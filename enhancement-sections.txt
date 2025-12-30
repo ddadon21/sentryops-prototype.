@@ -1,0 +1,10 @@
+This file contains the enhanced sections for Personnel Overview that need to be manually integrated due to file size constraints.
+
+The sections include:
+1. Enhanced metric cards
+2. Staffing Analytics Dashboard
+3. Certification Management
+4. Shift Schedule/Roster
+5. Hiring Pipeline
+
+See code implementation in commit message.
