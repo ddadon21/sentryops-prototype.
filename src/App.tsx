@@ -99,28 +99,24 @@ function App() {
         {/* Criminal Investigations Module (standalone, no layout wrapper) */}
         <Route path="/investigations/cases" element={<ActiveCasesDashboard />} />
 
-        {/* HR Dashboard (standalone, no layout wrapper - has its own sidebar) */}
+        {/* HR Module (standalone, no layout wrapper - each page has its own sidebar) */}
         <Route path="/hr/dashboard" element={<HRDashboard />} />
+        <Route path="/hr/jobs" element={<JobPostings />} />
+        <Route path="/hr/applicants" element={<ApplicantTracking />} />
+        <Route path="/hr/pipeline" element={<HiringPipeline />} />
+        <Route path="/hr/onboarding" element={<NewHireOnboarding />} />
+        <Route path="/hr/records" element={<EmployeeRecords />} />
+        <Route path="/hr/timeoff" element={<TimeOffManagement />} />
+        <Route path="/hr/reviews" element={<PerformanceReviews />} />
+        <Route path="/hr/training" element={<TrainingCertifications />} />
+        <Route path="/hr/compliance" element={<ComplianceManagement />} />
+        <Route path="/hr/reports" element={<HRReports />} />
+        <Route path="/hr/settings" element={<HRSettings />} />
 
         {/* App routes with MainLayout */}
         <Route element={<MainLayout />}>
           <Route path="about" element={<About />} />
           <Route path="dashboard" element={<Dashboard />} />
-
-          {/* HR Module (other pages use MainLayout) */}
-          <Route path="hr">
-            <Route path="applicants" element={<ApplicantTracking />} />
-            <Route path="jobs" element={<JobPostings />} />
-            <Route path="pipeline" element={<HiringPipeline />} />
-            <Route path="onboarding" element={<NewHireOnboarding />} />
-            <Route path="records" element={<EmployeeRecords />} />
-            <Route path="timeoff" element={<TimeOffManagement />} />
-            <Route path="reviews" element={<PerformanceReviews />} />
-            <Route path="training" element={<TrainingCertifications />} />
-            <Route path="compliance" element={<ComplianceManagement />} />
-            <Route path="reports" element={<HRReports />} />
-            <Route path="settings" element={<HRSettings />} />
-          </Route>
 
           {/* Background Investigations Module */}
           <Route path="investigations">
