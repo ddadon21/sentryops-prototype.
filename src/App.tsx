@@ -99,14 +99,16 @@ function App() {
         {/* Criminal Investigations Module (standalone, no layout wrapper) */}
         <Route path="/investigations/cases" element={<ActiveCasesDashboard />} />
 
+        {/* HR Dashboard (standalone, no layout wrapper - has its own sidebar) */}
+        <Route path="/hr/dashboard" element={<HRDashboard />} />
+
         {/* App routes with MainLayout */}
         <Route element={<MainLayout />}>
           <Route path="about" element={<About />} />
           <Route path="dashboard" element={<Dashboard />} />
 
-          {/* HR Module */}
+          {/* HR Module (other pages use MainLayout) */}
           <Route path="hr">
-            <Route path="dashboard" element={<HRDashboard />} />
             <Route path="applicants" element={<ApplicantTracking />} />
             <Route path="jobs" element={<JobPostings />} />
             <Route path="pipeline" element={<HiringPipeline />} />
