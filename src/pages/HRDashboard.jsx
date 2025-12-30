@@ -27,8 +27,8 @@ export default function HRDashboard() {
 
   const navigation = [
     { id: 'hr-dashboard', label: 'HR Dashboard', icon: Users },
-    { id: 'applicant-tracking', label: 'Applicant Tracking', icon: UserPlus, page: 'ApplicantTracking' },
     { id: 'job-postings', label: 'Job Postings', icon: Briefcase, page: 'JobPostings' },
+    { id: 'applicant-tracking', label: 'Applicant Tracking', icon: UserPlus, page: 'ApplicantTracking' },
     { id: 'hiring-pipeline', label: 'Hiring Pipeline', icon: TrendingUp, page: 'HiringPipeline' },
     { id: 'onboarding', label: 'New Hire Onboarding', icon: FileCheck, page: 'NewHireOnboarding' },
     { id: 'employee-records', label: 'Employee Records', icon: FileText, page: 'EmployeeRecords' },
