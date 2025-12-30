@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Home, Users, FileText, LayoutDashboard, TrendingUp, AlertCircle, Settings, Bell, MessageCircle, Search, ChevronRight, DollarSign, CheckCircle, Shield, Sparkles, X, Send, Menu, ChevronLeft, LogOut, UserPlus, Briefcase, Clock, Award, AlertTriangle, TrendingDown, Calendar, FileCheck, Target, Activity, ArrowUpRight, ArrowDownRight, Eye } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Users, FileText, LayoutDashboard, TrendingUp, Settings, Bell, MessageCircle, Search, ChevronRight, CheckCircle, Shield, Sparkles, X, Send, Menu, ChevronLeft, LogOut, UserPlus, Briefcase, Clock, Award, AlertTriangle, TrendingDown, Calendar, FileCheck, Target, ArrowUpRight, ArrowDownRight, Eye, Download, Filter } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 
@@ -12,9 +12,20 @@ export default function HRDashboard() {
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false);
   const [timeRange, setTimeRange] = useState('month');
+  const [currentTime, setCurrentTime] = useState(new Date());
+  const [aiInsightsVisible, setAiInsightsVisible] = useState(true);
+
+  // Update time every minute
+  useEffect(() => {
+    const timer = setInterval(() => setCurrentTime(new Date()), 60000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const formatTime = (date) => {
+    return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+  };
 
   const navigation = [
-    { id: 'command-dashboard', label: 'Command Dashboard', icon: Home, page: 'CommandDashboard' },
     { id: 'hr-dashboard', label: 'HR Dashboard', icon: Users },
     { id: 'applicant-tracking', label: 'Applicant Tracking', icon: UserPlus, page: 'ApplicantTracking' },
     { id: 'job-postings', label: 'Job Postings', icon: Briefcase, page: 'JobPostings' },
@@ -24,13 +35,15 @@ export default function HRDashboard() {
     { id: 'time-off', label: 'Time Off Management', icon: Calendar, page: 'TimeOffManagement' },
     { id: 'performance', label: 'Performance Reviews', icon: Award, page: 'PerformanceReviews' },
     { id: 'hr-reports', label: 'HR Reports', icon: LayoutDashboard, page: 'HRReports' },
-    { id: 'settings', label: 'Settings', icon: Settings, page: 'Settings' }
+    { id: 'settings', label: 'Settings', icon: Settings, page: 'HRSettings' }
   ];
 
   const notifications = [
     { id: 1, title: '5 New Applications', message: 'Deputy Sheriff position received 5 applications', time: '15 min ago', urgent: false },
     { id: 2, title: 'Interview Scheduled', message: 'Background investigator interview - Tomorrow 10 AM', time: '1 hour ago', urgent: true },
-    { id: 3, title: '3 Onboarding Tasks Due', message: 'New hire paperwork pending completion', time: '2 hours ago', urgent: true }
+    { id: 3, title: '3 Onboarding Tasks Due', message: 'New hire paperwork pending completion', time: '2 hours ago', urgent: true },
+    { id: 4, title: 'Certification Expiring', message: 'Deputy Williams P.O.S.T. certification expires in 30 days', time: '3 hours ago', urgent: true },
+    { id: 5, title: 'Background Check Complete', message: 'Elena Rodriguez cleared for hire', time: '4 hours ago', urgent: false }
   ];
 
   // Key metrics
@@ -89,10 +102,6 @@ export default function HRDashboard() {
 
   const handleLogout = () => {
     navigate(createPageUrl('SignIn'));
-  };
-
-  const getChangeColor = (value) => {
-    return value > 0 ? 'text-green-400' : 'text-red-400';
   };
 
   const getChangeIcon = (value) => {
@@ -219,8 +228,9 @@ export default function HRDashboard() {
               >
                 <Menu className="w-5 h-5 text-slate-400" />
               </button>
-              <div className="flex items-center gap-2 text-sm">
-                <span className="text-white">HR Dashboard</span>
+              <div className="flex-1 max-w-xl relative hidden sm:block">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
+                <input type="text" placeholder="Search employees, applicants, positions..." className="w-full pl-12 pr-4 py-2 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-amber-500/50" />
               </div>
             </div>
             <div className="flex items-center gap-2 lg:gap-3">
@@ -247,7 +257,10 @@ export default function HRDashboard() {
                 {notificationsOpen && (
                   <div className="absolute right-0 top-full mt-2 w-96 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-2xl z-50">
                     <div className="p-4 border-b border-slate-700/50">
-                      <h3 className="text-sm font-semibold text-white">Notifications</h3>
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-sm font-semibold text-white">Notifications</h3>
+                        <span className="px-2 py-0.5 bg-red-500/20 border border-red-500/30 text-red-400 text-xs rounded-full">{notifications.filter(n => n.urgent).length} urgent</span>
+                      </div>
                     </div>
                     <div className="max-h-96 overflow-y-auto">
                       {notifications.map(notification => (
@@ -264,7 +277,7 @@ export default function HRDashboard() {
                       ))}
                     </div>
                     <div className="p-3 border-t border-slate-700/50">
-                      <button className="w-full text-center text-sm text-amber-400 hover:text-amber-300 font-medium">View All</button>
+                      <button className="w-full text-center text-sm text-amber-400 hover:text-amber-300 font-medium">View All Notifications</button>
                     </div>
                   </div>
                 )}
@@ -287,78 +300,238 @@ export default function HRDashboard() {
 
         <main className="flex-1 overflow-y-auto p-4 lg:p-6">
           <div className="max-w-7xl mx-auto">
-            <div className="mb-6">
-              <h2 className="text-2xl lg:text-3xl font-bold text-white mb-2">HR Dashboard</h2>
-              <p className="text-slate-400">Recruitment, onboarding, and employee management overview</p>
+            {/* Header with greeting and quick actions */}
+            <div className="mb-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+              <div>
+                <h2 className="text-2xl lg:text-3xl font-bold text-white mb-2">Good morning, HR Director</h2>
+                <div className="flex items-center gap-3 text-slate-400">
+                  <span>Human Resources Dashboard</span>
+                  <span className="text-slate-600">•</span>
+                  <span className="text-amber-400 font-medium">{formatTime(currentTime)} EST</span>
+                  <span className="text-slate-600">•</span>
+                  <span className="text-xs text-slate-500">Updated 2 min ago</span>
+                </div>
+              </div>
+
+              {/* Quick Actions Bar */}
+              <div className="flex items-center gap-2 flex-wrap">
+                <button
+                  onClick={() => navigate(createPageUrl('JobPostings'))}
+                  className="flex items-center gap-2 px-4 py-2 bg-green-500/20 border border-green-500/30 text-green-400 rounded-xl text-sm font-medium hover:bg-green-500/30 transition-all"
+                >
+                  <Briefcase className="w-4 h-4" />
+                  Post New Job
+                </button>
+                <button
+                  onClick={() => navigate(createPageUrl('ApplicantTracking'))}
+                  className="flex items-center gap-2 px-4 py-2 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded-xl text-sm font-medium hover:bg-blue-500/30 transition-all"
+                >
+                  <UserPlus className="w-4 h-4" />
+                  Review Applicants
+                </button>
+                <button className="flex items-center gap-2 px-4 py-2 bg-slate-700/40 border border-slate-600/50 text-slate-300 rounded-xl text-sm font-medium hover:bg-slate-700/60 transition-all">
+                  <Download className="w-4 h-4" />
+                  HR Report
+                </button>
+              </div>
             </div>
 
-            {/* AI Insights */}
-            <div className="mb-6 bg-gradient-to-br from-blue-500/10 to-purple-500/5 border border-blue-500/20 rounded-xl p-5">
+            {/* AI Insights Banner */}
+            {aiInsightsVisible && (
+              <div className="mb-6 bg-gradient-to-br from-purple-500/10 to-purple-600/5 border border-purple-500/20 rounded-xl p-5">
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 bg-purple-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Sparkles className="w-6 h-6 text-purple-400" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between mb-3">
+                      <h4 className="text-base font-semibold text-white">AI Insights & Recommendations</h4>
+                      <button
+                        onClick={() => setAiInsightsVisible(false)}
+                        className="text-slate-400 hover:text-white transition-colors"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+                    <div className="space-y-2 text-sm">
+                      <div className="flex items-start gap-3">
+                        <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+                        <p className="text-slate-300"><span className="text-green-400 font-semibold">Hiring velocity up 22%</span> - streamlined screening is improving time-to-hire significantly</p>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                        <p className="text-slate-300"><span className="text-blue-400 font-semibold">3 candidates ready</span> for background checks this week - prioritize Deputy Sheriff positions</p>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <div className="w-2 h-2 bg-amber-500 rounded-full mt-2 flex-shrink-0"></div>
+                        <p className="text-slate-300"><span className="text-amber-400 font-semibold">3 certifications expiring</span> within 30 days - automated renewal reminders have been sent</p>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <div className="w-2 h-2 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
+                        <p className="text-slate-300"><span className="text-purple-400 font-semibold">87.5% offer acceptance</span> - candidate experience metrics are excellent, maintain current approach</p>
+                      </div>
+                    </div>
+                    <div className="mt-4 pt-4 border-t border-purple-500/20">
+                      <button className="text-sm text-purple-400 hover:text-purple-300 font-medium">
+                        View Detailed Analysis →
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Executive Summary */}
+            <div className="mb-6 bg-gradient-to-br from-blue-500/10 to-blue-600/5 border border-blue-500/20 rounded-xl p-5">
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <Sparkles className="w-6 h-6 text-blue-400" />
+                  <TrendingUp className="w-6 h-6 text-blue-400" />
                 </div>
                 <div className="flex-1">
-                  <h4 className="text-base font-semibold text-white mb-2">AI HR Intelligence</h4>
-                  <div className="space-y-2 text-sm text-slate-300">
-                    <p>• <span className="font-bold text-green-400">Hiring velocity up 22%</span> - streamlined screening improving time-to-hire</p>
-                    <p>• <span className="font-bold text-blue-400">47 active applicants</span> with 3 ready for background checks this week</p>
-                    <p>• <span className="font-bold text-amber-400">3 certifications expiring</span> - automated renewal reminders sent</p>
-                    <p>• <span className="font-bold text-purple-400">87.5% offer acceptance rate</span> - excellent candidate experience</p>
+                  <div className="flex items-center justify-between mb-4">
+                    <h4 className="text-base font-semibold text-white">HR Executive Summary</h4>
+                    <span className="text-xs text-slate-400">Updated 2 min ago</span>
+                  </div>
+
+                  {/* Action Required */}
+                  <div className="mb-4 pb-4 border-b border-blue-500/20">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                      <h5 className="text-sm font-semibold text-red-400">ACTION REQUIRED</h5>
+                    </div>
+                    <div className="space-y-1.5 text-sm">
+                      <div className="flex items-start gap-2">
+                        <UserPlus className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
+                        <p className="text-slate-300"><span className="font-semibold text-red-400">3 pending onboarding tasks</span> - new hire paperwork due this week</p>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <Award className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
+                        <p className="text-slate-300"><span className="font-semibold text-red-400">3 certifications expiring</span> - P.O.S.T. renewals needed within 30 days</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* In Progress */}
+                  <div className="mb-4 pb-4 border-b border-blue-500/20">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-2 h-2 bg-amber-500 rounded-full"></div>
+                      <h5 className="text-sm font-semibold text-amber-400">IN PROGRESS</h5>
+                    </div>
+                    <div className="space-y-1.5 text-sm">
+                      <div className="flex items-start gap-2">
+                        <Users className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
+                        <p className="text-slate-300"><span className="font-semibold text-amber-400">8 candidates in background check</span> - average completion time 12 days</p>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <Calendar className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
+                        <p className="text-slate-300"><span className="font-semibold text-amber-400">3 interviews scheduled</span> - Deputy Sheriff and Background Investigator positions</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Operational Status */}
+                  <div>
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                      <h5 className="text-sm font-semibold text-green-400">OPERATIONAL STATUS</h5>
+                    </div>
+                    <div className="space-y-1.5 text-sm">
+                      <div className="flex items-start gap-2">
+                        <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
+                        <p className="text-slate-300"><span className="font-semibold text-green-400">178 total employees</span> - 164 active, 14 positions vacant</p>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <Target className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
+                        <p className="text-slate-300"><span className="font-semibold text-green-400">94.3% certification compliance</span> - exceeds 90% department goal</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Key Metrics Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-              <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center">
-                    <Users className="w-5 h-5 text-blue-400" />
-                  </div>
-                  <div className="flex items-center gap-1 text-sm text-green-400">
-                    {getChangeIcon(2.3)}
-                    <span className="font-bold">2.3%</span>
-                  </div>
-                </div>
-                <p className="text-2xl font-bold text-white mb-1">{metrics.totalEmployees}</p>
-                <p className="text-sm text-slate-400">Total Employees</p>
-              </div>
-
-              <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="w-10 h-10 bg-amber-500/20 rounded-xl flex items-center justify-center">
-                    <Briefcase className="w-5 h-5 text-amber-400" />
-                  </div>
-                </div>
-                <p className="text-2xl font-bold text-white mb-1">{metrics.openPositions}</p>
-                <p className="text-sm text-slate-400">Open Positions</p>
-              </div>
-
-              <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center">
-                    <UserPlus className="w-5 h-5 text-green-400" />
-                  </div>
-                  <div className="flex items-center gap-1 text-sm text-green-400">
-                    {getChangeIcon(15.2)}
-                    <span className="font-bold">15.2%</span>
-                  </div>
-                </div>
-                <p className="text-2xl font-bold text-white mb-1">{metrics.activeApplicants}</p>
-                <p className="text-sm text-slate-400">Active Applicants</p>
-              </div>
-
-              <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="w-10 h-10 bg-purple-500/20 rounded-xl flex items-center justify-center">
-                    <FileCheck className="w-5 h-5 text-purple-400" />
-                  </div>
-                </div>
-                <p className="text-2xl font-bold text-white mb-1">{metrics.pendingOnboarding}</p>
-                <p className="text-sm text-slate-400">Pending Onboarding</p>
-              </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-6">
+              {[
+                {
+                  label: 'Total Employees',
+                  value: metrics.totalEmployees,
+                  sublabel: '164 active',
+                  icon: Users,
+                  color: 'blue',
+                  trend: 'up',
+                  trendValue: '↑ 2.3%',
+                  comparison: 'vs. last month',
+                  route: 'EmployeeRecords'
+                },
+                {
+                  label: 'Open Positions',
+                  value: metrics.openPositions,
+                  sublabel: '4 high priority',
+                  icon: Briefcase,
+                  color: 'amber',
+                  trend: 'neutral',
+                  trendValue: '→ Same',
+                  comparison: 'vs. last month',
+                  route: 'JobPostings'
+                },
+                {
+                  label: 'Active Applicants',
+                  value: metrics.activeApplicants,
+                  sublabel: '8 in background check',
+                  icon: UserPlus,
+                  color: 'green',
+                  trend: 'up',
+                  trendValue: '↑ 15.2%',
+                  comparison: 'vs. last month',
+                  route: 'ApplicantTracking'
+                },
+                {
+                  label: 'Pending Onboarding',
+                  value: metrics.pendingOnboarding,
+                  sublabel: 'Tasks due this week',
+                  icon: FileCheck,
+                  color: 'purple',
+                  trend: 'down',
+                  trendValue: '↓ 2',
+                  comparison: 'vs. last week',
+                  route: 'NewHireOnboarding'
+                }
+              ].map((stat, idx) => {
+                const Icon = stat.icon;
+                return (
+                  <button
+                    key={idx}
+                    onClick={() => navigate(createPageUrl(stat.route))}
+                    className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6 hover:border-slate-600/50 transition-all text-left group"
+                  >
+                    <div className="flex items-center justify-between mb-4">
+                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
+                        stat.color === 'blue' ? 'bg-blue-500/20' :
+                        stat.color === 'amber' ? 'bg-amber-500/20' :
+                        stat.color === 'green' ? 'bg-green-500/20' : 'bg-purple-500/20'
+                      }`}>
+                        <Icon className={`w-6 h-6 ${
+                          stat.color === 'blue' ? 'text-blue-400' :
+                          stat.color === 'amber' ? 'text-amber-400' :
+                          stat.color === 'green' ? 'text-green-400' : 'text-purple-400'
+                        }`} />
+                      </div>
+                      <ChevronRight className="w-5 h-5 text-slate-400 group-hover:text-amber-400 group-hover:translate-x-1 transition-all" />
+                    </div>
+                    <p className="text-3xl font-bold text-white mb-1">{stat.value}</p>
+                    <p className="text-sm text-slate-400 mb-2">{stat.label}</p>
+                    <p className="text-xs text-slate-500 mb-2">{stat.sublabel}</p>
+                    <div className="flex items-center justify-between pt-2 border-t border-slate-700/30">
+                      <span className={`text-xs font-medium ${
+                        stat.trend === 'up' ? 'text-green-400' :
+                        stat.trend === 'down' ? 'text-red-400' : 'text-slate-400'
+                      }`}>{stat.trendValue}</span>
+                      <span className="text-xs text-slate-500">{stat.comparison}</span>
+                    </div>
+                  </button>
+                );
+              })}
             </div>
 
             {/* Secondary Metrics */}
@@ -415,7 +588,15 @@ export default function HRDashboard() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
               {/* Hiring Funnel */}
               <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
-                <h3 className="text-lg font-semibold text-white mb-4">Hiring Funnel</h3>
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg font-semibold text-white">Hiring Funnel</h3>
+                  <button
+                    onClick={() => navigate(createPageUrl('HiringPipeline'))}
+                    className="text-sm text-amber-400 hover:text-amber-300"
+                  >
+                    View Details →
+                  </button>
+                </div>
                 <div className="space-y-3">
                   {hiringFunnel.map((stage, idx) => (
                     <div key={idx}>
@@ -484,7 +665,7 @@ export default function HRDashboard() {
               <div className="space-y-3">
                 {openPositions.map(position => (
                   <div key={position.id} className="p-4 bg-slate-900/50 rounded-xl hover:bg-slate-800/50 transition-all cursor-pointer">
-                    <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center justify-between flex-wrap gap-2">
                       <div className="flex items-center gap-3">
                         <h4 className="text-base font-semibold text-white">{position.title}</h4>
                         <span className={`px-2 py-0.5 rounded text-xs font-bold ${
@@ -512,7 +693,7 @@ export default function HRDashboard() {
               <div className="space-y-3">
                 {upcomingInterviews.map(interview => (
                   <div key={interview.id} className="p-4 bg-slate-900/50 rounded-xl hover:bg-slate-800/50 transition-all">
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between flex-wrap gap-2">
                       <div className="flex items-center gap-4">
                         <div className="w-10 h-10 bg-blue-500/20 rounded-full flex items-center justify-center">
                           <Users className="w-5 h-5 text-blue-400" />
@@ -541,6 +722,7 @@ export default function HRDashboard() {
         className="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-400 hover:to-blue-500 rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 z-40"
       >
         {chatOpen ? <X className="w-6 h-6 text-white" /> : <MessageCircle className="w-6 h-6 text-white" />}
+        {!chatOpen && <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full border-2 border-slate-900 animate-pulse"></span>}
       </button>
 
       {chatOpen && (
