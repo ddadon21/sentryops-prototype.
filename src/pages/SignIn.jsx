@@ -11,10 +11,10 @@ export default function SignIn() {
   const [selectedRole, setSelectedRole] = useState(null);
 
   const roles = [
-    { id: 'command', title: 'Command Staff', demo: 'sheriff@dept.gov' },
-    { id: 'hr', title: 'HR / Backgrounds', demo: 'hr@dept.gov' },
-    { id: 'supervisor', title: 'Unit Supervisor', demo: 'supervisor@dept.gov' },
-    { id: 'employee', title: 'Line Staff', demo: 'deputy@dept.gov' }
+    { id: 'command', title: 'Command Staff', demo: 'sheriff@dept.gov', description: 'Executive oversight & operations' },
+    { id: 'hr', title: 'Human Resources', demo: 'hr@dept.gov', description: 'Personnel & hiring management' },
+    { id: 'backgrounds', title: 'Background Investigations', demo: 'backgrounds@dept.gov', description: 'Applicant investigations' },
+    { id: 'civilian', title: 'Civilian Staff', demo: 'civilian@dept.gov', description: 'Administrative & support roles' }
   ];
 
   const handleLogin = () => {
@@ -25,10 +25,10 @@ export default function SignIn() {
       navigate(createPageUrl('CommandDashboard'));
     } else if (selectedRole.id === 'hr') {
       navigate(createPageUrl('HRDashboard'));
-    } else if (selectedRole.id === 'supervisor') {
-      navigate(createPageUrl('CommandDashboard')); // Placeholder - supervisor dashboard not built yet
-    } else if (selectedRole.id === 'employee') {
-      navigate(createPageUrl('CommandDashboard')); // Placeholder - employee dashboard not built yet
+    } else if (selectedRole.id === 'backgrounds') {
+      navigate(createPageUrl('BackgroundsDashboard'));
+    } else if (selectedRole.id === 'civilian') {
+      navigate(createPageUrl('CivilianDashboard')); // Placeholder - civilian dashboard not built yet
     }
   };
 
@@ -79,7 +79,7 @@ export default function SignIn() {
                 }`}
               >
                 <p className="text-sm font-medium text-white">{role.title}</p>
-                <p className="text-xs text-slate-400 mt-0.5 break-all">{role.demo}</p>
+                <p className="text-xs text-slate-500 mt-0.5">{role.description}</p>
               </button>
             ))}
           </div>
