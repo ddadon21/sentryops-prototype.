@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Home, Users, FileText, LayoutDashboard, TrendingUp, AlertCircle, Settings, Bell, MessageCircle, Search, ChevronRight, DollarSign, CheckCircle, Shield, Sparkles, X, Send, Menu, ChevronLeft, LogOut, UserPlus, Briefcase, Clock, Award, Filter, Download, Eye, Mail, Phone, MapPin, Calendar, Star, ThumbsUp, ThumbsDown, FileCheck, XCircle, CheckCircle2 } from 'lucide-react';
+import { Home, Users, FileText, LayoutDashboard, TrendingUp, AlertCircle, Settings, Bell, MessageCircle, Search, ChevronRight, DollarSign, CheckCircle, Shield, Sparkles, X, Send, Menu, ChevronLeft, LogOut, UserPlus, Briefcase, Clock, Award, Filter, Download, Eye, Mail, Phone, MapPin, Calendar, Star, ThumbsUp, ThumbsDown, FileCheck, XCircle, CheckCircle2, ClipboardCheck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 
@@ -21,6 +21,7 @@ export default function ApplicantTracking() {
     { id: 'job-postings', label: 'Job Postings', icon: Briefcase, page: 'JobPostings' },
     { id: 'applicant-tracking', label: 'Applicant Tracking', icon: UserPlus },
     { id: 'hiring-pipeline', label: 'Hiring Pipeline', icon: TrendingUp, page: 'HiringPipeline' },
+    { id: 'compliance', label: 'HR Compliance', icon: ClipboardCheck, page: 'ComplianceManagement' },
     { id: 'onboarding', label: 'New Hire Onboarding', icon: FileCheck, page: 'NewHireOnboarding' },
     { id: 'employee-records', label: 'Employee Records', icon: FileText, page: 'EmployeeRecords' },
     { id: 'time-off', label: 'Time Off Management', icon: Calendar, page: 'TimeOffManagement' },
