@@ -48,20 +48,7 @@ import HRReports from './pages/HRReports';
 import HRSettings from './pages/HRSettings';
 
 // Background Investigations Module
-import BIDashboard from './pages/BIDashboard';
-import ActiveCases from './pages/ActiveCases';
-import CaseManagement from './pages/CaseManagement';
-import InvestigationTimeline from './pages/InvestigationTimeline';
-import SubjectRecords from './pages/SubjectRecords';
-import InterviewScheduling from './pages/InterviewScheduling';
-import EvidenceTracking from './pages/EvidenceTracking';
-import ReferenceChecks from './pages/ReferenceChecks';
-import EmploymentVerification from './pages/EmploymentVerification';
-import CriminalHistoryReview from './pages/CriminalHistoryReview';
-import FinancialBackground from './pages/FinancialBackground';
-import SocialMediaAnalysis from './pages/SocialMediaAnalysis';
-import BIReports from './pages/BIReports';
-import CaseClosure from './pages/CaseClosure';
+import BackgroundsDashboard from './pages/BackgroundsDashboard';
 
 function App() {
   return (
@@ -113,28 +100,13 @@ function App() {
         <Route path="/hr/reports" element={<HRReports />} />
         <Route path="/hr/settings" element={<HRSettings />} />
 
+        {/* Background Investigations Module (standalone, no layout wrapper - each page has its own sidebar) */}
+        <Route path="/bi/dashboard" element={<BackgroundsDashboard />} />
+
         {/* App routes with MainLayout */}
         <Route element={<MainLayout />}>
           <Route path="about" element={<About />} />
           <Route path="dashboard" element={<Dashboard />} />
-
-          {/* Background Investigations Module */}
-          <Route path="investigations">
-            <Route path="dashboard" element={<BIDashboard />} />
-            <Route path="active" element={<ActiveCases />} />
-            <Route path="cases" element={<CaseManagement />} />
-            <Route path="timeline" element={<InvestigationTimeline />} />
-            <Route path="subjects" element={<SubjectRecords />} />
-            <Route path="interviews" element={<InterviewScheduling />} />
-            <Route path="evidence" element={<EvidenceTracking />} />
-            <Route path="references" element={<ReferenceChecks />} />
-            <Route path="employment" element={<EmploymentVerification />} />
-            <Route path="criminal" element={<CriminalHistoryReview />} />
-            <Route path="financial" element={<FinancialBackground />} />
-            <Route path="social" element={<SocialMediaAnalysis />} />
-            <Route path="reports" element={<BIReports />} />
-            <Route path="closure" element={<CaseClosure />} />
-          </Route>
         </Route>
       </Routes>
     </Router>
