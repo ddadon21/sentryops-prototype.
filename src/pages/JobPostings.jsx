@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Users, FileText, LayoutDashboard, TrendingUp, Settings, Bell, MessageCircle, Search, ChevronRight, CheckCircle, Shield, Sparkles, X, Send, Menu, ChevronLeft, LogOut, UserPlus, Briefcase, Clock, Award, Filter, Eye, Edit, Trash2, Plus, MapPin, Calendar, DollarSign, FileCheck, ClipboardCheck } from 'lucide-react';
+import { Users, FileText, LayoutDashboard, TrendingUp, Settings, Bell, MessageCircle, Search, ChevronRight, CheckCircle, Shield, Sparkles, X, Send, Menu, ChevronLeft, LogOut, UserPlus, Briefcase, Clock, Award, Filter, Eye, Edit, Trash2, Plus, MapPin, Calendar, DollarSign, FileCheck, ClipboardCheck, GraduationCap } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 
@@ -22,6 +22,7 @@ export default function JobPostings() {
     { id: 'hiring-pipeline', label: 'Hiring Pipeline', icon: TrendingUp, page: 'HiringPipeline' },
     { id: 'compliance', label: 'HR Compliance', icon: ClipboardCheck, page: 'ComplianceManagement' },
     { id: 'onboarding', label: 'New Hire Onboarding', icon: FileCheck, page: 'NewHireOnboarding' },
+    { id: 'training-certifications', label: 'Training & Certifications', icon: GraduationCap, page: 'TrainingCertifications' },
     { id: 'employee-records', label: 'Employee Records', icon: FileText, page: 'EmployeeRecords' },
     { id: 'time-off', label: 'Time Off Management', icon: Calendar, page: 'TimeOffManagement' },
     { id: 'performance', label: 'Performance Reviews', icon: Award, page: 'PerformanceReviews' },
