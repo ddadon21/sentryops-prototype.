@@ -51,6 +51,7 @@ import HRSettings from './pages/HRSettings';
 import BackgroundsDashboard from './pages/BackgroundsDashboard';
 import ActiveCases from './pages/ActiveCases';
 import CaseManagement from './pages/CaseManagement';
+import InvestigationTimeline from './pages/InvestigationTimeline';
 
 function App() {
   return (
@@ -106,6 +107,7 @@ function App() {
         <Route path="/bi/dashboard" element={<BackgroundsDashboard />} />
         <Route path="/bi/active" element={<ActiveCases />} />
         <Route path="/bi/cases" element={<CaseManagement />} />
+        <Route path="/bi/timeline" element={<InvestigationTimeline />} />
 
         {/* App routes with MainLayout */}
         <Route element={<MainLayout />}>
