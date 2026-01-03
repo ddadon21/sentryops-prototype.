@@ -50,6 +50,7 @@ import HRSettings from './pages/HRSettings';
 // Background Investigations Module
 import BackgroundsDashboard from './pages/BackgroundsDashboard';
 import ActiveCases from './pages/ActiveCases';
+import CaseManagement from './pages/CaseManagement';
 
 function App() {
   return (
@@ -104,6 +105,7 @@ function App() {
         {/* Background Investigations Module (standalone, no layout wrapper - each page has its own sidebar) */}
         <Route path="/bi/dashboard" element={<BackgroundsDashboard />} />
         <Route path="/bi/active" element={<ActiveCases />} />
+        <Route path="/bi/cases" element={<CaseManagement />} />
 
         {/* App routes with MainLayout */}
         <Route element={<MainLayout />}>
