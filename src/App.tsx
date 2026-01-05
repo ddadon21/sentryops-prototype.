@@ -55,6 +55,7 @@ import InvestigationTimeline from './pages/InvestigationTimeline';
 import SubjectRecords from './pages/SubjectRecords';
 import InterviewScheduling from './pages/InterviewScheduling';
 import EvidenceTracking from './pages/EvidenceTracking';
+import ReferenceChecks from './pages/ReferenceChecks';
 
 function App() {
   return (
@@ -114,6 +115,7 @@ function App() {
         <Route path="/bi/subjects" element={<SubjectRecords />} />
         <Route path="/bi/interviews" element={<InterviewScheduling />} />
         <Route path="/bi/evidence" element={<EvidenceTracking />} />
+        <Route path="/bi/references" element={<ReferenceChecks />} />
 
         {/* App routes with MainLayout */}
         <Route element={<MainLayout />}>
