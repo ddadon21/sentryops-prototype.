@@ -59,6 +59,7 @@ import ReferenceChecks from './pages/ReferenceChecks';
 import EmploymentVerification from './pages/EmploymentVerification';
 import CriminalHistoryReview from './pages/CriminalHistoryReview';
 import FinancialBackground from './pages/FinancialBackground';
+import SocialMediaAnalysis from './pages/SocialMediaAnalysis';
 
 function App() {
   return (
@@ -122,6 +123,7 @@ function App() {
         <Route path="/bi/employment" element={<EmploymentVerification />} />
         <Route path="/bi/criminal" element={<CriminalHistoryReview />} />
         <Route path="/bi/financial" element={<FinancialBackground />} />
+        <Route path="/bi/social" element={<SocialMediaAnalysis />} />
 
         {/* App routes with MainLayout */}
         <Route element={<MainLayout />}>
