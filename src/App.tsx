@@ -57,6 +57,7 @@ import InterviewScheduling from './pages/InterviewScheduling';
 import EvidenceTracking from './pages/EvidenceTracking';
 import ReferenceChecks from './pages/ReferenceChecks';
 import EmploymentVerification from './pages/EmploymentVerification';
+import CriminalHistoryReview from './pages/CriminalHistoryReview';
 
 function App() {
   return (
@@ -118,6 +119,7 @@ function App() {
         <Route path="/bi/evidence" element={<EvidenceTracking />} />
         <Route path="/bi/references" element={<ReferenceChecks />} />
         <Route path="/bi/employment" element={<EmploymentVerification />} />
+        <Route path="/bi/criminal" element={<CriminalHistoryReview />} />
 
         {/* App routes with MainLayout */}
         <Route element={<MainLayout />}>
