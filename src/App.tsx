@@ -60,6 +60,7 @@ import EmploymentVerification from './pages/EmploymentVerification';
 import CriminalHistoryReview from './pages/CriminalHistoryReview';
 import FinancialBackground from './pages/FinancialBackground';
 import SocialMediaAnalysis from './pages/SocialMediaAnalysis';
+import BIReports from './pages/BIReports';
 
 function App() {
   return (
@@ -124,6 +125,7 @@ function App() {
         <Route path="/bi/criminal" element={<CriminalHistoryReview />} />
         <Route path="/bi/financial" element={<FinancialBackground />} />
         <Route path="/bi/social" element={<SocialMediaAnalysis />} />
+        <Route path="/bi/reports" element={<BIReports />} />
 
         {/* App routes with MainLayout */}
         <Route element={<MainLayout />}>
