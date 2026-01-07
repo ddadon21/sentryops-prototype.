@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Shield, Lock, Mail, AlertCircle, ChevronRight, Eye, EyeOff, ArrowLeft } from 'lucide-react';
+import { Shield, Lock, Mail, ChevronRight, Eye, EyeOff, ArrowLeft, ChevronDown, Info } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 
@@ -8,27 +8,48 @@ export default function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [selectedRole, setSelectedRole] = useState(null);
+  const [rememberMe, setRememberMe] = useState(false);
+  const [showRememberTooltip, setShowRememberTooltip] = useState(false);
+  const [demoDropdownOpen, setDemoDropdownOpen] = useState(false);
+  const [selectedDemo, setSelectedDemo] = useState(null);
 
-  const roles = [
-    { id: 'command', title: 'Command Staff', demo: 'sheriff@dept.gov', description: 'Executive oversight & operations' },
-    { id: 'hr', title: 'Human Resources', demo: 'hr@dept.gov', description: 'Personnel & hiring management' },
-    { id: 'backgrounds', title: 'Background Investigations', demo: 'backgrounds@dept.gov', description: 'Applicant investigations' },
-    { id: 'civilian', title: 'Civilian Staff', demo: 'civilian@dept.gov', description: 'Administrative & support roles' }
+  const demoAccounts = [
+    {
+      id: 'sheriff',
+      title: 'Sheriff Conway',
+      role: 'Command Staff',
+      email: 'lou.conway@gwinnettcounty.com',
+      route: 'CommandDashboard'
+    },
+    {
+      id: 'major',
+      title: 'Major Richardson',
+      role: 'Background Investigations',
+      email: 'james.richardson@gwinnettcounty.com',
+      route: 'BackgroundsDashboard'
+    },
+    {
+      id: 'hr',
+      title: 'Director Henderson',
+      role: 'Human Resources',
+      email: 'patricia.henderson@gwinnettcounty.com',
+      route: 'HRDashboard'
+    }
   ];
 
-  const handleLogin = () => {
-    if (!selectedRole) return;
+  const handleDemoSelect = (account) => {
+    setSelectedDemo(account);
+    setEmail(account.email);
+    setPassword('••••••••••••');
+    setDemoDropdownOpen(false);
+  };
 
-    // Route based on selected role
-    if (selectedRole.id === 'command') {
+  const handleLogin = () => {
+    if (selectedDemo) {
+      navigate(createPageUrl(selectedDemo.route));
+    } else if (email) {
+      // Default to command dashboard if manually entering credentials
       navigate(createPageUrl('CommandDashboard'));
-    } else if (selectedRole.id === 'hr') {
-      navigate(createPageUrl('HRDashboard'));
-    } else if (selectedRole.id === 'backgrounds') {
-      navigate(createPageUrl('BackgroundsDashboard'));
-    } else if (selectedRole.id === 'civilian') {
-      navigate(createPageUrl('CivilianDashboard')); // Placeholder - civilian dashboard not built yet
     }
   };
 
@@ -47,41 +68,62 @@ export default function SignIn() {
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="w-16 h-16 bg-gradient-to-br from-amber-400 to-amber-600 rounded-2xl flex items-center justify-center">
-              <Shield className="w-9 h-9 text-slate-900" />
+            <div className="w-14 h-14 bg-gradient-to-br from-amber-500/90 to-amber-600/90 rounded-xl flex items-center justify-center shadow-lg shadow-amber-500/20">
+              <Shield className="w-7 h-7 text-slate-900" strokeWidth={2.5} />
             </div>
           </div>
-          <h1 className="text-3xl font-bold text-white mb-2">Sign in to SentryOps</h1>
-          <p className="text-slate-400">Enter your credentials to access your dashboard</p>
+          <h1 className="text-2xl font-bold text-white mb-2">Sign in to SentryOps</h1>
+          <p className="text-slate-400 text-sm">Secure access to centralized command operations</p>
         </div>
 
-        {/* Demo Role Selector */}
-        <div className="mb-6 bg-blue-500/10 border border-blue-500/20 rounded-xl p-4">
-          <div className="flex items-start gap-3 mb-3">
-            <AlertCircle className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
-            <div className="flex-1">
-              <p className="text-sm font-medium text-blue-400 mb-1">Demo Mode</p>
-              <p className="text-xs text-slate-400 mb-3">Select a role to pre-fill demo credentials</p>
+        {/* Demo Environment Notice */}
+        <div className="mb-6 bg-slate-800/30 border border-slate-700/40 rounded-xl p-4">
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+              <span className="text-xs font-medium text-slate-400 uppercase tracking-wide">Demo Environment</span>
             </div>
+            <span className="text-xs text-slate-500">Permissions simulated</span>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            {roles.map(role => (
-              <button
-                key={role.id}
-                onClick={() => {
-                  setSelectedRole(role);
-                  setEmail(role.demo);
-                }}
-                className={`p-3 rounded-lg text-left transition-all ${
-                  selectedRole?.id === role.id
-                    ? 'bg-blue-500/20 border-2 border-blue-500/50'
-                    : 'bg-slate-800/40 border-2 border-transparent hover:border-slate-600/50'
-                }`}
-              >
-                <p className="text-sm font-medium text-white">{role.title}</p>
-                <p className="text-xs text-slate-500 mt-0.5">{role.description}</p>
-              </button>
-            ))}
+
+          {/* Demo Account Dropdown */}
+          <div className="relative">
+            <button
+              onClick={() => setDemoDropdownOpen(!demoDropdownOpen)}
+              className="w-full flex items-center justify-between px-4 py-3 bg-slate-900/50 border border-slate-700/50 rounded-xl text-left hover:border-slate-600/50 transition-colors"
+            >
+              <div>
+                {selectedDemo ? (
+                  <>
+                    <p className="text-sm font-medium text-white">{selectedDemo.title}</p>
+                    <p className="text-xs text-slate-500">{selectedDemo.role}</p>
+                  </>
+                ) : (
+                  <>
+                    <p className="text-sm text-slate-400">Select demo account</p>
+                    <p className="text-xs text-slate-600">Choose a role to view the system</p>
+                  </>
+                )}
+              </div>
+              <ChevronDown className={`w-5 h-5 text-slate-400 transition-transform ${demoDropdownOpen ? 'rotate-180' : ''}`} />
+            </button>
+
+            {demoDropdownOpen && (
+              <div className="absolute top-full left-0 right-0 mt-2 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-2xl z-50 overflow-hidden">
+                {demoAccounts.map((account) => (
+                  <button
+                    key={account.id}
+                    onClick={() => handleDemoSelect(account)}
+                    className={`w-full px-4 py-3 text-left hover:bg-slate-800/50 transition-colors border-b border-slate-800/50 last:border-0 ${
+                      selectedDemo?.id === account.id ? 'bg-slate-800/30' : ''
+                    }`}
+                  >
+                    <p className="text-sm font-medium text-white">{account.title}</p>
+                    <p className="text-xs text-slate-500">{account.role}</p>
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 
@@ -97,8 +139,8 @@ export default function SignIn() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="your.email@dept.gov"
-                  className="w-full pl-12 pr-4 py-3 bg-slate-900/50 border border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-all"
+                  placeholder="firstname.lastname@gwinnettcounty.com"
+                  className="w-full pl-12 pr-4 py-3 bg-slate-900/50 border border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-all text-sm"
                 />
               </div>
             </div>
@@ -127,11 +169,36 @@ export default function SignIn() {
 
             {/* Remember & Forgot */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-sm">
-              <label className="flex items-center gap-2 text-slate-400 cursor-pointer">
-                <input type="checkbox" className="rounded border-slate-600" />
-                <span>Remember me</span>
-              </label>
-              <button className="text-amber-400 hover:text-amber-300 transition-colors">
+              <div className="relative">
+                <label className="flex items-center gap-2 text-slate-400 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                    className="rounded border-slate-600 bg-slate-800 text-amber-500 focus:ring-amber-500/20"
+                  />
+                  <span>Remember me</span>
+                  <button
+                    type="button"
+                    onMouseEnter={() => setShowRememberTooltip(true)}
+                    onMouseLeave={() => setShowRememberTooltip(false)}
+                    onClick={() => setShowRememberTooltip(!showRememberTooltip)}
+                    className="text-slate-600 hover:text-slate-400 transition-colors"
+                  >
+                    <Info className="w-3.5 h-3.5" />
+                  </button>
+                </label>
+
+                {/* Remember Me Tooltip */}
+                {showRememberTooltip && (
+                  <div className="absolute left-0 top-full mt-2 w-56 p-2.5 bg-slate-900 border border-slate-700/50 rounded-lg shadow-xl z-50">
+                    <p className="text-xs text-slate-400">
+                      Disabled on shared or secure terminals per department policy
+                    </p>
+                  </div>
+                )}
+              </div>
+              <button className="text-amber-400/80 hover:text-amber-300 transition-colors text-sm">
                 Forgot password?
               </button>
             </div>
@@ -139,31 +206,33 @@ export default function SignIn() {
             {/* Sign In Button */}
             <button
               onClick={handleLogin}
-              className="w-full py-3 bg-amber-500 hover:bg-amber-600 rounded-xl text-white font-medium transition-all flex items-center justify-center gap-2 group"
+              disabled={!email}
+              className="w-full py-3 bg-amber-500/90 hover:bg-amber-500 disabled:bg-slate-700 disabled:cursor-not-allowed rounded-xl text-white font-medium transition-all flex items-center justify-center gap-2 group shadow-lg shadow-amber-500/10 hover:shadow-amber-500/20"
             >
-              <Lock className="w-5 h-5" />
+              <Lock className="w-4 h-4" />
               Sign In
-              <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
             </button>
           </div>
 
           {/* MFA Notice */}
           <div className="mt-6 pt-6 border-t border-slate-700/50">
             <div className="flex items-center gap-2 text-xs text-slate-500">
-              <Shield className="w-4 h-4" />
-              <span>Multi-factor authentication required for production</span>
+              <Shield className="w-4 h-4 text-slate-600" />
+              <span>Multi-factor authentication enforced in production environments</span>
             </div>
           </div>
         </div>
 
         {/* Footer Links */}
-        <div className="mt-6 text-center space-y-2">
+        <div className="mt-6 text-center space-y-3">
           <p className="text-sm text-slate-500">
-            Don't have an account? <button className="text-amber-400 hover:text-amber-300">Contact IT Support</button>
+            Need access? <button className="text-amber-400/80 hover:text-amber-300 transition-colors">Contact IT Support</button>
           </p>
-          <p className="text-xs text-slate-600">
-            Protected by CJIS-compliant security • Hosted on AWS GovCloud
-          </p>
+          <div className="text-xs text-slate-600 space-y-1">
+            <p>Designed to align with CJIS security standards</p>
+            <p>Deployment options include GovCloud-compatible environments</p>
+          </div>
         </div>
       </div>
     </div>
