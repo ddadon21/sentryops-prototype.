@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Shield, Lock, Mail, ChevronRight, Eye, EyeOff, ArrowLeft, ChevronDown, Info } from 'lucide-react';
+import { Shield, Lock, Mail, ChevronRight, Eye, EyeOff, ArrowLeft, ChevronDown } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 
@@ -8,8 +8,6 @@ export default function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
-  const [showRememberTooltip, setShowRememberTooltip] = useState(false);
   const [demoDropdownOpen, setDemoDropdownOpen] = useState(false);
   const [selectedDemo, setSelectedDemo] = useState(null);
 
@@ -170,37 +168,8 @@ export default function SignIn() {
               </div>
             </div>
 
-            {/* Remember & Forgot */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-sm">
-              <div className="relative">
-                <label className="flex items-center gap-2 text-slate-400 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={rememberMe}
-                    onChange={(e) => setRememberMe(e.target.checked)}
-                    className="rounded border-slate-600 bg-slate-800 text-amber-500 focus:ring-amber-500/20"
-                  />
-                  <span>Remember me</span>
-                  <button
-                    type="button"
-                    onMouseEnter={() => setShowRememberTooltip(true)}
-                    onMouseLeave={() => setShowRememberTooltip(false)}
-                    onClick={() => setShowRememberTooltip(!showRememberTooltip)}
-                    className="text-slate-600 hover:text-slate-400 transition-colors"
-                  >
-                    <Info className="w-3.5 h-3.5" />
-                  </button>
-                </label>
-
-                {/* Remember Me Tooltip */}
-                {showRememberTooltip && (
-                  <div className="absolute left-0 top-full mt-2 w-56 p-2.5 bg-slate-900 border border-slate-700/50 rounded-lg shadow-xl z-50">
-                    <p className="text-xs text-slate-400">
-                      Disabled on shared or secure terminals per department policy
-                    </p>
-                  </div>
-                )}
-              </div>
+            {/* Forgot Password */}
+            <div className="flex justify-end">
               <button className="text-amber-400/80 hover:text-amber-300 transition-colors text-sm">
                 Forgot password?
               </button>
