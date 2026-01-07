@@ -15,24 +15,24 @@ export default function SignIn() {
 
   const demoAccounts = [
     {
-      id: 'sheriff',
-      title: 'Sheriff Conway',
-      role: 'Command Staff',
-      email: 'lou.conway@gwinnettcounty.com',
+      id: 'command',
+      title: 'Command Staff',
+      role: 'Sheriff / Chief View',
+      email: 'command.staff@gwinnettcounty.com',
       route: 'CommandDashboard'
     },
     {
-      id: 'major',
-      title: 'Major Richardson',
-      role: 'Background Investigations',
-      email: 'james.richardson@gwinnettcounty.com',
+      id: 'investigations',
+      title: 'Investigations Command',
+      role: 'Background Investigations Unit',
+      email: 'bi.command@gwinnettcounty.com',
       route: 'BackgroundsDashboard'
     },
     {
       id: 'hr',
-      title: 'Director Henderson',
-      role: 'Human Resources',
-      email: 'patricia.henderson@gwinnettcounty.com',
+      title: 'Human Resources',
+      role: 'Director View',
+      email: 'hr.director@gwinnettcounty.com',
       route: 'HRDashboard'
     }
   ];
@@ -100,8 +100,8 @@ export default function SignIn() {
                   </>
                 ) : (
                   <>
-                    <p className="text-sm text-slate-400">Select demo account</p>
-                    <p className="text-xs text-slate-600">Choose a role to view the system</p>
+                    <p className="text-sm text-slate-400">Select demo access level</p>
+                    <p className="text-xs text-slate-600">Choose a permission scope to view</p>
                   </>
                 )}
               </div>
@@ -125,6 +125,9 @@ export default function SignIn() {
               </div>
             )}
           </div>
+          <p className="mt-3 text-xs text-slate-500 text-center">
+            Demo environment only. Permissions are simulated and do not represent real users.
+          </p>
         </div>
 
         {/* Login Form */}
