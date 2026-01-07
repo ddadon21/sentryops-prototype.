@@ -62,6 +62,7 @@ import FinancialBackground from './pages/FinancialBackground';
 import SocialMediaAnalysis from './pages/SocialMediaAnalysis';
 import BIReports from './pages/BIReports';
 import CaseClosure from './pages/CaseClosure';
+import BISettings from './pages/BISettings';
 
 function App() {
   return (
@@ -128,6 +129,7 @@ function App() {
         <Route path="/bi/social" element={<SocialMediaAnalysis />} />
         <Route path="/bi/reports" element={<BIReports />} />
         <Route path="/bi/closure" element={<CaseClosure />} />
+        <Route path="/bi/settings" element={<BISettings />} />
 
         {/* App routes with MainLayout */}
         <Route element={<MainLayout />}>
