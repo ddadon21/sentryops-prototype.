@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  Home, Users, LayoutDashboard, CheckCircle, DollarSign, TrendingUp,
-  AlertCircle, Settings, Shield, ChevronLeft, ChevronRight, Menu,
+  Home, Users, CheckCircle, DollarSign, TrendingUp,
+  AlertCircle, Shield, ChevronLeft, ChevronRight, Menu,
   LogOut, Building2, Radio, Target, FileText, ShieldCheck, ChevronDown
 } from 'lucide-react';
 
@@ -19,7 +19,6 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   });
   const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false);
   const [staffingExpanded, setStaffingExpanded] = useState(false);
-  const [settingsMenuOpen, setSettingsMenuOpen] = useState(false);
 
   // Persist sidebar collapsed state
   useEffect(() => {
