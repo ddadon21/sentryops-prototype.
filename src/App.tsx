@@ -11,6 +11,8 @@ import SignIn from './pages/SignIn';
 
 // Command Module
 import CommandDashboard from './pages/CommandDashboard';
+import DailyCommandBrief from './pages/DailyCommandBrief';
+import RiskCompliance from './pages/RiskCompliance';
 import PersonnelOverview from './pages/PersonnelOverview';
 import OrgChart from './pages/OrgChart';
 import Approvals from './pages/Approvals';
@@ -78,6 +80,8 @@ function App() {
         <Route path="/command/dashboard" element={<CommandDashboard />} />
 
         {/* Command Module Pages (standalone, no layout wrapper) */}
+        <Route path="/command/brief" element={<DailyCommandBrief />} />
+        <Route path="/command/risk" element={<RiskCompliance />} />
         <Route path="/command/personnel" element={<PersonnelOverview />} />
         <Route path="/command/orgchart" element={<OrgChart />} />
         <Route path="/command/approvals" element={<Approvals />} />

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   Home, Users, LayoutDashboard, CheckCircle, DollarSign, TrendingUp,
   AlertCircle, Settings, Shield, ChevronLeft, ChevronRight, Menu,
-  LogOut, Building2, Radio, Target
+  LogOut, Building2, Radio, Target, FileText, ShieldCheck, ChevronDown
 } from 'lucide-react';
 
 interface DashboardLayoutProps {
@@ -18,6 +18,8 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     return saved === 'true';
   });
   const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false);
+  const [staffingExpanded, setStaffingExpanded] = useState(false);
+  const [settingsMenuOpen, setSettingsMenuOpen] = useState(false);
 
   // Persist sidebar collapsed state
   useEffect(() => {
@@ -25,24 +27,36 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   }, [sidebarCollapsed]);
 
   const navigation = [
-    { id: 'dashboard', label: 'Executive Dashboard', icon: Home, route: '/command/dashboard' },
-    { id: 'detention', label: 'Detention Operations', icon: Building2, route: '/jail/dashboard' },
-    { id: 'patrol', label: 'Patrol Operations', icon: Radio, route: '/patrol/cad' },
-    { id: 'investigations', label: 'Criminal Investigations', icon: Target, route: '/investigations/cases' },
-    { id: 'personnel', label: 'Personnel Overview', icon: Users, route: '/command/personnel' },
-    { id: 'org-chart', label: 'Org Chart', icon: LayoutDashboard, route: '/command/orgchart' },
-    { id: 'approvals', label: 'Approvals', icon: CheckCircle, badge: '8', route: '/command/approvals' },
-    { id: 'budget', label: 'Budget & Resources', icon: DollarSign, route: '/command/budget' },
-    { id: 'reports', label: 'Reports & Analytics', icon: TrendingUp, route: '/command/reports' },
+    { id: 'command-overview', label: 'Command Overview', icon: Home, route: '/command/dashboard' },
+    { id: 'daily-brief', label: 'Daily Command Brief', icon: FileText, route: '/command/brief' },
     { id: 'alerts', label: 'Command Alerts', icon: AlertCircle, badge: '3', route: '/command/alerts' },
-    { id: 'settings', label: 'Settings', icon: Settings, route: '/command/settings' }
+    { id: 'approvals', label: 'Command Approvals', icon: CheckCircle, badge: '8', route: '/command/approvals' },
+    { id: 'risk-compliance', label: 'Risk & Compliance', icon: ShieldCheck, route: '/command/risk' },
+    { id: 'staffing', label: 'Staffing & Readiness', icon: Users, hasSubmenu: true },
+    { id: 'custody', label: 'Custody Operations', icon: Building2, route: '/jail/dashboard' },
+    { id: 'field-ops', label: 'Field Operations (Overview)', icon: Radio, route: '/patrol/cad' },
+    { id: 'investigative', label: 'Investigative Oversight', icon: Target, route: '/investigations/cases' },
+    { id: 'budget', label: 'Budget & Assets', icon: DollarSign, route: '/command/budget' },
+    { id: 'reports', label: 'Reports & Compliance', icon: TrendingUp, route: '/command/reports' }
+  ];
+
+  const staffingSubmenu = [
+    { id: 'staffing-overview', label: 'Staffing Overview', route: '/command/personnel' },
+    { id: 'org-chart', label: 'Org Chart', route: '/command/orgchart' }
   ];
 
   const handleNavigation = (item: typeof navigation[0]) => {
-    if (item.route) {
+    if (item.hasSubmenu) {
+      setStaffingExpanded(!staffingExpanded);
+    } else if (item.route) {
       navigate(item.route);
       setSidebarOpen(false);
     }
+  };
+
+  const handleSubmenuNavigation = (route: string) => {
+    navigate(route);
+    setSidebarOpen(false);
   };
 
   const handleLogout = () => {
@@ -71,27 +85,55 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           </button>
         </div>
 
-        <nav className="flex-1 overflow-y-auto p-4 space-y-2">
+        <nav className="flex-1 overflow-y-auto p-4 space-y-1">
           {navigation.map(item => {
             const Icon = item.icon;
             const isActive = window.location.pathname === item.route;
+            const isStaffingActive = item.id === 'staffing' &&
+              (window.location.pathname === '/command/personnel' || window.location.pathname === '/command/orgchart');
+
             return (
-              <button
-                key={item.id}
-                onClick={() => handleNavigation(item)}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'
-                } ${sidebarCollapsed ? 'justify-center' : ''}`}
-                title={sidebarCollapsed ? item.label : ''}
-              >
-                <Icon className="w-5 h-5 flex-shrink-0" />
-                {!sidebarCollapsed && (
-                  <>
-                    <span className="flex-1 text-left text-sm font-medium truncate">{item.label}</span>
-                    {item.badge && <span className={`px-2 py-0.5 rounded-full text-xs ${isActive ? 'bg-white/20' : 'bg-red-500 text-white'}`}>{item.badge}</span>}
-                  </>
+              <div key={item.id}>
+                <button
+                  onClick={() => handleNavigation(item)}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                    isActive || isStaffingActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'
+                  } ${sidebarCollapsed ? 'justify-center' : ''}`}
+                  title={sidebarCollapsed ? item.label : ''}
+                >
+                  <Icon className="w-5 h-5 flex-shrink-0" />
+                  {!sidebarCollapsed && (
+                    <>
+                      <span className="flex-1 text-left text-sm font-medium truncate">{item.label}</span>
+                      {item.badge && <span className={`px-2 py-0.5 rounded-full text-xs ${isActive ? 'bg-white/20' : 'bg-red-500 text-white'}`}>{item.badge}</span>}
+                      {item.hasSubmenu && (
+                        <ChevronDown className={`w-4 h-4 transition-transform ${staffingExpanded ? 'rotate-180' : ''}`} />
+                      )}
+                    </>
+                  )}
+                </button>
+
+                {/* Staffing Submenu */}
+                {item.hasSubmenu && staffingExpanded && !sidebarCollapsed && (
+                  <div className="ml-4 mt-1 space-y-1">
+                    {staffingSubmenu.map(sub => {
+                      const isSubActive = window.location.pathname === sub.route;
+                      return (
+                        <button
+                          key={sub.id}
+                          onClick={() => handleSubmenuNavigation(sub.route)}
+                          className={`w-full flex items-center gap-3 px-4 py-2 rounded-lg transition-all text-sm ${
+                            isSubActive ? 'bg-amber-500/20 text-amber-400' : 'text-slate-500 hover:bg-slate-800/30 hover:text-slate-300'
+                          }`}
+                        >
+                          <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
+                          <span>{sub.label}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
                 )}
-              </button>
+              </div>
             );
           })}
         </nav>
