@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import {
   Home, Users, CheckCircle, DollarSign, TrendingUp,
   AlertCircle, Shield, ChevronLeft, ChevronRight, Menu,
-  LogOut, Building2, Radio, Target, FileText, ShieldCheck, ChevronDown
+  LogOut, Building2, Radio, Target, FileText, ShieldCheck, ChevronDown,
+  Search, Bell, Settings, User
 } from 'lucide-react';
 
 interface DashboardLayoutProps {
@@ -19,11 +20,28 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   });
   const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false);
   const [staffingExpanded, setStaffingExpanded] = useState(false);
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
 
   // Persist sidebar collapsed state
   useEffect(() => {
     localStorage.setItem('sidebarCollapsed', sidebarCollapsed.toString());
   }, [sidebarCollapsed]);
+
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (!target.closest('.notifications-dropdown') && !target.closest('.notifications-trigger')) {
+        setNotificationsOpen(false);
+      }
+      if (!target.closest('.profile-dropdown') && !target.closest('.profile-trigger')) {
+        setProfileMenuOpen(false);
+      }
+    };
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, []);
 
   const navigation = [
     { id: 'command-overview', label: 'Command Overview', icon: Home, route: '/command/dashboard' },
@@ -42,6 +60,14 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const staffingSubmenu = [
     { id: 'staffing-overview', label: 'Staffing Overview', route: '/command/personnel' },
     { id: 'org-chart', label: 'Org Chart', route: '/command/orgchart' }
+  ];
+
+  const notifications = [
+    { id: 1, title: 'Critical Incident - Detention', message: 'Use of force incident in B-Pod. Deputy Johnson. Review required.', time: '15 min ago', urgent: true },
+    { id: 2, title: 'Facility Alert - HVAC Failure', message: 'H2-Pod temperature 84°F. Emergency repair needed.', time: '32 min ago', urgent: true },
+    { id: 3, title: 'Staffing Emergency - B-Shift', message: '3 deputies out. Below minimum staffing.', time: '1 hour ago', urgent: true },
+    { id: 4, title: 'Budget Approval Required', message: 'Q1 2025 Training Budget: $45,000', time: '2 hours ago', urgent: false },
+    { id: 5, title: 'Leave Request Submitted', message: 'Deputy Marcus Chen - Dec 15-22', time: '3 hours ago', urgent: false }
   ];
 
   const handleNavigation = (item: typeof navigation[0]) => {
@@ -204,15 +230,146 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0">
-        {/* Mobile Menu Button */}
-        <div className="lg:hidden p-4 border-b border-slate-800/50 backdrop-blur-xl bg-slate-900/30">
-          <button
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="p-2 hover:bg-slate-800/50 rounded-lg"
-          >
-            <Menu className="w-5 h-5 text-slate-400" />
-          </button>
-        </div>
+        {/* Top Command Bar */}
+        <header className="border-b border-slate-800/50 backdrop-blur-xl bg-slate-900/30 sticky top-0 z-30">
+          <div className="px-4 lg:px-6 py-4 flex items-center justify-between gap-4">
+            {/* Mobile menu button and Search */}
+            <div className="flex items-center gap-4 flex-1 min-w-0">
+              <button
+                onClick={() => setSidebarOpen(!sidebarOpen)}
+                className="lg:hidden p-2 hover:bg-slate-800/50 rounded-lg"
+              >
+                <Menu className="w-5 h-5 text-slate-400" />
+              </button>
+              <div className="flex-1 max-w-xl relative hidden sm:block">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
+                <input
+                  type="text"
+                  placeholder="Search anything..."
+                  className="w-full pl-12 pr-4 py-2 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
+                />
+              </div>
+            </div>
+
+            {/* Right side - Notifications and Profile */}
+            <div className="flex items-center gap-2 lg:gap-3">
+              {/* Notifications */}
+              <div className="relative">
+                <button
+                  onClick={() => setNotificationsOpen(!notificationsOpen)}
+                  className="notifications-trigger p-2 hover:bg-slate-800/50 rounded-lg relative"
+                >
+                  <Bell className="w-5 h-5 text-slate-400" />
+                  <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                </button>
+
+                {notificationsOpen && (
+                  <div className="notifications-dropdown absolute right-0 top-full mt-2 w-96 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-2xl z-50">
+                    <div className="p-4 border-b border-slate-700/50">
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-sm font-semibold text-white">Notifications</h3>
+                        <span className="px-2 py-0.5 bg-red-500/20 border border-red-500/30 text-red-400 text-xs rounded-full">
+                          {notifications.filter(n => n.urgent).length} urgent
+                        </span>
+                      </div>
+                    </div>
+                    <div className="max-h-96 overflow-y-auto">
+                      {notifications.map(notification => (
+                        <div
+                          key={notification.id}
+                          className={`p-4 border-b border-slate-800/30 hover:bg-slate-800/30 cursor-pointer transition-colors ${
+                            notification.urgent ? 'bg-amber-500/5' : ''
+                          }`}
+                        >
+                          <div className="flex items-start gap-3">
+                            <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${
+                              notification.urgent ? 'bg-amber-400' : 'bg-blue-400'
+                            }`}></div>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm font-medium text-white mb-1">{notification.title}</p>
+                              <p className="text-xs text-slate-400 mb-2">{notification.message}</p>
+                              <p className="text-xs text-slate-500">{notification.time}</p>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="p-3 border-t border-slate-700/50">
+                      <button className="w-full text-center text-sm text-amber-400 hover:text-amber-300 font-medium">
+                        View All Notifications
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div className="h-8 w-px bg-slate-700/50 hidden sm:block"></div>
+
+              {/* Profile Menu */}
+              <div className="relative">
+                <button
+                  onClick={() => setProfileMenuOpen(!profileMenuOpen)}
+                  className="profile-trigger flex items-center gap-2 hover:bg-slate-800/50 rounded-lg p-1.5 transition-colors"
+                >
+                  <div className="w-8 h-8 bg-gradient-to-br from-amber-500 to-amber-600 rounded-full flex items-center justify-center">
+                    <span className="text-white text-sm font-bold">ST</span>
+                  </div>
+                  <div className="hidden sm:block text-left">
+                    <p className="text-sm font-medium text-white">Sheriff Thompson</p>
+                    <p className="text-xs text-slate-400">Administrator</p>
+                  </div>
+                  <ChevronDown className="w-4 h-4 text-slate-400 hidden sm:block" />
+                </button>
+
+                {profileMenuOpen && (
+                  <div className="profile-dropdown absolute right-0 top-full mt-2 w-56 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-2xl z-50">
+                    <div className="p-3 border-b border-slate-700/50">
+                      <p className="text-sm font-medium text-white">Sheriff Thompson</p>
+                      <p className="text-xs text-slate-400">sheriff.thompson@gwinnettcounty.com</p>
+                      <span className="inline-block mt-2 px-2 py-0.5 bg-amber-500/20 border border-amber-500/30 text-amber-400 text-xs rounded-full">
+                        Administrator
+                      </span>
+                    </div>
+                    <div className="p-2">
+                      <button
+                        onClick={() => {
+                          setProfileMenuOpen(false);
+                        }}
+                        className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800/50 hover:text-white transition-colors text-sm"
+                      >
+                        <User className="w-4 h-4" />
+                        <span>My Profile</span>
+                      </button>
+                      <button
+                        onClick={() => {
+                          setProfileMenuOpen(false);
+                          navigate('/command/settings');
+                        }}
+                        className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800/50 hover:text-white transition-colors text-sm"
+                      >
+                        <Settings className="w-4 h-4" />
+                        <span>Settings</span>
+                        <span className="ml-auto px-1.5 py-0.5 bg-slate-700/50 text-slate-400 text-xs rounded">Admin</span>
+                      </button>
+                    </div>
+                    <div className="p-2 border-t border-slate-700/50">
+                      <button
+                        onClick={() => {
+                          setProfileMenuOpen(false);
+                          setLogoutConfirmOpen(true);
+                        }}
+                        className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800/50 hover:text-red-400 transition-colors text-sm"
+                      >
+                        <LogOut className="w-4 h-4" />
+                        <span>Sign Out</span>
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </header>
 
         {/* Page Content */}
         <main className="flex-1 overflow-y-auto">
