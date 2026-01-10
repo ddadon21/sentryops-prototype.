@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react';
-import type { ReactNode } from 'react';
-import { useNavigate, Outlet } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Home, Users, CheckCircle, DollarSign, TrendingUp,
   AlertCircle, Shield, ChevronLeft, ChevronRight, Menu,
@@ -9,7 +8,7 @@ import {
 } from 'lucide-react';
 
 interface DashboardLayoutProps {
-  children?: ReactNode;
+  children: React.ReactNode;
 }
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
@@ -374,7 +373,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 
         {/* Page Content */}
         <main className="flex-1 overflow-y-auto">
-          {children || <Outlet />}
+          {children}
         </main>
       </div>
     </div>

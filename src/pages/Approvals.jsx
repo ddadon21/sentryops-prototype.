@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { FileText, TrendingUp, AlertCircle, MessageCircle, ChevronRight, DollarSign, CheckCircle, ThumbsUp, XCircle, Sparkles, X, Send, Calendar, Clock, Filter, ArrowUpCircle, Download, Eye, ChevronDown, ChevronUp, Info, FileCheck, TrendingDown, CheckSquare, Square } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
+import DashboardLayout from '../layouts/DashboardLayout';
+
 export default function Approvals() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('pending');
@@ -376,7 +378,7 @@ export default function Approvals() {
   };
 
   return (
-    <>
+    <DashboardLayout>
       <div className="p-4 lg:p-6">
         <div className="max-w-7xl mx-auto">
             <div className="mb-6">
@@ -1457,6 +1459,6 @@ export default function Approvals() {
           </div>
         </div>
       )}
-    </>
+    </DashboardLayout>
   );
 }

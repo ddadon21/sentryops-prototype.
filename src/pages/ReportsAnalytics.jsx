@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { FileText, TrendingUp, AlertCircle, MessageCircle, DollarSign, CheckCircle, Sparkles, X, Send, Download, Calendar, Filter, BarChart3, PieChart, LineChart, Activity, Clock, ArrowUpRight, ArrowDownRight, Eye, RefreshCw, FileSpreadsheet, Mail, Share2, Plus, Sliders, BookOpen, PlayCircle, PauseCircle, Printer, FileDown, ChevronDown, ChevronUp, TrendingDown, Zap, Info, Star, AlertTriangle, CheckCircle2, Maximize2, Minimize2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
+import DashboardLayout from '../layouts/DashboardLayout';
+
 export default function ReportsAnalytics() {
   const navigate = useNavigate();
   const [activePage, setActivePage] = useState('reports');
@@ -324,7 +326,7 @@ export default function ReportsAnalytics() {
     : availableReports.filter(r => r.category === filterCategory);
 
   return (
-    <>
+    <DashboardLayout>
       <div className="p-4 lg:p-6">
         <div className="max-w-7xl mx-auto">
             <div className="flex items-center justify-between mb-6">
@@ -1360,6 +1362,6 @@ export default function ReportsAnalytics() {
           </div>
         </div>
       )}
-    </>
+    </DashboardLayout>
   );
 }

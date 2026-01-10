@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MainLayout from './layouts/MainLayout';
-import DashboardLayout from './layouts/DashboardLayout';
 
 // Original pages
 import About from './pages/About';
@@ -77,19 +76,19 @@ function App() {
         {/* Auth pages (standalone, no layout wrapper) */}
         <Route path="/signin" element={<SignIn />} />
 
-        {/* Command Module with DashboardLayout */}
-        <Route path="/command" element={<DashboardLayout />}>
-          <Route path="dashboard" element={<CommandDashboard />} />
-          <Route path="brief" element={<DailyCommandBrief />} />
-          <Route path="risk" element={<RiskCompliance />} />
-          <Route path="personnel" element={<PersonnelOverview />} />
-          <Route path="orgchart" element={<OrgChart />} />
-          <Route path="approvals" element={<Approvals />} />
-          <Route path="budget" element={<BudgetResources />} />
-          <Route path="reports" element={<ReportsAnalytics />} />
-          <Route path="alerts" element={<CommandAlerts />} />
-          <Route path="settings" element={<Settings />} />
-        </Route>
+        {/* Command Dashboard (standalone, no layout wrapper) */}
+        <Route path="/command/dashboard" element={<CommandDashboard />} />
+
+        {/* Command Module Pages (standalone, no layout wrapper) */}
+        <Route path="/command/brief" element={<DailyCommandBrief />} />
+        <Route path="/command/risk" element={<RiskCompliance />} />
+        <Route path="/command/personnel" element={<PersonnelOverview />} />
+        <Route path="/command/orgchart" element={<OrgChart />} />
+        <Route path="/command/approvals" element={<Approvals />} />
+        <Route path="/command/budget" element={<BudgetResources />} />
+        <Route path="/command/reports" element={<ReportsAnalytics />} />
+        <Route path="/command/alerts" element={<CommandAlerts />} />
+        <Route path="/command/settings" element={<Settings />} />
 
         {/* Jail Operations Module (standalone, no layout wrapper) */}
         <Route path="/jail/dashboard" element={<JailDashboard />} />

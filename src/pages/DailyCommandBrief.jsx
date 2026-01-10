@@ -1,6 +1,8 @@
 import React from 'react';
 import { FileText, Clock, AlertCircle, CheckCircle, Users, Calendar, TrendingUp, Shield } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import DashboardLayout from '../layouts/DashboardLayout';
+
 export default function DailyCommandBrief() {
   const navigate = useNavigate();
 
@@ -12,6 +14,7 @@ export default function DailyCommandBrief() {
   });
 
   return (
+    <DashboardLayout>
       <div className="p-6 lg:p-8 space-y-6">
         {/* Header */}
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
@@ -95,5 +98,6 @@ export default function DailyCommandBrief() {
           </div>
         </div>
       </div>
+    </DashboardLayout>
   );
 }

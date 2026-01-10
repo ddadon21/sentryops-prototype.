@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Users, FileText, TrendingUp, AlertCircle, MessageCircle, Search, ChevronRight, DollarSign, CheckCircle, Sparkles, X, Send, Clock, MapPin, AlertTriangle, Info, CheckCircle2, Zap, Calendar, User, FileWarning, Building2, Download, ChevronDown, Eye, UserPlus, Link2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
+import DashboardLayout from '../layouts/DashboardLayout';
+
 export default function CommandAlerts() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('active');
@@ -413,7 +415,7 @@ export default function CommandAlerts() {
   };
 
   return (
-    <>
+    <DashboardLayout>
       <div className="p-4 lg:p-6">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center justify-between mb-6">
@@ -1134,6 +1136,6 @@ export default function CommandAlerts() {
           </div>
         </div>
       )}
-    </>
+    </DashboardLayout>
   );
 }

@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { TrendingUp, AlertCircle, MessageCircle, ChevronRight, DollarSign, CheckCircle, Clock, ThumbsUp, XCircle, Sparkles, X, Send, Building2, Download, Zap, TrendingDown, ArrowRight, Eye, FileCheck, AlertTriangle, Calendar, User, Filter, ChevronDown } from 'lucide-react';
+import { Home, Users, FileText, Award, LayoutDashboard, TrendingUp, AlertCircle, Settings, Bell, MessageCircle, Search, ChevronRight, DollarSign, CheckCircle, Clock, Shield, ThumbsUp, XCircle, Sparkles, X, Send, Menu, ChevronLeft, LogOut, Building2, Radio, Target, Download, Zap, TrendingDown, ArrowRight, Eye, FileCheck, AlertTriangle, Calendar, User, Filter, ChevronDown } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
+import DashboardLayout from '../layouts/DashboardLayout';
+
 export default function CommandDashboard() {
   const navigate = useNavigate();
+  const [activePage, setActivePage] = useState('dashboard');
   const [chatOpen, setChatOpen] = useState(false);
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [selectedApproval, setSelectedApproval] = useState(null);
   const [approvalAction, setApprovalAction] = useState(null);
   const [actionComment, setActionComment] = useState('');
@@ -168,6 +172,19 @@ export default function CommandDashboard() {
 
   const urgentCount = dashboardApprovals.filter(a => a.urgent).length;
 
+  const notifications = [
+    { id: 1, title: 'Critical Incident - Detention', message: 'Use of force incident in B-Pod. Deputy Johnson. Inmate restrained. Medical cleared. Review required.', time: '15 min ago', urgent: true },
+    { id: 2, title: 'Facility Alert - H2-Pod HVAC Failure', message: 'Temperature 84°F in federal detainee housing. Emergency repair approval needed. ACA compliance risk.', time: '32 min ago', urgent: true },
+    { id: 3, title: 'Staffing Emergency - B-Shift Patrol', message: '3 deputies out (FMLA/WC). Below minimum staffing. Overtime authorization requested.', time: '1 hour ago', urgent: true },
+    { id: 4, title: 'Vehicle Totaled - Unit 247', message: 'Pursuit resulted in total loss. No injuries. Insurance claim filed. Replacement approval needed.', time: '2 hours ago', urgent: true },
+    { id: 5, title: 'Inmate Medical Transport', message: 'Inmate Anderson transported to Gwinnett Medical - chest pain. Deputy Martinez on hospital guard.', time: '3 hours ago', urgent: false },
+    { id: 6, title: 'Jail Capacity Warning', message: 'Current population 842/920 (91.5%). H2-Pod over capacity using emergency beds.', time: '4 hours ago', urgent: false },
+    { id: 7, title: 'Certifications Expiring - Detention', message: '12 corrections officers require CPR/First Aid renewal within 30 days. Training scheduled.', time: '5 hours ago', urgent: false },
+    { id: 8, title: 'Federal Audit Notification', message: 'U.S. Marshals Service facility inspection scheduled Dec 12-14. H-Pod federal housing review.', time: '6 hours ago', urgent: false },
+    { id: 9, title: 'Contraband Discovered - D-Pod', message: 'Cell phone found during routine search. Inmate in administrative segregation. Investigation ongoing.', time: '7 hours ago', urgent: false },
+    { id: 10, title: 'Court Transport Schedule', message: 'Tomorrow: 31 inmates scheduled for transport across 5 court sessions. All deputies assigned.', time: '8 hours ago', urgent: false }
+  ];
+
   const openApprovalModal = (approval, action, e) => {
     e.stopPropagation();
     setSelectedApproval(approval);
@@ -203,8 +220,70 @@ export default function CommandDashboard() {
   };
 
   return (
-    <>
-      <div className="p-4 lg:p-6">
+    <DashboardLayout>
+      <header className="border-b border-slate-800/50 backdrop-blur-xl bg-slate-900/30">
+        <div className="px-4 lg:px-6 py-4 flex items-center justify-between gap-4">
+          <div className="flex items-center gap-4 flex-1 min-w-0">
+            <div className="flex-1 max-w-xl relative">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
+              <input type="text" placeholder="Search anything..." className="w-full pl-12 pr-4 py-2 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-amber-500/50" />
+            </div>
+          </div>
+          <div className="flex items-center gap-2 lg:gap-3">
+            <div className="relative">
+              <button
+                onClick={() => setNotificationsOpen(!notificationsOpen)}
+                className="p-2 hover:bg-slate-800/50 rounded-lg relative"
+              >
+                <Bell className="w-5 h-5 text-slate-400" />
+                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+              </button>
+
+              {notificationsOpen && (
+                <div className="absolute right-0 top-full mt-2 w-96 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-2xl z-50">
+                  <div className="p-4 border-b border-slate-700/50">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-sm font-semibold text-white">Notifications</h3>
+                      <span className="px-2 py-0.5 bg-red-500/20 border border-red-500/30 text-red-400 text-xs rounded-full">{notifications.filter(n => n.urgent).length} urgent</span>
+                    </div>
+                  </div>
+                  <div className="max-h-96 overflow-y-auto">
+                    {notifications.map(notification => (
+                      <div key={notification.id} className={`p-4 border-b border-slate-800/30 hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
+                        <div className="flex items-start gap-3">
+                          <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-amber-400' : 'bg-blue-400'}`}></div>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-medium text-white mb-1">{notification.title}</p>
+                            <p className="text-xs text-slate-400 mb-2">{notification.message}</p>
+                            <p className="text-xs text-slate-500">{notification.time}</p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="p-3 border-t border-slate-700/50">
+                    <button className="w-full text-center text-sm text-amber-400 hover:text-amber-300 font-medium">View All Notifications</button>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="h-8 w-px bg-slate-700/50"></div>
+
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-gradient-to-br from-amber-500 to-amber-600 rounded-full flex items-center justify-center">
+                <span className="text-white text-sm font-bold">ST</span>
+              </div>
+              <div className="hidden sm:block">
+                <p className="text-sm font-medium text-white">Sheriff Thompson</p>
+                <p className="text-xs text-slate-400">Administrator</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main className="flex-1 overflow-y-auto p-4 lg:p-6">
         <div className="mb-6 flex items-center justify-between">
           <div>
             <h2 className="text-2xl lg:text-3xl font-bold text-white mb-2">Good morning, Sheriff Thompson</h2>
@@ -1004,7 +1083,7 @@ export default function CommandDashboard() {
             </div>
           </div>
         </div>
-      </div>
+      </main>
 
       {/* Approval/Deny Modal */}
       {selectedApproval && (
@@ -1132,6 +1211,6 @@ export default function CommandDashboard() {
           </div>
         </div>
       )}
-    </>
+    </DashboardLayout>
   );
 }

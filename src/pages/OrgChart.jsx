@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Search, Filter, Download, ZoomIn, ZoomOut, ChevronRight, X, Users, Award, Mail, Phone, Shield, Home, DollarSign, AlertCircle, TrendingUp, CheckCircle, MessageCircle, Sparkles, Send, Maximize2, Minimize2, Move, ChevronDown, ChevronUp, UserPlus, Maximize, MoreVertical, MessageSquare, UserCog, FileText, Calendar, MapPin, Star } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
+import DashboardLayout from '../layouts/DashboardLayout';
+
 export default function OrgChart() {
   const navigate = useNavigate();
   const [selectedNode, setSelectedNode] = useState(null);
@@ -1053,7 +1055,7 @@ export default function OrgChart() {
   const ranks = ['all', 'Sheriff', 'Chief Deputy', 'Deputy Chief', 'Major', 'Captain', 'Lieutenant', 'Sergeant', 'Corporal', 'Deputy'];
 
   return (
-    <>
+    <DashboardLayout>
       <div className="p-4 lg:p-6 h-full">
         <div className="h-full flex flex-col">
             <div className="mb-4 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
@@ -1544,6 +1546,6 @@ export default function OrgChart() {
           </div>
         </div>
       )}
-    </>
+    </DashboardLayout>
   );
 }

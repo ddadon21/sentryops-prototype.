@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { FileText, TrendingUp, AlertCircle, MessageCircle, DollarSign, CheckCircle, Sparkles, X, Send, Download, ArrowUpRight, ArrowDownRight, TrendingDown, Calendar, Filter, Eye, PieChart, BarChart3, LineChart, Package, Truck, Wrench, ChevronDown, ChevronUp, Info, ArrowUpCircle, RefreshCw, FileSpreadsheet, Mail, Zap, Clock, Users, Building2, Target } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
+import DashboardLayout from '../layouts/DashboardLayout';
+
 export default function BudgetResources() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('overview'); // overview, divisions, resources, forecast
@@ -193,7 +195,7 @@ export default function BudgetResources() {
   };
 
   return (
-    <>
+    <DashboardLayout>
       <div className="p-4 lg:p-6">
         <div className="max-w-7xl mx-auto">
             <div className="flex items-center justify-between mb-6">
@@ -1375,6 +1377,6 @@ export default function BudgetResources() {
           </div>
         </div>
       )}
-    </>
+    </DashboardLayout>
   );
 }
