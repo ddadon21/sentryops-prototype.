@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Home, Users, FileText, LayoutDashboard, TrendingUp, AlertCircle, Settings, Bell, MessageCircle, Search, ChevronRight, DollarSign, CheckCircle, Shield, Sparkles, X, Send, Menu, ChevronLeft, LogOut, User, Lock, Palette, Globe, Clock, Smartphone, Mail, Monitor, Moon, Sun, Save, Camera, Building2, Radio, Target, Database, Wifi, Link, Key, HardDrive, Cloud, Zap, Server, Activity, RefreshCw, Download, Upload, Code, ExternalLink, Copy, Eye, EyeOff, AlertTriangle, Info, Cpu, HelpCircle, BarChart3, Package, Webhook, Terminal, FileJson, Settings as SettingsIcon, ChevronDown, ChevronUp, CheckCircle2, XCircle, Trash2, Plus, Edit3 } from 'lucide-react';
+import { Home, Users, FileText, LayoutDashboard, TrendingUp, AlertCircle, Settings, Bell, MessageCircle, Search, ChevronRight, DollarSign, CheckCircle, Shield, ShieldCheck, Sparkles, X, Send, Menu, ChevronLeft, LogOut, User, Lock, Palette, Globe, Clock, Smartphone, Mail, Monitor, Moon, Sun, Save, Camera, Building2, Radio, Target, Database, Wifi, Link, Key, HardDrive, Cloud, Zap, Server, Activity, RefreshCw, Download, Upload, Code, ExternalLink, Copy, Eye, EyeOff, AlertTriangle, Info, Cpu, HelpCircle, BarChart3, Package, Webhook, Terminal, FileJson, Settings as SettingsIcon, ChevronDown, ChevronUp, CheckCircle2, XCircle, Trash2, Plus, Edit3 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 
@@ -8,7 +8,10 @@ export default function SettingsPage() {
   const [activePage, setActivePage] = useState('settings');
   const [chatOpen, setChatOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(() => {
+    const saved = localStorage.getItem('sidebarCollapsed');
+    return saved === 'true';
+  });
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('profile');
@@ -16,6 +19,8 @@ export default function SettingsPage() {
   const [showApiKey, setShowApiKey] = useState({});
   const [testingConnection, setTestingConnection] = useState(null);
   const [expandedIntegration, setExpandedIntegration] = useState(null);
+  const [staffingExpanded, setStaffingExpanded] = useState(false);
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
 
   // Get user role from localStorage (default to 'command' for demo)
   const [userRole, setUserRole] = useState('command');
@@ -25,24 +30,51 @@ export default function SettingsPage() {
     setUserRole(storedRole);
   }, []);
 
+  // Persist sidebar collapsed state
+  useEffect(() => {
+    localStorage.setItem('sidebarCollapsed', sidebarCollapsed.toString());
+  }, [sidebarCollapsed]);
+
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      const target = event.target;
+      if (!target.closest('.notifications-dropdown') && !target.closest('.notifications-trigger')) {
+        setNotificationsOpen(false);
+      }
+      if (!target.closest('.profile-dropdown') && !target.closest('.profile-trigger')) {
+        setProfileMenuOpen(false);
+      }
+    };
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, []);
+
   const navigation = [
-    { id: 'dashboard', label: 'Executive Dashboard', icon: Home, route: '/command/dashboard' },
-    { id: 'detention', label: 'Detention Operations', icon: Building2, route: '/jail/dashboard' },
-    { id: 'patrol', label: 'Patrol Operations', icon: Radio, route: '/patrol/cad' },
-    { id: 'investigations', label: 'Criminal Investigations', icon: Target, route: '/investigations/cases' },
-    { id: 'personnel', label: 'Personnel Overview', icon: Users, route: '/command/personnel' },
-    { id: 'org-chart', label: 'Org Chart', icon: LayoutDashboard, route: '/command/orgchart' },
-    { id: 'approvals', label: 'Approvals', icon: CheckCircle, badge: '8', route: '/command/approvals' },
-    { id: 'budget', label: 'Budget & Resources', icon: DollarSign, route: '/command/budget' },
-    { id: 'reports', label: 'Reports & Analytics', icon: TrendingUp, route: '/command/reports' },
+    { id: 'command-overview', label: 'Command Overview', icon: Home, route: '/command/dashboard' },
+    { id: 'daily-brief', label: 'Daily Command Brief', icon: FileText, route: '/command/brief' },
     { id: 'alerts', label: 'Command Alerts', icon: AlertCircle, badge: '3', route: '/command/alerts' },
-    { id: 'settings', label: 'Settings', icon: Settings, route: '/command/settings' }
+    { id: 'approvals', label: 'Command Approvals', icon: CheckCircle, badge: '8', route: '/command/approvals' },
+    { id: 'risk-compliance', label: 'Risk & Compliance', icon: ShieldCheck, route: '/command/risk' },
+    { id: 'staffing', label: 'Staffing & Readiness', icon: Users, hasSubmenu: true },
+    { id: 'custody', label: 'Custody Operations', icon: Building2, route: '/jail/dashboard' },
+    { id: 'field-ops', label: 'Field Operations (Overview)', icon: Radio, route: '/patrol/cad' },
+    { id: 'investigative', label: 'Investigative Oversight', icon: Target, route: '/investigations/cases' },
+    { id: 'budget', label: 'Budget & Assets', icon: DollarSign, route: '/command/budget' },
+    { id: 'reports', label: 'Reports & Compliance', icon: TrendingUp, route: '/command/reports' }
+  ];
+
+  const staffingSubmenu = [
+    { id: 'staffing-overview', label: 'Staffing Overview', route: '/command/personnel' },
+    { id: 'org-chart', label: 'Org Chart', route: '/command/orgchart' }
   ];
 
   const notifications = [
-    { id: 1, title: 'Profile Updated', message: 'Your profile information was saved', time: '15 min ago', urgent: false },
-    { id: 2, title: 'Integration Synced', message: 'Versaterm CAD sync completed successfully', time: '1 hour ago', urgent: false },
-    { id: 3, title: 'API Key Rotated', message: 'Axon Evidence.com API key updated', time: '2 hours ago', urgent: false }
+    { id: 1, title: 'Critical Incident - Detention', message: 'Use of force incident in B-Pod. Deputy Johnson. Review required.', time: '15 min ago', urgent: true },
+    { id: 2, title: 'Facility Alert - HVAC Failure', message: 'H2-Pod temperature 84°F. Emergency repair needed.', time: '32 min ago', urgent: true },
+    { id: 3, title: 'Staffing Emergency - B-Shift', message: '3 deputies out. Below minimum staffing.', time: '1 hour ago', urgent: true },
+    { id: 4, title: 'Budget Approval Required', message: 'Q1 2025 Training Budget: $45,000', time: '2 hours ago', urgent: false },
+    { id: 5, title: 'Leave Request Submitted', message: 'Deputy Marcus Chen - Dec 15-22', time: '3 hours ago', urgent: false }
   ];
 
   const [profileSettings, setProfileSettings] = useState({
@@ -439,13 +471,22 @@ export default function SettingsPage() {
   ]);
 
   const handleNavigation = (item) => {
-    navigate(item.route);
+    if (item.hasSubmenu) {
+      setStaffingExpanded(!staffingExpanded);
+    } else if (item.route) {
+      navigate(item.route);
+      setSidebarOpen(false);
+    }
+  };
+
+  const handleSubmenuNavigation = (route) => {
+    navigate(route);
     setSidebarOpen(false);
   };
 
   const handleLogout = () => {
     localStorage.removeItem('userRole');
-    navigate(createPageUrl('SignIn'));
+    navigate('/signin');
   };
 
   const handleSaveSettings = () => {
@@ -556,27 +597,55 @@ export default function SettingsPage() {
           </button>
         </div>
 
-        <nav className="flex-1 overflow-y-auto p-4 space-y-2">
+        <nav className="flex-1 overflow-y-auto p-4 space-y-1">
           {navigation.map(item => {
             const Icon = item.icon;
             const isActive = window.location.pathname === item.route;
+            const isStaffingActive = item.id === 'staffing' &&
+              (window.location.pathname === '/command/personnel' || window.location.pathname === '/command/orgchart');
+
             return (
-              <button
-                key={item.id}
-                onClick={() => handleNavigation(item)}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'
-                } ${sidebarCollapsed ? 'justify-center' : ''}`}
-                title={sidebarCollapsed ? item.label : ''}
-              >
-                <Icon className="w-5 h-5 flex-shrink-0" />
-                {!sidebarCollapsed && (
-                  <>
-                    <span className="flex-1 text-left text-sm font-medium truncate">{item.label}</span>
-                    {item.badge && <span className={`px-2 py-0.5 rounded-full text-xs ${isActive ? 'bg-white/20' : 'bg-red-500 text-white'}`}>{item.badge}</span>}
-                  </>
+              <div key={item.id}>
+                <button
+                  onClick={() => handleNavigation(item)}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                    isActive || isStaffingActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'
+                  } ${sidebarCollapsed ? 'justify-center' : ''}`}
+                  title={sidebarCollapsed ? item.label : ''}
+                >
+                  <Icon className="w-5 h-5 flex-shrink-0" />
+                  {!sidebarCollapsed && (
+                    <>
+                      <span className="flex-1 text-left text-sm font-medium truncate">{item.label}</span>
+                      {item.badge && <span className={`px-2 py-0.5 rounded-full text-xs ${isActive ? 'bg-white/20' : 'bg-red-500 text-white'}`}>{item.badge}</span>}
+                      {item.hasSubmenu && (
+                        <ChevronDown className={`w-4 h-4 transition-transform ${staffingExpanded ? 'rotate-180' : ''}`} />
+                      )}
+                    </>
+                  )}
+                </button>
+
+                {/* Staffing Submenu */}
+                {item.hasSubmenu && staffingExpanded && !sidebarCollapsed && (
+                  <div className="ml-4 mt-1 space-y-1">
+                    {staffingSubmenu.map(sub => {
+                      const isSubActive = window.location.pathname === sub.route;
+                      return (
+                        <button
+                          key={sub.id}
+                          onClick={() => handleSubmenuNavigation(sub.route)}
+                          className={`w-full flex items-center gap-3 px-4 py-2 rounded-lg transition-all text-sm ${
+                            isSubActive ? 'bg-amber-500/20 text-amber-400' : 'text-slate-500 hover:bg-slate-800/30 hover:text-slate-300'
+                          }`}
+                        >
+                          <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
+                          <span>{sub.label}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
                 )}
-              </button>
+              </div>
             );
           })}
         </nav>
@@ -644,9 +713,12 @@ export default function SettingsPage() {
         </div>
       )}
 
+      {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="border-b border-slate-800/50 backdrop-blur-xl bg-slate-900/30">
+        {/* Top Command Bar */}
+        <header className="border-b border-slate-800/50 backdrop-blur-xl bg-slate-900/30 sticky top-0 z-30">
           <div className="px-4 lg:px-6 py-4 flex items-center justify-between gap-4">
+            {/* Mobile menu button and Search */}
             <div className="flex items-center gap-4 flex-1 min-w-0">
               <button
                 onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -654,37 +726,50 @@ export default function SettingsPage() {
               >
                 <Menu className="w-5 h-5 text-slate-400" />
               </button>
-              <div className="flex items-center gap-2 text-sm">
-                <button
-                  onClick={() => navigate(createPageUrl('CommandDashboard'))}
-                  className="text-slate-400 hover:text-white transition-colors"
-                >
-                  Dashboard
-                </button>
-                <ChevronRight className="w-4 h-4 text-slate-600" />
-                <span className="text-white">Settings</span>
+              <div className="flex-1 max-w-xl relative hidden sm:block">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
+                <input
+                  type="text"
+                  placeholder="Search anything..."
+                  className="w-full pl-12 pr-4 py-2 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
+                />
               </div>
             </div>
+
+            {/* Right side - Notifications and Profile */}
             <div className="flex items-center gap-2 lg:gap-3">
+              {/* Notifications */}
               <div className="relative">
                 <button
                   onClick={() => setNotificationsOpen(!notificationsOpen)}
-                  className="p-2 hover:bg-slate-800/50 rounded-lg relative"
+                  className="notifications-trigger p-2 hover:bg-slate-800/50 rounded-lg relative"
                 >
                   <Bell className="w-5 h-5 text-slate-400" />
                   <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                 </button>
 
                 {notificationsOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-96 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-2xl z-50">
+                  <div className="notifications-dropdown absolute right-0 top-full mt-2 w-96 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-2xl z-50">
                     <div className="p-4 border-b border-slate-700/50">
-                      <h3 className="text-sm font-semibold text-white">Notifications</h3>
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-sm font-semibold text-white">Notifications</h3>
+                        <span className="px-2 py-0.5 bg-red-500/20 border border-red-500/30 text-red-400 text-xs rounded-full">
+                          {notifications.filter(n => n.urgent).length} urgent
+                        </span>
+                      </div>
                     </div>
                     <div className="max-h-96 overflow-y-auto">
                       {notifications.map(notification => (
-                        <div key={notification.id} className="p-4 border-b border-slate-800/30 hover:bg-slate-800/30 cursor-pointer transition-colors">
+                        <div
+                          key={notification.id}
+                          className={`p-4 border-b border-slate-800/30 hover:bg-slate-800/30 cursor-pointer transition-colors ${
+                            notification.urgent ? 'bg-amber-500/5' : ''
+                          }`}
+                        >
                           <div className="flex items-start gap-3">
-                            <div className="w-2 h-2 rounded-full mt-2 flex-shrink-0 bg-blue-400"></div>
+                            <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${
+                              notification.urgent ? 'bg-amber-400' : 'bg-blue-400'
+                            }`}></div>
                             <div className="flex-1 min-w-0">
                               <p className="text-sm font-medium text-white mb-1">{notification.title}</p>
                               <p className="text-xs text-slate-400 mb-2">{notification.message}</p>
@@ -695,22 +780,77 @@ export default function SettingsPage() {
                       ))}
                     </div>
                     <div className="p-3 border-t border-slate-700/50">
-                      <button className="w-full text-center text-sm text-amber-400 hover:text-amber-300 font-medium">View All</button>
+                      <button className="w-full text-center text-sm text-amber-400 hover:text-amber-300 font-medium">
+                        View All Notifications
+                      </button>
                     </div>
                   </div>
                 )}
               </div>
 
-              <div className="h-8 w-px bg-slate-700/50"></div>
+              <div className="h-8 w-px bg-slate-700/50 hidden sm:block"></div>
 
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-gradient-to-br from-amber-500 to-amber-600 rounded-full flex items-center justify-center">
-                  <span className="text-white text-sm font-bold">ST</span>
-                </div>
-                <div className="hidden sm:block">
-                  <p className="text-sm font-medium text-white">{profileSettings.fullName}</p>
-                  <p className="text-xs text-slate-400">{profileSettings.department}</p>
-                </div>
+              {/* Profile Menu */}
+              <div className="relative">
+                <button
+                  onClick={() => setProfileMenuOpen(!profileMenuOpen)}
+                  className="profile-trigger flex items-center gap-2 hover:bg-slate-800/50 rounded-lg p-1.5 transition-colors"
+                >
+                  <div className="w-8 h-8 bg-gradient-to-br from-amber-500 to-amber-600 rounded-full flex items-center justify-center">
+                    <span className="text-white text-sm font-bold">ST</span>
+                  </div>
+                  <div className="hidden sm:block text-left">
+                    <p className="text-sm font-medium text-white">{profileSettings.fullName}</p>
+                    <p className="text-xs text-slate-400">Administrator</p>
+                  </div>
+                  <ChevronDown className="w-4 h-4 text-slate-400 hidden sm:block" />
+                </button>
+
+                {profileMenuOpen && (
+                  <div className="profile-dropdown absolute right-0 top-full mt-2 w-56 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-2xl z-50">
+                    <div className="p-3 border-b border-slate-700/50">
+                      <p className="text-sm font-medium text-white">{profileSettings.fullName}</p>
+                      <p className="text-xs text-slate-400">{profileSettings.email}</p>
+                      <span className="inline-block mt-2 px-2 py-0.5 bg-amber-500/20 border border-amber-500/30 text-amber-400 text-xs rounded-full">
+                        Administrator
+                      </span>
+                    </div>
+                    <div className="p-2">
+                      <button
+                        onClick={() => {
+                          setProfileMenuOpen(false);
+                          setActiveSection('profile');
+                        }}
+                        className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800/50 hover:text-white transition-colors text-sm"
+                      >
+                        <User className="w-4 h-4" />
+                        <span>My Profile</span>
+                      </button>
+                      <button
+                        onClick={() => {
+                          setProfileMenuOpen(false);
+                        }}
+                        className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800/50 hover:text-white transition-colors text-sm"
+                      >
+                        <Settings className="w-4 h-4" />
+                        <span>Settings</span>
+                        <span className="ml-auto px-1.5 py-0.5 bg-slate-700/50 text-slate-400 text-xs rounded">Admin</span>
+                      </button>
+                    </div>
+                    <div className="p-2 border-t border-slate-700/50">
+                      <button
+                        onClick={() => {
+                          setProfileMenuOpen(false);
+                          setLogoutConfirmOpen(true);
+                        }}
+                        className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800/50 hover:text-red-400 transition-colors text-sm"
+                      >
+                        <LogOut className="w-4 h-4" />
+                        <span>Sign Out</span>
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
