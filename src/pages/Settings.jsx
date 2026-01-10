@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Users, FileText, TrendingUp, AlertCircle, Settings, MessageCircle, Search, ChevronRight, DollarSign, CheckCircle, Shield, Sparkles, X, Send, User, Lock, Palette, Globe, Clock, Smartphone, Mail, Monitor, Moon, Sun, Save, Camera, Database, Wifi, Link, Key, HardDrive, Cloud, Zap, Server, Activity, RefreshCw, Download, Upload, Code, ExternalLink, Copy, Eye, EyeOff, AlertTriangle, Info, Cpu, HelpCircle, BarChart3, Package, Webhook, Terminal, FileJson, Settings as SettingsIcon, ChevronDown, ChevronUp, CheckCircle2, XCircle, Trash2, Plus, Edit3 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
-import DashboardLayout from '../layouts/DashboardLayout';
 
 export default function SettingsPage() {
   const navigate = useNavigate();
@@ -501,7 +500,7 @@ export default function SettingsPage() {
   const settingsTabs = getSettingsTabs();
 
   return (
-    <DashboardLayout>
+    <>
       <div className="p-4 lg:p-6">
         <div className="max-w-[1600px] mx-auto">
             <div className="mb-6">
@@ -1993,6 +1992,6 @@ export default function SettingsPage() {
           </div>
         </div>
       )}
-    </DashboardLayout>
+    </>
   );
 }

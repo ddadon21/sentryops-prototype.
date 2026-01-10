@@ -1,13 +1,10 @@
 import React from 'react';
 import { ShieldCheck, AlertTriangle, FileCheck, Scale, ClipboardCheck, TrendingUp, Calendar, CheckCircle2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import DashboardLayout from '../layouts/DashboardLayout';
-
 export default function RiskCompliance() {
   const navigate = useNavigate();
 
   return (
-    <DashboardLayout>
       <div className="p-6 lg:p-8 space-y-6">
         {/* Header */}
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
@@ -113,6 +110,5 @@ export default function RiskCompliance() {
           </div>
         </div>
       </div>
-    </DashboardLayout>
   );
 }

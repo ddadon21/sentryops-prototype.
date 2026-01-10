@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Search, Filter, Download, Mail, Phone, MapPin, AlertCircle, CheckCircle, Clock, ChevronRight, Bell, Users, Award, Calendar, TrendingUp, TrendingDown, MoreVertical, Eye, X, MessageCircle, Sparkles, Send, Plus, FileText, UserPlus, BarChart3, Link2, UserCircle, Shield, Activity, Star, Briefcase } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
-import DashboardLayout from '../layouts/DashboardLayout';
 
 export default function PersonnelOverview() {
   const navigate = useNavigate();
@@ -322,7 +321,6 @@ export default function PersonnelOverview() {
   };
 
   return (
-    <DashboardLayout>
       <div className="flex flex-col h-full">
       {/* Header */}
         <header className="border-b border-slate-800/50 backdrop-blur-xl bg-slate-900/30 sticky top-0 z-30">
@@ -1844,6 +1842,5 @@ export default function PersonnelOverview() {
         </div>
       )}
       </div>
-    </DashboardLayout>
   );
 }

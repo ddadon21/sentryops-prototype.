@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { TrendingUp, AlertCircle, MessageCircle, ChevronRight, DollarSign, CheckCircle, Clock, ThumbsUp, XCircle, Sparkles, X, Send, Building2, Download, Zap, TrendingDown, ArrowRight, Eye, FileCheck, AlertTriangle, Calendar, User, Filter, ChevronDown } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
-import DashboardLayout from '../layouts/DashboardLayout';
-
 export default function CommandDashboard() {
   const navigate = useNavigate();
   const [chatOpen, setChatOpen] = useState(false);
@@ -205,7 +203,7 @@ export default function CommandDashboard() {
   };
 
   return (
-    <DashboardLayout>
+    <>
       <div className="p-4 lg:p-6">
         <div className="mb-6 flex items-center justify-between">
           <div>
@@ -1134,6 +1132,6 @@ export default function CommandDashboard() {
           </div>
         </div>
       )}
-    </DashboardLayout>
+    </>
   );
 }
