@@ -221,68 +221,6 @@ export default function CommandDashboard() {
 
   return (
     <DashboardLayout>
-      <header className="border-b border-slate-800/50 backdrop-blur-xl bg-slate-900/30">
-        <div className="px-4 lg:px-6 py-4 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-4 flex-1 min-w-0">
-            <div className="flex-1 max-w-xl relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-              <input type="text" placeholder="Search anything..." className="w-full pl-12 pr-4 py-2 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-amber-500/50" />
-            </div>
-          </div>
-          <div className="flex items-center gap-2 lg:gap-3">
-            <div className="relative">
-              <button
-                onClick={() => setNotificationsOpen(!notificationsOpen)}
-                className="p-2 hover:bg-slate-800/50 rounded-lg relative"
-              >
-                <Bell className="w-5 h-5 text-slate-400" />
-                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-              </button>
-
-              {notificationsOpen && (
-                <div className="absolute right-0 top-full mt-2 w-96 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-2xl z-50">
-                  <div className="p-4 border-b border-slate-700/50">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-sm font-semibold text-white">Notifications</h3>
-                      <span className="px-2 py-0.5 bg-red-500/20 border border-red-500/30 text-red-400 text-xs rounded-full">{notifications.filter(n => n.urgent).length} urgent</span>
-                    </div>
-                  </div>
-                  <div className="max-h-96 overflow-y-auto">
-                    {notifications.map(notification => (
-                      <div key={notification.id} className={`p-4 border-b border-slate-800/30 hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
-                        <div className="flex items-start gap-3">
-                          <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-amber-400' : 'bg-blue-400'}`}></div>
-                          <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-white mb-1">{notification.title}</p>
-                            <p className="text-xs text-slate-400 mb-2">{notification.message}</p>
-                            <p className="text-xs text-slate-500">{notification.time}</p>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="p-3 border-t border-slate-700/50">
-                    <button className="w-full text-center text-sm text-amber-400 hover:text-amber-300 font-medium">View All Notifications</button>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <div className="h-8 w-px bg-slate-700/50"></div>
-
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-amber-500 to-amber-600 rounded-full flex items-center justify-center">
-                <span className="text-white text-sm font-bold">ST</span>
-              </div>
-              <div className="hidden sm:block">
-                <p className="text-sm font-medium text-white">Sheriff Thompson</p>
-                <p className="text-xs text-slate-400">Administrator</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
-
       <main className="flex-1 overflow-y-auto p-4 lg:p-6">
         <div className="mb-6 flex items-center justify-between">
           <div>
