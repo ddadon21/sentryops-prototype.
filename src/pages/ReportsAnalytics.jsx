@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
-import { FileText, TrendingUp, AlertCircle, MessageCircle, DollarSign, CheckCircle, Sparkles, X, Send, Download, Calendar, Filter, BarChart3, PieChart, LineChart, Activity, Clock, ArrowUpRight, ArrowDownRight, Eye, RefreshCw, FileSpreadsheet, Mail, Share2, Plus, Sliders, BookOpen, PlayCircle, PauseCircle, Printer, FileDown, ChevronDown, ChevronUp, TrendingDown, Zap, Info, Star, AlertTriangle, CheckCircle2, Maximize2, Minimize2 } from 'lucide-react';
+import { Home, Users, FileText, LayoutDashboard, TrendingUp, AlertCircle, Settings, Bell, MessageCircle, Search, ChevronRight, DollarSign, CheckCircle, Shield, Sparkles, X, Send, Menu, ChevronLeft, LogOut, Download, Calendar, Filter, BarChart3, PieChart, LineChart, Activity, Clock, ArrowUpRight, ArrowDownRight, Eye, RefreshCw, FileSpreadsheet, Mail, Share2, Building2, Radio, Target, Plus, Sliders, BookOpen, PlayCircle, PauseCircle, Printer, FileDown, ChevronDown, ChevronUp, TrendingDown, Zap, Info, Star, AlertTriangle, CheckCircle2, Maximize2, Minimize2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
-import DashboardLayout from '../layouts/DashboardLayout';
 
 export default function ReportsAnalytics() {
   const navigate = useNavigate();
   const [activePage, setActivePage] = useState('reports');
   const [activeTab, setActiveTab] = useState('overview');
   const [chatOpen, setChatOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false);
   const [timeRange, setTimeRange] = useState('ytd');
   const [selectedReport, setSelectedReport] = useState(null);
   const [reportDetailModal, setReportDetailModal] = useState(null);
@@ -20,6 +23,26 @@ export default function ReportsAnalytics() {
   const [expandedMetrics, setExpandedMetrics] = useState(new Set());
   const [selectedComparison, setSelectedComparison] = useState('yoy'); // yoy, mom, qoq
   const [filterCategory, setFilterCategory] = useState('all');
+
+  const navigation = [
+    { id: 'dashboard', label: 'Executive Dashboard', icon: Home, route: '/command/dashboard' },
+    { id: 'detention', label: 'Detention Operations', icon: Building2, route: '/jail/dashboard' },
+    { id: 'patrol', label: 'Patrol Operations', icon: Radio, route: '/patrol/cad' },
+    { id: 'investigations', label: 'Criminal Investigations', icon: Target, route: '/investigations/cases' },
+    { id: 'personnel', label: 'Personnel Overview', icon: Users, route: '/command/personnel' },
+    { id: 'org-chart', label: 'Org Chart', icon: LayoutDashboard, route: '/command/orgchart' },
+    { id: 'approvals', label: 'Approvals', icon: CheckCircle, badge: '8', route: '/command/approvals' },
+    { id: 'budget', label: 'Budget & Resources', icon: DollarSign, route: '/command/budget' },
+    { id: 'reports', label: 'Reports & Analytics', icon: TrendingUp, route: '/command/reports' },
+    { id: 'alerts', label: 'Command Alerts', icon: AlertCircle, badge: '3', route: '/command/alerts' },
+    { id: 'settings', label: 'Settings', icon: Settings, route: '/command/settings' }
+  ];
+
+  const notifications = [
+    { id: 1, title: '3 Certifications Expiring Soon', message: 'CPR, Firearms, and P.O.S.T. renewals needed', time: '10 min ago', urgent: true },
+    { id: 2, title: 'Budget Approval Required', message: 'Q1 2025 Training Budget: $45,000', time: '1 hour ago', urgent: true },
+    { id: 3, title: 'Leave Request Submitted', message: 'Deputy Marcus Chen - Dec 15-22', time: '2 hours ago', urgent: false }
+  ];
 
   // Key metrics data
   const keyMetrics = {
@@ -299,6 +322,15 @@ export default function ReportsAnalytics() {
     }
   ];
 
+  const handleNavigation = (item) => {
+    navigate(item.route);
+    setSidebarOpen(false);
+  };
+
+  const handleLogout = () => {
+    navigate(createPageUrl('SignIn'));
+  };
+
   const getChangeColor = (change) => {
     if (change > 0) return 'text-green-400';
     if (change < 0) return 'text-red-400';
@@ -326,9 +358,189 @@ export default function ReportsAnalytics() {
     : availableReports.filter(r => r.category === filterCategory);
 
   return (
-    <DashboardLayout>
-      <div className="p-4 lg:p-6">
-        <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex">
+      {/* Sidebar */}
+      <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-slate-800/50 backdrop-blur-xl bg-slate-900/30 flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
+        <div className="p-4 border-b border-slate-700/50 flex items-center justify-between">
+          {!sidebarCollapsed && (
+            <div className="flex items-center gap-2">
+              <Shield className="w-8 h-8 text-amber-500" />
+              <h1 className="text-xl font-bold text-white">SentryOps</h1>
+            </div>
+          )}
+          {sidebarCollapsed && (
+            <Shield className="w-8 h-8 text-amber-500 mx-auto" />
+          )}
+          <button
+            onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+            className="p-2 hover:bg-slate-800/50 rounded-lg transition-colors hidden lg:block"
+          >
+            {sidebarCollapsed ? <ChevronRight className="w-5 h-5 text-slate-400" /> : <ChevronLeft className="w-5 h-5 text-slate-400" />}
+          </button>
+        </div>
+
+        <nav className="flex-1 overflow-y-auto p-4 space-y-2">
+          {navigation.map(item => {
+            const Icon = item.icon;
+            const isActive = window.location.pathname === item.route;
+            return (
+              <button
+                key={item.id}
+                onClick={() => handleNavigation(item)}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'
+                } ${sidebarCollapsed ? 'justify-center' : ''}`}
+                title={sidebarCollapsed ? item.label : ''}
+              >
+                <Icon className="w-5 h-5 flex-shrink-0" />
+                {!sidebarCollapsed && (
+                  <>
+                    <span className="flex-1 text-left text-sm font-medium truncate">{item.label}</span>
+                    {item.badge && <span className={`px-2 py-0.5 rounded-full text-xs ${isActive ? 'bg-white/20' : 'bg-red-500 text-white'}`}>{item.badge}</span>}
+                  </>
+                )}
+              </button>
+            );
+          })}
+        </nav>
+
+        <div className="border-t border-slate-700/50">
+          {!sidebarCollapsed && (
+            <div className="px-4 py-3">
+              <p className="text-xs text-slate-500 text-center">Gwinnett County Sheriff's Office</p>
+            </div>
+          )}
+
+          <div className="p-4">
+            <button
+              onClick={() => setLogoutConfirmOpen(true)}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-slate-400 hover:bg-slate-800/40 hover:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
+              title={sidebarCollapsed ? 'Sign Out' : ''}
+            >
+              <LogOut className="w-5 h-5 flex-shrink-0" />
+              {!sidebarCollapsed && (
+                <span className="flex-1 text-left text-sm font-medium">Sign Out</span>
+              )}
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      {logoutConfirmOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            onClick={() => setLogoutConfirmOpen(false)}
+          />
+          <div className="relative bg-slate-900 border border-slate-700/50 rounded-2xl p-6 max-w-sm w-full shadow-2xl">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-12 h-12 bg-slate-800/60 rounded-xl flex items-center justify-center">
+                <LogOut className="w-6 h-6 text-slate-400" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-white">Sign Out</h3>
+                <p className="text-sm text-slate-400">Are you sure you want to sign out?</p>
+              </div>
+            </div>
+            <div className="flex gap-3 mt-6">
+              <button
+                onClick={() => setLogoutConfirmOpen(false)}
+                className="flex-1 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-white font-medium transition-all"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleLogout}
+                className="flex-1 px-4 py-2.5 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-white font-medium transition-all"
+              >
+                Sign Out
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="flex-1 flex flex-col min-w-0">
+        <header className="border-b border-slate-800/50 backdrop-blur-xl bg-slate-900/30">
+          <div className="px-4 lg:px-6 py-4 flex items-center justify-between gap-4">
+            <div className="flex items-center gap-4 flex-1 min-w-0">
+              <button
+                onClick={() => setSidebarOpen(!sidebarOpen)}
+                className="lg:hidden p-2 hover:bg-slate-800/50 rounded-lg"
+              >
+                <Menu className="w-5 h-5 text-slate-400" />
+              </button>
+              <div className="flex items-center gap-2 text-sm">
+                <button
+                  onClick={() => navigate(createPageUrl('CommandDashboard'))}
+                  className="text-slate-400 hover:text-white transition-colors"
+                >
+                  Dashboard
+                </button>
+                <ChevronRight className="w-4 h-4 text-slate-600" />
+                <span className="text-white">Reports & Analytics</span>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 lg:gap-3">
+              <div className="relative">
+                <button
+                  onClick={() => setNotificationsOpen(!notificationsOpen)}
+                  className="p-2 hover:bg-slate-800/50 rounded-lg relative"
+                >
+                  <Bell className="w-5 h-5 text-slate-400" />
+                  <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                </button>
+
+                {notificationsOpen && (
+                  <div className="absolute right-0 top-full mt-2 w-96 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-2xl z-50">
+                    <div className="p-4 border-b border-slate-700/50">
+                      <h3 className="text-sm font-semibold text-white">Notifications</h3>
+                    </div>
+                    <div className="max-h-96 overflow-y-auto">
+                      {notifications.map(notification => (
+                        <div key={notification.id} className={`p-4 border-b border-slate-800/30 hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
+                          <div className="flex items-start gap-3">
+                            <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-amber-400' : 'bg-blue-400'}`}></div>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm font-medium text-white mb-1">{notification.title}</p>
+                              <p className="text-xs text-slate-400 mb-2">{notification.message}</p>
+                              <p className="text-xs text-slate-500">{notification.time}</p>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="p-3 border-t border-slate-700/50">
+                      <button className="w-full text-center text-sm text-amber-400 hover:text-amber-300 font-medium">View All</button>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div className="h-8 w-px bg-slate-700/50"></div>
+
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 bg-gradient-to-br from-amber-500 to-amber-600 rounded-full flex items-center justify-center">
+                  <span className="text-white text-sm font-bold">ST</span>
+                </div>
+                <div className="hidden sm:block">
+                  <p className="text-sm font-medium text-white">Sheriff Thompson</p>
+                  <p className="text-xs text-slate-400">Administrator</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <main className="flex-1 overflow-y-auto p-4 lg:p-6">
+          <div className="max-w-7xl mx-auto">
             <div className="flex items-center justify-between mb-6">
               <div>
                 <h2 className="text-2xl lg:text-3xl font-bold text-white mb-2">Reports & Analytics</h2>
@@ -818,7 +1030,8 @@ export default function ReportsAnalytics() {
               </div>
             )}
           </div>
-        </div>
+        </main>
+      </div>
 
       {/* AI Chat Button */}
       <button
@@ -1362,6 +1575,6 @@ export default function ReportsAnalytics() {
           </div>
         </div>
       )}
-    </DashboardLayout>
+    </div>
   );
 }
