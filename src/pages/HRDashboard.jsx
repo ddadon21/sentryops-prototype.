@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Users, FileText, LayoutDashboard, TrendingUp, Settings, Bell, MessageCircle, Search, ChevronRight, CheckCircle, Shield, Sparkles, X, Send, Menu, ChevronLeft, LogOut, UserPlus, Briefcase, Clock, Award, AlertTriangle, TrendingDown, Calendar, FileCheck, Target, ArrowUpRight, ArrowDownRight, Eye, Download, Filter, ClipboardCheck, GraduationCap } from 'lucide-react';
+import { Users, FileText, LayoutDashboard, TrendingUp, Settings, Bell, MessageCircle, Search, ChevronRight, CheckCircle, Shield, Sparkles, X, Send, Menu, ChevronLeft, LogOut, UserPlus, Briefcase, Clock, Award, AlertTriangle, TrendingDown, Calendar, FileCheck, Target, ArrowUpRight, ArrowDownRight, Eye, Download, Filter, ClipboardCheck, GraduationCap, ChevronDown, User } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 
@@ -11,6 +11,7 @@ export default function HRDashboard() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false);
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const [timeRange, setTimeRange] = useState('month');
   const [currentTime, setCurrentTime] = useState(new Date());
   const [aiInsightsVisible, setAiInsightsVisible] = useState(true);
@@ -20,6 +21,19 @@ export default function HRDashboard() {
     const timer = setInterval(() => setCurrentTime(new Date()), 60000);
     return () => clearInterval(timer);
   }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (profileMenuOpen && !event.target.closest('.profile-menu-container')) {
+        setProfileMenuOpen(false);
+      }
+      if (notificationsOpen && !event.target.closest('.notifications-container')) {
+        setNotificationsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [profileMenuOpen, notificationsOpen]);
 
   const formatTime = (date) => {
     return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
@@ -287,14 +301,51 @@ export default function HRDashboard() {
 
               <div className="h-8 w-px bg-slate-700/50"></div>
 
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
-                  <span className="text-white text-sm font-bold">HR</span>
-                </div>
-                <div className="hidden sm:block">
-                  <p className="text-sm font-medium text-white">HR Director</p>
-                  <p className="text-xs text-slate-400">Human Resources</p>
-                </div>
+              <div className="relative profile-menu-container">
+                <button
+                  onClick={() => setProfileMenuOpen(!profileMenuOpen)}
+                  className="flex items-center gap-3 p-1.5 pr-3 hover:bg-slate-800/50 rounded-xl transition-colors"
+                >
+                  <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
+                    <span className="text-white text-sm font-bold">HR</span>
+                  </div>
+                  <div className="hidden sm:block text-left">
+                    <p className="text-sm font-medium text-white">HR Director</p>
+                    <p className="text-xs text-slate-400">Human Resources</p>
+                  </div>
+                  <ChevronDown className={`w-4 h-4 text-slate-400 hidden sm:block transition-transform ${profileMenuOpen ? 'rotate-180' : ''}`} />
+                </button>
+
+                {profileMenuOpen && (
+                  <div className="absolute right-0 top-full mt-2 w-56 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-2xl z-50 py-2">
+                    <div className="px-4 py-3 border-b border-slate-700/50">
+                      <p className="text-sm font-medium text-white">HR Director</p>
+                      <p className="text-xs text-slate-400">hr.director@gcso.gov</p>
+                    </div>
+                    <div className="py-1">
+                      <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-slate-300 hover:bg-slate-800/50 transition-colors">
+                        <User className="w-4 h-4" />
+                        View Profile
+                      </button>
+                      <button
+                        onClick={() => navigate(createPageUrl('HRSettings'))}
+                        className="w-full flex items-center gap-3 px-4 py-2 text-sm text-slate-300 hover:bg-slate-800/50 transition-colors"
+                      >
+                        <Settings className="w-4 h-4" />
+                        Settings
+                      </button>
+                    </div>
+                    <div className="border-t border-slate-700/50 py-1">
+                      <button
+                        onClick={() => setLogoutConfirmOpen(true)}
+                        className="w-full flex items-center gap-3 px-4 py-2 text-sm text-red-400 hover:bg-slate-800/50 transition-colors"
+                      >
+                        <LogOut className="w-4 h-4" />
+                        Sign Out
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
