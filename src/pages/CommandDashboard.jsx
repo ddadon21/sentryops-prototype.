@@ -280,20 +280,20 @@ export default function CommandDashboard() {
                 </div>
                 <div className="space-y-2 text-sm">
                   <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                    <p className="text-slate-300"><span className="text-red-400 font-semibold">Critical:</span> B-Shift staffing at 75% (9/12 deputies) - recommend approving 6 hours OT immediately to maintain minimum coverage</p>
+                    <AlertCircle className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
+                    <p className="text-slate-300"><span className="text-red-400 font-semibold">Critical:</span> B-Shift at 75% staffing (9/12 deputies) - immediate OT authorization required. 2 patrol units currently single-officer (zones 4, 7). Safety minimum compromised.</p>
                   </div>
                   <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-amber-500 rounded-full mt-2 flex-shrink-0"></div>
-                    <p className="text-slate-300"><span className="text-amber-400 font-semibold">Budget Alert:</span> Overtime tracking 19% over budget ($78K/$65K) - consider authorizing 2 new patrol hires vs. continued OT spend</p>
+                    <DollarSign className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
+                    <p className="text-slate-300"><span className="text-amber-400 font-semibold">Budget Alert:</span> Overtime tracking 19% over budget ($78,240/$65,000 YTD). Projected year-end overage: $23K. Recommend authorizing 2 lateral hires vs. continued OT spend.</p>
                   </div>
                   <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-amber-500 rounded-full mt-2 flex-shrink-0"></div>
-                    <p className="text-slate-300"><span className="text-amber-400 font-semibold">Compliance:</span> Federal audit in 2 days - 3 action items pending (H-Pod HVAC, 2 policy reviews). Recommend immediate approval of emergency repairs.</p>
+                    <Shield className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
+                    <p className="text-slate-300"><span className="text-amber-400 font-semibold">Compliance:</span> U.S. Marshals inspection Dec 12-14 (2 days). H2-Pod HVAC repair approval pending - required for ACA compliance. 3 policies need signature.</p>
                   </div>
                   <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                    <p className="text-slate-300"><span className="text-blue-400 font-semibold">Opportunity:</span> CIT training has 50% grant reimbursement available - approve now to reduce net cost from $6,400 to $3,200</p>
+                    <TrendingUp className="w-4 h-4 text-blue-400 mt-0.5 flex-shrink-0" />
+                    <p className="text-slate-300"><span className="text-blue-400 font-semibold">Opportunity:</span> CIT training grant reimbursement (50%) expires Dec 31. Approve $6,400 training request by Dec 15 for $3,200 net cost savings.</p>
                   </div>
                 </div>
                 <div className="mt-4 pt-4 border-t border-purple-500/20">
@@ -321,21 +321,21 @@ export default function CommandDashboard() {
               {/* Urgent Section */}
               <div className="mb-4 pb-4 border-b border-blue-500/20">
                 <div className="flex items-center gap-2 mb-2">
-                  <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                  <AlertCircle className="w-4 h-4 text-red-400" />
                   <h5 className="text-sm font-semibold text-red-400">URGENT (Action Required)</h5>
                 </div>
                 <div className="space-y-1.5 text-sm">
                   <div className="flex items-start gap-2">
-                    <AlertCircle className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
-                    <p className="text-slate-300"><span className="font-semibold text-red-400">4 approvals overdue</span> - Use of force review, HVAC emergency ($23.5K), B-Shift OT ($8.3K), vehicle replacement ($48.5K)</p>
+                    <FileCheck className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
+                    <p className="text-slate-300"><span className="font-semibold text-red-400">4 approvals pending &gt;2hrs:</span> UOF #2024-0847 (15min), PO #2024-1203 $23,500 (2hr), OT Auth #B-1247 $8,320 (90min), Vehicle #V-247 $48,500 (4hr)</p>
                   </div>
                   <div className="flex items-start gap-2">
                     <Users className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
-                    <p className="text-slate-300"><span className="font-semibold text-red-400">B-Shift 20% understaffed</span> - 3 deputies out (2 FMLA, 1 WC) - minimum staffing compromised</p>
+                    <p className="text-slate-300"><span className="font-semibold text-red-400">B-Shift at 75% (9/12):</span> Deputies Martinez (#4521), Chen (#4167), Williams (#4089) out. Zones 4, 7 single-officer.</p>
                   </div>
                   <div className="flex items-start gap-2">
                     <Building2 className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
-                    <p className="text-slate-300"><span className="font-semibold text-red-400">H2-Pod over capacity</span> - 36/32 inmates - using emergency beds</p>
+                    <p className="text-slate-300"><span className="font-semibold text-red-400">H2-Pod 112% capacity:</span> 36/32 federal detainees. 4 emergency beds deployed. ICE notified.</p>
                   </div>
                 </div>
               </div>
@@ -343,21 +343,21 @@ export default function CommandDashboard() {
               {/* Monitoring Section */}
               <div className="mb-4 pb-4 border-b border-blue-500/20">
                 <div className="flex items-center gap-2 mb-2">
-                  <div className="w-2 h-2 bg-amber-500 rounded-full"></div>
+                  <Eye className="w-4 h-4 text-amber-400" />
                   <h5 className="text-sm font-semibold text-amber-400">MONITORING</h5>
                 </div>
                 <div className="space-y-1.5 text-sm">
                   <div className="flex items-start gap-2">
                     <Shield className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                    <p className="text-slate-300"><span className="font-semibold text-amber-400">Federal audit Dec 12-14</span> - U.S. Marshals H-Pod inspection - 47 databases ready, 3 policies pending</p>
+                    <p className="text-slate-300"><span className="font-semibold text-amber-400">USMS Inspection T-2 days:</span> Dec 12-14, H-Pod federal housing. 47/47 databases ready. 3 policies pending (SOP-127, SOP-134, SOP-156).</p>
                   </div>
                   <div className="flex items-start gap-2">
                     <TrendingUp className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                    <p className="text-slate-300"><span className="font-semibold text-amber-400">18 bookings today</span>, 14 releases - net population +4 - trending toward 95% capacity</p>
+                    <p className="text-slate-300"><span className="font-semibold text-amber-400">Population trending up:</span> 18 bookings / 14 releases today (+4 net). Current 842/920 (91.5%). Projected 95% by Friday.</p>
                   </div>
                   <div className="flex items-start gap-2">
                     <Calendar className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                    <p className="text-slate-300"><span className="font-semibold text-amber-400">31 court transports tomorrow</span> - 5 sessions across Superior, State, Magistrate courts</p>
+                    <p className="text-slate-300"><span className="font-semibold text-amber-400">Heavy transport day tomorrow:</span> 31 inmates across 5 court sessions (Superior 12, State 8, Magistrate 11). 6 transport deputies assigned.</p>
                   </div>
                 </div>
               </div>
@@ -365,21 +365,21 @@ export default function CommandDashboard() {
               {/* Operational Status */}
               <div>
                 <div className="flex items-center gap-2 mb-2">
-                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                  <CheckCircle className="w-4 h-4 text-green-400" />
                   <h5 className="text-sm font-semibold text-green-400">OPERATIONAL STATUS</h5>
                 </div>
                 <div className="space-y-1.5 text-sm">
                   <div className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    <p className="text-slate-300"><span className="font-semibold text-green-400">Jail at 91.5% capacity</span> - 842/920 inmates - within normal operating parameters</p>
+                    <Building2 className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
+                    <p className="text-slate-300"><span className="font-semibold text-green-400">Detention 91.5% (842/920):</span> Within parameters. A-Shift fully staffed (48/48). Medical unit normal operations.</p>
                   </div>
                   <div className="flex items-start gap-2">
                     <Radio className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    <p className="text-slate-300"><span className="font-semibold text-green-400">1 hospital guard active</span> - Inmate Anderson at Gwinnett Medical - chest pain evaluation</p>
+                    <p className="text-slate-300"><span className="font-semibold text-green-400">Hospital guard active:</span> Deputy Martinez (#4312) at Gwinnett Medical with Inmate Anderson #2024-8847. ETA return: pending evaluation.</p>
                   </div>
                   <div className="flex items-start gap-2">
                     <Zap className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    <p className="text-slate-300"><span className="font-semibold text-green-400">All critical systems online</span> - CAD, RMS, SmartJAIL, radio network operational</p>
+                    <p className="text-slate-300"><span className="font-semibold text-green-400">Systems operational:</span> CAD (99.9%), RMS (100%), SmartJAIL (100%), P25 radio (100%). No outages last 24hrs.</p>
                   </div>
                 </div>
               </div>
@@ -565,38 +565,39 @@ export default function CommandDashboard() {
 
         {/* Staffing by Division */}
         <div className="mb-6 bg-slate-800/40 border border-slate-700/50 rounded-xl p-4 lg:p-6">
-          <h3 className="text-lg font-semibold text-white mb-4">Staffing by Division</h3>
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-semibold text-white">Staffing by Division</h3>
+            <span className="text-xs text-slate-400">164/178 authorized (92.1%)</span>
+          </div>
           <div className="space-y-4">
             {[
-              { division: 'Patrol', current: 56, target: 65, percentage: 86, trend: 'down', status: 'warning' },
-              { division: 'Investigations', current: 22, target: 25, percentage: 88, trend: 'neutral', status: 'warning' },
-              { division: 'Detention', current: 45, target: 48, percentage: 94, trend: 'up', status: 'good' },
-              { division: 'Support Services', current: 28, target: 30, percentage: 93, trend: 'neutral', status: 'good' }
+              { division: 'Patrol Division', current: 56, authorized: 65, percentage: 86, trend: 'down', trendNote: '↓ 2 vs last week', status: 'warning', note: 'B-Shift critical' },
+              { division: 'Investigations', current: 22, authorized: 25, percentage: 88, trend: 'neutral', trendNote: '→ No change', status: 'warning', note: '3 positions posted' },
+              { division: 'Detention', current: 45, authorized: 48, percentage: 94, trend: 'up', trendNote: '↑ 1 new hire', status: 'good', note: 'Rodriguez starting Mon' },
+              { division: 'Court Services', current: 18, authorized: 18, percentage: 100, trend: 'neutral', trendNote: '→ Fully staffed', status: 'good', note: '' },
+              { division: 'Support Services', current: 23, authorized: 22, percentage: 105, trend: 'up', trendNote: '↑ 1 over authorized', status: 'good', note: 'Grant-funded position' }
             ].map((div, idx) => (
               <div key={idx}>
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
                     <span className="text-sm font-medium text-white">{div.division}</span>
-                    <div className={`w-2 h-2 rounded-full ${
-                      div.status === 'good' ? 'bg-green-500' :
-                      div.status === 'warning' ? 'bg-amber-500' : 'bg-red-500'
-                    }`}></div>
+                    {div.note && <span className="text-xs text-slate-500">({div.note})</span>}
                   </div>
                   <div className="flex items-center gap-3">
                     <span className={`text-xs font-medium ${
                       div.trend === 'up' ? 'text-green-400' :
                       div.trend === 'down' ? 'text-red-400' : 'text-slate-400'
                     }`}>
-                      {div.trend === 'up' ? '↑' : div.trend === 'down' ? '↓' : '→'}
+                      {div.trendNote}
                     </span>
-                    <span className="text-sm text-slate-400">{div.current}/{div.target}</span>
+                    <span className="text-sm text-slate-400">{div.current}/{div.authorized}</span>
                     <span className={`text-sm font-bold ${
                       div.percentage >= 90 ? 'text-green-400' : 'text-amber-400'
                     }`}>{div.percentage}%</span>
                   </div>
                 </div>
                 <div className="w-full h-2 bg-slate-700/50 rounded-full overflow-hidden">
-                  <div className={`h-full ${div.percentage >= 90 ? 'bg-green-500' : 'bg-amber-500'}`} style={{ width: `${div.percentage}%` }} />
+                  <div className={`h-full ${div.percentage >= 90 ? 'bg-green-500' : 'bg-amber-500'}`} style={{ width: `${Math.min(div.percentage, 100)}%` }} />
                 </div>
               </div>
             ))}
@@ -702,34 +703,34 @@ export default function CommandDashboard() {
                   </div>
                   <span className="text-xs text-slate-400">15 min ago</span>
                 </div>
-                <div className="text-sm text-white font-medium mb-1">B-Pod - Deputy Johnson</div>
-                <div className="text-xs text-slate-400 mb-3">OC spray on inmate MARTINEZ. Medical cleared. Body cam footage available.</div>
+                <div className="text-sm text-white font-medium mb-1">UOF #2024-0847 • Deputy Johnson #D-4167</div>
+                <div className="text-xs text-slate-400 mb-3">B-Pod, Inmate MARTINEZ, Carlos #2024-7234. OC spray deployment. Medical cleared 14:32. Body cam BC-4167-1210-1447 available.</div>
                 <div className="flex items-center justify-between text-xs pt-2 border-t border-slate-700/30">
-                  <span className="text-slate-500">Assigned to: IA Supervisor Williams</span>
-                  <span className="text-red-400 font-semibold">Due: 8 hours</span>
+                  <span className="text-slate-500">Reviewing: Sgt. Williams #S-2847</span>
+                  <span className="text-red-400 font-semibold">Due: 22:00 today</span>
                 </div>
                 <div className="mt-2 flex gap-2">
                   <button className="flex-1 px-2 py-1 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded text-xs hover:bg-blue-500/30">
-                    View Details
+                    View Report
                   </button>
                   <button className="flex-1 px-2 py-1 bg-slate-700/40 border border-slate-600/50 text-slate-300 rounded text-xs hover:bg-slate-700/60">
-                    Request Footage
+                    View Footage
                   </button>
                 </div>
               </div>
               <div className="bg-slate-800/50 border border-purple-500/20 rounded p-3">
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
-                    <span className="px-2 py-0.5 bg-purple-500/20 text-purple-400 text-xs font-bold rounded">MEDICAL EMERGENCY</span>
-                    <span className="px-2 py-0.5 bg-blue-500/20 text-blue-400 text-xs font-bold rounded">IN PROGRESS</span>
+                    <span className="px-2 py-0.5 bg-purple-500/20 text-purple-400 text-xs font-bold rounded">MEDICAL TRANSPORT</span>
+                    <span className="px-2 py-0.5 bg-blue-500/20 text-blue-400 text-xs font-bold rounded">ACTIVE</span>
                   </div>
                   <span className="text-xs text-slate-400">3 hours ago</span>
                 </div>
-                <div className="text-sm text-white font-medium mb-1">C-Pod - Inmate Anderson</div>
-                <div className="text-xs text-slate-400 mb-3">Chest pain, transported to Gwinnett Medical. Deputy Martinez on hospital guard.</div>
+                <div className="text-sm text-white font-medium mb-1">MT #2024-1847 • Inmate Anderson, James #2024-8847</div>
+                <div className="text-xs text-slate-400 mb-3">C-Pod. Chief complaint: chest pain. Transported 11:23. Gwinnett Medical ER. Deputy Martinez #D-4312 on guard.</div>
                 <div className="flex items-center justify-between text-xs pt-2 border-t border-slate-700/30">
-                  <span className="text-slate-500">Assigned to: Deputy Martinez</span>
-                  <span className="text-purple-400 font-semibold">ETA: Pending eval</span>
+                  <span className="text-slate-500">Guard: Martinez #D-4312</span>
+                  <span className="text-purple-400 font-semibold">Status: Awaiting eval</span>
                 </div>
                 <div className="mt-2 flex gap-2">
                   <button className="flex-1 px-2 py-1 bg-purple-500/20 border border-purple-500/30 text-purple-400 rounded text-xs hover:bg-purple-500/30">
@@ -756,14 +757,14 @@ export default function CommandDashboard() {
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
               {[
-                { pod: 'A-Pod', current: 94, capacity: 96, status: 'near' },
-                { pod: 'B-Pod', current: 61, capacity: 64, status: 'normal' },
-                { pod: 'E-Pod (Medical)', current: 44, capacity: 48, status: 'near' },
-                { pod: 'H2-Pod (ICE)', current: 36, capacity: 32, status: 'over' },
-                { pod: 'D-Pod (Female)', current: 73, capacity: 80, status: 'normal' },
-                { pod: 'F-Pod (Intake)', current: 52, capacity: 64, status: 'normal' },
-                { pod: 'G-Pod (Juvenile)', current: 18, capacity: 24, status: 'normal' },
-                { pod: 'H-Pod (Federal)', current: 47, capacity: 48, status: 'near' }
+                { pod: 'A-Pod (GP Male)', current: 94, capacity: 96, pct: 98, status: 'near' },
+                { pod: 'B-Pod (GP Male)', current: 61, capacity: 64, pct: 95, status: 'near' },
+                { pod: 'C-Pod (Max Sec)', current: 28, capacity: 32, pct: 88, status: 'normal' },
+                { pod: 'D-Pod (Female)', current: 73, capacity: 80, pct: 91, status: 'normal' },
+                { pod: 'E-Pod (Medical)', current: 44, capacity: 48, pct: 92, status: 'normal' },
+                { pod: 'F-Pod (Intake)', current: 52, capacity: 64, pct: 81, status: 'normal' },
+                { pod: 'H-Pod (Federal)', current: 47, capacity: 48, pct: 98, status: 'near' },
+                { pod: 'H2-Pod (ICE)', current: 36, capacity: 32, pct: 112, status: 'over' }
               ].map((unit, idx) => (
                 <div key={idx} className={`p-2 rounded border ${
                   unit.status === 'over' ? 'bg-red-500/10 border-red-500/30' :
@@ -777,7 +778,7 @@ export default function CommandDashboard() {
                       unit.status === 'over' ? 'text-red-400' :
                       unit.status === 'near' ? 'text-amber-400' :
                       'text-emerald-400'
-                    }`}>{Math.round((unit.current / unit.capacity) * 100)}%</span>
+                    }`}>{unit.pct}%</span>
                   </div>
                 </div>
               ))}
@@ -789,51 +790,99 @@ export default function CommandDashboard() {
         <div className="mb-6 bg-gradient-to-br from-blue-500/10 to-blue-600/5 border border-blue-500/20 rounded-xl p-4 lg:p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-xl font-bold text-white">Patrol Division - Operational Status</h3>
-            <div className="text-xs text-slate-400">Updated 2 min ago</div>
+            <div className="flex items-center gap-3">
+              <span className="text-xs text-slate-400">Current: B-Shift (1500-2300)</span>
+              <span className="text-xs text-slate-500">Updated 2 min ago</span>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
             <div className="bg-slate-900/50 border border-slate-700/50 rounded-lg p-4">
-              <div className="text-xs text-slate-400 mb-2">Units Deployed</div>
+              <div className="text-xs text-slate-400 mb-2">Units Deployed (B-Shift)</div>
               <div className="flex items-center gap-3">
-                <div className="text-3xl font-bold text-white">12</div>
+                <div className="text-3xl font-bold text-white">9</div>
                 <div className="flex-1">
-                  <div className="text-xs text-slate-400 mb-1">Available: 3</div>
-                  <div className="text-xs text-emerald-400 flex items-center gap-1">
-                    <span className="w-2 h-2 bg-emerald-400 rounded-full"></span>
-                    Coverage: Good
+                  <div className="text-xs text-slate-400 mb-1">Minimum: 12 | Available: 1</div>
+                  <div className="text-xs text-red-400 flex items-center gap-1">
+                    <AlertCircle className="w-3 h-3" />
+                    Below minimum staffing
                   </div>
                 </div>
               </div>
             </div>
 
             <div className="bg-slate-900/50 border border-slate-700/50 rounded-lg p-4">
-              <div className="text-xs text-slate-400 mb-2">Active Calls</div>
+              <div className="text-xs text-slate-400 mb-2">Active Calls for Service</div>
               <div className="flex items-center gap-3">
                 <div className="text-3xl font-bold text-amber-400">8</div>
                 <div className="flex-1">
-                  <div className="text-xs text-slate-400 mb-1">Priority 1: 1</div>
-                  <div className="text-xs text-amber-400">Priority 2: 3</div>
+                  <div className="text-xs text-red-400 mb-1">Priority 1: 1 (weapons)</div>
+                  <div className="text-xs text-amber-400">Priority 2: 3 | Priority 3: 4</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-slate-900/50 border border-amber-500/20 rounded-lg p-4">
+              <div className="text-xs text-amber-400 font-semibold mb-2">Zone Coverage Alert</div>
+              <div className="space-y-1 text-xs">
+                <div className="flex justify-between">
+                  <span className="text-slate-300">Zone 4 (Lawrenceville):</span>
+                  <span className="text-red-400 font-semibold">Single officer</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-300">Zone 7 (Snellville):</span>
+                  <span className="text-red-400 font-semibold">Single officer</span>
+                </div>
+                <div className="flex justify-between pt-1 border-t border-slate-700/30">
+                  <span className="text-slate-400">Zones 1,2,3,5,6:</span>
+                  <span className="text-green-400">2-officer coverage</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div className="bg-slate-900/50 border border-slate-700/50 rounded-lg p-4">
+              <div className="text-xs text-slate-400 mb-2">Shift Staffing Comparison</div>
+              <div className="space-y-2 text-xs">
+                <div className="flex justify-between items-center">
+                  <span className="text-slate-300">A-Shift (0700-1500):</span>
+                  <span className="text-emerald-400 flex items-center gap-1">
+                    <CheckCircle className="w-3 h-3" />
+                    15/15 (100%)
+                  </span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-slate-300">B-Shift (1500-2300):</span>
+                  <span className="text-red-400 flex items-center gap-1">
+                    <AlertCircle className="w-3 h-3" />
+                    9/12 (75%) - CURRENT
+                  </span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-slate-300">C-Shift (2300-0700):</span>
+                  <span className="text-emerald-400 flex items-center gap-1">
+                    <CheckCircle className="w-3 h-3" />
+                    10/10 (100%)
+                  </span>
                 </div>
               </div>
             </div>
 
             <div className="bg-slate-900/50 border border-slate-700/50 rounded-lg p-4">
-              <div className="text-xs text-slate-400 mb-2">Shift Status</div>
-              <div className="space-y-1 text-xs">
+              <div className="text-xs text-slate-400 mb-2">B-Shift Absences</div>
+              <div className="space-y-1.5 text-xs">
                 <div className="flex justify-between">
-                  <span className="text-slate-300">A-Shift (Day):</span>
-                  <span className="text-emerald-400 flex items-center gap-1">
-                    <span className="w-2 h-2 bg-emerald-400 rounded-full"></span>
-                    15/15
-                  </span>
+                  <span className="text-slate-300">Martinez #4521:</span>
+                  <span className="text-amber-400">FMLA (returns 12/20)</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-300">B-Shift (Eve):</span>
-                  <span className="text-red-400 flex items-center gap-1">
-                    <span className="w-2 h-2 bg-red-400 rounded-full"></span>
-                    9/12
-                  </span>
+                  <span className="text-slate-300">Chen #4167:</span>
+                  <span className="text-amber-400">FMLA (returns 01/05)</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-300">Williams #4089:</span>
+                  <span className="text-purple-400">Workers Comp</span>
                 </div>
               </div>
             </div>
@@ -846,21 +895,31 @@ export default function CommandDashboard() {
                 <div className="flex items-center gap-3">
                   <span className="px-2 py-0.5 bg-red-500/20 text-red-400 font-bold rounded">P1</span>
                   <div>
-                    <div className="text-white font-medium">Domestic Violence - Weapons Involved</div>
-                    <div className="text-slate-400">4720 Lawrenceville Hwy • Unit 247, 251 responding</div>
+                    <div className="text-white font-medium">CAD #2024-128847 • Domestic Violence - Weapons</div>
+                    <div className="text-slate-400">4720 Lawrenceville Hwy, Zone 4 • Units 247 (Davis), 251 (Thompson) responding</div>
                   </div>
                 </div>
-                <div className="text-slate-400">3 min</div>
+                <div className="text-red-400 font-semibold">3 min</div>
               </div>
-              <div className="flex items-center justify-between p-2 bg-slate-800/50 rounded">
+              <div className="flex items-center justify-between p-2 bg-slate-800/50 rounded border border-amber-500/20">
                 <div className="flex items-center gap-3">
                   <span className="px-2 py-0.5 bg-amber-500/20 text-amber-400 font-bold rounded">P2</span>
                   <div>
-                    <div className="text-white font-medium">Suspicious Person - Business District</div>
-                    <div className="text-slate-400">2100 Pleasant Hill Rd • Unit 239</div>
+                    <div className="text-white font-medium">CAD #2024-128842 • Suspicious Person - Business</div>
+                    <div className="text-slate-400">2100 Pleasant Hill Rd, Zone 2 • Unit 239 (Garcia) on scene</div>
                   </div>
                 </div>
                 <div className="text-slate-400">12 min</div>
+              </div>
+              <div className="flex items-center justify-between p-2 bg-slate-800/50 rounded border border-amber-500/20">
+                <div className="flex items-center gap-3">
+                  <span className="px-2 py-0.5 bg-amber-500/20 text-amber-400 font-bold rounded">P2</span>
+                  <div>
+                    <div className="text-white font-medium">CAD #2024-128839 • Burglary - Just Occurred</div>
+                    <div className="text-slate-400">1455 Satellite Blvd, Zone 3 • Unit 244 (Patel) en route</div>
+                  </div>
+                </div>
+                <div className="text-slate-400">18 min</div>
               </div>
             </div>
           </div>
