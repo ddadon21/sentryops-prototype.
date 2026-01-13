@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Home, Users, FileText, LayoutDashboard, TrendingUp, AlertCircle, Settings, Bell, MessageCircle, Search, ChevronRight, DollarSign, CheckCircle, Shield, ShieldCheck, ThumbsUp, XCircle, Sparkles, X, Send, Menu, ChevronLeft, LogOut, Calendar, Clock, Filter, ArrowUpCircle, Download, Eye, ChevronDown, ChevronUp, Building2, Radio, Target, Info, FileCheck, TrendingDown, CheckSquare, Square, User } from 'lucide-react';
+import { Home, Users, FileText, LayoutDashboard, TrendingUp, AlertCircle, Settings, Bell, MessageCircle, Search, ChevronRight, DollarSign, CheckCircle, Shield, ShieldCheck, ThumbsUp, XCircle, Sparkles, X, Send, Menu, ChevronLeft, LogOut, Calendar, Clock, Filter, ArrowUpCircle, Download, Eye, ChevronDown, ChevronUp, Building2, Radio, Target, Info, FileCheck, TrendingDown, CheckSquare, Square, User, Package, MessageSquare } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 
@@ -56,21 +56,23 @@ export default function Approvals() {
       id: 1,
       type: 'leave',
       title: 'Leave Request',
-      submittedBy: 'Deputy Marcus Chen',
-      details: 'Annual leave: Dec 15-22',
-      division: 'Patrol Division',
+      submittedBy: 'Deputy Marcus Chen (#4103)',
+      submittedByTitle: 'Deputy Sheriff',
+      details: 'Annual leave Dec 15-22 (8 days, 64 hours)',
+      division: 'Patrol Division - A Shift',
       urgent: false,
       submittedDate: '2024-11-01',
       daysAgo: 3,
-      justification: 'Pre-planned annual leave for family vacation. All shifts covered by Deputy Rodriguez and Deputy Williams. No conflicts with major operations or events.',
+      leaveBalance: 120,
+      justification: 'Pre-planned annual leave for family vacation (Disney World, Orlando). Deputy Chen has 120 hours accrued leave (max allowable: 200 hours). Shift coverage confirmed: Deputy Rodriguez (#4087) covers Dec 15-18, Deputy Williams (#4028) covers Dec 19-22. No operational conflicts. Chen\'s zone 3 patrol assignment covered by existing A-Shift overlap. Last vacation taken: July 2024.',
       impact: {
-        approved: 'Patrol staffing at 92% during leave period. Deputy Rodriguez and Williams covering shifts. Morale boost from approved PTO.',
-        denied: 'Deputy Chen may need to reschedule family plans. Potential morale impact. Next available leave window is February 2025.'
+        approved: 'Patrol staffing at 92% during leave period. Deputy Rodriguez (#4087) and Williams (#4028) covering shifts with existing OT authorization. Morale boost from approved PTO.',
+        denied: 'Deputy Chen may need to reschedule family plans (non-refundable deposits at risk). Potential morale impact. Next available leave window is February 2025.'
       },
       aiRecommendation: {
         decision: 'approve',
         confidence: 95,
-        reasoning: 'No staffing conflicts. Coverage arranged. Within leave policy. Strong attendance record for Deputy Chen (98% in 2024).'
+        reasoning: 'Sufficient leave balance (120 hrs), adequate shift coverage confirmed, no conflicts detected with current schedule. Strong attendance record (98% in 2024).'
       },
       documents: ['Leave_Request_Form.pdf', 'Coverage_Plan.pdf'],
       relatedApprovals: []
@@ -79,63 +81,70 @@ export default function Approvals() {
       id: 2,
       type: 'budget',
       title: 'Budget Approval',
-      submittedBy: 'Training Division',
-      details: 'Q1 2025 Training Budget',
+      submittedBy: 'Training Director Martinez (#TR-005)',
+      submittedByTitle: 'Training Director',
+      details: 'Q1 2025 Training Budget ($43,000)',
       division: 'Training Division',
       urgent: true,
-      amount: 45000,
+      amount: 43000,
       submittedDate: '2024-11-02',
       daysAgo: 2,
-      justification: 'Mandatory P.O.S.T. certifications for 23 deputies expire Q1 2025. Legal requirement to maintain certification. Includes firearms re-qualification, CPR/First Aid, defensive tactics, and legal updates.',
+      approvalDeadline: '1700 hrs today',
+      justification: 'Mandatory P.O.S.T. recertifications for 23 deputies (deadline: March 31, 2025). State mandate requires completion for deputies to maintain peace officer status. Breakdown: Firearms qualification ($18K), Defensive tactics ($14K), Legal updates ($8K), CPR/First Aid ($3K). Training Division secured group rates with POST-certified vendors.',
       impact: {
-        approved: 'All 23 deputies maintain certifications. No operational disruptions. Compliance with state law. Training completed by March 31, 2025.',
-        denied: 'Deputies lose certification and cannot patrol. Potential liability exposure. Reduced field staffing by 23 officers. Violation of state requirements.'
+        approved: 'All 23 deputies maintain certifications. No operational disruptions. Compliance with GA P.O.S.T. requirements. Training completed by March 31, 2025.',
+        denied: 'Deputies lose certification and cannot patrol. Potential liability exposure. Reduced field staffing by 23 officers. Violation of state requirements. County liability for non-compliance.'
       },
       budgetImpact: {
-        amount: 45000,
+        amount: 43000,
         category: 'Training & Development',
         allocated: 180000,
         spent: 135000,
         percentUsed: 75,
-        remainingAfter: 0,
-        quarterlyBreakdown: { Q1: 45000, Q2: 0, Q3: 0, Q4: 0 }
+        remainingAfter: 2000,
+        quarterlyBreakdown: { Q1: 43000, Q2: 0, Q3: 0, Q4: 0 }
       },
       aiRecommendation: {
         decision: 'approve',
         confidence: 99,
-        reasoning: 'Critical compliance requirement. Legal mandate. Budget available. No alternative options. High risk if denied.',
-        urgencyNote: 'Deadline: Dec 20, 2024 to schedule training before certifications expire'
+        reasoning: 'Critical compliance requirement based on historical patterns, budget availability, operational priority. Legal mandate. No alternative options. High risk if denied.',
+        urgencyNote: 'Approval deadline today at 1700 hrs to meet vendor payment schedule'
       },
       documents: ['Training_Budget_Request.pdf', 'Certification_Requirements.pdf', 'Vendor_Quotes.pdf'],
-      relatedApprovals: []
+      relatedApprovals: ['Part of Q1 Training Budget (3 of 5 requests approved)'],
+      approvalChain: 'Captain → Major → Sheriff (you are: Sheriff)'
     },
     {
       id: 3,
       type: 'hiring',
       title: 'Hiring Decision',
       submittedBy: 'Jane Doe',
-      details: 'Federal Deputy Position',
-      division: 'Field Operations',
+      submittedByTitle: 'Candidate',
+      details: 'Federal Deputy Position (Court Security Division)',
+      division: 'Field Operations - Court Security',
       urgent: true,
       submittedDate: '2024-11-02',
       daysAgo: 2,
-      justification: 'Exceptional candidate - former FBI agent with 8 years federal law enforcement. Background check complete (clean). Top scorer on civil service exam (97th percentile). Fills critical vacancy in Field Operations. Offer expires Dec 18, 2024.',
+      offerExpires: 'Jan 16 (3 days)',
+      competingOffer: 'Fulton County SO ($4K higher)',
+      backgroundCleared: true,
+      justification: 'Candidate: Jane Doe, 8 years law enforcement experience (5 years Fulton County Marshal, 3 years DeKalb County SO). Certifications: P.O.S.T. certified, federal court security certified, bilingual (English/Spanish). Position vacant 47 days. Conditional offer expires Jan 16. Candidate has competing offer from Fulton County SO ($4K higher salary). Salary offered: $58,500 (within GS-7 federal pay scale equivalent). Start date proposed: Feb 1, 2025.',
       impact: {
-        approved: 'Field Operations at 100% staffing. Federal law enforcement experience strengthens investigations unit. Experienced hire reduces training costs. Immediate operational deployment.',
-        denied: 'Lose highly qualified candidate. Field Operations remains at 87% staffing. Next qualified candidate not available until March 2025. Continue overtime for current staff.'
+        approved: 'Court Security Division at 100% staffing. Federal law enforcement experience strengthens unit. Bilingual capability addresses community needs. Experienced hire reduces training costs. Immediate deployment Feb 1.',
+        denied: 'Lose highly qualified candidate to Fulton County. Court Security remains at 87% staffing. Next qualified candidate not available until March 2025. Continue overtime for current staff ($2,400/month).'
       },
       budgetImpact: {
-        amount: 78000,
+        amount: 58500,
         category: 'Personnel - Annual Salary',
-        firstYearCost: 78000,
-        benefits: 23400,
-        totalFirstYear: 101400
+        firstYearCost: 58500,
+        benefits: 17550,
+        totalFirstYear: 76050
       },
       aiRecommendation: {
         decision: 'approve',
-        confidence: 92,
-        reasoning: 'Exceptional qualifications. Critical vacancy. Budget available. Offer expires soon. Strong background check. Reduces overtime costs.',
-        urgencyNote: 'Offer expires Dec 18, 2024 (3 days)'
+        confidence: 89,
+        reasoning: 'Candidate qualifications exceed requirements, salary within range, division priority hire. Exceptional experience. Critical vacancy (47 days). Reduces overtime costs.',
+        urgencyNote: 'Conditional offer expires Jan 16 (3 days). Competing offer from Fulton County SO.'
       },
       documents: ['Resume.pdf', 'Background_Check.pdf', 'Civil_Service_Scores.pdf', 'Offer_Letter.pdf'],
       relatedApprovals: []
@@ -144,17 +153,20 @@ export default function Approvals() {
       id: 4,
       type: 'equipment',
       title: 'Equipment Purchase',
-      submittedBy: 'IT Department',
-      details: 'Body cameras upgrade',
-      division: 'Administrative Services',
+      submittedBy: 'IT Director Harrison (#IT-001)',
+      submittedByTitle: 'IT Director',
+      details: 'Body camera system upgrade (68 Axon Body 4 units)',
+      division: 'Administrative Services - IT Division',
       urgent: false,
       amount: 125000,
       submittedDate: '2024-10-28',
       daysAgo: 7,
-      justification: 'Current body cameras (purchased 2019) end-of-life December 2024. Vendor discontinuing support and cloud storage. New system offers 4K video, auto-activation, real-time streaming, and enhanced evidence management. Critical for transparency and legal protection.',
+      vendor: 'Axon',
+      pricingExpires: 'Jan 31',
+      justification: 'Current Axon Body 2 cameras (purchased 2019, 68 units) reach end-of-life Dec 31, 2024. Vendor (Axon) discontinuing cloud storage and technical support effective Jan 1, 2025. New Axon Body 4 system includes: 68 cameras ($82,450), 5-year cloud storage ($31,200), training ($6,350), extended warranty ($5,000). State compliance requires all patrol deputies have operational body cameras. Pricing locked until Jan 31 - price increases 8% Feb 1. Federal DOJ grant covers $37,500 (applied, pending approval). Net cost to county: $87,500 (or $125K if grant denied).',
       impact: {
-        approved: '85 new body cameras with 5-year warranty. 4K video quality (vs current 1080p). Auto-activation when weapon drawn. Real-time supervisor monitoring. Cloud storage for 7 years. Enhanced officer safety and accountability.',
-        denied: 'Current cameras lose vendor support Jan 1, 2025. No cloud storage after Dec 31. Potential evidence gaps. Liability risk. Technology obsolescence. May face public criticism for outdated equipment.'
+        approved: '68 new Axon Body 4 cameras with 5-year warranty. 4K video quality (vs current 1080p). Auto-activation when weapon drawn. Real-time supervisor monitoring. Cloud storage for 7 years. Enhanced officer safety and accountability.',
+        denied: 'Current cameras lose vendor support Jan 1, 2025. No cloud storage after Dec 31. Potential evidence gaps. Liability risk. Technology obsolescence. State compliance violation. Price increases 8% after Jan 31.'
       },
       budgetImpact: {
         amount: 125000,
@@ -165,13 +177,15 @@ export default function Approvals() {
         remainingAfter: 110000,
         quarterlyBreakdown: { Q1: 125000, Q2: 0, Q3: 0, Q4: 0 },
         fiveYearCost: 125000,
-        annualMaintenance: 8500
+        annualMaintenance: 8500,
+        grantOffset: 37500,
+        netCost: 87500
       },
       aiRecommendation: {
         decision: 'approve',
         confidence: 88,
-        reasoning: 'Current equipment end-of-life. Vendor support ending. Budget available. Critical for accountability and evidence. Technology upgrade enhances capabilities.',
-        considerations: 'Consider negotiating extended payment terms or phased deployment to reduce Q1 impact.'
+        reasoning: 'Mission-critical equipment, vendor pricing expires Jan 31, current system end-of-life. Budget available. Critical for accountability and evidence. State compliance requirement.',
+        considerations: 'Federal DOJ grant ($37,500) pending - net cost $87,500 if approved. Price increases 8% after Jan 31.'
       },
       documents: ['Equipment_Proposal.pdf', 'Vendor_Comparison.pdf', 'Current_System_EOL_Notice.pdf', 'Cost_Benefit_Analysis.pdf'],
       relatedApprovals: []
@@ -765,13 +779,16 @@ export default function Approvals() {
               <div className="flex gap-2 border-b border-slate-700/50">
                 <button
                   onClick={() => setActiveTab('pending')}
-                  className={`px-4 py-3 text-sm font-medium transition-all relative ${
+                  className={`px-4 py-3 text-sm font-medium transition-all relative flex items-center gap-2 ${
                     activeTab === 'pending'
                       ? 'text-amber-400'
                       : 'text-slate-400 hover:text-slate-300'
                   }`}
                 >
                   Pending
+                  <span className={`px-1.5 py-0.5 rounded text-xs ${activeTab === 'pending' ? 'bg-amber-500/20 text-amber-400' : 'bg-slate-700/50 text-slate-400'}`}>
+                    {approvalsList.length}
+                  </span>
                   {activeTab === 'pending' && (
                     <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500"></div>
                   )}
@@ -791,13 +808,16 @@ export default function Approvals() {
                 </button>
                 <button
                   onClick={() => setActiveTab('my-decisions')}
-                  className={`px-4 py-3 text-sm font-medium transition-all relative ${
+                  className={`px-4 py-3 text-sm font-medium transition-all relative flex items-center gap-2 ${
                     activeTab === 'my-decisions'
                       ? 'text-amber-400'
                       : 'text-slate-400 hover:text-slate-300'
                   }`}
                 >
                   My Decisions
+                  <span className={`px-1.5 py-0.5 rounded text-xs ${activeTab === 'my-decisions' ? 'bg-amber-500/20 text-amber-400' : 'bg-slate-700/50 text-slate-400'}`}>
+                    12
+                  </span>
                   {activeTab === 'my-decisions' && (
                     <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500"></div>
                   )}
@@ -817,53 +837,53 @@ export default function Approvals() {
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
                       {/* Urgent Items */}
-                      <div className="bg-slate-800/40 rounded-xl p-3 border border-slate-700/50">
+                      <div className="bg-slate-800/40 rounded-xl p-3 border border-red-500/30">
                         <div className="flex items-center gap-2 mb-2">
                           <div className="w-6 h-6 bg-red-500/20 rounded-lg flex items-center justify-center">
                             <AlertCircle className="w-3 h-3 text-red-400" />
                           </div>
-                          <span className="text-xs font-semibold text-slate-300">Urgent Action Needed</span>
+                          <span className="text-xs font-semibold text-red-400">Urgent Action Needed</span>
                         </div>
                         <div className="space-y-1.5">
-                          <p className="text-[10px] text-red-400">• Budget approval ($45K) - Due today</p>
-                          <p className="text-[10px] text-red-400">• Hiring decision - Offer expires in 3 days</p>
-                          <p className="text-[10px] text-amber-400">• 2 items overdue - Review immediately</p>
+                          <p className="text-[10px] text-red-400">• Budget approval required - Training Division Q1 2025 budget ($43,000) - approval deadline today at 1700 hrs to meet vendor payment schedule</p>
+                          <p className="text-[10px] text-red-400">• Hiring decision pending - Federal Deputy position (Jane Doe) - conditional offer expires Jan 16 (3 days). Candidate has competing offer from Fulton County SO.</p>
+                          <p className="text-[10px] text-amber-400">• 2 leave request conflicts - Patrol Division Dec 15-22 (Deputies Chen and Williams both requested) - immediate resolution required to maintain minimum shift coverage</p>
                         </div>
                       </div>
 
                       {/* Recommendations */}
-                      <div className="bg-slate-800/40 rounded-xl p-3 border border-slate-700/50">
+                      <div className="bg-slate-800/40 rounded-xl p-3 border border-green-500/30">
                         <div className="flex items-center gap-2 mb-2">
                           <div className="w-6 h-6 bg-green-500/20 rounded-lg flex items-center justify-center">
                             <CheckCircle className="w-3 h-3 text-green-400" />
                           </div>
-                          <span className="text-xs font-semibold text-slate-300">AI Recommendations</span>
+                          <span className="text-xs font-semibold text-green-400">AI Recommendations</span>
                         </div>
                         <div className="space-y-1.5">
-                          <p className="text-[10px] text-green-400">✅ Equipment ($125K) - Recommend approve</p>
-                          <p className="text-[10px] text-green-400">✅ Leave (Chen) - No staffing conflicts</p>
-                          <p className="text-[10px] text-slate-400">Within budget, critical needs</p>
+                          <p className="text-[10px] text-green-400"><CheckCircle className="w-2.5 h-2.5 inline mr-1" />Equipment purchase approved - Body camera upgrade ($125,000) - AI analysis: 88% confidence. Vendor pricing expires Jan 31, current cameras (2019 models) discontinued for support.</p>
+                          <p className="text-[10px] text-green-400"><CheckCircle className="w-2.5 h-2.5 inline mr-1" />Leave conflict detected - Patrol A-Shift vacation requests overlap Dec 18-24. Recommend approving Chen (requested first), suggest Williams shift dates to Jan 2-8 (same duration, no conflicts).</p>
+                          <p className="text-[10px] text-slate-300">All pending approvals within FY24 budget ($170K pending / $550K remaining). All requests meet operational necessity criteria. No budget constraints.</p>
                         </div>
                       </div>
 
                       {/* Budget Impact */}
-                      <div className="bg-slate-800/40 rounded-xl p-3 border border-slate-700/50">
+                      <div className="bg-slate-800/40 rounded-xl p-3 border border-blue-500/30">
                         <div className="flex items-center gap-2 mb-2">
                           <div className="w-6 h-6 bg-blue-500/20 rounded-lg flex items-center justify-center">
                             <DollarSign className="w-3 h-3 text-blue-400" />
                           </div>
-                          <span className="text-xs font-semibold text-slate-300">Budget Status</span>
+                          <span className="text-xs font-semibold text-blue-400">Budget Status</span>
                         </div>
                         <div className="space-y-1.5">
                           <div className="flex items-center justify-between">
-                            <span className="text-[10px] text-slate-400">If all approved:</span>
-                            <span className="text-[10px] font-bold text-blue-400">$415K</span>
+                            <span className="text-[10px] text-slate-400">Approvals today:</span>
+                            <span className="text-[10px] font-bold text-blue-400">9 processed ($387K)</span>
                           </div>
                           <div className="flex items-center justify-between">
-                            <span className="text-[10px] text-slate-400">Total budget used:</span>
-                            <span className="text-[10px] font-bold text-green-400">75%</span>
+                            <span className="text-[10px] text-slate-400">YTD spending:</span>
+                            <span className="text-[10px] font-bold text-white">$2.45M / $3.0M annual</span>
                           </div>
-                          <p className="text-[10px] text-green-400">✅ Healthy budget buffer</p>
+                          <p className="text-[10px] text-green-400"><CheckCircle className="w-2.5 h-2.5 inline mr-1" />Healthy budget buffer - 18.3% remaining ($550K) with 2 months left in FY24. Tracking 4% under projected spend.</p>
                         </div>
                       </div>
                     </div>
@@ -903,17 +923,17 @@ export default function Approvals() {
                     <AlertCircle className="w-4 h-4 text-amber-400" />
                   </div>
                   <p className="text-2xl font-bold text-white mb-1">${budgetOverview.pendingAmount.toLocaleString()}</p>
-                  <p className="text-xs text-slate-400">4 items awaiting decision</p>
+                  <p className="text-xs text-slate-400">4 items • Oldest: 7 days</p>
                 </div>
                 <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
                   <div className="flex items-center justify-between mb-1">
                     <p className="text-xs text-green-400">Approved Q4 2024</p>
                     <TrendingUp className="w-4 h-4 text-green-400" />
                   </div>
-                  <p className="text-2xl font-bold text-white mb-1">${budgetOverview.approvedQ4.toLocaleString()}</p>
+                  <p className="text-2xl font-bold text-white mb-1">$245,000</p>
                   <div className="flex items-center gap-1">
-                    <ArrowUpCircle className="w-3 h-3 text-green-400" />
-                    <p className="text-xs text-green-400">+12% vs Q3</p>
+                    <TrendingUp className="w-3 h-3 text-green-400" />
+                    <p className="text-xs text-green-400">+12% vs Q3 ($219K)</p>
                   </div>
                 </div>
                 <div className={`border rounded-lg p-4 ${
@@ -938,7 +958,7 @@ export default function Approvals() {
                     getBudgetStatusColor(budgetOverview.percentUsed) === 'red' ? 'text-red-400' :
                     getBudgetStatusColor(budgetOverview.percentUsed) === 'amber' ? 'text-amber-400' :
                     'text-green-400'
-                  }`}>{budgetOverview.percentUsed.toFixed(1)}% utilized</p>
+                  }`}>{budgetOverview.percentUsed.toFixed(1)}% utilized (2 months remaining)</p>
                 </div>
                 <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4">
                   <div className="flex items-center justify-between mb-1">
@@ -946,19 +966,22 @@ export default function Approvals() {
                     <Sparkles className="w-4 h-4 text-purple-400" />
                   </div>
                   <p className="text-2xl font-bold text-white mb-1">$385K</p>
-                  <p className="text-xs text-slate-400">Based on trends + pending</p>
+                  <p className="text-xs text-slate-400">Based on 6-month trend + current pending</p>
                 </div>
               </div>
 
               {/* Budget Utilization Bar */}
               <div className="mb-4">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm text-slate-300">FY24 Budget Utilization</span>
+                  <span className="text-sm text-slate-300">FY24 Budget Utilization (Oct 1 - Jan 13)</span>
                   <div className="flex items-center gap-2">
                     <span className="text-xs text-slate-400">
-                      ${budgetOverview.totalApprovedThisYear.toLocaleString()} / ${budgetOverview.totalBudget.toLocaleString()}
+                      ${budgetOverview.totalApprovedThisYear.toLocaleString()} / ${budgetOverview.totalBudget.toLocaleString()} allocated
                     </span>
+                    <span className="text-xs text-slate-500">|</span>
                     <span className="text-sm font-bold text-white">{budgetOverview.percentUsed.toFixed(1)}%</span>
+                    <span className="text-xs text-slate-500">|</span>
+                    <span className="text-xs text-green-400">${budgetOverview.remainingBudget.toLocaleString()} remaining</span>
                   </div>
                 </div>
                 <div className="w-full h-3 bg-slate-700/50 rounded-full overflow-hidden">
@@ -1096,7 +1119,7 @@ export default function Approvals() {
                         filterType === 'all' ? 'bg-amber-500 text-white' : 'bg-slate-800/40 text-slate-300 hover:bg-slate-800/60'
                       }`}
                     >
-                      All
+                      All ({approvalsList.length})
                     </button>
                     <button
                       onClick={() => setFilterType('urgent')}
@@ -1104,7 +1127,7 @@ export default function Approvals() {
                         filterType === 'urgent' ? 'bg-amber-500 text-white' : 'bg-slate-800/40 text-slate-300 hover:bg-slate-800/60'
                       }`}
                     >
-                      Urgent
+                      Urgent ({urgentCount})
                     </button>
                     <button
                       onClick={() => setFilterType('leave')}
@@ -1112,7 +1135,7 @@ export default function Approvals() {
                         filterType === 'leave' ? 'bg-amber-500 text-white' : 'bg-slate-800/40 text-slate-300 hover:bg-slate-800/60'
                       }`}
                     >
-                      Leave Requests
+                      Leave ({approvalsList.filter(a => a.type === 'leave').length})
                     </button>
                     <button
                       onClick={() => setFilterType('budget')}
@@ -1120,7 +1143,7 @@ export default function Approvals() {
                         filterType === 'budget' ? 'bg-amber-500 text-white' : 'bg-slate-800/40 text-slate-300 hover:bg-slate-800/60'
                       }`}
                     >
-                      Budget
+                      Budget ({approvalsList.filter(a => a.type === 'budget').length})
                     </button>
                     <button
                       onClick={() => setFilterType('hiring')}
@@ -1128,7 +1151,7 @@ export default function Approvals() {
                         filterType === 'hiring' ? 'bg-amber-500 text-white' : 'bg-slate-800/40 text-slate-300 hover:bg-slate-800/60'
                       }`}
                     >
-                      Hiring
+                      Hiring ({approvalsList.filter(a => a.type === 'hiring').length})
                     </button>
                     <button
                       onClick={() => setFilterType('equipment')}
@@ -1136,7 +1159,7 @@ export default function Approvals() {
                         filterType === 'equipment' ? 'bg-amber-500 text-white' : 'bg-slate-800/40 text-slate-300 hover:bg-slate-800/60'
                       }`}
                     >
-                      Equipment
+                      Equipment ({approvalsList.filter(a => a.type === 'equipment').length})
                     </button>
                   </div>
 
@@ -1145,9 +1168,9 @@ export default function Approvals() {
                     onChange={(e) => setSortBy(e.target.value)}
                     className="px-4 py-2 bg-slate-800/40 border border-slate-700/50 rounded-lg text-white text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer"
                   >
-                    <option value="recent">Most Recent</option>
-                    <option value="oldest">Oldest First</option>
-                    <option value="priority">By Priority</option>
+                    <option value="recent">Sort by: Most Recent</option>
+                    <option value="oldest">Sort by: Oldest First</option>
+                    <option value="priority">Sort by: Priority</option>
                   </select>
                 </div>
 
@@ -1213,7 +1236,8 @@ export default function Approvals() {
                         ) : (
                           <Square className="w-4 h-4" />
                         )}
-                        <span>Select all</span>
+                        <span className="font-medium">Select all</span>
+                        <span className="text-slate-500">({filteredApprovals.length} items)</span>
                       </button>
                     </div>
 
@@ -1265,51 +1289,104 @@ export default function Approvals() {
                                       )}
                                     </div>
                                     <p className="text-sm text-slate-300 mb-2">
-                                      <span className="font-medium">{approval.submittedBy}</span> • {approval.details}
+                                      <span className="font-semibold">{approval.submittedBy}</span> • {approval.details}
                                     </p>
-                                    <div className="flex items-center gap-4 text-xs text-slate-400 flex-wrap">
+                                    <div className="flex items-center gap-3 text-xs text-slate-400 flex-wrap">
                                       <span className="flex items-center gap-1">
-                                        <FileText className="w-3 h-3" />
+                                        <Building2 className="w-3.5 h-3.5" />
                                         {approval.division}
                                       </span>
+                                      <span className="text-slate-600">|</span>
                                       <span className="flex items-center gap-1">
-                                        <Clock className="w-3 h-3" />
+                                        <Clock className="w-3.5 h-3.5" />
                                         {approval.daysAgo} days ago
                                       </span>
                                       {approval.amount && (
-                                        <span className="flex items-center gap-1 text-green-400 font-semibold">
-                                          <DollarSign className="w-3 h-3" />
-                                          {approval.amount.toLocaleString()}
-                                        </span>
+                                        <>
+                                          <span className="text-slate-600">|</span>
+                                          <span className="flex items-center gap-1 text-green-400 font-semibold">
+                                            <DollarSign className="w-3.5 h-3.5" />
+                                            ${approval.amount.toLocaleString()}
+                                          </span>
+                                        </>
                                       )}
                                       {approval.documents && (
-                                        <span className="flex items-center gap-1">
-                                          <FileCheck className="w-3 h-3" />
-                                          {approval.documents.length} documents
-                                        </span>
+                                        <>
+                                          <span className="text-slate-600">|</span>
+                                          <span className="flex items-center gap-1">
+                                            <FileText className="w-3.5 h-3.5" />
+                                            {approval.documents.length} documents
+                                          </span>
+                                        </>
+                                      )}
+                                      {approval.leaveBalance && (
+                                        <>
+                                          <span className="text-slate-600">|</span>
+                                          <span className="flex items-center gap-1">
+                                            <Calendar className="w-3.5 h-3.5" />
+                                            Leave balance: {approval.leaveBalance} hrs
+                                          </span>
+                                        </>
+                                      )}
+                                      {approval.backgroundCleared && (
+                                        <>
+                                          <span className="text-slate-600">|</span>
+                                          <span className="flex items-center gap-1 text-green-400">
+                                            <Shield className="w-3.5 h-3.5" />
+                                            Background cleared
+                                          </span>
+                                        </>
+                                      )}
+                                      {approval.vendor && (
+                                        <>
+                                          <span className="text-slate-600">|</span>
+                                          <span className="flex items-center gap-1">
+                                            <Package className="w-3.5 h-3.5" />
+                                            Vendor: {approval.vendor}
+                                          </span>
+                                        </>
                                       )}
                                     </div>
+                                    {approval.submittedByTitle && (
+                                      <p className="text-xs text-slate-500 mt-2">
+                                        Submitted by: {approval.submittedBy.split(' (')[0]} ({approval.submittedByTitle})
+                                      </p>
+                                    )}
+                                    {approval.approvalChain && (
+                                      <p className="text-xs text-slate-500 mt-1">
+                                        Approval chain: {approval.approvalChain}
+                                      </p>
+                                    )}
                                   </div>
                                 </div>
 
                                 {/* AI Recommendation Badge */}
                                 {approval.aiRecommendation && (
-                                  <div className={`mb-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border ${
-                                    approval.aiRecommendation.decision === 'approve'
-                                      ? 'bg-green-500/10 border-green-500/30'
-                                      : 'bg-red-500/10 border-red-500/30'
-                                  }`}>
-                                    <Sparkles className={`w-4 h-4 ${
-                                      approval.aiRecommendation.decision === 'approve' ? 'text-green-400' : 'text-red-400'
-                                    }`} />
-                                    <span className={`text-xs font-bold ${
-                                      approval.aiRecommendation.decision === 'approve' ? 'text-green-400' : 'text-red-400'
-                                    }`}>
-                                      AI Recommends: {approval.aiRecommendation.decision.toUpperCase()}
-                                    </span>
-                                    <span className="text-xs text-slate-400">
-                                      ({approval.aiRecommendation.confidence}% confidence)
-                                    </span>
+                                  <div className={`mb-3 flex flex-col gap-1`}>
+                                    <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border animate-pulse-subtle ${
+                                      approval.aiRecommendation.decision === 'approve'
+                                        ? 'bg-green-500/10 border-green-500/30'
+                                        : 'bg-red-500/10 border-red-500/30'
+                                    }`} style={{ animation: 'pulse-subtle 3s ease-in-out infinite' }}>
+                                      <Sparkles className={`w-4 h-4 ${
+                                        approval.aiRecommendation.decision === 'approve' ? 'text-green-400' : 'text-red-400'
+                                      }`} />
+                                      <span className={`text-xs font-bold ${
+                                        approval.aiRecommendation.decision === 'approve' ? 'text-green-400' : 'text-red-400'
+                                      }`}>
+                                        AI Recommends: {approval.aiRecommendation.decision.toUpperCase()}
+                                      </span>
+                                      <span className={`text-xs font-semibold ${
+                                        approval.aiRecommendation.confidence >= 90 ? 'text-green-400' :
+                                        approval.aiRecommendation.confidence >= 75 ? 'text-yellow-400' :
+                                        'text-orange-400'
+                                      }`}>
+                                        ({approval.aiRecommendation.confidence}% confidence)
+                                      </span>
+                                    </div>
+                                    <p className="text-[10px] text-slate-500 ml-1">
+                                      {approval.aiRecommendation.reasoning.substring(0, 100)}...
+                                    </p>
                                   </div>
                                 )}
 
