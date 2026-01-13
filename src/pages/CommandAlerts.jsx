@@ -81,51 +81,51 @@ export default function CommandAlerts() {
       id: 1,
       severity: 'critical',
       category: 'personnel',
-      title: 'Critical Staffing Shortage - Night Shift',
-      description: 'Night shift patrol is 4 deputies below minimum safe staffing levels. Immediate action required.',
-      timestamp: '2024-11-04T02:15:00',
-      location: 'Patrol Division - Night Shift',
-      assignedTo: 'Major Davis',
+      title: 'Critical Staffing Shortage - B-Shift Patrol',
+      description: 'B-Shift patrol operating at 9/12 deputies (75%) - 3 deputies below minimum safe staffing. 2 FMLA absences, 1 workers comp, 1 emergency leave. Two zones currently single-officer patrol (zones 4, 7).',
+      timestamp: new Date(Date.now() - 18 * 60 * 60 * 1000).toISOString(),
+      location: 'Patrol Division - B Shift',
+      assignedTo: 'Patrol Major Davis (#2087)',
       status: 'active',
-      impact: 'High - Public safety risk',
-      recommendations: ['Mandatory overtime authorization', 'Request mutual aid', 'Shift coverage from adjacent zones'],
+      impact: 'High - Public safety risk • Single-officer zones create officer safety concern and delayed backup response. Standard is 2-officer minimum for residential zones.',
+      recommendations: ['Authorize mandatory OT - 6 hours coverage needed ($312 cost)', 'Request mutual aid - Lawrenceville PD or Duluth PD for zone 4 coverage', 'Shift coverage from adjacent zones - Zone 3 units can overlap into zone 7'],
       relatedData: {
         required: 12,
-        current: 8,
-        shortage: 4
+        current: 9,
+        shortage: 3
       }
     },
     {
       id: 2,
       severity: 'high',
       category: 'compliance',
-      title: 'Multiple Certifications Expiring This Week',
-      description: '8 deputies have critical certifications (P.O.S.T., Firearms) expiring within 7 days.',
-      timestamp: '2024-11-04T08:30:00',
-      location: 'Multiple Divisions',
-      assignedTo: 'Training Division',
+      title: 'Multiple Deputy Certifications Expiring - Q4 Deadline',
+      description: '23 deputies have not completed mandatory Q4 training with 4 weeks until Dec 31 deadline. Training Division coordinating makeup sessions. Breakdown: Patrol (15 deputies), Detention (6 officers), Investigations (2 detectives). Primary gaps: defensive tactics refresher, emergency response procedures.',
+      timestamp: new Date(Date.now() - 12 * 24 * 60 * 60 * 1000).toISOString(),
+      location: 'Multiple Divisions (Patrol: 15, Detention: 6, Investigations: 2)',
+      assignedTo: 'Training Director Martinez (#TR-005)',
       status: 'active',
-      impact: 'Medium - Operational capacity',
-      recommendations: ['Schedule emergency training sessions', 'Notify affected personnel', 'Temporary duty reassignment if needed'],
-      affectedPersonnel: ['Deputy Johnson', 'Deputy Martinez', 'Deputy Chen', 'Sgt. Williams', '4 others']
+      impact: 'Medium - Operational capacity • Deputies cannot work assigned roles without current certifications. State mandate requires completion by Dec 31.',
+      recommendations: ['Schedule makeup sessions - 3 firearms range dates (Dec 18, 19, 20) already booked', 'Send reminder notifications - automated email + supervisor follow-up', 'Track completion rates - weekly dashboard updates to command staff'],
+      affectedPersonnel: ['Deputy Johnson (#4167)', 'Deputy Martinez (#4521)', 'Deputy Chen (#4103)', 'Sgt. Williams (#4028)', '19 others']
     },
     {
       id: 3,
       severity: 'high',
       category: 'equipment',
       title: 'Fleet Maintenance - Multiple Vehicles Out of Service',
-      description: '6 patrol vehicles are currently out of service due to maintenance issues. Fleet capacity at 85%.',
-      timestamp: '2024-11-04T06:45:00',
+      description: '6 patrol vehicles currently out of service due to maintenance issues. Fleet operating at 56/65 units (86% capacity). 3 units awaiting transmission repairs (estimated return: Jan 20), 2 units in collision repair (insurance claims processing), 1 unit state inspection overdue.',
+      timestamp: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000).toISOString(),
       location: 'Fleet Maintenance',
-      assignedTo: 'Support Services',
+      assignedTo: 'Fleet Manager Anderson (#FLT-002)',
       status: 'active',
-      impact: 'Medium - Reduced patrol coverage',
-      recommendations: ['Expedite critical repairs', 'Deploy reserve vehicles', 'Coordinate vehicle sharing between shifts'],
+      impact: 'Medium - Reduced patrol coverage • 86% capacity acceptable but leaves no margin for additional breakdowns. Units averaging 87K miles (above 75K replacement threshold).',
+      recommendations: ['Expedite critical repairs - authorize overtime for mechanics ($840 for weekend work)', 'Deploy reserve vehicles - 2 administrative units reassigned to patrol temporarily', 'Coordinate shift vehicle sharing - A/B shift overlap allows 3 units to double-duty'],
       relatedData: {
-        totalVehicles: 128,
-        inService: 109,
+        totalVehicles: 65,
+        inService: 56,
         maintenance: 6,
-        reserve: 13
+        reserve: 3
       }
     },
     {
@@ -133,18 +133,18 @@ export default function CommandAlerts() {
       severity: 'medium',
       category: 'budget',
       title: 'Budget Threshold Alert - Patrol Division Overtime',
-      description: 'Patrol Division overtime spending has reached 92% of quarterly allocation with 3 weeks remaining.',
-      timestamp: '2024-11-04T09:00:00',
+      description: 'Patrol Division overtime spending at 126% of quarterly allocation ($78K spent / $62K budgeted) with 3 weeks remaining in quarter. Current trend projects $94K total spend by quarter end ($32K overage). Primary drivers: B-Shift staffing shortage (62% of OT), special events (22%), training backfill (16%).',
+      timestamp: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000).toISOString(),
       location: 'Patrol Division',
-      assignedTo: 'Deputy Chief Jones',
+      assignedTo: 'Deputy Chief Jones (#1005) + Budget Director',
       status: 'active',
-      impact: 'Medium - Budget overrun risk',
-      recommendations: ['Review and approve additional funds', 'Implement overtime restrictions', 'Analyze root causes'],
+      impact: 'Medium - Budget overrun risk • Continued OT spending unsustainable. Analysis shows hiring 2 full-time deputies would reduce annual net cost by $41K (salary + benefits vs projected OT trend).',
+      recommendations: ['Review budget reallocation options - transfer $35K from training budget underspend', 'Implement OT approval threshold - all requests >4 hrs require Patrol Captain approval', 'Accelerate hiring timeline - move 2 deputy positions from Q2 to Q1 hiring cycle'],
       relatedData: {
-        allocated: 125000,
-        spent: 115000,
-        remaining: 10000,
-        projectedNeed: 18000
+        allocated: 62000,
+        spent: 78000,
+        remaining: -16000,
+        projectedNeed: 94000
       }
     },
     {
@@ -152,13 +152,13 @@ export default function CommandAlerts() {
       severity: 'medium',
       category: 'facilities',
       title: 'Detention Capacity Warning',
-      description: 'Detention center at 91.5% capacity. Approaching maximum operational threshold.',
-      timestamp: '2024-11-04T07:20:00',
+      description: 'Detention center at 91.5% capacity (842/920 beds). Current trend projects 95% capacity by Friday. H2-Pod at 113% capacity (36/32 beds) - 4 inmates on emergency mattresses. Medical transports scheduled tonight: 2 inmates to Gwinnett Medical Center for routine care.',
+      timestamp: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
       location: 'Gwinnett County Detention Center',
-      assignedTo: 'Major Wilson',
+      assignedTo: 'Detention Major Wilson (#2145)',
       status: 'active',
-      impact: 'Medium - Capacity constraints',
-      recommendations: ['Coordinate with courts for expedited hearings', 'Review early release candidates', 'Prepare overflow protocols'],
+      impact: 'Medium - Capacity constraints • Over 95% capacity triggers operational restrictions per ACA standards. Booking delays may be required if trend continues. Court coordination needed for early release candidates.',
+      recommendations: ['Coordinate expedited court hearings - contact Superior Court admin for Jan 15-17 docket additions', 'Review early release list - 18 inmates eligible for time-served release pending judge approval', 'Activate overflow protocols - E-Pod (medical) can absorb 6 non-medical inmates if needed'],
       relatedData: {
         capacity: 920,
         current: 842,
@@ -170,74 +170,74 @@ export default function CommandAlerts() {
       severity: 'low',
       category: 'training',
       title: 'Quarterly Training Requirements - Q4 Deadline',
-      description: '23 personnel have not completed mandatory Q4 training with 4 weeks until deadline.',
-      timestamp: '2024-11-04T10:15:00',
+      description: '23 personnel have not completed mandatory Q4 training with 4 weeks until Dec 31 deadline. Training Division coordinating makeup sessions. Breakdown: Patrol (15 deputies), Detention (6 officers), Investigations (2 detectives). Primary gaps: defensive tactics refresher, emergency response procedures.',
+      timestamp: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
       location: 'Training Division',
-      assignedTo: 'Training Division',
+      assignedTo: 'Training Director Martinez (#TR-005)',
       status: 'active',
-      impact: 'Low - Compliance tracking',
-      recommendations: ['Send reminder notifications', 'Schedule makeup sessions', 'Monitor completion rates'],
+      impact: 'Low - Compliance tracking • Deputies cannot work assigned roles without current certifications. State mandate requires completion by Dec 31.',
+      recommendations: ['Send reminder notifications - automated email to affected personnel + supervisor follow-up', 'Schedule makeup sessions - 3 available dates (Dec 18, 19, 20)', 'Monitor completion rates - weekly dashboard updates to command staff'],
       affectedCount: 23
     },
     {
       id: 7,
       severity: 'info',
       category: 'operations',
-      title: 'Special Event - High School Football Game',
-      description: 'Large attendance expected at regional championship. Extra patrol requested.',
-      timestamp: '2024-11-04T11:00:00',
-      location: 'Gwinnett Stadium',
-      assignedTo: 'Patrol Division',
+      title: 'Special Event - Regional Championship Football Game',
+      description: 'Regional championship football game at Gwinnett Stadium Friday 7:30 PM. Expected attendance: 8,000-10,000. Event coordinator requesting 4 additional patrol units for traffic control and crowd management. Standard event rate: $52/hr per unit (4 hrs estimated).',
+      timestamp: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+      location: 'Gwinnett Stadium (5575 Sugarloaf Pkwy)',
+      assignedTo: 'Patrol Captain Rodriguez (#3042) + Event Coordinator',
       status: 'active',
-      impact: 'Info - Resource allocation',
-      recommendations: ['Deploy 4 additional officers', 'Coordinate with event security', 'Traffic control plan'],
-      eventDate: '2024-11-08T19:00:00',
-      expectedAttendance: 8500
+      impact: 'Info - Resource allocation • Standard community event. No unusual risk factors. School resource officers already assigned. Additional units for traffic flow only.',
+      recommendations: ['Deploy 4 additional units - authorize OT for A-Shift overlap (1800-2200 hrs), estimated cost $832', 'Coordinate with school security - joint briefing Thursday 1600 hrs at stadium', 'Activate traffic plan - pre-positioned units at Sugarloaf/Satellite intersection (primary congestion point)'],
+      eventDate: '2025-01-17T19:30:00',
+      expectedAttendance: 9000
     },
     {
       id: 8,
       severity: 'critical',
       category: 'equipment',
       title: 'Body Camera System Malfunction',
-      description: 'Primary body camera server experiencing issues. 45 cameras unable to upload footage.',
-      timestamp: '2024-11-03T22:30:00',
+      description: 'Primary body camera server experienced issues. 47 cameras (68% of patrol fleet) unable to upload footage. State compliance violation if not resolved within 24 hours.',
+      timestamp: new Date(Date.now() - 28 * 60 * 60 * 1000).toISOString(),
       location: 'IT Department',
-      assignedTo: 'IT Department',
+      assignedTo: 'IT Director (#IT-001)',
       status: 'resolved',
       impact: 'High - Evidence integrity risk',
-      resolution: 'Server backup restored. All cameras now syncing properly. No footage lost.',
-      resolvedAt: '2024-11-04T03:15:00',
-      resolvedBy: 'IT Team Lead'
+      resolution: 'Server backup restored at 03:15. All 47 cameras now syncing properly. Backlog cleared by 06:00. No footage lost. Root cause: storage array failure - replacement ordered.',
+      resolvedAt: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
+      resolvedBy: 'IT Team Lead Harrison (#IT-003)'
     },
     {
       id: 9,
       severity: 'high',
       category: 'personnel',
       title: 'FMLA Request - Investigations Supervisor',
-      description: 'Lt. Garcia requesting 6-week FMLA leave. Coverage plan needed for Special Investigations unit.',
-      timestamp: '2024-11-03T14:20:00',
+      description: 'Lt. Garcia (#3156) requesting 6-week FMLA leave effective Jan 20. Coverage plan needed for Special Investigations unit (8 detectives, 2 active major cases).',
+      timestamp: new Date(Date.now() - 36 * 60 * 60 * 1000).toISOString(),
       location: 'Investigations Division',
-      assignedTo: 'Captain Johnson',
+      assignedTo: 'Captain Johnson (#2034)',
       status: 'resolved',
       impact: 'Medium - Leadership continuity',
-      resolution: 'Temporary supervisor assigned. Sgt. Thompson to act as interim supervisor. Training transition scheduled.',
-      resolvedAt: '2024-11-04T09:30:00',
-      resolvedBy: 'Captain Johnson'
+      resolution: 'Temporary supervisor assigned. Sgt. Thompson (#4089) to act as interim supervisor. Training transition completed Dec 10. Active cases reassigned to maintain continuity.',
+      resolvedAt: new Date(Date.now() - 20 * 60 * 60 * 1000).toISOString(),
+      resolvedBy: 'Captain Johnson (#2034)'
     },
     {
       id: 10,
       severity: 'medium',
       category: 'compliance',
       title: 'Annual Use of Force Policy Review Due',
-      description: 'Annual review and update of Use of Force policy required by state mandate.',
-      timestamp: '2024-11-03T08:00:00',
+      description: 'Annual review and update of Use of Force policy required by state mandate (GA POST Rule 464-5-.03). Current policy SOP-127 last updated Jan 2024. Review deadline: Dec 31.',
+      timestamp: new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString(),
       location: 'Policy Division',
-      assignedTo: 'Chief Deputy Anderson',
+      assignedTo: 'Chief Deputy Anderson (#1002)',
       status: 'resolved',
       impact: 'Medium - Compliance requirement',
-      resolution: 'Policy review completed and approved. Updated policy distributed to all personnel. Training scheduled for next month.',
-      resolvedAt: '2024-11-04T16:45:00',
-      resolvedBy: 'Chief Deputy Anderson'
+      resolution: 'Policy review completed and approved Dec 8. Updated policy SOP-127-R1 distributed to all personnel via PowerDMS. Mandatory acknowledgment required by Dec 20. In-service training scheduled for Jan briefings.',
+      resolvedAt: new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString(),
+      resolvedBy: 'Chief Deputy Anderson (#1002)'
     }
   ]);
 
@@ -796,7 +796,7 @@ export default function CommandAlerts() {
                 <Sparkles className="w-6 h-6 text-amber-400" />
                 <h3 className="text-xl font-bold text-white">AI Insights</h3>
               </div>
-              
+
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                 {/* CRITICAL Section */}
                 <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-4">
@@ -806,12 +806,12 @@ export default function CommandAlerts() {
                   </div>
                   <ul className="space-y-2 text-sm text-slate-200">
                     <li className="flex items-start gap-2">
-                      <span className="text-red-400 mt-1">•</span>
-                      <span>Night shift patrol at dangerous staffing level - immediate action required</span>
+                      <AlertCircle className="w-3 h-3 text-red-400 mt-1 flex-shrink-0" />
+                      <span><strong>B-Shift patrol at 75% staffing (9/12 deputies)</strong> - immediate OT authorization required. 2 zones single-officer (zones 4, 7). Safety minimum compromised.</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-red-400 mt-1">•</span>
-                      <span>Body camera system malfunction requires immediate resolution</span>
+                      <AlertCircle className="w-3 h-3 text-red-400 mt-1 flex-shrink-0" />
+                      <span><strong>Body camera system failure</strong> - 47 units affected (68% of patrol fleet). State compliance violation. Emergency IT response dispatched.</span>
                     </li>
                   </ul>
                 </div>
@@ -824,16 +824,16 @@ export default function CommandAlerts() {
                   </div>
                   <ul className="space-y-2 text-sm text-slate-200">
                     <li className="flex items-start gap-2">
-                      <span className="text-amber-400 mt-1">•</span>
-                      <span>8 deputies with expiring certifications - monitor training schedules</span>
+                      <Clock className="w-3 h-3 text-amber-400 mt-1 flex-shrink-0" />
+                      <span><strong>8 deputies with expiring certifications</strong> (P.O.S.T., Firearms) - expirations within 7 days. Training Division notified to schedule makeup sessions.</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-amber-400 mt-1">•</span>
-                      <span>Patrol overtime on track to exceed budget - recommend review</span>
+                      <DollarSign className="w-3 h-3 text-amber-400 mt-1 flex-shrink-0" />
+                      <span><strong>Patrol OT at 126% of quarterly budget</strong> ($78K/$62K allocated) - trend projects $94K overage by Q4. Hiring 2 deputies would net $41K annual savings.</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-amber-400 mt-1">•</span>
-                      <span>Fleet capacity at 85% - monitor maintenance schedule</span>
+                      <Zap className="w-3 h-3 text-amber-400 mt-1 flex-shrink-0" />
+                      <span><strong>Fleet at 85% operational capacity</strong> (56/65 units available) - 6 units in maintenance, 3 awaiting parts. Expected return: 4 units by Friday.</span>
                     </li>
                   </ul>
                 </div>
@@ -846,16 +846,16 @@ export default function CommandAlerts() {
                   </div>
                   <ul className="space-y-2 text-sm text-slate-200">
                     <li className="flex items-start gap-2">
-                      <span className="text-green-400 mt-1">•</span>
-                      <span>3 alerts resolved in last 24 hours</span>
+                      <CheckCircle className="w-3 h-3 text-green-400 mt-1 flex-shrink-0" />
+                      <span><strong>3 alerts resolved in last 24 hours</strong> - avg resolution time: 8.2 hours (within target)</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-green-400 mt-1">•</span>
-                      <span>All critical systems operational</span>
+                      <CheckCircle className="w-3 h-3 text-green-400 mt-1 flex-shrink-0" />
+                      <span><strong>All critical systems operational</strong> - CAD, RMS, detention management, radio infrastructure at 100%</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-green-400 mt-1">•</span>
-                      <span>Response times within normal parameters</span>
+                      <CheckCircle className="w-3 h-3 text-green-400 mt-1 flex-shrink-0" />
+                      <span><strong>Response times within target</strong> - Priority 1: avg 4.2 min (target &lt;5 min), Priority 2: avg 9.8 min (target &lt;12 min)</span>
                     </li>
                   </ul>
                 </div>
@@ -870,7 +870,7 @@ export default function CommandAlerts() {
                   className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-sm font-medium transition-all flex items-center gap-2"
                 >
                   <CheckCircle2 className="w-4 h-4" />
-                  Acknowledge All
+                  Acknowledge All Active ({activeAlerts.length})
                 </button>
                 
                 <select
@@ -941,6 +941,7 @@ export default function CommandAlerts() {
                 </div>
                 <p className="text-2xl font-bold text-white mb-1">{activeAlerts.length}</p>
                 <p className="text-sm text-slate-400">Active Alerts</p>
+                <p className="text-xs text-slate-500 mt-1">Avg age: 18 hrs</p>
               </div>
 
               <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
@@ -951,6 +952,7 @@ export default function CommandAlerts() {
                 </div>
                 <p className="text-2xl font-bold text-white mb-1">{alerts.filter(a => a.status === 'resolved').length}</p>
                 <p className="text-sm text-slate-400">Resolved Today</p>
+                <p className="text-xs text-slate-500 mt-1">8.2 hr avg resolution</p>
               </div>
             </div>
 
@@ -985,7 +987,7 @@ export default function CommandAlerts() {
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
                 <input
                   type="text"
-                  placeholder="Search alerts..."
+                  placeholder="Search by keyword, division, or responsible person..."
                   className="w-full pl-12 pr-4 py-2.5 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
                 />
               </div>
