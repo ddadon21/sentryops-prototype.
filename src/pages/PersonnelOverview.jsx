@@ -315,10 +315,10 @@ export default function PersonnelOverview() {
   };
 
   const stats = {
-    total: personnel.length,
-    onDuty: personnel.filter(p => p.status === 'on-duty').length,
-    expiring: personnel.reduce((acc, p) => acc + p.certifications.filter(c => c.status === 'expiring' || c.status === 'expired').length, 0),
-    openPositions: 8
+    total: 170,
+    onDuty: 127,
+    expiring: 23,
+    openPositions: 12
   };
 
   return (
@@ -360,11 +360,11 @@ export default function PersonnelOverview() {
                             <ul className="space-y-2 text-sm text-slate-300">
                               <li className="flex items-start gap-2">
                                 <AlertCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
-                                <span>3 personnel have certifications expiring within 30 days - <span className="text-red-400 font-semibold">Schedule renewals immediately</span></span>
+                                <span>17 personnel have certifications expiring within 30 days - <span className="text-red-400 font-semibold">Schedule renewals immediately</span></span>
                               </li>
                               <li className="flex items-start gap-2">
                                 <Shield className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
-                                <span>Patrol division at 85% staffing - Consider reassignment or approve overtime</span>
+                                <span>Patrol division at 94% staffing - 4 open positions require overtime approval</span>
                               </li>
                             </ul>
                           </div>
@@ -378,15 +378,15 @@ export default function PersonnelOverview() {
                             <ul className="space-y-2 text-sm text-slate-300">
                               <li className="flex items-start gap-2">
                                 <Clock className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
-                                <span>5 certifications expiring within 60 days total</span>
+                                <span>23 certifications expiring within 60 days total</span>
                               </li>
                               <li className="flex items-start gap-2">
                                 <Users className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
-                                <span>8 open positions (prioritize: 3 Patrol, 2 Detention)</span>
+                                <span>12 open positions (prioritize: 4 Patrol, 3 Detention)</span>
                               </li>
                               <li className="flex items-start gap-2">
                                 <Award className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
-                                <span>Average years of service: 7.2 years (healthy mix)</span>
+                                <span>Average years of service: 8.4 years (experienced workforce)</span>
                               </li>
                             </ul>
                           </div>
@@ -400,15 +400,15 @@ export default function PersonnelOverview() {
                             <ul className="space-y-2 text-sm text-slate-300">
                               <li className="flex items-start gap-2">
                                 <CheckCircle className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
-                                <span>9 of 12 on duty (75% - good coverage)</span>
+                                <span>127 of 170 on duty (75% - optimal coverage)</span>
                               </li>
                               <li className="flex items-start gap-2">
                                 <TrendingDown className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
-                                <span>Turnover rate: 8% (below industry avg of 12%)</span>
+                                <span>Turnover rate: 6.5% (below industry avg of 12%)</span>
                               </li>
                               <li className="flex items-start gap-2">
                                 <Activity className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
-                                <span>Certification compliance: 83% current</span>
+                                <span>Certification compliance: 86% current</span>
                               </li>
                             </ul>
                           </div>
@@ -550,23 +550,23 @@ export default function PersonnelOverview() {
                         <div className="space-y-2">
                           <div className="flex justify-between text-sm">
                             <span className="text-slate-400">Patrol:</span>
-                            <span className="text-amber-400 font-medium">5/8 positions (63%) 🔴</span>
+                            <span className="text-emerald-400 font-medium flex items-center gap-1">64/68 positions (94%) <CheckCircle className="w-3 h-3 text-emerald-400" /></span>
                           </div>
                           <div className="flex justify-between text-sm">
                             <span className="text-slate-400">Investigations:</span>
-                            <span className="text-amber-400 font-medium">2/3 positions (67%) 🟡</span>
+                            <span className="text-emerald-400 font-medium flex items-center gap-1">22/24 positions (92%) <CheckCircle className="w-3 h-3 text-emerald-400" /></span>
                           </div>
                           <div className="flex justify-between text-sm">
                             <span className="text-slate-400">Detention:</span>
-                            <span className="text-red-400 font-medium">3/5 positions (60%) 🔴</span>
+                            <span className="text-amber-400 font-medium flex items-center gap-1">49/52 positions (94%) <Clock className="w-3 h-3 text-amber-400" /></span>
                           </div>
                           <div className="flex justify-between text-sm">
                             <span className="text-slate-400">Dispatch:</span>
-                            <span className="text-red-400 font-medium">1/2 positions (50%) 🔴</span>
+                            <span className="text-amber-400 font-medium flex items-center gap-1">24/26 positions (92%) <Clock className="w-3 h-3 text-amber-400" /></span>
                           </div>
                           <div className="flex justify-between text-sm">
                             <span className="text-slate-400">School Resource:</span>
-                            <span className="text-amber-400 font-medium">1/2 positions (50%) 🔴</span>
+                            <span className="text-emerald-400 font-medium flex items-center gap-1">11/12 positions (92%) <CheckCircle className="w-3 h-3 text-emerald-400" /></span>
                           </div>
                         </div>
                       </div>
@@ -577,23 +577,23 @@ export default function PersonnelOverview() {
                         <div className="space-y-2">
                           <div className="flex justify-between text-sm">
                             <span className="text-slate-400">0-2 years:</span>
-                            <span className="text-white font-medium">2 personnel (17%)</span>
+                            <span className="text-white font-medium">22 personnel (13%)</span>
                           </div>
                           <div className="flex justify-between text-sm">
                             <span className="text-slate-400">3-5 years:</span>
-                            <span className="text-white font-medium">4 personnel (33%)</span>
+                            <span className="text-white font-medium">41 personnel (24%)</span>
                           </div>
                           <div className="flex justify-between text-sm">
                             <span className="text-slate-400">6-10 years:</span>
-                            <span className="text-white font-medium">4 personnel (33%)</span>
+                            <span className="text-white font-medium">58 personnel (34%)</span>
                           </div>
                           <div className="flex justify-between text-sm">
                             <span className="text-slate-400">10+ years:</span>
-                            <span className="text-white font-medium">2 personnel (17%)</span>
+                            <span className="text-white font-medium">49 personnel (29%)</span>
                           </div>
                           <div className="flex justify-between text-sm pt-2 border-t border-slate-700">
                             <span className="text-slate-400">Avg years:</span>
-                            <span className="text-emerald-400 font-semibold">7.2 years ✅</span>
+                            <span className="text-emerald-400 font-semibold flex items-center gap-1">8.4 years <CheckCircle className="w-3 h-3 text-emerald-400" /></span>
                           </div>
                         </div>
                       </div>
@@ -604,19 +604,19 @@ export default function PersonnelOverview() {
                         <div className="space-y-2">
                           <div className="flex justify-between text-sm">
                             <span className="text-slate-400">Current:</span>
-                            <span className="text-emerald-400 font-semibold">10 personnel (83%)</span>
+                            <span className="text-emerald-400 font-semibold">146 personnel (86%)</span>
                           </div>
                           <div className="flex justify-between text-sm">
                             <span className="text-slate-400">Expiring &lt;30 days:</span>
-                            <span className="text-amber-400 font-semibold">3 (25%)</span>
+                            <span className="text-amber-400 font-semibold">12 (7%)</span>
                           </div>
                           <div className="flex justify-between text-sm">
                             <span className="text-slate-400">Expiring 30-60 days:</span>
-                            <span className="text-amber-400 font-semibold">2 (17%)</span>
+                            <span className="text-amber-400 font-semibold">6 (4%)</span>
                           </div>
                           <div className="flex justify-between text-sm">
                             <span className="text-slate-400">Expired:</span>
-                            <span className="text-red-400 font-semibold">2 (17%) 🔴</span>
+                            <span className="text-red-400 font-semibold flex items-center gap-1">6 (4%) <AlertCircle className="w-3 h-3 text-red-400" /></span>
                           </div>
                           <div className="flex justify-between text-sm pt-2 border-t border-slate-700">
                             <span className="text-slate-400">Target:</span>
@@ -624,7 +624,7 @@ export default function PersonnelOverview() {
                           </div>
                           <div className="flex justify-between text-sm">
                             <span className="text-slate-400">Gap:</span>
-                            <span className="text-red-400 font-semibold">-12% ⚠️</span>
+                            <span className="text-red-400 font-semibold flex items-center gap-1">-9% <AlertCircle className="w-3 h-3 text-red-400" /></span>
                           </div>
                         </div>
                       </div>
@@ -637,19 +637,19 @@ export default function PersonnelOverview() {
                         <div className="space-y-2">
                           <div className="flex justify-between text-sm">
                             <span className="text-slate-400">Last 12 months:</span>
-                            <span className="text-white font-medium">1 resignation</span>
+                            <span className="text-white font-medium">11 separations</span>
                           </div>
                           <div className="flex justify-between text-sm">
                             <span className="text-slate-400">Turnover rate:</span>
-                            <span className="text-emerald-400 font-semibold">8% (vs industry 12%) ✅</span>
+                            <span className="text-emerald-400 font-semibold flex items-center gap-1">6.5% (vs industry 12%) <CheckCircle className="w-3 h-3 text-emerald-400" /></span>
                           </div>
                           <div className="flex justify-between text-sm">
                             <span className="text-slate-400">Avg tenure:</span>
-                            <span className="text-white font-medium">7.2 years</span>
+                            <span className="text-white font-medium">8.4 years</span>
                           </div>
                           <div className="flex justify-between text-sm">
                             <span className="text-slate-400">Time to hire:</span>
-                            <span className="text-emerald-400 font-semibold">45 days (target 60) ✅</span>
+                            <span className="text-emerald-400 font-semibold flex items-center gap-1">42 days (target 60) <CheckCircle className="w-3 h-3 text-emerald-400" /></span>
                           </div>
                         </div>
                       </div>
@@ -660,15 +660,15 @@ export default function PersonnelOverview() {
                         <div className="space-y-2">
                           <div className="flex justify-between text-sm">
                             <span className="text-slate-400">Day Shift:</span>
-                            <span className="text-emerald-400 font-semibold">85% staffed ✅</span>
+                            <span className="text-emerald-400 font-semibold flex items-center gap-1">96% staffed <CheckCircle className="w-3 h-3 text-emerald-400" /></span>
                           </div>
                           <div className="flex justify-between text-sm">
                             <span className="text-slate-400">Night Shift:</span>
-                            <span className="text-amber-400 font-semibold">65% staffed ⚠️</span>
+                            <span className="text-emerald-400 font-semibold flex items-center gap-1">92% staffed <CheckCircle className="w-3 h-3 text-emerald-400" /></span>
                           </div>
                           <div className="flex justify-between text-sm">
                             <span className="text-slate-400">Evening Shift:</span>
-                            <span className="text-red-400 font-semibold">60% staffed 🔴</span>
+                            <span className="text-amber-400 font-semibold flex items-center gap-1">88% staffed <Clock className="w-3 h-3 text-amber-400" /></span>
                           </div>
                         </div>
                       </div>
@@ -698,7 +698,7 @@ export default function PersonnelOverview() {
                         <div className="space-y-2">
                           <div className="flex items-center justify-between text-sm">
                             <span className="text-slate-300">John Smith - Firearms (Dec 15)</span>
-                            <span className="text-red-400 font-semibold">3 days ⚠️</span>
+                            <span className="text-red-400 font-semibold flex items-center gap-1">3 days <AlertCircle className="w-3 h-3 text-red-400" /></span>
                           </div>
                           <div className="flex items-center justify-between text-sm">
                             <span className="text-slate-300">Jennifer Martinez - TASER (Dec 20)</span>
@@ -723,7 +723,7 @@ export default function PersonnelOverview() {
                       <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
                         <div className="flex items-center gap-2 mb-3">
                           <AlertCircle className="w-5 h-5 text-red-400" />
-                          <h4 className="text-base font-bold text-red-400">Expired: 2 🔴</h4>
+                          <h4 className="text-base font-bold text-red-400 flex items-center gap-2">Expired: 2 <AlertCircle className="w-4 h-4 text-red-400" /></h4>
                         </div>
                         <div className="space-y-2">
                           <div className="flex items-center justify-between text-sm">
@@ -752,28 +752,28 @@ export default function PersonnelOverview() {
                           <div className="bg-slate-900/50 border border-slate-700 rounded p-3">
                             <div className="flex justify-between mb-1">
                               <span className="text-xs text-slate-400">Firearms Qualification</span>
-                              <span className="text-emerald-400 text-xs font-semibold">100% ✅</span>
+                              <span className="text-emerald-400 text-xs font-semibold flex items-center gap-1">100% <CheckCircle className="w-3 h-3 text-emerald-400" /></span>
                             </div>
                             <div className="text-xs text-slate-500">Current: 8 • Expiring: 2 • Expired: 0</div>
                           </div>
                           <div className="bg-slate-900/50 border border-slate-700 rounded p-3">
                             <div className="flex justify-between mb-1">
                               <span className="text-xs text-slate-400">TASER Certification</span>
-                              <span className="text-emerald-400 text-xs font-semibold">100% ✅</span>
+                              <span className="text-emerald-400 text-xs font-semibold flex items-center gap-1">100% <CheckCircle className="w-3 h-3 text-emerald-400" /></span>
                             </div>
                             <div className="text-xs text-slate-500">Current: 10 • Expiring: 1 • Expired: 0</div>
                           </div>
                           <div className="bg-slate-900/50 border border-slate-700 rounded p-3">
                             <div className="flex justify-between mb-1">
                               <span className="text-xs text-slate-400">CPR/First Aid</span>
-                              <span className="text-amber-400 text-xs font-semibold">90% ⚠️</span>
+                              <span className="text-amber-400 text-xs font-semibold flex items-center gap-1">90% <Clock className="w-3 h-3 text-amber-400" /></span>
                             </div>
                             <div className="text-xs text-slate-500">Current: 9 • Expiring: 1 • Expired: 1</div>
                           </div>
                           <div className="bg-slate-900/50 border border-slate-700 rounded p-3">
                             <div className="flex justify-between mb-1">
                               <span className="text-xs text-slate-400">P.O.S.T. Certification</span>
-                              <span className="text-emerald-400 text-xs font-semibold">100% ✅</span>
+                              <span className="text-emerald-400 text-xs font-semibold flex items-center gap-1">100% <CheckCircle className="w-3 h-3 text-emerald-400" /></span>
                             </div>
                             <div className="text-xs text-slate-500">Current: 12 • Expiring: 0 • Expired: 0</div>
                           </div>
@@ -798,7 +798,7 @@ export default function PersonnelOverview() {
                     <div className="space-y-4">
                       {/* Day Shift */}
                       <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-4">
-                        <h4 className="text-base font-bold text-emerald-400 mb-3">Day Shift (06:00-14:00) - ✅ Good Coverage</h4>
+                        <h4 className="text-base font-bold text-emerald-400 mb-3 flex items-center gap-2">Day Shift (06:00-14:00) - <CheckCircle className="w-4 h-4 text-emerald-400" /> Good Coverage</h4>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                           <div>
                             <div className="text-xs text-slate-400 mb-2">PATROL: 4 deputies</div>
@@ -827,7 +827,7 @@ export default function PersonnelOverview() {
 
                       {/* Night Shift */}
                       <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
-                        <h4 className="text-base font-bold text-amber-400 mb-3">Night Shift (14:00-22:00) - ⚠️ Below Minimum</h4>
+                        <h4 className="text-base font-bold text-amber-400 mb-3 flex items-center gap-2">Night Shift (14:00-22:00) - <Clock className="w-4 h-4 text-amber-400" /> Below Minimum</h4>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div>
                             <div className="text-xs text-slate-400 mb-2">PATROL: 2 deputies (need 3)</div>
@@ -880,29 +880,29 @@ export default function PersonnelOverview() {
                   <div className="mb-6 bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
                     <div className="flex items-center gap-3 mb-4">
                       <UserPlus className="w-6 h-6 text-purple-400" />
-                      <h3 className="text-lg font-bold text-white">Hiring Pipeline - 8 Open Positions</h3>
+                      <h3 className="text-lg font-bold text-white">Hiring Pipeline - 12 Open Positions</h3>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                       {/* Stage Breakdown */}
                       <div>
-                        <h4 className="text-sm font-bold text-slate-300 mb-3">Active Applicants: 12</h4>
+                        <h4 className="text-sm font-bold text-slate-300 mb-3">Active Applicants: 28</h4>
                         <div className="space-y-2">
                           <div className="flex justify-between text-sm">
                             <span className="text-slate-400">Application submitted:</span>
-                            <span className="text-white font-medium">5</span>
+                            <span className="text-white font-medium">9</span>
                           </div>
                           <div className="flex justify-between text-sm">
                             <span className="text-slate-400">Under review:</span>
-                            <span className="text-white font-medium">3</span>
+                            <span className="text-white font-medium">6</span>
                           </div>
                           <div className="flex justify-between text-sm">
                             <span className="text-slate-400">Interview scheduled:</span>
-                            <span className="text-amber-400 font-medium">2</span>
+                            <span className="text-amber-400 font-medium">5</span>
                           </div>
                           <div className="flex justify-between text-sm">
                             <span className="text-slate-400">Background check:</span>
-                            <span className="text-blue-400 font-medium">4</span>
+                            <span className="text-blue-400 font-medium">5</span>
                           </div>
                           <div className="flex justify-between text-sm">
                             <span className="text-slate-400">Offer extended:</span>
@@ -921,19 +921,19 @@ export default function PersonnelOverview() {
                         <div className="space-y-2">
                           <div className="flex justify-between text-sm">
                             <span className="text-slate-400">Patrol:</span>
-                            <span className="text-red-400 font-semibold">3 positions (Critical)</span>
+                            <span className="text-red-400 font-semibold">4 positions (Critical)</span>
                           </div>
                           <div className="flex justify-between text-sm">
                             <span className="text-slate-400">Detention:</span>
-                            <span className="text-amber-400 font-semibold">2 positions (High)</span>
+                            <span className="text-amber-400 font-semibold">3 positions (High)</span>
                           </div>
                           <div className="flex justify-between text-sm">
                             <span className="text-slate-400">Investigations:</span>
-                            <span className="text-white font-medium">1 position</span>
+                            <span className="text-white font-medium">2 positions</span>
                           </div>
                           <div className="flex justify-between text-sm">
                             <span className="text-slate-400">Dispatch:</span>
-                            <span className="text-white font-medium">1 position</span>
+                            <span className="text-white font-medium">2 positions</span>
                           </div>
                           <div className="flex justify-between text-sm">
                             <span className="text-slate-400">School Resource:</span>
@@ -948,30 +948,34 @@ export default function PersonnelOverview() {
                       <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
                         <h4 className="text-sm font-bold text-blue-400 mb-2">Upcoming Interviews</h4>
                         <div className="space-y-1 text-sm text-slate-300">
-                          <div>• Dec 13 - 2 candidates (Patrol positions)</div>
-                          <div>• Dec 15 - 1 candidate (Detention)</div>
+                          <div>• Jan 18 - 3 candidates (Patrol positions)</div>
+                          <div>• Jan 20 - 2 candidates (Detention)</div>
                         </div>
                       </div>
 
                       {/* Background Checks */}
                       <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
-                        <h4 className="text-sm font-bold text-amber-400 mb-2">Background Checks in Progress: 4</h4>
+                        <h4 className="text-sm font-bold text-amber-400 mb-2">Background Checks in Progress: 5</h4>
                         <div className="space-y-2">
                           <div className="flex justify-between text-sm text-slate-300">
                             <span>Candidate A (Patrol)</span>
-                            <span className="text-amber-400">Day 15/30 (50%)</span>
+                            <span className="text-amber-400">Day 18/30 (60%)</span>
                           </div>
                           <div className="flex justify-between text-sm text-slate-300">
                             <span>Candidate B (Detention)</span>
-                            <span className="text-emerald-400">Day 22/30 (73%)</span>
+                            <span className="text-emerald-400">Day 25/30 (83%)</span>
                           </div>
                           <div className="flex justify-between text-sm text-slate-300">
                             <span>Candidate C (Patrol)</span>
-                            <span className="text-amber-400">Day 10/30 (33%)</span>
+                            <span className="text-amber-400">Day 12/30 (40%)</span>
                           </div>
                           <div className="flex justify-between text-sm text-slate-300">
                             <span>Candidate D (Dispatch)</span>
-                            <span className="text-blue-400">Day 5/30 (17%)</span>
+                            <span className="text-blue-400">Day 8/30 (27%)</span>
+                          </div>
+                          <div className="flex justify-between text-sm text-slate-300">
+                            <span>Candidate E (Investigations)</span>
+                            <span className="text-blue-400">Day 3/30 (10%)</span>
                           </div>
                         </div>
                       </div>
@@ -980,10 +984,10 @@ export default function PersonnelOverview() {
                       <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-4">
                         <h4 className="text-sm font-bold text-emerald-400 mb-2">Projected Hires</h4>
                         <div className="space-y-1 text-sm text-slate-300">
-                          <div>• January: 2 hires</div>
-                          <div>• February: 3 hires</div>
-                          <div>• March: 2 hires</div>
-                          <div className="text-emerald-400 font-semibold pt-2 border-t border-emerald-500/30">Timeline to fill all 8 positions: ~90 days</div>
+                          <div>• February: 4 hires</div>
+                          <div>• March: 5 hires</div>
+                          <div>• April: 3 hires</div>
+                          <div className="text-emerald-400 font-semibold pt-2 border-t border-emerald-500/30">Timeline to fill all 12 positions: ~75 days</div>
                         </div>
                       </div>
                     </div>
@@ -1160,35 +1164,35 @@ export default function PersonnelOverview() {
                     <div className="mt-4 pt-4 border-t border-slate-700/50 space-y-2">
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-400">Sworn:</span>
-                        <span className="text-white font-medium">10 (83%)</span>
+                        <span className="text-white font-medium">142 (84%)</span>
                       </div>
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-400">Civilian:</span>
-                        <span className="text-white font-medium">2 (17%)</span>
+                        <span className="text-white font-medium">28 (16%)</span>
                       </div>
                       <div className="flex justify-between text-xs pt-2 border-t border-slate-700/50">
                         <span className="text-slate-400">Patrol:</span>
-                        <span className="text-white font-medium">5</span>
+                        <span className="text-white font-medium">68</span>
                       </div>
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-400">Investigations:</span>
-                        <span className="text-white font-medium">2</span>
+                        <span className="text-white font-medium">24</span>
                       </div>
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-400">Detention:</span>
-                        <span className="text-white font-medium">3</span>
+                        <span className="text-white font-medium">52</span>
                       </div>
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-400">Dispatch:</span>
-                        <span className="text-white font-medium">2</span>
+                        <span className="text-white font-medium">26</span>
                       </div>
                       <div className="flex justify-between text-xs pt-2 border-t border-slate-700/50">
                         <span className="text-slate-400">Authorized:</span>
-                        <span className="text-amber-400 font-medium">20 (60%)</span>
+                        <span className="text-amber-400 font-medium">182 (93%)</span>
                       </div>
                       <div className="flex items-center gap-1 text-xs text-emerald-400 pt-1">
                         <TrendingUp className="w-3 h-3" />
-                        <span>+2 vs last year</span>
+                        <span>+8 vs last year</span>
                       </div>
                     </div>
                   </div>
@@ -1207,35 +1211,35 @@ export default function PersonnelOverview() {
                     <div className="mt-4 pt-4 border-t border-slate-700/50 space-y-2">
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-400">Patrol:</span>
-                        <span className="text-emerald-400 font-medium">4 on duty</span>
+                        <span className="text-emerald-400 font-medium">52 on duty</span>
                       </div>
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-400">Investigations:</span>
-                        <span className="text-emerald-400 font-medium">2 on duty</span>
+                        <span className="text-emerald-400 font-medium">18 on duty</span>
                       </div>
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-400">Detention:</span>
-                        <span className="text-emerald-400 font-medium">2 on duty</span>
+                        <span className="text-emerald-400 font-medium">38 on duty</span>
                       </div>
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-400">Dispatch:</span>
-                        <span className="text-emerald-400 font-medium">1 on duty</span>
+                        <span className="text-emerald-400 font-medium">19 on duty</span>
                       </div>
                       <div className="flex justify-between text-xs pt-2 border-t border-slate-700/50">
                         <span className="text-slate-400">Day shift:</span>
-                        <span className="text-white font-medium">7</span>
+                        <span className="text-white font-medium">68</span>
                       </div>
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-400">Night shift:</span>
-                        <span className="text-white font-medium">2</span>
+                        <span className="text-white font-medium">59</span>
                       </div>
                       <div className="flex justify-between text-xs pt-2 border-t border-slate-700/50">
                         <span className="text-slate-400">Off duty:</span>
-                        <span className="text-slate-300 font-medium">2</span>
+                        <span className="text-slate-300 font-medium">35</span>
                       </div>
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-400">On leave:</span>
-                        <span className="text-amber-400 font-medium">1</span>
+                        <span className="text-amber-400 font-medium">8</span>
                       </div>
                     </div>
                   </div>
@@ -1254,19 +1258,19 @@ export default function PersonnelOverview() {
                     <div className="mt-4 pt-4 border-t border-slate-700/50 space-y-2">
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-400">Urgent (&lt;7 days):</span>
-                        <span className="text-red-400 font-semibold">1</span>
+                        <span className="text-red-400 font-semibold">5</span>
                       </div>
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-400">Next 30 days:</span>
-                        <span className="text-amber-400 font-semibold">3</span>
+                        <span className="text-amber-400 font-semibold">12</span>
                       </div>
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-400">Expired:</span>
-                        <span className="text-red-400 font-semibold">2</span>
+                        <span className="text-red-400 font-semibold">6</span>
                       </div>
                       <div className="flex justify-between text-xs pt-2 border-t border-slate-700/50">
                         <span className="text-slate-400">Compliance rate:</span>
-                        <span className="text-amber-400 font-semibold">83%</span>
+                        <span className="text-amber-400 font-semibold">86%</span>
                       </div>
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-400">Target:</span>
@@ -1274,7 +1278,7 @@ export default function PersonnelOverview() {
                       </div>
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-400">Gap:</span>
-                        <span className="text-red-400 font-semibold">-12%</span>
+                        <span className="text-red-400 font-semibold">-9%</span>
                       </div>
                       <button onClick={() => setShowCertManagement(true)} className="mt-2 w-full px-3 py-1.5 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/30 text-amber-400 rounded-lg text-xs font-medium transition-colors">
                         Manage Now
@@ -1296,19 +1300,19 @@ export default function PersonnelOverview() {
                     <div className="mt-4 pt-4 border-t border-slate-700/50 space-y-2">
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-400">Patrol:</span>
-                        <span className="text-red-400 font-semibold">3 (Critical)</span>
+                        <span className="text-red-400 font-semibold">4 (Critical)</span>
                       </div>
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-400">Detention:</span>
-                        <span className="text-amber-400 font-semibold">2 (High)</span>
+                        <span className="text-amber-400 font-semibold">3 (High)</span>
                       </div>
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-400">Investigations:</span>
-                        <span className="text-white font-medium">1</span>
+                        <span className="text-white font-medium">2</span>
                       </div>
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-400">Dispatch:</span>
-                        <span className="text-white font-medium">1</span>
+                        <span className="text-white font-medium">2</span>
                       </div>
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-400">School Resource:</span>
@@ -1316,11 +1320,11 @@ export default function PersonnelOverview() {
                       </div>
                       <div className="flex justify-between text-xs pt-2 border-t border-slate-700/50">
                         <span className="text-slate-400">In pipeline:</span>
-                        <span className="text-blue-400 font-medium">12 applicants</span>
+                        <span className="text-blue-400 font-medium">28 applicants</span>
                       </div>
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-400">Avg time to hire:</span>
-                        <span className="text-emerald-400 font-medium">45 days</span>
+                        <span className="text-emerald-400 font-medium">42 days</span>
                       </div>
                       <button onClick={() => setShowHiringPipeline(true)} className="mt-2 w-full px-3 py-1.5 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 text-blue-400 rounded-lg text-xs font-medium transition-colors">
                         View Pipeline
