@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Search, Filter, Download, ZoomIn, ZoomOut, ChevronRight, X, Users, Award, Mail, Phone, Shield, Home, DollarSign, AlertCircle, TrendingUp, CheckCircle, MessageCircle, Sparkles, Send, Maximize2, Minimize2, Move, ChevronDown, ChevronUp, UserPlus, Maximize, MoreVertical, MessageSquare, UserCog, FileText, Calendar, MapPin, Star } from 'lucide-react';
+import { Search, Filter, Download, ZoomIn, ZoomOut, ChevronRight, X, Users, Award, Mail, Phone, Shield, Home, DollarSign, AlertCircle, TrendingUp, CheckCircle, MessageCircle, Sparkles, Send, Maximize2, Minimize2, Move, ChevronDown, ChevronUp, UserPlus, Maximize, MoreVertical, MessageSquare, UserCog, FileText, Calendar, MapPin, Star, Building2, Lightbulb, Printer, Share2, Settings, Eye, Layers, Clock, RefreshCw, ArrowLeft, Expand } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import DashboardLayout from '../layouts/DashboardLayout';
@@ -127,7 +127,9 @@ export default function OrgChart() {
       reports: 10,
       level: 3,
       parentId: 3,
-      divisionStrength: { current: 400, authorized: 420 }
+      divisionStrength: { current: 46, authorized: 48 },
+      performance: 4.6,
+      certStatus: 'current'
     },
     {
       id: 11,
@@ -176,15 +178,19 @@ export default function OrgChart() {
       photo: 'MD',
       email: 'm.davis@dept.gov',
       phone: '(555) 100-0004',
-      hireDate: '2012-08-22',
-      yearsOfService: 12,
+      hireDate: '1998-03-15',
+      yearsOfService: 26,
       lastTraining: '2024-08-15',
       status: 'On Duty',
       division: 'Patrol',
       reports: 8,
       level: 3,
       parentId: 4,
-      divisionStrength: { current: 200, authorized: 220 }
+      divisionStrength: { current: 64, authorized: 68 },
+      performance: 4.8,
+      certStatus: 'current',
+      retirementEligible: '2026',
+      succession: { ready: true, successor: 'Capt. Rodriguez', backup: 'Capt. Miller' }
     },
     {
       id: 14,
@@ -477,11 +483,11 @@ export default function OrgChart() {
       phone: '(555) 500-0002',
       yearsOfService: 3
     },
-    // Vacancy Positions
+    // Vacancy Positions - 8 total open positions
     {
       id: 'VACANT-001',
       name: 'OPEN POSITION',
-      title: 'Deputy Sheriff',
+      title: 'Deputy Sheriff - Zone 4',
       rank: 'Deputy',
       badge: 'VACANT',
       photo: '?',
@@ -491,43 +497,139 @@ export default function OrgChart() {
       parentId: 400,
       status: 'Vacant',
       isVacant: true,
-      daysVacant: 45,
-      candidatesInPipeline: 3,
-      expectedFill: 'Feb 2025'
+      daysVacant: 62,
+      candidatesInPipeline: 4,
+      expectedFill: 'Feb 2025',
+      interimCoverage: 'OT Coverage'
     },
     {
       id: 'VACANT-002',
       name: 'OPEN POSITION',
-      title: 'Deputy Sheriff',
+      title: 'Deputy Sheriff - Zone 5',
+      rank: 'Deputy',
+      badge: 'VACANT',
+      photo: '?',
+      division: 'Patrol',
+      reports: 0,
+      level: 8,
+      parentId: 400,
+      status: 'Vacant',
+      isVacant: true,
+      daysVacant: 41,
+      candidatesInPipeline: 3,
+      expectedFill: 'Feb 2025',
+      interimCoverage: 'Single-officer coverage'
+    },
+    {
+      id: 'VACANT-003',
+      name: 'OPEN POSITION',
+      title: 'Deputy Sheriff - Zone 7',
+      rank: 'Deputy',
+      badge: 'VACANT',
+      photo: '?',
+      division: 'Patrol',
+      reports: 0,
+      level: 8,
+      parentId: 400,
+      status: 'Vacant',
+      isVacant: true,
+      daysVacant: 28,
+      candidatesInPipeline: 5,
+      expectedFill: 'Mar 2025',
+      interimCoverage: 'Zone 6 backup'
+    },
+    {
+      id: 'VACANT-004',
+      name: 'OPEN POSITION',
+      title: 'Deputy - H2-Pod',
       rank: 'Deputy',
       badge: 'VACANT',
       photo: '?',
       division: 'Detention',
       reports: 0,
       level: 8,
+      parentId: 401,
+      status: 'Vacant',
+      isVacant: true,
+      daysVacant: 35,
+      candidatesInPipeline: 2,
+      expectedFill: 'Feb 2025',
+      interimCoverage: 'Cross-trained staff'
+    },
+    {
+      id: 'VACANT-005',
+      name: 'OPEN POSITION',
+      title: 'Deputy - E-Pod Medical',
+      rank: 'Deputy',
+      badge: 'VACANT',
+      photo: '?',
+      division: 'Detention',
+      reports: 0,
+      level: 8,
+      parentId: 401,
+      status: 'Vacant',
+      isVacant: true,
+      daysVacant: 21,
+      candidatesInPipeline: 3,
+      expectedFill: 'Feb 2025',
+      interimCoverage: 'OT Coverage'
+    },
+    {
+      id: 'VACANT-006',
+      name: 'OPEN POSITION',
+      title: 'Narcotics Detective',
+      rank: 'Detective',
+      badge: 'VACANT',
+      photo: '?',
+      division: 'Investigations',
+      reports: 0,
+      level: 7,
+      parentId: 203,
+      status: 'Vacant',
+      isVacant: true,
+      daysVacant: 47,
+      candidatesInPipeline: 2,
+      expectedFill: 'Mar 2025',
+      interimCoverage: 'Task force coverage',
+      notes: 'Grant funded position'
+    },
+    {
+      id: 'VACANT-007',
+      name: 'OPEN POSITION',
+      title: 'Captain - Court Security',
+      rank: 'Captain',
+      badge: 'VACANT',
+      photo: '?',
+      division: 'Court Services',
+      reports: 0,
+      level: 4,
+      parentId: 14,
+      status: 'Vacant',
+      isVacant: true,
+      daysVacant: 47,
+      candidatesInPipeline: 3,
+      expectedFill: 'Mar 2025',
+      interimCoverage: 'Capt. Anderson (Patrol)',
+      notes: 'Federal court coordination requirements'
+    },
+    {
+      id: 'VACANT-008',
+      name: 'OPEN POSITION',
+      title: 'School Resource Officer',
+      rank: 'Deputy',
+      badge: 'VACANT',
+      photo: '?',
+      division: 'SRO',
+      reports: 0,
+      level: 8,
       parentId: 400,
       status: 'Vacant',
       isVacant: true,
-      daysVacant: 32,
-      candidatesInPipeline: 2,
-      expectedFill: 'Jan 2025'
-    },
-    {
-      id: 'VACANT-003',
-      name: 'OPEN POSITION',
-      title: 'Sergeant',
-      rank: 'Sergeant',
-      badge: 'VACANT',
-      photo: '?',
-      division: 'Patrol',
-      reports: 0,
-      level: 6,
-      parentId: 300,
-      status: 'Vacant',
-      isVacant: true,
-      daysVacant: 60,
-      candidatesInPipeline: 1,
-      expectedFill: 'Mar 2025'
+      daysVacant: 15,
+      candidatesInPipeline: 4,
+      expectedFill: 'Feb 2025',
+      interimCoverage: 'Patrol coverage',
+      notes: 'Grayson High School assignment'
     }
   ];
 
@@ -1061,15 +1163,35 @@ export default function OrgChart() {
             <div className="mb-4 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
               <div>
                 <h2 className="text-2xl lg:text-3xl font-bold text-white mb-2">Organization Chart</h2>
-                <p className="text-slate-400">Full department hierarchy with {allOrgData.length} personnel</p>
+                <p className="text-slate-400">Full department hierarchy with 170 personnel (95.5% of 178 authorized positions)</p>
+                <p className="text-xs text-slate-500 mt-1 flex items-center gap-2">
+                  <Clock className="w-3 h-3" />
+                  Last updated: Today at 09:32 EST | Auto-refresh: Every 4 hours
+                  <button className="ml-2 text-purple-400 hover:text-purple-300 flex items-center gap-1 transition-colors">
+                    <RefreshCw className="w-3 h-3" />
+                    Refresh
+                  </button>
+                </p>
               </div>
 
               {/* Only show export button here when not in fullscreen */}
               {!isFullscreen && (
                 <div className="flex flex-wrap items-center gap-2">
-                  <button className="flex items-center gap-2 px-4 py-2 bg-slate-800/40 border border-slate-700/50 rounded-xl text-slate-300 hover:border-slate-600/50 hover:bg-slate-800/60 transition-all">
+                  <button className="flex items-center gap-2 px-4 py-2 bg-slate-800/40 border border-slate-700/50 rounded-xl text-slate-300 hover:border-slate-600/50 hover:bg-slate-800/60 transition-all" title="Export org chart (PDF, PNG, Excel, or CSV)">
                     <Download className="w-4 h-4" />
                     <span className="hidden sm:inline">Export</span>
+                  </button>
+                  <button className="flex items-center gap-2 px-4 py-2 bg-slate-800/40 border border-slate-700/50 rounded-xl text-slate-300 hover:border-slate-600/50 hover:bg-slate-800/60 transition-all">
+                    <Printer className="w-4 h-4" />
+                    <span className="hidden sm:inline">Print</span>
+                  </button>
+                  <button className="flex items-center gap-2 px-4 py-2 bg-slate-800/40 border border-slate-700/50 rounded-xl text-slate-300 hover:border-slate-600/50 hover:bg-slate-800/60 transition-all">
+                    <Share2 className="w-4 h-4" />
+                    <span className="hidden sm:inline">Share</span>
+                  </button>
+                  <button className="flex items-center gap-2 px-4 py-2 bg-slate-800/40 border border-slate-700/50 rounded-xl text-slate-300 hover:border-slate-600/50 hover:bg-slate-800/60 transition-all">
+                    <Settings className="w-4 h-4" />
+                    <span className="hidden sm:inline">View Options</span>
                   </button>
                 </div>
               )}
@@ -1087,44 +1209,66 @@ export default function OrgChart() {
                     {/* Structure Health */}
                     <div className="bg-slate-800/40 rounded-xl p-3 border border-slate-700/50">
                       <div className="flex items-center gap-2 mb-2">
-                        <div className="w-6 h-6 bg-amber-500/20 rounded-lg flex items-center justify-center">
-                          <TrendingUp className="w-3 h-3 text-amber-400" />
+                        <div className="w-6 h-6 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                          <Building2 className="w-3 h-3 text-blue-400" />
                         </div>
                         <span className="text-xs font-semibold text-slate-300">Structure Health</span>
                       </div>
                       <div className="space-y-1.5">
                         <div className="flex items-center justify-between">
                           <span className="text-[10px] text-slate-400">Overall staffing</span>
-                          <span className="text-xs font-bold text-amber-400">60%</span>
+                          <span className="text-xs font-bold text-emerald-400">95.5%</span>
                         </div>
                         <div className="w-full h-1.5 bg-slate-700/50 rounded-full overflow-hidden">
-                          <div className="h-full bg-amber-500 rounded-full" style={{ width: '60%' }}></div>
+                          <div className="h-full bg-emerald-500 rounded-full" style={{ width: '95.5%' }}></div>
                         </div>
-                        <p className="text-[10px] text-slate-500">30/50 positions filled</p>
-                        <p className="text-[10px] text-red-400">⚠️ 5 critical vacancies (Patrol)</p>
+                        <p className="text-[10px] text-slate-500">170 of 178 authorized positions filled</p>
+                        <div className="pt-1.5 border-t border-slate-700/50 mt-1.5">
+                          <p className="text-[10px] text-amber-400 flex items-center gap-1">
+                            <AlertCircle className="w-2.5 h-2.5" />
+                            8 Open Positions:
+                          </p>
+                          <p className="text-[9px] text-slate-400 ml-3.5">Patrol (3), Detention (2), Inv (1), Court (1), SRO (1)</p>
+                        </div>
+                        <div className="pt-1.5 border-t border-slate-700/50 mt-1.5">
+                          <p className="text-[10px] text-emerald-400 flex items-center gap-1">
+                            <CheckCircle className="w-2.5 h-2.5" />
+                            Span of Control: Healthy (1:8.2 avg)
+                          </p>
+                        </div>
                       </div>
                     </div>
 
                     {/* Leadership Status */}
                     <div className="bg-slate-800/40 rounded-xl p-3 border border-slate-700/50">
                       <div className="flex items-center gap-2 mb-2">
-                        <div className="w-6 h-6 bg-blue-500/20 rounded-lg flex items-center justify-center">
-                          <Users className="w-3 h-3 text-blue-400" />
+                        <div className="w-6 h-6 bg-purple-500/20 rounded-lg flex items-center justify-center">
+                          <Users className="w-3 h-3 text-purple-400" />
                         </div>
                         <span className="text-xs font-semibold text-slate-300">Leadership</span>
                       </div>
                       <div className="space-y-1.5">
                         <div className="flex items-center justify-between">
-                          <span className="text-[10px] text-slate-400">Executive</span>
-                          <span className="text-xs font-bold text-green-400">100%</span>
+                          <span className="text-[10px] text-slate-400">Executive Level</span>
+                          <span className="text-xs font-bold text-emerald-400">100%</span>
                         </div>
+                        <p className="text-[9px] text-slate-500 ml-2">Sheriff (1/1), Chief Deputy (1/1)</p>
                         <div className="flex items-center justify-between">
-                          <span className="text-[10px] text-slate-400">Command staff</span>
-                          <span className="text-xs font-bold text-amber-400">75%</span>
+                          <span className="text-[10px] text-slate-400">Command Staff</span>
+                          <span className="text-xs font-bold text-emerald-400">91.7%</span>
                         </div>
+                        <p className="text-[9px] text-slate-500 ml-2">Captains 11/12 (1 vacancy - Court)</p>
                         <div className="flex items-center justify-between">
                           <span className="text-[10px] text-slate-400">Supervisors</span>
-                          <span className="text-xs font-bold text-green-400">80%</span>
+                          <span className="text-xs font-bold text-emerald-400">96.3%</span>
+                        </div>
+                        <p className="text-[9px] text-slate-500 ml-2">Sergeants 26/27 (1 vacancy - B-Shift)</p>
+                        <div className="pt-1.5 border-t border-slate-700/50 mt-1.5">
+                          <p className="text-[10px] text-blue-400 flex items-center gap-1">
+                            <RefreshCw className="w-2.5 h-2.5" />
+                            8 retirement-eligible within 36 months
+                          </p>
+                          <p className="text-[9px] text-slate-500 ml-3.5">12 supervisors on promotion track</p>
                         </div>
                       </div>
                     </div>
@@ -1132,16 +1276,31 @@ export default function OrgChart() {
                     {/* Key Recommendations */}
                     <div className="bg-slate-800/40 rounded-xl p-3 border border-slate-700/50">
                       <div className="flex items-center gap-2 mb-2">
-                        <div className="w-6 h-6 bg-green-500/20 rounded-lg flex items-center justify-center">
-                          <CheckCircle className="w-3 h-3 text-green-400" />
+                        <div className="w-6 h-6 bg-yellow-500/20 rounded-lg flex items-center justify-center">
+                          <Lightbulb className="w-3 h-3 text-yellow-400" />
                         </div>
                         <span className="text-xs font-semibold text-slate-300">Recommendations</span>
                       </div>
                       <div className="space-y-1.5">
-                        <p className="text-[10px] text-slate-300">• Prioritize 5 Patrol vacancies</p>
-                        <p className="text-[10px] text-slate-300">• 3 retirement-eligible (2 years)</p>
-                        <p className="text-[10px] text-slate-300">• Succession plans ready ✅</p>
-                        <p className="text-[10px] text-blue-400">• Span of control: Healthy</p>
+                        <p className="text-[10px] text-slate-300 flex items-start gap-1">
+                          <CheckCircle className="w-2.5 h-2.5 text-emerald-400 mt-0.5 flex-shrink-0" />
+                          <span>Accelerate 3 Patrol hires (zones 4, 5, 7 critical)</span>
+                        </p>
+                        <p className="text-[10px] text-slate-300 flex items-start gap-1">
+                          <AlertCircle className="w-2.5 h-2.5 text-amber-400 mt-0.5 flex-shrink-0" />
+                          <span>Fill Court Security Captain before April audit</span>
+                        </p>
+                        <p className="text-[10px] text-slate-300 flex items-start gap-1">
+                          <AlertCircle className="w-2.5 h-2.5 text-amber-400 mt-0.5 flex-shrink-0" />
+                          <span>Major Davis retirement 2026 - successor ready</span>
+                        </p>
+                        <div className="pt-1.5 border-t border-slate-700/50 mt-1.5">
+                          <p className="text-[10px] text-emerald-400 flex items-center gap-1">
+                            <CheckCircle className="w-2.5 h-2.5" />
+                            Retention rate: 93.8% (above 87% avg)
+                          </p>
+                          <p className="text-[9px] text-slate-500 ml-3.5">8 vacancies = $680K annual savings</p>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -1156,23 +1315,59 @@ export default function OrgChart() {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => handleSearch(e.target.value)}
-                  placeholder="Search by name, badge, or division..."
+                  placeholder="Search by name, badge #, rank, division, supervisor, or certification..."
                   className="w-full pl-12 pr-4 py-2.5 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-all"
                 />
+                {searchQuery && (
+                  <button
+                    onClick={() => { setSearchQuery(''); setHighlightedNode(null); }}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white transition-colors"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                )}
               </div>
 
               <div className="flex gap-2">
-                <select value={filterDivision} onChange={(e) => setFilterDivision(e.target.value)} className="px-4 py-2.5 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer">
-                  {divisions.map(div => (
-                    <option key={div} value={div}>{div === 'all' ? 'All Divisions' : div}</option>
-                  ))}
-                </select>
+                <div className="relative">
+                  <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                  <select value={filterDivision} onChange={(e) => setFilterDivision(e.target.value)} className="pl-9 pr-4 py-2.5 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer">
+                    <option value="all">All Divisions (170)</option>
+                    <option value="Patrol">Patrol Division (65)</option>
+                    <option value="Detention">Detention Division (48)</option>
+                    <option value="Investigations">Investigations (24)</option>
+                    <option value="Support Services">Support Services (18)</option>
+                    <option value="Court Services">Court Security (8)</option>
+                    <option value="SRO">School Resource Officers (7)</option>
+                  </select>
+                </div>
 
-                <select value={filterRank} onChange={(e) => setFilterRank(e.target.value)} className="px-4 py-2.5 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer">
-                  {ranks.map(rank => (
-                    <option key={rank} value={rank}>{rank === 'all' ? 'All Ranks' : rank}</option>
-                  ))}
-                </select>
+                <div className="relative">
+                  <Users className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                  <select value={filterRank} onChange={(e) => setFilterRank(e.target.value)} className="pl-9 pr-4 py-2.5 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer">
+                    <option value="all">All Ranks (170)</option>
+                    <option value="Sheriff">Sheriff (1)</option>
+                    <option value="Chief Deputy">Chief Deputy (1)</option>
+                    <option value="Deputy Chief">Deputy Chief (2)</option>
+                    <option value="Major">Major (4)</option>
+                    <option value="Captain">Captain (11)</option>
+                    <option value="Lieutenant">Lieutenant (18)</option>
+                    <option value="Sergeant">Sergeant (26)</option>
+                    <option value="Corporal">Corporal (12)</option>
+                    <option value="Deputy">Deputy Sheriff (95)</option>
+                  </select>
+                </div>
+
+                <div className="relative">
+                  <Eye className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                  <select className="pl-9 pr-4 py-2.5 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer">
+                    <option value="hierarchy">Hierarchy View</option>
+                    <option value="span">Span of Control View</option>
+                    <option value="succession">Succession Planning View</option>
+                    <option value="vacancy">Vacancy Map View</option>
+                    <option value="division">Division Focus View</option>
+                  </select>
+                </div>
               </div>
             </div>
 
@@ -1192,33 +1387,76 @@ export default function OrgChart() {
               <div className="absolute top-4 left-4 z-50 flex flex-col gap-2">
                 {/* Zoom Controls */}
                 <div className="flex items-center gap-2 bg-slate-900/90 border border-slate-700/50 rounded-xl px-3 py-2 shadow-lg">
-                  <button onClick={() => setZoomLevel(Math.max(25, zoomLevel - 10))} className="p-1 hover:bg-slate-700/50 rounded transition-colors">
+                  <button onClick={() => setZoomLevel(Math.max(25, zoomLevel - 10))} className="p-1 hover:bg-slate-700/50 rounded transition-colors" title="Zoom out (-)">
                     <ZoomOut className="w-4 h-4 text-slate-300" />
                   </button>
                   <span className="text-sm text-white font-medium w-14 text-center">{zoomLevel}%</span>
-                  <button onClick={() => setZoomLevel(Math.min(200, zoomLevel + 10))} className="p-1 hover:bg-slate-700/50 rounded transition-colors">
+                  <button onClick={() => setZoomLevel(Math.min(200, zoomLevel + 10))} className="p-1 hover:bg-slate-700/50 rounded transition-colors" title="Zoom in (+)">
                     <ZoomIn className="w-4 h-4 text-slate-300" />
                   </button>
                 </div>
 
                 {/* Action Buttons */}
-                <button onClick={fitToScreen} className="flex items-center justify-center gap-2 px-4 py-2 bg-slate-900/90 border border-slate-700/50 rounded-xl text-slate-300 hover:border-slate-600/50 hover:bg-slate-800/90 transition-all shadow-lg">
+                <button onClick={fitToScreen} className="flex items-center justify-center gap-2 px-4 py-2 bg-slate-900/90 border border-slate-700/50 rounded-xl text-slate-300 hover:border-slate-600/50 hover:bg-slate-800/90 transition-all shadow-lg" title="Fit to Screen">
                   <Maximize className="w-4 h-4" />
-                  <span className="text-sm">Fit</span>
+                  <span className="text-sm">Fit to Screen</span>
                 </button>
 
-                <button onClick={toggleFullscreen} className="flex items-center justify-center gap-2 px-4 py-2 bg-slate-900/90 border border-slate-700/50 rounded-xl text-slate-300 hover:border-slate-600/50 hover:bg-slate-800/90 transition-all shadow-lg">
-                  {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
-                  <span className="text-sm">{isFullscreen ? 'Exit' : 'Full'}</span>
+                <button onClick={() => setCollapsedNodes(new Set())} className="flex items-center justify-center gap-2 px-4 py-2 bg-slate-900/90 border border-slate-700/50 rounded-xl text-slate-300 hover:border-slate-600/50 hover:bg-slate-800/90 transition-all shadow-lg" title="Expand all nodes">
+                  <Expand className="w-4 h-4" />
+                  <span className="text-sm">Expand All</span>
                 </button>
+
+                <button onClick={toggleFullscreen} className="flex items-center justify-center gap-2 px-4 py-2 bg-slate-900/90 border border-slate-700/50 rounded-xl text-slate-300 hover:border-slate-600/50 hover:bg-slate-800/90 transition-all shadow-lg" title={isFullscreen ? "Exit Full View (Esc)" : "Enter Full View"}>
+                  {isFullscreen ? <ArrowLeft className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+                  <span className="text-sm">{isFullscreen ? 'Exit Full View' : 'Full View'}</span>
+                </button>
+
+                {/* Keyboard Shortcuts Info */}
+                <div className="bg-slate-900/90 border border-slate-700/50 rounded-xl px-3 py-2 shadow-lg text-[9px] text-slate-400 hidden lg:block">
+                  <p className="text-[10px] text-slate-300 font-medium mb-1">Keyboard:</p>
+                  <p>+/− : Zoom in/out</p>
+                  <p>Space + drag : Pan</p>
+                  <p>Esc : Exit full view</p>
+                  <p>Double-click : Node details</p>
+                </div>
               </div>
 
               {/* MiniMap */}
-              <div className="absolute bottom-4 right-4 w-48 h-32 bg-slate-900/90 border border-slate-700/50 rounded-lg overflow-hidden z-40 hidden lg:block">
-                <div className="w-full h-full bg-slate-800/50 flex items-center justify-center">
-                  <div className="text-xs text-slate-500">
-                    <MapPin className="w-4 h-4 mx-auto mb-1" />
-                    <p>MiniMap</p>
+              <div className="absolute bottom-4 right-4 w-56 bg-slate-900/90 border border-slate-700/50 rounded-lg overflow-hidden z-40 hidden lg:block">
+                <div className="p-2 border-b border-slate-700/50 flex items-center justify-between">
+                  <span className="text-[10px] font-semibold text-slate-300">MiniMap</span>
+                  <button className="text-slate-400 hover:text-slate-300">
+                    <Minimize2 className="w-3 h-3" />
+                  </button>
+                </div>
+                <div className="h-20 bg-slate-800/50 flex items-center justify-center border-b border-slate-700/50">
+                  <div className="text-xs text-slate-500 flex flex-col items-center">
+                    <MapPin className="w-4 h-4 mb-1" />
+                    <p className="text-[9px]">Org Preview</p>
+                    <div className="w-16 h-8 border border-red-500/50 mt-1 rounded-sm"></div>
+                  </div>
+                </div>
+                <div className="p-2 space-y-1.5">
+                  <div className="flex items-center justify-between text-[9px]">
+                    <span className="text-slate-400">Current View:</span>
+                    <span className="text-slate-300">Command Level</span>
+                  </div>
+                  <div className="flex items-center justify-between text-[9px]">
+                    <span className="text-slate-400">Visible:</span>
+                    <span className="text-slate-300">47 of 170 personnel</span>
+                  </div>
+                  <div className="flex items-center justify-between text-[9px]">
+                    <span className="text-slate-400">Zoom:</span>
+                    <span className="text-slate-300">{zoomLevel}%</span>
+                  </div>
+                  <div className="pt-1.5 border-t border-slate-700/50 space-y-1">
+                    <button onClick={() => { setPanOffset({ x: 0, y: 0 }); setZoomLevel(100); }} className="w-full px-2 py-1 bg-slate-700/40 hover:bg-slate-700/60 text-[9px] text-slate-300 rounded transition-colors text-left">
+                      Center on Sheriff
+                    </button>
+                    <button className="w-full px-2 py-1 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/30 text-[9px] text-amber-400 rounded transition-colors text-left">
+                      Show Vacancies (8)
+                    </button>
                   </div>
                 </div>
               </div>
@@ -1235,7 +1473,7 @@ export default function OrgChart() {
               </div>
             </div>
 
-            <div className="mt-4 flex flex-wrap items-center justify-center gap-6 text-sm">
+            <div className="mt-4 flex flex-wrap items-center justify-center gap-4 lg:gap-6 text-xs lg:text-sm">
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 bg-green-500/20 border border-green-500/30 rounded"></div>
                 <span className="text-slate-400">95%+ Staffed</span>
@@ -1249,8 +1487,20 @@ export default function OrgChart() {
                 <span className="text-slate-400">&lt;80% Staffed</span>
               </div>
               <div className="flex items-center gap-2">
+                <div className="w-3 h-3 border-2 border-dashed border-red-500/40 rounded"></div>
+                <span className="text-slate-400">Vacant Position</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-green-400"></div>
+                <span className="text-slate-400">On Duty</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-blue-400 ring-2 ring-blue-400/30"></div>
+                <span className="text-slate-400">Retirement Eligible</span>
+              </div>
+              <div className="flex items-center gap-2">
                 <Move className="w-3 h-3 text-slate-400" />
-                <span className="text-slate-400">Drag/Pinch • {allOrgData.length}+ Total Personnel</span>
+                <span className="text-slate-400">Drag/Pinch to Navigate • 170 Personnel</span>
               </div>
             </div>
         </div>
