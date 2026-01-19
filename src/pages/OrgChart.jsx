@@ -1373,7 +1373,7 @@ export default function OrgChart() {
 
             <div
               ref={chartContainerRef}
-              className="flex-1 bg-slate-800/20 border border-slate-700/50 rounded-xl relative touch-none"
+              className="flex-1 min-h-[500px] lg:min-h-[650px] bg-slate-800/20 border border-slate-700/50 rounded-xl relative touch-none"
               style={{
                 cursor: isPanning ? 'grabbing' : 'grab',
                 overflow: 'hidden'
