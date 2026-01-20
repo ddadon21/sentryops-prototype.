@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DashboardLayout from '../../layouts/DashboardLayout';
 import {
-  Users, AlertTriangle, Activity, TrendingUp, TrendingDown,
+  Users, AlertTriangle, Activity, TrendingUp,
   Clock, Shield, Bed, Hospital, Scale, Calendar, UserCheck, MapPin,
-  Sparkles, X, CheckCircle, Search, RefreshCw, Building2, Lightbulb,
-  Download, Zap, ArrowRight, Eye, User, Heart, FileText, Home, BookOpen,
-  Send, Target, Utensils, UserPlus, CalendarClock, AlertOctagon, Stethoscope,
-  Phone, Mail, Truck, Video, ShoppingCart, AlertCircle, Plus, Circle, Check
+  Sparkles, X, CheckCircle, Search, RefreshCw, Building2,
+  ArrowRight, Eye, User, Heart, FileText, BookOpen,
+  Target, Utensils, UserPlus, CalendarClock, AlertOctagon, Stethoscope,
+  Phone, Mail, Truck, Video, ShoppingCart, AlertCircle, Circle, Check
 } from 'lucide-react';
 
 interface HousingUnit {
@@ -229,66 +229,10 @@ const JailDashboard = () => {
     }
   ];
 
-  // Classification breakdown with changes
-  const classificationData = [
-    { level: 'Minimum Security', count: 117, percentage: 13.9 },
-    { level: 'Medium Security', count: 419, percentage: 49.8 },
-    { level: 'Maximum Security', count: 148, percentage: 17.6 },
-    { level: 'Administrative Segregation', count: 28, percentage: 3.3, breakdown: 'Disciplinary: 12, Protective: 9, Investigation: 7' },
-    { level: 'Protective Custody', count: 41, percentage: 4.9 },
-    { level: 'Medical Housing', count: 44, percentage: 5.2 },
-    { level: 'Mental Health', count: 38, percentage: 4.5 },
-    { level: 'Awaiting Classification', count: 7, percentage: 0.8 }
-  ];
-
   const classificationChanges = [
     { description: '2 inmates reclassified (Medium → Minimum)', time: 'Today 10:30' },
     { description: '1 inmate moved to protective custody', time: 'Today 09:15' },
     { description: '3 inmates pending reclassification review', time: 'Pending' }
-  ];
-
-  // Enhanced medical alerts
-  const medicalAlerts = [
-    {
-      type: 'Critical Medication',
-      count: 12,
-      description: 'Time-sensitive medications required',
-      staff: 'RN Martinez, RN Chen',
-      nextAction: 'Next med round: 18:00 (in 42 minutes)',
-      status: 'On schedule'
-    },
-    {
-      type: 'Medical Holds',
-      count: 8,
-      description: 'Cannot be released without medical clearance',
-      staff: 'Dr. Anderson (reviewing)',
-      nextAction: '3 dental clearances scheduled Dec 12, 5 injury evaluations pending',
-      status: 'Processing'
-    },
-    {
-      type: 'Suicide Watch',
-      count: 4,
-      description: 'Active monitoring 24/7',
-      staff: '2 additional officers assigned',
-      nextAction: 'Last check: 5 min ago. Next eval: Every 15 minutes',
-      status: 'Active monitoring'
-    },
-    {
-      type: 'Infectious Disease',
-      count: 3,
-      description: 'Isolation protocols in effect',
-      staff: 'RN Johnson (isolation lead)',
-      nextAction: 'COVID-19: 1 (Day 3), TB exposure: 2 (testing pending)',
-      status: 'Monitored, no spread'
-    },
-    {
-      type: 'Wheelchair/ADA',
-      count: 11,
-      description: 'Special housing accommodations',
-      staff: 'Facilities Team',
-      nextAction: '2 pending ADA requests under review',
-      status: 'All housed appropriately'
-    }
   ];
 
   // Enhanced court schedule
@@ -400,23 +344,6 @@ const JailDashboard = () => {
       mealsToday: 'Breakfast: 842 served, Lunch: 842 served, Dinner: Preparing'
     }
   ];
-
-  // Critical tasks
-  const criticalTasks = {
-    dueToday: [
-      { task: 'Process 3 bond hearings', deadline: '16:00', remaining: '2 hours' },
-      { task: 'Complete 7 medical screenings (new bookings)', deadline: '17:00', remaining: '3 hours' },
-      { task: 'Finalize 2 disciplinary hearings', deadline: '16:30', remaining: '2.5 hours' },
-      { task: 'Submit federal housing report', deadline: '17:00', remaining: '3 hours' }
-    ],
-    overdue: [],
-    upcoming: [
-      { task: '31 court transports tomorrow', when: 'Tomorrow 08:00' },
-      { task: 'Federal audit prep (Dec 12-14)', when: '1 day away' },
-      { task: 'Monthly pod inspections (5 pending)', when: 'This week' },
-      { task: 'Staff performance reviews (3 due)', when: 'This week' }
-    ]
-  };
 
   const getCapacityColor = (percent: number) => {
     if (percent >= 95) return 'text-red-400';
