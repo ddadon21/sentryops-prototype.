@@ -2,8 +2,10 @@ import { useState } from 'react';
 import {
   Radio, MapPin, Clock, Users, Car, Navigation, Sparkles, X,
   AlertTriangle, CheckCircle, TrendingUp, Target, Activity,
-  Bell, Search, FileText,
-  AlertCircle, Zap, ChevronRight, Plus
+  Bell, Search, FileText, AlertCircle, Zap, ChevronRight,
+  RefreshCw, Shield, Phone, Eye, ArrowRight, Circle, Siren,
+  Timer, Gauge, BarChart3, User, PhoneCall, Send,
+  Megaphone, History, XCircle, Wifi, Signal
 } from 'lucide-react';
 import DashboardLayout from '../../layouts/DashboardLayout';
 
@@ -449,43 +451,81 @@ const CADDispatch = () => {
       <div className="p-4 lg:p-6">
         {/* Page Header with Quick Actions */}
         <div className="mb-6 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <Radio className="w-8 h-8 text-amber-500" />
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 bg-amber-500/20 rounded-xl flex items-center justify-center">
+              <Radio className="w-7 h-7 text-amber-400" />
+            </div>
             <div>
-              <h1 className="text-2xl lg:text-3xl font-bold text-white">CAD/Dispatch</h1>
-              <p className="text-slate-400">Patrol Operations - Real-Time Dispatch</p>
+              <div className="flex items-center gap-3">
+                <h1 className="text-2xl lg:text-3xl font-bold text-white">Field Operations</h1>
+                <span className="px-2 py-1 bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 rounded text-xs font-semibold flex items-center gap-1">
+                  <Circle className="w-2 h-2 fill-emerald-400" />
+                  LIVE
+                </span>
+              </div>
+              <div className="flex items-center gap-4 text-sm">
+                <span className="text-slate-400">CAD/Dispatch Console</span>
+                <span className="text-slate-500">|</span>
+                <span className="text-slate-400">A-Shift Active</span>
+                <span className="text-slate-500">|</span>
+                <span className="text-blue-400 font-medium">{patrolUnits.length} Units On Duty</span>
+              </div>
             </div>
           </div>
 
           {/* Quick Actions Bar */}
           <div className="flex flex-wrap items-center gap-2">
-            <button className="flex items-center gap-2 px-3 py-2 bg-red-500/20 border border-red-500/30 text-red-400 rounded-lg text-sm font-medium hover:bg-red-500/30 transition-all">
-              <Plus className="w-4 h-4" />
+            <button
+              className="flex items-center gap-2 px-3 py-2 bg-red-500/20 border border-red-500/30 text-red-400 rounded-lg text-sm font-medium hover:bg-red-500/30 transition-all"
+              title="Create new call for service"
+            >
+              <PhoneCall className="w-4 h-4" />
               New Call
             </button>
-            <button className="flex items-center gap-2 px-3 py-2 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded-lg text-sm font-medium hover:bg-blue-500/30 transition-all">
+            <button
+              className="flex items-center gap-2 px-3 py-2 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded-lg text-sm font-medium hover:bg-blue-500/30 transition-all"
+              title="Locate unit on map"
+            >
               <MapPin className="w-4 h-4" />
               Locate Unit
             </button>
-            <button className="flex items-center gap-2 px-3 py-2 bg-amber-500/20 border border-amber-500/30 text-amber-400 rounded-lg text-sm font-medium hover:bg-amber-500/30 transition-all">
-              <Bell className="w-4 h-4" />
-              Broadcast Alert
+            <button
+              className="flex items-center gap-2 px-3 py-2 bg-amber-500/20 border border-amber-500/30 text-amber-400 rounded-lg text-sm font-medium hover:bg-amber-500/30 transition-all"
+              title="Send broadcast alert to all units"
+            >
+              <Megaphone className="w-4 h-4" />
+              Broadcast
             </button>
-            <button className="flex items-center gap-2 px-3 py-2 bg-purple-500/20 border border-purple-500/30 text-purple-400 rounded-lg text-sm font-medium hover:bg-purple-500/30 transition-all">
-              <Users className="w-4 h-4" />
-              Request Backup
+            <button
+              className="flex items-center gap-2 px-3 py-2 bg-purple-500/20 border border-purple-500/30 text-purple-400 rounded-lg text-sm font-medium hover:bg-purple-500/30 transition-all"
+              title="Request backup for active call"
+            >
+              <Shield className="w-4 h-4" />
+              Backup
             </button>
-            <button className="flex items-center gap-2 px-3 py-2 bg-green-500/20 border border-green-500/30 text-green-400 rounded-lg text-sm font-medium hover:bg-green-500/30 transition-all">
+            <button
+              className="flex items-center gap-2 px-3 py-2 bg-green-500/20 border border-green-500/30 text-green-400 rounded-lg text-sm font-medium hover:bg-green-500/30 transition-all"
+              title="View shift report"
+            >
               <FileText className="w-4 h-4" />
-              Shift Report
+              Report
             </button>
-            <button className="flex items-center gap-2 px-3 py-2 bg-slate-700/40 border border-slate-600/50 text-slate-300 rounded-lg text-sm font-medium hover:bg-slate-700/60 transition-all">
+            <button
+              className="flex items-center gap-2 px-3 py-2 bg-slate-700/40 border border-slate-600/50 text-slate-300 rounded-lg text-sm font-medium hover:bg-slate-700/60 transition-all"
+              title="Search call history"
+            >
               <Search className="w-4 h-4" />
-              Search Calls
+              Search
             </button>
-            <div className="px-4 py-2 bg-slate-800 border border-slate-700 rounded-lg">
-              <div className="text-xs text-slate-400">Last Update</div>
-              <div className="text-sm text-white font-medium">14:35:42</div>
+            <div className="px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg flex items-center gap-3">
+              <div>
+                <div className="text-xs text-slate-400">Last Update</div>
+                <div className="text-sm text-white font-medium">14:35:42</div>
+              </div>
+              <div className="flex items-center gap-1 text-emerald-400">
+                <RefreshCw className="w-3 h-3 animate-spin" />
+                <span className="text-xs">Auto</span>
+              </div>
             </div>
           </div>
         </div>
@@ -499,7 +539,10 @@ const CADDispatch = () => {
               </div>
               <div className="flex-1">
                 <div className="flex items-center justify-between mb-3">
-                  <h4 className="text-base font-semibold text-white">AI Insights - Patrol Operations</h4>
+                  <div className="flex items-center gap-3">
+                    <h4 className="text-base font-semibold text-white">AI Insights - Field Operations</h4>
+                    <span className="text-xs text-slate-400 bg-slate-800 px-2 py-0.5 rounded">Updated 14:35</span>
+                  </div>
                   <button
                     onClick={() => setAiInsightsVisible(false)}
                     className="text-slate-400 hover:text-white transition-colors"
@@ -507,76 +550,128 @@ const CADDispatch = () => {
                     <X className="w-4 h-4" />
                   </button>
                 </div>
-                <div className="space-y-3">
+
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                   {/* Critical Section */}
-                  <div>
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                      <h5 className="text-sm font-semibold text-red-400">CRITICAL</h5>
+                  <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Siren className="w-4 h-4 text-red-400" />
+                      <h5 className="text-sm font-bold text-red-400">CRITICAL ALERTS</h5>
                     </div>
-                    <div className="space-y-2 text-sm ml-4">
+                    <div className="space-y-3 text-sm">
                       <div className="flex items-start gap-2">
                         <AlertCircle className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
-                        <p className="text-slate-300">P1 call elapsed 3 min - Domestic violence with weapons (4720 Lawrenceville Hwy)</p>
+                        <div>
+                          <p className="text-white font-medium">P1 DV-Weapons Active</p>
+                          <p className="text-slate-400 text-xs">4720 Lawrenceville Hwy - 3 min elapsed</p>
+                          <p className="text-red-300 text-xs mt-1">Units 247, 251 en route - ETA 2 min</p>
+                        </div>
                       </div>
                       <div className="flex items-start gap-2">
                         <Users className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
-                        <p className="text-slate-300">Only 3 units available - Consider bringing 2 units back from P3 calls</p>
+                        <div>
+                          <p className="text-white font-medium">Low Unit Availability</p>
+                          <p className="text-slate-400 text-xs">Only 3 of 15 units available (20%)</p>
+                          <p className="text-amber-300 text-xs mt-1">Recommend: Clear P3 calls faster</p>
+                        </div>
                       </div>
                       <div className="flex items-start gap-2">
                         <MapPin className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
-                        <p className="text-slate-300">High call volume area: Lawrenceville Hwy corridor (3 active calls)</p>
+                        <div>
+                          <p className="text-white font-medium">Hot Zone: Lawrenceville Hwy</p>
+                          <p className="text-slate-400 text-xs">3 concurrent calls in corridor</p>
+                          <p className="text-blue-300 text-xs mt-1">Consider zone saturation patrol</p>
+                        </div>
                       </div>
                     </div>
+                    <button className="mt-3 w-full text-xs text-red-400 hover:text-red-300 font-medium flex items-center justify-center gap-1">
+                      View All Alerts <ArrowRight className="w-3 h-3" />
+                    </button>
                   </div>
 
                   {/* Monitoring Section */}
-                  <div className="pt-3 border-t border-purple-500/20">
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="w-2 h-2 bg-amber-500 rounded-full"></div>
-                      <h5 className="text-sm font-semibold text-amber-400">MONITORING</h5>
+                  <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-4">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Eye className="w-4 h-4 text-amber-400" />
+                      <h5 className="text-sm font-bold text-amber-400">MONITORING</h5>
                     </div>
-                    <div className="space-y-2 text-sm ml-4">
+                    <div className="space-y-3 text-sm">
                       <div className="flex items-start gap-2">
-                        <CheckCircle className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                        <p className="text-slate-300">Average response time today: 4.2 min (target &lt;5 min) - On track</p>
+                        <Timer className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <p className="text-white font-medium">Response Time Trend</p>
+                          <p className="text-slate-400 text-xs">P1 avg: 3.2 min (target &lt;5 min)</p>
+                          <p className="text-emerald-300 text-xs mt-1">On target - Good performance</p>
+                        </div>
                       </div>
                       <div className="flex items-start gap-2">
                         <Clock className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                        <p className="text-slate-300">12 min elapsed on P2 calls - Monitor closely</p>
+                        <div>
+                          <p className="text-white font-medium">Calls Holding Extended</p>
+                          <p className="text-slate-400 text-xs">1 call over 1 hour (Parking)</p>
+                          <p className="text-amber-300 text-xs mt-1">Assign when unit clears</p>
+                        </div>
                       </div>
                       <div className="flex items-start gap-2">
                         <Activity className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                        <p className="text-slate-300">B-Shift starting in 90 min - Handoff prep needed</p>
+                        <div>
+                          <p className="text-white font-medium">Shift Change Approaching</p>
+                          <p className="text-slate-400 text-xs">B-Shift starts in 85 min</p>
+                          <p className="text-blue-300 text-xs mt-1">Prepare handoff briefing</p>
+                        </div>
                       </div>
                     </div>
+                    <button className="mt-3 w-full text-xs text-amber-400 hover:text-amber-300 font-medium flex items-center justify-center gap-1">
+                      View Details <ArrowRight className="w-3 h-3" />
+                    </button>
                   </div>
 
                   {/* Operational Status */}
-                  <div className="pt-3 border-t border-purple-500/20">
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                      <h5 className="text-sm font-semibold text-green-400">OPERATIONAL STATUS</h5>
+                  <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-4">
+                    <div className="flex items-center gap-2 mb-3">
+                      <CheckCircle className="w-4 h-4 text-emerald-400" />
+                      <h5 className="text-sm font-bold text-emerald-400">OPERATIONAL STATUS</h5>
                     </div>
-                    <div className="space-y-2 text-sm ml-4">
+                    <div className="space-y-3 text-sm">
                       <div className="flex items-start gap-2">
-                        <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
-                        <p className="text-slate-300">9 units deployed, 3 available - Coverage good</p>
+                        <Car className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <p className="text-white font-medium">Unit Deployment</p>
+                          <p className="text-slate-400 text-xs">9 deployed, 3 available, 3 OOS</p>
+                          <p className="text-emerald-300 text-xs mt-1">Coverage: Adequate</p>
+                        </div>
                       </div>
                       <div className="flex items-start gap-2">
-                        <Target className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
-                        <p className="text-slate-300">All P1 calls have units assigned - Emergency response active</p>
+                        <Target className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <p className="text-white font-medium">P1 Coverage</p>
+                          <p className="text-slate-400 text-xs">All P1 calls have assigned units</p>
+                          <p className="text-emerald-300 text-xs mt-1">Emergency response active</p>
+                        </div>
                       </div>
                       <div className="flex items-start gap-2">
-                        <Zap className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
-                        <p className="text-slate-300">No units overdue for end-of-shift</p>
+                        <Gauge className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <p className="text-white font-medium">Today's Clearance</p>
+                          <p className="text-slate-400 text-xs">39/47 calls cleared (83%)</p>
+                          <p className="text-emerald-300 text-xs mt-1">Above daily target (80%)</p>
+                        </div>
                       </div>
                     </div>
+                    <button className="mt-3 w-full text-xs text-emerald-400 hover:text-emerald-300 font-medium flex items-center justify-center gap-1">
+                      Full Status <ArrowRight className="w-3 h-3" />
+                    </button>
                   </div>
                 </div>
-                <div className="mt-4 pt-4 border-t border-purple-500/20">
-                  <button className="text-sm text-purple-400 hover:text-purple-300 font-medium">
-                    View Detailed Recommendations →
+
+                <div className="mt-4 pt-4 border-t border-purple-500/20 flex items-center justify-between">
+                  <div className="flex items-center gap-4 text-xs text-slate-400">
+                    <span className="flex items-center gap-1"><Wifi className="w-3 h-3 text-emerald-400" /> CAD Connected</span>
+                    <span className="flex items-center gap-1"><Signal className="w-3 h-3 text-emerald-400" /> Radio: All Clear</span>
+                    <span>Analysis based on real-time dispatch data</span>
+                  </div>
+                  <button className="text-sm text-purple-400 hover:text-purple-300 font-medium flex items-center gap-1">
+                    View Detailed Recommendations <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>
               </div>
@@ -586,197 +681,411 @@ const CADDispatch = () => {
 
         {/* Enhanced Stats Bar */}
         <div className="grid grid-cols-2 md:grid-cols-6 gap-4 mb-6">
-          <div className="bg-slate-800 border border-slate-700 rounded-lg p-4">
+          {/* Active Calls Card */}
+          <div className="bg-slate-800 border border-blue-500/30 rounded-lg p-4 hover:border-blue-500/50 transition-colors">
             <div className="flex items-center justify-between mb-2">
               <div className="text-sm text-slate-400">Active Calls</div>
-              <Activity className="w-4 h-4 text-blue-400" />
+              <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                <Radio className="w-4 h-4 text-blue-400" />
+              </div>
             </div>
-            <div className="text-2xl font-bold text-white mb-1">{stats.totalCalls}</div>
-            <div className="text-xs text-slate-500">
-              P1: {stats.priority1} | P2: {stats.priority2}
+            <div className="text-3xl font-bold text-white mb-1">{stats.totalCalls}</div>
+            <div className="space-y-1 text-xs">
+              <div className="flex justify-between">
+                <span className="text-slate-500">Dispatched:</span>
+                <span className="text-blue-400 font-medium">2</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-500">En Route:</span>
+                <span className="text-amber-400 font-medium">3</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-500">On Scene:</span>
+                <span className="text-purple-400 font-medium">4</span>
+              </div>
             </div>
-            <div className="mt-2 flex items-center gap-1 text-xs">
+            <div className="mt-2 pt-2 border-t border-slate-700 flex items-center gap-1 text-xs">
               <TrendingUp className="w-3 h-3 text-emerald-400" />
               <span className="text-emerald-400">+2 last 15 min</span>
             </div>
           </div>
 
-          <div className="bg-slate-800 border border-red-500/30 rounded-lg p-4">
+          {/* P1 Card */}
+          <div className="bg-slate-800 border border-red-500/30 rounded-lg p-4 hover:border-red-500/50 transition-colors">
             <div className="flex items-center justify-between mb-2">
               <div className="text-sm text-slate-400">Priority 1</div>
-              <AlertCircle className="w-4 h-4 text-red-400" />
+              <div className="w-8 h-8 bg-red-500/20 rounded-lg flex items-center justify-center">
+                <Siren className="w-4 h-4 text-red-400" />
+              </div>
             </div>
-            <div className="text-2xl font-bold text-red-400 mb-1">{stats.priority1}</div>
-            <div className="text-xs text-slate-500">Avg: 3.2 min response</div>
-            <div className="mt-2 flex items-center gap-1">
-              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-              <span className="text-xs text-green-400">Under 5 min target</span>
+            <div className="text-3xl font-bold text-red-400 mb-1">{stats.priority1}</div>
+            <div className="space-y-1 text-xs">
+              <div className="flex justify-between">
+                <span className="text-slate-500">Avg Response:</span>
+                <span className="text-emerald-400 font-medium">3.2 min</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-500">Target:</span>
+                <span className="text-slate-400">&lt;5 min</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-500">Today Total:</span>
+                <span className="text-white font-medium">8 calls</span>
+              </div>
+            </div>
+            <div className="mt-2 pt-2 border-t border-slate-700 flex items-center gap-1 text-xs">
+              <Circle className="w-2 h-2 fill-emerald-400 text-emerald-400" />
+              <span className="text-emerald-400">All units assigned</span>
             </div>
           </div>
 
-          <div className="bg-slate-800 border border-amber-500/30 rounded-lg p-4">
+          {/* P2 Card */}
+          <div className="bg-slate-800 border border-amber-500/30 rounded-lg p-4 hover:border-amber-500/50 transition-colors">
             <div className="flex items-center justify-between mb-2">
               <div className="text-sm text-slate-400">Priority 2</div>
-              <AlertTriangle className="w-4 h-4 text-amber-400" />
+              <div className="w-8 h-8 bg-amber-500/20 rounded-lg flex items-center justify-center">
+                <AlertTriangle className="w-4 h-4 text-amber-400" />
+              </div>
             </div>
-            <div className="text-2xl font-bold text-amber-400 mb-1">{stats.priority2}</div>
-            <div className="text-xs text-slate-500">Avg: 7.8 min response</div>
-            <div className="mt-2 flex items-center gap-1">
-              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-              <span className="text-xs text-green-400">Under 10 min target</span>
+            <div className="text-3xl font-bold text-amber-400 mb-1">{stats.priority2}</div>
+            <div className="space-y-1 text-xs">
+              <div className="flex justify-between">
+                <span className="text-slate-500">Avg Response:</span>
+                <span className="text-emerald-400 font-medium">7.8 min</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-500">Target:</span>
+                <span className="text-slate-400">&lt;10 min</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-500">Today Total:</span>
+                <span className="text-white font-medium">23 calls</span>
+              </div>
+            </div>
+            <div className="mt-2 pt-2 border-t border-slate-700 flex items-center gap-1 text-xs">
+              <Circle className="w-2 h-2 fill-emerald-400 text-emerald-400" />
+              <span className="text-emerald-400">Under target</span>
             </div>
           </div>
 
-          <div className="bg-slate-800 border border-emerald-500/30 rounded-lg p-4">
+          {/* Units Available Card */}
+          <div className="bg-slate-800 border border-emerald-500/30 rounded-lg p-4 hover:border-emerald-500/50 transition-colors">
             <div className="flex items-center justify-between mb-2">
               <div className="text-sm text-slate-400">Units Available</div>
-              <CheckCircle className="w-4 h-4 text-emerald-400" />
+              <div className="w-8 h-8 bg-emerald-500/20 rounded-lg flex items-center justify-center">
+                <CheckCircle className="w-4 h-4 text-emerald-400" />
+              </div>
             </div>
-            <div className="text-2xl font-bold text-emerald-400 mb-1">{stats.unitsAvailable}</div>
-            <div className="text-xs text-slate-500">
-              A-234, A-238, A-240
+            <div className="text-3xl font-bold text-emerald-400 mb-1">{stats.unitsAvailable}</div>
+            <div className="space-y-1 text-xs">
+              <div className="text-slate-400">Ready to dispatch:</div>
+              <div className="flex flex-wrap gap-1">
+                <span className="px-1.5 py-0.5 bg-emerald-500/20 text-emerald-400 rounded text-xs">A-234</span>
+                <span className="px-1.5 py-0.5 bg-emerald-500/20 text-emerald-400 rounded text-xs">A-238</span>
+                <span className="px-1.5 py-0.5 bg-emerald-500/20 text-emerald-400 rounded text-xs">A-240</span>
+              </div>
             </div>
-            <div className="mt-2 flex items-center gap-1">
-              <div className="w-2 h-2 bg-amber-500 rounded-full"></div>
-              <span className="text-xs text-amber-400">Below optimal (5+)</span>
+            <div className="mt-2 pt-2 border-t border-slate-700 flex items-center gap-1 text-xs">
+              <Circle className="w-2 h-2 fill-amber-400 text-amber-400" />
+              <span className="text-amber-400">Below optimal (5+)</span>
             </div>
           </div>
 
-          <div className="bg-slate-800 border border-slate-700 rounded-lg p-4">
+          {/* Units Deployed Card */}
+          <div className="bg-slate-800 border border-purple-500/30 rounded-lg p-4 hover:border-purple-500/50 transition-colors">
             <div className="flex items-center justify-between mb-2">
               <div className="text-sm text-slate-400">Units Deployed</div>
-              <Car className="w-4 h-4 text-blue-400" />
+              <div className="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center">
+                <Car className="w-4 h-4 text-purple-400" />
+              </div>
             </div>
-            <div className="text-2xl font-bold text-white mb-1">{stats.unitsDeployed}</div>
-            <div className="text-xs text-slate-500">Avg deployment: 18 min</div>
-            <div className="mt-2 text-xs text-slate-400">
-              P1: 2 | P2: 4 | P3: 3
+            <div className="text-3xl font-bold text-white mb-1">{stats.unitsDeployed}</div>
+            <div className="space-y-1 text-xs">
+              <div className="flex justify-between">
+                <span className="text-slate-500">On P1 calls:</span>
+                <span className="text-red-400 font-medium">2</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-500">On P2 calls:</span>
+                <span className="text-amber-400 font-medium">5</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-500">On P3 calls:</span>
+                <span className="text-blue-400 font-medium">2</span>
+              </div>
+            </div>
+            <div className="mt-2 pt-2 border-t border-slate-700 text-xs text-slate-400">
+              Avg time on call: 18 min
             </div>
           </div>
 
-          <div className="bg-slate-800 border border-slate-700 rounded-lg p-4">
+          {/* Out of Service Card */}
+          <div className="bg-slate-800 border border-slate-600/50 rounded-lg p-4 hover:border-slate-500/50 transition-colors">
             <div className="flex items-center justify-between mb-2">
               <div className="text-sm text-slate-400">Out of Service</div>
-              <AlertTriangle className="w-4 h-4 text-slate-400" />
+              <div className="w-8 h-8 bg-slate-700/50 rounded-lg flex items-center justify-center">
+                <XCircle className="w-4 h-4 text-slate-400" />
+              </div>
             </div>
-            <div className="text-2xl font-bold text-slate-400 mb-1">{stats.unitsOutOfService}</div>
-            <div className="text-xs text-slate-500">
-              Fuel: 1 | Break: 1 | Maint: 1
+            <div className="text-3xl font-bold text-slate-400 mb-1">{stats.unitsOutOfService}</div>
+            <div className="space-y-1 text-xs">
+              <div className="flex justify-between">
+                <span className="text-slate-500">Fueling:</span>
+                <span className="text-slate-300">1 (A-235)</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-500">Break:</span>
+                <span className="text-slate-300">1 (A-242)</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-500">Maintenance:</span>
+                <span className="text-slate-300">1 (A-257)</span>
+              </div>
             </div>
-            <div className="mt-2 text-xs text-blue-400">
-              A-235 back in 8 min
+            <div className="mt-2 pt-2 border-t border-slate-700 flex items-center gap-1 text-xs">
+              <Clock className="w-3 h-3 text-blue-400" />
+              <span className="text-blue-400">A-235 back in 8 min</span>
             </div>
           </div>
         </div>
 
         {/* Calls Holding Section */}
         {holdingCalls.length > 0 && (
-          <div className="mb-6 bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
-            <div className="flex items-center gap-3 mb-3">
-              <Clock className="w-5 h-5 text-amber-400" />
-              <h3 className="text-lg font-bold text-amber-400">Calls Holding (Awaiting Assignment)</h3>
-              <span className="px-2 py-1 bg-amber-500/20 text-amber-400 rounded text-sm font-bold">
-                {holdingCalls.length}
-              </span>
+          <div className="mb-6 bg-amber-500/10 border border-amber-500/30 rounded-xl p-5">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-amber-500/20 rounded-xl flex items-center justify-center">
+                  <Timer className="w-5 h-5 text-amber-400" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-white">Calls Holding</h3>
+                  <p className="text-sm text-slate-400">Awaiting unit assignment</p>
+                </div>
+                <span className="px-3 py-1 bg-amber-500/20 border border-amber-500/30 text-amber-400 rounded-full text-sm font-bold">
+                  {holdingCalls.length} calls
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <button className="px-3 py-2 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded-lg text-sm hover:bg-blue-500/30 flex items-center gap-2">
+                  <Users className="w-4 h-4" />
+                  Auto-Assign
+                </button>
+              </div>
             </div>
-            <div className="space-y-2">
+
+            <div className="space-y-3">
               {holdingCalls.map((call, idx) => (
-                <div key={idx} className="bg-slate-900/50 border border-amber-500/20 rounded-lg p-3 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <span className={`px-2 py-1 rounded text-xs font-bold border ${getPriorityColor(call.priority)}`}>
-                      {call.priority}
-                    </span>
-                    <div>
-                      <div className="text-white font-medium text-sm">{call.type}</div>
-                      <div className="text-xs text-slate-400">{call.location} • Call #{call.callNumber}</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="text-right">
-                      <div className="text-xs text-slate-400">Holding</div>
-                      <div className={`text-sm font-bold ${call.holdTime.includes('hr') ? 'text-red-400' : 'text-amber-400'}`}>
-                        {call.holdTime}
+                <div key={idx} className={`bg-slate-900/70 border rounded-lg p-4 ${call.holdTime.includes('hr') ? 'border-red-500/30' : 'border-amber-500/20'}`}>
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-start gap-3">
+                      <span className={`px-2.5 py-1 rounded text-xs font-bold border ${getPriorityColor(call.priority)}`}>
+                        {call.priority}
+                      </span>
+                      <div>
+                        <div className="text-white font-semibold">{call.type}</div>
+                        <div className="flex items-center gap-2 mt-1 text-sm text-slate-400">
+                          <MapPin className="w-3 h-3" />
+                          <span>{call.location}</span>
+                        </div>
+                        <div className="text-xs text-slate-500 mt-1">Call #{call.callNumber}</div>
                       </div>
                     </div>
-                    <div className="flex gap-2">
-                      <button className="px-3 py-1 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded text-xs hover:bg-blue-500/30">
-                        Assign Now
-                      </button>
-                      <button className="px-3 py-1 bg-slate-700/40 border border-slate-600/50 text-slate-300 rounded text-xs hover:bg-slate-700/60">
-                        Close
-                      </button>
+                    <div className="flex items-center gap-4">
+                      <div className="text-right">
+                        <div className="text-xs text-slate-400 mb-1">Hold Time</div>
+                        <div className={`text-lg font-bold flex items-center gap-1 ${call.holdTime.includes('hr') ? 'text-red-400' : 'text-amber-400'}`}>
+                          <Clock className="w-4 h-4" />
+                          {call.holdTime}
+                        </div>
+                        {call.holdTime.includes('hr') && (
+                          <div className="text-xs text-red-400 mt-1 flex items-center gap-1">
+                            <AlertTriangle className="w-3 h-3" />
+                            Overdue
+                          </div>
+                        )}
+                      </div>
+                      <div className="flex flex-col gap-2">
+                        <button className="px-4 py-2 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded-lg text-xs font-medium hover:bg-blue-500/30 flex items-center gap-1">
+                          <Send className="w-3 h-3" />
+                          Assign Now
+                        </button>
+                        <button className="px-4 py-2 bg-slate-700/40 border border-slate-600/50 text-slate-300 rounded-lg text-xs hover:bg-slate-700/60 flex items-center gap-1">
+                          <XCircle className="w-3 h-3" />
+                          Cancel
+                        </button>
+                      </div>
                     </div>
+                  </div>
+
+                  {/* Available units suggestion */}
+                  <div className="mt-3 pt-3 border-t border-slate-700/50 flex items-center justify-between text-xs">
+                    <div className="flex items-center gap-2 text-slate-400">
+                      <Car className="w-3 h-3" />
+                      <span>Nearest available:</span>
+                      <span className="px-2 py-0.5 bg-emerald-500/20 text-emerald-400 rounded font-medium">
+                        {idx === 0 ? 'A-234 (Zone 3)' : 'A-238 (Zone 1)'}
+                      </span>
+                      <span className="text-slate-500">ETA: {idx === 0 ? '6' : '8'} min</span>
+                    </div>
+                    <button className="text-blue-400 hover:text-blue-300 font-medium flex items-center gap-1">
+                      View Details <ArrowRight className="w-3 h-3" />
+                    </button>
                   </div>
                 </div>
               ))}
             </div>
-            <div className="mt-3 pt-3 border-t border-amber-500/20 flex items-center justify-between text-sm">
-              <div className="flex items-center gap-4">
-                <span className="text-slate-400">Total Holding: <span className="text-white font-semibold">{holdingCalls.length} calls</span></span>
-                <span className="text-slate-400">Avg Hold Time: <span className="text-amber-400 font-semibold">58 min</span></span>
+
+            <div className="mt-4 pt-4 border-t border-amber-500/20 grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="text-center">
+                <div className="text-xl font-bold text-white">{holdingCalls.length}</div>
+                <div className="text-xs text-slate-400">Total Holding</div>
               </div>
-              <div className="flex items-center gap-2 text-red-400">
-                <AlertTriangle className="w-4 h-4" />
-                <span className="font-semibold">1 call over 1 hour</span>
+              <div className="text-center">
+                <div className="text-xl font-bold text-amber-400">58 min</div>
+                <div className="text-xs text-slate-400">Avg Hold Time</div>
+              </div>
+              <div className="text-center">
+                <div className="text-xl font-bold text-red-400">1</div>
+                <div className="text-xs text-slate-400">Over 1 Hour</div>
+              </div>
+              <div className="text-center">
+                <div className="text-xl font-bold text-emerald-400">{stats.unitsAvailable}</div>
+                <div className="text-xs text-slate-400">Units Available</div>
               </div>
             </div>
           </div>
         )}
 
         {/* Shift Status Section */}
-        <div className="mb-6 bg-slate-800 border border-slate-700 rounded-lg p-5">
+        <div className="mb-6 bg-slate-800 border border-slate-700 rounded-xl overflow-hidden">
           <button
             onClick={() => setShowShiftStatus(!showShiftStatus)}
-            className="w-full flex items-center justify-between"
+            className="w-full flex items-center justify-between p-5 hover:bg-slate-700/30 transition-colors"
           >
-            <div className="flex items-center gap-2">
-              <Users className="w-5 h-5 text-blue-400" />
-              <h3 className="text-lg font-bold text-white">Shift Status</h3>
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center">
+                <Clock className="w-5 h-5 text-blue-400" />
+              </div>
+              <div className="text-left">
+                <h3 className="text-lg font-bold text-white">Shift Status</h3>
+                <p className="text-sm text-slate-400">A-Shift ends in 1 hr 25 min</p>
+              </div>
             </div>
-            <ChevronRight className={`w-5 h-5 text-slate-400 transition-transform ${showShiftStatus ? 'rotate-90' : ''}`} />
+            <div className="flex items-center gap-3">
+              <span className="px-3 py-1 bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 rounded-full text-xs font-semibold">
+                B-Shift Ready
+              </span>
+              <ChevronRight className={`w-5 h-5 text-slate-400 transition-transform duration-200 ${showShiftStatus ? 'rotate-90' : ''}`} />
+            </div>
           </button>
 
           {showShiftStatus && (
-            <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <div className="text-sm text-slate-400 mb-2">Current Shift: A-Shift</div>
-                <div className="text-2xl font-bold text-white mb-1">06:00-14:00</div>
-                <div className="text-sm text-amber-400">End of shift: 1 hr 25 min</div>
-              </div>
-              <div>
-                <div className="text-sm text-slate-400 mb-2">Next Shift: B-Shift</div>
-                <div className="text-lg font-semibold text-white mb-1">14:00-22:00</div>
-                <div className="flex items-center gap-1 text-sm">
-                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                  <span className="text-green-400">Staffing: 14/14 All covered</span>
-                </div>
-              </div>
-              <div className="md:col-span-2 bg-slate-900/50 border border-slate-700 rounded-lg p-4">
-                <h4 className="text-sm font-semibold text-white mb-3">Handoff Preparation:</h4>
-                <div className="space-y-2 text-sm">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-400" />
-                    <span className="text-slate-300">Active calls: {stats.totalCalls} (will transfer to B-Shift)</span>
+            <div className="p-5 pt-0 border-t border-slate-700/50">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                {/* Current Shift */}
+                <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Circle className="w-3 h-3 fill-blue-400 text-blue-400" />
+                    <span className="text-sm font-semibold text-blue-400">CURRENT SHIFT</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <AlertTriangle className="w-4 h-4 text-amber-400" />
-                    <span className="text-slate-300">{holdingCalls.length} calls holding (brief B-Shift)</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-400" />
-                    <span className="text-slate-300">No units overdue for EOD</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-400" />
-                    <span className="text-slate-300">Shift report drafted</span>
+                  <div className="text-2xl font-bold text-white mb-1">A-Shift</div>
+                  <div className="text-lg text-slate-300">06:00 - 14:00</div>
+                  <div className="mt-3 pt-3 border-t border-blue-500/20">
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-slate-400">Time Remaining:</span>
+                      <span className="text-amber-400 font-bold">1 hr 25 min</span>
+                    </div>
+                    <div className="flex items-center justify-between text-sm mt-1">
+                      <span className="text-slate-400">Supervisor:</span>
+                      <span className="text-white">Sgt. Mitchell</span>
+                    </div>
                   </div>
                 </div>
-                <div className="flex gap-2 mt-4">
-                  <button className="px-4 py-2 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded-lg text-sm hover:bg-blue-500/30">
+
+                {/* Next Shift */}
+                <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-4">
+                  <div className="flex items-center gap-2 mb-3">
+                    <ArrowRight className="w-3 h-3 text-emerald-400" />
+                    <span className="text-sm font-semibold text-emerald-400">NEXT SHIFT</span>
+                  </div>
+                  <div className="text-2xl font-bold text-white mb-1">B-Shift</div>
+                  <div className="text-lg text-slate-300">14:00 - 22:00</div>
+                  <div className="mt-3 pt-3 border-t border-emerald-500/20">
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-slate-400">Staffing:</span>
+                      <span className="text-emerald-400 font-bold flex items-center gap-1">
+                        <CheckCircle className="w-3 h-3" /> 14/14
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between text-sm mt-1">
+                      <span className="text-slate-400">Supervisor:</span>
+                      <span className="text-white">Sgt. Rodriguez</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Handoff Checklist */}
+                <div className="bg-slate-900/50 border border-slate-700 rounded-xl p-4">
+                  <div className="flex items-center gap-2 mb-3">
+                    <FileText className="w-4 h-4 text-purple-400" />
+                    <span className="text-sm font-semibold text-purple-400">HANDOFF CHECKLIST</span>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 text-sm">
+                      <CheckCircle className="w-4 h-4 text-emerald-400" />
+                      <span className="text-slate-300">Active calls briefed</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm">
+                      <CheckCircle className="w-4 h-4 text-emerald-400" />
+                      <span className="text-slate-300">Holding calls noted</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm">
+                      <CheckCircle className="w-4 h-4 text-emerald-400" />
+                      <span className="text-slate-300">Equipment checked</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm">
+                      <Circle className="w-4 h-4 text-slate-500" />
+                      <span className="text-slate-400">Final report pending</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Handoff Details */}
+              <div className="mt-4 bg-slate-900/30 border border-slate-700/50 rounded-xl p-4">
+                <h4 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+                  <Bell className="w-4 h-4 text-amber-400" />
+                  Transfer Summary for B-Shift
+                </h4>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                  <div className="text-center p-2 bg-slate-800/50 rounded-lg">
+                    <div className="text-xl font-bold text-white">{stats.totalCalls}</div>
+                    <div className="text-xs text-slate-400">Active Calls</div>
+                  </div>
+                  <div className="text-center p-2 bg-slate-800/50 rounded-lg">
+                    <div className="text-xl font-bold text-amber-400">{holdingCalls.length}</div>
+                    <div className="text-xs text-slate-400">Calls Holding</div>
+                  </div>
+                  <div className="text-center p-2 bg-slate-800/50 rounded-lg">
+                    <div className="text-xl font-bold text-red-400">{stats.priority1}</div>
+                    <div className="text-xs text-slate-400">P1 In Progress</div>
+                  </div>
+                  <div className="text-center p-2 bg-slate-800/50 rounded-lg">
+                    <div className="text-xl font-bold text-emerald-400">{stats.unitsAvailable}</div>
+                    <div className="text-xs text-slate-400">Units Available</div>
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  <button className="flex-1 px-4 py-2 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded-lg text-sm font-medium hover:bg-blue-500/30 flex items-center justify-center gap-2">
+                    <FileText className="w-4 h-4" />
                     View Shift Report
                   </button>
+                  <button className="flex-1 px-4 py-2 bg-purple-500/20 border border-purple-500/30 text-purple-400 rounded-lg text-sm font-medium hover:bg-purple-500/30 flex items-center justify-center gap-2">
+                    <Bell className="w-4 h-4" />
+                    Notify B-Shift
+                  </button>
                   <button className="px-4 py-2 bg-slate-700/40 border border-slate-600/50 text-slate-300 rounded-lg text-sm hover:bg-slate-700/60">
-                    Notify B-Shift Supervisor
+                    <Phone className="w-4 h-4" />
                   </button>
                 </div>
               </div>
@@ -785,109 +1094,195 @@ const CADDispatch = () => {
         </div>
 
         {/* Today's Metrics Section */}
-        <div className="mb-6 bg-slate-800 border border-slate-700 rounded-lg p-5">
+        <div className="mb-6 bg-slate-800 border border-slate-700 rounded-xl overflow-hidden">
           <button
             onClick={() => setShowMetrics(!showMetrics)}
-            className="w-full flex items-center justify-between"
+            className="w-full flex items-center justify-between p-5 hover:bg-slate-700/30 transition-colors"
           >
-            <div className="flex items-center gap-2">
-              <Activity className="w-5 h-5 text-purple-400" />
-              <h3 className="text-lg font-bold text-white">Today's Metrics</h3>
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-purple-500/20 rounded-xl flex items-center justify-center">
+                <BarChart3 className="w-5 h-5 text-purple-400" />
+              </div>
+              <div className="text-left">
+                <h3 className="text-lg font-bold text-white">Today's Metrics</h3>
+                <p className="text-sm text-slate-400">{todaysMetrics.totalCallsToday} calls today • {todaysMetrics.clearanceRate}% cleared</p>
+              </div>
             </div>
-            <ChevronRight className={`w-5 h-5 text-slate-400 transition-transform ${showMetrics ? 'rotate-90' : ''}`} />
+            <div className="flex items-center gap-3">
+              <div className="hidden md:flex items-center gap-2 text-xs">
+                <span className="px-2 py-1 bg-emerald-500/20 text-emerald-400 rounded">Response: On Target</span>
+              </div>
+              <ChevronRight className={`w-5 h-5 text-slate-400 transition-transform duration-200 ${showMetrics ? 'rotate-90' : ''}`} />
+            </div>
           </button>
 
           {showMetrics && (
-            <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
-              {/* Call Volume */}
-              <div className="bg-slate-900/50 border border-slate-700 rounded-lg p-4">
-                <h4 className="text-sm font-semibold text-white mb-3">Call Volume</h4>
-                <div className="text-3xl font-bold text-white mb-2">{todaysMetrics.totalCallsToday}</div>
-                <div className="space-y-1 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-slate-400">P1:</span>
-                    <span className="text-red-400 font-semibold">{todaysMetrics.p1Calls} (17%)</span>
+            <div className="p-5 pt-0 border-t border-slate-700/50">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4">
+                {/* Call Volume */}
+                <div className="bg-gradient-to-br from-blue-500/10 to-blue-600/5 border border-blue-500/20 rounded-xl p-4">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Radio className="w-4 h-4 text-blue-400" />
+                    <h4 className="text-sm font-semibold text-blue-400">CALL VOLUME</h4>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-slate-400">P2:</span>
-                    <span className="text-amber-400 font-semibold">{todaysMetrics.p2Calls} (49%)</span>
+                  <div className="text-4xl font-bold text-white mb-3">{todaysMetrics.totalCallsToday}</div>
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between text-sm">
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-red-400 rounded-full"></div>
+                        <span className="text-slate-400">P1 Emergency:</span>
+                      </div>
+                      <span className="text-red-400 font-semibold">{todaysMetrics.p1Calls}</span>
+                    </div>
+                    <div className="flex items-center justify-between text-sm">
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-amber-400 rounded-full"></div>
+                        <span className="text-slate-400">P2 Urgent:</span>
+                      </div>
+                      <span className="text-amber-400 font-semibold">{todaysMetrics.p2Calls}</span>
+                    </div>
+                    <div className="flex items-center justify-between text-sm">
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                        <span className="text-slate-400">P3 Routine:</span>
+                      </div>
+                      <span className="text-blue-400 font-semibold">{todaysMetrics.p3Calls}</span>
+                    </div>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-slate-400">P3:</span>
-                    <span className="text-blue-400 font-semibold">{todaysMetrics.p3Calls} (34%)</span>
+                  <div className="mt-3 pt-3 border-t border-blue-500/20 flex items-center gap-1 text-xs text-emerald-400">
+                    <TrendingUp className="w-3 h-3" />
+                    <span>+12% vs yesterday</span>
                   </div>
                 </div>
-              </div>
 
-              {/* Response Times */}
-              <div className="bg-slate-900/50 border border-slate-700 rounded-lg p-4">
-                <h4 className="text-sm font-semibold text-white mb-3">Response Times</h4>
-                <div className="space-y-2 text-sm">
-                  <div>
-                    <div className="flex justify-between mb-1">
-                      <span className="text-slate-400">P1 avg:</span>
-                      <span className="text-green-400 font-semibold">{todaysMetrics.avgResponseTimeP1} min</span>
-                    </div>
-                    <div className="text-xs text-green-400 flex items-center gap-1">
-                      <CheckCircle className="w-3 h-3" />
-                      Under 5 min target
-                    </div>
+                {/* Response Times */}
+                <div className="bg-gradient-to-br from-emerald-500/10 to-emerald-600/5 border border-emerald-500/20 rounded-xl p-4">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Timer className="w-4 h-4 text-emerald-400" />
+                    <h4 className="text-sm font-semibold text-emerald-400">RESPONSE TIMES</h4>
                   </div>
-                  <div>
-                    <div className="flex justify-between mb-1">
-                      <span className="text-slate-400">P2 avg:</span>
-                      <span className="text-green-400 font-semibold">{todaysMetrics.avgResponseTimeP2} min</span>
+                  <div className="space-y-3">
+                    <div className="bg-slate-900/50 rounded-lg p-2">
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-xs text-slate-400">P1 Emergency</span>
+                        <span className="text-emerald-400 font-bold">{todaysMetrics.avgResponseTimeP1} min</span>
+                      </div>
+                      <div className="w-full bg-slate-700 rounded-full h-1.5">
+                        <div className="bg-emerald-400 h-1.5 rounded-full" style={{width: '64%'}}></div>
+                      </div>
+                      <div className="text-xs text-slate-500 mt-1">Target: &lt;5 min</div>
                     </div>
-                    <div className="text-xs text-green-400 flex items-center gap-1">
-                      <CheckCircle className="w-3 h-3" />
-                      Under 10 min target
+                    <div className="bg-slate-900/50 rounded-lg p-2">
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-xs text-slate-400">P2 Urgent</span>
+                        <span className="text-emerald-400 font-bold">{todaysMetrics.avgResponseTimeP2} min</span>
+                      </div>
+                      <div className="w-full bg-slate-700 rounded-full h-1.5">
+                        <div className="bg-emerald-400 h-1.5 rounded-full" style={{width: '78%'}}></div>
+                      </div>
+                      <div className="text-xs text-slate-500 mt-1">Target: &lt;10 min</div>
                     </div>
-                  </div>
-                  <div>
-                    <div className="flex justify-between mb-1">
-                      <span className="text-slate-400">P3 avg:</span>
-                      <span className="text-green-400 font-semibold">{todaysMetrics.avgResponseTimeP3} min</span>
-                    </div>
-                    <div className="text-xs text-green-400 flex items-center gap-1">
-                      <CheckCircle className="w-3 h-3" />
-                      Under 20 min target
+                    <div className="bg-slate-900/50 rounded-lg p-2">
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-xs text-slate-400">P3 Routine</span>
+                        <span className="text-emerald-400 font-bold">{todaysMetrics.avgResponseTimeP3} min</span>
+                      </div>
+                      <div className="w-full bg-slate-700 rounded-full h-1.5">
+                        <div className="bg-emerald-400 h-1.5 rounded-full" style={{width: '73%'}}></div>
+                      </div>
+                      <div className="text-xs text-slate-500 mt-1">Target: &lt;20 min</div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Clearance Rate */}
-              <div className="bg-slate-900/50 border border-slate-700 rounded-lg p-4">
-                <h4 className="text-sm font-semibold text-white mb-3">Clearance Rate</h4>
-                <div className="text-3xl font-bold text-emerald-400 mb-2">{todaysMetrics.clearanceRate}%</div>
-                <div className="space-y-1 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-slate-400">Cleared:</span>
-                    <span className="text-white font-semibold">{todaysMetrics.callsCleared}/{todaysMetrics.totalCallsToday}</span>
+                {/* Clearance Rate */}
+                <div className="bg-gradient-to-br from-purple-500/10 to-purple-600/5 border border-purple-500/20 rounded-xl p-4">
+                  <div className="flex items-center gap-2 mb-3">
+                    <CheckCircle className="w-4 h-4 text-purple-400" />
+                    <h4 className="text-sm font-semibold text-purple-400">CLEARANCE RATE</h4>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-slate-400">Active:</span>
-                    <span className="text-amber-400 font-semibold">{stats.totalCalls}</span>
+                  <div className="flex items-end gap-2 mb-3">
+                    <div className="text-4xl font-bold text-emerald-400">{todaysMetrics.clearanceRate}%</div>
+                    <div className="text-sm text-emerald-400 mb-1 flex items-center gap-1">
+                      <TrendingUp className="w-3 h-3" />
+                      +3%
+                    </div>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-slate-400">Avg handling:</span>
-                    <span className="text-white font-semibold">{todaysMetrics.avgHandlingTime} min</span>
+                  <div className="w-full bg-slate-700 rounded-full h-3 mb-3">
+                    <div className="bg-gradient-to-r from-emerald-500 to-emerald-400 h-3 rounded-full" style={{width: `${todaysMetrics.clearanceRate}%`}}></div>
+                  </div>
+                  <div className="space-y-1 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">Cleared:</span>
+                      <span className="text-emerald-400 font-semibold">{todaysMetrics.callsCleared}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">Active:</span>
+                      <span className="text-amber-400 font-semibold">{stats.totalCalls}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">Holding:</span>
+                      <span className="text-red-400 font-semibold">{holdingCalls.length}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Handling Time */}
+                <div className="bg-gradient-to-br from-amber-500/10 to-amber-600/5 border border-amber-500/20 rounded-xl p-4">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Clock className="w-4 h-4 text-amber-400" />
+                    <h4 className="text-sm font-semibold text-amber-400">HANDLING TIME</h4>
+                  </div>
+                  <div className="text-4xl font-bold text-white mb-1">{todaysMetrics.avgHandlingTime}</div>
+                  <div className="text-sm text-slate-400 mb-3">minutes average</div>
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between text-sm bg-slate-900/50 rounded-lg p-2">
+                      <span className="text-slate-400">P1 Handling:</span>
+                      <span className="text-white font-semibold">28 min</span>
+                    </div>
+                    <div className="flex items-center justify-between text-sm bg-slate-900/50 rounded-lg p-2">
+                      <span className="text-slate-400">P2 Handling:</span>
+                      <span className="text-white font-semibold">24 min</span>
+                    </div>
+                    <div className="flex items-center justify-between text-sm bg-slate-900/50 rounded-lg p-2">
+                      <span className="text-slate-400">P3 Handling:</span>
+                      <span className="text-white font-semibold">15 min</span>
+                    </div>
                   </div>
                 </div>
               </div>
 
               {/* Unit Performance */}
-              <div className="md:col-span-3 bg-slate-900/50 border border-slate-700 rounded-lg p-4">
-                <h4 className="text-sm font-semibold text-white mb-3">Most Active Units Today</h4>
+              <div className="mt-4 bg-slate-900/30 border border-slate-700/50 rounded-xl p-4">
+                <div className="flex items-center justify-between mb-4">
+                  <h4 className="text-sm font-semibold text-white flex items-center gap-2">
+                    <Target className="w-4 h-4 text-amber-400" />
+                    Top Performing Units Today
+                  </h4>
+                  <button className="text-xs text-blue-400 hover:text-blue-300">View All Units</button>
+                </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                   {unitPerformance.map((perf, idx) => (
-                    <div key={idx} className="bg-slate-800/50 border border-slate-700/50 rounded p-3">
+                    <div key={idx} className={`bg-slate-800/70 border rounded-xl p-4 ${
+                      idx === 0 ? 'border-amber-500/30' : 'border-slate-700/50'
+                    }`}>
                       <div className="flex items-center justify-between mb-2">
-                        <span className="text-white font-bold">{perf.unit}</span>
-                        <span className="text-amber-400 font-bold">{perf.calls} calls</span>
+                        <div className="flex items-center gap-2">
+                          {idx === 0 && <span className="text-amber-400 text-lg">1st</span>}
+                          {idx === 1 && <span className="text-slate-300 text-lg">2nd</span>}
+                          {idx === 2 && <span className="text-amber-700 text-lg">3rd</span>}
+                          <span className="text-white font-bold text-lg">{perf.unit}</span>
+                        </div>
+                        <div className="text-right">
+                          <span className="text-2xl font-bold text-amber-400">{perf.calls}</span>
+                          <span className="text-xs text-slate-400 ml-1">calls</span>
+                        </div>
                       </div>
-                      <div className="text-xs text-slate-400 mb-1">{perf.officer}</div>
-                      <div className="text-xs text-green-400">Fastest response: {perf.fastestResponse} min</div>
+                      <div className="text-sm text-slate-400 mb-2">{perf.officer}</div>
+                      <div className="flex items-center gap-2 text-xs">
+                        <Zap className="w-3 h-3 text-emerald-400" />
+                        <span className="text-emerald-400">Fastest: {perf.fastestResponse} min response</span>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -900,14 +1295,26 @@ const CADDispatch = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Active Calls - Left Column (2/3 width) */}
           <div className="lg:col-span-2">
-            <div className="bg-slate-800 border border-slate-700 rounded-lg p-6">
+            <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-bold text-white flex items-center gap-2">
-                  <Radio className="w-5 h-5 text-amber-400" />
-                  Active Calls for Service
-                </h2>
-                <div className="text-sm text-slate-400">
-                  Sorted by Priority & Time
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-amber-500/20 rounded-xl flex items-center justify-center">
+                    <Radio className="w-5 h-5 text-amber-400" />
+                  </div>
+                  <div>
+                    <h2 className="text-xl font-bold text-white">Active Calls for Service</h2>
+                    <p className="text-sm text-slate-400">Real-time dispatch tracking</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2 text-sm">
+                    <span className="px-2 py-1 bg-red-500/20 text-red-400 rounded text-xs font-bold">P1: {stats.priority1}</span>
+                    <span className="px-2 py-1 bg-amber-500/20 text-amber-400 rounded text-xs font-bold">P2: {stats.priority2}</span>
+                    <span className="px-2 py-1 bg-blue-500/20 text-blue-400 rounded text-xs font-bold">P3: {activeCalls.filter(c => c.priority === 'P3').length}</span>
+                  </div>
+                  <button className="px-3 py-1.5 bg-slate-700/50 border border-slate-600 text-slate-300 rounded-lg text-xs hover:bg-slate-700">
+                    <BarChart3 className="w-4 h-4" />
+                  </button>
                 </div>
               </div>
 
@@ -916,91 +1323,136 @@ const CADDispatch = () => {
                   <div
                     key={call.id}
                     onClick={() => setSelectedCall(call)}
-                    className={`border rounded-lg p-4 cursor-pointer transition-all hover:border-amber-500/50 ${
-                      call.priority === 'P1' ? 'bg-red-500/5 border-red-500/30' :
-                      call.priority === 'P2' ? 'bg-amber-500/5 border-amber-500/30' :
-                      'bg-slate-900/50 border-slate-700/30'
+                    className={`border rounded-xl p-4 cursor-pointer transition-all hover:shadow-lg ${
+                      call.priority === 'P1' ? 'bg-red-500/5 border-red-500/30 hover:border-red-500/50' :
+                      call.priority === 'P2' ? 'bg-amber-500/5 border-amber-500/30 hover:border-amber-500/50' :
+                      'bg-slate-900/50 border-slate-700/30 hover:border-slate-600'
                     }`}
                   >
                     <div className="flex items-start justify-between mb-3">
                       <div className="flex items-center gap-3">
-                        <span className={`px-3 py-1 rounded font-bold text-sm border ${getPriorityColor(call.priority)}`}>
-                          {call.priority}
-                        </span>
+                        <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
+                          call.priority === 'P1' ? 'bg-red-500/20' :
+                          call.priority === 'P2' ? 'bg-amber-500/20' :
+                          'bg-blue-500/20'
+                        }`}>
+                          <span className={`text-lg font-bold ${
+                            call.priority === 'P1' ? 'text-red-400' :
+                            call.priority === 'P2' ? 'text-amber-400' :
+                            'text-blue-400'
+                          }`}>{call.priority}</span>
+                        </div>
                         <div>
-                          <div className="text-white font-semibold">{call.type}</div>
-                          <div className="text-xs text-slate-400">Call #{call.callNumber}</div>
+                          <div className="text-white font-semibold text-lg">{call.type}</div>
+                          <div className="flex items-center gap-2 text-xs text-slate-400">
+                            <span>Call #{call.callNumber}</span>
+                            {call.zone && (
+                              <>
+                                <span className="text-slate-600">|</span>
+                                <span>{call.zone}</span>
+                              </>
+                            )}
+                          </div>
                         </div>
                       </div>
                       <div className="text-right">
-                        <div className="text-sm text-slate-400">Elapsed</div>
-                        <div className={`font-bold ${call.elapsed.includes('hr') ? 'text-red-400' : 'text-amber-400'}`}>
+                        <div className={`text-2xl font-bold ${call.elapsed.includes('hr') ? 'text-red-400' : call.elapsed.includes('min') && parseInt(call.elapsed) > 20 ? 'text-amber-400' : 'text-white'}`}>
                           {call.elapsed}
                         </div>
+                        <div className="text-xs text-slate-400">elapsed</div>
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-3 text-sm">
-                      <div className="flex items-center gap-2">
-                        <MapPin className="w-4 h-4 text-slate-400 flex-shrink-0" />
-                        <span className="text-slate-300">{call.location}</span>
-                      </div>
-                      {call.crossStreets && (
-                        <div className="text-xs text-slate-500">
-                          Cross: {call.crossStreets}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+                      <div className="bg-slate-900/50 rounded-lg p-2.5">
+                        <div className="flex items-start gap-2">
+                          <MapPin className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
+                          <div>
+                            <div className="text-white text-sm font-medium">{call.location}</div>
+                            {call.crossStreets && (
+                              <div className="text-xs text-slate-400 mt-0.5">Cross: {call.crossStreets}</div>
+                            )}
+                          </div>
                         </div>
-                      )}
-                      <div className="flex items-center gap-2">
-                        <Clock className="w-4 h-4 text-slate-400" />
-                        <span className="text-slate-300">Received: {call.callTime}</span>
                       </div>
-                      {call.zone && (
-                        <div className="text-xs text-slate-500">
-                          {call.zone}
+                      <div className="bg-slate-900/50 rounded-lg p-2.5">
+                        <div className="flex items-start gap-2">
+                          <Clock className="w-4 h-4 text-blue-400 mt-0.5 flex-shrink-0" />
+                          <div>
+                            <div className="text-white text-sm font-medium">Received: {call.callTime}</div>
+                            {call.dispatchTime && (
+                              <div className="text-xs text-slate-400 mt-0.5">Dispatched: {call.dispatchTime}</div>
+                            )}
+                          </div>
                         </div>
-                      )}
+                      </div>
                     </div>
 
                     {/* Badges for special conditions */}
-                    {(call.backupRequested || call.supervisorNotified || call.priorCallsAtLocation! > 0) && (
+                    {(call.backupRequested || call.supervisorNotified || call.priorCallsAtLocation! > 0 || call.weaponsRegistered) && (
                       <div className="flex flex-wrap gap-2 mb-3">
                         {call.backupRequested && (
-                          <span className="px-2 py-1 bg-red-500/20 border border-red-500/30 text-red-400 rounded text-xs font-semibold">
+                          <span className="px-2 py-1 bg-red-500/20 border border-red-500/30 text-red-400 rounded-lg text-xs font-semibold flex items-center gap-1">
+                            <Shield className="w-3 h-3" />
                             BACKUP REQUESTED
                           </span>
                         )}
                         {call.supervisorNotified && (
-                          <span className="px-2 py-1 bg-purple-500/20 border border-purple-500/30 text-purple-400 rounded text-xs font-semibold">
+                          <span className="px-2 py-1 bg-purple-500/20 border border-purple-500/30 text-purple-400 rounded-lg text-xs font-semibold flex items-center gap-1">
+                            <User className="w-3 h-3" />
                             SUPERVISOR NOTIFIED
                           </span>
                         )}
                         {call.priorCallsAtLocation! > 0 && (
-                          <span className="px-2 py-1 bg-amber-500/20 border border-amber-500/30 text-amber-400 rounded text-xs font-semibold">
+                          <span className="px-2 py-1 bg-amber-500/20 border border-amber-500/30 text-amber-400 rounded-lg text-xs font-semibold flex items-center gap-1">
+                            <History className="w-3 h-3" />
                             {call.priorCallsAtLocation} PRIOR CALLS
+                          </span>
+                        )}
+                        {call.weaponsRegistered && (
+                          <span className="px-2 py-1 bg-red-500/20 border border-red-500/30 text-red-400 rounded-lg text-xs font-semibold flex items-center gap-1">
+                            <AlertCircle className="w-3 h-3" />
+                            WEAPONS FLAGGED
                           </span>
                         )}
                       </div>
                     )}
 
-                    <div className="flex items-center justify-between pt-3 border-t border-slate-700">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <Car className="w-4 h-4 text-blue-400" />
-                        <span className="text-sm text-slate-400">Assigned:</span>
+                    <div className="flex items-center justify-between pt-3 border-t border-slate-700/50">
+                      <div className="flex items-center gap-3 flex-wrap">
+                        <div className="flex items-center gap-2">
+                          <Car className="w-4 h-4 text-blue-400" />
+                          <span className="text-sm text-slate-400">Units:</span>
+                        </div>
                         {call.assignedUnits.length > 0 ? (
                           <div className="flex gap-1">
-                            {call.assignedUnits.map((unit, idx) => (
-                              <span key={idx} className="px-2 py-0.5 bg-blue-500/20 text-blue-400 rounded text-xs font-medium">
-                                A-{unit}
-                              </span>
-                            ))}
+                            {call.assignedUnits.map((unit, idx) => {
+                              const unitData = patrolUnits.find(u => u.id === unit);
+                              return (
+                                <div key={idx} className="px-2 py-1 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded-lg text-xs">
+                                  <span className="font-medium">A-{unit}</span>
+                                  {unitData?.eta && <span className="text-blue-300 ml-1">({unitData.eta})</span>}
+                                </div>
+                              );
+                            })}
                           </div>
                         ) : (
-                          <span className="text-red-400 text-sm font-semibold">No units assigned</span>
+                          <span className="px-2 py-1 bg-red-500/20 border border-red-500/30 text-red-400 rounded-lg text-xs font-semibold">
+                            NO UNITS ASSIGNED
+                          </span>
                         )}
                       </div>
-                      <span className={`px-3 py-1 rounded text-xs font-medium ${getStatusColor(call.status)}`}>
-                        {call.status}
-                      </span>
+                      <div className="flex items-center gap-2">
+                        <span className={`px-3 py-1.5 rounded-lg text-xs font-semibold ${getStatusColor(call.status)}`}>
+                          {call.status}
+                        </span>
+                        <button
+                          className="p-1.5 bg-slate-700/50 hover:bg-slate-700 rounded-lg text-slate-400 hover:text-white transition-colors"
+                          onClick={(e) => { e.stopPropagation(); setSelectedCall(call); }}
+                        >
+                          <Eye className="w-4 h-4" />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -1010,81 +1462,145 @@ const CADDispatch = () => {
 
           {/* Unit Status - Right Column */}
           <div className="lg:col-span-1">
-            <div className="bg-slate-800 border border-slate-700 rounded-lg p-6 sticky top-6">
-              <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                <Users className="w-5 h-5 text-emerald-400" />
-                Patrol Unit Status
-              </h2>
+            <div className="bg-slate-800 border border-slate-700 rounded-xl p-5 sticky top-6">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-2">
+                  <div className="w-9 h-9 bg-emerald-500/20 rounded-lg flex items-center justify-center">
+                    <Users className="w-5 h-5 text-emerald-400" />
+                  </div>
+                  <div>
+                    <h2 className="text-lg font-bold text-white">Unit Status</h2>
+                    <p className="text-xs text-slate-400">{patrolUnits.length} units on duty</p>
+                  </div>
+                </div>
+              </div>
 
-              <div className="space-y-2 max-h-[800px] overflow-y-auto">
+              {/* Quick Status Summary */}
+              <div className="grid grid-cols-4 gap-2 mb-4 p-2 bg-slate-900/50 rounded-lg">
+                <div className="text-center">
+                  <div className="text-lg font-bold text-emerald-400">{stats.unitsAvailable}</div>
+                  <div className="text-xs text-slate-500">Avail</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-lg font-bold text-amber-400">{patrolUnits.filter(u => u.status === 'En Route').length}</div>
+                  <div className="text-xs text-slate-500">Route</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-lg font-bold text-purple-400">{patrolUnits.filter(u => u.status === 'On Scene').length}</div>
+                  <div className="text-xs text-slate-500">Scene</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-lg font-bold text-slate-400">{stats.unitsOutOfService}</div>
+                  <div className="text-xs text-slate-500">OOS</div>
+                </div>
+              </div>
+
+              <div className="space-y-2 max-h-[700px] overflow-y-auto pr-1">
                 {patrolUnits.map((unit) => (
                   <div
                     key={unit.id}
-                    className={`border rounded-lg p-3 transition-colors ${
-                      unit.status === 'Available' ? 'bg-emerald-500/5 border-emerald-500/30' :
-                      unit.status === 'En Route' ? 'bg-amber-500/5 border-amber-500/30' :
-                      unit.status === 'On Scene' ? 'bg-purple-500/5 border-purple-500/30' :
-                      'bg-slate-900/50 border-slate-700'
+                    className={`border rounded-lg p-3 transition-all hover:shadow-md ${
+                      unit.status === 'Available' ? 'bg-emerald-500/5 border-emerald-500/30 hover:border-emerald-500/50' :
+                      unit.status === 'En Route' ? 'bg-amber-500/5 border-amber-500/30 hover:border-amber-500/50' :
+                      unit.status === 'On Scene' ? 'bg-purple-500/5 border-purple-500/30 hover:border-purple-500/50' :
+                      unit.status === 'Dispatched' ? 'bg-blue-500/5 border-blue-500/30 hover:border-blue-500/50' :
+                      'bg-slate-900/50 border-slate-700 hover:border-slate-600'
                     }`}
                   >
                     <div className="flex items-center justify-between mb-2">
-                      <div className="font-bold text-white">{unit.callSign}</div>
-                      <span className={`px-2 py-0.5 rounded text-xs font-medium ${getStatusColor(unit.status)}`}>
-                        {unit.status}
+                      <div className="flex items-center gap-2">
+                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold ${
+                          unit.status === 'Available' ? 'bg-emerald-500/20 text-emerald-400' :
+                          unit.status === 'En Route' ? 'bg-amber-500/20 text-amber-400' :
+                          unit.status === 'On Scene' ? 'bg-purple-500/20 text-purple-400' :
+                          unit.status === 'Dispatched' ? 'bg-blue-500/20 text-blue-400' :
+                          'bg-slate-700 text-slate-400'
+                        }`}>
+                          {unit.callSign.split('-')[1]}
+                        </div>
+                        <div>
+                          <div className="font-bold text-white text-sm">{unit.callSign}</div>
+                          <div className="text-xs text-slate-500">{unit.badge}</div>
+                        </div>
+                      </div>
+                      <span className={`px-2 py-0.5 rounded-lg text-xs font-semibold ${getStatusColor(unit.status)}`}>
+                        {unit.status === 'Out of Service' ? 'OOS' : unit.status}
                       </span>
                     </div>
-                    <div className="text-sm text-slate-400 mb-1">{unit.officer}</div>
-                    <div className="text-xs text-slate-500">Badge: {unit.badge}</div>
+
+                    <div className="text-sm text-slate-300 mb-2 truncate" title={unit.officer}>{unit.officer}</div>
 
                     {unit.currentCall && (
-                      <div className="mt-2 pt-2 border-t border-slate-700 text-xs">
-                        <span className="text-amber-400 font-medium">Call: {unit.currentCall}</span>
+                      <div className="mb-2 p-2 bg-slate-900/50 rounded-lg">
+                        <div className="flex items-center justify-between text-xs">
+                          <span className="text-slate-400">Call:</span>
+                          <span className="text-amber-400 font-medium">{unit.currentCall}</span>
+                        </div>
                         {unit.eta && (
-                          <div className="text-slate-500 mt-1">ETA: {unit.eta}</div>
+                          <div className="flex items-center justify-between text-xs mt-1">
+                            <span className="text-slate-400">ETA:</span>
+                            <span className="text-blue-400 font-medium">{unit.eta}</span>
+                          </div>
                         )}
                       </div>
                     )}
 
                     {unit.status === 'Out of Service' && unit.oosReason && (
-                      <div className="mt-2 pt-2 border-t border-slate-700 text-xs">
-                        <div className="text-slate-400">{unit.oosReason}</div>
+                      <div className="mb-2 p-2 bg-slate-700/30 rounded-lg">
+                        <div className="flex items-center justify-between text-xs">
+                          <span className="text-slate-400">Reason:</span>
+                          <span className="text-slate-300">{unit.oosReason}</span>
+                        </div>
                         {unit.oosETA && (
-                          <div className="text-blue-400 font-medium mt-1">Expected back: {unit.oosETA}</div>
+                          <div className="flex items-center justify-between text-xs mt-1">
+                            <span className="text-slate-400">Back in:</span>
+                            <span className="text-blue-400 font-medium">{unit.oosETA}</span>
+                          </div>
                         )}
                       </div>
                     )}
 
-                    <div className="mt-2 space-y-1">
-                      <div className="flex items-center gap-1 text-xs text-slate-500">
-                        <Navigation className="w-3 h-3" />
-                        <span>{unit.location}</span>
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-1 text-xs text-slate-400">
+                        <Navigation className="w-3 h-3 flex-shrink-0" />
+                        <span className="truncate" title={unit.location}>{unit.location}</span>
                       </div>
                       {unit.speed && unit.direction && (
-                        <div className="text-xs text-blue-400">
-                          {unit.speed} mph {unit.direction} • Updated {unit.lastUpdate}
-                        </div>
-                      )}
-                      {unit.lastActivity && (
-                        <div className="text-xs text-slate-500">
-                          {unit.lastActivity}
+                        <div className="flex items-center gap-2 text-xs">
+                          <span className="text-blue-400">{unit.speed} mph {unit.direction}</span>
+                          <span className="text-slate-600">|</span>
+                          <span className="text-slate-500">{unit.lastUpdate}</span>
                         </div>
                       )}
                     </div>
 
                     {/* Quick Actions */}
                     {unit.status === 'Available' && (
-                      <div className="mt-2 pt-2 border-t border-slate-700 flex gap-1">
-                        <button className="flex-1 px-2 py-1 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded text-xs hover:bg-blue-500/30">
+                      <div className="mt-2 pt-2 border-t border-slate-700/50 flex gap-1">
+                        <button className="flex-1 px-2 py-1.5 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded-lg text-xs font-medium hover:bg-blue-500/30 flex items-center justify-center gap-1">
+                          <Send className="w-3 h-3" />
                           Assign
+                        </button>
+                        <button className="px-2 py-1.5 bg-slate-700/40 border border-slate-600/50 text-slate-300 rounded-lg text-xs hover:bg-slate-700/60">
+                          <Phone className="w-3 h-3" />
                         </button>
                       </div>
                     )}
-                    {(unit.status === 'En Route' || unit.status === 'On Scene') && (
-                      <div className="mt-2 pt-2 border-t border-slate-700 flex gap-1">
-                        <button className="flex-1 px-2 py-1 bg-purple-500/20 border border-purple-500/30 text-purple-400 rounded text-xs hover:bg-purple-500/30">
+                    {(unit.status === 'En Route' || unit.status === 'On Scene' || unit.status === 'Dispatched') && (
+                      <div className="mt-2 pt-2 border-t border-slate-700/50 flex gap-1">
+                        <button className="flex-1 px-2 py-1.5 bg-purple-500/20 border border-purple-500/30 text-purple-400 rounded-lg text-xs font-medium hover:bg-purple-500/30 flex items-center justify-center gap-1">
+                          <MapPin className="w-3 h-3" />
                           Track
                         </button>
-                        <button className="flex-1 px-2 py-1 bg-slate-700/40 border border-slate-600/50 text-slate-300 rounded text-xs hover:bg-slate-700/60">
+                        <button className="px-2 py-1.5 bg-slate-700/40 border border-slate-600/50 text-slate-300 rounded-lg text-xs hover:bg-slate-700/60">
+                          <Phone className="w-3 h-3" />
+                        </button>
+                      </div>
+                    )}
+                    {unit.status === 'Out of Service' && (
+                      <div className="mt-2 pt-2 border-t border-slate-700/50">
+                        <button className="w-full px-2 py-1.5 bg-slate-700/40 border border-slate-600/50 text-slate-300 rounded-lg text-xs hover:bg-slate-700/60 flex items-center justify-center gap-1">
+                          <Phone className="w-3 h-3" />
                           Contact
                         </button>
                       </div>
