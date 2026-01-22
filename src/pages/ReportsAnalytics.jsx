@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Home, Users, FileText, LayoutDashboard, TrendingUp, AlertCircle, Settings, Bell, MessageCircle, Search, ChevronRight, DollarSign, CheckCircle, Shield, Sparkles, X, Send, Menu, ChevronLeft, LogOut, Download, Calendar, Filter, BarChart3, PieChart, LineChart, Activity, Clock, ArrowUpRight, ArrowDownRight, Eye, RefreshCw, FileSpreadsheet, Mail, Share2, Building2, Radio, Target, Plus, Sliders, BookOpen, PlayCircle, PauseCircle, Printer, FileDown, ChevronDown, ChevronUp, TrendingDown, Zap, Info, Star, AlertTriangle, CheckCircle2, Maximize2, Minimize2, ShieldCheck, User } from 'lucide-react';
+import { Home, Users, FileText, LayoutDashboard, TrendingUp, AlertCircle, Settings, Bell, MessageCircle, Search, ChevronRight, DollarSign, CheckCircle, Shield, Sparkles, X, Send, Menu, ChevronLeft, LogOut, Download, Calendar, Filter, BarChart3, PieChart, LineChart, Activity, Clock, ArrowUpRight, ArrowDownRight, Eye, RefreshCw, FileSpreadsheet, Mail, Share2, Building2, Radio, Target, Plus, Sliders, BookOpen, PlayCircle, PauseCircle, Printer, FileDown, ChevronDown, ChevronUp, TrendingDown, Zap, Info, Star, AlertTriangle, CheckCircle2, Maximize2, Minimize2, ShieldCheck, User, Phone, Lightbulb, Bot, CalendarClock, Library } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 
@@ -642,21 +642,60 @@ export default function ReportsAnalytics() {
 
         <main className="flex-1 overflow-y-auto p-4 lg:p-6">
           <div className="max-w-7xl mx-auto">
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h2 className="text-2xl lg:text-3xl font-bold text-white mb-2">Reports & Analytics</h2>
-                <p className="text-slate-400">Enterprise-grade insights and performance intelligence</p>
+            {/* Enhanced Page Header with KPI Metrics */}
+            <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4 mb-6">
+              <div className="flex-1">
+                <div className="flex items-center gap-3 mb-2">
+                  <h2 className="text-2xl lg:text-3xl font-bold text-white">Reports & Analytics</h2>
+                  <div className="flex items-center gap-1.5 px-2.5 py-1 bg-green-500/20 border border-green-500/40 rounded-lg">
+                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                    <span className="text-xs font-bold text-green-400">LIVE DATA</span>
+                  </div>
+                </div>
+                <p className="text-slate-400 text-sm mb-3">Enterprise-grade insights and performance intelligence</p>
+
+                {/* YTD Performance At-a-Glance */}
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
+                  <div className="flex items-center gap-2 px-3 py-1.5 bg-blue-500/10 border border-blue-500/30 rounded-lg">
+                    <Phone className="w-4 h-4 text-blue-400" />
+                    <span className="text-slate-400">YTD:</span>
+                    <span className="font-bold text-blue-400">{keyMetrics.callsForService.total.toLocaleString()} calls</span>
+                  </div>
+                  <div className="flex items-center gap-2 px-3 py-1.5 bg-green-500/10 border border-green-500/30 rounded-lg">
+                    <Clock className="w-4 h-4 text-green-400" />
+                    <span className="text-slate-400">Avg Response:</span>
+                    <span className="font-bold text-green-400">{keyMetrics.responseTime.average} min</span>
+                  </div>
+                  <div className="flex items-center gap-2 px-3 py-1.5 bg-purple-500/10 border border-purple-500/30 rounded-lg">
+                    <CheckCircle className="w-4 h-4 text-purple-400" />
+                    <span className="text-slate-400">Clearance:</span>
+                    <span className="font-bold text-purple-400">{keyMetrics.crimeClearanceRate.rate}%</span>
+                  </div>
+                  <div className="flex items-center gap-2 px-3 py-1.5 bg-amber-500/10 border border-amber-500/30 rounded-lg">
+                    <Users className="w-4 h-4 text-amber-400" />
+                    <span className="text-slate-400">Staffing:</span>
+                    <span className="font-bold text-amber-400">{keyMetrics.staffing.percentage}%</span>
+                  </div>
+                </div>
               </div>
-              <div className="flex items-center gap-2">
+
+              {/* Action Buttons */}
+              <div className="flex items-center gap-2 flex-wrap">
                 <select
                   value={timeRange}
                   onChange={(e) => setTimeRange(e.target.value)}
                   className="px-3 py-2 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white text-sm focus:outline-none focus:border-amber-500/50"
                 >
                   <option value="ytd">Year to Date</option>
-                  <option value="q4">Q4 2024</option>
-                  <option value="monthly">This Month</option>
-                  <option value="weekly">This Week</option>
+                  <option value="last30">Last 30 Days</option>
+                  <option value="last90">Last 90 Days</option>
+                  <option value="thisMonth">This Month</option>
+                  <option value="lastMonth">Last Month</option>
+                  <option value="q4">This Quarter</option>
+                  <option value="lastQuarter">Last Quarter</option>
+                  <option value="fy2024">Fiscal Year 2024</option>
+                  <option value="fy2023">Fiscal Year 2023</option>
+                  <option value="custom">Custom Date Range...</option>
                 </select>
                 <button
                   onClick={() => setComparisonModal(true)}
@@ -670,95 +709,197 @@ export default function ReportsAnalytics() {
                   className="hidden md:flex items-center gap-2 px-3 py-2 bg-purple-500/20 border border-purple-500/30 rounded-xl text-purple-300 hover:bg-purple-500/30 transition-all"
                 >
                   <Plus className="w-4 h-4" />
-                  <span className="text-sm">Custom</span>
+                  <span className="text-sm">Custom Report</span>
                 </button>
                 <button
                   onClick={() => setExportModal(true)}
+                  className="flex items-center gap-2 px-3 py-2 bg-slate-800/40 border border-slate-700/50 rounded-xl text-slate-300 hover:bg-slate-800/60 transition-all"
+                >
+                  <FileSpreadsheet className="w-4 h-4" />
+                  <span className="hidden sm:inline text-sm">Excel</span>
+                </button>
+                <button
+                  onClick={() => setScheduleModal(true)}
+                  className="hidden lg:flex items-center gap-2 px-3 py-2 bg-slate-800/40 border border-slate-700/50 rounded-xl text-slate-300 hover:bg-slate-800/60 transition-all"
+                >
+                  <CalendarClock className="w-4 h-4" />
+                  <span className="text-sm">Schedule</span>
+                </button>
+                <button
                   className="flex items-center gap-2 px-3 py-2 bg-amber-500/20 border border-amber-500/30 rounded-xl text-amber-300 hover:bg-amber-500/30 transition-all"
                 >
-                  <Download className="w-4 h-4" />
-                  <span className="hidden sm:inline text-sm">Export</span>
+                  <Printer className="w-4 h-4" />
+                  <span className="hidden sm:inline text-sm">Print</span>
                 </button>
               </div>
             </div>
 
-            {/* Enhanced AI Insights */}
+            {/* Enhanced AI Analytics Intelligence - 3 Column Grid */}
             <div className="mb-6 bg-gradient-to-br from-purple-500/10 to-purple-600/5 border border-purple-500/20 rounded-xl overflow-hidden">
               <div className="p-5">
-                <div className="flex items-start justify-between gap-4">
-                  <div className="flex items-start gap-4 flex-1">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-purple-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <Sparkles className="w-6 h-6 text-purple-400" />
+                      <Bot className="w-6 h-6 text-purple-400" />
                     </div>
-                    <div className="flex-1">
-                      <h4 className="text-base font-semibold text-white mb-2 flex items-center gap-2">
+                    <div>
+                      <h4 className="text-base font-bold text-white flex items-center gap-2">
                         AI Analytics Intelligence
-                        <span className="px-2 py-0.5 bg-purple-500/20 text-purple-300 text-xs rounded-full">Live</span>
                       </h4>
-                      <div className="space-y-2 text-sm text-slate-300">
-                        <p>• <span className="font-bold text-green-400">Response times improved 12.3%</span> this month - excellent progress toward 8-minute target</p>
-                        <p>• <span className="font-bold text-blue-400">Crime clearance rate</span> at 68.5%, up 3.8% YoY - investigations performing well</p>
-                        <p>• <span className="font-bold text-amber-400">Property crime down 5.8%</span> - community policing initiatives showing impact</p>
-                        <p>• <span className="font-bold text-purple-400">Overtime costs decreased 8.5%</span> - efficient scheduling reducing budget pressure</p>
+                      <div className="flex items-center gap-3 text-xs text-slate-400">
+                        <span className="flex items-center gap-1.5">
+                          <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                          <span className="text-green-400 font-medium">LIVE</span>
+                        </span>
+                        <span>Last updated: 4:23 PM</span>
+                        <span>Auto-refresh: Every 15 min</span>
                       </div>
                     </div>
                   </div>
                   <button
                     onClick={() => setAiInsightsExpanded(!aiInsightsExpanded)}
-                    className="p-2 hover:bg-purple-500/20 rounded-lg transition-colors flex-shrink-0"
+                    className="px-3 py-1.5 bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/30 text-purple-400 rounded-lg text-xs font-medium transition-all"
                   >
-                    {aiInsightsExpanded ? <ChevronUp className="w-5 h-5 text-purple-400" /> : <ChevronDown className="w-5 h-5 text-purple-400" />}
+                    {aiInsightsExpanded ? 'COLLAPSE' : 'EXPAND'}
                   </button>
                 </div>
 
                 {aiInsightsExpanded && (
-                  <div className="mt-4 pt-4 border-t border-purple-500/20">
-                    <h5 className="text-sm font-semibold text-white mb-3">Detailed Analytics</h5>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      <div className="bg-slate-900/40 rounded-lg p-3">
-                        <div className="flex items-center gap-2 mb-2">
+                  <div className="space-y-4">
+                    {/* Performance Highlights Summary */}
+                    <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
+                      <div className="flex items-center gap-2 mb-3">
+                        <TrendingUp className="w-4 h-4 text-green-400" />
+                        <h5 className="text-sm font-bold text-green-400">PERFORMANCE HIGHLIGHTS</h5>
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                        <div className="flex items-start gap-2">
+                          <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
+                          <p className="text-slate-300"><span className="font-bold text-green-400">Response times improved 12.3%</span> this month - excellent progress toward 8-minute target</p>
+                        </div>
+                        <div className="flex items-start gap-2">
+                          <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
+                          <p className="text-slate-300"><span className="font-bold text-blue-400">Crime clearance rate</span> at 68.5%, up 3.8% YoY - investigations performing well</p>
+                        </div>
+                        <div className="flex items-start gap-2">
+                          <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
+                          <p className="text-slate-300"><span className="font-bold text-amber-400">Property crime down 5.8%</span> - community policing initiatives showing impact</p>
+                        </div>
+                        <div className="flex items-start gap-2">
+                          <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
+                          <p className="text-slate-300"><span className="font-bold text-purple-400">Overtime costs decreased 8.5%</span> - efficient scheduling reducing budget pressure</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Detailed Analytics - 4 Column Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+                      {/* Performance Improvements */}
+                      <div className="bg-slate-900/40 rounded-lg p-4 border border-slate-700/30">
+                        <div className="flex items-center gap-2 mb-3">
                           <TrendingUp className="w-4 h-4 text-green-400" />
-                          <p className="text-xs font-semibold text-green-400">Performance Improvements</p>
+                          <p className="text-xs font-bold text-green-400">PERFORMANCE</p>
                         </div>
-                        <ul className="text-xs text-slate-300 space-y-1">
-                          <li>• Patrol response time: 7.8 min (↓ 0.6 min)</li>
-                          <li>• Case closure rate: 82.3% (↑ 4.1%)</li>
-                          <li>• Training completion: 94% (↑ 8%)</li>
-                        </ul>
+                        <div className="space-y-2 text-xs text-slate-300">
+                          <div className="flex justify-between">
+                            <span>Patrol response:</span>
+                            <span className="font-bold text-white">7.8 min <span className="text-green-400">(↓0.6)</span></span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Case closure:</span>
+                            <span className="font-bold text-white">82.3% <span className="text-green-400">(↑4.1%)</span></span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Training complete:</span>
+                            <span className="font-bold text-white">94% <span className="text-green-400">(↑8%)</span></span>
+                          </div>
+                        </div>
                       </div>
-                      <div className="bg-slate-900/40 rounded-lg p-3">
-                        <div className="flex items-center gap-2 mb-2">
+
+                      {/* Areas Requiring Attention */}
+                      <div className="bg-slate-900/40 rounded-lg p-4 border border-amber-500/30">
+                        <div className="flex items-center gap-2 mb-3">
                           <AlertTriangle className="w-4 h-4 text-amber-400" />
-                          <p className="text-xs font-semibold text-amber-400">Areas Requiring Attention</p>
+                          <p className="text-xs font-bold text-amber-400">ATTENTION NEEDED</p>
                         </div>
-                        <ul className="text-xs text-slate-300 space-y-1">
-                          <li>• Staffing at 92.1% (14 positions open)</li>
-                          <li>• 45 certifications expiring in 30 days</li>
-                          <li>• Equipment replacement budget 95% utilized</li>
-                        </ul>
+                        <div className="space-y-2 text-xs text-slate-300">
+                          <div className="flex justify-between">
+                            <span>Staffing level:</span>
+                            <span className="font-bold text-amber-400">92.1% (14 open)</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Certs expiring:</span>
+                            <span className="font-bold text-amber-400">45 in 30 days</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Equipment budget:</span>
+                            <span className="font-bold text-red-400">95% utilized</span>
+                          </div>
+                        </div>
                       </div>
-                      <div className="bg-slate-900/40 rounded-lg p-3">
-                        <div className="flex items-center gap-2 mb-2">
+
+                      {/* Budget Insights */}
+                      <div className="bg-slate-900/40 rounded-lg p-4 border border-slate-700/30">
+                        <div className="flex items-center gap-2 mb-3">
                           <DollarSign className="w-4 h-4 text-blue-400" />
-                          <p className="text-xs font-semibold text-blue-400">Budget Insights</p>
+                          <p className="text-xs font-bold text-blue-400">BUDGET INSIGHTS</p>
                         </div>
-                        <ul className="text-xs text-slate-300 space-y-1">
-                          <li>• YTD spending: 85% of annual budget</li>
-                          <li>• Projected to end year at 100.5%</li>
-                          <li>• Recommend $250K reallocation</li>
-                        </ul>
-                      </div>
-                      <div className="bg-slate-900/40 rounded-lg p-3">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Star className="w-4 h-4 text-purple-400" />
-                          <p className="text-xs font-semibold text-purple-400">Recommendations</p>
+                        <div className="space-y-2 text-xs text-slate-300">
+                          <div className="flex justify-between">
+                            <span>YTD spending:</span>
+                            <span className="font-bold text-white">85% of budget</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Year-end proj:</span>
+                            <span className="font-bold text-amber-400">100.5%</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Recommend:</span>
+                            <span className="font-bold text-blue-400">$250K realloc</span>
+                          </div>
                         </div>
-                        <ul className="text-xs text-slate-300 space-y-1">
-                          <li>• Focus hiring on patrol division</li>
-                          <li>• Schedule certification training Q1 2025</li>
-                          <li>• Review fleet replacement schedule</li>
-                        </ul>
                       </div>
+
+                      {/* Recommendations */}
+                      <div className="bg-slate-900/40 rounded-lg p-4 border border-slate-700/30">
+                        <div className="flex items-center gap-2 mb-3">
+                          <Lightbulb className="w-4 h-4 text-purple-400" />
+                          <p className="text-xs font-bold text-purple-400">RECOMMENDATIONS</p>
+                        </div>
+                        <div className="space-y-2 text-xs text-slate-300">
+                          <div className="flex items-start gap-1.5">
+                            <span className="text-purple-400 mt-0.5">•</span>
+                            <span>Focus hiring on patrol division</span>
+                          </div>
+                          <div className="flex items-start gap-1.5">
+                            <span className="text-purple-400 mt-0.5">•</span>
+                            <span>Schedule cert training Q1 2025</span>
+                          </div>
+                          <div className="flex items-start gap-1.5">
+                            <span className="text-purple-400 mt-0.5">•</span>
+                            <span>Review fleet replacement</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className="flex flex-wrap gap-2 pt-2">
+                      <button className="flex items-center gap-2 px-3 py-1.5 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 text-blue-400 rounded-lg text-xs font-medium transition-all">
+                        <Eye className="w-3.5 h-3.5" />
+                        VIEW FULL ANALYSIS
+                      </button>
+                      <button className="flex items-center gap-2 px-3 py-1.5 bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/30 text-purple-400 rounded-lg text-xs font-medium transition-all">
+                        <Download className="w-3.5 h-3.5" />
+                        EXPORT INSIGHTS
+                      </button>
+                      <button
+                        onClick={() => setComparisonModal(true)}
+                        className="flex items-center gap-2 px-3 py-1.5 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-400 rounded-lg text-xs font-medium transition-all"
+                      >
+                        <BarChart3 className="w-3.5 h-3.5" />
+                        COMPARE PERIODS
+                      </button>
                     </div>
                   </div>
                 )}
@@ -766,17 +907,17 @@ export default function ReportsAnalytics() {
             </div>
 
             {/* Tabs */}
-            <div className="mb-6 flex gap-2 border-b border-slate-700/50">
+            <div className="mb-6 flex gap-2 border-b border-slate-700/50 overflow-x-auto">
               {[
-                { id: 'overview', label: 'Overview', icon: Activity },
-                { id: 'operations', label: 'Operations', icon: BarChart3 },
-                { id: 'crime', label: 'Crime Stats', icon: Shield },
-                { id: 'reports', label: 'Reports Library', icon: FileText }
+                { id: 'overview', label: 'Overview', icon: Zap },
+                { id: 'operations', label: 'Operations', icon: Activity },
+                { id: 'crime', label: 'Crime Stats', icon: Target },
+                { id: 'reports', label: 'Reports Library', icon: BookOpen }
               ].map(tab => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all relative ${
+                  className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all relative whitespace-nowrap ${
                     activeTab === tab.id ? 'text-amber-400' : 'text-slate-400 hover:text-slate-300'
                   }`}
                 >
@@ -792,124 +933,291 @@ export default function ReportsAnalytics() {
             {/* OVERVIEW TAB */}
             {activeTab === 'overview' && (
               <div className="space-y-6">
-                {/* Key Metrics Grid */}
+                {/* Enhanced Key Metrics Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
+                  {/* Calls for Service Card */}
+                  <div className="bg-slate-800/40 border border-blue-500/30 rounded-xl p-5">
                     <div className="flex items-center justify-between mb-3">
                       <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center">
-                        <Activity className="w-5 h-5 text-blue-400" />
+                        <Phone className="w-5 h-5 text-blue-400" />
                       </div>
-                      <div className={`flex items-center gap-1 text-sm ${getChangeColor(keyMetrics.callsForService.change)}`}>
-                        {getChangeIcon(keyMetrics.callsForService.change)}
-                        <span className="font-bold">{Math.abs(keyMetrics.callsForService.change)}%</span>
-                      </div>
+                      <span className="text-xs font-medium text-blue-400">CALLS FOR SERVICE</span>
                     </div>
                     <p className="text-2xl font-bold text-white mb-1">{keyMetrics.callsForService.total.toLocaleString()}</p>
-                    <p className="text-sm text-slate-400">Calls for Service (YTD)</p>
+                    <p className="text-sm text-slate-400 mb-3">Year to Date (Jan 1 - Jan 21, 2026)</p>
+                    <div className="space-y-1.5 border-t border-slate-700/50 pt-3">
+                      <div className="flex justify-between text-xs">
+                        <span className="text-slate-400">Trend vs 2025:</span>
+                        <span className={`font-bold flex items-center gap-1 ${getChangeColor(keyMetrics.callsForService.change)}`}>
+                          {getChangeIcon(keyMetrics.callsForService.change)}
+                          {Math.abs(keyMetrics.callsForService.change)}%
+                        </span>
+                      </div>
+                      <div className="flex justify-between text-xs">
+                        <span className="text-slate-400">Avg per day:</span>
+                        <span className="font-medium text-white">6,936 calls</span>
+                      </div>
+                      <div className="flex justify-between text-xs">
+                        <span className="text-slate-400">Peak hours:</span>
+                        <span className="font-medium text-white">1400-1800 hrs</span>
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
+                  {/* Avg Response Time Card */}
+                  <div className="bg-slate-800/40 border border-green-500/30 rounded-xl p-5">
                     <div className="flex items-center justify-between mb-3">
                       <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center">
                         <Clock className="w-5 h-5 text-green-400" />
                       </div>
-                      <div className={`flex items-center gap-1 text-sm ${getChangeColor(-keyMetrics.responseTime.change)}`}>
-                        {getChangeIcon(-keyMetrics.responseTime.change)}
-                        <span className="font-bold">{Math.abs(keyMetrics.responseTime.change)}%</span>
-                      </div>
+                      <span className="text-xs font-medium text-green-400">AVG RESPONSE TIME</span>
                     </div>
                     <p className="text-2xl font-bold text-white mb-1">{keyMetrics.responseTime.average} min</p>
-                    <p className="text-sm text-slate-400">Avg Response Time</p>
-                    <div className="mt-2 pt-2 border-t border-slate-700/50">
-                      <p className="text-xs text-slate-500">Target: {keyMetrics.responseTime.target} min</p>
+                    <p className="text-sm text-slate-400 mb-3">All priorities combined</p>
+                    <div className="mb-3">
+                      <div className="flex justify-between text-xs mb-1">
+                        <span className="text-slate-400">Target: {keyMetrics.responseTime.target} min</span>
+                        <span className="font-bold text-green-400">0.4 min above</span>
+                      </div>
+                      <div className="w-full h-2 bg-slate-700/50 rounded-full overflow-hidden">
+                        <div className="h-full bg-green-500" style={{ width: '95%' }} />
+                      </div>
+                    </div>
+                    <div className="space-y-1.5 border-t border-slate-700/50 pt-3">
+                      <div className="flex justify-between text-xs">
+                        <span className="text-slate-400">P1 (Emergency):</span>
+                        <span className="font-medium text-green-400">3.2 min <CheckCircle className="w-3 h-3 inline" /></span>
+                      </div>
+                      <div className="flex justify-between text-xs">
+                        <span className="text-slate-400">P2 (Urgent):</span>
+                        <span className="font-medium text-green-400">7.8 min <CheckCircle className="w-3 h-3 inline" /></span>
+                      </div>
+                      <div className="flex justify-between text-xs">
+                        <span className="text-slate-400">P3 (Routine):</span>
+                        <span className="font-medium text-green-400">18.4 min <CheckCircle className="w-3 h-3 inline" /></span>
+                      </div>
                     </div>
                   </div>
 
-                  <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
+                  {/* Crime Clearance Rate Card */}
+                  <div className="bg-slate-800/40 border border-purple-500/30 rounded-xl p-5">
                     <div className="flex items-center justify-between mb-3">
                       <div className="w-10 h-10 bg-purple-500/20 rounded-xl flex items-center justify-center">
                         <CheckCircle className="w-5 h-5 text-purple-400" />
                       </div>
-                      <div className={`flex items-center gap-1 text-sm ${getChangeColor(keyMetrics.crimeClearanceRate.change)}`}>
-                        {getChangeIcon(keyMetrics.crimeClearanceRate.change)}
-                        <span className="font-bold">{Math.abs(keyMetrics.crimeClearanceRate.change)}%</span>
-                      </div>
+                      <span className="text-xs font-medium text-purple-400">CLEARANCE RATE</span>
                     </div>
                     <p className="text-2xl font-bold text-white mb-1">{keyMetrics.crimeClearanceRate.rate}%</p>
-                    <p className="text-sm text-slate-400">Crime Clearance Rate</p>
-                    <div className="mt-2 pt-2 border-t border-slate-700/50">
-                      <p className="text-xs text-slate-500">Target: {keyMetrics.crimeClearanceRate.target}%</p>
+                    <p className="text-sm text-slate-400 mb-3">Cases closed/solved vs total</p>
+                    <div className="mb-3">
+                      <div className="flex justify-between text-xs mb-1">
+                        <span className="text-slate-400">Target: {keyMetrics.crimeClearanceRate.target}%</span>
+                        <span className="font-bold text-amber-400">1.5 pts below</span>
+                      </div>
+                      <div className="w-full h-2 bg-slate-700/50 rounded-full overflow-hidden">
+                        <div className="h-full bg-purple-500" style={{ width: '97.9%' }} />
+                      </div>
+                    </div>
+                    <div className="space-y-1.5 border-t border-slate-700/50 pt-3">
+                      <div className="flex justify-between text-xs">
+                        <span className="text-slate-400">Violent crimes:</span>
+                        <span className="font-medium text-green-400">82.1% <CheckCircle className="w-3 h-3 inline" /></span>
+                      </div>
+                      <div className="flex justify-between text-xs">
+                        <span className="text-slate-400">Property crimes:</span>
+                        <span className="font-medium text-amber-400">56.8%</span>
+                      </div>
+                      <div className="flex justify-between text-xs">
+                        <span className="text-slate-400">YoY change:</span>
+                        <span className="font-medium text-green-400 flex items-center gap-1">
+                          <ArrowUpRight className="w-3 h-3" />+3.8 pts
+                        </span>
+                      </div>
                     </div>
                   </div>
 
-                  <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
+                  {/* Arrests Card */}
+                  <div className="bg-slate-800/40 border border-amber-500/30 rounded-xl p-5">
                     <div className="flex items-center justify-between mb-3">
                       <div className="w-10 h-10 bg-amber-500/20 rounded-xl flex items-center justify-center">
-                        <Shield className="w-5 h-5 text-amber-400" />
+                        <ShieldCheck className="w-5 h-5 text-amber-400" />
                       </div>
-                      <div className={`flex items-center gap-1 text-sm ${getChangeColor(keyMetrics.arrestsYTD.change)}`}>
-                        {getChangeIcon(keyMetrics.arrestsYTD.change)}
-                        <span className="font-bold">{Math.abs(keyMetrics.arrestsYTD.change)}%</span>
-                      </div>
+                      <span className="text-xs font-medium text-amber-400">ARRESTS (YTD)</span>
                     </div>
                     <p className="text-2xl font-bold text-white mb-1">{keyMetrics.arrestsYTD.total.toLocaleString()}</p>
-                    <p className="text-sm text-slate-400">Arrests (YTD)</p>
+                    <p className="text-sm text-slate-400 mb-3">Jan 1 - Jan 21, 2026</p>
+                    <div className="space-y-1.5 border-t border-slate-700/50 pt-3">
+                      <div className="flex justify-between text-xs">
+                        <span className="text-slate-400">Trend vs 2025:</span>
+                        <span className="font-bold text-green-400 flex items-center gap-1">
+                          <ArrowDownRight className="w-3 h-3" />-2.1% (fewer crimes)
+                        </span>
+                      </div>
+                      <div className="flex justify-between text-xs">
+                        <span className="text-slate-400">Felony:</span>
+                        <span className="font-medium text-white">3,487 (28%)</span>
+                      </div>
+                      <div className="flex justify-between text-xs">
+                        <span className="text-slate-400">Prosecution rate:</span>
+                        <span className="font-medium text-green-400">87.4% <CheckCircle className="w-3 h-3 inline" /></span>
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
+                  {/* Staffing Level Card */}
+                  <div className="bg-slate-800/40 border border-blue-500/30 rounded-xl p-5">
                     <div className="flex items-center justify-between mb-3">
                       <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center">
                         <Users className="w-5 h-5 text-blue-400" />
                       </div>
-                      <div className={`flex items-center gap-1 text-sm ${getChangeColor(keyMetrics.staffing.change)}`}>
-                        {getChangeIcon(keyMetrics.staffing.change)}
-                        <span className="font-bold">{Math.abs(keyMetrics.staffing.change)}%</span>
-                      </div>
+                      <span className="text-xs font-medium text-blue-400">STAFFING LEVEL</span>
                     </div>
                     <p className="text-2xl font-bold text-white mb-1">{keyMetrics.staffing.percentage}%</p>
-                    <p className="text-sm text-slate-400">Staffing Level</p>
-                    <div className="mt-2 pt-2 border-t border-slate-700/50">
-                      <p className="text-xs text-slate-500">{keyMetrics.staffing.current} / {keyMetrics.staffing.authorized} authorized</p>
+                    <p className="text-sm text-slate-400 mb-3">{keyMetrics.staffing.current} / {keyMetrics.staffing.authorized} positions</p>
+                    <div className="mb-3">
+                      <div className="flex justify-between text-xs mb-1">
+                        <span className="text-slate-400">Target: 95% (169 pos)</span>
+                        <span className="font-bold text-amber-400">-5 positions</span>
+                      </div>
+                      <div className="w-full h-2 bg-slate-700/50 rounded-full overflow-hidden">
+                        <div className="h-full bg-blue-500" style={{ width: `${keyMetrics.staffing.percentage}%` }} />
+                      </div>
+                    </div>
+                    <div className="space-y-1.5 border-t border-slate-700/50 pt-3">
+                      <div className="flex justify-between text-xs">
+                        <span className="text-slate-400">Vacancies:</span>
+                        <span className="font-medium text-amber-400">14 open positions</span>
+                      </div>
+                      <div className="flex justify-between text-xs">
+                        <span className="text-slate-400">Pipeline:</span>
+                        <span className="font-medium text-white">12 candidates</span>
+                      </div>
+                      <div className="flex justify-between text-xs">
+                        <span className="text-slate-400">Vacancy OT cost:</span>
+                        <span className="font-medium text-red-400">$588K/year</span>
+                      </div>
                     </div>
                   </div>
 
-                  <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
+                  {/* Overtime Cost Card */}
+                  <div className="bg-slate-800/40 border border-green-500/30 rounded-xl p-5">
                     <div className="flex items-center justify-between mb-3">
-                      <div className="w-10 h-10 bg-red-500/20 rounded-xl flex items-center justify-center">
-                        <DollarSign className="w-5 h-5 text-red-400" />
+                      <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center">
+                        <DollarSign className="w-5 h-5 text-green-400" />
                       </div>
-                      <div className={`flex items-center gap-1 text-sm ${getChangeColor(-keyMetrics.overtime.change)}`}>
-                        {getChangeIcon(-keyMetrics.overtime.change)}
-                        <span className="font-bold">{Math.abs(keyMetrics.overtime.change)}%</span>
-                      </div>
+                      <span className="text-xs font-medium text-green-400">OVERTIME COST</span>
                     </div>
                     <p className="text-2xl font-bold text-white mb-1">${(keyMetrics.overtime.cost / 1000000).toFixed(1)}M</p>
-                    <p className="text-sm text-slate-400">Overtime Cost (YTD)</p>
-                    <div className="mt-2 pt-2 border-t border-slate-700/50">
-                      <p className="text-xs text-slate-500">{keyMetrics.overtime.hours.toLocaleString()} hours</p>
+                    <p className="text-sm text-slate-400 mb-3">{keyMetrics.overtime.hours.toLocaleString()} hours YTD</p>
+                    <div className="mb-3">
+                      <div className="flex justify-between text-xs mb-1">
+                        <span className="text-slate-400">Target: &lt;10% of budget</span>
+                        <span className="font-bold text-green-400">8.9% <CheckCircle className="w-3 h-3 inline" /></span>
+                      </div>
+                      <div className="w-full h-2 bg-slate-700/50 rounded-full overflow-hidden">
+                        <div className="h-full bg-green-500" style={{ width: '89%' }} />
+                      </div>
+                    </div>
+                    <div className="space-y-1.5 border-t border-slate-700/50 pt-3">
+                      <div className="flex justify-between text-xs">
+                        <span className="text-slate-400">YoY change:</span>
+                        <span className="font-medium text-green-400 flex items-center gap-1">
+                          <ArrowDownRight className="w-3 h-3" />-8.5% ($110K saved)
+                        </span>
+                      </div>
+                      <div className="flex justify-between text-xs">
+                        <span className="text-slate-400">Shift coverage:</span>
+                        <span className="font-medium text-white">54% of OT</span>
+                      </div>
+                      <div className="flex justify-between text-xs">
+                        <span className="text-slate-400">vs National avg:</span>
+                        <span className="font-medium text-green-400">12-26% below</span>
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Monthly Trend Chart */}
+                {/* Enhanced Monthly Trends */}
                 <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
-                  <h3 className="text-lg font-semibold text-white mb-4">Monthly Trends</h3>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <TrendingUp className="w-5 h-5 text-blue-400" />
+                      <h3 className="text-lg font-semibold text-white">Monthly Trends</h3>
+                      <span className="text-xs text-slate-400">(Last 12 Months - Rolling)</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-xs">
+                      <span className="px-2 py-1 bg-blue-500/20 text-blue-400 rounded">Click for details</span>
+                    </div>
+                  </div>
                   <div className="space-y-3">
-                    {monthlyTrends.map((month, idx) => (
-                      <div key={idx}>
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="text-sm text-slate-300">{month.month}</span>
-                          <div className="flex items-center gap-4 text-sm">
-                            <span className="text-slate-400">Calls: {month.calls.toLocaleString()}</span>
-                            <span className="text-blue-400">Arrests: {month.arrests}</span>
-                            <span className="text-green-400">Clear: {month.clearance}%</span>
+                    {monthlyTrends.map((month, idx) => {
+                      const prevMonth = idx > 0 ? monthlyTrends[idx - 1] : null;
+                      const callsChange = prevMonth ? ((month.calls - prevMonth.calls) / prevMonth.calls * 100).toFixed(1) : 0;
+                      return (
+                        <div key={idx} className="hover:bg-slate-900/30 rounded-lg p-2 -mx-2 cursor-pointer transition-colors">
+                          <div className="flex items-center justify-between mb-2">
+                            <div className="flex items-center gap-3">
+                              <span className="text-sm font-medium text-white w-8">{month.month}</span>
+                              {idx === monthlyTrends.length - 1 && (
+                                <span className="text-xs px-1.5 py-0.5 bg-amber-500/20 text-amber-400 rounded">Current</span>
+                              )}
+                            </div>
+                            <div className="flex items-center gap-6 text-xs">
+                              <div className="flex items-center gap-2">
+                                <Phone className="w-3 h-3 text-slate-400" />
+                                <span className="text-slate-400">Calls:</span>
+                                <span className="font-bold text-white">{month.calls.toLocaleString()}</span>
+                                {prevMonth && (
+                                  <span className={`font-medium ${parseFloat(callsChange) >= 0 ? 'text-amber-400' : 'text-green-400'}`}>
+                                    ({parseFloat(callsChange) >= 0 ? '+' : ''}{callsChange}%)
+                                  </span>
+                                )}
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <ShieldCheck className="w-3 h-3 text-blue-400" />
+                                <span className="text-slate-400">Arrests:</span>
+                                <span className="font-bold text-blue-400">{month.arrests.toLocaleString()}</span>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <CheckCircle className="w-3 h-3 text-green-400" />
+                                <span className="text-slate-400">Clear:</span>
+                                <span className={`font-bold ${month.clearance >= 68 ? 'text-green-400' : 'text-amber-400'}`}>{month.clearance}%</span>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="w-full h-2 bg-slate-700/50 rounded-full overflow-hidden">
+                            <div className="h-full bg-gradient-to-r from-blue-500 to-green-500" style={{ width: `${(month.clearance / 100) * 100}%` }} />
                           </div>
                         </div>
-                        <div className="w-full h-2 bg-slate-700/50 rounded-full overflow-hidden">
-                          <div className="h-full bg-gradient-to-r from-blue-500 to-green-500" style={{ width: `${(month.clearance / 100) * 100}%` }} />
-                        </div>
+                      );
+                    })}
+                  </div>
+
+                  {/* Seasonal Patterns Summary */}
+                  <div className="mt-4 pt-4 border-t border-slate-700/50">
+                    <h4 className="text-sm font-semibold text-white mb-3">Seasonal Patterns Identified</h4>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
+                      <div className="bg-slate-900/40 rounded-lg p-3">
+                        <p className="text-slate-400 mb-1">Summer Peak (Jun-Aug)</p>
+                        <p className="font-bold text-white">14,782 calls/mo</p>
+                        <p className="text-amber-400">+18% vs winter</p>
                       </div>
-                    ))}
+                      <div className="bg-slate-900/40 rounded-lg p-3">
+                        <p className="text-slate-400 mb-1">Winter Low (Nov-Feb)</p>
+                        <p className="font-bold text-white">12,404 calls/mo</p>
+                        <p className="text-green-400">Lowest volume</p>
+                      </div>
+                      <div className="bg-slate-900/40 rounded-lg p-3">
+                        <p className="text-slate-400 mb-1">YoY Total 2025</p>
+                        <p className="font-bold text-white">157,423 calls</p>
+                        <p className="text-green-400">+5.0% vs 2024</p>
+                      </div>
+                      <div className="bg-slate-900/40 rounded-lg p-3">
+                        <p className="text-slate-400 mb-1">Best Clearance</p>
+                        <p className="font-bold text-white">July - 69.5%</p>
+                        <p className="text-green-400">Peak performance</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
