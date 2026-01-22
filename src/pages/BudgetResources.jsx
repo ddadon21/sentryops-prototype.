@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FileText, TrendingUp, AlertCircle, MessageCircle, DollarSign, CheckCircle, Sparkles, X, Send, Download, ArrowUpRight, ArrowDownRight, TrendingDown, Calendar, Filter, Eye, PieChart, BarChart3, LineChart, Package, Truck, Wrench, ChevronDown, ChevronUp, Info, ArrowUpCircle, RefreshCw, FileSpreadsheet, Mail, Zap, Clock, Users, Building2, Target } from 'lucide-react';
+import { FileText, TrendingUp, AlertCircle, AlertTriangle, MessageCircle, DollarSign, CheckCircle, Sparkles, X, Send, Download, ArrowUpRight, ArrowDownRight, TrendingDown, Calendar, Filter, Eye, PieChart, BarChart3, LineChart, Package, Truck, Wrench, ChevronDown, ChevronUp, Info, ArrowUpCircle, RefreshCw, FileSpreadsheet, Mail, Zap, Clock, Users, Building2, Target, Wallet, CircleDollarSign, Receipt, CreditCard, CalendarClock, Bot, CircleAlert, Lightbulb, Percent, ArrowDown, ArrowUp, Briefcase, ShieldAlert, BadgeCheck, BadgeAlert, Activity, Banknote, PiggyBank, Calculator, FileBarChart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import DashboardLayout from '../layouts/DashboardLayout';
@@ -198,12 +198,45 @@ export default function BudgetResources() {
     <DashboardLayout>
       <div className="p-4 lg:p-6">
         <div className="max-w-7xl mx-auto">
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h2 className="text-2xl lg:text-3xl font-bold text-white mb-2">Budget & Resources</h2>
-                <p className="text-slate-400">Fiscal oversight and resource management for FY 2024</p>
+            {/* Enhanced Page Header with Fiscal Metrics */}
+            <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4 mb-6">
+              <div className="flex-1">
+                <div className="flex items-center gap-3 mb-2">
+                  <h2 className="text-2xl lg:text-3xl font-bold text-white">Budget & Resources</h2>
+                  <div className="flex items-center gap-1.5 px-2.5 py-1 bg-green-500/20 border border-green-500/40 rounded-lg">
+                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                    <span className="text-xs font-bold text-green-400">FISCAL ACTIVE</span>
+                  </div>
+                </div>
+                <p className="text-slate-400 text-sm mb-3">Fiscal oversight and resource management for FY 2024</p>
+
+                {/* Fiscal Metrics At-a-Glance */}
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
+                  <div className="flex items-center gap-2 px-3 py-1.5 bg-blue-500/10 border border-blue-500/30 rounded-lg">
+                    <Wallet className="w-4 h-4 text-blue-400" />
+                    <span className="text-slate-400">Total Budget:</span>
+                    <span className="font-bold text-blue-400">${(fiscalYear.totalBudget / 1000000).toFixed(1)}M</span>
+                  </div>
+                  <div className="flex items-center gap-2 px-3 py-1.5 bg-amber-500/10 border border-amber-500/30 rounded-lg">
+                    <CircleDollarSign className="w-4 h-4 text-amber-400" />
+                    <span className="text-slate-400">Spent:</span>
+                    <span className="font-bold text-amber-400">${(fiscalYear.spent / 1000000).toFixed(1)}M ({fiscalYear.percentSpent}%)</span>
+                  </div>
+                  <div className="flex items-center gap-2 px-3 py-1.5 bg-green-500/10 border border-green-500/30 rounded-lg">
+                    <PiggyBank className="w-4 h-4 text-green-400" />
+                    <span className="text-slate-400">Available:</span>
+                    <span className="font-bold text-green-400">${(fiscalYear.available / 1000000).toFixed(1)}M</span>
+                  </div>
+                  <div className="flex items-center gap-2 px-3 py-1.5 bg-purple-500/10 border border-purple-500/30 rounded-lg">
+                    <CalendarClock className="w-4 h-4 text-purple-400" />
+                    <span className="text-slate-400">Days Left:</span>
+                    <span className="font-bold text-purple-400">61 days</span>
+                  </div>
+                </div>
               </div>
-              <div className="flex items-center gap-3">
+
+              {/* Actions */}
+              <div className="flex items-center gap-2">
                 <select
                   value={timeRange}
                   onChange={(e) => setTimeRange(e.target.value)}
@@ -213,164 +246,295 @@ export default function BudgetResources() {
                   <option value="q4">Q4 2024</option>
                   <option value="monthly">Monthly</option>
                 </select>
-                <button className="flex items-center gap-2 px-4 py-2 bg-slate-800/40 border border-slate-700/50 rounded-xl text-slate-300 hover:bg-slate-800/60 transition-all">
+                <button
+                  onClick={() => setVarianceReportOpen(true)}
+                  className="flex items-center gap-2 px-4 py-2 bg-slate-800/40 border border-slate-700/50 rounded-xl text-slate-300 hover:bg-slate-800/60 transition-all"
+                >
+                  <FileBarChart className="w-4 h-4" />
+                  <span className="hidden sm:inline">Variance</span>
+                </button>
+                <button
+                  onClick={() => setReallocationModal(true)}
+                  className="flex items-center gap-2 px-4 py-2 bg-slate-800/40 border border-slate-700/50 rounded-xl text-slate-300 hover:bg-slate-800/60 transition-all"
+                >
+                  <RefreshCw className="w-4 h-4" />
+                  <span className="hidden sm:inline">Reallocate</span>
+                </button>
+                <button
+                  onClick={() => setExportModal(true)}
+                  className="flex items-center gap-2 px-4 py-2 bg-slate-800/40 border border-slate-700/50 rounded-xl text-slate-300 hover:bg-slate-800/60 transition-all"
+                >
                   <Download className="w-4 h-4" />
                   <span className="hidden sm:inline">Export</span>
                 </button>
               </div>
             </div>
 
-            {/* Enhanced AI Budget Intelligence */}
+            {/* Enhanced AI Budget Intelligence - 3 Column Grid */}
             <div className="mb-6 bg-gradient-to-br from-purple-500/10 to-purple-600/5 border border-purple-500/20 rounded-xl p-5">
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 bg-purple-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <Sparkles className="w-6 h-6 text-purple-400" />
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between mb-4">
-                    <h4 className="text-base font-bold text-white flex items-center gap-2">
-                      🤖 AI BUDGET INTELLIGENCE
-                    </h4>
-                    <button
-                      onClick={() => setAiInsightsExpanded(!aiInsightsExpanded)}
-                      className="text-xs text-purple-400 hover:text-purple-300 font-medium transition-colors"
-                    >
-                      {aiInsightsExpanded ? 'HIDE' : 'SHOW'}
-                    </button>
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-purple-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Bot className="w-6 h-6 text-purple-400" />
                   </div>
+                  <div>
+                    <h4 className="text-base font-bold text-white flex items-center gap-2">
+                      AI BUDGET INTELLIGENCE
+                    </h4>
+                    <p className="text-xs text-slate-400">Real-time fiscal analysis and recommendations</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setAiInsightsExpanded(!aiInsightsExpanded)}
+                  className="px-3 py-1.5 bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/30 text-purple-400 rounded-lg text-xs font-medium transition-all"
+                >
+                  {aiInsightsExpanded ? 'COLLAPSE' : 'EXPAND'}
+                </button>
+              </div>
 
-                  {aiInsightsExpanded && (
-                    <div className="space-y-4">
-                      {/* Critical Alerts */}
-                      <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
-                        <div className="flex items-center gap-2 mb-3">
-                          <AlertCircle className="w-5 h-5 text-red-400" />
-                          <h5 className="text-sm font-bold text-red-400">🔴 CRITICAL ALERTS:</h5>
-                        </div>
-                        <div className="space-y-2 text-sm text-slate-300 pl-7">
-                          <p>• Currently at <span className="font-bold text-red-400">{fiscalYear.percentSpent}% of annual budget</span> with <span className="font-bold text-amber-400">2 months remaining</span></p>
-                          <p>• Projected year-end: <span className="font-bold text-red-400">$48.6M (over budget by $100K)</span> at current burn rate</p>
-                          <p>• <span className="font-bold text-red-400">Patrol Division</span> trending <span className="font-bold text-red-400">$150K over</span> - recommend review and reallocation</p>
-                        </div>
+              {aiInsightsExpanded && (
+                <div className="space-y-4">
+                  {/* 3-Column Grid */}
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                    {/* Critical Alerts Column */}
+                    <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
+                      <div className="flex items-center gap-2 mb-3">
+                        <div className="w-2 h-2 bg-red-400 rounded-full animate-pulse"></div>
+                        <h5 className="text-sm font-bold text-red-400">CRITICAL ALERTS</h5>
                       </div>
-
-                      {/* Recommendations */}
-                      <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
-                        <div className="flex items-center gap-2 mb-3">
-                          <Zap className="w-5 h-5 text-amber-400" />
-                          <h5 className="text-sm font-bold text-amber-400">🟡 RECOMMENDATIONS:</h5>
+                      <div className="space-y-3 text-sm">
+                        <div className="flex items-start gap-2">
+                          <ShieldAlert className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
+                          <p className="text-slate-300">Currently at <span className="font-bold text-red-400">{fiscalYear.percentSpent}%</span> with <span className="font-bold text-amber-400">2 months remaining</span></p>
                         </div>
-                        <div className="space-y-2 text-sm text-slate-300 pl-7">
-                          <p>• <span className="font-bold text-blue-400">Training Division</span> has highest surplus (<span className="font-bold text-green-400">$150K available</span>) - consider reallocating to Patrol</p>
-                          <p>• Reduce discretionary spending by <span className="font-bold text-amber-400">15% in Nov-Dec</span> to stay under budget</p>
-                          <p>• <span className="font-bold text-amber-400">3 pending approvals ($170K)</span> would push to 88.5% - prioritize carefully</p>
+                        <div className="flex items-start gap-2">
+                          <TrendingUp className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
+                          <p className="text-slate-300">Projected: <span className="font-bold text-red-400">$48.6M (over by $100K)</span></p>
                         </div>
-                      </div>
-
-                      {/* Positive Trends */}
-                      <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
-                        <div className="flex items-center gap-2 mb-3">
-                          <CheckCircle className="w-5 h-5 text-green-400" />
-                          <h5 className="text-sm font-bold text-green-400">✅ POSITIVE TRENDS:</h5>
+                        <div className="flex items-start gap-2">
+                          <AlertCircle className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
+                          <p className="text-slate-300"><span className="font-bold text-red-400">Patrol Division</span> trending <span className="font-bold text-red-400">$150K over</span></p>
                         </div>
-                        <div className="space-y-2 text-sm text-slate-300 pl-7">
-                          <p>• On track to finish within <span className="font-bold text-green-400">2% of budget ✅</span></p>
-                          <p>• Q3 spending decreased <span className="font-bold text-green-400">5% vs Q2</span> (cost controls working)</p>
-                          <p>• Overtime down <span className="font-bold text-green-400">12% vs last year</span></p>
-                        </div>
-                      </div>
-
-                      {/* Forecast */}
-                      <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
-                        <div className="flex items-center gap-2 mb-3">
-                          <TrendingUp className="w-5 h-5 text-blue-400" />
-                          <h5 className="text-sm font-bold text-blue-400">FORECAST (If current trends continue):</h5>
-                        </div>
-                        <div className="space-y-2 text-sm text-slate-300 pl-7">
-                          <p>• <span className="font-bold">November:</span> <span className="text-amber-400 font-bold">$4.1M (99% total)</span></p>
-                          <p>• <span className="font-bold">December:</span> <span className="text-red-400 font-bold">$3.4M (106% total - OVER BUDGET) ⚠️</span></p>
-                          <p>• <span className="font-bold text-green-400">Recommended Nov-Dec cap: $7.27M</span> to stay under budget</p>
-                        </div>
-                      </div>
-
-                      {/* Action Buttons */}
-                      <div className="flex flex-wrap gap-2 pt-2">
-                        <button className="px-3 py-1.5 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 text-blue-400 rounded-lg text-xs font-medium transition-all">
-                          VIEW DETAILED ANALYSIS
-                        </button>
-                        <button
-                          onClick={() => setActiveTab('forecast')}
-                          className="px-3 py-1.5 bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/30 text-purple-400 rounded-lg text-xs font-medium transition-all"
-                        >
-                          ADJUST FORECAST
-                        </button>
-                        <button
-                          onClick={() => setReallocationModal(true)}
-                          className="px-3 py-1.5 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-400 rounded-lg text-xs font-medium transition-all"
-                        >
-                          REALLOCATION PLANNER
-                        </button>
                       </div>
                     </div>
-                  )}
+
+                    {/* Recommendations Column */}
+                    <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
+                      <div className="flex items-center gap-2 mb-3">
+                        <Lightbulb className="w-4 h-4 text-amber-400" />
+                        <h5 className="text-sm font-bold text-amber-400">RECOMMENDATIONS</h5>
+                      </div>
+                      <div className="space-y-3 text-sm">
+                        <div className="flex items-start gap-2">
+                          <RefreshCw className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
+                          <p className="text-slate-300"><span className="font-bold text-blue-400">Training</span> surplus <span className="font-bold text-green-400">$150K</span> - reallocate to Patrol</p>
+                        </div>
+                        <div className="flex items-start gap-2">
+                          <TrendingDown className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
+                          <p className="text-slate-300">Reduce discretionary by <span className="font-bold text-amber-400">15% in Nov-Dec</span></p>
+                        </div>
+                        <div className="flex items-start gap-2">
+                          <Clock className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
+                          <p className="text-slate-300"><span className="font-bold text-amber-400">3 pending ($170K)</span> would push to 88.5%</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Positive Trends Column */}
+                    <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
+                      <div className="flex items-center gap-2 mb-3">
+                        <BadgeCheck className="w-4 h-4 text-green-400" />
+                        <h5 className="text-sm font-bold text-green-400">POSITIVE TRENDS</h5>
+                      </div>
+                      <div className="space-y-3 text-sm">
+                        <div className="flex items-start gap-2">
+                          <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
+                          <p className="text-slate-300">On track within <span className="font-bold text-green-400">2% of budget</span></p>
+                        </div>
+                        <div className="flex items-start gap-2">
+                          <TrendingDown className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
+                          <p className="text-slate-300">Q3 spending <span className="font-bold text-green-400">down 5%</span> vs Q2</p>
+                        </div>
+                        <div className="flex items-start gap-2">
+                          <Activity className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
+                          <p className="text-slate-300">Overtime <span className="font-bold text-green-400">down 12%</span> vs last year</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Forecast Row */}
+                  <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
+                    <div className="flex items-center gap-2 mb-3">
+                      <LineChart className="w-5 h-5 text-blue-400" />
+                      <h5 className="text-sm font-bold text-blue-400">FORECAST (If current trends continue)</h5>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                      <div className="flex items-center gap-3 bg-slate-900/30 rounded-lg p-3">
+                        <Calendar className="w-4 h-4 text-amber-400" />
+                        <div>
+                          <p className="text-xs text-slate-400">November</p>
+                          <p className="font-bold text-amber-400">$4.1M (99% total)</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 bg-slate-900/30 rounded-lg p-3">
+                        <Calendar className="w-4 h-4 text-red-400" />
+                        <div>
+                          <p className="text-xs text-slate-400">December</p>
+                          <p className="font-bold text-red-400">$3.4M (106% - OVER)</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 bg-slate-900/30 rounded-lg p-3">
+                        <Target className="w-4 h-4 text-green-400" />
+                        <div>
+                          <p className="text-xs text-slate-400">Recommended Cap</p>
+                          <p className="font-bold text-green-400">$7.27M Nov-Dec</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex flex-wrap gap-2 pt-2">
+                    <button className="flex items-center gap-2 px-3 py-1.5 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 text-blue-400 rounded-lg text-xs font-medium transition-all">
+                      <Eye className="w-3.5 h-3.5" />
+                      VIEW DETAILED ANALYSIS
+                    </button>
+                    <button
+                      onClick={() => setActiveTab('forecast')}
+                      className="flex items-center gap-2 px-3 py-1.5 bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/30 text-purple-400 rounded-lg text-xs font-medium transition-all"
+                    >
+                      <LineChart className="w-3.5 h-3.5" />
+                      ADJUST FORECAST
+                    </button>
+                    <button
+                      onClick={() => setReallocationModal(true)}
+                      className="flex items-center gap-2 px-3 py-1.5 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-400 rounded-lg text-xs font-medium transition-all"
+                    >
+                      <RefreshCw className="w-3.5 h-3.5" />
+                      REALLOCATION PLANNER
+                    </button>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
 
-            {/* Overview Cards */}
+            {/* Enhanced Overview Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-              <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
+              {/* Total Budget Card */}
+              <div className="bg-slate-800/40 border border-blue-500/30 rounded-xl p-5">
                 <div className="flex items-center justify-between mb-3">
                   <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center">
-                    <DollarSign className="w-5 h-5 text-blue-400" />
+                    <Wallet className="w-5 h-5 text-blue-400" />
                   </div>
-                  <span className="text-xs text-slate-400">Total Budget</span>
+                  <span className="text-xs font-medium text-blue-400">TOTAL BUDGET</span>
                 </div>
-                <p className="text-2xl font-bold text-white mb-1">${(fiscalYear.totalBudget / 1000000).toFixed(1)}M</p>
-                <p className="text-xs text-slate-400">{fiscalYear.year}</p>
+                <p className="text-2xl font-bold text-white mb-2">${(fiscalYear.totalBudget / 1000000).toFixed(1)}M</p>
+                <div className="space-y-1.5 border-t border-slate-700/50 pt-3">
+                  <div className="flex justify-between text-xs">
+                    <span className="text-slate-400">Fiscal Year:</span>
+                    <span className="font-medium text-white">{fiscalYear.year}</span>
+                  </div>
+                  <div className="flex justify-between text-xs">
+                    <span className="text-slate-400">Monthly Avg:</span>
+                    <span className="font-medium text-white">$4.04M</span>
+                  </div>
+                  <div className="flex justify-between text-xs">
+                    <span className="text-slate-400">Daily Rate:</span>
+                    <span className="font-medium text-white">$133K</span>
+                  </div>
+                </div>
               </div>
 
-              <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
+              {/* Spent Card */}
+              <div className={`bg-slate-800/40 border rounded-xl p-5 ${fiscalYear.percentSpent >= 90 ? 'border-red-500/30' : fiscalYear.percentSpent >= 80 ? 'border-amber-500/30' : 'border-green-500/30'}`}>
                 <div className="flex items-center justify-between mb-3">
-                  <div className="w-10 h-10 bg-amber-500/20 rounded-xl flex items-center justify-center">
-                    <TrendingUp className="w-5 h-5 text-amber-400" />
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${fiscalYear.percentSpent >= 90 ? 'bg-red-500/20' : fiscalYear.percentSpent >= 80 ? 'bg-amber-500/20' : 'bg-green-500/20'}`}>
+                    <CircleDollarSign className={`w-5 h-5 ${fiscalYear.percentSpent >= 90 ? 'text-red-400' : fiscalYear.percentSpent >= 80 ? 'text-amber-400' : 'text-green-400'}`} />
                   </div>
-                  <span className="text-xs text-slate-400">Spent</span>
+                  <span className={`text-xs font-medium ${fiscalYear.percentSpent >= 90 ? 'text-red-400' : fiscalYear.percentSpent >= 80 ? 'text-amber-400' : 'text-green-400'}`}>SPENT</span>
                 </div>
-                <p className="text-2xl font-bold text-white mb-1">${(fiscalYear.spent / 1000000).toFixed(1)}M</p>
-                <div className="flex items-center gap-1 text-xs">
-                  <span className={`font-semibold ${getPercentColor(fiscalYear.percentSpent) === 'red' ? 'text-red-400' : getPercentColor(fiscalYear.percentSpent) === 'amber' ? 'text-amber-400' : 'text-green-400'}`}>
-                    {fiscalYear.percentSpent}%
-                  </span>
-                  <span className="text-slate-500">of budget</span>
+                <p className="text-2xl font-bold text-white mb-2">${(fiscalYear.spent / 1000000).toFixed(1)}M</p>
+                <div className="mb-3">
+                  <div className="flex justify-between text-xs mb-1">
+                    <span className="text-slate-400">Budget utilization</span>
+                    <span className={`font-bold ${fiscalYear.percentSpent >= 90 ? 'text-red-400' : fiscalYear.percentSpent >= 80 ? 'text-amber-400' : 'text-green-400'}`}>{fiscalYear.percentSpent}%</span>
+                  </div>
+                  <div className="w-full h-2 bg-slate-700/50 rounded-full overflow-hidden">
+                    <div className={`h-full ${fiscalYear.percentSpent >= 90 ? 'bg-red-500' : fiscalYear.percentSpent >= 80 ? 'bg-amber-500' : 'bg-green-500'}`} style={{ width: `${fiscalYear.percentSpent}%` }} />
+                  </div>
+                </div>
+                <div className="space-y-1.5 border-t border-slate-700/50 pt-3">
+                  <div className="flex justify-between text-xs">
+                    <span className="text-slate-400">This month:</span>
+                    <span className="font-medium text-white">$3.98M</span>
+                  </div>
+                  <div className="flex justify-between text-xs">
+                    <span className="text-slate-400">vs Last month:</span>
+                    <span className="font-medium text-amber-400 flex items-center gap-1">
+                      <ArrowUp className="w-3 h-3" />+2.1%
+                    </span>
+                  </div>
                 </div>
               </div>
 
-              <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
+              {/* Committed Card */}
+              <div className="bg-slate-800/40 border border-purple-500/30 rounded-xl p-5">
                 <div className="flex items-center justify-between mb-3">
                   <div className="w-10 h-10 bg-purple-500/20 rounded-xl flex items-center justify-center">
-                    <Calendar className="w-5 h-5 text-purple-400" />
+                    <Receipt className="w-5 h-5 text-purple-400" />
                   </div>
-                  <span className="text-xs text-slate-400">Committed</span>
+                  <span className="text-xs font-medium text-purple-400">COMMITTED</span>
                 </div>
-                <p className="text-2xl font-bold text-white mb-1">${(fiscalYear.committed / 1000000).toFixed(1)}M</p>
-                <div className="flex items-center gap-1 text-xs">
-                  <span className="font-semibold text-purple-400">{fiscalYear.percentCommitted.toFixed(1)}%</span>
-                  <span className="text-slate-500">of budget</span>
+                <p className="text-2xl font-bold text-white mb-2">${(fiscalYear.committed / 1000000).toFixed(1)}M</p>
+                <div className="mb-3">
+                  <div className="flex justify-between text-xs mb-1">
+                    <span className="text-slate-400">Of total budget</span>
+                    <span className="font-bold text-purple-400">{fiscalYear.percentCommitted.toFixed(1)}%</span>
+                  </div>
+                  <div className="w-full h-2 bg-slate-700/50 rounded-full overflow-hidden">
+                    <div className="h-full bg-purple-500" style={{ width: `${fiscalYear.percentCommitted}%` }} />
+                  </div>
+                </div>
+                <div className="space-y-1.5 border-t border-slate-700/50 pt-3">
+                  <div className="flex justify-between text-xs">
+                    <span className="text-slate-400">Pending POs:</span>
+                    <span className="font-medium text-white">23 orders</span>
+                  </div>
+                  <div className="flex justify-between text-xs">
+                    <span className="text-slate-400">Largest:</span>
+                    <span className="font-medium text-white">$420K (Fleet)</span>
+                  </div>
                 </div>
               </div>
 
-              <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
+              {/* Available Card */}
+              <div className="bg-slate-800/40 border border-green-500/30 rounded-xl p-5">
                 <div className="flex items-center justify-between mb-3">
                   <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center">
-                    <CheckCircle className="w-5 h-5 text-green-400" />
+                    <PiggyBank className="w-5 h-5 text-green-400" />
                   </div>
-                  <span className="text-xs text-slate-400">Available</span>
+                  <span className="text-xs font-medium text-green-400">AVAILABLE</span>
                 </div>
-                <p className="text-2xl font-bold text-white mb-1">${(fiscalYear.available / 1000000).toFixed(1)}M</p>
-                <div className="flex items-center gap-1 text-xs">
-                  <span className="font-semibold text-green-400">{((fiscalYear.available / fiscalYear.totalBudget) * 100).toFixed(1)}%</span>
-                  <span className="text-slate-500">remaining</span>
+                <p className="text-2xl font-bold text-white mb-2">${(fiscalYear.available / 1000000).toFixed(1)}M</p>
+                <div className="mb-3">
+                  <div className="flex justify-between text-xs mb-1">
+                    <span className="text-slate-400">Remaining budget</span>
+                    <span className="font-bold text-green-400">{((fiscalYear.available / fiscalYear.totalBudget) * 100).toFixed(1)}%</span>
+                  </div>
+                  <div className="w-full h-2 bg-slate-700/50 rounded-full overflow-hidden">
+                    <div className="h-full bg-green-500" style={{ width: `${(fiscalYear.available / fiscalYear.totalBudget) * 100}%` }} />
+                  </div>
+                </div>
+                <div className="space-y-1.5 border-t border-slate-700/50 pt-3">
+                  <div className="flex justify-between text-xs">
+                    <span className="text-slate-400">Days remaining:</span>
+                    <span className="font-medium text-white">61 days</span>
+                  </div>
+                  <div className="flex justify-between text-xs">
+                    <span className="text-slate-400">Per day budget:</span>
+                    <span className="font-medium text-green-400">$57K/day</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -485,7 +649,7 @@ export default function BudgetResources() {
                         </div>
                         <div>
                           <p className="text-slate-400 mb-0.5">Projected additional spend:</p>
-                          <p className="font-bold text-red-400">$8.5M ⚠️</p>
+                          <p className="font-bold text-red-400 flex items-center gap-1">$8.5M <AlertTriangle className="w-3 h-3" /></p>
                         </div>
                       </div>
                     </div>
@@ -499,15 +663,15 @@ export default function BudgetResources() {
                       <div className="space-y-2 text-xs">
                         <div className="flex items-center justify-between p-2 bg-red-500/10 rounded">
                           <span className="text-slate-300">• Current pace:</span>
-                          <span className="font-bold text-red-400">$49.73M (103% - OVER BUDGET $1.23M) 🔴</span>
+                          <span className="font-bold text-red-400 flex items-center gap-1">$49.73M (103% - OVER BUDGET $1.23M) <AlertCircle className="w-3 h-3" /></span>
                         </div>
                         <div className="flex items-center justify-between p-2 bg-amber-500/10 rounded">
                           <span className="text-slate-300">• Conservative estimate:</span>
-                          <span className="font-bold text-amber-400">$48.9M (101% - OVER $400K) 🟡</span>
+                          <span className="font-bold text-amber-400 flex items-center gap-1">$48.9M (101% - OVER $400K) <AlertTriangle className="w-3 h-3" /></span>
                         </div>
                         <div className="flex items-center justify-between p-2 bg-green-500/10 rounded">
                           <span className="text-slate-300">• With cost controls:</span>
-                          <span className="font-bold text-green-400">$48.3M (99.6% - UNDER BUDGET $200K) ✅</span>
+                          <span className="font-bold text-green-400 flex items-center gap-1">$48.3M (99.6% - UNDER BUDGET $200K) <CheckCircle className="w-3 h-3" /></span>
                         </div>
                       </div>
                     </div>
@@ -622,17 +786,17 @@ export default function BudgetResources() {
                               {statusColor === 'red' && (
                                 <span className="px-2 py-0.5 bg-red-500/20 border border-red-500/30 rounded text-xs text-red-400 font-bold flex items-center gap-1">
                                   <AlertCircle className="w-3 h-3" />
-                                  🔴 Over Budget
+                                  Over Budget
                                 </span>
                               )}
                               {statusColor === 'amber' && (
                                 <span className="px-2 py-0.5 bg-amber-500/20 border border-amber-500/30 rounded text-xs text-amber-400 font-bold">
-                                  ⚠️ High Usage
+                                  High Usage
                                 </span>
                               )}
                               {statusColor === 'green' && division.variance > 50000 && (
                                 <span className="px-2 py-0.5 bg-green-500/20 border border-green-500/30 rounded text-xs text-green-400 font-bold">
-                                  ✅ Under Budget
+                                  Under Budget
                                 </span>
                               )}
                             </div>
@@ -777,7 +941,7 @@ export default function BudgetResources() {
                       <Users className="w-5 h-5 text-blue-400" />
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-white">💼 PERSONNEL (Largest expense)</h3>
+                      <h3 className="text-lg font-semibold text-white flex items-center gap-2"><Briefcase className="w-5 h-5 text-blue-400" /> PERSONNEL (Largest expense)</h3>
                       <p className="text-sm text-slate-400">Annual Budget: $38.5M (79% of total)</p>
                     </div>
                   </div>
@@ -825,7 +989,7 @@ export default function BudgetResources() {
                         <div className="flex items-center gap-2">
                           <span className="text-sm font-semibold text-white">• Overtime:</span>
                           <span className="px-2 py-0.5 bg-red-500/20 border border-red-500/30 rounded text-xs text-red-400 font-bold">
-                            ⚠️ Over Budget
+                            Over Budget
                           </span>
                         </div>
                         <div className="text-right">
@@ -849,7 +1013,7 @@ export default function BudgetResources() {
                           </div>
                           <div className="flex justify-between">
                             <span>• Projected year-end:</span>
-                            <span className="font-medium text-red-400">$3.8M (109% - OVER $300K) 🔴</span>
+                            <span className="font-medium text-red-400 flex items-center gap-1">$3.8M (109% - OVER $300K) <AlertCircle className="w-3 h-3" /></span>
                           </div>
                           <div className="flex justify-between">
                             <span>• Drivers:</span>
@@ -1036,7 +1200,7 @@ export default function BudgetResources() {
                         </div>
                         <div>
                           <p className="text-slate-400 mb-1">vs Budget:</p>
-                          <p className="font-bold text-red-400">$1.2M OVER (103%) 🔴</p>
+                          <p className="font-bold text-red-400 flex items-center gap-1">$1.2M OVER (103%) <AlertCircle className="w-3 h-3" /></p>
                         </div>
                       </div>
                     </div>
@@ -1045,7 +1209,7 @@ export default function BudgetResources() {
                     <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-5">
                       <div className="flex items-center gap-2 mb-3">
                         <CheckCircle className="w-5 h-5 text-green-400" />
-                        <h5 className="text-sm font-bold text-green-400">SCENARIO 2: Cost Controls (15% Reduction) ✅ RECOMMENDED</h5>
+                        <h5 className="text-sm font-bold text-green-400 flex items-center gap-2">SCENARIO 2: Cost Controls (15% Reduction) <CheckCircle className="w-4 h-4" /> RECOMMENDED</h5>
                       </div>
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs mb-3">
                         <div>
@@ -1062,7 +1226,7 @@ export default function BudgetResources() {
                         </div>
                         <div>
                           <p className="text-slate-400 mb-1">vs Budget:</p>
-                          <p className="font-bold text-green-400">$0 variance (100%) ✅</p>
+                          <p className="font-bold text-green-400 flex items-center gap-1">$0 variance (100%) <CheckCircle className="w-3 h-3" /></p>
                         </div>
                       </div>
                     </div>
@@ -1088,7 +1252,7 @@ export default function BudgetResources() {
                         </div>
                         <div>
                           <p className="text-slate-400 mb-1">vs Budget:</p>
-                          <p className="font-bold text-green-400">-$1.0M UNDER (98%) ✅</p>
+                          <p className="font-bold text-green-400 flex items-center gap-1">-$1.0M UNDER (98%) <CheckCircle className="w-3 h-3" /></p>
                         </div>
                       </div>
                     </div>
@@ -1212,7 +1376,7 @@ export default function BudgetResources() {
                       <span>• Overtime:</span>
                       <span className={`font-medium ${monthDetailModal.variance?.overtime ? 'text-amber-400' : 'text-white'}`}>
                         ${((monthDetailModal.personnel * 0.10) / 1000000).toFixed(2)}M
-                        {monthDetailModal.variance?.overtime && <span className="text-xs ml-1">(↑ 25% vs prior month ⚠️)</span>}
+                        {monthDetailModal.variance?.overtime && <span className="text-xs ml-1 inline-flex items-center gap-0.5">(↑ 25% vs prior month <AlertTriangle className="w-3 h-3" />)</span>}
                       </span>
                     </div>
                     <div className="flex justify-between">
