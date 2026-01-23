@@ -331,7 +331,7 @@ export default function PersonnelOverview() {
               <div className="flex-1 min-w-0">
                 {/* Page Header */}
                 <div className="mb-6">
-                  <h2 className="text-2xl lg:text-3xl font-bold text-white mb-2">Personnel Directory</h2>
+                  <h2 className="text-2xl lg:text-3xl font-bold text-white mb-2">Staffing Overview</h2>
                   <p className="text-slate-400">Manage all department personnel and certifications</p>
                 </div>
 
