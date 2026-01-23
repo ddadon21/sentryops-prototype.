@@ -646,7 +646,7 @@ export default function ReportsAnalytics() {
             <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4 mb-6">
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-2">
-                  <h2 className="text-2xl lg:text-3xl font-bold text-white">Reports & Analytics</h2>
+                  <h2 className="text-2xl lg:text-3xl font-bold text-white">Reports & Compliance</h2>
                   <div className="flex items-center gap-1.5 px-2.5 py-1 bg-green-500/20 border border-green-500/40 rounded-lg">
                     <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
                     <span className="text-xs font-bold text-green-400">LIVE DATA</span>
