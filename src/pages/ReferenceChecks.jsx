@@ -1,18 +1,68 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
-import { Home, Users, FileText, LayoutDashboard, TrendingUp, AlertCircle, Settings, Bell, MessageCircle, Search, ChevronRight, Shield, Sparkles, X, Send, Menu, ChevronLeft, LogOut, FolderOpen, Calendar, Clock, CheckCircle, XCircle, AlertTriangle, UserCheck, FileCheck, DollarSign, Eye, Plus, Phone, Mail, Star, ThumbsUp, ThumbsDown, ChevronDown, User } from 'lucide-react';
+import { LayoutDashboard, FolderOpen, FileText, Clock, UserCheck, Calendar, FileCheck, CheckCircle, CheckCircle2, TrendingUp, AlertTriangle, DollarSign, Eye, Activity, XCircle, Settings, Bell, Search, ChevronRight, Shield, X, Menu, ChevronLeft, LogOut, Plus, Phone, Mail, ChevronDown, User, Users, AlertCircle, Circle, HelpCircle, BookOpen, ExternalLink, Download, Printer, Filter, MapPin, Briefcase, FileWarning, ClipboardList } from 'lucide-react';
+
+// Helper: Reference status badge
+const getRefStatusBadge = (status) => {
+  switch (status) {
+    case 'Completed':
+      return <span className="px-2.5 py-1 bg-green-500/10 text-green-400 rounded-lg text-xs font-medium flex items-center gap-1.5"><CheckCircle2 className="w-3 h-3" />Completed</span>;
+    case 'Pending Callback':
+      return <span className="px-2.5 py-1 bg-amber-500/10 text-amber-400 rounded-lg text-xs font-medium flex items-center gap-1.5"><Clock className="w-3 h-3" />Pending Callback</span>;
+    case 'Not Yet Contacted':
+      return <span className="px-2.5 py-1 bg-slate-500/10 text-slate-400 rounded-lg text-xs font-medium flex items-center gap-1.5"><AlertCircle className="w-3 h-3" />Not Yet Contacted</span>;
+    case 'Scheduled':
+      return <span className="px-2.5 py-1 bg-blue-500/10 text-blue-400 rounded-lg text-xs font-medium flex items-center gap-1.5"><Calendar className="w-3 h-3" />Scheduled</span>;
+    case 'Required':
+      return <span className="px-2.5 py-1 bg-red-500/10 text-red-400 rounded-lg text-xs font-medium flex items-center gap-1.5"><AlertTriangle className="w-3 h-3" />Required</span>;
+    default:
+      return <span className="px-2.5 py-1 bg-slate-500/10 text-slate-400 rounded-lg text-xs font-medium">{status}</span>;
+  }
+};
+
+// Helper: Outcome badge (qualitative, not numerical)
+const getOutcomeBadge = (outcome) => {
+  switch (outcome) {
+    case 'Strongly Positive':
+      return <span className="px-2.5 py-1 bg-green-500/10 text-green-400 rounded-lg text-xs font-medium">Strongly Positive</span>;
+    case 'Positive':
+      return <span className="px-2.5 py-1 bg-green-500/10 text-green-300 rounded-lg text-xs font-medium">Positive</span>;
+    case 'Neutral':
+      return <span className="px-2.5 py-1 bg-slate-500/10 text-slate-300 rounded-lg text-xs font-medium">Neutral</span>;
+    case 'Negative':
+      return <span className="px-2.5 py-1 bg-red-500/10 text-red-400 rounded-lg text-xs font-medium">Negative</span>;
+    default:
+      return null;
+  }
+};
+
+// Helper: Reference type badge
+const getRefTypeBadge = (type) => {
+  switch (type) {
+    case 'Employment (Current)':
+      return <span className="px-2.5 py-1 bg-blue-500/10 text-blue-400 rounded-lg text-xs font-medium flex items-center gap-1"><Briefcase className="w-3 h-3" />Employment (Current)</span>;
+    case 'Employment (Former)':
+      return <span className="px-2.5 py-1 bg-cyan-500/10 text-cyan-400 rounded-lg text-xs font-medium flex items-center gap-1"><Briefcase className="w-3 h-3" />Employment (Former)</span>;
+    case 'Professional LE':
+      return <span className="px-2.5 py-1 bg-purple-500/10 text-purple-400 rounded-lg text-xs font-medium flex items-center gap-1"><Shield className="w-3 h-3" />Professional LE</span>;
+    case 'Personal':
+      return <span className="px-2.5 py-1 bg-amber-500/10 text-amber-400 rounded-lg text-xs font-medium flex items-center gap-1"><Users className="w-3 h-3" />Personal</span>;
+    default:
+      return <span className="px-2.5 py-1 bg-slate-500/10 text-slate-400 rounded-lg text-xs font-medium">{type}</span>;
+  }
+};
 
 export default function ReferenceChecks() {
   const navigate = useNavigate();
   const [activePage, setActivePage] = useState('reference-checks');
-  const [chatOpen, setChatOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const [selectedView, setSelectedView] = useState('pending');
+  const [expandedRef, setExpandedRef] = useState(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -27,6 +77,16 @@ export default function ReferenceChecks() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [profileMenuOpen, notificationsOpen]);
 
+  const currentDateTime = {
+    date: 'Monday, January 27, 2026',
+    time: '9:27 PM EST',
+  };
+
+  const investigatorInfo = {
+    name: 'Agent Brooks',
+    badge: 'BI-107',
+  };
+
   const navigation = [
     { id: 'bi-dashboard', label: 'BI Dashboard', icon: LayoutDashboard, page: 'BackgroundsDashboard' },
     { id: 'active-cases', label: 'Active Cases', icon: FolderOpen, page: 'ActiveCases' },
@@ -40,10 +100,216 @@ export default function ReferenceChecks() {
     { id: 'criminal-history', label: 'Criminal History Review', icon: AlertTriangle, page: 'CriminalHistoryReview' },
     { id: 'financial-background', label: 'Financial Background', icon: DollarSign, page: 'FinancialBackground' },
     { id: 'social-media', label: 'Social Media Analysis', icon: Eye, page: 'SocialMediaAnalysis' },
-    { id: 'bi-reports', label: 'BI Reports', icon: LayoutDashboard, page: 'BIReports' },
+    { id: 'bi-reports', label: 'BI Reports', icon: Activity, page: 'BIReports' },
     { id: 'case-closure', label: 'Case Closure', icon: XCircle, page: 'CaseClosure' },
     { id: 'settings', label: 'Settings', icon: Settings, page: 'BISettings' }
   ];
+
+  const references = [
+    {
+      id: 1,
+      caseId: 'BI-2024-145',
+      subject: 'Robert Martinez',
+      positionApplied: 'Deputy Sheriff',
+      referenceName: 'Sgt. John Davis',
+      rankPosition: 'Patrol Sergeant',
+      relationship: 'Current Supervisor',
+      relationshipDetail: 'Current direct supervisor (immediate supervisor). Martinez assigned to Sgt. Davis\'s squad since 2022 (3 years). Martinez currently works under Davis.',
+      organization: 'Metro Atlanta Police Department',
+      badge: '2456',
+      phone: '(404) 555-0101',
+      email: 'j.davis@metropd.gov',
+      status: 'Completed',
+      referenceType: 'Employment (Current)',
+      yearsKnown: '3 years (2022–Present)',
+      capacity: 'Supervisory — Martinez assigned to Davis\'s squad',
+      interview: {
+        date: 'Jan 23, 2026',
+        time: '10:00 AM – 10:22 AM EST (22 minutes)',
+        method: 'Phone interview',
+        interviewer: 'Agent Brooks (Badge #BI-107)',
+        notesPages: '4 pages (comprehensive)'
+      },
+      outcome: 'Strongly Positive',
+      wouldRecommend: 'YES (STRONGLY)',
+      recommendQuote: 'Without hesitation. He\'s one of our best officers.',
+      performance: {
+        overall: '"Above average" (top 25% of officers)',
+        workQuality: '"Excellent — thorough reports, good decisions"',
+        reliability: '"100% reliable — never misses shifts"',
+        professionalism: '"Very professional with public & peers"'
+      },
+      strengths: [
+        'Excellent judgment under pressure',
+        'Outstanding report writing',
+        'Strong community engagement',
+        'Good de-escalation skills',
+        'Respected by peers'
+      ],
+      areasForImprovement: [
+        { item: 'Could be more proactive with self-initiated activity', context: 'Not a major issue, just an observation' }
+      ],
+      concerns: 'None identified',
+      concernsQuote: '"No significant weaknesses. He\'s a solid officer."',
+      disciplinary: {
+        sustainedComplaints: 0,
+        unsustainedComplaints: '1 (2020 — unfounded)',
+        useOfForce: '2 incidents (both justified)',
+        disciplinaryActions: 0
+      },
+      reasonForLeaving: '"Seeking career advancement. Lateral move appropriate."',
+      eligibleForRehire: 'YES',
+      rehireQuote: '"Absolutely. Would welcome him back with open arms."',
+      bradyGiglio: 'None identified',
+      bradyGiglioDetail: 'No credibility impairments, untruthfulness, or bias issues',
+      investigatorAssessment: 'Strongly positive reference from current supervisor. No concerns identified. Supervisor supports lateral transfer. Proceed with investigation. This is an excellent reference.'
+    },
+    {
+      id: 2,
+      caseId: 'BI-2024-145',
+      subject: 'Robert Martinez',
+      positionApplied: 'Deputy Sheriff',
+      referenceName: 'Capt. Sarah Williams',
+      rankPosition: 'Captain, Patrol Division Commander',
+      relationship: 'Former Supervisor',
+      relationshipDetail: 'Former supervisor (2018–2022). Patrol Division Commander during Martinez\'s first 4 years. No longer direct supervisor (promoted 2022).',
+      organization: 'Metro Atlanta Police Department',
+      badge: '1789',
+      phone: '(404) 555-0102',
+      email: 's.williams@metropd.gov',
+      status: 'Completed',
+      referenceType: 'Employment (Former)',
+      yearsKnown: '4 years (supervised 2018–2022)',
+      capacity: 'Supervisory — Patrol Division Commander during first 4 years',
+      interview: {
+        date: 'Jan 23, 2026',
+        time: '2:00 PM – 2:18 PM EST (18 minutes)',
+        method: 'Phone interview',
+        interviewer: 'Agent Brooks (Badge #BI-107)',
+        notesPages: '3 pages'
+      },
+      outcome: 'Positive',
+      wouldRecommend: 'YES',
+      recommendQuote: '"Yes, I recommend him. He\'s a good officer."',
+      performance: {
+        overall: '"Solid officer, reliable, good community engagement"',
+        workQuality: '"Good reports, thorough investigations"',
+        reliability: '"Dependable — showed up and did the work"'
+      },
+      strengths: [
+        'Excellent de-escalation skills',
+        'Respected by community residents',
+        'Worked well with peers',
+        'Handled stressful situations calmly'
+      ],
+      areasForImprovement: [
+        { item: 'Could be more proactive with self-initiated activity', context: 'Consistent with current supervisor\'s feedback' }
+      ],
+      concerns: 'None identified',
+      concernsQuote: null,
+      disciplinary: {
+        sustainedComplaints: 0,
+        disciplinaryActions: 0,
+        note: '"No disciplinary issues under my command"'
+      },
+      reasonForLeaving: '"Has potential for advancement. Lateral move appropriate."',
+      eligibleForRehire: 'YES',
+      rehireQuote: '"Yes, we\'d take him back if he wanted to return."',
+      bradyGiglio: 'None identified',
+      bradyGiglioDetail: 'No credibility impairments identified',
+      investigatorAssessment: 'Positive reference from former supervisor. Consistent with current supervisor\'s assessment. No concerns. Proceed.'
+    },
+    {
+      id: 3,
+      caseId: 'BI-2024-145',
+      subject: 'Robert Martinez',
+      positionApplied: 'Deputy Sheriff',
+      referenceName: 'Officer Michael Brown',
+      rankPosition: 'Senior Patrol Officer',
+      relationship: 'Colleague / Former Field Training Officer (FTO)',
+      relationshipDetail: 'Was Martinez\'s Field Training Officer (FTO) in 2018 and worked alongside him for 6 years.',
+      organization: 'Metro Atlanta Police Department',
+      badge: '1923',
+      phone: '(404) 555-0103',
+      email: 'm.brown@metropd.gov',
+      status: 'Pending Callback',
+      referenceType: 'Professional LE',
+      yearsKnown: '6 years (2018–Present)',
+      capacity: 'FTO in 2018, then colleague on same patrol shift',
+      contactAttempts: [
+        {
+          attemptNumber: 1,
+          date: 'Jan 23, 2026 at 10:30 AM',
+          method: 'Phone call to (404) 555-0103',
+          outcome: 'Left voicemail (no answer)',
+          message: 'Identified self as BI investigator, requested callback for employment reference, left number'
+        }
+      ],
+      nextActions: {
+        followUpDate: 'Jan 27, 2026 (4 days after initial contact)',
+        action: 'If no callback by Jan 27, attempt second contact',
+        escalation: 'If no response after 3 attempts, may substitute with alternate reference (not critical — already have 2 strong supervisor references)',
+        priority: 'MEDIUM (not urgent — supervisory refs complete)'
+      },
+      plannedInterview: {
+        estimatedDuration: '15–20 minutes',
+        type: 'Phone interview',
+        assignedTo: 'Agent Brooks',
+        topics: 'FTO experience with Martinez, peer relationship, work performance, professionalism'
+      },
+      investigatorNotes: 'Officer Brown was Martinez\'s FTO in 2018 when Martinez joined Metro PD. His perspective would be valuable as he trained Martinez and worked alongside him for 6 years. However, not critical — we already have strong positive references from current and former supervisors. If Brown doesn\'t respond after 3 attempts, can proceed without.'
+    },
+    {
+      id: 4,
+      caseId: 'BI-2024-145',
+      subject: 'Robert Martinez',
+      positionApplied: 'Deputy Sheriff',
+      referenceName: 'Additional Personal Reference',
+      rankPosition: null,
+      relationship: 'Personal reference (to be identified)',
+      relationshipDetail: null,
+      organization: null,
+      badge: null,
+      phone: null,
+      email: null,
+      status: 'Required',
+      referenceType: 'Personal',
+      yearsKnown: null,
+      capacity: null,
+      policyRequirement: {
+        totalRequired: '3–5 total references',
+        employmentRequired: '2 required (2 completed)',
+        personalRequired: '2–3 required (0 completed)',
+        criteria: 'Non-family, known 2+ years, can speak to character'
+      },
+      actionRequired: {
+        action: 'Contact applicant — request 2–3 personal references',
+        requiredInfo: 'Name, phone, email, relationship, years known',
+        targetDate: 'Jan 28, 2026',
+        examples: 'Neighbors, friends, community contacts, volunteer associates. Should not be family members.'
+      },
+      investigatorNotes: 'Need to contact Martinez and request 2–3 personal references (non-law enforcement contacts who can speak to his character, integrity, and suitability for law enforcement). Examples: neighbors, friends, community contacts, volunteer associates. Should not be family members.'
+    }
+  ];
+
+  const notifications = [
+    { id: 1, title: 'Reference Completed', message: 'Capt. Williams interview documented — Positive', time: '1 hour ago', urgent: false },
+    { id: 2, title: 'Follow-up Required', message: 'Officer Brown — No response (1 attempt, follow up Jan 27)', time: '3 hours ago', urgent: true },
+    { id: 3, title: 'Action Required', message: 'Personal references needed — contact applicant', time: '5 hours ago', urgent: true }
+  ];
+
+  const pendingRefs = references.filter(r => r.status !== 'Completed');
+  const completedRefs = references.filter(r => r.status === 'Completed');
+
+  const getFilteredRefs = () => {
+    switch (selectedView) {
+      case 'pending': return pendingRefs;
+      case 'completed': return completedRefs;
+      case 'all': return references;
+      case 'contactlog': return references.filter(r => r.contactAttempts && r.contactAttempts.length > 0);
+      default: return references;
+    }
+  };
 
   const handleNavigation = (item) => {
     if (item.page) {
@@ -58,81 +324,6 @@ export default function ReferenceChecks() {
     navigate(createPageUrl('SignIn'));
   };
 
-  const references = [
-    {
-      id: 1,
-      caseId: 'BI-2024-145',
-      subject: 'Robert Martinez',
-      referenceName: 'Sgt. John Davis',
-      relationship: 'Current Supervisor',
-      organization: 'Metro Atlanta PD',
-      phone: '(404) 555-0101',
-      email: 'j.davis@metropd.gov',
-      status: 'Completed',
-      contacted: 'Nov 4, 2024',
-      rating: 5,
-      recommendation: 'Highly Recommended',
-      notes: 'Excellent officer with strong leadership potential. Consistent performance, reliable, and professional.',
-      yearsKnown: '6 years'
-    },
-    {
-      id: 2,
-      caseId: 'BI-2024-145',
-      subject: 'Robert Martinez',
-      referenceName: 'Captain Sarah Williams',
-      relationship: 'Previous Supervisor',
-      organization: 'Metro Atlanta PD',
-      phone: '(404) 555-0102',
-      email: 's.williams@metropd.gov',
-      status: 'Completed',
-      contacted: 'Nov 5, 2024',
-      rating: 5,
-      recommendation: 'Highly Recommended',
-      notes: 'Outstanding work ethic. Martinez consistently exceeded expectations and showed initiative.',
-      yearsKnown: '4 years'
-    },
-    {
-      id: 3,
-      caseId: 'BI-2024-145',
-      subject: 'Robert Martinez',
-      referenceName: 'Officer Michael Brown',
-      relationship: 'Colleague',
-      organization: 'Metro Atlanta PD',
-      phone: '(404) 555-0103',
-      email: 'm.brown@metropd.gov',
-      status: 'Pending',
-      contacted: 'Nov 6, 2024',
-      rating: null,
-      recommendation: null,
-      notes: 'Awaiting response - follow-up scheduled for Nov 24',
-      yearsKnown: '5 years'
-    },
-    {
-      id: 4,
-      caseId: 'BI-2024-143',
-      subject: 'Sarah Chen',
-      referenceName: 'Lt. David Rodriguez',
-      relationship: 'Former Commander',
-      organization: 'State Patrol',
-      phone: '(404) 555-0201',
-      email: 'd.rodriguez@statepatrol.gov',
-      status: 'In Progress',
-      contacted: 'Nov 7, 2024',
-      rating: null,
-      recommendation: null,
-      notes: 'Interview scheduled for Nov 25, 2024',
-      yearsKnown: '3 years'
-    }
-  ];
-
-  const notifications = [
-    { id: 1, title: 'Reference Completed', message: 'Capt. Williams - Highly Recommended', time: '1 hour ago', urgent: false },
-    { id: 2, title: 'Follow-up Required', message: 'Officer Brown - No response yet', time: '3 hours ago', urgent: true }
-  ];
-
-  const pendingRefs = references.filter(r => r.status === 'Pending' || r.status === 'In Progress');
-  const completedRefs = references.filter(r => r.status === 'Completed');
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex">
       {/* Sidebar */}
@@ -140,12 +331,12 @@ export default function ReferenceChecks() {
         <div className="p-4 border-b border-slate-700/50 flex items-center justify-between">
           {!sidebarCollapsed && (
             <div className="flex items-center gap-2">
-              <Shield className="w-8 h-8 text-purple-500" />
+              <Shield className="w-8 h-8 text-amber-500" />
               <h1 className="text-xl font-bold text-white">SentryOps</h1>
             </div>
           )}
           {sidebarCollapsed && (
-            <Shield className="w-8 h-8 text-purple-500 mx-auto" />
+            <Shield className="w-8 h-8 text-amber-500 mx-auto" />
           )}
           <button
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
@@ -164,7 +355,7 @@ export default function ReferenceChecks() {
                 key={item.id}
                 onClick={() => handleNavigation(item)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                  isActive ? 'bg-purple-500 text-white shadow-lg shadow-purple-500/20' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'
+                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'
                 } ${sidebarCollapsed ? 'justify-center' : ''}`}
                 title={sidebarCollapsed ? item.label : ''}
               >
@@ -183,7 +374,6 @@ export default function ReferenceChecks() {
               <p className="text-xs text-slate-500 text-center">Gwinnett County Sheriff's Office</p>
             </div>
           )}
-
           <div className="p-4">
             <button
               onClick={() => setLogoutConfirmOpen(true)}
@@ -200,18 +390,12 @@ export default function ReferenceChecks() {
       </aside>
 
       {sidebarOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
-          onClick={() => setSidebarOpen(false)}
-        />
+        <div className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={() => setSidebarOpen(false)} />
       )}
 
       {logoutConfirmOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-            onClick={() => setLogoutConfirmOpen(false)}
-          />
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setLogoutConfirmOpen(false)} />
           <div className="relative bg-slate-900 border border-slate-700/50 rounded-2xl p-6 max-w-sm w-full shadow-2xl">
             <div className="flex items-center gap-4 mb-4">
               <div className="w-12 h-12 bg-slate-800/60 rounded-xl flex items-center justify-center">
@@ -223,48 +407,32 @@ export default function ReferenceChecks() {
               </div>
             </div>
             <div className="flex gap-3 mt-6">
-              <button
-                onClick={() => setLogoutConfirmOpen(false)}
-                className="flex-1 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-white font-medium transition-all"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleLogout}
-                className="flex-1 px-4 py-2.5 bg-purple-600/40 hover:bg-purple-600/60 border border-purple-500/50 rounded-xl text-white font-medium transition-all"
-              >
-                Sign Out
-              </button>
+              <button onClick={() => setLogoutConfirmOpen(false)} className="flex-1 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-white font-medium transition-all">Cancel</button>
+              <button onClick={handleLogout} className="flex-1 px-4 py-2.5 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-white font-medium transition-all">Sign Out</button>
             </div>
           </div>
         </div>
       )}
 
+      {/* Main Content */}
       <div className="flex-1 flex flex-col min-w-0">
         <header className="border-b border-slate-800/50 backdrop-blur-xl bg-slate-900/30">
           <div className="px-4 lg:px-6 py-4 flex items-center justify-between gap-4">
             <div className="flex items-center gap-4 flex-1 min-w-0">
-              <button
-                onClick={() => setSidebarOpen(!sidebarOpen)}
-                className="lg:hidden p-2 hover:bg-slate-800/50 rounded-lg"
-              >
+              <button onClick={() => setSidebarOpen(!sidebarOpen)} className="lg:hidden p-2 hover:bg-slate-800/50 rounded-lg">
                 <Menu className="w-5 h-5 text-slate-400" />
               </button>
-              <div className="flex-1 max-w-xl relative">
+              <div className="flex-1 max-w-xl relative hidden sm:block">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-                <input type="text" placeholder="Search references..." className="w-full pl-12 pr-4 py-2 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-purple-500/50" />
+                <input type="text" placeholder="Search references by name, case, or relationship..." className="w-full pl-12 pr-4 py-2 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-amber-500/50" />
               </div>
             </div>
             <div className="flex items-center gap-2 lg:gap-3">
-              <div className="relative">
-                <button
-                  onClick={() => setNotificationsOpen(!notificationsOpen)}
-                  className="p-2 hover:bg-slate-800/50 rounded-lg relative"
-                >
+              <div className="relative notifications-container">
+                <button onClick={() => setNotificationsOpen(!notificationsOpen)} className="p-2 hover:bg-slate-800/50 rounded-lg relative">
                   <Bell className="w-5 h-5 text-slate-400" />
                   <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                 </button>
-
                 {notificationsOpen && (
                   <div className="absolute right-0 top-full mt-2 w-96 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-2xl z-50">
                     <div className="p-4 border-b border-slate-700/50">
@@ -272,9 +440,9 @@ export default function ReferenceChecks() {
                     </div>
                     <div className="max-h-96 overflow-y-auto">
                       {notifications.map(notification => (
-                        <div key={notification.id} className={`p-4 border-b border-slate-800/30 hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-purple-500/5' : ''}`}>
+                        <div key={notification.id} className={`p-4 border-b border-slate-800/30 hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
                           <div className="flex items-start gap-3">
-                            <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-purple-400' : 'bg-blue-400'}`}></div>
+                            <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-amber-400' : 'bg-blue-400'}`}></div>
                             <div className="flex-1 min-w-0">
                               <p className="text-sm font-medium text-white mb-1">{notification.title}</p>
                               <p className="text-xs text-slate-400 mb-2">{notification.message}</p>
@@ -285,20 +453,15 @@ export default function ReferenceChecks() {
                       ))}
                     </div>
                     <div className="p-3 border-t border-slate-700/50">
-                      <button className="w-full text-center text-sm text-purple-400 hover:text-purple-300 font-medium">View All</button>
+                      <button className="w-full text-center text-sm text-amber-400 hover:text-amber-300 font-medium">View All</button>
                     </div>
                   </div>
                 )}
               </div>
-
               <div className="h-8 w-px bg-slate-700/50"></div>
-
               <div className="relative profile-menu-container">
-                <button
-                  onClick={() => setProfileMenuOpen(!profileMenuOpen)}
-                  className="flex items-center gap-3 p-1.5 pr-3 hover:bg-slate-800/50 rounded-xl transition-colors"
-                >
-                  <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center">
+                <button onClick={() => setProfileMenuOpen(!profileMenuOpen)} className="flex items-center gap-3 p-1.5 pr-3 hover:bg-slate-800/50 rounded-xl transition-colors">
+                  <div className="w-8 h-8 bg-gradient-to-br from-amber-500 to-amber-600 rounded-full flex items-center justify-center">
                     <span className="text-white text-sm font-bold">BI</span>
                   </div>
                   <div className="hidden sm:block text-left">
@@ -307,7 +470,6 @@ export default function ReferenceChecks() {
                   </div>
                   <ChevronDown className={`w-4 h-4 text-slate-400 hidden sm:block transition-transform ${profileMenuOpen ? 'rotate-180' : ''}`} />
                 </button>
-
                 {profileMenuOpen && (
                   <div className="absolute right-0 top-full mt-2 w-56 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-2xl z-50 py-2">
                     <div className="px-4 py-3 border-b border-slate-700/50">
@@ -315,26 +477,11 @@ export default function ReferenceChecks() {
                       <p className="text-xs text-slate-400">bi.supervisor@gcso.gov</p>
                     </div>
                     <div className="py-1">
-                      <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-slate-300 hover:bg-slate-800/50 transition-colors">
-                        <User className="w-4 h-4" />
-                        View Profile
-                      </button>
-                      <button
-                        onClick={() => navigate(createPageUrl('BISettings'))}
-                        className="w-full flex items-center gap-3 px-4 py-2 text-sm text-slate-300 hover:bg-slate-800/50 transition-colors"
-                      >
-                        <Settings className="w-4 h-4" />
-                        Settings
-                      </button>
+                      <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-slate-300 hover:bg-slate-800/50 transition-colors"><User className="w-4 h-4" />View Profile</button>
+                      <button onClick={() => navigate(createPageUrl('BISettings'))} className="w-full flex items-center gap-3 px-4 py-2 text-sm text-slate-300 hover:bg-slate-800/50 transition-colors"><Settings className="w-4 h-4" />Settings</button>
                     </div>
                     <div className="border-t border-slate-700/50 py-1">
-                      <button
-                        onClick={() => setLogoutConfirmOpen(true)}
-                        className="w-full flex items-center gap-3 px-4 py-2 text-sm text-red-400 hover:bg-slate-800/50 transition-colors"
-                      >
-                        <LogOut className="w-4 h-4" />
-                        Sign Out
-                      </button>
+                      <button onClick={() => setLogoutConfirmOpen(true)} className="w-full flex items-center gap-3 px-4 py-2 text-sm text-red-400 hover:bg-slate-800/50 transition-colors"><LogOut className="w-4 h-4" />Sign Out</button>
                     </div>
                   </div>
                 )}
@@ -344,226 +491,768 @@ export default function ReferenceChecks() {
         </header>
 
         <main className="flex-1 overflow-y-auto p-4 lg:p-6">
-          <div className="mb-6">
-            <h2 className="text-2xl lg:text-3xl font-bold text-white mb-2">Reference Checks</h2>
-            <p className="text-slate-400">Professional and personal reference verification</p>
-          </div>
+          <div className="max-w-7xl mx-auto">
 
-          <div className="mb-6 bg-gradient-to-br from-purple-500/10 to-purple-600/5 border border-purple-500/20 rounded-xl p-5">
-            <div className="flex items-start gap-4">
-              <div className="w-10 h-10 bg-purple-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                <Sparkles className="w-6 h-6 text-purple-400" />
+            {/* Page Header */}
+            <div className="mb-6">
+              <h2 className="text-2xl lg:text-3xl font-bold text-white mb-2">Reference Checks</h2>
+              <p className="text-slate-400 mb-3">Professional and personal reference verification for background investigations</p>
+              <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-slate-500">
+                <span className="flex items-center gap-1.5">
+                  <Calendar className="w-4 h-4 text-slate-400" />
+                  {currentDateTime.date} at {currentDateTime.time}
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <Shield className="w-4 h-4 text-amber-400" />
+                  Active investigator: {investigatorInfo.name} (Badge #{investigatorInfo.badge})
+                </span>
               </div>
-              <div className="flex-1">
-                <h4 className="text-base font-semibold text-white mb-2">Reference Check Summary</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-slate-300">
-                  <p>• {completedRefs.length} references completed</p>
-                  <p>• {pendingRefs.length} references pending</p>
-                  <p>• 100% positive recommendations received</p>
-                  <p>• Average rating: 5.0/5.0</p>
+              <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-slate-500 mt-1">
+                <span className="flex items-center gap-1.5">
+                  <Users className="w-4 h-4 text-slate-400" />
+                  Total references tracked: {references.length} references across active cases
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <Clock className="w-4 h-4 text-amber-400" />
+                  Pending completion: {pendingRefs.length} references (awaiting callbacks)
+                </span>
+              </div>
+            </div>
+
+            {/* Quick Action Buttons */}
+            <div className="flex flex-wrap items-center gap-3 mb-6">
+              <button className="flex items-center gap-2 px-4 py-2.5 bg-amber-500 hover:bg-amber-600 text-white rounded-xl font-medium transition-colors text-sm">
+                <Plus className="w-4 h-4" />Add Reference
+              </button>
+              <button className="flex items-center gap-2 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-slate-300 rounded-xl font-medium transition-colors text-sm">
+                <Calendar className="w-4 h-4" />Schedule Interview
+              </button>
+              <button className="flex items-center gap-2 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-slate-300 rounded-xl font-medium transition-colors text-sm">
+                <Users className="w-4 h-4" />View All References
+              </button>
+              <button className="flex items-center gap-2 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-slate-300 rounded-xl font-medium transition-colors text-sm">
+                <Download className="w-4 h-4" />Export Reference Report
+              </button>
+              <button className="flex items-center gap-2 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-slate-300 rounded-xl font-medium transition-colors text-sm">
+                <Phone className="w-4 h-4" />Contact Pending
+              </button>
+              <button className="flex items-center gap-2 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-slate-300 rounded-xl font-medium transition-colors text-sm">
+                <Printer className="w-4 h-4" />Print Reference Log
+              </button>
+            </div>
+
+            {/* Reference Check Status Summary */}
+            <div className="mb-6 bg-gradient-to-br from-amber-500/10 to-amber-600/5 border border-amber-500/20 rounded-xl p-5">
+              <div className="flex items-start gap-4 mb-4">
+                <div className="w-10 h-10 bg-amber-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <ClipboardList className="w-6 h-6 text-amber-400" />
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center gap-3 mb-1">
+                    <h4 className="text-base font-semibold text-white">Reference Check Status Summary</h4>
+                    <span className="text-xs text-slate-500">As of {currentDateTime.date} at {currentDateTime.time}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Overall Status */}
+              <div className="bg-slate-900/40 rounded-lg p-4 mb-4">
+                <h5 className="text-sm font-semibold text-slate-300 mb-3">Overall Status</h5>
+                <div className="space-y-1.5 text-sm">
+                  <div className="text-slate-400">Total references required: <span className="text-white font-medium">5</span> <span className="text-slate-500">(per policy: 3 personal, 2 employment)</span></div>
+                  <div className="text-slate-400">References completed: <span className="text-green-400 font-medium">2</span> <span className="text-slate-500">(40% complete)</span></div>
+                  <div className="text-slate-400">References pending: <span className="text-amber-400 font-medium">2</span> <span className="text-slate-500">(1 awaiting callback, 1 not yet identified)</span></div>
+                  <div className="text-slate-400">References not yet contacted: <span className="text-white">0</span></div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+                {/* Completed Summary */}
+                <div className="bg-slate-900/40 rounded-lg p-4">
+                  <h5 className="text-sm font-semibold text-green-400 mb-3 flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4" />Completed References (2)
+                  </h5>
+                  <div className="space-y-3 text-sm">
+                    <div>
+                      <p className="text-white font-medium">Sgt. John Davis (Current Supervisor)</p>
+                      <p className="text-slate-400">Interview: Jan 23, 2026 — Employment reference</p>
+                      <p className="text-green-400">Outcome: POSITIVE — Strongly recommends for hire</p>
+                    </div>
+                    <div>
+                      <p className="text-white font-medium">Capt. Sarah Williams (Former Supervisor)</p>
+                      <p className="text-slate-400">Interview: Jan 23, 2026 — Employment reference</p>
+                      <p className="text-green-400">Outcome: POSITIVE — Recommends for hire</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Pending Summary */}
+                <div className="bg-slate-900/40 rounded-lg p-4">
+                  <h5 className="text-sm font-semibold text-amber-400 mb-3 flex items-center gap-2">
+                    <Clock className="w-4 h-4" />Pending References (2)
+                  </h5>
+                  <div className="space-y-3 text-sm">
+                    <div>
+                      <p className="text-white font-medium">Officer Michael Brown (Colleague/FTO)</p>
+                      <p className="text-slate-400">Status: Awaiting callback (1 contact attempt Jan 23)</p>
+                      <p className="text-amber-400/80">Next action: Follow up Jan 27 if no response</p>
+                    </div>
+                    <div>
+                      <p className="text-white font-medium">Additional personal reference (to be added)</p>
+                      <p className="text-slate-400">Status: Not yet scheduled</p>
+                      <p className="text-amber-400/80">Next action: Contact applicant for additional references</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Outcomes */}
+              <div className="bg-slate-900/40 rounded-lg p-4 mb-4">
+                <h5 className="text-sm font-semibold text-slate-300 mb-3">Reference Check Outcomes</h5>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+                  <div className="flex items-center gap-2 text-green-400">
+                    <CheckCircle2 className="w-3.5 h-3.5 flex-shrink-0" />
+                    <span>All completed references: POSITIVE (2 of 2)</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-green-400">
+                    <CheckCircle2 className="w-3.5 h-3.5 flex-shrink-0" />
+                    <span>Would recommend for hire: 2 of 2 said YES</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-green-400">
+                    <CheckCircle2 className="w-3.5 h-3.5 flex-shrink-0" />
+                    <span>No concerns identified by either supervisor</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-amber-400">
+                    <AlertTriangle className="w-3.5 h-3.5 flex-shrink-0" />
+                    <span>Cannot finalize without minimum 3 completed</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Assessment Method Note */}
+              <div className="bg-amber-500/5 border border-amber-500/20 rounded-lg p-4 mb-4">
+                <h5 className="text-sm font-semibold text-amber-400 mb-2 flex items-center gap-2">
+                  <AlertTriangle className="w-4 h-4" />Assessment Method Note
+                </h5>
+                <p className="text-sm text-slate-400">
+                  References are evaluated <span className="text-white font-medium">qualitatively</span>, not with numerical ratings or scores. Each reference is assessed individually for: would recommend (Yes/No), performance quality (Excellent/Good/Fair/Poor), disciplinary issues (Yes/No with details), specific concerns (documented), and Brady/Giglio credibility concerns (Yes/No). There is no "overall score" or "average rating."
+                </p>
+              </div>
+
+              {/* Investigator Assessment */}
+              <div className="bg-slate-900/40 rounded-lg p-4">
+                <h5 className="text-sm font-semibold text-slate-300 mb-2">Investigator Assessment</h5>
+                <p className="text-sm text-slate-400">
+                  Two strong supervisor references completed (current and former). Both strongly positive with no concerns identified. Pending colleague reference (not critical — already have 2 supervisory refs). Need at least 1 additional personal reference to meet minimum requirements. Recommend contacting applicant for 1–2 additional personal references (non-LE contacts).
+                </p>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-3 mt-4">
+                <button className="px-3 py-1.5 bg-slate-800/60 hover:bg-slate-800/80 text-slate-300 rounded-lg text-xs font-medium transition-colors">View Completed References</button>
+                <button className="px-3 py-1.5 bg-slate-800/60 hover:bg-slate-800/80 text-slate-300 rounded-lg text-xs font-medium transition-colors">Contact Pending References</button>
+                <button className="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 rounded-lg text-xs font-medium transition-colors">Request Additional References from Applicant</button>
+              </div>
+            </div>
+
+            {/* Status Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+              <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
+                <div className="flex items-center justify-between mb-3">
+                  <UserCheck className="w-8 h-8 text-blue-400" />
+                  <span className="text-2xl font-bold text-white">{references.length}</span>
+                </div>
+                <p className="text-sm font-medium text-white mb-1">Total References</p>
+                <p className="text-xs text-slate-500">Case BI-2024-145 (Martinez)</p>
+                <div className="mt-3 pt-3 border-t border-slate-700/30 space-y-1">
+                  <p className="text-xs text-slate-400">Employment: 2 (current + former supervisor)</p>
+                  <p className="text-xs text-slate-400">Professional LE: 1 (colleague/FTO)</p>
+                  <p className="text-xs text-slate-400">Personal: 1 (need 2–3 per policy)</p>
+                </div>
+              </div>
+
+              <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
+                <div className="flex items-center justify-between mb-3">
+                  <CheckCircle className="w-8 h-8 text-green-400" />
+                  <span className="text-2xl font-bold text-white">{completedRefs.length}</span>
+                </div>
+                <p className="text-sm font-medium text-white mb-1">Completed</p>
+                <p className="text-xs text-slate-500">Interview notes documented</p>
+                <div className="mt-3 pt-3 border-t border-slate-700/30 space-y-1">
+                  <p className="text-xs text-green-400/80">Sgt. Davis — Strongly Positive</p>
+                  <p className="text-xs text-green-400/80">Capt. Williams — Positive</p>
+                  <p className="text-xs text-slate-500 mt-1">Both recommend for hire</p>
+                </div>
+              </div>
+
+              <div className="bg-slate-800/40 border border-amber-500/30 rounded-xl p-5">
+                <div className="flex items-center justify-between mb-3">
+                  <Clock className="w-8 h-8 text-amber-400" />
+                  <span className="text-2xl font-bold text-white">{pendingRefs.length}</span>
+                </div>
+                <p className="text-sm font-medium text-white mb-1">Pending</p>
+                <p className="text-xs text-slate-500">Awaiting contact/callback</p>
+                <div className="mt-3 pt-3 border-t border-slate-700/30 space-y-1.5">
+                  <div>
+                    <p className="text-xs text-amber-400/80">Officer Brown — Awaiting callback</p>
+                    <p className="text-xs text-slate-500 ml-2">1 contact attempt (Jan 23)</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-red-400/80">Personal ref — Not yet identified</p>
+                    <p className="text-xs text-slate-500 ml-2">Contact applicant for refs</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
+                <div className="flex items-center justify-between mb-3">
+                  <ClipboardList className="w-8 h-8 text-amber-400" />
+                  <span className="text-lg font-bold text-white">QUALITATIVE</span>
+                </div>
+                <p className="text-sm font-medium text-white mb-1">Assessment Summary</p>
+                <p className="text-xs text-slate-500">Evaluated individually, not scored</p>
+                <div className="mt-3 pt-3 border-t border-slate-700/30 space-y-1">
+                  <p className="text-xs text-green-400/80">Would recommend: 2/2 YES</p>
+                  <p className="text-xs text-green-400/80">Concerns identified: 0</p>
+                  <p className="text-xs text-green-400/80">Brady/Giglio concerns: 0</p>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-            <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
-              <div className="flex items-center justify-between mb-2">
-                <UserCheck className="w-8 h-8 text-blue-400" />
-                <span className="text-2xl font-bold text-white">{references.length}</span>
+            {/* Reference Actions */}
+            <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5 mb-6">
+              <h3 className="text-sm font-semibold text-white mb-4 flex items-center gap-2">
+                <Settings className="w-4 h-4 text-amber-400" />Reference Check Actions
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                <button className="flex items-start gap-3 p-3 bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                  <Plus className="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="text-sm font-medium text-white">Add Reference</p>
+                    <p className="text-xs text-slate-500 mt-0.5">Add new personal or professional reference</p>
+                  </div>
+                </button>
+                <button className="flex items-start gap-3 p-3 bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                  <Phone className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="text-sm font-medium text-white">Contact Pending</p>
+                    <p className="text-xs text-slate-500 mt-0.5">Call/email pending references</p>
+                  </div>
+                </button>
+                <button className="flex items-start gap-3 p-3 bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                  <Calendar className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="text-sm font-medium text-white">Schedule Interview</p>
+                    <p className="text-xs text-slate-500 mt-0.5">Schedule phone/in-person reference check</p>
+                  </div>
+                </button>
+                <button className="flex items-start gap-3 p-3 bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                  <ClipboardList className="w-5 h-5 text-cyan-400 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="text-sm font-medium text-white">Interview Guide</p>
+                    <p className="text-xs text-slate-500 mt-0.5">Standard reference check questions</p>
+                  </div>
+                </button>
+                <button className="flex items-start gap-3 p-3 bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                  <Mail className="w-5 h-5 text-purple-400 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="text-sm font-medium text-white">Send Request Form</p>
+                    <p className="text-xs text-slate-500 mt-0.5">Email reference request to contact</p>
+                  </div>
+                </button>
+                <button className="flex items-start gap-3 p-3 bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                  <Download className="w-5 h-5 text-slate-400 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="text-sm font-medium text-white">Generate Report</p>
+                    <p className="text-xs text-slate-500 mt-0.5">Export reference check summary</p>
+                  </div>
+                </button>
+                <button className="flex items-start gap-3 p-3 bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                  <FileText className="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="text-sm font-medium text-white">Add Interview Notes</p>
+                    <p className="text-xs text-slate-500 mt-0.5">Document post-interview findings</p>
+                  </div>
+                </button>
+                <button className="flex items-start gap-3 p-3 bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                  <Search className="w-5 h-5 text-slate-400 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="text-sm font-medium text-white">Search References</p>
+                    <p className="text-xs text-slate-500 mt-0.5">By name, relationship, case, or date</p>
+                  </div>
+                </button>
               </div>
-              <p className="text-sm text-slate-400">Total References</p>
             </div>
 
-            <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
-              <div className="flex items-center justify-between mb-2">
-                <CheckCircle className="w-8 h-8 text-green-400" />
-                <span className="text-2xl font-bold text-white">{completedRefs.length}</span>
-              </div>
-              <p className="text-sm text-slate-400">Completed</p>
+            {/* Tabs */}
+            <div className="flex items-center gap-1 mb-6 bg-slate-800/30 rounded-xl p-1 overflow-x-auto">
+              {[
+                { id: 'pending', label: 'Pending', count: pendingRefs.length },
+                { id: 'completed', label: 'Completed', count: completedRefs.length },
+                { id: 'all', label: 'All References', count: references.length },
+                { id: 'contactlog', label: 'Contact Log', count: references.filter(r => r.contactAttempts && r.contactAttempts.length > 0).length }
+              ].map(tab => (
+                <button
+                  key={tab.id}
+                  onClick={() => setSelectedView(tab.id)}
+                  className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all whitespace-nowrap ${
+                    selectedView === tab.id
+                      ? 'bg-amber-500 text-white shadow-lg'
+                      : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
+                  }`}
+                >
+                  {tab.label}
+                  <span className={`px-1.5 py-0.5 rounded text-xs ${
+                    selectedView === tab.id ? 'bg-white/20 text-white' : 'bg-slate-700/50 text-slate-500'
+                  }`}>{tab.count}</span>
+                </button>
+              ))}
             </div>
 
-            <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
-              <div className="flex items-center justify-between mb-2">
-                <Clock className="w-8 h-8 text-amber-400" />
-                <span className="text-2xl font-bold text-white">{pendingRefs.length}</span>
-              </div>
-              <p className="text-sm text-slate-400">Pending</p>
-            </div>
-
-            <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
-              <div className="flex items-center justify-between mb-2">
-                <Star className="w-8 h-8 text-yellow-400" />
-                <span className="text-2xl font-bold text-white">5.0</span>
-              </div>
-              <p className="text-sm text-slate-400">Avg Rating</p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3 mb-6">
-            <button className="flex items-center gap-2 px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-xl font-medium transition-colors">
-              <Plus className="w-5 h-5" />
-              Add Reference
-            </button>
-          </div>
-
-          <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl overflow-hidden mb-6">
-            <div className="flex border-b border-slate-700/50">
-              <button
-                onClick={() => setSelectedView('pending')}
-                className={`px-6 py-4 text-sm font-medium transition-all ${selectedView === 'pending' ? 'bg-purple-500/10 text-purple-400 border-b-2 border-purple-500' : 'text-slate-400 hover:text-white'}`}
-              >
-                Pending ({pendingRefs.length})
-              </button>
-              <button
-                onClick={() => setSelectedView('completed')}
-                className={`px-6 py-4 text-sm font-medium transition-all ${selectedView === 'completed' ? 'bg-purple-500/10 text-purple-400 border-b-2 border-purple-500' : 'text-slate-400 hover:text-white'}`}
-              >
-                Completed ({completedRefs.length})
-              </button>
-            </div>
-          </div>
-
-          {selectedView === 'pending' && (
+            {/* Reference Cards */}
             <div className="space-y-4">
-              {pendingRefs.map((ref) => (
-                <div key={ref.id} className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
-                  <div className="flex items-start justify-between mb-4">
-                    <div>
-                      <h3 className="text-lg font-semibold text-white mb-1">{ref.referenceName}</h3>
-                      <p className="text-sm text-purple-400 mb-2">{ref.relationship} • {ref.organization}</p>
-                      <p className="text-sm text-slate-400 mb-3">Reference for: {ref.subject} ({ref.caseId})</p>
-                      <div className="flex items-center gap-4 text-sm text-slate-400">
-                        <span className="flex items-center gap-1">
-                          <Phone className="w-4 h-4" />
-                          {ref.phone}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Mail className="w-4 h-4" />
-                          {ref.email}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Clock className="w-4 h-4" />
-                          Known: {ref.yearsKnown}
-                        </span>
+              {getFilteredRefs().map((ref) => {
+                const isExpanded = expandedRef === ref.id;
+                const isCompleted = ref.status === 'Completed';
+                const isPending = ref.status === 'Pending Callback' || ref.status === 'Scheduled';
+                const isRequired = ref.status === 'Required';
+
+                return (
+                  <div key={ref.id} className={`bg-slate-800/40 border rounded-xl overflow-hidden transition-all ${
+                    isRequired ? 'border-red-500/30' : isPending ? 'border-amber-500/30' : 'border-slate-700/50 hover:border-amber-500/30'
+                  }`}>
+                    <div className="p-5">
+                      {/* Card Header */}
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-3 mb-1">
+                            <h3 className="text-lg font-semibold text-white">{ref.referenceName}</h3>
+                            {getRefStatusBadge(ref.status)}
+                          </div>
+                          <p className="text-sm text-amber-400 mb-1">{ref.relationship}</p>
+                          {ref.organization && (
+                            <p className="text-sm text-slate-400 mb-1">{ref.rankPosition ? `${ref.rankPosition} — ` : ''}{ref.organization}</p>
+                          )}
+                          <p className="text-sm text-slate-500">Reference for: {ref.subject} (Case {ref.caseId}) — {ref.positionApplied}</p>
+                        </div>
+                        <div className="flex flex-col items-end gap-2">
+                          {getRefTypeBadge(ref.referenceType)}
+                          {isCompleted && ref.outcome && getOutcomeBadge(ref.outcome)}
+                        </div>
+                      </div>
+
+                      {/* Contact Info (if available) */}
+                      {ref.phone && (
+                        <div className="bg-slate-900/40 rounded-lg p-3 mb-4">
+                          <h4 className="text-xs font-semibold text-slate-400 mb-2 uppercase tracking-wider">Contact Information</h4>
+                          <div className="flex flex-wrap gap-4 text-sm">
+                            {ref.referenceName !== 'Additional Personal Reference' && (
+                              <>
+                                <span className="flex items-center gap-1.5 text-slate-300"><Phone className="w-3.5 h-3.5 text-slate-400" />{ref.phone}</span>
+                                <span className="flex items-center gap-1.5 text-slate-300"><Mail className="w-3.5 h-3.5 text-slate-400" />{ref.email}</span>
+                                {ref.badge && <span className="flex items-center gap-1.5 text-slate-300"><Shield className="w-3.5 h-3.5 text-slate-400" />Badge #{ref.badge}</span>}
+                              </>
+                            )}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Relationship Details */}
+                      {ref.relationshipDetail && (
+                        <div className="bg-slate-900/40 rounded-lg p-3 mb-4">
+                          <h4 className="text-xs font-semibold text-slate-400 mb-2 uppercase tracking-wider">Relationship to Applicant</h4>
+                          <div className="text-sm space-y-1">
+                            <p className="text-slate-300">{ref.relationshipDetail}</p>
+                            {ref.yearsKnown && <p className="text-slate-500">Known applicant: <span className="text-slate-300">{ref.yearsKnown}</span></p>}
+                            {ref.capacity && <p className="text-slate-500">Capacity: <span className="text-slate-300">{ref.capacity}</span></p>}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* === COMPLETED REFERENCE CONTENT === */}
+                      {isCompleted && ref.interview && (
+                        <>
+                          {/* Interview Details */}
+                          <div className="bg-slate-900/40 rounded-lg p-3 mb-4">
+                            <h4 className="text-xs font-semibold text-slate-400 mb-2 uppercase tracking-wider">Interview Details</h4>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+                              <div className="text-slate-500">Date: <span className="text-slate-300">{ref.interview.date}</span></div>
+                              <div className="text-slate-500">Time: <span className="text-slate-300">{ref.interview.time}</span></div>
+                              <div className="text-slate-500">Method: <span className="text-slate-300">{ref.interview.method}</span></div>
+                              <div className="text-slate-500">Interviewer: <span className="text-slate-300">{ref.interview.interviewer}</span></div>
+                              <div className="text-slate-500">Notes: <span className="text-slate-300">{ref.interview.notesPages}</span></div>
+                            </div>
+                          </div>
+
+                          {/* Outcome Section */}
+                          <div className="bg-green-500/5 border border-green-500/20 rounded-lg p-4 mb-4">
+                            <h4 className="text-sm font-semibold text-white mb-3 border-b border-green-500/20 pb-2">Reference Interview Outcome</h4>
+
+                            <div className="mb-4">
+                              <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Overall Recommendation</p>
+                              <p className="text-sm text-green-400 font-medium flex items-center gap-1.5">
+                                <CheckCircle2 className="w-4 h-4" />Would recommend for hire: {ref.wouldRecommend}
+                              </p>
+                              {ref.recommendQuote && <p className="text-sm text-slate-400 mt-1 italic">"{ref.recommendQuote}"</p>}
+                            </div>
+
+                            {/* Performance */}
+                            {ref.performance && (
+                              <div className="mb-4">
+                                <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Performance Assessment</p>
+                                <div className="space-y-1 text-sm">
+                                  {ref.performance.overall && <p className="text-slate-400">Overall: <span className="text-slate-300">{ref.performance.overall}</span></p>}
+                                  {ref.performance.workQuality && <p className="text-slate-400">Work quality: <span className="text-slate-300">{ref.performance.workQuality}</span></p>}
+                                  {ref.performance.reliability && <p className="text-slate-400">Reliability: <span className="text-slate-300">{ref.performance.reliability}</span></p>}
+                                  {ref.performance.professionalism && <p className="text-slate-400">Professionalism: <span className="text-slate-300">{ref.performance.professionalism}</span></p>}
+                                </div>
+                              </div>
+                            )}
+
+                            {/* Strengths */}
+                            {ref.strengths && (
+                              <div className="mb-4">
+                                <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Strengths Identified</p>
+                                <ol className="space-y-1">
+                                  {ref.strengths.map((s, i) => (
+                                    <li key={i} className="text-sm text-slate-300 flex items-start gap-2">
+                                      <span className="text-amber-400/60 font-medium text-xs mt-0.5">{i + 1}.</span>{s}
+                                    </li>
+                                  ))}
+                                </ol>
+                              </div>
+                            )}
+
+                            {/* Areas for Improvement */}
+                            {ref.areasForImprovement && ref.areasForImprovement.length > 0 && (
+                              <div className="mb-4">
+                                <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Areas for Improvement</p>
+                                {ref.areasForImprovement.map((a, i) => (
+                                  <div key={i} className="text-sm mb-1">
+                                    <p className="text-slate-300">{i + 1}. {a.item}</p>
+                                    {a.context && <p className="text-slate-500 ml-4 text-xs">Context: "{a.context}"</p>}
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+
+                            {/* Concerns */}
+                            <div className="mb-4">
+                              <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Concerns / Red Flags</p>
+                              <p className="text-sm text-green-400">{ref.concerns}</p>
+                              {ref.concernsQuote && <p className="text-xs text-slate-500 mt-0.5">"{ref.concernsQuote}"</p>}
+                            </div>
+                          </div>
+
+                          {/* Expand for more details */}
+                          <button
+                            onClick={() => setExpandedRef(isExpanded ? null : ref.id)}
+                            className="w-full flex items-center justify-center gap-2 py-2 text-sm text-amber-400 hover:text-amber-300 transition-colors mb-2"
+                          >
+                            {isExpanded ? 'Hide Details' : 'Show Disciplinary, Rehire, Brady/Giglio & Assessment'}
+                            <ChevronDown className={`w-4 h-4 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                          </button>
+
+                          {isExpanded && (
+                            <div className="space-y-4">
+                              {/* Disciplinary */}
+                              <div className="bg-slate-900/40 rounded-lg p-3">
+                                <h4 className="text-xs font-semibold text-slate-400 mb-2 uppercase tracking-wider">Disciplinary History (Per Reference)</h4>
+                                <div className="space-y-1 text-sm">
+                                  <p className="text-slate-400">Sustained complaints: <span className="text-slate-300">{ref.disciplinary.sustainedComplaints}</span></p>
+                                  {ref.disciplinary.unsustainedComplaints !== undefined && (
+                                    <p className="text-slate-400">Unsustained complaints: <span className="text-slate-300">{ref.disciplinary.unsustainedComplaints}</span></p>
+                                  )}
+                                  {ref.disciplinary.useOfForce !== undefined && (
+                                    <p className="text-slate-400">Use of force: <span className="text-slate-300">{ref.disciplinary.useOfForce}</span></p>
+                                  )}
+                                  <p className="text-slate-400">Disciplinary actions: <span className="text-slate-300">{ref.disciplinary.disciplinaryActions}</span></p>
+                                  {ref.disciplinary.note && <p className="text-slate-500 italic text-xs mt-1">{ref.disciplinary.note}</p>}
+                                </div>
+                              </div>
+
+                              {/* Reason for Leaving / Rehire */}
+                              <div className="bg-slate-900/40 rounded-lg p-3">
+                                <h4 className="text-xs font-semibold text-slate-400 mb-2 uppercase tracking-wider">Reason for Leaving & Rehire Eligibility</h4>
+                                <div className="space-y-1.5 text-sm">
+                                  <p className="text-slate-400">Reason for leaving: <span className="text-slate-300">{ref.reasonForLeaving}</span></p>
+                                  <p className="text-slate-400">Eligible for rehire: <span className="text-green-400 font-medium">{ref.eligibleForRehire}</span></p>
+                                  {ref.rehireQuote && <p className="text-slate-500 italic text-xs">"{ref.rehireQuote}"</p>}
+                                </div>
+                              </div>
+
+                              {/* Brady/Giglio */}
+                              <div className="bg-slate-900/40 rounded-lg p-3">
+                                <h4 className="text-xs font-semibold text-slate-400 mb-2 uppercase tracking-wider">Brady/Giglio Concerns</h4>
+                                <p className="text-sm text-green-400 font-medium">{ref.bradyGiglio}</p>
+                                <p className="text-xs text-slate-500 mt-0.5">{ref.bradyGiglioDetail}</p>
+                              </div>
+
+                              {/* Investigator Assessment */}
+                              <div className="bg-slate-900/40 rounded-lg p-3">
+                                <h4 className="text-xs font-semibold text-slate-400 mb-2 uppercase tracking-wider">Investigator Assessment</h4>
+                                <p className="text-sm text-slate-300">{ref.investigatorAssessment}</p>
+                              </div>
+                            </div>
+                          )}
+                        </>
+                      )}
+
+                      {/* === PENDING REFERENCE CONTENT === */}
+                      {isPending && (
+                        <>
+                          {/* Contact Attempts */}
+                          {ref.contactAttempts && ref.contactAttempts.length > 0 && (
+                            <div className="bg-slate-900/40 rounded-lg p-3 mb-4">
+                              <h4 className="text-xs font-semibold text-slate-400 mb-2 uppercase tracking-wider">Contact Attempts</h4>
+                              <div className="space-y-3">
+                                {ref.contactAttempts.map((attempt, i) => (
+                                  <div key={i} className="text-sm">
+                                    <p className="text-white font-medium mb-0.5">Attempt #{attempt.attemptNumber}: {attempt.date}</p>
+                                    <p className="text-slate-400 ml-4">Method: {attempt.method}</p>
+                                    <p className="text-slate-400 ml-4">Outcome: {attempt.outcome}</p>
+                                    <p className="text-slate-500 ml-4 text-xs">Message: {attempt.message}</p>
+                                  </div>
+                                ))}
+                              </div>
+                              <p className="text-xs text-slate-500 mt-2">Total attempts: {ref.contactAttempts.length}</p>
+                            </div>
+                          )}
+
+                          {/* Next Actions */}
+                          {ref.nextActions && (
+                            <div className="bg-amber-500/5 border border-amber-500/20 rounded-lg p-3 mb-4">
+                              <h4 className="text-xs font-semibold text-amber-400 mb-2 uppercase tracking-wider">Next Actions</h4>
+                              <div className="space-y-1 text-sm">
+                                <p className="text-slate-400">Follow-up date: <span className="text-white">{ref.nextActions.followUpDate}</span></p>
+                                <p className="text-slate-400">Action: <span className="text-slate-300">{ref.nextActions.action}</span></p>
+                                <p className="text-slate-400">Escalation: <span className="text-slate-300">{ref.nextActions.escalation}</span></p>
+                                <p className="text-slate-400">Priority: <span className="text-amber-400">{ref.nextActions.priority}</span></p>
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Planned Interview */}
+                          {ref.plannedInterview && (
+                            <div className="bg-slate-900/40 rounded-lg p-3 mb-4">
+                              <h4 className="text-xs font-semibold text-slate-400 mb-2 uppercase tracking-wider">Interview Details (When Scheduled)</h4>
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+                                <p className="text-slate-400">Duration: <span className="text-slate-300">{ref.plannedInterview.estimatedDuration}</span></p>
+                                <p className="text-slate-400">Type: <span className="text-slate-300">{ref.plannedInterview.type}</span></p>
+                                <p className="text-slate-400">Assigned to: <span className="text-slate-300">{ref.plannedInterview.assignedTo}</span></p>
+                                <p className="text-slate-400">Topics: <span className="text-slate-300">{ref.plannedInterview.topics}</span></p>
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Investigator Notes */}
+                          {ref.investigatorNotes && (
+                            <div className="bg-slate-900/40 rounded-lg p-3 mb-4">
+                              <h4 className="text-xs font-semibold text-slate-400 mb-2 uppercase tracking-wider">Investigator Notes</h4>
+                              <p className="text-sm text-slate-300 italic">"{ref.investigatorNotes}"</p>
+                            </div>
+                          )}
+                        </>
+                      )}
+
+                      {/* === REQUIRED REFERENCE CONTENT === */}
+                      {isRequired && (
+                        <>
+                          {/* Policy Requirement */}
+                          {ref.policyRequirement && (
+                            <div className="bg-red-500/5 border border-red-500/20 rounded-lg p-3 mb-4">
+                              <h4 className="text-xs font-semibold text-red-400 mb-2 uppercase tracking-wider flex items-center gap-1.5">
+                                <AlertTriangle className="w-3.5 h-3.5" />Required — Not Yet Provided
+                              </h4>
+                              <div className="space-y-1 text-sm">
+                                <p className="text-slate-400">Agency policy requires: <span className="text-white">{ref.policyRequirement.totalRequired}</span></p>
+                                <p className="text-slate-400 ml-4">Employment references: <span className="text-green-400">{ref.policyRequirement.employmentRequired}</span></p>
+                                <p className="text-slate-400 ml-4">Personal references: <span className="text-red-400">{ref.policyRequirement.personalRequired}</span></p>
+                                <p className="text-slate-400">Criteria: <span className="text-slate-300">{ref.policyRequirement.criteria}</span></p>
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Action Required */}
+                          {ref.actionRequired && (
+                            <div className="bg-amber-500/5 border border-amber-500/20 rounded-lg p-3 mb-4">
+                              <h4 className="text-xs font-semibold text-amber-400 mb-2 uppercase tracking-wider">Action Required</h4>
+                              <div className="space-y-1.5 text-sm">
+                                <p className="text-slate-400">Action: <span className="text-white">{ref.actionRequired.action}</span></p>
+                                <p className="text-slate-400">Required info: <span className="text-slate-300">{ref.actionRequired.requiredInfo}</span></p>
+                                <p className="text-slate-400">Target date: <span className="text-amber-400">{ref.actionRequired.targetDate}</span></p>
+                                <p className="text-slate-400">Examples: <span className="text-slate-300">{ref.actionRequired.examples}</span></p>
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Investigator Notes */}
+                          {ref.investigatorNotes && (
+                            <div className="bg-slate-900/40 rounded-lg p-3 mb-4">
+                              <h4 className="text-xs font-semibold text-slate-400 mb-2 uppercase tracking-wider">Investigator Notes</h4>
+                              <p className="text-sm text-slate-300 italic">"{ref.investigatorNotes}"</p>
+                            </div>
+                          )}
+                        </>
+                      )}
+
+                      {/* Contact Log Tab Content */}
+                      {selectedView === 'contactlog' && ref.contactAttempts && (
+                        <div className="bg-slate-900/40 rounded-lg p-3 mb-4">
+                          <h4 className="text-xs font-semibold text-slate-400 mb-2 uppercase tracking-wider">Contact Log for {ref.referenceName}</h4>
+                          {ref.contactAttempts.map((attempt, i) => (
+                            <div key={i} className="text-sm border-l-2 border-amber-500/30 pl-3 mb-2">
+                              <p className="text-white font-medium">Attempt #{attempt.attemptNumber} — {attempt.date}</p>
+                              <p className="text-slate-400">Method: {attempt.method}</p>
+                              <p className="text-slate-400">Outcome: {attempt.outcome}</p>
+                              <p className="text-slate-500 text-xs">Message: {attempt.message}</p>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      {/* Action Buttons */}
+                      <div className="flex items-center justify-between pt-4 border-t border-slate-700/30 mt-2">
+                        <div className="text-sm text-slate-400">
+                          Case: <span className="text-white font-medium">{ref.caseId}</span> — {ref.subject}
+                        </div>
+                        <div className="flex items-center gap-2 flex-wrap">
+                          {isCompleted && (
+                            <>
+                              <button className="px-3 py-1.5 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 rounded-lg text-xs font-medium transition-colors">View Interview Notes</button>
+                              <button className="px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700/70 text-slate-300 rounded-lg text-xs font-medium transition-colors">Print Report</button>
+                              <button className="px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700/70 text-slate-300 rounded-lg text-xs font-medium transition-colors">View Case File</button>
+                            </>
+                          )}
+                          {isPending && (
+                            <>
+                              <button className="px-3 py-1.5 bg-green-500/10 hover:bg-green-500/20 text-green-400 rounded-lg text-xs font-medium transition-colors flex items-center gap-1"><Phone className="w-3 h-3" />Call Now</button>
+                              <button className="px-3 py-1.5 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 rounded-lg text-xs font-medium transition-colors flex items-center gap-1"><Mail className="w-3 h-3" />Send Email</button>
+                              <button className="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 rounded-lg text-xs font-medium transition-colors">Schedule Interview</button>
+                              <button className="px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700/70 text-slate-300 rounded-lg text-xs font-medium transition-colors">Log Contact Attempt</button>
+                            </>
+                          )}
+                          {isRequired && (
+                            <>
+                              <button className="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 rounded-lg text-xs font-medium transition-colors flex items-center gap-1"><Mail className="w-3 h-3" />Email Applicant</button>
+                              <button className="px-3 py-1.5 bg-green-500/10 hover:bg-green-500/20 text-green-400 rounded-lg text-xs font-medium transition-colors flex items-center gap-1"><Phone className="w-3 h-3" />Call Applicant</button>
+                              <button className="px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700/70 text-slate-300 rounded-lg text-xs font-medium transition-colors">Reference Request Form</button>
+                              <button className="px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700/70 text-slate-300 rounded-lg text-xs font-medium transition-colors">View Policy</button>
+                            </>
+                          )}
+                        </div>
                       </div>
                     </div>
-                    <span className={`px-3 py-1 rounded-lg text-xs font-medium ${
-                      ref.status === 'Pending' ? 'bg-amber-500/10 text-amber-400' : 'bg-blue-500/10 text-blue-400'
-                    }`}>
-                      {ref.status}
-                    </span>
                   </div>
+                );
+              })}
+            </div>
 
-                  <div className="bg-slate-900/40 rounded-lg p-3 mb-4">
-                    <p className="text-xs text-slate-500 mb-1">Notes</p>
-                    <p className="text-sm text-slate-300">{ref.notes}</p>
-                  </div>
+            {/* Footer Actions */}
+            <div className="flex items-center justify-between mt-6">
+              <button className="px-4 py-2 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-slate-300 rounded-xl text-sm font-medium transition-colors">Load More References</button>
+              <div className="flex items-center gap-3">
+                <button className="px-4 py-2 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-slate-300 rounded-xl text-sm font-medium transition-colors flex items-center gap-2">
+                  <Download className="w-4 h-4" />Export All References
+                </button>
+                <button className="px-4 py-2 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-slate-300 rounded-xl text-sm font-medium transition-colors flex items-center gap-2">
+                  <FileText className="w-4 h-4" />View Summary Report
+                </button>
+              </div>
+            </div>
 
-                  <div className="flex items-center justify-between pt-4 border-t border-slate-700/30">
-                    <p className="text-sm text-slate-400">Contacted: {ref.contacted}</p>
-                    <button className="px-4 py-2 bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 rounded-xl text-sm font-medium transition-colors">
-                      Follow Up
+            {/* Support & Resources Panel */}
+            <div className="mt-8 bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
+              <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                <HelpCircle className="w-5 h-5 text-amber-400" />
+                Support & Resources
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {/* Quick Actions */}
+                <div>
+                  <h4 className="text-sm font-semibold text-slate-300 mb-3">Quick Actions</h4>
+                  <div className="space-y-2">
+                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                      <Plus className="w-4 h-4 text-amber-400" />
+                      <span className="text-sm text-slate-300">Add New Reference</span>
+                    </button>
+                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                      <Phone className="w-4 h-4 text-green-400" />
+                      <span className="text-sm text-slate-300">Contact Pending References</span>
+                    </button>
+                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                      <Download className="w-4 h-4 text-blue-400" />
+                      <span className="text-sm text-slate-300">Export Reference Report</span>
+                    </button>
+                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                      <ClipboardList className="w-4 h-4 text-cyan-400" />
+                      <span className="text-sm text-slate-300">View Interview Guide</span>
                     </button>
                   </div>
                 </div>
-              ))}
-            </div>
-          )}
 
-          {selectedView === 'completed' && (
-            <div className="space-y-4">
-              {completedRefs.map((ref) => (
-                <div key={ref.id} className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
-                  <div className="flex items-start justify-between mb-4">
-                    <div>
-                      <h3 className="text-lg font-semibold text-white mb-1">{ref.referenceName}</h3>
-                      <p className="text-sm text-purple-400 mb-2">{ref.relationship} • {ref.organization}</p>
-                      <p className="text-sm text-slate-400 mb-3">Reference for: {ref.subject} ({ref.caseId})</p>
-                      <div className="flex items-center gap-4 text-sm text-slate-400">
-                        <span className="flex items-center gap-1">
-                          <Phone className="w-4 h-4" />
-                          {ref.phone}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Clock className="w-4 h-4" />
-                          Known: {ref.yearsKnown}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="flex flex-col items-end gap-2">
-                      <span className="px-3 py-1 bg-green-500/10 text-green-400 rounded-lg text-xs font-medium">
-                        {ref.status}
-                      </span>
-                      <div className="flex items-center gap-1">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className={`w-4 h-4 ${i < ref.rating ? 'text-yellow-400 fill-yellow-400' : 'text-slate-600'}`} />
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="bg-slate-900/40 rounded-lg p-3 mb-4">
-                    <p className="text-xs text-slate-500 mb-1">Recommendation</p>
-                    <p className="text-sm font-medium text-green-400 mb-2">{ref.recommendation}</p>
-                    <p className="text-sm text-slate-300">{ref.notes}</p>
-                  </div>
-
-                  <div className="flex items-center justify-between pt-4 border-t border-slate-700/30">
-                    <p className="text-sm text-slate-400">Completed: {ref.contacted}</p>
-                    <button className="px-4 py-2 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 rounded-xl text-sm font-medium transition-colors">
-                      View Full Report
+                {/* Documentation */}
+                <div>
+                  <h4 className="text-sm font-semibold text-slate-300 mb-3">Documentation</h4>
+                  <div className="space-y-2">
+                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                      <BookOpen className="w-4 h-4 text-amber-400" />
+                      <span className="text-sm text-slate-300">Reference Check Procedures</span>
+                    </button>
+                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                      <BookOpen className="w-4 h-4 text-amber-400" />
+                      <span className="text-sm text-slate-300">Standard Interview Questions</span>
+                    </button>
+                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                      <BookOpen className="w-4 h-4 text-amber-400" />
+                      <span className="text-sm text-slate-300">Brady/Giglio Assessment Guide</span>
+                    </button>
+                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                      <ExternalLink className="w-4 h-4 text-amber-400" />
+                      <span className="text-sm text-slate-300">POST Reference Requirements</span>
                     </button>
                   </div>
                 </div>
-              ))}
+
+                {/* Contact */}
+                <div>
+                  <h4 className="text-sm font-semibold text-slate-300 mb-3">Contact & Support</h4>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 px-3 py-2 bg-slate-900/40 rounded-lg">
+                      <Phone className="w-4 h-4 text-slate-400" />
+                      <div>
+                        <p className="text-sm text-slate-300">BI Unit</p>
+                        <p className="text-xs text-slate-500">Ext. 4520</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2 px-3 py-2 bg-slate-900/40 rounded-lg">
+                      <Mail className="w-4 h-4 text-slate-400" />
+                      <div>
+                        <p className="text-sm text-slate-300">BI Support</p>
+                        <p className="text-xs text-slate-500">bi.support@gcso.gov</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2 px-3 py-2 bg-slate-900/40 rounded-lg">
+                      <Phone className="w-4 h-4 text-slate-400" />
+                      <div>
+                        <p className="text-sm text-slate-300">Legal / Brady-Giglio</p>
+                        <p className="text-xs text-slate-500">Ext. 4550 (legal counsel)</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2 px-3 py-2 bg-slate-900/40 rounded-lg">
+                      <Phone className="w-4 h-4 text-slate-400" />
+                      <div>
+                        <p className="text-sm text-slate-300">POST Compliance</p>
+                        <p className="text-xs text-slate-500">Ext. 4560</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          )}
+
+          </div>
         </main>
       </div>
-
-      <button
-        onClick={() => setChatOpen(!chatOpen)}
-        className="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-br from-purple-500 to-purple-600 hover:from-purple-400 hover:to-purple-500 rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 z-50"
-      >
-        {chatOpen ? <X className="w-6 h-6 text-white" /> : <MessageCircle className="w-6 h-6 text-white" />}
-      </button>
-
-      {chatOpen && (
-        <div className="fixed bottom-24 right-6 w-full max-w-96 h-[500px] bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-2xl flex flex-col z-40 mx-4 sm:mx-0">
-          <div className="p-4 border-b border-slate-700/50">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <h3 className="text-sm font-semibold text-white">BI AI Assistant</h3>
-                <p className="text-xs text-green-400">Online</p>
-              </div>
-            </div>
-          </div>
-          <div className="flex-1 p-4 overflow-y-auto">
-            <div className="flex gap-3 mb-4">
-              <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Sparkles className="w-4 h-4 text-white" />
-              </div>
-              <div className="flex-1">
-                <div className="bg-slate-800/60 p-3 rounded-xl">
-                  <p className="text-sm text-slate-200">I can help draft reference check questions, analyze feedback patterns, flag inconsistencies, and suggest follow-up actions. What do you need?</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="p-4 border-t border-slate-700/50">
-            <div className="flex items-center gap-2">
-              <input type="text" placeholder="Ask about references..." className="flex-1 px-4 py-2 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-purple-500/50" />
-              <button className="w-10 h-10 bg-purple-500 rounded-xl flex items-center justify-center">
-                <Send className="w-5 h-5 text-white" />
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
