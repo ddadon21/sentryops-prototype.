@@ -1,527 +1,1185 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { createPageUrl } from '@/utils';
-import { Home, Users, FileText, LayoutDashboard, TrendingUp, AlertCircle, Settings, Bell, MessageCircle, Search, ChevronRight, Shield, Sparkles, X, Send, Menu, ChevronLeft, LogOut, FolderOpen, Calendar, Clock, CheckCircle, XCircle, AlertTriangle, UserCheck, FileCheck, DollarSign, Eye, Briefcase, Building2, Mail, Phone, ChevronDown, User } from 'lucide-react';
+import React, { useState } from 'react';
+import {
+  Briefcase,
+  Building2,
+  Calendar,
+  CheckCircle2,
+  Clock,
+  AlertTriangle,
+  Phone,
+  Mail,
+  User,
+  FileText,
+  Shield,
+  MapPin,
+  ChevronDown,
+  ChevronUp,
+  ExternalLink,
+  Search,
+  Filter,
+  Download,
+  Plus,
+  XCircle,
+  AlertCircle,
+  Scale,
+  BadgeCheck,
+  UserCheck,
+  ClipboardList,
+  PhoneCall,
+  MessageSquare,
+  BookOpen,
+  HelpCircle,
+  FileCheck,
+  History,
+  TrendingUp,
+  Award,
+  Flag
+} from 'lucide-react';
 
-export default function EmploymentVerification() {
-  const navigate = useNavigate();
-  const [activePage, setActivePage] = useState('employment-verification');
-  const [chatOpen, setChatOpen] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const [notificationsOpen, setNotificationsOpen] = useState(false);
-  const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false);
-  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+const EmploymentVerification = () => {
+  const [activeTab, setActiveTab] = useState('all');
+  const [expandedEmployer, setExpandedEmployer] = useState('emp-1');
+  const [searchTerm, setSearchTerm] = useState('');
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (profileMenuOpen && !event.target.closest('.profile-menu-container')) {
-        setProfileMenuOpen(false);
-      }
-      if (notificationsOpen && !event.target.closest('.notifications-container')) {
-        setNotificationsOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [profileMenuOpen, notificationsOpen]);
-
-  const navigation = [
-    { id: 'bi-dashboard', label: 'BI Dashboard', icon: LayoutDashboard, page: 'BackgroundsDashboard' },
-    { id: 'active-cases', label: 'Active Cases', icon: FolderOpen, page: 'ActiveCases' },
-    { id: 'case-management', label: 'Case Management', icon: FileText, page: 'CaseManagement' },
-    { id: 'investigation-timeline', label: 'Investigation Timeline', icon: Clock, page: 'InvestigationTimeline' },
-    { id: 'subject-records', label: 'Subject Records', icon: UserCheck, page: 'SubjectRecords' },
-    { id: 'interview-scheduling', label: 'Interview Scheduling', icon: Calendar, page: 'InterviewScheduling' },
-    { id: 'evidence-tracking', label: 'Evidence Tracking', icon: FileCheck, page: 'EvidenceTracking' },
-    { id: 'reference-checks', label: 'Reference Checks', icon: CheckCircle, page: 'ReferenceChecks' },
-    { id: 'employment-verification', label: 'Employment Verification', icon: TrendingUp },
-    { id: 'criminal-history', label: 'Criminal History Review', icon: AlertTriangle, page: 'CriminalHistoryReview' },
-    { id: 'financial-background', label: 'Financial Background', icon: DollarSign, page: 'FinancialBackground' },
-    { id: 'social-media', label: 'Social Media Analysis', icon: Eye, page: 'SocialMediaAnalysis' },
-    { id: 'bi-reports', label: 'BI Reports', icon: LayoutDashboard, page: 'BIReports' },
-    { id: 'case-closure', label: 'Case Closure', icon: XCircle, page: 'CaseClosure' },
-    { id: 'settings', label: 'Settings', icon: Settings, page: 'BISettings' }
-  ];
-
-  const handleNavigation = (item) => {
-    if (item.page) {
-      navigate(createPageUrl(item.page));
-    } else {
-      setActivePage(item.id);
-      setSidebarOpen(false);
-    }
-  };
-
-  const handleLogout = () => {
-    navigate(createPageUrl('SignIn'));
-  };
-
+  // Comprehensive employment records with verification details
   const employmentRecords = [
     {
-      id: 1,
-      caseId: 'BI-2024-145',
-      subject: 'Robert Martinez',
-      employer: 'Metro Atlanta Police Department',
-      position: 'Patrol Officer',
-      startDate: 'Jan 2018',
+      id: 'emp-1',
+      employer: 'Metro City Police Department',
+      position: 'Police Officer II',
+      department: 'Patrol Division',
+      location: 'Metro City, CA',
+      startDate: '2019-03-15',
       endDate: 'Present',
-      supervisor: 'Sgt. John Davis',
-      hrContact: 'HR Department',
-      phone: '(404) 555-0100',
-      email: 'hr@metropd.gov',
-      status: 'Verified',
-      verifiedDate: 'Nov 6, 2024',
-      salary: '$58,000/year',
-      reasonForLeaving: 'Career advancement opportunity',
-      rehireEligible: 'Yes',
-      notes: 'Excellent standing. Supervisor highly recommends. No disciplinary actions.'
+      isCurrent: true,
+      isSwornLE: true,
+      isLateralTransfer: true,
+      verificationStatus: 'Verified',
+      verificationMethod: 'HR Direct Call + Supervisor Interview',
+      verificationDate: '2024-01-18',
+      verifiedBy: 'Sgt. Patricia Vance',
+      hrContact: {
+        name: 'Maria Santos',
+        title: 'HR Specialist',
+        phone: '(555) 234-5678',
+        email: 'msantos@metrocitypd.gov',
+        contactDate: '2024-01-18',
+        contactMethod: 'Phone Call'
+      },
+      supervisorContact: {
+        name: 'Lt. James Morrison',
+        title: 'Watch Commander',
+        phone: '(555) 234-5680',
+        email: 'jmorrison@metrocitypd.gov',
+        contactDate: '2024-01-19',
+        contactMethod: 'In-Person Interview'
+      },
+      salary: {
+        starting: '$68,500',
+        current: '$82,400',
+        rank: 'Step 4'
+      },
+      performance: {
+        rating: 'Meets Standards',
+        lastReview: '2023-09-15',
+        commendations: 3,
+        awards: ['Officer of the Month - June 2022', 'Life Saving Award - 2021']
+      },
+      disciplinary: {
+        hasRecords: true,
+        details: 'One written counseling (2020) - Tardiness. No sustained complaints.',
+        sustainedComplaints: 0,
+        pendingInvestigations: 0
+      },
+      internalAffairs: {
+        required: true,
+        status: 'Requested',
+        requestDate: '2024-01-18',
+        expectedDate: '2024-02-01',
+        contactPerson: 'Capt. Robert Chen, IA Division',
+        notes: 'Standard lateral transfer IA clearance request submitted'
+      },
+      reasonForLeaving: 'Seeking advancement opportunity / Lateral transfer',
+      eligibleForRehire: 'Yes',
+      notes: 'Candidate is currently employed. Lateral transfer requires mandatory IA clearance before conditional offer.',
+      timeline: [
+        { date: '2024-01-18', action: 'HR verification completed', by: 'Sgt. Vance' },
+        { date: '2024-01-18', action: 'IA records request submitted', by: 'Sgt. Vance' },
+        { date: '2024-01-19', action: 'Supervisor interview completed', by: 'Sgt. Vance' },
+        { date: '2024-01-20', action: 'Awaiting IA clearance response', by: 'System' }
+      ]
     },
     {
-      id: 2,
-      caseId: 'BI-2024-145',
-      subject: 'Robert Martinez',
-      employer: 'Atlanta Security Services',
-      position: 'Security Supervisor',
-      startDate: 'Jun 2015',
-      endDate: 'Dec 2017',
-      supervisor: 'Mike Johnson',
-      hrContact: 'Linda Parks',
-      phone: '(404) 555-0110',
-      email: 'hr@atlsecurity.com',
-      status: 'Verified',
-      verifiedDate: 'Nov 5, 2024',
-      salary: '$42,000/year',
-      reasonForLeaving: 'Joined law enforcement',
-      rehireEligible: 'Yes',
-      notes: 'Promoted to supervisor after 18 months. Reliable and professional.'
+      id: 'emp-2',
+      employer: 'Riverside County Sheriff\'s Office',
+      position: 'Deputy Sheriff',
+      department: 'Corrections Division',
+      location: 'Riverside, CA',
+      startDate: '2016-06-01',
+      endDate: '2019-03-01',
+      isCurrent: false,
+      isSwornLE: true,
+      isLateralTransfer: false,
+      verificationStatus: 'Verified',
+      verificationMethod: 'HR Direct Call + Personnel File Review',
+      verificationDate: '2024-01-17',
+      verifiedBy: 'Sgt. Patricia Vance',
+      hrContact: {
+        name: 'Thomas Wright',
+        title: 'Personnel Records Supervisor',
+        phone: '(555) 345-6789',
+        email: 'twright@riversidesheriff.gov',
+        contactDate: '2024-01-17',
+        contactMethod: 'Phone Call'
+      },
+      supervisorContact: {
+        name: 'Sgt. Michael Torres (Retired)',
+        title: 'Former Shift Supervisor',
+        phone: '(555) 345-6790',
+        email: null,
+        contactDate: '2024-01-17',
+        contactMethod: 'Phone Call'
+      },
+      salary: {
+        starting: '$52,000',
+        ending: '$64,800',
+        rank: 'Deputy II'
+      },
+      performance: {
+        rating: 'Exceeds Standards',
+        lastReview: '2019-01-15',
+        commendations: 5,
+        awards: ['Deputy of the Quarter - Q3 2018']
+      },
+      disciplinary: {
+        hasRecords: false,
+        details: 'No disciplinary actions on file',
+        sustainedComplaints: 0,
+        pendingInvestigations: 0
+      },
+      internalAffairs: {
+        required: false,
+        status: 'Not Required',
+        notes: 'Former employer - standard verification only. IA records reviewed as part of personnel file.'
+      },
+      reasonForLeaving: 'Accepted patrol position at Metro City PD',
+      eligibleForRehire: 'Yes - Recommended',
+      notes: 'Left in good standing. Former supervisor highly recommends candidate.',
+      timeline: [
+        { date: '2024-01-17', action: 'HR verification completed', by: 'Sgt. Vance' },
+        { date: '2024-01-17', action: 'Personnel file reviewed', by: 'Sgt. Vance' },
+        { date: '2024-01-17', action: 'Former supervisor contacted', by: 'Sgt. Vance' }
+      ]
     },
     {
-      id: 3,
-      caseId: 'BI-2024-145',
-      subject: 'Robert Martinez',
-      employer: 'Campus Safety - Georgia State University',
+      id: 'emp-3',
+      employer: 'Valley Security Services',
       position: 'Security Officer',
-      startDate: 'Aug 2012',
-      endDate: 'May 2015',
-      supervisor: 'Linda Chen',
-      hrContact: 'University HR',
-      phone: '(404) 555-0120',
-      email: 'hr@gsu.edu',
-      status: 'Verified',
-      verifiedDate: 'Nov 3, 2024',
-      salary: '$32,000/year',
-      reasonForLeaving: 'Career growth',
-      rehireEligible: 'Yes',
-      notes: 'Worked through college. No issues. Good performance reviews.'
+      department: 'Commercial Properties',
+      location: 'Valley Center, CA',
+      startDate: '2014-08-15',
+      endDate: '2016-05-20',
+      isCurrent: false,
+      isSwornLE: false,
+      isLateralTransfer: false,
+      verificationStatus: 'Verified',
+      verificationMethod: 'HR Direct Call',
+      verificationDate: '2024-01-16',
+      verifiedBy: 'Sgt. Patricia Vance',
+      hrContact: {
+        name: 'Jennifer Lopez',
+        title: 'Human Resources Manager',
+        phone: '(555) 456-7890',
+        email: 'jlopez@valleysecurity.com',
+        contactDate: '2024-01-16',
+        contactMethod: 'Phone Call'
+      },
+      supervisorContact: null,
+      salary: {
+        starting: '$14.50/hr',
+        ending: '$17.25/hr',
+        rank: 'Senior Officer'
+      },
+      performance: {
+        rating: 'Satisfactory',
+        lastReview: '2016-02-01',
+        commendations: 1,
+        awards: []
+      },
+      disciplinary: {
+        hasRecords: false,
+        details: 'No disciplinary actions on file',
+        sustainedComplaints: 0,
+        pendingInvestigations: 0
+      },
+      internalAffairs: {
+        required: false,
+        status: 'Not Applicable',
+        notes: 'Non-sworn position'
+      },
+      reasonForLeaving: 'Accepted position with Sheriff\'s Office',
+      eligibleForRehire: 'Yes',
+      notes: 'Pre-law enforcement employment. Verified dates and position.',
+      timeline: [
+        { date: '2024-01-16', action: 'HR verification completed', by: 'Sgt. Vance' }
+      ]
     },
     {
-      id: 4,
-      caseId: 'BI-2024-143',
-      subject: 'Sarah Chen',
-      employer: 'State Patrol Division',
-      position: 'Trooper',
-      startDate: 'Mar 2020',
-      endDate: 'Present',
-      supervisor: 'Lt. Rodriguez',
-      hrContact: 'State HR',
-      phone: '(404) 555-0200',
-      email: 'hr@statepatrol.gov',
-      status: 'Pending',
-      verifiedDate: null,
-      salary: 'Pending verification',
-      reasonForLeaving: 'Seeking promotion',
-      rehireEligible: 'Pending',
-      notes: 'Verification request sent Nov 7. Awaiting response from State HR.'
+      id: 'emp-4',
+      employer: 'Quick Mart Inc.',
+      position: 'Assistant Manager',
+      department: 'Retail Operations',
+      location: 'San Diego, CA',
+      startDate: '2012-05-01',
+      endDate: '2014-08-01',
+      isCurrent: false,
+      isSwornLE: false,
+      isLateralTransfer: false,
+      verificationStatus: 'Unable to Verify',
+      verificationMethod: 'Multiple Attempts',
+      verificationDate: null,
+      verifiedBy: 'Sgt. Patricia Vance',
+      hrContact: {
+        name: 'Unknown',
+        title: 'HR Department',
+        phone: '(555) 567-8901',
+        email: 'hr@quickmart.com',
+        contactDate: '2024-01-19',
+        contactMethod: 'Phone/Email - No Response'
+      },
+      supervisorContact: null,
+      salary: {
+        starting: '$12.00/hr',
+        ending: '$14.00/hr',
+        rank: 'Assistant Manager'
+      },
+      performance: {
+        rating: 'Unknown',
+        lastReview: null,
+        commendations: 0,
+        awards: []
+      },
+      disciplinary: {
+        hasRecords: null,
+        details: 'Unable to verify - company unresponsive',
+        sustainedComplaints: null,
+        pendingInvestigations: null
+      },
+      internalAffairs: {
+        required: false,
+        status: 'Not Applicable',
+        notes: 'Non-sworn position'
+      },
+      reasonForLeaving: 'Career change to security field',
+      eligibleForRehire: 'Unknown',
+      notes: 'Company HR unresponsive after multiple contact attempts. Candidate provided W-2 and pay stubs as alternative documentation.',
+      contactAttempts: [
+        { date: '2024-01-15', method: 'Phone', result: 'Voicemail - left message', by: 'Sgt. Vance' },
+        { date: '2024-01-16', method: 'Email', result: 'No response', by: 'Sgt. Vance' },
+        { date: '2024-01-17', method: 'Phone', result: 'Voicemail - left message', by: 'Sgt. Vance' },
+        { date: '2024-01-19', method: 'Phone', result: 'Line disconnected', by: 'Sgt. Vance' }
+      ],
+      alternativeDocumentation: ['W-2 Form (2013)', 'W-2 Form (2014)', 'Pay stubs (3)'],
+      timeline: [
+        { date: '2024-01-15', action: 'Initial contact attempt - voicemail', by: 'Sgt. Vance' },
+        { date: '2024-01-16', action: 'Email sent to HR', by: 'Sgt. Vance' },
+        { date: '2024-01-17', action: 'Second phone attempt - voicemail', by: 'Sgt. Vance' },
+        { date: '2024-01-19', action: 'Phone line disconnected - marked unable to verify', by: 'Sgt. Vance' },
+        { date: '2024-01-19', action: 'Alternative documentation collected from candidate', by: 'Sgt. Vance' }
+      ]
+    },
+    {
+      id: 'emp-5',
+      employer: 'Self-Employed',
+      position: 'Landscaping Services',
+      department: null,
+      location: 'San Diego County, CA',
+      startDate: '2010-06-01',
+      endDate: '2012-04-30',
+      isCurrent: false,
+      isSwornLE: false,
+      isLateralTransfer: false,
+      verificationStatus: 'Documented',
+      verificationMethod: 'Tax Records + Client References',
+      verificationDate: '2024-01-16',
+      verifiedBy: 'Sgt. Patricia Vance',
+      hrContact: null,
+      supervisorContact: null,
+      salary: {
+        starting: 'Variable',
+        ending: 'Variable',
+        rank: 'Owner/Operator'
+      },
+      performance: {
+        rating: 'N/A',
+        lastReview: null,
+        commendations: 0,
+        awards: []
+      },
+      disciplinary: {
+        hasRecords: false,
+        details: 'N/A - Self-employed',
+        sustainedComplaints: null,
+        pendingInvestigations: null
+      },
+      internalAffairs: {
+        required: false,
+        status: 'Not Applicable',
+        notes: 'Non-sworn position'
+      },
+      reasonForLeaving: 'Pursued retail management opportunity',
+      eligibleForRehire: 'N/A',
+      notes: 'Self-employment verified through tax records and client references.',
+      alternativeDocumentation: ['Tax Return (2010)', 'Tax Return (2011)', 'Business License', 'Client References (2)'],
+      timeline: [
+        { date: '2024-01-16', action: 'Tax records reviewed', by: 'Sgt. Vance' },
+        { date: '2024-01-16', action: 'Client references contacted', by: 'Sgt. Vance' },
+        { date: '2024-01-16', action: 'Self-employment documented', by: 'Sgt. Vance' }
+      ]
     }
   ];
 
-  const notifications = [
-    { id: 1, title: 'Verification Complete', message: 'Metro PD - All clear', time: '2 hours ago', urgent: false },
-    { id: 2, title: 'Pending Response', message: 'State Patrol - 3 days waiting', time: '5 hours ago', urgent: true }
-  ];
+  // Helper functions for status badges
+  const getVerificationStatusBadge = (status) => {
+    switch (status) {
+      case 'Verified':
+        return (
+          <span className="px-2.5 py-1 bg-green-500/10 text-green-400 rounded-lg text-xs font-medium flex items-center gap-1.5">
+            <CheckCircle2 className="w-3 h-3" />
+            Verified
+          </span>
+        );
+      case 'Pending':
+        return (
+          <span className="px-2.5 py-1 bg-amber-500/10 text-amber-400 rounded-lg text-xs font-medium flex items-center gap-1.5">
+            <Clock className="w-3 h-3" />
+            Pending
+          </span>
+        );
+      case 'Unable to Verify':
+        return (
+          <span className="px-2.5 py-1 bg-red-500/10 text-red-400 rounded-lg text-xs font-medium flex items-center gap-1.5">
+            <AlertTriangle className="w-3 h-3" />
+            Unable to Verify
+          </span>
+        );
+      case 'Documented':
+        return (
+          <span className="px-2.5 py-1 bg-blue-500/10 text-blue-400 rounded-lg text-xs font-medium flex items-center gap-1.5">
+            <FileCheck className="w-3 h-3" />
+            Documented
+          </span>
+        );
+      default:
+        return (
+          <span className="px-2.5 py-1 bg-zinc-500/10 text-zinc-400 rounded-lg text-xs font-medium">
+            {status}
+          </span>
+        );
+    }
+  };
 
-  const verifiedCount = employmentRecords.filter(r => r.status === 'Verified').length;
-  const pendingCount = employmentRecords.filter(r => r.status === 'Pending').length;
+  const getIAStatusBadge = (status) => {
+    switch (status) {
+      case 'Cleared':
+        return (
+          <span className="px-2.5 py-1 bg-green-500/10 text-green-400 rounded-lg text-xs font-medium flex items-center gap-1.5">
+            <Shield className="w-3 h-3" />
+            IA Cleared
+          </span>
+        );
+      case 'Requested':
+        return (
+          <span className="px-2.5 py-1 bg-amber-500/10 text-amber-400 rounded-lg text-xs font-medium flex items-center gap-1.5">
+            <Clock className="w-3 h-3" />
+            IA Pending
+          </span>
+        );
+      case 'Not Required':
+        return (
+          <span className="px-2.5 py-1 bg-zinc-500/10 text-zinc-400 rounded-lg text-xs font-medium flex items-center gap-1.5">
+            <CheckCircle2 className="w-3 h-3" />
+            IA Not Required
+          </span>
+        );
+      case 'Not Applicable':
+        return (
+          <span className="px-2.5 py-1 bg-zinc-500/10 text-zinc-400 rounded-lg text-xs font-medium">
+            N/A
+          </span>
+        );
+      default:
+        return null;
+    }
+  };
+
+  const getEmploymentTypeBadge = (record) => {
+    if (record.isLateralTransfer && record.isCurrent) {
+      return (
+        <span className="px-2.5 py-1 bg-blue-500/10 text-blue-400 rounded-lg text-xs font-medium flex items-center gap-1.5">
+          <BadgeCheck className="w-3 h-3" />
+          Lateral Transfer
+        </span>
+      );
+    }
+    if (record.isSwornLE) {
+      return (
+        <span className="px-2.5 py-1 bg-amber-500/10 text-amber-400 rounded-lg text-xs font-medium flex items-center gap-1.5">
+          <Shield className="w-3 h-3" />
+          Sworn LE
+        </span>
+      );
+    }
+    return (
+      <span className="px-2.5 py-1 bg-zinc-500/10 text-zinc-400 rounded-lg text-xs font-medium">
+        Civilian
+      </span>
+    );
+  };
+
+  // Filter records based on active tab
+  const filteredRecords = employmentRecords.filter(record => {
+    if (activeTab === 'verified') return record.verificationStatus === 'Verified';
+    if (activeTab === 'pending') return record.verificationStatus === 'Pending' || record.verificationStatus === 'Unable to Verify';
+    if (activeTab === 'sworn') return record.isSwornLE;
+    return true;
+  });
+
+  // Calculate statistics
+  const stats = {
+    total: employmentRecords.length,
+    verified: employmentRecords.filter(r => r.verificationStatus === 'Verified').length,
+    pending: employmentRecords.filter(r => r.verificationStatus === 'Pending').length,
+    swornLE: employmentRecords.filter(r => r.isSwornLE).length,
+    lateralTransfer: employmentRecords.filter(r => r.isLateralTransfer).length,
+    yearsDocumented: 14 // Calculate from actual records
+  };
+
+  // Format date helper
+  const formatDate = (dateStr) => {
+    if (!dateStr || dateStr === 'Present') return dateStr;
+    return new Date(dateStr).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex">
-      <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-slate-800/50 backdrop-blur-xl bg-slate-900/30 flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
-        <div className="p-4 border-b border-slate-700/50 flex items-center justify-between">
-          {!sidebarCollapsed && (
-            <div className="flex items-center gap-2">
-              <Shield className="w-8 h-8 text-purple-500" />
-              <h1 className="text-xl font-bold text-white">SentryOps</h1>
-            </div>
-          )}
-          {sidebarCollapsed && (
-            <Shield className="w-8 h-8 text-purple-500 mx-auto" />
-          )}
-          <button
-            onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-            className="p-2 hover:bg-slate-800/50 rounded-lg transition-colors hidden lg:block"
-          >
-            {sidebarCollapsed ? <ChevronRight className="w-5 h-5 text-slate-400" /> : <ChevronLeft className="w-5 h-5 text-slate-400" />}
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-semibold text-white">Employment Verification</h1>
+          <p className="text-zinc-400 mt-1">Marcus Thompson — Case #2024-0892</p>
+        </div>
+        <div className="flex items-center gap-3">
+          <button className="flex items-center gap-2 px-4 py-2 bg-zinc-800 text-zinc-300 rounded-lg hover:bg-zinc-700 transition-colors">
+            <Download className="w-4 h-4" />
+            Export Report
+          </button>
+          <button className="flex items-center gap-2 px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-500 transition-colors">
+            <Plus className="w-4 h-4" />
+            Add Employer
           </button>
         </div>
+      </div>
 
-        <nav className="flex-1 overflow-y-auto p-4 space-y-2">
-          {navigation.map(item => {
-            const Icon = item.icon;
-            const isActive = activePage === item.id;
-            return (
-              <button
-                key={item.id}
-                onClick={() => handleNavigation(item)}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                  isActive ? 'bg-purple-500 text-white shadow-lg shadow-purple-500/20' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'
-                } ${sidebarCollapsed ? 'justify-center' : ''}`}
-                title={sidebarCollapsed ? item.label : ''}
-              >
-                <Icon className="w-5 h-5 flex-shrink-0" />
-                {!sidebarCollapsed && (
-                  <span className="flex-1 text-left text-sm font-medium truncate">{item.label}</span>
-                )}
-              </button>
-            );
-          })}
-        </nav>
-
-        <div className="border-t border-slate-700/50">
-          {!sidebarCollapsed && (
-            <div className="px-4 py-3">
-              <p className="text-xs text-slate-500 text-center">Gwinnett County Sheriff's Office</p>
-            </div>
-          )}
-
-          <div className="p-4">
-            <button
-              onClick={() => setLogoutConfirmOpen(true)}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-slate-400 hover:bg-slate-800/40 hover:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
-              title={sidebarCollapsed ? 'Sign Out' : ''}
-            >
-              <LogOut className="w-5 h-5 flex-shrink-0" />
-              {!sidebarCollapsed && (
-                <span className="flex-1 text-left text-sm font-medium">Sign Out</span>
-              )}
-            </button>
+      {/* POST Requirement Notice */}
+      <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-4">
+        <div className="flex items-start gap-3">
+          <div className="p-2 bg-amber-500/20 rounded-lg">
+            <Scale className="w-5 h-5 text-amber-400" />
           </div>
-        </div>
-      </aside>
-
-      {sidebarOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
-
-      {logoutConfirmOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-            onClick={() => setLogoutConfirmOpen(false)}
-          />
-          <div className="relative bg-slate-900 border border-slate-700/50 rounded-2xl p-6 max-w-sm w-full shadow-2xl">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="w-12 h-12 bg-slate-800/60 rounded-xl flex items-center justify-center">
-                <LogOut className="w-6 h-6 text-slate-400" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold text-white">Sign Out</h3>
-                <p className="text-sm text-slate-400">Are you sure you want to sign out?</p>
-              </div>
-            </div>
-            <div className="flex gap-3 mt-6">
-              <button
-                onClick={() => setLogoutConfirmOpen(false)}
-                className="flex-1 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-white font-medium transition-all"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleLogout}
-                className="flex-1 px-4 py-2.5 bg-purple-600/40 hover:bg-purple-600/60 border border-purple-500/50 rounded-xl text-white font-medium transition-all"
-              >
-                Sign Out
-              </button>
+          <div className="flex-1">
+            <h3 className="text-amber-400 font-medium">POST Employment History Requirement</h3>
+            <p className="text-zinc-400 text-sm mt-1">
+              California POST requires verification of all employment for the past 10 years.
+              Current documentation covers <span className="text-amber-400 font-medium">14 years</span> of
+              employment history (2010-Present), exceeding the minimum requirement.
+            </p>
+            <div className="flex items-center gap-4 mt-3 text-xs">
+              <span className="text-zinc-500">POST Reg. 1953(f)(1)</span>
+              <span className="text-zinc-600">•</span>
+              <span className="text-green-400 flex items-center gap-1">
+                <CheckCircle2 className="w-3 h-3" />
+                Requirement Met
+              </span>
             </div>
           </div>
         </div>
-      )}
+      </div>
 
-      <div className="flex-1 flex flex-col min-w-0">
-        <header className="border-b border-slate-800/50 backdrop-blur-xl bg-slate-900/30">
-          <div className="px-4 lg:px-6 py-4 flex items-center justify-between gap-4">
-            <div className="flex items-center gap-4 flex-1 min-w-0">
-              <button
-                onClick={() => setSidebarOpen(!sidebarOpen)}
-                className="lg:hidden p-2 hover:bg-slate-800/50 rounded-lg"
-              >
-                <Menu className="w-5 h-5 text-slate-400" />
-              </button>
-              <div className="flex-1 max-w-xl relative">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-                <input type="text" placeholder="Search employment..." className="w-full pl-12 pr-4 py-2 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-purple-500/50" />
-              </div>
+      {/* Lateral Transfer Alert - Only shows if applicable */}
+      {stats.lateralTransfer > 0 && (
+        <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4">
+          <div className="flex items-start gap-3">
+            <div className="p-2 bg-blue-500/20 rounded-lg">
+              <BadgeCheck className="w-5 h-5 text-blue-400" />
             </div>
-            <div className="flex items-center gap-2 lg:gap-3">
-              <div className="relative">
-                <button
-                  onClick={() => setNotificationsOpen(!notificationsOpen)}
-                  className="p-2 hover:bg-slate-800/50 rounded-lg relative"
-                >
-                  <Bell className="w-5 h-5 text-slate-400" />
-                  <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-                </button>
-
-                {notificationsOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-96 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-2xl z-50">
-                    <div className="p-4 border-b border-slate-700/50">
-                      <h3 className="text-sm font-semibold text-white">Notifications</h3>
-                    </div>
-                    <div className="max-h-96 overflow-y-auto">
-                      {notifications.map(notification => (
-                        <div key={notification.id} className={`p-4 border-b border-slate-800/30 hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-purple-500/5' : ''}`}>
-                          <div className="flex items-start gap-3">
-                            <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-purple-400' : 'bg-blue-400'}`}></div>
-                            <div className="flex-1 min-w-0">
-                              <p className="text-sm font-medium text-white mb-1">{notification.title}</p>
-                              <p className="text-xs text-slate-400 mb-2">{notification.message}</p>
-                              <p className="text-xs text-slate-500">{notification.time}</p>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="p-3 border-t border-slate-700/50">
-                      <button className="w-full text-center text-sm text-purple-400 hover:text-purple-300 font-medium">View All</button>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              <div className="h-8 w-px bg-slate-700/50"></div>
-
-              <div className="relative profile-menu-container">
-                <button
-                  onClick={() => setProfileMenuOpen(!profileMenuOpen)}
-                  className="flex items-center gap-3 p-1.5 pr-3 hover:bg-slate-800/50 rounded-xl transition-colors"
-                >
-                  <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center">
-                    <span className="text-white text-sm font-bold">BI</span>
-                  </div>
-                  <div className="hidden sm:block text-left">
-                    <p className="text-sm font-medium text-white">BI Supervisor</p>
-                    <p className="text-xs text-slate-400">Background Investigations</p>
-                  </div>
-                  <ChevronDown className={`w-4 h-4 text-slate-400 hidden sm:block transition-transform ${profileMenuOpen ? 'rotate-180' : ''}`} />
-                </button>
-
-                {profileMenuOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-56 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-2xl z-50 py-2">
-                    <div className="px-4 py-3 border-b border-slate-700/50">
-                      <p className="text-sm font-medium text-white">BI Supervisor</p>
-                      <p className="text-xs text-slate-400">bi.supervisor@gcso.gov</p>
-                    </div>
-                    <div className="py-1">
-                      <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-slate-300 hover:bg-slate-800/50 transition-colors">
-                        <User className="w-4 h-4" />
-                        View Profile
-                      </button>
-                      <button
-                        onClick={() => navigate(createPageUrl('BISettings'))}
-                        className="w-full flex items-center gap-3 px-4 py-2 text-sm text-slate-300 hover:bg-slate-800/50 transition-colors"
-                      >
-                        <Settings className="w-4 h-4" />
-                        Settings
-                      </button>
-                    </div>
-                    <div className="border-t border-slate-700/50 py-1">
-                      <button
-                        onClick={() => setLogoutConfirmOpen(true)}
-                        className="w-full flex items-center gap-3 px-4 py-2 text-sm text-red-400 hover:bg-slate-800/50 transition-colors"
-                      >
-                        <LogOut className="w-4 h-4" />
-                        Sign Out
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        </header>
-
-        <main className="flex-1 overflow-y-auto p-4 lg:p-6">
-          <div className="mb-6">
-            <h2 className="text-2xl lg:text-3xl font-bold text-white mb-2">Employment Verification</h2>
-            <p className="text-slate-400">Work history and employment validation</p>
-          </div>
-
-          <div className="mb-6 bg-gradient-to-br from-purple-500/10 to-purple-600/5 border border-purple-500/20 rounded-xl p-5">
-            <div className="flex items-start gap-4">
-              <div className="w-10 h-10 bg-purple-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                <Sparkles className="w-6 h-6 text-purple-400" />
-              </div>
-              <div className="flex-1">
-                <h4 className="text-base font-semibold text-white mb-2">Employment History Analysis</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-slate-300">
-                  <p>• {employmentRecords.length} employment records on file</p>
-                  <p>• {verifiedCount} verified, {pendingCount} pending</p>
-                  <p>• No employment gaps detected</p>
-                  <p>• All positions eligible for rehire</p>
+            <div className="flex-1">
+              <h3 className="text-blue-400 font-medium flex items-center gap-2">
+                Lateral Transfer Candidate
+                <span className="px-2 py-0.5 bg-blue-500/20 text-blue-300 rounded text-xs">CURRENT SWORN LE</span>
+              </h3>
+              <p className="text-zinc-400 text-sm mt-1">
+                Candidate is currently employed as a sworn law enforcement officer. Lateral transfer
+                processing requires <span className="text-blue-400 font-medium">mandatory Internal Affairs clearance</span> from
+                current employer before conditional offer can be extended.
+              </p>
+              <div className="flex items-center gap-4 mt-3">
+                <div className="flex items-center gap-2 text-sm">
+                  <Clock className="w-4 h-4 text-amber-400" />
+                  <span className="text-zinc-400">IA Request Status:</span>
+                  <span className="text-amber-400 font-medium">Pending Response</span>
                 </div>
+                <span className="text-zinc-600">•</span>
+                <span className="text-zinc-500 text-sm">Expected: Feb 1, 2024</span>
               </div>
             </div>
           </div>
+        </div>
+      )}
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-            <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
-              <div className="flex items-center justify-between mb-2">
-                <Briefcase className="w-8 h-8 text-blue-400" />
-                <span className="text-2xl font-bold text-white">{employmentRecords.length}</span>
-              </div>
-              <p className="text-sm text-slate-400">Total Records</p>
+      {/* Statistics Grid */}
+      <div className="grid grid-cols-5 gap-4">
+        <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-zinc-800 rounded-lg">
+              <Briefcase className="w-5 h-5 text-zinc-400" />
             </div>
-
-            <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
-              <div className="flex items-center justify-between mb-2">
-                <CheckCircle className="w-8 h-8 text-green-400" />
-                <span className="text-2xl font-bold text-white">{verifiedCount}</span>
-              </div>
-              <p className="text-sm text-slate-400">Verified</p>
+            <div>
+              <p className="text-2xl font-semibold text-white">{stats.total}</p>
+              <p className="text-zinc-500 text-sm">Total Employers</p>
             </div>
+          </div>
+        </div>
+        <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-green-500/10 rounded-lg">
+              <CheckCircle2 className="w-5 h-5 text-green-400" />
+            </div>
+            <div>
+              <p className="text-2xl font-semibold text-white">{stats.verified}</p>
+              <p className="text-zinc-500 text-sm">Verified</p>
+            </div>
+          </div>
+        </div>
+        <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-amber-500/10 rounded-lg">
+              <Shield className="w-5 h-5 text-amber-400" />
+            </div>
+            <div>
+              <p className="text-2xl font-semibold text-white">{stats.swornLE}</p>
+              <p className="text-zinc-500 text-sm">Sworn LE Positions</p>
+            </div>
+          </div>
+        </div>
+        <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-blue-500/10 rounded-lg">
+              <BadgeCheck className="w-5 h-5 text-blue-400" />
+            </div>
+            <div>
+              <p className="text-2xl font-semibold text-white">{stats.lateralTransfer}</p>
+              <p className="text-zinc-500 text-sm">Lateral Transfer</p>
+            </div>
+          </div>
+        </div>
+        <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-zinc-800 rounded-lg">
+              <Calendar className="w-5 h-5 text-zinc-400" />
+            </div>
+            <div>
+              <p className="text-2xl font-semibold text-white">{stats.yearsDocumented}</p>
+              <p className="text-zinc-500 text-sm">Years Documented</p>
+            </div>
+          </div>
+        </div>
+      </div>
 
-            <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
-              <div className="flex items-center justify-between mb-2">
-                <Clock className="w-8 h-8 text-amber-400" />
-                <span className="text-2xl font-bold text-white">{pendingCount}</span>
-              </div>
-              <p className="text-sm text-slate-400">Pending</p>
+      {/* Employment Timeline Visualization */}
+      <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+        <h3 className="text-white font-medium mb-4 flex items-center gap-2">
+          <History className="w-5 h-5 text-amber-400" />
+          Employment Timeline
+        </h3>
+        <div className="relative">
+          {/* Timeline bar */}
+          <div className="h-8 bg-zinc-800 rounded-lg overflow-hidden flex">
+            {employmentRecords.slice().reverse().map((record, index) => {
+              const startYear = new Date(record.startDate).getFullYear();
+              const endYear = record.endDate === 'Present' ? 2024 : new Date(record.endDate).getFullYear();
+              const totalYears = 14; // 2010-2024
+              const startOffset = ((startYear - 2010) / totalYears) * 100;
+              const width = ((endYear - startYear + 1) / totalYears) * 100;
+
+              return (
+                <div
+                  key={record.id}
+                  className={`h-full relative group cursor-pointer ${
+                    record.isSwornLE
+                      ? 'bg-amber-500/60 hover:bg-amber-500/80'
+                      : 'bg-zinc-600 hover:bg-zinc-500'
+                  }`}
+                  style={{
+                    width: `${width}%`,
+                    marginLeft: index === 0 ? `${startOffset}%` : '1px'
+                  }}
+                  title={`${record.employer} (${startYear}-${endYear === 2024 ? 'Present' : endYear})`}
+                >
+                  <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap text-xs text-zinc-400 bg-zinc-800 px-2 py-1 rounded z-10">
+                    {record.employer.length > 20 ? record.employer.substring(0, 20) + '...' : record.employer}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          {/* Year markers */}
+          <div className="flex justify-between mt-2 text-xs text-zinc-500">
+            <span>2010</span>
+            <span>2012</span>
+            <span>2014</span>
+            <span>2016</span>
+            <span>2018</span>
+            <span>2020</span>
+            <span>2022</span>
+            <span>2024</span>
+          </div>
+          {/* Legend */}
+          <div className="flex items-center gap-4 mt-4 text-xs">
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 bg-amber-500/60 rounded"></div>
+              <span className="text-zinc-400">Sworn Law Enforcement</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 bg-zinc-600 rounded"></div>
+              <span className="text-zinc-400">Civilian Employment</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="grid grid-cols-3 gap-6">
+        {/* Employment Records List */}
+        <div className="col-span-2 space-y-4">
+          {/* Tabs and Search */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              {[
+                { id: 'all', label: 'All Employers', count: stats.total },
+                { id: 'verified', label: 'Verified', count: stats.verified },
+                { id: 'pending', label: 'Needs Attention', count: employmentRecords.filter(r => r.verificationStatus === 'Pending' || r.verificationStatus === 'Unable to Verify').length },
+                { id: 'sworn', label: 'Sworn LE', count: stats.swornLE }
+              ].map(tab => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                    activeTab === tab.id
+                      ? 'bg-amber-500/10 text-amber-400'
+                      : 'text-zinc-400 hover:text-zinc-300 hover:bg-zinc-800'
+                  }`}
+                >
+                  {tab.label} ({tab.count})
+                </button>
+              ))}
+            </div>
+            <div className="relative">
+              <Search className="w-4 h-4 text-zinc-500 absolute left-3 top-1/2 transform -translate-y-1/2" />
+              <input
+                type="text"
+                placeholder="Search employers..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10 pr-4 py-2 bg-zinc-800 border border-zinc-700 rounded-lg text-white text-sm placeholder-zinc-500 focus:outline-none focus:border-amber-500/50"
+              />
             </div>
           </div>
 
+          {/* Employer Cards */}
           <div className="space-y-4">
-            {employmentRecords.map((record) => (
-              <div key={record.id} className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-start gap-4 flex-1">
-                    <div className="w-14 h-14 bg-gradient-to-br from-purple-500/20 to-purple-600/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <Building2 className="w-7 h-7 text-purple-400" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-white mb-1">{record.position}</h3>
-                      <p className="text-sm text-purple-400 mb-2">{record.employer}</p>
-                      <p className="text-sm text-slate-400 mb-3">Subject: {record.subject} ({record.caseId})</p>
-                      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm text-slate-400">
-                        <div>
-                          <p className="text-xs text-slate-500 mb-1">Employment Period</p>
-                          <p className="text-slate-300">{record.startDate} - {record.endDate}</p>
+            {filteredRecords.map(record => (
+              <div
+                key={record.id}
+                className={`bg-zinc-900 border rounded-xl overflow-hidden ${
+                  record.isLateralTransfer
+                    ? 'border-blue-500/30'
+                    : 'border-zinc-800'
+                }`}
+              >
+                {/* Card Header */}
+                <div
+                  className="p-4 cursor-pointer"
+                  onClick={() => setExpandedEmployer(expandedEmployer === record.id ? null : record.id)}
+                >
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-start gap-4">
+                      <div className={`p-3 rounded-xl ${
+                        record.isSwornLE
+                          ? 'bg-amber-500/10'
+                          : 'bg-zinc-800'
+                      }`}>
+                        {record.isSwornLE ? (
+                          <Shield className="w-6 h-6 text-amber-400" />
+                        ) : (
+                          <Building2 className="w-6 h-6 text-zinc-400" />
+                        )}
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <h3 className="text-white font-medium">{record.employer}</h3>
+                          {record.isCurrent && (
+                            <span className="px-2 py-0.5 bg-green-500/10 text-green-400 rounded text-xs">Current</span>
+                          )}
                         </div>
-                        <div>
-                          <p className="text-xs text-slate-500 mb-1">Supervisor</p>
-                          <p className="text-slate-300">{record.supervisor}</p>
-                        </div>
-                        <div>
-                          <p className="text-xs text-slate-500 mb-1">Salary</p>
-                          <p className="text-slate-300">{record.salary}</p>
+                        <p className="text-zinc-400 text-sm mt-0.5">{record.position}</p>
+                        <div className="flex items-center gap-3 mt-2 text-xs text-zinc-500">
+                          <span className="flex items-center gap-1">
+                            <MapPin className="w-3 h-3" />
+                            {record.location}
+                          </span>
+                          <span>•</span>
+                          <span className="flex items-center gap-1">
+                            <Calendar className="w-3 h-3" />
+                            {formatDate(record.startDate)} — {record.endDate === 'Present' ? 'Present' : formatDate(record.endDate)}
+                          </span>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <span className={`px-3 py-1 rounded-lg text-xs font-medium ${
-                    record.status === 'Verified' ? 'bg-green-500/10 text-green-400' : 'bg-amber-500/10 text-amber-400'
-                  }`}>
-                    {record.status}
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                  <div className="bg-slate-900/40 rounded-lg p-3">
-                    <p className="text-xs text-slate-500 mb-1">HR Contact</p>
-                    <p className="text-sm text-slate-300 mb-2">{record.hrContact}</p>
-                    <div className="flex items-center gap-3 text-xs text-slate-400">
-                      <span className="flex items-center gap-1">
-                        <Phone className="w-3 h-3" />
-                        {record.phone}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Mail className="w-3 h-3" />
-                        {record.email}
-                      </span>
+                    <div className="flex items-center gap-2">
+                      {getEmploymentTypeBadge(record)}
+                      {getVerificationStatusBadge(record.verificationStatus)}
+                      {expandedEmployer === record.id ? (
+                        <ChevronUp className="w-5 h-5 text-zinc-500" />
+                      ) : (
+                        <ChevronDown className="w-5 h-5 text-zinc-500" />
+                      )}
                     </div>
                   </div>
-                  <div className="bg-slate-900/40 rounded-lg p-3">
-                    <p className="text-xs text-slate-500 mb-1">Verification Notes</p>
-                    <p className="text-sm text-slate-300">{record.notes}</p>
-                  </div>
                 </div>
 
-                <div className="flex items-center justify-between pt-4 border-t border-slate-700/30">
-                  <div className="flex items-center gap-4 text-sm text-slate-400">
-                    <span>Reason for leaving: <span className="text-slate-300">{record.reasonForLeaving}</span></span>
-                    <span>•</span>
-                    <span>Rehire eligible: <span className="text-green-400">{record.rehireEligible}</span></span>
-                    {record.verifiedDate && (
-                      <>
-                        <span>•</span>
-                        <span>Verified: {record.verifiedDate}</span>
-                      </>
+                {/* Expanded Content */}
+                {expandedEmployer === record.id && (
+                  <div className="border-t border-zinc-800 p-4 space-y-4">
+                    {/* Verification Details */}
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="bg-zinc-800/50 rounded-lg p-3">
+                        <h4 className="text-zinc-400 text-xs font-medium mb-2">VERIFICATION METHOD</h4>
+                        <p className="text-white text-sm">{record.verificationMethod}</p>
+                        {record.verificationDate && (
+                          <p className="text-zinc-500 text-xs mt-1">
+                            Verified {formatDate(record.verificationDate)} by {record.verifiedBy}
+                          </p>
+                        )}
+                      </div>
+                      {record.internalAffairs.required && (
+                        <div className="bg-zinc-800/50 rounded-lg p-3">
+                          <h4 className="text-zinc-400 text-xs font-medium mb-2 flex items-center gap-1">
+                            <Flag className="w-3 h-3 text-amber-400" />
+                            INTERNAL AFFAIRS STATUS
+                          </h4>
+                          <div className="flex items-center gap-2">
+                            {getIAStatusBadge(record.internalAffairs.status)}
+                          </div>
+                          {record.internalAffairs.expectedDate && (
+                            <p className="text-zinc-500 text-xs mt-1">
+                              Expected: {formatDate(record.internalAffairs.expectedDate)}
+                            </p>
+                          )}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* HR Contact */}
+                    {record.hrContact && (
+                      <div className="bg-zinc-800/50 rounded-lg p-3">
+                        <h4 className="text-zinc-400 text-xs font-medium mb-2">HR CONTACT</h4>
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <p className="text-white text-sm">{record.hrContact.name}</p>
+                            <p className="text-zinc-500 text-xs">{record.hrContact.title}</p>
+                          </div>
+                          <div className="flex items-center gap-3 text-sm">
+                            {record.hrContact.phone && (
+                              <span className="text-zinc-400 flex items-center gap-1">
+                                <Phone className="w-3 h-3" />
+                                {record.hrContact.phone}
+                              </span>
+                            )}
+                            {record.hrContact.email && (
+                              <span className="text-zinc-400 flex items-center gap-1">
+                                <Mail className="w-3 h-3" />
+                                {record.hrContact.email}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                        <p className="text-zinc-500 text-xs mt-2">
+                          Contacted {formatDate(record.hrContact.contactDate)} via {record.hrContact.contactMethod}
+                        </p>
+                      </div>
+                    )}
+
+                    {/* Supervisor Contact */}
+                    {record.supervisorContact && (
+                      <div className="bg-zinc-800/50 rounded-lg p-3">
+                        <h4 className="text-zinc-400 text-xs font-medium mb-2">SUPERVISOR CONTACT</h4>
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <p className="text-white text-sm">{record.supervisorContact.name}</p>
+                            <p className="text-zinc-500 text-xs">{record.supervisorContact.title}</p>
+                          </div>
+                          <div className="flex items-center gap-3 text-sm">
+                            {record.supervisorContact.phone && (
+                              <span className="text-zinc-400 flex items-center gap-1">
+                                <Phone className="w-3 h-3" />
+                                {record.supervisorContact.phone}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                        <p className="text-zinc-500 text-xs mt-2">
+                          Contacted {formatDate(record.supervisorContact.contactDate)} via {record.supervisorContact.contactMethod}
+                        </p>
+                      </div>
+                    )}
+
+                    {/* Contact Attempts (for Unable to Verify) */}
+                    {record.contactAttempts && (
+                      <div className="bg-red-500/5 border border-red-500/20 rounded-lg p-3">
+                        <h4 className="text-red-400 text-xs font-medium mb-2 flex items-center gap-1">
+                          <AlertTriangle className="w-3 h-3" />
+                          CONTACT ATTEMPTS ({record.contactAttempts.length})
+                        </h4>
+                        <div className="space-y-2">
+                          {record.contactAttempts.map((attempt, index) => (
+                            <div key={index} className="flex items-center justify-between text-xs">
+                              <span className="text-zinc-400">{formatDate(attempt.date)}</span>
+                              <span className="text-zinc-500">{attempt.method}</span>
+                              <span className="text-zinc-400">{attempt.result}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Alternative Documentation */}
+                    {record.alternativeDocumentation && (
+                      <div className="bg-blue-500/5 border border-blue-500/20 rounded-lg p-3">
+                        <h4 className="text-blue-400 text-xs font-medium mb-2 flex items-center gap-1">
+                          <FileText className="w-3 h-3" />
+                          ALTERNATIVE DOCUMENTATION
+                        </h4>
+                        <div className="flex flex-wrap gap-2">
+                          {record.alternativeDocumentation.map((doc, index) => (
+                            <span key={index} className="px-2 py-1 bg-blue-500/10 text-blue-300 rounded text-xs">
+                              {doc}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Performance & Disciplinary Grid */}
+                    <div className="grid grid-cols-2 gap-4">
+                      {/* Performance */}
+                      <div className="bg-zinc-800/50 rounded-lg p-3">
+                        <h4 className="text-zinc-400 text-xs font-medium mb-2 flex items-center gap-1">
+                          <TrendingUp className="w-3 h-3" />
+                          PERFORMANCE
+                        </h4>
+                        <div className="space-y-2">
+                          <div className="flex items-center justify-between">
+                            <span className="text-zinc-500 text-xs">Rating:</span>
+                            <span className={`text-sm ${
+                              record.performance.rating === 'Exceeds Standards'
+                                ? 'text-green-400'
+                                : record.performance.rating === 'Meets Standards'
+                                  ? 'text-zinc-300'
+                                  : 'text-zinc-500'
+                            }`}>
+                              {record.performance.rating}
+                            </span>
+                          </div>
+                          {record.performance.commendations > 0 && (
+                            <div className="flex items-center justify-between">
+                              <span className="text-zinc-500 text-xs">Commendations:</span>
+                              <span className="text-green-400 text-sm">{record.performance.commendations}</span>
+                            </div>
+                          )}
+                          {record.performance.awards && record.performance.awards.length > 0 && (
+                            <div className="mt-2 space-y-1">
+                              {record.performance.awards.map((award, index) => (
+                                <div key={index} className="flex items-center gap-1 text-xs text-amber-400">
+                                  <Award className="w-3 h-3" />
+                                  {award}
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Disciplinary */}
+                      <div className="bg-zinc-800/50 rounded-lg p-3">
+                        <h4 className="text-zinc-400 text-xs font-medium mb-2 flex items-center gap-1">
+                          <ClipboardList className="w-3 h-3" />
+                          DISCIPLINARY
+                        </h4>
+                        {record.disciplinary.hasRecords === false ? (
+                          <p className="text-green-400 text-sm flex items-center gap-1">
+                            <CheckCircle2 className="w-3 h-3" />
+                            No disciplinary records
+                          </p>
+                        ) : record.disciplinary.hasRecords === true ? (
+                          <div className="space-y-2">
+                            <p className="text-amber-400 text-sm">{record.disciplinary.details}</p>
+                            <div className="flex items-center gap-3 text-xs">
+                              <span className="text-zinc-500">
+                                Sustained: <span className="text-zinc-400">{record.disciplinary.sustainedComplaints}</span>
+                              </span>
+                              <span className="text-zinc-500">
+                                Pending: <span className="text-zinc-400">{record.disciplinary.pendingInvestigations}</span>
+                              </span>
+                            </div>
+                          </div>
+                        ) : (
+                          <p className="text-zinc-500 text-sm">Unable to verify</p>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Salary & Employment End */}
+                    <div className="grid grid-cols-3 gap-4">
+                      <div className="bg-zinc-800/50 rounded-lg p-3">
+                        <h4 className="text-zinc-400 text-xs font-medium mb-1">STARTING SALARY</h4>
+                        <p className="text-white text-sm">{record.salary.starting}</p>
+                      </div>
+                      <div className="bg-zinc-800/50 rounded-lg p-3">
+                        <h4 className="text-zinc-400 text-xs font-medium mb-1">
+                          {record.isCurrent ? 'CURRENT SALARY' : 'ENDING SALARY'}
+                        </h4>
+                        <p className="text-white text-sm">{record.salary.current || record.salary.ending}</p>
+                      </div>
+                      <div className="bg-zinc-800/50 rounded-lg p-3">
+                        <h4 className="text-zinc-400 text-xs font-medium mb-1">REHIRE ELIGIBLE</h4>
+                        <p className={`text-sm ${
+                          record.eligibleForRehire === 'Yes' || record.eligibleForRehire === 'Yes - Recommended'
+                            ? 'text-green-400'
+                            : record.eligibleForRehire === 'No'
+                              ? 'text-red-400'
+                              : 'text-zinc-400'
+                        }`}>
+                          {record.eligibleForRehire}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Reason for Leaving */}
+                    <div className="bg-zinc-800/50 rounded-lg p-3">
+                      <h4 className="text-zinc-400 text-xs font-medium mb-1">REASON FOR LEAVING</h4>
+                      <p className="text-white text-sm">{record.reasonForLeaving}</p>
+                    </div>
+
+                    {/* Verification Timeline */}
+                    {record.timeline && record.timeline.length > 0 && (
+                      <div className="bg-zinc-800/50 rounded-lg p-3">
+                        <h4 className="text-zinc-400 text-xs font-medium mb-3">VERIFICATION TIMELINE</h4>
+                        <div className="space-y-2">
+                          {record.timeline.map((event, index) => (
+                            <div key={index} className="flex items-center gap-3 text-xs">
+                              <span className="text-zinc-500 w-24">{formatDate(event.date)}</span>
+                              <span className="text-zinc-400 flex-1">{event.action}</span>
+                              <span className="text-zinc-500">{event.by}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Notes */}
+                    {record.notes && (
+                      <div className="bg-zinc-800/50 rounded-lg p-3">
+                        <h4 className="text-zinc-400 text-xs font-medium mb-1">INVESTIGATOR NOTES</h4>
+                        <p className="text-zinc-300 text-sm">{record.notes}</p>
+                      </div>
                     )}
                   </div>
-                  <button className="px-4 py-2 bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 rounded-xl text-sm font-medium transition-colors">
-                    View Details
-                  </button>
-                </div>
+                )}
               </div>
             ))}
           </div>
-        </main>
-      </div>
+        </div>
 
-      <button
-        onClick={() => setChatOpen(!chatOpen)}
-        className="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-br from-purple-500 to-purple-600 hover:from-purple-400 hover:to-purple-500 rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 z-50"
-      >
-        {chatOpen ? <X className="w-6 h-6 text-white" /> : <MessageCircle className="w-6 h-6 text-white" />}
-      </button>
+        {/* Sidebar */}
+        <div className="space-y-4">
+          {/* Internal Affairs Requirement Panel */}
+          <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4">
+            <h3 className="text-white font-medium mb-4 flex items-center gap-2">
+              <Shield className="w-5 h-5 text-amber-400" />
+              Internal Affairs Requirements
+            </h3>
 
-      {chatOpen && (
-        <div className="fixed bottom-24 right-6 w-full max-w-96 h-[500px] bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-2xl flex flex-col z-40 mx-4 sm:mx-0">
-          <div className="p-4 border-b border-slate-700/50">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <h3 className="text-sm font-semibold text-white">BI AI Assistant</h3>
-                <p className="text-xs text-green-400">Online</p>
+            <div className="space-y-3">
+              {employmentRecords.filter(r => r.internalAffairs.required).map(record => (
+                <div key={record.id} className="bg-zinc-800/50 rounded-lg p-3">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-white text-sm font-medium">
+                      {record.employer.length > 25 ? record.employer.substring(0, 25) + '...' : record.employer}
+                    </span>
+                    {getIAStatusBadge(record.internalAffairs.status)}
+                  </div>
+                  <p className="text-zinc-500 text-xs mb-2">{record.internalAffairs.notes}</p>
+                  {record.internalAffairs.contactPerson && (
+                    <p className="text-zinc-400 text-xs">
+                      Contact: {record.internalAffairs.contactPerson}
+                    </p>
+                  )}
+                </div>
+              ))}
+
+              {employmentRecords.filter(r => r.internalAffairs.required).length === 0 && (
+                <p className="text-zinc-500 text-sm">No IA clearances required for this candidate.</p>
+              )}
+            </div>
+
+            <div className="mt-4 pt-4 border-t border-zinc-800">
+              <div className="bg-amber-500/10 rounded-lg p-3">
+                <h4 className="text-amber-400 text-xs font-medium mb-1">LATERAL TRANSFER POLICY</h4>
+                <p className="text-zinc-400 text-xs">
+                  All candidates currently employed as sworn law enforcement officers require
+                  mandatory IA clearance from their current employer before a conditional offer
+                  may be extended.
+                </p>
               </div>
             </div>
           </div>
-          <div className="flex-1 p-4 overflow-y-auto">
-            <div className="flex gap-3 mb-4">
-              <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Sparkles className="w-4 h-4 text-white" />
+
+          {/* Verification Summary */}
+          <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4">
+            <h3 className="text-white font-medium mb-4 flex items-center gap-2">
+              <FileCheck className="w-5 h-5 text-amber-400" />
+              Verification Summary
+            </h3>
+
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-zinc-400 text-sm">Employers Verified</span>
+                <span className="text-white font-medium">{stats.verified} / {stats.total}</span>
               </div>
-              <div className="flex-1">
-                <div className="bg-slate-800/60 p-3 rounded-xl">
-                  <p className="text-sm text-slate-200">I can help verify employment dates, detect gaps in work history, cross-reference salary information, and flag inconsistencies. What do you need?</p>
+              <div className="flex items-center justify-between">
+                <span className="text-zinc-400 text-sm">POST Requirement</span>
+                <span className="text-green-400 text-sm flex items-center gap-1">
+                  <CheckCircle2 className="w-3 h-3" />
+                  Met
+                </span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-zinc-400 text-sm">IA Clearance</span>
+                <span className="text-amber-400 text-sm flex items-center gap-1">
+                  <Clock className="w-3 h-3" />
+                  Pending
+                </span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-zinc-400 text-sm">Discrepancies Found</span>
+                <span className="text-green-400 text-sm">None</span>
+              </div>
+            </div>
+
+            <div className="mt-4 pt-4 border-t border-zinc-800">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-zinc-400 text-sm">Overall Status</span>
+              </div>
+              <div className="flex items-center gap-2 p-3 bg-amber-500/10 rounded-lg">
+                <Clock className="w-5 h-5 text-amber-400" />
+                <div>
+                  <p className="text-amber-400 font-medium text-sm">Awaiting IA Clearance</p>
+                  <p className="text-zinc-500 text-xs">Expected Feb 1, 2024</p>
                 </div>
               </div>
             </div>
           </div>
-          <div className="p-4 border-t border-slate-700/50">
-            <div className="flex items-center gap-2">
-              <input type="text" placeholder="Ask about employment..." className="flex-1 px-4 py-2 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-purple-500/50" />
-              <button className="w-10 h-10 bg-purple-500 rounded-xl flex items-center justify-center">
-                <Send className="w-5 h-5 text-white" />
-              </button>
+
+          {/* Support & Resources */}
+          <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4">
+            <h3 className="text-white font-medium mb-4 flex items-center gap-2">
+              <HelpCircle className="w-5 h-5 text-amber-400" />
+              Support & Resources
+            </h3>
+
+            <div className="space-y-2">
+              <a href="#" className="flex items-center gap-3 p-3 bg-zinc-800/50 rounded-lg hover:bg-zinc-800 transition-colors">
+                <BookOpen className="w-4 h-4 text-zinc-400" />
+                <div>
+                  <p className="text-white text-sm">POST Regulations Guide</p>
+                  <p className="text-zinc-500 text-xs">Employment verification requirements</p>
+                </div>
+                <ExternalLink className="w-4 h-4 text-zinc-500 ml-auto" />
+              </a>
+
+              <a href="#" className="flex items-center gap-3 p-3 bg-zinc-800/50 rounded-lg hover:bg-zinc-800 transition-colors">
+                <FileText className="w-4 h-4 text-zinc-400" />
+                <div>
+                  <p className="text-white text-sm">IA Request Templates</p>
+                  <p className="text-zinc-500 text-xs">Standard clearance request forms</p>
+                </div>
+                <ExternalLink className="w-4 h-4 text-zinc-500 ml-auto" />
+              </a>
+
+              <a href="#" className="flex items-center gap-3 p-3 bg-zinc-800/50 rounded-lg hover:bg-zinc-800 transition-colors">
+                <PhoneCall className="w-4 h-4 text-zinc-400" />
+                <div>
+                  <p className="text-white text-sm">Verification Hotline</p>
+                  <p className="text-zinc-500 text-xs">Background Unit support</p>
+                </div>
+                <ExternalLink className="w-4 h-4 text-zinc-500 ml-auto" />
+              </a>
+
+              <a href="#" className="flex items-center gap-3 p-3 bg-zinc-800/50 rounded-lg hover:bg-zinc-800 transition-colors">
+                <Scale className="w-4 h-4 text-zinc-400" />
+                <div>
+                  <p className="text-white text-sm">Lateral Transfer Policy</p>
+                  <p className="text-zinc-500 text-xs">Agency transfer procedures</p>
+                </div>
+                <ExternalLink className="w-4 h-4 text-zinc-500 ml-auto" />
+              </a>
+            </div>
+          </div>
+
+          {/* Audit Trail */}
+          <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4">
+            <h3 className="text-white font-medium mb-4 flex items-center gap-2">
+              <History className="w-5 h-5 text-amber-400" />
+              Recent Activity
+            </h3>
+
+            <div className="space-y-3">
+              {[
+                { action: 'IA request submitted', employer: 'Metro City PD', date: '2024-01-18', by: 'Sgt. Vance' },
+                { action: 'Supervisor interview completed', employer: 'Metro City PD', date: '2024-01-19', by: 'Sgt. Vance' },
+                { action: 'HR verification completed', employer: 'Metro City PD', date: '2024-01-18', by: 'Sgt. Vance' },
+                { action: 'Unable to verify - marked', employer: 'Quick Mart Inc.', date: '2024-01-19', by: 'Sgt. Vance' }
+              ].map((activity, index) => (
+                <div key={index} className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-amber-500 rounded-full mt-1.5"></div>
+                  <div className="flex-1">
+                    <p className="text-zinc-300 text-sm">{activity.action}</p>
+                    <p className="text-zinc-500 text-xs">{activity.employer}</p>
+                    <p className="text-zinc-600 text-xs">{activity.date} • {activity.by}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
-}
+};
+
+export default EmploymentVerification;
