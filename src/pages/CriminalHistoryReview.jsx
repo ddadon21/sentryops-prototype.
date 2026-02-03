@@ -83,8 +83,7 @@ export default function CriminalHistoryReview() {
     { id: 'financial-background', label: 'Financial Background', icon: DollarSign, page: 'FinancialBackground' },
     { id: 'social-media', label: 'Social Media Analysis', icon: Eye, page: 'SocialMediaAnalysis' },
     { id: 'bi-reports', label: 'BI Reports', icon: Activity, page: 'BIReports' },
-    { id: 'case-closure', label: 'Case Closure', icon: XCircle, page: 'CaseClosure' },
-    { id: 'settings', label: 'Settings', icon: Settings, page: 'BISettings' }
+    { id: 'case-closure', label: 'Case Closure', icon: XCircle, page: 'CaseClosure' }
   ];
 
   const handleNavigation = (item) => {

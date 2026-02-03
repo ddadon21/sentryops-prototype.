@@ -103,8 +103,7 @@ export default function CaseClosure() {
     { id: 'financial-background', label: 'Financial Background', icon: DollarSign, page: 'FinancialBackground' },
     { id: 'social-media', label: 'Social Media Analysis', icon: Eye, page: 'SocialMediaAnalysis' },
     { id: 'bi-reports', label: 'BI Reports', icon: LayoutDashboard, page: 'BIReports' },
-    { id: 'case-closure', label: 'Case Closure', icon: XCircle },
-    { id: 'settings', label: 'Settings', icon: Settings, page: 'BISettings' }
+    { id: 'case-closure', label: 'Case Closure', icon: XCircle }
   ];
 
   const handleNavigation = (item) => {
