@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Users, AlertCircle, CheckCircle, Clock, Shield, ThumbsUp, XCircle, X, Menu, ChevronRight, DollarSign, Download, Eye, FileCheck, AlertTriangle, Calendar, User, Filter, ChevronDown, ChevronUp, Circle, Building2, Radio, Target } from 'lucide-react';
+import React, { useState } from 'react';
+import { Users, AlertCircle, CheckCircle, Shield, ThumbsUp, XCircle, ChevronDown, ChevronUp, Circle, ArrowUpRight, ArrowDownRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import DashboardLayout from '../layouts/DashboardLayout';
@@ -10,8 +10,8 @@ export default function CommandDashboard() {
   const [approvalAction, setApprovalAction] = useState(null);
   const [actionComment, setActionComment] = useState('');
   const [toastMessage, setToastMessage] = useState(null);
-  const [approvalFilter, setApprovalFilter] = useState('all');
   const [aiBriefExpanded, setAiBriefExpanded] = useState(false);
+  const [hoveredDivision, setHoveredDivision] = useState(null);
 
   // Approval items with tiered urgency:
   // critical = life/safety or legal/compliance risk within 24h
@@ -22,125 +22,123 @@ export default function CommandDashboard() {
       id: 1,
       type: 'Use of Force Review',
       name: 'Deputy Johnson, Marcus #D-4167',
-      details: 'B-Pod incident - OC spray deployment on inmate MARTINEZ',
+      details: 'B-Pod incident — OC spray deployment on inmate MARTINEZ',
       tier: 'critical',
-      division: 'Detention Division',
+      division: 'Detention',
       title: 'Use of Force Review',
-      context: 'Inmate refused direct orders, took fighting stance. OC spray deployed. Full restraint applied. Medical evaluation completed - no injuries. Body cam footage available.',
+      context: 'Inmate refused direct orders, took fighting stance. OC spray deployed. Full restraint applied. Medical evaluation completed — no injuries. Body cam footage available.',
       submittedBy: 'Shift Supervisor Williams',
       timePendingMinutes: 15,
       deadline: '24 hours',
-      impact: 'Compliance deadline'
+      impact: 'Compliance deadline',
+      financial: null
     },
     {
       id: 2,
       type: 'Emergency Purchase',
-      name: 'Detention - Major Wilson',
+      name: 'Detention — Major Wilson',
       details: 'H2-Pod HVAC Repairs',
       tier: 'critical',
       division: 'Detention Facilities',
       title: 'Emergency Purchase Order',
-      amount: 23500,
       context: 'Critical HVAC failure in H2-Pod. Temperature at 84°F. Immediate repair required to maintain ACA accreditation standards.',
       submittedBy: 'Facilities Director Chen',
       timePendingMinutes: 120,
       deadline: 'Immediate',
-      impact: 'ACA compliance risk'
+      impact: 'ACA compliance risk',
+      financial: '$23,500'
     },
     {
       id: 3,
       type: 'Overtime Authorization',
-      name: 'Patrol Division - Capt. Rodriguez',
-      details: 'B-Shift Staffing Shortage - 160 hours @ $52/hr',
+      name: 'Patrol — Capt. Rodriguez',
+      details: 'B-Shift staffing shortage — 160 hrs @ $52/hr',
       tier: 'action',
-      division: 'Patrol Division',
+      division: 'Patrol',
       title: 'Overtime Authorization',
-      amount: 8320,
       context: '3 deputies out (2 FMLA, 1 Workers Comp). Minimum staffing requires 12 road deputies. Requesting OT authorization for next 2 weeks.',
       submittedBy: 'Capt. Rodriguez',
       timePendingMinutes: 90,
       deadline: '48 hours',
-      impact: 'Below minimum staffing'
+      impact: 'Below min staffing',
+      financial: '$8,320'
     },
     {
       id: 4,
       type: 'Vehicle Replacement',
-      name: 'Fleet Management - Anderson',
-      details: 'Patrol Unit 247 - Total Loss (Pursuit Damage)',
+      name: 'Fleet Mgmt — Anderson',
+      details: 'Patrol Unit 247 — total loss (pursuit)',
       tier: 'action',
       division: 'Support Services',
       title: 'Emergency Vehicle Replacement',
-      amount: 48500,
-      context: 'Unit 247 totaled in pursuit. Insurance claim filed. Immediate replacement needed - patrol fleet at minimum operational capacity.',
+      context: 'Unit 247 totaled in pursuit. Insurance claim filed. Immediate replacement needed — patrol fleet at minimum operational capacity.',
       submittedBy: 'Fleet Manager Anderson',
       timePendingMinutes: 240,
       deadline: '72 hours',
-      impact: 'Fleet at minimum capacity'
+      impact: 'Fleet at min capacity',
+      financial: '$48,500'
     },
     {
       id: 5,
       type: 'Hiring Decision',
       name: 'Rodriguez, Elena M.',
-      details: 'Certified Correctional Officer - Detention Division',
+      details: 'Certified CO — Detention Division',
       tier: 'standard',
-      division: 'Detention Division',
+      division: 'Detention',
       title: 'Hiring Decision',
-      context: 'Background investigation complete. 5 years experience. All certifications current. Detention at 94% staffing - approval needed to extend offer.',
+      context: 'Background investigation complete. 5 years experience. All certifications current. Detention at 94% staffing — approval needed to extend offer.',
       submittedBy: 'HR Director Thompson',
       timePendingMinutes: 1440,
       deadline: '5 days',
-      impact: 'Position vacant 45 days'
+      impact: 'Position vacant 45 days',
+      financial: null
     },
     {
       id: 6,
       type: 'Policy Exception',
-      name: 'Lt. Anderson - Investigations',
-      details: 'Extended Surveillance - Narcotics Case #2024-1847',
+      name: 'Lt. Anderson — Investigations',
+      details: 'Extended surveillance — Narcotics Case #2024-1847',
       tier: 'standard',
       division: 'Investigations',
       title: 'Policy Exception Request',
-      context: 'Multi-agency narcotics investigation. DEA requesting 30-day extension for surveillance operations. Additional overtime estimated $12,000.',
+      context: 'Multi-agency narcotics investigation. DEA requesting 30-day extension for surveillance operations.',
       submittedBy: 'Lt. Anderson',
       timePendingMinutes: 2880,
       deadline: '7 days',
-      amount: 12000
+      impact: null,
+      financial: '$12,000'
     },
     {
       id: 7,
       type: 'Leave Request',
       name: 'Deputy Chen, Michael #D-4521',
-      details: 'FMLA - Medical Leave: Dec 15 - Jan 5',
+      details: 'FMLA — Medical leave: Dec 15 – Jan 5',
       tier: 'standard',
-      division: 'Detention Division',
+      division: 'Detention',
       title: 'FMLA Leave Request',
       context: 'Approved medical procedure. FMLA documentation complete. Coverage plan submitted by Sgt. Williams.',
       submittedBy: 'Deputy Chen',
       timePendingMinutes: 720,
-      deadline: '10 days'
+      deadline: '10 days',
+      impact: null,
+      financial: null
     },
     {
       id: 8,
       type: 'Training Authorization',
-      name: 'Detention - Sgt. Williams',
-      details: 'Crisis Intervention Team Training - 8 Deputies',
+      name: 'Detention — Sgt. Williams',
+      details: 'CIT Training — 8 deputies',
       tier: 'standard',
-      division: 'Training Division',
+      division: 'Training',
       title: 'Training Authorization',
-      amount: 6400,
       context: '40-hour CIT certification. Addresses mental health incidents in detention. Grant funding available for 50% reimbursement.',
       submittedBy: 'Training Coordinator Smith',
       timePendingMinutes: 4320,
-      deadline: '14 days'
+      deadline: '14 days',
+      impact: null,
+      financial: '$6,400'
     }
   ];
-
-  const filteredApprovals = approvalFilter === 'all' ? dashboardApprovals :
-    approvalFilter === 'critical' ? dashboardApprovals.filter(a => a.tier === 'critical') :
-    approvalFilter === 'action' ? dashboardApprovals.filter(a => a.tier === 'action') :
-    dashboardApprovals.filter(a => a.tier === 'standard');
-
-  const criticalCount = dashboardApprovals.filter(a => a.tier === 'critical').length;
-  const actionCount = dashboardApprovals.filter(a => a.tier === 'action').length;
 
   const getTimePending = (minutesAgo) => {
     if (minutesAgo < 60) return `${minutesAgo}m`;
@@ -148,23 +146,16 @@ export default function CommandDashboard() {
     return `${Math.floor(minutesAgo / 1440)}d`;
   };
 
-  // Tier color helpers
   const getTierStripColor = (tier) => {
     if (tier === 'critical') return 'bg-red-500';
     if (tier === 'action') return 'bg-amber-500';
-    return 'bg-slate-700';
+    return 'bg-slate-600';
   };
 
   const getTierBadge = (tier) => {
     if (tier === 'critical') return { text: 'CRITICAL', classes: 'bg-red-500/10 border-red-500/20 text-red-400' };
     if (tier === 'action') return { text: 'ACTION', classes: 'bg-amber-500/10 border-amber-500/20 text-amber-400' };
     return null;
-  };
-
-  const getTierImpactColor = (tier) => {
-    if (tier === 'critical') return 'text-red-500';
-    if (tier === 'action') return 'text-amber-500';
-    return 'text-slate-600';
   };
 
   const openApprovalModal = (approval, action, e) => {
@@ -197,6 +188,23 @@ export default function CommandDashboard() {
 
   const activeIncidentCount = 3;
 
+  // Top 3 approvals by severity
+  const topApprovals = dashboardApprovals.slice(0, 3);
+
+  // Division data with hover drill info
+  const divisions = [
+    { name: 'Patrol', status: 'B-Shift 75%', severity: 'red', staffing: '56/65', route: 'PersonnelOverview',
+      drill: 'Min required: 12 deputies\nCurrently deployed: 9\nCoverage risk: Zones 4, 7' },
+    { name: 'Detention', status: '91.5% Capacity', severity: 'amber', staffing: '45/48', route: null,
+      drill: 'Population: 1,098 / 1,200\nFederal holds: 247\nMedical: 14 current' },
+    { name: 'Investigations', status: '1 Escalation', severity: 'amber', staffing: '22/25', route: null,
+      drill: 'Active cases: 142\nDEA joint op pending\n3 positions posted' },
+    { name: 'Court Services', status: 'Stable', severity: 'green', staffing: '18/18', route: null,
+      drill: 'All courtrooms covered\nTransport schedule nominal' },
+    { name: 'Support Services', status: 'Stable', severity: 'green', staffing: '23/22', route: null,
+      drill: '1 grant-funded position\nFleet at min capacity' }
+  ];
+
   return (
     <DashboardLayout>
       <div className="p-5 lg:p-8 space-y-8">
@@ -213,7 +221,7 @@ export default function CommandDashboard() {
           </div>
         </div>
 
-        {/* Executive Snapshot Row — Priority-weighted 4 cards */}
+        {/* Executive Snapshot Row */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
           {/* Personnel */}
           <button
@@ -224,11 +232,17 @@ export default function CommandDashboard() {
               <span className="text-xs text-slate-500 font-medium">Personnel</span>
               <Circle className="w-2 h-2 fill-amber-500 text-amber-500" />
             </div>
-            <p className="text-3xl font-bold text-white mb-1">164</p>
-            <p className="text-xs text-slate-500">14 vacancies of 178 authorized</p>
+            <div className="flex items-baseline gap-2 mb-1">
+              <p className="text-3xl font-bold text-white">164</p>
+              <span className="flex items-center gap-0.5 text-emerald-400 text-xs font-medium">
+                <ArrowUpRight className="w-3 h-3" />+2
+              </span>
+            </div>
+            <p className="text-xs text-slate-500 mb-1">14 vacancies of 178 authorized</p>
+            <p className="text-[11px] text-slate-400">Below authorized staffing</p>
           </button>
 
-          {/* Active Critical Incidents — visually dominant */}
+          {/* Active Critical Incidents — dominant */}
           <button
             onClick={() => navigate(createPageUrl('Approvals'))}
             className="bg-slate-800/25 border border-slate-700/40 rounded-xl p-5 text-left hover:border-slate-600/40 transition-colors"
@@ -243,17 +257,19 @@ export default function CommandDashboard() {
               )}
             </div>
             <p className="text-3xl font-extrabold text-white mb-1">{activeIncidentCount}</p>
-            <p className="text-xs text-slate-500">1 UOF, 1 facility, 1 staffing</p>
+            <p className="text-xs text-slate-500 mb-1">1 UOF / 1 facility / 1 staffing</p>
+            <p className="text-[11px] text-slate-400">1 staffing-related</p>
           </button>
 
-          {/* Compliance Status */}
+          {/* Compliance Status — specific */}
           <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5 text-left">
             <div className="flex items-center justify-between mb-3">
-              <span className="text-xs text-slate-500 font-medium">Compliance Status</span>
+              <span className="text-xs text-slate-500 font-medium">Compliance Readiness</span>
               <Circle className="w-2 h-2 fill-amber-500 text-amber-500" />
             </div>
             <p className="text-3xl font-bold text-white mb-1">94%</p>
-            <p className="text-xs text-slate-500">USMS inspection in 2 days</p>
+            <p className="text-xs text-slate-500 mb-1">USMS inspection in 2 days</p>
+            <p className="text-[11px] text-slate-400">3 open action items</p>
           </div>
 
           {/* Budget Snapshot */}
@@ -262,26 +278,27 @@ export default function CommandDashboard() {
             className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5 text-left hover:border-slate-600/40 transition-colors"
           >
             <div className="flex items-center justify-between mb-3">
-              <span className="text-xs text-slate-500 font-medium">Budget Snapshot</span>
+              <span className="text-xs text-slate-500 font-medium">Budget Utilization</span>
               <Circle className="w-2 h-2 fill-emerald-500 text-emerald-500" />
             </div>
             <p className="text-3xl font-bold text-white mb-1">85%</p>
-            <p className="text-xs text-slate-500">YTD utilization on track</p>
+            <p className="text-xs text-slate-500 mb-1">YTD spend on track</p>
+            <p className="text-[11px] text-slate-400">Within forecast range</p>
           </button>
         </div>
 
-        {/* AI Executive Brief — Advisory, not structural */}
+        {/* Executive Intelligence Summary */}
         <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl border-l-2 border-l-slate-600/40">
           <button
             onClick={() => setAiBriefExpanded(!aiBriefExpanded)}
             className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-slate-800/10 transition-colors rounded-xl"
           >
             <div className="flex items-center gap-3">
-              <h3 className="text-sm font-medium text-slate-300">AI Executive Brief</h3>
+              <h3 className="text-sm font-medium text-slate-300">Executive Intelligence Summary</h3>
               <span className="px-1.5 py-0.5 bg-slate-700/30 text-[11px] text-slate-500 rounded">3 Insights</span>
             </div>
             <div className="flex items-center gap-3">
-              <span className="hidden sm:inline text-[10px] text-slate-600">92% confidence · 4 sources · 3m ago</span>
+              <span className="hidden sm:inline text-[10px] text-slate-600">AI-assisted synthesis · 4 sources · 3m ago</span>
               {aiBriefExpanded ? <ChevronUp className="w-4 h-4 text-slate-600" /> : <ChevronDown className="w-4 h-4 text-slate-600" />}
             </div>
           </button>
@@ -291,69 +308,44 @@ export default function CommandDashboard() {
               <div className="flex items-start gap-3">
                 <div className="w-1.5 h-1.5 rounded-full bg-red-500 mt-1.5 flex-shrink-0"></div>
                 <div>
-                  <p className="text-sm text-slate-300"><span className="text-red-400 font-medium">Staffing Risk:</span> B-Shift at 75% (9/12 deputies). Zones 4 and 7 operating single-officer. OT authorization pending approval.</p>
-                  <p className="text-[10px] text-slate-600 mt-1">Sources: CAD roster, HR scheduling, patrol deployment log</p>
+                  <p className="text-sm text-slate-300"><span className="text-red-400 font-medium">Staffing Risk:</span> B-Shift operating at 75% (9/12). Minimum safety threshold breached. Recommend authorizing OT for 2 deputies within next 4 hours.</p>
+                  <p className="text-[10px] text-slate-500 mt-1">Sources: CAD roster, HR scheduling, patrol deployment log</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <div className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 flex-shrink-0"></div>
                 <div>
-                  <p className="text-sm text-slate-300"><span className="text-amber-400 font-medium">Budget Alert:</span> Overtime tracking 19% over allocation ($78,240/$65,000 YTD). Two lateral hires would reduce projected year-end overage by $23K.</p>
-                  <p className="text-[10px] text-slate-600 mt-1">Sources: Finance system, HR vacancy data, payroll records</p>
+                  <p className="text-sm text-slate-300"><span className="text-amber-400 font-medium">Budget Alert:</span> OT spend at $78,240 vs $65,000 allocation (19% over). Two lateral hires would reduce year-end overage by $23K. Recommend initiating by Dec 15.</p>
+                  <p className="text-[10px] text-slate-500 mt-1">Sources: Finance system, HR vacancy data, payroll records</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <div className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 flex-shrink-0"></div>
                 <div>
-                  <p className="text-sm text-slate-300"><span className="text-amber-400 font-medium">Compliance:</span> U.S. Marshals inspection Dec 12-14. H2-Pod HVAC repair approval pending. 3 policies require signature before inspection date.</p>
-                  <p className="text-[10px] text-slate-600 mt-1">Sources: Compliance database, facilities management, policy tracker</p>
+                  <p className="text-sm text-slate-300"><span className="text-amber-400 font-medium">Compliance:</span> USMS inspection Dec 12-14. H2-Pod HVAC repair requires approval within 48 hours. 3 policies require command signature before inspection date.</p>
+                  <p className="text-[10px] text-slate-500 mt-1">Sources: Compliance database, facilities management, policy tracker</p>
                 </div>
+              </div>
+              <div className="pt-2 text-[10px] text-slate-600">
+                Confidence: 92% · Model last trained on agency data 12h ago
               </div>
             </div>
           )}
         </div>
 
-        {/* Pending Approvals — Tiered urgency */}
+        {/* Pending Approvals — Top 3 only */}
         <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl">
           <div className="flex items-center justify-between px-5 py-4 pb-3">
             <h3 className="text-sm font-medium text-white">Pending Approvals</h3>
-            <div className="flex items-center gap-3">
-              <div className="flex items-center gap-1 text-[11px]">
-                <button
-                  onClick={() => setApprovalFilter('all')}
-                  className={`px-2 py-1 rounded ${approvalFilter === 'all' ? 'bg-slate-700/40 text-white' : 'text-slate-600 hover:text-slate-400'}`}
-                >
-                  All ({dashboardApprovals.length})
-                </button>
-                <button
-                  onClick={() => setApprovalFilter('critical')}
-                  className={`px-2 py-1 rounded ${approvalFilter === 'critical' ? 'bg-slate-700/40 text-white' : 'text-slate-600 hover:text-slate-400'}`}
-                >
-                  Critical ({criticalCount})
-                </button>
-                <button
-                  onClick={() => setApprovalFilter('action')}
-                  className={`px-2 py-1 rounded ${approvalFilter === 'action' ? 'bg-slate-700/40 text-white' : 'text-slate-600 hover:text-slate-400'}`}
-                >
-                  Action ({actionCount})
-                </button>
-                <button
-                  onClick={() => setApprovalFilter('standard')}
-                  className={`px-2 py-1 rounded ${approvalFilter === 'standard' ? 'bg-slate-700/40 text-white' : 'text-slate-600 hover:text-slate-400'}`}
-                >
-                  Standard ({dashboardApprovals.length - criticalCount - actionCount})
-                </button>
-              </div>
-              <button
-                onClick={() => navigate(createPageUrl('Approvals'))}
-                className="text-xs text-slate-500 hover:text-slate-400"
-              >
-                View all
-              </button>
-            </div>
+            <button
+              onClick={() => navigate(createPageUrl('Approvals'))}
+              className="text-xs text-amber-400/80 hover:text-amber-300"
+            >
+              View all {dashboardApprovals.length} approvals →
+            </button>
           </div>
           <div className="px-5 pb-5 space-y-2">
-            {filteredApprovals.slice(0, 6).map((item) => {
+            {topApprovals.map((item) => {
               const badge = getTierBadge(item.tier);
               return (
                 <div
@@ -361,19 +353,30 @@ export default function CommandDashboard() {
                   onClick={() => navigate(createPageUrl('Approvals'))}
                   className="flex items-center justify-between gap-4 p-3 rounded-lg border border-slate-700/20 cursor-pointer hover:bg-slate-800/20 transition-colors"
                 >
-                  {/* Left urgency strip — color-coded by tier */}
                   <div className={`w-0.5 self-stretch rounded-full flex-shrink-0 ${getTierStripColor(item.tier)}`}></div>
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
                       <p className="text-sm font-medium text-white">{item.type}</p>
                       {badge && <span className={`px-1.5 py-0.5 border rounded text-[11px] font-medium ${badge.classes}`}>{badge.text}</span>}
-                      <span className="text-[11px] text-slate-600">{getTimePending(item.timePendingMinutes)} ago</span>
+                      <span className="text-[11px] text-slate-500">{getTimePending(item.timePendingMinutes)} ago</span>
                     </div>
-                    <div className="flex items-center gap-3 text-[11px] text-slate-500">
-                      <span>{item.name}</span>
-                      {item.amount && <span>${item.amount.toLocaleString()}</span>}
-                      {item.impact && <span className={getTierImpactColor(item.tier)}>{item.impact}</span>}
+                    <div className="flex items-center gap-2 text-[11px]">
+                      <span className="text-slate-400">{item.division}</span>
+                      <span className="text-slate-600">·</span>
+                      <span className="text-slate-400">{item.name}</span>
+                      {item.financial && (
+                        <>
+                          <span className="text-slate-600">·</span>
+                          <span className="text-slate-400">{item.financial}</span>
+                        </>
+                      )}
+                      {item.impact && (
+                        <>
+                          <span className="text-slate-600">·</span>
+                          <span className={item.tier === 'critical' ? 'text-red-400' : item.tier === 'action' ? 'text-amber-400' : 'text-slate-400'}>{item.impact}</span>
+                        </>
+                      )}
                     </div>
                   </div>
 
@@ -399,78 +402,12 @@ export default function CommandDashboard() {
           </div>
         </div>
 
-        {/* Division Status — Strict green/amber/red semantic colors */}
-        <div>
-          <h3 className="text-sm font-medium text-white mb-4">Division Status</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-            {[
-              { name: 'Patrol', status: 'B-Shift 75%', severity: 'red', staffing: '56/65', route: 'PersonnelOverview' },
-              { name: 'Detention', status: '91.5% Capacity', severity: 'amber', staffing: '45/48', route: null },
-              { name: 'Investigations', status: '1 Escalation', severity: 'amber', staffing: '22/25', route: null },
-              { name: 'Court Services', status: 'Stable', severity: 'green', staffing: '18/18', route: null },
-              { name: 'Support Services', status: 'Stable', severity: 'green', staffing: '23/22', route: null }
-            ].map((div, idx) => (
-              <button
-                key={idx}
-                onClick={() => div.route && navigate(createPageUrl(div.route))}
-                className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-4 text-left hover:border-slate-600/40 transition-colors"
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium text-white">{div.name}</span>
-                  <div className={`w-2 h-2 rounded-full ${
-                    div.severity === 'red' ? 'bg-red-500' :
-                    div.severity === 'amber' ? 'bg-amber-500' : 'bg-emerald-500'
-                  }`}></div>
-                </div>
-                <p className={`text-xs font-medium mb-1 ${
-                  div.severity === 'red' ? 'text-red-400' :
-                  div.severity === 'amber' ? 'text-amber-400' : 'text-emerald-400'
-                }`}>{div.status}</p>
-                <p className="text-[11px] text-slate-600">{div.staffing} staffed</p>
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Staffing Levels — Reduced visual weight, % dominant */}
-        <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
-          <div className="flex items-center justify-between mb-5">
-            <h3 className="text-sm font-medium text-white">Staffing Levels</h3>
-            <span className="text-[11px] text-slate-600">164/178 authorized (92.1%)</span>
-          </div>
-          <div className="space-y-3.5">
-            {[
-              { division: 'Patrol Division', current: 56, authorized: 65, percentage: 86, note: 'B-Shift critical' },
-              { division: 'Investigations', current: 22, authorized: 25, percentage: 88, note: '3 positions posted' },
-              { division: 'Detention', current: 45, authorized: 48, percentage: 94, note: 'Rodriguez starting Mon' },
-              { division: 'Court Services', current: 18, authorized: 18, percentage: 100, note: '' },
-              { division: 'Support Services', current: 23, authorized: 22, percentage: 105, note: 'Grant-funded' }
-            ].map((div, idx) => (
-              <div key={idx}>
-                <div className="flex items-center justify-between mb-1.5">
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm text-slate-400">{div.division}</span>
-                    {div.note && <span className="text-[10px] text-slate-600">({div.note})</span>}
-                  </div>
-                  <div className="flex items-center gap-2.5">
-                    <span className="text-xs text-slate-600">{div.current}/{div.authorized}</span>
-                    <span className={`text-sm font-semibold ${div.percentage >= 90 ? 'text-emerald-500' : 'text-amber-500'}`}>{div.percentage}%</span>
-                  </div>
-                </div>
-                <div className="w-full h-1 bg-slate-800/50 rounded-full overflow-hidden">
-                  <div className={`h-full rounded-full ${div.percentage >= 90 ? 'bg-emerald-500/40' : 'bg-amber-500/40'}`} style={{ width: `${Math.min(div.percentage, 100)}%` }} />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Federal Compliance & Audits */}
+        {/* Federal Compliance & Audits — MOVED UP above Divisions/Staffing */}
         <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
           <div className="flex items-center justify-between mb-5">
             <div className="flex items-center gap-3">
               <h3 className="text-sm font-medium text-white">Federal Compliance & Audits</h3>
-              <span className="text-[10px] text-red-400 font-medium">USMS Dec 12-14</span>
+              <span className="text-[10px] text-red-400 font-medium">USMS Dec 12–14</span>
             </div>
           </div>
 
@@ -484,8 +421,8 @@ export default function CommandDashboard() {
               <div className="space-y-3">
                 <div>
                   <div className="flex items-center justify-between mb-1 text-xs">
-                    <span className="text-slate-500">Databases</span>
-                    <span className="text-emerald-500">47/47</span>
+                    <span className="text-slate-400">Databases</span>
+                    <span className="text-emerald-400">47/47</span>
                   </div>
                   <div className="w-full h-1 bg-slate-800/50 rounded-full overflow-hidden">
                     <div className="h-full bg-emerald-500/40 rounded-full" style={{width: '100%'}} />
@@ -493,8 +430,8 @@ export default function CommandDashboard() {
                 </div>
                 <div>
                   <div className="flex items-center justify-between mb-1 text-xs">
-                    <span className="text-slate-500">Policies</span>
-                    <span className="text-amber-500">44/47</span>
+                    <span className="text-slate-400">Policies</span>
+                    <span className="text-amber-400">44/47</span>
                   </div>
                   <div className="w-full h-1 bg-slate-800/50 rounded-full overflow-hidden">
                     <div className="h-full bg-amber-500/40 rounded-full" style={{width: '94%'}} />
@@ -502,21 +439,21 @@ export default function CommandDashboard() {
                 </div>
                 <div>
                   <div className="flex items-center justify-between mb-1 text-xs">
-                    <span className="text-slate-500">Training Records</span>
-                    <span className="text-amber-500">156/164</span>
+                    <span className="text-slate-400">Training Records</span>
+                    <span className="text-amber-400">156/164</span>
                   </div>
                   <div className="w-full h-1 bg-slate-800/50 rounded-full overflow-hidden">
                     <div className="h-full bg-amber-500/40 rounded-full" style={{width: '95%'}} />
                   </div>
                 </div>
               </div>
-              <div className="mt-4 pt-3 border-t border-slate-700/20 text-[11px] text-slate-500">
+              <div className="mt-4 pt-3 border-t border-slate-700/20 text-[11px] text-slate-400">
                 <p>3 policies pending review · 8 deputies need recertification</p>
-                <p className="text-slate-600 mt-1">POC: Major Anderson (Detention)</p>
+                <p className="text-slate-500 mt-1">POC: Major Anderson (Detention)</p>
               </div>
             </div>
 
-            {/* ACA Status — Concise bullet-like format */}
+            {/* ACA Status */}
             <div className="border border-slate-700/20 rounded-lg p-5">
               <div className="flex items-center gap-2 mb-4">
                 <Shield className="w-4 h-4 text-slate-500" />
@@ -524,21 +461,101 @@ export default function CommandDashboard() {
               </div>
               <div className="space-y-2.5 text-xs">
                 <div className="flex justify-between">
-                  <span className="text-slate-500">Status</span>
-                  <span className="text-emerald-500 font-medium">Accredited</span>
+                  <span className="text-slate-400">Status</span>
+                  <span className="text-emerald-400 font-medium">Accredited</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-500">Expires</span>
-                  <span className="text-slate-400">August 2025</span>
+                  <span className="text-slate-400">Expires</span>
+                  <span className="text-slate-300">August 2025</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-500">Issue</span>
+                  <span className="text-slate-400">Issue</span>
                   <span className="text-red-400">H2 HVAC — 72h window</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-500">Repair</span>
+                  <span className="text-slate-400">Repair</span>
                   <span className="text-amber-400">Pending approval</span>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Division Status — neutral text, colored dot only, hover drill */}
+        <div>
+          <h3 className="text-sm font-medium text-white mb-4">Division Status</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+            {divisions.map((div, idx) => (
+              <button
+                key={idx}
+                onClick={() => div.route && navigate(createPageUrl(div.route))}
+                onMouseEnter={() => setHoveredDivision(idx)}
+                onMouseLeave={() => setHoveredDivision(null)}
+                className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-4 text-left hover:border-slate-600/40 transition-colors relative"
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm font-medium text-white">{div.name}</span>
+                  <div className={`w-2 h-2 rounded-full ${
+                    div.severity === 'red' ? 'bg-red-500' :
+                    div.severity === 'amber' ? 'bg-amber-500' : 'bg-emerald-500'
+                  }`}></div>
+                </div>
+                <p className="text-xs text-slate-300 mb-1">{div.status}</p>
+                <p className="text-[11px] text-slate-400">{div.staffing} staffed</p>
+
+                {/* Hover drill tooltip */}
+                {hoveredDivision === idx && (
+                  <div className="absolute left-0 right-0 top-full mt-1 z-20 bg-slate-800 border border-slate-700/50 rounded-lg p-3 shadow-xl">
+                    {div.drill.split('\n').map((line, i) => (
+                      <p key={i} className="text-[11px] text-slate-300 leading-relaxed">{line}</p>
+                    ))}
+                  </div>
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Staffing Levels — threshold markers */}
+        <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
+          <div className="flex items-center justify-between mb-5">
+            <h3 className="text-sm font-medium text-white">Staffing Levels</h3>
+            <span className="text-[11px] text-slate-500">164/178 authorized (92.1%)</span>
+          </div>
+          <div className="space-y-3.5">
+            {[
+              { division: 'Patrol Division', current: 56, authorized: 65, percentage: 86, minThreshold: 80, note: 'B-Shift critical' },
+              { division: 'Investigations', current: 22, authorized: 25, percentage: 88, minThreshold: 80, note: '3 positions posted' },
+              { division: 'Detention', current: 45, authorized: 48, percentage: 94, minThreshold: 85, note: 'Rodriguez starting Mon' },
+              { division: 'Court Services', current: 18, authorized: 18, percentage: 100, minThreshold: 90, note: '' },
+              { division: 'Support Services', current: 23, authorized: 22, percentage: 105, minThreshold: 85, note: 'Grant-funded' }
+            ].map((div, idx) => (
+              <div key={idx}>
+                <div className="flex items-center justify-between mb-1.5">
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm text-slate-300">{div.division}</span>
+                    {div.note && <span className="text-[10px] text-slate-400">({div.note})</span>}
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <span className="text-xs text-slate-400">{div.current}/{div.authorized}</span>
+                    <span className={`text-sm font-semibold ${div.percentage >= 90 ? 'text-emerald-400' : div.percentage >= div.minThreshold ? 'text-amber-400' : 'text-red-400'}`}>{div.percentage}%</span>
+                  </div>
+                </div>
+                <div className="relative w-full h-1 bg-slate-800/50 rounded-full overflow-visible">
+                  <div className={`h-full rounded-full ${div.percentage >= 90 ? 'bg-emerald-500/40' : div.percentage >= div.minThreshold ? 'bg-amber-500/40' : 'bg-red-500/40'}`} style={{ width: `${Math.min(div.percentage, 100)}%` }} />
+                  {/* Min threshold marker */}
+                  <div
+                    className="absolute top-[-2px] w-px h-[calc(100%+4px)] bg-slate-500/60"
+                    style={{ left: `${div.minThreshold}%` }}
+                    title={`Min safe: ${div.minThreshold}%`}
+                  />
+                </div>
+              </div>
+            ))}
+            <div className="flex items-center gap-3 pt-2 text-[10px] text-slate-500">
+              <div className="flex items-center gap-1.5">
+                <div className="w-3 h-px bg-slate-500/60"></div>
+                <span>Min safe threshold</span>
               </div>
             </div>
           </div>
@@ -568,7 +585,7 @@ export default function CommandDashboard() {
                 <h3 className="text-base font-semibold text-white mb-0.5">
                   {approvalAction === 'approve' ? 'Approve' : 'Deny'} {selectedApproval.title}?
                 </h3>
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-slate-400">
                   {selectedApproval.name} · {selectedApproval.details}
                 </p>
               </div>

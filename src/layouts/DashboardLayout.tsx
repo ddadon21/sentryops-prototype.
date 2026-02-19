@@ -4,7 +4,7 @@ import {
   Home, Users, CheckCircle, DollarSign, TrendingUp,
   AlertCircle, Shield, ChevronLeft, ChevronRight, Menu,
   LogOut, Building2, Radio, Target, FileText, ShieldCheck, ChevronDown,
-  Search, Bell, Settings, User
+  Search, Bell, Settings, User, Circle
 } from 'lucide-react';
 
 interface DashboardLayoutProps {
@@ -122,7 +122,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                 <button
                   onClick={() => handleNavigation(item)}
                   className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                    isActive || isStaffingActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'
+                    isActive || isStaffingActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-500 hover:bg-slate-800/50 hover:text-white'
                   } ${sidebarCollapsed ? 'justify-center' : ''}`}
                   title={sidebarCollapsed ? item.label : ''}
                 >
@@ -251,8 +251,17 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
               </div>
             </div>
 
-            {/* Right side - Notifications and Profile */}
+            {/* Right side - Sync Status, Notifications and Profile */}
             <div className="flex items-center gap-2 lg:gap-3">
+              {/* Data Sync Heartbeat */}
+              <div className="hidden lg:flex items-center gap-2 text-[11px] text-slate-500">
+                <Circle className="w-1.5 h-1.5 fill-emerald-500 text-emerald-500" />
+                <span>Data Sync Healthy</span>
+                <span className="text-slate-600">·</span>
+                <span className="text-slate-600">Last Sync: 2m ago</span>
+              </div>
+              <div className="h-6 w-px bg-slate-700/30 hidden lg:block"></div>
+
               {/* Notifications */}
               <div className="relative">
                 <button
