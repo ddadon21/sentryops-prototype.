@@ -191,17 +191,17 @@ export default function CommandDashboard() {
   // Top 3 approvals by severity
   const topApprovals = dashboardApprovals.slice(0, 3);
 
-  // Division data with hover drill info — high-level operational status only
+  // Division data with hover drill info
   const divisions = [
-    { name: 'Patrol', status: 'B-Shift below threshold', severity: 'red', route: 'PersonnelOverview',
+    { name: 'Patrol', status: 'B-Shift 75%', severity: 'red', staffing: '56/65', route: 'PersonnelOverview',
       drill: 'Min required: 12 deputies\nCurrently deployed: 9\nCoverage risk: Zones 4, 7' },
-    { name: 'Detention', status: '91.5% Capacity', severity: 'amber', route: null,
+    { name: 'Detention', status: '91.5% Capacity', severity: 'amber', staffing: '45/48', route: null,
       drill: 'Population: 1,098 / 1,200\nFederal holds: 247\nMedical: 14 current' },
-    { name: 'Investigations', status: '1 Escalation pending', severity: 'amber', route: null,
+    { name: 'Investigations', status: '1 Escalation', severity: 'amber', staffing: '22/25', route: null,
       drill: 'Active cases: 142\nDEA joint op pending\n3 positions posted' },
-    { name: 'Court Services', status: 'Nominal', severity: 'green', route: null,
+    { name: 'Court Services', status: 'Stable', severity: 'green', staffing: '18/18', route: null,
       drill: 'All courtrooms covered\nTransport schedule nominal' },
-    { name: 'Support Services', status: 'Nominal', severity: 'green', route: null,
+    { name: 'Support Services', status: 'Stable', severity: 'green', staffing: '23/22', route: null,
       drill: '1 grant-funded position\nFleet at min capacity' }
   ];
 
@@ -556,7 +556,8 @@ export default function CommandDashboard() {
                     div.severity === 'amber' ? 'bg-amber-500' : 'bg-emerald-500'
                   }`}></div>
                 </div>
-                <p className="text-xs text-slate-300">{div.status}</p>
+                <p className="text-xs text-slate-300 mb-1">{div.status}</p>
+                <p className="text-[11px] text-slate-400">{div.staffing} staffed</p>
 
                 {/* Hover drill tooltip */}
                 {hoveredDivision === idx && (
