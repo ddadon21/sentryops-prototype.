@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Users, AlertCircle, CheckCircle, Shield, ThumbsUp, XCircle, ChevronDown, ChevronUp, Circle, ArrowUpRight, ArrowDownRight } from 'lucide-react';
+import { Users, AlertCircle, CheckCircle, Shield, ThumbsUp, XCircle, ChevronDown, ChevronUp, Circle, ArrowUpRight, ArrowDownRight, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import DashboardLayout from '../layouts/DashboardLayout';
@@ -238,8 +238,8 @@ export default function CommandDashboard() {
                 <ArrowUpRight className="w-3 h-3" />+2
               </span>
             </div>
-            <p className="text-xs text-slate-500 mb-1">14 vacancies of 178 authorized</p>
-            <p className="text-[11px] text-slate-400">Below authorized staffing</p>
+            <p className="text-xs text-slate-400 mb-1">14 Vacancies (7.8%)</p>
+            <p className="text-[11px] text-red-400">3 below safety threshold (Patrol B-Shift)</p>
           </button>
 
           {/* Active Critical Incidents — dominant */}
@@ -256,20 +256,29 @@ export default function CommandDashboard() {
                 </span>
               )}
             </div>
-            <p className="text-3xl font-extrabold text-white mb-1">{activeIncidentCount}</p>
-            <p className="text-xs text-slate-500 mb-1">1 UOF / 1 facility / 1 staffing</p>
-            <p className="text-[11px] text-slate-400">1 staffing-related</p>
+            <div className="flex items-baseline gap-2 mb-1">
+              <p className="text-3xl font-extrabold text-white">{activeIncidentCount}</p>
+              <span className="text-xs text-slate-400">Active (2 escalated)</span>
+            </div>
+            <p className="text-xs text-slate-400 mb-1">1 UOF · 1 Facility · 1 Staffing</p>
+            <p className="text-[11px] text-amber-400">Oldest: 1h 22m</p>
           </button>
 
-          {/* Compliance Status — specific */}
+          {/* Compliance Status — with breakdown */}
           <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5 text-left">
             <div className="flex items-center justify-between mb-3">
               <span className="text-xs text-slate-500 font-medium">Compliance Readiness</span>
               <Circle className="w-2 h-2 fill-amber-500 text-amber-500" />
             </div>
             <p className="text-3xl font-bold text-white mb-1">94%</p>
-            <p className="text-xs text-slate-500 mb-1">USMS inspection in 2 days</p>
-            <p className="text-[11px] text-slate-400">3 open action items</p>
+            <div className="flex items-center gap-2 text-[11px] text-slate-400 mb-1">
+              <span>Policies 94%</span>
+              <span className="text-slate-600">·</span>
+              <span>Training 91%</span>
+              <span className="text-slate-600">·</span>
+              <span>Audit 100%</span>
+            </div>
+            <p className="text-[11px] text-amber-400">USMS inspection in 2 days</p>
           </div>
 
           {/* Budget Snapshot */}
@@ -281,9 +290,14 @@ export default function CommandDashboard() {
               <span className="text-xs text-slate-500 font-medium">Budget Utilization</span>
               <Circle className="w-2 h-2 fill-emerald-500 text-emerald-500" />
             </div>
-            <p className="text-3xl font-bold text-white mb-1">85%</p>
-            <p className="text-xs text-slate-500 mb-1">YTD spend on track</p>
-            <p className="text-[11px] text-slate-400">Within forecast range</p>
+            <div className="flex items-baseline gap-2 mb-1">
+              <p className="text-3xl font-bold text-white">85%</p>
+              <span className="flex items-center gap-0.5 text-amber-400 text-xs font-medium">
+                <ArrowUpRight className="w-3 h-3" />+1.2%
+              </span>
+            </div>
+            <p className="text-xs text-slate-400 mb-1">Forecast variance +1.2% from plan</p>
+            <p className="text-[11px] text-amber-400">OT spend 19% above baseline</p>
           </button>
         </div>
 
@@ -304,28 +318,49 @@ export default function CommandDashboard() {
           </button>
 
           {aiBriefExpanded && (
-            <div className="px-5 pb-5 space-y-3 border-t border-slate-700/20 pt-3">
+            <div className="px-5 pb-5 space-y-4 border-t border-slate-700/20 pt-4">
+              {/* Staffing Risk */}
               <div className="flex items-start gap-3">
                 <div className="w-1.5 h-1.5 rounded-full bg-red-500 mt-1.5 flex-shrink-0"></div>
-                <div>
-                  <p className="text-sm text-slate-300"><span className="text-red-400 font-medium">Staffing Risk:</span> B-Shift operating at 75% (9/12). Minimum safety threshold breached. Recommend authorizing OT for 2 deputies within next 4 hours.</p>
-                  <p className="text-[10px] text-slate-500 mt-1">Sources: CAD roster, HR scheduling, patrol deployment log</p>
+                <div className="space-y-1">
+                  <p className="text-sm font-medium text-red-400">Staffing Risk — B-Shift @ 75%</p>
+                  <ul className="space-y-0.5 text-[13px] text-slate-300">
+                    <li>Minimum threshold breached (9 of 12 required)</li>
+                    <li>2 deputies recommended within 4 hrs</li>
+                    <li>Impact: Patrol response time +18%</li>
+                  </ul>
+                  <p className="text-[10px] text-slate-500 pt-0.5">CAD roster · HR scheduling · patrol deployment log</p>
                 </div>
               </div>
+
+              {/* Budget Alert */}
               <div className="flex items-start gap-3">
                 <div className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 flex-shrink-0"></div>
-                <div>
-                  <p className="text-sm text-slate-300"><span className="text-amber-400 font-medium">Budget Alert:</span> OT spend at $78,240 vs $65,000 allocation (19% over). Two lateral hires would reduce year-end overage by $23K. Recommend initiating by Dec 15.</p>
-                  <p className="text-[10px] text-slate-500 mt-1">Sources: Finance system, HR vacancy data, payroll records</p>
+                <div className="space-y-1">
+                  <p className="text-sm font-medium text-amber-400">Budget Alert — OT 19% Over Allocation</p>
+                  <ul className="space-y-0.5 text-[13px] text-slate-300">
+                    <li>OT spend $78,240 vs $65,000 allocation</li>
+                    <li>2 lateral hires would reduce year-end overage by $23K</li>
+                    <li>Action: Initiate hiring by Dec 15</li>
+                  </ul>
+                  <p className="text-[10px] text-slate-500 pt-0.5">Finance system · HR vacancy data · payroll records</p>
                 </div>
               </div>
+
+              {/* Compliance */}
               <div className="flex items-start gap-3">
                 <div className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 flex-shrink-0"></div>
-                <div>
-                  <p className="text-sm text-slate-300"><span className="text-amber-400 font-medium">Compliance:</span> USMS inspection Dec 12-14. H2-Pod HVAC repair requires approval within 48 hours. 3 policies require command signature before inspection date.</p>
-                  <p className="text-[10px] text-slate-500 mt-1">Sources: Compliance database, facilities management, policy tracker</p>
+                <div className="space-y-1">
+                  <p className="text-sm font-medium text-amber-400">Compliance — USMS Inspection Dec 12–14</p>
+                  <ul className="space-y-0.5 text-[13px] text-slate-300">
+                    <li>H2-Pod HVAC repair requires approval within 48 hrs</li>
+                    <li>3 policies require command signature before inspection</li>
+                    <li>Risk: ACA non-compliance if HVAC unresolved</li>
+                  </ul>
+                  <p className="text-[10px] text-slate-500 pt-0.5">Compliance database · facilities management · policy tracker</p>
                 </div>
               </div>
+
               <div className="pt-2 text-[10px] text-slate-600">
                 Confidence: 92% · Model last trained on agency data 12h ago
               </div>
@@ -350,51 +385,60 @@ export default function CommandDashboard() {
               return (
                 <div
                   key={item.id}
-                  onClick={() => navigate(createPageUrl('Approvals'))}
-                  className="flex items-center justify-between gap-4 p-3 rounded-lg border border-slate-700/20 cursor-pointer hover:bg-slate-800/20 transition-colors"
+                  className="rounded-lg border border-slate-700/20 hover:bg-slate-800/20 transition-colors"
                 >
-                  <div className={`w-0.5 self-stretch rounded-full flex-shrink-0 ${getTierStripColor(item.tier)}`}></div>
+                  <div className="flex items-center gap-4 p-3">
+                    <div className={`w-0.5 self-stretch rounded-full flex-shrink-0 ${getTierStripColor(item.tier)}`}></div>
 
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <p className="text-sm font-medium text-white">{item.type}</p>
-                      {badge && <span className={`px-1.5 py-0.5 border rounded text-[11px] font-medium ${badge.classes}`}>{badge.text}</span>}
-                      <span className="text-[11px] text-slate-500">{getTimePending(item.timePendingMinutes)} ago</span>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <p className="text-sm font-medium text-white">{item.type}</p>
+                        {badge && <span className={`px-1.5 py-0.5 border rounded text-[11px] font-medium ${badge.classes}`}>{badge.text}</span>}
+                        <span className="text-[11px] text-slate-500">{getTimePending(item.timePendingMinutes)} ago</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-[11px]">
+                        <span className="text-slate-400">{item.division}</span>
+                        <span className="text-slate-600">·</span>
+                        <span className="text-slate-400">{item.name}</span>
+                        {item.financial && (
+                          <>
+                            <span className="text-slate-600">·</span>
+                            <span className="text-slate-400">{item.financial}</span>
+                          </>
+                        )}
+                        {item.impact && (
+                          <>
+                            <span className="text-slate-600">·</span>
+                            <span className={item.tier === 'critical' ? 'text-red-400' : item.tier === 'action' ? 'text-amber-400' : 'text-slate-400'}>{item.impact}</span>
+                          </>
+                        )}
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2 text-[11px]">
-                      <span className="text-slate-400">{item.division}</span>
-                      <span className="text-slate-600">·</span>
-                      <span className="text-slate-400">{item.name}</span>
-                      {item.financial && (
-                        <>
-                          <span className="text-slate-600">·</span>
-                          <span className="text-slate-400">{item.financial}</span>
-                        </>
-                      )}
-                      {item.impact && (
-                        <>
-                          <span className="text-slate-600">·</span>
-                          <span className={item.tier === 'critical' ? 'text-red-400' : item.tier === 'action' ? 'text-amber-400' : 'text-slate-400'}>{item.impact}</span>
-                        </>
-                      )}
+
+                    <div className="flex items-center gap-2 flex-shrink-0">
+                      <button
+                        onClick={(e) => openApprovalModal(item, 'approve', e)}
+                        className="px-3 py-1.5 text-xs font-medium text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/10 rounded-lg transition-colors"
+                      >
+                        Approve
+                      </button>
+                      <button
+                        onClick={(e) => openApprovalModal(item, 'deny', e)}
+                        className="px-3 py-1.5 text-xs font-medium text-slate-400 border border-slate-700/30 hover:bg-slate-700/20 rounded-lg transition-colors"
+                      >
+                        Escalate
+                      </button>
                     </div>
                   </div>
-
-                  <div className="flex items-center gap-1.5 flex-shrink-0">
-                    <button
-                      onClick={(e) => openApprovalModal(item, 'approve', e)}
-                      className="p-1.5 border border-slate-700/30 hover:bg-emerald-500/10 hover:border-emerald-500/20 rounded-lg transition-colors"
-                      title="Approve"
-                    >
-                      <ThumbsUp className="w-3.5 h-3.5 text-slate-500 hover:text-emerald-400" />
-                    </button>
-                    <button
-                      onClick={(e) => openApprovalModal(item, 'deny', e)}
-                      className="p-1.5 border border-slate-700/30 hover:bg-red-500/10 hover:border-red-500/20 rounded-lg transition-colors"
-                      title="Deny"
-                    >
-                      <XCircle className="w-3.5 h-3.5 text-slate-500 hover:text-red-400" />
-                    </button>
+                  <div className="flex items-center gap-2 px-3 pb-2 ml-[10px] text-[10px] text-slate-500">
+                    <Shield className="w-3 h-3 text-slate-600" />
+                    <span>Logged to audit trail</span>
+                    {item.impact && (
+                      <>
+                        <span className="text-slate-600">·</span>
+                        <span>Impact: {item.impact}</span>
+                      </>
+                    )}
                   </div>
                 </div>
               );

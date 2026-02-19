@@ -253,12 +253,26 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 
             {/* Right side - Sync Status, Notifications and Profile */}
             <div className="flex items-center gap-2 lg:gap-3">
-              {/* Data Sync Heartbeat */}
-              <div className="hidden lg:flex items-center gap-2 text-[11px] text-slate-500">
-                <Circle className="w-1.5 h-1.5 fill-emerald-500 text-emerald-500" />
-                <span>Data Sync Healthy</span>
-                <span className="text-slate-600">·</span>
-                <span className="text-slate-600">Last Sync: 2m ago</span>
+              {/* System Connection Indicators */}
+              <div className="hidden lg:flex items-center gap-3 text-[11px] text-slate-500">
+                <div className="flex items-center gap-1.5">
+                  <Circle className="w-1.5 h-1.5 fill-emerald-500 text-emerald-500" />
+                  <span>Sync Healthy</span>
+                  <span className="text-slate-600">· 2m ago</span>
+                </div>
+                <div className="h-3 w-px bg-slate-700/30"></div>
+                <div className="flex items-center gap-1.5">
+                  <Circle className="w-1.5 h-1.5 fill-emerald-500 text-emerald-500" />
+                  <span>RMS</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <Circle className="w-1.5 h-1.5 fill-emerald-500 text-emerald-500" />
+                  <span>Smartcop</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <Circle className="w-1.5 h-1.5 fill-emerald-500 text-emerald-500" />
+                  <span>NeoGov</span>
+                </div>
               </div>
               <div className="h-6 w-px bg-slate-700/30 hidden lg:block"></div>
 
