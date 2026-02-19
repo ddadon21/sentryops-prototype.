@@ -126,7 +126,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                   } ${sidebarCollapsed ? 'justify-center' : ''}`}
                   title={sidebarCollapsed ? item.label : ''}
                 >
-                  <Icon className="w-5 h-5 flex-shrink-0" />
+                  <Icon className="w-[18px] h-[18px] flex-shrink-0" />
                   {!sidebarCollapsed && (
                     <>
                       <span className="flex-1 text-left text-sm font-medium truncate">{item.label}</span>
@@ -176,7 +176,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
               className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-slate-400 hover:bg-slate-800/40 hover:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
               title={sidebarCollapsed ? 'Sign Out' : ''}
             >
-              <LogOut className="w-5 h-5 flex-shrink-0" />
+              <LogOut className="w-[18px] h-[18px] flex-shrink-0" />
               {!sidebarCollapsed && (
                 <span className="flex-1 text-left text-sm font-medium">Sign Out</span>
               )}
@@ -241,12 +241,12 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
               >
                 <Menu className="w-5 h-5 text-slate-400" />
               </button>
-              <div className="flex-1 max-w-xl relative hidden sm:block">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
+              <div className="flex-1 max-w-lg relative hidden sm:block">
+                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
                 <input
                   type="text"
-                  placeholder="Search anything..."
-                  className="w-full pl-12 pr-4 py-2 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
+                  placeholder="Search..."
+                  className="w-full pl-10 pr-4 py-1.5 bg-slate-800/30 border border-slate-700/30 rounded-lg text-sm text-white placeholder-slate-600 focus:outline-none focus:border-slate-600/50"
                 />
               </div>
             </div>
