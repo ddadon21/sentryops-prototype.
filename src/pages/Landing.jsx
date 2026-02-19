@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Shield, Check, Lock, ArrowRight, Zap, Globe, Users, TrendingUp, Menu, X } from 'lucide-react';
+import { Shield, Check, Lock, ArrowRight, Globe, Users, TrendingUp, Menu, X, BarChart3, FileCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 
@@ -7,26 +7,26 @@ export default function Landing() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
+    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-925 to-slate-950">
       {/* Nav */}
-      <nav className="border-b border-slate-800/50 backdrop-blur-xl bg-slate-900/30">
-        <div className="max-w-7xl mx-auto px-6 py-4">
+      <nav className="border-b border-slate-800/30 bg-slate-950/80 backdrop-blur-sm">
+        <div className="max-w-6xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-amber-400 to-amber-600 rounded-xl flex items-center justify-center">
-                <Shield className="w-6 h-6 text-slate-900" />
+              <div className="w-10 h-10 bg-amber-500 rounded-lg flex items-center justify-center">
+                <Shield className="w-6 h-6 text-slate-950" />
               </div>
-              <span className="text-xl font-bold text-white">SentryOps</span>
+              <span className="text-xl font-bold text-white tracking-tight">SentryOps</span>
             </div>
 
             {/* Desktop Nav */}
-            <div className="hidden md:flex items-center gap-4">
-              <a href="#features" className="text-slate-400 hover:text-white transition-colors">Features</a>
-              <a href="#security" className="text-slate-400 hover:text-white transition-colors">Security</a>
-              <a href="#pricing" className="text-slate-400 hover:text-white transition-colors">Pricing</a>
+            <div className="hidden md:flex items-center gap-6">
+              <a href="#features" className="text-slate-500 hover:text-slate-300 transition-colors text-sm font-medium">Features</a>
+              <a href="#security" className="text-slate-500 hover:text-slate-300 transition-colors text-sm font-medium">Security</a>
+              <a href="#compliance" className="text-slate-500 hover:text-slate-300 transition-colors text-sm font-medium">Compliance</a>
               <Link
                 to={createPageUrl('SignIn')}
-                className="px-4 py-2 bg-amber-500 hover:bg-amber-600 rounded-lg text-white font-medium transition-colors flex items-center gap-2"
+                className="px-4 py-2 bg-amber-500 hover:bg-amber-600 rounded-lg text-white text-sm font-medium transition-colors flex items-center gap-2"
               >
                 <Lock className="w-4 h-4" />
                 Sign In
@@ -45,12 +45,12 @@ export default function Landing() {
           {/* Mobile Menu */}
           {mobileMenuOpen && (
             <div className="md:hidden mt-4 pb-4 space-y-3">
-              <a href="#features" className="block text-slate-400 hover:text-white transition-colors">Features</a>
-              <a href="#security" className="block text-slate-400 hover:text-white transition-colors">Security</a>
-              <a href="#pricing" className="block text-slate-400 hover:text-white transition-colors">Pricing</a>
+              <a href="#features" className="block text-slate-500 hover:text-white transition-colors text-sm">Features</a>
+              <a href="#security" className="block text-slate-500 hover:text-white transition-colors text-sm">Security</a>
+              <a href="#compliance" className="block text-slate-500 hover:text-white transition-colors text-sm">Compliance</a>
               <Link
                 to={createPageUrl('SignIn')}
-                className="w-full px-4 py-2 bg-amber-500 hover:bg-amber-600 rounded-lg text-white font-medium transition-colors flex items-center justify-center gap-2"
+                className="w-full px-4 py-2 bg-amber-500 hover:bg-amber-600 rounded-lg text-white text-sm font-medium transition-colors flex items-center justify-center gap-2"
               >
                 <Lock className="w-4 h-4" />
                 Sign In
@@ -61,58 +61,52 @@ export default function Landing() {
       </nav>
 
       {/* Hero */}
-      <div className="max-w-7xl mx-auto px-6 py-12 md:py-20">
-        <div className="text-center mb-12 md:mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-400 text-sm font-medium mb-6">
-            <Zap className="w-4 h-4" />
-            Now with AI-powered intelligence
-          </div>
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-            The Central Hub for<br />Sheriff Operations
+      <div className="max-w-6xl mx-auto px-6 pt-20 pb-24">
+        <div className="text-center mb-20">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 tracking-tight leading-tight">
+            Operational Intelligence Infrastructure<br />for Sheriff Leadership
           </h1>
-          <p className="text-lg md:text-xl text-slate-400 mb-8 max-w-2xl mx-auto px-4">
-            Unified command platform that integrates your existing tools into one AI-powered hub.
-            Built for law enforcement, designed for efficiency.
+          <p className="text-lg text-slate-400 mb-10 max-w-2xl mx-auto leading-relaxed">
+            Centralized command platform integrating personnel, compliance, and operational data for executive decision-making.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button className="w-full sm:w-auto px-6 py-3 bg-amber-500 hover:bg-amber-600 rounded-xl text-white font-medium transition-colors flex items-center justify-center gap-2">
+            <button className="w-full sm:w-auto px-8 py-3.5 bg-amber-500 hover:bg-amber-600 rounded-lg text-white font-medium transition-colors flex items-center justify-center gap-2 text-sm">
               Request Demo
-              <ArrowRight className="w-5 h-5" />
+              <ArrowRight className="w-4 h-4" />
             </button>
-            <button className="w-full sm:w-auto px-6 py-3 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-white font-medium transition-colors">
+            <button className="w-full sm:w-auto px-8 py-3.5 bg-transparent hover:bg-slate-800/30 border border-slate-700/50 rounded-lg text-slate-400 hover:text-slate-300 font-medium transition-colors text-sm">
               View Documentation
             </button>
           </div>
         </div>
 
-        {/* Trust Badges */}
-        <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8 mb-12 md:mb-16 text-sm text-slate-400 px-4">
+        {/* Trust Indicators */}
+        <div className="flex flex-wrap items-center justify-center gap-6 md:gap-10 mb-20 px-4">
           <div className="flex items-center gap-2">
-            <Check className="w-4 h-4 text-green-400" />
-            <span>CJIS Compliant</span>
+            <Check className="w-3.5 h-3.5 text-slate-500" />
+            <span className="text-xs text-slate-500 font-medium tracking-wide uppercase">CJIS Compliant</span>
           </div>
           <div className="flex items-center gap-2">
-            <Check className="w-4 h-4 text-green-400" />
-            <span>AWS GovCloud</span>
+            <Check className="w-3.5 h-3.5 text-slate-500" />
+            <span className="text-xs text-slate-500 font-medium tracking-wide uppercase">AWS GovCloud</span>
           </div>
           <div className="flex items-center gap-2">
-            <Check className="w-4 h-4 text-green-400" />
-            <span>SOC 2 Type II</span>
+            <Check className="w-3.5 h-3.5 text-slate-500" />
+            <span className="text-xs text-slate-500 font-medium tracking-wide uppercase">SOC 2 Type II</span>
           </div>
           <div className="flex items-center gap-2">
-            <Check className="w-4 h-4 text-green-400" />
-            <span>GDPR Ready</span>
+            <Check className="w-3.5 h-3.5 text-slate-500" />
+            <span className="text-xs text-slate-500 font-medium tracking-wide uppercase">FedRAMP Aligned</span>
           </div>
         </div>
 
-        {/* Screenshot Mockup */}
-        <div className="relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-amber-500/20 blur-3xl"></div>
-          <div className="relative bg-slate-900/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-2">
-            <div className="bg-slate-950 rounded-xl aspect-video flex items-center justify-center">
+        {/* Dashboard Preview */}
+        <div className="relative mb-20">
+          <div className="bg-slate-900/40 border border-slate-800/40 rounded-xl p-2">
+            <div className="bg-slate-950 rounded-lg aspect-video flex items-center justify-center">
               <div className="text-center">
-                <Shield className="w-12 h-12 md:w-20 md:h-20 text-slate-700 mx-auto mb-4" />
-                <p className="text-slate-600 text-sm md:text-base">Dashboard Preview</p>
+                <Shield className="w-16 h-16 text-slate-800 mx-auto mb-4" />
+                <p className="text-slate-700 text-sm">Executive Command Dashboard Preview</p>
               </div>
             </div>
           </div>
@@ -120,28 +114,26 @@ export default function Landing() {
       </div>
 
       {/* Features */}
-      <div className="max-w-7xl mx-auto px-6 py-12 md:py-20">
-        <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-4">Everything You Need</h2>
-        <p className="text-slate-400 text-center mb-12 max-w-2xl mx-auto px-4">
-          Integrate all your existing tools into one intelligent platform
+      <div id="features" className="max-w-6xl mx-auto px-6 pb-24">
+        <h2 className="text-2xl md:text-3xl font-bold text-white text-center mb-3 tracking-tight">Core Capabilities</h2>
+        <p className="text-slate-500 text-center mb-14 max-w-xl mx-auto text-sm">
+          Integrated operational infrastructure connecting existing agency systems into a unified command environment.
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
-            { icon: Users, title: 'Personnel Management', desc: 'Complete staff directory with certifications, training, and scheduling' },
-            { icon: Globe, title: 'System Integration', desc: 'Connect NeoGov, PowerDMS, RMS/CAD, and more in one hub' },
-            { icon: Zap, title: 'AI Assistant', desc: 'Context-aware AI that helps you work faster and smarter' },
-            { icon: TrendingUp, title: 'Real-time Analytics', desc: 'Live dashboards with KPIs, compliance tracking, and insights' },
-            { icon: Shield, title: 'Enterprise Security', desc: 'CJIS-compliant with role-based access and full audit trails' },
-            { icon: Lock, title: 'Background Checks', desc: 'Streamlined applicant tracking with AI-powered summaries' }
+            { icon: Users, title: 'Personnel Management', desc: 'Complete staff directory with certifications, training records, and scheduling integrated from existing HR systems.' },
+            { icon: Globe, title: 'System Integration', desc: 'Connects NeoGov, PowerDMS, RMS/CAD, and agency databases into a single operational view.' },
+            { icon: BarChart3, title: 'Executive Analytics', desc: 'Real-time dashboards with operational KPIs, compliance tracking, and resource utilization metrics.' },
+            { icon: TrendingUp, title: 'Compliance Monitoring', desc: 'Automated tracking for POST certifications, ACA accreditation, CJIS audits, and federal requirements.' },
+            { icon: Shield, title: 'Enterprise Security', desc: 'CJIS-compliant architecture with role-based access control, full audit trails, and encrypted data handling.' },
+            { icon: FileCheck, title: 'Background Investigations', desc: 'Structured applicant tracking with document management, timeline oversight, and adjudication workflows.' }
           ].map((feature, idx) => {
             const Icon = feature.icon;
             return (
-              <div key={idx} className="bg-slate-800/40 backdrop-blur-xl border border-slate-700/50 rounded-xl p-6 hover:border-slate-600/50 transition-all">
-                <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center mb-4">
-                  <Icon className="w-6 h-6 text-blue-400" />
-                </div>
-                <h3 className="text-lg font-semibold text-white mb-2">{feature.title}</h3>
-                <p className="text-sm text-slate-400">{feature.desc}</p>
+              <div key={idx} className="bg-slate-900/30 border border-slate-800/30 rounded-lg p-6 hover:border-slate-700/40 transition-colors">
+                <Icon className="w-6 h-6 text-slate-500 mb-4" strokeWidth={1.5} />
+                <h3 className="text-base font-semibold text-white mb-2">{feature.title}</h3>
+                <p className="text-sm text-slate-500 leading-relaxed">{feature.desc}</p>
               </div>
             );
           })}
@@ -149,29 +141,29 @@ export default function Landing() {
       </div>
 
       {/* CTA */}
-      <div className="max-w-7xl mx-auto px-6 py-12 md:py-20">
-        <div className="bg-gradient-to-r from-blue-500/10 to-amber-500/10 border border-slate-700/50 rounded-2xl p-8 md:p-12 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Ready to transform your operations?</h2>
-          <p className="text-slate-400 mb-8 max-w-2xl mx-auto px-4">
-            Join forward-thinking sheriff's departments using SentryOps to streamline operations and improve efficiency.
+      <div className="max-w-6xl mx-auto px-6 pb-24">
+        <div className="bg-slate-900/30 border border-slate-800/30 rounded-xl p-10 md:p-14 text-center">
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-4 tracking-tight">Ready to consolidate your operations?</h2>
+          <p className="text-slate-500 mb-8 max-w-xl mx-auto text-sm leading-relaxed">
+            Schedule a demonstration to see how SentryOps integrates with your existing agency infrastructure.
           </p>
-          <button className="px-8 py-4 bg-amber-500 hover:bg-amber-600 rounded-xl text-white font-medium text-lg transition-colors inline-flex items-center gap-2">
+          <button className="px-8 py-3.5 bg-amber-500 hover:bg-amber-600 rounded-lg text-white font-medium transition-colors inline-flex items-center gap-2 text-sm">
             Schedule a Demo
-            <ArrowRight className="w-5 h-5" />
+            <ArrowRight className="w-4 h-4" />
           </button>
         </div>
       </div>
 
       {/* Footer */}
-      <footer className="border-t border-slate-800/50 py-8">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-slate-500">
-            <p>© 2024 SentryOps. All rights reserved.</p>
-            <div className="flex items-center gap-6">
-              <a href="#" className="hover:text-white transition-colors">Privacy</a>
-              <a href="#" className="hover:text-white transition-colors">Terms</a>
-              <a href="#" className="hover:text-white transition-colors">Security</a>
-              <a href="#" className="hover:text-white transition-colors">Contact</a>
+      <footer className="border-t border-slate-800/30 bg-slate-950/60">
+        <div className="max-w-6xl mx-auto px-6 py-8">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-600">
+            <p>&copy; 2024 SentryOps. All rights reserved.</p>
+            <div className="flex items-center gap-8">
+              <a href="#" className="hover:text-slate-400 transition-colors">Privacy Policy</a>
+              <a href="#" className="hover:text-slate-400 transition-colors">Terms of Service</a>
+              <a href="#" className="hover:text-slate-400 transition-colors">Security</a>
+              <a href="#" className="hover:text-slate-400 transition-colors">Contact</a>
             </div>
           </div>
         </div>
