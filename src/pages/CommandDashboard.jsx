@@ -191,17 +191,17 @@ export default function CommandDashboard() {
   // Top 3 approvals by severity
   const topApprovals = dashboardApprovals.slice(0, 3);
 
-  // Division data with hover drill info
+  // Division data with hover drill info — high-level operational status only
   const divisions = [
-    { name: 'Patrol', status: 'B-Shift 75%', severity: 'red', staffing: '56/65', route: 'PersonnelOverview',
+    { name: 'Patrol', status: 'B-Shift below threshold', severity: 'red', route: 'PersonnelOverview',
       drill: 'Min required: 12 deputies\nCurrently deployed: 9\nCoverage risk: Zones 4, 7' },
-    { name: 'Detention', status: '91.5% Capacity', severity: 'amber', staffing: '45/48', route: null,
+    { name: 'Detention', status: '91.5% Capacity', severity: 'amber', route: null,
       drill: 'Population: 1,098 / 1,200\nFederal holds: 247\nMedical: 14 current' },
-    { name: 'Investigations', status: '1 Escalation', severity: 'amber', staffing: '22/25', route: null,
+    { name: 'Investigations', status: '1 Escalation pending', severity: 'amber', route: null,
       drill: 'Active cases: 142\nDEA joint op pending\n3 positions posted' },
-    { name: 'Court Services', status: 'Stable', severity: 'green', staffing: '18/18', route: null,
+    { name: 'Court Services', status: 'Nominal', severity: 'green', route: null,
       drill: 'All courtrooms covered\nTransport schedule nominal' },
-    { name: 'Support Services', status: 'Stable', severity: 'green', staffing: '23/22', route: null,
+    { name: 'Support Services', status: 'Nominal', severity: 'green', route: null,
       drill: '1 grant-funded position\nFleet at min capacity' }
   ];
 
@@ -513,12 +513,24 @@ export default function CommandDashboard() {
                   <span className="text-slate-300">August 2025</span>
                 </div>
                 <div className="flex justify-between">
+                  <span className="text-slate-400">Next Review</span>
+                  <span className="text-slate-300">184 days</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-400">Risk Level</span>
+                  <span className="text-amber-400 font-medium">Moderate</span>
+                </div>
+                <div className="flex justify-between">
                   <span className="text-slate-400">Issue</span>
                   <span className="text-red-400">H2 HVAC — 72h window</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-400">Repair</span>
                   <span className="text-amber-400">Pending approval</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-400">Assigned To</span>
+                  <span className="text-slate-300">Facilities Director Chen</span>
                 </div>
               </div>
             </div>
@@ -544,8 +556,7 @@ export default function CommandDashboard() {
                     div.severity === 'amber' ? 'bg-amber-500' : 'bg-emerald-500'
                   }`}></div>
                 </div>
-                <p className="text-xs text-slate-300 mb-1">{div.status}</p>
-                <p className="text-[11px] text-slate-400">{div.staffing} staffed</p>
+                <p className="text-xs text-slate-300">{div.status}</p>
 
                 {/* Hover drill tooltip */}
                 {hoveredDivision === idx && (
@@ -589,7 +600,7 @@ export default function CommandDashboard() {
                   <div className={`h-full rounded-full ${div.percentage >= 90 ? 'bg-emerald-500/40' : div.percentage >= div.minThreshold ? 'bg-amber-500/40' : 'bg-red-500/40'}`} style={{ width: `${Math.min(div.percentage, 100)}%` }} />
                   {/* Min threshold marker */}
                   <div
-                    className="absolute top-[-2px] w-px h-[calc(100%+4px)] bg-slate-500/60"
+                    className="absolute top-[-3px] w-[1.5px] h-[calc(100%+6px)] bg-red-500/50 rounded-full"
                     style={{ left: `${div.minThreshold}%` }}
                     title={`Min safe: ${div.minThreshold}%`}
                   />
@@ -598,7 +609,7 @@ export default function CommandDashboard() {
             ))}
             <div className="flex items-center gap-3 pt-2 text-[10px] text-slate-500">
               <div className="flex items-center gap-1.5">
-                <div className="w-3 h-px bg-slate-500/60"></div>
+                <div className="w-[1.5px] h-2.5 bg-red-500/50 rounded-full"></div>
                 <span>Min safe threshold</span>
               </div>
             </div>
