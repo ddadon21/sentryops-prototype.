@@ -151,8 +151,8 @@ export default function DashboardLayout({
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex">
-      {/* ── Sidebar ─── LOCKED: w-64/w-20 · p-4 · space-y-1 · never changes per module ── */}
-      <aside className={`fixed lg:static inset-y-0 left-0 z-50 flex-shrink-0 border-r border-slate-800/50 backdrop-blur-xl bg-slate-900/30 flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
+      {/* ── Sidebar ──────────────────────────────────────── */}
+      <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-slate-800/50 backdrop-blur-xl bg-slate-900/30 flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
         {/* Logo */}
         <div className="p-4 border-b border-slate-700/50 flex items-center justify-between">
           {!sidebarCollapsed && (
@@ -172,8 +172,8 @@ export default function DashboardLayout({
           </button>
         </div>
 
-        {/* Navigation — LOCKED: p-4 space-y-1 · scrolls internally · spacing never changes */}
-        <nav className="flex-1 overflow-y-auto overscroll-contain p-4 space-y-1">
+        {/* Navigation */}
+        <nav className="flex-1 overflow-y-auto p-4 space-y-1">
           {navigation.map(item => {
             const Icon = item.icon;
             const isActive = isNavActive(item);
@@ -297,9 +297,9 @@ export default function DashboardLayout({
 
       {/* ── Main Content Area ──────────────────────────── */}
       <div className="flex-1 flex flex-col min-w-0">
-        {/* Header — LOCKED: h-16 · px-6 · border-b · identical across all modules */}
-        <header className="h-16 border-b border-slate-800/50 backdrop-blur-xl bg-slate-900/30 sticky top-0 z-30">
-          <div className="h-full px-4 lg:px-6 flex items-center justify-between gap-4">
+        {/* Header */}
+        <header className="border-b border-slate-800/50 backdrop-blur-xl bg-slate-900/30 sticky top-0 z-30">
+          <div className="px-4 lg:px-6 py-4 flex items-center justify-between gap-4">
             {/* Left: mobile menu + search */}
             <div className="flex items-center gap-4 flex-1 min-w-0">
               <button

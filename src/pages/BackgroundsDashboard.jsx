@@ -3,11 +3,6 @@ import { LayoutDashboard, FolderOpen, FileText, Clock, UserCheck, Calendar, File
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import DashboardLayout from '../layouts/DashboardLayout';
-import {
-  MetricCard, MetricRow, SectionContainer, AlertStrip, AlertStripCompact, PageHeader,
-  SURFACE, SPACING, TYPE, STATUS_DOT, STATUS_DOT_MUTED, STATUS_TEXT,
-  DOT_SIZE, DOT_SIZE_SMALL
-} from '../components/shared';
 
 // ── BI module config for shared layout ────────────────────────
 
@@ -139,143 +134,145 @@ export default function BackgroundsDashboard() {
       notifications={biNotifications}
       settingsRoute="/bi/settings"
     >
-      <div className="p-5 lg:p-8">
-        <div className="max-w-7xl mx-auto space-y-8">
-
-          {/* Page Header — uses shared PageHeader */}
-          <PageHeader
-            title="Investigations Command Overview"
-            subtitle={
-              <>
+      <div className="p-4 lg:p-8">
+        <div className="max-w-7xl mx-auto">
+          {/* Page Header */}
+          <div className="mb-8 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            <div>
+              <h2 className="text-xl font-bold text-white mb-1">Investigations Command Overview</h2>
+              <div className="flex items-center gap-2 text-[11px] text-slate-500">
                 <span>{formatDate(currentTime)}</span>
                 <span className="text-slate-700">·</span>
                 <span>{formatTime(currentTime)} EST</span>
                 <span className="text-slate-700">·</span>
                 <span>Updated 2 minutes ago</span>
-              </>
-            }
-            actions={
-              <>
-                <button className="flex items-center gap-2 px-4 py-2 bg-slate-800/40 border border-slate-700/40 text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-800/60 transition-all">
-                  <Download className="w-4 h-4" />
-                  Export Report
-                </button>
-                <div className="relative filter-container">
-                  <button
-                    onClick={() => setFilterOpen(!filterOpen)}
-                    className="flex items-center gap-2 px-4 py-2 bg-slate-800/40 border border-slate-700/40 text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-800/60 transition-all"
-                  >
-                    <Filter className="w-4 h-4" />
-                    Filter
-                    <ChevronDown className="w-3 h-3" />
-                  </button>
-                  {filterOpen && (
-                    <div className="absolute right-0 top-full mt-2 w-48 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-lg shadow-2xl z-50 py-1">
-                      <button className="w-full text-left px-4 py-2 text-[13px] text-slate-300 hover:bg-slate-800/50">All Cases</button>
-                      <button className="w-full text-left px-4 py-2 text-[13px] text-slate-300 hover:bg-slate-800/50">With Concerns</button>
-                      <button className="w-full text-left px-4 py-2 text-[13px] text-slate-300 hover:bg-slate-800/50">Pending Review</button>
-                      <button className="w-full text-left px-4 py-2 text-[13px] text-slate-300 hover:bg-slate-800/50">Overdue</button>
-                    </div>
-                  )}
-                </div>
-                <select
-                  value={timeRange}
-                  onChange={(e) => setTimeRange(e.target.value)}
-                  className="px-4 py-2 bg-slate-800/40 border border-slate-700/40 rounded-lg text-slate-300 text-[13px] focus:outline-none focus:border-slate-600"
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button className="flex items-center gap-2 px-4 py-2 bg-slate-800/40 border border-slate-700/40 text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-800/60 transition-all">
+                <Download className="w-4 h-4" />
+                Export Report
+              </button>
+              <div className="relative filter-container">
+                <button
+                  onClick={() => setFilterOpen(!filterOpen)}
+                  className="flex items-center gap-2 px-4 py-2 bg-slate-800/40 border border-slate-700/40 text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-800/60 transition-all"
                 >
-                  <option value="week">This Week</option>
-                  <option value="month">This Month</option>
-                  <option value="quarter">This Quarter</option>
-                  <option value="year">This Year</option>
-                </select>
-              </>
-            }
-          />
+                  <Filter className="w-4 h-4" />
+                  Filter
+                  <ChevronDown className="w-3 h-3" />
+                </button>
+                {filterOpen && (
+                  <div className="absolute right-0 top-full mt-2 w-48 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-lg shadow-2xl z-50 py-1">
+                    <button className="w-full text-left px-4 py-2 text-[13px] text-slate-300 hover:bg-slate-800/50">All Cases</button>
+                    <button className="w-full text-left px-4 py-2 text-[13px] text-slate-300 hover:bg-slate-800/50">With Concerns</button>
+                    <button className="w-full text-left px-4 py-2 text-[13px] text-slate-300 hover:bg-slate-800/50">Pending Review</button>
+                    <button className="w-full text-left px-4 py-2 text-[13px] text-slate-300 hover:bg-slate-800/50">Overdue</button>
+                  </div>
+                )}
+              </div>
+              <select
+                value={timeRange}
+                onChange={(e) => setTimeRange(e.target.value)}
+                className="px-4 py-2 bg-slate-800/40 border border-slate-700/40 rounded-lg text-slate-300 text-[13px] focus:outline-none focus:border-slate-600"
+              >
+                <option value="week">This Week</option>
+                <option value="month">This Month</option>
+                <option value="quarter">This Quarter</option>
+                <option value="year">This Year</option>
+              </select>
+            </div>
+          </div>
 
           {/* Adjudication Exposure Console */}
-          <div className={`flex items-center gap-6 px-5 py-3.5 ${SURFACE.card}`} style={{ borderRadius: '0.5rem' }}>
+          <div className="mb-8 flex items-center gap-6 px-5 py-3.5 bg-slate-800/40 border border-slate-600/30 rounded-lg">
             <div className="flex items-center gap-2.5">
-              <div className={`${DOT_SIZE_SMALL} ${STATUS_DOT_MUTED.critical}`}></div>
-              <span className={`${TYPE.body} font-semibold`}>Cases Awaiting Sign-Off:</span>
+              <div className="w-1.5 h-1.5 bg-red-700/60 rounded-full"></div>
+              <span className="text-[13px] font-semibold text-slate-300">Cases Awaiting Sign-Off:</span>
               <span className="text-[13px] font-bold text-white">{metrics.awaitingSupervisorSignOff}</span>
             </div>
             <div className="h-4 w-px bg-slate-600/40"></div>
             <div className="flex items-center gap-2.5">
-              <span className={`${TYPE.body} font-semibold`}>Avg Wait:</span>
+              <span className="text-[13px] font-semibold text-slate-300">Avg Wait:</span>
               <span className="text-[13px] font-bold text-white">{metrics.avgSupervisorWait} days</span>
             </div>
             <div className="h-4 w-px bg-slate-600/40"></div>
             <div className="flex items-center gap-2.5">
-              <div className={`${DOT_SIZE_SMALL} ${STATUS_DOT_MUTED.critical}`}></div>
-              <span className={`${TYPE.body} font-semibold`}>SLA Breach:</span>
+              <div className="w-1.5 h-1.5 bg-red-700/60 rounded-full"></div>
+              <span className="text-[13px] font-semibold text-slate-300">SLA Breach:</span>
               <span className="text-[13px] font-bold text-white">{metrics.slaBreachCases}</span>
             </div>
             <div className="h-4 w-px bg-slate-600/40"></div>
             <div className="flex items-center gap-2.5">
-              <span className={`${TYPE.body} font-semibold`}>Avg Case Age:</span>
+              <span className="text-[13px] font-semibold text-slate-300">Avg Case Age:</span>
               <span className="text-[13px] font-bold text-white">{metrics.avgCaseAge} days</span>
             </div>
           </div>
 
-          {/* Supervisor Review Required — uses AlertStrip */}
+          {/* Supervisor Review Required */}
           {supervisorReviewVisible && (
-            <AlertStrip
-              severity="critical"
-              dismissible
-              onDismiss={() => setSupervisorReviewVisible(false)}
-            >
-              <div className="-mt-1.5 -ml-3">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-3">
-                    <h4 className={TYPE.h3}>Supervisor Review Required</h4>
-                    <span className={TYPE.meta}>{supervisorReviewCases.length} pending</span>
-                  </div>
+            <div className="mb-8 bg-slate-800/25 border border-slate-700/30 border-l-[3px] border-l-red-800/60 rounded-xl p-5">
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-3">
+                  <h4 className="text-[13px] font-semibold text-white uppercase tracking-wide">Supervisor Review Required</h4>
+                  <span className="text-xs text-slate-500">{supervisorReviewCases.length} pending</span>
+                </div>
+                <div className="flex items-center gap-3">
                   <button
                     onClick={() => navigate(createPageUrl('CaseManagement'))}
                     className="text-[13px] text-slate-400 hover:text-slate-300 font-medium"
                   >
                     Review All Pending →
                   </button>
-                </div>
-
-                <div className="space-y-1">
-                  {supervisorReviewCases.map(caseItem => (
-                    <div key={caseItem.id} className={`flex items-center gap-4 px-4 py-2.5 ${SURFACE.row} rounded border-l-[3px] ${
-                      caseItem.severity === 'high' ? 'border-l-red-800/50' : 'border-l-amber-700/40'
-                    }`}>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-3">
-                          <span className="text-[13px] font-semibold text-white">{caseItem.subject}</span>
-                          <span className={TYPE.meta}>{caseItem.caseNumber}</span>
-                        </div>
-                        <p className="text-xs text-slate-400 mt-1">{caseItem.detail}</p>
-                      </div>
-                      <div className="text-right flex-shrink-0">
-                        <span className={TYPE.meta}>{caseItem.issueType}</span>
-                        <div className="flex items-center gap-2 mt-1">
-                          <span className={`${DOT_SIZE_SMALL} ${caseItem.severity === 'high' ? STATUS_DOT_MUTED.critical : STATUS_DOT_MUTED.warning}`}></span>
-                          <span className={TYPE.meta}>{caseItem.daysOpen} days open</span>
-                        </div>
-                      </div>
-                      <div className="flex-shrink-0">
-                        <span className="text-xs text-slate-400">{caseItem.nextAction}</span>
-                      </div>
-                    </div>
-                  ))}
+                  <button
+                    onClick={() => setSupervisorReviewVisible(false)}
+                    className="text-slate-500 hover:text-slate-400 transition-colors"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
                 </div>
               </div>
-            </AlertStrip>
+
+              <div className="space-y-1">
+                {supervisorReviewCases.map(caseItem => (
+                  <div key={caseItem.id} className={`flex items-center gap-4 px-4 py-2.5 bg-slate-900/40 rounded border-l-[3px] ${
+                    caseItem.severity === 'high' ? 'border-l-red-800/50' : 'border-l-amber-700/40'
+                  }`}>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-3">
+                        <span className="text-[13px] font-semibold text-white">{caseItem.subject}</span>
+                        <span className="text-xs text-slate-500">{caseItem.caseNumber}</span>
+                      </div>
+                      <p className="text-xs text-slate-400 mt-1">{caseItem.detail}</p>
+                    </div>
+                    <div className="text-right flex-shrink-0">
+                      <span className="text-xs text-slate-500">{caseItem.issueType}</span>
+                      <div className="flex items-center gap-2 mt-1">
+                        <span className={`w-1.5 h-1.5 rounded-full ${caseItem.severity === 'high' ? 'bg-red-700/60' : 'bg-amber-700/50'}`}></span>
+                        <span className="text-xs text-slate-500">{caseItem.daysOpen} days open</span>
+                      </div>
+                    </div>
+                    <div className="flex-shrink-0">
+                      <span className="text-xs text-slate-400">{caseItem.nextAction}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           )}
 
-          {/* Investigation Status Summary — uses SectionContainer */}
-          <SectionContainer
-            title="Investigation Status Summary"
-            headerRight={<span className={TYPE.meta}>Last sync: 2 min ago</span>}
-          >
+          {/* Investigation Status Summary */}
+          <div className="mb-8 bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
+            <div className="flex items-center justify-between mb-5">
+              <h4 className="text-[13px] font-semibold text-white uppercase tracking-wide">Investigation Status Summary</h4>
+              <span className="text-xs text-slate-500">Last sync: 2 min ago</span>
+            </div>
+
             <div className="mb-5">
               <div className="flex items-center gap-2 mb-2.5">
-                <div className={`${DOT_SIZE_SMALL} ${STATUS_DOT_MUTED.critical}`}></div>
-                <h5 className={TYPE.h3}>REQUIRES ACTION</h5>
+                <div className="w-1.5 h-1.5 bg-red-700/60 rounded-full"></div>
+                <h5 className="text-[13px] font-semibold text-slate-300">REQUIRES ACTION</h5>
               </div>
               <div className="space-y-1.5 text-[13px]">
                 <div className="flex items-start gap-3 pl-4">
@@ -295,8 +292,8 @@ export default function BackgroundsDashboard() {
 
             <div className="mb-5">
               <div className="flex items-center gap-2 mb-2.5">
-                <div className={`${DOT_SIZE_SMALL} ${STATUS_DOT_MUTED.warning}`}></div>
-                <h5 className={TYPE.h3}>IN PROGRESS</h5>
+                <div className="w-1.5 h-1.5 bg-amber-600/50 rounded-full"></div>
+                <h5 className="text-[13px] font-semibold text-slate-300">IN PROGRESS</h5>
               </div>
               <div className="space-y-1.5 text-[13px]">
                 <div className="flex items-start gap-3 pl-4">
@@ -316,8 +313,8 @@ export default function BackgroundsDashboard() {
 
             <div>
               <div className="flex items-center gap-2 mb-2.5">
-                <div className={`${DOT_SIZE_SMALL} ${STATUS_DOT_MUTED.neutral}`}></div>
-                <h5 className={TYPE.h3}>COMPLETED THIS MONTH</h5>
+                <div className="w-1.5 h-1.5 bg-slate-500/50 rounded-full"></div>
+                <h5 className="text-[13px] font-semibold text-slate-300">COMPLETED THIS MONTH</h5>
               </div>
               <div className="space-y-1.5 text-[13px]">
                 <div className="flex items-start gap-3 pl-4">
@@ -334,100 +331,194 @@ export default function BackgroundsDashboard() {
                 </div>
               </div>
             </div>
-          </SectionContainer>
+          </div>
 
-          {/* Compliance Risk Indicator — uses AlertStripCompact */}
+          {/* Compliance Risk Indicator */}
           {metrics.slaBreachCases > 0 && (
-            <AlertStripCompact severity="warning">
-              <div>
-                <p className="text-[13px] text-white"><span className="text-slate-400">Compliance Notice:</span> {metrics.slaBreachCases} case(s) have exceeded the 18-day SLA target.</p>
-                <p className={`${TYPE.micro} mt-0.5`}>POST certification and hiring timelines may be affected.</p>
+            <div className="mb-8 bg-slate-800/25 border border-slate-700/30 border-l-[3px] border-l-amber-700/50 rounded-xl px-5 py-3">
+              <div className="flex items-center gap-3">
+                <div className="w-1.5 h-1.5 bg-amber-700/50 rounded-full flex-shrink-0"></div>
+                <div>
+                  <p className="text-[13px] text-white"><span className="text-slate-400">Compliance Notice:</span> {metrics.slaBreachCases} case(s) have exceeded the 18-day SLA target.</p>
+                  <p className="text-[11px] text-slate-500 mt-0.5">POST certification and hiring timelines may be affected.</p>
+                </div>
               </div>
-            </AlertStripCompact>
+            </div>
           )}
 
-          {/* Key Metrics Grid — uses shared MetricCard */}
-          <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 ${SPACING.gridGap}`}>
-            <MetricCard
-              title="Active Investigations"
-              value={metrics.activeCases}
-              status="neutral"
+          {/* Key Metrics Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+            <button
               onClick={() => navigate(createPageUrl('ActiveCases'))}
+              className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5 hover:border-slate-600/40 transition-all text-left group"
             >
-              <MetricRow label="Initial Review" value="12" />
-              <MetricRow label="Reference Checks" value="15" />
-              <MetricRow label="Pending Review" value={metrics.pendingReview} />
-            </MetricCard>
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 bg-slate-500/50 rounded-full"></div>
+                  <span className="text-xs text-slate-500 uppercase tracking-wide font-medium">Active Investigations</span>
+                </div>
+                <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-slate-400 transition-all" />
+              </div>
+              <p className="text-2xl font-semibold text-white mb-3">{metrics.activeCases}</p>
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-slate-500">Initial Review</span>
+                  <span className="text-slate-300">12</span>
+                </div>
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-slate-500">Reference Checks</span>
+                  <span className="text-slate-300">15</span>
+                </div>
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-slate-500">Pending Review</span>
+                  <span className="text-slate-300">{metrics.pendingReview}</span>
+                </div>
+              </div>
+            </button>
 
-            <MetricCard
-              title="Documented Concerns"
-              value={metrics.casesWithConcerns}
-              status="critical"
+            <button
               onClick={() => navigate(createPageUrl('CriminalHistoryReview'))}
+              className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5 hover:border-slate-600/40 transition-all text-left group"
             >
-              <MetricRow label="Criminal History" value="3" />
-              <MetricRow label="Financial Issues" value="3" />
-              <MetricRow label="Employment Gaps" value="2" />
-            </MetricCard>
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 bg-red-700/60 rounded-full"></div>
+                  <span className="text-xs text-slate-500 uppercase tracking-wide font-medium">Documented Concerns</span>
+                </div>
+                <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-slate-400 transition-all" />
+              </div>
+              <p className="text-2xl font-semibold text-white mb-3">{metrics.casesWithConcerns}</p>
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-slate-500">Criminal History</span>
+                  <span className="text-slate-300">3</span>
+                </div>
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-slate-500">Financial Issues</span>
+                  <span className="text-slate-300">3</span>
+                </div>
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-slate-500">Employment Gaps</span>
+                  <span className="text-slate-300">2</span>
+                </div>
+              </div>
+            </button>
 
-            <MetricCard
-              title="Completed This Month"
-              value={metrics.completedThisMonth}
-              status="neutral"
+            <button
               onClick={() => navigate(createPageUrl('CaseClosure'))}
+              className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5 hover:border-slate-600/40 transition-all text-left group"
             >
-              <MetricRow label="Cleared for Hire" value={metrics.clearedForHire} />
-              <MetricRow label="Not Recommended" value={metrics.notRecommended} />
-              <MetricRow label="Monthly Target" value="35" />
-            </MetricCard>
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 bg-slate-500/50 rounded-full"></div>
+                  <span className="text-xs text-slate-500 uppercase tracking-wide font-medium">Completed This Month</span>
+                </div>
+                <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-slate-400 transition-all" />
+              </div>
+              <p className="text-2xl font-semibold text-white mb-3">{metrics.completedThisMonth}</p>
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-slate-500">Cleared for Hire</span>
+                  <span className="text-slate-300">{metrics.clearedForHire}</span>
+                </div>
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-slate-500">Not Recommended</span>
+                  <span className="text-slate-300">{metrics.notRecommended}</span>
+                </div>
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-slate-500">Monthly Target</span>
+                  <span className="text-slate-300">35</span>
+                </div>
+              </div>
+            </button>
 
-            <MetricCard
-              title="Avg Turnaround"
-              value={metrics.avgCompletionDays}
-              valueSuffix="days"
-              status="neutral"
+            <button
               onClick={() => navigate(createPageUrl('BIReports'))}
+              className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5 hover:border-slate-600/40 transition-all text-left group"
             >
-              <MetricRow label="SLA Target" value={`${metrics.slaTarget} days`} />
-              <MetricRow label="Ahead of Target" value="3.5 days" />
-              <MetricRow label="Fastest This Month" value="8 days" />
-            </MetricCard>
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 bg-slate-500/50 rounded-full"></div>
+                  <span className="text-xs text-slate-500 uppercase tracking-wide font-medium">Avg Turnaround</span>
+                </div>
+                <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-slate-400 transition-all" />
+              </div>
+              <p className="text-2xl font-semibold text-white mb-3">{metrics.avgCompletionDays}<span className="text-base text-slate-500 ml-1">days</span></p>
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-slate-500">SLA Target</span>
+                  <span className="text-slate-300">{metrics.slaTarget} days</span>
+                </div>
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-slate-500">Ahead of Target</span>
+                  <span className="text-slate-300">3.5 days</span>
+                </div>
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-slate-500">Fastest This Month</span>
+                  <span className="text-slate-300">8 days</span>
+                </div>
+              </div>
+            </button>
           </div>
 
-          {/* Secondary Metrics — uses shared MetricCard (sm size) */}
-          <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 ${SPACING.gridGap}`}>
-            <MetricCard title="Today" value={metrics.interviewsToday} size="sm" status="neutral"
-              subtext="Reference Interviews Scheduled"
-              alert={{ text: 'Next: 10:30 AM — Thompson ref #2', severity: 'warning' }}
-            />
-            <MetricCard title="Pending" value={metrics.referencesPending} size="sm" status="warning"
-              subtext="References Awaiting Contact"
-              alert={{ text: 'Avg response time: 2.3 days', severity: 'warning' }}
-            />
-            <MetricCard title="Overdue" value={metrics.overdueItems} size="sm" status="critical"
-              subtext="Overdue Items"
-              alert={{ text: 'Oldest: 4 days — Johnson refs', severity: 'warning' }}
-            />
-            <MetricCard title="Queue" value={metrics.pendingReview} size="sm" status="neutral"
-              subtext="Awaiting Supervisor Review"
-              alert={{ text: 'Avg wait: 1.2 days', severity: 'warning' }}
-            />
+          {/* Secondary Metrics */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+            <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-1.5 h-1.5 bg-slate-500/50 rounded-full"></div>
+                <span className="text-xs text-slate-500 uppercase tracking-wide font-medium">Today</span>
+              </div>
+              <p className="text-xl font-semibold text-white mb-1">{metrics.interviewsToday}</p>
+              <p className="text-xs text-slate-400">Reference Interviews Scheduled</p>
+              <p className="text-xs text-slate-500 mt-2">Next: 10:30 AM — Thompson ref #2</p>
+            </div>
+
+            <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-1.5 h-1.5 bg-amber-600/50 rounded-full"></div>
+                <span className="text-xs text-slate-500 uppercase tracking-wide font-medium">Pending</span>
+              </div>
+              <p className="text-xl font-semibold text-white mb-1">{metrics.referencesPending}</p>
+              <p className="text-xs text-slate-400">References Awaiting Contact</p>
+              <p className="text-xs text-slate-500 mt-2">Avg response time: 2.3 days</p>
+            </div>
+
+            <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-1.5 h-1.5 bg-red-700/60 rounded-full"></div>
+                <span className="text-xs text-slate-500 uppercase tracking-wide font-medium">Overdue</span>
+              </div>
+              <p className="text-xl font-semibold text-white mb-1">{metrics.overdueItems}</p>
+              <p className="text-xs text-slate-400">Overdue Items</p>
+              <p className="text-xs text-slate-500 mt-2">Oldest: 4 days — Johnson refs</p>
+            </div>
+
+            <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-1.5 h-1.5 bg-slate-500/50 rounded-full"></div>
+                <span className="text-xs text-slate-500 uppercase tracking-wide font-medium">Queue</span>
+              </div>
+              <p className="text-xl font-semibold text-white mb-1">{metrics.pendingReview}</p>
+              <p className="text-xs text-slate-400">Awaiting Supervisor Review</p>
+              <p className="text-xs text-slate-500 mt-2">Avg wait: 1.2 days</p>
+            </div>
           </div>
 
-          <div className={`grid grid-cols-1 lg:grid-cols-2 ${SPACING.gridGap}`}>
-            {/* Investigation Pipeline — uses SectionContainer */}
-            <SectionContainer
-              title="Investigation Pipeline"
-              subtitle={`47 total active — SLA Breach: ${metrics.slaBreachCases} case(s) — Avg Case Age: ${metrics.avgCaseAge} days`}
-              headerRight={
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-8">
+            {/* Investigation Pipeline */}
+            <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
+              <div className="flex items-center justify-between mb-3">
+                <div>
+                  <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">Investigation Pipeline</h3>
+                  <p className="text-xs text-slate-500 mt-1">47 total active — SLA Breach: {metrics.slaBreachCases} case(s) — Avg Case Age: {metrics.avgCaseAge} days</p>
+                </div>
                 <button
                   onClick={() => navigate(createPageUrl('CaseManagement'))}
                   className="text-[13px] text-slate-400 hover:text-slate-300"
                 >
                   View All →
                 </button>
-              }
-            >
+              </div>
               <div className="space-y-3.5">
                 {investigationStages.map((stage, idx) => {
                   const isBreaching = stage.stage === 'Supervisor Review';
@@ -435,8 +526,8 @@ export default function BackgroundsDashboard() {
                     <div key={idx}>
                       <div className="flex items-center justify-between mb-1">
                         <div className="flex items-center gap-2">
-                          <span className={TYPE.body}>{stage.stage}</span>
-                          <span className={TYPE.meta}>— {stage.description}</span>
+                          <span className="text-[13px] text-slate-300">{stage.stage}</span>
+                          <span className="text-xs text-slate-600">— {stage.description}</span>
                         </div>
                         <span className="text-[13px] font-semibold text-slate-300">{stage.count}</span>
                       </div>
@@ -463,120 +554,122 @@ export default function BackgroundsDashboard() {
                   <span className="text-slate-300 ml-2 font-medium">{metrics.slaTarget} days</span>
                 </div>
               </div>
-            </SectionContainer>
+            </div>
 
-            {/* Recent Activity — uses SectionContainer */}
-            <SectionContainer
-              title="Recent Activity"
-              headerRight={<span className={TYPE.meta}>Last 24 hours</span>}
-            >
+            {/* Recent Activity */}
+            <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
+              <div className="flex items-center justify-between mb-5">
+                <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">Recent Activity</h3>
+                <span className="text-xs text-slate-500">Last 24 hours</span>
+              </div>
               <div className="space-y-1">
                 {recentActivity.map(activity => {
-                  const statusDot = activity.type === 'flag' ? STATUS_DOT_MUTED.critical :
-                    activity.type === 'complete' ? 'bg-slate-400/50' : STATUS_DOT_MUTED.neutral;
+                  const statusDot = activity.type === 'flag' ? 'bg-red-700/60' :
+                    activity.type === 'complete' ? 'bg-slate-400/50' : 'bg-slate-600/50';
                   return (
-                    <div key={activity.id} className={`flex items-start gap-3 px-4 py-2.5 ${SURFACE.row} rounded ${SURFACE.rowHover} transition-all cursor-pointer`}>
-                      <div className={`${DOT_SIZE_SMALL} mt-[7px] flex-shrink-0 ${statusDot}`}></div>
+                    <div key={activity.id} className="flex items-start gap-3 px-4 py-2.5 bg-slate-900/20 rounded hover:bg-slate-800/30 transition-all cursor-pointer">
+                      <div className={`w-1.5 h-1.5 rounded-full mt-[7px] flex-shrink-0 ${statusDot}`}></div>
                       <div className="flex-1 min-w-0">
-                        <p className={TYPE.body}>{activity.message}</p>
+                        <p className="text-[13px] text-slate-300 leading-snug">{activity.message}</p>
                         <div className="flex items-center gap-2 mt-1">
                           <span className="text-[11px] text-slate-500 font-medium">{activity.user}</span>
                           <span className="text-slate-700 text-[11px]">|</span>
-                          <span className={TYPE.micro}>{activity.time}</span>
+                          <span className="text-[11px] text-slate-500">{activity.time}</span>
                           <span className="text-slate-700 text-[11px]">|</span>
-                          <span className={TYPE.micro}>{activity.detail}</span>
+                          <span className="text-[11px] text-slate-500">{activity.detail}</span>
                         </div>
                       </div>
                     </div>
                   );
                 })}
               </div>
-            </SectionContainer>
+            </div>
           </div>
 
-          {/* Priority Cases — uses SectionContainer */}
-          <SectionContainer
-            title="Priority Cases Requiring Action"
-            headerRight={
+          {/* Priority Cases */}
+          <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5 mb-8">
+            <div className="flex items-center justify-between mb-5">
+              <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">Priority Cases Requiring Action</h3>
               <button
                 onClick={() => navigate(createPageUrl('ActiveCases'))}
                 className="text-[13px] text-slate-400 hover:text-slate-300 font-medium"
               >
                 View All →
               </button>
-            }
-          >
+            </div>
             <div className="space-y-1">
               {priorityCases.map(caseItem => (
-                <div key={caseItem.id} className={`flex items-center gap-4 px-4 py-3 ${SURFACE.row} rounded ${SURFACE.rowHover} transition-all cursor-pointer`}>
+                <div key={caseItem.id} className="flex items-center gap-4 px-4 py-3 bg-slate-900/20 rounded hover:bg-slate-800/30 transition-all cursor-pointer">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-4">
-                      <span className={`${DOT_SIZE_SMALL} flex-shrink-0 ${
-                        caseItem.priority === 'high' ? STATUS_DOT_MUTED.critical :
-                        caseItem.priority === 'medium' ? STATUS_DOT_MUTED.warning : STATUS_DOT_MUTED.neutral
+                      <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${
+                        caseItem.priority === 'high' ? 'bg-red-700/60' :
+                        caseItem.priority === 'medium' ? 'bg-amber-700/50' : 'bg-slate-600/50'
                       }`}></span>
                       <span className="text-[13px] font-semibold text-white">{caseItem.subject}</span>
-                      <span className={TYPE.micro}>{caseItem.caseNumber}</span>
+                      <span className="text-[11px] text-slate-600">{caseItem.caseNumber}</span>
                     </div>
                     <span className="text-[11px] text-slate-500 ml-[22px]">{caseItem.position}</span>
                   </div>
                   <div className="flex-shrink-0 text-center w-48">
-                    <span className={TYPE.body}>{caseItem.stage}</span>
-                    <div className={TYPE.micro}>{caseItem.daysOpen} days open</div>
+                    <span className="text-[13px] text-slate-300">{caseItem.stage}</span>
+                    <div className="text-[11px] text-slate-500">{caseItem.daysOpen} days open</div>
                   </div>
                   <div className="flex-shrink-0 text-right w-56">
                     <span className="text-[13px] font-medium text-slate-200">{caseItem.nextAction}</span>
-                    <div className={TYPE.micro}>{caseItem.investigator}</div>
+                    <div className="text-[11px] text-slate-500">{caseItem.investigator}</div>
                   </div>
                 </div>
               ))}
             </div>
-          </SectionContainer>
+          </div>
 
-          {/* Upcoming Deadlines — uses SectionContainer */}
-          <SectionContainer
-            title="Upcoming Deadlines"
-            headerRight={<span className={TYPE.meta}>Compliance and SLA-driven milestones</span>}
-          >
+          {/* Upcoming Deadlines */}
+          <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5 mb-8">
+            <div className="flex items-center justify-between mb-5">
+              <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">Upcoming Deadlines</h3>
+              <span className="text-xs text-slate-500">Compliance and SLA-driven milestones</span>
+            </div>
+
             {['today', 'tomorrow', '3day', '7day'].map(group => {
               const items = upcomingDeadlines.filter(d => d.urgencyGroup === group);
               if (items.length === 0) return null;
 
               const groupConfig = {
-                today: { label: 'Today', dot: STATUS_DOT_MUTED.critical, border: 'border-l-red-800/50' },
-                tomorrow: { label: 'Tomorrow', dot: STATUS_DOT_MUTED.warning, border: 'border-l-amber-800/40' },
-                '3day': { label: 'Within 3 Days', dot: STATUS_DOT_MUTED.neutral, border: 'border-l-slate-600/30' },
+                today: { label: 'Today', dot: 'bg-red-700/60', border: 'border-l-red-800/50' },
+                tomorrow: { label: 'Tomorrow', dot: 'bg-amber-700/50', border: 'border-l-amber-800/40' },
+                '3day': { label: 'Within 3 Days', dot: 'bg-slate-500/50', border: 'border-l-slate-600/30' },
                 '7day': { label: 'Within 7 Days', dot: 'bg-slate-600/40', border: 'border-l-slate-700/30' }
               }[group];
 
               return (
                 <div key={group} className="mb-4 last:mb-0">
                   <div className="flex items-center gap-2 mb-1.5">
-                    <div className={`${DOT_SIZE_SMALL} ${groupConfig.dot}`}></div>
-                    <span className={TYPE.h3}>{groupConfig.label}</span>
+                    <div className={`w-1.5 h-1.5 ${groupConfig.dot} rounded-full`}></div>
+                    <span className="text-[13px] font-semibold text-slate-300 uppercase tracking-wide">{groupConfig.label}</span>
                   </div>
                   {items.map(deadline => (
-                    <div key={deadline.id} className={`flex items-center gap-4 px-4 py-2.5 ${SURFACE.row} rounded border-l-[3px] ${groupConfig.border} ml-3`}>
+                    <div key={deadline.id} className={`flex items-center gap-4 px-4 py-2.5 bg-slate-900/20 rounded border-l-[3px] ${groupConfig.border} ml-3`}>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-3">
                           <span className="text-[13px] font-medium text-white">{deadline.subject}</span>
-                          <span className={TYPE.micro}>{deadline.caseNumber}</span>
+                          <span className="text-[11px] text-slate-600">{deadline.caseNumber}</span>
                         </div>
                         <p className="text-[11px] text-slate-400 mt-0.5">{deadline.task}</p>
                       </div>
                       <div className="flex-shrink-0 text-right">
                         <span className="text-[13px] font-medium text-slate-300">{deadline.dueDate}</span>
-                        <p className={TYPE.micro}>{deadline.compliance}</p>
+                        <p className="text-[11px] text-slate-500">{deadline.compliance}</p>
                       </div>
                     </div>
                   ))}
                 </div>
               );
             })}
-          </SectionContainer>
+          </div>
 
           {/* Audit Log Footer */}
-          <div className="px-5 py-3 bg-slate-800/10 border border-slate-800/30 rounded-lg">
+          <div className="mb-4 px-5 py-3 bg-slate-800/10 border border-slate-800/30 rounded-lg">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Shield className="w-3.5 h-3.5 text-slate-600" />
@@ -610,7 +703,7 @@ export default function BackgroundsDashboard() {
               </div>
               <div>
                 <h3 className="text-[13px] font-semibold text-white">BI Support & Resources</h3>
-                <p className={TYPE.meta}>Quick links and assistance</p>
+                <p className="text-xs text-slate-500">Quick links and assistance</p>
               </div>
             </div>
           </div>
@@ -619,28 +712,28 @@ export default function BackgroundsDashboard() {
               <FileText className="w-5 h-5 text-slate-400" />
               <div>
                 <p className="text-[13px] text-white font-medium">Investigation Guidelines</p>
-                <p className={TYPE.meta}>POST standards & procedures</p>
+                <p className="text-xs text-slate-500">POST standards & procedures</p>
               </div>
             </button>
             <button className="w-full flex items-center gap-3 p-3 bg-slate-800/30 hover:bg-slate-800/50 rounded-lg transition-all text-left">
               <ClipboardCheck className="w-5 h-5 text-slate-400" />
               <div>
                 <p className="text-[13px] text-white font-medium">Adjudication Checklist</p>
-                <p className={TYPE.meta}>Review requirements</p>
+                <p className="text-xs text-slate-500">Review requirements</p>
               </div>
             </button>
             <button className="w-full flex items-center gap-3 p-3 bg-slate-800/30 hover:bg-slate-800/50 rounded-lg transition-all text-left">
               <Phone className="w-5 h-5 text-slate-400" />
               <div>
                 <p className="text-[13px] text-white font-medium">Contact IT Support</p>
-                <p className={TYPE.meta}>Technical assistance</p>
+                <p className="text-xs text-slate-500">Technical assistance</p>
               </div>
             </button>
             <button className="w-full flex items-center gap-3 p-3 bg-slate-800/30 hover:bg-slate-800/50 rounded-lg transition-all text-left">
               <Scale className="w-5 h-5 text-slate-400" />
               <div>
                 <p className="text-[13px] text-white font-medium">Legal Reference</p>
-                <p className={TYPE.meta}>Compliance documentation</p>
+                <p className="text-xs text-slate-500">Compliance documentation</p>
               </div>
             </button>
           </div>
