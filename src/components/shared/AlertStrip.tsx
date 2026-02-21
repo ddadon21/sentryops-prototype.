@@ -1,9 +1,8 @@
 import React from 'react';
 import { X } from 'lucide-react';
 import {
-  SURFACE, SPACING, ALERT_STRIP_BORDER_WIDTH,
+  SURFACE, ALERT_STRIP_BORDER_WIDTH,
   ALERT_BORDER, STATUS_DOT_MUTED, DOT_SIZE_SMALL,
-  type StatusSeverity
 } from './tokens';
 
 // ── AlertStrip ──────────────────────────────────────────────────
