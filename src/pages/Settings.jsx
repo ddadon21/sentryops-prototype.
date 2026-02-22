@@ -15,7 +15,7 @@ export default function SettingsPage() {
   });
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('profile');
+  const [activeSection, setActiveSection] = useState('integrations');
   const [selectedIntegration, setSelectedIntegration] = useState(null);
   const [showApiKey, setShowApiKey] = useState({});
   const [testingConnection, setTestingConnection] = useState(null);
@@ -545,44 +545,62 @@ export default function SettingsPage() {
   };
 
   const getSettingsTabs = () => {
-    const baseTabs = [
-      { id: 'profile', label: 'Profile', icon: User },
-      { id: 'notifications', label: 'Notifications', icon: Bell },
-      { id: 'display', label: 'Display', icon: Monitor },
-      { id: 'security', label: 'Security', icon: Lock }
+    // Tier 1 — Core Oversight (Top Priority)
+    const tier1 = [
+      { id: 'integrations', label: 'Integrations', icon: Link, tier: 1 },
+      { id: 'security', label: 'Security', icon: Lock, tier: 1 },
+      { id: 'audit', label: 'Audit & Compliance', icon: FileText, tier: 1 },
+      { id: 'data', label: 'Backup & Retention', icon: Database, tier: 1 },
     ];
 
-    if (userRole === 'command' || userRole === 'admin') {
-      return [
-        ...baseTabs,
-        { id: 'integrations', label: 'Integrations', icon: Link },
-        { id: 'api', label: 'API Management', icon: Code },
-        { id: 'data', label: 'Data & Export', icon: Database },
-        { id: 'system', label: 'System', icon: Settings },
-        { id: 'audit', label: 'Audit Logs', icon: FileText }
-      ];
+    // Tier 2 — User Preferences (Secondary)
+    const tier2 = [
+      { id: 'profile', label: 'Profile', icon: User, tier: 2 },
+      { id: 'notifications', label: 'Notifications', icon: Bell, tier: 2 },
+      { id: 'display', label: 'Display', icon: Monitor, tier: 2 },
+    ];
+
+    // Tier 3 — Advanced System Controls (Admin/IT only)
+    const tier3 = [
+      { id: 'advanced', label: 'Advanced System Controls', icon: Server, tier: 3 },
+    ];
+
+    if (userRole === 'admin') {
+      return [...tier1, ...tier2, ...tier3];
+    }
+
+    if (userRole === 'command') {
+      return [...tier1, ...tier2];
     }
 
     if (userRole === 'hr') {
       return [
-        ...baseTabs,
-        { id: 'integrations', label: 'Integrations', icon: Link },
-        { id: 'system', label: 'System', icon: Settings }
+        tier1[0], // Integrations
+        tier1[1], // Security
+        ...tier2,
       ];
     }
 
-    return baseTabs;
+    // Standard users — preferences only
+    return tier2;
   };
 
   const settingsTabs = getSettingsTabs();
+
+  // Default to first available tab for the user's role
+  useEffect(() => {
+    if (settingsTabs.length > 0 && !settingsTabs.find(t => t.id === activeSection)) {
+      setActiveSection(settingsTabs[0].id);
+    }
+  }, [userRole]);
 
   return (
     <DashboardLayout>
       <div className="p-5 lg:p-8 space-y-8">
           <div className="max-w-[1600px] mx-auto">
             <div className="mb-6">
-              <h2 className="text-2xl lg:text-3xl font-bold text-white mb-2">Settings & Configuration</h2>
-              <p className="text-slate-400">Manage your account, system integrations, and enterprise settings</p>
+              <h2 className="text-xl font-bold text-white mb-1">Settings & Configuration</h2>
+              <p className="text-xs text-slate-500">Manage your account, system integrations, and enterprise settings</p>
             </div>
 
             {/* System Status Banner */}
@@ -611,23 +629,29 @@ export default function SettingsPage() {
             </div>
 
             {/* Settings Navigation */}
-            <div className="mb-6 flex gap-2 border-b border-slate-700/50 overflow-x-auto scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-transparent">
-              {settingsTabs.map(tab => {
+            <div className="mb-6 flex gap-1 border-b border-slate-700/50 overflow-x-auto scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-transparent">
+              {settingsTabs.map((tab, idx) => {
                 const Icon = tab.icon;
+                const prevTier = idx > 0 ? settingsTabs[idx - 1].tier : tab.tier;
+                const showDivider = tab.tier !== prevTier;
                 return (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveSection(tab.id)}
-                    className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all relative whitespace-nowrap ${
-                      activeSection === tab.id ? 'text-amber-400' : 'text-slate-400 hover:text-slate-300'
-                    }`}
-                  >
-                    <Icon className="w-4 h-4" />
-                    {tab.label}
-                    {activeSection === tab.id && (
-                      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500"></div>
+                  <React.Fragment key={tab.id}>
+                    {showDivider && (
+                      <div className="self-center mx-1 w-px h-5 bg-slate-700/60" />
                     )}
-                  </button>
+                    <button
+                      onClick={() => setActiveSection(tab.id)}
+                      className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all relative whitespace-nowrap ${
+                        activeSection === tab.id ? 'text-amber-400' : tab.tier === 3 ? 'text-red-400/70 hover:text-red-300' : 'text-slate-400 hover:text-slate-300'
+                      }`}
+                    >
+                      <Icon className="w-4 h-4" />
+                      {tab.label}
+                      {activeSection === tab.id && (
+                        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500"></div>
+                      )}
+                    </button>
+                  </React.Fragment>
                 );
               })}
             </div>
@@ -637,13 +661,14 @@ export default function SettingsPage() {
               {/* Profile Settings */}
               {activeSection === 'profile' && (
                 <>
-                  <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
-                    <div className="flex items-center justify-between mb-6">
-                      <h3 className="text-lg font-semibold text-white">Profile Information</h3>
-                      <div className="flex items-center gap-2 px-3 py-1.5 bg-green-500/20 border border-green-500/30 rounded-lg">
-                        <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                        <span className="text-xs font-medium text-green-400">Verified Account</span>
-                      </div>
+                  <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-6">
+                    <div className="flex items-center justify-between mb-1">
+                      <h3 className="text-sm font-semibold text-white">Profile Information</h3>
+                      <span className="text-[10px] text-slate-500">Last updated: Dec 11, 2025 09:14 AM</span>
+                    </div>
+                    <div className="flex items-center gap-2 mb-6">
+                      <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                      <span className="text-xs font-medium text-green-400">Verified Account</span>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                       <div>
@@ -756,237 +781,101 @@ export default function SettingsPage() {
 
               {/* Notifications Settings */}
               {activeSection === 'notifications' && (
-                <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
-                  <h3 className="text-lg font-semibold text-white mb-6">Notification Preferences</h3>
+                <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-6">
+                  <div className="flex items-center justify-between mb-1">
+                    <h3 className="text-sm font-semibold text-white">Operational Alert Preferences</h3>
+                    <span className="text-[10px] text-slate-500">Last updated: Dec 11, 2025 09:14 AM</span>
+                  </div>
+                  <p className="text-xs text-slate-500 mb-6">Only critical operational events are surfaced here. Cosmetic and low-priority alerts have been removed.</p>
                   <div className="space-y-4">
-                    <div className="flex items-center justify-between py-3 border-b border-slate-700/30">
-                      <div className="flex-1">
-                        <h4 className="text-sm font-medium text-white">Email Notifications</h4>
-                        <p className="text-xs text-slate-400 mt-1">Receive notifications via email</p>
+                    {[
+                      { key: 'integrationAlerts', title: 'Integration Failure', desc: 'Alert when an integration sync fails or loses connection' },
+                      { key: 'criticalAlerts', title: 'Backup Failure', desc: 'Alert when a scheduled backup fails or is incomplete' },
+                      { key: 'securityAlerts', title: 'Failed Login Attempts', desc: 'Alert on repeated failed login attempts or blocked IPs' },
+                      { key: 'complianceAlerts', title: 'Sync Delays', desc: 'Alert when integration sync exceeds expected response window' },
+                      { key: 'budgetAlerts', title: 'Critical System Events', desc: 'Service outages, certificate expiry, and threshold breaches' },
+                    ].map((item, idx, arr) => (
+                      <div key={item.key} className={`flex items-center justify-between py-3 ${idx < arr.length - 1 ? 'border-b border-slate-700/20' : ''}`}>
+                        <div className="flex-1">
+                          <h4 className="text-sm font-medium text-white">{item.title}</h4>
+                          <p className="text-xs text-slate-400 mt-1">{item.desc}</p>
+                        </div>
+                        <button
+                          onClick={() => setNotificationSettings({...notificationSettings, [item.key]: !notificationSettings[item.key]})}
+                          className={`relative w-12 h-6 rounded-full transition-colors ${notificationSettings[item.key] ? 'bg-green-500' : 'bg-slate-600'}`}
+                        >
+                          <div className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform ${notificationSettings[item.key] ? 'translate-x-6' : 'translate-x-0'}`}></div>
+                        </button>
                       </div>
-                      <button
-                        onClick={() => setNotificationSettings({...notificationSettings, emailNotifications: !notificationSettings.emailNotifications})}
-                        className={`relative w-12 h-6 rounded-full transition-colors ${notificationSettings.emailNotifications ? 'bg-green-500' : 'bg-slate-600'}`}
-                      >
-                        <div className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform ${notificationSettings.emailNotifications ? 'translate-x-6' : 'translate-x-0'}`}></div>
-                      </button>
-                    </div>
-                    <div className="flex items-center justify-between py-3 border-b border-slate-700/30">
-                      <div className="flex-1">
-                        <h4 className="text-sm font-medium text-white">SMS Notifications</h4>
-                        <p className="text-xs text-slate-400 mt-1">Receive text message alerts</p>
-                      </div>
-                      <button
-                        onClick={() => setNotificationSettings({...notificationSettings, smsNotifications: !notificationSettings.smsNotifications})}
-                        className={`relative w-12 h-6 rounded-full transition-colors ${notificationSettings.smsNotifications ? 'bg-green-500' : 'bg-slate-600'}`}
-                      >
-                        <div className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform ${notificationSettings.smsNotifications ? 'translate-x-6' : 'translate-x-0'}`}></div>
-                      </button>
-                    </div>
-                    <div className="flex items-center justify-between py-3 border-b border-slate-700/30">
-                      <div className="flex-1">
-                        <h4 className="text-sm font-medium text-white">Push Notifications</h4>
-                        <p className="text-xs text-slate-400 mt-1">Browser and mobile push notifications</p>
-                      </div>
-                      <button
-                        onClick={() => setNotificationSettings({...notificationSettings, pushNotifications: !notificationSettings.pushNotifications})}
-                        className={`relative w-12 h-6 rounded-full transition-colors ${notificationSettings.pushNotifications ? 'bg-green-500' : 'bg-slate-600'}`}
-                      >
-                        <div className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform ${notificationSettings.pushNotifications ? 'translate-x-6' : 'translate-x-0'}`}></div>
-                      </button>
-                    </div>
-                    <div className="flex items-center justify-between py-3 border-b border-slate-700/30">
-                      <div className="flex-1">
-                        <h4 className="text-sm font-medium text-white">Critical Alerts</h4>
-                        <p className="text-xs text-slate-400 mt-1">High-priority operational alerts</p>
-                      </div>
-                      <button
-                        onClick={() => setNotificationSettings({...notificationSettings, criticalAlerts: !notificationSettings.criticalAlerts})}
-                        className={`relative w-12 h-6 rounded-full transition-colors ${notificationSettings.criticalAlerts ? 'bg-green-500' : 'bg-slate-600'}`}
-                      >
-                        <div className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform ${notificationSettings.criticalAlerts ? 'translate-x-6' : 'translate-x-0'}`}></div>
-                      </button>
-                    </div>
-                    <div className="flex items-center justify-between py-3 border-b border-slate-700/30">
-                      <div className="flex-1">
-                        <h4 className="text-sm font-medium text-white">Report Reminders</h4>
-                        <p className="text-xs text-slate-400 mt-1">Due date reminders for reports</p>
-                      </div>
-                      <button
-                        onClick={() => setNotificationSettings({...notificationSettings, reportReminders: !notificationSettings.reportReminders})}
-                        className={`relative w-12 h-6 rounded-full transition-colors ${notificationSettings.reportReminders ? 'bg-green-500' : 'bg-slate-600'}`}
-                      >
-                        <div className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform ${notificationSettings.reportReminders ? 'translate-x-6' : 'translate-x-0'}`}></div>
-                      </button>
-                    </div>
-                    <div className="flex items-center justify-between py-3 border-b border-slate-700/30">
-                      <div className="flex-1">
-                        <h4 className="text-sm font-medium text-white">System Updates</h4>
-                        <p className="text-xs text-slate-400 mt-1">Software updates and maintenance</p>
-                      </div>
-                      <button
-                        onClick={() => setNotificationSettings({...notificationSettings, systemUpdates: !notificationSettings.systemUpdates})}
-                        className={`relative w-12 h-6 rounded-full transition-colors ${notificationSettings.systemUpdates ? 'bg-green-500' : 'bg-slate-600'}`}
-                      >
-                        <div className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform ${notificationSettings.systemUpdates ? 'translate-x-6' : 'translate-x-0'}`}></div>
-                      </button>
-                    </div>
-                    <div className="flex items-center justify-between py-3 border-b border-slate-700/30">
-                      <div className="flex-1">
-                        <h4 className="text-sm font-medium text-white">Personnel Alerts</h4>
-                        <p className="text-xs text-slate-400 mt-1">Staff changes and updates</p>
-                      </div>
-                      <button
-                        onClick={() => setNotificationSettings({...notificationSettings, personnelAlerts: !notificationSettings.personnelAlerts})}
-                        className={`relative w-12 h-6 rounded-full transition-colors ${notificationSettings.personnelAlerts ? 'bg-green-500' : 'bg-slate-600'}`}
-                      >
-                        <div className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform ${notificationSettings.personnelAlerts ? 'translate-x-6' : 'translate-x-0'}`}></div>
-                      </button>
-                    </div>
-                    <div className="flex items-center justify-between py-3 border-b border-slate-700/30">
-                      <div className="flex-1">
-                        <h4 className="text-sm font-medium text-white">Budget Alerts</h4>
-                        <p className="text-xs text-slate-400 mt-1">Budget thresholds and approvals</p>
-                      </div>
-                      <button
-                        onClick={() => setNotificationSettings({...notificationSettings, budgetAlerts: !notificationSettings.budgetAlerts})}
-                        className={`relative w-12 h-6 rounded-full transition-colors ${notificationSettings.budgetAlerts ? 'bg-green-500' : 'bg-slate-600'}`}
-                      >
-                        <div className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform ${notificationSettings.budgetAlerts ? 'translate-x-6' : 'translate-x-0'}`}></div>
-                      </button>
-                    </div>
-                    <div className="flex items-center justify-between py-3 border-b border-slate-700/30">
-                      <div className="flex-1">
-                        <h4 className="text-sm font-medium text-white">Compliance Alerts</h4>
-                        <p className="text-xs text-slate-400 mt-1">Training and certification expiry</p>
-                      </div>
-                      <button
-                        onClick={() => setNotificationSettings({...notificationSettings, complianceAlerts: !notificationSettings.complianceAlerts})}
-                        className={`relative w-12 h-6 rounded-full transition-colors ${notificationSettings.complianceAlerts ? 'bg-green-500' : 'bg-slate-600'}`}
-                      >
-                        <div className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform ${notificationSettings.complianceAlerts ? 'translate-x-6' : 'translate-x-0'}`}></div>
-                      </button>
-                    </div>
-                    <div className="flex items-center justify-between py-3 border-b border-slate-700/30">
-                      <div className="flex-1">
-                        <h4 className="text-sm font-medium text-white">Integration Alerts</h4>
-                        <p className="text-xs text-slate-400 mt-1">Integration sync and errors</p>
-                      </div>
-                      <button
-                        onClick={() => setNotificationSettings({...notificationSettings, integrationAlerts: !notificationSettings.integrationAlerts})}
-                        className={`relative w-12 h-6 rounded-full transition-colors ${notificationSettings.integrationAlerts ? 'bg-green-500' : 'bg-slate-600'}`}
-                      >
-                        <div className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform ${notificationSettings.integrationAlerts ? 'translate-x-6' : 'translate-x-0'}`}></div>
-                      </button>
-                    </div>
-                    <div className="flex items-center justify-between py-3">
-                      <div className="flex-1">
-                        <h4 className="text-sm font-medium text-white">Security Alerts</h4>
-                        <p className="text-xs text-slate-400 mt-1">Login attempts and security events</p>
-                      </div>
-                      <button
-                        onClick={() => setNotificationSettings({...notificationSettings, securityAlerts: !notificationSettings.securityAlerts})}
-                        className={`relative w-12 h-6 rounded-full transition-colors ${notificationSettings.securityAlerts ? 'bg-green-500' : 'bg-slate-600'}`}
-                      >
-                        <div className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform ${notificationSettings.securityAlerts ? 'translate-x-6' : 'translate-x-0'}`}></div>
-                      </button>
-                    </div>
+                    ))}
                   </div>
                 </div>
               )}
 
               {/* Display Settings */}
               {activeSection === 'display' && (
-                <div className="space-y-6">
-                  <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
-                    <h3 className="text-lg font-semibold text-white mb-6">Appearance</h3>
-                    <div className="space-y-4">
-                      <div>
-                        <label className="block text-sm font-medium text-slate-300 mb-3">Theme</label>
-                        <div className="grid grid-cols-3 gap-3">
+                <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-6">
+                  <div className="flex items-center justify-between mb-1">
+                    <h3 className="text-sm font-semibold text-white">Display Preferences</h3>
+                    <span className="text-[10px] text-slate-500">Last updated: Dec 10, 2025 02:30 PM</span>
+                  </div>
+                  <p className="text-xs text-slate-500 mb-6">Theme, timezone, date format, and dashboard density.</p>
+                  <div className="space-y-5">
+                    <div>
+                      <label className="block text-sm font-medium text-slate-300 mb-3">Theme</label>
+                      <div className="grid grid-cols-3 gap-3">
+                        {[
+                          { value: 'dark', label: 'Dark', Icon: Moon },
+                          { value: 'light', label: 'Light', Icon: Sun },
+                          { value: 'auto', label: 'Auto', Icon: Monitor },
+                        ].map(t => (
                           <button
-                            onClick={() => setDisplaySettings({...displaySettings, theme: 'dark'})}
-                            className={`p-4 rounded-xl border-2 transition-all ${displaySettings.theme === 'dark' ? 'border-amber-500 bg-slate-800/60' : 'border-slate-700/50 bg-slate-800/20 hover:bg-slate-800/40'}`}
+                            key={t.value}
+                            onClick={() => setDisplaySettings({...displaySettings, theme: t.value})}
+                            className={`p-4 rounded-xl border-2 transition-all ${displaySettings.theme === t.value ? 'border-amber-500 bg-slate-800/60' : 'border-slate-700/50 bg-slate-800/20 hover:bg-slate-800/40'}`}
                           >
-                            <Moon className="w-6 h-6 text-slate-300 mb-2" />
-                            <p className="text-sm font-medium text-white">Dark</p>
+                            <t.Icon className="w-6 h-6 text-slate-300 mb-2" />
+                            <p className="text-sm font-medium text-white">{t.label}</p>
                           </button>
-                          <button
-                            onClick={() => setDisplaySettings({...displaySettings, theme: 'light'})}
-                            className={`p-4 rounded-xl border-2 transition-all ${displaySettings.theme === 'light' ? 'border-amber-500 bg-slate-800/60' : 'border-slate-700/50 bg-slate-800/20 hover:bg-slate-800/40'}`}
-                          >
-                            <Sun className="w-6 h-6 text-slate-300 mb-2" />
-                            <p className="text-sm font-medium text-white">Light</p>
-                          </button>
-                          <button
-                            onClick={() => setDisplaySettings({...displaySettings, theme: 'auto'})}
-                            className={`p-4 rounded-xl border-2 transition-all ${displaySettings.theme === 'auto' ? 'border-amber-500 bg-slate-800/60' : 'border-slate-700/50 bg-slate-800/20 hover:bg-slate-800/40'}`}
-                          >
-                            <Monitor className="w-6 h-6 text-slate-300 mb-2" />
-                            <p className="text-sm font-medium text-white">Auto</p>
-                          </button>
-                        </div>
+                        ))}
                       </div>
-                      <div>
-                        <label className="block text-sm font-medium text-slate-300 mb-2">Date Format</label>
-                        <select
-                          value={displaySettings.dateFormat}
-                          onChange={(e) => setDisplaySettings({...displaySettings, dateFormat: e.target.value})}
-                          className="w-full px-4 py-2.5 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white focus:outline-none focus:border-amber-500/50 transition-colors"
-                        >
-                          <option value="MM/DD/YYYY">MM/DD/YYYY (12/11/2025)</option>
-                          <option value="DD/MM/YYYY">DD/MM/YYYY (11/12/2025)</option>
-                          <option value="YYYY-MM-DD">YYYY-MM-DD (2025-12-11)</option>
-                        </select>
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-slate-300 mb-2">Time Format</label>
-                        <select
-                          value={displaySettings.timeFormat}
-                          onChange={(e) => setDisplaySettings({...displaySettings, timeFormat: e.target.value})}
-                          className="w-full px-4 py-2.5 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white focus:outline-none focus:border-amber-500/50 transition-colors"
-                        >
-                          <option value="12h">12-hour (3:45 PM)</option>
-                          <option value="24h">24-hour (15:45)</option>
-                        </select>
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-slate-300 mb-2">Timezone</label>
-                        <select
-                          value={displaySettings.timezone}
-                          onChange={(e) => setDisplaySettings({...displaySettings, timezone: e.target.value})}
-                          className="w-full px-4 py-2.5 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white focus:outline-none focus:border-amber-500/50 transition-colors"
-                        >
-                          <option value="America/New_York">Eastern Time (ET)</option>
-                          <option value="America/Chicago">Central Time (CT)</option>
-                          <option value="America/Denver">Mountain Time (MT)</option>
-                          <option value="America/Los_Angeles">Pacific Time (PT)</option>
-                        </select>
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-slate-300 mb-2">Density</label>
-                        <select
-                          value={displaySettings.density}
-                          onChange={(e) => setDisplaySettings({...displaySettings, density: e.target.value})}
-                          className="w-full px-4 py-2.5 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white focus:outline-none focus:border-amber-500/50 transition-colors"
-                        >
-                          <option value="compact">Compact</option>
-                          <option value="comfortable">Comfortable</option>
-                          <option value="spacious">Spacious</option>
-                        </select>
-                      </div>
-                      <div className="flex items-center justify-between py-3">
-                        <div className="flex-1">
-                          <h4 className="text-sm font-medium text-white">Animations</h4>
-                          <p className="text-xs text-slate-400 mt-1">Enable interface animations</p>
-                        </div>
-                        <button
-                          onClick={() => setDisplaySettings({...displaySettings, animations: !displaySettings.animations})}
-                          className={`relative w-12 h-6 rounded-full transition-colors ${displaySettings.animations ? 'bg-green-500' : 'bg-slate-600'}`}
-                        >
-                          <div className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform ${displaySettings.animations ? 'translate-x-6' : 'translate-x-0'}`}></div>
-                        </button>
-                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-slate-300 mb-2">Timezone</label>
+                      <select
+                        value={displaySettings.timezone}
+                        onChange={(e) => setDisplaySettings({...displaySettings, timezone: e.target.value})}
+                        className="w-full px-4 py-2.5 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white focus:outline-none focus:border-amber-500/50 transition-colors"
+                      >
+                        <option value="America/New_York">Eastern Time (ET)</option>
+                        <option value="America/Chicago">Central Time (CT)</option>
+                        <option value="America/Denver">Mountain Time (MT)</option>
+                        <option value="America/Los_Angeles">Pacific Time (PT)</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-slate-300 mb-2">Date Format</label>
+                      <select
+                        value={displaySettings.dateFormat}
+                        onChange={(e) => setDisplaySettings({...displaySettings, dateFormat: e.target.value})}
+                        className="w-full px-4 py-2.5 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white focus:outline-none focus:border-amber-500/50 transition-colors"
+                      >
+                        <option value="MM/DD/YYYY">MM/DD/YYYY (12/11/2025)</option>
+                        <option value="DD/MM/YYYY">DD/MM/YYYY (11/12/2025)</option>
+                        <option value="YYYY-MM-DD">YYYY-MM-DD (2025-12-11)</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-slate-300 mb-2">Dashboard Density</label>
+                      <select
+                        value={displaySettings.density}
+                        onChange={(e) => setDisplaySettings({...displaySettings, density: e.target.value})}
+                        className="w-full px-4 py-2.5 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white focus:outline-none focus:border-amber-500/50 transition-colors"
+                      >
+                        <option value="compact">Compact</option>
+                        <option value="comfortable">Comfortable</option>
+                        <option value="spacious">Spacious</option>
+                      </select>
                     </div>
                   </div>
                 </div>
@@ -995,8 +884,12 @@ export default function SettingsPage() {
               {/* Security Settings */}
               {activeSection === 'security' && (
                 <div className="space-y-6">
-                  <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
-                    <h3 className="text-lg font-semibold text-white mb-6">Authentication & Access</h3>
+                  <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-6">
+                    <div className="flex items-center justify-between mb-1">
+                      <h3 className="text-sm font-semibold text-white">Authentication & Access</h3>
+                      <span className="text-[10px] text-slate-500">Last updated: Dec 9, 2025 11:42 AM</span>
+                    </div>
+                    <p className="text-xs text-slate-500 mb-6">Multi-factor authentication, session management, and access controls.</p>
                     <div className="space-y-4">
                       <div className="flex items-center justify-between py-3 border-b border-slate-700/30">
                         <div className="flex-1">
@@ -1098,8 +991,8 @@ export default function SettingsPage() {
                     </div>
                   </div>
 
-                  <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
-                    <h3 className="text-lg font-semibold text-white mb-6">Active Sessions</h3>
+                  <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-6">
+                    <h3 className="text-sm font-semibold text-white mb-6">Active Sessions</h3>
                     <div className="space-y-3">
                       <div className="flex items-center gap-4 p-4 bg-slate-800/30 border border-slate-700/30 rounded-xl">
                         <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center">
@@ -1130,8 +1023,8 @@ export default function SettingsPage() {
                     </div>
                   </div>
 
-                  <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
-                    <h3 className="text-lg font-semibold text-white mb-4">Change Password</h3>
+                  <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-6">
+                    <h3 className="text-sm font-semibold text-white mb-4">Change Password</h3>
                     <div className="space-y-4">
                       <div>
                         <label className="block text-sm font-medium text-slate-300 mb-2">Current Password</label>
@@ -1169,11 +1062,15 @@ export default function SettingsPage() {
               {/* Integrations Settings */}
               {activeSection === 'integrations' && (
                 <div className="space-y-4">
+                  <div className="flex items-center justify-between mb-1">
+                    <h3 className="text-sm font-semibold text-white">System Integrations</h3>
+                    <span className="text-[10px] text-slate-500">Last updated: Dec 11, 2025 09:01 AM</span>
+                  </div>
                   {Object.entries(integrations).map(([key, integration]) => {
                     const Icon = getIntegrationIcon(integration.type);
                     const isExpanded = expandedIntegration === key;
                     return (
-                      <div key={key} className="bg-slate-800/40 border border-slate-700/50 rounded-xl overflow-hidden">
+                      <div key={key} className="bg-slate-800/25 border border-slate-700/30 rounded-xl overflow-hidden">
                         <div
                           onClick={() => setExpandedIntegration(isExpanded ? null : key)}
                           className="p-6 cursor-pointer hover:bg-slate-800/20 transition-colors"
@@ -1462,144 +1359,16 @@ export default function SettingsPage() {
                 </div>
               )}
 
-              {/* API Management */}
-              {activeSection === 'api' && (
-                <div className="space-y-6">
-                  <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
-                    <div className="flex items-center justify-between mb-6">
-                      <div>
-                        <h3 className="text-lg font-semibold text-white">API Keys</h3>
-                        <p className="text-sm text-slate-400 mt-1">Manage API access keys for SentryOps platform</p>
-                      </div>
-                      <button className="flex items-center gap-2 px-4 py-2 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded-xl text-sm font-medium hover:bg-blue-500/30 transition-all">
-                        <Plus className="w-4 h-4" />
-                        Generate New Key
-                      </button>
-                    </div>
 
-                    <div className="space-y-3">
-                      {apiKeys.map(apiKey => (
-                        <div key={apiKey.id} className="flex items-center gap-4 p-4 bg-slate-800/30 border border-slate-700/30 rounded-xl">
-                          <div className={`w-10 h-10 ${apiKey.status === 'active' ? 'bg-green-500/20' : 'bg-slate-700/40'} rounded-xl flex items-center justify-center`}>
-                            <Key className={`w-5 h-5 ${apiKey.status === 'active' ? 'text-green-400' : 'text-slate-500'}`} />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-white">{apiKey.name}</p>
-                            <div className="flex items-center gap-2 mt-1">
-                              <code className="text-xs text-amber-400 bg-slate-900/50 px-2 py-1 rounded border border-slate-700/50">
-                                {showApiKey[`api_${apiKey.id}`] ? apiKey.key : '••••••••••••••••••••'}
-                              </code>
-                              <button
-                                onClick={() => setShowApiKey({...showApiKey, [`api_${apiKey.id}`]: !showApiKey[`api_${apiKey.id}`]})}
-                                className="p-1 hover:bg-slate-700/40 rounded transition-colors"
-                              >
-                                {showApiKey[`api_${apiKey.id}`] ? <EyeOff className="w-3 h-3 text-slate-400" /> : <Eye className="w-3 h-3 text-slate-400" />}
-                              </button>
-                              <button
-                                onClick={() => handleCopyApiKey(apiKey.key)}
-                                className="p-1 hover:bg-slate-700/40 rounded transition-colors"
-                              >
-                                <Copy className="w-3 h-3 text-slate-400" />
-                              </button>
-                            </div>
-                            <div className="flex items-center gap-4 mt-2 text-xs text-slate-400">
-                              <span>Created: {apiKey.created}</span>
-                              <span>Last used: {apiKey.lastUsed}</span>
-                              <span>Permissions: {apiKey.permissions}</span>
-                            </div>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <div className={`px-3 py-1.5 ${apiKey.status === 'active' ? 'bg-green-500/20 border-green-500/30' : 'bg-slate-700/40 border-slate-600/50'} border rounded-lg`}>
-                              <span className={`text-xs font-medium ${apiKey.status === 'active' ? 'text-green-400' : 'text-slate-400'}`}>
-                                {apiKey.status === 'active' ? 'Active' : 'Inactive'}
-                              </span>
-                            </div>
-                            <button className="p-2 hover:bg-slate-700/40 rounded-lg transition-colors">
-                              <Edit3 className="w-4 h-4 text-slate-400" />
-                            </button>
-                            <button className="p-2 hover:bg-red-500/20 rounded-lg transition-colors">
-                              <Trash2 className="w-4 h-4 text-red-400" />
-                            </button>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
-                    <h3 className="text-lg font-semibold text-white mb-6">API Usage Statistics</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                      <div className="bg-slate-900/50 border border-slate-700/50 rounded-xl p-4">
-                        <div className="flex items-center gap-3 mb-2">
-                          <BarChart3 className="w-5 h-5 text-blue-400" />
-                          <p className="text-xs font-medium text-slate-400">Total Requests (30d)</p>
-                        </div>
-                        <p className="text-2xl font-bold text-white">8.2M</p>
-                        <p className="text-xs text-green-400 mt-1">+12% vs last month</p>
-                      </div>
-                      <div className="bg-slate-900/50 border border-slate-700/50 rounded-xl p-4">
-                        <div className="flex items-center gap-3 mb-2">
-                          <Activity className="w-5 h-5 text-green-400" />
-                          <p className="text-xs font-medium text-slate-400">Success Rate</p>
-                        </div>
-                        <p className="text-2xl font-bold text-white">99.7%</p>
-                        <p className="text-xs text-slate-400 mt-1">24,891 errors</p>
-                      </div>
-                      <div className="bg-slate-900/50 border border-slate-700/50 rounded-xl p-4">
-                        <div className="flex items-center gap-3 mb-2">
-                          <Clock className="w-5 h-5 text-amber-400" />
-                          <p className="text-xs font-medium text-slate-400">Avg Response Time</p>
-                        </div>
-                        <p className="text-2xl font-bold text-white">187ms</p>
-                        <p className="text-xs text-green-400 mt-1">-23ms vs last month</p>
-                      </div>
-                      <div className="bg-slate-900/50 border border-slate-700/50 rounded-xl p-4">
-                        <div className="flex items-center gap-3 mb-2">
-                          <Zap className="w-5 h-5 text-purple-400" />
-                          <p className="text-xs font-medium text-slate-400">Peak RPS</p>
-                        </div>
-                        <p className="text-2xl font-bold text-white">1,247</p>
-                        <p className="text-xs text-slate-400 mt-1">requests/second</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
-                    <h3 className="text-lg font-semibold text-white mb-6">Rate Limiting</h3>
-                    <div className="space-y-4">
-                      <div>
-                        <label className="block text-sm font-medium text-slate-300 mb-2">Default Rate Limit (requests/hour)</label>
-                        <select
-                          value={securitySettings.apiRateLimit}
-                          onChange={(e) => setSecuritySettings({...securitySettings, apiRateLimit: e.target.value})}
-                          className="w-full px-4 py-2.5 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white focus:outline-none focus:border-amber-500/50 transition-colors"
-                        >
-                          <option value="100">100 requests/hour (Basic)</option>
-                          <option value="500">500 requests/hour (Standard)</option>
-                          <option value="1000">1,000 requests/hour (Professional)</option>
-                          <option value="5000">5,000 requests/hour (Enterprise)</option>
-                          <option value="unlimited">Unlimited</option>
-                        </select>
-                      </div>
-                      <div className="p-4 bg-blue-500/10 border border-blue-500/20 rounded-xl">
-                        <div className="flex items-start gap-3">
-                          <Info className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
-                          <div>
-                            <p className="text-sm font-medium text-blue-300">Rate Limit Information</p>
-                            <p className="text-xs text-blue-200/70 mt-1">Rate limits apply per API key. Exceeding limits will result in HTTP 429 responses. Contact your system administrator to increase limits.</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Data & Export */}
+              {/* Backup & Retention */}
               {activeSection === 'data' && (
                 <div className="space-y-6">
-                  <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
-                    <h3 className="text-lg font-semibold text-white mb-6">Data Export</h3>
+                  <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-6">
+                    <div className="flex items-center justify-between mb-1">
+                      <h3 className="text-sm font-semibold text-white">Data Export</h3>
+                      <span className="text-[10px] text-slate-500">Last updated: Dec 11, 2025 02:00 AM</span>
+                    </div>
+                    <p className="text-xs text-slate-500 mb-6">Export personnel records, reports, integration logs, and audit trails.</p>
                     <div className="space-y-4">
                       <div className="p-4 bg-slate-800/30 border border-slate-700/30 rounded-xl">
                         <div className="flex items-center justify-between mb-3">
@@ -1672,8 +1441,8 @@ export default function SettingsPage() {
                     </div>
                   </div>
 
-                  <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
-                    <h3 className="text-lg font-semibold text-white mb-6">Backup & Restore</h3>
+                  <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-6">
+                    <h3 className="text-sm font-semibold text-white mb-6">Backup & Restore</h3>
                     <div className="space-y-4">
                       <div className="p-4 bg-slate-800/30 border border-slate-700/30 rounded-xl">
                         <div className="flex items-center justify-between mb-3">
@@ -1709,8 +1478,8 @@ export default function SettingsPage() {
                     </div>
                   </div>
 
-                  <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
-                    <h3 className="text-lg font-semibold text-white mb-6">Data Retention</h3>
+                  <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-6">
+                    <h3 className="text-sm font-semibold text-white mb-6">Data Retention</h3>
                     <div className="space-y-4">
                       <div>
                         <label className="block text-sm font-medium text-slate-300 mb-2">Audit Log Retention</label>
@@ -1750,134 +1519,185 @@ export default function SettingsPage() {
                 </div>
               )}
 
-              {/* System Settings */}
-              {activeSection === 'system' && (
+              {/* Advanced System Controls — Admin/IT Only */}
+              {activeSection === 'advanced' && (
                 <div className="space-y-6">
-                  <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
-                    <h3 className="text-lg font-semibold text-white mb-6">System Information</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* Admin Warning Banner */}
+                  <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-4">
+                    <div className="flex items-center gap-3">
+                      <AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0" />
                       <div>
-                        <p className="text-xs font-medium text-slate-400 mb-2">Platform Version</p>
-                        <p className="text-sm text-white">SentryOps v3.8.2 (Build 20251211)</p>
-                      </div>
-                      <div>
-                        <p className="text-xs font-medium text-slate-400 mb-2">Database Version</p>
-                        <p className="text-sm text-white">PostgreSQL 15.4</p>
-                      </div>
-                      <div>
-                        <p className="text-xs font-medium text-slate-400 mb-2">Cache Server</p>
-                        <p className="text-sm text-white">Redis 7.2.3</p>
-                      </div>
-                      <div>
-                        <p className="text-xs font-medium text-slate-400 mb-2">Web Server</p>
-                        <p className="text-sm text-white">Nginx 1.25.3</p>
-                      </div>
-                      <div>
-                        <p className="text-xs font-medium text-slate-400 mb-2">Last System Update</p>
-                        <p className="text-sm text-white">December 8, 2025</p>
-                      </div>
-                      <div>
-                        <p className="text-xs font-medium text-slate-400 mb-2">Uptime</p>
-                        <p className="text-sm text-white">47 days, 12 hours</p>
+                        <p className="text-sm font-medium text-red-300">Admin / IT Access Only</p>
+                        <p className="text-xs text-red-200/60 mt-0.5">These controls affect infrastructure and are restricted to authorized IT personnel.</p>
                       </div>
                     </div>
                   </div>
 
-                  <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
-                    <h3 className="text-lg font-semibold text-white mb-6">System Health</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                      <div className="bg-slate-900/50 border border-slate-700/50 rounded-xl p-4">
-                        <div className="flex items-center gap-3 mb-2">
-                          <Cpu className="w-5 h-5 text-blue-400" />
-                          <p className="text-xs font-medium text-slate-400">CPU Usage</p>
+                  {/* API Management */}
+                  <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-6">
+                    <div className="flex items-center justify-between mb-1">
+                      <h3 className="text-sm font-semibold text-white">API Management</h3>
+                      <span className="text-[10px] text-slate-500">Last updated: Dec 11, 2025 08:22 AM</span>
+                    </div>
+                    <p className="text-xs text-slate-500 mb-6">API keys, usage statistics, and rate limiting configuration.</p>
+                    <div className="flex items-center justify-between mb-4">
+                      <h4 className="text-xs font-medium text-slate-400 uppercase tracking-wider">API Keys</h4>
+                      <button className="flex items-center gap-2 px-3 py-1.5 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded-lg text-xs font-medium hover:bg-blue-500/30 transition-all">
+                        <Plus className="w-3 h-3" />
+                        Generate New Key
+                      </button>
+                    </div>
+                    <div className="space-y-3 mb-6">
+                      {apiKeys.map(apiKey => (
+                        <div key={apiKey.id} className="flex items-center gap-4 p-4 border border-slate-700/20 rounded-lg">
+                          <div className={`w-10 h-10 ${apiKey.status === 'active' ? 'bg-green-500/20' : 'bg-slate-700/40'} rounded-xl flex items-center justify-center`}>
+                            <Key className={`w-5 h-5 ${apiKey.status === 'active' ? 'text-green-400' : 'text-slate-500'}`} />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-medium text-white">{apiKey.name}</p>
+                            <div className="flex items-center gap-2 mt-1">
+                              <code className="text-xs text-amber-400 bg-slate-900/50 px-2 py-1 rounded border border-slate-700/50">
+                                {showApiKey[`api_${apiKey.id}`] ? apiKey.key : '\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022'}
+                              </code>
+                              <button onClick={() => setShowApiKey({...showApiKey, [`api_${apiKey.id}`]: !showApiKey[`api_${apiKey.id}`]})} className="p-1 hover:bg-slate-700/40 rounded transition-colors">
+                                {showApiKey[`api_${apiKey.id}`] ? <EyeOff className="w-3 h-3 text-slate-400" /> : <Eye className="w-3 h-3 text-slate-400" />}
+                              </button>
+                              <button onClick={() => handleCopyApiKey(apiKey.key)} className="p-1 hover:bg-slate-700/40 rounded transition-colors">
+                                <Copy className="w-3 h-3 text-slate-400" />
+                              </button>
+                            </div>
+                            <div className="flex items-center gap-4 mt-2 text-xs text-slate-400">
+                              <span>Created: {apiKey.created}</span>
+                              <span>Last used: {apiKey.lastUsed}</span>
+                              <span>Permissions: {apiKey.permissions}</span>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <div className={`px-3 py-1.5 ${apiKey.status === 'active' ? 'bg-green-500/20 border-green-500/30' : 'bg-slate-700/40 border-slate-600/50'} border rounded-lg`}>
+                              <span className={`text-xs font-medium ${apiKey.status === 'active' ? 'text-green-400' : 'text-slate-400'}`}>{apiKey.status === 'active' ? 'Active' : 'Inactive'}</span>
+                            </div>
+                            <button className="p-2 hover:bg-slate-700/40 rounded-lg transition-colors"><Edit3 className="w-4 h-4 text-slate-400" /></button>
+                            <button className="p-2 hover:bg-red-500/20 rounded-lg transition-colors"><Trash2 className="w-4 h-4 text-red-400" /></button>
+                          </div>
                         </div>
-                        <p className="text-2xl font-bold text-white">34%</p>
-                        <div className="mt-2 h-2 bg-slate-700/40 rounded-full overflow-hidden">
-                          <div className="h-full bg-gradient-to-r from-blue-500 to-cyan-500" style={{width: '34%'}}></div>
+                      ))}
+                    </div>
+                    <h4 className="text-xs font-medium text-slate-400 uppercase tracking-wider mb-3">API Usage (30 Day)</h4>
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                      {[
+                        { icon: BarChart3, color: 'text-blue-400', label: 'Total Requests', value: '8.2M', sub: '+12% vs last month', subColor: 'text-green-400' },
+                        { icon: Activity, color: 'text-green-400', label: 'Success Rate', value: '99.7%', sub: '24,891 errors', subColor: 'text-slate-400' },
+                        { icon: Clock, color: 'text-amber-400', label: 'Avg Response', value: '187ms', sub: '-23ms vs last month', subColor: 'text-green-400' },
+                        { icon: Zap, color: 'text-purple-400', label: 'Peak RPS', value: '1,247', sub: 'requests/second', subColor: 'text-slate-400' },
+                      ].map((s, i) => (
+                        <div key={i} className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-4">
+                          <div className="flex items-center gap-2 mb-2">
+                            <s.icon className={`w-4 h-4 ${s.color}`} />
+                            <p className="text-[10px] font-medium text-slate-400">{s.label}</p>
+                          </div>
+                          <p className="text-xl font-bold text-white">{s.value}</p>
+                          <p className={`text-[10px] ${s.subColor} mt-1`}>{s.sub}</p>
                         </div>
-                      </div>
-                      <div className="bg-slate-900/50 border border-slate-700/50 rounded-xl p-4">
-                        <div className="flex items-center gap-3 mb-2">
-                          <HardDrive className="w-5 h-5 text-green-400" />
-                          <p className="text-xs font-medium text-slate-400">Memory Usage</p>
+                      ))}
+                    </div>
+                    <h4 className="text-xs font-medium text-slate-400 uppercase tracking-wider mb-3">Rate Limiting</h4>
+                    <select
+                      value={securitySettings.apiRateLimit}
+                      onChange={(e) => setSecuritySettings({...securitySettings, apiRateLimit: e.target.value})}
+                      className="w-full px-4 py-2.5 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white focus:outline-none focus:border-amber-500/50 transition-colors"
+                    >
+                      <option value="100">100 requests/hour (Basic)</option>
+                      <option value="500">500 requests/hour (Standard)</option>
+                      <option value="1000">1,000 requests/hour (Professional)</option>
+                      <option value="5000">5,000 requests/hour (Enterprise)</option>
+                      <option value="unlimited">Unlimited</option>
+                    </select>
+                  </div>
+
+                  {/* System Health */}
+                  <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-6">
+                    <div className="flex items-center justify-between mb-1">
+                      <h3 className="text-sm font-semibold text-white">System Health</h3>
+                      <span className="text-[10px] text-slate-500">Last updated: Dec 11, 2025 09:15 AM</span>
+                    </div>
+                    <p className="text-xs text-slate-500 mb-6">Infrastructure metrics, version monitoring, and resource utilization.</p>
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                      {[
+                        { icon: Cpu, color: 'blue', label: 'CPU Usage', value: '34%', pct: 34 },
+                        { icon: HardDrive, color: 'green', label: 'Memory Usage', value: '67%', pct: 67 },
+                        { icon: Database, color: 'amber', label: 'Storage Used', value: '42%', pct: 42 },
+                        { icon: Activity, color: 'purple', label: 'Active Connections', value: '234' },
+                      ].map((m, i) => (
+                        <div key={i} className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-4">
+                          <div className="flex items-center gap-2 mb-2">
+                            <m.icon className={`w-4 h-4 text-${m.color}-400`} />
+                            <p className="text-[10px] font-medium text-slate-400">{m.label}</p>
+                          </div>
+                          <p className="text-xl font-bold text-white">{m.value}</p>
+                          {m.pct !== undefined && (
+                            <div className="mt-2 h-1.5 bg-slate-700/40 rounded-full overflow-hidden">
+                              <div className={`h-full bg-${m.color}-500`} style={{width: `${m.pct}%`}}></div>
+                            </div>
+                          )}
                         </div>
-                        <p className="text-2xl font-bold text-white">67%</p>
-                        <div className="mt-2 h-2 bg-slate-700/40 rounded-full overflow-hidden">
-                          <div className="h-full bg-gradient-to-r from-green-500 to-emerald-500" style={{width: '67%'}}></div>
+                      ))}
+                    </div>
+                    <h4 className="text-xs font-medium text-slate-400 uppercase tracking-wider mb-3">Version Monitoring</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      {[
+                        { label: 'Platform', value: 'SentryOps v3.8.2 (Build 20251211)' },
+                        { label: 'Database', value: 'PostgreSQL 15.4' },
+                        { label: 'Cache Server', value: 'Redis 7.2.3' },
+                        { label: 'Web Server', value: 'Nginx 1.25.3' },
+                        { label: 'Last Update', value: 'December 8, 2025' },
+                        { label: 'Uptime', value: '47 days, 12 hours' },
+                      ].map((v, i) => (
+                        <div key={i} className="flex justify-between items-center py-2 border-b border-slate-700/20">
+                          <span className="text-xs text-slate-400">{v.label}</span>
+                          <span className="text-xs font-medium text-white">{v.value}</span>
                         </div>
-                      </div>
-                      <div className="bg-slate-900/50 border border-slate-700/50 rounded-xl p-4">
-                        <div className="flex items-center gap-3 mb-2">
-                          <Database className="w-5 h-5 text-amber-400" />
-                          <p className="text-xs font-medium text-slate-400">Storage Used</p>
-                        </div>
-                        <p className="text-2xl font-bold text-white">42%</p>
-                        <div className="mt-2 h-2 bg-slate-700/40 rounded-full overflow-hidden">
-                          <div className="h-full bg-gradient-to-r from-amber-500 to-orange-500" style={{width: '42%'}}></div>
-                        </div>
-                      </div>
-                      <div className="bg-slate-900/50 border border-slate-700/50 rounded-xl p-4">
-                        <div className="flex items-center gap-3 mb-2">
-                          <Activity className="w-5 h-5 text-purple-400" />
-                          <p className="text-xs font-medium text-slate-400">Active Connections</p>
-                        </div>
-                        <p className="text-2xl font-bold text-white">234</p>
-                        <p className="text-xs text-slate-400 mt-1">connections</p>
-                      </div>
+                      ))}
                     </div>
                   </div>
 
-                  <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
-                    <h3 className="text-lg font-semibold text-white mb-6">Maintenance</h3>
+                  {/* DevOps / Infrastructure Controls */}
+                  <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-6">
+                    <div className="flex items-center justify-between mb-1">
+                      <h3 className="text-sm font-semibold text-white">DevOps / Infrastructure Controls</h3>
+                      <span className="text-[10px] text-slate-500">Last action: Dec 10, 2025 02:00 AM</span>
+                    </div>
+                    <p className="text-xs text-slate-500 mb-6">Cache clearing, database optimization, and version monitoring.</p>
                     <div className="space-y-3">
-                      <button className="w-full flex items-center justify-between p-4 bg-slate-800/30 border border-slate-700/30 rounded-xl hover:bg-slate-800/50 transition-all">
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center">
-                            <RefreshCw className="w-5 h-5 text-blue-400" />
+                      {[
+                        { icon: RefreshCw, color: 'blue', title: 'Clear Cache', desc: 'Clear system and application cache' },
+                        { icon: Database, color: 'amber', title: 'Optimize Database', desc: 'Run database optimization and vacuum tasks' },
+                        { icon: Download, color: 'green', title: 'Check for Updates', desc: 'Check for system and dependency updates' },
+                      ].map((action, i) => (
+                        <button key={i} className="w-full flex items-center justify-between p-4 border border-slate-700/20 rounded-lg hover:bg-slate-800/30 transition-all">
+                          <div className="flex items-center gap-3">
+                            <div className={`w-10 h-10 bg-${action.color}-500/20 rounded-xl flex items-center justify-center`}>
+                              <action.icon className={`w-5 h-5 text-${action.color}-400`} />
+                            </div>
+                            <div className="text-left">
+                              <p className="text-sm font-medium text-white">{action.title}</p>
+                              <p className="text-xs text-slate-400">{action.desc}</p>
+                            </div>
                           </div>
-                          <div className="text-left">
-                            <p className="text-sm font-medium text-white">Clear Cache</p>
-                            <p className="text-xs text-slate-400">Clear system and application cache</p>
-                          </div>
-                        </div>
-                        <ChevronRight className="w-5 h-5 text-slate-400" />
-                      </button>
-                      <button className="w-full flex items-center justify-between p-4 bg-slate-800/30 border border-slate-700/30 rounded-xl hover:bg-slate-800/50 transition-all">
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 bg-amber-500/20 rounded-xl flex items-center justify-center">
-                            <Database className="w-5 h-5 text-amber-400" />
-                          </div>
-                          <div className="text-left">
-                            <p className="text-sm font-medium text-white">Optimize Database</p>
-                            <p className="text-xs text-slate-400">Run database optimization tasks</p>
-                          </div>
-                        </div>
-                        <ChevronRight className="w-5 h-5 text-slate-400" />
-                      </button>
-                      <button className="w-full flex items-center justify-between p-4 bg-slate-800/30 border border-slate-700/30 rounded-xl hover:bg-slate-800/50 transition-all">
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center">
-                            <Download className="w-5 h-5 text-green-400" />
-                          </div>
-                          <div className="text-left">
-                            <p className="text-sm font-medium text-white">Check for Updates</p>
-                            <p className="text-xs text-slate-400">Check for system updates</p>
-                          </div>
-                        </div>
-                        <ChevronRight className="w-5 h-5 text-slate-400" />
-                      </button>
+                          <ChevronRight className="w-5 h-5 text-slate-400" />
+                        </button>
+                      ))}
                     </div>
                   </div>
                 </div>
               )}
 
-              {/* Audit Logs */}
+              {/* Audit & Compliance */}
               {activeSection === 'audit' && (
-                <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
+                <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-6">
                   <div className="flex items-center justify-between mb-6">
                     <div>
-                      <h3 className="text-lg font-semibold text-white">Audit Trail</h3>
-                      <p className="text-sm text-slate-400 mt-1">Recent security and system events</p>
+                      <h3 className="text-sm font-semibold text-white">Audit & Compliance Trail</h3>
+                      <p className="text-xs text-slate-500 mt-1">Recent security, compliance, and system events. All changes are logged.</p>
                     </div>
                     <button className="flex items-center gap-2 px-4 py-2 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded-xl text-sm font-medium hover:bg-blue-500/30 transition-all">
                       <Download className="w-4 h-4" />
@@ -2005,7 +1825,7 @@ export default function SettingsPage() {
             </div>
 
             {/* Save Changes Button */}
-            <div className="mt-8 flex items-center justify-between p-6 bg-slate-800/40 border border-slate-700/50 rounded-xl">
+            <div className="mt-8 flex items-center justify-between p-5 bg-slate-800/25 border border-slate-700/30 rounded-xl">
               <div>
                 <p className="text-sm font-medium text-white">Unsaved Changes</p>
                 <p className="text-xs text-slate-400 mt-1">Save your changes to apply the new settings</p>
