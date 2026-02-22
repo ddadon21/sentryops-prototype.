@@ -1,4 +1,4 @@
-import { LayoutDashboard, FolderOpen, FileText, Clock, UserCheck, Calendar, FileCheck, CheckCircle, TrendingUp, AlertTriangle, DollarSign, Eye, Activity, XCircle, Settings } from 'lucide-react';
+import { LayoutDashboard, FolderOpen, FileText, Clock, UserCheck, Calendar, FileCheck, CheckCircle, TrendingUp, AlertTriangle, DollarSign, Eye, Activity, XCircle } from 'lucide-react';
 
 // ── BI module shared navigation, profile, and notifications ───
 // Every BI page imports this to pass to DashboardLayout so the sidebar
@@ -19,7 +19,6 @@ export const biNavigation = [
   { id: 'social-media', label: 'Digital Footprint Review', icon: Eye, route: '/bi/social' },
   { id: 'bi-reports', label: 'Adjudication Reports', icon: Activity, route: '/bi/reports' },
   { id: 'case-closure', label: 'Final Determinations', icon: XCircle, route: '/bi/closure' },
-  { id: 'bi-settings', label: 'Settings', icon: Settings, route: '/bi/settings' },
 ];
 
 export const biProfile = {
