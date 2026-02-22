@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import {
   Search, Filter, X, Plus, Users, Scale,
-  FlaskConical, BarChart3, TrendingUp, AlertCircle, Clock,
-  CheckCircle, Link2, UserCircle, ChevronRight, ChevronDown, ChevronUp,
-  Activity, Shield, Phone, Mail, Eye, FileText, AlertTriangle,
-  Database, FileWarning, Microscope, ArrowRight, Circle
+  FlaskConical, BarChart3, Clock,
+  CheckCircle, Link2, ChevronDown, ChevronUp,
+  Activity, Phone, Mail, FileText,
+  Database, FileWarning, Microscope, Circle
 } from 'lucide-react';
 import DashboardLayout from '../../layouts/DashboardLayout';
 
