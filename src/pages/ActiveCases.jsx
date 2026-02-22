@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { LayoutDashboard, FolderOpen, FileText, Clock, UserCheck, Calendar, FileCheck, CheckCircle, TrendingUp, AlertTriangle, DollarSign, Eye, Activity, XCircle, Settings, Bell, MessageCircle, Search, ChevronRight, Shield, X, Menu, ChevronLeft, LogOut, Download, RefreshCw, Users, Building2, Phone, CreditCard, Briefcase, Scale, ClipboardCheck, Printer, ChevronDown, Filter, CircleDot, Hourglass, AlertCircle, FileWarning, CheckCircle2, Circle, PauseCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
+import DashboardLayout from '../layouts/DashboardLayout';
+import { biNavigation, biProfile, biNotifications } from '../config/biConfig';
 
 export default function ActiveCases() {
   const navigate = useNavigate();
@@ -312,182 +314,13 @@ export default function ActiveCases() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex">
-      {/* Sidebar */}
-      <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-slate-800/50 backdrop-blur-xl bg-slate-900/30 flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
-        <div className="p-4 border-b border-slate-700/50 flex items-center justify-between">
-          {!sidebarCollapsed && (
-            <div className="flex items-center gap-2">
-              <Shield className="w-8 h-8 text-amber-500" />
-              <h1 className="text-xl font-bold text-white">SentryOps</h1>
-            </div>
-          )}
-          {sidebarCollapsed && (
-            <Shield className="w-8 h-8 text-amber-500 mx-auto" />
-          )}
-          <button
-            onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-            className="p-2 hover:bg-slate-800/50 rounded-lg transition-colors hidden lg:block"
-          >
-            {sidebarCollapsed ? <ChevronRight className="w-5 h-5 text-slate-400" /> : <ChevronLeft className="w-5 h-5 text-slate-400" />}
-          </button>
-        </div>
-
-        <nav className="flex-1 overflow-y-auto p-4 space-y-2">
-          {navigation.map(item => {
-            const Icon = item.icon;
-            const isActive = activePage === item.id;
-            return (
-              <button
-                key={item.id}
-                onClick={() => handleNavigation(item)}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'
-                } ${sidebarCollapsed ? 'justify-center' : ''}`}
-                title={sidebarCollapsed ? item.label : ''}
-              >
-                <Icon className="w-5 h-5 flex-shrink-0" />
-                {!sidebarCollapsed && (
-                  <span className="flex-1 text-left text-sm font-medium truncate">{item.label}</span>
-                )}
-              </button>
-            );
-          })}
-        </nav>
-
-        <div className="border-t border-slate-700/50">
-          {!sidebarCollapsed && (
-            <div className="px-4 py-3">
-              <p className="text-xs text-slate-500 text-center">Gwinnett County Sheriff's Office</p>
-            </div>
-          )}
-
-          <div className="p-4">
-            <button
-              onClick={() => setLogoutConfirmOpen(true)}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-slate-400 hover:bg-slate-800/40 hover:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
-              title={sidebarCollapsed ? 'Sign Out' : ''}
-            >
-              <LogOut className="w-5 h-5 flex-shrink-0" />
-              {!sidebarCollapsed && (
-                <span className="flex-1 text-left text-sm font-medium">Sign Out</span>
-              )}
-            </button>
-          </div>
-        </div>
-      </aside>
-
-      {/* Mobile Overlay */}
-      {sidebarOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
-
-      {/* Logout Modal */}
-      {logoutConfirmOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-            onClick={() => setLogoutConfirmOpen(false)}
-          />
-          <div className="relative bg-slate-900 border border-slate-700/50 rounded-2xl p-6 max-w-sm w-full shadow-2xl">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="w-12 h-12 bg-slate-800/60 rounded-xl flex items-center justify-center">
-                <LogOut className="w-6 h-6 text-slate-400" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold text-white">Sign Out</h3>
-                <p className="text-sm text-slate-400">Are you sure you want to sign out?</p>
-              </div>
-            </div>
-            <div className="flex gap-3 mt-6">
-              <button
-                onClick={() => setLogoutConfirmOpen(false)}
-                className="flex-1 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-white font-medium transition-all"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleLogout}
-                className="flex-1 px-4 py-2.5 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-white font-medium transition-all"
-              >
-                Sign Out
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col min-w-0">
-        <header className="border-b border-slate-800/50 backdrop-blur-xl bg-slate-900/30">
-          <div className="px-4 lg:px-6 py-4 flex items-center justify-between gap-4">
-            <div className="flex items-center gap-4 flex-1 min-w-0">
-              <button
-                onClick={() => setSidebarOpen(!sidebarOpen)}
-                className="lg:hidden p-2 hover:bg-slate-800/50 rounded-lg"
-              >
-                <Menu className="w-5 h-5 text-slate-400" />
-              </button>
-              <div className="flex-1 max-w-xl relative hidden sm:block">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-                <input type="text" placeholder="Search cases..." className="w-full pl-12 pr-4 py-2 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-amber-500/50" />
-              </div>
-            </div>
-            <div className="flex items-center gap-2 lg:gap-3">
-              <div className="relative">
-                <button
-                  onClick={() => setNotificationsOpen(!notificationsOpen)}
-                  className="p-2 hover:bg-slate-800/50 rounded-lg relative"
-                >
-                  <Bell className="w-5 h-5 text-slate-400" />
-                  <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-                </button>
-
-                {notificationsOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-96 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-2xl z-50">
-                    <div className="p-4 border-b border-slate-700/50">
-                      <h3 className="text-sm font-semibold text-white">Notifications</h3>
-                    </div>
-                    <div className="max-h-96 overflow-y-auto">
-                      {notifications.map(notification => (
-                        <div key={notification.id} className={`p-4 border-b border-slate-800/30 hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
-                          <div className="flex items-start gap-3">
-                            <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-amber-400' : 'bg-blue-400'}`}></div>
-                            <div className="flex-1 min-w-0">
-                              <p className="text-sm font-medium text-white mb-1">{notification.title}</p>
-                              <p className="text-xs text-slate-400 mb-2">{notification.message}</p>
-                              <p className="text-xs text-slate-500">{notification.time}</p>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="p-3 border-t border-slate-700/50">
-                      <button className="w-full text-center text-sm text-amber-400 hover:text-amber-300 font-medium">View All</button>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              <div className="h-8 w-px bg-slate-700/50"></div>
-
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center">
-                  <span className="text-white text-sm font-bold">BI</span>
-                </div>
-                <div className="hidden sm:block">
-                  <p className="text-sm font-medium text-white">BI Supervisor</p>
-                  <p className="text-xs text-slate-400">Background Investigations</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </header>
-
-        <main className="flex-1 overflow-y-auto p-4 lg:p-6">
+    <DashboardLayout
+      navigation={biNavigation}
+      profile={biProfile}
+      notifications={biNotifications}
+      settingsRoute="/bi/settings"
+    >
+      <div className="p-5 lg:p-8 space-y-8">
           <div className="max-w-7xl mx-auto">
             <div className="mb-6">
               <div className="flex items-center gap-3 mb-2">
@@ -927,63 +760,7 @@ export default function ActiveCases() {
               })}
             </div>
           </div>
-        </main>
       </div>
-
-      {/* Quick Help Button */}
-      <button
-        onClick={() => setChatOpen(!chatOpen)}
-        className="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-br from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 z-40"
-      >
-        {chatOpen ? <X className="w-6 h-6 text-white" /> : <MessageCircle className="w-6 h-6 text-white" />}
-      </button>
-
-      {/* Support & Resources Panel */}
-      {chatOpen && (
-        <div className="fixed bottom-24 right-6 w-full max-w-96 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-2xl flex flex-col z-40 mx-4 sm:mx-0">
-          <div className="p-4 border-b border-slate-700/50">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center">
-                <Shield className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <h3 className="text-sm font-semibold text-white">Case Management Resources</h3>
-                <p className="text-xs text-slate-400">Quick links and assistance</p>
-              </div>
-            </div>
-          </div>
-          <div className="p-4 space-y-3">
-            <button className="w-full flex items-center gap-3 p-3 bg-slate-800/40 hover:bg-slate-800/60 rounded-xl transition-all text-left">
-              <FileText className="w-5 h-5 text-blue-400" />
-              <div>
-                <p className="text-sm text-white font-medium">Investigation Guidelines</p>
-                <p className="text-xs text-slate-500">POST standards & procedures</p>
-              </div>
-            </button>
-            <button className="w-full flex items-center gap-3 p-3 bg-slate-800/40 hover:bg-slate-800/60 rounded-xl transition-all text-left">
-              <ClipboardCheck className="w-5 h-5 text-green-400" />
-              <div>
-                <p className="text-sm text-white font-medium">Case Checklists</p>
-                <p className="text-xs text-slate-500">Stage-by-stage requirements</p>
-              </div>
-            </button>
-            <button className="w-full flex items-center gap-3 p-3 bg-slate-800/40 hover:bg-slate-800/60 rounded-xl transition-all text-left">
-              <Users className="w-5 h-5 text-purple-400" />
-              <div>
-                <p className="text-sm text-white font-medium">Reassign Cases</p>
-                <p className="text-xs text-slate-500">Transfer to another investigator</p>
-              </div>
-            </button>
-            <button className="w-full flex items-center gap-3 p-3 bg-slate-800/40 hover:bg-slate-800/60 rounded-xl transition-all text-left">
-              <Scale className="w-5 h-5 text-amber-400" />
-              <div>
-                <p className="text-sm text-white font-medium">Adjudication Guidelines</p>
-                <p className="text-xs text-slate-500">Decision criteria reference</p>
-              </div>
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
+    </DashboardLayout>
   );
 }
