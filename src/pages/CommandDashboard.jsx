@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Users, AlertCircle, CheckCircle, Shield, ThumbsUp, XCircle, ChevronDown, ChevronUp, Circle, ArrowUpRight, ArrowDownRight, ArrowRight } from 'lucide-react';
+import { Users, AlertCircle, CheckCircle, Shield, ThumbsUp, XCircle, ChevronDown, ChevronUp, ArrowUpRight, ArrowDownRight, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import DashboardLayout from '../layouts/DashboardLayout';
@@ -207,33 +207,38 @@ export default function CommandDashboard() {
 
   return (
     <DashboardLayout>
-      <div className="p-5 lg:p-8 space-y-8">
+      <div className="p-5 lg:p-8">
+        <div className="max-w-7xl mx-auto">
 
         {/* Page Header */}
-        <div>
-          <h2 className="text-xl font-bold text-white mb-1">Executive Command Dashboard</h2>
-          <div className="flex items-center gap-2 text-xs text-slate-500">
-            <span>Administrator</span>
-            <span>·</span>
-            <span>Command Staff</span>
-            <span>·</span>
-            <span>Updated 2 minutes ago</span>
+        <div className="mb-8 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+          <div>
+            <h2 className="text-xl font-bold text-white mb-1">Executive Command Dashboard</h2>
+            <div className="flex items-center gap-2 text-[11px] text-slate-500">
+              <span>Administrator</span>
+              <span className="text-slate-700">·</span>
+              <span>Command Staff</span>
+              <span className="text-slate-700">·</span>
+              <span>Updated 2 minutes ago</span>
+            </div>
           </div>
         </div>
 
         {/* Executive Snapshot Row */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="mb-8 grid grid-cols-2 lg:grid-cols-4 gap-5">
           {/* Personnel */}
           <button
             onClick={() => navigate(createPageUrl('PersonnelOverview'))}
             className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5 text-left hover:border-slate-600/40 transition-colors"
           >
             <div className="flex items-center justify-between mb-3">
-              <span className="text-xs text-slate-500 font-medium">Personnel</span>
-              <Circle className="w-2 h-2 fill-amber-500 text-amber-500" />
+              <div className="flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-amber-500"></div>
+                <span className="text-xs text-slate-500 font-medium uppercase tracking-wide">Personnel</span>
+              </div>
             </div>
             <div className="flex items-baseline gap-2 mb-1">
-              <p className="text-3xl font-bold text-white">164</p>
+              <p className="text-2xl font-semibold text-white">164</p>
               <span className="flex items-center gap-0.5 text-emerald-400 text-xs font-medium">
                 <ArrowUpRight className="w-3 h-3" />+2
               </span>
@@ -248,7 +253,9 @@ export default function CommandDashboard() {
             className="bg-slate-800/25 border border-slate-700/40 rounded-xl p-5 text-left hover:border-slate-600/40 transition-colors"
           >
             <div className="flex items-center justify-between mb-3">
-              <span className="text-xs text-slate-500 font-medium">Active Critical Incidents</span>
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-slate-500 font-medium uppercase tracking-wide">Active Critical Incidents</span>
+              </div>
               {activeIncidentCount > 0 && (
                 <span className="relative flex h-2.5 w-2.5">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
@@ -257,7 +264,7 @@ export default function CommandDashboard() {
               )}
             </div>
             <div className="flex items-baseline gap-2 mb-1">
-              <p className="text-3xl font-extrabold text-white">{activeIncidentCount}</p>
+              <p className="text-2xl font-semibold text-white">{activeIncidentCount}</p>
               <span className="text-xs text-slate-400">Active (2 escalated)</span>
             </div>
             <p className="text-xs text-slate-400 mb-1">1 UOF · 1 Facility · 1 Staffing</p>
@@ -267,10 +274,12 @@ export default function CommandDashboard() {
           {/* Compliance Status — with breakdown */}
           <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5 text-left">
             <div className="flex items-center justify-between mb-3">
-              <span className="text-xs text-slate-500 font-medium">Compliance Readiness</span>
-              <Circle className="w-2 h-2 fill-amber-500 text-amber-500" />
+              <div className="flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-amber-500"></div>
+                <span className="text-xs text-slate-500 font-medium uppercase tracking-wide">Compliance Readiness</span>
+              </div>
             </div>
-            <p className="text-3xl font-bold text-white mb-1">94%</p>
+            <p className="text-2xl font-semibold text-white mb-1">94%</p>
             <div className="flex items-center gap-2 text-[11px] text-slate-400 mb-1">
               <span>Policies 94%</span>
               <span className="text-slate-600">·</span>
@@ -287,11 +296,13 @@ export default function CommandDashboard() {
             className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5 text-left hover:border-slate-600/40 transition-colors"
           >
             <div className="flex items-center justify-between mb-3">
-              <span className="text-xs text-slate-500 font-medium">Budget Utilization</span>
-              <Circle className="w-2 h-2 fill-emerald-500 text-emerald-500" />
+              <div className="flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
+                <span className="text-xs text-slate-500 font-medium uppercase tracking-wide">Budget Utilization</span>
+              </div>
             </div>
             <div className="flex items-baseline gap-2 mb-1">
-              <p className="text-3xl font-bold text-white">85%</p>
+              <p className="text-2xl font-semibold text-white">85%</p>
               <span className="flex items-center gap-0.5 text-amber-400 text-xs font-medium">
                 <ArrowUpRight className="w-3 h-3" />+1.2%
               </span>
@@ -302,13 +313,13 @@ export default function CommandDashboard() {
         </div>
 
         {/* Executive Intelligence Summary */}
-        <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl border-l-2 border-l-slate-600/40">
+        <div className="mb-8 bg-slate-800/25 border border-slate-700/30 rounded-xl border-l-2 border-l-slate-600/40">
           <button
             onClick={() => setAiBriefExpanded(!aiBriefExpanded)}
             className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-slate-800/10 transition-colors rounded-xl"
           >
             <div className="flex items-center gap-3">
-              <h3 className="text-sm font-medium text-slate-300">Executive Intelligence Summary</h3>
+              <h3 className="text-[13px] font-semibold text-slate-300 uppercase tracking-wide">Executive Intelligence Summary</h3>
               <span className="px-1.5 py-0.5 bg-slate-700/30 text-[11px] text-slate-500 rounded">3 Insights</span>
             </div>
             <div className="flex items-center gap-3">
@@ -369,9 +380,9 @@ export default function CommandDashboard() {
         </div>
 
         {/* Pending Approvals — Top 3 only */}
-        <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl">
+        <div className="mb-8 bg-slate-800/25 border border-slate-700/30 rounded-xl">
           <div className="flex items-center justify-between px-5 py-4 pb-3">
-            <h3 className="text-sm font-medium text-white">Pending Approvals</h3>
+            <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">Pending Approvals</h3>
             <button
               onClick={() => navigate(createPageUrl('Approvals'))}
               className="text-xs text-amber-400/80 hover:text-amber-300"
@@ -447,10 +458,10 @@ export default function CommandDashboard() {
         </div>
 
         {/* Federal Compliance & Audits — MOVED UP above Divisions/Staffing */}
-        <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
+        <div className="mb-8 bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
           <div className="flex items-center justify-between mb-5">
             <div className="flex items-center gap-3">
-              <h3 className="text-sm font-medium text-white">Federal Compliance & Audits</h3>
+              <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">Federal Compliance & Audits</h3>
               <span className="text-[10px] text-red-400 font-medium">USMS Dec 12–14</span>
             </div>
           </div>
@@ -538,8 +549,8 @@ export default function CommandDashboard() {
         </div>
 
         {/* Division Status — neutral text, colored dot only, hover drill */}
-        <div>
-          <h3 className="text-sm font-medium text-white mb-4">Division Status</h3>
+        <div className="mb-8">
+          <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide mb-4">Division Status</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
             {divisions.map((div, idx) => (
               <button
@@ -573,9 +584,9 @@ export default function CommandDashboard() {
         </div>
 
         {/* Staffing Levels — threshold markers */}
-        <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
+        <div className="mb-8 bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
           <div className="flex items-center justify-between mb-5">
-            <h3 className="text-sm font-medium text-white">Staffing Levels</h3>
+            <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">Staffing Levels</h3>
             <span className="text-[11px] text-slate-500">164/178 authorized (92.1%)</span>
           </div>
           <div className="space-y-3.5">
@@ -617,6 +628,7 @@ export default function CommandDashboard() {
           </div>
         </div>
 
+        </div>
       </div>
 
       {/* Approval/Deny Modal */}

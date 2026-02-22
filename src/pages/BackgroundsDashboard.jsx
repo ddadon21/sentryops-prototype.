@@ -101,7 +101,7 @@ export default function BackgroundsDashboard() {
       notifications={biNotifications}
       settingsRoute="/bi/settings"
     >
-      <div className="p-4 lg:p-8">
+      <div className="p-5 lg:p-8">
         <div className="max-w-7xl mx-auto">
           {/* Page Header */}
           <div className="mb-8 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
