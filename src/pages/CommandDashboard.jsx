@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Users, AlertCircle, CheckCircle, Shield, ThumbsUp, XCircle, ChevronDown, ChevronUp, ArrowUpRight, ArrowDownRight, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
@@ -12,6 +12,20 @@ export default function CommandDashboard() {
   const [toastMessage, setToastMessage] = useState(null);
   const [aiBriefExpanded, setAiBriefExpanded] = useState(false);
   const [hoveredDivision, setHoveredDivision] = useState(null);
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => setCurrentTime(new Date()), 60000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const formatTime = (date) => {
+    return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+  };
+
+  const formatDate = (date) => {
+    return date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  };
 
   // Approval items with tiered urgency:
   // critical = life/safety or legal/compliance risk within 24h
@@ -215,9 +229,9 @@ export default function CommandDashboard() {
           <div>
             <h2 className="text-xl font-bold text-white mb-1">Executive Command Dashboard</h2>
             <div className="flex items-center gap-2 text-[11px] text-slate-500">
-              <span>Administrator</span>
+              <span>{formatDate(currentTime)}</span>
               <span className="text-slate-700">·</span>
-              <span>Command Staff</span>
+              <span>{formatTime(currentTime)} EST</span>
               <span className="text-slate-700">·</span>
               <span>Updated 2 minutes ago</span>
             </div>
