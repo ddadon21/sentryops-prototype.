@@ -153,9 +153,9 @@ export default function BackgroundsDashboard() {
           </div>
 
           {/* Adjudication Exposure Console */}
-          <div className="mb-8 flex items-center gap-6 px-5 py-3.5 bg-slate-800/40 border border-slate-600/30 rounded-lg">
+          <div className="mb-8 flex items-center gap-6 px-5 py-3.5 bg-slate-800/25 border border-slate-700/30 rounded-xl">
             <div className="flex items-center gap-2.5">
-              <div className="w-1.5 h-1.5 bg-red-700/60 rounded-full"></div>
+              <div className="w-1.5 h-1.5 bg-red-500 rounded-full"></div>
               <span className="text-[13px] font-semibold text-slate-300">Cases Awaiting Sign-Off:</span>
               <span className="text-[13px] font-bold text-white">{metrics.awaitingSupervisorSignOff}</span>
             </div>
@@ -166,7 +166,7 @@ export default function BackgroundsDashboard() {
             </div>
             <div className="h-4 w-px bg-slate-600/40"></div>
             <div className="flex items-center gap-2.5">
-              <div className="w-1.5 h-1.5 bg-red-700/60 rounded-full"></div>
+              <div className="w-1.5 h-1.5 bg-red-500 rounded-full"></div>
               <span className="text-[13px] font-semibold text-slate-300">SLA Breach:</span>
               <span className="text-[13px] font-bold text-white">{metrics.slaBreachCases}</span>
             </div>
@@ -179,7 +179,7 @@ export default function BackgroundsDashboard() {
 
           {/* Supervisor Review Required */}
           {supervisorReviewVisible && (
-            <div className="mb-8 bg-slate-800/25 border border-slate-700/30 border-l-[3px] border-l-red-800/60 rounded-xl p-5">
+            <div className="mb-8 bg-slate-800/25 border border-slate-700/30 border-l-[3px] border-l-red-500/40 rounded-xl p-5">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-3">
                   <h4 className="text-[13px] font-semibold text-white uppercase tracking-wide">Supervisor Review Required</h4>
@@ -203,8 +203,8 @@ export default function BackgroundsDashboard() {
 
               <div className="space-y-1">
                 {supervisorReviewCases.map(caseItem => (
-                  <div key={caseItem.id} className={`flex items-center gap-4 px-4 py-2.5 bg-slate-900/40 rounded border-l-[3px] ${
-                    caseItem.severity === 'high' ? 'border-l-red-800/50' : 'border-l-amber-700/40'
+                  <div key={caseItem.id} className={`flex items-center gap-4 px-4 py-2.5 bg-slate-900/20 rounded border-l-[3px] ${
+                    caseItem.severity === 'high' ? 'border-l-red-500/30' : 'border-l-amber-500/30'
                   }`}>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-3">
@@ -216,7 +216,7 @@ export default function BackgroundsDashboard() {
                     <div className="text-right flex-shrink-0">
                       <span className="text-xs text-slate-500">{caseItem.issueType}</span>
                       <div className="flex items-center gap-2 mt-1">
-                        <span className={`w-1.5 h-1.5 rounded-full ${caseItem.severity === 'high' ? 'bg-red-700/60' : 'bg-amber-700/50'}`}></span>
+                        <span className={`w-1.5 h-1.5 rounded-full ${caseItem.severity === 'high' ? 'bg-red-500' : 'bg-amber-500'}`}></span>
                         <span className="text-xs text-slate-500">{caseItem.daysOpen} days open</span>
                       </div>
                     </div>
@@ -238,7 +238,7 @@ export default function BackgroundsDashboard() {
 
             <div className="mb-5">
               <div className="flex items-center gap-2 mb-2.5">
-                <div className="w-1.5 h-1.5 bg-red-700/60 rounded-full"></div>
+                <div className="w-1.5 h-1.5 bg-red-500 rounded-full"></div>
                 <h5 className="text-[13px] font-semibold text-slate-300">REQUIRES ACTION</h5>
               </div>
               <div className="space-y-1.5 text-[13px]">
@@ -259,7 +259,7 @@ export default function BackgroundsDashboard() {
 
             <div className="mb-5">
               <div className="flex items-center gap-2 mb-2.5">
-                <div className="w-1.5 h-1.5 bg-amber-600/50 rounded-full"></div>
+                <div className="w-1.5 h-1.5 bg-amber-500 rounded-full"></div>
                 <h5 className="text-[13px] font-semibold text-slate-300">IN PROGRESS</h5>
               </div>
               <div className="space-y-1.5 text-[13px]">
@@ -280,7 +280,7 @@ export default function BackgroundsDashboard() {
 
             <div>
               <div className="flex items-center gap-2 mb-2.5">
-                <div className="w-1.5 h-1.5 bg-slate-500/50 rounded-full"></div>
+                <div className="w-1.5 h-1.5 bg-slate-500 rounded-full"></div>
                 <h5 className="text-[13px] font-semibold text-slate-300">COMPLETED THIS MONTH</h5>
               </div>
               <div className="space-y-1.5 text-[13px]">
@@ -302,9 +302,9 @@ export default function BackgroundsDashboard() {
 
           {/* Compliance Risk Indicator */}
           {metrics.slaBreachCases > 0 && (
-            <div className="mb-8 bg-slate-800/25 border border-slate-700/30 border-l-[3px] border-l-amber-700/50 rounded-xl px-5 py-3">
+            <div className="mb-8 bg-slate-800/25 border border-slate-700/30 border-l-[3px] border-l-amber-500/30 rounded-xl px-5 py-3">
               <div className="flex items-center gap-3">
-                <div className="w-1.5 h-1.5 bg-amber-700/50 rounded-full flex-shrink-0"></div>
+                <div className="w-1.5 h-1.5 bg-amber-500 rounded-full flex-shrink-0"></div>
                 <div>
                   <p className="text-[13px] text-white"><span className="text-slate-400">Compliance Notice:</span> {metrics.slaBreachCases} case(s) have exceeded the 18-day SLA target.</p>
                   <p className="text-[11px] text-slate-500 mt-0.5">POST certification and hiring timelines may be affected.</p>
@@ -321,7 +321,7 @@ export default function BackgroundsDashboard() {
             >
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 bg-slate-500/50 rounded-full"></div>
+                  <div className="w-1.5 h-1.5 bg-slate-500 rounded-full"></div>
                   <span className="text-xs text-slate-500 uppercase tracking-wide font-medium">Active Investigations</span>
                 </div>
                 <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-slate-400 transition-all" />
@@ -349,7 +349,7 @@ export default function BackgroundsDashboard() {
             >
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 bg-red-700/60 rounded-full"></div>
+                  <div className="w-1.5 h-1.5 bg-red-500 rounded-full"></div>
                   <span className="text-xs text-slate-500 uppercase tracking-wide font-medium">Documented Concerns</span>
                 </div>
                 <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-slate-400 transition-all" />
@@ -377,7 +377,7 @@ export default function BackgroundsDashboard() {
             >
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 bg-slate-500/50 rounded-full"></div>
+                  <div className="w-1.5 h-1.5 bg-slate-500 rounded-full"></div>
                   <span className="text-xs text-slate-500 uppercase tracking-wide font-medium">Completed This Month</span>
                 </div>
                 <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-slate-400 transition-all" />
@@ -405,7 +405,7 @@ export default function BackgroundsDashboard() {
             >
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 bg-slate-500/50 rounded-full"></div>
+                  <div className="w-1.5 h-1.5 bg-slate-500 rounded-full"></div>
                   <span className="text-xs text-slate-500 uppercase tracking-wide font-medium">Avg Turnaround</span>
                 </div>
                 <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-slate-400 transition-all" />
@@ -432,7 +432,7 @@ export default function BackgroundsDashboard() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
             <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
               <div className="flex items-center gap-2 mb-2">
-                <div className="w-1.5 h-1.5 bg-slate-500/50 rounded-full"></div>
+                <div className="w-1.5 h-1.5 bg-slate-500 rounded-full"></div>
                 <span className="text-xs text-slate-500 uppercase tracking-wide font-medium">Today</span>
               </div>
               <p className="text-xl font-semibold text-white mb-1">{metrics.interviewsToday}</p>
@@ -442,7 +442,7 @@ export default function BackgroundsDashboard() {
 
             <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
               <div className="flex items-center gap-2 mb-2">
-                <div className="w-1.5 h-1.5 bg-amber-600/50 rounded-full"></div>
+                <div className="w-1.5 h-1.5 bg-amber-500 rounded-full"></div>
                 <span className="text-xs text-slate-500 uppercase tracking-wide font-medium">Pending</span>
               </div>
               <p className="text-xl font-semibold text-white mb-1">{metrics.referencesPending}</p>
@@ -452,7 +452,7 @@ export default function BackgroundsDashboard() {
 
             <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
               <div className="flex items-center gap-2 mb-2">
-                <div className="w-1.5 h-1.5 bg-red-700/60 rounded-full"></div>
+                <div className="w-1.5 h-1.5 bg-red-500 rounded-full"></div>
                 <span className="text-xs text-slate-500 uppercase tracking-wide font-medium">Overdue</span>
               </div>
               <p className="text-xl font-semibold text-white mb-1">{metrics.overdueItems}</p>
@@ -462,7 +462,7 @@ export default function BackgroundsDashboard() {
 
             <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
               <div className="flex items-center gap-2 mb-2">
-                <div className="w-1.5 h-1.5 bg-slate-500/50 rounded-full"></div>
+                <div className="w-1.5 h-1.5 bg-slate-500 rounded-full"></div>
                 <span className="text-xs text-slate-500 uppercase tracking-wide font-medium">Queue</span>
               </div>
               <p className="text-xl font-semibold text-white mb-1">{metrics.pendingReview}</p>
@@ -500,11 +500,11 @@ export default function BackgroundsDashboard() {
                       </div>
                       <div className="w-full h-1.5 bg-slate-700/30 rounded-full overflow-hidden relative">
                         <div
-                          className={`h-full rounded-full transition-all ${isBreaching ? 'bg-red-700/50' : 'bg-slate-500/40'}`}
+                          className={`h-full rounded-full transition-all ${isBreaching ? 'bg-red-500/40' : 'bg-slate-500/40'}`}
                           style={{ width: `${(stage.count / 47) * 100}%` }}
                         />
                         {isBreaching && (
-                          <div className="absolute top-0 bottom-0 w-px bg-red-600/40" style={{ left: '21%' }}></div>
+                          <div className="absolute top-0 bottom-0 w-px bg-red-500/40" style={{ left: '21%' }}></div>
                         )}
                       </div>
                     </div>
@@ -531,8 +531,8 @@ export default function BackgroundsDashboard() {
               </div>
               <div className="space-y-1">
                 {recentActivity.map(activity => {
-                  const statusDot = activity.type === 'flag' ? 'bg-red-700/60' :
-                    activity.type === 'complete' ? 'bg-slate-400/50' : 'bg-slate-600/50';
+                  const statusDot = activity.type === 'flag' ? 'bg-red-500' :
+                    activity.type === 'complete' ? 'bg-emerald-500' : 'bg-slate-600';
                   return (
                     <div key={activity.id} className="flex items-start gap-3 px-4 py-2.5 bg-slate-900/20 rounded hover:bg-slate-800/30 transition-all cursor-pointer">
                       <div className={`w-1.5 h-1.5 rounded-full mt-[7px] flex-shrink-0 ${statusDot}`}></div>
@@ -570,8 +570,8 @@ export default function BackgroundsDashboard() {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-4">
                       <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${
-                        caseItem.priority === 'high' ? 'bg-red-700/60' :
-                        caseItem.priority === 'medium' ? 'bg-amber-700/50' : 'bg-slate-600/50'
+                        caseItem.priority === 'high' ? 'bg-red-500' :
+                        caseItem.priority === 'medium' ? 'bg-amber-500' : 'bg-slate-600'
                       }`}></span>
                       <span className="text-[13px] font-semibold text-white">{caseItem.subject}</span>
                       <span className="text-[11px] text-slate-600">{caseItem.caseNumber}</span>
@@ -603,10 +603,10 @@ export default function BackgroundsDashboard() {
               if (items.length === 0) return null;
 
               const groupConfig = {
-                today: { label: 'Today', dot: 'bg-red-700/60', border: 'border-l-red-800/50' },
-                tomorrow: { label: 'Tomorrow', dot: 'bg-amber-700/50', border: 'border-l-amber-800/40' },
-                '3day': { label: 'Within 3 Days', dot: 'bg-slate-500/50', border: 'border-l-slate-600/30' },
-                '7day': { label: 'Within 7 Days', dot: 'bg-slate-600/40', border: 'border-l-slate-700/30' }
+                today: { label: 'Today', dot: 'bg-red-500', border: 'border-l-red-500/30' },
+                tomorrow: { label: 'Tomorrow', dot: 'bg-amber-500', border: 'border-l-amber-500/30' },
+                '3day': { label: 'Within 3 Days', dot: 'bg-slate-500', border: 'border-l-slate-600/30' },
+                '7day': { label: 'Within 7 Days', dot: 'bg-slate-600', border: 'border-l-slate-700/30' }
               }[group];
 
               return (
