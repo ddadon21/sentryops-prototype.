@@ -1,27 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import {
-  AlertCircle,
-  ClipboardCheck,
-  Users,
-  FileCheck,
   Clock,
   Printer,
   Download,
   RefreshCw,
-  CheckCircle,
   Shield,
-  Calendar,
   ChevronDown,
   ChevronUp,
   Phone,
   Radio,
-  MapPin,
   X,
   User,
   Building2,
-  TrendingUp,
-  Package,
-  Activity
+  ArrowUpRight
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import DashboardLayout from '../layouts/DashboardLayout';
@@ -31,13 +22,24 @@ export default function DailyCommandBrief() {
   const [expandedItem, setExpandedItem] = useState(null);
   const [contactModal, setContactModal] = useState(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [currentTime, setCurrentTime] = useState(new Date());
 
-  const currentDate = new Date().toLocaleDateString('en-US', {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  });
+  // Live clock — matches Executive Command Dashboard pattern
+  useEffect(() => {
+    const timer = setInterval(() => setCurrentTime(new Date()), 60000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const formatTime = (date) => {
+    return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+  };
+
+  const formatDate = (date) => {
+    return date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  };
+
+  // Brief generation timestamp (snapshot mode — generated at 0600 daily)
+  const briefGeneratedAt = '06:00';
 
   // Command Summary Data
   const summaryData = {
@@ -145,11 +147,11 @@ export default function DailyCommandBrief() {
 
   // Operational Highlights Data
   const operationalHighlights = [
-    { icon: Users, text: 'Jail population +6 net (848/920, 92%) – approaching capacity threshold', severity: 'warning' },
-    { icon: Activity, text: '2 hospital transports (chest pain, laceration) – both inmates returned by 0200 hrs', severity: 'info' },
-    { icon: Shield, text: 'B-Shift use of force under review – Deputy Johnson, OC spray, no injuries', severity: 'info' },
-    { icon: Package, text: 'Narcotics seizure (I-85 traffic stop) – 4.2 kg cocaine, 1 arrest, DEA notified', severity: 'positive' },
-    { icon: CheckCircle, text: 'No pursuits, no injuries, no critical incidents overnight', severity: 'positive' }
+    { text: 'Jail population +6 net (848/920, 92%) — approaching capacity threshold', severity: 'warning' },
+    { text: '2 hospital transports (chest pain, laceration) — both inmates returned by 0200 hrs', severity: 'info' },
+    { text: 'B-Shift use of force under review — Deputy Johnson, OC spray, no injuries', severity: 'info' },
+    { text: 'Narcotics seizure (I-85 traffic stop) — 4.2 kg cocaine, 1 arrest, DEA notified', severity: 'positive' },
+    { text: 'No pursuits, no injuries, no critical incidents overnight', severity: 'positive' }
   ];
 
   // On Duty Today Data
@@ -182,356 +184,383 @@ export default function DailyCommandBrief() {
     window.print();
   };
 
+  // Severity dot color — unified system palette
   const getSeverityColor = (severity) => {
     switch (severity) {
       case 'critical': return 'bg-red-500';
-      case 'high': return 'bg-yellow-500';
-      case 'medium': return 'bg-blue-500';
+      case 'high': return 'bg-amber-500';
+      case 'medium': return 'bg-slate-500';
       default: return 'bg-slate-500';
     }
   };
 
-  const getDeadlineBadgeStyle = (hours) => {
-    if (hours <= 4) return 'bg-red-900/50 text-red-300 border-red-500/30';
-    if (hours <= 24) return 'bg-yellow-900/50 text-yellow-300 border-yellow-500/30';
-    return 'bg-blue-900/50 text-blue-300 border-blue-500/30';
+  // Severity left-strip color — matches Executive Dashboard tier strips
+  const getSeverityStripColor = (severity) => {
+    if (severity === 'critical') return 'bg-red-500';
+    if (severity === 'high') return 'bg-amber-500';
+    return 'bg-slate-600';
   };
 
-  const getHighlightIconColor = (severity) => {
+  // Badge system — unified with Executive Dashboard getTierBadge pattern
+  const getSeverityBadge = (severity, deadlineHours) => {
+    if (severity === 'critical') return { text: `CRITICAL · ${deadlineHours}h`, classes: 'bg-red-500/10 border-red-500/20 text-red-400' };
+    if (severity === 'high') return { text: `ACTION · ${deadlineHours}h`, classes: 'bg-amber-500/10 border-amber-500/20 text-amber-400' };
+    return null;
+  };
+
+  // Operational highlight dot color — system palette
+  const getHighlightDot = (severity) => {
     switch (severity) {
-      case 'warning': return 'text-yellow-400';
-      case 'positive': return 'text-green-400';
-      case 'info': return 'text-slate-400';
-      default: return 'text-slate-400';
+      case 'warning': return 'bg-amber-500';
+      case 'positive': return 'bg-emerald-500';
+      case 'info': return 'bg-slate-500';
+      default: return 'bg-slate-500';
     }
   };
 
+  // Event category label color
   const getCategoryColor = (category) => {
     switch (category) {
-      case 'compliance': return 'text-blue-400';
-      case 'external': return 'text-purple-400';
-      case 'internal': return 'text-slate-400';
+      case 'compliance': return 'text-amber-400';
       case 'operational': return 'text-amber-400';
+      case 'external': return 'text-slate-400';
+      case 'internal': return 'text-slate-400';
       default: return 'text-slate-400';
     }
   };
 
   return (
     <DashboardLayout>
-      <div className="p-6 lg:p-8 space-y-8">
-        {/* Header */}
-        <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4">
+      <div className="p-5 lg:p-8">
+        <div className="max-w-7xl mx-auto">
+
+        {/* Page Header — matches Executive Command Dashboard header pattern */}
+        <div className="mb-8 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           <div>
-            <h1 className="text-2xl lg:text-3xl font-bold text-white tracking-tight">Daily Command Brief</h1>
-            <p className="text-sm text-slate-400 mt-1">Executive operational summary for command staff • Auto-generated at 0600</p>
-            <p className="text-slate-400 mt-1">{currentDate} • Last updated: 06:00 EST</p>
+            <h2 className="text-xl font-bold text-white mb-1">Daily Command Brief</h2>
+            <div className="flex items-center gap-2 text-[11px] text-slate-500">
+              <span>{formatDate(currentTime)}</span>
+              <span className="text-slate-700">·</span>
+              <span>{formatTime(currentTime)} EST</span>
+              <span className="text-slate-700">·</span>
+              <span>Brief generated at {briefGeneratedAt} EST</span>
+            </div>
           </div>
           <div className="flex items-center gap-2">
             <button
               onClick={handlePrint}
-              className="flex items-center gap-2 px-3 py-2 bg-slate-800/40 border border-slate-700/50 rounded-lg text-slate-300 hover:bg-slate-700/50 transition-colors"
-              title="Print"
+              className="flex items-center gap-2 px-4 py-2 bg-slate-800/40 border border-slate-700/40 text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-800/60 transition-all"
             >
               <Printer className="w-4 h-4" />
-              <span className="hidden sm:inline text-sm">Print</span>
+              Print
             </button>
             <button
-              className="flex items-center gap-2 px-3 py-2 bg-slate-800/40 border border-slate-700/50 rounded-lg text-slate-300 hover:bg-slate-700/50 transition-colors"
-              title="Download PDF"
+              className="flex items-center gap-2 px-4 py-2 bg-slate-800/40 border border-slate-700/40 text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-800/60 transition-all"
             >
               <Download className="w-4 h-4" />
-              <span className="hidden sm:inline text-sm">PDF</span>
+              PDF
             </button>
             <button
               onClick={handleRefresh}
               disabled={isRefreshing}
-              className="flex items-center gap-2 px-3 py-2 bg-slate-800/40 border border-slate-700/50 rounded-lg text-slate-300 hover:bg-slate-700/50 transition-colors disabled:opacity-50"
-              title="Refresh"
+              className="flex items-center gap-2 px-4 py-2 bg-slate-800/40 border border-slate-700/40 text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-800/60 transition-all disabled:opacity-50"
             >
               <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin' : ''}`} />
-              <span className="hidden sm:inline text-sm">Refresh</span>
+              Refresh
             </button>
           </div>
         </div>
 
-        {/* Command Summary Strip */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {/* Critical Alerts Tile */}
+        {/* Command Summary — matches Executive Dashboard stat cards exactly */}
+        <div className="mb-8 grid grid-cols-2 lg:grid-cols-4 gap-5">
+          {/* Critical Alerts */}
           <button
             onClick={() => navigate('/command/alerts')}
-            className="bg-slate-800 border border-slate-700 rounded-lg p-5 hover:bg-slate-700 transition-colors text-left relative h-[120px]"
+            className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5 text-left hover:border-slate-600/40 transition-colors"
           >
-            <AlertCircle className="w-5 h-5 text-red-400 absolute top-4 left-4" />
-            <div className="flex flex-col items-center justify-center h-full">
-              <span className="text-5xl font-bold text-red-400 tabular-nums">{summaryData.criticalAlerts.count}</span>
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-red-500"></div>
+                <span className="text-xs text-slate-500 font-medium uppercase tracking-wide">Critical Issues</span>
+              </div>
             </div>
-            <div className="absolute bottom-4 left-4">
-              <span className="text-sm text-slate-400">Critical Issues</span>
+            <div className="flex items-baseline gap-2 mb-1">
+              <p className="text-2xl font-semibold text-white">{summaryData.criticalAlerts.count}</p>
+              <span className="flex items-center gap-0.5 text-red-400 text-xs font-medium">
+                <ArrowUpRight className="w-3 h-3" />+{summaryData.criticalAlerts.change}
+              </span>
             </div>
-            <div className="absolute bottom-4 right-4">
-              <span className="text-xs text-slate-500">↑ {summaryData.criticalAlerts.change} from yesterday</span>
-            </div>
+            <p className="text-[11px] text-slate-400">+{summaryData.criticalAlerts.change} from yesterday</p>
           </button>
 
-          {/* Pending Approvals Tile */}
+          {/* Pending Approvals */}
           <button
             onClick={() => navigate('/command/approvals')}
-            className="bg-slate-800 border border-slate-700 rounded-lg p-5 hover:bg-slate-700 transition-colors text-left relative h-[120px]"
+            className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5 text-left hover:border-slate-600/40 transition-colors"
           >
-            <ClipboardCheck className="w-5 h-5 text-yellow-400 absolute top-4 left-4" />
-            <div className="flex flex-col items-center justify-center h-full">
-              <span className="text-5xl font-bold text-yellow-400 tabular-nums">{summaryData.pendingApprovals.count}</span>
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-amber-500"></div>
+                <span className="text-xs text-slate-500 font-medium uppercase tracking-wide">Pending Approvals</span>
+              </div>
             </div>
-            <div className="absolute bottom-4 left-4">
-              <span className="text-sm text-slate-400">Pending Approvals</span>
-            </div>
-            <div className="absolute bottom-4 right-4">
-              <span className="text-xs text-slate-500">Oldest: {summaryData.pendingApprovals.oldestHours} hrs</span>
-            </div>
+            <p className="text-2xl font-semibold text-white mb-1">{summaryData.pendingApprovals.count}</p>
+            <p className="text-xs text-slate-400 mb-1">Oldest: {summaryData.pendingApprovals.oldestHours} hrs</p>
+            <p className="text-[11px] text-amber-400">6 awaiting command review</p>
           </button>
 
-          {/* Staffing Status Tile */}
+          {/* Staffing Status */}
           <button
             onClick={() => navigate('/staffing')}
-            className="bg-slate-800 border border-slate-700 rounded-lg p-5 hover:bg-slate-700 transition-colors text-left relative h-[120px]"
+            className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5 text-left hover:border-slate-600/40 transition-colors"
           >
-            <Users className="w-5 h-5 text-slate-400 absolute top-4 left-4" />
-            <div className="flex flex-col items-center justify-center h-full">
-              <span className="text-5xl font-bold text-orange-400 tabular-nums">{summaryData.staffingStatus.percentage}%</span>
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-red-500"></div>
+                <span className="text-xs text-slate-500 font-medium uppercase tracking-wide">{summaryData.staffingStatus.shift}-Shift {summaryData.staffingStatus.division}</span>
+              </div>
             </div>
-            <div className="absolute bottom-4 left-4">
-              <span className="text-sm text-slate-400">{summaryData.staffingStatus.shift}-Shift {summaryData.staffingStatus.division}</span>
-            </div>
-            <div className="absolute bottom-4 right-4">
-              <span className="text-xs text-red-400">Below minimum</span>
-            </div>
+            <p className="text-2xl font-semibold text-white mb-1">{summaryData.staffingStatus.percentage}%</p>
+            <p className="text-xs text-slate-400 mb-1">9/12 minimum deputies</p>
+            <p className="text-[11px] text-red-400">Below minimum staffing</p>
           </button>
 
-          {/* Compliance Deadline Tile */}
+          {/* Compliance Deadline */}
           <button
             onClick={() => navigate('/risk-compliance')}
-            className="bg-slate-800 border border-slate-700 rounded-lg p-5 hover:bg-slate-700 transition-colors text-left relative h-[120px]"
+            className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5 text-left hover:border-slate-600/40 transition-colors"
           >
-            <FileCheck className="w-5 h-5 text-blue-400 absolute top-4 left-4" />
-            <div className="flex flex-col items-center justify-center h-full">
-              <span className="text-5xl font-bold text-blue-400 tabular-nums">{summaryData.complianceDeadline.hoursUntil}</span>
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-amber-500"></div>
+                <span className="text-xs text-slate-500 font-medium uppercase tracking-wide">{summaryData.complianceDeadline.event}</span>
+              </div>
             </div>
-            <div className="absolute bottom-4 left-4">
-              <span className="text-sm text-slate-400">{summaryData.complianceDeadline.event}</span>
+            <div className="flex items-baseline gap-2 mb-1">
+              <p className="text-2xl font-semibold text-white">{summaryData.complianceDeadline.hoursUntil}</p>
+              <span className="text-xs text-slate-400">hours</span>
             </div>
-            <div className="absolute bottom-4 right-4">
-              <span className="text-xs text-slate-500">Hours until</span>
-            </div>
+            <p className="text-[11px] text-amber-400">USMS inspection window approaching</p>
           </button>
         </div>
 
-        {/* Priority Items Section */}
-        <div className="space-y-4">
-          <h2 className="text-xl font-semibold text-white uppercase tracking-wide">Priority Items Requiring Command Attention</h2>
-
-          <div className="space-y-0 divide-y divide-slate-700">
-            {priorityItems.map((item) => (
-              <div key={item.id} className="py-4">
+        {/* Priority Items — matches Executive Dashboard "Pending Approvals" card structure */}
+        <div className="mb-8 bg-slate-800/25 border border-slate-700/30 rounded-xl">
+          <div className="flex items-center justify-between px-5 py-4 pb-3">
+            <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">Priority Items Requiring Command Attention</h3>
+            <span className="text-xs text-slate-500">{priorityItems.length} items ranked</span>
+          </div>
+          <div className="px-5 pb-5 space-y-2">
+            {priorityItems.map((item) => {
+              const badge = getSeverityBadge(item.severity, item.deadlineHours);
+              return (
                 <div
-                  className="cursor-pointer"
-                  onClick={() => setExpandedItem(expandedItem === item.id ? null : item.id)}
+                  key={item.id}
+                  className="rounded-lg border border-slate-700/20 hover:bg-slate-800/20 transition-colors"
                 >
-                  <div className="flex items-start gap-4">
-                    {/* Rank Number */}
-                    <span className="text-2xl font-bold text-slate-300 w-8">{item.rank}</span>
+                  <div
+                    className="flex items-center gap-4 p-3 cursor-pointer"
+                    onClick={() => setExpandedItem(expandedItem === item.id ? null : item.id)}
+                  >
+                    <div className={`w-0.5 self-stretch rounded-full flex-shrink-0 ${getSeverityStripColor(item.severity)}`}></div>
 
-                    {/* Severity Dot */}
-                    <div className={`w-2 h-2 ${getSeverityColor(item.severity)} rounded-full mt-2.5 flex-shrink-0`}></div>
-
-                    {/* Content */}
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between gap-4 mb-2">
-                        <h3 className="text-lg font-semibold text-white">{item.title}</h3>
-                        <span className={`px-3 py-1 rounded-full text-xs font-medium border ${getDeadlineBadgeStyle(item.deadlineHours)}`}>
-                          {item.deadlineHours} hrs
+                      <div className="flex items-center gap-2 mb-1">
+                        <p className="text-sm font-medium text-white">{item.title}</p>
+                        {badge && <span className={`px-1.5 py-0.5 border rounded text-[11px] font-medium ${badge.classes}`}>{badge.text}</span>}
+                        <span className="text-[11px] text-slate-500">#{item.rank}</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-[11px]">
+                        <span className="text-slate-400">{item.description}</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-[11px] mt-1">
+                        <span className="text-slate-500">{item.responsible.name}</span>
+                        <span className="text-slate-600">·</span>
+                        <span className="text-slate-500">#{item.responsible.badge}</span>
+                        <span className="text-slate-600">·</span>
+                        <span className={item.severity === 'critical' ? 'text-red-400' : item.severity === 'high' ? 'text-amber-400' : 'text-slate-400'}>
+                          {item.deadlineHours}h deadline
                         </span>
                       </div>
+                    </div>
 
-                      <p className="text-sm text-slate-300 leading-relaxed mb-2">{item.description}</p>
-
-                      <p className="text-sm text-white mb-1">
-                        <span className="font-semibold">Action:</span> {item.actionRequired}
-                      </p>
-
-                      <p className="text-sm text-slate-400">
-                        <span className="font-medium">Responsible:</span> {item.responsible.name} (#{item.responsible.badge})
-                      </p>
-
-                      <button className="text-sm text-slate-500 hover:text-slate-300 mt-2 flex items-center gap-1">
-                        {expandedItem === item.id ? (
-                          <>Collapse <ChevronUp className="w-4 h-4" /></>
-                        ) : (
-                          <>Expand for details <ChevronDown className="w-4 h-4" /></>
-                        )}
-                      </button>
+                    <div className="flex items-center gap-2 flex-shrink-0">
+                      {expandedItem === item.id ? <ChevronUp className="w-4 h-4 text-slate-600" /> : <ChevronDown className="w-4 h-4 text-slate-600" />}
                     </div>
                   </div>
-                </div>
 
-                {/* Expanded Content */}
-                {expandedItem === item.id && (
-                  <div className="mt-4 ml-14 pl-4 border-l-2 border-slate-700 space-y-4">
-                    <p className="text-sm text-slate-300 leading-relaxed">{item.expandedContent.fullDescription}</p>
+                  {/* Expanded Content */}
+                  {expandedItem === item.id && (
+                    <div className="px-3 pb-3 ml-[10px] space-y-3 border-t border-slate-700/20 pt-3">
+                      <p className="text-[13px] text-slate-300 leading-relaxed">{item.expandedContent.fullDescription}</p>
 
-                    <div>
-                      <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Timeline</h4>
-                      <div className="space-y-1">
-                        {item.expandedContent.timeline.map((entry, idx) => (
-                          <div key={idx} className="flex items-start gap-3 text-sm">
-                            <span className="font-mono text-slate-500 w-24 flex-shrink-0">{entry.time}</span>
-                            <span className="text-slate-300">{entry.event}</span>
-                          </div>
-                        ))}
+                      <div>
+                        <h4 className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-2">Timeline</h4>
+                        <div className="space-y-1">
+                          {item.expandedContent.timeline.map((entry, idx) => (
+                            <div key={idx} className="flex items-start gap-3 text-[13px]">
+                              <span className="font-mono text-slate-500 w-24 flex-shrink-0">{entry.time}</span>
+                              <span className="text-slate-300">{entry.event}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Action affordance — matches Executive Dashboard approve/escalate pattern */}
+                      <div className="flex gap-2 pt-1">
+                        <button className="px-3 py-1.5 text-xs font-medium text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/10 rounded-lg transition-colors">
+                          View Details
+                        </button>
+                        <button className="px-3 py-1.5 text-xs font-medium text-slate-400 border border-slate-700/30 hover:bg-slate-700/20 rounded-lg transition-colors">
+                          Assign
+                        </button>
                       </div>
                     </div>
+                  )}
 
-                    <div className="flex gap-2 pt-2">
-                      <button className="px-3 py-1.5 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded text-sm hover:bg-blue-500/30 transition-colors">
-                        View Details
-                      </button>
-                      <button className="px-3 py-1.5 bg-slate-700/40 border border-slate-600/50 text-slate-300 rounded text-sm hover:bg-slate-700/60 transition-colors">
-                        Assign
-                      </button>
-                    </div>
+                  <div className="flex items-center gap-2 px-3 pb-2 ml-[10px] text-[10px] text-slate-500">
+                    <Shield className="w-3 h-3 text-slate-600" />
+                    <span>Logged to audit trail</span>
+                    <span className="text-slate-600">·</span>
+                    <span>Action: {item.actionRequired.split('.')[0]}</span>
                   </div>
-                )}
-              </div>
-            ))}
+                </div>
+              );
+            })}
           </div>
         </div>
 
-        {/* Two Column Layout: Operational Highlights + On Duty Today */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Two Column Layout — matches Executive Dashboard 2-col pattern */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-8">
           {/* Operational Highlights */}
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <h2 className="text-xl font-semibold text-white uppercase tracking-wide">Operational Highlights</h2>
-              <span className="text-xs text-slate-500">Last 24 Hours</span>
+          <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
+            <div className="flex items-center justify-between mb-5">
+              <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">Operational Highlights</h3>
+              <span className="text-xs text-slate-500">Last 24 hours</span>
             </div>
 
             <div className="space-y-3">
-              {operationalHighlights.map((highlight, idx) => {
-                const Icon = highlight.icon;
-                return (
-                  <div key={idx} className="flex items-start gap-3">
-                    <Icon className={`w-4 h-4 ${getHighlightIconColor(highlight.severity)} mt-0.5 flex-shrink-0`} />
-                    <p className="text-sm text-slate-300">{highlight.text}</p>
-                  </div>
-                );
-              })}
+              {operationalHighlights.map((highlight, idx) => (
+                <div key={idx} className="flex items-start gap-3">
+                  <div className={`w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0 ${getHighlightDot(highlight.severity)}`}></div>
+                  <p className="text-[13px] text-slate-300">{highlight.text}</p>
+                </div>
+              ))}
             </div>
           </div>
 
           {/* On Duty Today */}
-          <div className="space-y-4">
-            <h2 className="text-xl font-semibold text-white uppercase tracking-wide">On Duty Today</h2>
+          <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
+            <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide mb-5">On Duty Today</h3>
 
-            <div className="space-y-4 divide-y divide-slate-700">
+            <div className="space-y-4">
               {/* Watch Commander */}
-              <div className="pt-0">
-                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Watch Commander</span>
-                <div className="mt-2">
+              <div>
+                <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Watch Commander</span>
+                <div className="mt-1.5 flex items-center gap-2">
                   <button
                     onClick={() => setContactModal(onDutyData.watchCommander)}
-                    className="text-base font-medium text-white hover:text-blue-400 transition-colors"
+                    className="text-sm font-medium text-white hover:text-slate-300 transition-colors"
                   >
                     {onDutyData.watchCommander.name}
                   </button>
-                  <span className="text-slate-500 ml-1">(#{onDutyData.watchCommander.badge})</span>
-                  <span className="text-slate-400 font-mono text-sm ml-2">• Radio: {onDutyData.watchCommander.radio}</span>
+                  <span className="text-[11px] text-slate-500">#{onDutyData.watchCommander.badge}</span>
+                  <span className="text-slate-600 text-[11px]">·</span>
+                  <span className="text-[11px] text-slate-500">Radio: {onDutyData.watchCommander.radio}</span>
                 </div>
               </div>
 
               {/* Patrol Supervisors */}
-              <div className="pt-4">
-                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Patrol Supervisors</span>
-                <div className="mt-2 space-y-1">
+              <div className="border-t border-slate-700/20 pt-3">
+                <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Patrol Supervisors</span>
+                <div className="mt-1.5 space-y-1">
                   {onDutyData.patrolSupervisors.map((sup, idx) => (
-                    <div key={idx}>
+                    <div key={idx} className="flex items-center gap-2">
                       <button
                         onClick={() => setContactModal(sup)}
-                        className="text-base font-medium text-white hover:text-blue-400 transition-colors"
+                        className="text-sm font-medium text-white hover:text-slate-300 transition-colors"
                       >
                         {sup.name}
                       </button>
-                      <span className="text-slate-500 ml-1">(#{sup.badge})</span>
-                      <span className="text-slate-400 font-mono text-sm ml-2">• Radio: {sup.radio}</span>
+                      <span className="text-[11px] text-slate-500">#{sup.badge}</span>
+                      <span className="text-slate-600 text-[11px]">·</span>
+                      <span className="text-[11px] text-slate-500">Radio: {sup.radio}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
               {/* Detention Commander */}
-              <div className="pt-4">
-                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Detention Commander</span>
-                <div className="mt-2">
+              <div className="border-t border-slate-700/20 pt-3">
+                <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Detention Commander</span>
+                <div className="mt-1.5 flex items-center gap-2">
                   <button
                     onClick={() => setContactModal(onDutyData.detentionCommander)}
-                    className="text-base font-medium text-white hover:text-blue-400 transition-colors"
+                    className="text-sm font-medium text-white hover:text-slate-300 transition-colors"
                   >
                     {onDutyData.detentionCommander.name}
                   </button>
-                  <span className="text-slate-500 ml-1">(#{onDutyData.detentionCommander.badge})</span>
-                  <span className="text-slate-400 font-mono text-sm ml-2">• Radio: {onDutyData.detentionCommander.radio}</span>
+                  <span className="text-[11px] text-slate-500">#{onDutyData.detentionCommander.badge}</span>
+                  <span className="text-slate-600 text-[11px]">·</span>
+                  <span className="text-[11px] text-slate-500">Radio: {onDutyData.detentionCommander.radio}</span>
                 </div>
               </div>
 
               {/* On-Call Command */}
-              <div className="pt-4">
-                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">On-Call Command</span>
-                <div className="mt-2">
+              <div className="border-t border-slate-700/20 pt-3">
+                <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">On-Call Command</span>
+                <div className="mt-1.5 flex items-center gap-2">
                   <button
                     onClick={() => setContactModal(onDutyData.onCallCommand)}
-                    className="text-base font-medium text-white hover:text-blue-400 transition-colors"
+                    className="text-sm font-medium text-white hover:text-slate-300 transition-colors"
                   >
                     {onDutyData.onCallCommand.name}
                   </button>
-                  <span className="text-slate-500 ml-2">• Cell: {onDutyData.onCallCommand.phone}</span>
+                  <span className="text-slate-600 text-[11px]">·</span>
+                  <span className="text-[11px] text-slate-500">Cell: {onDutyData.onCallCommand.phone}</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Scheduled Events */}
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xl font-semibold text-white uppercase tracking-wide">Scheduled Events (Command-Level)</h2>
+        {/* Scheduled Events — card-wrapped, matches system styling */}
+        <div className="mb-8 bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
+          <div className="flex items-center justify-between mb-5">
+            <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">Scheduled Events (Command-Level)</h3>
             <button
               onClick={() => navigate('/calendar')}
-              className="text-sm text-amber-400 hover:text-amber-300"
+              className="text-xs text-amber-400/80 hover:text-amber-300"
             >
               View Full Calendar →
             </button>
           </div>
 
-          <div className="space-y-0 divide-y divide-slate-700">
+          <div className="space-y-1">
             {scheduledEvents.map((event) => (
               <div
                 key={event.id}
-                className={`py-4 ${event.hoursUntil <= 2 ? 'bg-yellow-900/10 -mx-4 px-4 rounded-lg' : ''}`}
+                className={`flex items-center gap-4 px-4 py-2.5 rounded ${
+                  event.hoursUntil <= 2 ? 'bg-amber-500/5 border-l-[3px] border-l-amber-500/30' : 'bg-slate-900/20 hover:bg-slate-800/30 transition-all'
+                }`}
               >
-                <div className="flex items-start gap-4">
-                  <span className="text-base font-mono font-bold text-slate-300 w-14">{event.time}</span>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      {event.hoursUntil <= 2 && <Clock className="w-4 h-4 text-yellow-400" />}
-                      <h3 className="text-base font-semibold text-white">{event.title}</h3>
-                      {event.hoursUntil <= 2 && (
-                        <span className="px-2 py-0.5 bg-yellow-900/50 border border-yellow-500/30 rounded text-xs text-yellow-300">
-                          Starting soon
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-sm text-slate-400 mt-1">
-                      Location: {event.location} | Lead: {event.lead}
-                    </p>
-                    <span className={`text-xs ${getCategoryColor(event.category)}`}>
+                <span className="text-[13px] font-mono font-semibold text-slate-300 w-14 flex-shrink-0">{event.time}</span>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2">
+                    {event.hoursUntil <= 2 && <Clock className="w-3.5 h-3.5 text-amber-400" />}
+                    <span className="text-[13px] font-medium text-white">{event.title}</span>
+                    {event.hoursUntil <= 2 && (
+                      <span className="px-1.5 py-0.5 bg-amber-500/10 border border-amber-500/20 rounded text-[11px] font-medium text-amber-400">
+                        Starting soon
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-2 mt-0.5 text-[11px]">
+                    <span className="text-slate-400">{event.location}</span>
+                    <span className="text-slate-600">·</span>
+                    <span className="text-slate-400">{event.lead}</span>
+                    <span className="text-slate-600">·</span>
+                    <span className={getCategoryColor(event.category)}>
                       {event.category === 'compliance' && 'Compliance'}
                       {event.category === 'external' && 'External Briefing'}
                       {event.category === 'internal' && 'Internal Review'}
@@ -543,9 +572,21 @@ export default function DailyCommandBrief() {
             ))}
           </div>
         </div>
+
+        {/* Data Freshness Footer — documents snapshot vs live mode behavior */}
+        <div className="mb-4 px-5 py-3 bg-slate-800/10 border border-slate-800/30 rounded-lg">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Shield className="w-3.5 h-3.5 text-slate-600" />
+              <span className="text-xs text-slate-600">Snapshot brief auto-generated at {briefGeneratedAt} EST daily. Data reflects state at generation time. Use Refresh for live updates.</span>
+            </div>
+          </div>
+        </div>
+
+        </div>
       </div>
 
-      {/* Contact Modal */}
+      {/* Contact Modal — aligned to system card/button tokens */}
       {contactModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div
@@ -553,8 +594,13 @@ export default function DailyCommandBrief() {
             onClick={() => setContactModal(null)}
           />
           <div className="relative bg-slate-900 border border-slate-700/50 rounded-2xl p-6 max-w-sm w-full shadow-2xl">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-white">Contact: {contactModal.name}</h3>
+            <div className="flex items-start gap-3 mb-5">
+              <div className="flex-1">
+                <h3 className="text-base font-semibold text-white mb-0.5">Contact: {contactModal.name}</h3>
+                {contactModal.title && (
+                  <p className="text-xs text-slate-400">{contactModal.title}</p>
+                )}
+              </div>
               <button
                 onClick={() => setContactModal(null)}
                 className="text-slate-400 hover:text-white transition-colors"
@@ -566,48 +612,42 @@ export default function DailyCommandBrief() {
             <div className="space-y-3 text-sm">
               {contactModal.badge && (
                 <div className="flex items-center gap-3">
-                  <User className="w-4 h-4 text-slate-400" />
+                  <User className="w-4 h-4 text-slate-500" />
                   <span className="text-slate-300">Badge: #{contactModal.badge}</span>
                 </div>
               )}
               {contactModal.radio && (
                 <div className="flex items-center gap-3">
-                  <Radio className="w-4 h-4 text-slate-400" />
+                  <Radio className="w-4 h-4 text-slate-500" />
                   <span className="text-slate-300">Radio: {contactModal.radio}</span>
                 </div>
               )}
               {contactModal.phone && (
                 <div className="flex items-center gap-3">
-                  <Phone className="w-4 h-4 text-slate-400" />
+                  <Phone className="w-4 h-4 text-slate-500" />
                   <span className="text-slate-300">Cell: {contactModal.phone}</span>
                 </div>
               )}
               {contactModal.email && (
                 <div className="flex items-center gap-3">
-                  <Building2 className="w-4 h-4 text-slate-400" />
+                  <Building2 className="w-4 h-4 text-slate-500" />
                   <span className="text-slate-300">{contactModal.email}</span>
                 </div>
               )}
               {contactModal.onDutySince && (
                 <div className="flex items-center gap-3">
-                  <Clock className="w-4 h-4 text-slate-400" />
+                  <Clock className="w-4 h-4 text-slate-500" />
                   <span className="text-slate-300">On Duty Since: {contactModal.onDutySince}</span>
-                </div>
-              )}
-              {contactModal.title && (
-                <div className="flex items-center gap-3">
-                  <User className="w-4 h-4 text-slate-400" />
-                  <span className="text-slate-300">Title: {contactModal.title}</span>
                 </div>
               )}
             </div>
 
-            <div className="flex gap-2 mt-6">
-              <button className="flex-1 px-4 py-2 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded-lg text-sm hover:bg-blue-500/30 transition-colors">
+            <div className="flex gap-3 mt-6">
+              <button className="flex-1 px-4 py-2.5 text-xs font-medium text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/10 rounded-xl transition-colors">
                 Call Cell
               </button>
               {contactModal.radio && (
-                <button className="flex-1 px-4 py-2 bg-slate-700/40 border border-slate-600/50 text-slate-300 rounded-lg text-sm hover:bg-slate-700/60 transition-colors">
+                <button className="flex-1 px-4 py-2.5 text-xs font-medium text-slate-400 border border-slate-700/30 hover:bg-slate-700/20 rounded-xl transition-colors">
                   Radio Contact
                 </button>
               )}
