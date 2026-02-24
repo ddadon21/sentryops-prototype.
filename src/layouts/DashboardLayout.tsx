@@ -4,7 +4,7 @@ import {
   Home, Users, CheckCircle, DollarSign, TrendingUp,
   AlertCircle, Shield, ChevronLeft, ChevronRight, Menu,
   LogOut, Building2, Radio, Target, FileText, ShieldCheck, ChevronDown,
-  Search, Bell, Settings, User, Circle
+  Search, Bell, Settings, User, Circle, Calendar
 } from 'lucide-react';
 
 // ── Shared types ──────────────────────────────────────────────
@@ -56,6 +56,7 @@ const defaultNavigation: NavItem[] = [
   { id: 'daily-brief', label: 'Daily Command Brief', icon: FileText, route: '/command/brief' },
   { id: 'alerts', label: 'Command Alerts', icon: AlertCircle, badge: '3', route: '/command/alerts' },
   { id: 'approvals', label: 'Command Approvals', icon: CheckCircle, badge: '8', route: '/command/approvals' },
+  { id: 'calendar', label: 'Calendar & Timeline', icon: Calendar, route: '/command/calendar' },
   { id: 'risk-compliance', label: 'Risk & Compliance', icon: ShieldCheck, route: '/command/risk' },
   { id: 'staffing', label: 'Staffing & Readiness', icon: Users, hasSubmenu: true, submenu: [
     { id: 'staffing-overview', label: 'Staffing Overview', route: '/command/personnel' },

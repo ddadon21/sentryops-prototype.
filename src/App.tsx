@@ -19,6 +19,7 @@ import Approvals from './pages/Approvals';
 import BudgetResources from './pages/BudgetResources';
 import ReportsAnalytics from './pages/ReportsAnalytics';
 import CommandAlerts from './pages/CommandAlerts';
+import CommandCalendar from './pages/CommandCalendar';
 import Settings from './pages/Settings';
 
 // Jail Operations Module
@@ -88,6 +89,7 @@ function App() {
         <Route path="/command/budget" element={<BudgetResources />} />
         <Route path="/command/reports" element={<ReportsAnalytics />} />
         <Route path="/command/alerts" element={<CommandAlerts />} />
+        <Route path="/command/calendar" element={<CommandCalendar />} />
         <Route path="/command/settings" element={<Settings />} />
 
         {/* Jail Operations Module (standalone, no layout wrapper) */}
