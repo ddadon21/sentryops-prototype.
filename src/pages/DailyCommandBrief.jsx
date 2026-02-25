@@ -15,7 +15,10 @@ import {
   ArrowUpRight,
   ArrowDownRight,
   CheckCircle,
-  AlertTriangle
+  AlertTriangle,
+  Gauge,
+  Target,
+  Zap
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import DashboardLayout from '../layouts/DashboardLayout';
@@ -26,208 +29,221 @@ export default function DailyCommandBrief() {
   const [contactModal, setContactModal] = useState(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [activeFilter, setActiveFilter] = useState(null);
-  const prioritySectionRef = useRef(null);
+  const decisionsSectionRef = useRef(null);
 
-  // Live clock — matches Executive Command Dashboard pattern
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 60000);
     return () => clearInterval(timer);
   }, []);
 
-  const formatTime = (date) => {
-    return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
-  };
+  const formatTime = (date) => date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+  const formatDate = (date) => date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
-  const formatDate = (date) => {
-    return date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-  };
-
-  // Brief generation timestamp (snapshot mode — generated at 0600 daily)
   const briefGeneratedAt = '06:00';
 
-  // System integrity data
-  const systemIntegrity = {
-    integrationsHealthy: true,
-    failedFeeds: 0,
-    staleModules: 0,
-    lastSync: '2 min ago'
+  // ============================================================
+  // COMMAND PRESSURE INDEX — one-glance health signal
+  // Calculated from: critical issues, compliance deadlines <72h,
+  // staffing below threshold
+  // ============================================================
+  const pressureFactors = {
+    criticalIssues: 3,
+    complianceDeadlinesUnder72h: 2,
+    staffingBelowThreshold: true,
+    overdueItems: 1
   };
 
-  // Command Summary Data — with trend intelligence
-  const summaryData = {
-    criticalAlerts: { count: 3, trend: 'up', change: 1, yesterday: 2, sparkline: [1, 2, 1, 2, 3, 2, 3] },
-    pendingApprovals: { count: 6, trend: 'down', change: 2, yesterday: 8, sparkline: [12, 10, 9, 8, 7, 8, 6] },
-    staffingStatus: { division: 'Patrol', shift: 'B', percentage: 75, trend: 'down', change: 8, yesterday: 83, sparkline: [92, 88, 85, 83, 80, 83, 75] },
-    complianceDeadline: { event: 'Federal audit', hoursUntil: 48, trend: 'down', change: 24, sparkline: [168, 144, 120, 96, 72, 60, 48] }
+  const computePressureLevel = () => {
+    let score = 0;
+    score += pressureFactors.criticalIssues * 3;
+    score += pressureFactors.complianceDeadlinesUnder72h * 2;
+    if (pressureFactors.staffingBelowThreshold) score += 4;
+    score += pressureFactors.overdueItems * 2;
+    if (score >= 15) return { level: 'CRITICAL', color: 'red', bg: 'bg-red-500/[0.08]', border: 'border-red-500/30', text: 'text-red-400', dot: 'bg-red-500', barWidth: '92%' };
+    if (score >= 10) return { level: 'ELEVATED', color: 'amber', bg: 'bg-amber-500/[0.06]', border: 'border-amber-500/25', text: 'text-amber-400', dot: 'bg-amber-500', barWidth: '68%' };
+    if (score >= 5) return { level: 'MODERATE', color: 'amber', bg: 'bg-amber-500/[0.04]', border: 'border-amber-500/15', text: 'text-amber-400', dot: 'bg-amber-400', barWidth: '45%' };
+    return { level: 'LOW', color: 'emerald', bg: 'bg-emerald-500/[0.04]', border: 'border-emerald-500/15', text: 'text-emerald-400', dot: 'bg-emerald-500', barWidth: '15%' };
   };
 
-  // Priority Items Data — with execution state and escalation tier
-  const priorityItems = [
+  const pressure = computePressureLevel();
+
+  // ============================================================
+  // SECTION A — COMMAND DECISIONS TODAY
+  // Format: Title / Deadline / Exposure Type / Required Action / Escalation
+  // ============================================================
+  const commandDecisions = [
     {
-      id: 'pri-001',
-      rank: 1,
-      severity: 'critical',
-      title: 'H2-Pod HVAC Failure',
-      description: 'Temperature 84°F, exceeds ACA maximum (80°F). Federal audit in 48 hours.',
-      actionRequired: 'Emergency repair approval ($23.5K) required immediately.',
-      responsible: { name: 'Facilities Director Chen', badge: 'FAC-001', phone: '770-555-0123' },
+      id: 'dec-001',
+      title: 'H2-Pod HVAC Failure — Emergency Repair',
+      deadline: '10:00 EST Today',
       deadlineHours: 4,
-      linkedModule: '/command/calendar',
+      exposureType: 'Compliance',
+      exposureColor: 'text-red-400',
+      requiredAction: 'Approve $23.5K emergency repair contract',
+      owner: { name: 'Facilities Director Chen', badge: 'FAC-001', phone: '770-555-0123' },
+      escalation: 'USMS / External Compliance',
+      severity: 'critical',
       status: 'escalated',
-      escalationTier: 'External Compliance (USMS)',
-      expandedContent: {
-        fullDescription: 'H2-Pod HVAC system experienced complete compressor failure at 0300 hrs. Current temperature 84°F exceeds ACA maximum of 80°F. Federal housing inspection scheduled Dec 12-14. Emergency repair contractor available with 4-hour response time. Repair cost $23,500 from Facilities Maintenance budget.',
-        timeline: [
-          { time: '03:00', event: 'HVAC failure detected by automated monitoring' },
-          { time: '03:15', event: 'Facilities on-call notified' },
-          { time: '04:00', event: 'Emergency contractor quote received ($23.5K)' },
-          { time: '05:30', event: 'Approval request submitted to Command' }
-        ]
-      }
+      consequence: 'Federal audit failure — housing contract at risk',
+      timeline: [
+        { time: '03:00', event: 'HVAC compressor failure detected' },
+        { time: '04:00', event: 'Emergency contractor quote: $23.5K' },
+        { time: '05:30', event: 'Approval request submitted to Command' }
+      ]
     },
     {
-      id: 'pri-002',
-      rank: 2,
-      severity: 'high',
-      title: 'B-Shift Patrol Below Minimum',
-      description: 'Operating at 9/12 deputies (75%). Two zones single-officer (4, 7).',
-      actionRequired: 'OT authorization required for safe coverage.',
-      responsible: { name: 'Capt. Rodriguez', badge: '3042', phone: '770-555-3042' },
+      id: 'dec-002',
+      title: 'B-Shift Patrol Below Minimum — 9/12 Deputies',
+      deadline: '12:00 EST Today',
       deadlineHours: 6,
-      linkedModule: '/command/personnel',
+      exposureType: 'Staffing',
+      exposureColor: 'text-amber-400',
+      requiredAction: 'Authorize OT for Zones 4 & 7 coverage ($8.3K)',
+      owner: { name: 'Capt. Rodriguez', badge: '3042', phone: '770-555-3042' },
+      escalation: 'Command',
+      severity: 'high',
       status: 'pending',
-      escalationTier: 'Command',
-      expandedContent: {
-        fullDescription: 'B-Shift currently operating with 9 of 12 minimum deputies. Three deputies out: Martinez (#4521) FMLA, Chen (#4167) FMLA, Williams (#4089) Workers Comp. Zones 4 (Lawrenceville) and 7 (Snellville) operating single-officer against policy. OT authorization of $8,320 requested for 160 hours coverage over next 2 weeks.',
-        timeline: [
-          { time: '14:00', event: 'Shift started with 9/12 deputies' },
-          { time: '14:15', event: 'Zone coverage assessment completed' },
-          { time: '14:30', event: 'OT authorization request submitted' }
-        ]
-      }
+      consequence: 'Two zones single-officer — liability exposure',
+      timeline: [
+        { time: '14:00', event: 'B-Shift started at 75% strength' },
+        { time: '14:15', event: 'Zone coverage gap identified (4, 7)' },
+        { time: '14:30', event: 'OT authorization request submitted' }
+      ]
     },
     {
-      id: 'pri-003',
-      rank: 3,
-      severity: 'high',
-      title: 'Use of Force Compliance Overdue',
-      description: 'Deputy Johnson incident report due 8 hours ago. State reporting deadline in 4 hours.',
-      actionRequired: 'IA Supervisor Williams must submit report or request extension.',
-      responsible: { name: 'IA Supervisor Williams', badge: '5012', phone: '770-555-5012' },
+      id: 'dec-003',
+      title: 'Use-of-Force Report — State Deadline Imminent',
+      deadline: '10:00 EST Today',
       deadlineHours: 4,
-      linkedModule: '/command/risk',
+      exposureType: 'Legal',
+      exposureColor: 'text-red-400',
+      requiredAction: 'Direct IA Supervisor Williams to submit report or request extension',
+      owner: { name: 'IA Supervisor Williams', badge: '5012', phone: '770-555-5012' },
+      escalation: 'Legal / State Reporting',
+      severity: 'high',
       status: 'overdue',
-      escalationTier: 'Legal / State Reporting',
-      expandedContent: {
-        fullDescription: 'Use of force incident #2024-0847 involving Deputy Johnson (#D-4167) occurred in B-Pod at 14:47 yesterday. OC spray deployment on inmate MARTINEZ, Carlos #2024-7234. Medical evaluation completed, no injuries. Body camera footage BC-4167-1210-1447 secured. State reporting requires submission within 24 hours. Currently 8 hours overdue for internal review.',
-        timeline: [
-          { time: 'Yesterday 14:47', event: 'Incident occurred - OC spray deployed' },
-          { time: 'Yesterday 15:15', event: 'Medical evaluation completed' },
-          { time: 'Yesterday 16:00', event: 'Initial report filed by Deputy Johnson' },
-          { time: 'Today 06:00', event: 'Internal review deadline passed' }
-        ]
-      }
-    },
-    {
-      id: 'pri-004',
-      rank: 4,
-      severity: 'medium',
-      title: 'Jail Population Approaching Capacity',
-      description: 'Current 848/920 beds (92%). Trend projects 95% by Friday.',
-      actionRequired: 'Review early release candidates and coordinate with courts.',
-      responsible: { name: 'Detention Major Wilson', badge: '2145', phone: '770-555-2145' },
-      deadlineHours: 24,
-      linkedModule: '/command/calendar',
-      status: 'in_progress',
-      escalationTier: 'Command',
-      expandedContent: {
-        fullDescription: 'Jail population at 848/920 (92%). Net increase of +6 in last 24 hours (18 bookings, 12 releases). H2-Pod federal housing at 112% (36/32) using emergency beds. Current trajectory projects 95% capacity by Friday. Early release review of 23 eligible inmates scheduled. Courts coordination meeting at 1400.',
-        timeline: [
-          { time: '06:00', event: 'Population count: 848/920' },
-          { time: '06:15', event: 'Trend analysis completed' },
-          { time: '08:00', event: 'Early release list generated (23 candidates)' }
-        ]
-      }
-    },
-    {
-      id: 'pri-005',
-      rank: 5,
-      severity: 'medium',
-      title: 'Fleet Maintenance Backlog',
-      description: '9 patrol units pending maintenance (14% of fleet). 2 units overdue for state inspection.',
-      actionRequired: 'Authorize overtime for mechanics or contract repairs.',
-      responsible: { name: 'Fleet Manager Anderson', badge: 'FLT-002', phone: '770-555-0199' },
-      deadlineHours: 48,
-      linkedModule: '/command/budget',
-      status: 'pending',
-      escalationTier: 'Command',
-      expandedContent: {
-        fullDescription: '9 of 64 patrol units currently out of service for maintenance. Units 247 (totaled in pursuit), 312, 318, 324, 327, 331, 342, 355, 361 awaiting repairs. 2 units (312, 318) overdue for state inspection - must be completed by Friday or units cannot be deployed. Overtime authorization for mechanics or contract repair services requested.',
-        timeline: [
-          { time: 'Yesterday', event: 'Unit 247 totaled in pursuit' },
-          { time: 'This week', event: '8 additional units queued for service' },
-          { time: 'Friday', event: 'State inspection deadline for units 312, 318' }
-        ]
-      }
+      consequence: 'State reporting violation — potential sanction',
+      timeline: [
+        { time: 'Yesterday 14:47', event: 'OC spray incident — Deputy Johnson, B-Pod' },
+        { time: 'Yesterday 16:00', event: 'Initial report filed' },
+        { time: 'Today 06:00', event: 'Internal review deadline passed (8h overdue)' }
+      ]
     }
   ];
 
-  // Upcoming Risk Horizon (72 Hours) — predictive, not current-state
-  const riskHorizon = [
+  // ============================================================
+  // SECTION B — ESCALATING RISK (72 HOURS)
+  // Items that worsen if untouched. Each has consequence line.
+  // ============================================================
+  const escalatingRisks = [
     {
-      id: 'risk-001',
+      id: 'esc-001',
       title: 'POST Certification Expiration — 8 Deputies',
-      severity: 'critical',
       hoursUntil: 48,
-      linkedModule: '/command/risk',
       category: 'Compliance',
-      projectedImpact: 'Deputies lose certification, suspended from duty'
+      severity: 'critical',
+      owner: 'IA Supervisor Williams',
+      ifNotResolved: 'Deputies lose certification → suspended from duty. 8-deputy staffing gap.',
+      linkedModule: '/command/risk'
     },
     {
-      id: 'risk-002',
-      title: 'Jail Population Projected to 95% Capacity',
-      severity: 'high',
+      id: 'esc-002',
+      title: 'Jail Population Trending to 95% Capacity',
       hoursUntil: 72,
-      linkedModule: '/command/calendar',
       category: 'Operations',
-      projectedImpact: 'Intake restrictions, early release review needed'
+      severity: 'high',
+      owner: 'Detention Major Wilson',
+      ifNotResolved: 'Intake restrictions triggered → court coordination required. 23 early release candidates pending.',
+      linkedModule: '/command/calendar'
     },
     {
-      id: 'risk-003',
-      title: 'B-Shift Staffing — Weekend Coverage Gap',
-      severity: 'high',
+      id: 'esc-003',
+      title: 'B-Shift Weekend Coverage Gap',
       hoursUntil: 36,
-      linkedModule: '/command/personnel',
       category: 'Staffing',
-      projectedImpact: 'OT burn rate $4,160/day if not addressed'
+      severity: 'high',
+      owner: 'Capt. Rodriguez',
+      ifNotResolved: 'OT burn rate $4,160/day through weekend. 3 FMLA/Workers Comp absences unresolved.',
+      linkedModule: '/command/personnel'
     },
     {
-      id: 'risk-004',
+      id: 'esc-004',
       title: 'Fleet Units 312/318 — State Inspection Overdue Friday',
-      severity: 'high',
       hoursUntil: 60,
-      linkedModule: '/command/budget',
       category: 'Maintenance',
-      projectedImpact: '2 patrol units pulled from service'
+      severity: 'high',
+      owner: 'Fleet Manager Anderson',
+      ifNotResolved: '2 patrol units pulled from service → fleet at 86% availability.',
+      linkedModule: '/command/budget'
     }
   ];
 
-  // Accountability data
-  const accountabilityData = {
-    activeCommandTasks: 5,
-    awaitingReview: 2,
-    escalatedToSheriff: 1,
-    missedDeadlines24h: 0
-  };
+  // ============================================================
+  // SECTION C — STRATEGIC EXPOSURE (7–14 DAYS)
+  // Fixed countdowns, readiness %, owner, risk color
+  // ============================================================
+  const strategicExposure = [
+    {
+      id: 'str-001',
+      title: 'USMS Federal Housing Inspection',
+      countdown: '48h',
+      countdownLabel: 'Inspection Window Opens',
+      readiness: 82,
+      openDeficiencies: 3,
+      owner: 'Major Wilson',
+      riskColor: 'red',
+      notes: 'H2-Pod HVAC (critical), C-Pod camera gap, documentation gaps'
+    },
+    {
+      id: 'str-002',
+      title: 'POST Certification Submission Window',
+      countdown: '8 days',
+      countdownLabel: 'Final Submission Deadline',
+      readiness: 65,
+      openDeficiencies: 8,
+      owner: 'IA Supervisor Williams',
+      riskColor: 'red',
+      notes: '8 deputies at risk. Training records incomplete for 3.'
+    },
+    {
+      id: 'str-003',
+      title: 'Holiday Staffing Plan — Christmas/NYE',
+      countdown: '10 days',
+      countdownLabel: 'Coverage Begins',
+      readiness: 40,
+      openDeficiencies: null,
+      owner: 'Capt. Rodriguez',
+      riskColor: 'amber',
+      notes: 'Patrol min: 14/shift. Detention min: 22. OT budget not yet approved.'
+    },
+    {
+      id: 'str-004',
+      title: 'County Council Public Safety Briefing',
+      countdown: '6 days',
+      countdownLabel: 'Presentation Date',
+      readiness: 70,
+      openDeficiencies: null,
+      owner: 'Sheriff Thompson',
+      riskColor: 'amber',
+      notes: 'Crime stats compiled. Staffing narrative needs update. Budget projections pending.'
+    }
+  ];
 
-  // Operational Highlights Data
+  // ============================================================
+  // OPERATIONAL HIGHLIGHTS — Compressed to liability/staffing/compliance only
+  // ============================================================
   const operationalHighlights = [
-    { text: 'Jail population +6 net (848/920, 92%) — approaching capacity threshold', severity: 'warning' },
-    { text: '2 hospital transports (chest pain, laceration) — both inmates returned by 0200 hrs', severity: 'info' },
-    { text: 'B-Shift use of force under review — Deputy Johnson, OC spray, no injuries', severity: 'info' },
-    { text: 'Narcotics seizure (I-85 traffic stop) — 4.2 kg cocaine, 1 arrest, DEA notified', severity: 'positive' },
-    { text: 'No pursuits, no injuries, no critical incidents overnight', severity: 'positive' }
+    { text: 'Jail population +6 net (848/920, 92%) — approaching capacity threshold', type: 'Compliance', severity: 'warning' },
+    { text: 'B-Shift use of force under review — state reporting deadline in 4h', type: 'Legal', severity: 'warning' },
+    { text: 'Narcotics seizure (4.2 kg cocaine, I-85 stop) — DEA notified, media inquiry possible', type: 'Political', severity: 'info' }
+  ];
+
+  // Scheduled Events Data
+  const scheduledEvents = [
+    { id: 'evt-001', time: '09:00', title: 'Federal audit walkthrough', location: 'H-Pod', lead: 'Major Wilson', category: 'compliance', hoursUntil: 3 },
+    { id: 'evt-002', time: '13:00', title: 'Use-of-force review board', location: 'Admin 2nd floor', lead: 'Chief Deputy Harris', category: 'internal', hoursUntil: 7 },
+    { id: 'evt-003', time: '14:00', title: 'Courts coordination meeting', location: 'Admin Conference Room', lead: 'Major Wilson', category: 'operational', hoursUntil: 8 },
+    { id: 'evt-004', time: '18:00', title: 'County Council public safety update', location: 'Government Center', lead: 'Sheriff Thompson', category: 'external', hoursUntil: 12 }
   ];
 
   // On Duty Today Data
@@ -241,62 +257,27 @@ export default function DailyCommandBrief() {
     onCallCommand: { name: 'Chief Deputy Harris', title: 'Chief Deputy', phone: '770-555-0001' }
   };
 
-  // Scheduled Events Data
-  const scheduledEvents = [
-    { id: 'evt-001', time: '09:00', title: 'Federal audit walkthrough', location: 'H-Pod', lead: 'Major Wilson', category: 'compliance', hoursUntil: 3 },
-    { id: 'evt-002', time: '13:00', title: 'Use-of-force review board', location: 'Admin 2nd floor', lead: 'Chief Deputy Harris', category: 'internal', hoursUntil: 7 },
-    { id: 'evt-003', time: '14:00', title: 'Courts coordination meeting', location: 'Admin Conference Room', lead: 'Major Wilson', category: 'operational', hoursUntil: 8 },
-    { id: 'evt-004', time: '18:00', title: 'County Council public safety update', location: 'Government Center', lead: 'Sheriff Thompson', category: 'external', hoursUntil: 12 }
-  ];
-
   const handleRefresh = () => {
     setIsRefreshing(true);
-    setTimeout(() => {
-      setIsRefreshing(false);
-    }, 2000);
+    setTimeout(() => setIsRefreshing(false), 2000);
   };
 
-  const handlePrint = () => {
-    window.print();
-  };
-
-  // Severity left-strip color — matches Executive Dashboard tier strips
   const getSeverityStripColor = (severity) => {
     if (severity === 'critical') return 'bg-red-500';
     if (severity === 'high') return 'bg-amber-500';
     return 'bg-slate-600';
   };
 
-  // Badge system — unified with Executive Dashboard getTierBadge pattern
-  const getSeverityBadge = (severity, deadlineHours) => {
-    if (severity === 'critical') return { text: `CRITICAL · ${deadlineHours}h`, classes: 'bg-red-500/10 border-red-500/20 text-red-400' };
-    if (severity === 'high') return { text: `ACTION · ${deadlineHours}h`, classes: 'bg-amber-500/10 border-amber-500/20 text-amber-400' };
-    return null;
-  };
-
-  // Execution status badge
   const getStatusBadge = (status) => {
     switch (status) {
       case 'pending': return { text: 'Pending', classes: 'bg-amber-500/10 border-amber-500/20 text-amber-400' };
       case 'in_progress': return { text: 'In Progress', classes: 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400' };
       case 'escalated': return { text: 'Escalated', classes: 'bg-red-500/10 border-red-500/20 text-red-400' };
       case 'overdue': return { text: 'Overdue', classes: 'bg-red-500/10 border-red-500/20 text-red-400' };
-      case 'resolved': return { text: 'Resolved', classes: 'bg-slate-500/10 border-slate-500/20 text-slate-400' };
       default: return { text: status, classes: 'bg-slate-500/10 border-slate-500/20 text-slate-400' };
     }
   };
 
-  // Operational highlight dot color — system palette
-  const getHighlightDot = (severity) => {
-    switch (severity) {
-      case 'warning': return 'bg-amber-500';
-      case 'positive': return 'bg-emerald-500';
-      case 'info': return 'bg-slate-500';
-      default: return 'bg-slate-500';
-    }
-  };
-
-  // Event category label color
   const getCategoryColor = (category) => {
     switch (category) {
       case 'compliance': return 'text-amber-400';
@@ -307,55 +288,13 @@ export default function DailyCommandBrief() {
     }
   };
 
-  // Sparkline renderer — inline SVG, no dependencies
-  const Sparkline = ({ data, color = 'text-slate-400' }) => {
-    const max = Math.max(...data);
-    const min = Math.min(...data);
-    const range = max - min || 1;
-    const points = data.map((v, i) => `${(i / (data.length - 1)) * 56},${14 - ((v - min) / range) * 12}`).join(' ');
-    return (
-      <svg className={`w-14 h-4 ${color}`} viewBox="0 0 56 16" fill="none">
-        <polyline points={points} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.5" />
-      </svg>
-    );
-  };
-
-  // Compute absolute deadline time from relative hours (brief generated at 06:00)
-  const getAbsoluteDeadline = (hoursUntil) => {
-    const briefHour = 6;
-    const totalHours = briefHour + hoursUntil;
-    const days = Math.floor(totalHours / 24);
-    const hour = totalHours % 24;
-    const timeStr = `${String(hour).padStart(2, '0')}:00 EST`;
-    return days > 0 ? `${timeStr} +${days}d` : timeStr;
-  };
-
-  // Commander Focus — auto-generated from highest severity + shortest deadline
-  const commandFocusItems = [...priorityItems]
-    .sort((a, b) => {
-      const sw = { critical: 0, high: 1, medium: 2 };
-      return (sw[a.severity] - sw[b.severity]) || (a.deadlineHours - b.deadlineHours);
-    })
-    .slice(0, 3);
-
-  // Filter priority items based on Execution Snapshot selection
-  const filteredPriorityItems = activeFilter
-    ? priorityItems.filter(item => {
-        if (activeFilter === 'active') return true;
-        if (activeFilter === 'review') return item.status === 'pending';
-        if (activeFilter === 'escalated') return item.status === 'escalated';
-        if (activeFilter === 'overdue') return item.status === 'overdue';
-        return true;
-      })
-    : priorityItems;
-
   return (
     <DashboardLayout>
       <div className="p-5 lg:p-8">
         <div className="max-w-7xl mx-auto">
 
         {/* Page Header */}
-        <div className="mb-8 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+        <div className="mb-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           <div>
             <h2 className="text-xl font-bold text-white mb-1">Daily Command Brief</h2>
             <div className="flex items-center gap-2 text-[11px] text-slate-500">
@@ -364,312 +303,208 @@ export default function DailyCommandBrief() {
               <span>{formatTime(currentTime)} EST</span>
               <span className="text-slate-700">·</span>
               <span>Generated at {briefGeneratedAt} EST</span>
-              <span className="text-slate-700">·</span>
-              <span>Data snapshot integrity: Synced {systemIntegrity.lastSync}</span>
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <button
-              onClick={handlePrint}
-              className="flex items-center gap-2 px-4 py-2 bg-slate-800/40 border border-slate-700/40 text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-800/60 transition-all"
-            >
-              <Printer className="w-4 h-4" />
-              Print
+            <button onClick={() => window.print()} className="flex items-center gap-2 px-4 py-2 bg-slate-800/40 border border-slate-700/40 text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-800/60 transition-all">
+              <Printer className="w-4 h-4" />Print
             </button>
-            <button
-              className="flex items-center gap-2 px-4 py-2 bg-slate-800/40 border border-slate-700/40 text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-800/60 transition-all"
-            >
-              <Download className="w-4 h-4" />
-              PDF
+            <button className="flex items-center gap-2 px-4 py-2 bg-slate-800/40 border border-slate-700/40 text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-800/60 transition-all">
+              <Download className="w-4 h-4" />PDF
             </button>
-            <button
-              onClick={handleRefresh}
-              disabled={isRefreshing}
-              className="flex items-center gap-2 px-4 py-2 bg-slate-800/40 border border-slate-700/40 text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-800/60 transition-all disabled:opacity-50"
-            >
-              <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin' : ''}`} />
-              Refresh
+            <button onClick={handleRefresh} disabled={isRefreshing} className="flex items-center gap-2 px-4 py-2 bg-slate-800/40 border border-slate-700/40 text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-800/60 transition-all disabled:opacity-50">
+              <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin' : ''}`} />Refresh
             </button>
           </div>
         </div>
 
-        {/* Commander Focus — mental anchor for the day */}
+        {/* ================================================================
+            COMMAND PRESSURE INDEX — Above everything
+            One-glance health signal for the Sheriff
+            ================================================================ */}
+        <div className={`mb-6 ${pressure.bg} border ${pressure.border} rounded-xl overflow-hidden`}>
+          <div className="px-5 py-4 flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2.5">
+                <Gauge className={`w-5 h-5 ${pressure.text}`} />
+                <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest">Command Pressure</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className={`w-2.5 h-2.5 rounded-full ${pressure.dot} animate-pulse`}></div>
+                <span className={`text-lg font-bold tracking-wide ${pressure.text}`}>{pressure.level}</span>
+              </div>
+            </div>
+            <div className="flex items-center gap-5 text-[11px]">
+              <span className="text-slate-500"><span className="text-white font-semibold">{pressureFactors.criticalIssues}</span> critical issues</span>
+              <span className="text-slate-600">|</span>
+              <span className="text-slate-500"><span className="text-white font-semibold">{pressureFactors.complianceDeadlinesUnder72h}</span> compliance deadlines &lt;72h</span>
+              <span className="text-slate-600">|</span>
+              <span className="text-slate-500">Staffing: <span className={pressureFactors.staffingBelowThreshold ? 'text-red-400 font-semibold' : 'text-emerald-400 font-semibold'}>{pressureFactors.staffingBelowThreshold ? 'Below threshold' : 'Adequate'}</span></span>
+              <span className="text-slate-600">|</span>
+              <span className="text-slate-500"><span className="text-white font-semibold">{pressureFactors.overdueItems}</span> overdue</span>
+            </div>
+          </div>
+          <div className="h-1 bg-slate-800/40">
+            <div className={`h-full ${pressure.dot} transition-all duration-1000`} style={{ width: pressure.barWidth }}></div>
+          </div>
+        </div>
+
+        {/* Commander Focus — mental anchor */}
         <div className="mb-6 px-5 py-3 bg-amber-500/[0.04] border border-amber-500/15 rounded-xl">
           <div className="flex items-start gap-2">
+            <Target className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
             <span className="text-[13px] font-semibold text-amber-400 whitespace-nowrap">Command Focus Today:</span>
             <span className="text-[13px] text-slate-300">
-              {commandFocusItems.map((item, i) => (
+              {commandDecisions.map((item, i) => (
                 <span key={item.id}>
-                  {i > 0 && <span className="text-slate-600">, </span>}
-                  <span className="text-white font-medium">{item.title}</span>
-                  <span className="text-slate-400"> ({item.deadlineHours}h, {getAbsoluteDeadline(item.deadlineHours)})</span>
+                  {i > 0 && <span className="text-slate-600"> · </span>}
+                  <span className="text-white font-medium">{item.title.split('—')[0].trim()}</span>
+                  <span className="text-slate-500"> ({item.deadlineHours}h)</span>
                 </span>
               ))}
             </span>
           </div>
         </div>
 
-        {/* System Integrity Strip — matches Settings System Health pattern */}
-        <div className="mb-8 flex items-center gap-6 px-5 py-3 bg-slate-800/25 border border-slate-700/30 rounded-xl">
-          <div className="flex items-center gap-2.5">
-            <Shield className="w-4 h-4 text-slate-500" />
-            <span className="text-[13px] font-semibold text-slate-300">System Integrity</span>
+        {/* ================================================================
+            SECTION A — COMMAND DECISIONS TODAY
+            "What decisions must I make today?"
+            No narrative. Decision-focused.
+            ================================================================ */}
+        <div ref={decisionsSectionRef} className="mb-6 bg-slate-800/25 border border-slate-700/30 rounded-xl">
+          <div className="flex items-center justify-between px-5 py-4 pb-3 border-b border-slate-700/15">
+            <div className="flex items-center gap-2.5">
+              <Zap className="w-4 h-4 text-red-400" />
+              <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">Command Decisions — Today</h3>
+            </div>
+            <span className="text-[11px] text-slate-500">{commandDecisions.length} items requiring decision</span>
           </div>
-          <div className="h-4 w-px bg-slate-600/40"></div>
-          <div className="flex items-center gap-2.5">
-            <div className={`w-1.5 h-1.5 rounded-full ${systemIntegrity.integrationsHealthy ? 'bg-emerald-500' : 'bg-red-500'}`}></div>
-            <span className="text-[13px] text-slate-400">Integrations {systemIntegrity.integrationsHealthy ? 'healthy' : 'degraded'}</span>
-          </div>
-          <div className="h-4 w-px bg-slate-600/40"></div>
-          <div className="flex items-center gap-2.5">
-            <div className={`w-1.5 h-1.5 rounded-full ${systemIntegrity.failedFeeds === 0 ? 'bg-emerald-500' : 'bg-red-500'}`}></div>
-            <span className="text-[13px] text-slate-400">{systemIntegrity.failedFeeds} failed data feeds</span>
-          </div>
-          <div className="h-4 w-px bg-slate-600/40"></div>
-          <div className="flex items-center gap-2.5">
-            <div className={`w-1.5 h-1.5 rounded-full ${systemIntegrity.staleModules === 0 ? 'bg-emerald-500' : 'bg-amber-500'}`}></div>
-            <span className="text-[13px] text-slate-400">{systemIntegrity.staleModules} stale modules</span>
-          </div>
-        </div>
 
-        {/* Command Summary — with 7-day trend sparklines */}
-        <div className="mb-8 grid grid-cols-2 lg:grid-cols-4 gap-5">
-          {/* Critical Alerts */}
-          <button
-            onClick={() => navigate('/command/alerts')}
-            className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5 text-left hover:border-slate-600/40 transition-colors"
-          >
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-red-500"></div>
-                <span className="text-xs text-slate-500 font-medium uppercase tracking-wide">Critical Issues</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <span className="text-[9px] text-slate-600">7d</span>
-                <Sparkline data={summaryData.criticalAlerts.sparkline} color="text-red-400" />
-              </div>
-            </div>
-            <div className="flex items-baseline gap-2 mb-1">
-              <p className="text-2xl font-semibold text-white">{summaryData.criticalAlerts.count}</p>
-              <span className="flex items-center gap-0.5 text-red-400 text-xs font-medium">
-                <ArrowUpRight className="w-3 h-3" />+{summaryData.criticalAlerts.change}
-              </span>
-            </div>
-            <p className="text-[11px] text-slate-400">+{summaryData.criticalAlerts.change} from yesterday ({summaryData.criticalAlerts.yesterday})</p>
-          </button>
-
-          {/* Pending Approvals */}
-          <button
-            onClick={() => navigate('/command/approvals')}
-            className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5 text-left hover:border-slate-600/40 transition-colors"
-          >
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-amber-500"></div>
-                <span className="text-xs text-slate-500 font-medium uppercase tracking-wide">Pending Approvals</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <span className="text-[9px] text-slate-600">7d</span>
-                <Sparkline data={summaryData.pendingApprovals.sparkline} color="text-emerald-400" />
-              </div>
-            </div>
-            <div className="flex items-baseline gap-2 mb-1">
-              <p className="text-2xl font-semibold text-white">{summaryData.pendingApprovals.count}</p>
-              <span className="flex items-center gap-0.5 text-emerald-400 text-xs font-medium">
-                <ArrowDownRight className="w-3 h-3" />-{summaryData.pendingApprovals.change}
-              </span>
-            </div>
-            <p className="text-[11px] text-slate-400">-{summaryData.pendingApprovals.change} from yesterday ({summaryData.pendingApprovals.yesterday})</p>
-          </button>
-
-          {/* Staffing Status */}
-          <button
-            onClick={() => navigate('/command/personnel')}
-            className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5 text-left hover:border-slate-600/40 transition-colors"
-          >
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-red-500"></div>
-                <span className="text-xs text-slate-500 font-medium uppercase tracking-wide">{summaryData.staffingStatus.shift}-Shift {summaryData.staffingStatus.division}</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <span className="text-[9px] text-slate-600">7d</span>
-                <Sparkline data={summaryData.staffingStatus.sparkline} color="text-red-400" />
-              </div>
-            </div>
-            <div className="flex items-baseline gap-2 mb-1">
-              <p className="text-2xl font-semibold text-white">{summaryData.staffingStatus.percentage}%</p>
-              <span className="flex items-center gap-0.5 text-red-400 text-xs font-medium">
-                <ArrowDownRight className="w-3 h-3" />-{summaryData.staffingStatus.change}%
-              </span>
-            </div>
-            <p className="text-[11px] text-red-400">Below minimum staffing (was {summaryData.staffingStatus.yesterday}%)</p>
-          </button>
-
-          {/* Compliance Deadline — countdown-focused, severity shifts at 24h */}
-          <button
-            onClick={() => navigate('/command/risk')}
-            className={`bg-slate-800/25 border rounded-xl p-5 text-left hover:border-slate-600/40 transition-colors ${
-              summaryData.complianceDeadline.hoursUntil <= 24 ? 'border-red-500/30' : 'border-slate-700/30'
-            }`}
-          >
-            <div className="flex items-center gap-2 mb-3">
-              <div className={`w-1.5 h-1.5 rounded-full ${summaryData.complianceDeadline.hoursUntil <= 24 ? 'bg-red-500' : 'bg-amber-500'}`}></div>
-              <span className="text-xs text-slate-500 font-medium uppercase tracking-wide">{summaryData.complianceDeadline.event}</span>
-            </div>
-            <div className="flex items-baseline gap-2 mb-2">
-              <p className={`text-2xl font-semibold ${summaryData.complianceDeadline.hoursUntil <= 24 ? 'text-red-400' : 'text-white'}`}>{summaryData.complianceDeadline.hoursUntil}h</p>
-              <span className="text-[11px] text-slate-500">{getAbsoluteDeadline(summaryData.complianceDeadline.hoursUntil)}</span>
-            </div>
-            <div className="w-full h-1.5 bg-slate-700/30 rounded-full overflow-hidden mb-2">
-              <div
-                className={`h-full rounded-full transition-all ${summaryData.complianceDeadline.hoursUntil <= 24 ? 'bg-red-500' : 'bg-amber-500'}`}
-                style={{ width: `${Math.max(5, (summaryData.complianceDeadline.hoursUntil / 168) * 100)}%` }}
-              ></div>
-            </div>
-            <p className={`text-[11px] ${summaryData.complianceDeadline.hoursUntil <= 24 ? 'text-red-400' : 'text-amber-400'}`}>USMS inspection window approaching</p>
-          </button>
-        </div>
-
-        {/* Priority Items — with execution state and escalation tier */}
-        <div ref={prioritySectionRef} className="mb-8 bg-slate-800/25 border border-slate-700/30 rounded-xl">
-          <div className="flex items-center justify-between px-5 py-4 pb-3">
-            <div className="flex items-center gap-3">
-              <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">Priority Items Requiring Command Attention</h3>
-              {activeFilter && (
-                <button
-                  onClick={() => setActiveFilter(null)}
-                  className="px-2 py-0.5 text-[11px] font-medium text-slate-400 border border-slate-700/30 rounded hover:bg-slate-700/20 transition-colors"
-                >
-                  Clear filter ×
-                </button>
-              )}
-            </div>
-            <span className="text-xs text-slate-500">{filteredPriorityItems.length} of {priorityItems.length} items</span>
-          </div>
-          <div className="px-5 pb-5 space-y-2">
-            {filteredPriorityItems.map((item) => {
-              const badge = getSeverityBadge(item.severity, item.deadlineHours);
+          <div className="px-5 py-4 space-y-1">
+            {commandDecisions.map((item) => {
               const statusBadge = getStatusBadge(item.status);
+              const isExpanded = expandedItem === item.id;
               return (
                 <div
                   key={item.id}
                   className={`rounded-lg border transition-colors ${
-                    item.rank === 1
-                      ? 'border-red-500/20 bg-red-500/[0.03] hover:bg-red-500/[0.06]'
-                      : 'border-slate-700/20 hover:bg-slate-800/20'
+                    item.severity === 'critical'
+                      ? 'border-red-500/20 bg-red-500/[0.03]'
+                      : 'border-slate-700/20'
                   }`}
                 >
                   <div
-                    className="flex items-center gap-4 p-3 cursor-pointer"
-                    onClick={() => setExpandedItem(expandedItem === item.id ? null : item.id)}
+                    className="p-3 cursor-pointer hover:bg-slate-800/20 transition-colors"
+                    onClick={() => setExpandedItem(isExpanded ? null : item.id)}
                   >
-                    <div className={`${item.rank === 1 ? 'w-1' : 'w-0.5'} self-stretch rounded-full flex-shrink-0 ${getSeverityStripColor(item.severity)}`}></div>
+                    {/* Row 1: Title + Status badges */}
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className={`w-1 self-stretch rounded-full flex-shrink-0 ${getSeverityStripColor(item.severity)}`}></div>
+                      <p className="text-sm font-semibold text-white flex-1">{item.title}</p>
+                      <span className={`px-1.5 py-0.5 border rounded text-[11px] font-medium ${statusBadge.classes}`}>{statusBadge.text}</span>
+                      {isExpanded ? <ChevronUp className="w-4 h-4 text-slate-600" /> : <ChevronDown className="w-4 h-4 text-slate-600" />}
+                    </div>
 
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1 flex-wrap">
-                        <p className="text-sm font-medium text-white">{item.title}</p>
-                        {badge && <span className={`px-1.5 py-0.5 border rounded text-[11px] font-medium ${badge.classes}`}>{badge.text}</span>}
-                        <span className={`px-1.5 py-0.5 border rounded text-[11px] font-medium ${statusBadge.classes}`}>{statusBadge.text}</span>
+                    {/* Row 2: Decision metadata — structured, not narrative */}
+                    <div className="ml-3 grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-1.5 text-[11px]">
+                      <div>
+                        <span className="text-slate-600 uppercase tracking-wider text-[10px]">Deadline</span>
+                        <p className={`font-semibold mt-0.5 ${item.severity === 'critical' ? 'text-red-400' : 'text-amber-400'}`}>{item.deadline}</p>
                       </div>
-                      <div className="flex items-center gap-2 text-[11px]">
-                        <span className="text-slate-400">{item.description}</span>
+                      <div>
+                        <span className="text-slate-600 uppercase tracking-wider text-[10px]">Exposure</span>
+                        <p className={`font-semibold mt-0.5 ${item.exposureColor}`}>{item.exposureType}</p>
                       </div>
-                      <div className="flex items-center gap-2 text-[11px] mt-1">
-                        <span className="text-slate-500">{item.responsible.name}</span>
-                        <span className="text-slate-600">·</span>
-                        <span className="text-slate-500">#{item.responsible.badge}</span>
-                        <span className="text-slate-600">·</span>
-                        <span className={item.severity === 'critical' ? 'text-red-400' : item.severity === 'high' ? 'text-amber-400' : 'text-slate-400'}>
-                          {item.deadlineHours}h · {getAbsoluteDeadline(item.deadlineHours)}
-                        </span>
-                        <span className="text-slate-600">·</span>
-                        <span className="text-slate-600">Escalation: {item.escalationTier}</span>
+                      <div className="col-span-2 lg:col-span-1">
+                        <span className="text-slate-600 uppercase tracking-wider text-[10px]">Required Action</span>
+                        <p className="text-white font-medium mt-0.5">{item.requiredAction}</p>
+                      </div>
+                      <div>
+                        <span className="text-slate-600 uppercase tracking-wider text-[10px]">Escalation</span>
+                        <p className="text-slate-400 mt-0.5">{item.escalation}</p>
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-2 flex-shrink-0">
-                      {expandedItem === item.id ? <ChevronUp className="w-4 h-4 text-slate-600" /> : <ChevronDown className="w-4 h-4 text-slate-600" />}
+                    {/* Row 3: Owner + consequence */}
+                    <div className="ml-3 mt-2 flex items-center gap-3 text-[11px]">
+                      <span className="text-slate-500">{item.owner.name} · #{item.owner.badge}</span>
+                      <span className="text-slate-700">|</span>
+                      <span className="text-red-400/70">If delayed → {item.consequence}</span>
                     </div>
                   </div>
 
-                  {/* Expanded Content */}
-                  {expandedItem === item.id && (
-                    <div className="px-3 pb-3 ml-[10px] space-y-3 border-t border-slate-700/20 pt-3">
-                      <p className="text-[13px] text-slate-300 leading-relaxed">{item.expandedContent.fullDescription}</p>
-
-                      <div>
-                        <h4 className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-2">Timeline</h4>
-                        <div className="space-y-1">
-                          {item.expandedContent.timeline.map((entry, idx) => (
-                            <div key={idx} className="flex items-start gap-3 text-[13px]">
-                              <span className="font-mono text-slate-500 w-24 flex-shrink-0">{entry.time}</span>
-                              <span className="text-slate-300">{entry.event}</span>
-                            </div>
-                          ))}
+                  {/* Expanded: Timeline only (no paragraph) */}
+                  {isExpanded && (
+                    <div className="px-3 pb-3 ml-3 border-t border-slate-700/15 pt-3">
+                      <div className="flex items-start gap-6">
+                        <div className="flex-1">
+                          <h4 className="text-[10px] font-semibold text-slate-600 uppercase tracking-widest mb-2">Event Timeline</h4>
+                          <div className="space-y-1">
+                            {item.timeline.map((entry, idx) => (
+                              <div key={idx} className="flex items-start gap-3 text-[12px]">
+                                <span className="font-mono text-slate-500 w-28 flex-shrink-0">{entry.time}</span>
+                                <span className="text-slate-300">{entry.event}</span>
+                              </div>
+                            ))}
+                          </div>
                         </div>
-                      </div>
-
-                      {/* Action affordance */}
-                      <div className="flex gap-2 pt-1">
-                        <button
-                          onClick={(e) => { e.stopPropagation(); navigate(item.linkedModule); }}
-                          className="px-3 py-1.5 text-xs font-medium text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/10 rounded-lg transition-colors"
-                        >
-                          View Details
-                        </button>
-                        <button className="px-3 py-1.5 text-xs font-medium text-slate-400 border border-slate-700/30 hover:bg-slate-700/20 rounded-lg transition-colors">
-                          Assign
-                        </button>
+                        <div className="flex gap-2">
+                          <button
+                            onClick={(e) => { e.stopPropagation(); setContactModal(item.owner); }}
+                            className="px-3 py-1.5 text-xs font-medium text-slate-400 border border-slate-700/30 hover:bg-slate-700/20 rounded-lg transition-colors"
+                          >
+                            Contact Owner
+                          </button>
+                        </div>
                       </div>
                     </div>
                   )}
-
-                  <div className="flex items-center gap-2 px-3 pb-2 ml-[10px] text-[10px] text-slate-500">
-                    <Shield className="w-3 h-3 text-slate-600" />
-                    <span>Logged to audit trail</span>
-                    <span className="text-slate-600">·</span>
-                    <span>Action: {item.actionRequired.split('.')[0]}</span>
-                  </div>
                 </div>
               );
             })}
           </div>
         </div>
 
-        {/* Upcoming Risk Horizon (72 Hours) — predictive intelligence */}
-        <div className="mb-8 bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
-          <div className="flex items-center justify-between mb-5">
-            <div className="flex items-center gap-2">
+        {/* ================================================================
+            SECTION B — ESCALATING RISK (72 HOURS)
+            Predictive: items that worsen if untouched
+            Each has: "If not resolved → consequence"
+            ================================================================ */}
+        <div className="mb-6 bg-slate-800/25 border border-slate-700/30 rounded-xl">
+          <div className="flex items-center justify-between px-5 py-4 pb-3 border-b border-slate-700/15">
+            <div className="flex items-center gap-2.5">
               <AlertTriangle className="w-4 h-4 text-amber-400" />
-              <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">Upcoming Risk Horizon (72 Hours)</h3>
+              <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">Escalating Risk — Next 72 Hours</h3>
             </div>
-            <span className="text-xs text-slate-500">Predictive — projected escalation items</span>
+            <span className="text-[11px] text-slate-500">Items that worsen if untouched</span>
           </div>
 
-          <div className="space-y-2">
-            {riskHorizon.map(risk => (
+          <div className="px-5 py-4 space-y-1">
+            {escalatingRisks.map(risk => (
               <button
                 key={risk.id}
                 onClick={() => navigate(risk.linkedModule)}
                 className="w-full rounded-lg border border-slate-700/20 hover:bg-slate-800/20 transition-colors text-left"
               >
-                <div className="flex items-center gap-4 p-3">
-                  <div className={`w-0.5 self-stretch rounded-full flex-shrink-0 ${risk.severity === 'critical' ? 'bg-red-500' : 'bg-amber-500'}`}></div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <p className="text-sm font-medium text-white">{risk.title}</p>
-                      <span className={`px-1.5 py-0.5 border rounded text-[11px] font-medium ${
-                        risk.severity === 'critical' ? 'bg-red-500/10 border-red-500/20 text-red-400' : 'bg-amber-500/10 border-amber-500/20 text-amber-400'
-                      }`}>
-                        {risk.hoursUntil}h · {getAbsoluteDeadline(risk.hoursUntil)}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2 text-[11px]">
-                      <span className="text-slate-500">{risk.category}</span>
-                      <span className="text-slate-600">·</span>
-                      <span className="text-slate-400">{risk.projectedImpact}</span>
-                    </div>
+                <div className="p-3">
+                  {/* Top line: title + time badge */}
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <div className={`w-0.5 h-4 rounded-full flex-shrink-0 ${risk.severity === 'critical' ? 'bg-red-500' : 'bg-amber-500'}`}></div>
+                    <p className="text-sm font-medium text-white flex-1">{risk.title}</p>
+                    <span className={`px-1.5 py-0.5 border rounded text-[11px] font-semibold ${
+                      risk.severity === 'critical' ? 'bg-red-500/10 border-red-500/20 text-red-400' : 'bg-amber-500/10 border-amber-500/20 text-amber-400'
+                    }`}>
+                      {risk.hoursUntil}h
+                    </span>
+                    <span className="text-[11px] text-slate-500">{risk.category}</span>
+                  </div>
+                  {/* Consequence line — this is the differentiator */}
+                  <div className="ml-2.5 flex items-start gap-2 text-[11px]">
+                    <span className="text-slate-600 flex-shrink-0">If not resolved →</span>
+                    <span className="text-red-400/80">{risk.ifNotResolved}</span>
+                  </div>
+                  <div className="ml-2.5 mt-1 text-[11px] text-slate-500">
+                    Owner: {risk.owner}
                   </div>
                 </div>
               </button>
@@ -677,20 +512,87 @@ export default function DailyCommandBrief() {
           </div>
         </div>
 
-        {/* Two Column Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-8">
-          {/* Operational Highlights */}
+        {/* ================================================================
+            SECTION C — STRATEGIC EXPOSURE (7–14 DAYS)
+            Countdowns, readiness %, owner, risk color
+            ================================================================ */}
+        <div className="mb-6 bg-slate-800/25 border border-slate-700/30 rounded-xl">
+          <div className="flex items-center justify-between px-5 py-4 pb-3 border-b border-slate-700/15">
+            <div className="flex items-center gap-2.5">
+              <Shield className="w-4 h-4 text-slate-400" />
+              <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">Strategic Exposure — 7 to 14 Days</h3>
+            </div>
+            <span className="text-[11px] text-slate-500">Audit, certification & inspection readiness</span>
+          </div>
+
+          <div className="px-5 py-4 grid grid-cols-1 lg:grid-cols-2 gap-3">
+            {strategicExposure.map(item => {
+              const riskColors = {
+                red: { bg: 'bg-red-500/[0.04]', border: 'border-red-500/15', text: 'text-red-400', bar: 'bg-red-500' },
+                amber: { bg: 'bg-amber-500/[0.03]', border: 'border-amber-500/12', text: 'text-amber-400', bar: 'bg-amber-500' }
+              };
+              const rc = riskColors[item.riskColor];
+              return (
+                <div key={item.id} className={`${rc.bg} border ${rc.border} rounded-lg p-4`}>
+                  <div className="flex items-start justify-between mb-3">
+                    <p className="text-sm font-semibold text-white leading-tight">{item.title}</p>
+                    <div className={`flex-shrink-0 ml-3 text-right`}>
+                      <p className={`text-xl font-bold ${rc.text}`}>{item.countdown}</p>
+                      <p className="text-[10px] text-slate-500 mt-0.5">{item.countdownLabel}</p>
+                    </div>
+                  </div>
+
+                  {/* Readiness bar */}
+                  <div className="mb-3">
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Readiness</span>
+                      <span className={`text-[12px] font-bold ${item.readiness >= 80 ? 'text-emerald-400' : item.readiness >= 60 ? 'text-amber-400' : 'text-red-400'}`}>{item.readiness}%</span>
+                    </div>
+                    <div className="w-full h-1.5 bg-slate-700/30 rounded-full overflow-hidden">
+                      <div
+                        className={`h-full rounded-full transition-all ${item.readiness >= 80 ? 'bg-emerald-500' : item.readiness >= 60 ? 'bg-amber-500' : 'bg-red-500'}`}
+                        style={{ width: `${item.readiness}%` }}
+                      ></div>
+                    </div>
+                  </div>
+
+                  {/* Metadata */}
+                  <div className="flex items-center gap-3 text-[11px]">
+                    <span className="text-slate-500">Owner: <span className="text-slate-300">{item.owner}</span></span>
+                    {item.openDeficiencies !== null && (
+                      <>
+                        <span className="text-slate-700">|</span>
+                        <span className={`${rc.text}`}>{item.openDeficiencies} open deficiencies</span>
+                      </>
+                    )}
+                  </div>
+                  <p className="text-[11px] text-slate-500 mt-1.5">{item.notes}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Two Column Layout — Compressed highlights + On Duty */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-6">
+          {/* Operational Highlights — liability/staffing/compliance ONLY */}
           <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
-            <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center justify-between mb-4">
               <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">Operational Highlights</h3>
-              <span className="text-xs text-slate-500">Last 24 hours</span>
+              <span className="text-[11px] text-slate-500">Liability · Staffing · Compliance only</span>
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-2.5">
               {operationalHighlights.map((highlight, idx) => (
                 <div key={idx} className="flex items-start gap-3">
-                  <div className={`w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0 ${getHighlightDot(highlight.severity)}`}></div>
-                  <p className="text-[13px] text-slate-300">{highlight.text}</p>
+                  <div className={`w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0 ${highlight.severity === 'warning' ? 'bg-amber-500' : 'bg-slate-500'}`}></div>
+                  <div>
+                    <p className="text-[13px] text-slate-300">{highlight.text}</p>
+                    <span className={`text-[10px] font-semibold uppercase tracking-wider ${
+                      highlight.type === 'Legal' || highlight.type === 'Compliance' ? 'text-red-400/60' :
+                      highlight.type === 'Political' ? 'text-amber-400/60' : 'text-slate-500'
+                    }`}>{highlight.type}</span>
+                  </div>
                 </div>
               ))}
             </div>
@@ -698,72 +600,37 @@ export default function DailyCommandBrief() {
 
           {/* On Duty Today */}
           <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
-            <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide mb-5">On Duty Today</h3>
-
-            <div className="space-y-4">
-              {/* Watch Commander */}
+            <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide mb-4">On Duty Today</h3>
+            <div className="space-y-3">
               <div>
-                <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Watch Commander</span>
-                <div className="mt-1.5 flex items-center gap-2">
-                  <button
-                    onClick={() => setContactModal(onDutyData.watchCommander)}
-                    className="text-sm font-medium text-white hover:text-slate-300 transition-colors"
-                  >
-                    {onDutyData.watchCommander.name}
-                  </button>
-                  <span className="text-[11px] text-slate-500">#{onDutyData.watchCommander.badge}</span>
-                  <span className="text-slate-600 text-[11px]">·</span>
-                  <span className="text-[11px] text-slate-500">Radio: {onDutyData.watchCommander.radio}</span>
+                <span className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider">Watch Commander</span>
+                <div className="mt-1 flex items-center gap-2">
+                  <button onClick={() => setContactModal(onDutyData.watchCommander)} className="text-sm font-medium text-white hover:text-slate-300 transition-colors">{onDutyData.watchCommander.name}</button>
+                  <span className="text-[11px] text-slate-500">#{onDutyData.watchCommander.badge} · Radio: {onDutyData.watchCommander.radio}</span>
                 </div>
               </div>
-
-              {/* Patrol Supervisors */}
-              <div className="border-t border-slate-700/20 pt-3">
-                <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Patrol Supervisors</span>
-                <div className="mt-1.5 space-y-1">
+              <div className="border-t border-slate-700/20 pt-2.5">
+                <span className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider">Patrol Supervisors</span>
+                <div className="mt-1 space-y-1">
                   {onDutyData.patrolSupervisors.map((sup, idx) => (
                     <div key={idx} className="flex items-center gap-2">
-                      <button
-                        onClick={() => setContactModal(sup)}
-                        className="text-sm font-medium text-white hover:text-slate-300 transition-colors"
-                      >
-                        {sup.name}
-                      </button>
-                      <span className="text-[11px] text-slate-500">#{sup.badge}</span>
-                      <span className="text-slate-600 text-[11px]">·</span>
-                      <span className="text-[11px] text-slate-500">Radio: {sup.radio}</span>
+                      <button onClick={() => setContactModal(sup)} className="text-sm font-medium text-white hover:text-slate-300 transition-colors">{sup.name}</button>
+                      <span className="text-[11px] text-slate-500">#{sup.badge} · {sup.radio}</span>
                     </div>
                   ))}
                 </div>
               </div>
-
-              {/* Detention Commander */}
-              <div className="border-t border-slate-700/20 pt-3">
-                <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Detention Commander</span>
-                <div className="mt-1.5 flex items-center gap-2">
-                  <button
-                    onClick={() => setContactModal(onDutyData.detentionCommander)}
-                    className="text-sm font-medium text-white hover:text-slate-300 transition-colors"
-                  >
-                    {onDutyData.detentionCommander.name}
-                  </button>
-                  <span className="text-[11px] text-slate-500">#{onDutyData.detentionCommander.badge}</span>
-                  <span className="text-slate-600 text-[11px]">·</span>
-                  <span className="text-[11px] text-slate-500">Radio: {onDutyData.detentionCommander.radio}</span>
+              <div className="border-t border-slate-700/20 pt-2.5">
+                <span className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider">Detention Commander</span>
+                <div className="mt-1 flex items-center gap-2">
+                  <button onClick={() => setContactModal(onDutyData.detentionCommander)} className="text-sm font-medium text-white hover:text-slate-300 transition-colors">{onDutyData.detentionCommander.name}</button>
+                  <span className="text-[11px] text-slate-500">#{onDutyData.detentionCommander.badge} · {onDutyData.detentionCommander.radio}</span>
                 </div>
               </div>
-
-              {/* On-Call Command */}
-              <div className="border-t border-slate-700/20 pt-3">
-                <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">On-Call Command</span>
-                <div className="mt-1.5 flex items-center gap-2">
-                  <button
-                    onClick={() => setContactModal(onDutyData.onCallCommand)}
-                    className="text-sm font-medium text-white hover:text-slate-300 transition-colors"
-                  >
-                    {onDutyData.onCallCommand.name}
-                  </button>
-                  <span className="text-slate-600 text-[11px]">·</span>
+              <div className="border-t border-slate-700/20 pt-2.5">
+                <span className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider">On-Call Command</span>
+                <div className="mt-1 flex items-center gap-2">
+                  <button onClick={() => setContactModal(onDutyData.onCallCommand)} className="text-sm font-medium text-white hover:text-slate-300 transition-colors">{onDutyData.onCallCommand.name}</button>
                   <span className="text-[11px] text-slate-500">Cell: {onDutyData.onCallCommand.phone}</span>
                 </div>
               </div>
@@ -771,78 +638,21 @@ export default function DailyCommandBrief() {
           </div>
         </div>
 
-        {/* Accountability Summary Strip — clickable filters → scroll to priority items */}
-        <div className="mb-8 flex items-center gap-6 px-5 py-3.5 bg-slate-800/25 border border-slate-700/30 rounded-xl">
-          <div className="flex items-center gap-2.5">
-            <CheckCircle className="w-4 h-4 text-slate-500" />
-            <span className="text-[13px] font-semibold text-slate-300">Execution Snapshot</span>
+        {/* Scheduled Events — Compact */}
+        <div className="mb-6 bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">Today's Schedule</h3>
+            <button onClick={() => navigate('/command/calendar')} className="text-xs text-amber-400/80 hover:text-amber-300">View Full Calendar →</button>
           </div>
-          <div className="h-4 w-px bg-slate-600/40"></div>
-          <button
-            onClick={() => { setActiveFilter(activeFilter === 'active' ? null : 'active'); prioritySectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}
-            className="flex items-center gap-2.5"
-          >
-            <span className={`px-2 py-0.5 border rounded text-[11px] font-medium transition-colors cursor-pointer ${
-              activeFilter === 'active' ? 'bg-slate-500/20 border-slate-400/30 text-white' : 'bg-slate-500/10 border-slate-500/20 text-slate-300 hover:bg-slate-500/15'
-            }`}>
-              {accountabilityData.activeCommandTasks} Active Tasks
-            </span>
-          </button>
-          <button
-            onClick={() => { setActiveFilter(activeFilter === 'review' ? null : 'review'); prioritySectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}
-            className="flex items-center gap-2.5"
-          >
-            <span className={`px-2 py-0.5 border rounded text-[11px] font-medium transition-colors cursor-pointer ${
-              activeFilter === 'review' ? 'bg-amber-500/20 border-amber-400/30 text-amber-300' : 'bg-amber-500/10 border-amber-500/20 text-amber-400 hover:bg-amber-500/15'
-            }`}>
-              {accountabilityData.awaitingReview} Awaiting Review
-            </span>
-          </button>
-          <button
-            onClick={() => { setActiveFilter(activeFilter === 'escalated' ? null : 'escalated'); prioritySectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}
-            className="flex items-center gap-2.5"
-          >
-            <span className={`px-2 py-0.5 border rounded text-[11px] font-medium transition-colors cursor-pointer ${
-              activeFilter === 'escalated' ? 'bg-red-500/20 border-red-400/30 text-red-300' : 'bg-red-500/10 border-red-500/20 text-red-400 hover:bg-red-500/15'
-            }`}>
-              {accountabilityData.escalatedToSheriff} Escalated to Sheriff
-            </span>
-          </button>
-          <button
-            onClick={() => { setActiveFilter(activeFilter === 'overdue' ? null : 'overdue'); prioritySectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}
-            className="flex items-center gap-2.5"
-          >
-            <span className={`px-2 py-0.5 border rounded text-[11px] font-medium transition-colors cursor-pointer ${
-              activeFilter === 'overdue'
-                ? (accountabilityData.missedDeadlines24h === 0 ? 'bg-emerald-500/20 border-emerald-400/30 text-emerald-300' : 'bg-red-500/20 border-red-400/30 text-red-300')
-                : (accountabilityData.missedDeadlines24h === 0 ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/15' : 'bg-red-500/10 border-red-500/20 text-red-400 hover:bg-red-500/15')
-            }`}>
-              {accountabilityData.missedDeadlines24h} Missed Deadlines (24h)
-            </span>
-          </button>
-        </div>
-
-        {/* Scheduled Events */}
-        <div className="mb-8 bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
-          <div className="flex items-center justify-between mb-5">
-            <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">Scheduled Events (Command-Level)</h3>
-            <button
-              onClick={() => navigate('/command/calendar')}
-              className="text-xs text-amber-400/80 hover:text-amber-300"
-            >
-              View Full Calendar →
-            </button>
-          </div>
-
           <div className="space-y-1">
             {scheduledEvents.map((event) => (
               <div
                 key={event.id}
-                className={`flex items-center gap-4 px-4 py-2.5 rounded ${
+                className={`flex items-center gap-4 px-4 py-2 rounded ${
                   event.hoursUntil <= 2 ? 'bg-amber-500/5 border-l-[3px] border-l-amber-500/30' : 'bg-slate-900/20 hover:bg-slate-800/30 transition-all'
                 }`}
               >
-                <div className="flex flex-col items-start w-16 flex-shrink-0">
+                <div className="flex flex-col items-start w-14 flex-shrink-0">
                   <span className="text-[13px] font-mono font-semibold text-slate-300">{event.time}</span>
                   <span className="text-[10px] text-slate-500">in {event.hoursUntil}h</span>
                 </div>
@@ -850,23 +660,11 @@ export default function DailyCommandBrief() {
                   <div className="flex items-center gap-2">
                     {event.hoursUntil <= 2 && <Clock className="w-3.5 h-3.5 text-amber-400" />}
                     <span className="text-[13px] font-medium text-white">{event.title}</span>
-                    {event.hoursUntil <= 2 && (
-                      <span className="px-1.5 py-0.5 bg-amber-500/10 border border-amber-500/20 rounded text-[11px] font-medium text-amber-400">
-                        Starting soon
-                      </span>
-                    )}
                   </div>
                   <div className="flex items-center gap-2 mt-0.5 text-[11px]">
                     <span className="text-slate-400">{event.location}</span>
                     <span className="text-slate-600">·</span>
                     <span className="text-slate-400">{event.lead}</span>
-                    <span className="text-slate-600">·</span>
-                    <span className={getCategoryColor(event.category)}>
-                      {event.category === 'compliance' && 'Compliance'}
-                      {event.category === 'external' && 'External Briefing'}
-                      {event.category === 'internal' && 'Internal Review'}
-                      {event.category === 'operational' && 'Operational'}
-                    </span>
                   </div>
                 </div>
               </div>
@@ -888,67 +686,38 @@ export default function DailyCommandBrief() {
       {/* Contact Modal */}
       {contactModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-            onClick={() => setContactModal(null)}
-          />
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setContactModal(null)} />
           <div className="relative bg-slate-900 border border-slate-700/50 rounded-2xl p-6 max-w-sm w-full shadow-2xl">
             <div className="flex items-start gap-3 mb-5">
               <div className="flex-1">
                 <h3 className="text-base font-semibold text-white mb-0.5">Contact: {contactModal.name}</h3>
-                {contactModal.title && (
-                  <p className="text-xs text-slate-400">{contactModal.title}</p>
-                )}
+                {contactModal.title && <p className="text-xs text-slate-400">{contactModal.title}</p>}
               </div>
-              <button
-                onClick={() => setContactModal(null)}
-                className="text-slate-400 hover:text-white transition-colors"
-              >
+              <button onClick={() => setContactModal(null)} className="text-slate-400 hover:text-white transition-colors">
                 <X className="w-5 h-5" />
               </button>
             </div>
-
             <div className="space-y-3 text-sm">
               {contactModal.badge && (
-                <div className="flex items-center gap-3">
-                  <User className="w-4 h-4 text-slate-500" />
-                  <span className="text-slate-300">Badge: #{contactModal.badge}</span>
-                </div>
+                <div className="flex items-center gap-3"><User className="w-4 h-4 text-slate-500" /><span className="text-slate-300">Badge: #{contactModal.badge}</span></div>
               )}
               {contactModal.radio && (
-                <div className="flex items-center gap-3">
-                  <Radio className="w-4 h-4 text-slate-500" />
-                  <span className="text-slate-300">Radio: {contactModal.radio}</span>
-                </div>
+                <div className="flex items-center gap-3"><Radio className="w-4 h-4 text-slate-500" /><span className="text-slate-300">Radio: {contactModal.radio}</span></div>
               )}
               {contactModal.phone && (
-                <div className="flex items-center gap-3">
-                  <Phone className="w-4 h-4 text-slate-500" />
-                  <span className="text-slate-300">Cell: {contactModal.phone}</span>
-                </div>
+                <div className="flex items-center gap-3"><Phone className="w-4 h-4 text-slate-500" /><span className="text-slate-300">Cell: {contactModal.phone}</span></div>
               )}
               {contactModal.email && (
-                <div className="flex items-center gap-3">
-                  <Building2 className="w-4 h-4 text-slate-500" />
-                  <span className="text-slate-300">{contactModal.email}</span>
-                </div>
+                <div className="flex items-center gap-3"><Building2 className="w-4 h-4 text-slate-500" /><span className="text-slate-300">{contactModal.email}</span></div>
               )}
               {contactModal.onDutySince && (
-                <div className="flex items-center gap-3">
-                  <Clock className="w-4 h-4 text-slate-500" />
-                  <span className="text-slate-300">On Duty Since: {contactModal.onDutySince}</span>
-                </div>
+                <div className="flex items-center gap-3"><Clock className="w-4 h-4 text-slate-500" /><span className="text-slate-300">On Duty Since: {contactModal.onDutySince}</span></div>
               )}
             </div>
-
             <div className="flex gap-3 mt-6">
-              <button className="flex-1 px-4 py-2.5 text-xs font-medium text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/10 rounded-xl transition-colors">
-                Call Cell
-              </button>
+              <button className="flex-1 px-4 py-2.5 text-xs font-medium text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/10 rounded-xl transition-colors">Call Cell</button>
               {contactModal.radio && (
-                <button className="flex-1 px-4 py-2.5 text-xs font-medium text-slate-400 border border-slate-700/30 hover:bg-slate-700/20 rounded-xl transition-colors">
-                  Radio Contact
-                </button>
+                <button className="flex-1 px-4 py-2.5 text-xs font-medium text-slate-400 border border-slate-700/30 hover:bg-slate-700/20 rounded-xl transition-colors">Radio Contact</button>
               )}
             </div>
           </div>

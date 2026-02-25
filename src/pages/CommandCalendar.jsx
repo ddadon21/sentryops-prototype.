@@ -7,10 +7,11 @@ import {
   Clock,
   Shield,
   X,
-  ArrowUpRight,
   ExternalLink,
   AlertTriangle,
-  Eye
+  Eye,
+  Users,
+  Zap
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import DashboardLayout from '../layouts/DashboardLayout';
@@ -20,9 +21,10 @@ export default function CommandCalendar() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [viewMode, setViewMode] = useState('month');
   const [selectedEvent, setSelectedEvent] = useState(null);
-  const [currentMonth, setCurrentMonth] = useState(11); // December (0-indexed)
+  const [currentMonth, setCurrentMonth] = useState(11);
   const [currentYear, setCurrentYear] = useState(2024);
   const [showRiskOverlay, setShowRiskOverlay] = useState(false);
+  const [showStaffingOverlay, setShowStaffingOverlay] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 60000);
@@ -32,7 +34,7 @@ export default function CommandCalendar() {
   const formatTime = (date) => date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
   const formatDate = (date) => date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
-  // Full event data architecture
+  // Full event data
   const calendarEvents = [
     {
       id: 'cal-001',
@@ -123,7 +125,9 @@ export default function CommandCalendar() {
       status: 'pending',
       notes: '40-hour Crisis Intervention Training. 8 deputies enrolled. Patrol coverage adjusted.',
       day: 16,
-      time: '08:00'
+      time: '08:00',
+      staffingImpact: true,
+      deputiesAffected: 8
     },
     {
       id: 'cal-008',
@@ -136,7 +140,9 @@ export default function CommandCalendar() {
       status: 'pending',
       notes: '8 deputies approaching POST certification expiration. Training records must be submitted. Failure results in suspended duty status.',
       day: 20,
-      time: '17:00'
+      time: '17:00',
+      staffingImpact: true,
+      deputiesAffected: 8
     },
     {
       id: 'cal-009',
@@ -162,7 +168,8 @@ export default function CommandCalendar() {
       status: 'pending',
       notes: 'Christmas/New Year staffing plan. Minimum coverage requirements. OT budget projection.',
       day: 22,
-      time: '12:00'
+      time: '12:00',
+      staffingImpact: true
     },
     {
       id: 'cal-011',
@@ -188,7 +195,8 @@ export default function CommandCalendar() {
       status: 'pending',
       notes: 'Holiday shift coverage begins. Patrol minimum staffing: 14 per shift. Detention minimum: 22.',
       day: 24,
-      time: '06:00'
+      time: '06:00',
+      staffingImpact: true
     },
     {
       id: 'cal-013',
@@ -201,9 +209,10 @@ export default function CommandCalendar() {
       status: 'pending',
       notes: 'Annual DT recertification for 12 deputies. Range and classroom sessions.',
       day: 27,
-      time: '08:00'
+      time: '08:00',
+      staffingImpact: true,
+      deputiesAffected: 12
     },
-    // --- Multi-event days for realistic calendar density ---
     {
       id: 'cal-014',
       title: 'Jail Population Review — Early Release',
@@ -241,7 +250,9 @@ export default function CommandCalendar() {
       status: 'pending',
       notes: '12 deputies scheduled for quarterly firearms qualification. Range reserved 0800-1200.',
       day: 13,
-      time: '08:00'
+      time: '08:00',
+      staffingImpact: true,
+      deputiesAffected: 12
     },
     {
       id: 'cal-017',
@@ -306,7 +317,9 @@ export default function CommandCalendar() {
       status: 'pending',
       notes: 'USMS transport of 6 federal inmates. Escort detail: 4 deputies. Route security coordination required.',
       day: 22,
-      time: '09:00'
+      time: '09:00',
+      staffingImpact: true,
+      deputiesAffected: 4
     },
     {
       id: 'cal-022',
@@ -336,7 +349,50 @@ export default function CommandCalendar() {
     }
   ];
 
-  // Category accent colors — system palette
+  // ============================================================
+  // CONFLICT DETECTION — Simulated intelligence
+  // Detect overlapping events with shared personnel/resources
+  // ============================================================
+  const conflicts = [
+    {
+      id: 'conflict-001',
+      title: 'USMS Inspection overlaps with Fleet Inspection Deadline',
+      days: [10, 12],
+      detail: 'Shared personnel: Facilities + Maintenance. Generator test, fleet inspection, and federal audit all require maintenance staff.',
+      severity: 'high'
+    },
+    {
+      id: 'conflict-002',
+      title: 'Firearms Qualification removes 12 deputies during Use-of-Force Review',
+      days: [13],
+      detail: 'Dec 13: B-Shift already below minimum. 12 deputies at range 0800-1200 while UoF review board in session.',
+      severity: 'high'
+    },
+    {
+      id: 'conflict-003',
+      title: 'POST Certification + OT Budget Review on same day',
+      days: [20],
+      detail: 'Dec 20: Three command-level items competing. Sheriff Thompson needed for budget review while certification deadline looms.',
+      severity: 'medium'
+    }
+  ];
+
+  // Staffing impact data per day — days where staffing is affected
+  const staffingImpactDays = {
+    10: { below80: false, label: 'Fleet maintenance reduces patrol units' },
+    12: { below80: false, label: 'Federal inspection pulls supervisors' },
+    13: { below80: true, label: 'B-Shift below 80% + 12 at firearms range' },
+    16: { below80: true, label: '8 deputies in CIT training (40hr block)' },
+    17: { below80: true, label: 'CIT training continues — 8 deputies out' },
+    18: { below80: true, label: 'CIT training day 3 — 8 deputies out' },
+    19: { below80: true, label: 'CIT training day 4 — 8 deputies out' },
+    20: { below80: true, label: 'CIT training day 5 + POST cert expiring' },
+    22: { below80: false, label: '4 deputies on federal transport detail' },
+    24: { below80: false, label: 'Holiday coverage begins — OT required' },
+    27: { below80: true, label: '12 deputies in DT recertification' }
+  };
+
+  // Category accent colors
   const getCategoryAccent = (category) => {
     switch (category) {
       case 'compliance': return 'bg-red-500';
@@ -345,15 +401,6 @@ export default function CommandCalendar() {
       case 'investigations': return 'bg-slate-500';
       case 'training': case 'maintenance': return 'bg-emerald-500';
       default: return 'bg-slate-500';
-    }
-  };
-
-  // Severity border color for upcoming deadlines panel
-  const getSeverityBorder = (severity) => {
-    switch (severity) {
-      case 'critical': return 'border-l-red-500/40';
-      case 'high': return 'border-l-amber-500/40';
-      default: return 'border-l-slate-500/30';
     }
   };
 
@@ -379,7 +426,18 @@ export default function CommandCalendar() {
     }
   };
 
-  // Calendar grid generation
+  const getRiskTypeBadge = (category) => {
+    switch (category) {
+      case 'compliance': return { text: 'Compliance', classes: 'bg-red-500/10 border-red-500/20 text-red-400' };
+      case 'staffing': return { text: 'Staffing', classes: 'bg-amber-500/10 border-amber-500/20 text-amber-400' };
+      case 'operational': return { text: 'Operational', classes: 'bg-slate-500/10 border-slate-500/20 text-slate-300' };
+      case 'training': return { text: 'Training', classes: 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400' };
+      case 'maintenance': return { text: 'Maintenance', classes: 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400' };
+      default: return { text: category, classes: 'bg-slate-500/10 border-slate-500/20 text-slate-400' };
+    }
+  };
+
+  // Calendar grid
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
   const firstDayOfWeek = new Date(currentYear, currentMonth, 1).getDay();
   const monthName = new Date(currentYear, currentMonth, 1).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
@@ -393,37 +451,67 @@ export default function CommandCalendar() {
 
   const getEventsForDay = (day) => calendarEvents.filter(e => e.day === day);
 
-  // Risk overlay: check if a day has risk-relevant events (compliance, staffing, expirations)
-  const dayHasRisk = (day) => {
-    const dayEvents = getEventsForDay(day);
-    return dayEvents.some(e =>
-      e.status !== 'completed' &&
-      (e.category === 'compliance' || e.category === 'staffing' || e.severity === 'critical' || e.severity === 'high')
+  // ============================================================
+  // RISK DENSITY — per day, computed from event count + severity
+  // Light = 1 event, Medium = 2, Heavy = 3+
+  // ============================================================
+  const getRiskDensity = (day) => {
+    const dayEvents = getEventsForDay(day).filter(e => e.status !== 'completed');
+    const activeRiskEvents = dayEvents.filter(e =>
+      e.category === 'compliance' || e.category === 'staffing' || e.severity === 'critical' || e.severity === 'high'
     );
+    if (activeRiskEvents.length >= 3) return 'heavy';
+    if (activeRiskEvents.length >= 2) return 'medium';
+    if (activeRiskEvents.length >= 1) return 'light';
+    return 'none';
   };
 
-  // Risk assessment for next 7 days
+  const getDensityDots = (density) => {
+    switch (density) {
+      case 'heavy': return (
+        <div className="flex items-center gap-0.5">
+          <div className="w-1 h-1 rounded-full bg-red-500"></div>
+          <div className="w-1 h-1 rounded-full bg-red-500"></div>
+          <div className="w-1 h-1 rounded-full bg-red-500"></div>
+        </div>
+      );
+      case 'medium': return (
+        <div className="flex items-center gap-0.5">
+          <div className="w-1 h-1 rounded-full bg-amber-500"></div>
+          <div className="w-1 h-1 rounded-full bg-amber-500"></div>
+        </div>
+      );
+      case 'light': return (
+        <div className="flex items-center gap-0.5">
+          <div className="w-1 h-1 rounded-full bg-slate-400"></div>
+        </div>
+      );
+      default: return null;
+    }
+  };
+
+  // Risk stats
   const upcomingCritical = calendarEvents.filter(e => e.severity === 'critical' && e.status !== 'completed');
   const upcomingStaffing = calendarEvents.filter(e => e.category === 'staffing' && e.status !== 'completed');
-  const riskLevel = upcomingCritical.length > 0 ? 'critical' : upcomingStaffing.length > 0 ? 'elevated' : 'stable';
 
-  // High priority upcoming (sorted by day)
+  // High priority upcoming (sorted by day, with richer data)
   const upcomingDeadlines = calendarEvents
     .filter(e => e.status !== 'completed' && e.day >= (isCurrentMonth ? today.getDate() : 1))
-    .sort((a, b) => a.day - b.day)
-    .slice(0, 6);
+    .sort((a, b) => {
+      const sw = { critical: 0, high: 1, medium: 2, low: 3 };
+      return (sw[a.severity] - sw[b.severity]) || (a.day - b.day);
+    })
+    .slice(0, 8);
 
   const prevMonth = () => {
     if (currentMonth === 0) { setCurrentMonth(11); setCurrentYear(y => y - 1); }
     else setCurrentMonth(m => m - 1);
   };
-
   const nextMonth = () => {
     if (currentMonth === 11) { setCurrentMonth(0); setCurrentYear(y => y + 1); }
     else setCurrentMonth(m => m + 1);
   };
 
-  // Countdown helper
   const getCountdown = (day) => {
     const targetDay = isCurrentMonth ? day - today.getDate() : day;
     if (targetDay <= 0) return 'Today';
@@ -431,7 +519,7 @@ export default function CommandCalendar() {
     return `${targetDay} days`;
   };
 
-  // Timeline view: generate next 7 days with hourly blocks
+  // Timeline view
   const todayDate = isCurrentMonth ? today.getDate() : 1;
   const timelineDays = [];
   for (let i = 0; i < 7; i++) {
@@ -453,7 +541,7 @@ export default function CommandCalendar() {
         <div className="max-w-7xl mx-auto">
 
         {/* Page Header */}
-        <div className="mb-8 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+        <div className="mb-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           <div>
             <h2 className="text-xl font-bold text-white mb-1">Calendar & Timeline</h2>
             <div className="flex items-center gap-2 text-[11px] text-slate-500">
@@ -461,10 +549,22 @@ export default function CommandCalendar() {
               <span className="text-slate-700">·</span>
               <span>{formatTime(currentTime)} EST</span>
               <span className="text-slate-700">·</span>
-              <span>Command-level operational scheduling, compliance deadlines, and strategic events</span>
+              <span>Operational pressure mapping and deadline intelligence</span>
             </div>
           </div>
           <div className="flex items-center gap-2">
+            {/* Staffing Impact Toggle */}
+            <button
+              onClick={() => setShowStaffingOverlay(!showStaffingOverlay)}
+              className={`flex items-center gap-2 px-3 py-2 border rounded-lg text-[13px] font-medium transition-all ${
+                showStaffingOverlay
+                  ? 'bg-amber-500/10 border-amber-500/30 text-amber-400'
+                  : 'bg-slate-800/40 border-slate-700/40 text-slate-400 hover:text-slate-300'
+              }`}
+            >
+              <Users className="w-4 h-4" />
+              Staffing Impact
+            </button>
             {/* Risk Overlay Toggle */}
             <button
               onClick={() => setShowRiskOverlay(!showRiskOverlay)}
@@ -476,14 +576,6 @@ export default function CommandCalendar() {
             >
               <Eye className="w-4 h-4" />
               Risk Overlay
-            </button>
-            <button className="flex items-center gap-2 px-4 py-2 bg-amber-500/20 border border-amber-500/30 text-amber-400 rounded-lg text-[13px] font-medium hover:bg-amber-500/30 transition-all">
-              <Plus className="w-4 h-4" />
-              Create Event
-            </button>
-            <button className="flex items-center gap-2 px-4 py-2 bg-slate-800/40 border border-slate-700/40 text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-800/60 transition-all">
-              <Filter className="w-4 h-4" />
-              Filter
             </button>
             <div className="flex bg-slate-800/40 border border-slate-700/40 rounded-lg overflow-hidden">
               <button
@@ -502,33 +594,40 @@ export default function CommandCalendar() {
           </div>
         </div>
 
-        {/* Risk Timeline Strip */}
-        <div className="mb-8 flex items-center gap-6 px-5 py-3.5 bg-slate-800/25 border border-slate-700/30 rounded-xl">
-          <div className="flex items-center gap-2.5">
-            <Shield className="w-4 h-4 text-slate-500" />
-            <span className="text-[13px] font-semibold text-slate-300">Upcoming Command Risk (Next 7 Days)</span>
+        {/* ================================================================
+            CONFLICT DETECTION BANNER
+            "Where does operational pressure stack?"
+            ================================================================ */}
+        {conflicts.length > 0 && (
+          <div className="mb-6 space-y-2">
+            {conflicts.map(conflict => (
+              <div
+                key={conflict.id}
+                className={`px-5 py-3 rounded-xl border flex items-start gap-3 ${
+                  conflict.severity === 'high'
+                    ? 'bg-amber-500/[0.05] border-amber-500/20'
+                    : 'bg-slate-800/25 border-slate-700/30'
+                }`}
+              >
+                <Zap className={`w-4 h-4 mt-0.5 flex-shrink-0 ${conflict.severity === 'high' ? 'text-amber-400' : 'text-slate-400'}`} />
+                <div className="flex-1">
+                  <div className="flex items-center gap-2">
+                    <span className={`text-[13px] font-semibold ${conflict.severity === 'high' ? 'text-amber-400' : 'text-slate-300'}`}>
+                      Conflict Detected:
+                    </span>
+                    <span className="text-[13px] text-white font-medium">{conflict.title}</span>
+                  </div>
+                  <p className="text-[11px] text-slate-400 mt-0.5">{conflict.detail}</p>
+                </div>
+                <span className="text-[11px] text-slate-500 flex-shrink-0">Dec {conflict.days.join(', ')}</span>
+              </div>
+            ))}
           </div>
-          <div className="h-4 w-px bg-slate-600/40"></div>
-          <div className="flex items-center gap-2.5">
-            <div className={`w-2 h-2 rounded-full ${riskLevel === 'critical' ? 'bg-red-500' : riskLevel === 'elevated' ? 'bg-amber-500' : 'bg-emerald-500'}`}></div>
-            <span className={`text-[13px] font-semibold ${riskLevel === 'critical' ? 'text-red-400' : riskLevel === 'elevated' ? 'text-amber-400' : 'text-emerald-400'}`}>
-              {riskLevel === 'critical' ? 'Critical — Compliance deadline at risk' : riskLevel === 'elevated' ? 'Elevated — Staffing risk projected' : 'Stable — No critical items'}
-            </span>
-          </div>
-          <div className="h-4 w-px bg-slate-600/40"></div>
-          <div className="flex items-center gap-2.5">
-            <span className="text-[13px] text-slate-400">{upcomingCritical.length} critical</span>
-            <span className="text-slate-600">·</span>
-            <span className="text-[13px] text-slate-400">{upcomingStaffing.length} staffing</span>
-            <span className="text-slate-600">·</span>
-            <span className="text-[13px] text-slate-400">{calendarEvents.filter(e => e.status !== 'completed').length} total pending</span>
-          </div>
-        </div>
+        )}
 
         {/* Main Content */}
         {viewMode === 'month' ? (
-          /* ===== MONTH VIEW ===== */
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-6">
 
             {/* Calendar Grid */}
             <div className="lg:col-span-2 bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
@@ -555,28 +654,47 @@ export default function CommandCalendar() {
               {/* Calendar Grid */}
               <div className="grid grid-cols-7 gap-px">
                 {calendarDays.map((day, idx) => {
-                  if (day === null) return <div key={`empty-${idx}`} className="min-h-[80px] bg-slate-900/10 rounded"></div>;
+                  if (day === null) return <div key={`empty-${idx}`} className="min-h-[85px] bg-slate-900/10 rounded"></div>;
                   const dayEvents = getEventsForDay(day);
                   const isToday = isCurrentMonth && day === today.getDate();
-                  const hasRisk = showRiskOverlay && dayHasRisk(day);
+                  const density = getRiskDensity(day);
+                  const hasStaffingImpact = showStaffingOverlay && staffingImpactDays[day];
+                  const staffingBelow80 = hasStaffingImpact && staffingImpactDays[day].below80;
+
+                  // Background based on overlays
+                  let bgClass = 'bg-slate-900/20';
+                  if (isToday) {
+                    bgClass = 'ring-2 ring-amber-500/40 bg-amber-500/[0.07] shadow-[0_0_12px_rgba(245,158,11,0.08)]';
+                  } else if (staffingBelow80) {
+                    bgClass = 'bg-amber-500/[0.05] ring-1 ring-amber-500/15';
+                  } else if (showRiskOverlay && density === 'heavy') {
+                    bgClass = 'bg-red-500/[0.06] ring-1 ring-red-500/20';
+                  } else if (showRiskOverlay && density === 'medium') {
+                    bgClass = 'bg-red-500/[0.03] ring-1 ring-red-500/10';
+                  }
+
                   return (
                     <div
                       key={day}
-                      className={`min-h-[80px] p-1.5 rounded transition-colors hover:bg-slate-800/30 ${
-                        isToday
-                          ? 'ring-2 ring-amber-500/40 bg-amber-500/[0.07] shadow-[0_0_12px_rgba(245,158,11,0.08)]'
-                          : hasRisk
-                            ? 'bg-red-500/[0.04] ring-1 ring-red-500/15'
-                            : 'bg-slate-900/20'
-                      }`}
+                      className={`min-h-[85px] p-1.5 rounded transition-colors hover:bg-slate-800/30 ${bgClass}`}
                     >
-                      <div className="flex items-center gap-1">
-                        <span className={`text-[11px] font-semibold ${isToday ? 'text-amber-400' : 'text-slate-500'}`}>{day}</span>
-                        {isToday && <span className="text-[9px] text-amber-500/60 font-medium uppercase">Today</span>}
-                        {hasRisk && !isToday && <AlertTriangle className="w-2.5 h-2.5 text-red-400/50" />}
+                      {/* Day number + density dots */}
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-1">
+                          <span className={`text-[11px] font-semibold ${isToday ? 'text-amber-400' : 'text-slate-500'}`}>{day}</span>
+                          {isToday && <span className="text-[9px] text-amber-500/60 font-medium uppercase">Today</span>}
+                        </div>
+                        <div className="flex items-center gap-1">
+                          {showStaffingOverlay && staffingImpactDays[day] && (
+                            <Users className={`w-2.5 h-2.5 ${staffingBelow80 ? 'text-amber-400' : 'text-slate-500'}`} />
+                          )}
+                          {showRiskOverlay && getDensityDots(density)}
+                        </div>
                       </div>
+
+                      {/* Events */}
                       <div className="mt-1 space-y-0.5">
-                        {dayEvents.slice(0, 3).map(event => (
+                        {dayEvents.slice(0, 2).map(event => (
                           <button
                             key={event.id}
                             onClick={() => setSelectedEvent(event)}
@@ -586,8 +704,13 @@ export default function CommandCalendar() {
                             <span className="text-[10px] text-slate-300 truncate group-hover:text-white transition-colors">{event.title}</span>
                           </button>
                         ))}
-                        {dayEvents.length > 3 && (
-                          <span className="text-[10px] text-slate-500 pl-2">+{dayEvents.length - 3} more</span>
+                        {dayEvents.length > 2 && (
+                          <button
+                            onClick={() => setSelectedEvent(dayEvents[2])}
+                            className="text-[10px] text-slate-500 pl-2 hover:text-slate-300 transition-colors"
+                          >
+                            +{dayEvents.length - 2} more
+                          </button>
                         )}
                       </div>
                     </div>
@@ -595,13 +718,12 @@ export default function CommandCalendar() {
                 })}
               </div>
 
-              {/* Category Legend */}
-              <div className="flex items-center gap-4 mt-4 pt-3 border-t border-slate-700/20">
+              {/* Legend */}
+              <div className="flex items-center gap-4 mt-4 pt-3 border-t border-slate-700/20 flex-wrap">
                 {[
                   { color: 'bg-red-500', label: 'Compliance' },
                   { color: 'bg-amber-500', label: 'Staffing' },
                   { color: 'bg-slate-400', label: 'Operational' },
-                  { color: 'bg-slate-500', label: 'Investigations' },
                   { color: 'bg-emerald-500', label: 'Training/Maint.' }
                 ].map(item => (
                   <div key={item.label} className="flex items-center gap-1.5">
@@ -612,48 +734,92 @@ export default function CommandCalendar() {
                 {showRiskOverlay && (
                   <>
                     <div className="h-3 w-px bg-slate-700/30"></div>
+                    <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-1">
+                        <div className="w-1 h-1 rounded-full bg-slate-400"></div>
+                        <span className="text-[10px] text-slate-500">Low</span>
+                      </div>
+                      <div className="flex items-center gap-0.5">
+                        <div className="w-1 h-1 rounded-full bg-amber-500"></div>
+                        <div className="w-1 h-1 rounded-full bg-amber-500"></div>
+                        <span className="text-[10px] text-slate-500 ml-0.5">Med</span>
+                      </div>
+                      <div className="flex items-center gap-0.5">
+                        <div className="w-1 h-1 rounded-full bg-red-500"></div>
+                        <div className="w-1 h-1 rounded-full bg-red-500"></div>
+                        <div className="w-1 h-1 rounded-full bg-red-500"></div>
+                        <span className="text-[10px] text-slate-500 ml-0.5">Heavy</span>
+                      </div>
+                    </div>
+                  </>
+                )}
+                {showStaffingOverlay && (
+                  <>
+                    <div className="h-3 w-px bg-slate-700/30"></div>
                     <div className="flex items-center gap-1.5">
-                      <AlertTriangle className="w-2.5 h-2.5 text-red-400/50" />
-                      <span className="text-[10px] text-red-400/60">Risk day</span>
+                      <Users className="w-2.5 h-2.5 text-amber-400" />
+                      <span className="text-[10px] text-amber-400/60">Staffing impacted</span>
                     </div>
                   </>
                 )}
               </div>
             </div>
 
-            {/* Upcoming Deadlines Panel — with severity left borders */}
+            {/* ================================================================
+                HIGH PRIORITY UPCOMING — Upgraded with risk type, escalation, readiness
+                ================================================================ */}
             <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
-              <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide mb-5">High Priority Upcoming</h3>
+              <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide mb-4">High Priority Upcoming</h3>
 
               <div className="space-y-2">
                 {upcomingDeadlines.map(event => {
                   const countdown = getCountdown(event.day);
+                  const riskBadge = getRiskTypeBadge(event.category);
+                  const isEscalating = event.severity === 'critical' || (event.severity === 'high' && event.day <= (isCurrentMonth ? today.getDate() + 3 : 3));
                   return (
                     <button
                       key={event.id}
                       onClick={() => setSelectedEvent(event)}
-                      className={`w-full rounded-lg border border-slate-700/20 border-l-[3px] ${getSeverityBorder(event.severity)} hover:bg-slate-800/20 transition-colors text-left`}
+                      className={`w-full rounded-lg border border-slate-700/20 border-l-[3px] ${
+                        event.severity === 'critical' ? 'border-l-red-500/60' :
+                        event.severity === 'high' ? 'border-l-amber-500/50' :
+                        'border-l-slate-500/30'
+                      } hover:bg-slate-800/20 transition-colors text-left`}
                     >
-                      <div className="flex items-center gap-3 p-3">
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 mb-1">
-                            <p className="text-sm font-medium text-white truncate">{event.title}</p>
-                          </div>
-                          <div className="flex items-center gap-2 text-[11px]">
-                            <span className={`px-1.5 py-0.5 border rounded font-medium ${
-                              event.severity === 'critical' ? 'bg-red-500/10 border-red-500/20 text-red-400' :
-                              event.severity === 'high' ? 'bg-amber-500/10 border-amber-500/20 text-amber-400' :
-                              'bg-slate-500/10 border-slate-500/20 text-slate-400'
-                            }`}>
-                              {countdown}
+                      <div className="p-3">
+                        {/* Title */}
+                        <p className="text-[13px] font-medium text-white mb-1.5 leading-tight">{event.title}</p>
+
+                        {/* Badges row: risk type + severity + countdown */}
+                        <div className="flex items-center gap-1.5 mb-1.5 flex-wrap">
+                          <span className={`px-1.5 py-0.5 border rounded text-[10px] font-semibold ${riskBadge.classes}`}>
+                            {riskBadge.text}
+                          </span>
+                          <span className={`px-1.5 py-0.5 border rounded text-[10px] font-semibold ${
+                            event.severity === 'critical' ? 'bg-red-500/10 border-red-500/20 text-red-400' :
+                            event.severity === 'high' ? 'bg-amber-500/10 border-amber-500/20 text-amber-400' :
+                            'bg-slate-500/10 border-slate-500/20 text-slate-400'
+                          }`}>
+                            {countdown}
+                          </span>
+                          {isEscalating && (
+                            <span className="px-1.5 py-0.5 bg-red-500/10 border border-red-500/20 rounded text-[10px] font-semibold text-red-400">
+                              Escalating
                             </span>
-                            <span className="text-slate-500">{getCategoryLabel(event.category)}</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-[11px] mt-1">
-                            <span className="text-slate-500">{event.assignedTo}</span>
-                            <span className="text-slate-600">·</span>
-                            <span className="text-slate-500">Dec {event.day} · {event.time}</span>
-                          </div>
+                          )}
+                          {event.staffingImpact && (
+                            <span className="px-1.5 py-0.5 bg-amber-500/8 border border-amber-500/15 rounded text-[10px] font-medium text-amber-400/70">
+                              <Users className="w-2.5 h-2.5 inline mr-0.5 -mt-0.5" />
+                              {event.deputiesAffected ? `${event.deputiesAffected} deputies` : 'Staffing'}
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Metadata */}
+                        <div className="flex items-center gap-2 text-[11px]">
+                          <span className="text-slate-500">{event.assignedTo}</span>
+                          <span className="text-slate-600">·</span>
+                          <span className="text-slate-500">Dec {event.day} · {event.time}</span>
                         </div>
                       </div>
                     </button>
@@ -663,8 +829,8 @@ export default function CommandCalendar() {
             </div>
           </div>
         ) : (
-          /* ===== TIMELINE VIEW — Next 7 Days Hour-by-Hour ===== */
-          <div className="mb-8 bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
+          /* ===== TIMELINE VIEW ===== */
+          <div className="mb-6 bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
             <div className="flex items-center justify-between mb-5">
               <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">Next 7 Days — Hour by Hour</h3>
               <span className="text-xs text-slate-500">Dec {timelineDays[0]?.day} – Dec {timelineDays[timelineDays.length - 1]?.day}, {currentYear}</span>
@@ -675,22 +841,30 @@ export default function CommandCalendar() {
                 {/* Day headers */}
                 <div className="grid gap-px" style={{ gridTemplateColumns: '60px repeat(7, 1fr)' }}>
                   <div></div>
-                  {timelineDays.map(d => (
-                    <div
-                      key={d.day}
-                      className={`text-center py-2 rounded-t-lg ${
-                        d.isToday ? 'bg-amber-500/[0.07] ring-1 ring-amber-500/20' : ''
-                      }`}
-                    >
-                      <span className={`text-[11px] font-semibold uppercase tracking-wider ${d.isToday ? 'text-amber-400' : 'text-slate-500'}`}>
-                        {d.dayName}
-                      </span>
-                      <span className={`block text-[13px] font-semibold ${d.isToday ? 'text-amber-300' : 'text-white'}`}>
-                        {d.day}
-                      </span>
-                      {d.isToday && <span className="text-[9px] text-amber-500/60 font-medium">TODAY</span>}
-                    </div>
-                  ))}
+                  {timelineDays.map(d => {
+                    const density = getRiskDensity(d.day);
+                    const hasStaffing = showStaffingOverlay && staffingImpactDays[d.day];
+                    return (
+                      <div
+                        key={d.day}
+                        className={`text-center py-2 rounded-t-lg ${
+                          d.isToday ? 'bg-amber-500/[0.07] ring-1 ring-amber-500/20' : ''
+                        }`}
+                      >
+                        <span className={`text-[11px] font-semibold uppercase tracking-wider ${d.isToday ? 'text-amber-400' : 'text-slate-500'}`}>
+                          {d.dayName}
+                        </span>
+                        <span className={`block text-[13px] font-semibold ${d.isToday ? 'text-amber-300' : 'text-white'}`}>
+                          {d.day}
+                        </span>
+                        <div className="flex items-center justify-center gap-1 mt-0.5">
+                          {d.isToday && <span className="text-[9px] text-amber-500/60 font-medium">TODAY</span>}
+                          {showRiskOverlay && getDensityDots(density)}
+                          {hasStaffing && <Users className="w-2.5 h-2.5 text-amber-400/60" />}
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
 
                 {/* Hourly rows */}
@@ -702,16 +876,14 @@ export default function CommandCalendar() {
                         <span className="text-[11px] font-mono text-slate-600">{hour}</span>
                       </div>
                       {timelineDays.map(d => {
-                        const hourEvents = d.events.filter(e => {
-                          const eventHour = parseInt(e.time.split(':')[0]);
-                          return eventHour === hourNum;
-                        });
+                        const hourEvents = d.events.filter(e => parseInt(e.time.split(':')[0]) === hourNum);
+                        const hasStaffing = showStaffingOverlay && staffingImpactDays[d.day];
                         return (
                           <div
                             key={`${d.day}-${hour}`}
                             className={`min-h-[32px] py-1 px-1 ${
                               d.isToday ? 'bg-amber-500/[0.02]' : ''
-                            } ${showRiskOverlay && dayHasRisk(d.day) ? 'bg-red-500/[0.02]' : ''}`}
+                            } ${hasStaffing && showStaffingOverlay ? 'bg-amber-500/[0.02]' : ''}`}
                           >
                             {hourEvents.map(event => (
                               <button
@@ -765,18 +937,25 @@ export default function CommandCalendar() {
       {selectedEvent && (
         <>
           <div className="fixed inset-0 bg-black/30 z-40" onClick={() => setSelectedEvent(null)} />
-          <div className="fixed right-0 top-0 bottom-0 w-full max-w-md bg-slate-900 border-l border-slate-700/50 shadow-2xl z-50 overflow-y-auto transform transition-transform">
+          <div className="fixed right-0 top-0 bottom-0 w-full max-w-md bg-slate-900 border-l border-slate-700/50 shadow-2xl z-50 overflow-y-auto">
             <div className="p-6">
-              {/* Panel Header */}
               <div className="flex items-start justify-between mb-6">
                 <div className="flex-1">
                   <h3 className="text-base font-semibold text-white mb-2">{selectedEvent.title}</h3>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap">
                     <span className={`px-1.5 py-0.5 border rounded text-[11px] font-medium ${getStatusBadge(selectedEvent.status).classes}`}>
                       {getStatusBadge(selectedEvent.status).text}
                     </span>
-                    <div className={`w-1.5 h-1.5 rounded-full ${getCategoryAccent(selectedEvent.category)}`}></div>
-                    <span className="text-[11px] text-slate-400">{getCategoryLabel(selectedEvent.category)}</span>
+                    <span className={`px-1.5 py-0.5 border rounded text-[11px] font-medium ${getRiskTypeBadge(selectedEvent.category).classes}`}>
+                      {getRiskTypeBadge(selectedEvent.category).text}
+                    </span>
+                    <span className={`px-1.5 py-0.5 border rounded text-[11px] font-medium ${
+                      selectedEvent.severity === 'critical' ? 'bg-red-500/10 border-red-500/20 text-red-400' :
+                      selectedEvent.severity === 'high' ? 'bg-amber-500/10 border-amber-500/20 text-amber-400' :
+                      'bg-slate-500/10 border-slate-500/20 text-slate-400'
+                    }`}>
+                      {selectedEvent.severity.toUpperCase()}
+                    </span>
                   </div>
                 </div>
                 <button onClick={() => setSelectedEvent(null)} className="text-slate-400 hover:text-white transition-colors">
@@ -784,9 +963,7 @@ export default function CommandCalendar() {
                 </button>
               </div>
 
-              {/* Event Details */}
               <div className="space-y-5">
-                {/* Countdown */}
                 {selectedEvent.status !== 'completed' && (
                   <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-4">
                     <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Countdown</span>
@@ -797,7 +974,6 @@ export default function CommandCalendar() {
                   </div>
                 )}
 
-                {/* Details Grid */}
                 <div className="space-y-3">
                   <div>
                     <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Assigned Lead</span>
@@ -807,18 +983,14 @@ export default function CommandCalendar() {
                     <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Date & Time</span>
                     <p className="text-sm text-white mt-1">December {selectedEvent.day}, 2024 · {selectedEvent.time}</p>
                   </div>
-                  <div className="border-t border-slate-700/20 pt-3">
-                    <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Severity</span>
-                    <div className="mt-1">
-                      <span className={`px-1.5 py-0.5 border rounded text-[11px] font-medium ${
-                        selectedEvent.severity === 'critical' ? 'bg-red-500/10 border-red-500/20 text-red-400' :
-                        selectedEvent.severity === 'high' ? 'bg-amber-500/10 border-amber-500/20 text-amber-400' :
-                        'bg-slate-500/10 border-slate-500/20 text-slate-400'
-                      }`}>
-                        {selectedEvent.severity.toUpperCase()}
-                      </span>
+                  {selectedEvent.staffingImpact && (
+                    <div className="border-t border-slate-700/20 pt-3">
+                      <span className="text-[11px] font-semibold text-amber-400/80 uppercase tracking-wider">Staffing Impact</span>
+                      <p className="text-sm text-amber-400 mt-1">
+                        {selectedEvent.deputiesAffected ? `${selectedEvent.deputiesAffected} deputies removed from field duty` : 'Staffing coverage affected'}
+                      </p>
                     </div>
-                  </div>
+                  )}
                   <div className="border-t border-slate-700/20 pt-3">
                     <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Linked Module</span>
                     <button
@@ -835,7 +1007,6 @@ export default function CommandCalendar() {
                   </div>
                 </div>
 
-                {/* Action Buttons */}
                 <div className="flex gap-2 pt-3 border-t border-slate-700/20">
                   <button
                     onClick={() => { setSelectedEvent(null); navigate(selectedEvent.linkedModule); }}
