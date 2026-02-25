@@ -8,7 +8,9 @@ import {
   Shield,
   X,
   ArrowUpRight,
-  ExternalLink
+  ExternalLink,
+  AlertTriangle,
+  Eye
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import DashboardLayout from '../layouts/DashboardLayout';
@@ -20,6 +22,7 @@ export default function CommandCalendar() {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [currentMonth, setCurrentMonth] = useState(11); // December (0-indexed)
   const [currentYear, setCurrentYear] = useState(2024);
+  const [showRiskOverlay, setShowRiskOverlay] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 60000);
@@ -214,6 +217,15 @@ export default function CommandCalendar() {
     }
   };
 
+  // Severity border color for upcoming deadlines panel
+  const getSeverityBorder = (severity) => {
+    switch (severity) {
+      case 'critical': return 'border-l-red-500/40';
+      case 'high': return 'border-l-amber-500/40';
+      default: return 'border-l-slate-500/30';
+    }
+  };
+
   const getCategoryLabel = (category) => {
     switch (category) {
       case 'compliance': return 'Compliance';
@@ -250,6 +262,15 @@ export default function CommandCalendar() {
 
   const getEventsForDay = (day) => calendarEvents.filter(e => e.day === day);
 
+  // Risk overlay: check if a day has risk-relevant events (compliance, staffing, expirations)
+  const dayHasRisk = (day) => {
+    const dayEvents = getEventsForDay(day);
+    return dayEvents.some(e =>
+      e.status !== 'completed' &&
+      (e.category === 'compliance' || e.category === 'staffing' || e.severity === 'critical' || e.severity === 'high')
+    );
+  };
+
   // Risk assessment for next 7 days
   const upcomingCritical = calendarEvents.filter(e => e.severity === 'critical' && e.status !== 'completed');
   const upcomingStaffing = calendarEvents.filter(e => e.category === 'staffing' && e.status !== 'completed');
@@ -279,6 +300,22 @@ export default function CommandCalendar() {
     return `${targetDay} days`;
   };
 
+  // Timeline view: generate next 7 days with hourly blocks
+  const todayDate = isCurrentMonth ? today.getDate() : 1;
+  const timelineDays = [];
+  for (let i = 0; i < 7; i++) {
+    const d = todayDate + i;
+    if (d <= daysInMonth) {
+      timelineDays.push({
+        day: d,
+        dayName: new Date(currentYear, currentMonth, d).toLocaleDateString('en-US', { weekday: 'short' }),
+        isToday: isCurrentMonth && d === today.getDate(),
+        events: getEventsForDay(d)
+      });
+    }
+  }
+  const timelineHours = ['06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00'];
+
   return (
     <DashboardLayout>
       <div className="p-5 lg:p-8">
@@ -297,6 +334,18 @@ export default function CommandCalendar() {
             </div>
           </div>
           <div className="flex items-center gap-2">
+            {/* Risk Overlay Toggle */}
+            <button
+              onClick={() => setShowRiskOverlay(!showRiskOverlay)}
+              className={`flex items-center gap-2 px-3 py-2 border rounded-lg text-[13px] font-medium transition-all ${
+                showRiskOverlay
+                  ? 'bg-red-500/10 border-red-500/30 text-red-400'
+                  : 'bg-slate-800/40 border-slate-700/40 text-slate-400 hover:text-slate-300'
+              }`}
+            >
+              <Eye className="w-4 h-4" />
+              Risk Overlay
+            </button>
             <button className="flex items-center gap-2 px-4 py-2 bg-amber-500/20 border border-amber-500/30 text-amber-400 rounded-lg text-[13px] font-medium hover:bg-amber-500/30 transition-all">
               <Plus className="w-4 h-4" />
               Create Event
@@ -313,10 +362,10 @@ export default function CommandCalendar() {
                 Month
               </button>
               <button
-                onClick={() => setViewMode('week')}
-                className={`px-3 py-2 text-[13px] font-medium transition-all ${viewMode === 'week' ? 'bg-slate-700/50 text-white' : 'text-slate-400 hover:text-slate-300'}`}
+                onClick={() => setViewMode('timeline')}
+                className={`px-3 py-2 text-[13px] font-medium transition-all ${viewMode === 'timeline' ? 'bg-slate-700/50 text-white' : 'text-slate-400 hover:text-slate-300'}`}
               >
-                Week
+                Timeline
               </button>
             </div>
           </div>
@@ -345,131 +394,236 @@ export default function CommandCalendar() {
           </div>
         </div>
 
-        {/* Main Content: Calendar Grid + Upcoming Deadlines */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-8">
-
-          {/* Calendar Grid */}
-          <div className="lg:col-span-2 bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
-            {/* Month Navigation */}
-            <div className="flex items-center justify-between mb-5">
-              <button onClick={prevMonth} className="p-1.5 hover:bg-slate-700/30 rounded-lg transition-colors">
-                <ChevronLeft className="w-4 h-4 text-slate-400" />
-              </button>
-              <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">{monthName}</h3>
-              <button onClick={nextMonth} className="p-1.5 hover:bg-slate-700/30 rounded-lg transition-colors">
-                <ChevronRight className="w-4 h-4 text-slate-400" />
-              </button>
-            </div>
-
-            {/* Day Headers */}
-            <div className="grid grid-cols-7 gap-px mb-1">
-              {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-                <div key={day} className="text-center text-[11px] font-semibold text-slate-500 uppercase tracking-wider py-2">
-                  {day}
-                </div>
-              ))}
-            </div>
+        {/* Main Content */}
+        {viewMode === 'month' ? (
+          /* ===== MONTH VIEW ===== */
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-8">
 
             {/* Calendar Grid */}
-            <div className="grid grid-cols-7 gap-px">
-              {calendarDays.map((day, idx) => {
-                if (day === null) return <div key={`empty-${idx}`} className="min-h-[80px] bg-slate-900/10 rounded"></div>;
-                const dayEvents = getEventsForDay(day);
-                const isToday = isCurrentMonth && day === today.getDate();
-                return (
-                  <div
-                    key={day}
-                    className={`min-h-[80px] p-1.5 rounded transition-colors hover:bg-slate-800/30 ${
-                      isToday ? 'ring-1 ring-amber-500/30 bg-amber-500/5' : 'bg-slate-900/20'
-                    }`}
-                  >
-                    <span className={`text-[11px] font-medium ${isToday ? 'text-amber-400' : 'text-slate-500'}`}>{day}</span>
-                    <div className="mt-1 space-y-0.5">
-                      {dayEvents.slice(0, 3).map(event => (
-                        <button
-                          key={event.id}
-                          onClick={() => setSelectedEvent(event)}
-                          className="w-full flex items-center gap-1 px-1 py-0.5 rounded hover:bg-slate-700/30 transition-colors text-left group"
-                        >
-                          <div className={`w-0.5 h-3 rounded-full flex-shrink-0 ${getCategoryAccent(event.category)}`}></div>
-                          <span className="text-[10px] text-slate-300 truncate group-hover:text-white transition-colors">{event.title}</span>
-                        </button>
-                      ))}
-                      {dayEvents.length > 3 && (
-                        <span className="text-[10px] text-slate-500 pl-2">+{dayEvents.length - 3} more</span>
-                      )}
-                    </div>
+            <div className="lg:col-span-2 bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
+              {/* Month Navigation */}
+              <div className="flex items-center justify-between mb-5">
+                <button onClick={prevMonth} className="p-1.5 hover:bg-slate-700/30 rounded-lg transition-colors">
+                  <ChevronLeft className="w-4 h-4 text-slate-400" />
+                </button>
+                <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">{monthName}</h3>
+                <button onClick={nextMonth} className="p-1.5 hover:bg-slate-700/30 rounded-lg transition-colors">
+                  <ChevronRight className="w-4 h-4 text-slate-400" />
+                </button>
+              </div>
+
+              {/* Day Headers */}
+              <div className="grid grid-cols-7 gap-px mb-1">
+                {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
+                  <div key={day} className="text-center text-[11px] font-semibold text-slate-500 uppercase tracking-wider py-2">
+                    {day}
                   </div>
-                );
-              })}
-            </div>
+                ))}
+              </div>
 
-            {/* Category Legend */}
-            <div className="flex items-center gap-4 mt-4 pt-3 border-t border-slate-700/20">
-              {[
-                { color: 'bg-red-500', label: 'Compliance' },
-                { color: 'bg-amber-500', label: 'Staffing' },
-                { color: 'bg-slate-400', label: 'Operational' },
-                { color: 'bg-slate-500', label: 'Investigations' },
-                { color: 'bg-emerald-500', label: 'Training/Maint.' }
-              ].map(item => (
-                <div key={item.label} className="flex items-center gap-1.5">
-                  <div className={`w-1.5 h-1.5 rounded-full ${item.color}`}></div>
-                  <span className="text-[10px] text-slate-500">{item.label}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Upcoming Deadlines Panel */}
-          <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
-            <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide mb-5">High Priority Upcoming</h3>
-
-            <div className="space-y-2">
-              {upcomingDeadlines.map(event => {
-                const badge = getStatusBadge(event.status);
-                const countdown = getCountdown(event.day);
-                return (
-                  <button
-                    key={event.id}
-                    onClick={() => setSelectedEvent(event)}
-                    className="w-full rounded-lg border border-slate-700/20 hover:bg-slate-800/20 transition-colors text-left"
-                  >
-                    <div className="flex items-center gap-3 p-3">
-                      <div className={`w-0.5 self-stretch rounded-full flex-shrink-0 ${getCategoryAccent(event.category)}`}></div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-1">
-                          <p className="text-sm font-medium text-white truncate">{event.title}</p>
-                        </div>
-                        <div className="flex items-center gap-2 text-[11px]">
-                          <span className={`px-1.5 py-0.5 border rounded font-medium ${
-                            event.severity === 'critical' ? 'bg-red-500/10 border-red-500/20 text-red-400' :
-                            event.severity === 'high' ? 'bg-amber-500/10 border-amber-500/20 text-amber-400' :
-                            'bg-slate-500/10 border-slate-500/20 text-slate-400'
-                          }`}>
-                            {countdown}
-                          </span>
-                          <span className="text-slate-500">{getCategoryLabel(event.category)}</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-[11px] mt-1">
-                          <span className="text-slate-500">{event.assignedTo}</span>
-                          <span className="text-slate-600">·</span>
-                          <span className="text-slate-500">Dec {event.day}</span>
-                        </div>
+              {/* Calendar Grid */}
+              <div className="grid grid-cols-7 gap-px">
+                {calendarDays.map((day, idx) => {
+                  if (day === null) return <div key={`empty-${idx}`} className="min-h-[80px] bg-slate-900/10 rounded"></div>;
+                  const dayEvents = getEventsForDay(day);
+                  const isToday = isCurrentMonth && day === today.getDate();
+                  const hasRisk = showRiskOverlay && dayHasRisk(day);
+                  return (
+                    <div
+                      key={day}
+                      className={`min-h-[80px] p-1.5 rounded transition-colors hover:bg-slate-800/30 ${
+                        isToday
+                          ? 'ring-2 ring-amber-500/40 bg-amber-500/[0.07] shadow-[0_0_12px_rgba(245,158,11,0.08)]'
+                          : hasRisk
+                            ? 'bg-red-500/[0.04] ring-1 ring-red-500/15'
+                            : 'bg-slate-900/20'
+                      }`}
+                    >
+                      <div className="flex items-center gap-1">
+                        <span className={`text-[11px] font-semibold ${isToday ? 'text-amber-400' : 'text-slate-500'}`}>{day}</span>
+                        {isToday && <span className="text-[9px] text-amber-500/60 font-medium uppercase">Today</span>}
+                        {hasRisk && !isToday && <AlertTriangle className="w-2.5 h-2.5 text-red-400/50" />}
+                      </div>
+                      <div className="mt-1 space-y-0.5">
+                        {dayEvents.slice(0, 3).map(event => (
+                          <button
+                            key={event.id}
+                            onClick={() => setSelectedEvent(event)}
+                            className="w-full flex items-center gap-1 px-1 py-0.5 rounded hover:bg-slate-700/30 transition-colors text-left group"
+                          >
+                            <div className={`w-0.5 h-3 rounded-full flex-shrink-0 ${getCategoryAccent(event.category)}`}></div>
+                            <span className="text-[10px] text-slate-300 truncate group-hover:text-white transition-colors">{event.title}</span>
+                          </button>
+                        ))}
+                        {dayEvents.length > 3 && (
+                          <span className="text-[10px] text-slate-500 pl-2">+{dayEvents.length - 3} more</span>
+                        )}
                       </div>
                     </div>
-                  </button>
-                );
-              })}
+                  );
+                })}
+              </div>
+
+              {/* Category Legend */}
+              <div className="flex items-center gap-4 mt-4 pt-3 border-t border-slate-700/20">
+                {[
+                  { color: 'bg-red-500', label: 'Compliance' },
+                  { color: 'bg-amber-500', label: 'Staffing' },
+                  { color: 'bg-slate-400', label: 'Operational' },
+                  { color: 'bg-slate-500', label: 'Investigations' },
+                  { color: 'bg-emerald-500', label: 'Training/Maint.' }
+                ].map(item => (
+                  <div key={item.label} className="flex items-center gap-1.5">
+                    <div className={`w-1.5 h-1.5 rounded-full ${item.color}`}></div>
+                    <span className="text-[10px] text-slate-500">{item.label}</span>
+                  </div>
+                ))}
+                {showRiskOverlay && (
+                  <>
+                    <div className="h-3 w-px bg-slate-700/30"></div>
+                    <div className="flex items-center gap-1.5">
+                      <AlertTriangle className="w-2.5 h-2.5 text-red-400/50" />
+                      <span className="text-[10px] text-red-400/60">Risk day</span>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+
+            {/* Upcoming Deadlines Panel — with severity left borders */}
+            <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
+              <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide mb-5">High Priority Upcoming</h3>
+
+              <div className="space-y-2">
+                {upcomingDeadlines.map(event => {
+                  const countdown = getCountdown(event.day);
+                  return (
+                    <button
+                      key={event.id}
+                      onClick={() => setSelectedEvent(event)}
+                      className={`w-full rounded-lg border border-slate-700/20 border-l-[3px] ${getSeverityBorder(event.severity)} hover:bg-slate-800/20 transition-colors text-left`}
+                    >
+                      <div className="flex items-center gap-3 p-3">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-1">
+                            <p className="text-sm font-medium text-white truncate">{event.title}</p>
+                          </div>
+                          <div className="flex items-center gap-2 text-[11px]">
+                            <span className={`px-1.5 py-0.5 border rounded font-medium ${
+                              event.severity === 'critical' ? 'bg-red-500/10 border-red-500/20 text-red-400' :
+                              event.severity === 'high' ? 'bg-amber-500/10 border-amber-500/20 text-amber-400' :
+                              'bg-slate-500/10 border-slate-500/20 text-slate-400'
+                            }`}>
+                              {countdown}
+                            </span>
+                            <span className="text-slate-500">{getCategoryLabel(event.category)}</span>
+                          </div>
+                          <div className="flex items-center gap-2 text-[11px] mt-1">
+                            <span className="text-slate-500">{event.assignedTo}</span>
+                            <span className="text-slate-600">·</span>
+                            <span className="text-slate-500">Dec {event.day} · {event.time}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          /* ===== TIMELINE VIEW — Next 7 Days Hour-by-Hour ===== */
+          <div className="mb-8 bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
+            <div className="flex items-center justify-between mb-5">
+              <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">Next 7 Days — Hour by Hour</h3>
+              <span className="text-xs text-slate-500">Dec {timelineDays[0]?.day} – Dec {timelineDays[timelineDays.length - 1]?.day}, {currentYear}</span>
+            </div>
 
-        {/* Data Freshness Footer */}
+            <div className="overflow-x-auto">
+              <div className="min-w-[800px]">
+                {/* Day headers */}
+                <div className="grid gap-px" style={{ gridTemplateColumns: '60px repeat(7, 1fr)' }}>
+                  <div></div>
+                  {timelineDays.map(d => (
+                    <div
+                      key={d.day}
+                      className={`text-center py-2 rounded-t-lg ${
+                        d.isToday ? 'bg-amber-500/[0.07] ring-1 ring-amber-500/20' : ''
+                      }`}
+                    >
+                      <span className={`text-[11px] font-semibold uppercase tracking-wider ${d.isToday ? 'text-amber-400' : 'text-slate-500'}`}>
+                        {d.dayName}
+                      </span>
+                      <span className={`block text-[13px] font-semibold ${d.isToday ? 'text-amber-300' : 'text-white'}`}>
+                        {d.day}
+                      </span>
+                      {d.isToday && <span className="text-[9px] text-amber-500/60 font-medium">TODAY</span>}
+                    </div>
+                  ))}
+                </div>
+
+                {/* Hourly rows */}
+                {timelineHours.map(hour => {
+                  const hourNum = parseInt(hour.split(':')[0]);
+                  return (
+                    <div key={hour} className="grid gap-px border-t border-slate-700/10" style={{ gridTemplateColumns: '60px repeat(7, 1fr)' }}>
+                      <div className="py-2 pr-2 text-right">
+                        <span className="text-[11px] font-mono text-slate-600">{hour}</span>
+                      </div>
+                      {timelineDays.map(d => {
+                        const hourEvents = d.events.filter(e => {
+                          const eventHour = parseInt(e.time.split(':')[0]);
+                          return eventHour === hourNum;
+                        });
+                        return (
+                          <div
+                            key={`${d.day}-${hour}`}
+                            className={`min-h-[32px] py-1 px-1 ${
+                              d.isToday ? 'bg-amber-500/[0.02]' : ''
+                            } ${showRiskOverlay && dayHasRisk(d.day) ? 'bg-red-500/[0.02]' : ''}`}
+                          >
+                            {hourEvents.map(event => (
+                              <button
+                                key={event.id}
+                                onClick={() => setSelectedEvent(event)}
+                                className={`w-full flex items-center gap-1.5 px-2 py-1 rounded text-left transition-colors hover:bg-slate-700/30 ${
+                                  event.severity === 'critical' ? 'bg-red-500/[0.06] border-l-2 border-l-red-500/40' :
+                                  event.severity === 'high' ? 'bg-amber-500/[0.06] border-l-2 border-l-amber-500/40' :
+                                  'bg-slate-800/20 border-l-2 border-l-slate-500/30'
+                                }`}
+                              >
+                                <div className={`w-1 h-1 rounded-full flex-shrink-0 ${getCategoryAccent(event.category)}`}></div>
+                                <span className="text-[10px] text-slate-300 truncate">{event.title}</span>
+                              </button>
+                            ))}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Data Confidence Strip */}
         <div className="mb-4 px-5 py-3 bg-slate-800/10 border border-slate-800/30 rounded-lg">
-          <div className="flex items-center gap-2">
-            <Shield className="w-3.5 h-3.5 text-slate-600" />
-            <span className="text-xs text-slate-600">Calendar synced with Compliance, Approvals, Investigations, Staffing, and Facilities modules. Events auto-populate from linked systems.</span>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <Shield className="w-3.5 h-3.5 text-slate-600" />
+              <span className="text-xs text-slate-600">Calendar synced from</span>
+            </div>
+            <div className="flex items-center gap-2">
+              {['Compliance', 'Staffing', 'Approvals', 'Facilities', 'Investigations'].map(mod => (
+                <span key={mod} className="flex items-center gap-1 text-[11px] text-slate-500">
+                  <div className="w-1 h-1 rounded-full bg-emerald-500/60"></div>
+                  {mod}
+                </span>
+              ))}
+            </div>
+            <div className="h-3 w-px bg-slate-700/30"></div>
+            <span className="text-[11px] text-slate-500">Last sync: 2m ago</span>
           </div>
         </div>
 
