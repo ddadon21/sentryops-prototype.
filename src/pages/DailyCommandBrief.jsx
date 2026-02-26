@@ -79,7 +79,7 @@ export default function DailyCommandBrief() {
       deadlineHours: 4,
       exposureType: 'Compliance',
       exposureColor: 'text-red-400',
-      requiredAction: 'Approve $23.5K emergency repair contract',
+      requiredAction: 'Authorize emergency HVAC contract ($23.5K) — required before 10:00 EST',
       owner: { name: 'Facilities Director Chen', badge: 'FAC-001', phone: '770-555-0123' },
       escalation: 'USMS / External Compliance',
       severity: 'critical',
@@ -98,7 +98,7 @@ export default function DailyCommandBrief() {
       deadlineHours: 6,
       exposureType: 'Staffing',
       exposureColor: 'text-amber-400',
-      requiredAction: 'Authorize OT for Zones 4 & 7 coverage ($8.3K)',
+      requiredAction: 'Authorize B-Shift OT ($8.3K) — Zones 4 & 7 single-officer before 12:00 EST',
       owner: { name: 'Capt. Rodriguez', badge: '3042', phone: '770-555-3042' },
       escalation: 'Command',
       severity: 'high',
@@ -117,7 +117,7 @@ export default function DailyCommandBrief() {
       deadlineHours: 4,
       exposureType: 'Legal',
       exposureColor: 'text-red-400',
-      requiredAction: 'Direct IA Supervisor Williams to submit report or request extension',
+      requiredAction: 'Direct Williams: submit UoF report or file state extension — deadline 10:00 EST',
       owner: { name: 'IA Supervisor Williams', badge: '5012', phone: '770-555-5012' },
       escalation: 'Legal / State Reporting',
       severity: 'high',
@@ -142,6 +142,7 @@ export default function DailyCommandBrief() {
       hoursUntil: 48,
       category: 'Compliance',
       severity: 'critical',
+      riskScore: 'High',
       owner: 'IA Supervisor Williams',
       ifNotResolved: 'Deputies lose certification → suspended from duty. 8-deputy staffing gap.',
       linkedModule: '/command/risk'
@@ -152,6 +153,7 @@ export default function DailyCommandBrief() {
       hoursUntil: 72,
       category: 'Operations',
       severity: 'high',
+      riskScore: 'High',
       owner: 'Detention Major Wilson',
       ifNotResolved: 'Intake restrictions triggered → court coordination required. 23 early release candidates pending.',
       linkedModule: '/command/calendar'
@@ -162,6 +164,7 @@ export default function DailyCommandBrief() {
       hoursUntil: 36,
       category: 'Staffing',
       severity: 'high',
+      riskScore: 'High',
       owner: 'Capt. Rodriguez',
       ifNotResolved: 'OT burn rate $4,160/day through weekend. 3 FMLA/Workers Comp absences unresolved.',
       linkedModule: '/command/personnel'
@@ -172,6 +175,7 @@ export default function DailyCommandBrief() {
       hoursUntil: 60,
       category: 'Maintenance',
       severity: 'high',
+      riskScore: 'Moderate',
       owner: 'Fleet Manager Anderson',
       ifNotResolved: '2 patrol units pulled from service → fleet at 86% availability.',
       linkedModule: '/command/budget'
@@ -192,6 +196,7 @@ export default function DailyCommandBrief() {
       openDeficiencies: 3,
       owner: 'Major Wilson',
       riskColor: 'red',
+      impactTypes: ['Compliance', 'Political'],
       notes: 'H2-Pod HVAC (critical), C-Pod camera gap, documentation gaps'
     },
     {
@@ -203,6 +208,7 @@ export default function DailyCommandBrief() {
       openDeficiencies: 8,
       owner: 'IA Supervisor Williams',
       riskColor: 'red',
+      impactTypes: ['Compliance', 'Operational'],
       notes: '8 deputies at risk. Training records incomplete for 3.'
     },
     {
@@ -214,6 +220,7 @@ export default function DailyCommandBrief() {
       openDeficiencies: null,
       owner: 'Capt. Rodriguez',
       riskColor: 'amber',
+      impactTypes: ['Operational', 'Budget'],
       notes: 'Patrol min: 14/shift. Detention min: 22. OT budget not yet approved.'
     },
     {
@@ -225,6 +232,7 @@ export default function DailyCommandBrief() {
       openDeficiencies: null,
       owner: 'Sheriff Thompson',
       riskColor: 'amber',
+      impactTypes: ['Political'],
       notes: 'Crime stats compiled. Staffing narrative needs update. Budget projections pending.'
     }
   ];
@@ -233,9 +241,9 @@ export default function DailyCommandBrief() {
   // OPERATIONAL HIGHLIGHTS — Compressed to liability/staffing/compliance only
   // ============================================================
   const operationalHighlights = [
-    { text: 'Jail population +6 net (848/920, 92%) — approaching capacity threshold', type: 'Compliance', severity: 'warning' },
-    { text: 'B-Shift use of force under review — state reporting deadline in 4h', type: 'Legal', severity: 'warning' },
-    { text: 'Narcotics seizure (4.2 kg cocaine, I-85 stop) — DEA notified, media inquiry possible', type: 'Political', severity: 'info' }
+    { text: 'Jail at 92% capacity (848/920) — intake restrictions trigger at 95%', type: 'Compliance', severity: 'warning' },
+    { text: 'UoF state report 8h overdue — sanctions possible if not filed by 10:00', type: 'Legal', severity: 'warning' },
+    { text: '4.2 kg cocaine seizure, I-85 — media inquiry received, PIO response pending', type: 'Political', severity: 'info' }
   ];
 
   // Scheduled Events Data
@@ -322,27 +330,38 @@ export default function DailyCommandBrief() {
             COMMAND PRESSURE INDEX — Above everything
             One-glance health signal for the Sheriff
             ================================================================ */}
+        {/* Executive Summary — the sentence that replaces Outlook */}
+        <div className="mb-4 px-5 py-3.5 bg-slate-800/30 border border-slate-700/30 rounded-xl">
+          <p className="text-[14px] text-white font-medium">
+            {commandDecisions.length} decisions required before 12:00 EST to avoid compliance and staffing exposure.
+          </p>
+        </div>
+
         <div className={`mb-6 ${pressure.bg} border ${pressure.border} rounded-xl overflow-hidden`}>
-          <div className="px-5 py-4 flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2.5">
-                <Gauge className={`w-5 h-5 ${pressure.text}`} />
-                <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest">Command Pressure</span>
+          <div className="px-5 py-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2.5">
+                  <Gauge className={`w-5 h-5 ${pressure.text}`} />
+                  <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest">Command Pressure</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className={`w-2.5 h-2.5 rounded-full ${pressure.dot} animate-pulse`}></div>
+                  <span className={`text-lg font-bold tracking-wide ${pressure.text}`}>{pressure.level}</span>
+                </div>
               </div>
-              <div className="flex items-center gap-2">
-                <div className={`w-2.5 h-2.5 rounded-full ${pressure.dot} animate-pulse`}></div>
-                <span className={`text-lg font-bold tracking-wide ${pressure.text}`}>{pressure.level}</span>
+              <div className="flex items-center gap-5 text-[11px]">
+                <span className="text-slate-500"><span className="text-white font-semibold">{pressureFactors.criticalIssues}</span> critical</span>
+                <span className="text-slate-600">|</span>
+                <span className="text-slate-500"><span className="text-white font-semibold">{pressureFactors.complianceDeadlinesUnder72h}</span> compliance &lt;72h</span>
+                <span className="text-slate-600">|</span>
+                <span className="text-slate-500">Staffing: <span className={pressureFactors.staffingBelowThreshold ? 'text-red-400 font-semibold' : 'text-emerald-400 font-semibold'}>{pressureFactors.staffingBelowThreshold ? 'Below threshold' : 'Adequate'}</span></span>
+                <span className="text-slate-600">|</span>
+                <span className="text-slate-500"><span className="text-white font-semibold">{pressureFactors.overdueItems}</span> overdue</span>
               </div>
             </div>
-            <div className="flex items-center gap-5 text-[11px]">
-              <span className="text-slate-500"><span className="text-white font-semibold">{pressureFactors.criticalIssues}</span> critical issues</span>
-              <span className="text-slate-600">|</span>
-              <span className="text-slate-500"><span className="text-white font-semibold">{pressureFactors.complianceDeadlinesUnder72h}</span> compliance deadlines &lt;72h</span>
-              <span className="text-slate-600">|</span>
-              <span className="text-slate-500">Staffing: <span className={pressureFactors.staffingBelowThreshold ? 'text-red-400 font-semibold' : 'text-emerald-400 font-semibold'}>{pressureFactors.staffingBelowThreshold ? 'Below threshold' : 'Adequate'}</span></span>
-              <span className="text-slate-600">|</span>
-              <span className="text-slate-500"><span className="text-white font-semibold">{pressureFactors.overdueItems}</span> overdue</span>
-            </div>
+            {/* Diagnostic driver — not just alerting, diagnostic */}
+            <p className="mt-2 text-[11px] text-slate-400">Primary driver: <span className={`font-semibold ${pressure.text}`}>Compliance exposure + staffing deficit</span> — federal inspection in 48h with open HVAC deficiency, B-Shift at 75%</p>
           </div>
           <div className="h-1 bg-slate-800/40">
             <div className={`h-full ${pressure.dot} transition-all duration-1000`} style={{ width: pressure.barWidth }}></div>
@@ -503,8 +522,16 @@ export default function DailyCommandBrief() {
                     <span className="text-slate-600 flex-shrink-0">If not resolved →</span>
                     <span className="text-red-400/80">{risk.ifNotResolved}</span>
                   </div>
-                  <div className="ml-2.5 mt-1 text-[11px] text-slate-500">
-                    Owner: {risk.owner}
+                  <div className="ml-2.5 mt-1.5 flex items-center gap-3 text-[11px]">
+                    <span className="text-slate-500">Owner: {risk.owner}</span>
+                    <span className="text-slate-700">|</span>
+                    <span className={`px-1.5 py-0.5 border rounded text-[10px] font-semibold ${
+                      risk.riskScore === 'High' ? 'bg-red-500/10 border-red-500/20 text-red-400' :
+                      risk.riskScore === 'Moderate' ? 'bg-amber-500/10 border-amber-500/20 text-amber-400' :
+                      'bg-slate-500/10 border-slate-500/20 text-slate-400'
+                    }`}>
+                      Risk: {risk.riskScore}
+                    </span>
                   </div>
                 </div>
               </button>
@@ -534,8 +561,21 @@ export default function DailyCommandBrief() {
               const rc = riskColors[item.riskColor];
               return (
                 <div key={item.id} className={`${rc.bg} border ${rc.border} rounded-lg p-4`}>
-                  <div className="flex items-start justify-between mb-3">
-                    <p className="text-sm font-semibold text-white leading-tight">{item.title}</p>
+                  <div className="flex items-start justify-between mb-2">
+                    <div>
+                      <p className="text-sm font-semibold text-white leading-tight">{item.title}</p>
+                      <div className="flex items-center gap-1 mt-1">
+                        <span className="text-[10px] text-slate-500">Impact:</span>
+                        {item.impactTypes.map(type => (
+                          <span key={type} className={`px-1 py-0 border rounded text-[9px] font-semibold ${
+                            type === 'Compliance' ? 'bg-red-500/10 border-red-500/20 text-red-400' :
+                            type === 'Political' ? 'bg-purple-500/10 border-purple-500/20 text-purple-400' :
+                            type === 'Budget' ? 'bg-amber-500/10 border-amber-500/20 text-amber-400' :
+                            'bg-slate-500/10 border-slate-500/20 text-slate-400'
+                          }`}>{type}</span>
+                        ))}
+                      </div>
+                    </div>
                     <div className={`flex-shrink-0 ml-3 text-right`}>
                       <p className={`text-xl font-bold ${rc.text}`}>{item.countdown}</p>
                       <p className="text-[10px] text-slate-500 mt-0.5">{item.countdownLabel}</p>

@@ -501,7 +501,7 @@ export default function CommandCalendar() {
       const sw = { critical: 0, high: 1, medium: 2, low: 3 };
       return (sw[a.severity] - sw[b.severity]) || (a.day - b.day);
     })
-    .slice(0, 8);
+    .slice(0, 5);
 
   const prevMonth = () => {
     if (currentMonth === 0) { setCurrentMonth(11); setCurrentYear(y => y - 1); }
@@ -616,6 +616,11 @@ export default function CommandCalendar() {
                       Conflict Detected:
                     </span>
                     <span className="text-[13px] text-white font-medium">{conflict.title}</span>
+                    <span className={`px-1.5 py-0.5 border rounded text-[10px] font-semibold ${
+                      conflict.severity === 'critical' ? 'bg-red-500/10 border-red-500/20 text-red-400' :
+                      conflict.severity === 'high' ? 'bg-amber-500/10 border-amber-500/20 text-amber-400' :
+                      'bg-slate-500/10 border-slate-500/20 text-slate-400'
+                    }`}>{conflict.severity === 'high' ? 'High' : conflict.severity === 'critical' ? 'Critical' : 'Moderate'}</span>
                   </div>
                   <p className="text-[11px] text-slate-400 mt-0.5">{conflict.detail}</p>
                 </div>
@@ -624,6 +629,43 @@ export default function CommandCalendar() {
             ))}
           </div>
         )}
+
+        {/* ================================================================
+            OPERATIONAL PRESSURE FORECAST — Next 7 Days
+            Predictive, not reactive
+            ================================================================ */}
+        <div className="mb-6 bg-slate-800/25 border border-slate-700/30 rounded-xl px-5 py-4">
+          <div className="flex items-center gap-2.5 mb-3">
+            <AlertTriangle className="w-4 h-4 text-slate-400" />
+            <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">Operational Pressure Forecast — Next 7 Days</h3>
+          </div>
+          <div className="grid grid-cols-3 gap-4">
+            <div className="bg-red-500/[0.04] border border-red-500/15 rounded-lg px-4 py-3">
+              <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Compliance Load</span>
+              <div className="flex items-center gap-2 mt-1">
+                <div className="w-2 h-2 rounded-full bg-red-500"></div>
+                <span className="text-sm font-bold text-red-400">Elevated</span>
+              </div>
+              <p className="text-[10px] text-slate-500 mt-1">Federal inspection + POST deadline + PREA audit</p>
+            </div>
+            <div className="bg-amber-500/[0.03] border border-amber-500/12 rounded-lg px-4 py-3">
+              <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Staffing Risk</span>
+              <div className="flex items-center gap-2 mt-1">
+                <div className="w-2 h-2 rounded-full bg-amber-500"></div>
+                <span className="text-sm font-bold text-amber-400">Moderate</span>
+              </div>
+              <p className="text-[10px] text-slate-500 mt-1">B-Shift deficit + firearms qual pulls 12 deputies</p>
+            </div>
+            <div className="bg-slate-800/20 border border-slate-700/20 rounded-lg px-4 py-3">
+              <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Facility Risk</span>
+              <div className="flex items-center gap-2 mt-1">
+                <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
+                <span className="text-sm font-bold text-emerald-400">Low</span>
+              </div>
+              <p className="text-[10px] text-slate-500 mt-1">HVAC repair pending approval — contained to H2-Pod</p>
+            </div>
+          </div>
+        </div>
 
         {/* Main Content */}
         {viewMode === 'month' ? (
@@ -661,16 +703,20 @@ export default function CommandCalendar() {
                   const hasStaffingImpact = showStaffingOverlay && staffingImpactDays[day];
                   const staffingBelow80 = hasStaffingImpact && staffingImpactDays[day].below80;
 
-                  // Background based on overlays
+                  // Background: always-on heat glow by risk density, overlays intensify
                   let bgClass = 'bg-slate-900/20';
                   if (isToday) {
                     bgClass = 'ring-2 ring-amber-500/40 bg-amber-500/[0.07] shadow-[0_0_12px_rgba(245,158,11,0.08)]';
                   } else if (staffingBelow80) {
                     bgClass = 'bg-amber-500/[0.05] ring-1 ring-amber-500/15';
-                  } else if (showRiskOverlay && density === 'heavy') {
-                    bgClass = 'bg-red-500/[0.06] ring-1 ring-red-500/20';
-                  } else if (showRiskOverlay && density === 'medium') {
-                    bgClass = 'bg-red-500/[0.03] ring-1 ring-red-500/10';
+                  } else if (density === 'heavy') {
+                    bgClass = showRiskOverlay
+                      ? 'bg-red-500/[0.08] ring-1 ring-red-500/25 shadow-[0_0_8px_rgba(239,68,68,0.06)]'
+                      : 'bg-red-500/[0.04]';
+                  } else if (density === 'medium') {
+                    bgClass = showRiskOverlay
+                      ? 'bg-red-500/[0.05] ring-1 ring-red-500/15'
+                      : 'bg-amber-500/[0.03]';
                   }
 
                   return (
