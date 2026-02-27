@@ -330,38 +330,32 @@ export default function DailyCommandBrief() {
             COMMAND PRESSURE INDEX — Above everything
             One-glance health signal for the Sheriff
             ================================================================ */}
-        {/* Executive Summary — the sentence that replaces Outlook */}
-        <div className="mb-4 px-5 py-3.5 bg-slate-800/30 border border-slate-700/30 rounded-xl">
-          <p className="text-[14px] text-white font-medium">
-            {commandDecisions.length} decisions required before 12:00 EST to avoid compliance and staffing exposure.
-          </p>
-        </div>
-
-        <div className={`mb-6 ${pressure.bg} border ${pressure.border} rounded-xl overflow-hidden`}>
-          <div className="px-5 py-4">
+        <div className={`mb-5 ${pressure.bg} border ${pressure.border} rounded-xl overflow-hidden`}>
+          <div className="px-5 py-3.5">
+            {/* Executive sentence — the line that replaces Outlook */}
+            <p className="text-[13px] text-white font-medium mb-2.5">
+              {commandDecisions.length} decisions required before 12:00 EST to avoid compliance and staffing exposure.
+            </p>
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className="flex items-center gap-2.5">
-                  <Gauge className={`w-5 h-5 ${pressure.text}`} />
-                  <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest">Command Pressure</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className={`w-2.5 h-2.5 rounded-full ${pressure.dot} animate-pulse`}></div>
-                  <span className={`text-lg font-bold tracking-wide ${pressure.text}`}>{pressure.level}</span>
+              <div className="flex items-center gap-3">
+                <Gauge className={`w-4 h-4 ${pressure.text}`} />
+                <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest">Pressure</span>
+                <div className="flex items-center gap-1.5">
+                  <div className={`w-2 h-2 rounded-full ${pressure.dot} animate-pulse`}></div>
+                  <span className={`text-sm font-bold tracking-wide ${pressure.text}`}>{pressure.level}</span>
                 </div>
               </div>
-              <div className="flex items-center gap-5 text-[11px]">
+              <div className="flex items-center gap-4 text-[11px]">
                 <span className="text-slate-500"><span className="text-white font-semibold">{pressureFactors.criticalIssues}</span> critical</span>
                 <span className="text-slate-600">|</span>
                 <span className="text-slate-500"><span className="text-white font-semibold">{pressureFactors.complianceDeadlinesUnder72h}</span> compliance &lt;72h</span>
                 <span className="text-slate-600">|</span>
-                <span className="text-slate-500">Staffing: <span className={pressureFactors.staffingBelowThreshold ? 'text-red-400 font-semibold' : 'text-emerald-400 font-semibold'}>{pressureFactors.staffingBelowThreshold ? 'Below threshold' : 'Adequate'}</span></span>
+                <span className={pressureFactors.staffingBelowThreshold ? 'text-red-400 text-[11px] font-semibold' : 'text-emerald-400 text-[11px]'}>{pressureFactors.staffingBelowThreshold ? 'Staffing deficit' : 'Staffing OK'}</span>
                 <span className="text-slate-600">|</span>
                 <span className="text-slate-500"><span className="text-white font-semibold">{pressureFactors.overdueItems}</span> overdue</span>
               </div>
             </div>
-            {/* Diagnostic driver — not just alerting, diagnostic */}
-            <p className="mt-2 text-[11px] text-slate-400">Primary driver: <span className={`font-semibold ${pressure.text}`}>Compliance exposure + staffing deficit</span> — federal inspection in 48h with open HVAC deficiency, B-Shift at 75%</p>
+            <p className="mt-1.5 text-[11px] text-slate-500">Driver: <span className={`font-semibold ${pressure.text}`}>Compliance exposure + staffing deficit</span> — federal inspection 48h, HVAC open deficiency, B-Shift 75%</p>
           </div>
           <div className="h-1 bg-slate-800/40">
             <div className={`h-full ${pressure.dot} transition-all duration-1000`} style={{ width: pressure.barWidth }}></div>
@@ -369,9 +363,9 @@ export default function DailyCommandBrief() {
         </div>
 
         {/* Commander Focus — mental anchor */}
-        <div className="mb-6 px-5 py-3 bg-amber-500/[0.04] border border-amber-500/15 rounded-xl">
+        <div className="mb-5 px-5 py-2.5 bg-amber-500/[0.04] border border-amber-500/15 rounded-xl">
           <div className="flex items-start gap-2">
-            <Target className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
+            <Target className="w-3.5 h-3.5 text-amber-400 mt-0.5 flex-shrink-0" />
             <span className="text-[13px] font-semibold text-amber-400 whitespace-nowrap">Command Focus Today:</span>
             <span className="text-[13px] text-slate-300">
               {commandDecisions.map((item, i) => (
@@ -390,8 +384,8 @@ export default function DailyCommandBrief() {
             "What decisions must I make today?"
             No narrative. Decision-focused.
             ================================================================ */}
-        <div ref={decisionsSectionRef} className="mb-6 bg-slate-800/25 border border-slate-700/30 rounded-xl">
-          <div className="flex items-center justify-between px-5 py-4 pb-3 border-b border-slate-700/15">
+        <div ref={decisionsSectionRef} className="mb-5 bg-slate-800/25 border border-slate-700/30 rounded-xl">
+          <div className="flex items-center justify-between px-5 py-3 border-b border-slate-700/15">
             <div className="flex items-center gap-2.5">
               <Zap className="w-4 h-4 text-red-400" />
               <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">Command Decisions — Today</h3>
@@ -399,7 +393,7 @@ export default function DailyCommandBrief() {
             <span className="text-[11px] text-slate-500">{commandDecisions.length} items requiring decision</span>
           </div>
 
-          <div className="px-5 py-4 space-y-1">
+          <div className="px-5 py-3 space-y-1">
             {commandDecisions.map((item) => {
               const statusBadge = getStatusBadge(item.status);
               const isExpanded = expandedItem === item.id;
@@ -489,8 +483,8 @@ export default function DailyCommandBrief() {
             Predictive: items that worsen if untouched
             Each has: "If not resolved → consequence"
             ================================================================ */}
-        <div className="mb-6 bg-slate-800/25 border border-slate-700/30 rounded-xl">
-          <div className="flex items-center justify-between px-5 py-4 pb-3 border-b border-slate-700/15">
+        <div className="mb-5 bg-slate-800/25 border border-slate-700/30 rounded-xl">
+          <div className="flex items-center justify-between px-5 py-3 border-b border-slate-700/15">
             <div className="flex items-center gap-2.5">
               <AlertTriangle className="w-4 h-4 text-amber-400" />
               <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">Escalating Risk — Next 72 Hours</h3>
@@ -498,7 +492,7 @@ export default function DailyCommandBrief() {
             <span className="text-[11px] text-slate-500">Items that worsen if untouched</span>
           </div>
 
-          <div className="px-5 py-4 space-y-1">
+          <div className="px-5 py-3 space-y-1">
             {escalatingRisks.map(risk => (
               <button
                 key={risk.id}
@@ -543,8 +537,8 @@ export default function DailyCommandBrief() {
             SECTION C — STRATEGIC EXPOSURE (7–14 DAYS)
             Countdowns, readiness %, owner, risk color
             ================================================================ */}
-        <div className="mb-6 bg-slate-800/25 border border-slate-700/30 rounded-xl">
-          <div className="flex items-center justify-between px-5 py-4 pb-3 border-b border-slate-700/15">
+        <div className="mb-5 bg-slate-800/25 border border-slate-700/30 rounded-xl">
+          <div className="flex items-center justify-between px-5 py-3 border-b border-slate-700/15">
             <div className="flex items-center gap-2.5">
               <Shield className="w-4 h-4 text-slate-400" />
               <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">Strategic Exposure — 7 to 14 Days</h3>
@@ -552,7 +546,7 @@ export default function DailyCommandBrief() {
             <span className="text-[11px] text-slate-500">Audit, certification & inspection readiness</span>
           </div>
 
-          <div className="px-5 py-4 grid grid-cols-1 lg:grid-cols-2 gap-3">
+          <div className="px-5 py-3 grid grid-cols-1 lg:grid-cols-2 gap-3">
             {strategicExposure.map(item => {
               const riskColors = {
                 red: { bg: 'bg-red-500/[0.04]', border: 'border-red-500/15', text: 'text-red-400', bar: 'bg-red-500' },
@@ -560,7 +554,7 @@ export default function DailyCommandBrief() {
               };
               const rc = riskColors[item.riskColor];
               return (
-                <div key={item.id} className={`${rc.bg} border ${rc.border} rounded-lg p-4`}>
+                <div key={item.id} className={`${rc.bg} border ${rc.border} rounded-lg p-3.5`}>
                   <div className="flex items-start justify-between mb-2">
                     <div>
                       <p className="text-sm font-semibold text-white leading-tight">{item.title}</p>
@@ -614,10 +608,10 @@ export default function DailyCommandBrief() {
         </div>
 
         {/* Two Column Layout — Compressed highlights + On Duty */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-5">
           {/* Operational Highlights — liability/staffing/compliance ONLY */}
-          <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
-            <div className="flex items-center justify-between mb-4">
+          <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-4">
+            <div className="flex items-center justify-between mb-3">
               <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">Operational Highlights</h3>
               <span className="text-[11px] text-slate-500">Liability · Staffing · Compliance only</span>
             </div>
@@ -639,8 +633,8 @@ export default function DailyCommandBrief() {
           </div>
 
           {/* On Duty Today */}
-          <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
-            <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide mb-4">On Duty Today</h3>
+          <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-4">
+            <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide mb-3">On Duty Today</h3>
             <div className="space-y-3">
               <div>
                 <span className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider">Watch Commander</span>
@@ -679,8 +673,8 @@ export default function DailyCommandBrief() {
         </div>
 
         {/* Scheduled Events — Compact */}
-        <div className="mb-6 bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
-          <div className="flex items-center justify-between mb-4">
+        <div className="mb-5 bg-slate-800/25 border border-slate-700/30 rounded-xl p-4">
+          <div className="flex items-center justify-between mb-3">
             <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">Today's Schedule</h3>
             <button onClick={() => navigate('/command/calendar')} className="text-xs text-amber-400/80 hover:text-amber-300">View Full Calendar →</button>
           </div>

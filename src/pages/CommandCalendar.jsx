@@ -358,21 +358,21 @@ export default function CommandCalendar() {
       id: 'conflict-001',
       title: 'USMS Inspection overlaps with Fleet Inspection Deadline',
       days: [10, 12],
-      detail: 'Shared personnel: Facilities + Maintenance. Generator test, fleet inspection, and federal audit all require maintenance staff.',
+      detail: 'Maintenance staff shared across generator test, fleet inspection, and federal audit',
       severity: 'high'
     },
     {
       id: 'conflict-002',
       title: 'Firearms Qualification removes 12 deputies during Use-of-Force Review',
       days: [13],
-      detail: 'Dec 13: B-Shift already below minimum. 12 deputies at range 0800-1200 while UoF review board in session.',
+      detail: '12 deputies at range + UoF review board — B-Shift already below minimum',
       severity: 'high'
     },
     {
       id: 'conflict-003',
       title: 'POST Certification + OT Budget Review on same day',
       days: [20],
-      detail: 'Dec 20: Three command-level items competing. Sheriff Thompson needed for budget review while certification deadline looms.',
+      detail: 'Sheriff needed for OT budget review while POST certification deadline looms',
       severity: 'medium'
     }
   ];
@@ -494,12 +494,27 @@ export default function CommandCalendar() {
   const upcomingCritical = calendarEvents.filter(e => e.severity === 'critical' && e.status !== 'completed');
   const upcomingStaffing = calendarEvents.filter(e => e.category === 'staffing' && e.status !== 'completed');
 
-  // High priority upcoming (sorted by day, with richer data)
+  // High priority upcoming — strict filtering:
+  // Within 14 days, escalating, compliance/staffing/inspection only
+  // Sort: compliance risk → staffing impact → deadline proximity
+  const startDay = isCurrentMonth ? today.getDate() : 1;
   const upcomingDeadlines = calendarEvents
-    .filter(e => e.status !== 'completed' && e.day >= (isCurrentMonth ? today.getDate() : 1))
+    .filter(e => {
+      if (e.status === 'completed') return false;
+      if (e.day < startDay || e.day > startDay + 14) return false;
+      const isEscalating = e.severity === 'critical' || e.severity === 'high';
+      const isRelevantCategory = ['compliance', 'staffing', 'maintenance'].includes(e.category);
+      return isEscalating && isRelevantCategory;
+    })
     .sort((a, b) => {
-      const sw = { critical: 0, high: 1, medium: 2, low: 3 };
-      return (sw[a.severity] - sw[b.severity]) || (a.day - b.day);
+      const catWeight = { compliance: 0, staffing: 1, maintenance: 2 };
+      const catA = catWeight[a.category] ?? 3;
+      const catB = catWeight[b.category] ?? 3;
+      if (catA !== catB) return catA - catB;
+      const sw = { critical: 0, high: 1 };
+      const sevDiff = (sw[a.severity] ?? 2) - (sw[b.severity] ?? 2);
+      if (sevDiff !== 0) return sevDiff;
+      return a.day - b.day;
     })
     .slice(0, 5);
 
@@ -599,7 +614,7 @@ export default function CommandCalendar() {
             "Where does operational pressure stack?"
             ================================================================ */}
         {conflicts.length > 0 && (
-          <div className="mb-6 space-y-2">
+          <div className="mb-5 space-y-1.5">
             {conflicts.map(conflict => (
               <div
                 key={conflict.id}
@@ -634,35 +649,23 @@ export default function CommandCalendar() {
             OPERATIONAL PRESSURE FORECAST — Next 7 Days
             Predictive, not reactive
             ================================================================ */}
-        <div className="mb-6 bg-slate-800/25 border border-slate-700/30 rounded-xl px-5 py-4">
-          <div className="flex items-center gap-2.5 mb-3">
-            <AlertTriangle className="w-4 h-4 text-slate-400" />
-            <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">Operational Pressure Forecast — Next 7 Days</h3>
-          </div>
-          <div className="grid grid-cols-3 gap-4">
-            <div className="bg-red-500/[0.04] border border-red-500/15 rounded-lg px-4 py-3">
-              <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Compliance Load</span>
-              <div className="flex items-center gap-2 mt-1">
-                <div className="w-2 h-2 rounded-full bg-red-500"></div>
-                <span className="text-sm font-bold text-red-400">Elevated</span>
+        <div className="mb-5 px-4 py-2.5 bg-slate-800/20 border border-slate-700/20 rounded-lg">
+          <div className="flex items-center gap-4">
+            <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider flex-shrink-0">7-Day Pressure</span>
+            <div className="h-3 w-px bg-slate-700/30"></div>
+            <div className="flex items-center gap-5 flex-wrap">
+              <div className="flex items-center gap-1.5">
+                <span className="px-1.5 py-0.5 bg-red-500/10 border border-red-500/20 rounded text-[10px] font-semibold text-red-400">Elevated</span>
+                <span className="text-[10px] text-slate-500">Compliance — inspection + POST + PREA</span>
               </div>
-              <p className="text-[10px] text-slate-500 mt-1">Federal inspection + POST deadline + PREA audit</p>
-            </div>
-            <div className="bg-amber-500/[0.03] border border-amber-500/12 rounded-lg px-4 py-3">
-              <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Staffing Risk</span>
-              <div className="flex items-center gap-2 mt-1">
-                <div className="w-2 h-2 rounded-full bg-amber-500"></div>
-                <span className="text-sm font-bold text-amber-400">Moderate</span>
+              <div className="flex items-center gap-1.5">
+                <span className="px-1.5 py-0.5 bg-amber-500/10 border border-amber-500/20 rounded text-[10px] font-semibold text-amber-400">Moderate</span>
+                <span className="text-[10px] text-slate-500">Staffing — B-Shift + 12 at range</span>
               </div>
-              <p className="text-[10px] text-slate-500 mt-1">B-Shift deficit + firearms qual pulls 12 deputies</p>
-            </div>
-            <div className="bg-slate-800/20 border border-slate-700/20 rounded-lg px-4 py-3">
-              <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Facility Risk</span>
-              <div className="flex items-center gap-2 mt-1">
-                <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
-                <span className="text-sm font-bold text-emerald-400">Low</span>
+              <div className="flex items-center gap-1.5">
+                <span className="px-1.5 py-0.5 bg-emerald-500/10 border border-emerald-500/20 rounded text-[10px] font-semibold text-emerald-400">Low</span>
+                <span className="text-[10px] text-slate-500">Facility — HVAC contained to H2-Pod</span>
               </div>
-              <p className="text-[10px] text-slate-500 mt-1">HVAC repair pending approval — contained to H2-Pod</p>
             </div>
           </div>
         </div>
