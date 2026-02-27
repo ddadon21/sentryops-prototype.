@@ -649,22 +649,22 @@ export default function CommandCalendar() {
             OPERATIONAL PRESSURE FORECAST — Next 7 Days
             Predictive, not reactive
             ================================================================ */}
-        <div className="mb-5 px-4 py-2.5 bg-slate-800/20 border border-slate-700/20 rounded-lg">
-          <div className="flex items-center gap-4">
+        <div className="mb-4 px-4 py-2 bg-slate-800/15 border border-slate-700/15 rounded-lg">
+          <div className="flex items-center gap-3">
             <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider flex-shrink-0">7-Day Pressure</span>
-            <div className="h-3 w-px bg-slate-700/30"></div>
-            <div className="flex items-center gap-5 flex-wrap">
+            <div className="h-3 w-px bg-slate-700/25"></div>
+            <div className="flex items-center gap-4 flex-wrap">
               <div className="flex items-center gap-1.5">
                 <span className="px-1.5 py-0.5 bg-red-500/10 border border-red-500/20 rounded text-[10px] font-semibold text-red-400">Elevated</span>
-                <span className="text-[10px] text-slate-500">Compliance — inspection + POST + PREA</span>
+                <span className="text-[10px] text-slate-500">Compliance: Inspection / POST / PREA</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <span className="px-1.5 py-0.5 bg-amber-500/10 border border-amber-500/20 rounded text-[10px] font-semibold text-amber-400">Moderate</span>
-                <span className="text-[10px] text-slate-500">Staffing — B-Shift + 12 at range</span>
+                <span className="text-[10px] text-slate-500">Staffing: B-Shift + 12 at range</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <span className="px-1.5 py-0.5 bg-emerald-500/10 border border-emerald-500/20 rounded text-[10px] font-semibold text-emerald-400">Low</span>
-                <span className="text-[10px] text-slate-500">Facility — HVAC contained to H2-Pod</span>
+                <span className="text-[10px] text-slate-500">Facility: HVAC contained to H2-Pod</span>
               </div>
             </div>
           </div>

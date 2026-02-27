@@ -332,9 +332,13 @@ export default function DailyCommandBrief() {
             ================================================================ */}
         <div className={`mb-5 ${pressure.bg} border ${pressure.border} rounded-xl overflow-hidden`}>
           <div className="px-5 py-3.5">
-            {/* Executive sentence — the line that replaces Outlook */}
-            <p className="text-[13px] text-white font-medium mb-2.5">
-              {commandDecisions.length} decisions required before 12:00 EST to avoid compliance and staffing exposure.
+            {/* Line 1: Decision count — the headline */}
+            <p className="text-[13px] text-white font-semibold mb-1">
+              {commandDecisions.length} decisions required before 12:00 EST
+            </p>
+            {/* Line 2: Exposure categories — lighter weight */}
+            <p className="text-[11px] text-slate-400 mb-2">
+              Exposure: <span className="text-red-400 font-medium">Compliance</span> + <span className="text-amber-400 font-medium">Staffing</span>
             </p>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -355,7 +359,8 @@ export default function DailyCommandBrief() {
                 <span className="text-slate-500"><span className="text-white font-semibold">{pressureFactors.overdueItems}</span> overdue</span>
               </div>
             </div>
-            <p className="mt-1.5 text-[11px] text-slate-500">Driver: <span className={`font-semibold ${pressure.text}`}>Compliance exposure + staffing deficit</span> — federal inspection 48h, HVAC open deficiency, B-Shift 75%</p>
+            {/* Line 3: Driver — small, diagnostic */}
+            <p className="mt-1.5 text-[10px] text-slate-500">Driver: <span className={`font-semibold ${pressure.text}`}>Federal inspection (48h)</span> · HVAC open deficiency · B-Shift at 75%</p>
           </div>
           <div className="h-1 bg-slate-800/40">
             <div className={`h-full ${pressure.dot} transition-all duration-1000`} style={{ width: pressure.barWidth }}></div>
@@ -479,62 +484,7 @@ export default function DailyCommandBrief() {
         </div>
 
         {/* ================================================================
-            SECTION B — ESCALATING RISK (72 HOURS)
-            Predictive: items that worsen if untouched
-            Each has: "If not resolved → consequence"
-            ================================================================ */}
-        <div className="mb-5 bg-slate-800/25 border border-slate-700/30 rounded-xl">
-          <div className="flex items-center justify-between px-5 py-3 border-b border-slate-700/15">
-            <div className="flex items-center gap-2.5">
-              <AlertTriangle className="w-4 h-4 text-amber-400" />
-              <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">Escalating Risk — Next 72 Hours</h3>
-            </div>
-            <span className="text-[11px] text-slate-500">Items that worsen if untouched</span>
-          </div>
-
-          <div className="px-5 py-3 space-y-1">
-            {escalatingRisks.map(risk => (
-              <button
-                key={risk.id}
-                onClick={() => navigate(risk.linkedModule)}
-                className="w-full rounded-lg border border-slate-700/20 hover:bg-slate-800/20 transition-colors text-left"
-              >
-                <div className="p-3">
-                  {/* Top line: title + time badge */}
-                  <div className="flex items-center gap-2 mb-1.5">
-                    <div className={`w-0.5 h-4 rounded-full flex-shrink-0 ${risk.severity === 'critical' ? 'bg-red-500' : 'bg-amber-500'}`}></div>
-                    <p className="text-sm font-medium text-white flex-1">{risk.title}</p>
-                    <span className={`px-1.5 py-0.5 border rounded text-[11px] font-semibold ${
-                      risk.severity === 'critical' ? 'bg-red-500/10 border-red-500/20 text-red-400' : 'bg-amber-500/10 border-amber-500/20 text-amber-400'
-                    }`}>
-                      {risk.hoursUntil}h
-                    </span>
-                    <span className="text-[11px] text-slate-500">{risk.category}</span>
-                  </div>
-                  {/* Consequence line — this is the differentiator */}
-                  <div className="ml-2.5 flex items-start gap-2 text-[11px]">
-                    <span className="text-slate-600 flex-shrink-0">If not resolved →</span>
-                    <span className="text-red-400/80">{risk.ifNotResolved}</span>
-                  </div>
-                  <div className="ml-2.5 mt-1.5 flex items-center gap-3 text-[11px]">
-                    <span className="text-slate-500">Owner: {risk.owner}</span>
-                    <span className="text-slate-700">|</span>
-                    <span className={`px-1.5 py-0.5 border rounded text-[10px] font-semibold ${
-                      risk.riskScore === 'High' ? 'bg-red-500/10 border-red-500/20 text-red-400' :
-                      risk.riskScore === 'Moderate' ? 'bg-amber-500/10 border-amber-500/20 text-amber-400' :
-                      'bg-slate-500/10 border-slate-500/20 text-slate-400'
-                    }`}>
-                      Risk: {risk.riskScore}
-                    </span>
-                  </div>
-                </div>
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* ================================================================
-            SECTION C — STRATEGIC EXPOSURE (7–14 DAYS)
+            SECTION B — STRATEGIC EXPOSURE (7–14 DAYS)
             Countdowns, readiness %, owner, risk color
             ================================================================ */}
         <div className="mb-5 bg-slate-800/25 border border-slate-700/30 rounded-xl">
@@ -604,6 +554,54 @@ export default function DailyCommandBrief() {
                 </div>
               );
             })}
+          </div>
+        </div>
+
+        {/* ================================================================
+            SECTION C — ESCALATING RISK (72 HOURS)
+            Visually subordinate — items that worsen if untouched
+            ================================================================ */}
+        <div className="mb-5 bg-slate-800/15 border border-slate-700/20 rounded-lg">
+          <div className="flex items-center justify-between px-4 py-2.5 border-b border-slate-700/10">
+            <div className="flex items-center gap-2">
+              <AlertTriangle className="w-3.5 h-3.5 text-amber-400/70" />
+              <h3 className="text-[12px] font-semibold text-slate-300 uppercase tracking-wide">Escalating Risk — Next 72 Hours</h3>
+            </div>
+            <span className="text-[10px] text-slate-500">Worsens if untouched</span>
+          </div>
+
+          <div className="px-4 py-2.5 space-y-0.5">
+            {escalatingRisks.map(risk => (
+              <button
+                key={risk.id}
+                onClick={() => navigate(risk.linkedModule)}
+                className="w-full rounded border border-slate-700/15 hover:bg-slate-800/15 transition-colors text-left"
+              >
+                <div className="px-3 py-2">
+                  <div className="flex items-center gap-2 mb-1">
+                    <div className={`w-0.5 h-3.5 rounded-full flex-shrink-0 ${risk.severity === 'critical' ? 'bg-red-500' : 'bg-amber-500/70'}`}></div>
+                    <p className="text-[13px] font-medium text-slate-200 flex-1">{risk.title}</p>
+                    <span className={`px-1.5 py-0.5 border rounded text-[10px] font-semibold ${
+                      risk.severity === 'critical' ? 'bg-red-500/10 border-red-500/20 text-red-400' : 'bg-amber-500/10 border-amber-500/15 text-amber-400/80'
+                    }`}>
+                      {risk.hoursUntil}h
+                    </span>
+                    <span className={`px-1.5 py-0.5 border rounded text-[10px] font-semibold ${
+                      risk.riskScore === 'High' ? 'bg-red-500/10 border-red-500/15 text-red-400/80' :
+                      'bg-amber-500/8 border-amber-500/12 text-amber-400/70'
+                    }`}>
+                      {risk.riskScore}
+                    </span>
+                  </div>
+                  <div className="ml-2.5 flex items-center gap-2 text-[11px]">
+                    <span className="text-red-400/60">If not resolved → {risk.ifNotResolved}</span>
+                  </div>
+                  <div className="ml-2.5 mt-1 text-[10px] text-slate-500">
+                    {risk.owner} · {risk.category}
+                  </div>
+                </div>
+              </button>
+            ))}
           </div>
         </div>
 
