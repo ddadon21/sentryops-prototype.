@@ -55,7 +55,7 @@ interface DashboardLayoutProps {
 const defaultNavigation: NavItem[] = [
   { id: 'command-overview', label: 'Command Overview', icon: Home, route: '/command/dashboard' },
   { id: 'daily-brief', label: 'Daily Command Brief', icon: FileText, route: '/command/brief' },
-  { id: 'alerts', label: 'Command Alerts', icon: AlertCircle, badge: '3', route: '/command/alerts' },
+  { id: 'alerts', label: 'Command Alerts', icon: AlertCircle, badge: '7', route: '/command/alerts' },
   { id: 'approvals', label: 'Command Approvals', icon: CheckCircle, badge: '8', route: '/command/approvals' },
   { id: 'calendar', label: 'Calendar & Timeline', icon: Calendar, route: '/command/calendar' },
   { id: 'risk-compliance', label: 'Risk & Compliance', icon: ShieldCheck, route: '/command/risk' },
