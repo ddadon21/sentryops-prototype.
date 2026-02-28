@@ -37,7 +37,8 @@ export interface NotificationItem {
   title: string;
   message: string;
   time: string;
-  urgent: boolean;
+  category: 'assignment' | 'approval' | 'reminder' | 'system';
+  read?: boolean;
 }
 
 interface DashboardLayoutProps {
@@ -77,11 +78,12 @@ const defaultProfile: ProfileConfig = {
 };
 
 const defaultNotifications: NotificationItem[] = [
-  { id: 1, title: 'Critical Incident - Detention', message: 'Use of force incident in B-Pod. Deputy Johnson. Review required.', time: '15 min ago', urgent: true },
-  { id: 2, title: 'Facility Alert - HVAC Failure', message: 'H2-Pod temperature 84°F. Emergency repair needed.', time: '32 min ago', urgent: true },
-  { id: 3, title: 'Staffing Emergency - B-Shift', message: '3 deputies out. Below minimum staffing.', time: '1 hour ago', urgent: true },
-  { id: 4, title: 'Budget Approval Required', message: 'Q1 2025 Training Budget: $45,000', time: '2 hours ago', urgent: false },
-  { id: 5, title: 'Leave Request Submitted', message: 'Deputy Marcus Chen - Dec 15-22', time: '3 hours ago', urgent: false }
+  { id: 1, title: 'Fleet Maintenance alert assigned to you', message: '6 vehicles out of service — review required', time: '12 min ago', category: 'assignment' },
+  { id: 2, title: 'Budget review submitted for approval', message: 'Q1 2025 Training Budget: $45,000', time: '1 hour ago', category: 'approval' },
+  { id: 3, title: 'POST certification expiring in 7 days', message: 'Firearms qualification — schedule renewal', time: '2 hours ago', category: 'reminder' },
+  { id: 4, title: 'Training session confirmed', message: 'Defensive tactics refresher — Dec 18 at 0800', time: '3 hours ago', category: 'reminder', read: true },
+  { id: 5, title: 'Overtime request awaiting your approval', message: 'Deputy Chen — B-Shift coverage 6 hrs', time: '4 hours ago', category: 'approval' },
+  { id: 6, title: 'Leave request approved', message: 'Deputy Marcus Chen — Dec 15-22', time: '5 hours ago', category: 'system', read: true }
 ];
 
 // ── Component ─────────────────────────────────────────────────
@@ -329,48 +331,59 @@ export default function DashboardLayout({
               </div>
               <div className="h-6 w-px bg-slate-700/30 hidden lg:block"></div>
 
-              {/* Notifications */}
+              {/* Notifications — Personal Command Inbox */}
               <div className="relative">
                 <button
                   onClick={() => setNotificationsOpen(!notificationsOpen)}
                   className="notifications-trigger p-2 hover:bg-slate-800/50 rounded-lg relative"
                 >
                   <Bell className="w-5 h-5 text-slate-400" />
-                  {notifications.some(n => n.urgent) && (
-                    <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                  {notifications.some(n => !n.read) && (
+                    <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-slate-400 rounded-full"></span>
                   )}
                 </button>
 
                 {notificationsOpen && (
-                  <div className="notifications-dropdown absolute right-0 top-full mt-2 w-96 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-2xl z-50">
-                    <div className="p-4 border-b border-slate-700/50">
+                  <div className="notifications-dropdown absolute right-0 top-full mt-2 w-80 bg-slate-900/95 backdrop-blur-xl border border-slate-700/40 rounded-xl shadow-2xl z-50">
+                    <div className="px-4 py-3 border-b border-slate-700/30">
                       <div className="flex items-center justify-between">
                         <h3 className="text-[13px] font-semibold text-white">Notifications</h3>
-                        <span className="text-xs text-slate-500">{notifications.filter(n => n.urgent).length} requiring attention</span>
+                        <span className="text-[11px] text-slate-500">{notifications.filter(n => !n.read).length} unread</span>
                       </div>
                     </div>
-                    <div className="max-h-96 overflow-y-auto">
+                    <div className="max-h-80 overflow-y-auto">
                       {notifications.map(notification => (
                         <div
                           key={notification.id}
-                          className="p-4 border-b border-slate-800/30 hover:bg-slate-800/30 cursor-pointer transition-colors"
+                          className={`px-4 py-2.5 border-b border-slate-800/15 hover:bg-slate-800/20 cursor-pointer transition-colors ${
+                            notification.read ? 'opacity-50' : ''
+                          }`}
                         >
-                          <div className="flex items-start gap-3">
-                            <div className={`w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0 ${
-                              notification.urgent ? 'bg-red-700/60' : 'bg-slate-500'
+                          <div className="flex items-start gap-2.5">
+                            {/* Unread dot */}
+                            <div className={`w-1 h-1 rounded-full mt-[7px] flex-shrink-0 ${
+                              notification.read ? 'bg-transparent' : 'bg-slate-400'
                             }`}></div>
                             <div className="flex-1 min-w-0">
-                              <p className="text-[13px] font-medium text-white mb-1">{notification.title}</p>
-                              <p className="text-xs text-slate-400 mb-2">{notification.message}</p>
-                              <p className="text-xs text-slate-500">{notification.time}</p>
+                              <div className="flex items-center gap-2 mb-0.5">
+                                <span className="px-1.5 py-px rounded text-[9px] font-medium bg-slate-700/30 border border-slate-700/20 text-slate-400 capitalize">
+                                  {notification.category}
+                                </span>
+                                <span className="text-[10px] text-slate-600">{notification.time}</span>
+                              </div>
+                              <p className={`text-[12px] mb-0.5 ${notification.read ? 'text-slate-400' : 'text-white font-medium'}`}>{notification.title}</p>
+                              <p className="text-[11px] text-slate-500 truncate">{notification.message}</p>
                             </div>
                           </div>
                         </div>
                       ))}
                     </div>
-                    <div className="p-3 border-t border-slate-700/50">
-                      <button className="w-full text-center text-[13px] text-slate-400 hover:text-slate-300 font-medium">
-                        View All Notifications
+                    <div className="px-4 py-2 border-t border-slate-700/30 flex items-center justify-between">
+                      <button className="text-[11px] text-slate-500 hover:text-slate-300 font-medium transition-colors">
+                        Mark all read
+                      </button>
+                      <button className="text-[11px] text-slate-500 hover:text-slate-300 font-medium transition-colors">
+                        View all
                       </button>
                     </div>
                   </div>
