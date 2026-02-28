@@ -317,7 +317,7 @@ export default function CommandAlerts() {
   return (
     <DashboardLayout>
       <div className="p-4 lg:p-6">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1400px] mx-auto">
 
         {/* ── Page Header ────────────────────────────────── */}
         <div className="mb-4">
@@ -375,9 +375,9 @@ export default function CommandAlerts() {
                 }`}
               >
                 {/* ── Compact Row ──────────────────────── */}
-                <div className="flex items-center gap-2.5 px-3 py-[7px]">
+                <div className="flex items-center gap-2.5 px-3.5 py-[9px]">
                   {/* Severity strip */}
-                  <div className={`w-[3px] self-stretch rounded-full flex-shrink-0 ${sev.strip}`}></div>
+                  <div className={`w-[4px] self-stretch rounded-full flex-shrink-0 ${sev.strip}`}></div>
 
                   {/* Severity pill */}
                   <span className={`px-1.5 py-px border rounded text-[10px] font-semibold flex-shrink-0 leading-tight ${sev.pill}`}>
@@ -385,12 +385,12 @@ export default function CommandAlerts() {
                   </span>
 
                   {/* Title */}
-                  <span className={`text-[12px] font-semibold flex-1 min-w-0 truncate ${isResolved ? 'text-slate-500' : 'text-white'}`}>
+                  <span className={`text-[13px] font-bold flex-1 min-w-0 truncate ${isResolved ? 'text-slate-500' : 'text-white'}`}>
                     {alert.title}
                   </span>
 
                   {/* Impact — max ~12 words */}
-                  <span className="hidden xl:block text-[10px] text-slate-500 max-w-[220px] truncate flex-shrink-0">
+                  <span className="hidden xl:block text-[10px] text-slate-400 max-w-[240px] truncate flex-shrink-0">
                     {alert.impact}
                   </span>
 
@@ -448,8 +448,8 @@ export default function CommandAlerts() {
                 </div>
 
                 {/* Mobile: impact line */}
-                <div className="xl:hidden px-3 pb-1.5 -mt-0.5 pl-[22px]">
-                  <span className="text-[10px] text-slate-500">{alert.impact}</span>
+                <div className="xl:hidden px-3.5 pb-1.5 -mt-0.5 pl-[26px]">
+                  <span className="text-[10px] text-slate-400">{alert.impact}</span>
                 </div>
 
                 {/* ── Expanded Detail ───────────────────── */}
