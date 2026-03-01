@@ -1,54 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { Home, Users, FileText, LayoutDashboard, TrendingUp, AlertCircle, Settings, Bell, MessageCircle, Search, ChevronRight, DollarSign, CheckCircle, Shield, ShieldCheck, ThumbsUp, XCircle, Sparkles, X, Send, Menu, ChevronLeft, LogOut, Calendar, Clock, Filter, ArrowUpCircle, Download, Eye, ChevronDown, ChevronUp, Building2, Radio, Target, Info, FileCheck, TrendingDown, CheckSquare, Square, User, Package, MessageSquare } from 'lucide-react';
+import React, { useState } from 'react';
+import { Users, FileText, AlertCircle, Search, DollarSign, CheckCircle, ThumbsUp, XCircle, Sparkles, X, Send, Calendar, Clock, Download, Eye, ChevronDown, ChevronUp, Building2, Info, FileCheck, CheckSquare, Square, Package } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { createPageUrl } from '@/utils';
 import DashboardLayout from '../layouts/DashboardLayout';
 
 export default function Approvals() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('pending');
-  const [chatOpen, setChatOpen] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(() => {
-    const saved = localStorage.getItem('sidebarCollapsed');
-    return saved === 'true';
-  });
-  const [notificationsOpen, setNotificationsOpen] = useState(false);
-  const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false);
   const [selectedApproval, setSelectedApproval] = useState(null);
   const [approvalAction, setApprovalAction] = useState(null);
   const [actionComment, setActionComment] = useState('');
   const [filterType, setFilterType] = useState('all');
-  const [sortBy, setSortBy] = useState('recent');
   const [toastMessage, setToastMessage] = useState(null);
-  const [budgetExpanded, setBudgetExpanded] = useState(false);
   const [historyDetailModal, setHistoryDetailModal] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
   const [expandedCards, setExpandedCards] = useState([]);
   const [requestInfoModal, setRequestInfoModal] = useState(null);
   const [infoRequest, setInfoRequest] = useState('');
-  const [staffingExpanded, setStaffingExpanded] = useState(false);
-  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
-
-  // Persist sidebar collapsed state
-  useEffect(() => {
-    localStorage.setItem('sidebarCollapsed', sidebarCollapsed.toString());
-  }, [sidebarCollapsed]);
-
-  // Close dropdowns when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      const target = event.target;
-      if (!target.closest('.notifications-dropdown') && !target.closest('.notifications-trigger')) {
-        setNotificationsOpen(false);
-      }
-      if (!target.closest('.profile-dropdown') && !target.closest('.profile-trigger')) {
-        setProfileMenuOpen(false);
-      }
-    };
-    document.addEventListener('click', handleClickOutside);
-    return () => document.removeEventListener('click', handleClickOutside);
-  }, []);
+  const [aiSummaryExpanded, setAiSummaryExpanded] = useState(false);
 
   const currentUser = 'Sheriff Thompson';
 
@@ -265,70 +233,7 @@ export default function Approvals() {
     }
   ]);
 
-  const navigation = [
-    { id: 'command-overview', label: 'Command Overview', icon: Home, route: '/command/dashboard' },
-    { id: 'daily-brief', label: 'Daily Command Brief', icon: FileText, route: '/command/brief' },
-    { id: 'alerts', label: 'Command Alerts', icon: AlertCircle, badge: '3', route: '/command/alerts' },
-    { id: 'approvals', label: 'Command Approvals', icon: CheckCircle, badge: approvalsList.length.toString(), route: '/command/approvals' },
-    { id: 'risk-compliance', label: 'Risk & Compliance', icon: ShieldCheck, route: '/command/risk' },
-    { id: 'staffing', label: 'Staffing & Readiness', icon: Users, hasSubmenu: true },
-    { id: 'custody', label: 'Custody Operations', icon: Building2, route: '/jail/dashboard' },
-    { id: 'field-ops', label: 'Field Operations (Overview)', icon: Radio, route: '/patrol/cad' },
-    { id: 'investigative', label: 'Investigative Oversight', icon: Target, route: '/investigations/cases' },
-    { id: 'budget', label: 'Budget & Assets', icon: DollarSign, route: '/command/budget' },
-    { id: 'reports', label: 'Reports & Compliance', icon: TrendingUp, route: '/command/reports' }
-  ];
-
-  const staffingSubmenu = [
-    { id: 'staffing-overview', label: 'Staffing Overview', route: '/command/personnel' },
-    { id: 'org-chart', label: 'Org Chart', route: '/command/orgchart' }
-  ];
-
-  const notifications = [
-    { id: 1, title: 'Critical Incident - Detention', message: 'Use of force incident in B-Pod. Deputy Johnson. Review required.', time: '15 min ago', urgent: true },
-    { id: 2, title: 'Facility Alert - HVAC Failure', message: 'H2-Pod temperature 84°F. Emergency repair needed.', time: '32 min ago', urgent: true },
-    { id: 3, title: 'Staffing Emergency - B-Shift', message: '3 deputies out. Below minimum staffing.', time: '1 hour ago', urgent: true },
-    { id: 4, title: 'Budget Approval Required', message: 'Q1 2025 Training Budget: $45,000', time: '2 hours ago', urgent: false },
-    { id: 5, title: 'Leave Request Submitted', message: 'Deputy Marcus Chen - Dec 15-22', time: '3 hours ago', urgent: false }
-  ];
-
-  const budgetOverview = {
-    pendingAmount: approvalsList.filter(a => a.amount).reduce((sum, a) => sum + a.amount, 0),
-    approvedQ4: approvalHistory
-      .filter(h => h.decision === 'approved' && h.amount && new Date(h.decidedDate) >= new Date('2024-10-01'))
-      .reduce((sum, h) => sum + h.amount, 0),
-    totalApprovedThisYear: 2450000,
-    totalBudget: 3000000,
-    byDivision: [
-      { name: 'Patrol Division', approved: 520000, pending: 0, total: 680000 },
-      { name: 'Administrative Services', approved: 380000, pending: 190000, total: 550000 },
-      { name: 'Detention', approved: 420000, pending: 0, total: 480000 },
-      { name: 'Investigations', approved: 285000, pending: 0, total: 350000 },
-      { name: 'Training Division', approved: 180000, pending: 45000, total: 240000 },
-      { name: 'Special Operations', approved: 210000, pending: 0, total: 290000 }
-    ]
-  };
-
-  budgetOverview.remainingBudget = budgetOverview.totalBudget - budgetOverview.totalApprovedThisYear;
-  budgetOverview.percentUsed = (budgetOverview.totalApprovedThisYear / budgetOverview.totalBudget) * 100;
-
-  const handleNavigation = (item) => {
-    if (item.hasSubmenu) {
-      setStaffingExpanded(!staffingExpanded);
-    } else if (item.route) {
-      navigate(item.route);
-      setSidebarOpen(false);
-    }
-  };
-
-  const handleSubmenuNavigation = (route) => {
-    navigate(route);
-    setSidebarOpen(false);
-  };
-
-  const handleLogout = () => {
-    navigate('/signin');
-  };
+  const pendingAmount = approvalsList.filter(a => a.amount).reduce((sum, a) => sum + a.amount, 0);
 
   const openApprovalModal = (approval, action) => {
     setSelectedApproval(approval);
@@ -389,12 +294,6 @@ export default function Approvals() {
     setSelectedItems([]);
   };
 
-  const bulkRequestInfo = () => {
-    if (selectedItems.length === 0) return;
-    showToast(`Info requested for ${selectedItems.length} items`, 'success');
-    setSelectedItems([]);
-  };
-
   const toggleExpandCard = (id) => {
     setExpandedCards(prev =>
       prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
@@ -430,16 +329,6 @@ export default function Approvals() {
     }
   };
 
-  const getTypeColor = (type) => {
-    switch (type) {
-      case 'leave': return 'text-blue-400 bg-blue-500/20';
-      case 'budget': return 'text-green-400 bg-green-500/20';
-      case 'hiring': return 'text-purple-400 bg-purple-500/20';
-      case 'equipment': return 'text-amber-400 bg-amber-500/20';
-      default: return 'text-slate-400 bg-slate-500/20';
-    }
-  };
-
   const filteredApprovals = approvalsList
     .filter(approval => {
       if (filterType === 'all') return true;
@@ -447,10 +336,11 @@ export default function Approvals() {
       return approval.type === filterType;
     })
     .sort((a, b) => {
-      if (sortBy === 'recent') return a.daysAgo - b.daysAgo;
-      if (sortBy === 'oldest') return b.daysAgo - a.daysAgo;
-      if (sortBy === 'priority') return (b.urgent ? 1 : 0) - (a.urgent ? 1 : 0);
-      return 0;
+      // Urgent always first
+      if (a.urgent && !b.urgent) return -1;
+      if (!a.urgent && b.urgent) return 1;
+      // Then by recency
+      return a.daysAgo - b.daysAgo;
     });
 
   const filteredHistory = activeTab === 'my-decisions'
@@ -459,799 +349,422 @@ export default function Approvals() {
 
   const urgentCount = approvalsList.filter(a => a.urgent).length;
 
-  const getBudgetStatusColor = (percent) => {
-    if (percent >= 95) return 'red';
-    if (percent >= 85) return 'amber';
-    return 'green';
-  };
-
   return (
     <DashboardLayout>
-      <div className="p-5 lg:p-8 space-y-8">
-          <div className="max-w-7xl mx-auto">
-            <div className="mb-6">
-              <div className="flex items-center justify-between mb-4">
+      <div className="p-4 lg:p-6">
+          <div className="max-w-[1400px] mx-auto">
+
+            {/* ── Page Header ────────────────────────────────── */}
+            <div className="mb-4">
+              <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-2xl lg:text-3xl font-bold text-white mb-2">Approvals Center</h2>
-                  <p className="text-slate-400">Review and process pending requests</p>
+                  <h2 className="text-lg font-bold text-white mb-0.5">Command Approvals</h2>
+                  <div className="flex items-center gap-2 text-[11px] text-slate-500">
+                    <span>Decision execution surface</span>
+                    <span className="text-slate-700">·</span>
+                    <span>{approvalsList.length} pending</span>
+                    {urgentCount > 0 && (
+                      <>
+                        <span className="text-slate-700">·</span>
+                        <span className="text-red-400 font-semibold">{urgentCount} urgent</span>
+                      </>
+                    )}
+                  </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  {activeTab === 'pending' && (
-                    <>
-                      <span className="px-4 py-2 bg-amber-500/20 border border-amber-500/30 rounded-xl text-amber-400 font-semibold">
-                        {approvalsList.length} items
-                      </span>
-                      {urgentCount > 0 && (
-                        <span className="px-3 py-1 bg-red-500/20 border border-red-500/30 rounded-full text-red-400 text-sm font-medium">
-                          {urgentCount} urgent
-                        </span>
-                      )}
-                    </>
+                <div className="flex items-center gap-2">
+                  <span className="px-2.5 py-1 bg-green-500/8 border border-green-500/15 rounded text-[10px] font-semibold text-green-400">
+                    FY24 Remaining: $550K
+                  </span>
+                  {activeTab === 'pending' && pendingAmount > 0 && (
+                    <span className="px-2.5 py-1 bg-amber-500/8 border border-amber-500/15 rounded text-[10px] font-semibold text-amber-400">
+                      ${pendingAmount.toLocaleString()} pending
+                    </span>
                   )}
                   {(activeTab === 'history' || activeTab === 'my-decisions') && (
-                    <button className="flex items-center gap-2 px-4 py-2 bg-slate-800/40 border border-slate-700/50 rounded-xl text-slate-300 hover:bg-slate-800/60 transition-all">
-                      <Download className="w-4 h-4" />
-                      Export PDF
+                    <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/40 border border-slate-700/30 rounded text-[11px] text-slate-400 hover:text-white transition-colors">
+                      <Download className="w-3 h-3" />
+                      Export
                     </button>
                   )}
                 </div>
               </div>
-
-              <div className="flex gap-2 border-b border-slate-700/50">
-                <button
-                  onClick={() => setActiveTab('pending')}
-                  className={`px-4 py-3 text-sm font-medium transition-all relative flex items-center gap-2 ${
-                    activeTab === 'pending'
-                      ? 'text-amber-400'
-                      : 'text-slate-400 hover:text-slate-300'
-                  }`}
-                >
-                  Pending
-                  <span className={`px-1.5 py-0.5 rounded text-xs ${activeTab === 'pending' ? 'bg-amber-500/20 text-amber-400' : 'bg-slate-700/50 text-slate-400'}`}>
-                    {approvalsList.length}
-                  </span>
-                  {activeTab === 'pending' && (
-                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500"></div>
-                  )}
-                </button>
-                <button
-                  onClick={() => setActiveTab('history')}
-                  className={`px-4 py-3 text-sm font-medium transition-all relative ${
-                    activeTab === 'history'
-                      ? 'text-amber-400'
-                      : 'text-slate-400 hover:text-slate-300'
-                  }`}
-                >
-                  History
-                  {activeTab === 'history' && (
-                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500"></div>
-                  )}
-                </button>
-                <button
-                  onClick={() => setActiveTab('my-decisions')}
-                  className={`px-4 py-3 text-sm font-medium transition-all relative flex items-center gap-2 ${
-                    activeTab === 'my-decisions'
-                      ? 'text-amber-400'
-                      : 'text-slate-400 hover:text-slate-300'
-                  }`}
-                >
-                  My Decisions
-                  <span className={`px-1.5 py-0.5 rounded text-xs ${activeTab === 'my-decisions' ? 'bg-amber-500/20 text-amber-400' : 'bg-slate-700/50 text-slate-400'}`}>
-                    12
-                  </span>
-                  {activeTab === 'my-decisions' && (
-                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500"></div>
-                  )}
-                </button>
-              </div>
             </div>
 
-            {/* AI Insights Banner */}
+            {/* ── Tabs ────────────────────────────────── */}
+            <div className="flex gap-1.5 mb-4 border-b border-slate-800/50 pb-px">
+              <button
+                onClick={() => setActiveTab('pending')}
+                className={`px-2.5 py-1.5 text-[11px] font-medium transition-all relative flex items-center gap-1.5 ${
+                  activeTab === 'pending' ? 'text-white' : 'text-slate-500 hover:text-slate-300'
+                }`}
+              >
+                Pending
+                <span className={`px-1 py-px rounded text-[10px] ${activeTab === 'pending' ? 'bg-amber-500/15 text-amber-400' : 'bg-slate-800/50 text-slate-500'}`}>
+                  {approvalsList.length}
+                </span>
+                {activeTab === 'pending' && <div className="absolute bottom-0 left-0 right-0 h-px bg-amber-500"></div>}
+              </button>
+              <button
+                onClick={() => setActiveTab('history')}
+                className={`px-2.5 py-1.5 text-[11px] font-medium transition-all relative ${
+                  activeTab === 'history' ? 'text-white' : 'text-slate-500 hover:text-slate-300'
+                }`}
+              >
+                History
+                {activeTab === 'history' && <div className="absolute bottom-0 left-0 right-0 h-px bg-amber-500"></div>}
+              </button>
+              <button
+                onClick={() => setActiveTab('my-decisions')}
+                className={`px-2.5 py-1.5 text-[11px] font-medium transition-all relative flex items-center gap-1.5 ${
+                  activeTab === 'my-decisions' ? 'text-white' : 'text-slate-500 hover:text-slate-300'
+                }`}
+              >
+                My Decisions
+                {activeTab === 'my-decisions' && <div className="absolute bottom-0 left-0 right-0 h-px bg-amber-500"></div>}
+              </button>
+            </div>
+
+            {/* ── AI Summary Bar (collapsed by default) ────── */}
             {activeTab === 'pending' && (
-              <div className="mb-6 bg-gradient-to-br from-purple-500/10 to-purple-600/5 border border-purple-500/20 rounded-xl p-5">
-                <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 bg-purple-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Sparkles className="w-5 h-5 text-purple-400" />
+              <div className="mb-4">
+                <button
+                  onClick={() => setAiSummaryExpanded(!aiSummaryExpanded)}
+                  className="w-full flex items-center gap-2 px-3 py-2 bg-slate-800/20 border border-slate-700/15 rounded hover:bg-slate-800/30 transition-colors"
+                >
+                  <Sparkles className="w-3 h-3 text-slate-500" />
+                  <span className="text-[11px] text-slate-400 flex-1 text-left">
+                    <span className="text-slate-500 font-medium">AI Summary:</span>{' '}
+                    <span className="text-amber-400">{urgentCount} urgent budget items</span>
+                    <span className="text-slate-600 mx-1">·</span>
+                    <span className="text-green-400">1 hiring rec high confidence</span>
+                    <span className="text-slate-600 mx-1">·</span>
+                    <span className="text-slate-400">No projected deficit risk</span>
+                  </span>
+                  {aiSummaryExpanded ? <ChevronUp className="w-3 h-3 text-slate-600" /> : <ChevronDown className="w-3 h-3 text-slate-600" />}
+                </button>
+
+                {aiSummaryExpanded && (
+                  <div className="mt-1 px-3 py-2.5 bg-slate-800/15 border border-slate-700/10 rounded space-y-1.5">
+                    <p className="text-[10px] text-red-400">• Training Division Q1 budget ($43K) — deadline today 1700 hrs. Vendor payment schedule at risk.</p>
+                    <p className="text-[10px] text-red-400">• Federal Deputy hire (Jane Doe) — offer expires Jan 16. Competing offer from Fulton County SO.</p>
+                    <p className="text-[10px] text-green-400">• Body camera upgrade ($125K) — 88% confidence approve. Vendor pricing expires Jan 31.</p>
+                    <p className="text-[10px] text-slate-400">• All pending within FY24 budget ($170K pending / $550K remaining). No constraints.</p>
                   </div>
-                  <div className="flex-1">
-                    <h3 className="text-sm font-bold text-white mb-3">AI Approval Insights</h3>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
-                      {/* Urgent Items */}
-                      <div className="bg-slate-800/40 rounded-xl p-3 border border-red-500/30">
-                        <div className="flex items-center gap-2 mb-2">
-                          <div className="w-6 h-6 bg-red-500/20 rounded-lg flex items-center justify-center">
-                            <AlertCircle className="w-3 h-3 text-red-400" />
-                          </div>
-                          <span className="text-xs font-semibold text-red-400">Urgent Action Needed</span>
-                        </div>
-                        <div className="space-y-1.5">
-                          <p className="text-[10px] text-red-400">• Budget approval required - Training Division Q1 2025 budget ($43,000) - approval deadline today at 1700 hrs to meet vendor payment schedule</p>
-                          <p className="text-[10px] text-red-400">• Hiring decision pending - Federal Deputy position (Jane Doe) - conditional offer expires Jan 16 (3 days). Candidate has competing offer from Fulton County SO.</p>
-                          <p className="text-[10px] text-amber-400">• 2 leave request conflicts - Patrol Division Dec 15-22 (Deputies Chen and Williams both requested) - immediate resolution required to maintain minimum shift coverage</p>
-                        </div>
-                      </div>
-
-                      {/* Recommendations */}
-                      <div className="bg-slate-800/40 rounded-xl p-3 border border-green-500/30">
-                        <div className="flex items-center gap-2 mb-2">
-                          <div className="w-6 h-6 bg-green-500/20 rounded-lg flex items-center justify-center">
-                            <CheckCircle className="w-3 h-3 text-green-400" />
-                          </div>
-                          <span className="text-xs font-semibold text-green-400">AI Recommendations</span>
-                        </div>
-                        <div className="space-y-1.5">
-                          <p className="text-[10px] text-green-400"><CheckCircle className="w-2.5 h-2.5 inline mr-1" />Equipment purchase approved - Body camera upgrade ($125,000) - AI analysis: 88% confidence. Vendor pricing expires Jan 31, current cameras (2019 models) discontinued for support.</p>
-                          <p className="text-[10px] text-green-400"><CheckCircle className="w-2.5 h-2.5 inline mr-1" />Leave conflict detected - Patrol A-Shift vacation requests overlap Dec 18-24. Recommend approving Chen (requested first), suggest Williams shift dates to Jan 2-8 (same duration, no conflicts).</p>
-                          <p className="text-[10px] text-slate-300">All pending approvals within FY24 budget ($170K pending / $550K remaining). All requests meet operational necessity criteria. No budget constraints.</p>
-                        </div>
-                      </div>
-
-                      {/* Budget Impact */}
-                      <div className="bg-slate-800/40 rounded-xl p-3 border border-blue-500/30">
-                        <div className="flex items-center gap-2 mb-2">
-                          <div className="w-6 h-6 bg-blue-500/20 rounded-lg flex items-center justify-center">
-                            <DollarSign className="w-3 h-3 text-blue-400" />
-                          </div>
-                          <span className="text-xs font-semibold text-blue-400">Budget Status</span>
-                        </div>
-                        <div className="space-y-1.5">
-                          <div className="flex items-center justify-between">
-                            <span className="text-[10px] text-slate-400">Approvals today:</span>
-                            <span className="text-[10px] font-bold text-blue-400">9 processed ($387K)</span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="text-[10px] text-slate-400">YTD spending:</span>
-                            <span className="text-[10px] font-bold text-white">$2.45M / $3.0M annual</span>
-                          </div>
-                          <p className="text-[10px] text-green-400"><CheckCircle className="w-2.5 h-2.5 inline mr-1" />Healthy budget buffer - 18.3% remaining ($550K) with 2 months left in FY24. Tracking 4% under projected spend.</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="flex flex-wrap gap-2">
-                      <button className="px-3 py-1.5 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 text-blue-400 rounded-lg text-xs font-medium transition-all">
-                        View Recommendations
-                      </button>
-                      <button className="px-3 py-1.5 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-400 rounded-lg text-xs font-medium transition-all">
-                        Auto-Approve Safe Items
-                      </button>
-                    </div>
-                  </div>
-                </div>
+                )}
               </div>
             )}
 
-            <div className="mb-6 bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-white flex items-center gap-2">
-                  <DollarSign className="w-5 h-5 text-green-400" />
-                  Budget Overview & Forecast
-                </h3>
-                <button
-                  onClick={() => setBudgetExpanded(!budgetExpanded)}
-                  className="p-2 hover:bg-slate-700/50 rounded-lg transition-colors"
-                >
-                  {budgetExpanded ? <ChevronUp className="w-5 h-5 text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-400" />}
-                </button>
-              </div>
-
-              {/* Main Budget Stats */}
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
-                <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-1">
-                    <p className="text-xs text-amber-400">Pending Approvals</p>
-                    <AlertCircle className="w-4 h-4 text-amber-400" />
-                  </div>
-                  <p className="text-2xl font-bold text-white mb-1">${budgetOverview.pendingAmount.toLocaleString()}</p>
-                  <p className="text-xs text-slate-400">4 items • Oldest: 7 days</p>
-                </div>
-                <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-1">
-                    <p className="text-xs text-green-400">Approved Q4 2024</p>
-                    <TrendingUp className="w-4 h-4 text-green-400" />
-                  </div>
-                  <p className="text-2xl font-bold text-white mb-1">$245,000</p>
-                  <div className="flex items-center gap-1">
-                    <TrendingUp className="w-3 h-3 text-green-400" />
-                    <p className="text-xs text-green-400">+12% vs Q3 ($219K)</p>
-                  </div>
-                </div>
-                <div className={`border rounded-lg p-4 ${
-                  getBudgetStatusColor(budgetOverview.percentUsed) === 'red' ? 'bg-red-500/10 border-red-500/20' :
-                  getBudgetStatusColor(budgetOverview.percentUsed) === 'amber' ? 'bg-amber-500/10 border-amber-500/20' :
-                  'bg-blue-500/10 border-blue-500/20'
-                }`}>
-                  <div className="flex items-center justify-between mb-1">
-                    <p className={`text-xs ${
-                      getBudgetStatusColor(budgetOverview.percentUsed) === 'red' ? 'text-red-400' :
-                      getBudgetStatusColor(budgetOverview.percentUsed) === 'amber' ? 'text-amber-400' :
-                      'text-blue-400'
-                    }`}>Remaining FY24</p>
-                    <DollarSign className={`w-4 h-4 ${
-                      getBudgetStatusColor(budgetOverview.percentUsed) === 'red' ? 'text-red-400' :
-                      getBudgetStatusColor(budgetOverview.percentUsed) === 'amber' ? 'text-amber-400' :
-                      'text-blue-400'
-                    }`} />
-                  </div>
-                  <p className="text-2xl font-bold text-white mb-1">${budgetOverview.remainingBudget.toLocaleString()}</p>
-                  <p className={`text-xs ${
-                    getBudgetStatusColor(budgetOverview.percentUsed) === 'red' ? 'text-red-400' :
-                    getBudgetStatusColor(budgetOverview.percentUsed) === 'amber' ? 'text-amber-400' :
-                    'text-green-400'
-                  }`}>{budgetOverview.percentUsed.toFixed(1)}% utilized (2 months remaining)</p>
-                </div>
-                <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-1">
-                    <p className="text-xs text-purple-400">Q1 2025 Forecast</p>
-                    <Sparkles className="w-4 h-4 text-purple-400" />
-                  </div>
-                  <p className="text-2xl font-bold text-white mb-1">$385K</p>
-                  <p className="text-xs text-slate-400">Based on 6-month trend + current pending</p>
-                </div>
-              </div>
-
-              {/* Budget Utilization Bar */}
-              <div className="mb-4">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm text-slate-300">FY24 Budget Utilization (Oct 1 - Jan 13)</span>
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs text-slate-400">
-                      ${budgetOverview.totalApprovedThisYear.toLocaleString()} / ${budgetOverview.totalBudget.toLocaleString()} allocated
-                    </span>
-                    <span className="text-xs text-slate-500">|</span>
-                    <span className="text-sm font-bold text-white">{budgetOverview.percentUsed.toFixed(1)}%</span>
-                    <span className="text-xs text-slate-500">|</span>
-                    <span className="text-xs text-green-400">${budgetOverview.remainingBudget.toLocaleString()} remaining</span>
-                  </div>
-                </div>
-                <div className="w-full h-3 bg-slate-700/50 rounded-full overflow-hidden">
-                  <div
-                    className={`h-full transition-all ${
-                      getBudgetStatusColor(budgetOverview.percentUsed) === 'red' ? 'bg-red-500' :
-                      getBudgetStatusColor(budgetOverview.percentUsed) === 'amber' ? 'bg-amber-500' :
-                      'bg-green-500'
+            {/* ── Filter Pills (operational style, matches alerts) ── */}
+            {activeTab === 'pending' && (
+              <div className="mb-4 flex items-center gap-1.5 flex-wrap">
+                {[
+                  { id: 'all', label: 'All', count: approvalsList.length },
+                  { id: 'urgent', label: 'Urgent', count: urgentCount },
+                  { id: 'leave', label: 'Leave', count: approvalsList.filter(a => a.type === 'leave').length },
+                  { id: 'budget', label: 'Budget', count: approvalsList.filter(a => a.type === 'budget').length },
+                  { id: 'hiring', label: 'Hiring', count: approvalsList.filter(a => a.type === 'hiring').length },
+                  { id: 'equipment', label: 'Equipment', count: approvalsList.filter(a => a.type === 'equipment').length },
+                ].map(opt => (
+                  <button
+                    key={opt.id}
+                    onClick={() => setFilterType(opt.id)}
+                    className={`px-2.5 py-1 rounded text-[11px] font-medium border transition-all ${
+                      filterType === opt.id
+                        ? 'bg-slate-700/50 border-slate-600/50 text-white'
+                        : 'bg-transparent border-slate-700/20 text-slate-500 hover:text-slate-300 hover:border-slate-600/30'
                     }`}
-                    style={{ width: `${budgetOverview.percentUsed}%` }}
-                  />
-                </div>
+                  >
+                    {opt.label}
+                    <span className={`ml-1 ${filterType === opt.id ? 'text-slate-400' : 'text-slate-600'}`}>{opt.count}</span>
+                  </button>
+                ))}
               </div>
-
-              {/* Quarterly Breakdown */}
-              {budgetExpanded && (
-                <div className="mb-4 pb-4 border-b border-slate-700/50">
-                  <h4 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
-                    <TrendingUp className="w-4 h-4 text-blue-400" />
-                    Quarterly Trends (FY24)
-                  </h4>
-                  <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
-                    <div className="bg-slate-900/50 rounded-lg p-3 border border-slate-700/30">
-                      <p className="text-xs text-slate-400 mb-1">Q1 2024</p>
-                      <p className="text-lg font-bold text-white mb-1">$580K</p>
-                      <div className="flex items-center gap-1">
-                        <div className="w-full h-1.5 bg-slate-700/50 rounded-full overflow-hidden">
-                          <div className="h-full bg-blue-500" style={{ width: '92%' }}></div>
-                        </div>
-                        <span className="text-xs text-slate-400 whitespace-nowrap">92%</span>
-                      </div>
-                    </div>
-                    <div className="bg-slate-900/50 rounded-lg p-3 border border-slate-700/30">
-                      <p className="text-xs text-slate-400 mb-1">Q2 2024</p>
-                      <p className="text-lg font-bold text-white mb-1">$625K</p>
-                      <div className="flex items-center gap-1">
-                        <div className="w-full h-1.5 bg-slate-700/50 rounded-full overflow-hidden">
-                          <div className="h-full bg-green-500" style={{ width: '88%' }}></div>
-                        </div>
-                        <span className="text-xs text-slate-400 whitespace-nowrap">88%</span>
-                      </div>
-                    </div>
-                    <div className="bg-slate-900/50 rounded-lg p-3 border border-slate-700/30">
-                      <p className="text-xs text-slate-400 mb-1">Q3 2024</p>
-                      <p className="text-lg font-bold text-white mb-1">$445K</p>
-                      <div className="flex items-center gap-1">
-                        <div className="w-full h-1.5 bg-slate-700/50 rounded-full overflow-hidden">
-                          <div className="h-full bg-amber-500" style={{ width: '71%' }}></div>
-                        </div>
-                        <span className="text-xs text-slate-400 whitespace-nowrap">71%</span>
-                      </div>
-                    </div>
-                    <div className="bg-slate-900/50 rounded-lg p-3 border border-slate-700/30">
-                      <p className="text-xs text-slate-400 mb-1">Q4 2024</p>
-                      <p className="text-lg font-bold text-white mb-1">$500K</p>
-                      <div className="flex items-center gap-1">
-                        <div className="w-full h-1.5 bg-slate-700/50 rounded-full overflow-hidden">
-                          <div className="h-full bg-green-500" style={{ width: '83%' }}></div>
-                        </div>
-                        <span className="text-xs text-slate-400 whitespace-nowrap">83%</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="mt-3 bg-purple-500/5 border border-purple-500/20 rounded-lg p-3">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Sparkles className="w-4 h-4 text-purple-400" />
-                      <span className="text-xs font-semibold text-purple-400">Q1 2025 Forecast</span>
-                    </div>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                      <div>
-                        <p className="text-[10px] text-slate-400 mb-0.5">Predicted Spend</p>
-                        <p className="text-sm font-bold text-white">$385K</p>
-                      </div>
-                      <div>
-                        <p className="text-[10px] text-slate-400 mb-0.5">Confidence</p>
-                        <p className="text-sm font-bold text-green-400">87%</p>
-                      </div>
-                      <div>
-                        <p className="text-[10px] text-slate-400 mb-0.5">vs Q4 2024</p>
-                        <div className="flex items-center gap-1">
-                          <TrendingDown className="w-3 h-3 text-red-400" />
-                          <p className="text-sm font-bold text-red-400">-23%</p>
-                        </div>
-                      </div>
-                      <div>
-                        <p className="text-[10px] text-slate-400 mb-0.5">Baseline + Pending</p>
-                        <p className="text-sm font-bold text-white">$340K + $45K</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {budgetExpanded && (
-                <div className="pt-4 border-t border-slate-700/50 space-y-3">
-                  <h4 className="text-sm font-semibold text-white mb-3">By Division</h4>
-                  {budgetOverview.byDivision.map((div, idx) => {
-                    const divPercent = (div.approved / div.total) * 100;
-                    return (
-                      <div key={idx}>
-                        <div className="flex items-center justify-between mb-2">
-                          <div className="flex-1">
-                            <span className="text-sm text-slate-300">{div.name}</span>
-                            <p className="text-xs text-slate-500">
-                              ${div.approved.toLocaleString()} / ${div.total.toLocaleString()}
-                              {div.pending > 0 && <span className="text-amber-400 ml-2">(${div.pending.toLocaleString()} pending)</span>}
-                            </p>
-                          </div>
-                          <span className={`text-sm font-bold ${
-                            divPercent >= 95 ? 'text-red-400' : divPercent >= 85 ? 'text-amber-400' : 'text-green-400'
-                          }`}>{divPercent.toFixed(0)}%</span>
-                        </div>
-                        <div className="w-full h-2 bg-slate-700/50 rounded-full overflow-hidden">
-                          <div
-                            className={`h-full ${
-                              divPercent >= 95 ? 'bg-red-500' : divPercent >= 85 ? 'bg-amber-500' : 'bg-green-500'
-                            }`}
-                            style={{ width: `${divPercent}%` }}
-                          />
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
+            )}
 
             {activeTab === 'pending' && (
               <>
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mb-6">
-                  <div className="flex flex-wrap gap-2">
-                    <button
-                      onClick={() => setFilterType('all')}
-                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                        filterType === 'all' ? 'bg-amber-500 text-white' : 'bg-slate-800/40 text-slate-300 hover:bg-slate-800/60'
-                      }`}
-                    >
-                      All ({approvalsList.length})
-                    </button>
-                    <button
-                      onClick={() => setFilterType('urgent')}
-                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                        filterType === 'urgent' ? 'bg-amber-500 text-white' : 'bg-slate-800/40 text-slate-300 hover:bg-slate-800/60'
-                      }`}
-                    >
-                      Urgent ({urgentCount})
-                    </button>
-                    <button
-                      onClick={() => setFilterType('leave')}
-                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                        filterType === 'leave' ? 'bg-amber-500 text-white' : 'bg-slate-800/40 text-slate-300 hover:bg-slate-800/60'
-                      }`}
-                    >
-                      Leave ({approvalsList.filter(a => a.type === 'leave').length})
-                    </button>
-                    <button
-                      onClick={() => setFilterType('budget')}
-                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                        filterType === 'budget' ? 'bg-amber-500 text-white' : 'bg-slate-800/40 text-slate-300 hover:bg-slate-800/60'
-                      }`}
-                    >
-                      Budget ({approvalsList.filter(a => a.type === 'budget').length})
-                    </button>
-                    <button
-                      onClick={() => setFilterType('hiring')}
-                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                        filterType === 'hiring' ? 'bg-amber-500 text-white' : 'bg-slate-800/40 text-slate-300 hover:bg-slate-800/60'
-                      }`}
-                    >
-                      Hiring ({approvalsList.filter(a => a.type === 'hiring').length})
-                    </button>
-                    <button
-                      onClick={() => setFilterType('equipment')}
-                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                        filterType === 'equipment' ? 'bg-amber-500 text-white' : 'bg-slate-800/40 text-slate-300 hover:bg-slate-800/60'
-                      }`}
-                    >
-                      Equipment ({approvalsList.filter(a => a.type === 'equipment').length})
-                    </button>
-                  </div>
-
-                  <select
-                    value={sortBy}
-                    onChange={(e) => setSortBy(e.target.value)}
-                    className="px-4 py-2 bg-slate-800/40 border border-slate-700/50 rounded-lg text-white text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer"
-                  >
-                    <option value="recent">Sort by: Most Recent</option>
-                    <option value="oldest">Sort by: Oldest First</option>
-                    <option value="priority">Sort by: Priority</option>
-                  </select>
-                </div>
-
                 {/* Bulk Actions Toolbar */}
                 {selectedItems.length > 0 && (
-                  <div className="mb-4 bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-500/30 rounded-xl p-4">
-                    <div className="flex items-center justify-between flex-wrap gap-3">
-                      <div className="flex items-center gap-3">
-                        <CheckSquare className="w-5 h-5 text-blue-400" />
-                        <span className="text-sm font-semibold text-white">
-                          {selectedItems.length} item{selectedItems.length !== 1 ? 's' : ''} selected
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <button
-                          onClick={bulkApprove}
-                          className="px-4 py-2 bg-green-500/20 border border-green-500/30 hover:bg-green-500/30 text-green-400 rounded-lg text-sm font-medium transition-all flex items-center gap-2"
-                        >
-                          <ThumbsUp className="w-4 h-4" />
-                          Approve All
-                        </button>
-                        <button
-                          onClick={bulkDeny}
-                          className="px-4 py-2 bg-red-500/20 border border-red-500/30 hover:bg-red-500/30 text-red-400 rounded-lg text-sm font-medium transition-all flex items-center gap-2"
-                        >
-                          <XCircle className="w-4 h-4" />
-                          Deny All
-                        </button>
-                        <button
-                          onClick={bulkRequestInfo}
-                          className="px-4 py-2 bg-blue-500/20 border border-blue-500/30 hover:bg-blue-500/30 text-blue-400 rounded-lg text-sm font-medium transition-all flex items-center gap-2"
-                        >
-                          <Info className="w-4 h-4" />
-                          Request Info
-                        </button>
-                        <button
-                          onClick={() => setSelectedItems([])}
-                          className="px-4 py-2 bg-slate-700/40 border border-slate-600/50 hover:bg-slate-700/60 text-slate-300 rounded-lg text-sm font-medium transition-all"
-                        >
-                          Clear
-                        </button>
-                      </div>
-                    </div>
+                  <div className="mb-3 flex items-center gap-2 px-3 py-2 bg-slate-800/20 border border-slate-700/15 rounded">
+                    <CheckSquare className="w-3.5 h-3.5 text-blue-400" />
+                    <span className="text-[11px] font-semibold text-white">
+                      {selectedItems.length} selected
+                    </span>
+                    <div className="flex-1" />
+                    <button onClick={bulkApprove} className="px-2 py-1 text-[10px] font-medium text-green-400 hover:bg-green-500/10 rounded transition-colors">Approve All</button>
+                    <button onClick={bulkDeny} className="px-2 py-1 text-[10px] font-medium text-red-400 hover:bg-red-500/10 rounded transition-colors">Deny All</button>
+                    <button onClick={() => setSelectedItems([])} className="px-2 py-1 text-[10px] font-medium text-slate-500 hover:text-white rounded transition-colors">Clear</button>
                   </div>
                 )}
 
                 {filteredApprovals.length === 0 ? (
-                  <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-12 text-center">
-                    <CheckCircle className="w-16 h-16 text-green-400 mx-auto mb-4" />
-                    <h3 className="text-xl font-bold text-white mb-2">All caught up!</h3>
-                    <p className="text-slate-400">No pending approvals at this time.</p>
+                  <div className="py-12 text-center">
+                    <CheckCircle className="w-10 h-10 text-green-400/50 mx-auto mb-3" />
+                    <p className="text-sm font-semibold text-white mb-1">All caught up</p>
+                    <p className="text-[11px] text-slate-500">No pending approvals.</p>
                   </div>
                 ) : (
                   <>
-                    {/* Select All Checkbox */}
-                    <div className="mb-3 flex items-center gap-2 px-2">
+                    {/* Select All */}
+                    <div className="mb-2 flex items-center gap-2 px-1">
                       <button
                         onClick={toggleSelectAll}
-                        className="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors"
+                        className="flex items-center gap-1.5 text-[11px] text-slate-500 hover:text-white transition-colors"
                       >
                         {selectedItems.length === filteredApprovals.length ? (
-                          <CheckSquare className="w-4 h-4 text-blue-400" />
+                          <CheckSquare className="w-3.5 h-3.5 text-blue-400" />
                         ) : (
-                          <Square className="w-4 h-4" />
+                          <Square className="w-3.5 h-3.5" />
                         )}
-                        <span className="font-medium">Select all</span>
-                        <span className="text-slate-500">({filteredApprovals.length} items)</span>
+                        Select all ({filteredApprovals.length})
                       </button>
                     </div>
 
-                    <div className="space-y-4">
+                    {/* ── Decision Cards ────────────────────── */}
+                    <div className="space-y-px">
                       {filteredApprovals.map((approval) => {
                         const TypeIcon = getTypeIcon(approval.type);
-                        const typeColor = getTypeColor(approval.type);
                         const isExpanded = expandedCards.includes(approval.id);
                         const isSelected = selectedItems.includes(approval.id);
 
                         return (
                           <div
                             key={approval.id}
-                            className={`bg-slate-800/40 border rounded-xl transition-all ${
-                              approval.urgent ? 'border-amber-500/40 bg-amber-500/5' :
-                              isSelected ? 'border-blue-500/50 bg-blue-500/5' :
-                              'border-slate-700/50'
-                            } ${isExpanded ? 'p-6' : 'p-5'}`}
+                            className={`rounded border transition-colors ${
+                              isSelected ? 'border-blue-500/30 bg-blue-500/[0.03]' :
+                              'border-slate-700/15 bg-slate-800/15 hover:bg-slate-800/25'
+                            }`}
                           >
-                            {/* Card Header */}
-                            <div className="flex items-start gap-4 mb-4">
+                            {/* ── Compact Row ──────────────────────── */}
+                            <div className="flex items-center gap-2.5 px-3.5 py-[9px]">
+                              {/* Urgent strip */}
+                              <div className={`w-[4px] self-stretch rounded-full flex-shrink-0 ${
+                                approval.urgent ? 'bg-amber-500' : 'bg-slate-700/30'
+                              }`}></div>
+
                               {/* Checkbox */}
-                              <button
-                                onClick={() => toggleSelectItem(approval.id)}
-                                className="mt-1 flex-shrink-0"
-                              >
+                              <button onClick={() => toggleSelectItem(approval.id)} className="flex-shrink-0">
                                 {isSelected ? (
-                                  <CheckSquare className="w-5 h-5 text-blue-400" />
+                                  <CheckSquare className="w-3.5 h-3.5 text-blue-400" />
                                 ) : (
-                                  <Square className="w-5 h-5 text-slate-500 hover:text-slate-400 transition-colors" />
+                                  <Square className="w-3.5 h-3.5 text-slate-600 hover:text-slate-400 transition-colors" />
                                 )}
                               </button>
 
-                              {/* Type Icon */}
-                              <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${typeColor}`}>
-                                <TypeIcon className="w-6 h-6" />
+                              {/* Type pill */}
+                              <span className={`px-1.5 py-px border rounded text-[10px] font-semibold flex-shrink-0 leading-tight ${
+                                approval.type === 'leave' ? 'bg-blue-500/10 border-blue-500/20 text-blue-400' :
+                                approval.type === 'budget' ? 'bg-green-500/10 border-green-500/20 text-green-400' :
+                                approval.type === 'hiring' ? 'bg-purple-500/10 border-purple-500/20 text-purple-400' :
+                                'bg-amber-500/10 border-amber-500/20 text-amber-400'
+                              }`}>
+                                {approval.type.charAt(0).toUpperCase() + approval.type.slice(1)}
+                              </span>
+
+                              {/* Title */}
+                              <span className="text-[13px] font-bold flex-1 min-w-0 truncate text-white">
+                                {approval.title} — {approval.details}
+                              </span>
+
+                              {/* Amount */}
+                              {approval.amount && (
+                                <span className="text-[11px] font-semibold text-green-400 flex-shrink-0 font-mono">
+                                  ${approval.amount.toLocaleString()}
+                                </span>
+                              )}
+
+                              {/* Requestor */}
+                              <span className="hidden lg:block text-[10px] text-slate-500 flex-shrink-0 max-w-[140px] truncate">
+                                {approval.submittedBy.split(' (')[0]}
+                              </span>
+
+                              {/* Time pending */}
+                              <span className="text-[10px] text-slate-600 flex-shrink-0 font-mono">
+                                {approval.daysAgo}d ago
+                              </span>
+
+                              {/* Urgent tag + deadline */}
+                              {approval.urgent && (
+                                <span className="px-1.5 py-px bg-red-500/10 border border-red-500/20 rounded text-[10px] font-bold text-red-400 flex-shrink-0">
+                                  {approval.approvalDeadline ? `Due ${approval.approvalDeadline}` :
+                                   approval.offerExpires ? `Expires ${approval.offerExpires}` : 'URGENT'}
+                                </span>
+                              )}
+
+                              {/* AI Recommendation — small bar */}
+                              {approval.aiRecommendation && (
+                                <span className={`hidden md:inline-flex items-center gap-1 px-1.5 py-px rounded text-[10px] font-semibold flex-shrink-0 ${
+                                  approval.aiRecommendation.decision === 'approve'
+                                    ? 'text-green-400/80'
+                                    : 'text-red-400/80'
+                                }`}>
+                                  <Sparkles className="w-2.5 h-2.5" />
+                                  {approval.aiRecommendation.decision === 'approve' ? 'Approve' : 'Deny'} ({approval.aiRecommendation.confidence}%)
+                                </span>
+                              )}
+
+                              {/* Approve / Deny */}
+                              <div className="flex items-center gap-1 flex-shrink-0 ml-1">
+                                <button
+                                  onClick={() => openApprovalModal(approval, 'approve')}
+                                  className="p-1 rounded hover:bg-green-500/15 transition-colors"
+                                  title="Approve"
+                                >
+                                  <ThumbsUp className="w-3.5 h-3.5 text-green-400" />
+                                </button>
+                                <button
+                                  onClick={() => openApprovalModal(approval, 'deny')}
+                                  className="p-1 rounded hover:bg-red-500/15 transition-colors"
+                                  title="Deny"
+                                >
+                                  <XCircle className="w-3.5 h-3.5 text-red-400" />
+                                </button>
+                                <button
+                                  onClick={() => toggleExpandCard(approval.id)}
+                                  className="p-1 rounded hover:bg-slate-700/30 transition-colors"
+                                  title={isExpanded ? 'Collapse' : 'Expand'}
+                                >
+                                  {isExpanded ? <ChevronUp className="w-3.5 h-3.5 text-slate-500" /> : <ChevronDown className="w-3.5 h-3.5 text-slate-500" />}
+                                </button>
                               </div>
+                            </div>
 
-                              {/* Main Content */}
-                              <div className="flex-1 min-w-0">
-                                <div className="flex items-start justify-between gap-3 mb-3">
-                                  <div className="flex-1">
-                                    <div className="flex items-center gap-2 mb-2 flex-wrap">
-                                      <h3 className="text-lg font-semibold text-white">{approval.title}</h3>
-                                      {approval.urgent && (
-                                        <span className="px-2 py-0.5 bg-amber-500/20 border border-amber-500/30 rounded text-xs text-amber-400 font-bold">
-                                          URGENT
-                                        </span>
-                                      )}
-                                    </div>
-                                    <p className="text-sm text-slate-300 mb-2">
-                                      <span className="font-semibold">{approval.submittedBy}</span> • {approval.details}
-                                    </p>
-                                    <div className="flex items-center gap-3 text-xs text-slate-400 flex-wrap">
-                                      <span className="flex items-center gap-1">
-                                        <Building2 className="w-3.5 h-3.5" />
-                                        {approval.division}
-                                      </span>
-                                      <span className="text-slate-600">|</span>
-                                      <span className="flex items-center gap-1">
-                                        <Clock className="w-3.5 h-3.5" />
-                                        {approval.daysAgo} days ago
-                                      </span>
-                                      {approval.amount && (
-                                        <>
-                                          <span className="text-slate-600">|</span>
-                                          <span className="flex items-center gap-1 text-green-400 font-semibold">
-                                            <DollarSign className="w-3.5 h-3.5" />
-                                            ${approval.amount.toLocaleString()}
-                                          </span>
-                                        </>
-                                      )}
-                                      {approval.documents && (
-                                        <>
-                                          <span className="text-slate-600">|</span>
-                                          <span className="flex items-center gap-1">
-                                            <FileText className="w-3.5 h-3.5" />
-                                            {approval.documents.length} documents
-                                          </span>
-                                        </>
-                                      )}
-                                      {approval.leaveBalance && (
-                                        <>
-                                          <span className="text-slate-600">|</span>
-                                          <span className="flex items-center gap-1">
-                                            <Calendar className="w-3.5 h-3.5" />
-                                            Leave balance: {approval.leaveBalance} hrs
-                                          </span>
-                                        </>
-                                      )}
-                                      {approval.backgroundCleared && (
-                                        <>
-                                          <span className="text-slate-600">|</span>
-                                          <span className="flex items-center gap-1 text-green-400">
-                                            <Shield className="w-3.5 h-3.5" />
-                                            Background cleared
-                                          </span>
-                                        </>
-                                      )}
-                                      {approval.vendor && (
-                                        <>
-                                          <span className="text-slate-600">|</span>
-                                          <span className="flex items-center gap-1">
-                                            <Package className="w-3.5 h-3.5" />
-                                            Vendor: {approval.vendor}
-                                          </span>
-                                        </>
-                                      )}
-                                    </div>
-                                    {approval.submittedByTitle && (
-                                      <p className="text-xs text-slate-500 mt-2">
-                                        Submitted by: {approval.submittedBy.split(' (')[0]} ({approval.submittedByTitle})
-                                      </p>
-                                    )}
-                                    {approval.approvalChain && (
-                                      <p className="text-xs text-slate-500 mt-1">
-                                        Approval chain: {approval.approvalChain}
-                                      </p>
-                                    )}
+                            {/* ── Expanded Details ──────────────────── */}
+                            {isExpanded && (
+                              <div className="px-3.5 pb-3 pt-1 ml-[26px] space-y-2.5">
+                                {/* Key context row */}
+                                <div className="flex items-center gap-3 text-[10px] text-slate-400 flex-wrap">
+                                  <span className="flex items-center gap-1">
+                                    <Building2 className="w-3 h-3" />
+                                    {approval.division}
+                                  </span>
+                                  {approval.submittedByTitle && (
+                                    <>
+                                      <span className="text-slate-700">·</span>
+                                      <span>{approval.submittedBy.split(' (')[0]} ({approval.submittedByTitle})</span>
+                                    </>
+                                  )}
+                                  {approval.leaveBalance && (
+                                    <>
+                                      <span className="text-slate-700">·</span>
+                                      <span>Leave balance: {approval.leaveBalance} hrs</span>
+                                    </>
+                                  )}
+                                  {approval.backgroundCleared && (
+                                    <>
+                                      <span className="text-slate-700">·</span>
+                                      <span className="text-green-400">Background cleared</span>
+                                    </>
+                                  )}
+                                  {approval.vendor && (
+                                    <>
+                                      <span className="text-slate-700">·</span>
+                                      <span>Vendor: {approval.vendor}</span>
+                                    </>
+                                  )}
+                                  {approval.approvalChain && (
+                                    <>
+                                      <span className="text-slate-700">·</span>
+                                      <span>{approval.approvalChain}</span>
+                                    </>
+                                  )}
+                                </div>
+
+                                {/* Justification */}
+                                <div className="bg-slate-900/30 rounded p-2.5 border border-slate-700/15">
+                                  <p className="text-[10px] text-slate-500 font-semibold mb-1">Justification</p>
+                                  <p className="text-[11px] text-slate-300 leading-relaxed">{approval.justification}</p>
+                                </div>
+
+                                {/* Impact Analysis */}
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                                  <div className="bg-green-500/[0.03] border border-green-500/10 rounded p-2.5">
+                                    <p className="text-[10px] font-bold text-green-400 mb-1">IF APPROVED</p>
+                                    <p className="text-[10px] text-slate-400 leading-relaxed">{approval.impact.approved}</p>
+                                  </div>
+                                  <div className="bg-red-500/[0.03] border border-red-500/10 rounded p-2.5">
+                                    <p className="text-[10px] font-bold text-red-400 mb-1">IF DENIED</p>
+                                    <p className="text-[10px] text-slate-400 leading-relaxed">{approval.impact.denied}</p>
                                   </div>
                                 </div>
 
-                                {/* AI Recommendation Badge */}
+                                {/* Budget impact (inline if exists) */}
+                                {approval.budgetImpact && (
+                                  <div className="flex items-center gap-4 text-[10px] text-slate-400 bg-slate-900/20 rounded px-2.5 py-2 border border-slate-700/10">
+                                    <span className="text-slate-500 font-semibold">Budget:</span>
+                                    <span>{approval.budgetImpact.category}</span>
+                                    {approval.budgetImpact.allocated && <span>Allocated ${approval.budgetImpact.allocated.toLocaleString()}</span>}
+                                    {approval.budgetImpact.spent && <span>Spent ${approval.budgetImpact.spent.toLocaleString()}</span>}
+                                    {approval.budgetImpact.percentUsed && (
+                                      <span className={
+                                        approval.budgetImpact.percentUsed >= 90 ? 'text-red-400' :
+                                        approval.budgetImpact.percentUsed >= 75 ? 'text-amber-400' :
+                                        'text-green-400'
+                                      }>{approval.budgetImpact.percentUsed}% used</span>
+                                    )}
+                                  </div>
+                                )}
+
+                                {/* AI Analysis (expanded, still subdued) */}
                                 {approval.aiRecommendation && (
-                                  <div className={`mb-3 flex flex-col gap-1`}>
-                                    <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border animate-pulse-subtle ${
-                                      approval.aiRecommendation.decision === 'approve'
-                                        ? 'bg-green-500/10 border-green-500/30'
-                                        : 'bg-red-500/10 border-red-500/30'
-                                    }`} style={{ animation: 'pulse-subtle 3s ease-in-out infinite' }}>
-                                      <Sparkles className={`w-4 h-4 ${
-                                        approval.aiRecommendation.decision === 'approve' ? 'text-green-400' : 'text-red-400'
-                                      }`} />
-                                      <span className={`text-xs font-bold ${
-                                        approval.aiRecommendation.decision === 'approve' ? 'text-green-400' : 'text-red-400'
-                                      }`}>
-                                        AI Recommends: {approval.aiRecommendation.decision.toUpperCase()}
-                                      </span>
-                                      <span className={`text-xs font-semibold ${
-                                        approval.aiRecommendation.confidence >= 90 ? 'text-green-400' :
-                                        approval.aiRecommendation.confidence >= 75 ? 'text-yellow-400' :
-                                        'text-orange-400'
-                                      }`}>
-                                        ({approval.aiRecommendation.confidence}% confidence)
-                                      </span>
+                                  <div className="flex items-start gap-2 text-[10px] text-slate-400">
+                                    <Sparkles className="w-3 h-3 text-slate-500 mt-0.5 flex-shrink-0" />
+                                    <div>
+                                      <span className="text-slate-500 font-semibold">AI Analysis:</span>{' '}
+                                      <span>{approval.aiRecommendation.reasoning}</span>
+                                      {approval.aiRecommendation.urgencyNote && (
+                                        <span className="text-amber-400 ml-1">⚠ {approval.aiRecommendation.urgencyNote}</span>
+                                      )}
+                                      {approval.aiRecommendation.considerations && (
+                                        <span className="text-blue-400 ml-1">{approval.aiRecommendation.considerations}</span>
+                                      )}
                                     </div>
-                                    <p className="text-[10px] text-slate-500 ml-1">
-                                      {approval.aiRecommendation.reasoning.substring(0, 100)}...
-                                    </p>
                                   </div>
                                 )}
 
-                                {/* Justification Preview */}
-                                <div className="bg-slate-900/50 rounded-lg p-3 mb-3 border border-slate-700/30">
-                                  <p className="text-xs text-slate-400 mb-1 font-semibold">Justification</p>
-                                  <p className="text-sm text-slate-300 leading-relaxed">
-                                    {isExpanded ? approval.justification : `${approval.justification.substring(0, 120)}...`}
-                                  </p>
-                                </div>
-
-                                {/* Expanded Details */}
-                                {isExpanded && (
-                                  <div className="space-y-3 mb-4">
-                                    {/* Impact Analysis */}
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                      <div className="bg-green-500/5 border border-green-500/20 rounded-lg p-3">
-                                        <div className="flex items-center gap-2 mb-2">
-                                          <ThumbsUp className="w-4 h-4 text-green-400" />
-                                          <span className="text-xs font-bold text-green-400">IF APPROVED</span>
-                                        </div>
-                                        <p className="text-xs text-slate-300 leading-relaxed">{approval.impact.approved}</p>
-                                      </div>
-                                      <div className="bg-red-500/5 border border-red-500/20 rounded-lg p-3">
-                                        <div className="flex items-center gap-2 mb-2">
-                                          <TrendingDown className="w-4 h-4 text-red-400" />
-                                          <span className="text-xs font-bold text-red-400">IF DENIED</span>
-                                        </div>
-                                        <p className="text-xs text-slate-300 leading-relaxed">{approval.impact.denied}</p>
-                                      </div>
-                                    </div>
-
-                                    {/* Budget Impact Details */}
-                                    {approval.budgetImpact && (
-                                      <div className="bg-blue-500/5 border border-blue-500/20 rounded-lg p-3">
-                                        <div className="flex items-center gap-2 mb-3">
-                                          <DollarSign className="w-4 h-4 text-blue-400" />
-                                          <span className="text-xs font-bold text-blue-400">BUDGET IMPACT</span>
-                                        </div>
-                                        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                                          <div>
-                                            <p className="text-[10px] text-slate-400 mb-1">Category</p>
-                                            <p className="text-xs font-semibold text-white">{approval.budgetImpact.category}</p>
-                                          </div>
-                                          <div>
-                                            <p className="text-[10px] text-slate-400 mb-1">Allocated</p>
-                                            <p className="text-xs font-semibold text-white">${approval.budgetImpact.allocated?.toLocaleString()}</p>
-                                          </div>
-                                          <div>
-                                            <p className="text-[10px] text-slate-400 mb-1">Spent</p>
-                                            <p className="text-xs font-semibold text-white">${approval.budgetImpact.spent?.toLocaleString()}</p>
-                                          </div>
-                                          <div>
-                                            <p className="text-[10px] text-slate-400 mb-1">% Used</p>
-                                            <p className={`text-xs font-semibold ${
-                                              approval.budgetImpact.percentUsed >= 90 ? 'text-red-400' :
-                                              approval.budgetImpact.percentUsed >= 75 ? 'text-amber-400' :
-                                              'text-green-400'
-                                            }`}>{approval.budgetImpact.percentUsed}%</p>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    )}
-
-                                    {/* AI Recommendation Details */}
-                                    {approval.aiRecommendation && (
-                                      <div className="bg-purple-500/5 border border-purple-500/20 rounded-lg p-3">
-                                        <div className="flex items-center gap-2 mb-2">
-                                          <Sparkles className="w-4 h-4 text-purple-400" />
-                                          <span className="text-xs font-bold text-purple-400">AI ANALYSIS</span>
-                                        </div>
-                                        <p className="text-xs text-slate-300 mb-2 leading-relaxed">{approval.aiRecommendation.reasoning}</p>
-                                        {approval.aiRecommendation.urgencyNote && (
-                                          <div className="flex items-start gap-2 mt-2 pt-2 border-t border-purple-500/10">
-                                            <AlertCircle className="w-3 h-3 text-amber-400 mt-0.5 flex-shrink-0" />
-                                            <p className="text-xs text-amber-400">{approval.aiRecommendation.urgencyNote}</p>
-                                          </div>
-                                        )}
-                                        {approval.aiRecommendation.considerations && (
-                                          <div className="flex items-start gap-2 mt-2 pt-2 border-t border-purple-500/10">
-                                            <Info className="w-3 h-3 text-blue-400 mt-0.5 flex-shrink-0" />
-                                            <p className="text-xs text-blue-400">{approval.aiRecommendation.considerations}</p>
-                                          </div>
-                                        )}
-                                      </div>
-                                    )}
-
-                                    {/* Supporting Documents */}
-                                    {approval.documents && approval.documents.length > 0 && (
-                                      <div className="bg-slate-900/50 border border-slate-700/30 rounded-lg p-3">
-                                        <div className="flex items-center gap-2 mb-2">
-                                          <FileCheck className="w-4 h-4 text-slate-400" />
-                                          <span className="text-xs font-bold text-slate-300">SUPPORTING DOCUMENTS</span>
-                                        </div>
-                                        <div className="flex flex-wrap gap-2">
-                                          {approval.documents.map((doc, idx) => (
-                                            <button
-                                              key={idx}
-                                              className="flex items-center gap-1 px-2 py-1 bg-slate-800/50 hover:bg-slate-700/50 border border-slate-600/30 rounded text-xs text-blue-400 transition-all"
-                                            >
-                                              <FileText className="w-3 h-3" />
-                                              {doc}
-                                            </button>
-                                          ))}
-                                        </div>
-                                      </div>
-                                    )}
+                                {/* Documents */}
+                                {approval.documents && approval.documents.length > 0 && (
+                                  <div className="flex items-center gap-2 flex-wrap">
+                                    <FileCheck className="w-3 h-3 text-slate-600" />
+                                    {approval.documents.map((doc, idx) => (
+                                      <button
+                                        key={idx}
+                                        className="flex items-center gap-1 px-1.5 py-0.5 bg-slate-800/30 hover:bg-slate-700/30 border border-slate-700/15 rounded text-[10px] text-blue-400 transition-colors"
+                                      >
+                                        <FileText className="w-2.5 h-2.5" />
+                                        {doc}
+                                      </button>
+                                    ))}
                                   </div>
                                 )}
 
-                                {/* Action Buttons */}
-                                <div className="flex items-center gap-2 flex-wrap">
-                                  <button
-                                    onClick={() => toggleExpandCard(approval.id)}
-                                    className="px-3 py-1.5 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-lg text-xs text-slate-300 font-medium transition-all flex items-center gap-1"
-                                  >
-                                    {isExpanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
-                                    {isExpanded ? 'Show Less' : 'Show Full Details'}
-                                  </button>
+                                {/* Expanded action buttons */}
+                                <div className="flex items-center gap-2 pt-1">
                                   <button
                                     onClick={() => openRequestInfoModal(approval)}
-                                    className="px-3 py-1.5 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 rounded-lg text-xs text-blue-400 font-medium transition-all flex items-center gap-1"
+                                    className="px-2 py-1 text-[10px] font-medium text-blue-400 hover:bg-blue-500/10 rounded transition-colors flex items-center gap-1"
                                   >
                                     <Info className="w-3 h-3" />
-                                    Request More Info
+                                    Request Info
                                   </button>
-                                  <div className="flex-1"></div>
+                                  <div className="flex-1" />
                                   <button
                                     onClick={() => openApprovalModal(approval, 'approve')}
-                                    className="px-4 py-2 bg-green-500/20 border border-green-500/30 hover:bg-green-500/30 rounded-lg transition-all group flex items-center gap-2"
+                                    className="px-3 py-1.5 bg-green-500/10 border border-green-500/20 hover:bg-green-500/20 rounded text-[11px] font-semibold text-green-400 transition-colors flex items-center gap-1.5"
                                   >
-                                    <ThumbsUp className="w-4 h-4 text-green-400 group-hover:scale-110 transition-transform" />
-                                    <span className="text-sm font-medium text-green-400">Approve</span>
+                                    <ThumbsUp className="w-3 h-3" />
+                                    Approve
                                   </button>
                                   <button
                                     onClick={() => openApprovalModal(approval, 'deny')}
-                                    className="px-4 py-2 bg-red-500/20 border border-red-500/30 hover:bg-red-500/30 rounded-lg transition-all group flex items-center gap-2"
+                                    className="px-3 py-1.5 bg-red-500/10 border border-red-500/20 hover:bg-red-500/20 rounded text-[11px] font-semibold text-red-400 transition-colors flex items-center gap-1.5"
                                   >
-                                    <XCircle className="w-4 h-4 text-red-400 group-hover:scale-110 transition-transform" />
-                                    <span className="text-sm font-medium text-red-400">Deny</span>
+                                    <XCircle className="w-3 h-3" />
+                                    Deny
                                   </button>
                                 </div>
                               </div>
-                            </div>
+                            )}
                           </div>
                         );
                       })}
@@ -1568,48 +1081,6 @@ export default function Approvals() {
         </div>
       )}
 
-      <button
-        onClick={() => setChatOpen(!chatOpen)}
-        className="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-400 hover:to-blue-500 rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 z-40"
-      >
-        {chatOpen ? <X className="w-6 h-6 text-white" /> : <MessageCircle className="w-6 h-6 text-white" />}
-      </button>
-
-      {chatOpen && (
-        <div className="fixed bottom-24 right-6 w-full max-w-96 h-[500px] bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-2xl flex flex-col z-40 mx-4 sm:mx-0">
-          <div className="p-4 border-b border-slate-700/50">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <h3 className="text-sm font-semibold text-white">Approvals AI Assistant</h3>
-                <p className="text-xs text-green-400">Online</p>
-              </div>
-            </div>
-          </div>
-          <div className="flex-1 p-4 overflow-y-auto">
-            <div className="flex gap-3">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Sparkles className="w-4 h-4 text-white" />
-              </div>
-              <div className="flex-1">
-                <div className="bg-slate-800/60 p-3 rounded-xl">
-                  <p className="text-sm text-slate-200">Hi! I can help you review approval requests, provide context on budget items, check personnel availability, and answer questions about pending requests. What do you need?</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="p-4 border-t border-slate-700/50">
-            <div className="flex items-center gap-2">
-              <input type="text" placeholder="Ask about approvals..." className="flex-1 px-4 py-2 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-blue-500/50" />
-              <button className="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center">
-                <Send className="w-5 h-5 text-white" />
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </DashboardLayout>
   );
 }
