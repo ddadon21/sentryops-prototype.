@@ -17,6 +17,8 @@ export default function Approvals() {
   const [requestInfoModal, setRequestInfoModal] = useState(null);
   const [infoRequest, setInfoRequest] = useState('');
   const [aiSummaryExpanded, setAiSummaryExpanded] = useState(false);
+  const [sortBy, setSortBy] = useState('urgency');
+  const [logFilter, setLogFilter] = useState('all');
 
   const currentUser = 'Sheriff Thompson';
 
@@ -458,6 +460,12 @@ export default function Approvals() {
     return `${days}d left`;
   };
 
+  const getPendingTime = (daysAgo) => {
+    if (daysAgo === 0) return 'Today';
+    if (daysAgo === 1) return '1d';
+    return `${daysAgo}d`;
+  };
+
   const filteredApprovals = approvalsList
     .filter(approval => {
       if (filterType === 'all') return true;
@@ -465,7 +473,7 @@ export default function Approvals() {
       return approval.type === filterType;
     })
     .sort((a, b) => {
-      // 1. Overdue/critical deadline first
+      // Always: overdue/critical deadline items pinned to top
       const aDeadline = a.deadlineHrs ?? 9999;
       const bDeadline = b.deadlineHrs ?? 9999;
       const aUrgent = aDeadline <= 24;
@@ -473,17 +481,26 @@ export default function Approvals() {
       if (aUrgent && !bUrgent) return -1;
       if (!aUrgent && bUrgent) return 1;
       if (aUrgent && bUrgent) return aDeadline - bDeadline;
-      // 2. High dollar impact
-      const aAmount = a.amount || 0;
-      const bAmount = b.amount || 0;
-      if (aAmount !== bAmount) return bAmount - aAmount;
-      // 3. Longest pending
+      // Secondary sort by user selection
+      if (sortBy === 'amount') return (b.amount || 0) - (a.amount || 0);
+      if (sortBy === 'oldest') return b.daysAgo - a.daysAgo;
+      // Default (urgency): dollar impact then oldest
+      const amountDiff = (b.amount || 0) - (a.amount || 0);
+      if (amountDiff !== 0) return amountDiff;
       return b.daysAgo - a.daysAgo;
     });
 
-  const filteredHistory = activeTab === 'my-decisions'
-    ? approvalHistory.filter(h => h.decidedBy === currentUser)
-    : approvalHistory;
+  const filteredHistory = approvalHistory
+    .filter(h => {
+      if (activeTab === 'my-actions') return h.decidedBy === currentUser;
+      if (logFilter === 'approved') return h.decision === 'approved';
+      if (logFilter === 'denied') return h.decision === 'denied';
+      return true;
+    });
+
+  const myActions = approvalHistory.filter(h => h.decidedBy === currentUser);
+  const myApprovedTotal = myActions.filter(h => h.decision === 'approved' && h.amount).reduce((s, h) => s + h.amount, 0);
+  const myDeniedTotal = myActions.filter(h => h.decision === 'denied' && h.amount).reduce((s, h) => s + h.amount, 0);
 
   const urgentCount = approvalsList.filter(a => a.urgent || (a.deadlineHrs != null && a.deadlineHrs <= 24)).length;
 
@@ -518,7 +535,7 @@ export default function Approvals() {
                       ${pendingAmount.toLocaleString()} pending
                     </span>
                   )}
-                  {(activeTab === 'history' || activeTab === 'my-decisions') && (
+                  {(activeTab === 'decision-log' || activeTab === 'my-actions') && (
                     <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/40 border border-slate-700/30 rounded text-[11px] text-slate-400 hover:text-white transition-colors">
                       <Download className="w-3 h-3" />
                       Export
@@ -543,22 +560,25 @@ export default function Approvals() {
                 {activeTab === 'pending' && <div className="absolute bottom-0 left-0 right-0 h-px bg-amber-500"></div>}
               </button>
               <button
-                onClick={() => setActiveTab('history')}
+                onClick={() => setActiveTab('decision-log')}
                 className={`px-2.5 py-1.5 text-[11px] font-medium transition-all relative ${
-                  activeTab === 'history' ? 'text-white' : 'text-slate-500 hover:text-slate-300'
+                  activeTab === 'decision-log' ? 'text-white' : 'text-slate-500 hover:text-slate-300'
                 }`}
               >
-                History
-                {activeTab === 'history' && <div className="absolute bottom-0 left-0 right-0 h-px bg-amber-500"></div>}
+                Decision Log
+                {activeTab === 'decision-log' && <div className="absolute bottom-0 left-0 right-0 h-px bg-amber-500"></div>}
               </button>
               <button
-                onClick={() => setActiveTab('my-decisions')}
+                onClick={() => setActiveTab('my-actions')}
                 className={`px-2.5 py-1.5 text-[11px] font-medium transition-all relative flex items-center gap-1.5 ${
-                  activeTab === 'my-decisions' ? 'text-white' : 'text-slate-500 hover:text-slate-300'
+                  activeTab === 'my-actions' ? 'text-white' : 'text-slate-500 hover:text-slate-300'
                 }`}
               >
-                My Decisions
-                {activeTab === 'my-decisions' && <div className="absolute bottom-0 left-0 right-0 h-px bg-amber-500"></div>}
+                My Actions
+                <span className={`px-1 py-px rounded text-[10px] ${activeTab === 'my-actions' ? 'bg-amber-500/15 text-amber-400' : 'bg-slate-800/50 text-slate-500'}`}>
+                  {myActions.length}
+                </span>
+                {activeTab === 'my-actions' && <div className="absolute bottom-0 left-0 right-0 h-px bg-amber-500"></div>}
               </button>
             </div>
 
@@ -621,6 +641,30 @@ export default function Approvals() {
                     <span className={`ml-1 ${filterType === opt.id ? 'text-slate-400' : 'text-slate-600'}`}>{opt.count}</span>
                   </button>
                 ))}
+
+                <div className="flex-1" />
+
+                {/* Sort toggle */}
+                <div className="flex items-center gap-1">
+                  <span className="text-[10px] text-slate-600 mr-1">Sort:</span>
+                  {[
+                    { id: 'urgency', label: 'Urgency' },
+                    { id: 'amount', label: 'Amount' },
+                    { id: 'oldest', label: 'Oldest' },
+                  ].map(s => (
+                    <button
+                      key={s.id}
+                      onClick={() => setSortBy(s.id)}
+                      className={`px-2 py-0.5 rounded text-[10px] font-medium transition-all ${
+                        sortBy === s.id
+                          ? 'bg-slate-700/50 text-white'
+                          : 'text-slate-600 hover:text-slate-400'
+                      }`}
+                    >
+                      {s.label}
+                    </button>
+                  ))}
+                </div>
               </div>
             )}
 
@@ -731,9 +775,9 @@ export default function Approvals() {
                                 {approval.submittedBy.split(' (')[0]}
                               </span>
 
-                              {/* Time pending */}
+                              {/* Pending time */}
                               <span className="text-[10px] text-slate-600 flex-shrink-0 font-mono">
-                                {approval.daysAgo === 0 ? 'Today' : `${approval.daysAgo}d ago`}
+                                {getPendingTime(approval.daysAgo)}
                               </span>
 
                               {/* Deadline indicator */}
@@ -935,97 +979,188 @@ export default function Approvals() {
               </>
             )}
 
-            {(activeTab === 'history' || activeTab === 'my-decisions') && (
+            {/* ════════════════════════════════════════════
+                DECISION LOG — Institutional audit record
+                ════════════════════════════════════════════ */}
+            {activeTab === 'decision-log' && (
               <>
-                <div className="mb-4 flex flex-col sm:flex-row gap-3">
-                  <div className="flex-1 relative">
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
+                {/* Filters */}
+                <div className="mb-4 flex items-center gap-1.5 flex-wrap">
+                  {[
+                    { id: 'all', label: 'All', count: approvalHistory.length },
+                    { id: 'approved', label: 'Approved', count: approvalHistory.filter(h => h.decision === 'approved').length },
+                    { id: 'denied', label: 'Denied', count: approvalHistory.filter(h => h.decision === 'denied').length },
+                  ].map(opt => (
+                    <button
+                      key={opt.id}
+                      onClick={() => setLogFilter(opt.id)}
+                      className={`px-2.5 py-1 rounded text-[11px] font-medium border transition-all ${
+                        logFilter === opt.id
+                          ? 'bg-slate-700/50 border-slate-600/50 text-white'
+                          : 'bg-transparent border-slate-700/20 text-slate-500 hover:text-slate-300 hover:border-slate-600/30'
+                      }`}
+                    >
+                      {opt.label}
+                      <span className={`ml-1 ${logFilter === opt.id ? 'text-slate-400' : 'text-slate-600'}`}>{opt.count}</span>
+                    </button>
+                  ))}
+                  <div className="flex-1" />
+                  <div className="flex-1 relative max-w-[240px]">
+                    <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-600" />
                     <input
                       type="text"
-                      placeholder="Search history..."
-                      className="w-full pl-12 pr-4 py-2.5 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
+                      placeholder="Search log..."
+                      className="w-full pl-8 pr-3 py-1 bg-slate-800/30 border border-slate-700/20 rounded text-[11px] text-white placeholder-slate-600 focus:outline-none focus:border-slate-600/50"
                     />
                   </div>
-                  <select className="px-4 py-2.5 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer">
-                    <option>All Types</option>
-                    <option>Leave</option>
-                    <option>Budget</option>
-                    <option>Hiring</option>
-                    <option>Equipment</option>
-                  </select>
                 </div>
 
-                <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl overflow-hidden">
-                  <div className="overflow-x-auto">
-                    <table className="w-full">
-                      <thead className="bg-slate-900/50 border-b border-slate-700/50">
-                        <tr>
-                          <th className="px-4 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Type</th>
-                          <th className="px-4 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Submitted By</th>
-                          <th className="px-4 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Division</th>
-                          <th className="px-4 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Amount</th>
-                          <th className="px-4 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Decision</th>
-                          <th className="px-4 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Decided By</th>
-                          <th className="px-4 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Date</th>
-                          <th className="px-4 py-3 text-right text-xs font-semibold text-slate-400 uppercase tracking-wider">Actions</th>
+                {/* Table */}
+                <div className="border border-slate-700/15 rounded overflow-hidden">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="border-b border-slate-700/20">
+                        <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Type</th>
+                        <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Title</th>
+                        <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Division</th>
+                        <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Amount</th>
+                        <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Decision</th>
+                        <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Decided By</th>
+                        <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Date</th>
+                        <th className="px-3 py-2 text-right text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Reason</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredHistory.map((item) => (
+                        <tr key={item.id} className="border-b border-slate-800/10 hover:bg-slate-800/15 transition-colors">
+                          <td className="px-3 py-2.5">
+                            <span className="text-[11px] text-slate-400 capitalize">{item.type}</span>
+                          </td>
+                          <td className="px-3 py-2.5">
+                            <p className="text-[11px] font-semibold text-white">{item.title}</p>
+                            <p className="text-[10px] text-slate-500">{item.submittedBy} · {item.details}</p>
+                          </td>
+                          <td className="px-3 py-2.5">
+                            <span className="text-[11px] text-slate-400">{item.division}</span>
+                          </td>
+                          <td className="px-3 py-2.5">
+                            {item.amount ? (
+                              <span className="text-[11px] font-mono text-green-400">${item.amount.toLocaleString()}</span>
+                            ) : (
+                              <span className="text-[11px] text-slate-600">—</span>
+                            )}
+                          </td>
+                          <td className="px-3 py-2.5">
+                            <span className={`inline-flex items-center gap-1 px-1.5 py-px rounded text-[10px] font-bold border ${
+                              item.decision === 'approved'
+                                ? 'bg-green-500/10 border-green-500/20 text-green-400'
+                                : 'bg-red-500/10 border-red-500/20 text-red-400'
+                            }`}>
+                              {item.decision === 'approved' ? <CheckCircle className="w-2.5 h-2.5" /> : <XCircle className="w-2.5 h-2.5" />}
+                              {item.decision === 'approved' ? 'Approved' : 'Denied'}
+                            </span>
+                          </td>
+                          <td className="px-3 py-2.5">
+                            <span className="text-[11px] text-slate-400">{item.decidedBy}</span>
+                          </td>
+                          <td className="px-3 py-2.5">
+                            <span className="text-[10px] text-slate-500 font-mono">{new Date(item.decidedDate).toLocaleDateString()}</span>
+                          </td>
+                          <td className="px-3 py-2.5 text-right">
+                            <button
+                              onClick={() => setHistoryDetailModal(item)}
+                              className="text-[10px] text-blue-400 hover:text-blue-300 transition-colors"
+                            >
+                              View
+                            </button>
+                          </td>
                         </tr>
-                      </thead>
-                      <tbody>
-                        {filteredHistory.map((item) => {
-                          const TypeIcon = getTypeIcon(item.type);
-                          return (
-                            <tr key={item.id} className="border-b border-slate-800/30 hover:bg-slate-800/30 transition-colors">
-                              <td className="px-4 py-4">
-                                <div className="flex items-center gap-2">
-                                  <TypeIcon className="w-4 h-4 text-slate-400" />
-                                  <span className="text-sm text-slate-300 capitalize">{item.type}</span>
-                                </div>
-                              </td>
-                              <td className="px-4 py-4">
-                                <p className="text-sm text-slate-300">{item.submittedBy}</p>
-                                <p className="text-xs text-slate-500">{item.details}</p>
-                              </td>
-                              <td className="px-4 py-4">
-                                <p className="text-sm text-slate-300">{item.division}</p>
-                              </td>
-                              <td className="px-4 py-4">
-                                {item.amount ? (
-                                  <p className="text-sm font-mono text-green-400">${item.amount.toLocaleString()}</p>
-                                ) : (
-                                  <p className="text-sm text-slate-500">-</p>
-                                )}
-                              </td>
-                              <td className="px-4 py-4">
-                                <span className={`inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-bold ${
-                                  item.decision === 'approved'
-                                    ? 'bg-green-500/20 text-green-400 border border-green-500/30'
-                                    : 'bg-red-500/20 text-red-400 border border-red-500/30'
-                                }`}>
-                                  {item.decision === 'approved' ? <CheckCircle className="w-3 h-3" /> : <XCircle className="w-3 h-3" />}
-                                  {item.decision.toUpperCase()}
-                                </span>
-                              </td>
-                              <td className="px-4 py-4">
-                                <p className="text-sm text-slate-300">{item.decidedBy}</p>
-                              </td>
-                              <td className="px-4 py-4">
-                                <p className="text-sm text-slate-300">{new Date(item.decidedDate).toLocaleDateString()}</p>
-                              </td>
-                              <td className="px-4 py-4 text-right">
-                                <button
-                                  onClick={() => setHistoryDetailModal(item)}
-                                  className="inline-flex items-center gap-1 px-3 py-1.5 text-sm text-blue-400 hover:text-blue-300 hover:bg-blue-500/10 rounded-lg transition-all"
-                                >
-                                  <Eye className="w-4 h-4" />
-                                  View
-                                </button>
-                              </td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </>
+            )}
+
+            {/* ════════════════════════════════════════════
+                MY ACTIONS — Personal accountability
+                ════════════════════════════════════════════ */}
+            {activeTab === 'my-actions' && (
+              <>
+                {/* Summary bar */}
+                <div className="mb-4 flex items-center gap-3">
+                  <div className="flex items-center gap-2 px-3 py-2 bg-slate-800/20 border border-slate-700/15 rounded">
+                    <span className="text-[10px] text-slate-500 font-medium">Your Decisions This Quarter</span>
+                    <span className="text-slate-700">|</span>
+                    <span className="text-[11px] font-semibold text-green-400">{myActions.filter(h => h.decision === 'approved').length} Approved</span>
+                    <span className="text-[10px] text-slate-500 font-mono">${myApprovedTotal.toLocaleString()}</span>
+                    <span className="text-slate-700">|</span>
+                    <span className="text-[11px] font-semibold text-red-400">{myActions.filter(h => h.decision === 'denied').length} Denied</span>
+                    <span className="text-[10px] text-slate-500 font-mono">${myDeniedTotal.toLocaleString()}</span>
+                    <span className="text-slate-700">|</span>
+                    <span className="text-[10px] text-slate-500">Avg decision time: <span className="text-white font-semibold">4.2 hrs</span></span>
                   </div>
+                </div>
+
+                {/* Table — same compact style */}
+                <div className="border border-slate-700/15 rounded overflow-hidden">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="border-b border-slate-700/20">
+                        <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Type</th>
+                        <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Title</th>
+                        <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Division</th>
+                        <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Amount</th>
+                        <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Your Decision</th>
+                        <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Date</th>
+                        <th className="px-3 py-2 text-right text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Notes</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredHistory.map((item) => (
+                        <tr key={item.id} className="border-b border-slate-800/10 hover:bg-slate-800/15 transition-colors">
+                          <td className="px-3 py-2.5">
+                            <span className="text-[11px] text-slate-400 capitalize">{item.type}</span>
+                          </td>
+                          <td className="px-3 py-2.5">
+                            <p className="text-[11px] font-semibold text-white">{item.title}</p>
+                            <p className="text-[10px] text-slate-500">{item.submittedBy} · {item.details}</p>
+                          </td>
+                          <td className="px-3 py-2.5">
+                            <span className="text-[11px] text-slate-400">{item.division}</span>
+                          </td>
+                          <td className="px-3 py-2.5">
+                            {item.amount ? (
+                              <span className="text-[11px] font-mono text-green-400">${item.amount.toLocaleString()}</span>
+                            ) : (
+                              <span className="text-[11px] text-slate-600">—</span>
+                            )}
+                          </td>
+                          <td className="px-3 py-2.5">
+                            <span className={`inline-flex items-center gap-1 px-1.5 py-px rounded text-[10px] font-bold border ${
+                              item.decision === 'approved'
+                                ? 'bg-green-500/10 border-green-500/20 text-green-400'
+                                : 'bg-red-500/10 border-red-500/20 text-red-400'
+                            }`}>
+                              {item.decision === 'approved' ? <CheckCircle className="w-2.5 h-2.5" /> : <XCircle className="w-2.5 h-2.5" />}
+                              {item.decision === 'approved' ? 'Approved' : 'Denied'}
+                            </span>
+                          </td>
+                          <td className="px-3 py-2.5">
+                            <span className="text-[10px] text-slate-500 font-mono">{new Date(item.decidedDate).toLocaleDateString()}</span>
+                          </td>
+                          <td className="px-3 py-2.5 text-right">
+                            <button
+                              onClick={() => setHistoryDetailModal(item)}
+                              className="text-[10px] text-blue-400 hover:text-blue-300 transition-colors"
+                            >
+                              View
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               </>
             )}
