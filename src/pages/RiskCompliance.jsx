@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import {
-  AlertTriangle, AlertCircle, Calendar, CheckCircle, Shield, FileText,
+  AlertTriangle, Calendar, CheckCircle, Shield, FileText,
   ChevronDown, ChevronUp, TrendingUp, Download,
   Sparkles, Link2
 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 import DashboardLayout from '../layouts/DashboardLayout';
 
 export default function RiskCompliance() {
-  const navigate = useNavigate();
   const [expandedRisks, setExpandedRisks] = useState([]);
   const [riskFilter, setRiskFilter] = useState('all');
   const [aiSummaryExpanded, setAiSummaryExpanded] = useState(false);
@@ -54,7 +52,8 @@ export default function RiskCompliance() {
       nextAudit: 'Continuous',
       openFindings: 2,
       trend: 'up',
-      detail: '156/158 deputies certified | 2 expiring Jan 2025 — training scheduled'
+      detail: '156/158 certified | 2 expiring Jan 2025',
+      autoAction: 'Training approval created · Command alert sent'
     }
   ];
 
@@ -65,70 +64,98 @@ export default function RiskCompliance() {
       severity: 'critical',
       title: 'H2-Pod HVAC System Failure',
       description: 'Temperature 84°F — exceeds ACA max (78°F). 36 inmates in pod.',
-      impactCategory: 'Compliance',
+      impactTags: ['Inmate Safety', 'Federal Compliance', 'Civil Liability'],
       owner: 'Facilities Director Brooks',
       due: 'Dec 13, 2024',
       dueUrgency: 'critical',
       daysLeft: 5,
       status: 'Emergency repair approved — contractor on-site',
       linkedApproval: { id: 4, title: 'Emergency HVAC Repair', amount: 18500, status: 'approved' },
-      auditImpact: 'U.S. Marshals H-Pod inspection Dec 12-14'
+      auditImpact: 'U.S. Marshals H-Pod inspection Dec 12-14',
+      ifUnresolved: [
+        'Federal housing contract revoked — lose $1.2M/yr revenue',
+        'ACA accreditation jeopardized',
+        'Inmate transfer required (36 inmates, pods at 91.5%)',
+        'State detention violation filed'
+      ]
     },
     {
       id: 2,
       severity: 'critical',
       title: 'Body Camera System End-of-Life',
       description: '68 Axon Body 2 cameras reach EOL Dec 31. Vendor discontinuing cloud storage.',
-      impactCategory: 'Compliance',
+      impactTags: ['Evidence Integrity', 'State Compliance', 'Civil Liability'],
       owner: 'IT Director Harrison',
       due: 'Dec 31, 2024',
       dueUrgency: 'soon',
       daysLeft: 23,
       status: 'Replacement purchase pending Sheriff approval',
       linkedApproval: { id: 5, title: 'Body Camera Upgrade', amount: 125000, status: 'pending' },
-      auditImpact: 'State evidence integrity requirements'
+      auditImpact: 'State evidence integrity requirements',
+      ifUnresolved: [
+        'Evidence chain-of-custody gaps in active cases',
+        'State compliance violation — GA POST mandate',
+        'Increased civil liability in use-of-force cases',
+        'Equipment compliance drops 86% → 72%',
+        'Risk trend escalates further (+16% already)'
+      ]
     },
     {
       id: 3,
       severity: 'medium',
       title: 'Patrol Vehicle Inspections Overdue',
       description: '9 of 64 units (14%) past state inspection date.',
-      impactCategory: 'Operational',
+      impactTags: ['Insurance Liability', 'Operational'],
       owner: 'Fleet Manager Anderson',
       due: 'Jan 15, 2025',
       dueUrgency: 'soon',
       daysLeft: 38,
       status: 'Inspection appointments scheduled — 3 complete, 6 remaining',
       linkedApproval: null,
-      auditImpact: 'Insurance liability, operational restrictions'
+      auditImpact: 'Insurance liability, operational restrictions',
+      ifUnresolved: [
+        'Insurance carrier flags non-compliant vehicles',
+        '9 units restricted from patrol duty',
+        'Equipment compliance drops further'
+      ]
     },
     {
       id: 4,
       severity: 'medium',
       title: 'P.O.S.T. Certifications Expiring',
       description: '2 deputies (Chen, Williams) certifications expire Jan 31, 2025.',
-      impactCategory: 'Compliance',
+      impactTags: ['Personnel Compliance', 'Staffing'],
       owner: 'Training Director Martinez',
       due: 'Jan 31, 2025',
       dueUrgency: 'monitor',
       daysLeft: 54,
       status: 'Training sessions scheduled Jan 18-19',
       linkedApproval: { id: 2, title: 'Q1 Training Budget', amount: 43000, status: 'pending' },
-      auditImpact: 'Deputies cannot patrol without active certification'
+      auditImpact: 'Deputies cannot patrol without active certification',
+      ifUnresolved: [
+        'Deputies pulled from patrol — staffing at 97% → 96%',
+        'Training compliance 91.8% → 90.6%',
+        'Auto-alert generated for Staffing & Readiness',
+        'POST audit finding if inspected'
+      ]
     },
     {
       id: 5,
       severity: 'low',
       title: 'ACA Documentation Gaps',
       description: '2 minor documentation findings from Feb 2024 inspection.',
-      impactCategory: 'Compliance',
+      impactTags: ['Accreditation'],
       owner: 'Chief Deputy Harris',
       due: 'Feb 18, 2025',
       dueUrgency: 'monitor',
       daysLeft: 72,
       status: 'Corrective action plans drafted — review pending',
       linkedApproval: null,
-      auditImpact: 'ACA re-accreditation inspection Feb 18-21'
+      auditImpact: 'ACA re-accreditation inspection Feb 18-21',
+      ifUnresolved: [
+        'ACA re-accreditation at risk — audit readiness drops',
+        'Repeat findings flagged in inspection report'
+      ]
     }
   ];
 
@@ -173,21 +200,35 @@ export default function RiskCompliance() {
       rate: 97.2,
       detail: '154/158 incidents reviewed on time',
       status: 'SOP-127 updated Nov 2024',
-      trend: 'stable'
+      trend: 'stable',
+      threshold: 95,
+      autoActions: null
     },
     {
       name: 'Training Certifications',
       rate: 91.8,
       detail: '156/170 deputies current',
       warning: '14 due Jan-Feb 2025',
-      trend: 'down'
+      trend: 'down',
+      threshold: 95,
+      autoActions: [
+        'Training approval auto-created ($43K)',
+        'Staffing readiness alert triggered',
+        'Audit readiness recalculated'
+      ]
     },
     {
       name: 'Equipment Compliance',
       rate: 86.0,
       detail: 'Body cams: 100% operational',
       warning: 'Fleet: 86% inspection current (9 overdue)',
-      trend: 'down'
+      trend: 'down',
+      threshold: 90,
+      autoActions: [
+        'Command alert generated',
+        'Risk item auto-escalated',
+        'Equipment approval flagged for priority'
+      ]
     }
   ];
 
@@ -336,23 +377,23 @@ export default function RiskCompliance() {
               <Sparkles className="w-3 h-3 text-slate-500" />
               <span className="text-[11px] text-slate-400 flex-1 text-left">
                 <span className="text-slate-500 font-medium">AI Summary:</span>{' '}
-                <span className="text-red-400">{criticalCount} critical risks need resolution before Dec audit</span>
+                <span className="text-red-400">{criticalCount} critical risks threaten Dec 12 audit</span>
                 <span className="text-slate-600 mx-1">&middot;</span>
-                <span className="text-amber-400">Equipment risk trend escalating (+16%)</span>
+                <span className="text-amber-400">Equipment/Facility ↑16% — lawsuit exposure</span>
                 <span className="text-slate-600 mx-1">&middot;</span>
-                <span className="text-green-400">Overall compliance strong at {overallCompliance}%</span>
+                <span className="text-green-400">{overallCompliance}% compliant — 3 approvals would push to 96.1%</span>
               </span>
               {aiSummaryExpanded ? <ChevronUp className="w-3 h-3 text-slate-600" /> : <ChevronDown className="w-3 h-3 text-slate-600" />}
             </button>
 
             {aiSummaryExpanded && (
               <div className="mt-1 px-3 py-2.5 bg-slate-800/15 border border-slate-700/10 rounded space-y-1.5">
-                <p className="text-[10px] text-red-400">&bull; HVAC repair in progress but U.S. Marshals inspection in 4 days. Temperature must be below 78&deg;F by Dec 12.</p>
-                <p className="text-[10px] text-red-400">&bull; Body camera EOL Dec 31 &mdash; $125K replacement awaiting approval. State evidence compliance at risk if delayed.</p>
-                <p className="text-[10px] text-amber-400">&bull; ACA re-accreditation Feb 18 at 62% readiness. 2 documentation gaps need resolution. Timeline is tight.</p>
-                <p className="text-[10px] text-amber-400">&bull; 2 P.O.S.T. certifications expiring Jan 31 &mdash; training budget ($43K) pending approval to fund sessions.</p>
-                <p className="text-[10px] text-green-400">&bull; CJIS and PREA fully compliant. Training deficiency trend improved 40%. Use-of-force reviews at 97.2%.</p>
-                <p className="text-[10px] text-slate-400">&bull; If all pending approvals clear: 3 of 5 risks auto-resolve or downgrade. Compliance rate projects to 96.1%.</p>
+                <p className="text-[10px] text-red-400">&bull; HVAC 84&deg;F. Marshals inspect in 4 days. If temp &gt;78&deg;F on Dec 12 &rarr; federal housing violation. Contractor on-site.</p>
+                <p className="text-[10px] text-red-400">&bull; Body cams EOL Dec 31. $125K pending approval. If denied &rarr; evidence gaps, state violation, civil liability exposure.</p>
+                <p className="text-[10px] text-amber-400">&bull; ACA re-accreditation 62% ready, 72 days out. 2 doc gaps unresolved. Below 70% at 30 days triggers AT RISK.</p>
+                <p className="text-[10px] text-amber-400">&bull; 2 P.O.S.T. certs expire Jan 31. Training budget ($43K) pending. If denied &rarr; deputies can't patrol, staffing drops.</p>
+                <p className="text-[10px] text-green-400">&bull; CJIS clean. PREA clean. UOF reviews 97.2%. Training trend ↓40%.</p>
+                <p className="text-[10px] text-slate-400">&bull; Approval cascade: 3 pending approvals resolve 3 of 5 risks. Compliance projects 94.7% &rarr; 96.1%.</p>
               </div>
             )}
           </div>
@@ -418,6 +459,9 @@ export default function RiskCompliance() {
                       </td>
                       <td className="px-3 py-2.5">
                         <span className="text-[10px] text-slate-500">{std.detail}</span>
+                        {std.autoAction && (
+                          <p className="text-[9px] text-amber-400 mt-0.5">⚡ {std.autoAction}</p>
+                        )}
                       </td>
                     </tr>
                   ))}
@@ -486,9 +530,18 @@ export default function RiskCompliance() {
                         {risk.severity}
                       </span>
 
-                      {/* Impact category */}
-                      <span className="px-1.5 py-px bg-slate-700/30 border border-slate-700/20 rounded text-[10px] font-medium text-slate-400 flex-shrink-0">
-                        {risk.impactCategory}
+                      {/* Impact tags */}
+                      <span className="hidden md:flex items-center gap-1 flex-shrink-0">
+                        {risk.impactTags.slice(0, 2).map((tag, i) => (
+                          <span key={i} className={`px-1 py-px rounded text-[9px] font-semibold border ${
+                            tag.includes('Liability') || tag.includes('Safety') ? 'bg-red-500/8 border-red-500/15 text-red-400/90' :
+                            tag.includes('Compliance') || tag.includes('Integrity') ? 'bg-amber-500/8 border-amber-500/15 text-amber-400/90' :
+                            'bg-slate-700/30 border-slate-700/20 text-slate-400'
+                          }`}>{tag}</span>
+                        ))}
+                        {risk.impactTags.length > 2 && (
+                          <span className="text-[9px] text-slate-600">+{risk.impactTags.length - 2}</span>
+                        )}
                       </span>
 
                       {/* Title */}
@@ -534,16 +587,25 @@ export default function RiskCompliance() {
                     {/* Expanded Details */}
                     {isExpanded && (
                       <div className="px-3.5 pb-3 pt-1 ml-[26px] space-y-2">
-                        {/* Description */}
-                        <p className="text-[11px] text-slate-400">{risk.description}</p>
+                        {/* Description + impact tags */}
+                        <div>
+                          <p className="text-[11px] text-slate-400 mb-1.5">{risk.description}</p>
+                          <div className="flex items-center gap-1 flex-wrap">
+                            {risk.impactTags.map((tag, i) => (
+                              <span key={i} className={`px-1.5 py-px rounded text-[9px] font-semibold border ${
+                                tag.includes('Liability') || tag.includes('Safety') ? 'bg-red-500/8 border-red-500/15 text-red-400' :
+                                tag.includes('Compliance') || tag.includes('Integrity') || tag.includes('Accreditation') ? 'bg-amber-500/8 border-amber-500/15 text-amber-400' :
+                                'bg-slate-700/30 border-slate-700/20 text-slate-400'
+                              }`}>{tag}</span>
+                            ))}
+                          </div>
+                        </div>
 
                         {/* Key details row */}
                         <div className="flex items-center gap-3 text-[10px] text-slate-400 flex-wrap">
                           <span>Owner: <span className="text-white font-medium">{risk.owner}</span></span>
                           <span className="text-slate-700">&middot;</span>
                           <span>Due: <span className="text-white font-medium">{risk.due}</span></span>
-                          <span className="text-slate-700">&middot;</span>
-                          <span>Impact: <span className="text-white font-medium">{risk.impactCategory}</span></span>
                         </div>
 
                         {/* Status */}
@@ -557,6 +619,16 @@ export default function RiskCompliance() {
                           <div className="flex items-center gap-2 text-[10px] text-amber-400">
                             <AlertTriangle className="w-3 h-3 flex-shrink-0" />
                             <span>Audit impact: {risk.auditImpact}</span>
+                          </div>
+                        )}
+
+                        {/* If unresolved — cascade chain */}
+                        {risk.ifUnresolved && (
+                          <div className="bg-red-500/[0.02] border border-red-500/10 rounded p-2">
+                            <p className="text-[10px] text-red-400 font-bold mb-1">IF UNRESOLVED:</p>
+                            {risk.ifUnresolved.map((consequence, i) => (
+                              <p key={i} className="text-[10px] text-red-400/80 pl-2">→ {consequence}</p>
+                            ))}
                           </div>
                         )}
 
@@ -608,8 +680,14 @@ export default function RiskCompliance() {
                 <tbody>
                   {upcomingAudits.map((audit) => {
                     const readinessWarning = getReadinessWarning(audit.readiness, audit.daysOut);
+                    const isAtRisk = readinessWarning === 'AT RISK';
+                    const isMonitor = readinessWarning === 'MONITOR';
                     return (
-                      <tr key={audit.id} className="border-b border-slate-800/10 hover:bg-slate-800/15 transition-colors">
+                      <tr key={audit.id} className={`border-b transition-colors ${
+                        isAtRisk ? 'border-red-500/15 bg-red-500/[0.03] hover:bg-red-500/[0.06]' :
+                        isMonitor ? 'border-amber-500/10 bg-amber-500/[0.02] hover:bg-amber-500/[0.04]' :
+                        'border-slate-800/10 hover:bg-slate-800/15'
+                      }`}>
                         <td className="px-3 py-2.5">
                           <div className="flex items-center gap-1.5">
                             <span className="text-[11px] font-semibold text-white">{audit.date}</span>
@@ -708,38 +786,50 @@ export default function RiskCompliance() {
               </div>
 
               <div className="space-y-2">
-                {policyCompliance.map((policy, idx) => (
-                  <div key={idx} className="bg-slate-900/20 border border-slate-700/10 rounded p-2.5">
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-[11px] font-semibold text-white">{policy.name}</span>
-                      <div className="flex items-center gap-1.5">
-                        <span className={`text-[13px] font-bold ${
-                          policy.rate >= 95 ? 'text-green-400' :
-                          policy.rate >= 90 ? 'text-amber-400' :
-                          'text-red-400'
-                        }`}>{policy.rate}%</span>
-                        <span className={`text-[10px] font-semibold ${
-                          policy.trend === 'down' ? 'text-red-400' :
-                          policy.trend === 'up' ? 'text-green-400' :
-                          'text-slate-500'
-                        }`}>
-                          {policy.trend === 'down' ? '↓' : policy.trend === 'up' ? '↑' : '→'}
-                        </span>
+                {policyCompliance.map((policy, idx) => {
+                  const breached = policy.rate < policy.threshold;
+                  return (
+                    <div key={idx} className={`rounded p-2.5 border ${
+                      breached ? 'bg-red-500/[0.02] border-red-500/10' : 'bg-slate-900/20 border-slate-700/10'
+                    }`}>
+                      <div className="flex items-center justify-between mb-1">
+                        <div className="flex items-center gap-2">
+                          <span className="text-[11px] font-semibold text-white">{policy.name}</span>
+                          {breached && (
+                            <span className="px-1 py-px rounded text-[9px] font-bold border bg-red-500/10 border-red-500/20 text-red-400">
+                              BELOW {policy.threshold}%
+                            </span>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <span className={`text-[13px] font-bold ${
+                            policy.rate >= policy.threshold ? 'text-green-400' :
+                            policy.rate >= policy.threshold - 5 ? 'text-amber-400' :
+                            'text-red-400'
+                          }`}>{policy.rate}%</span>
+                          <span className={`text-[10px] font-semibold ${
+                            policy.trend === 'down' ? 'text-red-400' :
+                            policy.trend === 'up' ? 'text-green-400' :
+                            'text-slate-500'
+                          }`}>
+                            {policy.trend === 'down' ? '↓' : policy.trend === 'up' ? '↑' : '→'}
+                          </span>
+                        </div>
                       </div>
+                      <p className="text-[10px] text-slate-500">{policy.detail}</p>
+                      {policy.status && <p className="text-[10px] text-slate-500">{policy.status}</p>}
+                      {policy.warning && <p className="text-[10px] text-amber-400">{policy.warning}</p>}
+                      {breached && policy.autoActions && (
+                        <div className="mt-1.5 pt-1.5 border-t border-red-500/10">
+                          <p className="text-[9px] text-red-400/80 font-bold uppercase mb-0.5">Auto-escalation triggered:</p>
+                          {policy.autoActions.map((action, i) => (
+                            <p key={i} className="text-[10px] text-red-400/70 pl-2">→ {action}</p>
+                          ))}
+                        </div>
+                      )}
                     </div>
-                    <p className="text-[10px] text-slate-500">{policy.detail}</p>
-                    {policy.status && <p className="text-[10px] text-slate-500">{policy.status}</p>}
-                    {policy.warning && <p className="text-[10px] text-amber-400">{policy.warning}</p>}
-                  </div>
-                ))}
-              </div>
-
-              {/* Escalation note */}
-              <div className="mt-2.5 flex items-start gap-2 px-2 py-1.5 bg-amber-500/[0.03] border border-amber-500/10 rounded">
-                <AlertTriangle className="w-3 h-3 text-amber-400 flex-shrink-0 mt-0.5" />
-                <p className="text-[10px] text-amber-400">
-                  Training compliance below 95% &mdash; auto-escalation triggered. Training approval pending ($43K).
-                </p>
+                  );
+                })}
               </div>
             </div>
           </div>
