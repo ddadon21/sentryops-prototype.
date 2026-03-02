@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
   AlertTriangle, Calendar, CheckCircle, Shield, FileText,
   ChevronDown, ChevronUp, TrendingUp, TrendingDown, Download,
-  Sparkles, Link2, Zap
+  Sparkles, Link2, Zap, Gauge
 } from 'lucide-react';
 import DashboardLayout from '../layouts/DashboardLayout';
 
@@ -79,10 +79,10 @@ export default function RiskCompliance() {
       linkedApproval: { id: 4, title: 'Emergency HVAC Repair', amount: 18500, status: 'approved' },
       auditImpact: 'U.S. Marshals H-Pod inspection Dec 12-14',
       ifUnresolved: [
-        'Federal housing contract revoked — lose $1.2M/yr revenue',
-        'ACA accreditation jeopardized',
-        'Inmate transfer required (36 inmates, pods at 91.5%)',
-        'State detention violation filed'
+        'Federal housing contract exposure: $1.2M/yr',
+        'ACA accreditation status: jeopardized',
+        'Inmate transfer required (36 inmates, facility at 91.5% capacity)',
+        'State detention standards violation filed'
       ]
     },
     {
@@ -99,11 +99,11 @@ export default function RiskCompliance() {
       linkedApproval: { id: 5, title: 'Body Camera Upgrade', amount: 125000, status: 'pending' },
       auditImpact: 'State evidence integrity requirements',
       ifUnresolved: [
-        'Evidence chain-of-custody gaps in active cases',
-        'State compliance violation — GA POST mandate',
-        'Increased civil liability in use-of-force cases',
-        'Equipment compliance drops 86% → 72%',
-        'Risk trend escalates further (+16% already)'
+        'Evidence chain-of-custody gaps: 142 active cases affected',
+        'GA POST mandate violation: state compliance status revoked',
+        'Civil liability exposure: unrecorded UOF incidents',
+        'Equipment compliance projection: 86% → 72%',
+        'Risk trend trajectory: +16% and accelerating'
       ]
     },
     {
@@ -120,9 +120,9 @@ export default function RiskCompliance() {
       linkedApproval: null,
       auditImpact: 'Insurance liability, operational restrictions',
       ifUnresolved: [
-        'Insurance carrier flags non-compliant vehicles',
-        '9 units restricted from patrol duty',
-        'Equipment compliance drops further'
+        'Insurance carrier action: 9 vehicles flagged non-compliant',
+        'Patrol capacity reduced: 9 units restricted from duty',
+        'Equipment compliance projection: 86% → 78%'
       ]
     },
     {
@@ -139,10 +139,10 @@ export default function RiskCompliance() {
       linkedApproval: { id: 2, title: 'Q1 Training Budget', amount: 43000, status: 'pending' },
       auditImpact: 'Deputies cannot patrol without active certification',
       ifUnresolved: [
-        'Deputies pulled from patrol — staffing at 97% → 96%',
-        'Training compliance 91.8% → 90.6%',
-        'Auto-alert generated for Staffing & Readiness',
-        'POST audit finding if inspected'
+        'Patrol staffing impact: 2 deputies removed, 97% → 96%',
+        'Training compliance projection: 91.8% → 90.6%',
+        'Staffing & Readiness alert auto-generated',
+        'POST inspection exposure: certification gap documented'
       ]
     },
     {
@@ -159,8 +159,8 @@ export default function RiskCompliance() {
       linkedApproval: null,
       auditImpact: 'ACA re-accreditation inspection Feb 18-21',
       ifUnresolved: [
-        'ACA re-accreditation at risk — audit readiness drops',
-        'Repeat findings flagged in inspection report'
+        'ACA re-accreditation exposure: conditional status probable',
+        'Inspection report: repeat findings documented'
       ]
     }
   ];
@@ -255,6 +255,17 @@ export default function RiskCompliance() {
   const overallCompliance = 94.7;
   const nextAudit = upcomingAudits[0];
 
+  // ── Operational Pressure Index ──────────────────
+  const opiScore = 72;
+  const opiLevel = opiScore >= 75 ? 'Critical' : opiScore >= 50 ? 'High' : opiScore >= 25 ? 'Moderate' : 'Low';
+  const opiColor = opiScore >= 75 ? 'text-red-400' : opiScore >= 50 ? 'text-amber-400' : 'text-green-400';
+  const opiDrivers = [
+    `${criticalCount} critical compliance risks`,
+    `1 audit < 14 days`,
+    'Training compliance below 95% threshold',
+    'Equipment compliance below 90% threshold',
+  ];
+
   const filteredRisks = openRisks.filter(r => {
     if (riskFilter === 'all') return true;
     return r.severity === riskFilter;
@@ -312,8 +323,32 @@ export default function RiskCompliance() {
             </div>
           </div>
 
-          {/* ── Top Summary — 3 Cards ────────────────────── */}
-          <div className="grid grid-cols-3 gap-3 mb-4">
+          {/* ── Top Summary — 4 Cards ────────────────────── */}
+          <div className="grid grid-cols-4 gap-3 mb-4">
+            {/* Operational Pressure Index */}
+            <div className={`bg-slate-800/15 border rounded px-3 py-2.5 ${
+              opiScore >= 75 ? 'border-red-500/20' : opiScore >= 50 ? 'border-amber-500/20' : 'border-slate-700/15'
+            }`}>
+              <div className="flex items-center gap-2 mb-1.5">
+                <Gauge className="w-3.5 h-3.5 text-amber-400" />
+                <span className="text-[10px] font-medium text-slate-500 uppercase tracking-wider">Pressure Index</span>
+              </div>
+              <div className="flex items-baseline gap-2">
+                <span className={`text-xl font-bold ${opiColor}`}>{opiScore}</span>
+                <span className="text-[10px] text-slate-600">/ 100</span>
+                <span className={`px-1.5 py-px rounded text-[9px] font-bold uppercase border ${
+                  opiScore >= 75 ? 'bg-red-500/10 border-red-500/20 text-red-400' :
+                  opiScore >= 50 ? 'bg-amber-500/10 border-amber-500/20 text-amber-400' :
+                  'bg-green-500/10 border-green-500/20 text-green-400'
+                }`}>{opiLevel}</span>
+              </div>
+              <div className="mt-1 space-y-px">
+                {opiDrivers.map((driver, i) => (
+                  <p key={i} className="text-[9px] text-slate-600 leading-tight">{driver}</p>
+                ))}
+              </div>
+            </div>
+
             {/* Open Risk Items */}
             <div className="bg-slate-800/15 border border-slate-700/15 rounded px-3 py-2.5">
               <div className="flex items-center gap-2 mb-1.5">
@@ -393,12 +428,12 @@ export default function RiskCompliance() {
 
             {aiSummaryExpanded && (
               <div className="mt-1 px-3 py-2.5 bg-slate-800/15 border border-slate-700/10 rounded space-y-1.5">
-                <p className="text-[10px] text-red-400">&bull; HVAC 84&deg;F. Marshals inspect in 4 days. If temp &gt;78&deg;F on Dec 12 &rarr; federal housing violation. Contractor on-site.</p>
-                <p className="text-[10px] text-red-400">&bull; Body cams EOL Dec 31. $125K pending approval. If denied &rarr; evidence gaps, state violation, civil liability exposure.</p>
-                <p className="text-[10px] text-amber-400">&bull; ACA re-accreditation 62% ready, 72 days out. 2 doc gaps unresolved. Below 70% at 30 days triggers AT RISK.</p>
-                <p className="text-[10px] text-amber-400">&bull; 2 P.O.S.T. certs expire Jan 31. Training budget ($43K) pending. If denied &rarr; deputies can't patrol, staffing drops.</p>
-                <p className="text-[10px] text-green-400">&bull; CJIS clean. PREA clean. UOF reviews 97.2%. Training trend ↓40%.</p>
-                <p className="text-[10px] text-slate-400">&bull; Approval cascade: 3 pending approvals resolve 3 of 5 risks. Compliance projects 94.7% &rarr; 96.1%.</p>
+                <p className="text-[10px] text-red-400">&bull; HVAC 84&deg;F. USMS inspection in 4 days. Federal housing contract exposure: $1.2M/yr. Contractor on-site.</p>
+                <p className="text-[10px] text-red-400">&bull; Body cams EOL Dec 31. $125K approval pending. If denied: 142 active cases with evidence gaps. State compliance revoked.</p>
+                <p className="text-[10px] text-amber-400">&bull; ACA re-accreditation: 62% ready, 72 days out. 2 documentation findings open. Below 70% at 30d triggers AT RISK.</p>
+                <p className="text-[10px] text-amber-400">&bull; 2 POST certifications expire Jan 31. Training budget ($43K) pending. If denied: 2 deputies removed from patrol.</p>
+                <p className="text-[10px] text-green-400">&bull; CJIS: compliant. PREA: compliant. UOF review rate: 97.2%. Training deficiency trend: &darr;40%.</p>
+                <p className="text-[10px] text-slate-400">&bull; 3 pending approvals ($186K) resolve 3 of 5 open risks. Projected compliance: 94.7% &rarr; 96.1%.</p>
               </div>
             )}
           </div>
@@ -754,8 +789,8 @@ export default function RiskCompliance() {
             </div>
           </div>
 
-          {/* ── Risk Trends (Narrative) + Policy Compliance ── */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+          {/* ── Risk Trends + Policy Compliance ─────────────── */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 mb-4">
 
             {/* Risk Trends — Narrative */}
             <div className="bg-slate-800/15 border border-slate-700/15 rounded p-3">
@@ -867,7 +902,7 @@ export default function RiskCompliance() {
           </div>
 
           {/* ── 30-Day Cascade Projection ───────────────────── */}
-          <div className="mt-4 border border-red-500/15 rounded overflow-hidden">
+          <div className="border border-red-500/15 rounded overflow-hidden">
             <div className="px-3 py-2.5 bg-red-500/[0.03] border-b border-red-500/10">
               <div className="flex items-center gap-2">
                 <Zap className="w-3.5 h-3.5 text-red-400" />
@@ -881,7 +916,7 @@ export default function RiskCompliance() {
             <div className="grid grid-cols-5 gap-px bg-slate-800/10">
               {[
                 { label: 'Overall Compliance', current: '94.7%', projected: '89.2%', direction: 'down', severity: 'critical' },
-                { label: 'Insurance Risk', current: 'Moderate', projected: 'High', direction: 'up', severity: 'critical' },
+                { label: 'Insurance Risk Score', current: 'Moderate', projected: 'High', direction: 'up', severity: 'critical' },
                 { label: 'Federal Funding Risk', current: 'Low', projected: 'Elevated', direction: 'up', severity: 'warning' },
                 { label: 'Command Brief Status', current: 'Amber', projected: 'Red', direction: 'up', severity: 'critical' },
                 { label: 'Budget Reallocation', current: '$0', projected: '$168K', direction: 'up', severity: 'warning' },
@@ -909,11 +944,11 @@ export default function RiskCompliance() {
               <div className="px-3 py-2.5 bg-slate-900/20">
                 <p className="text-[10px] font-bold text-red-400 mb-1.5">POST Certification Cascade</p>
                 <div className="space-y-1">
-                  <p className="text-[10px] text-slate-400">2 certs expire Jan 31</p>
-                  <p className="text-[10px] text-red-400/80 pl-1.5">→ 14 deputies total uncertified</p>
-                  <p className="text-[10px] text-red-400/80 pl-3">→ Staffing drops 97% → 93.5%</p>
-                  <p className="text-[10px] text-red-400/80 pl-4.5">→ 3 shifts below minimum threshold</p>
-                  <p className="text-[10px] text-red-400/80 pl-6">→ POST audit finding if inspected</p>
+                  <p className="text-[10px] text-slate-400">Trigger: 2 certifications expire Jan 31</p>
+                  <p className="text-[10px] text-red-400/80 pl-1.5">→ Uncertified deputies: 14 of 170</p>
+                  <p className="text-[10px] text-red-400/80 pl-3">→ Staffing projection: 97% → 93.5%</p>
+                  <p className="text-[10px] text-red-400/80 pl-4.5">→ Shift coverage: 3 below minimum staffing</p>
+                  <p className="text-[10px] text-red-400/80 pl-6">→ POST inspection exposure: documented finding</p>
                 </div>
               </div>
 
@@ -921,11 +956,11 @@ export default function RiskCompliance() {
               <div className="px-3 py-2.5 bg-slate-900/20">
                 <p className="text-[10px] font-bold text-red-400 mb-1.5">Equipment Compliance Cascade</p>
                 <div className="space-y-1">
-                  <p className="text-[10px] text-slate-400">Body cams EOL Dec 31 + 9 fleet overdue</p>
-                  <p className="text-[10px] text-red-400/80 pl-1.5">→ Equipment compliance 86% → 72%</p>
-                  <p className="text-[10px] text-red-400/80 pl-3">→ Evidence integrity gaps in active cases</p>
-                  <p className="text-[10px] text-red-400/80 pl-4.5">→ Civil liability exposure on UOF incidents</p>
-                  <p className="text-[10px] text-red-400/80 pl-6">→ Insurance carrier flags agency</p>
+                  <p className="text-[10px] text-slate-400">Trigger: 68 body cams EOL Dec 31 + 9 fleet overdue</p>
+                  <p className="text-[10px] text-red-400/80 pl-1.5">→ Equipment compliance projection: 86% → 72%</p>
+                  <p className="text-[10px] text-red-400/80 pl-3">→ Evidence integrity: 142 active cases affected</p>
+                  <p className="text-[10px] text-red-400/80 pl-4.5">→ Civil liability exposure: unrecorded UOF incidents</p>
+                  <p className="text-[10px] text-red-400/80 pl-6">→ Insurance carrier action: agency flagged</p>
                 </div>
               </div>
 
@@ -933,11 +968,11 @@ export default function RiskCompliance() {
               <div className="px-3 py-2.5 bg-slate-900/20">
                 <p className="text-[10px] font-bold text-amber-400 mb-1.5">ACA Accreditation Cascade</p>
                 <div className="space-y-1">
-                  <p className="text-[10px] text-slate-400">Readiness 62%, 2 doc gaps open</p>
-                  <p className="text-[10px] text-amber-400/80 pl-1.5">→ Feb 18 audit readiness drops below 50%</p>
-                  <p className="text-[10px] text-amber-400/80 pl-3">→ Re-accreditation fails — conditional status</p>
-                  <p className="text-[10px] text-amber-400/80 pl-4.5">→ Federal housing contract reviewed</p>
-                  <p className="text-[10px] text-amber-400/80 pl-6">→ $1.2M/yr USMS revenue at risk</p>
+                  <p className="text-[10px] text-slate-400">Trigger: Readiness 62%, 2 documentation findings open</p>
+                  <p className="text-[10px] text-amber-400/80 pl-1.5">→ Feb 18 audit readiness projection: below 50%</p>
+                  <p className="text-[10px] text-amber-400/80 pl-3">→ Re-accreditation outcome: conditional status</p>
+                  <p className="text-[10px] text-amber-400/80 pl-4.5">→ Federal housing contract: under review</p>
+                  <p className="text-[10px] text-amber-400/80 pl-6">→ USMS revenue exposure: $1.2M/yr</p>
                 </div>
               </div>
             </div>
@@ -947,11 +982,11 @@ export default function RiskCompliance() {
               <p className="text-[10px] font-bold text-white mb-1.5">Cross-System Ripple</p>
               <div className="grid grid-cols-2 lg:grid-cols-5 gap-2">
                 {[
-                  { system: 'Command Alerts', action: '3 new critical alerts generated', color: 'red' },
+                  { system: 'Command Alerts', action: '3 critical alerts auto-generated', color: 'red' },
                   { system: 'Approvals', action: '2 emergency approvals auto-created', color: 'amber' },
-                  { system: 'Daily Brief', action: 'Risk headline escalates to RED', color: 'red' },
-                  { system: 'Staffing', action: 'Readiness drops below 94% threshold', color: 'amber' },
-                  { system: 'Budget', action: '$168K reallocation recommendation', color: 'amber' },
+                  { system: 'Daily Brief', action: 'Risk headline status: RED', color: 'red' },
+                  { system: 'Staffing', action: 'Readiness projection: below 94%', color: 'amber' },
+                  { system: 'Budget', action: 'Reallocation recommendation: $168K', color: 'amber' },
                 ].map((ripple, idx) => (
                   <div key={idx} className={`px-2 py-1.5 rounded border ${
                     ripple.color === 'red'
@@ -972,7 +1007,7 @@ export default function RiskCompliance() {
               <div className="flex items-center gap-2">
                 <CheckCircle className="w-3 h-3 text-green-400 flex-shrink-0" />
                 <p className="text-[10px] text-green-400">
-                  <span className="font-bold">Resolution path:</span> Approve 3 pending items ($186K total) → compliance projects to 96.1% → all cascades neutralized → command brief returns to GREEN
+                  <span className="font-bold uppercase">Action Required:</span> Approve 3 pending items ($186K) to neutralize all cascades and restore GREEN status. Projected compliance: 96.1%.
                 </p>
               </div>
             </div>
