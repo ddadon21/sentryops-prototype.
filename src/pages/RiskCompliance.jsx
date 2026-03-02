@@ -254,16 +254,29 @@ export default function RiskCompliance() {
   const lowCount = openRisks.filter(r => r.severity === 'low').length;
   const overallCompliance = 94.7;
   const nextAudit = upcomingAudits[0];
+  const pendingApprovalCount = openRisks.filter(r => r.linkedApproval?.status === 'pending').length;
 
-  // ── Operational Pressure Index ──────────────────
-  const opiScore = 72;
+  // ── Operational Pressure Index (Computed) ──────
+  // Methodology: Weighted composite of risk severity, audit proximity,
+  // compliance breaches, and trend trajectory. Scale 0-100.
+  const opiRiskScore = (criticalCount * 25) + (mediumCount * 10) + (lowCount * 3);
+  const opiAuditScore = upcomingAudits.reduce((sum, a) => {
+    if (a.daysOut < 14) return sum + 15;
+    if (a.daysOut < 30) return sum + 8;
+    return sum;
+  }, 0);
+  const opiComplianceScore = policyCompliance.reduce((sum, p) =>
+    p.rate < p.threshold ? sum + 10 : sum, 0
+  );
+  const opiTrendScore = riskInsights.filter(i => i.direction === 'up').length * 5;
+  const opiScore = Math.min(100, opiRiskScore + opiAuditScore + opiComplianceScore + opiTrendScore);
   const opiLevel = opiScore >= 75 ? 'Critical' : opiScore >= 50 ? 'High' : opiScore >= 25 ? 'Moderate' : 'Low';
   const opiColor = opiScore >= 75 ? 'text-red-400' : opiScore >= 50 ? 'text-amber-400' : 'text-green-400';
-  const opiDrivers = [
-    `${criticalCount} critical compliance risks`,
-    `1 audit < 14 days`,
-    'Training compliance below 95% threshold',
-    'Equipment compliance below 90% threshold',
+  const opiBreakdown = [
+    { label: 'Risk severity', score: opiRiskScore, detail: `${criticalCount}×25 + ${mediumCount}×10 + ${lowCount}×3` },
+    { label: 'Audit proximity', score: opiAuditScore, detail: upcomingAudits.filter(a => a.daysOut < 30).length + ' audits < 30 days' },
+    { label: 'Compliance breach', score: opiComplianceScore, detail: policyCompliance.filter(p => p.rate < p.threshold).length + ' below threshold' },
+    { label: 'Trend trajectory', score: opiTrendScore, detail: riskInsights.filter(i => i.direction === 'up').length + ' escalating' },
   ];
 
   const filteredRisks = openRisks.filter(r => {
@@ -293,6 +306,10 @@ export default function RiskCompliance() {
     <DashboardLayout>
       <div className="p-4 lg:p-6">
         <div className="max-w-[1400px] mx-auto">
+
+          {/* ═══════════════════════════════════════════════════
+               ZONE 1: STATUS — Are we in danger?
+               ═══════════════════════════════════════════════════ */}
 
           {/* ── Page Header ────────────────────────────────── */}
           <div className="mb-4">
@@ -343,8 +360,8 @@ export default function RiskCompliance() {
                 }`}>{opiLevel}</span>
               </div>
               <div className="mt-1 space-y-px">
-                {opiDrivers.map((driver, i) => (
-                  <p key={i} className="text-[9px] text-slate-600 leading-tight">{driver}</p>
+                {opiBreakdown.filter(b => b.score > 0).map((b, i) => (
+                  <p key={i} className="text-[9px] text-slate-600 leading-tight">{b.label}: {b.score}pts — {b.detail}</p>
                 ))}
               </div>
             </div>
@@ -420,7 +437,7 @@ export default function RiskCompliance() {
             >
               <Sparkles className="w-3 h-3 text-slate-500" />
               <span className="text-[11px] text-slate-300 flex-1 text-left">
-                {criticalCount} critical risks threaten Dec 12 audit. Equipment ↑16%. 3 approvals would push compliance to 96.1%.
+                {criticalCount} critical risks threaten Dec 12 audit. Equipment ↑16%. {pendingApprovalCount} approvals pending — projected compliance: 96.1% if approved.
               </span>
               <span className="text-[10px] text-slate-600 flex-shrink-0">{aiSummaryExpanded ? 'Less' : 'Details'}</span>
               {aiSummaryExpanded ? <ChevronUp className="w-3 h-3 text-slate-600" /> : <ChevronDown className="w-3 h-3 text-slate-600" />}
@@ -433,97 +450,16 @@ export default function RiskCompliance() {
                 <p className="text-[10px] text-amber-400">&bull; ACA re-accreditation: 62% ready, 72 days out. 2 documentation findings open. Below 70% at 30d triggers AT RISK.</p>
                 <p className="text-[10px] text-amber-400">&bull; 2 POST certifications expire Jan 31. Training budget ($43K) pending. If denied: 2 deputies removed from patrol.</p>
                 <p className="text-[10px] text-green-400">&bull; CJIS: compliant. PREA: compliant. UOF review rate: 97.2%. Training deficiency trend: &darr;40%.</p>
-                <p className="text-[10px] text-slate-400">&bull; 3 pending approvals ($186K) resolve 3 of 5 open risks. Projected compliance: 94.7% &rarr; 96.1%.</p>
+                <p className="text-[10px] text-slate-400">&bull; {pendingApprovalCount} pending approvals ($186K) resolve {pendingApprovalCount} of {openRisks.length} open risks. Projected compliance: 94.7% &rarr; 96.1%.</p>
               </div>
             )}
           </div>
 
-          {/* ── Compliance Standards (Operational Table) ──── */}
-          <div className="mb-4">
-            <div className="flex items-center gap-2 mb-2 px-1">
-              <Shield className="w-3.5 h-3.5 text-blue-400" />
-              <span className="text-[12px] font-bold text-white">Regulatory Standards</span>
-            </div>
-            <div className="border border-slate-700/15 rounded overflow-hidden">
-              <table className="w-full">
-                <thead>
-                  <tr className="border-b border-slate-700/20">
-                    <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Standard</th>
-                    <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Status</th>
-                    <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Exposure</th>
-                    <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Last Audit</th>
-                    <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Next Audit</th>
-                    <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Findings</th>
-                    <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Trend</th>
-                    <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Detail</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {complianceStandards.map((std) => (
-                    <tr key={std.id} className="border-b border-slate-800/10 hover:bg-slate-800/15 transition-colors">
-                      <td className="px-3 py-2.5">
-                        <span className="text-[11px] font-semibold text-white">{std.name}</span>
-                      </td>
-                      <td className="px-3 py-2.5">
-                        <span className={`inline-flex items-center gap-1 px-1.5 py-px rounded text-[10px] font-bold border ${
-                          std.status === 'compliant'
-                            ? 'bg-green-500/10 border-green-500/20 text-green-400'
-                            : std.status === 'warning'
-                            ? 'bg-amber-500/10 border-amber-500/20 text-amber-400'
-                            : 'bg-red-500/10 border-red-500/20 text-red-400'
-                        }`}>
-                          {std.status === 'compliant' ? <CheckCircle className="w-2.5 h-2.5" /> : <AlertTriangle className="w-2.5 h-2.5" />}
-                          {std.statusLabel || (std.status === 'compliant' ? 'Compliant' : std.status === 'warning' ? 'At Risk' : 'Non-Compliant')}
-                        </span>
-                      </td>
-                      <td className="px-3 py-2.5">
-                        <div className="flex items-center gap-1">
-                          <span className={`px-1.5 py-px rounded text-[9px] font-bold uppercase border ${
-                            std.exposure === 'high' ? 'bg-red-500/10 border-red-500/20 text-red-400' :
-                            std.exposure === 'moderate' ? 'bg-amber-500/10 border-amber-500/20 text-amber-400' :
-                            'bg-slate-700/30 border-slate-700/20 text-slate-500'
-                          }`}>{std.exposure}</span>
-                        </div>
-                        {std.exposureNote && (
-                          <p className="text-[9px] text-slate-600 mt-0.5">{std.exposureNote}</p>
-                        )}
-                      </td>
-                      <td className="px-3 py-2.5">
-                        <span className="text-[10px] text-slate-400 font-mono">{std.lastAudit}</span>
-                      </td>
-                      <td className="px-3 py-2.5">
-                        <span className="text-[10px] text-slate-400 font-mono">{std.nextAudit}</span>
-                      </td>
-                      <td className="px-3 py-2.5">
-                        {std.openFindings > 0 ? (
-                          <span className="text-[10px] font-semibold text-amber-400">{std.openFindings} open</span>
-                        ) : (
-                          <span className="text-[10px] text-slate-600">0</span>
-                        )}
-                      </td>
-                      <td className="px-3 py-2.5">
-                        <span className={`text-[10px] font-semibold ${
-                          std.trend === 'down' ? 'text-green-400' :
-                          std.trend === 'up' ? 'text-red-400' :
-                          'text-slate-500'
-                        }`}>
-                          {std.trend === 'down' ? '↓ Improving' : std.trend === 'up' ? '↑ Escalating' : '→ Stable'}
-                        </span>
-                      </td>
-                      <td className="px-3 py-2.5">
-                        <span className="text-[10px] text-slate-500">{std.detail}</span>
-                        {std.autoAction && (
-                          <p className="text-[9px] text-amber-400 mt-0.5">⚡ {std.autoAction}</p>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
+          {/* ═══════════════════════════════════════════════════
+               ZONE 2: REQUIRED ACTIONS — What's causing it? What must I approve?
+               ═══════════════════════════════════════════════════ */}
 
-          {/* ── Open Risk Items (Core Section) ────────────── */}
+          {/* ── Open Risk Items ────────────────────────────── */}
           <div className="mb-4">
             <div className="flex items-center gap-2 mb-2 px-1">
               <AlertTriangle className="w-3.5 h-3.5 text-red-400" />
@@ -789,6 +725,10 @@ export default function RiskCompliance() {
             </div>
           </div>
 
+          {/* ═══════════════════════════════════════════════════
+               ZONE 3: FORWARD PROJECTION — What happens if we don't act?
+               ═══════════════════════════════════════════════════ */}
+
           {/* ── Risk Trends + Policy Compliance ─────────────── */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 mb-4">
 
@@ -1007,9 +947,82 @@ export default function RiskCompliance() {
               <div className="flex items-center gap-2">
                 <CheckCircle className="w-3 h-3 text-green-400 flex-shrink-0" />
                 <p className="text-[10px] text-green-400">
-                  <span className="font-bold uppercase">Action Required:</span> Approve 3 pending items ($186K) to neutralize all cascades and restore GREEN status. Projected compliance: 96.1%.
+                  <span className="font-bold uppercase">Action Required:</span> Approve {pendingApprovalCount} pending items ($186K) to neutralize all cascades and restore GREEN status. Projected compliance: 96.1%.
                 </p>
               </div>
+            </div>
+          </div>
+
+          {/* ── Regulatory Standards (Reference) ─────────── */}
+          <div className="mt-4">
+            <div className="flex items-center gap-2 mb-2 px-1">
+              <Shield className="w-3.5 h-3.5 text-blue-400" />
+              <span className="text-[12px] font-bold text-white">Regulatory Standards</span>
+              <span className="text-[10px] text-slate-600">Reference</span>
+            </div>
+            <div className="border border-slate-700/15 rounded overflow-hidden">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b border-slate-700/20">
+                    <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Standard</th>
+                    <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Status</th>
+                    <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Exposure</th>
+                    <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Findings</th>
+                    <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Trend</th>
+                    <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Detail</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {complianceStandards.map((std) => (
+                    <tr key={std.id} className="border-b border-slate-800/10 hover:bg-slate-800/15 transition-colors">
+                      <td className="px-3 py-2">
+                        <span className="text-[11px] font-semibold text-white">{std.name}</span>
+                      </td>
+                      <td className="px-3 py-2">
+                        <span className={`inline-flex items-center gap-1 px-1.5 py-px rounded text-[10px] font-bold border ${
+                          std.status === 'compliant'
+                            ? 'bg-green-500/10 border-green-500/20 text-green-400'
+                            : std.status === 'warning'
+                            ? 'bg-amber-500/10 border-amber-500/20 text-amber-400'
+                            : 'bg-red-500/10 border-red-500/20 text-red-400'
+                        }`}>
+                          {std.status === 'compliant' ? <CheckCircle className="w-2.5 h-2.5" /> : <AlertTriangle className="w-2.5 h-2.5" />}
+                          {std.statusLabel || (std.status === 'compliant' ? 'Compliant' : std.status === 'warning' ? 'At Risk' : 'Non-Compliant')}
+                        </span>
+                      </td>
+                      <td className="px-3 py-2">
+                        <span className={`px-1.5 py-px rounded text-[9px] font-bold uppercase border ${
+                          std.exposure === 'high' ? 'bg-red-500/10 border-red-500/20 text-red-400' :
+                          std.exposure === 'moderate' ? 'bg-amber-500/10 border-amber-500/20 text-amber-400' :
+                          'bg-slate-700/30 border-slate-700/20 text-slate-500'
+                        }`}>{std.exposure}</span>
+                      </td>
+                      <td className="px-3 py-2">
+                        {std.openFindings > 0 ? (
+                          <span className="text-[10px] font-semibold text-amber-400">{std.openFindings} open</span>
+                        ) : (
+                          <span className="text-[10px] text-slate-600">0</span>
+                        )}
+                      </td>
+                      <td className="px-3 py-2">
+                        <span className={`text-[10px] font-semibold ${
+                          std.trend === 'down' ? 'text-green-400' :
+                          std.trend === 'up' ? 'text-red-400' :
+                          'text-slate-500'
+                        }`}>
+                          {std.trend === 'down' ? '↓' : std.trend === 'up' ? '↑' : '→'}
+                        </span>
+                      </td>
+                      <td className="px-3 py-2">
+                        <span className="text-[10px] text-slate-500">{std.detail}</span>
+                        {std.autoAction && (
+                          <span className="text-[9px] text-amber-400 ml-1">⚡ {std.autoAction}</span>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
 
