@@ -20,8 +20,6 @@ export default function Approvals() {
   const [sortBy, setSortBy] = useState('urgency');
   const [logFilter, setLogFilter] = useState('all');
 
-  const currentUser = 'Sheriff Thompson';
-
   const [approvalsList, setApprovalsList] = useState([
     {
       id: 1,
@@ -492,15 +490,10 @@ export default function Approvals() {
 
   const filteredHistory = approvalHistory
     .filter(h => {
-      if (activeTab === 'my-actions') return h.decidedBy === currentUser;
       if (logFilter === 'approved') return h.decision === 'approved';
       if (logFilter === 'denied') return h.decision === 'denied';
       return true;
     });
-
-  const myActions = approvalHistory.filter(h => h.decidedBy === currentUser);
-  const myApprovedTotal = myActions.filter(h => h.decision === 'approved' && h.amount).reduce((s, h) => s + h.amount, 0);
-  const myDeniedTotal = myActions.filter(h => h.decision === 'denied' && h.amount).reduce((s, h) => s + h.amount, 0);
 
   const urgentCount = approvalsList.filter(a => a.urgent || (a.deadlineHrs != null && a.deadlineHrs <= 24)).length;
 
@@ -535,7 +528,7 @@ export default function Approvals() {
                       ${pendingAmount.toLocaleString()} pending
                     </span>
                   )}
-                  {(activeTab === 'decision-log' || activeTab === 'my-actions') && (
+                  {activeTab === 'decision-log' && (
                     <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/40 border border-slate-700/30 rounded text-[11px] text-slate-400 hover:text-white transition-colors">
                       <Download className="w-3 h-3" />
                       Export
@@ -567,18 +560,6 @@ export default function Approvals() {
               >
                 Decision Log
                 {activeTab === 'decision-log' && <div className="absolute bottom-0 left-0 right-0 h-px bg-amber-500"></div>}
-              </button>
-              <button
-                onClick={() => setActiveTab('my-actions')}
-                className={`px-2.5 py-1.5 text-[11px] font-medium transition-all relative flex items-center gap-1.5 ${
-                  activeTab === 'my-actions' ? 'text-white' : 'text-slate-500 hover:text-slate-300'
-                }`}
-              >
-                My Actions
-                <span className={`px-1 py-px rounded text-[10px] ${activeTab === 'my-actions' ? 'bg-amber-500/15 text-amber-400' : 'bg-slate-800/50 text-slate-500'}`}>
-                  {myActions.length}
-                </span>
-                {activeTab === 'my-actions' && <div className="absolute bottom-0 left-0 right-0 h-px bg-amber-500"></div>}
               </button>
             </div>
 
@@ -1082,88 +1063,6 @@ export default function Approvals() {
               </>
             )}
 
-            {/* ════════════════════════════════════════════
-                MY ACTIONS — Personal accountability
-                ════════════════════════════════════════════ */}
-            {activeTab === 'my-actions' && (
-              <>
-                {/* Summary bar */}
-                <div className="mb-4 flex items-center gap-3">
-                  <div className="flex items-center gap-2 px-3 py-2 bg-slate-800/20 border border-slate-700/15 rounded">
-                    <span className="text-[10px] text-slate-500 font-medium">Your Decisions This Quarter</span>
-                    <span className="text-slate-700">|</span>
-                    <span className="text-[11px] font-semibold text-green-400">{myActions.filter(h => h.decision === 'approved').length} Approved</span>
-                    <span className="text-[10px] text-slate-500 font-mono">${myApprovedTotal.toLocaleString()}</span>
-                    <span className="text-slate-700">|</span>
-                    <span className="text-[11px] font-semibold text-red-400">{myActions.filter(h => h.decision === 'denied').length} Denied</span>
-                    <span className="text-[10px] text-slate-500 font-mono">${myDeniedTotal.toLocaleString()}</span>
-                    <span className="text-slate-700">|</span>
-                    <span className="text-[10px] text-slate-500">Avg decision time: <span className="text-white font-semibold">4.2 hrs</span></span>
-                  </div>
-                </div>
-
-                {/* Table — same compact style */}
-                <div className="border border-slate-700/15 rounded overflow-hidden">
-                  <table className="w-full">
-                    <thead>
-                      <tr className="border-b border-slate-700/20">
-                        <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Type</th>
-                        <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Title</th>
-                        <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Division</th>
-                        <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Amount</th>
-                        <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Your Decision</th>
-                        <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Date</th>
-                        <th className="px-3 py-2 text-right text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Notes</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {filteredHistory.map((item) => (
-                        <tr key={item.id} className="border-b border-slate-800/10 hover:bg-slate-800/15 transition-colors">
-                          <td className="px-3 py-2.5">
-                            <span className="text-[11px] text-slate-400 capitalize">{item.type}</span>
-                          </td>
-                          <td className="px-3 py-2.5">
-                            <p className="text-[11px] font-semibold text-white">{item.title}</p>
-                            <p className="text-[10px] text-slate-500">{item.submittedBy} · {item.details}</p>
-                          </td>
-                          <td className="px-3 py-2.5">
-                            <span className="text-[11px] text-slate-400">{item.division}</span>
-                          </td>
-                          <td className="px-3 py-2.5">
-                            {item.amount ? (
-                              <span className="text-[11px] font-mono text-green-400">${item.amount.toLocaleString()}</span>
-                            ) : (
-                              <span className="text-[11px] text-slate-600">—</span>
-                            )}
-                          </td>
-                          <td className="px-3 py-2.5">
-                            <span className={`inline-flex items-center gap-1 px-1.5 py-px rounded text-[10px] font-bold border ${
-                              item.decision === 'approved'
-                                ? 'bg-green-500/10 border-green-500/20 text-green-400'
-                                : 'bg-red-500/10 border-red-500/20 text-red-400'
-                            }`}>
-                              {item.decision === 'approved' ? <CheckCircle className="w-2.5 h-2.5" /> : <XCircle className="w-2.5 h-2.5" />}
-                              {item.decision === 'approved' ? 'Approved' : 'Denied'}
-                            </span>
-                          </td>
-                          <td className="px-3 py-2.5">
-                            <span className="text-[10px] text-slate-500 font-mono">{new Date(item.decidedDate).toLocaleDateString()}</span>
-                          </td>
-                          <td className="px-3 py-2.5 text-right">
-                            <button
-                              onClick={() => setHistoryDetailModal(item)}
-                              className="text-[10px] text-blue-400 hover:text-blue-300 transition-colors"
-                            >
-                              View
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </>
-            )}
           </div>
       </div>
 
