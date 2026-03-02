@@ -12,3 +12,12 @@
     @apply min-h-screen m-0 p-0;
   }
 }
+
+@keyframes pulse-warning {
+  0%, 100% { background-color: rgba(239, 68, 68, 0.03); }
+  50% { background-color: rgba(239, 68, 68, 0.08); }
+}
+
+.audit-pulse {
+  animation: pulse-warning 2.5s ease-in-out infinite;
+}

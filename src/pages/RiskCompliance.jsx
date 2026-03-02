@@ -21,6 +21,7 @@ export default function RiskCompliance() {
       nextAudit: 'Sep 2025',
       openFindings: 0,
       trend: 'stable',
+      exposure: 'low',
       detail: 'v5.9 | All 158 staff training current | TAC audit passed'
     },
     {
@@ -32,6 +33,8 @@ export default function RiskCompliance() {
       nextAudit: 'Feb 2025',
       openFindings: 2,
       trend: 'down',
+      exposure: 'moderate',
+      exposureNote: '2 open findings',
       detail: '3 findings resolved, 2 minor remaining (documentation gaps)'
     },
     {
@@ -42,6 +45,7 @@ export default function RiskCompliance() {
       nextAudit: 'Nov 2026',
       openFindings: 0,
       trend: 'stable',
+      exposure: 'low',
       detail: 'Zero substantiated incidents YTD | Staff training: 100%'
     },
     {
@@ -52,6 +56,8 @@ export default function RiskCompliance() {
       nextAudit: 'Continuous',
       openFindings: 2,
       trend: 'up',
+      exposure: 'high',
+      exposureNote: 'Escalating + expiring certs',
       detail: '156/158 certified | 2 expiring Jan 2025',
       autoAction: 'Training approval created · Command alert sent'
     }
@@ -202,6 +208,7 @@ export default function RiskCompliance() {
       status: 'SOP-127 updated Nov 2024',
       trend: 'stable',
       threshold: 95,
+      operationalImpact: null,
       autoActions: null
     },
     {
@@ -211,6 +218,7 @@ export default function RiskCompliance() {
       warning: '14 due Jan-Feb 2025',
       trend: 'down',
       threshold: 95,
+      operationalImpact: '14 deputies uncertified, 3 shifts below staffing threshold',
       autoActions: [
         'Training approval auto-created ($43K)',
         'Staffing readiness alert triggered',
@@ -224,6 +232,7 @@ export default function RiskCompliance() {
       warning: 'Fleet: 86% inspection current (9 overdue)',
       trend: 'down',
       threshold: 90,
+      operationalImpact: '9 patrol units restricted, 2 zones below minimum vehicle count',
       autoActions: [
         'Command alert generated',
         'Risk item auto-escalated',
@@ -375,14 +384,10 @@ export default function RiskCompliance() {
               className="w-full flex items-center gap-2 px-3 py-2 bg-slate-800/20 border border-slate-700/15 rounded hover:bg-slate-800/30 transition-colors"
             >
               <Sparkles className="w-3 h-3 text-slate-500" />
-              <span className="text-[11px] text-slate-400 flex-1 text-left">
-                <span className="text-slate-500 font-medium">AI Summary:</span>{' '}
-                <span className="text-red-400">{criticalCount} critical risks threaten Dec 12 audit</span>
-                <span className="text-slate-600 mx-1">&middot;</span>
-                <span className="text-amber-400">Equipment/Facility ↑16% — lawsuit exposure</span>
-                <span className="text-slate-600 mx-1">&middot;</span>
-                <span className="text-green-400">{overallCompliance}% compliant — 3 approvals would push to 96.1%</span>
+              <span className="text-[11px] text-slate-300 flex-1 text-left">
+                {criticalCount} critical risks threaten Dec 12 audit. Equipment ↑16%. 3 approvals would push compliance to 96.1%.
               </span>
+              <span className="text-[10px] text-slate-600 flex-shrink-0">{aiSummaryExpanded ? 'Less' : 'Details'}</span>
               {aiSummaryExpanded ? <ChevronUp className="w-3 h-3 text-slate-600" /> : <ChevronDown className="w-3 h-3 text-slate-600" />}
             </button>
 
@@ -410,6 +415,7 @@ export default function RiskCompliance() {
                   <tr className="border-b border-slate-700/20">
                     <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Standard</th>
                     <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Status</th>
+                    <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Exposure</th>
                     <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Last Audit</th>
                     <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Next Audit</th>
                     <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Findings</th>
@@ -434,6 +440,18 @@ export default function RiskCompliance() {
                           {std.status === 'compliant' ? <CheckCircle className="w-2.5 h-2.5" /> : <AlertTriangle className="w-2.5 h-2.5" />}
                           {std.statusLabel || (std.status === 'compliant' ? 'Compliant' : std.status === 'warning' ? 'At Risk' : 'Non-Compliant')}
                         </span>
+                      </td>
+                      <td className="px-3 py-2.5">
+                        <div className="flex items-center gap-1">
+                          <span className={`px-1.5 py-px rounded text-[9px] font-bold uppercase border ${
+                            std.exposure === 'high' ? 'bg-red-500/10 border-red-500/20 text-red-400' :
+                            std.exposure === 'moderate' ? 'bg-amber-500/10 border-amber-500/20 text-amber-400' :
+                            'bg-slate-700/30 border-slate-700/20 text-slate-500'
+                          }`}>{std.exposure}</span>
+                        </div>
+                        {std.exposureNote && (
+                          <p className="text-[9px] text-slate-600 mt-0.5">{std.exposureNote}</p>
+                        )}
                       </td>
                       <td className="px-3 py-2.5">
                         <span className="text-[10px] text-slate-400 font-mono">{std.lastAudit}</span>
@@ -682,8 +700,10 @@ export default function RiskCompliance() {
                     const readinessWarning = getReadinessWarning(audit.readiness, audit.daysOut);
                     const isAtRisk = readinessWarning === 'AT RISK';
                     const isMonitor = readinessWarning === 'MONITOR';
+                    const shouldPulse = audit.readiness < 75 && audit.daysOut < 30;
                     return (
                       <tr key={audit.id} className={`border-b transition-colors ${
+                        shouldPulse ? 'border-red-500/20 audit-pulse' :
                         isAtRisk ? 'border-red-500/15 bg-red-500/[0.03] hover:bg-red-500/[0.06]' :
                         isMonitor ? 'border-amber-500/10 bg-amber-500/[0.02] hover:bg-amber-500/[0.04]' :
                         'border-slate-800/10 hover:bg-slate-800/15'
@@ -771,7 +791,14 @@ export default function RiskCompliance() {
                 ))}
               </div>
 
-              <div className="mt-3 pt-2.5 border-t border-slate-700/15 flex items-center gap-3 text-[10px] text-slate-500">
+              <div className="mt-3 pt-2.5 border-t border-red-500/10">
+                <p className="text-[10px] text-red-400 font-semibold">
+                  Projected risk exposure if no action: <span className="text-red-300">+9% next 30 days</span>
+                </p>
+                <p className="text-[9px] text-slate-600 mt-0.5">Driven by equipment EOL + ACA readiness gap + 2 expiring certs</p>
+              </div>
+
+              <div className="mt-2 pt-2 border-t border-slate-700/15 flex items-center gap-3 text-[10px] text-slate-500">
                 <span>Total events: <span className="text-white font-semibold">24</span> (↓14% vs H1)</span>
                 <span className="text-slate-700">&middot;</span>
                 <span>Avg resolution: <span className="text-white font-semibold">8.3d</span> (target: &lt;10d)</span>
@@ -819,6 +846,11 @@ export default function RiskCompliance() {
                       <p className="text-[10px] text-slate-500">{policy.detail}</p>
                       {policy.status && <p className="text-[10px] text-slate-500">{policy.status}</p>}
                       {policy.warning && <p className="text-[10px] text-amber-400">{policy.warning}</p>}
+                      {breached && policy.operationalImpact && (
+                        <p className="text-[10px] text-red-400 mt-0.5">
+                          <span className="font-semibold">Impact:</span> {policy.operationalImpact}
+                        </p>
+                      )}
                       {breached && policy.autoActions && (
                         <div className="mt-1.5 pt-1.5 border-t border-red-500/10">
                           <p className="text-[9px] text-red-400/80 font-bold uppercase mb-0.5">Auto-escalation triggered:</p>
