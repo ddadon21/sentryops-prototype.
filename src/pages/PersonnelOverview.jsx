@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Filter, Download, Mail, Phone, MapPin, AlertCircle, CheckCircle, Clock, ChevronRight, Bell, Users, Award, Calendar, TrendingUp, TrendingDown, MoreVertical, Eye, X, MessageCircle, Sparkles, Send, Plus, FileText, UserPlus, BarChart3, Link2, UserCircle, Shield, Activity, Star, Briefcase } from 'lucide-react';
+import { Search, Filter, Download, Mail, Phone, MapPin, AlertCircle, CheckCircle, Clock, ChevronRight, Bell, Users, Award, Calendar, TrendingUp, TrendingDown, MoreVertical, Eye, X, MessageCircle, Sparkles, Send, Plus, FileText, UserPlus, BarChart3, Link2, UserCircle, Shield, Activity, Star, Briefcase, Zap, Target, ArrowRight, CircleDot, AlertTriangle, Gauge } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import DashboardLayout from '../layouts/DashboardLayout';
@@ -304,6 +304,16 @@ export default function PersonnelOverview() {
     return colors[status] || colors['off-duty'];
   };
 
+  const getOperationalStatus = (person) => {
+    const hasCriticalCert = person.certifications.some(c => c.status === 'expired');
+    const hasExpiringCert = person.certifications.some(c => c.status === 'expiring');
+    if (person.status === 'on-leave') return { label: 'Non-Deployable', color: 'red', icon: AlertTriangle, detail: 'On leave' };
+    if (hasCriticalCert) return { label: 'Restricted', color: 'red', icon: AlertCircle, detail: 'Expired certification' };
+    if (hasExpiringCert) return { label: 'Cert Expiring', color: 'amber', icon: Clock, detail: 'Renewal required' };
+    if (person.status === 'off-duty') return { label: 'Deployable', color: 'green', icon: CheckCircle, detail: 'Off-duty, available' };
+    return { label: 'Deployable', color: 'green', icon: CheckCircle, detail: 'Full duty' };
+  };
+
   const openQuickPeek = (person) => {
     setPeekData(person);
     setQuickPeekOpen(true);
@@ -329,104 +339,125 @@ export default function PersonnelOverview() {
             <div className="flex flex-col xl:flex-row gap-6">
               {/* Main Content */}
               <div className="flex-1 min-w-0">
-                {/* Page Header */}
-                <div className="mb-6">
-                  <h2 className="text-2xl lg:text-3xl font-bold text-white mb-2">Staffing Overview</h2>
-                  <p className="text-slate-400">Manage all department personnel and certifications</p>
+                {/* ── Page Header ─────────────────────────────── */}
+                <div className="mb-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h2 className="text-lg font-bold text-white mb-0.5">Staffing Overview</h2>
+                      <p className="text-[11px] text-slate-500">Operational workforce management + deployment readiness</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/40 border border-slate-700/30 rounded text-[11px] text-slate-400 hover:text-white transition-colors">
+                        <Download className="w-3 h-3" />
+                        Staffing Report
+                      </button>
+                    </div>
+                  </div>
                 </div>
 
-                {/* Enhanced AI Insights */}
+                {/* ── Workforce Status Row (4 cards) ──────────── */}
+                <div className="grid grid-cols-4 gap-3 mb-4">
+                  {/* Workforce Health */}
+                  <div className="bg-slate-800/30 border border-slate-700/15 rounded p-3">
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <Gauge className="w-3.5 h-3.5 text-amber-400" />
+                      <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Workforce Health</span>
+                    </div>
+                    <div className="flex items-baseline gap-1.5">
+                      <span className="text-2xl font-bold text-amber-400">87%</span>
+                      <span className="text-[10px] text-slate-500">composite</span>
+                    </div>
+                    <p className="text-[9px] text-slate-600 mt-0.5">Staffing + compliance + retention</p>
+                  </div>
+
+                  {/* Patrol Coverage */}
+                  <div className="bg-slate-800/30 border border-amber-500/15 rounded p-3">
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <Shield className="w-3.5 h-3.5 text-amber-400" />
+                      <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Patrol Coverage</span>
+                    </div>
+                    <div className="flex items-baseline gap-1.5">
+                      <span className="text-2xl font-bold text-amber-400">75%</span>
+                      <span className="text-[10px] text-amber-400/60">127/170</span>
+                    </div>
+                    <p className="text-[9px] text-amber-400/70 mt-0.5">4 positions below optimal</p>
+                  </div>
+
+                  {/* Certification Compliance */}
+                  <div className="bg-slate-800/30 border border-amber-500/15 rounded p-3">
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <Award className="w-3.5 h-3.5 text-amber-400" />
+                      <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Cert Compliance</span>
+                    </div>
+                    <div className="flex items-baseline gap-1.5">
+                      <span className="text-2xl font-bold text-amber-400">86%</span>
+                      <span className="text-[10px] text-slate-500">target: 95%</span>
+                    </div>
+                    <p className="text-[9px] text-red-400/70 mt-0.5">17 expiring within 30 days</p>
+                  </div>
+
+                  {/* Staffing Gap */}
+                  <div className="bg-slate-800/30 border border-red-500/15 rounded p-3">
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <Users className="w-3.5 h-3.5 text-red-400" />
+                      <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Staffing Gap</span>
+                    </div>
+                    <div className="flex items-baseline gap-1.5">
+                      <span className="text-2xl font-bold text-red-400">12</span>
+                      <span className="text-[10px] text-slate-500">open positions</span>
+                    </div>
+                    <p className="text-[9px] text-red-400/70 mt-0.5">170 of 182 authorized filled</p>
+                  </div>
+                </div>
+
+                {/* ── Workforce Signals (condensed AI) ────────── */}
                 {aiInsightsVisible && (
-                  <div className="mb-6 bg-gradient-to-br from-purple-500/10 to-purple-600/5 border border-purple-500/20 rounded-xl p-5">
-                    <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 bg-purple-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                        <Sparkles className="w-6 h-6 text-purple-400" />
+                  <div className="mb-4 bg-slate-800/20 border border-slate-700/15 rounded p-3">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-2">
+                        <Sparkles className="w-3.5 h-3.5 text-slate-400" />
+                        <span className="text-[11px] font-bold text-white">Workforce Signals</span>
                       </div>
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between mb-3">
-                          <h4 className="text-base font-semibold text-white">AI Sentry Workforce Insights</h4>
-                          <button onClick={() => setAiInsightsVisible(false)} className="text-slate-400 hover:text-white transition-colors">
-                            <X className="w-4 h-4" />
-                          </button>
-                        </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                          {/* Critical */}
-                          <div>
-                            <div className="flex items-center gap-2 mb-2">
-                              <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                              <span className="text-xs font-bold text-red-400 uppercase">Critical</span>
-                            </div>
-                            <ul className="space-y-2 text-sm text-slate-300">
-                              <li className="flex items-start gap-2">
-                                <AlertCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
-                                <span>17 personnel have certifications expiring within 30 days - <span className="text-red-400 font-semibold">Schedule renewals immediately</span></span>
-                              </li>
-                              <li className="flex items-start gap-2">
-                                <Shield className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
-                                <span>Patrol division at 94% staffing - 4 open positions require overtime approval</span>
-                              </li>
-                            </ul>
-                          </div>
-
-                          {/* Monitoring */}
-                          <div>
-                            <div className="flex items-center gap-2 mb-2">
-                              <div className="w-2 h-2 bg-amber-500 rounded-full"></div>
-                              <span className="text-xs font-bold text-amber-400 uppercase">Monitoring</span>
-                            </div>
-                            <ul className="space-y-2 text-sm text-slate-300">
-                              <li className="flex items-start gap-2">
-                                <Clock className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
-                                <span>23 certifications expiring within 60 days total</span>
-                              </li>
-                              <li className="flex items-start gap-2">
-                                <Users className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
-                                <span>12 open positions (prioritize: 4 Patrol, 3 Detention)</span>
-                              </li>
-                              <li className="flex items-start gap-2">
-                                <Award className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
-                                <span>Average years of service: 8.4 years (experienced workforce)</span>
-                              </li>
-                            </ul>
-                          </div>
-
-                          {/* Operational Status */}
-                          <div>
-                            <div className="flex items-center gap-2 mb-2">
-                              <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                              <span className="text-xs font-bold text-emerald-400 uppercase">Operational Status</span>
-                            </div>
-                            <ul className="space-y-2 text-sm text-slate-300">
-                              <li className="flex items-start gap-2">
-                                <CheckCircle className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
-                                <span>127 of 170 on duty (75% - optimal coverage)</span>
-                              </li>
-                              <li className="flex items-start gap-2">
-                                <TrendingDown className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
-                                <span>Turnover rate: 6.5% (below industry avg of 12%)</span>
-                              </li>
-                              <li className="flex items-start gap-2">
-                                <Activity className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
-                                <span>Certification compliance: 86% current</span>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-
-                        <div className="flex gap-3 mt-4">
-                          <button className="px-4 py-2 bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/30 text-purple-300 rounded-lg text-sm font-medium transition-colors">
-                            View Recommendations
-                          </button>
-                          <button onClick={() => setShowCertManagement(!showCertManagement)} className="px-4 py-2 bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/30 text-purple-300 rounded-lg text-sm font-medium transition-colors">
-                            Manage Certifications
-                          </button>
-                          <button onClick={() => setShowHiringPipeline(!showHiringPipeline)} className="px-4 py-2 bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/30 text-purple-300 rounded-lg text-sm font-medium transition-colors">
-                            Hiring Pipeline
-                          </button>
-                        </div>
+                      <button onClick={() => setAiInsightsVisible(false)} className="text-slate-600 hover:text-slate-400 transition-colors">
+                        <X className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
+                      <div className="flex items-start gap-2 px-2.5 py-2 rounded bg-red-500/[0.03] border border-red-500/10">
+                        <div className="w-1.5 h-1.5 bg-red-500 rounded-full mt-1 flex-shrink-0"></div>
+                        <p className="text-[10px] text-slate-300">17 certifications expire within 30 days</p>
+                      </div>
+                      <div className="flex items-start gap-2 px-2.5 py-2 rounded bg-amber-500/[0.02] border border-amber-500/10">
+                        <div className="w-1.5 h-1.5 bg-amber-500 rounded-full mt-1 flex-shrink-0"></div>
+                        <p className="text-[10px] text-slate-300">Patrol staffing at 75% coverage</p>
+                      </div>
+                      <div className="flex items-start gap-2 px-2.5 py-2 rounded bg-amber-500/[0.02] border border-amber-500/10">
+                        <div className="w-1.5 h-1.5 bg-amber-500 rounded-full mt-1 flex-shrink-0"></div>
+                        <p className="text-[10px] text-slate-300">12 open positions affecting detention + patrol</p>
+                      </div>
+                      <div className="flex items-start gap-2 px-2.5 py-2 rounded bg-green-500/[0.02] border border-green-500/10">
+                        <div className="w-1.5 h-1.5 bg-green-500 rounded-full mt-1 flex-shrink-0"></div>
+                        <p className="text-[10px] text-slate-300">Turnover 6.5% (below national average)</p>
                       </div>
                     </div>
+                    <div className="flex gap-2 mt-2.5">
+                      <button onClick={() => setShowCertManagement(!showCertManagement)} className="px-3 py-1.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/30 text-slate-300 rounded text-[10px] font-medium transition-colors">
+                        Manage Certifications
+                      </button>
+                      <button onClick={() => setShowHiringPipeline(!showHiringPipeline)} className="px-3 py-1.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/30 text-slate-300 rounded text-[10px] font-medium transition-colors">
+                        Hiring Pipeline
+                      </button>
+                      <button onClick={() => navigate(createPageUrl('TrainingCertifications'))} className="px-3 py-1.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/30 text-slate-300 rounded text-[10px] font-medium transition-colors">
+                        Training Schedule
+                      </button>
+                    </div>
+                  </div>
+                )}
+                {!aiInsightsVisible && (
+                  <div className="mb-4 flex justify-end">
+                    <button onClick={() => setAiInsightsVisible(true)} className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/30 border border-slate-700/20 rounded text-[10px] text-slate-500 hover:text-white transition-colors">
+                      <Sparkles className="w-3 h-3" />Show Signals
+                    </button>
                   </div>
                 )}
 
@@ -1019,6 +1050,7 @@ export default function PersonnelOverview() {
                         <th className="px-4 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Performance</th>
                         <th className="px-4 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Last Check-in</th>
                         <th className="px-4 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Status</th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Operational</th>
                         <th className="px-4 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Certifications</th>
                         <th className="px-4 py-3 text-right text-xs font-semibold text-slate-400 uppercase tracking-wider">Actions</th>
                       </tr>
@@ -1086,6 +1118,22 @@ export default function PersonnelOverview() {
                                 <div className="w-2 h-2 rounded-full bg-current"></div>
                                 <span className="capitalize">{person.status.replace('-', ' ')}</span>
                               </div>
+                            </td>
+                            <td className="px-4 py-4">
+                              {(() => {
+                                const opStatus = getOperationalStatus(person);
+                                const OpIcon = opStatus.icon;
+                                return (
+                                  <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 border rounded-full text-[10px] font-semibold ${
+                                    opStatus.color === 'red' ? 'bg-red-500/15 border-red-500/25 text-red-400' :
+                                    opStatus.color === 'amber' ? 'bg-amber-500/15 border-amber-500/25 text-amber-400' :
+                                    'bg-green-500/15 border-green-500/25 text-green-400'
+                                  }`}>
+                                    <OpIcon className="w-3 h-3" />
+                                    <span>{opStatus.label}</span>
+                                  </div>
+                                );
+                              })()}
                             </td>
                             <td className="px-4 py-4">
                               <div className="group/cert relative inline-block">
@@ -1244,18 +1292,18 @@ export default function PersonnelOverview() {
                     </div>
                   </div>
 
-                  {/* Expiring Certs - Enhanced */}
-                  <div className="bg-slate-800/40 backdrop-blur-xl border border-slate-700/50 rounded-xl p-5">
+                  {/* Expiring Certs - With Operational Impact */}
+                  <div className="bg-slate-800/40 backdrop-blur-xl border border-amber-500/20 rounded-xl p-5">
                     <div className="flex items-center gap-3 mb-2">
                       <div className="w-10 h-10 bg-amber-500/20 rounded-xl flex items-center justify-center">
                         <Clock className="w-5 h-5 text-amber-400" />
                       </div>
                       <div>
                         <p className="text-2xl font-bold text-white">{stats.expiring}</p>
-                        <p className="text-xs text-slate-400">Expiring Certs</p>
+                        <p className="text-xs text-slate-400">Expiring Certifications</p>
                       </div>
                     </div>
-                    <div className="mt-4 pt-4 border-t border-slate-700/50 space-y-2">
+                    <div className="mt-3 pt-3 border-t border-slate-700/50 space-y-2">
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-400">Urgent (&lt;7 days):</span>
                         <span className="text-red-400 font-semibold">5</span>
@@ -1268,22 +1316,19 @@ export default function PersonnelOverview() {
                         <span className="text-slate-400">Expired:</span>
                         <span className="text-red-400 font-semibold">6</span>
                       </div>
-                      <div className="flex justify-between text-xs pt-2 border-t border-slate-700/50">
-                        <span className="text-slate-400">Compliance rate:</span>
-                        <span className="text-amber-400 font-semibold">86%</span>
-                      </div>
-                      <div className="flex justify-between text-xs">
-                        <span className="text-slate-400">Target:</span>
-                        <span className="text-slate-300 font-medium">95%</span>
-                      </div>
-                      <div className="flex justify-between text-xs">
-                        <span className="text-slate-400">Gap:</span>
-                        <span className="text-red-400 font-semibold">-9%</span>
-                      </div>
-                      <button onClick={() => setShowCertManagement(true)} className="mt-2 w-full px-3 py-1.5 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/30 text-amber-400 rounded-lg text-xs font-medium transition-colors">
-                        Manage Now
-                      </button>
                     </div>
+                    {/* Operational Impact */}
+                    <div className="mt-3 pt-3 border-t border-red-500/15">
+                      <p className="text-[9px] font-bold text-red-400 uppercase tracking-wider mb-1.5">Operational Impact</p>
+                      <div className="space-y-1.5">
+                        <p className="text-[10px] text-slate-300">6 Patrol Deputies affected</p>
+                        <p className="text-[10px] text-slate-300">Patrol coverage would drop to <span className="text-red-400 font-bold">69%</span></p>
+                        <p className="text-[10px] text-slate-300">Training required within <span className="text-amber-400 font-bold">21 days</span></p>
+                      </div>
+                    </div>
+                    <button onClick={() => navigate(createPageUrl('TrainingCertifications'))} className="mt-3 w-full px-3 py-2 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/30 text-amber-400 rounded-lg text-xs font-semibold transition-colors">
+                      Schedule Training
+                    </button>
                   </div>
 
                   {/* Open Positions - Enhanced */}
@@ -1330,6 +1375,89 @@ export default function PersonnelOverview() {
                         View Pipeline
                       </button>
                     </div>
+                  </div>
+
+                  {/* ── Coverage Risk Panel ─────────────────────── */}
+                  <div className="bg-slate-800/40 backdrop-blur-xl border border-red-500/20 rounded-xl p-5">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Target className="w-4 h-4 text-red-400" />
+                      <span className="text-xs font-bold text-white">Coverage Risk</span>
+                    </div>
+                    <div className="space-y-2">
+                      {[
+                        { zone: 'North Patrol', required: 12, current: 9, risk: 'amber' },
+                        { zone: 'Central Patrol', required: 10, current: 8, risk: 'red' },
+                        { zone: 'South Patrol', required: 8, current: 8, risk: 'green' },
+                        { zone: 'Detention', required: 52, current: 49, risk: 'amber' },
+                      ].map((z, i) => (
+                        <div key={i} className="flex items-center justify-between text-xs">
+                          <span className="text-slate-400">{z.zone}</span>
+                          <div className="flex items-center gap-2">
+                            <span className="text-slate-300 font-mono text-[10px]">{z.current}/{z.required}</span>
+                            <div className={`w-2 h-2 rounded-full ${
+                              z.risk === 'red' ? 'bg-red-500' : z.risk === 'amber' ? 'bg-amber-500' : 'bg-green-500'
+                            }`}></div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="mt-3 pt-3 border-t border-slate-700/30">
+                      <div className="flex items-start gap-2">
+                        <Sparkles className="w-3 h-3 text-slate-400 mt-0.5 flex-shrink-0" />
+                        <p className="text-[10px] text-slate-400">Reassign 2 deputies from investigations to central patrol to prevent overtime escalation.</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* ── Certification Cascade Risk ──────────────── */}
+                  <div className="bg-slate-800/40 backdrop-blur-xl border border-red-500/15 rounded-xl p-5">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Zap className="w-4 h-4 text-red-400" />
+                      <span className="text-xs font-bold text-white">Certification Cascade</span>
+                    </div>
+                    <div className="bg-red-500/[0.03] border border-red-500/10 rounded-lg p-3 mb-3">
+                      <p className="text-[9px] font-bold text-red-400 uppercase tracking-wider mb-1">Trigger: POST certs expiring Jan 31</p>
+                      <div className="space-y-1.5 mt-2">
+                        <p className="text-[10px] text-slate-300">Patrol coverage drops to <span className="text-red-400 font-bold">72%</span></p>
+                        <p className="text-[10px] text-slate-300">4 deputies removed from deployable pool</p>
+                        <p className="text-[10px] text-slate-300">Overtime projection: <span className="text-red-400 font-bold">+$9,400</span></p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2 px-2.5 py-2 bg-green-500/[0.03] border border-green-500/15 rounded-lg">
+                      <CheckCircle className="w-3 h-3 text-green-400 flex-shrink-0" />
+                      <p className="text-[10px] text-green-400 font-semibold">Approve training block to prevent cascade</p>
+                    </div>
+                  </div>
+
+                  {/* ── Hiring Pipeline Forecast ────────────────── */}
+                  <div className="bg-slate-800/40 backdrop-blur-xl border border-slate-700/50 rounded-xl p-5">
+                    <div className="flex items-center gap-2 mb-3">
+                      <ArrowRight className="w-4 h-4 text-blue-400" />
+                      <span className="text-xs font-bold text-white">Hiring Pipeline</span>
+                    </div>
+                    <div className="space-y-2">
+                      {[
+                        { stage: 'Applications', count: 28, color: 'slate' },
+                        { stage: 'Background Check', count: 11, color: 'amber' },
+                        { stage: 'Academy', count: 6, color: 'blue' },
+                        { stage: 'Field Training', count: 3, color: 'green' },
+                      ].map((s, i) => (
+                        <div key={i} className="flex items-center justify-between text-xs">
+                          <span className="text-slate-400">{s.stage}</span>
+                          <span className={`font-bold ${
+                            s.color === 'green' ? 'text-green-400' : s.color === 'blue' ? 'text-blue-400' : s.color === 'amber' ? 'text-amber-400' : 'text-slate-300'
+                          }`}>{s.count}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="mt-3 pt-3 border-t border-slate-700/30">
+                      <p className="text-[10px] text-slate-400">Projected patrol staffing recovery:</p>
+                      <p className="text-xs text-blue-400 font-bold mt-0.5">April 18, 2026</p>
+                      <p className="text-[9px] text-slate-600 mt-0.5">Based on current pipeline velocity: 42-day avg</p>
+                    </div>
+                    <button onClick={() => navigate(createPageUrl('HiringPipeline'))} className="mt-3 w-full px-3 py-1.5 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 text-blue-400 rounded-lg text-xs font-medium transition-colors">
+                      Full Pipeline
+                    </button>
                   </div>
                 </div>
               </div>
