@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import {
   AlertTriangle, Calendar, CheckCircle, Shield, FileText,
   ChevronDown, ChevronUp, TrendingUp, TrendingDown, Download,
-  Sparkles, Link2, Zap, Gauge
+  Sparkles, Link2, Zap, Gauge, X, Clock, UserCheck, FileSignature,
+  Lock, ArrowRight, CircleDot, History
 } from 'lucide-react';
 import DashboardLayout from '../layouts/DashboardLayout';
 
@@ -10,6 +11,10 @@ export default function RiskCompliance() {
   const [expandedRisks, setExpandedRisks] = useState([]);
   const [riskFilter, setRiskFilter] = useState('all');
   const [aiSummaryExpanded, setAiSummaryExpanded] = useState(false);
+  const [actionLog, setActionLog] = useState([]);
+  const [approvalModal, setApprovalModal] = useState(null);
+  const [approvalNote, setApprovalNote] = useState('');
+  const [approvalDecision, setApprovalDecision] = useState(null);
 
   // ── Compliance Standards Data ──────────────────────
   const complianceStandards = [
@@ -256,27 +261,106 @@ export default function RiskCompliance() {
   const nextAudit = upcomingAudits[0];
   const pendingApprovalCount = openRisks.filter(r => r.linkedApproval?.status === 'pending').length;
 
-  // ── Operational Pressure Index (Computed) ──────
-  // Methodology: Weighted composite of risk severity, audit proximity,
-  // compliance breaches, and trend trajectory. Scale 0-100.
-  const opiRiskScore = (criticalCount * 25) + (mediumCount * 10) + (lowCount * 3);
-  const opiAuditScore = upcomingAudits.reduce((sum, a) => {
-    if (a.daysOut < 14) return sum + 15;
-    if (a.daysOut < 30) return sum + 8;
-    return sum;
+  // ══════════════════════════════════════════════════════════════════
+  // OPERATIONAL PRESSURE INDEX (OPI) — Defensible Composite Formula
+  // ══════════════════════════════════════════════════════════════════
+  //
+  // OPI = (W_risk × RiskSeverityScore)
+  //     + (W_findings × OpenFindingsScore)
+  //     + (W_audit × AuditProximityFactor)
+  //     + (W_staffing × StaffingDeviationMultiplier)
+  //     + (W_equipment × EquipmentComplianceDelta)
+  //     + (W_trend × TrendTrajectoryScore)
+  //
+  // Each component is normalized to a 0-25 range, then summed.
+  // Final score capped at 100. Weights sum to 1.0.
+  // ──────────────────────────────────────────────────────────────────
+
+  // Weights — tunable per agency policy, must sum to 1.0
+  const OPI_WEIGHTS = {
+    risk: 0.30,       // W_risk: weighted critical risks
+    findings: 0.15,   // W_findings: open audit findings
+    audit: 0.20,      // W_audit: audit proximity factor
+    staffing: 0.15,   // W_staffing: staffing deviation from authorized strength
+    equipment: 0.10,  // W_equipment: equipment compliance delta from threshold
+    trend: 0.10,      // W_trend: trend trajectory (escalating risk directions)
+  };
+
+  // ── Component 1: Risk Severity Score (max raw = 25) ──
+  // Formula: (critical × 12) + (medium × 5) + (low × 1.5), normalized to 0-25
+  const riskSeverityRaw = (criticalCount * 12) + (mediumCount * 5) + (lowCount * 1.5);
+  const riskSeverityNorm = Math.min(25, riskSeverityRaw);
+
+  // ── Component 2: Open Findings Score (max raw = 25) ──
+  // Formula: sum of open findings across all standards × 3, normalized to 0-25
+  const totalOpenFindings = complianceStandards.reduce((sum, s) => sum + s.openFindings, 0);
+  const openFindingsRaw = totalOpenFindings * 3;
+  const openFindingsNorm = Math.min(25, openFindingsRaw);
+
+  // ── Component 3: Audit Proximity Factor (max raw = 25) ──
+  // Formula: per audit, score = max(0, (30 - daysOut) / 30) × 15 for imminent
+  //          audits, plus readiness penalty: (100 - readiness) / 100 × 10
+  const auditProximityRaw = upcomingAudits.reduce((sum, a) => {
+    const proximityScore = a.daysOut < 30 ? ((30 - a.daysOut) / 30) * 15 : 0;
+    const readinessPenalty = ((100 - a.readiness) / 100) * 10;
+    return sum + proximityScore + (a.daysOut < 90 ? readinessPenalty : 0);
   }, 0);
-  const opiComplianceScore = policyCompliance.reduce((sum, p) =>
-    p.rate < p.threshold ? sum + 10 : sum, 0
-  );
-  const opiTrendScore = riskInsights.filter(i => i.direction === 'up').length * 5;
-  const opiScore = Math.min(100, opiRiskScore + opiAuditScore + opiComplianceScore + opiTrendScore);
+  const auditProximityNorm = Math.min(25, auditProximityRaw);
+
+  // ── Component 4: Staffing Deviation Multiplier (max raw = 25) ──
+  // Formula: |actual_staffing_rate - authorized_target| / authorized_target × 100
+  // Baseline: 170 authorized sworn, 158 currently deployable (12 non-deployable:
+  //   2 POST expiring, 1 desk duty, 3 FMLA, 6 training pipeline)
+  const authorizedStrength = 170;
+  const deployableStrength = 158;
+  const staffingDeviation = ((authorizedStrength - deployableStrength) / authorizedStrength) * 100;
+  const staffingDeviationNorm = Math.min(25, staffingDeviation * 2.5); // 1% deviation = 2.5 points
+
+  // ── Component 5: Equipment Compliance Delta (max raw = 25) ──
+  // Formula: (equipment_threshold - actual_equipment_rate) × multiplier
+  // Only contributes when below threshold
+  const equipmentPolicy = policyCompliance.find(p => p.name === 'Equipment Compliance');
+  const equipmentRate = equipmentPolicy ? equipmentPolicy.rate : 100;
+  const equipmentThreshold = equipmentPolicy ? equipmentPolicy.threshold : 90;
+  const equipmentDelta = Math.max(0, equipmentThreshold - equipmentRate);
+  const equipmentDeltaNorm = Math.min(25, equipmentDelta * 2); // 1% below threshold = 2 points
+
+  // ── Component 6: Trend Trajectory Score (max raw = 25) ──
+  // Formula: escalating_trends × 8, minus improving_trends × 3
+  const escalatingCount = riskInsights.filter(i => i.direction === 'up').length;
+  const improvingCount = riskInsights.filter(i => i.direction === 'down').length;
+  const trendTrajectoryRaw = Math.max(0, (escalatingCount * 8) - (improvingCount * 3));
+  const trendTrajectoryNorm = Math.min(25, trendTrajectoryRaw);
+
+  // ── Final OPI Calculation ──
+  const opiComponents = {
+    risk: riskSeverityNorm,
+    findings: openFindingsNorm,
+    audit: auditProximityNorm,
+    staffing: staffingDeviationNorm,
+    equipment: equipmentDeltaNorm,
+    trend: trendTrajectoryNorm,
+  };
+
+  const opiScore = Math.min(100, Math.round(
+    (OPI_WEIGHTS.risk * opiComponents.risk / 25 * 100) +
+    (OPI_WEIGHTS.findings * opiComponents.findings / 25 * 100) +
+    (OPI_WEIGHTS.audit * opiComponents.audit / 25 * 100) +
+    (OPI_WEIGHTS.staffing * opiComponents.staffing / 25 * 100) +
+    (OPI_WEIGHTS.equipment * opiComponents.equipment / 25 * 100) +
+    (OPI_WEIGHTS.trend * opiComponents.trend / 25 * 100)
+  ));
+
   const opiLevel = opiScore >= 75 ? 'Critical' : opiScore >= 50 ? 'High' : opiScore >= 25 ? 'Moderate' : 'Low';
   const opiColor = opiScore >= 75 ? 'text-red-400' : opiScore >= 50 ? 'text-amber-400' : 'text-green-400';
+
   const opiBreakdown = [
-    { label: 'Risk severity', score: opiRiskScore, detail: `${criticalCount}×25 + ${mediumCount}×10 + ${lowCount}×3` },
-    { label: 'Audit proximity', score: opiAuditScore, detail: upcomingAudits.filter(a => a.daysOut < 30).length + ' audits < 30 days' },
-    { label: 'Compliance breach', score: opiComplianceScore, detail: policyCompliance.filter(p => p.rate < p.threshold).length + ' below threshold' },
-    { label: 'Trend trajectory', score: opiTrendScore, detail: riskInsights.filter(i => i.direction === 'up').length + ' escalating' },
+    { label: 'Risk severity', weight: OPI_WEIGHTS.risk, score: opiComponents.risk, max: 25, detail: `${criticalCount}×12 + ${mediumCount}×5 + ${lowCount}×1.5 = ${riskSeverityRaw.toFixed(1)}`, weighted: Math.round(OPI_WEIGHTS.risk * opiComponents.risk / 25 * 100) },
+    { label: 'Open findings', weight: OPI_WEIGHTS.findings, score: opiComponents.findings, max: 25, detail: `${totalOpenFindings} findings × 3 = ${openFindingsRaw}`, weighted: Math.round(OPI_WEIGHTS.findings * opiComponents.findings / 25 * 100) },
+    { label: 'Audit proximity', weight: OPI_WEIGHTS.audit, score: opiComponents.audit, max: 25, detail: `${upcomingAudits.filter(a => a.daysOut < 30).length} imminent + readiness gaps`, weighted: Math.round(OPI_WEIGHTS.audit * opiComponents.audit / 25 * 100) },
+    { label: 'Staffing deviation', weight: OPI_WEIGHTS.staffing, score: opiComponents.staffing, max: 25, detail: `${deployableStrength}/${authorizedStrength} deployable (${staffingDeviation.toFixed(1)}% gap)`, weighted: Math.round(OPI_WEIGHTS.staffing * opiComponents.staffing / 25 * 100) },
+    { label: 'Equipment delta', weight: OPI_WEIGHTS.equipment, score: opiComponents.equipment, max: 25, detail: `${equipmentRate}% vs ${equipmentThreshold}% threshold (${equipmentDelta > 0 ? '-' : ''}${equipmentDelta.toFixed(1)}%)`, weighted: Math.round(OPI_WEIGHTS.equipment * opiComponents.equipment / 25 * 100) },
+    { label: 'Trend trajectory', weight: OPI_WEIGHTS.trend, score: opiComponents.trend, max: 25, detail: `${escalatingCount} escalating − ${improvingCount} improving`, weighted: Math.round(OPI_WEIGHTS.trend * opiComponents.trend / 25 * 100) },
   ];
 
   const filteredRisks = openRisks.filter(r => {
@@ -300,6 +384,68 @@ export default function RiskCompliance() {
     if (readiness < 70 && daysOut < 30) return 'AT RISK';
     if (readiness < 80 && daysOut < 60) return 'MONITOR';
     return null;
+  };
+
+  // ══════════════════════════════════════════════════════════════════
+  // ACTION REQUIRED WORKFLOW ENGINE
+  // ══════════════════════════════════════════════════════════════════
+  // Every pending approval becomes an actionable workflow item.
+  // Decisions are logged with timestamps, actors, and rationale.
+  // This is the ownership layer — it drives the system, not cosmetic.
+
+  const pendingActions = openRisks
+    .filter(r => r.linkedApproval?.status === 'pending')
+    .map(r => ({
+      riskId: r.id,
+      approvalId: r.linkedApproval.id,
+      title: r.linkedApproval.title,
+      amount: r.linkedApproval.amount,
+      riskTitle: r.title,
+      severity: r.severity,
+      daysLeft: r.daysLeft,
+      owner: r.owner,
+      cascadeCount: r.ifUnresolved?.length || 0,
+      auditImpact: r.auditImpact,
+    }));
+
+  const handleApprovalAction = (action) => {
+    const now = new Date();
+    const logEntry = {
+      id: `LOG-${Date.now()}`,
+      timestamp: now.toISOString(),
+      displayTime: now.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+      approvalId: approvalModal.approvalId,
+      approvalTitle: approvalModal.title,
+      riskId: approvalModal.riskId,
+      riskTitle: approvalModal.riskTitle,
+      decision: action, // 'approved' | 'denied' | 'escalated' | 'deferred'
+      amount: approvalModal.amount,
+      actor: 'Sheriff K. Conway',
+      role: 'Authorizing Official',
+      note: approvalNote,
+      opiAtDecision: opiScore,
+      complianceAtDecision: overallCompliance,
+    };
+
+    setActionLog(prev => [logEntry, ...prev]);
+    setApprovalDecision({ action, entry: logEntry });
+    setApprovalNote('');
+  };
+
+  const closeApprovalModal = () => {
+    setApprovalModal(null);
+    setApprovalDecision(null);
+    setApprovalNote('');
+  };
+
+  const getDecisionConfig = (decision) => {
+    const configs = {
+      approved: { bg: 'bg-green-500/10', border: 'border-green-500/20', text: 'text-green-400', label: 'APPROVED', icon: CheckCircle },
+      denied: { bg: 'bg-red-500/10', border: 'border-red-500/20', text: 'text-red-400', label: 'DENIED', icon: X },
+      escalated: { bg: 'bg-amber-500/10', border: 'border-amber-500/20', text: 'text-amber-400', label: 'ESCALATED', icon: ArrowRight },
+      deferred: { bg: 'bg-slate-700/20', border: 'border-slate-600/20', text: 'text-slate-400', label: 'DEFERRED', icon: Clock },
+    };
+    return configs[decision] || configs.deferred;
   };
 
   return (
@@ -361,8 +507,17 @@ export default function RiskCompliance() {
               </div>
               <div className="mt-1 space-y-px">
                 {opiBreakdown.filter(b => b.score > 0).map((b, i) => (
-                  <p key={i} className="text-[9px] text-slate-600 leading-tight">{b.label}: {b.score}pts — {b.detail}</p>
+                  <div key={i} className="flex items-center gap-1 text-[9px] text-slate-600 leading-tight">
+                    <span className="text-slate-500 font-mono w-[28px]">{(b.weight * 100).toFixed(0)}%</span>
+                    <span className="flex-1">{b.label}: {b.score.toFixed(1)}/{b.max}</span>
+                    <span className="font-mono text-slate-500">+{b.weighted}</span>
+                  </div>
                 ))}
+                <div className="flex items-center gap-1 text-[9px] text-slate-500 leading-tight pt-0.5 border-t border-slate-700/20 mt-0.5">
+                  <span className="font-mono w-[28px]">Σ</span>
+                  <span className="flex-1 font-semibold">Composite OPI</span>
+                  <span className="font-mono font-bold text-white">={opiScore}</span>
+                </div>
               </div>
             </div>
 
@@ -622,24 +777,48 @@ export default function RiskCompliance() {
                         )}
 
                         {/* Linked approval */}
-                        {risk.linkedApproval && (
-                          <div className={`flex items-center gap-2 px-2.5 py-1.5 rounded border text-[10px] ${
-                            risk.linkedApproval.status === 'approved'
-                              ? 'bg-green-500/[0.03] border-green-500/15 text-green-400'
-                              : 'bg-amber-500/[0.03] border-amber-500/15 text-amber-400'
-                          }`}>
-                            <Link2 className="w-3 h-3 flex-shrink-0" />
-                            <span className="font-semibold">Linked Approval:</span>
-                            <span className="text-white">{risk.linkedApproval.title}</span>
-                            <span className="font-mono">${risk.linkedApproval.amount.toLocaleString()}</span>
-                            <span className="text-slate-700">&mdash;</span>
-                            <span className={`font-bold uppercase ${
-                              risk.linkedApproval.status === 'approved' ? 'text-green-400' : 'text-amber-400'
-                            }`}>
-                              {risk.linkedApproval.status}
-                            </span>
-                          </div>
-                        )}
+                        {risk.linkedApproval && (() => {
+                          const isLogged = actionLog.some(l => l.approvalId === risk.linkedApproval.id);
+                          const logEntry = actionLog.find(l => l.approvalId === risk.linkedApproval.id);
+                          const displayStatus = isLogged ? logEntry.decision : risk.linkedApproval.status;
+                          const statusCfg = isLogged ? getDecisionConfig(logEntry.decision) : null;
+
+                          return (
+                            <div
+                              className={`flex items-center gap-2 px-2.5 py-1.5 rounded border text-[10px] ${
+                                isLogged
+                                  ? `${statusCfg.bg} ${statusCfg.border}`
+                                  : risk.linkedApproval.status === 'approved'
+                                    ? 'bg-green-500/[0.03] border-green-500/15 text-green-400'
+                                    : 'bg-amber-500/[0.03] border-amber-500/15 text-amber-400 cursor-pointer hover:bg-amber-500/[0.06]'
+                              } transition-all`}
+                              onClick={() => {
+                                if (!isLogged && risk.linkedApproval.status === 'pending') {
+                                  const action = pendingActions.find(a => a.approvalId === risk.linkedApproval.id);
+                                  if (action) setApprovalModal(action);
+                                }
+                              }}
+                            >
+                              <Link2 className="w-3 h-3 flex-shrink-0" />
+                              <span className="font-semibold">Linked Approval:</span>
+                              <span className="text-white">{risk.linkedApproval.title}</span>
+                              <span className="font-mono">${risk.linkedApproval.amount.toLocaleString()}</span>
+                              <span className="text-slate-700">&mdash;</span>
+                              <span className={`font-bold uppercase ${
+                                isLogged ? statusCfg.text :
+                                risk.linkedApproval.status === 'approved' ? 'text-green-400' : 'text-amber-400'
+                              }`}>
+                                {displayStatus}
+                              </span>
+                              {isLogged && logEntry && (
+                                <span className="text-[9px] text-slate-600 font-mono ml-1">{logEntry.displayTime}</span>
+                              )}
+                              {!isLogged && risk.linkedApproval.status === 'pending' && (
+                                <span className="text-[9px] text-amber-400/70 ml-1">→ Click to decide</span>
+                              )}
+                            </div>
+                          );
+                        })()}
                       </div>
                     )}
                   </div>
@@ -942,13 +1121,101 @@ export default function RiskCompliance() {
               </div>
             </div>
 
-            {/* Resolution Path */}
-            <div className="px-3 py-2 bg-green-500/[0.02] border-t border-green-500/10">
-              <div className="flex items-center gap-2">
-                <CheckCircle className="w-3 h-3 text-green-400 flex-shrink-0" />
-                <p className="text-[10px] text-green-400">
-                  <span className="font-bold uppercase">Action Required:</span> Approve {pendingApprovalCount} pending items ($186K) to neutralize all cascades and restore GREEN status. Projected compliance: 96.1%.
-                </p>
+            {/* ── ACTION REQUIRED: Workflow Driver ────────────── */}
+            <div className="border-t border-amber-500/20 bg-gradient-to-r from-amber-500/[0.04] via-amber-500/[0.02] to-transparent">
+              <div className="px-4 py-3">
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-5 h-5 bg-amber-500/20 rounded flex items-center justify-center">
+                    <FileSignature className="w-3 h-3 text-amber-400" />
+                  </div>
+                  <span className="text-[11px] font-bold text-amber-400 uppercase tracking-wider">Action Required — {pendingActions.length} Pending Decisions</span>
+                  <span className="text-[10px] text-slate-500 ml-1">${pendingActions.reduce((s, a) => s + a.amount, 0).toLocaleString()} total</span>
+                </div>
+
+                {pendingActions.length > 0 ? (
+                  <div className="space-y-2">
+                    {pendingActions.map(action => {
+                      const isLogged = actionLog.some(l => l.approvalId === action.approvalId);
+                      const logEntry = actionLog.find(l => l.approvalId === action.approvalId);
+                      const decisionConfig = logEntry ? getDecisionConfig(logEntry.decision) : null;
+
+                      return (
+                        <div key={action.approvalId} className={`flex items-center gap-3 px-3 py-2.5 rounded-lg border transition-all ${
+                          isLogged
+                            ? `${decisionConfig.bg} ${decisionConfig.border}`
+                            : 'bg-slate-900/40 border-amber-500/15 hover:border-amber-500/30'
+                        }`}>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 mb-0.5">
+                              <span className={`px-1.5 py-px rounded text-[9px] font-bold border ${
+                                action.severity === 'critical' ? 'bg-red-500/10 border-red-500/20 text-red-400' : 'bg-amber-500/10 border-amber-500/20 text-amber-400'
+                              }`}>{action.severity.toUpperCase()}</span>
+                              <span className="text-[11px] font-semibold text-white truncate">{action.title}</span>
+                              <span className="text-[10px] font-mono text-slate-400">${action.amount.toLocaleString()}</span>
+                            </div>
+                            <div className="flex items-center gap-2 text-[10px] text-slate-500">
+                              <span>Risk: {action.riskTitle}</span>
+                              <span className="text-slate-700">&middot;</span>
+                              <span>{action.daysLeft}d remaining</span>
+                              <span className="text-slate-700">&middot;</span>
+                              <span>{action.cascadeCount} cascade consequences</span>
+                            </div>
+                          </div>
+
+                          {isLogged ? (
+                            <div className="flex items-center gap-2 flex-shrink-0">
+                              <div className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded ${decisionConfig.bg} ${decisionConfig.border} border`}>
+                                <decisionConfig.icon className={`w-3 h-3 ${decisionConfig.text}`} />
+                                <span className={`text-[10px] font-bold ${decisionConfig.text}`}>{decisionConfig.label}</span>
+                              </div>
+                              <span className="text-[9px] text-slate-600">{logEntry.displayTime}</span>
+                            </div>
+                          ) : (
+                            <button
+                              onClick={() => setApprovalModal(action)}
+                              className="flex items-center gap-1.5 px-3 py-2 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/30 hover:border-amber-500/50 text-amber-400 rounded-lg text-[11px] font-bold transition-all flex-shrink-0"
+                            >
+                              <Lock className="w-3 h-3" />
+                              Review & Decide
+                            </button>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2 px-3 py-2.5 rounded-lg bg-green-500/[0.03] border border-green-500/15">
+                    <CheckCircle className="w-3.5 h-3.5 text-green-400" />
+                    <p className="text-[10px] text-green-400 font-semibold">All pending approvals resolved. Projected compliance: 96.1% — GREEN status.</p>
+                  </div>
+                )}
+
+                {/* Decision Audit Log */}
+                {actionLog.length > 0 && (
+                  <div className="mt-3 pt-3 border-t border-slate-700/20">
+                    <div className="flex items-center gap-2 mb-2">
+                      <History className="w-3 h-3 text-slate-500" />
+                      <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Decision Log</span>
+                      <span className="text-[9px] text-slate-600">{actionLog.length} entries</span>
+                    </div>
+                    <div className="space-y-1">
+                      {actionLog.slice(0, 5).map(entry => {
+                        const cfg = getDecisionConfig(entry.decision);
+                        return (
+                          <div key={entry.id} className="flex items-center gap-2 text-[10px] px-2 py-1.5 rounded bg-slate-900/30">
+                            <cfg.icon className={`w-3 h-3 flex-shrink-0 ${cfg.text}`} />
+                            <span className={`font-bold ${cfg.text} w-[72px]`}>{cfg.label}</span>
+                            <span className="text-white font-medium flex-1 truncate">{entry.approvalTitle}</span>
+                            <span className="text-slate-500 font-mono">${entry.amount.toLocaleString()}</span>
+                            <span className="text-slate-600">{entry.actor}</span>
+                            <span className="text-slate-600 font-mono text-[9px]">{entry.displayTime}</span>
+                            <span className="text-slate-600 font-mono text-[9px]">OPI:{entry.opiAtDecision}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -1028,6 +1295,192 @@ export default function RiskCompliance() {
 
         </div>
       </div>
+      {/* ══════════════════════════════════════════════════
+           APPROVAL DECISION MODAL
+           Full workflow: Review → Decide → Log → Timestamp
+           ══════════════════════════════════════════════════ */}
+      {approvalModal && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={closeApprovalModal} />
+          <div className="relative bg-slate-900 border border-slate-700/50 rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden">
+
+            {/* Modal Header */}
+            <div className="px-5 py-4 border-b border-slate-700/50 bg-slate-800/30">
+              <div className="flex items-start justify-between">
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <Lock className="w-4 h-4 text-amber-400" />
+                    <h3 className="text-sm font-bold text-white">Authorization Required</h3>
+                  </div>
+                  <p className="text-[10px] text-slate-500">Decision will be logged with timestamp, actor, and OPI context</p>
+                </div>
+                <button onClick={closeApprovalModal} className="p-1.5 hover:bg-slate-800/50 rounded-lg transition-colors">
+                  <X className="w-4 h-4 text-slate-400" />
+                </button>
+              </div>
+            </div>
+
+            {!approvalDecision ? (
+              <>
+                {/* Approval Details */}
+                <div className="px-5 py-4 space-y-4">
+                  <div className="bg-slate-800/40 rounded-xl p-4 border border-slate-700/30">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className={`px-1.5 py-px rounded text-[9px] font-bold border ${
+                        approvalModal.severity === 'critical' ? 'bg-red-500/10 border-red-500/20 text-red-400' : 'bg-amber-500/10 border-amber-500/20 text-amber-400'
+                      }`}>{approvalModal.severity.toUpperCase()}</span>
+                      <span className="text-sm font-semibold text-white">{approvalModal.title}</span>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2 text-[10px]">
+                      <div><span className="text-slate-500">Amount:</span> <span className="text-white font-bold font-mono">${approvalModal.amount.toLocaleString()}</span></div>
+                      <div><span className="text-slate-500">Linked Risk:</span> <span className="text-white">{approvalModal.riskTitle}</span></div>
+                      <div><span className="text-slate-500">Owner:</span> <span className="text-white">{approvalModal.owner}</span></div>
+                      <div><span className="text-slate-500">Days Remaining:</span> <span className={`font-bold ${approvalModal.daysLeft <= 7 ? 'text-red-400' : 'text-amber-400'}`}>{approvalModal.daysLeft}d</span></div>
+                      <div><span className="text-slate-500">Cascade Chains:</span> <span className="text-red-400 font-bold">{approvalModal.cascadeCount} consequences</span></div>
+                      {approvalModal.auditImpact && <div><span className="text-slate-500">Audit Impact:</span> <span className="text-amber-400">{approvalModal.auditImpact}</span></div>}
+                    </div>
+                  </div>
+
+                  {/* Context snapshot */}
+                  <div className="bg-slate-800/20 rounded-lg p-3 border border-slate-700/20">
+                    <p className="text-[9px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Decision Context Snapshot</p>
+                    <div className="grid grid-cols-3 gap-2 text-[10px]">
+                      <div className="text-center">
+                        <p className="text-slate-500">Current OPI</p>
+                        <p className={`font-bold text-sm ${opiColor}`}>{opiScore}</p>
+                      </div>
+                      <div className="text-center">
+                        <p className="text-slate-500">Compliance</p>
+                        <p className="font-bold text-sm text-amber-400">{overallCompliance}%</p>
+                      </div>
+                      <div className="text-center">
+                        <p className="text-slate-500">Timestamp</p>
+                        <p className="font-bold text-[10px] text-slate-300 font-mono">{new Date().toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Decision note */}
+                  <div>
+                    <label className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-1.5 block">Decision Rationale (required for audit trail)</label>
+                    <textarea
+                      value={approvalNote}
+                      onChange={(e) => setApprovalNote(e.target.value)}
+                      placeholder="Enter justification for this decision..."
+                      className="w-full px-3 py-2.5 bg-slate-800/40 border border-slate-700/50 rounded-lg text-white text-xs placeholder-slate-600 focus:outline-none focus:border-amber-500/50 resize-none"
+                      rows={3}
+                    />
+                  </div>
+                </div>
+
+                {/* Decision Buttons */}
+                <div className="px-5 py-4 border-t border-slate-700/50 bg-slate-800/20">
+                  <p className="text-[9px] text-slate-600 mb-3 flex items-center gap-1.5">
+                    <UserCheck className="w-3 h-3" />
+                    Authorizing Official: <span className="text-white font-semibold">Sheriff K. Conway</span> — decision is final and logged
+                  </p>
+                  <div className="grid grid-cols-4 gap-2">
+                    <button
+                      onClick={() => handleApprovalAction('approved')}
+                      disabled={!approvalNote.trim()}
+                      className="px-3 py-2.5 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-400 rounded-lg text-[11px] font-bold transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                    >
+                      <CheckCircle className="w-3.5 h-3.5 mx-auto mb-1" />
+                      Approve
+                    </button>
+                    <button
+                      onClick={() => handleApprovalAction('denied')}
+                      disabled={!approvalNote.trim()}
+                      className="px-3 py-2.5 bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 text-red-400 rounded-lg text-[11px] font-bold transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                    >
+                      <X className="w-3.5 h-3.5 mx-auto mb-1" />
+                      Deny
+                    </button>
+                    <button
+                      onClick={() => handleApprovalAction('escalated')}
+                      disabled={!approvalNote.trim()}
+                      className="px-3 py-2.5 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/30 text-amber-400 rounded-lg text-[11px] font-bold transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                    >
+                      <ArrowRight className="w-3.5 h-3.5 mx-auto mb-1" />
+                      Escalate
+                    </button>
+                    <button
+                      onClick={() => handleApprovalAction('deferred')}
+                      disabled={!approvalNote.trim()}
+                      className="px-3 py-2.5 bg-slate-700/30 hover:bg-slate-700/50 border border-slate-600/30 text-slate-400 rounded-lg text-[11px] font-bold transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                    >
+                      <Clock className="w-3.5 h-3.5 mx-auto mb-1" />
+                      Defer
+                    </button>
+                  </div>
+                </div>
+              </>
+            ) : (
+              /* ── Decision Confirmation ── */
+              <div className="px-5 py-6">
+                <div className="text-center mb-4">
+                  {(() => {
+                    const cfg = getDecisionConfig(approvalDecision.action);
+                    const Icon = cfg.icon;
+                    return (
+                      <>
+                        <div className={`w-14 h-14 ${cfg.bg} border ${cfg.border} rounded-full flex items-center justify-center mx-auto mb-3`}>
+                          <Icon className={`w-7 h-7 ${cfg.text}`} />
+                        </div>
+                        <h4 className={`text-lg font-bold ${cfg.text}`}>{cfg.label}</h4>
+                        <p className="text-xs text-slate-400 mt-1">{approvalModal.title} — ${approvalModal.amount.toLocaleString()}</p>
+                      </>
+                    );
+                  })()}
+                </div>
+
+                <div className="bg-slate-800/40 rounded-lg p-3 border border-slate-700/30 space-y-2 text-[10px]">
+                  <div className="flex justify-between">
+                    <span className="text-slate-500">Decision ID</span>
+                    <span className="text-white font-mono">{approvalDecision.entry.id}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-500">Timestamp</span>
+                    <span className="text-white font-mono">{approvalDecision.entry.displayTime}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-500">Authorized By</span>
+                    <span className="text-white">{approvalDecision.entry.actor} ({approvalDecision.entry.role})</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-500">OPI at Decision</span>
+                    <span className={`font-bold ${opiColor}`}>{approvalDecision.entry.opiAtDecision}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-500">Compliance at Decision</span>
+                    <span className="text-white">{approvalDecision.entry.complianceAtDecision}%</span>
+                  </div>
+                  {approvalDecision.entry.note && (
+                    <div className="pt-2 border-t border-slate-700/30">
+                      <span className="text-slate-500">Rationale:</span>
+                      <p className="text-slate-300 mt-0.5">{approvalDecision.entry.note}</p>
+                    </div>
+                  )}
+                </div>
+
+                <div className="mt-4 p-2.5 bg-blue-500/5 border border-blue-500/15 rounded-lg">
+                  <p className="text-[9px] text-blue-400 flex items-center gap-1.5">
+                    <CircleDot className="w-3 h-3" />
+                    This decision has been recorded to the audit trail and will persist across sessions. Cascade projections will recalculate on next refresh.
+                  </p>
+                </div>
+
+                <button
+                  onClick={closeApprovalModal}
+                  className="mt-4 w-full px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-white rounded-xl text-sm font-medium transition-all"
+                >
+                  Close
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </DashboardLayout>
   );
 }
