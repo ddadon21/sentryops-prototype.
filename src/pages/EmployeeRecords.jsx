@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Users, FileText, LayoutDashboard, TrendingUp, Settings, Bell, Search, ChevronRight, CheckCircle, Shield, X, Menu, ChevronLeft, LogOut, UserPlus, Briefcase, Clock, Award, Download, Calendar, Phone, Mail, FileCheck, BadgeCheck, AlertTriangle, AlertCircle, ClipboardCheck, GraduationCap, ChevronDown, ChevronUp, MapPin, Eye, CheckCircle2, Circle, ExternalLink, Upload, HelpCircle, Crosshair, Zap, Heart, Car, Printer, ShieldAlert } from 'lucide-react';
+import { Users, FileText, LayoutDashboard, TrendingUp, Settings, Bell, Search, ChevronRight, CheckCircle, Shield, X, Menu, ChevronLeft, LogOut, UserPlus, Briefcase, Clock, Award, Download, Calendar, Phone, Mail, FileCheck, BadgeCheck, AlertTriangle, AlertCircle, ClipboardCheck, GraduationCap, ChevronDown, ChevronUp, MapPin, Eye, CheckCircle2, Circle, ExternalLink, Upload, HelpCircle, Crosshair, Zap, Heart, Car, Printer, ShieldAlert, Sparkles, Activity, List, LayoutGrid, TrendingDown, ArrowUpRight, ArrowDownRight, BarChart3, Filter } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 
@@ -17,6 +17,8 @@ export default function EmployeeRecords() {
   const [searchQuery, setSearchQuery] = useState('');
   const [expandedIssue, setExpandedIssue] = useState({ martinez: true, chen: true });
   const [supportOpen, setSupportOpen] = useState(false);
+  const [viewMode, setViewMode] = useState('card');
+  const [aiInsightsVisible, setAiInsightsVisible] = useState(true);
 
   const navigation = [
     { id: 'hr-dashboard', label: 'HR Dashboard', icon: Users, page: 'HRDashboard' },
@@ -867,14 +869,94 @@ export default function EmployeeRecords() {
               </div>
             </div>
 
+            {/* AI Workforce Insights */}
+            {aiInsightsVisible && (
+              <div className="mb-6 bg-gradient-to-r from-violet-500/10 via-blue-500/10 to-cyan-500/10 border border-violet-500/20 rounded-xl p-5">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-violet-500/20 rounded-lg flex items-center justify-center">
+                      <Sparkles className="w-5 h-5 text-violet-400" />
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-bold text-white">AI Workforce Insights</h3>
+                      <p className="text-[10px] text-slate-400">Real-time personnel analytics • Updated {new Date().toLocaleDateString()}</p>
+                    </div>
+                  </div>
+                  <button onClick={() => setAiInsightsVisible(false)} className="p-1.5 hover:bg-slate-800/50 rounded-lg transition-colors">
+                    <X className="w-4 h-4 text-slate-400" />
+                  </button>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="bg-slate-900/40 rounded-lg p-3 border border-slate-700/30">
+                    <div className="flex items-center gap-2 mb-2">
+                      <AlertTriangle className="w-4 h-4 text-red-400" />
+                      <span className="text-xs font-semibold text-red-400">Certification Risk</span>
+                    </div>
+                    <p className="text-xs text-slate-300">2 personnel with certification issues affecting operational readiness. Martinez (firearms expired, desk duty) and Chen (CIT expiring in 19 days, no renewal scheduled).</p>
+                    <div className="mt-2 flex items-center gap-1">
+                      <ArrowUpRight className="w-3 h-3 text-red-400" />
+                      <span className="text-[10px] text-red-400">Immediate action required for both</span>
+                    </div>
+                  </div>
+                  <div className="bg-slate-900/40 rounded-lg p-3 border border-slate-700/30">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Activity className="w-4 h-4 text-amber-400" />
+                      <span className="text-xs font-semibold text-amber-400">Staffing Pressure</span>
+                    </div>
+                    <p className="text-xs text-slate-300">Patrol Division operating at reduced capacity: 1 deputy on desk duty (Martinez), 1 detention officer on FMLA (Davis). B-Shift most impacted with coverage gaps.</p>
+                    <div className="mt-2 flex items-center gap-1">
+                      <TrendingDown className="w-3 h-3 text-amber-400" />
+                      <span className="text-[10px] text-amber-400">2 positions effectively offline</span>
+                    </div>
+                  </div>
+                  <div className="bg-slate-900/40 rounded-lg p-3 border border-slate-700/30">
+                    <div className="flex items-center gap-2 mb-2">
+                      <BarChart3 className="w-4 h-4 text-green-400" />
+                      <span className="text-xs font-semibold text-green-400">Workforce Health</span>
+                    </div>
+                    <p className="text-xs text-slate-300">Overall compliance: 96.6% (172/178 fully compliant). Performance review completion: 100% on file. Average tenure: 6.4 years. 3 commendations in last 12 months.</p>
+                    <div className="mt-2 flex items-center gap-1">
+                      <CheckCircle2 className="w-3 h-3 text-green-400" />
+                      <span className="text-[10px] text-green-400">Strong institutional health indicators</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+            {!aiInsightsVisible && (
+              <div className="mb-4 flex justify-end">
+                <button onClick={() => setAiInsightsVisible(true)} className="flex items-center gap-2 px-3 py-1.5 bg-violet-500/10 hover:bg-violet-500/20 border border-violet-500/20 rounded-lg text-xs text-violet-400 transition-colors">
+                  <Sparkles className="w-3.5 h-3.5" />Show AI Insights
+                </button>
+              </div>
+            )}
+
             {/* Personnel Directory */}
             <div className="mb-8">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">
-                  <Users className="w-5 h-5 text-blue-400" />
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                    <Users className="w-5 h-5 text-blue-400" />
+                  </div>
+                  <h3 className="text-lg font-bold text-white">Personnel Directory</h3>
+                  <span className="text-xs text-slate-500">Showing {filteredEmployees.length} of {personnelStats.total} total employees</span>
                 </div>
-                <h3 className="text-lg font-bold text-white">Personnel Directory</h3>
-                <span className="text-xs text-slate-500">Showing {filteredEmployees.length} of {personnelStats.total} total employees</span>
+                <div className="flex items-center gap-1 bg-slate-800/40 border border-slate-700/50 rounded-lg p-1">
+                  <button
+                    onClick={() => setViewMode('card')}
+                    className={`p-2 rounded-md transition-all ${viewMode === 'card' ? 'bg-amber-500/20 text-amber-400' : 'text-slate-400 hover:text-white'}`}
+                    title="Card View"
+                  >
+                    <LayoutGrid className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => setViewMode('list')}
+                    className={`p-2 rounded-md transition-all ${viewMode === 'list' ? 'bg-amber-500/20 text-amber-400' : 'text-slate-400 hover:text-white'}`}
+                    title="List View"
+                  >
+                    <List className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
 
               {/* Filters */}
@@ -910,8 +992,71 @@ export default function EmployeeRecords() {
                 </select>
               </div>
 
+              {/* Employee List View */}
+              {viewMode === 'list' && (
+                <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl overflow-hidden">
+                  <div className="grid grid-cols-[1fr_120px_140px_120px_100px_80px] gap-2 px-5 py-3 bg-slate-800/60 border-b border-slate-700/50 text-[10px] font-semibold text-slate-400 uppercase tracking-wider">
+                    <span>Employee</span>
+                    <span>Badge</span>
+                    <span>Department</span>
+                    <span>Status</span>
+                    <span>Cert Status</span>
+                    <span className="text-right">Action</span>
+                  </div>
+                  {filteredEmployees.map(employee => {
+                    const statusConfig = getStatusConfig(employee.status);
+                    return (
+                      <div key={employee.id} className={`grid grid-cols-[1fr_120px_140px_120px_100px_80px] gap-2 px-5 py-3 items-center border-b border-slate-700/30 hover:bg-slate-800/60 transition-colors ${
+                        employee.certAlert === 'expired' ? 'bg-red-500/5' : employee.certAlert === 'expiring' ? 'bg-amber-500/5' : ''
+                      }`}>
+                        <div className="flex items-center gap-3 min-w-0">
+                          <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
+                            employee.positionType === 'sworn' ? 'bg-blue-500/20' : 'bg-purple-500/20'
+                          }`}>
+                            {employee.positionType === 'sworn' ? (
+                              <Shield className="w-4 h-4 text-blue-400" />
+                            ) : (
+                              <Users className="w-4 h-4 text-purple-400" />
+                            )}
+                          </div>
+                          <div className="min-w-0">
+                            <p className="text-sm font-medium text-white truncate">{employee.name}</p>
+                            <p className="text-[10px] text-slate-400 truncate">{employee.position}</p>
+                          </div>
+                        </div>
+                        <span className="text-xs text-slate-300 font-mono">{employee.badge}</span>
+                        <span className="text-xs text-slate-400 truncate">{employee.department}</span>
+                        <span className={`px-2 py-0.5 rounded text-[10px] font-bold border w-fit ${statusConfig.bg} ${statusConfig.text} ${statusConfig.border}`}>
+                          {statusConfig.label}
+                        </span>
+                        <div>
+                          {employee.certAlert === 'expired' && (
+                            <span className="px-2 py-0.5 bg-red-500/20 border border-red-500/30 rounded text-[10px] text-red-400 font-bold">EXPIRED</span>
+                          )}
+                          {employee.certAlert === 'expiring' && (
+                            <span className="px-2 py-0.5 bg-amber-500/20 border border-amber-500/30 rounded text-[10px] text-amber-400 font-bold">EXPIRING</span>
+                          )}
+                          {!employee.certAlert && (
+                            <span className="px-2 py-0.5 bg-green-500/20 border border-green-500/30 rounded text-[10px] text-green-400">OK</span>
+                          )}
+                        </div>
+                        <div className="text-right">
+                          <button
+                            onClick={() => setSelectedEmployee(employee)}
+                            className="p-1.5 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 text-blue-400 rounded-lg transition-all"
+                            title="View Full Record"
+                          >
+                            <Eye className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+
               {/* Employee Cards */}
-              <div className="space-y-4">
+              {viewMode === 'card' && <div className="space-y-4">
                 {filteredEmployees.map(employee => {
                   const statusConfig = getStatusConfig(employee.status);
 
@@ -1066,7 +1211,7 @@ export default function EmployeeRecords() {
                     </div>
                   );
                 })}
-              </div>
+              </div>}
             </div>
           </div>
         </main>
