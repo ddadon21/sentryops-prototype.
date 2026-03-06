@@ -333,12 +333,11 @@ export default function PersonnelOverview() {
 
   return (
     <DashboardLayout>
-      <div className="flex flex-col h-full">
-        <div className="flex-1 overflow-y-auto p-4 lg:p-6">
-          <div className="max-w-[1600px] mx-auto">
-            <div className="flex flex-col xl:flex-row gap-6">
-              {/* Main Content */}
-              <div className="flex-1 min-w-0">
+      <div className="p-4 lg:p-6">
+        <div className="max-w-[1400px] mx-auto">
+          <div className="flex flex-col xl:flex-row gap-4">
+            {/* Main Content */}
+            <div className="flex-1 min-w-0">
                 {/* ── Page Header ─────────────────────────────── */}
                 <div className="mb-4">
                   <div className="flex items-center justify-between">
@@ -410,629 +409,107 @@ export default function PersonnelOverview() {
                   </div>
                 </div>
 
-                {/* ── Workforce Signals (condensed AI) ────────── */}
-                {aiInsightsVisible && (
-                  <div className="mb-4 bg-slate-800/20 border border-slate-700/15 rounded p-3">
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center gap-2">
-                        <Sparkles className="w-3.5 h-3.5 text-slate-400" />
-                        <span className="text-[11px] font-bold text-white">Workforce Signals</span>
-                      </div>
-                      <button onClick={() => setAiInsightsVisible(false)} className="text-slate-600 hover:text-slate-400 transition-colors">
-                        <X className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
-                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
-                      <div className="flex items-start gap-2 px-2.5 py-2 rounded bg-red-500/[0.03] border border-red-500/10">
-                        <div className="w-1.5 h-1.5 bg-red-500 rounded-full mt-1 flex-shrink-0"></div>
-                        <p className="text-[10px] text-slate-300">17 certifications expire within 30 days</p>
-                      </div>
-                      <div className="flex items-start gap-2 px-2.5 py-2 rounded bg-amber-500/[0.02] border border-amber-500/10">
-                        <div className="w-1.5 h-1.5 bg-amber-500 rounded-full mt-1 flex-shrink-0"></div>
-                        <p className="text-[10px] text-slate-300">Patrol staffing at 75% coverage</p>
-                      </div>
-                      <div className="flex items-start gap-2 px-2.5 py-2 rounded bg-amber-500/[0.02] border border-amber-500/10">
-                        <div className="w-1.5 h-1.5 bg-amber-500 rounded-full mt-1 flex-shrink-0"></div>
-                        <p className="text-[10px] text-slate-300">12 open positions affecting detention + patrol</p>
-                      </div>
-                      <div className="flex items-start gap-2 px-2.5 py-2 rounded bg-green-500/[0.02] border border-green-500/10">
-                        <div className="w-1.5 h-1.5 bg-green-500 rounded-full mt-1 flex-shrink-0"></div>
-                        <p className="text-[10px] text-slate-300">Turnover 6.5% (below national average)</p>
-                      </div>
-                    </div>
-                    <div className="flex gap-2 mt-2.5">
-                      <button onClick={() => setShowCertManagement(!showCertManagement)} className="px-3 py-1.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/30 text-slate-300 rounded text-[10px] font-medium transition-colors">
-                        Manage Certifications
-                      </button>
-                      <button onClick={() => setShowHiringPipeline(!showHiringPipeline)} className="px-3 py-1.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/30 text-slate-300 rounded text-[10px] font-medium transition-colors">
-                        Hiring Pipeline
-                      </button>
-                      <button onClick={() => navigate(createPageUrl('TrainingCertifications'))} className="px-3 py-1.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/30 text-slate-300 rounded text-[10px] font-medium transition-colors">
-                        Training Schedule
-                      </button>
-                    </div>
-                  </div>
-                )}
-                {!aiInsightsVisible && (
-                  <div className="mb-4 flex justify-end">
-                    <button onClick={() => setAiInsightsVisible(true)} className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/30 border border-slate-700/20 rounded text-[10px] text-slate-500 hover:text-white transition-colors">
-                      <Sparkles className="w-3 h-3" />Show Signals
-                    </button>
-                  </div>
-                )}
 
-                {/* Quick Actions Bar */}
-                <div className="mb-6 grid grid-cols-2 md:grid-cols-6 gap-3">
-                  <button className="flex items-center justify-center gap-2 px-4 py-3 bg-amber-500 hover:bg-amber-600 text-slate-900 font-medium rounded-lg transition-colors">
-                    <Plus className="w-4 h-4" />
-                    <span className="text-sm">Add Personnel</span>
+                {/* ── Command Signal Bar (expandable) ─────────── */}
+                <div className="mb-4">
+                  <button
+                    onClick={() => setAiInsightsVisible(!aiInsightsVisible)}
+                    className="w-full flex items-center gap-2 px-3 py-2 bg-slate-800/20 border border-slate-700/15 rounded hover:bg-slate-800/30 transition-colors"
+                  >
+                    <Sparkles className="w-3 h-3 text-slate-500" />
+                    <span className="text-[11px] text-slate-300 flex-1 text-left">
+                      17 certs expiring 30d. Patrol at 75% (4 below optimal). 12 open positions — Central Patrol at risk. Turnover 6.5% (below avg).
+                    </span>
+                    <span className="text-[10px] text-slate-600 flex-shrink-0">{aiInsightsVisible ? 'Less' : 'Details'}</span>
+                    {aiInsightsVisible ? <ChevronRight className="w-3 h-3 text-slate-600 rotate-90" /> : <ChevronRight className="w-3 h-3 text-slate-600" />}
                   </button>
-                  <button className="flex items-center justify-center gap-2 px-4 py-3 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white font-medium rounded-lg transition-colors">
-                    <Calendar className="w-4 h-4" />
-                    <span className="text-sm">Schedule Training</span>
-                  </button>
-                  <button onClick={() => setShowCertManagement(!showCertManagement)} className="flex items-center justify-center gap-2 px-4 py-3 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white font-medium rounded-lg transition-colors">
-                    <FileText className="w-4 h-4" />
-                    <span className="text-sm">Cert Report</span>
-                  </button>
-                  <button onClick={() => setShowAnalytics(!showAnalytics)} className="flex items-center justify-center gap-2 px-4 py-3 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white font-medium rounded-lg transition-colors">
-                    <BarChart3 className="w-4 h-4" />
-                    <span className="text-sm">Analytics</span>
-                  </button>
-                  <button className="flex items-center justify-center gap-2 px-4 py-3 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white font-medium rounded-lg transition-colors">
-                    <Shield className="w-4 h-4" />
-                    <span className="text-sm">Background Check</span>
-                  </button>
-                  <button className="flex items-center justify-center gap-2 px-4 py-3 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white font-medium rounded-lg transition-colors">
-                    <Download className="w-4 h-4" />
-                    <span className="text-sm">Import Roster</span>
-                  </button>
+
+                  {aiInsightsVisible && (
+                    <div className="mt-1 px-3 py-2.5 bg-slate-800/15 border border-slate-700/10 rounded space-y-1.5">
+                      <p className="text-[10px] text-red-400">&bull; 17 certifications expire within 30 days. 6 are Patrol Deputies — if lapsed, coverage drops to 69%. Schedule training immediately.</p>
+                      <p className="text-[10px] text-amber-400">&bull; Patrol staffing at 75% (127/170). 4 open positions + 8 on leave. Central Patrol zone below minimum staffing.</p>
+                      <p className="text-[10px] text-amber-400">&bull; 12 open positions across divisions. Priority: 4 Patrol (critical), 3 Detention (high). Pipeline: 28 applicants, 42-day avg hire.</p>
+                      <p className="text-[10px] text-green-400">&bull; Turnover 6.5% (industry avg 12%). Avg tenure 8.4 years. Workforce retention stable.</p>
+                    </div>
+                  )}
                 </div>
 
-                {/* Toolbar */}
-                <div className="mb-6 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+                {/* ── Command Workforce Actions ──────────────── */}
+                <div className="mb-4">
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <button className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-slate-900 font-semibold rounded text-[11px] transition-colors">
+                      <Plus className="w-3 h-3" />Add Personnel
+                    </button>
+                    <button onClick={() => navigate(createPageUrl('TrainingCertifications'))} className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/30 text-slate-300 rounded text-[11px] font-medium transition-colors">
+                      <Calendar className="w-3 h-3" />Schedule Training
+                    </button>
+                    <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/30 text-slate-300 rounded text-[11px] font-medium transition-colors">
+                      <FileText className="w-3 h-3" />Certification Report
+                    </button>
+                    <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/30 text-slate-300 rounded text-[11px] font-medium transition-colors">
+                      <BarChart3 className="w-3 h-3" />Workforce Analytics
+                    </button>
+                    <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/30 text-slate-300 rounded text-[11px] font-medium transition-colors">
+                      <Download className="w-3 h-3" />Import Roster
+                    </button>
+                  </div>
+                </div>
+
+                {/* ── Table Toolbar ──────────────────────────── */}
+                <div className="mb-2 flex items-center gap-2">
                   <div className="flex-1 relative">
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-500" />
                     <input
                       type="text"
-                      placeholder="Search by name, badge, division, or rank..."
-                      className="w-full pl-12 pr-4 py-3 bg-slate-800/40 backdrop-blur-xl border border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-amber-500/50 focus:bg-slate-800/60 transition-all"
+                      placeholder="Search name, badge, division, rank..."
+                      className="w-full pl-9 pr-3 py-2 bg-slate-800/30 border border-slate-700/30 rounded text-[11px] text-white placeholder-slate-600 focus:outline-none focus:border-amber-500/40 transition-all"
                     />
                   </div>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => setFiltersOpen(!filtersOpen)}
-                      className="flex items-center gap-2 px-4 py-3 bg-slate-800/40 backdrop-blur-xl border border-slate-700/50 rounded-xl text-slate-300 hover:border-slate-600/50 hover:bg-slate-800/60 transition-all"
-                    >
-                      <Filter className="w-5 h-5" />
-                      <span>Filters</span>
-                    </button>
-                    <button className="flex items-center gap-2 px-4 py-3 bg-slate-800/40 backdrop-blur-xl border border-slate-700/50 rounded-xl text-slate-300 hover:border-slate-600/50 hover:bg-slate-800/60 transition-all">
-                      <Download className="w-5 h-5" />
-                      <span className="hidden sm:inline">Export</span>
-                    </button>
-                  </div>
+                  <button
+                    onClick={() => setFiltersOpen(!filtersOpen)}
+                    className="flex items-center gap-1.5 px-3 py-2 bg-slate-800/30 border border-slate-700/30 rounded text-[11px] text-slate-400 hover:text-white transition-colors"
+                  >
+                    <Filter className="w-3 h-3" />Filters
+                  </button>
+                  <button className="flex items-center gap-1.5 px-3 py-2 bg-slate-800/30 border border-slate-700/30 rounded text-[11px] text-slate-400 hover:text-white transition-colors">
+                    <Download className="w-3 h-3" />Export
+                  </button>
                 </div>
 
-                {/* Filters Panel */}
                 {filtersOpen && (
-                  <div className="mb-6 bg-slate-800/40 backdrop-blur-xl border border-slate-700/50 rounded-xl p-6">
-                    <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-sm font-semibold text-white">Filters</h3>
-                      <button className="text-xs text-amber-400 hover:text-amber-300">Clear all</button>
+                  <div className="mb-3 bg-slate-800/20 border border-slate-700/15 rounded p-3">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Filters</span>
+                      <button className="text-[10px] text-amber-400 hover:text-amber-300">Clear</button>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                      <div>
-                        <label className="block text-xs font-medium text-slate-400 mb-2">Division</label>
-                        <select className="w-full px-3 py-2 bg-slate-900/50 border border-slate-700/50 rounded-lg text-white text-sm focus:outline-none focus:border-amber-500/50">
-                          <option>All Divisions</option>
-                          <option>Patrol</option>
-                          <option>Investigations</option>
-                          <option>Detention</option>
-                          <option>Dispatch</option>
-                          <option>School Resource</option>
-                        </select>
-                      </div>
-                      <div>
-                        <label className="block text-xs font-medium text-slate-400 mb-2">Rank</label>
-                        <select className="w-full px-3 py-2 bg-slate-900/50 border border-slate-700/50 rounded-lg text-white text-sm focus:outline-none focus:border-amber-500/50">
-                          <option>All Ranks</option>
-                          <option>Deputy Sheriff</option>
-                          <option>Senior Deputy</option>
-                          <option>Sergeant</option>
-                          <option>Lieutenant</option>
-                          <option>Captain</option>
-                        </select>
-                      </div>
-                      <div>
-                        <label className="block text-xs font-medium text-slate-400 mb-2">Status</label>
-                        <select className="w-full px-3 py-2 bg-slate-900/50 border border-slate-700/50 rounded-lg text-white text-sm focus:outline-none focus:border-amber-500/50">
-                          <option>All</option>
-                          <option>On Duty</option>
-                          <option>Off Duty</option>
-                          <option>On Leave</option>
-                        </select>
-                      </div>
-                      <div>
-                        <label className="block text-xs font-medium text-slate-400 mb-2">Certifications</label>
-                        <select className="w-full px-3 py-2 bg-slate-900/50 border border-slate-700/50 rounded-lg text-white text-sm focus:outline-none focus:border-amber-500/50">
-                          <option>All</option>
-                          <option>Current</option>
-                          <option>Expiring (30 days)</option>
-                          <option>Expired</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* Staffing Analytics Dashboard - Collapsible */}
-                {showAnalytics && (
-                  <div className="mb-6 bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
-                    <div className="flex items-center gap-3 mb-4">
-                      <BarChart3 className="w-6 h-6 text-purple-400" />
-                      <h3 className="text-lg font-bold text-white">Staffing Analytics</h3>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                      {/* Coverage by Division */}
-                      <div>
-                        <h4 className="text-sm font-bold text-slate-300 mb-3">Coverage by Division</h4>
-                        <div className="space-y-2">
-                          <div className="flex justify-between text-sm">
-                            <span className="text-slate-400">Patrol:</span>
-                            <span className="text-emerald-400 font-medium flex items-center gap-1">64/68 positions (94%) <CheckCircle className="w-3 h-3 text-emerald-400" /></span>
-                          </div>
-                          <div className="flex justify-between text-sm">
-                            <span className="text-slate-400">Investigations:</span>
-                            <span className="text-emerald-400 font-medium flex items-center gap-1">22/24 positions (92%) <CheckCircle className="w-3 h-3 text-emerald-400" /></span>
-                          </div>
-                          <div className="flex justify-between text-sm">
-                            <span className="text-slate-400">Detention:</span>
-                            <span className="text-amber-400 font-medium flex items-center gap-1">49/52 positions (94%) <Clock className="w-3 h-3 text-amber-400" /></span>
-                          </div>
-                          <div className="flex justify-between text-sm">
-                            <span className="text-slate-400">Dispatch:</span>
-                            <span className="text-amber-400 font-medium flex items-center gap-1">24/26 positions (92%) <Clock className="w-3 h-3 text-amber-400" /></span>
-                          </div>
-                          <div className="flex justify-between text-sm">
-                            <span className="text-slate-400">School Resource:</span>
-                            <span className="text-emerald-400 font-medium flex items-center gap-1">11/12 positions (92%) <CheckCircle className="w-3 h-3 text-emerald-400" /></span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Experience Distribution */}
-                      <div>
-                        <h4 className="text-sm font-bold text-slate-300 mb-3">Experience Distribution</h4>
-                        <div className="space-y-2">
-                          <div className="flex justify-between text-sm">
-                            <span className="text-slate-400">0-2 years:</span>
-                            <span className="text-white font-medium">22 personnel (13%)</span>
-                          </div>
-                          <div className="flex justify-between text-sm">
-                            <span className="text-slate-400">3-5 years:</span>
-                            <span className="text-white font-medium">41 personnel (24%)</span>
-                          </div>
-                          <div className="flex justify-between text-sm">
-                            <span className="text-slate-400">6-10 years:</span>
-                            <span className="text-white font-medium">58 personnel (34%)</span>
-                          </div>
-                          <div className="flex justify-between text-sm">
-                            <span className="text-slate-400">10+ years:</span>
-                            <span className="text-white font-medium">49 personnel (29%)</span>
-                          </div>
-                          <div className="flex justify-between text-sm pt-2 border-t border-slate-700">
-                            <span className="text-slate-400">Avg years:</span>
-                            <span className="text-emerald-400 font-semibold flex items-center gap-1">8.4 years <CheckCircle className="w-3 h-3 text-emerald-400" /></span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Certification Compliance */}
-                      <div>
-                        <h4 className="text-sm font-bold text-slate-300 mb-3">Certification Compliance</h4>
-                        <div className="space-y-2">
-                          <div className="flex justify-between text-sm">
-                            <span className="text-slate-400">Current:</span>
-                            <span className="text-emerald-400 font-semibold">146 personnel (86%)</span>
-                          </div>
-                          <div className="flex justify-between text-sm">
-                            <span className="text-slate-400">Expiring &lt;30 days:</span>
-                            <span className="text-amber-400 font-semibold">12 (7%)</span>
-                          </div>
-                          <div className="flex justify-between text-sm">
-                            <span className="text-slate-400">Expiring 30-60 days:</span>
-                            <span className="text-amber-400 font-semibold">6 (4%)</span>
-                          </div>
-                          <div className="flex justify-between text-sm">
-                            <span className="text-slate-400">Expired:</span>
-                            <span className="text-red-400 font-semibold flex items-center gap-1">6 (4%) <AlertCircle className="w-3 h-3 text-red-400" /></span>
-                          </div>
-                          <div className="flex justify-between text-sm pt-2 border-t border-slate-700">
-                            <span className="text-slate-400">Target:</span>
-                            <span className="text-slate-300 font-medium">95%</span>
-                          </div>
-                          <div className="flex justify-between text-sm">
-                            <span className="text-slate-400">Gap:</span>
-                            <span className="text-red-400 font-semibold flex items-center gap-1">-9% <AlertCircle className="w-3 h-3 text-red-400" /></span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      {/* Turnover & Hiring */}
-                      <div>
-                        <h4 className="text-sm font-bold text-slate-300 mb-3">Turnover & Hiring</h4>
-                        <div className="space-y-2">
-                          <div className="flex justify-between text-sm">
-                            <span className="text-slate-400">Last 12 months:</span>
-                            <span className="text-white font-medium">11 separations</span>
-                          </div>
-                          <div className="flex justify-between text-sm">
-                            <span className="text-slate-400">Turnover rate:</span>
-                            <span className="text-emerald-400 font-semibold flex items-center gap-1">6.5% (vs industry 12%) <CheckCircle className="w-3 h-3 text-emerald-400" /></span>
-                          </div>
-                          <div className="flex justify-between text-sm">
-                            <span className="text-slate-400">Avg tenure:</span>
-                            <span className="text-white font-medium">8.4 years</span>
-                          </div>
-                          <div className="flex justify-between text-sm">
-                            <span className="text-slate-400">Time to hire:</span>
-                            <span className="text-emerald-400 font-semibold flex items-center gap-1">42 days (target 60) <CheckCircle className="w-3 h-3 text-emerald-400" /></span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Shift Coverage */}
-                      <div>
-                        <h4 className="text-sm font-bold text-slate-300 mb-3">Shift Coverage</h4>
-                        <div className="space-y-2">
-                          <div className="flex justify-between text-sm">
-                            <span className="text-slate-400">Day Shift:</span>
-                            <span className="text-emerald-400 font-semibold flex items-center gap-1">96% staffed <CheckCircle className="w-3 h-3 text-emerald-400" /></span>
-                          </div>
-                          <div className="flex justify-between text-sm">
-                            <span className="text-slate-400">Night Shift:</span>
-                            <span className="text-emerald-400 font-semibold flex items-center gap-1">92% staffed <CheckCircle className="w-3 h-3 text-emerald-400" /></span>
-                          </div>
-                          <div className="flex justify-between text-sm">
-                            <span className="text-slate-400">Evening Shift:</span>
-                            <span className="text-amber-400 font-semibold flex items-center gap-1">88% staffed <Clock className="w-3 h-3 text-amber-400" /></span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <button className="mt-4 px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white font-medium rounded-lg transition-colors text-sm">
-                      Download Full Report
-                    </button>
-                  </div>
-                )}
-
-                {/* Certification Management - Collapsible */}
-                {showCertManagement && (
-                  <div className="mb-6 bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
-                    <div className="flex items-center gap-3 mb-4">
-                      <FileText className="w-6 h-6 text-purple-400" />
-                      <h3 className="text-lg font-bold text-white">Certification Management</h3>
-                    </div>
-
-                    <div className="space-y-4">
-                      {/* Expiring Soon */}
-                      <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
-                        <div className="flex items-center gap-2 mb-3">
-                          <Clock className="w-5 h-5 text-amber-400" />
-                          <h4 className="text-base font-bold text-amber-400">Expiring Soon (Next 30 days): 3</h4>
-                        </div>
-                        <div className="space-y-2">
-                          <div className="flex items-center justify-between text-sm">
-                            <span className="text-slate-300">John Smith - Firearms (Dec 15)</span>
-                            <span className="text-red-400 font-semibold flex items-center gap-1">3 days <AlertCircle className="w-3 h-3 text-red-400" /></span>
-                          </div>
-                          <div className="flex items-center justify-between text-sm">
-                            <span className="text-slate-300">Jennifer Martinez - TASER (Dec 20)</span>
-                            <span className="text-amber-400 font-semibold">8 days</span>
-                          </div>
-                          <div className="flex items-center justify-between text-sm">
-                            <span className="text-slate-300">James Brown - First Aid (Dec 28)</span>
-                            <span className="text-amber-400 font-semibold">16 days</span>
-                          </div>
-                        </div>
-                        <div className="flex gap-2 mt-3">
-                          <button className="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-slate-900 font-medium rounded text-xs transition-colors">
-                            Schedule All 3
-                          </button>
-                          <button className="px-3 py-1.5 bg-slate-700 hover:bg-slate-600 text-white font-medium rounded text-xs transition-colors">
-                            Send Reminders
-                          </button>
-                        </div>
-                      </div>
-
-                      {/* Expired */}
-                      <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
-                        <div className="flex items-center gap-2 mb-3">
-                          <AlertCircle className="w-5 h-5 text-red-400" />
-                          <h4 className="text-base font-bold text-red-400 flex items-center gap-2">Expired: 2 <AlertCircle className="w-4 h-4 text-red-400" /></h4>
-                        </div>
-                        <div className="space-y-2">
-                          <div className="flex items-center justify-between text-sm">
-                            <span className="text-slate-300">Sarah Johnson - CPR/First Aid</span>
-                            <span className="text-red-400 font-semibold">Expired Sep 15</span>
-                          </div>
-                          <div className="flex items-center justify-between text-sm">
-                            <span className="text-slate-300">Emily Rodriguez - EMD Certified</span>
-                            <span className="text-red-400 font-semibold">Expired Oct 25</span>
-                          </div>
-                        </div>
-                        <div className="flex gap-2 mt-3">
-                          <button className="px-3 py-1.5 bg-red-500 hover:bg-red-600 text-white font-medium rounded text-xs transition-colors">
-                            Schedule Immediately
-                          </button>
-                          <button className="px-3 py-1.5 bg-slate-700 hover:bg-slate-600 text-white font-medium rounded text-xs transition-colors">
-                            Notify Supervisors
-                          </button>
-                        </div>
-                      </div>
-
-                      {/* By Certification Type */}
-                      <div>
-                        <h4 className="text-sm font-bold text-slate-300 mb-3">By Certification Type</h4>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                          <div className="bg-slate-900/50 border border-slate-700 rounded p-3">
-                            <div className="flex justify-between mb-1">
-                              <span className="text-xs text-slate-400">Firearms Qualification</span>
-                              <span className="text-emerald-400 text-xs font-semibold flex items-center gap-1">100% <CheckCircle className="w-3 h-3 text-emerald-400" /></span>
-                            </div>
-                            <div className="text-xs text-slate-500">Current: 8 • Expiring: 2 • Expired: 0</div>
-                          </div>
-                          <div className="bg-slate-900/50 border border-slate-700 rounded p-3">
-                            <div className="flex justify-between mb-1">
-                              <span className="text-xs text-slate-400">TASER Certification</span>
-                              <span className="text-emerald-400 text-xs font-semibold flex items-center gap-1">100% <CheckCircle className="w-3 h-3 text-emerald-400" /></span>
-                            </div>
-                            <div className="text-xs text-slate-500">Current: 10 • Expiring: 1 • Expired: 0</div>
-                          </div>
-                          <div className="bg-slate-900/50 border border-slate-700 rounded p-3">
-                            <div className="flex justify-between mb-1">
-                              <span className="text-xs text-slate-400">CPR/First Aid</span>
-                              <span className="text-amber-400 text-xs font-semibold flex items-center gap-1">90% <Clock className="w-3 h-3 text-amber-400" /></span>
-                            </div>
-                            <div className="text-xs text-slate-500">Current: 9 • Expiring: 1 • Expired: 1</div>
-                          </div>
-                          <div className="bg-slate-900/50 border border-slate-700 rounded p-3">
-                            <div className="flex justify-between mb-1">
-                              <span className="text-xs text-slate-400">P.O.S.T. Certification</span>
-                              <span className="text-emerald-400 text-xs font-semibold flex items-center gap-1">100% <CheckCircle className="w-3 h-3 text-emerald-400" /></span>
-                            </div>
-                            <div className="text-xs text-slate-500">Current: 12 • Expiring: 0 • Expired: 0</div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <button className="mt-4 px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white font-medium rounded-lg transition-colors text-sm">
-                      Generate Compliance Report
-                    </button>
-                  </div>
-                )}
-
-                {/* Shift Schedule - Collapsible */}
-                {showShiftSchedule && (
-                  <div className="mb-6 bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
-                    <div className="flex items-center gap-3 mb-4">
-                      <Calendar className="w-6 h-6 text-purple-400" />
-                      <h3 className="text-lg font-bold text-white">Shift Schedule - December 13, 2024</h3>
-                    </div>
-
-                    <div className="space-y-4">
-                      {/* Day Shift */}
-                      <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-4">
-                        <h4 className="text-base font-bold text-emerald-400 mb-3 flex items-center gap-2">Day Shift (06:00-14:00) - <CheckCircle className="w-4 h-4 text-emerald-400" /> Good Coverage</h4>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                          <div>
-                            <div className="text-xs text-slate-400 mb-2">PATROL: 4 deputies</div>
-                            <div className="space-y-1 text-sm text-slate-300">
-                              <div>• John Smith (D-4521) - Zone 3</div>
-                              <div>• Jennifer Martinez (D-4524) - School Resource</div>
-                              <div>• Robert Taylor (D-4525) - Zone 1</div>
-                              <div>• David Williams (S-2201) - Supervisor</div>
-                            </div>
-                          </div>
-                          <div>
-                            <div className="text-xs text-slate-400 mb-2">INVESTIGATIONS: 1 detective</div>
-                            <div className="space-y-1 text-sm text-slate-300">
-                              <div>• Sarah Johnson (D-4522)</div>
-                            </div>
-                          </div>
-                          <div>
-                            <div className="text-xs text-slate-400 mb-2">DETENTION: 2 officers</div>
-                            <div className="space-y-1 text-sm text-slate-300">
-                              <div>• Michael Chen (D-4523)</div>
-                              <div>• James Brown (D-4526)</div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Night Shift */}
-                      <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
-                        <h4 className="text-base font-bold text-amber-400 mb-3 flex items-center gap-2">Night Shift (14:00-22:00) - <Clock className="w-4 h-4 text-amber-400" /> Below Minimum</h4>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <div>
-                            <div className="text-xs text-slate-400 mb-2">PATROL: 2 deputies (need 3)</div>
-                            <div className="space-y-1 text-sm text-slate-300">
-                              <div>• Amanda White (L-3301)</div>
-                              <div>• Kevin Garcia (D-4527)</div>
-                            </div>
-                          </div>
-                          <div>
-                            <div className="text-xs text-slate-400 mb-2">DETENTION: 1 officer</div>
-                            <div className="space-y-1 text-sm text-slate-300">
-                              <div>• Maria Lopez (D-4528)</div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="flex gap-2 mt-3">
-                          <button className="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-slate-900 font-medium rounded text-xs transition-colors">
-                            Approve Overtime
-                          </button>
-                          <button className="px-3 py-1.5 bg-slate-700 hover:bg-slate-600 text-white font-medium rounded text-xs transition-colors">
-                            Reassign
-                          </button>
-                        </div>
-                      </div>
-
-                      {/* Off Duty */}
-                      <div className="bg-slate-900/50 border border-slate-700 rounded-lg p-4">
-                        <h4 className="text-sm font-bold text-slate-300 mb-2">Off Duty / Leave</h4>
-                        <div className="space-y-1 text-sm text-slate-300">
-                          <div>• Emily Rodriguez (C-1105) - Off Duty</div>
-                          <div>• Lisa Anderson (C-1106) - Off Duty (starts at 22:00)</div>
-                          <div className="text-amber-400">• Jennifer Martinez (D-4524) - On Leave</div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="flex gap-2 mt-4">
-                      <button className="px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white font-medium rounded-lg transition-colors text-sm">
-                        View Weekly Schedule
-                      </button>
-                      <button className="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white font-medium rounded-lg transition-colors text-sm">
-                        Approve Leave
-                      </button>
-                    </div>
-                  </div>
-                )}
-
-                {/* Hiring Pipeline - Collapsible */}
-                {showHiringPipeline && (
-                  <div className="mb-6 bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
-                    <div className="flex items-center gap-3 mb-4">
-                      <UserPlus className="w-6 h-6 text-purple-400" />
-                      <h3 className="text-lg font-bold text-white">Hiring Pipeline - 12 Open Positions</h3>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                      {/* Stage Breakdown */}
-                      <div>
-                        <h4 className="text-sm font-bold text-slate-300 mb-3">Active Applicants: 28</h4>
-                        <div className="space-y-2">
-                          <div className="flex justify-between text-sm">
-                            <span className="text-slate-400">Application submitted:</span>
-                            <span className="text-white font-medium">9</span>
-                          </div>
-                          <div className="flex justify-between text-sm">
-                            <span className="text-slate-400">Under review:</span>
-                            <span className="text-white font-medium">6</span>
-                          </div>
-                          <div className="flex justify-between text-sm">
-                            <span className="text-slate-400">Interview scheduled:</span>
-                            <span className="text-amber-400 font-medium">5</span>
-                          </div>
-                          <div className="flex justify-between text-sm">
-                            <span className="text-slate-400">Background check:</span>
-                            <span className="text-blue-400 font-medium">5</span>
-                          </div>
-                          <div className="flex justify-between text-sm">
-                            <span className="text-slate-400">Offer extended:</span>
-                            <span className="text-emerald-400 font-medium">2</span>
-                          </div>
-                          <div className="flex justify-between text-sm">
-                            <span className="text-slate-400">Start date set:</span>
-                            <span className="text-emerald-400 font-semibold">1</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Open Positions */}
-                      <div>
-                        <h4 className="text-sm font-bold text-slate-300 mb-3">Open Positions by Division</h4>
-                        <div className="space-y-2">
-                          <div className="flex justify-between text-sm">
-                            <span className="text-slate-400">Patrol:</span>
-                            <span className="text-red-400 font-semibold">4 positions (Critical)</span>
-                          </div>
-                          <div className="flex justify-between text-sm">
-                            <span className="text-slate-400">Detention:</span>
-                            <span className="text-amber-400 font-semibold">3 positions (High)</span>
-                          </div>
-                          <div className="flex justify-between text-sm">
-                            <span className="text-slate-400">Investigations:</span>
-                            <span className="text-white font-medium">2 positions</span>
-                          </div>
-                          <div className="flex justify-between text-sm">
-                            <span className="text-slate-400">Dispatch:</span>
-                            <span className="text-white font-medium">2 positions</span>
-                          </div>
-                          <div className="flex justify-between text-sm">
-                            <span className="text-slate-400">School Resource:</span>
-                            <span className="text-white font-medium">1 position</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="space-y-4">
-                      {/* Upcoming Interviews */}
-                      <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
-                        <h4 className="text-sm font-bold text-blue-400 mb-2">Upcoming Interviews</h4>
-                        <div className="space-y-1 text-sm text-slate-300">
-                          <div>• Jan 18 - 3 candidates (Patrol positions)</div>
-                          <div>• Jan 20 - 2 candidates (Detention)</div>
-                        </div>
-                      </div>
-
-                      {/* Background Checks */}
-                      <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
-                        <h4 className="text-sm font-bold text-amber-400 mb-2">Background Checks in Progress: 5</h4>
-                        <div className="space-y-2">
-                          <div className="flex justify-between text-sm text-slate-300">
-                            <span>Candidate A (Patrol)</span>
-                            <span className="text-amber-400">Day 18/30 (60%)</span>
-                          </div>
-                          <div className="flex justify-between text-sm text-slate-300">
-                            <span>Candidate B (Detention)</span>
-                            <span className="text-emerald-400">Day 25/30 (83%)</span>
-                          </div>
-                          <div className="flex justify-between text-sm text-slate-300">
-                            <span>Candidate C (Patrol)</span>
-                            <span className="text-amber-400">Day 12/30 (40%)</span>
-                          </div>
-                          <div className="flex justify-between text-sm text-slate-300">
-                            <span>Candidate D (Dispatch)</span>
-                            <span className="text-blue-400">Day 8/30 (27%)</span>
-                          </div>
-                          <div className="flex justify-between text-sm text-slate-300">
-                            <span>Candidate E (Investigations)</span>
-                            <span className="text-blue-400">Day 3/30 (10%)</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Projected Hires */}
-                      <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-4">
-                        <h4 className="text-sm font-bold text-emerald-400 mb-2">Projected Hires</h4>
-                        <div className="space-y-1 text-sm text-slate-300">
-                          <div>• February: 4 hires</div>
-                          <div>• March: 5 hires</div>
-                          <div>• April: 3 hires</div>
-                          <div className="text-emerald-400 font-semibold pt-2 border-t border-emerald-500/30">Timeline to fill all 12 positions: ~75 days</div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="flex gap-2 mt-4">
-                      <button className="px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white font-medium rounded-lg transition-colors text-sm">
-                        View Applicants
-                      </button>
-                      <button className="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white font-medium rounded-lg transition-colors text-sm">
-                        Schedule Interviews
-                      </button>
-                      <button className="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white font-medium rounded-lg transition-colors text-sm">
-                        Extend Offer
-                      </button>
+                    <div className="grid grid-cols-4 gap-3">
+                      <select className="px-2.5 py-1.5 bg-slate-900/40 border border-slate-700/30 rounded text-[11px] text-white focus:outline-none focus:border-amber-500/40">
+                        <option>All Divisions</option>
+                        <option>Patrol</option>
+                        <option>Investigations</option>
+                        <option>Detention</option>
+                        <option>Dispatch</option>
+                        <option>School Resource</option>
+                      </select>
+                      <select className="px-2.5 py-1.5 bg-slate-900/40 border border-slate-700/30 rounded text-[11px] text-white focus:outline-none focus:border-amber-500/40">
+                        <option>All Ranks</option>
+                        <option>Deputy Sheriff</option>
+                        <option>Senior Deputy</option>
+                        <option>Sergeant</option>
+                        <option>Lieutenant</option>
+                      </select>
+                      <select className="px-2.5 py-1.5 bg-slate-900/40 border border-slate-700/30 rounded text-[11px] text-white focus:outline-none focus:border-amber-500/40">
+                        <option>All Status</option>
+                        <option>On Duty</option>
+                        <option>Off Duty</option>
+                        <option>On Leave</option>
+                      </select>
+                      <select className="px-2.5 py-1.5 bg-slate-900/40 border border-slate-700/30 rounded text-[11px] text-white focus:outline-none focus:border-amber-500/40">
+                        <option>All Certs</option>
+                        <option>Current</option>
+                        <option>Expiring</option>
+                        <option>Expired</option>
+                      </select>
                     </div>
                   </div>
                 )}
@@ -1195,271 +672,120 @@ export default function PersonnelOverview() {
                 </div>
               </div>
 
-              {/* Right Sidebar - KPIs */}
-              <div className="w-full xl:w-72 shrink-0">
-                <div className="grid grid-cols-2 xl:grid-cols-1 gap-4">
-                  {/* Total Personnel - Enhanced */}
-                  <div className="bg-slate-800/40 backdrop-blur-xl border border-slate-700/50 rounded-xl p-5">
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center">
-                        <Users className="w-5 h-5 text-blue-400" />
-                      </div>
-                      <div>
-                        <p className="text-2xl font-bold text-white">{stats.total}</p>
-                        <p className="text-xs text-slate-400">Total Personnel</p>
-                      </div>
-                    </div>
-                    <div className="mt-4 pt-4 border-t border-slate-700/50 space-y-2">
-                      <div className="flex justify-between text-xs">
-                        <span className="text-slate-400">Sworn:</span>
-                        <span className="text-white font-medium">142 (84%)</span>
-                      </div>
-                      <div className="flex justify-between text-xs">
-                        <span className="text-slate-400">Civilian:</span>
-                        <span className="text-white font-medium">28 (16%)</span>
-                      </div>
-                      <div className="flex justify-between text-xs pt-2 border-t border-slate-700/50">
-                        <span className="text-slate-400">Patrol:</span>
-                        <span className="text-white font-medium">68</span>
-                      </div>
-                      <div className="flex justify-between text-xs">
-                        <span className="text-slate-400">Investigations:</span>
-                        <span className="text-white font-medium">24</span>
-                      </div>
-                      <div className="flex justify-between text-xs">
-                        <span className="text-slate-400">Detention:</span>
-                        <span className="text-white font-medium">52</span>
-                      </div>
-                      <div className="flex justify-between text-xs">
-                        <span className="text-slate-400">Dispatch:</span>
-                        <span className="text-white font-medium">26</span>
-                      </div>
-                      <div className="flex justify-between text-xs pt-2 border-t border-slate-700/50">
-                        <span className="text-slate-400">Authorized:</span>
-                        <span className="text-amber-400 font-medium">182 (93%)</span>
-                      </div>
-                      <div className="flex items-center gap-1 text-xs text-emerald-400 pt-1">
-                        <TrendingUp className="w-3 h-3" />
-                        <span>+8 vs last year</span>
-                      </div>
-                    </div>
-                  </div>
 
-                  {/* On Duty Now - Enhanced */}
-                  <div className="bg-slate-800/40 backdrop-blur-xl border border-slate-700/50 rounded-xl p-5">
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center">
-                        <CheckCircle className="w-5 h-5 text-green-400" />
-                      </div>
-                      <div>
-                        <p className="text-2xl font-bold text-white">{stats.onDuty}</p>
-                        <p className="text-xs text-slate-400">On Duty Now</p>
-                      </div>
-                    </div>
-                    <div className="mt-4 pt-4 border-t border-slate-700/50 space-y-2">
-                      <div className="flex justify-between text-xs">
-                        <span className="text-slate-400">Patrol:</span>
-                        <span className="text-emerald-400 font-medium">52 on duty</span>
-                      </div>
-                      <div className="flex justify-between text-xs">
-                        <span className="text-slate-400">Investigations:</span>
-                        <span className="text-emerald-400 font-medium">18 on duty</span>
-                      </div>
-                      <div className="flex justify-between text-xs">
-                        <span className="text-slate-400">Detention:</span>
-                        <span className="text-emerald-400 font-medium">38 on duty</span>
-                      </div>
-                      <div className="flex justify-between text-xs">
-                        <span className="text-slate-400">Dispatch:</span>
-                        <span className="text-emerald-400 font-medium">19 on duty</span>
-                      </div>
-                      <div className="flex justify-between text-xs pt-2 border-t border-slate-700/50">
-                        <span className="text-slate-400">Day shift:</span>
-                        <span className="text-white font-medium">68</span>
-                      </div>
-                      <div className="flex justify-between text-xs">
-                        <span className="text-slate-400">Night shift:</span>
-                        <span className="text-white font-medium">59</span>
-                      </div>
-                      <div className="flex justify-between text-xs pt-2 border-t border-slate-700/50">
-                        <span className="text-slate-400">Off duty:</span>
-                        <span className="text-slate-300 font-medium">35</span>
-                      </div>
-                      <div className="flex justify-between text-xs">
-                        <span className="text-slate-400">On leave:</span>
-                        <span className="text-amber-400 font-medium">8</span>
-                      </div>
-                    </div>
-                  </div>
+              {/* ═══ Right Panel — 3 Operational Widgets ═══ */}
+              <div className="w-full xl:w-64 shrink-0 space-y-3">
 
-                  {/* Expiring Certs - With Operational Impact */}
-                  <div className="bg-slate-800/40 backdrop-blur-xl border border-amber-500/20 rounded-xl p-5">
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="w-10 h-10 bg-amber-500/20 rounded-xl flex items-center justify-center">
-                        <Clock className="w-5 h-5 text-amber-400" />
-                      </div>
-                      <div>
-                        <p className="text-2xl font-bold text-white">{stats.expiring}</p>
-                        <p className="text-xs text-slate-400">Expiring Certifications</p>
-                      </div>
-                    </div>
-                    <div className="mt-3 pt-3 border-t border-slate-700/50 space-y-2">
-                      <div className="flex justify-between text-xs">
-                        <span className="text-slate-400">Urgent (&lt;7 days):</span>
-                        <span className="text-red-400 font-semibold">5</span>
-                      </div>
-                      <div className="flex justify-between text-xs">
-                        <span className="text-slate-400">Next 30 days:</span>
-                        <span className="text-amber-400 font-semibold">12</span>
-                      </div>
-                      <div className="flex justify-between text-xs">
-                        <span className="text-slate-400">Expired:</span>
-                        <span className="text-red-400 font-semibold">6</span>
-                      </div>
-                    </div>
-                    {/* Operational Impact */}
-                    <div className="mt-3 pt-3 border-t border-red-500/15">
-                      <p className="text-[9px] font-bold text-red-400 uppercase tracking-wider mb-1.5">Operational Impact</p>
-                      <div className="space-y-1.5">
-                        <p className="text-[10px] text-slate-300">6 Patrol Deputies affected</p>
-                        <p className="text-[10px] text-slate-300">Patrol coverage would drop to <span className="text-red-400 font-bold">69%</span></p>
-                        <p className="text-[10px] text-slate-300">Training required within <span className="text-amber-400 font-bold">21 days</span></p>
-                      </div>
-                    </div>
-                    <button onClick={() => navigate(createPageUrl('TrainingCertifications'))} className="mt-3 w-full px-3 py-2 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/30 text-amber-400 rounded-lg text-xs font-semibold transition-colors">
-                      Schedule Training
-                    </button>
+                {/* Widget 1: Operational Coverage */}
+                <div className="bg-slate-800/15 border border-slate-700/15 rounded p-3">
+                  <div className="flex items-center gap-2 mb-2.5">
+                    <Shield className="w-3.5 h-3.5 text-blue-400" />
+                    <span className="text-[11px] font-bold text-white">Operational Coverage</span>
                   </div>
-
-                  {/* Open Positions - Enhanced */}
-                  <div className="bg-slate-800/40 backdrop-blur-xl border border-slate-700/50 rounded-xl p-5">
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="w-10 h-10 bg-red-500/20 rounded-xl flex items-center justify-center">
-                        <AlertCircle className="w-5 h-5 text-red-400" />
-                      </div>
-                      <div>
-                        <p className="text-2xl font-bold text-white">{stats.openPositions}</p>
-                        <p className="text-xs text-slate-400">Open Positions</p>
-                      </div>
-                    </div>
-                    <div className="mt-4 pt-4 border-t border-slate-700/50 space-y-2">
-                      <div className="flex justify-between text-xs">
-                        <span className="text-slate-400">Patrol:</span>
-                        <span className="text-red-400 font-semibold">4 (Critical)</span>
-                      </div>
-                      <div className="flex justify-between text-xs">
-                        <span className="text-slate-400">Detention:</span>
-                        <span className="text-amber-400 font-semibold">3 (High)</span>
-                      </div>
-                      <div className="flex justify-between text-xs">
-                        <span className="text-slate-400">Investigations:</span>
-                        <span className="text-white font-medium">2</span>
-                      </div>
-                      <div className="flex justify-between text-xs">
-                        <span className="text-slate-400">Dispatch:</span>
-                        <span className="text-white font-medium">2</span>
-                      </div>
-                      <div className="flex justify-between text-xs">
-                        <span className="text-slate-400">School Resource:</span>
-                        <span className="text-white font-medium">1</span>
-                      </div>
-                      <div className="flex justify-between text-xs pt-2 border-t border-slate-700/50">
-                        <span className="text-slate-400">In pipeline:</span>
-                        <span className="text-blue-400 font-medium">28 applicants</span>
-                      </div>
-                      <div className="flex justify-between text-xs">
-                        <span className="text-slate-400">Avg time to hire:</span>
-                        <span className="text-emerald-400 font-medium">42 days</span>
-                      </div>
-                      <button onClick={() => setShowHiringPipeline(true)} className="mt-2 w-full px-3 py-1.5 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 text-blue-400 rounded-lg text-xs font-medium transition-colors">
-                        View Pipeline
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* ── Coverage Risk Panel ─────────────────────── */}
-                  <div className="bg-slate-800/40 backdrop-blur-xl border border-red-500/20 rounded-xl p-5">
-                    <div className="flex items-center gap-2 mb-3">
-                      <Target className="w-4 h-4 text-red-400" />
-                      <span className="text-xs font-bold text-white">Coverage Risk</span>
-                    </div>
-                    <div className="space-y-2">
-                      {[
-                        { zone: 'North Patrol', required: 12, current: 9, risk: 'amber' },
-                        { zone: 'Central Patrol', required: 10, current: 8, risk: 'red' },
-                        { zone: 'South Patrol', required: 8, current: 8, risk: 'green' },
-                        { zone: 'Detention', required: 52, current: 49, risk: 'amber' },
-                      ].map((z, i) => (
-                        <div key={i} className="flex items-center justify-between text-xs">
-                          <span className="text-slate-400">{z.zone}</span>
-                          <div className="flex items-center gap-2">
-                            <span className="text-slate-300 font-mono text-[10px]">{z.current}/{z.required}</span>
-                            <div className={`w-2 h-2 rounded-full ${
-                              z.risk === 'red' ? 'bg-red-500' : z.risk === 'amber' ? 'bg-amber-500' : 'bg-green-500'
-                            }`}></div>
-                          </div>
+                  <div className="space-y-2">
+                    {[
+                      { division: 'Patrol', current: 64, required: 68, color: 'amber' },
+                      { division: 'Investigations', current: 22, required: 24, color: 'green' },
+                      { division: 'Detention', current: 49, required: 52, color: 'amber' },
+                      { division: 'Dispatch', current: 24, required: 26, color: 'green' },
+                    ].map((d, i) => (
+                      <div key={i}>
+                        <div className="flex items-center justify-between text-[10px] mb-0.5">
+                          <span className="text-slate-400">{d.division}</span>
+                          <span className="text-slate-300 font-mono">{d.current}/{d.required}</span>
                         </div>
-                      ))}
-                    </div>
-                    <div className="mt-3 pt-3 border-t border-slate-700/30">
-                      <div className="flex items-start gap-2">
-                        <Sparkles className="w-3 h-3 text-slate-400 mt-0.5 flex-shrink-0" />
-                        <p className="text-[10px] text-slate-400">Reassign 2 deputies from investigations to central patrol to prevent overtime escalation.</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* ── Certification Cascade Risk ──────────────── */}
-                  <div className="bg-slate-800/40 backdrop-blur-xl border border-red-500/15 rounded-xl p-5">
-                    <div className="flex items-center gap-2 mb-3">
-                      <Zap className="w-4 h-4 text-red-400" />
-                      <span className="text-xs font-bold text-white">Certification Cascade</span>
-                    </div>
-                    <div className="bg-red-500/[0.03] border border-red-500/10 rounded-lg p-3 mb-3">
-                      <p className="text-[9px] font-bold text-red-400 uppercase tracking-wider mb-1">Trigger: POST certs expiring Jan 31</p>
-                      <div className="space-y-1.5 mt-2">
-                        <p className="text-[10px] text-slate-300">Patrol coverage drops to <span className="text-red-400 font-bold">72%</span></p>
-                        <p className="text-[10px] text-slate-300">4 deputies removed from deployable pool</p>
-                        <p className="text-[10px] text-slate-300">Overtime projection: <span className="text-red-400 font-bold">+$9,400</span></p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2 px-2.5 py-2 bg-green-500/[0.03] border border-green-500/15 rounded-lg">
-                      <CheckCircle className="w-3 h-3 text-green-400 flex-shrink-0" />
-                      <p className="text-[10px] text-green-400 font-semibold">Approve training block to prevent cascade</p>
-                    </div>
-                  </div>
-
-                  {/* ── Hiring Pipeline Forecast ────────────────── */}
-                  <div className="bg-slate-800/40 backdrop-blur-xl border border-slate-700/50 rounded-xl p-5">
-                    <div className="flex items-center gap-2 mb-3">
-                      <ArrowRight className="w-4 h-4 text-blue-400" />
-                      <span className="text-xs font-bold text-white">Hiring Pipeline</span>
-                    </div>
-                    <div className="space-y-2">
-                      {[
-                        { stage: 'Applications', count: 28, color: 'slate' },
-                        { stage: 'Background Check', count: 11, color: 'amber' },
-                        { stage: 'Academy', count: 6, color: 'blue' },
-                        { stage: 'Field Training', count: 3, color: 'green' },
-                      ].map((s, i) => (
-                        <div key={i} className="flex items-center justify-between text-xs">
-                          <span className="text-slate-400">{s.stage}</span>
-                          <span className={`font-bold ${
-                            s.color === 'green' ? 'text-green-400' : s.color === 'blue' ? 'text-blue-400' : s.color === 'amber' ? 'text-amber-400' : 'text-slate-300'
-                          }`}>{s.count}</span>
+                        <div className="w-full h-1 bg-slate-800 rounded-full overflow-hidden">
+                          <div
+                            className={`h-full rounded-full ${
+                              d.current / d.required >= 0.95 ? 'bg-green-500' :
+                              d.current / d.required >= 0.85 ? 'bg-amber-500' : 'bg-red-500'
+                            }`}
+                            style={{ width: `${(d.current / d.required) * 100}%` }}
+                          ></div>
                         </div>
-                      ))}
-                    </div>
-                    <div className="mt-3 pt-3 border-t border-slate-700/30">
-                      <p className="text-[10px] text-slate-400">Projected patrol staffing recovery:</p>
-                      <p className="text-xs text-blue-400 font-bold mt-0.5">April 18, 2026</p>
-                      <p className="text-[9px] text-slate-600 mt-0.5">Based on current pipeline velocity: 42-day avg</p>
-                    </div>
-                    <button onClick={() => navigate(createPageUrl('HiringPipeline'))} className="mt-3 w-full px-3 py-1.5 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 text-blue-400 rounded-lg text-xs font-medium transition-colors">
-                      Full Pipeline
-                    </button>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-2.5 pt-2 border-t border-slate-700/15 flex items-center justify-between text-[10px]">
+                    <span className="text-slate-500">Total on duty:</span>
+                    <span className="text-white font-bold">127/170 (75%)</span>
+                  </div>
+                  <div className="flex items-center justify-between text-[10px] mt-0.5">
+                    <span className="text-slate-500">On leave:</span>
+                    <span className="text-amber-400">8</span>
+                  </div>
+                  <div className="flex items-center justify-between text-[10px] mt-0.5">
+                    <span className="text-slate-500">Off duty:</span>
+                    <span className="text-slate-400">35</span>
                   </div>
                 </div>
+
+                {/* Widget 2: Certification Risk */}
+                <div className="bg-slate-800/15 border border-amber-500/15 rounded p-3">
+                  <div className="flex items-center gap-2 mb-2">
+                    <AlertTriangle className="w-3.5 h-3.5 text-amber-400" />
+                    <span className="text-[11px] font-bold text-white">Certification Risk</span>
+                  </div>
+                  <div className="flex items-baseline gap-1.5 mb-2">
+                    <span className="text-2xl font-bold text-amber-400">23</span>
+                    <span className="text-[10px] text-slate-500">expiring</span>
+                  </div>
+                  <div className="space-y-1.5 text-[10px]">
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">Urgent (&lt;7 days):</span>
+                      <span className="text-red-400 font-bold">5</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">Next 30 days:</span>
+                      <span className="text-amber-400 font-bold">12</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">Expired:</span>
+                      <span className="text-red-400 font-bold">6</span>
+                    </div>
+                  </div>
+                  <div className="mt-2.5 pt-2 border-t border-red-500/10">
+                    <p className="text-[9px] font-bold text-red-400 uppercase tracking-wider mb-1">Operational Impact</p>
+                    <p className="text-[10px] text-slate-300">6 Patrol Deputies affected</p>
+                    <p className="text-[10px] text-slate-300">Coverage drops to <span className="text-red-400 font-bold">69%</span></p>
+                    <p className="text-[10px] text-slate-300">Training required within <span className="text-amber-400 font-bold">21 days</span></p>
+                  </div>
+                  <button onClick={() => navigate(createPageUrl('TrainingCertifications'))} className="mt-2.5 w-full px-2.5 py-1.5 bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/20 text-amber-400 rounded text-[10px] font-semibold transition-colors">
+                    Schedule Training
+                  </button>
+                </div>
+
+                {/* Widget 3: Coverage Risk Prediction */}
+                <div className="bg-slate-800/15 border border-red-500/15 rounded p-3">
+                  <div className="flex items-center gap-2 mb-2.5">
+                    <Target className="w-3.5 h-3.5 text-red-400" />
+                    <span className="text-[11px] font-bold text-white">Coverage Risk</span>
+                  </div>
+                  <div className="space-y-2">
+                    {[
+                      { zone: 'North Patrol', required: 12, current: 9, risk: 'amber' },
+                      { zone: 'Central Patrol', required: 10, current: 8, risk: 'red' },
+                      { zone: 'South Patrol', required: 8, current: 8, risk: 'green' },
+                    ].map((z, i) => (
+                      <div key={i} className="flex items-center justify-between text-[10px]">
+                        <span className="text-slate-400">{z.zone}</span>
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-slate-300 font-mono">{z.current}/{z.required}</span>
+                          <div className={`w-2 h-2 rounded-full ${
+                            z.risk === 'red' ? 'bg-red-500' : z.risk === 'amber' ? 'bg-amber-500' : 'bg-green-500'
+                          }`}></div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-2.5 pt-2 border-t border-slate-700/15">
+                    <div className="flex items-start gap-1.5">
+                      <Sparkles className="w-3 h-3 text-slate-500 mt-0.5 flex-shrink-0" />
+                      <p className="text-[10px] text-slate-400">Reassign 2 from investigations to central patrol to prevent overtime escalation.</p>
+                    </div>
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>
@@ -1584,51 +910,8 @@ export default function PersonnelOverview() {
         </div>
       )}
 
-      {/* AI Chat Button */}
-      <button
-        onClick={() => setChatOpen(!chatOpen)}
-        className="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-400 hover:to-blue-500 rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 z-40"
-      >
-        {chatOpen ? <X className="w-6 h-6 text-white" /> : <MessageCircle className="w-6 h-6 text-white" />}
-        {!chatOpen && <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full border-2 border-slate-900 animate-pulse"></span>}
-      </button>
 
-      {/* AI Chat Panel */}
-      {chatOpen && (
-        <div className="fixed bottom-24 right-6 w-full max-w-96 h-[500px] bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-2xl flex flex-col z-40 mx-4 sm:mx-0">
-          <div className="p-4 border-b border-slate-700/50 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <h3 className="text-sm font-semibold text-white">Personnel AI Assistant</h3>
-                <p className="text-xs text-green-400">Online</p>
-              </div>
-            </div>
-          </div>
-          <div className="flex-1 p-4 overflow-y-auto">
-            <div className="flex gap-3 mb-4">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Sparkles className="w-4 h-4 text-white" />
-              </div>
-              <div className="flex-1">
-                <div className="bg-slate-800/60 p-3 rounded-xl">
-                  <p className="text-sm text-slate-200">Hi! I can help you find personnel records, analyze certifications, check staffing levels, and answer questions about your team. What would you like to know?</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="p-4 border-t border-slate-700/50">
-            <div className="flex items-center gap-2">
-              <input type="text" placeholder="Ask about personnel..." className="flex-1 px-4 py-2 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-blue-500/50" />
-              <button className="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center">
-                <Send className="w-5 h-5 text-white" />
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+
 
       {/* Full Personnel Profile Modal */}
       {fullProfileOpen && fullProfileData && (
@@ -1903,7 +1186,6 @@ export default function PersonnelOverview() {
           </div>
         </div>
       )}
-      </div>
     </DashboardLayout>
   );
 }
