@@ -12,6 +12,7 @@ export default function PersonnelOverview() {
   const [aiInsightsVisible, setAiInsightsVisible] = useState(true);
   const [fullProfileOpen, setFullProfileOpen] = useState(false);
   const [fullProfileData, setFullProfileData] = useState(null);
+  const [collapsedGroups, setCollapsedGroups] = useState({});
 
   const personnel = [
     {
@@ -36,7 +37,7 @@ export default function PersonnelOverview() {
       lastCheckIn: '2 hours ago',
       coverageImpact: 'critical',
       risk: 'CPR/First Aid expiring in 14 days',
-      aiInsight: 'Schedule CPR renewal — Zone 3 coverage at risk'
+      aiInsight: 'Schedule CPR training before Jan 14'
     },
     {
       id: 'P-2024-002',
@@ -61,7 +62,8 @@ export default function PersonnelOverview() {
       lastCheckIn: '1 hour ago',
       coverageImpact: 'stable',
       risk: 'CPR/First Aid expired — restricted from field duty',
-      aiInsight: 'Reassign to patrol — experienced deputy available'
+      restrictionReason: 'CPR/First Aid expired',
+      aiInsight: 'Complete CPR recert to restore field duty status'
     },
     {
       id: 'P-2024-003',
@@ -109,7 +111,7 @@ export default function PersonnelOverview() {
       lastCheckIn: '30 min ago',
       coverageImpact: 'critical',
       risk: 'EMD Certified expiring in 7 days',
-      aiInsight: 'Night dispatch at 60% — EMD renewal critical'
+      aiInsight: 'Renew EMD cert by Oct 25 — night dispatch at 60%'
     },
     {
       id: 'P-2024-005',
@@ -134,7 +136,7 @@ export default function PersonnelOverview() {
       lastCheckIn: '45 min ago',
       coverageImpact: 'stable',
       risk: null,
-      aiInsight: 'Eligible for field training officer role'
+      aiInsight: 'Assign as Field Training Officer'
     },
     {
       id: 'P-2024-006',
@@ -158,6 +160,7 @@ export default function PersonnelOverview() {
       lastCheckIn: '3 days ago',
       coverageImpact: 'watch',
       risk: 'On medical leave — CPR expiring during absence',
+      restrictionReason: 'Medical leave',
       aiInsight: 'Schedule CPR renewal for return date'
     },
     {
@@ -182,7 +185,7 @@ export default function PersonnelOverview() {
       lastCheckIn: '3 hours ago',
       coverageImpact: 'critical',
       risk: null,
-      aiInsight: 'Reassign to Central Patrol — zone below minimum'
+      aiInsight: 'Move to Central Patrol — zone below minimum'
     },
     {
       id: 'P-2024-008',
@@ -231,7 +234,7 @@ export default function PersonnelOverview() {
       lastCheckIn: '1 hour ago',
       coverageImpact: 'watch',
       risk: 'CPR/First Aid expiring in 18 days',
-      aiInsight: 'Training required within 18 days'
+      aiInsight: 'Schedule CPR recert before Nov 5'
     },
     {
       id: 'P-2024-010',
@@ -280,7 +283,7 @@ export default function PersonnelOverview() {
       lastCheckIn: '15 min ago',
       coverageImpact: 'stable',
       risk: null,
-      aiInsight: 'Eligible for field training officer role'
+      aiInsight: 'Assign as Field Training Officer'
     },
     {
       id: 'P-2024-012',
@@ -365,6 +368,10 @@ export default function PersonnelOverview() {
       { key: 'nonDeployable', label: 'Non-Deployable', count: nonDeployable.length, color: 'red', people: nonDeployable },
     ].filter(g => g.people.length > 0);
   })();
+
+  const toggleGroup = (key) => {
+    setCollapsedGroups(prev => ({ ...prev, [key]: !prev[key] }));
+  };
 
   const openQuickPeek = (person) => {
     setPeekData(person);
@@ -569,147 +576,167 @@ export default function PersonnelOverview() {
 
                 {/* ═══════════════════════════════════════════════
                      OPERATIONAL PERSONNEL TABLE
-                     Grouped by deployability. Card-row hybrid.
+                     Grouped by deployability. Collapsible sections.
                      ═══════════════════════════════════════════════ */}
-                <div className="space-y-3">
-                  {groupedPersonnel.map(group => (
-                    <div key={group.key} className="border border-slate-700/15 rounded overflow-hidden">
-                      {/* Group Header */}
-                      <div className={`px-3 py-2 flex items-center gap-2 ${
-                        group.color === 'red' ? 'bg-red-500/[0.04] border-b border-red-500/10' :
-                        group.color === 'amber' ? 'bg-amber-500/[0.03] border-b border-amber-500/10' :
-                        'bg-green-500/[0.02] border-b border-green-500/10'
-                      }`}>
-                        <div className={`w-2 h-2 rounded-full ${
-                          group.color === 'red' ? 'bg-red-500' : group.color === 'amber' ? 'bg-amber-500' : 'bg-green-500'
-                        }`}></div>
-                        <span className={`text-[11px] font-bold uppercase tracking-wider ${
-                          group.color === 'red' ? 'text-red-400' : group.color === 'amber' ? 'text-amber-400' : 'text-green-400'
-                        }`}>{group.label}</span>
-                        <span className="text-[10px] text-slate-500">({group.count})</span>
-                      </div>
+                <div className="space-y-2">
+                  {groupedPersonnel.map(group => {
+                    const isCollapsed = collapsedGroups[group.key];
+                    return (
+                      <div key={group.key} className="border border-slate-700/15 rounded overflow-hidden">
+                        {/* Group Header — clickable to collapse */}
+                        <button
+                          onClick={() => toggleGroup(group.key)}
+                          className={`w-full px-3 py-2 flex items-center gap-2 transition-colors ${
+                            group.color === 'red' ? 'bg-red-500/[0.04] hover:bg-red-500/[0.07] border-b border-red-500/10' :
+                            group.color === 'amber' ? 'bg-amber-500/[0.03] hover:bg-amber-500/[0.06] border-b border-amber-500/10' :
+                            'bg-green-500/[0.02] hover:bg-green-500/[0.04] border-b border-green-500/10'
+                          }`}
+                        >
+                          <div className={`w-2 h-2 rounded-full flex-shrink-0 ${
+                            group.color === 'red' ? 'bg-red-500' : group.color === 'amber' ? 'bg-amber-500' : 'bg-green-500'
+                          }`}></div>
+                          <span className={`text-[11px] font-bold uppercase tracking-wider ${
+                            group.color === 'red' ? 'text-red-400' : group.color === 'amber' ? 'text-amber-400' : 'text-green-400'
+                          }`}>{group.label}</span>
+                          <span className="text-[10px] text-slate-500">({group.count})</span>
+                          <ChevronRight className={`w-3 h-3 text-slate-600 ml-auto transition-transform ${isCollapsed ? '' : 'rotate-90'}`} />
+                        </button>
 
-                      {/* Column Headers */}
-                      <div className="grid grid-cols-[1fr_80px_100px_100px_1fr_1fr_90px] gap-1 px-3 py-1.5 bg-slate-900/30 border-b border-slate-700/10 text-[9px] font-semibold text-slate-500 uppercase tracking-wider">
-                        <span>Personnel</span>
-                        <span>Division</span>
-                        <span>Deployability</span>
-                        <span>Coverage</span>
-                        <span>Risk</span>
-                        <span>AI Insight</span>
-                        <span className="text-right">Actions</span>
-                      </div>
-
-                      {/* Personnel Rows — card-row hybrid */}
-                      {group.people.map(person => {
-                        const opStatus = getOperationalStatus(person);
-                        const OpIcon = opStatus.icon;
-                        const covConfig = getCoverageConfig(person.coverageImpact);
-
-                        return (
-                          <div
-                            key={person.id}
-                            className={`grid grid-cols-[1fr_80px_100px_100px_1fr_1fr_90px] gap-1 px-3 py-3 items-center border-b border-slate-800/20 hover:bg-slate-800/20 transition-colors ${
-                              opStatus.color === 'red' ? 'bg-red-500/[0.02]' :
-                              opStatus.color === 'amber' ? 'bg-amber-500/[0.01]' : ''
-                            }`}
-                          >
-                            {/* Personnel — name + badge + rank */}
-                            <div
-                              className="flex items-center gap-2.5 cursor-pointer group min-w-0"
-                              onClick={() => openQuickPeek(person)}
-                            >
-                              <div className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 text-[11px] font-bold ${
-                                opStatus.color === 'red' ? 'bg-red-500/15 text-red-400' :
-                                opStatus.color === 'amber' ? 'bg-amber-500/15 text-amber-400' :
-                                'bg-blue-500/15 text-blue-400'
-                              }`}>
-                                {person.photo}
-                              </div>
-                              <div className="min-w-0">
-                                <p className="text-[11px] font-semibold text-white group-hover:text-amber-400 transition-colors truncate">{person.name}</p>
-                                <p className="text-[10px] text-slate-500">{person.rank} &middot; <span className="font-mono">{person.badge}</span></p>
-                              </div>
+                        {!isCollapsed && (
+                          <>
+                            {/* Column Headers */}
+                            <div className="grid grid-cols-[1fr_80px_100px_90px_1fr_1fr_90px] gap-1 px-3 py-1.5 bg-slate-900/30 border-b border-slate-700/10 text-[9px] font-semibold text-slate-500 uppercase tracking-wider">
+                              <span>Personnel</span>
+                              <span>Division</span>
+                              <span>Deployability</span>
+                              <span>Coverage</span>
+                              <span>Risk</span>
+                              <span>Recommended Action</span>
+                              <span className="text-right">Actions</span>
                             </div>
 
-                            {/* Division */}
-                            <div>
-                              <p className="text-[10px] text-slate-300">{person.division}</p>
-                              <p className="text-[9px] text-slate-600">{person.shift}</p>
-                            </div>
+                            {/* Personnel Rows */}
+                            {group.people.map(person => {
+                              const opStatus = getOperationalStatus(person);
+                              const OpIcon = opStatus.icon;
+                              const covConfig = getCoverageConfig(person.coverageImpact);
 
-                            {/* Deployability */}
-                            <div className={`inline-flex items-center gap-1 px-2 py-0.5 rounded border text-[9px] font-bold w-fit ${
-                              opStatus.color === 'red' ? 'bg-red-500/10 border-red-500/20 text-red-400' :
-                              opStatus.color === 'amber' ? 'bg-amber-500/10 border-amber-500/20 text-amber-400' :
-                              'bg-green-500/10 border-green-500/20 text-green-400'
-                            }`}>
-                              <OpIcon className="w-3 h-3" />
-                              {opStatus.label}
-                            </div>
+                              return (
+                                <div
+                                  key={person.id}
+                                  className={`grid grid-cols-[1fr_80px_100px_90px_1fr_1fr_90px] gap-1 px-3 py-3.5 items-start border-b border-slate-800/15 hover:bg-slate-800/15 transition-colors ${
+                                    opStatus.color === 'red' ? 'bg-red-500/[0.02]' :
+                                    opStatus.color === 'amber' ? 'bg-amber-500/[0.01]' : ''
+                                  }`}
+                                >
+                                  {/* Personnel */}
+                                  <div
+                                    className="flex items-center gap-2.5 cursor-pointer group min-w-0"
+                                    onClick={() => openQuickPeek(person)}
+                                  >
+                                    <div className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 text-[11px] font-bold ${
+                                      opStatus.color === 'red' ? 'bg-red-500/15 text-red-400' :
+                                      opStatus.color === 'amber' ? 'bg-amber-500/15 text-amber-400' :
+                                      'bg-blue-500/15 text-blue-400'
+                                    }`}>
+                                      {person.photo}
+                                    </div>
+                                    <div className="min-w-0">
+                                      <p className="text-[11px] font-semibold text-white group-hover:text-amber-400 transition-colors truncate">{person.name}</p>
+                                      <p className="text-[10px] text-slate-500">{person.rank} &middot; <span className="font-mono">{person.badge}</span></p>
+                                    </div>
+                                  </div>
 
-                            {/* Coverage Impact */}
-                            <span className={`text-[10px] font-bold ${covConfig.color}`}>{covConfig.label}</span>
+                                  {/* Division */}
+                                  <div className="pt-0.5">
+                                    <p className="text-[10px] text-slate-300">{person.division}</p>
+                                    <p className="text-[9px] text-slate-600">{person.shift}</p>
+                                  </div>
 
-                            {/* Risk */}
-                            <div>
-                              {person.risk ? (
-                                <div className="flex items-start gap-1">
-                                  <AlertTriangle className="w-3 h-3 text-amber-400 mt-0.5 flex-shrink-0" />
-                                  <p className="text-[10px] text-amber-400">{person.risk}</p>
+                                  {/* Deployability */}
+                                  <div className="pt-0.5">
+                                    <div className={`inline-flex items-center gap-1 px-2 py-0.5 rounded border text-[9px] font-bold w-fit ${
+                                      opStatus.color === 'red' ? 'bg-red-500/10 border-red-500/20 text-red-400' :
+                                      opStatus.color === 'amber' ? 'bg-amber-500/10 border-amber-500/20 text-amber-400' :
+                                      'bg-green-500/10 border-green-500/20 text-green-400'
+                                    }`}>
+                                      <OpIcon className="w-3 h-3" />
+                                      {opStatus.label}
+                                    </div>
+                                    {/* Restriction reason for non-deployable/restricted */}
+                                    {person.restrictionReason && (
+                                      <p className="text-[9px] text-red-400/70 mt-0.5">{person.restrictionReason}</p>
+                                    )}
+                                  </div>
+
+                                  {/* Coverage Impact */}
+                                  <div className="pt-1">
+                                    <span className={`text-[10px] font-bold ${covConfig.color}`}>{covConfig.label}</span>
+                                  </div>
+
+                                  {/* Risk */}
+                                  <div className="pt-0.5">
+                                    {person.risk ? (
+                                      <div className="flex items-start gap-1">
+                                        <AlertTriangle className="w-3 h-3 text-amber-400 mt-0.5 flex-shrink-0" />
+                                        <p className="text-[10px] text-amber-400">{person.risk}</p>
+                                      </div>
+                                    ) : (
+                                      <span className="text-[10px] text-slate-600">&mdash;</span>
+                                    )}
+                                  </div>
+
+                                  {/* Recommended Action */}
+                                  <div className="pt-0.5">
+                                    {person.aiInsight ? (
+                                      <div className="flex items-start gap-1">
+                                        <ArrowRight className="w-3 h-3 text-blue-400 mt-0.5 flex-shrink-0" />
+                                        <p className="text-[10px] text-blue-400 font-medium">{person.aiInsight}</p>
+                                      </div>
+                                    ) : (
+                                      <span className="text-[10px] text-slate-600">&mdash;</span>
+                                    )}
+                                  </div>
+
+                                  {/* Quick Actions */}
+                                  <div className="flex items-center justify-end gap-0.5 pt-0.5">
+                                    <button
+                                      onClick={() => openQuickPeek(person)}
+                                      className="p-1.5 text-slate-500 hover:text-amber-400 hover:bg-amber-500/10 rounded transition-all"
+                                      title="View Profile"
+                                    >
+                                      <Eye className="w-3.5 h-3.5" />
+                                    </button>
+                                    <button
+                                      className="p-1.5 text-slate-500 hover:text-blue-400 hover:bg-blue-500/10 rounded transition-all"
+                                      title="Reassign"
+                                    >
+                                      <RefreshCw className="w-3.5 h-3.5" />
+                                    </button>
+                                    <button
+                                      className="p-1.5 text-slate-500 hover:text-green-400 hover:bg-green-500/10 rounded transition-all"
+                                      title="Schedule Training"
+                                    >
+                                      <Calendar className="w-3.5 h-3.5" />
+                                    </button>
+                                    <button
+                                      className="p-1.5 text-slate-500 hover:text-red-400 hover:bg-red-500/10 rounded transition-all"
+                                      title="Notify Supervisor"
+                                    >
+                                      <Flag className="w-3.5 h-3.5" />
+                                    </button>
+                                  </div>
                                 </div>
-                              ) : (
-                                <span className="text-[10px] text-slate-600">—</span>
-                              )}
-                            </div>
-
-                            {/* AI Insight */}
-                            <div>
-                              {person.aiInsight ? (
-                                <div className="flex items-start gap-1">
-                                  <Sparkles className="w-3 h-3 text-slate-400 mt-0.5 flex-shrink-0" />
-                                  <p className="text-[10px] text-slate-400">{person.aiInsight}</p>
-                                </div>
-                              ) : (
-                                <span className="text-[10px] text-slate-600">—</span>
-                              )}
-                            </div>
-
-                            {/* Quick Actions */}
-                            <div className="flex items-center justify-end gap-1">
-                              <button
-                                onClick={() => openQuickPeek(person)}
-                                className="p-1.5 text-slate-500 hover:text-amber-400 hover:bg-amber-500/10 rounded transition-all"
-                                title="View"
-                              >
-                                <Eye className="w-3.5 h-3.5" />
-                              </button>
-                              <button
-                                className="p-1.5 text-slate-500 hover:text-blue-400 hover:bg-blue-500/10 rounded transition-all"
-                                title="Reassign"
-                              >
-                                <RefreshCw className="w-3.5 h-3.5" />
-                              </button>
-                              <button
-                                className="p-1.5 text-slate-500 hover:text-green-400 hover:bg-green-500/10 rounded transition-all"
-                                title="Schedule Training"
-                              >
-                                <Calendar className="w-3.5 h-3.5" />
-                              </button>
-                              <button
-                                className="p-1.5 text-slate-500 hover:text-red-400 hover:bg-red-500/10 rounded transition-all"
-                                title="Flag Risk"
-                              >
-                                <Flag className="w-3.5 h-3.5" />
-                              </button>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  ))}
+                              );
+                            })}
+                          </>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
+
 
 
 
@@ -793,37 +820,6 @@ export default function PersonnelOverview() {
                   <button onClick={() => navigate(createPageUrl('TrainingCertifications'))} className="mt-2.5 w-full px-2.5 py-1.5 bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/20 text-amber-400 rounded text-[10px] font-semibold transition-colors">
                     Schedule Training
                   </button>
-                </div>
-
-                {/* Widget 3: Coverage Risk Prediction */}
-                <div className="bg-slate-800/15 border border-red-500/15 rounded p-3">
-                  <div className="flex items-center gap-2 mb-2.5">
-                    <Target className="w-3.5 h-3.5 text-red-400" />
-                    <span className="text-[11px] font-bold text-white">Coverage Risk</span>
-                  </div>
-                  <div className="space-y-2">
-                    {[
-                      { zone: 'North Patrol', required: 12, current: 9, risk: 'amber' },
-                      { zone: 'Central Patrol', required: 10, current: 8, risk: 'red' },
-                      { zone: 'South Patrol', required: 8, current: 8, risk: 'green' },
-                    ].map((z, i) => (
-                      <div key={i} className="flex items-center justify-between text-[10px]">
-                        <span className="text-slate-400">{z.zone}</span>
-                        <div className="flex items-center gap-1.5">
-                          <span className="text-slate-300 font-mono">{z.current}/{z.required}</span>
-                          <div className={`w-2 h-2 rounded-full ${
-                            z.risk === 'red' ? 'bg-red-500' : z.risk === 'amber' ? 'bg-amber-500' : 'bg-green-500'
-                          }`}></div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mt-2.5 pt-2 border-t border-slate-700/15">
-                    <div className="flex items-start gap-1.5">
-                      <Sparkles className="w-3 h-3 text-slate-500 mt-0.5 flex-shrink-0" />
-                      <p className="text-[10px] text-slate-400">Reassign 2 from investigations to central patrol to prevent overtime escalation.</p>
-                    </div>
-                  </div>
                 </div>
 
               </div>
