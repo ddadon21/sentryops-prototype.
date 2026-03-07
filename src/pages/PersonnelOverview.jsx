@@ -1,23 +1,15 @@
 import React, { useState } from 'react';
-import { Search, Filter, Download, Mail, Phone, MapPin, AlertCircle, CheckCircle, Clock, ChevronRight, Bell, Users, Award, Calendar, TrendingUp, TrendingDown, MoreVertical, Eye, X, MessageCircle, Sparkles, Send, Plus, FileText, UserPlus, BarChart3, Link2, UserCircle, Shield, Activity, Star, Briefcase, Zap, Target, ArrowRight, CircleDot, AlertTriangle, Gauge } from 'lucide-react';
+import { Search, Filter, Download, Mail, Phone, MapPin, AlertCircle, CheckCircle, Clock, ChevronRight, Bell, Users, Award, Calendar, TrendingUp, TrendingDown, MoreVertical, Eye, X, Sparkles, Plus, FileText, BarChart3, Shield, Activity, Star, Briefcase, Zap, Target, ArrowRight, AlertTriangle, Gauge, RefreshCw, Flag } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import DashboardLayout from '../layouts/DashboardLayout';
 
 export default function PersonnelOverview() {
   const navigate = useNavigate();
-  const [hoveredRow, setHoveredRow] = useState(null);
   const [quickPeekOpen, setQuickPeekOpen] = useState(false);
   const [peekData, setPeekData] = useState(null);
   const [filtersOpen, setFiltersOpen] = useState(false);
-  const [chatOpen, setChatOpen] = useState(false);
-  const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [aiInsightsVisible, setAiInsightsVisible] = useState(true);
-  const [showAnalytics, setShowAnalytics] = useState(false);
-  const [showCertManagement, setShowCertManagement] = useState(false);
-  const [showShiftSchedule, setShowShiftSchedule] = useState(false);
-  const [showHiringPipeline, setShowHiringPipeline] = useState(false);
-  const [selectedPerson, setSelectedPerson] = useState(null);
   const [fullProfileOpen, setFullProfileOpen] = useState(false);
   const [fullProfileData, setFullProfileData] = useState(null);
 
@@ -41,7 +33,10 @@ export default function PersonnelOverview() {
       phone: '(555) 100-0001',
       supervisor: 'Sgt. Williams',
       performance: 4.2,
-      lastCheckIn: '2 hours ago'
+      lastCheckIn: '2 hours ago',
+      coverageImpact: 'critical',
+      risk: 'CPR/First Aid expiring in 14 days',
+      aiInsight: 'Schedule CPR renewal — Zone 3 coverage at risk'
     },
     {
       id: 'P-2024-002',
@@ -63,7 +58,10 @@ export default function PersonnelOverview() {
       phone: '(555) 100-0002',
       supervisor: 'Lt. Martinez',
       performance: 4.7,
-      lastCheckIn: '1 hour ago'
+      lastCheckIn: '1 hour ago',
+      coverageImpact: 'stable',
+      risk: 'CPR/First Aid expired — restricted from field duty',
+      aiInsight: 'Reassign to patrol — experienced deputy available'
     },
     {
       id: 'P-2024-003',
@@ -84,7 +82,10 @@ export default function PersonnelOverview() {
       phone: '(555) 100-0003',
       supervisor: 'Sgt. Davis',
       performance: 4.0,
-      lastCheckIn: '8 hours ago'
+      lastCheckIn: '8 hours ago',
+      coverageImpact: 'watch',
+      risk: null,
+      aiInsight: null
     },
     {
       id: 'P-2024-004',
@@ -105,7 +106,10 @@ export default function PersonnelOverview() {
       phone: '(555) 100-0004',
       supervisor: 'Shift Supervisor Lee',
       performance: 4.3,
-      lastCheckIn: '30 min ago'
+      lastCheckIn: '30 min ago',
+      coverageImpact: 'critical',
+      risk: 'EMD Certified expiring in 7 days',
+      aiInsight: 'Night dispatch at 60% — EMD renewal critical'
     },
     {
       id: 'P-2024-005',
@@ -127,7 +131,10 @@ export default function PersonnelOverview() {
       phone: '(555) 100-0005',
       supervisor: 'Lt. Thompson',
       performance: 4.8,
-      lastCheckIn: '45 min ago'
+      lastCheckIn: '45 min ago',
+      coverageImpact: 'stable',
+      risk: null,
+      aiInsight: 'Eligible for field training officer role'
     },
     {
       id: 'P-2024-006',
@@ -148,7 +155,10 @@ export default function PersonnelOverview() {
       phone: '(555) 100-0006',
       supervisor: 'Capt. Anderson',
       performance: 4.5,
-      lastCheckIn: '3 days ago'
+      lastCheckIn: '3 days ago',
+      coverageImpact: 'watch',
+      risk: 'On medical leave — CPR expiring during absence',
+      aiInsight: 'Schedule CPR renewal for return date'
     },
     {
       id: 'P-2024-007',
@@ -169,7 +179,10 @@ export default function PersonnelOverview() {
       phone: '(555) 100-0007',
       supervisor: 'Sgt. Williams',
       performance: 4.1,
-      lastCheckIn: '3 hours ago'
+      lastCheckIn: '3 hours ago',
+      coverageImpact: 'critical',
+      risk: null,
+      aiInsight: 'Reassign to Central Patrol — zone below minimum'
     },
     {
       id: 'P-2024-008',
@@ -191,7 +204,10 @@ export default function PersonnelOverview() {
       phone: '(555) 100-0008',
       supervisor: 'Captain Reed',
       performance: 4.9,
-      lastCheckIn: '20 min ago'
+      lastCheckIn: '20 min ago',
+      coverageImpact: 'stable',
+      risk: null,
+      aiInsight: null
     },
     {
       id: 'P-2024-009',
@@ -212,7 +228,10 @@ export default function PersonnelOverview() {
       phone: '(555) 100-0009',
       supervisor: 'Sgt. Davis',
       performance: 4.4,
-      lastCheckIn: '1 hour ago'
+      lastCheckIn: '1 hour ago',
+      coverageImpact: 'watch',
+      risk: 'CPR/First Aid expiring in 18 days',
+      aiInsight: 'Training required within 18 days'
     },
     {
       id: 'P-2024-010',
@@ -233,7 +252,10 @@ export default function PersonnelOverview() {
       phone: '(555) 100-0010',
       supervisor: 'Shift Supervisor Lee',
       performance: 4.2,
-      lastCheckIn: '6 hours ago'
+      lastCheckIn: '6 hours ago',
+      coverageImpact: 'stable',
+      risk: null,
+      aiInsight: null
     },
     {
       id: 'P-2024-011',
@@ -255,7 +277,10 @@ export default function PersonnelOverview() {
       phone: '(555) 100-0011',
       supervisor: 'Sgt. Williams',
       performance: 4.6,
-      lastCheckIn: '15 min ago'
+      lastCheckIn: '15 min ago',
+      coverageImpact: 'stable',
+      risk: null,
+      aiInsight: 'Eligible for field training officer role'
     },
     {
       id: 'P-2024-012',
@@ -277,7 +302,10 @@ export default function PersonnelOverview() {
       phone: '(555) 100-0012',
       supervisor: 'Capt. Anderson',
       performance: 4.5,
-      lastCheckIn: '40 min ago'
+      lastCheckIn: '40 min ago',
+      coverageImpact: 'stable',
+      risk: null,
+      aiInsight: null
     }
   ];
 
@@ -313,6 +341,30 @@ export default function PersonnelOverview() {
     if (person.status === 'off-duty') return { label: 'Deployable', color: 'green', icon: CheckCircle, detail: 'Off-duty, available' };
     return { label: 'Deployable', color: 'green', icon: CheckCircle, detail: 'Full duty' };
   };
+
+  const getCoverageConfig = (impact) => {
+    if (impact === 'critical') return { label: 'Critical', color: 'text-red-400', bg: 'bg-red-500/10 border-red-500/15' };
+    if (impact === 'watch') return { label: 'Watch', color: 'text-amber-400', bg: 'bg-amber-500/10 border-amber-500/15' };
+    return { label: 'Stable', color: 'text-green-400', bg: 'bg-green-500/10 border-green-500/15' };
+  };
+
+  // Group personnel by operational status for command view
+  const groupedPersonnel = (() => {
+    const deployable = [];
+    const certRisk = [];
+    const nonDeployable = [];
+    personnel.forEach(p => {
+      const op = getOperationalStatus(p);
+      if (op.color === 'red') nonDeployable.push(p);
+      else if (op.color === 'amber') certRisk.push(p);
+      else deployable.push(p);
+    });
+    return [
+      { key: 'deployable', label: 'Deployable Personnel', count: deployable.length, color: 'green', people: deployable },
+      { key: 'certRisk', label: 'Certification Risk', count: certRisk.length, color: 'amber', people: certRisk },
+      { key: 'nonDeployable', label: 'Non-Deployable', count: nonDeployable.length, color: 'red', people: nonDeployable },
+    ].filter(g => g.people.length > 0);
+  })();
 
   const openQuickPeek = (person) => {
     setPeekData(person);
@@ -514,163 +566,151 @@ export default function PersonnelOverview() {
                   </div>
                 )}
 
-                {/* Table */}
-                <div className="bg-slate-800/40 backdrop-blur-xl border border-slate-700/50 rounded-xl overflow-x-auto">
-                  <table className="w-full">
-                    <thead className="bg-slate-900/50 border-b border-slate-700/50">
-                      <tr>
-                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Personnel</th>
-                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Badge</th>
-                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Division</th>
-                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Contact</th>
-                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Supervisor</th>
-                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Performance</th>
-                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Last Check-in</th>
-                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Status</th>
-                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Operational</th>
-                        <th className="px-4 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Certifications</th>
-                        <th className="px-4 py-3 text-right text-xs font-semibold text-slate-400 uppercase tracking-wider">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {personnel.map((person) => {
-                        const certStatus = getCertStatus(person.certifications);
-                        const StatusIcon = certStatus.icon;
+
+                {/* ═══════════════════════════════════════════════
+                     OPERATIONAL PERSONNEL TABLE
+                     Grouped by deployability. Card-row hybrid.
+                     ═══════════════════════════════════════════════ */}
+                <div className="space-y-3">
+                  {groupedPersonnel.map(group => (
+                    <div key={group.key} className="border border-slate-700/15 rounded overflow-hidden">
+                      {/* Group Header */}
+                      <div className={`px-3 py-2 flex items-center gap-2 ${
+                        group.color === 'red' ? 'bg-red-500/[0.04] border-b border-red-500/10' :
+                        group.color === 'amber' ? 'bg-amber-500/[0.03] border-b border-amber-500/10' :
+                        'bg-green-500/[0.02] border-b border-green-500/10'
+                      }`}>
+                        <div className={`w-2 h-2 rounded-full ${
+                          group.color === 'red' ? 'bg-red-500' : group.color === 'amber' ? 'bg-amber-500' : 'bg-green-500'
+                        }`}></div>
+                        <span className={`text-[11px] font-bold uppercase tracking-wider ${
+                          group.color === 'red' ? 'text-red-400' : group.color === 'amber' ? 'text-amber-400' : 'text-green-400'
+                        }`}>{group.label}</span>
+                        <span className="text-[10px] text-slate-500">({group.count})</span>
+                      </div>
+
+                      {/* Column Headers */}
+                      <div className="grid grid-cols-[1fr_80px_100px_100px_1fr_1fr_90px] gap-1 px-3 py-1.5 bg-slate-900/30 border-b border-slate-700/10 text-[9px] font-semibold text-slate-500 uppercase tracking-wider">
+                        <span>Personnel</span>
+                        <span>Division</span>
+                        <span>Deployability</span>
+                        <span>Coverage</span>
+                        <span>Risk</span>
+                        <span>AI Insight</span>
+                        <span className="text-right">Actions</span>
+                      </div>
+
+                      {/* Personnel Rows — card-row hybrid */}
+                      {group.people.map(person => {
+                        const opStatus = getOperationalStatus(person);
+                        const OpIcon = opStatus.icon;
+                        const covConfig = getCoverageConfig(person.coverageImpact);
+
                         return (
-                          <tr
+                          <div
                             key={person.id}
-                            onMouseEnter={() => setHoveredRow(person.id)}
-                            onMouseLeave={() => setHoveredRow(null)}
-                            className={`border-b border-slate-800/30 transition-colors ${hoveredRow === person.id ? 'bg-slate-800/30' : ''}`}
+                            className={`grid grid-cols-[1fr_80px_100px_100px_1fr_1fr_90px] gap-1 px-3 py-3 items-center border-b border-slate-800/20 hover:bg-slate-800/20 transition-colors ${
+                              opStatus.color === 'red' ? 'bg-red-500/[0.02]' :
+                              opStatus.color === 'amber' ? 'bg-amber-500/[0.01]' : ''
+                            }`}
                           >
-                            <td className="px-4 py-4">
-                              <div
+                            {/* Personnel — name + badge + rank */}
+                            <div
+                              className="flex items-center gap-2.5 cursor-pointer group min-w-0"
+                              onClick={() => openQuickPeek(person)}
+                            >
+                              <div className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 text-[11px] font-bold ${
+                                opStatus.color === 'red' ? 'bg-red-500/15 text-red-400' :
+                                opStatus.color === 'amber' ? 'bg-amber-500/15 text-amber-400' :
+                                'bg-blue-500/15 text-blue-400'
+                              }`}>
+                                {person.photo}
+                              </div>
+                              <div className="min-w-0">
+                                <p className="text-[11px] font-semibold text-white group-hover:text-amber-400 transition-colors truncate">{person.name}</p>
+                                <p className="text-[10px] text-slate-500">{person.rank} &middot; <span className="font-mono">{person.badge}</span></p>
+                              </div>
+                            </div>
+
+                            {/* Division */}
+                            <div>
+                              <p className="text-[10px] text-slate-300">{person.division}</p>
+                              <p className="text-[9px] text-slate-600">{person.shift}</p>
+                            </div>
+
+                            {/* Deployability */}
+                            <div className={`inline-flex items-center gap-1 px-2 py-0.5 rounded border text-[9px] font-bold w-fit ${
+                              opStatus.color === 'red' ? 'bg-red-500/10 border-red-500/20 text-red-400' :
+                              opStatus.color === 'amber' ? 'bg-amber-500/10 border-amber-500/20 text-amber-400' :
+                              'bg-green-500/10 border-green-500/20 text-green-400'
+                            }`}>
+                              <OpIcon className="w-3 h-3" />
+                              {opStatus.label}
+                            </div>
+
+                            {/* Coverage Impact */}
+                            <span className={`text-[10px] font-bold ${covConfig.color}`}>{covConfig.label}</span>
+
+                            {/* Risk */}
+                            <div>
+                              {person.risk ? (
+                                <div className="flex items-start gap-1">
+                                  <AlertTriangle className="w-3 h-3 text-amber-400 mt-0.5 flex-shrink-0" />
+                                  <p className="text-[10px] text-amber-400">{person.risk}</p>
+                                </div>
+                              ) : (
+                                <span className="text-[10px] text-slate-600">—</span>
+                              )}
+                            </div>
+
+                            {/* AI Insight */}
+                            <div>
+                              {person.aiInsight ? (
+                                <div className="flex items-start gap-1">
+                                  <Sparkles className="w-3 h-3 text-slate-400 mt-0.5 flex-shrink-0" />
+                                  <p className="text-[10px] text-slate-400">{person.aiInsight}</p>
+                                </div>
+                              ) : (
+                                <span className="text-[10px] text-slate-600">—</span>
+                              )}
+                            </div>
+
+                            {/* Quick Actions */}
+                            <div className="flex items-center justify-end gap-1">
+                              <button
                                 onClick={() => openQuickPeek(person)}
-                                className="flex items-center gap-3 group cursor-pointer"
+                                className="p-1.5 text-slate-500 hover:text-amber-400 hover:bg-amber-500/10 rounded transition-all"
+                                title="View"
                               >
-                                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                                  <span className="text-white text-sm font-medium">{person.photo}</span>
-                                </div>
-                                <div>
-                                  <p className="text-sm font-medium text-white group-hover:text-amber-400 transition-colors">{person.name}</p>
-                                  <p className="text-xs text-slate-400">{person.rank}</p>
-                                </div>
-                              </div>
-                            </td>
-                            <td className="px-4 py-4">
-                              <p className="text-sm text-slate-300 font-mono">{person.badge}</p>
-                            </td>
-                            <td className="px-4 py-4">
-                              <p className="text-sm text-slate-300">{person.division}</p>
-                              <p className="text-xs text-slate-400">{person.shift}</p>
-                            </td>
-                            <td className="px-4 py-4">
-                              <div className="space-y-1">
-                                <a href={`mailto:${person.email}`} className="flex items-center gap-2 text-xs text-blue-400 hover:text-blue-300 transition-colors">
-                                  <Mail className="w-3 h-3" />
-                                  <span>{person.email}</span>
-                                </a>
-                                <a href={`tel:${person.phone}`} className="flex items-center gap-2 text-xs text-slate-400 hover:text-slate-300 transition-colors">
-                                  <Phone className="w-3 h-3" />
-                                  <span>{person.phone}</span>
-                                </a>
-                              </div>
-                            </td>
-                            <td className="px-4 py-4">
-                              <p className="text-sm text-slate-300">{person.supervisor}</p>
-                            </td>
-                            <td className="px-4 py-4">
-                              <div className="flex items-center gap-2">
-                                <Star className={`w-4 h-4 ${person.performance >= 4.5 ? 'text-amber-400' : person.performance >= 4.0 ? 'text-blue-400' : 'text-slate-400'}`} />
-                                <span className={`text-sm font-medium ${person.performance >= 4.5 ? 'text-amber-400' : person.performance >= 4.0 ? 'text-blue-400' : 'text-slate-300'}`}>
-                                  {person.performance.toFixed(1)}
-                                </span>
-                              </div>
-                            </td>
-                            <td className="px-4 py-4">
-                              <p className="text-sm text-slate-400">{person.lastCheckIn}</p>
-                            </td>
-                            <td className="px-4 py-4">
-                              <div className={`inline-flex items-center gap-2 px-3 py-1 border rounded-full text-xs font-medium ${getStatusColor(person.status)}`}>
-                                <div className="w-2 h-2 rounded-full bg-current"></div>
-                                <span className="capitalize">{person.status.replace('-', ' ')}</span>
-                              </div>
-                            </td>
-                            <td className="px-4 py-4">
-                              {(() => {
-                                const opStatus = getOperationalStatus(person);
-                                const OpIcon = opStatus.icon;
-                                return (
-                                  <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 border rounded-full text-[10px] font-semibold ${
-                                    opStatus.color === 'red' ? 'bg-red-500/15 border-red-500/25 text-red-400' :
-                                    opStatus.color === 'amber' ? 'bg-amber-500/15 border-amber-500/25 text-amber-400' :
-                                    'bg-green-500/15 border-green-500/25 text-green-400'
-                                  }`}>
-                                    <OpIcon className="w-3 h-3" />
-                                    <span>{opStatus.label}</span>
-                                  </div>
-                                );
-                              })()}
-                            </td>
-                            <td className="px-4 py-4">
-                              <div className="group/cert relative inline-block">
-                                <div className={`flex items-center gap-2 px-3 py-1 border rounded-full text-xs font-medium ${
-                                  certStatus.color === 'red' ? 'bg-red-500/20 border-red-500/30 text-red-400' :
-                                  certStatus.color === 'amber' ? 'bg-amber-500/20 border-amber-500/30 text-amber-400' :
-                                  'bg-green-500/20 border-green-500/30 text-green-400'
-                                }`}>
-                                  <StatusIcon className="w-3 h-3" />
-                                  <span>{certStatus.label}</span>
-                                </div>
-                                {/* Cert Tooltip */}
-                                <div className="absolute left-0 top-full mt-2 w-72 bg-slate-900 border border-slate-700 rounded-lg p-3 opacity-0 invisible group-hover/cert:opacity-100 group-hover/cert:visible transition-all z-50 shadow-xl">
-                                  <div className="space-y-2">
-                                    {person.certifications.map((cert, idx) => (
-                                      <div key={idx} className="flex items-center justify-between text-xs">
-                                        <span className="text-slate-300">{cert.name}</span>
-                                        <span className={`${
-                                          cert.status === 'expired' ? 'text-red-400' :
-                                          cert.status === 'expiring' ? 'text-amber-400' : 'text-green-400'
-                                        }`}>
-                                          {cert.status === 'expired' ? 'Expired' : `Exp: ${cert.expires}`}
-                                        </span>
-                                      </div>
-                                    ))}
-                                  </div>
-                                </div>
-                              </div>
-                            </td>
-                            <td className="px-4 py-4 text-right">
-                              <div className="flex items-center justify-end gap-2">
-                                <button
-                                  onClick={() => openQuickPeek(person)}
-                                  className="inline-flex items-center gap-1 px-3 py-1.5 text-xs text-amber-400 hover:text-amber-300 hover:bg-amber-500/10 rounded-lg transition-all"
-                                  title="View Profile"
-                                >
-                                  <Eye className="w-3 h-3" />
-                                  <span>View</span>
-                                </button>
-                                <button
-                                  className="inline-flex items-center gap-1 px-3 py-1.5 text-xs text-blue-400 hover:text-blue-300 hover:bg-blue-500/10 rounded-lg transition-all"
-                                  title="Schedule Training"
-                                >
-                                  <Calendar className="w-3 h-3" />
-                                </button>
-                                <button
-                                  className="inline-flex items-center gap-1 px-3 py-1.5 text-xs text-slate-400 hover:text-slate-300 hover:bg-slate-500/10 rounded-lg transition-all"
-                                  title="More Actions"
-                                >
-                                  <MoreVertical className="w-3 h-3" />
-                                </button>
-                              </div>
-                            </td>
-                          </tr>
+                                <Eye className="w-3.5 h-3.5" />
+                              </button>
+                              <button
+                                className="p-1.5 text-slate-500 hover:text-blue-400 hover:bg-blue-500/10 rounded transition-all"
+                                title="Reassign"
+                              >
+                                <RefreshCw className="w-3.5 h-3.5" />
+                              </button>
+                              <button
+                                className="p-1.5 text-slate-500 hover:text-green-400 hover:bg-green-500/10 rounded transition-all"
+                                title="Schedule Training"
+                              >
+                                <Calendar className="w-3.5 h-3.5" />
+                              </button>
+                              <button
+                                className="p-1.5 text-slate-500 hover:text-red-400 hover:bg-red-500/10 rounded transition-all"
+                                title="Flag Risk"
+                              >
+                                <Flag className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+                          </div>
                         );
                       })}
-                    </tbody>
-                  </table>
+                    </div>
+                  ))}
                 </div>
               </div>
+
 
 
               {/* ═══ Right Panel — 3 Operational Widgets ═══ */}
