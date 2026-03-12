@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Search, Filter, Download, ZoomIn, ZoomOut, ChevronRight, X, Users, Award, Mail, Phone, Shield, Home, DollarSign, AlertCircle, TrendingUp, CheckCircle, MessageCircle, Sparkles, Send, Maximize2, Minimize2, Move, ChevronDown, ChevronUp, UserPlus, Maximize, MoreVertical, MessageSquare, UserCog, FileText, Calendar, MapPin, Star, Building2, Lightbulb, Printer, Share2, Settings, Eye, Layers, Clock, RefreshCw, ArrowLeft, Expand } from 'lucide-react';
+import { Search, Filter, Download, ZoomIn, ZoomOut, ChevronRight, X, Users, Award, Mail, Phone, Shield, Home, DollarSign, AlertCircle, TrendingUp, CheckCircle, MessageCircle, Sparkles, Send, Maximize2, Minimize2, Move, ChevronDown, ChevronUp, UserPlus, Maximize, MoreVertical, MessageSquare, UserCog, FileText, Calendar, MapPin, Star, Building2, Lightbulb, Printer, Share2, Settings, Eye, Layers, Clock, RefreshCw, ArrowLeft, Expand, AlertTriangle, Activity, Zap, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import DashboardLayout from '../layouts/DashboardLayout';
@@ -20,6 +20,8 @@ export default function OrgChart() {
   const [filterRank, setFilterRank] = useState('all');
   const [collapsedNodes, setCollapsedNodes] = useState(new Set());
   const [highlightedNode, setHighlightedNode] = useState(null);
+  const [viewMode, setViewMode] = useState('hierarchy'); // 'hierarchy' | 'operational'
+  const [insightsExpanded, setInsightsExpanded] = useState(false);
   const chartContainerRef = useRef(null);
   const [touchDistance, setTouchDistance] = useState(0);
 
@@ -44,7 +46,10 @@ export default function OrgChart() {
       performance: 4.9,
       certStatus: 'current',
       succession: { ready: true, successor: 'Chief Deputy Anderson' },
-      retirementEligible: '2030'
+      retirementEligible: '2030',
+      retirementMonths: 48,
+      readinessStatus: 'green',
+      readinessLabel: 'Command ready'
     },
     {
       id: 2,
@@ -66,7 +71,11 @@ export default function OrgChart() {
       performance: 4.8,
       certStatus: 'current',
       succession: { ready: true, successors: ['Major Wilson', 'Major Davis'] },
-      retirementEligible: '2028'
+      retirementEligible: '2028',
+      retirementMonths: 24,
+      promotionCandidates: ['Major Wilson', 'Major Davis'],
+      readinessStatus: 'green',
+      readinessLabel: 'Succession planned'
     },
     {
       id: 3,
@@ -87,7 +96,9 @@ export default function OrgChart() {
       parentId: 2,
       divisionStrength: { current: 500, authorized: 540 },
       performance: 4.6,
-      certStatus: 'current'
+      certStatus: 'current',
+      readinessStatus: 'yellow',
+      readinessLabel: 'Staffing risk'
     },
     {
       id: 4,
@@ -108,7 +119,9 @@ export default function OrgChart() {
       parentId: 2,
       divisionStrength: { current: 300, authorized: 320 },
       performance: 4.7,
-      certStatus: 'expiring'
+      certStatus: 'expiring',
+      readinessStatus: 'yellow',
+      readinessLabel: 'Cert expiring · retirement risk'
     },
     {
       id: 10,
@@ -129,7 +142,10 @@ export default function OrgChart() {
       parentId: 3,
       divisionStrength: { current: 46, authorized: 48 },
       performance: 4.6,
-      certStatus: 'current'
+      certStatus: 'current',
+      readinessStatus: 'green',
+      readinessLabel: 'Fully staffed',
+      promotionCandidates: ['Capt. Rodriguez', 'Capt. Mitchell']
     },
     {
       id: 11,
@@ -148,7 +164,10 @@ export default function OrgChart() {
       reports: 5,
       level: 3,
       parentId: 3,
-      divisionStrength: { current: 60, authorized: 70 }
+      divisionStrength: { current: 60, authorized: 70 },
+      readinessStatus: 'yellow',
+      readinessLabel: 'Acting supervisor',
+      actingFlag: true
     },
     {
       id: 12,
@@ -167,7 +186,9 @@ export default function OrgChart() {
       reports: 4,
       level: 3,
       parentId: 3,
-      divisionStrength: { current: 40, authorized: 50 }
+      divisionStrength: { current: 40, authorized: 50 },
+      readinessStatus: 'red',
+      readinessLabel: 'Leadership vacancy'
     },
     {
       id: 13,
@@ -190,7 +211,11 @@ export default function OrgChart() {
       performance: 4.8,
       certStatus: 'current',
       retirementEligible: '2026',
-      succession: { ready: true, successor: 'Capt. Rodriguez', backup: 'Capt. Miller' }
+      retirementMonths: 0,
+      succession: { ready: true, successor: 'Capt. Rodriguez', backup: 'Capt. Miller' },
+      readinessStatus: 'yellow',
+      readinessLabel: 'Retirement eligible',
+      promotionCandidates: ['Capt. Rodriguez', 'Capt. Miller']
     },
     {
       id: 14,
@@ -209,7 +234,10 @@ export default function OrgChart() {
       reports: 6,
       level: 3,
       parentId: 4,
-      divisionStrength: { current: 100, authorized: 100 }
+      divisionStrength: { current: 100, authorized: 100 },
+      readinessStatus: 'yellow',
+      readinessLabel: 'Command vacancy',
+      promotionCandidates: ['Lt. Evans']
     },
     {
       id: 100,
@@ -433,7 +461,8 @@ export default function OrgChart() {
       status: 'On Duty',
       email: 's.adams@dept.gov',
       phone: '(555) 400-0003',
-      yearsOfService: 5
+      yearsOfService: 5,
+      spanWarning: 'elevated'
     },
     {
       id: 303,
@@ -449,7 +478,8 @@ export default function OrgChart() {
       status: 'On Duty',
       email: 's.cooper@dept.gov',
       phone: '(555) 400-0004',
-      yearsOfService: 5
+      yearsOfService: 5,
+      spanWarning: 'elevated'
     },
     {
       id: 400,
@@ -465,7 +495,9 @@ export default function OrgChart() {
       status: 'On Duty',
       email: 'cpl.johnson@dept.gov',
       phone: '(555) 500-0001',
-      yearsOfService: 3
+      yearsOfService: 3,
+      spanWarning: 'high',
+      spanRecommendation: 'Add corporal role or redistribute personnel'
     },
     {
       id: 401,
@@ -481,7 +513,9 @@ export default function OrgChart() {
       status: 'On Duty',
       email: 'cpl.white@dept.gov',
       phone: '(555) 500-0002',
-      yearsOfService: 3
+      yearsOfService: 3,
+      spanWarning: 'high',
+      spanRecommendation: 'Add corporal role or redistribute personnel'
     },
     // Vacancy Positions - 8 total open positions
     {
@@ -666,6 +700,95 @@ export default function OrgChart() {
 
   const allOrgData = [...orgDataBase, ...generateDeputies()];
 
+  // Vacancy impact simulation data — operational consequences of each leadership position going vacant
+  const vacancyImpactData = {
+    1: {
+      riskLevel: 'critical',
+      impacts: [
+        'Full executive command authority suspended',
+        'Chief Deputy assumes emergency acting authority',
+        'County Commissioner notification required within 24h',
+        'State certification board must be notified'
+      ],
+      suggestedAction: 'Activate succession protocol — Chief Deputy Anderson assumes acting authority immediately'
+    },
+    2: {
+      riskLevel: 'critical',
+      impacts: [
+        'Both bureaus operate without unified oversight',
+        'Cross-bureau approval authority gaps emerge',
+        'Daily command briefings disrupted',
+        'Sheriff must directly oversee both bureaus simultaneously'
+      ],
+      suggestedAction: 'Designate Major Wilson as Acting Chief Deputy'
+    },
+    3: {
+      riskLevel: 'high',
+      impacts: [
+        'Administrative Bureau oversight gap for all three divisions',
+        'Budget approval chain disrupted — delays expected',
+        'HR and support coordination reduced significantly'
+      ],
+      suggestedAction: 'Major Parker assumes Acting Deputy Chief (Administrative Bureau)'
+    },
+    4: {
+      riskLevel: 'high',
+      impacts: [
+        'Field and court operations lose unified command',
+        'Patrol deployment authority delayed',
+        'Major Davis assumes interim oversight (retirement risk compounds)'
+      ],
+      suggestedAction: 'Major Thompson assumes Acting Deputy Chief (Operations Bureau)'
+    },
+    10: {
+      riskLevel: 'critical',
+      impacts: [
+        'Jail operations command vacuum — no Major-level oversight',
+        'Shift captains elevated without supervising authority',
+        'ACA compliance monitoring disrupted',
+        'USMS coordination at immediate risk'
+      ],
+      suggestedAction: 'Capt. Rodriguez assumes Acting Major (Jail Operations)'
+    },
+    11: {
+      riskLevel: 'medium',
+      impacts: [
+        'Support operations lose Major-level coordination',
+        'Inter-division resource sharing disrupted',
+        'Grant-funded positions at administrative risk'
+      ],
+      suggestedAction: 'Senior Captain in Support assumes acting role pending appointment'
+    },
+    12: {
+      riskLevel: 'high',
+      impacts: [
+        'Administrative Services leadership vacancy deepens',
+        'Records and administrative compliance at risk',
+        'Existing vacancy in division compounds command gap'
+      ],
+      suggestedAction: 'Major Parker currently filling — immediate permanent appointment required'
+    },
+    13: {
+      riskLevel: 'high',
+      impacts: [
+        'Patrol command coverage reduced across all zones',
+        'Shift approval authority delayed 4–8 hours',
+        'OT authorization backlog expected within 48h',
+        'Compliance reporting risk increases'
+      ],
+      suggestedAction: 'Promote Capt. Rodriguez to Acting Major (Field Operations) — succession plan ready'
+    },
+    14: {
+      riskLevel: 'medium',
+      impacts: [
+        'Court security oversight gap',
+        'Federal court coordination at risk',
+        'Existing Captain vacancy makes coverage doubly difficult'
+      ],
+      suggestedAction: 'Capt. Lee (Warrants) assumes interim court oversight'
+    }
+  };
+
   // Touch handlers
   const handleTouchStart = (e) => {
     if (e.target.closest('.org-node')) return;
@@ -846,6 +969,34 @@ export default function OrgChart() {
     return 'green';
   };
 
+  const getStaffingPct = (strength) => {
+    if (!strength) return null;
+    return Math.round((strength.current / strength.authorized) * 100);
+  };
+
+  // Returns Tailwind color classes for readiness status indicators
+  const getReadinessColors = (status) => {
+    if (status === 'green') return { dot: 'bg-emerald-400', text: 'text-emerald-400', border: 'border-l-emerald-500', nodeBg: 'from-emerald-900/20 to-slate-800/30' };
+    if (status === 'red')   return { dot: 'bg-red-400',     text: 'text-red-400',     border: 'border-l-red-500',     nodeBg: 'from-red-900/20 to-slate-800/30' };
+    return                         { dot: 'bg-amber-400',   text: 'text-amber-400',   border: 'border-l-amber-500',   nodeBg: 'from-amber-900/20 to-slate-800/30' };
+  };
+
+  // Returns operational heatmap background classes based on staffing %
+  const getHeatmapBg = (node) => {
+    if (node.readinessStatus) {
+      if (node.readinessStatus === 'green') return 'from-emerald-900/25 to-slate-800/30';
+      if (node.readinessStatus === 'red')   return 'from-red-900/25 to-slate-800/30';
+      return 'from-amber-900/20 to-slate-800/30';
+    }
+    const pct = getStaffingPct(node.divisionStrength);
+    if (pct !== null) {
+      if (pct >= 95) return 'from-emerald-900/25 to-slate-800/30';
+      if (pct >= 80) return 'from-amber-900/20 to-slate-800/30';
+      return 'from-red-900/25 to-slate-800/30';
+    }
+    return 'from-slate-800/50 to-slate-800/30';
+  };
+
   const renderNodeVertical = (node, size = 'md') => {
     if (!node || !isNodeVisible(node)) return null;
 
@@ -963,7 +1114,9 @@ export default function OrgChart() {
             className={`org-node relative ${
               node.isVacant
                 ? 'bg-slate-800/20 backdrop-blur-xl border-2 border-dashed border-red-500/40'
-                : 'bg-gradient-to-br from-slate-800/50 to-slate-800/30 backdrop-blur-xl border'
+                : viewMode === 'operational'
+                  ? `bg-gradient-to-br ${getHeatmapBg(node)} backdrop-blur-xl border border-l-4 ${node.readinessStatus ? getReadinessColors(node.readinessStatus).border : 'border-l-slate-700/50'}`
+                  : 'bg-gradient-to-br from-slate-800/50 to-slate-800/30 backdrop-blur-xl border'
             } rounded-xl cursor-pointer transition-all shadow-lg group ${
               isHighlighted || isHovered ? 'border-amber-500/60 scale-105 shadow-xl shadow-amber-500/10 ring-2 ring-amber-500/20' : node.isVacant ? '' : 'border-slate-700/50'
             } ${sizeClasses[size]}`}
@@ -980,13 +1133,20 @@ export default function OrgChart() {
               }`} title={node.status} />
             )}
 
+            {/* Acting Flag Badge */}
+            {node.actingFlag && (
+              <div className="absolute -top-2 -left-2 px-1.5 py-0.5 bg-amber-600 rounded text-[8px] font-bold text-white shadow-lg" title="Acting Supervisor">
+                ACT
+              </div>
+            )}
+
             {/* Cert Alert Badge - Top Left (not for vacancies) */}
-            {!node.isVacant && node.certStatus === 'expiring' && (
+            {!node.isVacant && !node.actingFlag && node.certStatus === 'expiring' && (
               <div className="absolute -top-2 -left-2 px-1.5 py-0.5 bg-amber-500 rounded text-[8px] font-bold text-white shadow-lg" title="Certification Expiring Soon">
                 CERT
               </div>
             )}
-            {!node.isVacant && node.certStatus === 'expired' && (
+            {!node.isVacant && !node.actingFlag && node.certStatus === 'expired' && (
               <div className="absolute -top-2 -left-2 px-1.5 py-0.5 bg-red-500 rounded text-[8px] font-bold text-white shadow-lg" title="Certification Expired">
                 EXP
               </div>
@@ -1065,11 +1225,43 @@ export default function OrgChart() {
                           <span>{node.reports}</span>
                         </div>
                       )}
+                      {/* Readiness status indicator — bureau/division level only */}
+                      {node.readinessStatus && (size === 'lg' || size === 'md') && (
+                        <div className={`flex items-center gap-1 mt-0.5 ${size === 'lg' ? 'text-[10px]' : 'text-[9px]'}`}>
+                          <div className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${getReadinessColors(node.readinessStatus).dot}`} />
+                          <span className={getReadinessColors(node.readinessStatus).text}>{node.readinessLabel}</span>
+                        </div>
+                      )}
+                      {/* Retirement signal */}
+                      {node.retirementMonths !== undefined && size === 'lg' && (
+                        <div className="flex items-center gap-1 mt-0.5 text-[9px] text-blue-400">
+                          <Clock className="w-2 h-2" />
+                          <span>{node.retirementMonths === 0 ? 'Retirement eligible' : `Retirement: ${node.retirementMonths}mo`}</span>
+                        </div>
+                      )}
+                      {/* Promotion candidates */}
+                      {node.promotionCandidates && node.promotionCandidates.length > 0 && size === 'lg' && (
+                        <div className="flex items-center gap-1 mt-0.5 text-[9px] text-slate-400">
+                          <ArrowRight className="w-2 h-2 text-slate-500" />
+                          <span className="truncate">{node.promotionCandidates[0]}</span>
+                        </div>
+                      )}
                     </>
                   )}
                 </>
               )}
             </div>
+            {/* Span of control warning badge — shown outside main content block for visibility */}
+            {node.spanWarning && (size === 'lg' || size === 'md') && (
+              <div className={`mt-1.5 flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-medium w-fit ${
+                node.spanWarning === 'high'
+                  ? 'bg-amber-500/15 text-amber-400 border border-amber-500/20'
+                  : 'bg-amber-500/10 text-amber-500/80 border border-amber-500/15'
+              }`}>
+                <AlertTriangle className="w-2.5 h-2.5 flex-shrink-0" />
+                <span>{node.reports} reports · Span: {node.spanWarning === 'high' ? 'High' : 'Elevated'}</span>
+              </div>
+            )}
 
             <div className="absolute left-full ml-2 top-0 w-64 bg-slate-900/95 border border-slate-700/50 rounded-lg p-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 shadow-2xl pointer-events-none">
               <div className="space-y-2 text-xs">
@@ -1197,15 +1389,32 @@ export default function OrgChart() {
               )}
             </div>
 
-            {/* Organizational Insights Panel */}
-            <div className="mb-4 bg-gradient-to-br from-purple-500/10 to-purple-600/5 border border-purple-500/20 rounded-xl p-4">
-              <div className="flex items-start gap-3">
-                <div className="w-10 h-10 bg-purple-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <Sparkles className="w-5 h-5 text-purple-400" />
+            {/* Organizational Insights Panel — collapsible to keep chart prominent */}
+            <div className="mb-4 bg-gradient-to-br from-purple-500/10 to-purple-600/5 border border-purple-500/20 rounded-xl overflow-hidden">
+              <button
+                onClick={() => setInsightsExpanded(!insightsExpanded)}
+                className="w-full flex items-center justify-between px-4 py-3 hover:bg-purple-500/5 transition-colors"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-7 h-7 bg-purple-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Sparkles className="w-3.5 h-3.5 text-purple-400" />
+                  </div>
+                  <span className="text-sm font-semibold text-white">AI Organizational Insights</span>
+                  <div className="flex items-center gap-2 text-[11px]">
+                    <span className="px-1.5 py-0.5 bg-red-500/20 text-red-400 border border-red-500/20 rounded text-[10px]">1 Critical</span>
+                    <span className="px-1.5 py-0.5 bg-amber-500/20 text-amber-400 border border-amber-500/20 rounded text-[10px]">2 Warnings</span>
+                    <span className="px-1.5 py-0.5 bg-blue-500/20 text-blue-400 border border-blue-500/20 rounded text-[10px]">3 Insights</span>
+                  </div>
                 </div>
-                <div className="flex-1">
-                  <h3 className="text-sm font-bold text-white mb-2">AI Organizational Insights</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div className="flex items-center gap-2">
+                  <span className="hidden sm:inline text-[10px] text-slate-500">AI-assisted · 4 sources · 3m ago</span>
+                  {insightsExpanded ? <ChevronUp className="w-4 h-4 text-slate-500" /> : <ChevronDown className="w-4 h-4 text-slate-500" />}
+                </div>
+              </button>
+
+              {insightsExpanded && (
+              <div className="px-4 pb-4 border-t border-purple-500/10">
+                <div className="pt-3 grid grid-cols-1 md:grid-cols-3 gap-3">
                     {/* Structure Health */}
                     <div className="bg-slate-800/40 rounded-xl p-3 border border-slate-700/50">
                       <div className="flex items-center gap-2 mb-2">
@@ -1305,10 +1514,11 @@ export default function OrgChart() {
                     </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3 mb-4">
+
               <div className="flex-1 relative">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
                 <input
@@ -1358,15 +1568,31 @@ export default function OrgChart() {
                   </select>
                 </div>
 
-                <div className="relative">
-                  <Eye className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                  <select className="pl-9 pr-4 py-2.5 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer">
-                    <option value="hierarchy">Hierarchy View</option>
-                    <option value="span">Span of Control View</option>
-                    <option value="succession">Succession Planning View</option>
-                    <option value="vacancy">Vacancy Map View</option>
-                    <option value="division">Division Focus View</option>
-                  </select>
+                {/* Command Layer Toggle */}
+                <div className="flex items-center bg-slate-800/40 border border-slate-700/50 rounded-xl overflow-hidden" title="Switch between hierarchy view and operational risk map">
+                  <button
+                    onClick={() => setViewMode('hierarchy')}
+                    className={`flex items-center gap-1.5 px-3 py-2.5 text-sm font-medium transition-all ${
+                      viewMode === 'hierarchy'
+                        ? 'bg-slate-700/60 text-white'
+                        : 'text-slate-400 hover:text-slate-300'
+                    }`}
+                  >
+                    <Layers className="w-4 h-4" />
+                    <span className="hidden sm:inline">Hierarchy</span>
+                  </button>
+                  <div className="w-px h-5 bg-slate-700/50" />
+                  <button
+                    onClick={() => setViewMode('operational')}
+                    className={`flex items-center gap-1.5 px-3 py-2.5 text-sm font-medium transition-all ${
+                      viewMode === 'operational'
+                        ? 'bg-amber-500/20 text-amber-400'
+                        : 'text-slate-400 hover:text-slate-300'
+                    }`}
+                  >
+                    <Activity className="w-4 h-4" />
+                    <span className="hidden sm:inline">Operational</span>
+                  </button>
                 </div>
               </div>
             </div>
@@ -1473,34 +1699,56 @@ export default function OrgChart() {
               </div>
             </div>
 
-            <div className="mt-4 flex flex-wrap items-center justify-center gap-4 lg:gap-6 text-xs lg:text-sm">
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-green-500/20 border border-green-500/30 rounded"></div>
-                <span className="text-slate-400">95%+ Staffed</span>
+            <div className="mt-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 lg:gap-x-5 text-[11px]">
+              {/* Readiness */}
+              <div className="flex items-center gap-1.5">
+                <div className="w-2 h-2 rounded-full bg-emerald-400"></div>
+                <span className="text-slate-400">Fully staffed</span>
               </div>
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-amber-500/20 border border-amber-500/30 rounded"></div>
-                <span className="text-slate-400">80-94% Staffed</span>
+              <div className="flex items-center gap-1.5">
+                <div className="w-2 h-2 rounded-full bg-amber-400"></div>
+                <span className="text-slate-400">At risk / acting</span>
               </div>
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-red-500/20 border border-red-500/30 rounded"></div>
-                <span className="text-slate-400">&lt;80% Staffed</span>
+              <div className="flex items-center gap-1.5">
+                <div className="w-2 h-2 rounded-full bg-red-400"></div>
+                <span className="text-slate-400">Leadership vacancy</span>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="text-slate-700">·</div>
+              {/* Heatmap */}
+              <div className="flex items-center gap-1.5">
+                <div className="w-3 h-3 bg-emerald-900/40 border border-l-2 border-emerald-500 rounded"></div>
+                <span className="text-slate-400">95%+ staffed</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <div className="w-3 h-3 bg-amber-900/30 border border-l-2 border-amber-500 rounded"></div>
+                <span className="text-slate-400">80–94%</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <div className="w-3 h-3 bg-red-900/30 border border-l-2 border-red-500 rounded"></div>
+                <span className="text-slate-400">&lt;80%</span>
+              </div>
+              <div className="text-slate-700">·</div>
+              {/* Special */}
+              <div className="flex items-center gap-1.5">
                 <div className="w-3 h-3 border-2 border-dashed border-red-500/40 rounded"></div>
-                <span className="text-slate-400">Vacant Position</span>
+                <span className="text-slate-400">Vacant</span>
               </div>
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-green-400"></div>
-                <span className="text-slate-400">On Duty</span>
+              <div className="flex items-center gap-1.5">
+                <div className="px-1 py-0.5 bg-amber-600 rounded text-[7px] font-bold text-white">ACT</div>
+                <span className="text-slate-400">Acting supervisor</span>
               </div>
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-blue-400 ring-2 ring-blue-400/30"></div>
-                <span className="text-slate-400">Retirement Eligible</span>
+              <div className="flex items-center gap-1.5">
+                <AlertTriangle className="w-3 h-3 text-amber-400" />
+                <span className="text-slate-400">Span of control alert</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Move className="w-3 h-3 text-slate-400" />
-                <span className="text-slate-400">Drag/Pinch to Navigate • 170 Personnel</span>
+              <div className="flex items-center gap-1.5">
+                <Clock className="w-3 h-3 text-blue-400" />
+                <span className="text-slate-400">Retirement signal</span>
+              </div>
+              <div className="text-slate-700">·</div>
+              <div className="flex items-center gap-1.5">
+                <Move className="w-3 h-3 text-slate-500" />
+                <span className="text-slate-500">Drag/Pinch to Navigate · 170 Personnel</span>
               </div>
             </div>
         </div>
@@ -1643,8 +1891,59 @@ export default function OrgChart() {
                 </div>
               )}
 
-              {/* Succession Planning */}
-              {selectedNode.succession && (
+              {/* Leadership Pipeline — retirement + promotion candidates */}
+              {(selectedNode.retirementMonths !== undefined || selectedNode.promotionCandidates) && (
+                <div>
+                  <h4 className="text-sm font-semibold text-white mb-3">Leadership Pipeline</h4>
+                  <div className="bg-slate-800/40 rounded-xl p-4 border border-slate-700/50 space-y-3">
+                    {selectedNode.retirementMonths !== undefined && (
+                      <div className="flex items-start gap-3">
+                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
+                          selectedNode.retirementMonths === 0 ? 'bg-amber-500/20 border border-amber-500/20' : 'bg-blue-500/20 border border-blue-500/20'
+                        }`}>
+                          <Clock className={`w-4 h-4 ${selectedNode.retirementMonths === 0 ? 'text-amber-400' : 'text-blue-400'}`} />
+                        </div>
+                        <div>
+                          <p className={`text-sm font-medium ${selectedNode.retirementMonths === 0 ? 'text-amber-400' : 'text-blue-400'}`}>
+                            {selectedNode.retirementMonths === 0
+                              ? 'Retirement eligible now'
+                              : `Retirement eligible in ${selectedNode.retirementMonths} months`
+                            }
+                          </p>
+                          {selectedNode.retirementEligible && (
+                            <p className="text-xs text-slate-400">Eligible since: {selectedNode.retirementEligible}</p>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                    {selectedNode.promotionCandidates && selectedNode.promotionCandidates.length > 0 && (
+                      <div>
+                        <p className="text-xs text-slate-400 mb-2">Promotion Candidates</p>
+                        <div className="space-y-1.5">
+                          {selectedNode.promotionCandidates.map((candidate, idx) => (
+                            <div key={idx} className="flex items-center gap-2 text-sm">
+                              <ArrowRight className="w-3 h-3 text-emerald-500" />
+                              <span className="text-white">{candidate}</span>
+                              {idx === 0 && <span className="text-[10px] px-1.5 py-0.5 bg-emerald-500/20 text-emerald-400 rounded border border-emerald-500/20">Primary</span>}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    {selectedNode.succession && (
+                      <div className="pt-2 border-t border-slate-700/50">
+                        <div className="flex items-center gap-2">
+                          <CheckCircle className="w-3.5 h-3.5 text-green-400" />
+                          <span className="text-xs text-green-400 font-medium">Succession plan active</span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* Succession Planning (legacy — shown when no pipeline data but succession exists) */}
+              {selectedNode.succession && !selectedNode.promotionCandidates && (
                 <div>
                   <h4 className="text-sm font-semibold text-white mb-3">Succession Planning</h4>
                   <div className="bg-slate-800/40 rounded-xl p-4 border border-slate-700/50 space-y-3">
@@ -1674,6 +1973,77 @@ export default function OrgChart() {
                         <p className="text-sm text-white">{selectedNode.retirementEligible}</p>
                       </div>
                     )}
+                  </div>
+                </div>
+              )}
+
+              {/* Span of Control Warning — show in drawer if flagged */}
+              {selectedNode.spanWarning && (
+                <div>
+                  <h4 className="text-sm font-semibold text-white mb-3">Span of Control</h4>
+                  <div className={`rounded-xl p-4 border space-y-3 ${
+                    selectedNode.spanWarning === 'high'
+                      ? 'bg-amber-500/10 border-amber-500/30'
+                      : 'bg-amber-500/5 border-amber-500/20'
+                  }`}>
+                    <div className="flex items-center gap-2">
+                      <AlertTriangle className={`w-4 h-4 ${selectedNode.spanWarning === 'high' ? 'text-amber-400' : 'text-amber-500/70'}`} />
+                      <span className={`text-sm font-medium ${selectedNode.spanWarning === 'high' ? 'text-amber-400' : 'text-amber-500'}`}>
+                        {selectedNode.reports} direct reports · Span of control {selectedNode.spanWarning === 'high' ? 'HIGH' : 'ELEVATED'}
+                      </span>
+                    </div>
+                    {selectedNode.spanRecommendation && (
+                      <p className="text-xs text-slate-300">
+                        Recommendation: {selectedNode.spanRecommendation}
+                      </p>
+                    )}
+                    <p className="text-[11px] text-slate-500">
+                      Recommended max: 8–10 direct reports for supervisory roles
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {/* Vacancy Impact Simulation — shown for leadership roles */}
+              {vacancyImpactData[selectedNode.id] && !selectedNode.isVacant && (
+                <div>
+                  <h4 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+                    <Zap className="w-4 h-4 text-amber-400" />
+                    Vacancy Impact Simulation
+                  </h4>
+                  <div className={`rounded-xl p-4 border space-y-3 ${
+                    vacancyImpactData[selectedNode.id].riskLevel === 'critical'
+                      ? 'bg-red-500/10 border-red-500/30'
+                      : vacancyImpactData[selectedNode.id].riskLevel === 'high'
+                        ? 'bg-amber-500/10 border-amber-500/30'
+                        : 'bg-slate-800/40 border-slate-700/50'
+                  }`}>
+                    <div className="flex items-center justify-between">
+                      <p className="text-xs text-slate-400">If this position becomes vacant:</p>
+                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded border ${
+                        vacancyImpactData[selectedNode.id].riskLevel === 'critical'
+                          ? 'bg-red-500/20 text-red-400 border-red-500/30'
+                          : vacancyImpactData[selectedNode.id].riskLevel === 'high'
+                            ? 'bg-amber-500/20 text-amber-400 border-amber-500/30'
+                            : 'bg-slate-700/40 text-slate-400 border-slate-600/30'
+                      }`}>
+                        {vacancyImpactData[selectedNode.id].riskLevel.toUpperCase()} RISK
+                      </span>
+                    </div>
+                    <div className="space-y-1.5">
+                      {vacancyImpactData[selectedNode.id].impacts.map((impact, idx) => (
+                        <p key={idx} className="text-xs text-slate-300 flex items-start gap-2">
+                          <span className="text-slate-500 mt-0.5">•</span>
+                          {impact}
+                        </p>
+                      ))}
+                    </div>
+                    <div className="pt-2 border-t border-slate-700/30">
+                      <p className="text-xs text-slate-400 mb-1">Suggested action:</p>
+                      <p className="text-sm text-emerald-400 font-medium">
+                        → {vacancyImpactData[selectedNode.id].suggestedAction}
+                      </p>
+                    </div>
                   </div>
                 </div>
               )}
