@@ -789,6 +789,21 @@ export default function OrgChart() {
     }
   };
 
+  // Bureau-level metrics for the enriched status label blocks
+  const bureauMetrics = {
+    3: { personnel: 100, authorized: 110, vacancies: 2, certRisk: 3, leadershipLabel: 'Stable' },
+    4: { personnel: 170, authorized: 188, vacancies: 6, certRisk: 5, leadershipLabel: 'At Risk' }
+  };
+
+  // Division-level enriched metrics
+  const divisionMetrics = {
+    10: { deployable: 44, vacancies: 2, certRisk: 2 },
+    11: { deployable: 56, vacancies: 0, certRisk: 1, alert: 'Acting supervision' },
+    12: { deployable: 36, vacancies: 2, certRisk: 4, alert: 'Leadership vacancy' },
+    13: { deployable: 58, vacancies: 4, certRisk: 3, alert: 'Retirement eligible now', action: 'Promote Capt. Rodriguez → Acting Major' },
+    14: { deployable: 98, vacancies: 1, certRisk: 1, alert: 'Captain vacancy active' }
+  };
+
   // Touch handlers
   const handleTouchStart = (e) => {
     if (e.target.closest('.org-node')) return;
@@ -976,9 +991,21 @@ export default function OrgChart() {
 
   // Returns Tailwind color classes for readiness status indicators
   const getReadinessColors = (status) => {
-    if (status === 'green') return { dot: 'bg-emerald-400', text: 'text-emerald-400', border: 'border-l-emerald-500', nodeBg: 'from-emerald-900/20 to-slate-800/30' };
-    if (status === 'red')   return { dot: 'bg-red-400',     text: 'text-red-400',     border: 'border-l-red-500',     nodeBg: 'from-red-900/20 to-slate-800/30' };
-    return                         { dot: 'bg-amber-400',   text: 'text-amber-400',   border: 'border-l-amber-500',   nodeBg: 'from-amber-900/20 to-slate-800/30' };
+    if (status === 'green') return {
+      dot: 'bg-emerald-400', text: 'text-emerald-400', border: 'border-l-emerald-500',
+      nodeBg: 'from-emerald-900/20 to-slate-800/30',
+      zoneBg: 'bg-emerald-900/35', zoneBorder: 'border-emerald-500/45', zoneConnector: 'bg-emerald-500/40'
+    };
+    if (status === 'red') return {
+      dot: 'bg-red-400',     text: 'text-red-400',     border: 'border-l-red-500',
+      nodeBg: 'from-red-900/20 to-slate-800/30',
+      zoneBg: 'bg-red-900/40', zoneBorder: 'border-red-500/50', zoneConnector: 'bg-red-500/40'
+    };
+    return {
+      dot: 'bg-amber-400',   text: 'text-amber-400',   border: 'border-l-amber-500',
+      nodeBg: 'from-amber-900/20 to-slate-800/30',
+      zoneBg: 'bg-amber-900/30', zoneBorder: 'border-amber-500/45', zoneConnector: 'bg-amber-500/40'
+    };
   };
 
   // Returns operational heatmap background classes based on staffing %
@@ -1073,29 +1100,77 @@ export default function OrgChart() {
 
     return (
       <div key={node.id} className="flex flex-col items-center">
-        {/* Bureau Label */}
-        {showBureauLabel && !isCollapsed && (
-          <div className="mb-4">
-            <div className="px-6 py-2 bg-gradient-to-r from-amber-500/20 to-amber-600/20 backdrop-blur-xl border-2 border-amber-500/40 rounded-xl shadow-lg">
-              <p className="text-sm font-bold text-amber-400 tracking-wider text-center whitespace-nowrap">
-                {bureauLabelText}
-              </p>
+        {/* Bureau Label — rich status block */}
+        {showBureauLabel && !isCollapsed && (() => {
+          const bm = bureauMetrics[node.id];
+          const rc = node.readinessStatus ? getReadinessColors(node.readinessStatus) : null;
+          const isOp = viewMode === 'operational' && rc;
+          const pct = bm ? Math.round(bm.personnel / bm.authorized * 100) : null;
+          return (
+            <div className="mb-4">
+              <div className={`px-5 py-3 rounded-xl border-2 shadow-lg min-w-[220px] ${
+                isOp ? `${rc.zoneBg} ${rc.zoneBorder}` : 'bg-gradient-to-r from-amber-500/20 to-amber-600/20 border-amber-500/40'
+              }`}>
+                <p className={`text-[11px] font-bold tracking-wider text-center mb-1.5 ${isOp ? rc.text : 'text-amber-400'}`}>
+                  {bureauLabelText}
+                </p>
+                {bm && (
+                  <div className="flex items-center justify-center gap-3 text-[10px] flex-wrap">
+                    <span className="text-slate-400">{bm.personnel} personnel</span>
+                    <span className="text-slate-600">·</span>
+                    <span className={pct >= 95 ? 'text-emerald-400' : pct >= 80 ? 'text-amber-400' : 'text-red-400'}>
+                      {pct}% staffed
+                    </span>
+                    {bm.vacancies > 0 && <><span className="text-slate-600">·</span><span className="text-red-400">{bm.vacancies} vacant</span></>}
+                    {bm.certRisk > 0 && <><span className="text-slate-600">·</span><span className="text-amber-400/80">{bm.certRisk} cert risk</span></>}
+                  </div>
+                )}
+                {bm && (
+                  <p className={`text-[10px] text-center mt-1 ${bm.leadershipLabel === 'Stable' ? 'text-emerald-400/70' : 'text-amber-400'}`}>
+                    Leadership: {bm.leadershipLabel}
+                  </p>
+                )}
+              </div>
+              <div className={`w-0.5 h-4 mx-auto ${isOp ? rc.zoneConnector : 'bg-amber-500/40'}`}></div>
             </div>
-            <div className="w-0.5 h-4 bg-amber-500/40 mx-auto"></div>
-          </div>
-        )}
+          );
+        })()}
 
-        {/* Division Label */}
-        {showDivisionLabel && !isCollapsed && (
-          <div className="mb-3">
-            <div className="px-5 py-1.5 bg-gradient-to-r from-blue-500/20 to-blue-600/20 backdrop-blur-xl border border-blue-500/40 rounded-lg shadow-md">
-              <p className="text-xs font-semibold text-blue-400 tracking-wide text-center whitespace-nowrap">
-                {divisionLabelText}
-              </p>
+        {/* Division Label — rich status block */}
+        {showDivisionLabel && !isCollapsed && (() => {
+          const dm = divisionMetrics[node.id];
+          const rc = node.readinessStatus ? getReadinessColors(node.readinessStatus) : null;
+          const isOp = viewMode === 'operational' && rc;
+          const sColor = getStaffingColor(node.divisionStrength);
+          return (
+            <div className="mb-3">
+              <div className={`px-4 py-2 rounded-lg border shadow-md min-w-[180px] ${
+                isOp ? `${rc.zoneBg} ${rc.zoneBorder}` : 'bg-gradient-to-r from-blue-500/15 to-blue-600/15 border-blue-500/35'
+              }`}>
+                <p className={`text-[10px] font-bold tracking-wide text-center whitespace-nowrap ${isOp ? rc.text : 'text-blue-400'}`}>
+                  {divisionLabelText}
+                </p>
+                {(node.divisionStrength || dm) && (
+                  <div className="flex items-center justify-center gap-2 text-[9px] mt-0.5 flex-wrap">
+                    {node.divisionStrength && (
+                      <span className={sColor === 'green' ? 'text-emerald-400' : sColor === 'amber' ? 'text-amber-400' : 'text-red-400'}>
+                        {node.divisionStrength.current}/{node.divisionStrength.authorized}
+                      </span>
+                    )}
+                    {dm?.vacancies > 0 && <><span className="text-slate-600">·</span><span className="text-red-400">{dm.vacancies} vacant</span></>}
+                    {dm?.certRisk > 0 && <><span className="text-slate-600">·</span><span className="text-amber-400/80">{dm.certRisk} cert risk</span></>}
+                  </div>
+                )}
+                {dm?.alert && (
+                  <p className={`text-[9px] text-center mt-0.5 font-medium ${
+                    node.readinessStatus === 'red' ? 'text-red-400' : 'text-amber-400'
+                  }`}>⚠ {dm.alert}</p>
+                )}
+              </div>
+              <div className={`w-0.5 h-3 mx-auto ${isOp ? rc.zoneConnector : 'bg-blue-500/40'}`}></div>
             </div>
-            <div className="w-0.5 h-3 bg-blue-500/40 mx-auto"></div>
-          </div>
-        )}
+          );
+        })()}
 
         {/* Section Label */}
         {showSectionLabel && !isCollapsed && (
@@ -1114,11 +1189,17 @@ export default function OrgChart() {
             className={`org-node relative ${
               node.isVacant
                 ? 'bg-slate-800/20 backdrop-blur-xl border-2 border-dashed border-red-500/40'
-                : viewMode === 'operational'
-                  ? `bg-gradient-to-br ${getHeatmapBg(node)} backdrop-blur-xl border border-l-4 ${node.readinessStatus ? getReadinessColors(node.readinessStatus).border : 'border-l-slate-700/50'}`
-                  : 'bg-gradient-to-br from-slate-800/50 to-slate-800/30 backdrop-blur-xl border'
+                : node.actingFlag
+                  ? 'bg-gradient-to-br from-amber-900/35 to-slate-800/40 backdrop-blur-xl border-2 border-amber-500/60 shadow-amber-500/20'
+                  : viewMode === 'operational'
+                    ? `bg-gradient-to-br ${getHeatmapBg(node)} backdrop-blur-xl border border-l-4 ${node.readinessStatus ? getReadinessColors(node.readinessStatus).border : 'border-l-slate-700/50'}`
+                    : 'bg-gradient-to-br from-slate-800/50 to-slate-800/30 backdrop-blur-xl border'
             } rounded-xl cursor-pointer transition-all shadow-lg group ${
-              isHighlighted || isHovered ? 'border-amber-500/60 scale-105 shadow-xl shadow-amber-500/10 ring-2 ring-amber-500/20' : node.isVacant ? '' : 'border-slate-700/50'
+              isHighlighted || isHovered
+                ? 'border-amber-500/60 scale-105 shadow-xl shadow-amber-500/10 ring-2 ring-amber-500/20'
+                : node.isVacant ? ''
+                : node.actingFlag ? 'ring-1 ring-amber-500/25 shadow-amber-500/15'
+                : 'border-slate-700/50'
             } ${sizeClasses[size]}`}
             onMouseEnter={() => setHoveredNode(node.id)}
             onMouseLeave={() => setHoveredNode(null)}
@@ -1133,10 +1214,11 @@ export default function OrgChart() {
               }`} title={node.status} />
             )}
 
-            {/* Acting Flag Badge */}
+            {/* Acting Flag Badge — glows amber to signal temporary command */}
             {node.actingFlag && (
-              <div className="absolute -top-2 -left-2 px-1.5 py-0.5 bg-amber-600 rounded text-[8px] font-bold text-white shadow-lg" title="Acting Supervisor">
-                ACT
+              <div className="absolute -top-2.5 left-1/2 -translate-x-1/2 flex items-center gap-1 px-2 py-0.5 bg-amber-500 rounded-full text-[8px] font-bold text-white shadow-lg shadow-amber-500/30 whitespace-nowrap" title="Acting Supervisor — temporary assignment">
+                <AlertTriangle className="w-2.5 h-2.5" />
+                ACTING SUPERVISOR
               </div>
             )}
 
@@ -1232,11 +1314,22 @@ export default function OrgChart() {
                           <span className={getReadinessColors(node.readinessStatus).text}>{node.readinessLabel}</span>
                         </div>
                       )}
-                      {/* Retirement signal */}
+                      {/* Retirement signal — louder for eligible/imminent */}
                       {node.retirementMonths !== undefined && size === 'lg' && (
-                        <div className="flex items-center gap-1 mt-0.5 text-[9px] text-blue-400">
-                          <Clock className="w-2 h-2" />
-                          <span>{node.retirementMonths === 0 ? 'Retirement eligible' : `Retirement: ${node.retirementMonths}mo`}</span>
+                        <div className={`flex items-center gap-1 mt-1 px-1.5 py-0.5 rounded border text-[9px] font-medium w-fit ${
+                          node.retirementMonths === 0
+                            ? 'bg-amber-500/20 border-amber-500/30 text-amber-300'
+                            : node.retirementMonths <= 18
+                              ? 'bg-blue-500/15 border-blue-500/20 text-blue-300'
+                              : 'bg-slate-700/20 border-slate-700/30 text-slate-500'
+                        }`}>
+                          <Clock className="w-2.5 h-2.5 flex-shrink-0" />
+                          <span>
+                            {node.retirementMonths === 0
+                              ? `Eligible now${node.promotionCandidates?.[0] ? ` · ${node.promotionCandidates[0]} →` : ''}`
+                              : `${node.retirementMonths}mo to retirement`
+                            }
+                          </span>
                         </div>
                       )}
                       {/* Promotion candidates */}
@@ -1251,15 +1344,15 @@ export default function OrgChart() {
                 </>
               )}
             </div>
-            {/* Span of control warning badge — shown outside main content block for visibility */}
+            {/* Span of control warning — bottom banner */}
             {node.spanWarning && (size === 'lg' || size === 'md') && (
-              <div className={`mt-1.5 flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-medium w-fit ${
+              <div className={`-mx-4 -mb-4 mt-2 px-2 py-1 rounded-b-xl flex items-center gap-1.5 text-[9px] font-semibold ${
                 node.spanWarning === 'high'
-                  ? 'bg-amber-500/15 text-amber-400 border border-amber-500/20'
-                  : 'bg-amber-500/10 text-amber-500/80 border border-amber-500/15'
+                  ? 'bg-amber-500/25 text-amber-300'
+                  : 'bg-amber-500/15 text-amber-400/80'
               }`}>
                 <AlertTriangle className="w-2.5 h-2.5 flex-shrink-0" />
-                <span>{node.reports} reports · Span: {node.spanWarning === 'high' ? 'High' : 'Elevated'}</span>
+                <span>Span: {node.spanWarning === 'high' ? 'HIGH' : 'Elevated'} — {node.reports} direct reports</span>
               </div>
             )}
 
@@ -1831,9 +1924,9 @@ export default function OrgChart() {
               {selectedNode.divisionStrength && (
                 <div>
                   <h4 className="text-sm font-semibold text-white mb-3">Staffing Overview</h4>
-                  <div className="bg-slate-800/40 rounded-xl p-4 border border-slate-700/50">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm text-slate-300">Current Strength</span>
+                  <div className="bg-slate-800/40 rounded-xl p-4 border border-slate-700/50 space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-slate-300">Assigned Strength</span>
                       <span className="text-lg font-bold text-white">{selectedNode.divisionStrength.current} / {selectedNode.divisionStrength.authorized}</span>
                     </div>
                     <div className="w-full h-2 bg-slate-700/50 rounded-full overflow-hidden">
@@ -1842,12 +1935,49 @@ export default function OrgChart() {
                           getStaffingColor(selectedNode.divisionStrength) === 'red' ? 'bg-red-500' :
                           getStaffingColor(selectedNode.divisionStrength) === 'amber' ? 'bg-amber-500' : 'bg-green-500'
                         }`}
-                        style={{ width: `${(selectedNode.divisionStrength.current / selectedNode.divisionStrength.authorized) * 100}%` }}
+                        style={{ width: `${Math.min((selectedNode.divisionStrength.current / selectedNode.divisionStrength.authorized) * 100, 100)}%` }}
                       />
                     </div>
-                    <p className="text-xs text-slate-400 mt-2">
-                      {Math.round((selectedNode.divisionStrength.current / selectedNode.divisionStrength.authorized) * 100)}% capacity
+                    <p className="text-xs text-slate-400">
+                      {Math.round((selectedNode.divisionStrength.current / selectedNode.divisionStrength.authorized) * 100)}% of authorized strength
                     </p>
+                    {/* Enriched metrics from divisionMetrics */}
+                    {divisionMetrics[selectedNode.id] && (
+                      <div className="pt-2 border-t border-slate-700/30 grid grid-cols-3 gap-3">
+                        <div className="text-center">
+                          <p className="text-[11px] text-slate-400 mb-0.5">Deployable</p>
+                          <p className="text-base font-bold text-emerald-400">{divisionMetrics[selectedNode.id].deployable}</p>
+                        </div>
+                        <div className="text-center">
+                          <p className="text-[11px] text-slate-400 mb-0.5">Vacancies</p>
+                          <p className={`text-base font-bold ${divisionMetrics[selectedNode.id].vacancies > 0 ? 'text-red-400' : 'text-emerald-400'}`}>
+                            {divisionMetrics[selectedNode.id].vacancies}
+                          </p>
+                        </div>
+                        <div className="text-center">
+                          <p className="text-[11px] text-slate-400 mb-0.5">Cert Risk</p>
+                          <p className={`text-base font-bold ${divisionMetrics[selectedNode.id].certRisk > 2 ? 'text-amber-400' : 'text-slate-300'}`}>
+                            {divisionMetrics[selectedNode.id].certRisk}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                    {/* Operational risk alert */}
+                    {divisionMetrics[selectedNode.id]?.alert && (
+                      <div className="pt-2 border-t border-slate-700/30">
+                        <div className="flex items-start gap-2 text-xs">
+                          <AlertTriangle className="w-3.5 h-3.5 text-amber-400 mt-0.5 flex-shrink-0" />
+                          <span className="text-amber-300">{divisionMetrics[selectedNode.id].alert}</span>
+                        </div>
+                      </div>
+                    )}
+                    {/* Recommended action */}
+                    {divisionMetrics[selectedNode.id]?.action && (
+                      <div className="flex items-start gap-2 text-xs">
+                        <ArrowRight className="w-3.5 h-3.5 text-emerald-400 mt-0.5 flex-shrink-0" />
+                        <span className="text-emerald-300 font-medium">{divisionMetrics[selectedNode.id].action}</span>
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
