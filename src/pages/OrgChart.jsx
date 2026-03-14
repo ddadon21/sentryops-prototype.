@@ -795,13 +795,15 @@ export default function OrgChart() {
     4: { personnel: 170, authorized: 188, vacancies: 6, certRisk: 5, leadershipLabel: 'At Risk' }
   };
 
-  // Division-level enriched metrics
+  // Bureau and division enriched metrics — powers the click drawer intel panels
   const divisionMetrics = {
-    10: { deployable: 44, vacancies: 2, certRisk: 2 },
-    11: { deployable: 56, vacancies: 0, certRisk: 1, alert: 'Acting supervision' },
-    12: { deployable: 36, vacancies: 2, certRisk: 4, alert: 'Leadership vacancy' },
-    13: { deployable: 58, vacancies: 4, certRisk: 3, alert: 'Retirement eligible now', action: 'Promote Capt. Rodriguez → Acting Major' },
-    14: { deployable: 98, vacancies: 1, certRisk: 1, alert: 'Captain vacancy active' }
+    3:  { deployable: 94,  vacancies: 2, certRisk: 3, alert: null,                         action: null },
+    4:  { deployable: 157, vacancies: 6, certRisk: 5, alert: 'Cert expiring · retirement risk', action: 'Begin succession planning for Deputy Chief Webster' },
+    10: { deployable: 44,  vacancies: 2, certRisk: 2, alert: null,                         action: null },
+    11: { deployable: 56,  vacancies: 0, certRisk: 1, alert: 'Acting supervision',          action: null },
+    12: { deployable: 36,  vacancies: 2, certRisk: 4, alert: 'Leadership vacancy',          action: 'Permanent appointment required immediately' },
+    13: { deployable: 58,  vacancies: 4, certRisk: 3, alert: 'Retirement eligible now',     action: 'Promote Capt. Rodriguez → Acting Major' },
+    14: { deployable: 98,  vacancies: 1, certRisk: 1, alert: 'Captain vacancy active',      action: null },
   };
 
   // Touch handlers
@@ -975,6 +977,26 @@ export default function OrgChart() {
     setSelectedNode(node);
     setDrawerOpen(true);
   };
+
+  // Jump to a node on the chart and flash it
+  const highlightNode = (nodeId) => {
+    if (!nodeId) return;
+    setHighlightedNode(nodeId);
+    setPanOffset({ x: 0, y: 0 });
+    setZoomLevel(100);
+    setDrawerOpen(false);
+    setTimeout(() => setHighlightedNode(null), 5000);
+  };
+
+  // Command radar alerts — drives the insight panel
+  const commandAlerts = [
+    { type: 'critical', nodeId: 12, short: 'Admin Services leadership vacancy', full: 'Administrative Services Division has no permanent Major — leadership gap compounding existing vacancies.' },
+    { type: 'warning',  nodeId: 4,  short: '5 cert expirations pending',        full: 'Deputy Chief Webster cert expiring + 4 officers in Operations Bureau within 60 days.' },
+    { type: 'warning',  nodeId: 11, short: 'Patrol acting supervision active',  full: 'Support Operations Major Harris on acting basis — no permanent appointment made.' },
+    { type: 'insight',  nodeId: 13, short: 'Major Davis eligible for retirement', full: 'Field Operations Major Davis retirement-eligible now. Capt. Rodriguez on succession track.' },
+    { type: 'insight',  nodeId: 2,  short: 'Chief Deputy 24mo succession window', full: 'Chief Deputy Anderson retires in 24 months. Succession plan confirmed: Major Wilson / Major Davis.' },
+    { type: 'insight',  nodeId: null, short: 'Span of control elevated in Patrol', full: 'Sgt. Williams managing 12 direct reports — above recommended 8. Corporal role needed.' },
+  ];
 
   const getStaffingColor = (strength) => {
     if (!strength) return 'slate';
@@ -1314,20 +1336,24 @@ export default function OrgChart() {
                           <span className={getReadinessColors(node.readinessStatus).text}>{node.readinessLabel}</span>
                         </div>
                       )}
-                      {/* Retirement signal — louder for eligible/imminent */}
+                      {/* Retirement signal — tiered: red <24mo / amber 24-60mo / green >60mo */}
                       {node.retirementMonths !== undefined && size === 'lg' && (
                         <div className={`flex items-center gap-1 mt-1 px-1.5 py-0.5 rounded border text-[9px] font-medium w-fit ${
                           node.retirementMonths === 0
-                            ? 'bg-amber-500/20 border-amber-500/30 text-amber-300'
-                            : node.retirementMonths <= 18
-                              ? 'bg-blue-500/15 border-blue-500/20 text-blue-300'
-                              : 'bg-slate-700/20 border-slate-700/30 text-slate-500'
+                            ? 'bg-red-500/25 border-red-500/35 text-red-300'
+                            : node.retirementMonths < 24
+                              ? 'bg-amber-500/20 border-amber-500/30 text-amber-300'
+                              : node.retirementMonths <= 60
+                                ? 'bg-blue-500/12 border-blue-500/20 text-blue-400'
+                                : 'bg-emerald-500/10 border-emerald-500/15 text-emerald-400/70'
                         }`}>
                           <Clock className="w-2.5 h-2.5 flex-shrink-0" />
                           <span>
                             {node.retirementMonths === 0
-                              ? `Eligible now${node.promotionCandidates?.[0] ? ` · ${node.promotionCandidates[0]} →` : ''}`
-                              : `${node.retirementMonths}mo to retirement`
+                              ? `Eligible NOW${node.promotionCandidates?.[0] ? ` · ${node.promotionCandidates[0]} →` : ' · succession required'}`
+                              : node.retirementMonths < 24
+                                ? `${node.retirementMonths}mo · succession urgent`
+                                : `${node.retirementMonths}mo to retirement`
                             }
                           </span>
                         </div>
@@ -1481,128 +1507,69 @@ export default function OrgChart() {
               )}
             </div>
 
-            {/* Organizational Insights Panel — collapsible, starts closed so chart is dominant */}
+            {/* Command Radar Panel — collapsible intelligence bar */}
             <div className="mb-4 bg-slate-800/25 border border-slate-700/30 rounded-xl overflow-hidden">
-              <button
-                onClick={() => setInsightsExpanded(!insightsExpanded)}
-                className="w-full flex items-center justify-between px-4 py-3 hover:bg-slate-800/20 transition-colors"
-              >
-                <div className="flex items-center gap-3">
-                  <span className="text-[13px] font-semibold text-slate-300 uppercase tracking-wide">Organizational Insights</span>
-                  <div className="flex items-center gap-2">
-                    <span className="px-1.5 py-0.5 bg-red-500/10 text-red-400 border border-red-500/20 rounded text-[10px]">1 Critical</span>
-                    <span className="px-1.5 py-0.5 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded text-[10px]">2 Warnings</span>
-                    <span className="px-1.5 py-0.5 bg-slate-700/30 text-slate-400 rounded text-[10px]">3 Insights</span>
-                  </div>
+              <div className="flex items-start justify-between px-4 py-2.5 gap-3">
+                <div className="flex items-center gap-2 flex-wrap min-w-0">
+                  <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide shrink-0">Command Radar</span>
+                  {commandAlerts.map((alert, i) => (
+                    <button
+                      key={i}
+                      onClick={() => { highlightNode(alert.nodeId); setInsightsExpanded(false); }}
+                      title={alert.full}
+                      className={`px-2 py-0.5 rounded text-[10px] font-medium transition-all border whitespace-nowrap ${
+                        alert.type === 'critical'
+                          ? 'bg-red-500/10 text-red-400 border-red-500/20 hover:bg-red-500/20'
+                          : alert.type === 'warning'
+                            ? 'bg-amber-500/10 text-amber-400 border-amber-500/20 hover:bg-amber-500/20'
+                            : 'bg-slate-700/25 text-slate-400 border-slate-700/30 hover:bg-slate-700/40'
+                      }`}
+                    >
+                      {alert.type === 'critical' ? '⬤' : alert.type === 'warning' ? '⚠' : '●'} {alert.short}
+                    </button>
+                  ))}
                 </div>
-                <div className="flex items-center gap-3">
-                  <span className="hidden sm:inline text-[10px] text-slate-600">AI-assisted synthesis · 4 sources · 3m ago</span>
-                  {insightsExpanded ? <ChevronUp className="w-4 h-4 text-slate-600" /> : <ChevronDown className="w-4 h-4 text-slate-600" />}
-                </div>
-              </button>
+                <button
+                  onClick={() => setInsightsExpanded(!insightsExpanded)}
+                  className="shrink-0 flex items-center gap-1 text-[10px] text-slate-600 hover:text-slate-400 transition-colors pt-0.5"
+                >
+                  <span className="hidden sm:inline">Details</span>
+                  {insightsExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+                </button>
+              </div>
 
               {insightsExpanded && (
-              <div className="px-4 pb-4 border-t border-slate-700/20">
-                <div className="pt-3 grid grid-cols-1 md:grid-cols-3 gap-3">
-                    {/* Structure Health */}
-                    <div className="bg-slate-800/40 rounded-xl p-3 border border-slate-700/50">
-                      <div className="flex items-center gap-2 mb-2">
-                        <div className="w-6 h-6 bg-blue-500/20 rounded-lg flex items-center justify-center">
-                          <Building2 className="w-3 h-3 text-blue-400" />
-                        </div>
-                        <span className="text-xs font-semibold text-slate-300">Structure Health</span>
-                      </div>
-                      <div className="space-y-1.5">
-                        <div className="flex items-center justify-between">
-                          <span className="text-[10px] text-slate-400">Overall staffing</span>
-                          <span className="text-xs font-bold text-emerald-400">95.5%</span>
-                        </div>
-                        <div className="w-full h-1.5 bg-slate-700/50 rounded-full overflow-hidden">
-                          <div className="h-full bg-emerald-500 rounded-full" style={{ width: '95.5%' }}></div>
-                        </div>
-                        <p className="text-[10px] text-slate-500">170 of 178 authorized positions filled</p>
-                        <div className="pt-1.5 border-t border-slate-700/50 mt-1.5">
-                          <p className="text-[10px] text-amber-400 flex items-center gap-1">
-                            <AlertCircle className="w-2.5 h-2.5" />
-                            8 Open Positions:
-                          </p>
-                          <p className="text-[9px] text-slate-400 ml-3.5">Patrol (3), Detention (2), Inv (1), Court (1), SRO (1)</p>
-                        </div>
-                        <div className="pt-1.5 border-t border-slate-700/50 mt-1.5">
-                          <p className="text-[10px] text-emerald-400 flex items-center gap-1">
-                            <CheckCircle className="w-2.5 h-2.5" />
-                            Span of Control: Healthy (1:8.2 avg)
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Leadership Status */}
-                    <div className="bg-slate-800/40 rounded-xl p-3 border border-slate-700/50">
-                      <div className="flex items-center gap-2 mb-2">
-                        <div className="w-6 h-6 bg-purple-500/20 rounded-lg flex items-center justify-center">
-                          <Users className="w-3 h-3 text-purple-400" />
-                        </div>
-                        <span className="text-xs font-semibold text-slate-300">Leadership</span>
-                      </div>
-                      <div className="space-y-1.5">
-                        <div className="flex items-center justify-between">
-                          <span className="text-[10px] text-slate-400">Executive Level</span>
-                          <span className="text-xs font-bold text-emerald-400">100%</span>
-                        </div>
-                        <p className="text-[9px] text-slate-500 ml-2">Sheriff (1/1), Chief Deputy (1/1)</p>
-                        <div className="flex items-center justify-between">
-                          <span className="text-[10px] text-slate-400">Command Staff</span>
-                          <span className="text-xs font-bold text-emerald-400">91.7%</span>
-                        </div>
-                        <p className="text-[9px] text-slate-500 ml-2">Captains 11/12 (1 vacancy - Court)</p>
-                        <div className="flex items-center justify-between">
-                          <span className="text-[10px] text-slate-400">Supervisors</span>
-                          <span className="text-xs font-bold text-emerald-400">96.3%</span>
-                        </div>
-                        <p className="text-[9px] text-slate-500 ml-2">Sergeants 26/27 (1 vacancy - B-Shift)</p>
-                        <div className="pt-1.5 border-t border-slate-700/50 mt-1.5">
-                          <p className="text-[10px] text-blue-400 flex items-center gap-1">
-                            <RefreshCw className="w-2.5 h-2.5" />
-                            8 retirement-eligible within 36 months
-                          </p>
-                          <p className="text-[9px] text-slate-500 ml-3.5">12 supervisors on promotion track</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Key Recommendations */}
-                    <div className="bg-slate-800/40 rounded-xl p-3 border border-slate-700/50">
-                      <div className="flex items-center gap-2 mb-2">
-                        <div className="w-6 h-6 bg-yellow-500/20 rounded-lg flex items-center justify-center">
-                          <Lightbulb className="w-3 h-3 text-yellow-400" />
-                        </div>
-                        <span className="text-xs font-semibold text-slate-300">Recommendations</span>
-                      </div>
-                      <div className="space-y-1.5">
-                        <p className="text-[10px] text-slate-300 flex items-start gap-1">
-                          <CheckCircle className="w-2.5 h-2.5 text-emerald-400 mt-0.5 flex-shrink-0" />
-                          <span>Accelerate 3 Patrol hires (zones 4, 5, 7 critical)</span>
-                        </p>
-                        <p className="text-[10px] text-slate-300 flex items-start gap-1">
-                          <AlertCircle className="w-2.5 h-2.5 text-amber-400 mt-0.5 flex-shrink-0" />
-                          <span>Fill Court Security Captain before April audit</span>
-                        </p>
-                        <p className="text-[10px] text-slate-300 flex items-start gap-1">
-                          <AlertCircle className="w-2.5 h-2.5 text-amber-400 mt-0.5 flex-shrink-0" />
-                          <span>Major Davis retirement 2026 - successor ready</span>
-                        </p>
-                        <div className="pt-1.5 border-t border-slate-700/50 mt-1.5">
-                          <p className="text-[10px] text-emerald-400 flex items-center gap-1">
-                            <CheckCircle className="w-2.5 h-2.5" />
-                            Retention rate: 93.8% (above 87% avg)
-                          </p>
-                          <p className="text-[9px] text-slate-500 ml-3.5">8 vacancies = $680K annual savings</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+              <div className="px-4 pb-3 pt-2.5 border-t border-slate-700/20 space-y-1.5">
+                {commandAlerts.map((alert, i) => (
+                  <button
+                    key={i}
+                    onClick={() => { highlightNode(alert.nodeId); setInsightsExpanded(false); }}
+                    className={`w-full flex items-start gap-3 p-2.5 rounded-lg border text-left transition-all ${
+                      alert.type === 'critical'
+                        ? 'bg-red-500/8 border-red-500/20 hover:bg-red-500/15'
+                        : alert.type === 'warning'
+                          ? 'bg-amber-500/8 border-amber-500/15 hover:bg-amber-500/15'
+                          : 'bg-slate-800/30 border-slate-700/30 hover:bg-slate-800/50'
+                    }`}
+                  >
+                    <span className={`text-[9px] font-bold uppercase tracking-wider pt-0.5 shrink-0 w-12 ${
+                      alert.type === 'critical' ? 'text-red-400' : alert.type === 'warning' ? 'text-amber-400' : 'text-slate-500'
+                    }`}>{alert.type}</span>
+                    <span className={`text-[11px] leading-snug ${
+                      alert.type === 'critical' ? 'text-red-200' : alert.type === 'warning' ? 'text-amber-200' : 'text-slate-300'
+                    }`}>{alert.full}</span>
+                    {alert.nodeId && (
+                      <ArrowRight className={`w-3.5 h-3.5 shrink-0 mt-0.5 ml-auto ${
+                        alert.type === 'critical' ? 'text-red-500' : alert.type === 'warning' ? 'text-amber-500' : 'text-slate-600'
+                      }`} />
+                    )}
+                  </button>
+                ))}
+                <div className="flex items-center justify-between pt-1 border-t border-slate-700/20">
+                  <span className="text-[10px] text-slate-600">Staffing: 95.5% · 8 open positions · Retention 93.8%</span>
+                  <span className="text-[10px] text-slate-600">AI-assisted · 3m ago</span>
                 </div>
+              </div>
               )}
             </div>
 
