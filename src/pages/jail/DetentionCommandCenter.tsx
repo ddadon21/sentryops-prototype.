@@ -4,8 +4,8 @@ import DashboardLayout from '../../layouts/DashboardLayout';
 import {
   Building2, Users, AlertTriangle, Shield, Hospital, Truck,
   Activity, TrendingUp, TrendingDown, Clock, CheckCircle,
-  AlertCircle, Circle, ArrowRight, RefreshCw, Sparkles, X,
-  ChevronRight, Heart, Zap, AlertOctagon, UserCheck
+  Circle, ArrowRight, RefreshCw, Sparkles, X,
+  Heart, Zap, AlertOctagon
 } from 'lucide-react';
 
 // ── Types ─────────────────────────────────────────────────────
@@ -134,38 +134,6 @@ const getUrgencyColors = (u: string) => {
   if (u === 'critical') return 'border-l-2 border-red-500 bg-red-500/8 text-red-300';
   if (u === 'high') return 'border-l-2 border-amber-500 bg-amber-500/8 text-amber-300';
   return 'border-l-2 border-blue-500/60 bg-blue-500/5 text-slate-300';
-};
-
-// ── Mini SVG bar chart ─────────────────────────────────────────
-
-const TrendChart = () => {
-  const min = Math.min(...populationTrend.map(d => d.pop)) - 5;
-  const max = Math.max(...populationTrend.map(d => d.pop)) + 5;
-  const H = 48;
-  const W = 8;
-  const gap = 4;
-  const total = populationTrend.length;
-  const chartW = total * (W + gap) - gap;
-
-  return (
-    <svg width={chartW} height={H} className="overflow-visible">
-      {populationTrend.map((d, i) => {
-        const barH = ((d.pop - min) / (max - min)) * H;
-        const x = i * (W + gap);
-        const isNow = i === total - 1;
-        return (
-          <g key={d.date}>
-            <rect
-              x={x} y={H - barH} width={W} height={barH}
-              rx={2}
-              className={isNow ? 'fill-amber-500/70' : 'fill-slate-600/60'}
-            />
-            <title>{d.date}: {d.pop}</title>
-          </g>
-        );
-      })}
-    </svg>
-  );
 };
 
 // ── Component ─────────────────────────────────────────────────
