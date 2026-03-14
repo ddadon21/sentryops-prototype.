@@ -63,6 +63,7 @@ const defaultNavigation: NavItem[] = [
     { id: 'staffing-overview', label: 'Staffing Overview', route: '/command/personnel' },
     { id: 'org-chart', label: 'Org Chart', route: '/command/orgchart' }
   ]},
+  { id: 'detention-command', label: 'Detention Command Center', icon: Shield, route: '/jail/command' },
   { id: 'custody', label: 'Custody Operations', icon: Building2, route: '/jail/dashboard' },
   { id: 'field-ops', label: 'Field Operations (Overview)', icon: Radio, route: '/patrol/cad' },
   { id: 'investigative', label: 'Investigative Oversight', icon: Target, route: '/investigations/cases' },

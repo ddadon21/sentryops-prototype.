@@ -52,6 +52,9 @@ export function createPageUrl(pageName: string): string {
     CaseClosure: '/bi/closure',
     BISettings: '/bi/settings',
 
+    // Detention Command Center
+    DetentionCommandCenter: '/jail/command',
+
     // Original pages
     Home: '/',
     About: '/about',

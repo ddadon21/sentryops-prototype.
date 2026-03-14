@@ -24,6 +24,7 @@ import Settings from './pages/Settings';
 
 // Jail Operations Module
 import JailDashboard from './pages/jail/JailDashboard';
+import DetentionCommandCenter from './pages/jail/DetentionCommandCenter';
 import InmateManagement from './pages/jail/InmateManagement';
 import BookingProcessing from './pages/jail/BookingProcessing';
 import IncidentReports from './pages/jail/IncidentReports';
@@ -93,6 +94,7 @@ function App() {
         <Route path="/command/settings" element={<Settings />} />
 
         {/* Jail Operations Module (standalone, no layout wrapper) */}
+        <Route path="/jail/command" element={<DetentionCommandCenter />} />
         <Route path="/jail/dashboard" element={<JailDashboard />} />
         <Route path="/jail/inmates" element={<InmateManagement />} />
         <Route path="/jail/booking" element={<BookingProcessing />} />
