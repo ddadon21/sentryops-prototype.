@@ -28,6 +28,7 @@ import CommandWarRoom from './pages/CommandWarRoom';
 // Jail Operations Module
 import JailDashboard from './pages/jail/JailDashboard';
 import DetentionCommandCenter from './pages/jail/DetentionCommandCenter';
+import CustodyOperations from './pages/jail/CustodyOperations';
 import InmateManagement from './pages/jail/InmateManagement';
 import BookingProcessing from './pages/jail/BookingProcessing';
 import IncidentReports from './pages/jail/IncidentReports';
@@ -101,6 +102,7 @@ function App() {
 
         {/* Jail Operations Module (standalone, no layout wrapper) */}
         <Route path="/jail/command" element={<DetentionCommandCenter />} />
+        <Route path="/jail/custody" element={<CustodyOperations />} />
         <Route path="/jail/dashboard" element={<JailDashboard />} />
         <Route path="/jail/inmates" element={<InmateManagement />} />
         <Route path="/jail/booking" element={<BookingProcessing />} />
