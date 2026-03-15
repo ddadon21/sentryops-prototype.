@@ -109,7 +109,7 @@ const criticalTasks = [
 const getPodColor = (pod: HousingPod) => {
   if (pod.status === 'Over Capacity') return { bg: 'bg-red-500/25 border-red-500/50', text: 'text-red-300', bar: 'bg-red-500' };
   if (pod.status === 'Near Capacity') return { bg: 'bg-amber-500/15 border-amber-500/40', text: 'text-amber-300', bar: 'bg-amber-500' };
-  return { bg: 'bg-slate-800/40 border-slate-700/40', text: 'text-emerald-400', bar: 'bg-emerald-500' };
+  return { bg: 'bg-slate-800/25 border-slate-700/30', text: 'text-emerald-400', bar: 'bg-emerald-500' };
 };
 
 const getPct = (pod: HousingPod) => Math.round((pod.current / pod.capacity) * 100);
@@ -182,7 +182,7 @@ export default function DetentionCommandCenter() {
                 {overallReadiness === 'Critical' ? '⬤' : '⚠'} {overallReadiness}
               </span>
             </div>
-            <p className="text-slate-400 text-sm">Gwinnett County Detention Center · {criticalCount > 0 ? `${criticalCount} critical action${criticalCount > 1 ? 's' : ''} pending` : 'Monitoring'}</p>
+            <p className="text-[11px] text-slate-500">Gwinnett County Detention Center · {criticalCount > 0 ? `${criticalCount} critical action${criticalCount > 1 ? 's' : ''} pending` : 'Monitoring'}</p>
           </div>
           <div className="flex items-center gap-2 text-[11px] text-slate-500">
             <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> Last updated 6:38 PM EST</span>
@@ -195,7 +195,7 @@ export default function DetentionCommandCenter() {
         {/* ── Row 1: Command Snapshot KPIs ───────────────── */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
           {/* Facility Capacity */}
-          <div className={`bg-slate-800/40 border rounded-xl p-3 ${capacityPct >= 95 ? 'border-red-500/30' : capacityPct >= 85 ? 'border-amber-500/30' : 'border-slate-700/50'}`}>
+          <div className={`bg-slate-800/25 border rounded-xl p-3 ${capacityPct >= 95 ? 'border-red-500/30' : capacityPct >= 85 ? 'border-amber-500/30' : 'border-slate-700/30'}`}>
             <div className="flex items-center gap-1.5 mb-2">
               <Building2 className="w-3.5 h-3.5 text-blue-400" />
               <span className="text-[10px] text-slate-400 font-medium uppercase tracking-wide">Capacity</span>
@@ -208,7 +208,7 @@ export default function DetentionCommandCenter() {
           </div>
 
           {/* Net Population Change */}
-          <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-3">
+          <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-3">
             <div className="flex items-center gap-1.5 mb-2">
               <Activity className="w-3.5 h-3.5 text-slate-400" />
               <span className="text-[10px] text-slate-400 font-medium uppercase tracking-wide">Population</span>
@@ -222,7 +222,7 @@ export default function DetentionCommandCenter() {
           </div>
 
           {/* Staff Coverage */}
-          <div className={`bg-slate-800/40 border rounded-xl p-3 ${staffReadiness === 'Critical' ? 'border-red-500/30' : staffReadiness === 'Warning' ? 'border-amber-500/30' : 'border-slate-700/50'}`}>
+          <div className={`bg-slate-800/25 border rounded-xl p-3 ${staffReadiness === 'Critical' ? 'border-red-500/30' : staffReadiness === 'Warning' ? 'border-amber-500/30' : 'border-slate-700/30'}`}>
             <div className="flex items-center gap-1.5 mb-2">
               <Users className="w-3.5 h-3.5 text-slate-400" />
               <span className="text-[10px] text-slate-400 font-medium uppercase tracking-wide">Staff</span>
@@ -233,7 +233,7 @@ export default function DetentionCommandCenter() {
           </div>
 
           {/* Active Alerts */}
-          <div className={`bg-slate-800/40 border rounded-xl p-3 ${criticalCount > 0 ? 'border-red-500/30' : warningCount > 0 ? 'border-amber-500/30' : 'border-slate-700/50'}`}>
+          <div className={`bg-slate-800/25 border rounded-xl p-3 ${criticalCount > 0 ? 'border-red-500/30' : warningCount > 0 ? 'border-amber-500/30' : 'border-slate-700/30'}`}>
             <div className="flex items-center gap-1.5 mb-2">
               <AlertTriangle className="w-3.5 h-3.5 text-red-400" />
               <span className="text-[10px] text-slate-400 font-medium uppercase tracking-wide">Alerts</span>
@@ -244,7 +244,7 @@ export default function DetentionCommandCenter() {
           </div>
 
           {/* Medical Unit */}
-          <div className={`bg-slate-800/40 border rounded-xl p-3 ${medicalReadiness === 'Warning' ? 'border-amber-500/30' : 'border-slate-700/50'}`}>
+          <div className={`bg-slate-800/25 border rounded-xl p-3 ${medicalReadiness === 'Warning' ? 'border-amber-500/30' : 'border-slate-700/30'}`}>
             <div className="flex items-center gap-1.5 mb-2">
               <Hospital className="w-3.5 h-3.5 text-pink-400" />
               <span className="text-[10px] text-slate-400 font-medium uppercase tracking-wide">Medical</span>
@@ -255,7 +255,7 @@ export default function DetentionCommandCenter() {
           </div>
 
           {/* Court Transports */}
-          <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-3">
+          <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-3">
             <div className="flex items-center gap-1.5 mb-2">
               <Truck className="w-3.5 h-3.5 text-slate-400" />
               <span className="text-[10px] text-slate-400 font-medium uppercase tracking-wide">Transports</span>
@@ -270,7 +270,7 @@ export default function DetentionCommandCenter() {
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
 
           {/* Active Alerts */}
-          <div className="lg:col-span-2 bg-slate-800/30 border border-slate-700/40 rounded-xl p-4">
+          <div className="lg:col-span-2 bg-slate-800/25 border border-slate-700/30 rounded-xl p-4">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <AlertOctagon className="w-4 h-4 text-red-400" />
@@ -365,7 +365,7 @@ export default function DetentionCommandCenter() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
 
           {/* Housing Unit Map */}
-          <div className="bg-slate-800/30 border border-slate-700/40 rounded-xl p-4">
+          <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-4">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <Shield className="w-4 h-4 text-slate-400" />
@@ -399,7 +399,7 @@ export default function DetentionCommandCenter() {
           </div>
 
           {/* Staff Coverage */}
-          <div className="bg-slate-800/30 border border-slate-700/40 rounded-xl p-4">
+          <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-4">
             <div className="flex items-center gap-2 mb-3">
               <Users className="w-4 h-4 text-slate-400" />
               <h3 className="text-sm font-semibold text-white">Staff Coverage</h3>
@@ -431,7 +431,7 @@ export default function DetentionCommandCenter() {
           </div>
 
           {/* Court Transport Schedule */}
-          <div className="bg-slate-800/30 border border-slate-700/40 rounded-xl p-4">
+          <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-4">
             <div className="flex items-center gap-2 mb-3">
               <Truck className="w-4 h-4 text-slate-400" />
               <h3 className="text-sm font-semibold text-white">Court Transport Schedule</h3>
@@ -466,7 +466,7 @@ export default function DetentionCommandCenter() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
 
           {/* Population Trend */}
-          <div className="bg-slate-800/30 border border-slate-700/40 rounded-xl p-4">
+          <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-4">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <TrendingUp className="w-4 h-4 text-slate-400" />
@@ -517,7 +517,7 @@ export default function DetentionCommandCenter() {
           </div>
 
           {/* Medical Monitoring */}
-          <div className="bg-slate-800/30 border border-slate-700/40 rounded-xl p-4">
+          <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-4">
             <div className="flex items-center gap-2 mb-3">
               <Heart className="w-4 h-4 text-pink-400" />
               <h3 className="text-sm font-semibold text-white">Medical Monitoring</h3>
@@ -551,7 +551,7 @@ export default function DetentionCommandCenter() {
           </div>
 
           {/* Critical Tasks */}
-          <div className="bg-slate-800/30 border border-slate-700/40 rounded-xl p-4">
+          <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-4">
             <div className="flex items-center gap-2 mb-3">
               <Zap className="w-4 h-4 text-amber-400" />
               <h3 className="text-sm font-semibold text-white">Command Actions</h3>
