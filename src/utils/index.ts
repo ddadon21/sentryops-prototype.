@@ -12,6 +12,7 @@ export function createPageUrl(pageName: string): string {
 
     // Command Module
     CommandDashboard: '/command/dashboard',
+    CommandWarRoom: '/command/warroom',
     PersonnelOverview: '/command/personnel',
     OrgChart: '/command/orgchart',
     Approvals: '/command/approvals',

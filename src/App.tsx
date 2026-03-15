@@ -22,6 +22,9 @@ import CommandAlerts from './pages/CommandAlerts';
 import CommandCalendar from './pages/CommandCalendar';
 import Settings from './pages/Settings';
 
+// Command War Room
+import CommandWarRoom from './pages/CommandWarRoom';
+
 // Jail Operations Module
 import JailDashboard from './pages/jail/JailDashboard';
 import DetentionCommandCenter from './pages/jail/DetentionCommandCenter';
@@ -92,6 +95,9 @@ function App() {
         <Route path="/command/alerts" element={<CommandAlerts />} />
         <Route path="/command/calendar" element={<CommandCalendar />} />
         <Route path="/command/settings" element={<Settings />} />
+
+        {/* Command War Room */}
+        <Route path="/command/warroom" element={<CommandWarRoom />} />
 
         {/* Jail Operations Module (standalone, no layout wrapper) */}
         <Route path="/jail/command" element={<DetentionCommandCenter />} />
