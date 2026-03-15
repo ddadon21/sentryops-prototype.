@@ -320,8 +320,8 @@ export default function CommandAlerts() {
         <div className="max-w-[1400px] mx-auto">
 
         {/* ── Page Header ────────────────────────────────── */}
-        <div className="mb-4">
-          <h2 className="text-lg font-bold text-white mb-0.5">Command Alerts</h2>
+        <div className="mb-6">
+          <h2 className="text-xl font-bold text-white mb-1">Command Alerts</h2>
           <div className="flex items-center gap-2 text-[11px] text-slate-500">
             <span>{formatDate(currentTime)}</span>
             <span className="text-slate-700">·</span>

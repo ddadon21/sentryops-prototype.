@@ -398,14 +398,14 @@ export default function PersonnelOverview() {
             {/* Main Content */}
             <div className="flex-1 min-w-0">
                 {/* ── Page Header ─────────────────────────────── */}
-                <div className="mb-4">
+                <div className="mb-6">
                   <div className="flex items-center justify-between">
                     <div>
-                      <h2 className="text-lg font-bold text-white mb-0.5">Staffing Overview</h2>
+                      <h2 className="text-xl font-bold text-white mb-1">Staffing Overview</h2>
                       <p className="text-[11px] text-slate-500">Operational workforce management + deployment readiness</p>
                     </div>
                     <div className="flex items-center gap-2">
-                      <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/40 border border-slate-700/30 rounded text-[11px] text-slate-400 hover:text-white transition-colors">
+                      <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/40 border border-slate-700/30 rounded-lg text-[11px] text-slate-400 hover:text-white transition-colors">
                         <Download className="w-3 h-3" />
                         Staffing Report
                       </button>
@@ -416,7 +416,7 @@ export default function PersonnelOverview() {
                 {/* ── Workforce Status Row (4 cards) ──────────── */}
                 <div className="grid grid-cols-4 gap-3 mb-4">
                   {/* Workforce Health */}
-                  <div className="bg-slate-800/30 border border-slate-700/15 rounded p-3">
+                  <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-3">
                     <div className="flex items-center gap-2 mb-1.5">
                       <Gauge className="w-3.5 h-3.5 text-amber-400" />
                       <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Workforce Health</span>
@@ -429,7 +429,7 @@ export default function PersonnelOverview() {
                   </div>
 
                   {/* Patrol Coverage */}
-                  <div className="bg-slate-800/30 border border-amber-500/15 rounded p-3">
+                  <div className="bg-slate-800/25 border border-amber-500/20 rounded-xl p-3">
                     <div className="flex items-center gap-2 mb-1.5">
                       <Shield className="w-3.5 h-3.5 text-amber-400" />
                       <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Patrol Coverage</span>
@@ -442,7 +442,7 @@ export default function PersonnelOverview() {
                   </div>
 
                   {/* Certification Compliance */}
-                  <div className="bg-slate-800/30 border border-amber-500/15 rounded p-3">
+                  <div className="bg-slate-800/25 border border-amber-500/20 rounded-xl p-3">
                     <div className="flex items-center gap-2 mb-1.5">
                       <Award className="w-3.5 h-3.5 text-amber-400" />
                       <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Cert Compliance</span>
@@ -455,7 +455,7 @@ export default function PersonnelOverview() {
                   </div>
 
                   {/* Staffing Gap */}
-                  <div className="bg-slate-800/30 border border-red-500/15 rounded p-3">
+                  <div className="bg-slate-800/25 border border-red-500/20 rounded-xl p-3">
                     <div className="flex items-center gap-2 mb-1.5">
                       <Users className="w-3.5 h-3.5 text-red-400" />
                       <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Staffing Gap</span>

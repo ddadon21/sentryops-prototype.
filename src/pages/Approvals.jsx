@@ -503,10 +503,10 @@ export default function Approvals() {
           <div className="max-w-[1400px] mx-auto">
 
             {/* ── Page Header ────────────────────────────────── */}
-            <div className="mb-4">
+            <div className="mb-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-lg font-bold text-white mb-0.5">Command Approvals</h2>
+                  <h2 className="text-xl font-bold text-white mb-1">Command Approvals</h2>
                   <div className="flex items-center gap-2 text-[11px] text-slate-500">
                     <span>Decision execution surface</span>
                     <span className="text-slate-700">·</span>
@@ -529,7 +529,7 @@ export default function Approvals() {
                     </span>
                   )}
                   {activeTab === 'decision-log' && (
-                    <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/40 border border-slate-700/30 rounded text-[11px] text-slate-400 hover:text-white transition-colors">
+                    <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/40 border border-slate-700/30 rounded-lg text-[11px] text-slate-400 hover:text-white transition-colors">
                       <Download className="w-3 h-3" />
                       Export
                     </button>

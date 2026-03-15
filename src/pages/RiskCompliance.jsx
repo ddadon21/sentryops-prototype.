@@ -458,10 +458,10 @@ export default function RiskCompliance() {
                ═══════════════════════════════════════════════════ */}
 
           {/* ── Page Header ────────────────────────────────── */}
-          <div className="mb-4">
+          <div className="mb-6">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-lg font-bold text-white mb-0.5">Risk & Compliance</h2>
+                <h2 className="text-xl font-bold text-white mb-1">Risk & Compliance</h2>
                 <div className="flex items-center gap-2 text-[11px] text-slate-500">
                   <span>Early warning + audit defense</span>
                   <span className="text-slate-700">&middot;</span>
@@ -478,7 +478,7 @@ export default function RiskCompliance() {
                 <span className={`px-2.5 py-1 bg-green-500/8 border border-green-500/15 rounded text-[10px] font-semibold ${overallCompliance >= 90 ? 'text-green-400' : 'text-amber-400'}`}>
                   {overallCompliance}% Compliant
                 </span>
-                <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/40 border border-slate-700/30 rounded text-[11px] text-slate-400 hover:text-white transition-colors">
+                <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/40 border border-slate-700/30 rounded-lg text-[11px] text-slate-400 hover:text-white transition-colors">
                   <Download className="w-3 h-3" />
                   Compliance Report
                 </button>
@@ -489,7 +489,7 @@ export default function RiskCompliance() {
           {/* ── Top Summary — 4 Cards ────────────────────── */}
           <div className="grid grid-cols-4 gap-3 mb-4">
             {/* Operational Pressure Index */}
-            <div className={`bg-slate-800/15 border rounded px-3 py-2.5 ${
+            <div className={`bg-slate-800/20 border rounded-xl px-3 py-2.5 ${
               opiScore >= 75 ? 'border-red-500/20' : opiScore >= 50 ? 'border-amber-500/20' : 'border-slate-700/15'
             }`}>
               <div className="flex items-center gap-2 mb-1.5">
@@ -522,7 +522,7 @@ export default function RiskCompliance() {
             </div>
 
             {/* Open Risk Items */}
-            <div className="bg-slate-800/15 border border-slate-700/15 rounded px-3 py-2.5">
+            <div className="bg-slate-800/20 border border-slate-700/25 rounded-xl px-3 py-2.5">
               <div className="flex items-center gap-2 mb-1.5">
                 <AlertTriangle className="w-3.5 h-3.5 text-amber-400" />
                 <span className="text-[10px] font-medium text-slate-500 uppercase tracking-wider">Open Risks</span>
@@ -544,7 +544,7 @@ export default function RiskCompliance() {
             </div>
 
             {/* Next Audit */}
-            <div className="bg-slate-800/15 border border-slate-700/15 rounded px-3 py-2.5">
+            <div className="bg-slate-800/20 border border-slate-700/25 rounded-xl px-3 py-2.5">
               <div className="flex items-center gap-2 mb-1.5">
                 <Calendar className="w-3.5 h-3.5 text-purple-400" />
                 <span className="text-[10px] font-medium text-slate-500 uppercase tracking-wider">Next Audit</span>
@@ -569,7 +569,7 @@ export default function RiskCompliance() {
             </div>
 
             {/* Compliance Rate */}
-            <div className="bg-slate-800/15 border border-slate-700/15 rounded px-3 py-2.5">
+            <div className="bg-slate-800/20 border border-slate-700/25 rounded-xl px-3 py-2.5">
               <div className="flex items-center gap-2 mb-1.5">
                 <Shield className="w-3.5 h-3.5 text-green-400" />
                 <span className="text-[10px] font-medium text-slate-500 uppercase tracking-wider">Compliance Rate</span>
@@ -833,7 +833,7 @@ export default function RiskCompliance() {
               <Calendar className="w-3.5 h-3.5 text-purple-400" />
               <span className="text-[12px] font-bold text-white">Upcoming Audits</span>
             </div>
-            <div className="border border-slate-700/15 rounded overflow-hidden">
+            <div className="border border-slate-700/25 rounded-xl overflow-hidden">
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-slate-700/20">
@@ -912,7 +912,7 @@ export default function RiskCompliance() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 mb-4">
 
             {/* Risk Trends — Narrative */}
-            <div className="bg-slate-800/15 border border-slate-700/15 rounded p-3">
+            <div className="bg-slate-800/20 border border-slate-700/25 rounded-xl p-3">
               <div className="flex items-center gap-2 mb-2.5">
                 <TrendingUp className="w-3.5 h-3.5 text-purple-400" />
                 <span className="text-[12px] font-bold text-white">Risk Trends</span>
@@ -960,7 +960,7 @@ export default function RiskCompliance() {
             </div>
 
             {/* Policy Compliance */}
-            <div className="bg-slate-800/15 border border-slate-700/15 rounded p-3">
+            <div className="bg-slate-800/20 border border-slate-700/25 rounded-xl p-3">
               <div className="flex items-center gap-2 mb-2.5">
                 <FileText className="w-3.5 h-3.5 text-blue-400" />
                 <span className="text-[12px] font-bold text-white">Policy Compliance</span>
@@ -1227,7 +1227,7 @@ export default function RiskCompliance() {
               <span className="text-[12px] font-bold text-white">Regulatory Standards</span>
               <span className="text-[10px] text-slate-600">Reference</span>
             </div>
-            <div className="border border-slate-700/15 rounded overflow-hidden">
+            <div className="border border-slate-700/25 rounded-xl overflow-hidden">
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-slate-700/20">

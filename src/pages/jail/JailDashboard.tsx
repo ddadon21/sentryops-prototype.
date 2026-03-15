@@ -374,8 +374,8 @@ const JailDashboard = () => {
         {/* Page Header with Quick Actions */}
         <div className="mb-6 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
           <div>
-            <h1 className="text-2xl lg:text-3xl font-bold text-white mb-2">Detention Operations</h1>
-            <p className="text-slate-400">Gwinnett County Detention Center - Real-time Facility Status</p>
+            <h1 className="text-xl font-bold text-white mb-1">Detention Operations</h1>
+            <p className="text-[11px] text-slate-500">Gwinnett County Detention Center · Real-time facility status</p>
             <p className="text-sm text-slate-500 mt-1 flex items-center gap-2 flex-wrap">
               <span className="font-medium text-amber-400">Capacity: 842/920 (91.5%)</span>
               <span className="text-slate-600">|</span>
@@ -543,7 +543,7 @@ const JailDashboard = () => {
         {/* Enhanced Key Metrics */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           {/* Facility Capacity Card - Enhanced */}
-          <div className="bg-slate-800 border border-slate-700 rounded-lg p-6">
+          <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
             <div className="flex items-center justify-between mb-4">
               <div className="p-3 bg-blue-500/20 rounded-lg">
                 <Building2 className="w-6 h-6 text-blue-400" />
@@ -599,7 +599,7 @@ const JailDashboard = () => {
           </div>
 
           {/* Today's Activity Card - Enhanced */}
-          <div className="bg-slate-800 border border-slate-700 rounded-lg p-6">
+          <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
             <div className="flex items-center justify-between mb-4">
               <div className="p-3 bg-emerald-500/20 rounded-lg">
                 <Activity className="w-6 h-6 text-emerald-400" />
@@ -652,7 +652,7 @@ const JailDashboard = () => {
           </div>
 
           {/* Court Transports Card - Enhanced */}
-          <div className="bg-slate-800 border border-slate-700 rounded-lg p-6">
+          <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
             <div className="flex items-center justify-between mb-4">
               <div className="p-3 bg-amber-500/20 rounded-lg">
                 <Calendar className="w-6 h-6 text-amber-400" />
@@ -689,7 +689,7 @@ const JailDashboard = () => {
           </div>
 
           {/* Average Length of Stay Card - Enhanced */}
-          <div className="bg-slate-800 border border-slate-700 rounded-lg p-6">
+          <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
             <div className="flex items-center justify-between mb-4">
               <div className="p-3 bg-purple-500/20 rounded-lg">
                 <Clock className="w-6 h-6 text-purple-400" />
@@ -729,7 +729,7 @@ const JailDashboard = () => {
         </div>
 
         {/* Population Trend Chart */}
-        <div className="mb-6 bg-slate-800 border border-slate-700 rounded-lg p-6">
+        <div className="mb-6 bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
           <div className="flex items-center justify-between mb-4">
             <div>
               <h2 className="text-xl font-bold text-white flex items-center gap-2">
@@ -1112,7 +1112,7 @@ const JailDashboard = () => {
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
           {/* Housing Units Status - Enhanced with Clickable Pods */}
-          <div className="lg:col-span-2 bg-slate-800 border border-slate-700 rounded-lg p-6">
+          <div className="lg:col-span-2 bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-bold text-white flex items-center gap-2">
                 <Bed className="w-5 h-5 text-amber-400" />
@@ -1180,7 +1180,7 @@ const JailDashboard = () => {
           {/* Right Column */}
           <div className="space-y-6">
             {/* Enhanced Classification Breakdown */}
-            <div className="bg-slate-800 border border-slate-700 rounded-lg p-6">
+            <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
               <div className="flex items-center gap-2 mb-1">
                 <Shield className="w-5 h-5 text-purple-400" />
                 <h2 className="text-xl font-bold text-white">Inmate Classification</h2>
@@ -1358,7 +1358,7 @@ const JailDashboard = () => {
             </div>
 
             {/* Enhanced Medical Alerts */}
-            <div className="bg-slate-800 border border-slate-700 rounded-lg p-6">
+            <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
               <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
                 <Heart className="w-5 h-5 text-red-400" />
                 Medical Alerts
@@ -1513,7 +1513,7 @@ const JailDashboard = () => {
         {/* Enhanced Recent Bookings & Incidents */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           {/* Enhanced Recent Bookings */}
-          <div className="bg-slate-800 border border-slate-700 rounded-lg p-6">
+          <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-bold text-white flex items-center gap-2">
                 <UserCheck className="w-5 h-5 text-blue-400" />
@@ -1618,7 +1618,7 @@ const JailDashboard = () => {
           </div>
 
           {/* Enhanced Recent Incidents */}
-          <div className="bg-slate-800 border border-slate-700 rounded-lg p-6">
+          <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-bold text-white flex items-center gap-2">
                 <AlertTriangle className="w-5 h-5 text-red-400" />
@@ -1714,7 +1714,7 @@ const JailDashboard = () => {
         {/* Enhanced Court Schedule & Staff Coverage */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           {/* Enhanced Court Schedule */}
-          <div className="bg-slate-800 border border-slate-700 rounded-lg p-6">
+          <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-bold text-white flex items-center gap-2">
                 <Scale className="w-5 h-5 text-purple-400" />
@@ -1799,7 +1799,7 @@ const JailDashboard = () => {
           </div>
 
           {/* Enhanced Staff Coverage */}
-          <div className="bg-slate-800 border border-slate-700 rounded-lg p-6">
+          <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
             <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
               <Users className="w-5 h-5 text-emerald-400" />
               Staff Coverage
@@ -1913,7 +1913,7 @@ const JailDashboard = () => {
         {/* Inmate Programs & Services + Visitation Statistics */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           {/* Inmate Programs & Services */}
-          <div className="bg-slate-800 border border-slate-700 rounded-lg p-6">
+          <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
             <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5 text-emerald-400" />
               Inmate Programs & Services
@@ -2002,7 +2002,7 @@ const JailDashboard = () => {
           </div>
 
           {/* Visitation Statistics */}
-          <div className="bg-slate-800 border border-slate-700 rounded-lg p-6">
+          <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
             <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
               <Users className="w-5 h-5 text-blue-400" />
               Visitation Today
@@ -2088,7 +2088,7 @@ const JailDashboard = () => {
         </div>
 
         {/* Enhanced Services Status */}
-        <div className="bg-slate-800 border border-slate-700 rounded-lg p-6">
+        <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
           <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
             <Activity className="w-5 h-5 text-blue-400" />
             Facility Services Status

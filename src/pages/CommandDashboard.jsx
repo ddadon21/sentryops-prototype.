@@ -225,7 +225,7 @@ export default function CommandDashboard() {
         <div className="max-w-7xl mx-auto">
 
         {/* Page Header */}
-        <div className="mb-8 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+        <div className="mb-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           <div>
             <h2 className="text-xl font-bold text-white mb-1">Executive Command Dashboard</h2>
             <div className="flex items-center gap-2 text-[11px] text-slate-500">

@@ -1471,9 +1471,9 @@ export default function OrgChart() {
     <DashboardLayout>
       <div className="p-4 lg:p-6 h-full">
         <div className="h-full flex flex-col max-w-[1400px] mx-auto">
-            <div className="mb-4 flex items-center justify-between">
+            <div className="mb-5 flex items-center justify-between">
               <div>
-                <h2 className="text-lg font-bold text-white mb-0.5">Organization Chart</h2>
+                <h2 className="text-xl font-bold text-white mb-1">Organization Chart</h2>
                 <div className="flex items-center gap-2 text-[11px] text-slate-500">
                   <span>Full command hierarchy · 170 personnel · 95.5% of 178 authorized</span>
                   <span className="text-slate-700">·</span>

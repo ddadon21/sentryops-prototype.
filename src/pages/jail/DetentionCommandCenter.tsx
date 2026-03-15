@@ -177,7 +177,7 @@ export default function DetentionCommandCenter() {
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-3">
           <div>
             <div className="flex items-center gap-3 mb-1">
-              <h1 className="text-xl lg:text-2xl font-bold text-white">Detention Command Center</h1>
+              <h1 className="text-xl font-bold text-white">Detention Command Center</h1>
               <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-semibold ${readinessBadge(overallReadiness)}`}>
                 {overallReadiness === 'Critical' ? '⬤' : '⚠'} {overallReadiness}
               </span>
