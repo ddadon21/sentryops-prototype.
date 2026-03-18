@@ -134,21 +134,21 @@ const alerts: CommandAlert[] = [
 // ── Helpers ───────────────────────────────────────────────────
 
 function getDivisionColors(status: DivisionReadiness['status']) {
-  if (status === 'Critical')     return { badge: 'bg-red-500/15 text-red-400 border border-red-500/25', dot: 'bg-red-500' };
+  if (status === 'Critical')     return { badge: 'bg-red-500/15 text-red-400 border border-red-500/25',       dot: 'bg-red-500' };
   if (status === 'Reduced')      return { badge: 'bg-amber-500/15 text-amber-400 border border-amber-500/25', dot: 'bg-amber-400' };
-  return { badge: 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/25', dot: 'bg-emerald-500' };
+  return { badge: 'bg-slate-700/30 text-slate-400 border border-slate-700/20', dot: 'bg-slate-500' };
 }
 
 function getBeatColors(status: PatrolBeat['status']) {
-  if (status === 'Uncovered') return { bg: 'bg-red-500/20 border-red-500/40', text: 'text-red-300', dot: 'bg-red-500' };
-  if (status === 'Thin')      return { bg: 'bg-amber-500/20 border-amber-500/40', text: 'text-amber-300', dot: 'bg-amber-400' };
-  return { bg: 'bg-emerald-500/10 border-emerald-500/25', text: 'text-emerald-300', dot: 'bg-emerald-500' };
+  if (status === 'Uncovered') return { bg: 'bg-red-500/15 border-red-500/35', text: 'text-red-300', dot: 'bg-red-500' };
+  if (status === 'Thin')      return { bg: 'bg-amber-500/12 border-amber-500/30', text: 'text-amber-300', dot: 'bg-amber-400' };
+  return { bg: 'bg-slate-800/30 border-slate-700/30', text: 'text-slate-300', dot: 'bg-slate-500' };
 }
 
 function getCertColors(severity: CertAlert['severity']) {
-  if (severity === 'critical') return { row: 'border-l-2 border-l-red-500/70',    badge: 'bg-red-500/15 text-red-400 border border-red-500/20',    days: 'text-red-400 font-bold' };
-  if (severity === 'warning')  return { row: 'border-l-2 border-l-amber-500/70',  badge: 'bg-amber-500/15 text-amber-400 border border-amber-500/20', days: 'text-amber-400 font-semibold' };
-  return { row: 'border-l-2 border-l-blue-500/50',     badge: 'bg-blue-500/15 text-blue-400 border border-blue-500/20',     days: 'text-blue-400' };
+  if (severity === 'critical') return { row: 'border-l-2 border-l-red-500/70',   badge: 'bg-red-500/15 text-red-400 border border-red-500/20',    days: 'text-red-400 font-bold' };
+  if (severity === 'warning')  return { row: 'border-l-2 border-l-amber-500/60', badge: 'bg-amber-500/15 text-amber-400 border border-amber-500/20', days: 'text-amber-400 font-semibold' };
+  return { row: '', badge: 'bg-slate-700/30 text-slate-400 border border-slate-700/20', days: 'text-slate-400' };
 }
 
 function getDeploymentStatusColors(status: Deployment['status']) {
@@ -159,9 +159,9 @@ function getDeploymentStatusColors(status: Deployment['status']) {
 }
 
 function getAlertColors(severity: CommandAlert['severity']) {
-  if (severity === 'critical') return { border: 'border-l-red-500',    icon: 'text-red-400',    label: 'bg-red-500/15 text-red-400 border border-red-500/20' };
-  if (severity === 'warning')  return { border: 'border-l-amber-500',  icon: 'text-amber-400',  label: 'bg-amber-500/15 text-amber-400 border border-amber-500/20' };
-  return { border: 'border-l-blue-500', icon: 'text-blue-400', label: 'bg-blue-500/15 text-blue-400 border border-blue-500/20' };
+  if (severity === 'critical') return { border: 'border-l-red-500',   icon: 'text-red-400',   label: 'bg-red-500/15 text-red-400 border border-red-500/20' };
+  if (severity === 'warning')  return { border: 'border-l-amber-500', icon: 'text-amber-400', label: 'bg-amber-500/15 text-amber-400 border border-amber-500/20' };
+  return { border: 'border-l-slate-700', icon: 'text-slate-500', label: 'bg-slate-700/30 text-slate-500 border border-slate-700/20' };
 }
 
 // ── Component ─────────────────────────────────────────────────
@@ -177,8 +177,7 @@ export default function CommandWarRoom() {
       value: `${commandSnapshot.filled}/${commandSnapshot.authorizedStrength}`,
       sub: `${filledPct}% filled · ${commandSnapshot.openVacancies} vacancies`,
       icon: Users,
-      color: commandSnapshot.openVacancies > 10 ? 'text-amber-400' : 'text-emerald-400',
-      ring: commandSnapshot.openVacancies > 10 ? 'ring-amber-500/20' : 'ring-emerald-500/20',
+      color: 'text-white',
       trend: null,
     },
     {
@@ -186,8 +185,7 @@ export default function CommandWarRoom() {
       value: `${commandSnapshot.onDuty}`,
       sub: `${onDutyPct}% of filled positions`,
       icon: Activity,
-      color: 'text-blue-400',
-      ring: 'ring-blue-500/20',
+      color: 'text-white',
       trend: null,
     },
     {
@@ -195,8 +193,7 @@ export default function CommandWarRoom() {
       value: `${commandSnapshot.patrolCoverage}%`,
       sub: '1 beat uncovered · 2 thin',
       icon: Radio,
-      color: commandSnapshot.patrolCoverage < 90 ? 'text-amber-400' : 'text-emerald-400',
-      ring: commandSnapshot.patrolCoverage < 90 ? 'ring-amber-500/20' : 'ring-emerald-500/20',
+      color: 'text-amber-400',
       trend: 'down',
     },
     {
@@ -205,7 +202,6 @@ export default function CommandWarRoom() {
       sub: '2 critical · 4 warning · 8 watch',
       icon: Award,
       color: 'text-red-400',
-      ring: 'ring-red-500/20',
       trend: 'up',
     },
     {
@@ -213,8 +209,7 @@ export default function CommandWarRoom() {
       value: `${commandSnapshot.activeDeployments}`,
       sub: `${commandSnapshot.mutualAidOut} mutual aid out`,
       icon: Target,
-      color: 'text-purple-400',
-      ring: 'ring-purple-500/20',
+      color: 'text-white',
       trend: null,
     },
     {
@@ -223,14 +218,13 @@ export default function CommandWarRoom() {
       sub: `${commandSnapshot.criticalAlerts} critical · needs action`,
       icon: AlertTriangle,
       color: 'text-red-400',
-      ring: 'ring-red-500/20',
       trend: null,
     },
   ];
 
   return (
     <DashboardLayout>
-      <div className="p-6 space-y-6">
+      <div className="p-6 space-y-8">
 
         {/* ── Page Header ─────────────────────────────────── */}
         <div className="flex items-start justify-between gap-4 mb-6">
@@ -258,14 +252,14 @@ export default function CommandWarRoom() {
             const Icon = kpi.icon;
             return (
               <div key={kpi.label}
-                className={`bg-slate-800/25 border border-slate-700/30 rounded-xl p-4 ring-1 ${kpi.ring}`}
+                className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-4"
               >
-                <div className="flex items-center justify-between mb-2">
-                  <Icon className={`w-4 h-4 ${kpi.color}`} />
-                  {kpi.trend === 'up'   && <TrendingUp   className="w-3.5 h-3.5 text-red-400 opacity-70" />}
-                  {kpi.trend === 'down' && <TrendingDown  className="w-3.5 h-3.5 text-amber-400 opacity-70" />}
+                <div className="flex items-center justify-between mb-3">
+                  <Icon className="w-4 h-4 text-slate-400" />
+                  {kpi.trend === 'up'   && <TrendingUp   className="w-3.5 h-3.5 text-red-400 opacity-60" />}
+                  {kpi.trend === 'down' && <TrendingDown  className="w-3.5 h-3.5 text-amber-400 opacity-60" />}
                 </div>
-                <p className={`text-2xl font-bold ${kpi.color} mb-0.5`}>{kpi.value}</p>
+                <p className={`text-2xl font-bold mb-0.5 ${kpi.color}`}>{kpi.value}</p>
                 <p className="text-[10px] text-slate-500 leading-tight uppercase tracking-wide">{kpi.label}</p>
                 <p className="text-[10px] text-slate-500 mt-1 leading-tight">{kpi.sub}</p>
               </div>
@@ -274,7 +268,7 @@ export default function CommandWarRoom() {
         </div>
 
         {/* ── Row 2: Staffing Readiness + Patrol Beat Coverage ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-5">
 
           {/* Staffing Readiness by Division */}
           <div className="lg:col-span-3 bg-slate-800/25 border border-slate-700/30 rounded-xl overflow-hidden">
@@ -401,7 +395,7 @@ export default function CommandWarRoom() {
         </div>
 
         {/* ── Row 3: Cert Risk + Deployments ──────────────── */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
 
           {/* Certification Risk Matrix */}
           <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl overflow-hidden">
@@ -462,7 +456,7 @@ export default function CommandWarRoom() {
               <div className="flex items-center gap-2">
                 <Target className="w-4 h-4 text-slate-400" />
                 <span className="text-[13px] font-semibold text-white">Active Deployments</span>
-                <span className="text-[10px] px-2 py-0.5 rounded-full bg-purple-500/15 text-purple-400 border border-purple-500/20">
+                <span className="text-[10px] px-2 py-0.5 rounded-full bg-slate-700/30 text-slate-400 border border-slate-700/20">
                   {deployments.reduce((s, d) => s + d.personnel, 0)} deputies
                 </span>
               </div>
@@ -497,7 +491,7 @@ export default function CommandWarRoom() {
         </div>
 
         {/* ── Row 4: Command Alert Feed + AI Summary ───────── */}
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-5">
 
           {/* Command Alert Feed */}
           <div className="lg:col-span-3 bg-slate-800/25 border border-slate-700/30 rounded-xl overflow-hidden">
@@ -549,9 +543,9 @@ export default function CommandWarRoom() {
           <div className="lg:col-span-2 flex flex-col gap-4">
 
             {/* AI Command Intelligence */}
-            <div className="bg-gradient-to-br from-purple-900/20 to-slate-800/25 border border-purple-700/20 rounded-xl overflow-hidden flex-1">
-              <div className="flex items-center gap-2 px-5 py-3.5 border-b border-purple-700/20">
-                <Sparkles className="w-4 h-4 text-purple-400" />
+            <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl overflow-hidden flex-1">
+              <div className="flex items-center gap-2 px-5 py-3.5 border-b border-slate-700/20">
+                <Sparkles className="w-4 h-4 text-slate-400" />
                 <span className="text-[13px] font-semibold text-white">Command Intelligence</span>
               </div>
               <div className="p-5 space-y-3">
@@ -570,7 +564,7 @@ export default function CommandWarRoom() {
                   </p>
                 </div>
                 <div className="flex gap-3">
-                  <Shield className="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5" />
+                  <Shield className="w-4 h-4 text-slate-400 flex-shrink-0 mt-0.5" />
                   <p className="text-[12px] text-slate-300 leading-relaxed">
                     <span className="text-white font-medium">This Week: </span>
                     Bravo Division is operating with 2 acting supervisors and 6 unfilled vacancies. Recommend priority recruiting review.

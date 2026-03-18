@@ -208,7 +208,7 @@ export default function CustodyOperations() {
 
   return (
     <DashboardLayout>
-      <div className="p-6 space-y-5">
+      <div className="p-6 space-y-7">
 
         {/* ── Page Header ─────────────────────────────────── */}
         <div className="flex items-start justify-between gap-4 mb-6">
@@ -238,13 +238,13 @@ export default function CustodyOperations() {
 
             {/* Shift identity */}
             <div className="flex items-center gap-4 flex-shrink-0">
-              <div className="w-12 h-12 bg-blue-500/15 border border-blue-500/25 rounded-xl flex items-center justify-center">
-                <Shield className="w-6 h-6 text-blue-400" />
+              <div className="w-12 h-12 bg-slate-700/30 border border-slate-700/20 rounded-xl flex items-center justify-center">
+                <Shield className="w-6 h-6 text-slate-400" />
               </div>
               <div>
                 <div className="flex items-center gap-2 mb-0.5">
                   <span className="text-[18px] font-bold text-white">{currentShift.label}</span>
-                  <span className="text-[11px] px-2 py-0.5 bg-blue-500/15 text-blue-400 border border-blue-500/20 rounded-full">Active</span>
+                  <span className="text-[11px] px-2 py-0.5 bg-slate-700/30 text-slate-400 border border-slate-700/20 rounded-full">Active</span>
                 </div>
                 <p className="text-[12px] text-slate-400">{currentShift.window} &nbsp;·&nbsp; Commander: <span className="text-white font-medium">{currentShift.commander}</span> #{currentShift.badge}</p>
               </div>
@@ -270,19 +270,19 @@ export default function CustodyOperations() {
 
               <div>
                 <p className="text-[10px] text-slate-500 uppercase tracking-wide mb-1">Active Movements</p>
-                <p className="text-[20px] font-bold text-blue-400 leading-none">{activeMovementCount}</p>
+                <p className="text-[20px] font-bold text-white leading-none">{activeMovementCount}</p>
                 <p className="text-[10px] text-slate-500 mt-1">{movements.filter(m => m.status === 'Pending').length} pending</p>
               </div>
 
               <div>
                 <p className="text-[10px] text-slate-500 uppercase tracking-wide mb-1">Open Incidents</p>
-                <p className={`text-[20px] font-bold leading-none ${openIncidents > 0 ? 'text-amber-400' : 'text-emerald-400'}`}>{openIncidents}</p>
+                <p className={`text-[20px] font-bold leading-none ${openIncidents > 0 ? 'text-amber-400' : 'text-white'}`}>{openIncidents}</p>
                 <p className="text-[10px] text-slate-500 mt-1">this shift</p>
               </div>
 
               <div>
                 <p className="text-[10px] text-slate-500 uppercase tracking-wide mb-1">Unassigned Pods</p>
-                <p className={`text-[20px] font-bold leading-none ${unassignedPods > 0 ? 'text-amber-400' : 'text-emerald-400'}`}>{unassignedPods}</p>
+                <p className={`text-[20px] font-bold leading-none ${unassignedPods > 0 ? 'text-amber-400' : 'text-white'}`}>{unassignedPods}</p>
                 <p className="text-[10px] text-slate-500 mt-1">float coverage</p>
               </div>
             </div>
@@ -421,7 +421,7 @@ export default function CustodyOperations() {
         </div>
 
         {/* ── Section 3: Movement Control + Incidents ──────── */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
 
           {/* Inmate Movement Control */}
           <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl overflow-hidden">
@@ -429,7 +429,7 @@ export default function CustodyOperations() {
               <div className="flex items-center gap-2">
                 <ArrowLeftRight className="w-4 h-4 text-slate-400" />
                 <span className="text-[13px] font-semibold text-white">Inmate Movement Control</span>
-                <span className="text-[10px] px-2 py-0.5 bg-blue-500/15 text-blue-400 border border-blue-500/20 rounded-full">
+                <span className="text-[10px] px-2 py-0.5 bg-slate-700/30 text-slate-400 border border-slate-700/20 rounded-full">
                   {activeMovementCount} active
                 </span>
               </div>
@@ -446,10 +446,8 @@ export default function CustodyOperations() {
                 const Icon = getMovementIcon(mov.type);
                 return (
                   <div key={mov.id} className="flex items-start gap-3 px-5 py-3 hover:bg-slate-700/10 transition-colors">
-                    <div className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5 ${
-                      mov.status === 'Completed' ? 'bg-slate-700/40' : 'bg-blue-500/10 border border-blue-500/15'
-                    }`}>
-                      <Icon className={`w-3.5 h-3.5 ${mov.status === 'Completed' ? 'text-slate-500' : 'text-blue-400'}`} />
+                    <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5 bg-slate-700/30">
+                      <Icon className="w-3.5 h-3.5 text-slate-400" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between gap-2 mb-0.5">

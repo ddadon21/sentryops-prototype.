@@ -171,7 +171,7 @@ export default function DetentionCommandCenter() {
 
   return (
     <DashboardLayout>
-      <div className="p-4 lg:p-6 space-y-5">
+      <div className="p-4 lg:p-6 space-y-7">
 
         {/* ── Header ──────────────────────────────────────── */}
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-3">
@@ -267,7 +267,7 @@ export default function DetentionCommandCenter() {
         </div>
 
         {/* ── Row 2: Alerts + AI Intelligence ───────────── */}
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-5">
 
           {/* Active Alerts */}
           <div className="lg:col-span-2 bg-slate-800/25 border border-slate-700/30 rounded-xl p-4">
@@ -321,11 +321,11 @@ export default function DetentionCommandCenter() {
           </div>
 
           {/* AI Command Intelligence */}
-          <div className="lg:col-span-3 bg-gradient-to-br from-purple-500/8 to-purple-600/4 border border-purple-500/20 rounded-xl p-4">
+          <div className="lg:col-span-3 bg-slate-800/25 border border-slate-700/30 rounded-xl p-4">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
-                <div className="w-7 h-7 bg-purple-500/20 rounded-lg flex items-center justify-center">
-                  <Sparkles className="w-4 h-4 text-purple-400" />
+                <div className="w-7 h-7 bg-slate-700/30 rounded-lg flex items-center justify-center">
+                  <Sparkles className="w-4 h-4 text-slate-400" />
                 </div>
                 <h3 className="text-sm font-semibold text-white">AI Command Intelligence</h3>
               </div>
@@ -352,9 +352,9 @@ export default function DetentionCommandCenter() {
             {!aiExpanded && (
               <p className="text-[11px] text-slate-500">2 critical actions · 1 warning · Click expand to review</p>
             )}
-            <div className="mt-3 pt-2.5 border-t border-purple-500/15 flex items-center justify-between">
-              <span className="text-[10px] text-purple-400/60">AI-assisted · 4 sources · 3m ago</span>
-              <button className="text-[11px] text-purple-400 hover:text-purple-300 transition-colors flex items-center gap-1">
+            <div className="mt-3 pt-2.5 border-t border-slate-700/20 flex items-center justify-between">
+              <span className="text-[10px] text-slate-600">AI-assisted · 4 sources · 3m ago</span>
+              <button className="text-[11px] text-slate-400 hover:text-slate-300 transition-colors flex items-center gap-1">
                 Full intelligence brief <ArrowRight className="w-3 h-3" />
               </button>
             </div>
@@ -362,7 +362,7 @@ export default function DetentionCommandCenter() {
         </div>
 
         {/* ── Row 3: Operational Risk ────────────────────── */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
 
           {/* Housing Unit Map */}
           <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-4">
@@ -463,7 +463,7 @@ export default function DetentionCommandCenter() {
         </div>
 
         {/* ── Row 4: Monitoring ─────────────────────────── */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
 
           {/* Population Trend */}
           <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-4">
