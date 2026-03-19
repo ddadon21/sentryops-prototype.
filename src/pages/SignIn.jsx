@@ -128,7 +128,7 @@ export default function SignIn() {
         )}
 
         {/* Demo Access Panel */}
-        <div className="mb-5 bg-slate-900/40 backdrop-blur-xl border border-slate-700/40 rounded-xl p-4">
+        <div className="relative z-10 mb-5 bg-slate-900/40 backdrop-blur-xl border border-slate-700/40 rounded-xl p-4">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
               <div className="w-1.5 h-1.5 bg-amber-500/80 rounded-full" />
