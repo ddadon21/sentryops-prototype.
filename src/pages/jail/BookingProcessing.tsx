@@ -170,7 +170,7 @@ const BookingProcessing = () => {
               </div>
               <div className="px-4 py-2 bg-slate-800 border border-slate-700 rounded-lg">
                 <div className="text-xs text-slate-400">Pending Intake</div>
-                <div className="text-xl font-bold text-blue-400">{pendingBookings.length}</div>
+                <div className="text-xl font-bold text-white">{pendingBookings.length}</div>
               </div>
               <div className="px-4 py-2 bg-slate-800 border border-slate-700 rounded-lg">
                 <div className="text-xs text-slate-400">Today Total</div>
@@ -354,7 +354,7 @@ const BookingProcessing = () => {
                   <div>
                     <div className="flex items-center gap-3 mb-3">
                       <h3 className="text-xl font-bold text-white">{booking.name}</h3>
-                      <span className="px-3 py-1 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded text-sm font-medium">
+                      <span className="px-3 py-1 bg-amber-500/20 border border-amber-500/30 text-amber-400 rounded text-sm font-medium">
                         {booking.status}
                       </span>
                     </div>
@@ -403,7 +403,7 @@ const BookingProcessing = () => {
               <div key={booking.id} className="bg-slate-800 border border-slate-700 rounded-lg p-6">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-4">
-                    <div className="p-3 bg-emerald-500/20 rounded-lg">
+                    <div className="p-3 bg-slate-700/60 rounded-lg">
                       <CheckCircle className="w-6 h-6 text-emerald-400" />
                     </div>
                     <div>
@@ -423,7 +423,7 @@ const BookingProcessing = () => {
                         </div>
                         <div>
                           <span className="text-slate-400">Total Time:</span>{' '}
-                          <span className="text-emerald-400 font-semibold">{booking.totalTime}</span>
+                          <span className="text-slate-300 font-semibold">{booking.totalTime}</span>
                         </div>
                         <div>
                           <span className="text-slate-400">Housing:</span>{' '}

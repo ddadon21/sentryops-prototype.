@@ -232,7 +232,7 @@ const IncidentReports = () => {
       case 'Critical': return 'bg-red-500/20 text-red-400 border-red-500/30';
       case 'High': return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
       case 'Medium': return 'bg-amber-500/20 text-amber-400 border-amber-500/30';
-      case 'Low': return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+      case 'Low': return 'bg-slate-700/40 text-slate-300 border-slate-600/50';
       default: return 'bg-slate-500/20 text-slate-400 border-slate-500/30';
     }
   };
@@ -241,7 +241,7 @@ const IncidentReports = () => {
     switch (status) {
       case 'Resolved': return 'bg-emerald-500/20 text-emerald-400';
       case 'Under Review': return 'bg-amber-500/20 text-amber-400';
-      case 'Investigating': return 'bg-blue-500/20 text-blue-400';
+      case 'Investigating': return 'bg-amber-500/20 text-amber-400';
       case 'Pending': return 'bg-slate-500/20 text-slate-400';
       default: return 'bg-slate-500/20 text-slate-400';
     }
@@ -385,7 +385,7 @@ const IncidentReports = () => {
                     <div className="text-xs text-slate-400 mb-1">Evidence</div>
                     <div className="flex gap-2">
                       {incident.videoEvidence && (
-                        <div className="flex items-center gap-1 text-emerald-400 text-xs">
+                        <div className="flex items-center gap-1 text-slate-400 text-xs">
                           <Video className="w-4 h-4" />
                           <span>Video</span>
                         </div>
@@ -402,7 +402,7 @@ const IncidentReports = () => {
                     </span>
                   )}
                   {incident.medicalCalled && (
-                    <span className="px-2 py-1 bg-purple-500/20 text-purple-400 rounded text-xs font-medium">
+                    <span className="px-2 py-1 bg-slate-700/40 text-slate-300 rounded text-xs font-medium">
                       Medical Response
                     </span>
                   )}
@@ -432,7 +432,7 @@ const IncidentReports = () => {
                       <h4 className="text-white font-semibold mb-3">Staff Involved</h4>
                       <div className="space-y-1">
                         {incident.staffInvolved.map((staff, idx) => (
-                          <div key={idx} className="text-sm text-blue-400">• {staff}</div>
+                          <div key={idx} className="text-sm text-slate-300">• {staff}</div>
                         ))}
                       </div>
                     </div>

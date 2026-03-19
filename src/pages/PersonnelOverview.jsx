@@ -405,7 +405,7 @@ export default function PersonnelOverview() {
                       <p className="text-[11px] text-slate-500">Operational workforce management + deployment readiness</p>
                     </div>
                     <div className="flex items-center gap-2">
-                      <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/40 border border-slate-700/30 rounded-lg text-[11px] text-slate-400 hover:text-white transition-colors">
+                      <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/40 border border-slate-700/50 rounded-lg text-[11px] text-slate-400 hover:text-white transition-colors">
                         <Download className="w-3 h-3" />
                         Staffing Report
                       </button>
@@ -416,7 +416,7 @@ export default function PersonnelOverview() {
                 {/* ── Workforce Status Row (4 cards) ──────────── */}
                 <div className="grid grid-cols-4 gap-3 mb-4">
                   {/* Workforce Health */}
-                  <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-3">
+                  <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-3">
                     <div className="flex items-center gap-2 mb-1.5">
                       <Gauge className="w-3.5 h-3.5 text-amber-400" />
                       <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Workforce Health</span>
@@ -429,7 +429,7 @@ export default function PersonnelOverview() {
                   </div>
 
                   {/* Patrol Coverage */}
-                  <div className="bg-slate-800/25 border border-amber-500/20 rounded-xl p-3">
+                  <div className="bg-slate-800/40 border border-amber-500/20 rounded-xl p-3">
                     <div className="flex items-center gap-2 mb-1.5">
                       <Shield className="w-3.5 h-3.5 text-amber-400" />
                       <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Patrol Coverage</span>
@@ -442,7 +442,7 @@ export default function PersonnelOverview() {
                   </div>
 
                   {/* Certification Compliance */}
-                  <div className="bg-slate-800/25 border border-amber-500/20 rounded-xl p-3">
+                  <div className="bg-slate-800/40 border border-amber-500/20 rounded-xl p-3">
                     <div className="flex items-center gap-2 mb-1.5">
                       <Award className="w-3.5 h-3.5 text-amber-400" />
                       <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Cert Compliance</span>
@@ -455,7 +455,7 @@ export default function PersonnelOverview() {
                   </div>
 
                   {/* Staffing Gap */}
-                  <div className="bg-slate-800/25 border border-red-500/20 rounded-xl p-3">
+                  <div className="bg-slate-800/40 border border-red-500/20 rounded-xl p-3">
                     <div className="flex items-center gap-2 mb-1.5">
                       <Users className="w-3.5 h-3.5 text-red-400" />
                       <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Staffing Gap</span>
@@ -473,7 +473,7 @@ export default function PersonnelOverview() {
                 <div className="mb-4">
                   <button
                     onClick={() => setAiInsightsVisible(!aiInsightsVisible)}
-                    className="w-full flex items-center gap-2 px-3 py-2 bg-slate-800/20 border border-slate-700/15 rounded hover:bg-slate-800/30 transition-colors"
+                    className="w-full flex items-center gap-2 px-3 py-2 bg-slate-800/35 border border-slate-700/30 rounded hover:bg-slate-800/30 transition-colors"
                   >
                     <Sparkles className="w-3 h-3 text-slate-500" />
                     <span className="text-[11px] text-slate-300 flex-1 text-left">
@@ -499,16 +499,16 @@ export default function PersonnelOverview() {
                     <button className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-slate-900 font-semibold rounded text-[11px] transition-colors">
                       <Plus className="w-3 h-3" />Add Personnel
                     </button>
-                    <button onClick={() => navigate(createPageUrl('TrainingCertifications'))} className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/30 text-slate-300 rounded text-[11px] font-medium transition-colors">
+                    <button onClick={() => navigate(createPageUrl('TrainingCertifications'))} className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-slate-300 rounded text-[11px] font-medium transition-colors">
                       <Calendar className="w-3 h-3" />Schedule Training
                     </button>
-                    <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/30 text-slate-300 rounded text-[11px] font-medium transition-colors">
+                    <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-slate-300 rounded text-[11px] font-medium transition-colors">
                       <FileText className="w-3 h-3" />Certification Report
                     </button>
-                    <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/30 text-slate-300 rounded text-[11px] font-medium transition-colors">
+                    <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-slate-300 rounded text-[11px] font-medium transition-colors">
                       <BarChart3 className="w-3 h-3" />Workforce Analytics
                     </button>
-                    <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/30 text-slate-300 rounded text-[11px] font-medium transition-colors">
+                    <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-slate-300 rounded text-[11px] font-medium transition-colors">
                       <Download className="w-3 h-3" />Import Roster
                     </button>
                   </div>
@@ -521,28 +521,28 @@ export default function PersonnelOverview() {
                     <input
                       type="text"
                       placeholder="Search name, badge, division, rank..."
-                      className="w-full pl-9 pr-3 py-2 bg-slate-800/30 border border-slate-700/30 rounded text-[11px] text-white placeholder-slate-600 focus:outline-none focus:border-amber-500/40 transition-all"
+                      className="w-full pl-9 pr-3 py-2 bg-slate-800/30 border border-slate-700/50 rounded text-[11px] text-white placeholder-slate-600 focus:outline-none focus:border-amber-500/40 transition-all"
                     />
                   </div>
                   <button
                     onClick={() => setFiltersOpen(!filtersOpen)}
-                    className="flex items-center gap-1.5 px-3 py-2 bg-slate-800/30 border border-slate-700/30 rounded text-[11px] text-slate-400 hover:text-white transition-colors"
+                    className="flex items-center gap-1.5 px-3 py-2 bg-slate-800/30 border border-slate-700/50 rounded text-[11px] text-slate-400 hover:text-white transition-colors"
                   >
                     <Filter className="w-3 h-3" />Filters
                   </button>
-                  <button className="flex items-center gap-1.5 px-3 py-2 bg-slate-800/30 border border-slate-700/30 rounded text-[11px] text-slate-400 hover:text-white transition-colors">
+                  <button className="flex items-center gap-1.5 px-3 py-2 bg-slate-800/30 border border-slate-700/50 rounded text-[11px] text-slate-400 hover:text-white transition-colors">
                     <Download className="w-3 h-3" />Export
                   </button>
                 </div>
 
                 {filtersOpen && (
-                  <div className="mb-3 bg-slate-800/20 border border-slate-700/15 rounded p-3">
+                  <div className="mb-3 bg-slate-800/35 border border-slate-700/30 rounded p-3">
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Filters</span>
                       <button className="text-[10px] text-amber-400 hover:text-amber-300">Clear</button>
                     </div>
                     <div className="grid grid-cols-4 gap-3">
-                      <select className="px-2.5 py-1.5 bg-slate-900/40 border border-slate-700/30 rounded text-[11px] text-white focus:outline-none focus:border-amber-500/40">
+                      <select className="px-2.5 py-1.5 bg-slate-900/40 border border-slate-700/50 rounded text-[11px] text-white focus:outline-none focus:border-amber-500/40">
                         <option>All Divisions</option>
                         <option>Patrol</option>
                         <option>Investigations</option>
@@ -550,20 +550,20 @@ export default function PersonnelOverview() {
                         <option>Dispatch</option>
                         <option>School Resource</option>
                       </select>
-                      <select className="px-2.5 py-1.5 bg-slate-900/40 border border-slate-700/30 rounded text-[11px] text-white focus:outline-none focus:border-amber-500/40">
+                      <select className="px-2.5 py-1.5 bg-slate-900/40 border border-slate-700/50 rounded text-[11px] text-white focus:outline-none focus:border-amber-500/40">
                         <option>All Ranks</option>
                         <option>Deputy Sheriff</option>
                         <option>Senior Deputy</option>
                         <option>Sergeant</option>
                         <option>Lieutenant</option>
                       </select>
-                      <select className="px-2.5 py-1.5 bg-slate-900/40 border border-slate-700/30 rounded text-[11px] text-white focus:outline-none focus:border-amber-500/40">
+                      <select className="px-2.5 py-1.5 bg-slate-900/40 border border-slate-700/50 rounded text-[11px] text-white focus:outline-none focus:border-amber-500/40">
                         <option>All Status</option>
                         <option>On Duty</option>
                         <option>Off Duty</option>
                         <option>On Leave</option>
                       </select>
-                      <select className="px-2.5 py-1.5 bg-slate-900/40 border border-slate-700/30 rounded text-[11px] text-white focus:outline-none focus:border-amber-500/40">
+                      <select className="px-2.5 py-1.5 bg-slate-900/40 border border-slate-700/50 rounded text-[11px] text-white focus:outline-none focus:border-amber-500/40">
                         <option>All Certs</option>
                         <option>Current</option>
                         <option>Expiring</option>
@@ -582,7 +582,7 @@ export default function PersonnelOverview() {
                   {groupedPersonnel.map(group => {
                     const isCollapsed = collapsedGroups[group.key];
                     return (
-                      <div key={group.key} className="border border-slate-700/15 rounded overflow-hidden">
+                      <div key={group.key} className="border border-slate-700/30 rounded overflow-hidden">
                         {/* Group Header — clickable to collapse */}
                         <button
                           onClick={() => toggleGroup(group.key)}
@@ -744,7 +744,7 @@ export default function PersonnelOverview() {
               <div className="w-full xl:w-64 shrink-0 space-y-3">
 
                 {/* Widget 1: Operational Coverage */}
-                <div className="bg-slate-800/15 border border-slate-700/15 rounded p-3">
+                <div className="bg-slate-800/15 border border-slate-700/30 rounded p-3">
                   <div className="flex items-center gap-2 mb-2.5">
                     <Shield className="w-3.5 h-3.5 text-slate-400" />
                     <span className="text-[11px] font-bold text-white">Operational Coverage</span>
@@ -773,7 +773,7 @@ export default function PersonnelOverview() {
                       </div>
                     ))}
                   </div>
-                  <div className="mt-2.5 pt-2 border-t border-slate-700/15 flex items-center justify-between text-[10px]">
+                  <div className="mt-2.5 pt-2 border-t border-slate-700/30 flex items-center justify-between text-[10px]">
                     <span className="text-slate-500">Total on duty:</span>
                     <span className="text-white font-bold">127/170 (75%)</span>
                   </div>

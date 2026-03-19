@@ -1210,7 +1210,7 @@ export default function OrgChart() {
           <div
             className={`org-node relative ${
               node.isVacant
-                ? 'bg-slate-800/20 backdrop-blur-xl border-2 border-dashed border-red-500/40'
+                ? 'bg-slate-800/35 backdrop-blur-xl border-2 border-dashed border-red-500/40'
                 : node.actingFlag
                   ? 'bg-gradient-to-br from-amber-900/35 to-slate-800/40 backdrop-blur-xl border-2 border-amber-500/60 shadow-amber-500/20'
                   : viewMode === 'operational'
@@ -1491,15 +1491,15 @@ export default function OrgChart() {
 
               {!isFullscreen && (
                 <div className="flex items-center gap-2">
-                  <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/40 border border-slate-700/30 rounded text-[11px] text-slate-400 hover:text-white transition-colors" title="Export org chart">
+                  <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/40 border border-slate-700/50 rounded text-[11px] text-slate-400 hover:text-white transition-colors" title="Export org chart">
                     <Download className="w-3 h-3" />
                     <span className="hidden sm:inline">Export</span>
                   </button>
-                  <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/40 border border-slate-700/30 rounded text-[11px] text-slate-400 hover:text-white transition-colors">
+                  <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/40 border border-slate-700/50 rounded text-[11px] text-slate-400 hover:text-white transition-colors">
                     <Printer className="w-3 h-3" />
                     <span className="hidden sm:inline">Print</span>
                   </button>
-                  <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/40 border border-slate-700/30 rounded text-[11px] text-slate-400 hover:text-white transition-colors">
+                  <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/40 border border-slate-700/50 rounded text-[11px] text-slate-400 hover:text-white transition-colors">
                     <Share2 className="w-3 h-3" />
                     <span className="hidden sm:inline">Share</span>
                   </button>
@@ -1508,7 +1508,7 @@ export default function OrgChart() {
             </div>
 
             {/* Command Radar Panel — collapsible intelligence bar */}
-            <div className="mb-4 bg-slate-800/25 border border-slate-700/30 rounded-xl overflow-hidden">
+            <div className="mb-4 bg-slate-800/40 border border-slate-700/50 rounded-xl overflow-hidden">
               <div className="flex items-start justify-between px-4 py-2.5 gap-3">
                 <div className="flex items-center gap-2 flex-wrap min-w-0">
                   <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide shrink-0">Command Radar</span>
@@ -1522,7 +1522,7 @@ export default function OrgChart() {
                           ? 'bg-red-500/10 text-red-400 border-red-500/20 hover:bg-red-500/20'
                           : alert.type === 'warning'
                             ? 'bg-amber-500/10 text-amber-400 border-amber-500/20 hover:bg-amber-500/20'
-                            : 'bg-slate-700/25 text-slate-400 border-slate-700/30 hover:bg-slate-700/40'
+                            : 'bg-slate-700/25 text-slate-400 border-slate-700/50 hover:bg-slate-700/40'
                       }`}
                     >
                       {alert.type === 'critical' ? '⬤' : alert.type === 'warning' ? '⚠' : '●'} {alert.short}
@@ -1539,7 +1539,7 @@ export default function OrgChart() {
               </div>
 
               {insightsExpanded && (
-              <div className="px-4 pb-3 pt-2.5 border-t border-slate-700/20 space-y-1.5">
+              <div className="px-4 pb-3 pt-2.5 border-t border-slate-700/40 space-y-1.5">
                 {commandAlerts.map((alert, i) => (
                   <button
                     key={i}
@@ -1549,7 +1549,7 @@ export default function OrgChart() {
                         ? 'bg-red-500/8 border-red-500/20 hover:bg-red-500/15'
                         : alert.type === 'warning'
                           ? 'bg-amber-500/8 border-amber-500/15 hover:bg-amber-500/15'
-                          : 'bg-slate-800/30 border-slate-700/30 hover:bg-slate-800/50'
+                          : 'bg-slate-800/30 border-slate-700/50 hover:bg-slate-800/50'
                     }`}
                   >
                     <span className={`text-[9px] font-bold uppercase tracking-wider pt-0.5 shrink-0 w-12 ${
@@ -1565,7 +1565,7 @@ export default function OrgChart() {
                     )}
                   </button>
                 ))}
-                <div className="flex items-center justify-between pt-1 border-t border-slate-700/20">
+                <div className="flex items-center justify-between pt-1 border-t border-slate-700/40">
                   <span className="text-[10px] text-slate-600">Staffing: 95.5% · 8 open positions · Retention 93.8%</span>
                   <span className="text-[10px] text-slate-600">AI-assisted · 3m ago</span>
                 </div>
@@ -1582,7 +1582,7 @@ export default function OrgChart() {
                   value={searchQuery}
                   onChange={(e) => handleSearch(e.target.value)}
                   placeholder="Search by name, badge #, rank, or division..."
-                  className="w-full pl-9 pr-4 py-2 bg-slate-800/40 border border-slate-700/30 rounded text-sm text-white placeholder-slate-500 focus:outline-none focus:border-slate-500/50 transition-all"
+                  className="w-full pl-9 pr-4 py-2 bg-slate-800/40 border border-slate-700/50 rounded text-sm text-white placeholder-slate-500 focus:outline-none focus:border-slate-500/50 transition-all"
                 />
                 {searchQuery && (
                   <button
@@ -1597,7 +1597,7 @@ export default function OrgChart() {
               <div className="flex gap-2">
                 <div className="relative">
                   <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400" />
-                  <select value={filterDivision} onChange={(e) => setFilterDivision(e.target.value)} className="pl-8 pr-3 py-2 bg-slate-800/40 border border-slate-700/30 rounded text-[11px] text-white focus:outline-none focus:border-slate-500/50 cursor-pointer">
+                  <select value={filterDivision} onChange={(e) => setFilterDivision(e.target.value)} className="pl-8 pr-3 py-2 bg-slate-800/40 border border-slate-700/50 rounded text-[11px] text-white focus:outline-none focus:border-slate-500/50 cursor-pointer">
                     <option value="all">All Divisions (170)</option>
                     <option value="Patrol">Patrol Division (65)</option>
                     <option value="Detention">Detention Division (48)</option>
@@ -1610,7 +1610,7 @@ export default function OrgChart() {
 
                 <div className="relative">
                   <Users className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400" />
-                  <select value={filterRank} onChange={(e) => setFilterRank(e.target.value)} className="pl-8 pr-3 py-2 bg-slate-800/40 border border-slate-700/30 rounded text-[11px] text-white focus:outline-none focus:border-slate-500/50 cursor-pointer">
+                  <select value={filterRank} onChange={(e) => setFilterRank(e.target.value)} className="pl-8 pr-3 py-2 bg-slate-800/40 border border-slate-700/50 rounded text-[11px] text-white focus:outline-none focus:border-slate-500/50 cursor-pointer">
                     <option value="all">All Ranks (170)</option>
                     <option value="Sheriff">Sheriff (1)</option>
                     <option value="Chief Deputy">Chief Deputy (1)</option>
@@ -1625,7 +1625,7 @@ export default function OrgChart() {
                 </div>
 
                 {/* Command Layer Toggle */}
-                <div className="flex items-center bg-slate-800/40 border border-slate-700/30 rounded overflow-hidden" title="Switch between hierarchy view and operational risk map">
+                <div className="flex items-center bg-slate-800/40 border border-slate-700/50 rounded overflow-hidden" title="Switch between hierarchy view and operational risk map">
                   <button
                     onClick={() => setViewMode('hierarchy')}
                     className={`flex items-center gap-1.5 px-2.5 py-2 text-[11px] font-medium transition-all ${
@@ -1655,7 +1655,7 @@ export default function OrgChart() {
 
             <div
               ref={chartContainerRef}
-              className="flex-1 min-h-[500px] lg:min-h-[650px] bg-slate-800/20 border border-slate-700/50 rounded-xl relative touch-none"
+              className="flex-1 min-h-[500px] lg:min-h-[650px] bg-slate-800/35 border border-slate-700/50 rounded-xl relative touch-none"
               style={{
                 cursor: isPanning ? 'grabbing' : 'grab',
                 overflow: 'hidden'
@@ -1910,7 +1910,7 @@ export default function OrgChart() {
                     </p>
                     {/* Enriched metrics from divisionMetrics */}
                     {divisionMetrics[selectedNode.id] && (
-                      <div className="pt-2 border-t border-slate-700/30 grid grid-cols-3 gap-3">
+                      <div className="pt-2 border-t border-slate-700/50 grid grid-cols-3 gap-3">
                         <div className="text-center">
                           <p className="text-[11px] text-slate-400 mb-0.5">Deployable</p>
                           <p className="text-base font-bold text-white">{divisionMetrics[selectedNode.id].deployable}</p>
@@ -1931,7 +1931,7 @@ export default function OrgChart() {
                     )}
                     {/* Operational risk alert */}
                     {divisionMetrics[selectedNode.id]?.alert && (
-                      <div className="pt-2 border-t border-slate-700/30">
+                      <div className="pt-2 border-t border-slate-700/50">
                         <div className="flex items-start gap-2 text-xs">
                           <AlertTriangle className="w-3.5 h-3.5 text-amber-400 mt-0.5 flex-shrink-0" />
                           <span className="text-amber-300">{divisionMetrics[selectedNode.id].alert}</span>
@@ -2131,7 +2131,7 @@ export default function OrgChart() {
                         </p>
                       ))}
                     </div>
-                    <div className="pt-2 border-t border-slate-700/30">
+                    <div className="pt-2 border-t border-slate-700/50">
                       <p className="text-xs text-slate-400 mb-1">Suggested action:</p>
                       <p className="text-sm text-slate-300 font-medium">
                         → {vacancyImpactData[selectedNode.id].suggestedAction}

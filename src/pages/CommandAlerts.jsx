@@ -340,7 +340,7 @@ export default function CommandAlerts() {
               className={`px-2.5 py-1 rounded text-[11px] font-medium border transition-all ${
                 filterSeverity === opt.id
                   ? 'bg-slate-700/50 border-slate-600/50 text-white'
-                  : 'bg-transparent border-slate-700/20 text-slate-500 hover:text-slate-300 hover:border-slate-600/30'
+                  : 'bg-transparent border-slate-700/40 text-slate-500 hover:text-slate-300 hover:border-slate-600/30'
               }`}
             >
               {opt.label}
@@ -370,8 +370,8 @@ export default function CommandAlerts() {
                   isResolved
                     ? 'border-slate-800/10 bg-slate-800/[0.06] opacity-[0.30]'
                     : isAcknowledged
-                    ? 'border-slate-700/15 bg-slate-800/15 opacity-70'
-                    : 'border-slate-700/15 bg-slate-800/15 hover:bg-slate-800/25'
+                    ? 'border-slate-700/30 bg-slate-800/15 opacity-70'
+                    : 'border-slate-700/30 bg-slate-800/15 hover:bg-slate-800/40'
                 }`}
               >
                 {/* ── Compact Row ──────────────────────── */}
@@ -430,7 +430,7 @@ export default function CommandAlerts() {
                     {!isResolved && !isAcknowledged && (
                       <button
                         onClick={(e) => { e.stopPropagation(); acknowledgeAlert(alert.id); }}
-                        className="px-2 py-0.5 text-[10px] font-medium text-slate-500 hover:text-white border border-slate-700/15 hover:border-slate-600/30 rounded transition-colors"
+                        className="px-2 py-0.5 text-[10px] font-medium text-slate-500 hover:text-white border border-slate-700/30 hover:border-slate-600/30 rounded transition-colors"
                       >
                         Ack
                       </button>
@@ -491,7 +491,7 @@ export default function CommandAlerts() {
 
                     {/* Resolution */}
                     {isResolved && alert.resolution && (
-                      <div className="mb-2 bg-slate-700/20 border border-slate-700/30 rounded px-2.5 py-1.5">
+                      <div className="mb-2 bg-slate-700/20 border border-slate-700/50 rounded px-2.5 py-1.5">
                         <span className="text-[9px] font-semibold text-slate-400/70 uppercase tracking-wider">Resolution</span>
                         <p className="text-[10px] text-slate-400 mt-0.5">{alert.resolution}</p>
                         <div className="mt-0.5 text-[9px] text-slate-500">
@@ -518,14 +518,14 @@ export default function CommandAlerts() {
                         {!isAcknowledged && (
                           <button
                             onClick={() => acknowledgeAlert(alert.id)}
-                            className="px-2.5 py-1 text-[10px] font-medium text-slate-400 border border-slate-700/15 hover:bg-slate-700/15 rounded transition-colors"
+                            className="px-2.5 py-1 text-[10px] font-medium text-slate-400 border border-slate-700/30 hover:bg-slate-700/15 rounded transition-colors"
                           >
                             Acknowledge
                           </button>
                         )}
                         <button
                           onClick={() => { setAlertToAction(alert); setAssignModalOpen(true); }}
-                          className="px-2.5 py-1 text-[10px] font-medium text-slate-400 border border-slate-700/15 hover:bg-slate-700/15 rounded transition-colors"
+                          className="px-2.5 py-1 text-[10px] font-medium text-slate-400 border border-slate-700/30 hover:bg-slate-700/15 rounded transition-colors"
                         >
                           Assign
                         </button>
@@ -585,7 +585,7 @@ export default function CommandAlerts() {
               <div className="flex gap-2">
                 <button
                   onClick={() => { setAssignModalOpen(false); setAlertToAction(null); setAssignPersonnel(''); }}
-                  className="flex-1 px-3 py-1.5 text-xs font-medium text-slate-400 border border-slate-700/30 hover:bg-slate-700/20 rounded-lg transition-colors"
+                  className="flex-1 px-3 py-1.5 text-xs font-medium text-slate-400 border border-slate-700/50 hover:bg-slate-700/20 rounded-lg transition-colors"
                 >
                   Cancel
                 </button>
@@ -619,7 +619,7 @@ export default function CommandAlerts() {
               <div className="flex gap-2">
                 <button
                   onClick={() => { setResolveModalOpen(false); setAlertToAction(null); setResolveNotes(''); }}
-                  className="flex-1 px-3 py-1.5 text-xs font-medium text-slate-400 border border-slate-700/30 hover:bg-slate-700/20 rounded-lg transition-colors"
+                  className="flex-1 px-3 py-1.5 text-xs font-medium text-slate-400 border border-slate-700/50 hover:bg-slate-700/20 rounded-lg transition-colors"
                 >
                   Cancel
                 </button>

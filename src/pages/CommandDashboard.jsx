@@ -243,7 +243,7 @@ export default function CommandDashboard() {
           {/* Personnel */}
           <button
             onClick={() => navigate(createPageUrl('PersonnelOverview'))}
-            className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5 text-left hover:border-slate-600/40 transition-colors"
+            className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5 text-left hover:border-slate-600/40 transition-colors"
           >
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
@@ -264,7 +264,7 @@ export default function CommandDashboard() {
           {/* Active Critical Incidents — dominant */}
           <button
             onClick={() => navigate(createPageUrl('Approvals'))}
-            className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5 text-left hover:border-slate-600/40 transition-colors"
+            className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5 text-left hover:border-slate-600/40 transition-colors"
           >
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
@@ -286,7 +286,7 @@ export default function CommandDashboard() {
           </button>
 
           {/* Compliance Status — with breakdown */}
-          <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5 text-left">
+          <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5 text-left">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-amber-500"></div>
@@ -307,7 +307,7 @@ export default function CommandDashboard() {
           {/* Budget Snapshot */}
           <button
             onClick={() => navigate(createPageUrl('BudgetResources'))}
-            className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5 text-left hover:border-slate-600/40 transition-colors"
+            className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5 text-left hover:border-slate-600/40 transition-colors"
           >
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
@@ -327,7 +327,7 @@ export default function CommandDashboard() {
         </div>
 
         {/* Executive Intelligence Summary */}
-        <div className="mb-8 bg-slate-800/25 border border-slate-700/30 rounded-xl border-l-2 border-l-slate-600/40">
+        <div className="mb-8 bg-slate-800/40 border border-slate-700/50 rounded-xl border-l-2 border-l-slate-600/40">
           <button
             onClick={() => setAiBriefExpanded(!aiBriefExpanded)}
             className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-slate-800/10 transition-colors rounded-xl"
@@ -343,7 +343,7 @@ export default function CommandDashboard() {
           </button>
 
           {aiBriefExpanded && (
-            <div className="px-5 pb-5 space-y-4 border-t border-slate-700/20 pt-4">
+            <div className="px-5 pb-5 space-y-4 border-t border-slate-700/40 pt-4">
               {/* Staffing Risk */}
               <div className="flex items-start gap-3">
                 <div className="w-1.5 h-1.5 rounded-full bg-red-500 mt-1.5 flex-shrink-0"></div>
@@ -394,7 +394,7 @@ export default function CommandDashboard() {
         </div>
 
         {/* Pending Approvals — Top 3 only */}
-        <div className="mb-8 bg-slate-800/25 border border-slate-700/30 rounded-xl">
+        <div className="mb-8 bg-slate-800/40 border border-slate-700/50 rounded-xl">
           <div className="flex items-center justify-between px-5 py-4 pb-3">
             <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">Pending Approvals</h3>
             <button
@@ -410,7 +410,7 @@ export default function CommandDashboard() {
               return (
                 <div
                   key={item.id}
-                  className="rounded-lg border border-slate-700/20 hover:bg-slate-800/20 transition-colors"
+                  className="rounded-lg border border-slate-700/40 hover:bg-slate-800/35 transition-colors"
                 >
                   <div className="flex items-center gap-4 p-3">
                     <div className={`w-0.5 self-stretch rounded-full flex-shrink-0 ${getTierStripColor(item.tier)}`}></div>
@@ -449,7 +449,7 @@ export default function CommandDashboard() {
                       </button>
                       <button
                         onClick={(e) => openApprovalModal(item, 'deny', e)}
-                        className="px-3 py-1.5 text-xs font-medium text-slate-400 border border-slate-700/30 hover:bg-slate-700/20 rounded-lg transition-colors"
+                        className="px-3 py-1.5 text-xs font-medium text-slate-400 border border-slate-700/50 hover:bg-slate-700/20 rounded-lg transition-colors"
                       >
                         Escalate
                       </button>
@@ -472,7 +472,7 @@ export default function CommandDashboard() {
         </div>
 
         {/* Federal Compliance & Audits — MOVED UP above Divisions/Staffing */}
-        <div className="mb-8 bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
+        <div className="mb-8 bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
           <div className="flex items-center justify-between mb-5">
             <div className="flex items-center gap-3">
               <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">Federal Compliance & Audits</h3>
@@ -482,7 +482,7 @@ export default function CommandDashboard() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {/* USMS Readiness */}
-            <div className="border border-slate-700/20 rounded-lg p-5">
+            <div className="border border-slate-700/40 rounded-lg p-5">
               <div className="flex items-center gap-2 mb-4">
                 <Shield className="w-4 h-4 text-slate-500" />
                 <span className="text-sm font-medium text-white">USMS Inspection Readiness</span>
@@ -516,14 +516,14 @@ export default function CommandDashboard() {
                   </div>
                 </div>
               </div>
-              <div className="mt-4 pt-3 border-t border-slate-700/20 text-[11px] text-slate-400">
+              <div className="mt-4 pt-3 border-t border-slate-700/40 text-[11px] text-slate-400">
                 <p>3 policies pending review · 8 deputies need recertification</p>
                 <p className="text-slate-500 mt-1">POC: Major Anderson (Detention)</p>
               </div>
             </div>
 
             {/* ACA Status */}
-            <div className="border border-slate-700/20 rounded-lg p-5">
+            <div className="border border-slate-700/40 rounded-lg p-5">
               <div className="flex items-center gap-2 mb-4">
                 <Shield className="w-4 h-4 text-slate-500" />
                 <span className="text-sm font-medium text-white">ACA Re-Accreditation</span>
@@ -572,7 +572,7 @@ export default function CommandDashboard() {
                 onClick={() => div.route && navigate(createPageUrl(div.route))}
                 onMouseEnter={() => setHoveredDivision(idx)}
                 onMouseLeave={() => setHoveredDivision(null)}
-                className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-4 text-left hover:border-slate-600/40 transition-colors relative"
+                className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-4 text-left hover:border-slate-600/40 transition-colors relative"
               >
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-sm font-medium text-white">{div.name}</span>
@@ -598,7 +598,7 @@ export default function CommandDashboard() {
         </div>
 
         {/* Staffing Levels — threshold markers */}
-        <div className="mb-8 bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
+        <div className="mb-8 bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
           <div className="flex items-center justify-between mb-5">
             <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">Staffing Levels</h3>
             <span className="text-[11px] text-slate-500">164/178 authorized (92.1%)</span>

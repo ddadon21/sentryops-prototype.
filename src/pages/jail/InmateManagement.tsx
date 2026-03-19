@@ -515,7 +515,7 @@ const InmateManagement = () => {
       case 'Minimum Security':
         return 'text-emerald-400';
       case 'Protective Custody':
-        return 'text-purple-400';
+        return 'text-slate-400';
       default:
         return 'text-slate-400';
     }
@@ -556,11 +556,11 @@ const InmateManagement = () => {
           </div>
           <div className="bg-slate-800 border border-slate-700 rounded-lg p-4">
             <div className="text-sm text-slate-400 mb-1">Male</div>
-            <div className="text-2xl font-bold text-blue-400">{stats.male}</div>
+            <div className="text-2xl font-bold text-white">{stats.male}</div>
           </div>
           <div className="bg-slate-800 border border-slate-700 rounded-lg p-4">
             <div className="text-sm text-slate-400 mb-1">Female</div>
-            <div className="text-2xl font-bold text-purple-400">{stats.female}</div>
+            <div className="text-2xl font-bold text-white">{stats.female}</div>
           </div>
           <div className="bg-slate-800 border border-slate-700 rounded-lg p-4">
             <div className="text-sm text-slate-400 mb-1">No Bond</div>
@@ -725,7 +725,7 @@ const InmateManagement = () => {
                 {/* Booking Information */}
                 <div>
                   <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
-                    <Calendar className="w-5 h-5 text-blue-400" />
+                    <Calendar className="w-5 h-5 text-slate-400" />
                     Booking Information
                   </h3>
                   <div className="grid grid-cols-2 gap-4 bg-slate-900/50 border border-slate-700 rounded-lg p-4">
@@ -764,7 +764,7 @@ const InmateManagement = () => {
                           </div>
                           <span className={`px-3 py-1 rounded text-sm font-medium ${
                             charge.degree === 'Felony' ? 'bg-red-500/20 text-red-400' :
-                            charge.degree === 'Federal' ? 'bg-purple-500/20 text-purple-400' :
+                            charge.degree === 'Federal' ? 'bg-slate-700/40 text-slate-300' :
                             'bg-amber-500/20 text-amber-400'
                           }`}>
                             {charge.degree}
@@ -792,7 +792,7 @@ const InmateManagement = () => {
                 {/* Housing & Classification */}
                 <div>
                   <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
-                    <MapPin className="w-5 h-5 text-purple-400" />
+                    <MapPin className="w-5 h-5 text-slate-400" />
                     Housing & Classification
                   </h3>
                   <div className="grid grid-cols-2 gap-4 bg-slate-900/50 border border-slate-700 rounded-lg p-4">

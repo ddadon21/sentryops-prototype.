@@ -245,7 +245,7 @@ const MedicalManagement = () => {
       case 'Critical': return 'text-red-400 bg-red-500/20 border-red-500/30';
       case 'High': return 'text-orange-400 bg-orange-500/20 border-orange-500/30';
       case 'Medium': return 'text-amber-400 bg-amber-500/20 border-amber-500/30';
-      case 'Low': return 'text-blue-400 bg-blue-500/20 border-blue-500/30';
+      case 'Low': return 'text-slate-400 bg-slate-700/40 border-slate-600/50';
       default: return 'text-slate-400 bg-slate-500/20 border-slate-500/30';
     }
   };
@@ -280,7 +280,7 @@ const MedicalManagement = () => {
           <div className="bg-slate-800 border border-slate-700 rounded-lg p-4">
             <div className="flex items-center justify-between mb-2">
               <div className="text-sm text-slate-400">Total Under Medical Care</div>
-              <Hospital className="w-5 h-5 text-blue-400" />
+              <Hospital className="w-5 h-5 text-slate-400" />
             </div>
             <div className="text-2xl font-bold text-white">{medicalStats.totalUnderCare}</div>
           </div>
@@ -294,9 +294,9 @@ const MedicalManagement = () => {
           <div className="bg-slate-800 border border-slate-700 rounded-lg p-4">
             <div className="flex items-center justify-between mb-2">
               <div className="text-sm text-slate-400">Active Medications</div>
-              <Pill className="w-5 h-5 text-purple-400" />
+              <Pill className="w-5 h-5 text-slate-400" />
             </div>
-            <div className="text-2xl font-bold text-purple-400">{medicalStats.activeMedications}</div>
+            <div className="text-2xl font-bold text-white">{medicalStats.activeMedications}</div>
           </div>
           <div className="bg-slate-800 border border-slate-700 rounded-lg p-4">
             <div className="flex items-center justify-between mb-2">
@@ -423,7 +423,7 @@ const MedicalManagement = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <h4 className="text-white font-semibold mb-2 flex items-center gap-2">
-                      <Pill className="w-4 h-4 text-purple-400" />
+                      <Pill className="w-4 h-4 text-slate-400" />
                       Current Medications
                     </h4>
                     <div className="space-y-1">
@@ -441,7 +441,7 @@ const MedicalManagement = () => {
                   </div>
                   <div>
                     <h4 className="text-white font-semibold mb-2 flex items-center gap-2">
-                      <User className="w-4 h-4 text-blue-400" />
+                      <User className="w-4 h-4 text-slate-400" />
                       Medical Provider
                     </h4>
                     <div className="text-sm text-slate-300 mb-2">{record.provider}</div>
@@ -534,14 +534,14 @@ const MedicalManagement = () => {
                 </div>
                 <div className="flex items-center justify-between">
                   <span className={`px-3 py-1 rounded text-sm font-medium ${
-                    request.status.includes('Scheduled') ? 'bg-blue-500/20 text-blue-400' :
+                    request.status.includes('Scheduled') ? 'bg-amber-500/20 text-amber-400' :
                     request.status.includes('Approved') ? 'bg-emerald-500/20 text-emerald-400' :
                     'bg-amber-500/20 text-amber-400'
                   }`}>
                     {request.status}
                   </span>
                   <div className="flex gap-2">
-                    <button className="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg transition-colors text-sm">
+                    <button className="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg transition-colors text-sm">
                       Approve
                     </button>
                     <button className="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg transition-colors text-sm">
@@ -569,14 +569,14 @@ const MedicalManagement = () => {
                   </div>
                   <span className={`px-3 py-1 rounded text-sm font-medium ${
                     record.status === 'Stable' ? 'bg-emerald-500/20 text-emerald-400' :
-                    record.status === 'Improving' ? 'bg-blue-500/20 text-blue-400' :
+                    record.status === 'Improving' ? 'bg-slate-700/40 text-slate-300' :
                     'bg-amber-500/20 text-amber-400'
                   }`}>
                     {record.status}
                   </span>
                 </div>
-                <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4 mb-3">
-                  <h4 className="text-blue-400 font-semibold mb-2">{record.condition}</h4>
+                <div className="bg-slate-800/60 border border-slate-700/50 rounded-lg p-4 mb-3">
+                  <h4 className="text-slate-300 font-semibold mb-2">{record.condition}</h4>
                   <div className="space-y-1">
                     {record.medications.map((med, medIdx) => (
                       <div key={medIdx} className="text-sm text-slate-300">• {med}</div>
@@ -590,7 +590,7 @@ const MedicalManagement = () => {
                   </div>
                   <div>
                     <span className="text-slate-400">Last Reading:</span>{' '}
-                    <span className="text-emerald-400 font-medium">{record.lastReading}</span>
+                    <span className="text-slate-300 font-medium">{record.lastReading}</span>
                   </div>
                 </div>
               </div>
