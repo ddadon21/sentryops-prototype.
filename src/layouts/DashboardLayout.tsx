@@ -155,7 +155,7 @@ export default function DashboardLayout({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex">
+    <div className="min-h-screen bg-slate-950 flex">
       {/* ── Sidebar ──────────────────────────────────────── */}
       <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-slate-800/30 backdrop-blur-xl bg-slate-950/40 flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
         {/* Logo */}

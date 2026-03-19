@@ -145,10 +145,10 @@ const getPodColors = (pod: Pod) => {
     badge: 'bg-amber-500/15 text-amber-400 border border-amber-500/20',
   };
   return {
-    card: 'bg-slate-800/25 border-slate-700/30',
-    pct: 'text-emerald-400',
-    bar: 'bg-emerald-500',
-    badge: 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/20',
+    card: 'bg-slate-800/20 border-slate-700/25',
+    pct: 'text-slate-400',
+    bar: 'bg-slate-600/50',
+    badge: 'bg-slate-700/30 text-slate-400 border border-slate-700/20',
   };
 };
 
@@ -165,8 +165,8 @@ const getMovementIcon = (type: Movement['type']) => {
 const getMovementColors = (status: Movement['status']) => {
   if (status === 'In Progress') return 'bg-blue-500/15 text-blue-400 border border-blue-500/20';
   if (status === 'Staging')     return 'bg-amber-500/15 text-amber-400 border border-amber-500/20';
-  if (status === 'Pending')     return 'bg-slate-500/15 text-slate-400 border border-slate-500/20';
-  return 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/20';
+  if (status === 'Pending')     return 'bg-slate-700/30 text-slate-400 border border-slate-700/20';
+  return 'bg-slate-700/30 text-slate-400 border border-slate-700/20';
 };
 
 const getIncidentColors = (severity: Incident['severity'], status: Incident['status']) => {
@@ -174,7 +174,7 @@ const getIncidentColors = (severity: Incident['severity'], status: Incident['sta
   if (resolved) return { row: 'opacity-60', badge: 'bg-slate-500/15 text-slate-400 border border-slate-500/20', sev: '' };
   if (severity === 'critical') return { row: '', badge: 'bg-red-500/15 text-red-400 border border-red-500/20',    sev: 'text-red-400' };
   if (severity === 'high')     return { row: '', badge: 'bg-amber-500/15 text-amber-400 border border-amber-500/20', sev: 'text-amber-400' };
-  return { row: '', badge: 'bg-blue-500/15 text-blue-400 border border-blue-500/20', sev: 'text-blue-400' };
+  return { row: '', badge: 'bg-slate-700/30 text-slate-400 border border-slate-700/20', sev: 'text-slate-400' };
 };
 
 const getIncidentIcon = (type: Incident['type']) => {
@@ -187,11 +187,11 @@ const getIncidentIcon = (type: Incident['type']) => {
 };
 
 const getOfficerStatusColors = (status: Officer['status']) => {
-  if (status === 'On Post')        return 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/20';
-  if (status === 'Medical Escort') return 'bg-pink-500/15 text-pink-400 border border-pink-500/20';
+  if (status === 'On Post')        return 'bg-slate-700/30 text-slate-400 border border-slate-700/20';
+  if (status === 'Medical Escort') return 'bg-amber-500/15 text-amber-400 border border-amber-500/20';
   if (status === 'OT Pending')     return 'bg-amber-500/15 text-amber-400 border border-amber-500/20';
-  if (status === 'Transport')      return 'bg-blue-500/15 text-blue-400 border border-blue-500/20';
-  return 'bg-slate-500/15 text-slate-400 border border-slate-500/20';
+  if (status === 'Transport')      return 'bg-slate-700/30 text-slate-400 border border-slate-700/20';
+  return 'bg-slate-700/30 text-slate-400 border border-slate-700/20';
 };
 
 // ── Component ──────────────────────────────────────────────────
@@ -261,9 +261,9 @@ export default function CustodyOperations() {
                 </p>
                 <div className="flex items-center gap-1.5 mt-1.5">
                   <div className="flex-1 h-1 bg-slate-700/50 rounded-full overflow-hidden">
-                    <div className={`h-full rounded-full ${staffPct < 93 ? 'bg-red-500' : staffPct < 100 ? 'bg-amber-400' : 'bg-emerald-500'}`} style={{ width: `${staffPct}%` }} />
+                    <div className={`h-full rounded-full ${staffPct < 93 ? 'bg-red-500' : staffPct < 100 ? 'bg-amber-400' : 'bg-slate-500'}`} style={{ width: `${staffPct}%` }} />
                   </div>
-                  <span className={`text-[10px] ${staffPct < 93 ? 'text-red-400' : staffPct < 100 ? 'text-amber-400' : 'text-emerald-400'}`}>{staffPct}%</span>
+                  <span className={`text-[10px] ${staffPct < 93 ? 'text-red-400' : staffPct < 100 ? 'text-amber-400' : 'text-slate-400'}`}>{staffPct}%</span>
                 </div>
                 {currentShift.note && <p className="text-[10px] text-amber-400 mt-1">⚠ {currentShift.note.split('—')[0].trim()}</p>}
               </div>

@@ -107,33 +107,33 @@ const criticalTasks = [
 // ── Helper functions ───────────────────────────────────────────
 
 const getPodColor = (pod: HousingPod) => {
-  if (pod.status === 'Over Capacity') return { bg: 'bg-red-500/25 border-red-500/50', text: 'text-red-300', bar: 'bg-red-500' };
-  if (pod.status === 'Near Capacity') return { bg: 'bg-amber-500/15 border-amber-500/40', text: 'text-amber-300', bar: 'bg-amber-500' };
-  return { bg: 'bg-slate-800/25 border-slate-700/30', text: 'text-emerald-400', bar: 'bg-emerald-500' };
+  if (pod.status === 'Over Capacity') return { bg: 'bg-red-500/15 border-red-500/40', text: 'text-red-300', bar: 'bg-red-500' };
+  if (pod.status === 'Near Capacity') return { bg: 'bg-amber-500/10 border-amber-500/30', text: 'text-amber-300', bar: 'bg-amber-500' };
+  return { bg: 'bg-slate-800/20 border-slate-700/25', text: 'text-slate-400', bar: 'bg-slate-600/50' };
 };
 
 const getPct = (pod: HousingPod) => Math.round((pod.current / pod.capacity) * 100);
 
 const getShiftColors = (shift: ShiftStatus) => {
   const pct = (shift.present / shift.scheduled) * 100;
-  if (pct < 93) return { text: 'text-red-400', bg: 'bg-red-500/10 border-red-500/20', dot: 'bg-red-400' };
+  if (pct < 93) return { text: 'text-red-400',   bg: 'bg-red-500/10 border-red-500/20',     dot: 'bg-red-400' };
   if (pct < 100) return { text: 'text-amber-400', bg: 'bg-amber-500/10 border-amber-500/20', dot: 'bg-amber-400' };
-  return { text: 'text-emerald-400', bg: 'bg-emerald-500/8 border-emerald-500/15', dot: 'bg-emerald-400' };
+  return { text: 'text-slate-300', bg: 'bg-slate-800/20 border-slate-700/20', dot: 'bg-slate-500' };
 };
 
 const getRunStatus = (status: CourtRun['status']) => {
   switch (status) {
-    case 'Completed': return 'text-emerald-400';
-    case 'En Route':  return 'text-blue-400';
+    case 'Completed': return 'text-slate-400';
+    case 'En Route':  return 'text-slate-300';
     case 'Staging':   return 'text-amber-400';
-    default:          return 'text-slate-400';
+    default:          return 'text-slate-500';
   }
 };
 
 const getUrgencyColors = (u: string) => {
   if (u === 'critical') return 'border-l-2 border-red-500 bg-red-500/8 text-red-300';
   if (u === 'high') return 'border-l-2 border-amber-500 bg-amber-500/8 text-amber-300';
-  return 'border-l-2 border-blue-500/60 bg-blue-500/5 text-slate-300';
+  return 'border-l-2 border-slate-600/50 bg-slate-800/30 text-slate-300';
 };
 
 // ── Component ─────────────────────────────────────────────────
@@ -166,7 +166,7 @@ export default function DetentionCommandCenter() {
   const readinessBadge = (r: string) => {
     if (r === 'Critical') return 'bg-red-500/15 text-red-400 border border-red-500/25';
     if (r === 'Warning')  return 'bg-amber-500/15 text-amber-400 border border-amber-500/25';
-    return 'bg-emerald-500/12 text-emerald-400 border border-emerald-500/20';
+    return 'bg-slate-700/30 text-slate-400 border border-slate-700/20';
   };
 
   return (
@@ -193,50 +193,50 @@ export default function DetentionCommandCenter() {
         </div>
 
         {/* ── Row 1: Command Snapshot KPIs ───────────────── */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
           {/* Facility Capacity */}
-          <div className={`bg-slate-800/25 border rounded-xl p-3 ${capacityPct >= 95 ? 'border-red-500/30' : capacityPct >= 85 ? 'border-amber-500/30' : 'border-slate-700/30'}`}>
+          <div className={`bg-slate-800/25 border rounded-xl p-4 ${capacityPct >= 95 ? 'border-red-500/30' : capacityPct >= 85 ? 'border-amber-500/30' : 'border-slate-700/30'}`}>
             <div className="flex items-center gap-1.5 mb-2">
-              <Building2 className="w-3.5 h-3.5 text-blue-400" />
-              <span className="text-[10px] text-slate-400 font-medium uppercase tracking-wide">Capacity</span>
+              <Building2 className="w-3.5 h-3.5 text-slate-400" />
+              <span className="text-[10px] text-slate-500 font-medium uppercase tracking-wide">Capacity</span>
             </div>
             <p className="text-xl font-bold text-white">{facilityMetrics.currentPopulation}<span className="text-sm text-slate-500">/{facilityMetrics.totalCapacity}</span></p>
-            <p className={`text-[11px] font-semibold mt-0.5 ${capacityPct >= 95 ? 'text-red-400' : capacityPct >= 85 ? 'text-amber-400' : 'text-emerald-400'}`}>{capacityPct}% full</p>
+            <p className={`text-[11px] font-semibold mt-0.5 ${capacityPct >= 95 ? 'text-red-400' : capacityPct >= 85 ? 'text-amber-400' : 'text-slate-300'}`}>{capacityPct}% full</p>
             <div className="w-full h-1 bg-slate-700/50 rounded-full mt-1.5 overflow-hidden">
-              <div className={`h-full rounded-full ${capacityPct >= 95 ? 'bg-red-500' : capacityPct >= 85 ? 'bg-amber-500' : 'bg-emerald-500'}`} style={{ width: `${Math.min(capacityPct, 100)}%` }} />
+              <div className={`h-full rounded-full ${capacityPct >= 95 ? 'bg-red-500' : capacityPct >= 85 ? 'bg-amber-500' : 'bg-slate-500/60'}`} style={{ width: `${Math.min(capacityPct, 100)}%` }} />
             </div>
           </div>
 
           {/* Net Population Change */}
-          <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-3">
+          <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-4">
             <div className="flex items-center gap-1.5 mb-2">
               <Activity className="w-3.5 h-3.5 text-slate-400" />
-              <span className="text-[10px] text-slate-400 font-medium uppercase tracking-wide">Population</span>
+              <span className="text-[10px] text-slate-500 font-medium uppercase tracking-wide">Population</span>
             </div>
             <p className="text-xl font-bold text-white">{facilityMetrics.bookingsToday}<span className="text-[11px] text-slate-400 ml-1">in</span></p>
             <p className="text-[11px] text-slate-400 mt-0.5">{facilityMetrics.releasesToday} releases</p>
-            <p className={`text-[11px] font-semibold mt-0.5 flex items-center gap-0.5 ${facilityMetrics.netChange > 0 ? 'text-amber-400' : 'text-emerald-400'}`}>
+            <p className={`text-[11px] font-semibold mt-0.5 flex items-center gap-0.5 ${facilityMetrics.netChange > 0 ? 'text-amber-400' : 'text-slate-400'}`}>
               {facilityMetrics.netChange > 0 ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
               Net {facilityMetrics.netChange > 0 ? '+' : ''}{facilityMetrics.netChange} today
             </p>
           </div>
 
           {/* Staff Coverage */}
-          <div className={`bg-slate-800/25 border rounded-xl p-3 ${staffReadiness === 'Critical' ? 'border-red-500/30' : staffReadiness === 'Warning' ? 'border-amber-500/30' : 'border-slate-700/30'}`}>
+          <div className={`bg-slate-800/25 border rounded-xl p-4 ${staffReadiness === 'Critical' ? 'border-red-500/30' : staffReadiness === 'Warning' ? 'border-amber-500/30' : 'border-slate-700/30'}`}>
             <div className="flex items-center gap-1.5 mb-2">
               <Users className="w-3.5 h-3.5 text-slate-400" />
-              <span className="text-[10px] text-slate-400 font-medium uppercase tracking-wide">Staff</span>
+              <span className="text-[10px] text-slate-500 font-medium uppercase tracking-wide">Staff</span>
             </div>
             <p className="text-xl font-bold text-white">{totalPresent}<span className="text-sm text-slate-500">/{totalStaff}</span></p>
-            <p className={`text-[11px] font-semibold mt-0.5 ${staffReadiness === 'Critical' ? 'text-red-400' : staffReadiness === 'Warning' ? 'text-amber-400' : 'text-emerald-400'}`}>{staffPct}% coverage</p>
+            <p className={`text-[11px] font-semibold mt-0.5 ${staffReadiness === 'Critical' ? 'text-red-400' : staffReadiness === 'Warning' ? 'text-amber-400' : 'text-slate-300'}`}>{staffPct}% coverage</p>
             <p className="text-[10px] text-slate-500 mt-0.5">B-Shift gap</p>
           </div>
 
           {/* Active Alerts */}
-          <div className={`bg-slate-800/25 border rounded-xl p-3 ${criticalCount > 0 ? 'border-red-500/30' : warningCount > 0 ? 'border-amber-500/30' : 'border-slate-700/30'}`}>
+          <div className={`bg-slate-800/25 border rounded-xl p-4 ${criticalCount > 0 ? 'border-red-500/30' : warningCount > 0 ? 'border-amber-500/30' : 'border-slate-700/30'}`}>
             <div className="flex items-center gap-1.5 mb-2">
               <AlertTriangle className="w-3.5 h-3.5 text-red-400" />
-              <span className="text-[10px] text-slate-400 font-medium uppercase tracking-wide">Alerts</span>
+              <span className="text-[10px] text-slate-500 font-medium uppercase tracking-wide">Alerts</span>
             </div>
             <p className="text-xl font-bold text-white">{visibleAlerts.length}</p>
             <p className="text-[11px] font-semibold mt-0.5 text-red-400">{criticalCount} critical</p>
@@ -244,10 +244,10 @@ export default function DetentionCommandCenter() {
           </div>
 
           {/* Medical Unit */}
-          <div className={`bg-slate-800/25 border rounded-xl p-3 ${medicalReadiness === 'Warning' ? 'border-amber-500/30' : 'border-slate-700/30'}`}>
+          <div className={`bg-slate-800/25 border rounded-xl p-4 ${medicalReadiness === 'Warning' ? 'border-amber-500/30' : 'border-slate-700/30'}`}>
             <div className="flex items-center gap-1.5 mb-2">
-              <Hospital className="w-3.5 h-3.5 text-pink-400" />
-              <span className="text-[10px] text-slate-400 font-medium uppercase tracking-wide">Medical</span>
+              <Hospital className="w-3.5 h-3.5 text-slate-400" />
+              <span className="text-[10px] text-slate-500 font-medium uppercase tracking-wide">Medical</span>
             </div>
             <p className="text-xl font-bold text-white">E-Pod</p>
             <p className="text-[11px] font-semibold mt-0.5 text-amber-400">92% occupied</p>
@@ -255,10 +255,10 @@ export default function DetentionCommandCenter() {
           </div>
 
           {/* Court Transports */}
-          <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-3">
+          <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-4">
             <div className="flex items-center gap-1.5 mb-2">
               <Truck className="w-3.5 h-3.5 text-slate-400" />
-              <span className="text-[10px] text-slate-400 font-medium uppercase tracking-wide">Transports</span>
+              <span className="text-[10px] text-slate-500 font-medium uppercase tracking-wide">Transports</span>
             </div>
             <p className="text-xl font-bold text-white">{facilityMetrics.courtTransports}</p>
             <p className="text-[11px] text-slate-400 mt-0.5">5 runs today</p>
@@ -372,7 +372,7 @@ export default function DetentionCommandCenter() {
                 <h3 className="text-sm font-semibold text-white">Housing Unit Status</h3>
               </div>
               <div className="flex items-center gap-2 text-[9px] text-slate-500">
-                <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-sm bg-emerald-500/60 inline-block" />OK</span>
+                <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-sm bg-slate-600 inline-block" />Normal</span>
                 <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-sm bg-amber-500/60 inline-block" />Near</span>
                 <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-sm bg-red-500/60 inline-block" />Over</span>
               </div>
