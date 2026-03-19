@@ -546,7 +546,7 @@ export default function RiskCompliance() {
             {/* Next Audit */}
             <div className="bg-slate-800/20 border border-slate-700/25 rounded-xl px-3 py-2.5">
               <div className="flex items-center gap-2 mb-1.5">
-                <Calendar className="w-3.5 h-3.5 text-purple-400" />
+                <Calendar className="w-3.5 h-3.5 text-slate-400" />
                 <span className="text-[10px] font-medium text-slate-500 uppercase tracking-wider">Next Audit</span>
               </div>
               <div className="flex items-baseline gap-2">
@@ -830,7 +830,7 @@ export default function RiskCompliance() {
           {/* ── Upcoming Audits & Inspections ─────────────── */}
           <div className="mb-4">
             <div className="flex items-center gap-2 mb-2 px-1">
-              <Calendar className="w-3.5 h-3.5 text-purple-400" />
+              <Calendar className="w-3.5 h-3.5 text-slate-400" />
               <span className="text-[12px] font-bold text-white">Upcoming Audits</span>
             </div>
             <div className="border border-slate-700/25 rounded-xl overflow-hidden">
@@ -914,7 +914,7 @@ export default function RiskCompliance() {
             {/* Risk Trends — Narrative */}
             <div className="bg-slate-800/20 border border-slate-700/25 rounded-xl p-3">
               <div className="flex items-center gap-2 mb-2.5">
-                <TrendingUp className="w-3.5 h-3.5 text-purple-400" />
+                <TrendingUp className="w-3.5 h-3.5 text-slate-400" />
                 <span className="text-[12px] font-bold text-white">Risk Trends</span>
                 <span className="text-[10px] text-slate-600 ml-1">6-month analysis</span>
               </div>
@@ -962,7 +962,7 @@ export default function RiskCompliance() {
             {/* Policy Compliance */}
             <div className="bg-slate-800/20 border border-slate-700/25 rounded-xl p-3">
               <div className="flex items-center gap-2 mb-2.5">
-                <FileText className="w-3.5 h-3.5 text-blue-400" />
+                <FileText className="w-3.5 h-3.5 text-slate-400" />
                 <span className="text-[12px] font-bold text-white">Policy Compliance</span>
               </div>
 
@@ -1223,7 +1223,7 @@ export default function RiskCompliance() {
           {/* ── Regulatory Standards (Reference) ─────────── */}
           <div className="mt-4">
             <div className="flex items-center gap-2 mb-2 px-1">
-              <Shield className="w-3.5 h-3.5 text-blue-400" />
+              <Shield className="w-3.5 h-3.5 text-slate-400" />
               <span className="text-[12px] font-bold text-white">Regulatory Standards</span>
               <span className="text-[10px] text-slate-600">Reference</span>
             </div>
@@ -1463,8 +1463,8 @@ export default function RiskCompliance() {
                   )}
                 </div>
 
-                <div className="mt-4 p-2.5 bg-blue-500/5 border border-blue-500/15 rounded-lg">
-                  <p className="text-[9px] text-blue-400 flex items-center gap-1.5">
+                <div className="mt-4 p-2.5 bg-slate-800/40 border border-slate-700/40 rounded-lg">
+                  <p className="text-[9px] text-slate-400 flex items-center gap-1.5">
                     <CircleDot className="w-3 h-3" />
                     This decision has been recorded to the audit trail and will persist across sessions. Cascade projections will recalculate on next refresh.
                   </p>

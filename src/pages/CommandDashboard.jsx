@@ -253,7 +253,7 @@ export default function CommandDashboard() {
             </div>
             <div className="flex items-baseline gap-2 mb-1">
               <p className="text-2xl font-semibold text-white">164</p>
-              <span className="flex items-center gap-0.5 text-emerald-400 text-xs font-medium">
+              <span className="flex items-center gap-0.5 text-slate-400 text-xs font-medium">
                 <ArrowUpRight className="w-3 h-3" />+2
               </span>
             </div>
@@ -311,7 +311,7 @@ export default function CommandDashboard() {
           >
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
+                <div className="w-1.5 h-1.5 rounded-full bg-slate-500"></div>
                 <span className="text-xs text-slate-500 font-medium uppercase tracking-wide">Budget Utilization</span>
               </div>
             </div>
@@ -443,7 +443,7 @@ export default function CommandDashboard() {
                     <div className="flex items-center gap-2 flex-shrink-0">
                       <button
                         onClick={(e) => openApprovalModal(item, 'approve', e)}
-                        className="px-3 py-1.5 text-xs font-medium text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/10 rounded-lg transition-colors"
+                        className="px-3 py-1.5 text-xs font-medium text-slate-300 border border-slate-700/40 hover:bg-slate-700/30 rounded-lg transition-colors"
                       >
                         Approve
                       </button>
@@ -491,10 +491,10 @@ export default function CommandDashboard() {
                 <div>
                   <div className="flex items-center justify-between mb-1 text-xs">
                     <span className="text-slate-400">Databases</span>
-                    <span className="text-emerald-400">47/47</span>
+                    <span className="text-white">47/47</span>
                   </div>
                   <div className="w-full h-1 bg-slate-800/50 rounded-full overflow-hidden">
-                    <div className="h-full bg-emerald-500/40 rounded-full" style={{width: '100%'}} />
+                    <div className="h-full bg-slate-600/60 rounded-full" style={{width: '100%'}} />
                   </div>
                 </div>
                 <div>

@@ -1169,7 +1169,7 @@ export default function OrgChart() {
               <div className={`px-4 py-2 rounded-lg border shadow-md min-w-[180px] ${
                 isOp ? `${rc.zoneBg} ${rc.zoneBorder}` : 'bg-gradient-to-r from-blue-500/15 to-blue-600/15 border-blue-500/35'
               }`}>
-                <p className={`text-[10px] font-bold tracking-wide text-center whitespace-nowrap ${isOp ? rc.text : 'text-blue-400'}`}>
+                <p className={`text-[10px] font-bold tracking-wide text-center whitespace-nowrap ${isOp ? rc.text : 'text-slate-400'}`}>
                   {divisionLabelText}
                 </p>
                 {(node.divisionStrength || dm) && (
@@ -1189,7 +1189,7 @@ export default function OrgChart() {
                   }`}>⚠ {dm.alert}</p>
                 )}
               </div>
-              <div className={`w-0.5 h-3 mx-auto ${isOp ? rc.zoneConnector : 'bg-blue-500/40'}`}></div>
+              <div className={`w-0.5 h-3 mx-auto ${isOp ? rc.zoneConnector : 'bg-slate-600/40'}`}></div>
             </div>
           );
         })()}
@@ -1287,7 +1287,7 @@ export default function OrgChart() {
                       <div className={`text-amber-400 ${size === 'lg' ? 'text-[10px]' : 'text-[9px]'}`}>
                         {node.daysVacant} days vacant
                       </div>
-                      <div className={`text-blue-400 ${size === 'lg' ? 'text-[10px]' : 'text-[9px]'}`}>
+                      <div className={`text-slate-400 ${size === 'lg' ? 'text-[10px]' : 'text-[9px]'}`}>
                         {node.candidatesInPipeline} candidate{node.candidatesInPipeline !== 1 ? 's' : ''}
                       </div>
                     </>
@@ -1344,7 +1344,7 @@ export default function OrgChart() {
                             : node.retirementMonths < 24
                               ? 'bg-amber-500/20 border-amber-500/30 text-amber-300'
                               : node.retirementMonths <= 60
-                                ? 'bg-blue-500/12 border-blue-500/20 text-blue-400'
+                                ? 'bg-slate-700/40 border-slate-600/50 text-slate-300'
                                 : 'bg-emerald-500/10 border-emerald-500/15 text-emerald-400/70'
                         }`}>
                           <Clock className="w-2.5 h-2.5 flex-shrink-0" />
@@ -1798,7 +1798,7 @@ export default function OrgChart() {
                 <span className="text-slate-400">Span of control alert</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <Clock className="w-3 h-3 text-blue-400" />
+                <Clock className="w-3 h-3 text-slate-400" />
                 <span className="text-slate-400">Retirement signal</span>
               </div>
               <div className="text-slate-700">·</div>
@@ -1841,7 +1841,7 @@ export default function OrgChart() {
                   <Users className="w-3 h-3" />
                   Profile
                 </button>
-                <button className="px-3 py-2 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 text-blue-400 rounded-lg text-xs font-medium transition-colors flex items-center justify-center gap-1">
+                <button className="px-3 py-2 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-300 rounded-lg text-xs font-medium transition-colors flex items-center justify-center gap-1">
                   <Mail className="w-3 h-3" />
                   Message
                 </button>
@@ -1913,11 +1913,11 @@ export default function OrgChart() {
                       <div className="pt-2 border-t border-slate-700/30 grid grid-cols-3 gap-3">
                         <div className="text-center">
                           <p className="text-[11px] text-slate-400 mb-0.5">Deployable</p>
-                          <p className="text-base font-bold text-emerald-400">{divisionMetrics[selectedNode.id].deployable}</p>
+                          <p className="text-base font-bold text-white">{divisionMetrics[selectedNode.id].deployable}</p>
                         </div>
                         <div className="text-center">
                           <p className="text-[11px] text-slate-400 mb-0.5">Vacancies</p>
-                          <p className={`text-base font-bold ${divisionMetrics[selectedNode.id].vacancies > 0 ? 'text-red-400' : 'text-emerald-400'}`}>
+                          <p className={`text-base font-bold ${divisionMetrics[selectedNode.id].vacancies > 0 ? 'text-red-400' : 'text-white'}`}>
                             {divisionMetrics[selectedNode.id].vacancies}
                           </p>
                         </div>
@@ -1941,7 +1941,7 @@ export default function OrgChart() {
                     {/* Recommended action */}
                     {divisionMetrics[selectedNode.id]?.action && (
                       <div className="flex items-start gap-2 text-xs">
-                        <ArrowRight className="w-3.5 h-3.5 text-emerald-400 mt-0.5 flex-shrink-0" />
+                        <ArrowRight className="w-3.5 h-3.5 text-slate-400 mt-0.5 flex-shrink-0" />
                         <span className="text-emerald-300 font-medium">{divisionMetrics[selectedNode.id].action}</span>
                       </div>
                     )}
@@ -1954,7 +1954,7 @@ export default function OrgChart() {
                 <div className="bg-slate-800/40 rounded-xl p-4 border border-slate-700/50">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <Users className="w-5 h-5 text-blue-400" />
+                      <Users className="w-5 h-5 text-slate-400" />
                       <span className="text-sm text-slate-300">Direct Reports</span>
                     </div>
                     <span className="text-lg font-bold text-white">{selectedNode.reports}</span>
@@ -1992,12 +1992,12 @@ export default function OrgChart() {
                     {selectedNode.retirementMonths !== undefined && (
                       <div className="flex items-start gap-3">
                         <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
-                          selectedNode.retirementMonths === 0 ? 'bg-amber-500/20 border border-amber-500/20' : 'bg-blue-500/20 border border-blue-500/20'
+                          selectedNode.retirementMonths === 0 ? 'bg-amber-500/20 border border-amber-500/20' : 'bg-slate-700/40 border border-slate-600/50'
                         }`}>
-                          <Clock className={`w-4 h-4 ${selectedNode.retirementMonths === 0 ? 'text-amber-400' : 'text-blue-400'}`} />
+                          <Clock className={`w-4 h-4 ${selectedNode.retirementMonths === 0 ? 'text-amber-400' : 'text-slate-400'}`} />
                         </div>
                         <div>
-                          <p className={`text-sm font-medium ${selectedNode.retirementMonths === 0 ? 'text-amber-400' : 'text-blue-400'}`}>
+                          <p className={`text-sm font-medium ${selectedNode.retirementMonths === 0 ? 'text-amber-400' : 'text-slate-400'}`}>
                             {selectedNode.retirementMonths === 0
                               ? 'Retirement eligible now'
                               : `Retirement eligible in ${selectedNode.retirementMonths} months`
@@ -2017,7 +2017,7 @@ export default function OrgChart() {
                             <div key={idx} className="flex items-center gap-2 text-sm">
                               <ArrowRight className="w-3 h-3 text-emerald-500" />
                               <span className="text-white">{candidate}</span>
-                              {idx === 0 && <span className="text-[10px] px-1.5 py-0.5 bg-emerald-500/20 text-emerald-400 rounded border border-emerald-500/20">Primary</span>}
+                              {idx === 0 && <span className="text-[10px] px-1.5 py-0.5 bg-slate-700/40 text-slate-300 rounded border border-slate-600/50">Primary</span>}
                             </div>
                           ))}
                         </div>
@@ -2133,7 +2133,7 @@ export default function OrgChart() {
                     </div>
                     <div className="pt-2 border-t border-slate-700/30">
                       <p className="text-xs text-slate-400 mb-1">Suggested action:</p>
-                      <p className="text-sm text-emerald-400 font-medium">
+                      <p className="text-sm text-slate-300 font-medium">
                         → {vacancyImpactData[selectedNode.id].suggestedAction}
                       </p>
                     </div>
@@ -2177,7 +2177,7 @@ export default function OrgChart() {
                     <div className="mt-4 pt-4 border-t border-slate-700/50 grid grid-cols-2 gap-4">
                       <div>
                         <p className="text-xs text-slate-400 mb-1">Commendations</p>
-                        <p className="text-sm font-bold text-blue-400">8 this month</p>
+                        <p className="text-sm font-bold text-white">8 this month</p>
                       </div>
                       <div>
                         <p className="text-xs text-slate-400 mb-1">Disciplinary</p>
@@ -2200,13 +2200,13 @@ export default function OrgChart() {
                       </div>
                       <div className="flex items-center justify-between">
                         <span className="text-sm text-slate-300">Candidates in Pipeline</span>
-                        <span className="text-lg font-bold text-blue-400">{selectedNode.candidatesInPipeline}</span>
+                        <span className="text-lg font-bold text-white">{selectedNode.candidatesInPipeline}</span>
                       </div>
                       <div className="flex items-center justify-between">
                         <span className="text-sm text-slate-300">Expected Fill Date</span>
                         <span className="text-sm font-medium text-white">{selectedNode.expectedFill}</span>
                       </div>
-                      <button className="w-full mt-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-medium transition-colors">
+                      <button className="w-full mt-2 px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg text-sm font-medium transition-colors">
                         View Applicants
                       </button>
                     </div>
@@ -2252,7 +2252,7 @@ export default function OrgChart() {
                 placeholder="Ask about the org structure..."
                 className="flex-1 px-4 py-2 bg-slate-800/40 border border-slate-700/50 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-blue-500/50"
               />
-              <button className="p-2 bg-blue-500 hover:bg-blue-600 rounded-lg transition-colors">
+              <button className="p-2 bg-slate-700 hover:bg-slate-600 rounded-lg transition-colors">
                 <Send className="w-5 h-5 text-white" />
               </button>
             </div>

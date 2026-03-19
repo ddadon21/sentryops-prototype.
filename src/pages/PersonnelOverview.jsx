@@ -637,7 +637,7 @@ export default function PersonnelOverview() {
                                     <div className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 text-[11px] font-bold ${
                                       opStatus.color === 'red' ? 'bg-red-500/15 text-red-400' :
                                       opStatus.color === 'amber' ? 'bg-amber-500/15 text-amber-400' :
-                                      'bg-blue-500/15 text-blue-400'
+                                      'bg-slate-700/40 text-slate-300'
                                     }`}>
                                       {person.photo}
                                     </div>
@@ -690,8 +690,8 @@ export default function PersonnelOverview() {
                                   <div className="pt-0.5">
                                     {person.aiInsight ? (
                                       <div className="flex items-start gap-1">
-                                        <ArrowRight className="w-3 h-3 text-blue-400 mt-0.5 flex-shrink-0" />
-                                        <p className="text-[10px] text-blue-400 font-medium">{person.aiInsight}</p>
+                                        <ArrowRight className="w-3 h-3 text-slate-400 mt-0.5 flex-shrink-0" />
+                                        <p className="text-[10px] text-slate-300 font-medium">{person.aiInsight}</p>
                                       </div>
                                     ) : (
                                       <span className="text-[10px] text-slate-600">&mdash;</span>
@@ -708,7 +708,7 @@ export default function PersonnelOverview() {
                                       <Eye className="w-3.5 h-3.5" />
                                     </button>
                                     <button
-                                      className="p-1.5 text-slate-500 hover:text-blue-400 hover:bg-blue-500/10 rounded transition-all"
+                                      className="p-1.5 text-slate-500 hover:text-slate-300 hover:bg-slate-700/30 rounded transition-all"
                                       title="Reassign"
                                     >
                                       <RefreshCw className="w-3.5 h-3.5" />
@@ -746,7 +746,7 @@ export default function PersonnelOverview() {
                 {/* Widget 1: Operational Coverage */}
                 <div className="bg-slate-800/15 border border-slate-700/15 rounded p-3">
                   <div className="flex items-center gap-2 mb-2.5">
-                    <Shield className="w-3.5 h-3.5 text-blue-400" />
+                    <Shield className="w-3.5 h-3.5 text-slate-400" />
                     <span className="text-[11px] font-bold text-white">Operational Coverage</span>
                   </div>
                   <div className="space-y-2">
@@ -933,7 +933,7 @@ export default function PersonnelOverview() {
               {/* Quick Actions */}
               <div className="pt-4 border-t border-slate-700/50 space-y-3">
                 <button className="w-full flex items-center gap-3 px-4 py-3 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 hover:border-slate-600/50 rounded-xl text-white transition-all">
-                  <Mail className="w-5 h-5 text-blue-400" />
+                  <Mail className="w-5 h-5 text-slate-400" />
                   <span className="text-sm font-medium">Send Message</span>
                 </button>
                 <button className="w-full flex items-center gap-3 px-4 py-3 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 hover:border-slate-600/50 rounded-xl text-white transition-all">
@@ -1019,8 +1019,8 @@ export default function PersonnelOverview() {
                       <div>
                         <p className="text-xs text-slate-400 mb-1">Performance Rating</p>
                         <div className="flex items-center gap-2">
-                          <Star className={`w-5 h-5 ${fullProfileData.performance >= 4.5 ? 'text-amber-400' : fullProfileData.performance >= 4.0 ? 'text-blue-400' : 'text-slate-400'}`} />
-                          <span className={`text-lg font-bold ${fullProfileData.performance >= 4.5 ? 'text-amber-400' : fullProfileData.performance >= 4.0 ? 'text-blue-400' : 'text-slate-300'}`}>
+                          <Star className={`w-5 h-5 ${fullProfileData.performance >= 4.5 ? 'text-amber-400' : fullProfileData.performance >= 4.0 ? 'text-amber-400' : 'text-slate-400'}`} />
+                          <span className={`text-lg font-bold ${fullProfileData.performance >= 4.5 ? 'text-amber-400' : fullProfileData.performance >= 4.0 ? 'text-amber-400' : 'text-slate-300'}`}>
                             {fullProfileData.performance.toFixed(1)}
                           </span>
                           <span className="text-xs text-slate-400">/5.0</span>
@@ -1032,16 +1032,16 @@ export default function PersonnelOverview() {
                   {/* Activity Stats */}
                   <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
                     <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                      <Activity className="w-5 h-5 text-purple-400" />
+                      <Activity className="w-5 h-5 text-slate-400" />
                       Activity Statistics (Last 30 Days)
                     </h3>
                     <div className="grid grid-cols-3 gap-4">
                       <div className="text-center p-4 bg-slate-900/50 rounded-lg">
-                        <p className="text-2xl font-bold text-blue-400">142</p>
+                        <p className="text-2xl font-bold text-white">142</p>
                         <p className="text-xs text-slate-400 mt-1">Calls for Service</p>
                       </div>
                       <div className="text-center p-4 bg-slate-900/50 rounded-lg">
-                        <p className="text-2xl font-bold text-emerald-400">28</p>
+                        <p className="text-2xl font-bold text-white">28</p>
                         <p className="text-xs text-slate-400 mt-1">Reports Written</p>
                       </div>
                       <div className="text-center p-4 bg-slate-900/50 rounded-lg">
@@ -1051,7 +1051,7 @@ export default function PersonnelOverview() {
                     </div>
                     <div className="grid grid-cols-2 gap-4 mt-4">
                       <div className="text-center p-4 bg-slate-900/50 rounded-lg">
-                        <p className="text-xl font-bold text-purple-400">8.5 hrs</p>
+                        <p className="text-xl font-bold text-white">8.5 hrs</p>
                         <p className="text-xs text-slate-400 mt-1">Avg Response Time</p>
                       </div>
                       <div className="text-center p-4 bg-slate-900/50 rounded-lg">
@@ -1064,7 +1064,7 @@ export default function PersonnelOverview() {
                   {/* Certifications & Training */}
                   <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
                     <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                      <Award className="w-5 h-5 text-purple-400" />
+                      <Award className="w-5 h-5 text-slate-400" />
                       Certifications & Training History
                     </h3>
                     <div className="space-y-3">
@@ -1107,7 +1107,7 @@ export default function PersonnelOverview() {
                   {/* Performance Reviews */}
                   <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
                     <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                      <Star className="w-5 h-5 text-purple-400" />
+                      <Star className="w-5 h-5 text-slate-400" />
                       Performance Reviews
                     </h3>
                     <div className="space-y-3">
@@ -1126,8 +1126,8 @@ export default function PersonnelOverview() {
                         <div className="flex items-center justify-between mb-2">
                           <span className="text-sm font-medium text-white">2023 Annual Review</span>
                           <div className="flex items-center gap-2">
-                            <Star className="w-4 h-4 text-blue-400" />
-                            <span className="text-sm font-bold text-blue-400">{(fullProfileData.performance - 0.2).toFixed(1)}/5.0</span>
+                            <Star className="w-4 h-4 text-amber-400" />
+                            <span className="text-sm font-bold text-amber-400">{(fullProfileData.performance - 0.2).toFixed(1)}/5.0</span>
                           </div>
                         </div>
                         <p className="text-xs text-slate-400">Strong work ethic and dedication to duty. Continues to improve.</p>
@@ -1145,14 +1145,14 @@ export default function PersonnelOverview() {
                     <div className="space-y-3">
                       <div>
                         <p className="text-xs text-slate-400 mb-1">Email</p>
-                        <a href={`mailto:${fullProfileData.email}`} className="flex items-center gap-2 text-sm text-blue-400 hover:text-blue-300 transition-colors">
+                        <a href={`mailto:${fullProfileData.email}`} className="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
                           <Mail className="w-4 h-4" />
                           <span>{fullProfileData.email}</span>
                         </a>
                       </div>
                       <div>
                         <p className="text-xs text-slate-400 mb-1">Phone</p>
-                        <a href={`tel:${fullProfileData.phone}`} className="flex items-center gap-2 text-sm text-blue-400 hover:text-blue-300 transition-colors">
+                        <a href={`tel:${fullProfileData.phone}`} className="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors">
                           <Phone className="w-4 h-4" />
                           <span>{fullProfileData.phone}</span>
                         </a>
@@ -1163,7 +1163,7 @@ export default function PersonnelOverview() {
                   {/* Equipment Assignments */}
                   <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
                     <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                      <Shield className="w-5 h-5 text-purple-400" />
+                      <Shield className="w-5 h-5 text-slate-400" />
                       Equipment
                     </h3>
                     <div className="space-y-3">

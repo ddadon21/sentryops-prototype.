@@ -491,8 +491,8 @@ export default function CommandAlerts() {
 
                     {/* Resolution */}
                     {isResolved && alert.resolution && (
-                      <div className="mb-2 bg-emerald-500/[0.03] border border-emerald-500/8 rounded px-2.5 py-1.5">
-                        <span className="text-[9px] font-semibold text-emerald-400/70 uppercase tracking-wider">Resolution</span>
+                      <div className="mb-2 bg-slate-700/20 border border-slate-700/30 rounded px-2.5 py-1.5">
+                        <span className="text-[9px] font-semibold text-slate-400/70 uppercase tracking-wider">Resolution</span>
                         <p className="text-[10px] text-slate-400 mt-0.5">{alert.resolution}</p>
                         <div className="mt-0.5 text-[9px] text-slate-500">
                           {alert.resolvedBy} · {alert.resolvedAt && new Date(alert.resolvedAt).toLocaleString()}
@@ -531,7 +531,7 @@ export default function CommandAlerts() {
                         </button>
                         <button
                           onClick={() => { setAlertToAction(alert); setResolveModalOpen(true); }}
-                          className="px-2.5 py-1 text-[10px] font-medium text-emerald-400/70 border border-emerald-500/10 hover:bg-emerald-500/8 rounded transition-colors"
+                          className="px-2.5 py-1 text-[10px] font-medium text-slate-300 border border-slate-600/30 hover:bg-slate-700/20 rounded transition-colors"
                         >
                           Resolve
                         </button>
@@ -554,7 +554,7 @@ export default function CommandAlerts() {
             <div className="flex items-center gap-2">
               {['CAD', 'RMS', 'Detention', 'Fleet', 'Compliance', 'Budget'].map(mod => (
                 <span key={mod} className="flex items-center gap-1 text-[10px] text-slate-500">
-                  <div className="w-1 h-1 rounded-full bg-emerald-500/50"></div>
+                  <div className="w-1 h-1 rounded-full bg-slate-500/70"></div>
                   {mod}
                 </span>
               ))}
@@ -625,7 +625,7 @@ export default function CommandAlerts() {
                 </button>
                 <button
                   onClick={() => handleResolve(alertToAction.id)}
-                  className="flex-1 px-3 py-1.5 text-xs font-medium text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/10 rounded-lg transition-colors"
+                  className="flex-1 px-3 py-1.5 text-xs font-medium text-slate-300 border border-slate-600/40 hover:bg-slate-700/30 rounded-lg transition-colors"
                 >
                   Resolve
                 </button>
