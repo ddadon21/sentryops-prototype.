@@ -128,7 +128,7 @@ export default function SignIn() {
         )}
 
         {/* Demo Access Panel */}
-        <div className="relative z-10 mb-5 bg-slate-900/40 backdrop-blur-xl border border-slate-700/40 rounded-xl p-4">
+        <div className="mb-5 bg-slate-900/40 backdrop-blur-xl border border-slate-700/40 rounded-xl p-4">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
               <div className="w-1.5 h-1.5 bg-amber-500/80 rounded-full" />
@@ -137,44 +137,44 @@ export default function SignIn() {
             <span className="text-[10px] text-slate-600">Permissions simulated</span>
           </div>
 
-          <div className="relative">
-            <button
-              onClick={() => setDemoDropdownOpen(!demoDropdownOpen)}
-              className="w-full flex items-center justify-between px-3.5 py-2.5 bg-slate-800/60 border border-slate-700/50 rounded-lg text-left hover:border-slate-600/60 transition-colors"
-            >
-              <div>
-                {selectedDemo ? (
-                  <>
-                    <p className="text-sm font-medium text-white">{selectedDemo.title}</p>
-                    <p className="text-[11px] text-slate-500">{selectedDemo.role}</p>
-                  </>
-                ) : (
-                  <>
-                    <p className="text-sm text-slate-400">Select access level</p>
-                    <p className="text-[11px] text-slate-600">Choose permission scope</p>
-                  </>
-                )}
-              </div>
-              <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform ${demoDropdownOpen ? 'rotate-180' : ''}`} />
-            </button>
+          {/* Trigger row */}
+          <button
+            onClick={() => setDemoDropdownOpen(!demoDropdownOpen)}
+            className="w-full flex items-center justify-between px-3.5 py-2.5 bg-slate-800/60 border border-slate-700/50 rounded-lg text-left hover:border-slate-600/60 transition-colors"
+          >
+            <div>
+              {selectedDemo ? (
+                <>
+                  <p className="text-sm font-medium text-white">{selectedDemo.title}</p>
+                  <p className="text-[11px] text-slate-500">{selectedDemo.role}</p>
+                </>
+              ) : (
+                <>
+                  <p className="text-sm text-slate-400">Select access level</p>
+                  <p className="text-[11px] text-slate-600">Choose permission scope</p>
+                </>
+              )}
+            </div>
+            <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform ${demoDropdownOpen ? 'rotate-180' : ''}`} />
+          </button>
 
-            {demoDropdownOpen && (
-              <div className="absolute top-full left-0 right-0 mt-1.5 bg-slate-900/98 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-2xl z-50 overflow-hidden">
-                {demoAccounts.map((account, idx) => (
-                  <button
-                    key={account.id}
-                    onClick={() => handleDemoSelect(account)}
-                    className={`w-full px-4 py-3 text-left hover:bg-slate-800/60 transition-colors ${
-                      idx < demoAccounts.length - 1 ? 'border-b border-slate-800/60' : ''
-                    } ${selectedDemo?.id === account.id ? 'bg-slate-800/40' : ''}`}
-                  >
-                    <p className="text-sm font-medium text-white">{account.title}</p>
-                    <p className="text-[11px] text-slate-500">{account.clearance}</p>
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
+          {/* Inline expanding list — normal document flow, pushes content down */}
+          {demoDropdownOpen && (
+            <div className="mt-2 flex flex-col border border-slate-700/50 rounded-lg overflow-hidden">
+              {demoAccounts.map((account, idx) => (
+                <button
+                  key={account.id}
+                  onClick={() => handleDemoSelect(account)}
+                  className={`w-full px-4 py-3 text-left hover:bg-slate-800/60 transition-colors ${
+                    idx < demoAccounts.length - 1 ? 'border-b border-slate-700/40' : ''
+                  } ${selectedDemo?.id === account.id ? 'bg-slate-800/40' : 'bg-slate-900/40'}`}
+                >
+                  <p className="text-sm font-medium text-white">{account.title}</p>
+                  <p className="text-[11px] text-slate-500">{account.clearance}</p>
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Login Form */}
