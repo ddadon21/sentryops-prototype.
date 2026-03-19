@@ -22,6 +22,8 @@ interface Pod {
   notes?: string;
   activeMovements: number;
   incidents: number;
+  trend: 'up' | 'down' | 'stable';
+  projection?: string;
 }
 
 interface Movement {
@@ -76,22 +78,22 @@ const currentShift = {
 };
 
 const pods: Pod[] = [
-  { id: 'A1',  name: 'A-Pod',   type: 'Male GP',       security: 'Med', capacity: 96,  current: 94,  assignedOfficer: 'Dep. Harris',   status: 'Near Capacity', activeMovements: 1, incidents: 0 },
-  { id: 'A2',  name: 'A2-Pod',  type: 'Male GP',       security: 'Med', capacity: 96,  current: 89,  assignedOfficer: 'Dep. White',    status: 'Normal',        activeMovements: 0, incidents: 1 },
-  { id: 'B1',  name: 'B-Pod',   type: 'Male Max',      security: 'Max', capacity: 64,  current: 61,  assignedOfficer: 'Dep. King',     status: 'Normal',        activeMovements: 0, incidents: 0 },
-  { id: 'B2',  name: 'B2-Pod',  type: 'Disciplinary',  security: 'Max', capacity: 32,  current: 28,  assignedOfficer: 'Dep. Scott',    status: 'Normal',        activeMovements: 0, incidents: 1 },
-  { id: 'C1',  name: 'C-Pod',   type: 'Male Medium',   security: 'Med', capacity: 128, current: 115, assignedOfficer: 'Dep. Rivera',   status: 'Normal',        activeMovements: 2, incidents: 0 },
-  { id: 'C2',  name: 'C2-Pod',  type: 'Work Release',  security: 'Min', capacity: 48,  current: 42,  assignedOfficer: null,            status: 'Normal',        activeMovements: 1, incidents: 0, notes: 'Float coverage' },
-  { id: 'D1',  name: 'D-Pod',   type: 'Female GP',     security: 'Med', capacity: 80,  current: 73,  assignedOfficer: 'Dep. Carter',   status: 'Normal',        activeMovements: 0, incidents: 0 },
-  { id: 'D2',  name: 'D2-Pod',  type: 'Female Max',    security: 'Max', capacity: 32,  current: 29,  assignedOfficer: 'Dep. Lewis',    status: 'Normal',        activeMovements: 0, incidents: 0 },
-  { id: 'E1',  name: 'E-Pod',   type: 'Medical',       security: 'Med', capacity: 48,  current: 44,  assignedOfficer: 'Dep. Martinez', status: 'Near Capacity', activeMovements: 1, incidents: 0, notes: '3 isolation active' },
-  { id: 'E2',  name: 'E2-Pod',  type: 'Mental Health', security: 'Med', capacity: 40,  current: 38,  assignedOfficer: 'Dep. Johnson',  status: 'Near Capacity', activeMovements: 0, incidents: 1, notes: '24/7 monitoring' },
-  { id: 'F1',  name: 'F-Pod',   type: 'Intake',        security: 'Hi',  capacity: 64,  current: 52,  assignedOfficer: 'Dep. Allen',    status: 'Normal',        activeMovements: 3, incidents: 0, notes: '12 pending class.' },
-  { id: 'F2',  name: 'F2-Pod',  type: 'Prot. Custody', security: 'Hi', capacity: 48,  current: 41,  assignedOfficer: 'Dep. Young',    status: 'Normal',        activeMovements: 0, incidents: 0 },
-  { id: 'G1',  name: 'G-Pod',   type: 'Juvenile',      security: 'Med', capacity: 24,  current: 18,  assignedOfficer: 'Dep. Hill',     status: 'Normal',        activeMovements: 0, incidents: 0 },
-  { id: 'G2',  name: 'G2-Pod',  type: 'Pre-Release',   security: 'Min', capacity: 40,  current: 35,  assignedOfficer: null,            status: 'Normal',        activeMovements: 1, incidents: 0, notes: 'Float coverage' },
-  { id: 'H1',  name: 'H-Pod',   type: 'Federal Hold',  security: 'Hi',  capacity: 48,  current: 47,  assignedOfficer: 'Dep. Clark',    status: 'Near Capacity', activeMovements: 0, incidents: 0 },
-  { id: 'H2',  name: 'H2-Pod',  type: 'ICE Hold',      security: 'Med', capacity: 32,  current: 36,  assignedOfficer: 'Dep. Robinson', status: 'Over Capacity', activeMovements: 0, incidents: 0, notes: 'Emergency beds in use' },
+  { id: 'A1',  name: 'A-Pod',   type: 'Male GP',       security: 'Med', capacity: 96,  current: 94,  assignedOfficer: 'Dep. Harris',   status: 'Near Capacity', activeMovements: 1, incidents: 0, trend: 'up',     projection: '2 intakes pending — may hit capacity by 16:00' },
+  { id: 'A2',  name: 'A2-Pod',  type: 'Male GP',       security: 'Med', capacity: 96,  current: 89,  assignedOfficer: 'Dep. White',    status: 'Normal',        activeMovements: 0, incidents: 1, trend: 'stable' },
+  { id: 'B1',  name: 'B-Pod',   type: 'Male Max',      security: 'Max', capacity: 64,  current: 61,  assignedOfficer: 'Dep. King',     status: 'Normal',        activeMovements: 0, incidents: 0, trend: 'stable' },
+  { id: 'B2',  name: 'B2-Pod',  type: 'Disciplinary',  security: 'Max', capacity: 32,  current: 28,  assignedOfficer: 'Dep. Scott',    status: 'Normal',        activeMovements: 0, incidents: 1, trend: 'stable' },
+  { id: 'C1',  name: 'C-Pod',   type: 'Male Medium',   security: 'Med', capacity: 128, current: 115, assignedOfficer: 'Dep. Rivera',   status: 'Normal',        activeMovements: 2, incidents: 0, trend: 'stable' },
+  { id: 'C2',  name: 'C2-Pod',  type: 'Work Release',  security: 'Min', capacity: 48,  current: 42,  assignedOfficer: null,            status: 'Normal',        activeMovements: 1, incidents: 0, trend: 'up',     projection: 'Unassigned post — float coverage gap this shift', notes: 'Float coverage' },
+  { id: 'D1',  name: 'D-Pod',   type: 'Female GP',     security: 'Med', capacity: 80,  current: 73,  assignedOfficer: 'Dep. Carter',   status: 'Normal',        activeMovements: 0, incidents: 0, trend: 'stable' },
+  { id: 'D2',  name: 'D2-Pod',  type: 'Female Max',    security: 'Max', capacity: 32,  current: 29,  assignedOfficer: 'Dep. Lewis',    status: 'Normal',        activeMovements: 0, incidents: 0, trend: 'stable' },
+  { id: 'E1',  name: 'E-Pod',   type: 'Medical',       security: 'Med', capacity: 48,  current: 44,  assignedOfficer: 'Dep. Martinez', status: 'Near Capacity', activeMovements: 1, incidents: 0, trend: 'up',     projection: '3 isolation active + incoming movement — pressure rising', notes: '3 isolation active' },
+  { id: 'E2',  name: 'E2-Pod',  type: 'Mental Health', security: 'Med', capacity: 40,  current: 38,  assignedOfficer: 'Dep. Johnson',  status: 'Near Capacity', activeMovements: 0, incidents: 1, trend: 'up',     projection: 'Near cap + open contraband incident — risk increasing', notes: '24/7 monitoring' },
+  { id: 'F1',  name: 'F-Pod',   type: 'Intake',        security: 'Hi',  capacity: 64,  current: 52,  assignedOfficer: 'Dep. Allen',    status: 'Normal',        activeMovements: 3, incidents: 0, trend: 'up',     projection: '12 pending classification — intake pressure next 2h', notes: '12 pending class.' },
+  { id: 'F2',  name: 'F2-Pod',  type: 'Prot. Custody', security: 'Hi', capacity: 48,  current: 41,  assignedOfficer: 'Dep. Young',    status: 'Normal',        activeMovements: 0, incidents: 0, trend: 'stable' },
+  { id: 'G1',  name: 'G-Pod',   type: 'Juvenile',      security: 'Med', capacity: 24,  current: 18,  assignedOfficer: 'Dep. Hill',     status: 'Normal',        activeMovements: 0, incidents: 0, trend: 'down',   projection: 'Below average occupancy — stable' },
+  { id: 'G2',  name: 'G2-Pod',  type: 'Pre-Release',   security: 'Min', capacity: 40,  current: 35,  assignedOfficer: null,            status: 'Normal',        activeMovements: 1, incidents: 0, trend: 'stable', notes: 'Float coverage' },
+  { id: 'H1',  name: 'H-Pod',   type: 'Federal Hold',  security: 'Hi',  capacity: 48,  current: 47,  assignedOfficer: 'Dep. Clark',    status: 'Near Capacity', activeMovements: 0, incidents: 0, trend: 'stable', projection: 'Federal intake frozen — no change expected' },
+  { id: 'H2',  name: 'H2-Pod',  type: 'ICE Hold',      security: 'Med', capacity: 32,  current: 36,  assignedOfficer: 'Dep. Robinson', status: 'Over Capacity', activeMovements: 0, incidents: 0, trend: 'down',   projection: 'Transfer in progress — drops to 32 within ~45 min', notes: 'Emergency beds in use' },
 ];
 
 const movements: Movement[] = [
@@ -205,6 +207,7 @@ interface CriticalIssue {
   label: string;
   detail: string;
   impact: string[];
+  recommendation: string;
   actions: string[];
 }
 
@@ -242,6 +245,7 @@ export default function CustodyOperations() {
   const [expandedPod, setExpandedPod] = useState<string | null>(null);
   const [expandedIncident, setExpandedIncident] = useState<number | null>(null);
   const [activePreview, setActivePreview] = useState<{ issueId: string; action: string } | null>(null);
+  const [showStatusDetail, setShowStatusDetail] = useState(false);
 
   const staffPct = Math.round((currentShift.present / currentShift.scheduled) * 100);
   const unassignedPods = pods.filter(p => !p.assignedOfficer).length;
@@ -259,6 +263,24 @@ export default function CustodyOperations() {
     return 'Stable';
   })();
 
+  // ── System Status contributing factors ───────────────────────
+  const statusFactors: string[] = [
+    overCapacityPods.length > 0
+      ? `${overCapacityPods.length} pod(s) over rated capacity — ACA violation active`
+      : nearCapacityPods.length > 0
+      ? `${nearCapacityPods.length} pod(s) near capacity — one intake from violation`
+      : 'All housing units within rated capacity',
+    incidents.filter(i => i.status !== 'Resolved' && (i.severity === 'critical' || i.severity === 'high')).length > 0
+      ? `${incidents.filter(i => i.status !== 'Resolved' && (i.severity === 'critical' || i.severity === 'high')).length} high/critical incident(s) unresolved this shift`
+      : 'No high-severity open incidents',
+    staffPct < 100
+      ? `Staffing at ${staffPct}% — ${currentShift.scheduled - currentShift.present} post(s) uncovered`
+      : 'Full staffing complement on shift',
+    unassignedPods > 0
+      ? `${unassignedPods} pod(s) on float coverage — dedicated officer required`
+      : 'All pods have dedicated officer assignments',
+  ];
+
   // ── Critical Issues with Priority + Impact ────────────────────
   const criticalIssues: CriticalIssue[] = [
     ...overCapacityPods.map(p => ({
@@ -268,10 +290,11 @@ export default function CustodyOperations() {
       label: `${p.name} — Over Capacity`,
       detail: `${p.current}/${p.capacity} beds · ${Math.round((p.current / p.capacity) * 100)}% occupied · ${p.type}`,
       impact: [
-        'ACA compliance violation — reportable offense if unresolved',
-        'Emergency beds exhausted — no medical overflow capacity',
-        'Increased likelihood of inmate conflict and use-of-force',
+        `ACA compliance violation active — reportable offense if unresolved by shift end (22:00)`,
+        'Emergency beds exhausted — no capacity for medical overflow or additional intake',
+        'Conflict risk increases ~40% above rated capacity — use-of-force likelihood elevated',
       ],
+      recommendation: `Move ${p.current - p.capacity + 4} inmates to B-Pod (3 available beds) — restores compliance within ~45 min`,
       actions: ['Redistribute Inmates', 'Contact USMS'],
     })),
     ...incidents
@@ -284,10 +307,27 @@ export default function CustodyOperations() {
         detail: `${i.time} · ${i.reportingOfficer} · ${i.status}`,
         impact:
           i.type === 'Fight'
-            ? ['Risk of escalation to use-of-force if not contained', 'Injured inmate may require outside medical transport', 'Pod lockdown likely — disrupts inmate count cycle']
+            ? [
+                'Escalation risk increases significantly after 30 min without supervisor on-scene',
+                'Injured inmate may require outside transport — pod movement halt for ~2 hours',
+                'ACA incident report required within 24h — clock started at ' + i.time,
+              ]
             : i.type === 'Contraband'
-            ? ['Contraband in circulation elevates safety risk facility-wide', 'Investigative hold and search sweep required', 'Intel report required within 24 hours per SOP']
-            : ['Staff safety at risk without supervisor response', 'Potential ACA documentation requirement if unresolved'],
+            ? [
+                'Contraband in active unit elevates safety risk until sweep completed',
+                `Intel report required within 24h per SOP — due by ${i.time.replace(':', '')}hrs + 24h`,
+                'Investigative hold must be initiated before next shift change (22:00)',
+              ]
+            : [
+                'Unresolved incident compounds if next count finds non-compliance',
+                'ACA documentation requirement triggers if not resolved within current shift',
+              ],
+        recommendation:
+          i.type === 'Fight'
+            ? `Assign supervisor to ${i.pod} now — stabilize before 15:00 count · ${i.reportingOfficer} needs on-scene support`
+            : i.type === 'Contraband'
+            ? `Initiate ${i.pod} sweep immediately — ${i.reportingOfficer} to lead · Intel report due by 15:30`
+            : `Assign supervisor to ${i.pod} to review and document — close before shift end`,
         actions: i.severity === 'critical' ? ['Escalate to Command', 'Lock Unit'] : ['Assign Supervisor', 'Escalate'],
       })),
     ...(staffPct < 93 ? [{
@@ -297,10 +337,11 @@ export default function CustodyOperations() {
       label: 'Shift Understaffed',
       detail: `${currentShift.present}/${currentShift.scheduled} present · ${currentShift.note}`,
       impact: [
-        'Post coverage gap creates supervisory blind spot on unassigned pods',
-        'Remaining officers carrying double-post load — fatigue risk',
-        'ACA minimum ratio requires immediate action to restore coverage',
+        'Post coverage gap persists for remaining ~6 hours of B-Shift if no action taken',
+        'Float officers carrying dual-post load — fatigue risk compounds after hour 6',
+        'ACA minimum ratio (1:64) requires full complement — current gap is non-compliant',
       ],
+      recommendation: 'Approve OT for Smith replacement — covers C2 and G2 float gap · authorization required now',
       actions: ['Approve OT', 'Call Backup'],
     }] : []),
   ].sort((a, b) => PRIORITY_ORDER[a.priority] - PRIORITY_ORDER[b.priority]);
@@ -326,18 +367,43 @@ export default function CustodyOperations() {
             </p>
           </div>
           <div className="flex items-center gap-2">
-            {/* System Status */}
-            <div className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border text-[12px] font-semibold ${
-              systemStatus === 'Critical' ? 'bg-red-500/10 border-red-500/30 text-red-400' :
-              systemStatus === 'Strained' ? 'bg-amber-500/10 border-amber-500/30 text-amber-400' :
-              'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
-            }`}>
-              <Circle className={`w-1.5 h-1.5 ${
-                systemStatus === 'Critical' ? 'fill-red-500 text-red-500' :
-                systemStatus === 'Strained' ? 'fill-amber-400 text-amber-400' :
-                'fill-emerald-500 text-emerald-500'
-              }`} />
-              System: {systemStatus}
+            {/* System Status — clickable to show contributing factors */}
+            <div className="relative">
+              <button
+                onClick={() => setShowStatusDetail(v => !v)}
+                className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border text-[12px] font-semibold transition-colors ${
+                  systemStatus === 'Critical' ? 'bg-red-500/10 border-red-500/30 text-red-400 hover:bg-red-500/15' :
+                  systemStatus === 'Strained' ? 'bg-amber-500/10 border-amber-500/30 text-amber-400 hover:bg-amber-500/15' :
+                  'bg-emerald-500/10 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/15'
+                }`}
+              >
+                <Circle className={`w-1.5 h-1.5 ${
+                  systemStatus === 'Critical' ? 'fill-red-500 text-red-500' :
+                  systemStatus === 'Strained' ? 'fill-amber-400 text-amber-400' :
+                  'fill-emerald-500 text-emerald-500'
+                }`} />
+                System: {systemStatus}
+                <ChevronDown className={`w-3 h-3 transition-transform ${showStatusDetail ? 'rotate-180' : ''}`} />
+              </button>
+
+              {showStatusDetail && (
+                <div className="absolute right-0 top-full mt-1.5 z-50 min-w-[280px] bg-slate-900 border border-slate-700/60 rounded-xl shadow-xl overflow-hidden">
+                  <div className="px-4 py-2.5 border-b border-slate-700/40">
+                    <p className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Why System is {systemStatus}</p>
+                  </div>
+                  <ul className="p-3 space-y-1.5">
+                    {statusFactors.map((factor, i) => {
+                      const isIssue = factor.includes('violation') || factor.includes('uncovered') || factor.includes('unresolved') || factor.includes('required');
+                      return (
+                        <li key={i} className="flex items-start gap-2 text-[11px]">
+                          <span className={`mt-0.5 flex-shrink-0 font-bold ${isIssue ? 'text-amber-500' : 'text-emerald-600'}`}>{isIssue ? '—' : '✓'}</span>
+                          <span className={isIssue ? 'text-slate-300' : 'text-slate-500'}>{factor}</span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              )}
             </div>
             <div className="flex items-center gap-1.5 text-[11px] text-slate-500 bg-slate-800/30 border border-slate-700/50 rounded-lg px-3 py-1.5">
               <Circle className="w-1.5 h-1.5 fill-emerald-500 text-emerald-500" />
@@ -403,33 +469,39 @@ export default function CustodyOperations() {
                         </div>
                       </div>
 
-                      {/* Action buttons */}
-                      <div className="flex flex-col gap-1.5 flex-shrink-0">
-                        {issue.actions.map(action => {
-                          const hasPreview = !!IMPACT_PREVIEWS[action];
-                          const isActive = activePreview?.issueId === issue.id && activePreview?.action === action;
-                          const isDestructive = action.toLowerCase().includes('escalate') || action.toLowerCase().includes('lock');
-                          return (
-                            <button
-                              key={action}
-                              onClick={() => hasPreview ? togglePreview(issue.id, action) : undefined}
-                              className={`text-[11px] px-3 py-1.5 rounded-lg font-medium transition-colors whitespace-nowrap ${
-                                isDestructive
-                                  ? isActive
-                                    ? 'bg-red-500/30 border border-red-500/50 text-red-300'
-                                    : 'bg-red-500/15 border border-red-500/25 text-red-400 hover:bg-red-500/25'
-                                  : isActive
-                                    ? 'bg-slate-600/60 border border-slate-500/60 text-white'
-                                    : 'bg-slate-700/50 border border-slate-600/50 text-slate-300 hover:bg-slate-700/70'
-                              }`}
-                            >
-                              {action}
-                              {hasPreview && (
-                                <span className="ml-1.5 text-[9px] opacity-50">{isActive ? '▲' : '▼'}</span>
-                              )}
-                            </button>
-                          );
-                        })}
+                      {/* Recommended action + buttons */}
+                      <div className="flex flex-col gap-2 flex-shrink-0 max-w-[200px]">
+                        <div className="bg-slate-800/60 border border-slate-700/50 rounded-lg px-2.5 py-2">
+                          <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1">Recommended</p>
+                          <p className="text-[11px] text-slate-200 leading-snug">{issue.recommendation}</p>
+                        </div>
+                        <div className="flex flex-col gap-1">
+                          {issue.actions.map(action => {
+                            const hasPreview = !!IMPACT_PREVIEWS[action];
+                            const isActive = activePreview?.issueId === issue.id && activePreview?.action === action;
+                            const isDestructive = action.toLowerCase().includes('escalate') || action.toLowerCase().includes('lock');
+                            return (
+                              <button
+                                key={action}
+                                onClick={() => hasPreview ? togglePreview(issue.id, action) : undefined}
+                                className={`text-[11px] px-3 py-1.5 rounded-lg font-medium transition-colors whitespace-nowrap ${
+                                  isDestructive
+                                    ? isActive
+                                      ? 'bg-red-500/30 border border-red-500/50 text-red-300'
+                                      : 'bg-red-500/15 border border-red-500/25 text-red-400 hover:bg-red-500/25'
+                                    : isActive
+                                      ? 'bg-slate-600/60 border border-slate-500/60 text-white'
+                                      : 'bg-slate-700/50 border border-slate-600/50 text-slate-300 hover:bg-slate-700/70'
+                                }`}
+                              >
+                                {action}
+                                {hasPreview && (
+                                  <span className="ml-1.5 text-[9px] opacity-50">{isActive ? '▲' : '▼'}</span>
+                                )}
+                              </button>
+                            );
+                          })}
+                        </div>
                       </div>
                     </div>
 
@@ -544,6 +616,9 @@ export default function CustodyOperations() {
                 <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-slate-500 inline-block" />Stable</span>
                 <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-amber-400 inline-block" />Near</span>
                 <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-red-500 inline-block" />Over</span>
+                <span className="text-slate-600">·</span>
+                <span className="flex items-center gap-0.5 text-amber-400 font-bold">↑</span><span className="text-slate-500">worsening</span>
+                <span className="flex items-center gap-0.5 text-emerald-500 font-bold">↓</span><span className="text-slate-500">improving</span>
               </div>
               <button className="flex items-center gap-1.5 text-[11px] text-slate-300 bg-slate-700/40 border border-slate-600/50 rounded-lg px-3 py-1.5 hover:bg-slate-700/60 transition-colors">
                 <ArrowLeftRight className="w-3.5 h-3.5" /> Redistribute Inmates
@@ -560,12 +635,15 @@ export default function CustodyOperations() {
                 <div key={pod.id} className="col-span-1">
                   <button
                     onClick={() => setExpandedPod(isExpanded ? null : pod.id)}
+                    title={pod.projection}
                     className={`w-full rounded-xl border p-2.5 text-left transition-all hover:ring-1 hover:ring-slate-500/40 ${colors.card} ${isExpanded ? 'ring-1 ring-slate-400/30' : ''}`}
                   >
                     <div className="flex items-start justify-between mb-1.5">
                       <span className="text-[11px] font-bold text-white">{pod.id}</span>
-                      <div className="flex gap-0.5">
-                        {pod.incidents > 0 && <span className="w-1.5 h-1.5 rounded-full bg-amber-400 mt-0.5" title="Active incident" />}
+                      <div className="flex items-center gap-0.5">
+                        {pod.trend === 'up'     && <span className={`text-[10px] font-bold leading-none ${pod.status === 'Over Capacity' ? 'text-red-400' : 'text-amber-400'}`}>↑</span>}
+                        {pod.trend === 'down'   && <span className="text-[10px] font-bold leading-none text-emerald-500">↓</span>}
+                        {pod.incidents > 0      && <span className="w-1.5 h-1.5 rounded-full bg-amber-400 mt-0.5" title="Active incident" />}
                         {pod.activeMovements > 0 && <span className="w-1.5 h-1.5 rounded-full bg-slate-400 mt-0.5" title="Active movement" />}
                       </div>
                     </div>
@@ -599,6 +677,14 @@ export default function CustodyOperations() {
                       {pod.current} / {pod.capacity} beds occupied ({pct}%)
                       {pod.notes && <span className="ml-2 text-amber-400">· {pod.notes}</span>}
                     </p>
+                    {pod.projection && (
+                      <p className="text-[11px] mt-1 flex items-center gap-1.5">
+                        <span className={`font-bold ${pod.trend === 'up' ? (pod.status === 'Over Capacity' ? 'text-red-400' : 'text-amber-400') : pod.trend === 'down' ? 'text-emerald-500' : 'text-slate-500'}`}>
+                          {pod.trend === 'up' ? '↑' : pod.trend === 'down' ? '↓' : '→'}
+                        </span>
+                        <span className="text-slate-400">{pod.projection}</span>
+                      </p>
+                    )}
                   </div>
                   <button onClick={() => setExpandedPod(null)} className="text-slate-500 hover:text-slate-300 text-[11px] flex-shrink-0">Close</button>
                 </div>
@@ -907,16 +993,21 @@ export default function CustodyOperations() {
           <div className="grid grid-cols-12 px-5 py-2 border-b border-slate-700/10 text-[10px] text-slate-500 uppercase tracking-wide">
             <span className="col-span-3">Officer</span>
             <span className="col-span-3">Assignment</span>
-            <span className="col-span-1 text-center">Post Type</span>
-            <span className="col-span-1 text-center">On Post</span>
+            <span className="col-span-2">Risk Signals</span>
             <span className="col-span-1 text-center">Hours</span>
             <span className="col-span-3 text-right">Status · Actions</span>
           </div>
 
           <div className="divide-y divide-slate-700/10">
             {officers.map(officer => {
-              const isHighHours = officer.hoursWorked >= 8;
-              const isOffPost = officer.status !== 'On Post';
+              const isHighHours   = officer.hoursWorked >= 8;
+              const isFatigueRisk = officer.hoursWorked >= 6;
+              const isOffPost     = officer.status !== 'On Post';
+              // Priority post: officer assigned to a pod that is over/near capacity or has incidents
+              const assignedPod   = pods.find(p => p.assignedOfficer === officer.name || p.assignedOfficer === `Dep. ${officer.name.split(', ')[0]}`);
+              const isPriorityPost = assignedPod && (assignedPod.status !== 'Normal' || assignedPod.incidents > 0);
+              // Coverage gap: officer is off-post and pod has no backup
+              const hasCoverageGap = isOffPost && assignedPod && assignedPod.incidents > 0;
               return (
                 <div key={officer.badge} className={`grid grid-cols-12 items-center px-5 py-2.5 hover:bg-slate-700/10 transition-colors ${isHighHours ? 'bg-amber-500/[0.03]' : ''}`}>
                   <div className="col-span-3">
@@ -927,11 +1018,30 @@ export default function CustodyOperations() {
                     <p className="text-[12px] text-slate-300">{officer.assignment}</p>
                     {isOffPost && <p className="text-[9px] text-amber-400 mt-0.5">Away from post</p>}
                   </div>
-                  <div className="col-span-1 text-center">
-                    <span className="text-[10px] text-slate-400">{officer.postType}</span>
-                  </div>
-                  <div className="col-span-1 text-center">
-                    <span className="text-[11px] text-slate-400">{officer.onPostSince}</span>
+                  {/* Risk Signals */}
+                  <div className="col-span-2">
+                    <div className="flex flex-wrap gap-1">
+                      {isHighHours && (
+                        <span className="text-[9px] px-1.5 py-0.5 bg-amber-500/15 text-amber-400 border border-amber-500/20 rounded font-semibold uppercase tracking-wide" title="Officer at or over 8 hours — fatigue risk">
+                          Fatigue
+                        </span>
+                      )}
+                      {!isHighHours && isFatigueRisk && (
+                        <span className="text-[9px] px-1.5 py-0.5 bg-slate-700/30 text-slate-400 border border-slate-700/40 rounded font-semibold uppercase tracking-wide" title="Approaching 8-hour threshold">
+                          6h+
+                        </span>
+                      )}
+                      {isPriorityPost && (
+                        <span className="text-[9px] px-1.5 py-0.5 bg-slate-700/30 text-amber-500/80 border border-amber-500/20 rounded font-semibold uppercase tracking-wide" title="Assigned to high-priority housing unit">
+                          Priority
+                        </span>
+                      )}
+                      {hasCoverageGap && (
+                        <span className="text-[9px] px-1.5 py-0.5 bg-red-500/15 text-red-400 border border-red-500/20 rounded font-semibold uppercase tracking-wide" title="Off post with open incident in assigned unit">
+                          Gap
+                        </span>
+                      )}
+                    </div>
                   </div>
                   <div className="col-span-1 text-center">
                     <span className={`text-[12px] font-semibold ${isHighHours ? 'text-amber-400' : 'text-slate-400'}`}>
