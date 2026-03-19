@@ -5,7 +5,7 @@ import {
   Users, AlertTriangle, Shield, Clock, CheckCircle,
   Circle, ArrowRight, ChevronDown, ChevronUp,
   Truck, Heart, LogOut, ArrowLeftRight, AlertOctagon,
-  UserCheck, MapPin, MoreHorizontal, Plus, Zap
+  UserCheck, MapPin, Plus, Zap, PhoneCall, Lock, RotateCcw, UserX
 } from 'lucide-react';
 
 // ── Types ──────────────────────────────────────────────────────
@@ -206,16 +206,38 @@ export default function CustodyOperations() {
   const openIncidents = incidents.filter(i => i.status !== 'Resolved').length;
   const activeMovementCount = movements.filter(m => m.status === 'In Progress' || m.status === 'Staging').length;
 
+  // Derive critical issues for top panel
+  const criticalIssues = [
+    ...pods.filter(p => p.status === 'Over Capacity').map(p => ({
+      id: `pod-${p.id}`, severity: 'critical' as const,
+      label: `${p.name} — Over Capacity`,
+      detail: `${p.current}/${p.capacity} beds (${Math.round((p.current / p.capacity) * 100)}%) · ${p.type}`,
+      actions: ['Redistribute Inmates', 'Contact USMS'],
+    })),
+    ...incidents.filter(i => i.status !== 'Resolved' && (i.severity === 'critical' || i.severity === 'high')).map(i => ({
+      id: `inc-${i.id}`, severity: i.severity,
+      label: `${i.type} — ${i.pod}`,
+      detail: `${i.time} · ${i.reportingOfficer} · ${i.status}`,
+      actions: i.severity === 'critical' ? ['Escalate to Command', 'Lock Unit'] : ['Assign Supervisor', 'Escalate'],
+    })),
+    ...(staffPct < 93 ? [{
+      id: 'staff-short', severity: 'high' as const,
+      label: 'Shift Understaffed',
+      detail: `${currentShift.present}/${currentShift.scheduled} present · ${currentShift.note}`,
+      actions: ['Approve OT', 'Call Backup'],
+    }] : []),
+  ];
+
   return (
     <DashboardLayout>
-      <div className="p-6 space-y-7">
+      <div className="p-6 space-y-5">
 
         {/* ── Page Header ─────────────────────────────────── */}
-        <div className="flex items-start justify-between gap-4 mb-6">
+        <div className="flex items-start justify-between gap-4">
           <div>
             <h1 className="text-xl font-bold text-white mb-1">Custody Operations</h1>
             <p className="text-[11px] text-slate-500">
-              Watch commander control panel · {currentShift.label} · {currentShift.window}
+              Watch commander control panel · {currentShift.label} · {currentShift.window} · Commander: <span className="text-slate-400">{currentShift.commander}</span>
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -231,6 +253,58 @@ export default function CustodyOperations() {
             </button>
           </div>
         </div>
+
+        {/* ── Critical Operational Issues ──────────────────── */}
+        {criticalIssues.length > 0 && (
+          <div className="border border-red-500/30 bg-red-500/5 rounded-xl overflow-hidden">
+            <div className="flex items-center justify-between px-5 py-3 border-b border-red-500/20">
+              <div className="flex items-center gap-2">
+                <AlertOctagon className="w-4 h-4 text-red-400" />
+                <span className="text-[13px] font-bold text-red-400 uppercase tracking-wide">
+                  Critical Operational Issues
+                </span>
+                <span className="text-[10px] px-2 py-0.5 bg-red-500/15 text-red-400 border border-red-500/20 rounded-full">
+                  {criticalIssues.length} requiring action
+                </span>
+              </div>
+              <span className="text-[10px] text-slate-500 flex items-center gap-1">
+                <ArrowRight className="w-3 h-3" /> Reported to Command Center
+              </span>
+            </div>
+            <div className="divide-y divide-red-500/10">
+              {criticalIssues.map(issue => (
+                <div key={issue.id} className="flex items-center gap-4 px-5 py-3">
+                  <div className={`w-1.5 self-stretch rounded-full flex-shrink-0 ${issue.severity === 'critical' ? 'bg-red-500' : 'bg-amber-500'}`} />
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-0.5">
+                      <span className={`text-[11px] px-1.5 py-0.5 rounded font-semibold uppercase tracking-wide ${
+                        issue.severity === 'critical'
+                          ? 'bg-red-500/15 text-red-400 border border-red-500/20'
+                          : 'bg-amber-500/15 text-amber-400 border border-amber-500/20'
+                      }`}>Action Required</span>
+                      <p className="text-[13px] font-semibold text-white">{issue.label}</p>
+                    </div>
+                    <p className="text-[11px] text-slate-400">{issue.detail}</p>
+                  </div>
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    {issue.actions.map(action => (
+                      <button
+                        key={action}
+                        className={`text-[11px] px-3 py-1.5 rounded-lg font-medium transition-colors ${
+                          action.toLowerCase().includes('escalate') || action.toLowerCase().includes('lock') || action.toLowerCase().includes('backup')
+                            ? 'bg-red-500/15 border border-red-500/25 text-red-400 hover:bg-red-500/25'
+                            : 'bg-slate-700/50 border border-slate-600/50 text-slate-300 hover:bg-slate-700/70'
+                        }`}
+                      >
+                        {action}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* ── Section 1: Shift Operations Overview ─────────── */}
         <div className="bg-slate-800/30 border border-slate-700/50 rounded-xl p-5">
@@ -306,13 +380,18 @@ export default function CustodyOperations() {
               <MapPin className="w-4 h-4 text-slate-400" />
               <span className="text-[13px] font-semibold text-white">Housing Unit Management</span>
               <span className="text-[10px] px-2 py-0.5 bg-slate-700/40 text-slate-400 rounded-full">
-                {pods.filter(p => p.status === 'Over Capacity').length} over · {pods.filter(p => p.status === 'Near Capacity').length} near · {pods.filter(p => p.status === 'Normal').length} normal
+                {pods.filter(p => p.status === 'Over Capacity').length} over · {pods.filter(p => p.status === 'Near Capacity').length} near · {pods.filter(p => p.status === 'Normal').length} stable
               </span>
             </div>
-            <div className="flex items-center gap-3 text-[10px] text-slate-500">
-              <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" />Normal</span>
-              <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-amber-400 inline-block" />Near</span>
-              <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-red-500 inline-block" />Over</span>
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-3 text-[10px] text-slate-500 mr-2">
+                <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-slate-500 inline-block" />Stable</span>
+                <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-amber-400 inline-block" />Near</span>
+                <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-red-500 inline-block" />Over</span>
+              </div>
+              <button className="flex items-center gap-1.5 text-[11px] text-slate-300 bg-slate-700/40 border border-slate-600/50 rounded-lg px-3 py-1.5 hover:bg-slate-700/60 transition-colors">
+                <ArrowLeftRight className="w-3.5 h-3.5" /> Redistribute Inmates
+              </button>
             </div>
           </div>
 
@@ -331,7 +410,7 @@ export default function CustodyOperations() {
                       <span className="text-[11px] font-bold text-white">{pod.id}</span>
                       <div className="flex gap-0.5">
                         {pod.incidents > 0 && <span className="w-1.5 h-1.5 rounded-full bg-amber-400 mt-0.5" title="Active incident" />}
-                        {pod.activeMovements > 0 && <span className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-0.5" title="Active movement" />}
+                        {pod.activeMovements > 0 && <span className="w-1.5 h-1.5 rounded-full bg-slate-400 mt-0.5" title="Active movement" />}
                       </div>
                     </div>
                     <p className={`text-[13px] font-bold ${colors.pct}`}>{pct}%</p>
@@ -370,21 +449,26 @@ export default function CustodyOperations() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {/* Officer assignment */}
-                  <div className="bg-slate-800/30 border border-slate-700/40 rounded-lg p-3">
-                    <p className="text-[10px] text-slate-500 uppercase tracking-wide mb-2">Assigned Officer</p>
+                  <div className={`border rounded-lg p-3 ${!pod.assignedOfficer ? 'bg-amber-500/5 border-amber-500/25' : 'bg-slate-800/30 border-slate-700/40'}`}>
+                    <div className="flex items-center justify-between mb-2">
+                      <p className="text-[10px] text-slate-500 uppercase tracking-wide">Assigned Officer</p>
+                      {!pod.assignedOfficer && <span className="text-[9px] px-1.5 py-0.5 bg-amber-500/15 text-amber-400 border border-amber-500/20 rounded font-semibold uppercase">At Risk</span>}
+                    </div>
                     {pod.assignedOfficer ? (
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <UserCheck className="w-3.5 h-3.5 text-slate-400" />
                           <span className="text-[12px] font-medium text-white">{pod.assignedOfficer}</span>
                         </div>
-                        <button className="text-[10px] text-slate-500 hover:text-slate-300 transition-colors">Reassign</button>
+                        <button className="text-[10px] px-2 py-1 bg-slate-700/40 border border-slate-600/50 text-slate-300 hover:text-white rounded-lg transition-colors">
+                          Reassign Officer
+                        </button>
                       </div>
                     ) : (
                       <div className="flex items-center justify-between">
-                        <span className="text-[12px] text-amber-400">Float coverage</span>
-                        <button className="flex items-center gap-1 text-[10px] text-slate-400 hover:text-slate-300 transition-colors">
-                          <Plus className="w-3 h-3" /> Assign
+                        <span className="text-[12px] text-amber-400">Float coverage only</span>
+                        <button className="flex items-center gap-1 text-[10px] px-2 py-1 bg-slate-700/40 border border-slate-600/50 text-slate-300 hover:text-white rounded-lg transition-colors">
+                          <Plus className="w-3 h-3" /> Assign Now
                         </button>
                       </div>
                     )}
@@ -406,14 +490,25 @@ export default function CustodyOperations() {
                   <div className="bg-slate-800/30 border border-slate-700/40 rounded-lg p-3">
                     <p className="text-[10px] text-slate-500 uppercase tracking-wide mb-2">Actions</p>
                     <div className="space-y-1.5">
-                      <button className="w-full flex items-center gap-2 text-[11px] text-slate-300 hover:text-white px-2 py-1.5 bg-slate-700/30 rounded-lg transition-colors">
-                        <ArrowLeftRight className="w-3 h-3" /> Initiate Transfer
+                      <button className="w-full flex items-center gap-2 text-[11px] text-slate-300 hover:text-white px-2.5 py-1.5 bg-slate-700/30 border border-slate-700/40 rounded-lg transition-colors">
+                        <ArrowLeftRight className="w-3 h-3" /> Redistribute Inmates
                       </button>
-                      <button className="w-full flex items-center gap-2 text-[11px] text-slate-300 hover:text-white px-2 py-1.5 bg-slate-700/30 rounded-lg transition-colors">
+                      <button className="w-full flex items-center gap-2 text-[11px] text-slate-300 hover:text-white px-2.5 py-1.5 bg-slate-700/30 border border-slate-700/40 rounded-lg transition-colors">
+                        <Lock className="w-3 h-3" /> Lock Unit
+                      </button>
+                      <button className="w-full flex items-center gap-2 text-[11px] text-slate-300 hover:text-white px-2.5 py-1.5 bg-slate-700/30 border border-slate-700/40 rounded-lg transition-colors">
                         <AlertTriangle className="w-3 h-3" /> Log Incident
                       </button>
                     </div>
                   </div>
+                </div>
+
+                {/* Command uplink */}
+                <div className="mt-3 pt-3 border-t border-slate-700/30 flex items-center gap-1.5">
+                  <ArrowRight className="w-3 h-3 text-slate-600" />
+                  <span className="text-[10px] text-slate-600">
+                    {pod.status === 'Over Capacity' ? 'Impacts Command Risk Level — capacity violation flagged upward' : 'Pod status feeds Command Center housing overview'}
+                  </span>
                 </div>
               </div>
             );
@@ -444,6 +539,7 @@ export default function CustodyOperations() {
             <div className="divide-y divide-slate-700/10">
               {movements.map(mov => {
                 const Icon = getMovementIcon(mov.type);
+                const isActive = mov.status === 'In Progress' || mov.status === 'Staging';
                 return (
                   <div key={mov.id} className="flex items-start gap-3 px-5 py-3 hover:bg-slate-700/10 transition-colors">
                     <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5 bg-slate-700/30">
@@ -457,9 +553,25 @@ export default function CustodyOperations() {
                       <p className="text-[11px] text-slate-400">{mov.type} · {mov.from} → {mov.to}</p>
                       <p className="text-[10px] text-slate-500 mt-0.5">{mov.escort} · Started {mov.startTime} · ETA {mov.eta}</p>
                     </div>
+                    {isActive && (
+                      <div className="flex flex-col gap-1 flex-shrink-0">
+                        <button className="text-[10px] px-2 py-1 bg-slate-700/40 border border-slate-600/50 text-slate-300 hover:text-white rounded transition-colors whitespace-nowrap">
+                          Delay
+                        </button>
+                        <button className="text-[10px] px-2 py-1 bg-slate-700/40 border border-slate-600/50 text-slate-300 hover:text-white rounded transition-colors whitespace-nowrap">
+                          Re-route
+                        </button>
+                      </div>
+                    )}
                   </div>
                 );
               })}
+            </div>
+
+            <div className="px-5 py-2.5 border-t border-slate-700/30">
+              <p className="text-[10px] text-slate-600 flex items-center gap-1">
+                <ArrowRight className="w-3 h-3" /> Active movements tracked in Command Center transport log
+              </p>
             </div>
           </div>
 
@@ -497,9 +609,18 @@ export default function CustodyOperations() {
                       <Icon className={`w-4 h-4 flex-shrink-0 mt-0.5 ${colors.sev || 'text-slate-500'}`} />
                       <div className="flex-1 min-w-0">
                         <div className="flex items-start justify-between gap-2 mb-0.5">
-                          <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-2 flex-wrap">
                             <p className="text-[12px] font-medium text-slate-200">{inc.type}</p>
                             <span className="text-[10px] text-slate-500">{inc.pod}</span>
+                            {inc.status !== 'Resolved' && (
+                              <span className={`text-[9px] px-1.5 py-0.5 rounded font-semibold uppercase tracking-wide ${
+                                inc.severity === 'critical' ? 'bg-red-500/15 text-red-400 border border-red-500/20' :
+                                inc.severity === 'high' ? 'bg-amber-500/15 text-amber-400 border border-amber-500/20' :
+                                'bg-slate-700/30 text-slate-500 border border-slate-700/40'
+                              }`}>
+                                {inc.severity === 'critical' || inc.severity === 'high' ? 'Action Required' : 'Review'}
+                              </span>
+                            )}
                           </div>
                           <div className="flex items-center gap-1.5 flex-shrink-0">
                             <span className={`text-[10px] px-1.5 py-0.5 rounded ${colors.badge}`}>{inc.status}</span>
@@ -511,19 +632,37 @@ export default function CustodyOperations() {
                     </button>
                     {isExpanded && (
                       <div className="px-5 pb-3 pl-12">
-                        <p className="text-[11px] text-slate-300 leading-relaxed bg-slate-900/30 rounded-lg p-3 border border-slate-700/40">
+                        <p className="text-[11px] text-slate-300 leading-relaxed bg-slate-900/30 rounded-lg p-3 border border-slate-700/40 mb-2">
                           {inc.description}
                         </p>
-                        <div className="flex gap-2 mt-2">
-                          <button className="text-[10px] px-2.5 py-1 bg-slate-700/30 border border-slate-700/40 text-slate-400 hover:text-white rounded-lg transition-colors">
-                            View Report
-                          </button>
-                          {inc.status !== 'Resolved' && (
-                            <button className="text-[10px] px-2.5 py-1 bg-slate-700/40 border border-slate-600/50 text-slate-300 hover:text-white rounded-lg transition-colors">
-                              Mark Resolved
+                        <div className="flex flex-wrap gap-1.5">
+                          {inc.status !== 'Resolved' && inc.severity === 'critical' && (
+                            <button className="text-[10px] px-2.5 py-1.5 bg-red-500/15 border border-red-500/25 text-red-400 hover:bg-red-500/25 rounded-lg transition-colors font-medium">
+                              Escalate to Command
                             </button>
                           )}
+                          {inc.status !== 'Resolved' && (
+                            <>
+                              <button className="text-[10px] px-2.5 py-1.5 bg-slate-700/40 border border-slate-600/50 text-slate-300 hover:text-white rounded-lg transition-colors">
+                                Assign Supervisor
+                              </button>
+                              <button className="text-[10px] px-2.5 py-1.5 bg-slate-700/40 border border-slate-600/50 text-slate-300 hover:text-white rounded-lg transition-colors">
+                                Lock Unit
+                              </button>
+                              <button className="text-[10px] px-2.5 py-1.5 bg-slate-700/40 border border-slate-600/50 text-slate-300 hover:text-white rounded-lg transition-colors">
+                                Mark Resolved
+                              </button>
+                            </>
+                          )}
+                          <button className="text-[10px] px-2.5 py-1.5 bg-slate-700/30 border border-slate-700/40 text-slate-400 hover:text-white rounded-lg transition-colors">
+                            View Report
+                          </button>
                         </div>
+                        {inc.severity !== 'low' && inc.status !== 'Resolved' && (
+                          <p className="text-[10px] text-slate-600 mt-2 flex items-center gap-1">
+                            <ArrowRight className="w-3 h-3" /> {inc.severity === 'critical' ? 'Impacts Command Risk Level' : 'Reported to Command Center'}
+                          </p>
+                        )}
                       </div>
                     )}
                   </div>
@@ -539,15 +678,18 @@ export default function CustodyOperations() {
             <div className="flex items-center gap-2">
               <Users className="w-4 h-4 text-slate-400" />
               <span className="text-[13px] font-semibold text-white">Officer Assignment Board</span>
-              <span className="text-[10px] px-2 py-0.5 bg-slate-700/40 text-slate-400 rounded-full">
-                {currentShift.present} of {currentShift.scheduled} on shift
+              <span className={`text-[10px] px-2 py-0.5 rounded-full ${staffPct < 93 ? 'bg-amber-500/15 text-amber-400 border border-amber-500/20' : 'bg-slate-700/40 text-slate-400'}`}>
+                {currentShift.present}/{currentShift.scheduled} on shift
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <button className="flex items-center gap-1.5 text-[11px] text-amber-400 hover:text-amber-300 bg-amber-500/10 border border-amber-500/20 rounded-lg px-3 py-1.5 transition-colors">
+              <button className="flex items-center gap-1.5 text-[11px] text-slate-300 bg-slate-700/40 border border-slate-600/50 rounded-lg px-3 py-1.5 hover:bg-slate-700/60 transition-colors">
+                <PhoneCall className="w-3.5 h-3.5" /> Call Backup
+              </button>
+              <button className="flex items-center gap-1.5 text-[11px] text-slate-300 bg-slate-700/40 border border-slate-600/50 rounded-lg px-3 py-1.5 hover:bg-slate-700/60 transition-colors">
                 <Plus className="w-3.5 h-3.5" /> Approve OT
               </button>
-              <button className="flex items-center gap-1.5 text-[11px] text-slate-400 hover:text-white bg-slate-700/20 border border-slate-700/40 rounded-lg px-3 py-1.5 transition-colors">
+              <button className="flex items-center gap-1.5 text-[11px] text-slate-300 bg-slate-700/40 border border-slate-600/50 rounded-lg px-3 py-1.5 hover:bg-slate-700/60 transition-colors">
                 <ArrowLeftRight className="w-3.5 h-3.5" /> Bulk Reassign
               </button>
             </div>
@@ -557,57 +699,64 @@ export default function CustodyOperations() {
           <div className="grid grid-cols-12 px-5 py-2 border-b border-slate-700/10 text-[10px] text-slate-500 uppercase tracking-wide">
             <span className="col-span-3">Officer</span>
             <span className="col-span-3">Assignment</span>
-            <span className="col-span-2 text-center">Post Type</span>
+            <span className="col-span-1 text-center">Post Type</span>
             <span className="col-span-1 text-center">On Post</span>
             <span className="col-span-1 text-center">Hours</span>
-            <span className="col-span-2 text-right">Status / Action</span>
+            <span className="col-span-3 text-right">Status · Actions</span>
           </div>
 
           <div className="divide-y divide-slate-700/10">
-            {officers.map(officer => (
-              <div key={officer.badge} className="grid grid-cols-12 items-center px-5 py-2.5 hover:bg-slate-700/10 transition-colors">
-                <div className="col-span-3">
-                  <p className="text-[12px] font-medium text-slate-200">{officer.name}</p>
-                  <p className="text-[10px] text-slate-500">#{officer.badge} · {officer.rank}</p>
-                </div>
-                <div className="col-span-3">
-                  <p className="text-[12px] text-slate-300">{officer.assignment}</p>
-                </div>
-                <div className="col-span-2 text-center">
-                  <span className="text-[10px] text-slate-400">{officer.postType}</span>
-                </div>
-                <div className="col-span-1 text-center">
-                  <div className="flex items-center justify-center gap-1">
-                    <Clock className="w-3 h-3 text-slate-600" />
+            {officers.map(officer => {
+              const isHighHours = officer.hoursWorked >= 8;
+              const isOffPost = officer.status !== 'On Post';
+              return (
+                <div key={officer.badge} className={`grid grid-cols-12 items-center px-5 py-2.5 hover:bg-slate-700/10 transition-colors ${isHighHours ? 'bg-amber-500/[0.03]' : ''}`}>
+                  <div className="col-span-3">
+                    <p className="text-[12px] font-medium text-slate-200">{officer.name}</p>
+                    <p className="text-[10px] text-slate-500">#{officer.badge} · {officer.rank}</p>
+                  </div>
+                  <div className="col-span-3">
+                    <p className="text-[12px] text-slate-300">{officer.assignment}</p>
+                    {isOffPost && <p className="text-[9px] text-amber-400 mt-0.5">Away from post</p>}
+                  </div>
+                  <div className="col-span-1 text-center">
+                    <span className="text-[10px] text-slate-400">{officer.postType}</span>
+                  </div>
+                  <div className="col-span-1 text-center">
                     <span className="text-[11px] text-slate-400">{officer.onPostSince}</span>
                   </div>
+                  <div className="col-span-1 text-center">
+                    <span className={`text-[12px] font-semibold ${isHighHours ? 'text-amber-400' : 'text-slate-400'}`}>
+                      {officer.hoursWorked}h
+                    </span>
+                    {isHighHours && <p className="text-[8px] text-amber-400/70 leading-none">OT</p>}
+                  </div>
+                  <div className="col-span-3 flex items-center justify-end gap-1.5">
+                    <span className={`text-[10px] px-1.5 py-0.5 rounded-full flex-shrink-0 ${getOfficerStatusColors(officer.status)}`}>
+                      {officer.status}
+                    </span>
+                    <button className="text-[10px] px-2 py-1 bg-slate-700/40 border border-slate-600/50 text-slate-400 hover:text-white rounded transition-colors flex-shrink-0">
+                      Reassign
+                    </button>
+                  </div>
                 </div>
-                <div className="col-span-1 text-center">
-                  <span className={`text-[12px] font-medium ${officer.hoursWorked >= 8 ? 'text-amber-400' : 'text-slate-400'}`}>
-                    {officer.hoursWorked}h
-                  </span>
-                </div>
-                <div className="col-span-2 flex items-center justify-end gap-2">
-                  <span className={`text-[10px] px-2 py-0.5 rounded-full ${getOfficerStatusColors(officer.status)}`}>
-                    {officer.status}
-                  </span>
-                  <button className="text-slate-600 hover:text-slate-400 transition-colors">
-                    <MoreHorizontal className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-              </div>
-            ))}
+              );
+            })}
 
             {/* Missing officer row */}
             <div className="grid grid-cols-12 items-center px-5 py-2.5 bg-red-500/5 border-l-2 border-l-red-500/50">
               <div className="col-span-3">
-                <p className="text-[12px] font-medium text-red-400">Smith, Officer</p>
+                <div className="flex items-center gap-1.5">
+                  <UserX className="w-3 h-3 text-red-400" />
+                  <p className="text-[12px] font-medium text-red-400">Smith, Officer</p>
+                </div>
                 <p className="text-[10px] text-slate-500">#2176 · Deputy</p>
               </div>
               <div className="col-span-3">
-                <p className="text-[12px] text-slate-500">—</p>
+                <p className="text-[11px] text-amber-400">Post uncovered</p>
+                <p className="text-[10px] text-slate-600">Float or OT required</p>
               </div>
-              <div className="col-span-2 text-center">
+              <div className="col-span-1 text-center">
                 <span className="text-[10px] text-slate-500">Pod</span>
               </div>
               <div className="col-span-1 text-center">
@@ -616,10 +765,13 @@ export default function CustodyOperations() {
               <div className="col-span-1 text-center">
                 <span className="text-[10px] text-slate-600">—</span>
               </div>
-              <div className="col-span-2 flex items-center justify-end gap-2">
-                <span className="text-[10px] px-2 py-0.5 bg-red-500/15 text-red-400 border border-red-500/20 rounded-full">Sick Call</span>
-                <button className="flex items-center gap-1 text-[10px] text-amber-400 hover:text-amber-300 transition-colors">
-                  <Plus className="w-3 h-3" /> OT
+              <div className="col-span-3 flex items-center justify-end gap-1.5">
+                <span className="text-[10px] px-1.5 py-0.5 bg-red-500/15 text-red-400 border border-red-500/20 rounded-full flex-shrink-0">Sick Call</span>
+                <button className="text-[10px] px-2 py-1 bg-slate-700/40 border border-slate-600/50 text-slate-300 hover:text-white rounded transition-colors flex-shrink-0">
+                  Approve OT
+                </button>
+                <button className="text-[10px] px-2 py-1 bg-slate-700/40 border border-slate-600/50 text-slate-300 hover:text-white rounded transition-colors flex-shrink-0">
+                  Call Backup
                 </button>
               </div>
             </div>
@@ -627,11 +779,16 @@ export default function CustodyOperations() {
 
           <div className="px-5 py-3 border-t border-slate-700/30 flex items-center justify-between">
             <p className="text-[10px] text-slate-600">
-              Officers on 9h+ shift highlighted · ACA minimum ratio: 1 officer per 64 inmates
+              Officers at 8h+ highlighted · ACA minimum: 1 officer per 64 inmates
             </p>
-            <div className="flex items-center gap-1.5 text-[10px]">
-              <CheckCircle className="w-3 h-3 text-emerald-500" />
-              <span className="text-slate-500">ACA minimum {currentShift.present >= 13 ? 'met' : 'NOT MET'}</span>
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-1.5 text-[10px]">
+                <CheckCircle className="w-3 h-3 text-emerald-500" />
+                <span className="text-slate-500">ACA minimum {currentShift.present >= 13 ? 'met' : 'NOT MET'}</span>
+              </div>
+              <span className="text-[10px] text-slate-600 flex items-center gap-1">
+                <ArrowRight className="w-3 h-3" /> Staffing status reported to Command
+              </span>
             </div>
           </div>
         </div>
