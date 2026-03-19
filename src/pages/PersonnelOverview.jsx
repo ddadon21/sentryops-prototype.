@@ -405,7 +405,7 @@ export default function PersonnelOverview() {
                       <p className="text-[11px] text-slate-500">Operational workforce management + deployment readiness</p>
                     </div>
                     <div className="flex items-center gap-2">
-                      <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/40 border border-slate-700/50 rounded-lg text-[11px] text-slate-400 hover:text-white transition-colors">
+                      <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/30 border border-slate-700/50 rounded-lg text-[11px] text-slate-400 hover:text-white transition-colors">
                         <Download className="w-3 h-3" />
                         Staffing Report
                       </button>
@@ -416,7 +416,7 @@ export default function PersonnelOverview() {
                 {/* ── Workforce Status Row (4 cards) ──────────── */}
                 <div className="grid grid-cols-4 gap-3 mb-4">
                   {/* Workforce Health */}
-                  <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-3">
+                  <div className="bg-slate-800/30 border border-slate-700/50 rounded-xl p-3">
                     <div className="flex items-center gap-2 mb-1.5">
                       <Gauge className="w-3.5 h-3.5 text-amber-400" />
                       <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Workforce Health</span>
@@ -429,7 +429,7 @@ export default function PersonnelOverview() {
                   </div>
 
                   {/* Patrol Coverage */}
-                  <div className="bg-slate-800/40 border border-amber-500/20 rounded-xl p-3">
+                  <div className="bg-slate-800/30 border border-amber-500/20 rounded-xl p-3">
                     <div className="flex items-center gap-2 mb-1.5">
                       <Shield className="w-3.5 h-3.5 text-amber-400" />
                       <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Patrol Coverage</span>
@@ -442,7 +442,7 @@ export default function PersonnelOverview() {
                   </div>
 
                   {/* Certification Compliance */}
-                  <div className="bg-slate-800/40 border border-amber-500/20 rounded-xl p-3">
+                  <div className="bg-slate-800/30 border border-amber-500/20 rounded-xl p-3">
                     <div className="flex items-center gap-2 mb-1.5">
                       <Award className="w-3.5 h-3.5 text-amber-400" />
                       <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Cert Compliance</span>
@@ -455,7 +455,7 @@ export default function PersonnelOverview() {
                   </div>
 
                   {/* Staffing Gap */}
-                  <div className="bg-slate-800/40 border border-red-500/20 rounded-xl p-3">
+                  <div className="bg-slate-800/30 border border-red-500/20 rounded-xl p-3">
                     <div className="flex items-center gap-2 mb-1.5">
                       <Users className="w-3.5 h-3.5 text-red-400" />
                       <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Staffing Gap</span>
@@ -499,16 +499,16 @@ export default function PersonnelOverview() {
                     <button className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-slate-900 font-semibold rounded text-[11px] transition-colors">
                       <Plus className="w-3 h-3" />Add Personnel
                     </button>
-                    <button onClick={() => navigate(createPageUrl('TrainingCertifications'))} className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-slate-300 rounded text-[11px] font-medium transition-colors">
+                    <button onClick={() => navigate(createPageUrl('TrainingCertifications'))} className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800/30 hover:bg-slate-800/60 border border-slate-700/50 text-slate-300 rounded text-[11px] font-medium transition-colors">
                       <Calendar className="w-3 h-3" />Schedule Training
                     </button>
-                    <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-slate-300 rounded text-[11px] font-medium transition-colors">
+                    <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800/30 hover:bg-slate-800/60 border border-slate-700/50 text-slate-300 rounded text-[11px] font-medium transition-colors">
                       <FileText className="w-3 h-3" />Certification Report
                     </button>
-                    <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-slate-300 rounded text-[11px] font-medium transition-colors">
+                    <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800/30 hover:bg-slate-800/60 border border-slate-700/50 text-slate-300 rounded text-[11px] font-medium transition-colors">
                       <BarChart3 className="w-3 h-3" />Workforce Analytics
                     </button>
-                    <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-slate-300 rounded text-[11px] font-medium transition-colors">
+                    <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800/30 hover:bg-slate-800/60 border border-slate-700/50 text-slate-300 rounded text-[11px] font-medium transition-colors">
                       <Download className="w-3 h-3" />Import Roster
                     </button>
                   </div>
@@ -869,19 +869,19 @@ export default function PersonnelOverview() {
 
               {/* Key Info */}
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-slate-800/40 rounded-xl p-4 border border-slate-700/50">
+                <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
                   <p className="text-xs text-slate-400 mb-1">Badge</p>
                   <p className="text-sm font-medium text-white font-mono">{peekData.badge}</p>
                 </div>
-                <div className="bg-slate-800/40 rounded-xl p-4 border border-slate-700/50">
+                <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
                   <p className="text-xs text-slate-400 mb-1">Division</p>
                   <p className="text-sm font-medium text-white">{peekData.division}</p>
                 </div>
-                <div className="bg-slate-800/40 rounded-xl p-4 border border-slate-700/50">
+                <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
                   <p className="text-xs text-slate-400 mb-1">Shift</p>
                   <p className="text-sm font-medium text-white">{peekData.shift}</p>
                 </div>
-                <div className="bg-slate-800/40 rounded-xl p-4 border border-slate-700/50">
+                <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
                   <p className="text-xs text-slate-400 mb-1">Tenure</p>
                   <p className="text-sm font-medium text-white">{peekData.tenure}</p>
                 </div>
@@ -911,7 +911,7 @@ export default function PersonnelOverview() {
                 <h4 className="text-sm font-semibold text-white mb-3">Certifications</h4>
                 <div className="space-y-2">
                   {peekData.certifications.map((cert, idx) => (
-                    <div key={idx} className="flex items-center justify-between p-3 bg-slate-800/40 rounded-lg border border-slate-700/50">
+                    <div key={idx} className="flex items-center justify-between p-3 bg-slate-800/30 rounded-lg border border-slate-700/50">
                       <div className="flex items-center gap-3">
                         {cert.status === 'current' ? (
                           <CheckCircle className="w-4 h-4 text-green-400" />
@@ -932,11 +932,11 @@ export default function PersonnelOverview() {
 
               {/* Quick Actions */}
               <div className="pt-4 border-t border-slate-700/50 space-y-3">
-                <button className="w-full flex items-center gap-3 px-4 py-3 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 hover:border-slate-600/50 rounded-xl text-white transition-all">
+                <button className="w-full flex items-center gap-3 px-4 py-3 bg-slate-800/30 hover:bg-slate-800/60 border border-slate-700/50 hover:border-slate-600/50 rounded-xl text-white transition-all">
                   <Mail className="w-5 h-5 text-slate-400" />
                   <span className="text-sm font-medium">Send Message</span>
                 </button>
-                <button className="w-full flex items-center gap-3 px-4 py-3 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 hover:border-slate-600/50 rounded-xl text-white transition-all">
+                <button className="w-full flex items-center gap-3 px-4 py-3 bg-slate-800/30 hover:bg-slate-800/60 border border-slate-700/50 hover:border-slate-600/50 rounded-xl text-white transition-all">
                   <Calendar className="w-5 h-5 text-amber-400" />
                   <span className="text-sm font-medium">View Schedule</span>
                 </button>
@@ -990,7 +990,7 @@ export default function PersonnelOverview() {
                 {/* Left Column - Main Info */}
                 <div className="lg:col-span-2 space-y-6">
                   {/* Status & Quick Info */}
-                  <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
+                  <div className="bg-slate-800/30 border border-slate-700/50 rounded-xl p-5">
                     <h3 className="text-lg font-bold text-white mb-4">Status & Information</h3>
                     <div className="grid grid-cols-2 gap-4">
                       <div>
@@ -1030,7 +1030,7 @@ export default function PersonnelOverview() {
                   </div>
 
                   {/* Activity Stats */}
-                  <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
+                  <div className="bg-slate-800/30 border border-slate-700/50 rounded-xl p-5">
                     <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
                       <Activity className="w-5 h-5 text-slate-400" />
                       Activity Statistics (Last 30 Days)
@@ -1062,7 +1062,7 @@ export default function PersonnelOverview() {
                   </div>
 
                   {/* Certifications & Training */}
-                  <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
+                  <div className="bg-slate-800/30 border border-slate-700/50 rounded-xl p-5">
                     <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
                       <Award className="w-5 h-5 text-slate-400" />
                       Certifications & Training History
@@ -1105,7 +1105,7 @@ export default function PersonnelOverview() {
                   </div>
 
                   {/* Performance Reviews */}
-                  <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
+                  <div className="bg-slate-800/30 border border-slate-700/50 rounded-xl p-5">
                     <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
                       <Star className="w-5 h-5 text-slate-400" />
                       Performance Reviews
@@ -1140,7 +1140,7 @@ export default function PersonnelOverview() {
                 {/* Right Column - Contact & Equipment */}
                 <div className="space-y-6">
                   {/* Contact Information */}
-                  <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
+                  <div className="bg-slate-800/30 border border-slate-700/50 rounded-xl p-5">
                     <h3 className="text-lg font-bold text-white mb-4">Contact</h3>
                     <div className="space-y-3">
                       <div>
@@ -1161,7 +1161,7 @@ export default function PersonnelOverview() {
                   </div>
 
                   {/* Equipment Assignments */}
-                  <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
+                  <div className="bg-slate-800/30 border border-slate-700/50 rounded-xl p-5">
                     <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
                       <Shield className="w-5 h-5 text-slate-400" />
                       Equipment
@@ -1191,7 +1191,7 @@ export default function PersonnelOverview() {
                   </div>
 
                   {/* Action Buttons */}
-                  <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
+                  <div className="bg-slate-800/30 border border-slate-700/50 rounded-xl p-5">
                     <h3 className="text-lg font-bold text-white mb-4">Actions</h3>
                     <div className="space-y-2">
                       <button className="w-full flex items-center gap-3 px-4 py-2.5 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-sm font-medium transition-colors">

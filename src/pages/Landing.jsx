@@ -7,7 +7,7 @@ export default function Landing() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-[#0d1424] to-slate-950">
       {/* Nav */}
       <nav className="border-b border-slate-800/50 backdrop-blur-xl bg-slate-900/30">
         <div className="max-w-7xl mx-auto px-6 py-4">
@@ -63,9 +63,9 @@ export default function Landing() {
       {/* Hero */}
       <div className="max-w-7xl mx-auto px-6 py-12 md:py-20">
         <div className="text-center mb-12 md:mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-400 text-sm font-medium mb-6">
-            <Zap className="w-4 h-4" />
-            Now with AI-powered intelligence
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-slate-800/50 border border-slate-700/50 rounded-lg text-slate-400 text-xs font-semibold uppercase tracking-widest mb-6">
+            <Shield className="w-3.5 h-3.5" />
+            Law Enforcement Command Platform
           </div>
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
             The Central Hub for<br />Sheriff Operations
@@ -88,26 +88,26 @@ export default function Landing() {
         {/* Trust Badges */}
         <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8 mb-12 md:mb-16 text-sm text-slate-400 px-4">
           <div className="flex items-center gap-2">
-            <Check className="w-4 h-4 text-green-400" />
+            <Check className="w-4 h-4 text-slate-500" />
             <span>CJIS Compliant</span>
           </div>
           <div className="flex items-center gap-2">
-            <Check className="w-4 h-4 text-green-400" />
+            <Check className="w-4 h-4 text-slate-500" />
             <span>AWS GovCloud</span>
           </div>
           <div className="flex items-center gap-2">
-            <Check className="w-4 h-4 text-green-400" />
+            <Check className="w-4 h-4 text-slate-500" />
             <span>SOC 2 Type II</span>
           </div>
           <div className="flex items-center gap-2">
-            <Check className="w-4 h-4 text-green-400" />
+            <Check className="w-4 h-4 text-slate-500" />
             <span>GDPR Ready</span>
           </div>
         </div>
 
         {/* Screenshot Mockup */}
         <div className="relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-amber-500/20 blur-3xl"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-700/10 to-slate-600/10 blur-3xl"></div>
           <div className="relative bg-slate-900/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-2">
             <div className="bg-slate-950 rounded-xl aspect-video flex items-center justify-center">
               <div className="text-center">
@@ -137,8 +137,8 @@ export default function Landing() {
             const Icon = feature.icon;
             return (
               <div key={idx} className="bg-slate-800/40 backdrop-blur-xl border border-slate-700/50 rounded-xl p-6 hover:border-slate-600/50 transition-all">
-                <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center mb-4">
-                  <Icon className="w-6 h-6 text-blue-400" />
+                <div className="w-12 h-12 bg-slate-700/60 rounded-xl flex items-center justify-center mb-4">
+                  <Icon className="w-6 h-6 text-slate-400" />
                 </div>
                 <h3 className="text-lg font-semibold text-white mb-2">{feature.title}</h3>
                 <p className="text-sm text-slate-400">{feature.desc}</p>
@@ -150,7 +150,7 @@ export default function Landing() {
 
       {/* CTA */}
       <div className="max-w-7xl mx-auto px-6 py-12 md:py-20">
-        <div className="bg-gradient-to-r from-blue-500/10 to-amber-500/10 border border-slate-700/50 rounded-2xl p-8 md:p-12 text-center">
+        <div className="bg-slate-800/30 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-8 md:p-12 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Ready to transform your operations?</h2>
           <p className="text-slate-400 mb-8 max-w-2xl mx-auto px-4">
             Join forward-thinking sheriff's departments using SentryOps to streamline operations and improve efficiency.

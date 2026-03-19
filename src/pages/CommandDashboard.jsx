@@ -243,7 +243,7 @@ export default function CommandDashboard() {
           {/* Personnel */}
           <button
             onClick={() => navigate(createPageUrl('PersonnelOverview'))}
-            className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5 text-left hover:border-slate-600/40 transition-colors"
+            className="bg-slate-800/30 border border-slate-700/50 rounded-xl p-5 text-left hover:border-slate-600/40 transition-colors"
           >
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
@@ -264,7 +264,7 @@ export default function CommandDashboard() {
           {/* Active Critical Incidents — dominant */}
           <button
             onClick={() => navigate(createPageUrl('Approvals'))}
-            className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5 text-left hover:border-slate-600/40 transition-colors"
+            className="bg-slate-800/30 border border-slate-700/50 rounded-xl p-5 text-left hover:border-slate-600/40 transition-colors"
           >
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
@@ -286,7 +286,7 @@ export default function CommandDashboard() {
           </button>
 
           {/* Compliance Status — with breakdown */}
-          <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5 text-left">
+          <div className="bg-slate-800/30 border border-slate-700/50 rounded-xl p-5 text-left">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-amber-500"></div>
@@ -307,7 +307,7 @@ export default function CommandDashboard() {
           {/* Budget Snapshot */}
           <button
             onClick={() => navigate(createPageUrl('BudgetResources'))}
-            className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5 text-left hover:border-slate-600/40 transition-colors"
+            className="bg-slate-800/30 border border-slate-700/50 rounded-xl p-5 text-left hover:border-slate-600/40 transition-colors"
           >
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
@@ -327,7 +327,7 @@ export default function CommandDashboard() {
         </div>
 
         {/* Executive Intelligence Summary */}
-        <div className="mb-8 bg-slate-800/40 border border-slate-700/50 rounded-xl border-l-2 border-l-slate-600/40">
+        <div className="mb-8 bg-slate-800/30 border border-slate-700/50 rounded-xl border-l-2 border-l-slate-600/40">
           <button
             onClick={() => setAiBriefExpanded(!aiBriefExpanded)}
             className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-slate-800/10 transition-colors rounded-xl"
@@ -394,7 +394,7 @@ export default function CommandDashboard() {
         </div>
 
         {/* Pending Approvals — Top 3 only */}
-        <div className="mb-8 bg-slate-800/40 border border-slate-700/50 rounded-xl">
+        <div className="mb-8 bg-slate-800/30 border border-slate-700/50 rounded-xl">
           <div className="flex items-center justify-between px-5 py-4 pb-3">
             <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">Pending Approvals</h3>
             <button
@@ -472,7 +472,7 @@ export default function CommandDashboard() {
         </div>
 
         {/* Federal Compliance & Audits — MOVED UP above Divisions/Staffing */}
-        <div className="mb-8 bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
+        <div className="mb-8 bg-slate-800/30 border border-slate-700/50 rounded-xl p-5">
           <div className="flex items-center justify-between mb-5">
             <div className="flex items-center gap-3">
               <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">Federal Compliance & Audits</h3>
@@ -572,7 +572,7 @@ export default function CommandDashboard() {
                 onClick={() => div.route && navigate(createPageUrl(div.route))}
                 onMouseEnter={() => setHoveredDivision(idx)}
                 onMouseLeave={() => setHoveredDivision(null)}
-                className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-4 text-left hover:border-slate-600/40 transition-colors relative"
+                className="bg-slate-800/30 border border-slate-700/50 rounded-xl p-4 text-left hover:border-slate-600/40 transition-colors relative"
               >
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-sm font-medium text-white">{div.name}</span>
@@ -598,7 +598,7 @@ export default function CommandDashboard() {
         </div>
 
         {/* Staffing Levels — threshold markers */}
-        <div className="mb-8 bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
+        <div className="mb-8 bg-slate-800/30 border border-slate-700/50 rounded-xl p-5">
           <div className="flex items-center justify-between mb-5">
             <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">Staffing Levels</h3>
             <span className="text-[11px] text-slate-500">164/178 authorized (92.1%)</span>
@@ -689,7 +689,7 @@ export default function CommandDashboard() {
             <div className="flex gap-3">
               <button
                 onClick={closeApprovalModal}
-                className="flex-1 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-white text-sm font-medium transition-colors"
+                className="flex-1 px-4 py-2.5 bg-slate-800/30 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-white text-sm font-medium transition-colors"
               >
                 Cancel
               </button>

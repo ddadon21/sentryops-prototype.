@@ -529,7 +529,7 @@ export default function Approvals() {
                     </span>
                   )}
                   {activeTab === 'decision-log' && (
-                    <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/40 border border-slate-700/50 rounded-lg text-[11px] text-slate-400 hover:text-white transition-colors">
+                    <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/30 border border-slate-700/50 rounded-lg text-[11px] text-slate-400 hover:text-white transition-colors">
                       <Download className="w-3 h-3" />
                       Export
                     </button>
@@ -701,7 +701,7 @@ export default function Approvals() {
                             key={approval.id}
                             className={`rounded border transition-colors ${
                               isSelected ? 'border-slate-600/40 bg-slate-700/[0.1]' :
-                              'border-slate-700/30 bg-slate-800/15 hover:bg-slate-800/40'
+                              'border-slate-700/30 bg-slate-800/15 hover:bg-slate-800/30'
                             }`}
                           >
                             {/* ── Compact Row ──────────────────────── */}
@@ -1102,14 +1102,14 @@ export default function Approvals() {
                 onChange={(e) => setActionComment(e.target.value)}
                 placeholder={approvalAction === 'approve' ? 'Add any comments...' : 'Please provide a reason...'}
                 rows={4}
-                className="w-full px-4 py-3 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-amber-500/50 resize-none"
+                className="w-full px-4 py-3 bg-slate-800/30 border border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-amber-500/50 resize-none"
               />
             </div>
 
             <div className="flex gap-3">
               <button
                 onClick={closeApprovalModal}
-                className="flex-1 px-4 py-3 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-white font-medium transition-all"
+                className="flex-1 px-4 py-3 bg-slate-800/30 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-white font-medium transition-all"
               >
                 Cancel
               </button>
@@ -1150,21 +1150,21 @@ export default function Approvals() {
 
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-slate-800/40 rounded-xl p-4 border border-slate-700/50">
+                <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
                   <p className="text-xs text-slate-400 mb-1">Submitted By</p>
                   <p className="text-sm font-medium text-white">{historyDetailModal.submittedBy}</p>
                 </div>
-                <div className="bg-slate-800/40 rounded-xl p-4 border border-slate-700/50">
+                <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
                   <p className="text-xs text-slate-400 mb-1">Division</p>
                   <p className="text-sm font-medium text-white">{historyDetailModal.division}</p>
                 </div>
                 {historyDetailModal.amount && (
-                  <div className="bg-slate-800/40 rounded-xl p-4 border border-slate-700/50">
+                  <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
                     <p className="text-xs text-slate-400 mb-1">Amount</p>
                     <p className="text-sm font-medium text-green-400">${historyDetailModal.amount.toLocaleString()}</p>
                   </div>
                 )}
-                <div className="bg-slate-800/40 rounded-xl p-4 border border-slate-700/50">
+                <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
                   <p className="text-xs text-slate-400 mb-1">Submitted Date</p>
                   <p className="text-sm font-medium text-white">{new Date(historyDetailModal.submittedDate).toLocaleDateString()}</p>
                 </div>
@@ -1233,7 +1233,7 @@ export default function Approvals() {
                 onChange={(e) => setInfoRequest(e.target.value)}
                 placeholder="Example: Please provide detailed cost breakdown and vendor comparison..."
                 rows={6}
-                className="w-full px-4 py-3 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-blue-500/50 resize-none"
+                className="w-full px-4 py-3 bg-slate-800/30 border border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-blue-500/50 resize-none"
               />
               <p className="text-xs text-slate-500 mt-2">
                 The requester will receive an email notification and can respond directly.
@@ -1243,7 +1243,7 @@ export default function Approvals() {
             <div className="flex gap-3">
               <button
                 onClick={closeRequestInfoModal}
-                className="flex-1 px-4 py-3 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-white font-medium transition-all"
+                className="flex-1 px-4 py-3 bg-slate-800/30 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-white font-medium transition-all"
               >
                 Cancel
               </button>

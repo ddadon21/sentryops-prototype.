@@ -233,7 +233,7 @@ export default function CustodyOperations() {
         </div>
 
         {/* ── Section 1: Shift Operations Overview ─────────── */}
-        <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
+        <div className="bg-slate-800/30 border border-slate-700/50 rounded-xl p-5">
           <div className="flex flex-col lg:flex-row items-start lg:items-center gap-5">
 
             {/* Shift identity */}
@@ -300,7 +300,7 @@ export default function CustodyOperations() {
         </div>
 
         {/* ── Section 2: Housing Unit Management ──────────── */}
-        <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl overflow-hidden">
+        <div className="bg-slate-800/30 border border-slate-700/50 rounded-xl overflow-hidden">
           <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-700/40">
             <div className="flex items-center gap-2">
               <MapPin className="w-4 h-4 text-slate-400" />
@@ -370,7 +370,7 @@ export default function CustodyOperations() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {/* Officer assignment */}
-                  <div className="bg-slate-800/40 border border-slate-700/40 rounded-lg p-3">
+                  <div className="bg-slate-800/30 border border-slate-700/40 rounded-lg p-3">
                     <p className="text-[10px] text-slate-500 uppercase tracking-wide mb-2">Assigned Officer</p>
                     {pod.assignedOfficer ? (
                       <div className="flex items-center justify-between">
@@ -391,7 +391,7 @@ export default function CustodyOperations() {
                   </div>
 
                   {/* Active movements for this pod */}
-                  <div className="bg-slate-800/40 border border-slate-700/40 rounded-lg p-3">
+                  <div className="bg-slate-800/30 border border-slate-700/40 rounded-lg p-3">
                     <p className="text-[10px] text-slate-500 uppercase tracking-wide mb-2">Pod Movements ({pod.activeMovements})</p>
                     {pod.activeMovements === 0 ? (
                       <p className="text-[11px] text-slate-600">No active movements</p>
@@ -403,7 +403,7 @@ export default function CustodyOperations() {
                   </div>
 
                   {/* Actions */}
-                  <div className="bg-slate-800/40 border border-slate-700/40 rounded-lg p-3">
+                  <div className="bg-slate-800/30 border border-slate-700/40 rounded-lg p-3">
                     <p className="text-[10px] text-slate-500 uppercase tracking-wide mb-2">Actions</p>
                     <div className="space-y-1.5">
                       <button className="w-full flex items-center gap-2 text-[11px] text-slate-300 hover:text-white px-2 py-1.5 bg-slate-700/30 rounded-lg transition-colors">
@@ -424,7 +424,7 @@ export default function CustodyOperations() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
 
           {/* Inmate Movement Control */}
-          <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl overflow-hidden">
+          <div className="bg-slate-800/30 border border-slate-700/50 rounded-xl overflow-hidden">
             <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-700/40">
               <div className="flex items-center gap-2">
                 <ArrowLeftRight className="w-4 h-4 text-slate-400" />
@@ -464,7 +464,7 @@ export default function CustodyOperations() {
           </div>
 
           {/* Incident & Discipline Tracking */}
-          <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl overflow-hidden">
+          <div className="bg-slate-800/30 border border-slate-700/50 rounded-xl overflow-hidden">
             <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-700/40">
               <div className="flex items-center gap-2">
                 <AlertOctagon className="w-4 h-4 text-slate-400" />
@@ -534,7 +534,7 @@ export default function CustodyOperations() {
         </div>
 
         {/* ── Section 4: Officer Assignment Board ──────────── */}
-        <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl overflow-hidden">
+        <div className="bg-slate-800/30 border border-slate-700/50 rounded-xl overflow-hidden">
           <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-700/40">
             <div className="flex items-center gap-2">
               <Users className="w-4 h-4 text-slate-400" />

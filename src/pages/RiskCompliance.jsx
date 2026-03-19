@@ -478,7 +478,7 @@ export default function RiskCompliance() {
                 <span className={`px-2.5 py-1 bg-green-500/8 border border-green-500/15 rounded text-[10px] font-semibold ${overallCompliance >= 90 ? 'text-green-400' : 'text-amber-400'}`}>
                   {overallCompliance}% Compliant
                 </span>
-                <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/40 border border-slate-700/50 rounded-lg text-[11px] text-slate-400 hover:text-white transition-colors">
+                <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/30 border border-slate-700/50 rounded-lg text-[11px] text-slate-400 hover:text-white transition-colors">
                   <Download className="w-3 h-3" />
                   Compliance Report
                 </button>
@@ -654,7 +654,7 @@ export default function RiskCompliance() {
                 return (
                   <div
                     key={risk.id}
-                    className="rounded border border-slate-700/30 bg-slate-800/15 hover:bg-slate-800/40 transition-colors"
+                    className="rounded border border-slate-700/30 bg-slate-800/15 hover:bg-slate-800/30 transition-colors"
                   >
                     {/* Compact Row */}
                     <div className="flex items-center gap-2.5 px-3.5 py-[9px]">
@@ -1324,7 +1324,7 @@ export default function RiskCompliance() {
               <>
                 {/* Approval Details */}
                 <div className="px-5 py-4 space-y-4">
-                  <div className="bg-slate-800/40 rounded-xl p-4 border border-slate-700/50">
+                  <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
                     <div className="flex items-center gap-2 mb-2">
                       <span className={`px-1.5 py-px rounded text-[9px] font-bold border ${
                         approvalModal.severity === 'critical' ? 'bg-red-500/10 border-red-500/20 text-red-400' : 'bg-amber-500/10 border-amber-500/20 text-amber-400'
@@ -1367,7 +1367,7 @@ export default function RiskCompliance() {
                       value={approvalNote}
                       onChange={(e) => setApprovalNote(e.target.value)}
                       placeholder="Enter justification for this decision..."
-                      className="w-full px-3 py-2.5 bg-slate-800/40 border border-slate-700/50 rounded-lg text-white text-xs placeholder-slate-600 focus:outline-none focus:border-amber-500/50 resize-none"
+                      className="w-full px-3 py-2.5 bg-slate-800/30 border border-slate-700/50 rounded-lg text-white text-xs placeholder-slate-600 focus:outline-none focus:border-amber-500/50 resize-none"
                       rows={3}
                     />
                   </div>
@@ -1434,7 +1434,7 @@ export default function RiskCompliance() {
                   })()}
                 </div>
 
-                <div className="bg-slate-800/40 rounded-lg p-3 border border-slate-700/50 space-y-2 text-[10px]">
+                <div className="bg-slate-800/30 rounded-lg p-3 border border-slate-700/50 space-y-2 text-[10px]">
                   <div className="flex justify-between">
                     <span className="text-slate-500">Decision ID</span>
                     <span className="text-white font-mono">{approvalDecision.entry.id}</span>
@@ -1463,7 +1463,7 @@ export default function RiskCompliance() {
                   )}
                 </div>
 
-                <div className="mt-4 p-2.5 bg-slate-800/40 border border-slate-700/40 rounded-lg">
+                <div className="mt-4 p-2.5 bg-slate-800/30 border border-slate-700/40 rounded-lg">
                   <p className="text-[9px] text-slate-400 flex items-center gap-1.5">
                     <CircleDot className="w-3 h-3" />
                     This decision has been recorded to the audit trail and will persist across sessions. Cascade projections will recalculate on next refresh.
@@ -1472,7 +1472,7 @@ export default function RiskCompliance() {
 
                 <button
                   onClick={closeApprovalModal}
-                  className="mt-4 w-full px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-white rounded-xl text-sm font-medium transition-all"
+                  className="mt-4 w-full px-4 py-2.5 bg-slate-800/30 hover:bg-slate-800/60 border border-slate-700/50 text-white rounded-xl text-sm font-medium transition-all"
                 >
                   Close
                 </button>

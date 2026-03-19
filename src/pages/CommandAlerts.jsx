@@ -371,7 +371,7 @@ export default function CommandAlerts() {
                     ? 'border-slate-800/10 bg-slate-800/[0.06] opacity-[0.30]'
                     : isAcknowledged
                     ? 'border-slate-700/30 bg-slate-800/15 opacity-70'
-                    : 'border-slate-700/30 bg-slate-800/15 hover:bg-slate-800/40'
+                    : 'border-slate-700/30 bg-slate-800/15 hover:bg-slate-800/30'
                 }`}
               >
                 {/* ── Compact Row ──────────────────────── */}
@@ -580,7 +580,7 @@ export default function CommandAlerts() {
                 value={assignPersonnel}
                 onChange={(e) => setAssignPersonnel(e.target.value)}
                 placeholder="Personnel name..."
-                className="w-full px-3 py-2 bg-slate-800/40 border border-slate-700/40 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:border-slate-600 mb-3"
+                className="w-full px-3 py-2 bg-slate-800/30 border border-slate-700/40 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:border-slate-600 mb-3"
               />
               <div className="flex gap-2">
                 <button
@@ -614,7 +614,7 @@ export default function CommandAlerts() {
                 onChange={(e) => setResolveNotes(e.target.value)}
                 placeholder="Resolution notes..."
                 rows={3}
-                className="w-full px-3 py-2 bg-slate-800/40 border border-slate-700/40 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:border-slate-600 mb-3 resize-none"
+                className="w-full px-3 py-2 bg-slate-800/30 border border-slate-700/40 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:border-slate-600 mb-3 resize-none"
               />
               <div className="flex gap-2">
                 <button
