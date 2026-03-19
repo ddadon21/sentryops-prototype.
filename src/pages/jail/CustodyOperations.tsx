@@ -188,6 +188,22 @@ const getIncidentIcon = (type: Incident['type']) => {
   }
 };
 
+const getMovementDecision = (mov: Movement): { risk: string | null; action: string | null } => {
+  if (mov.status === 'Completed') return { risk: null, action: null };
+  switch (mov.type) {
+    case 'Court Transport':
+      return { risk: 'Delay risk: Missed appearance — rescheduling + judicial notice', action: null };
+    case 'Medical Visit':
+      return { risk: 'Delay risk: Medical window may close — physician availability limited', action: null };
+    case 'Housing Transfer':
+      return { risk: 'Delay risk: Source pod remains over capacity — ACA violation persists', action: 'Complete immediately — resolves H2 compliance' };
+    case 'Release':
+      return { risk: 'Delay risk: Wrongful detention liability after release time', action: 'Verify paperwork · clear by ETA' };
+    case 'Intake':
+      return { risk: null, action: 'Classification required before pod assignment' };
+  }
+};
+
 const getOfficerStatusColors = (status: Officer['status']) => {
   if (status === 'On Post')        return 'bg-slate-700/30 text-slate-400 border border-slate-700/40';
   if (status === 'Medical Escort') return 'bg-amber-500/15 text-amber-400 border border-amber-500/20';
@@ -208,6 +224,8 @@ interface CriticalIssue {
   detail: string;
   impact: string[];
   recommendation: string;
+  confidence: 'High' | 'Medium';
+  outcome: string;
   actions: string[];
 }
 
@@ -295,6 +313,8 @@ export default function CustodyOperations() {
         'Conflict risk increases ~40% above rated capacity — use-of-force likelihood elevated',
       ],
       recommendation: `Move ${p.current - p.capacity + 4} inmates to B-Pod (3 available beds) — restores compliance within ~45 min`,
+      confidence: 'High' as const,
+      outcome: 'ACA violation cleared · conflict risk reduced · medical overflow capacity restored',
       actions: ['Redistribute Inmates', 'Contact USMS'],
     })),
     ...incidents
@@ -328,6 +348,13 @@ export default function CustodyOperations() {
             : i.type === 'Contraband'
             ? `Initiate ${i.pod} sweep immediately — ${i.reportingOfficer} to lead · Intel report due by 15:30`
             : `Assign supervisor to ${i.pod} to review and document — close before shift end`,
+        confidence: (i.type === 'Fight' ? 'High' : 'Medium') as 'High' | 'Medium',
+        outcome:
+          i.type === 'Fight'
+            ? 'Incident contained · documentation complete · pod count cycle preserved'
+            : i.type === 'Contraband'
+            ? 'Sweep complete · intel report filed · investigation hold initiated'
+            : 'Incident closed · ACA documentation fulfilled · supervisor notified',
         actions: i.severity === 'critical' ? ['Escalate to Command', 'Lock Unit'] : ['Assign Supervisor', 'Escalate'],
       })),
     ...(staffPct < 93 ? [{
@@ -342,6 +369,8 @@ export default function CustodyOperations() {
         'ACA minimum ratio (1:64) requires full complement — current gap is non-compliant',
       ],
       recommendation: 'Approve OT for Smith replacement — covers C2 and G2 float gap · authorization required now',
+      confidence: 'High' as const,
+      outcome: 'Staffing restored to 100% · ACA minimum met · float gap eliminated for remainder of B-Shift',
       actions: ['Approve OT', 'Call Backup'],
     }] : []),
   ].sort((a, b) => PRIORITY_ORDER[a.priority] - PRIORITY_ORDER[b.priority]);
@@ -418,6 +447,90 @@ export default function CustodyOperations() {
           </div>
         </div>
 
+        {/* ── Command Attention Needed ─────────────────────── */}
+        {(() => {
+          const complianceRisks = overCapacityPods.map(p => `${p.name} over capacity — ACA violation active`);
+          const staffingRisks = [
+            ...(staffPct < 100 ? [`${currentShift.scheduled - currentShift.present} post uncovered · ${currentShift.note.split('—')[0].trim()}`] : []),
+            ...(officers.filter(o => o.hoursWorked >= 8).length > 0 ? [`${officers.filter(o => o.hoursWorked >= 8).length} officer(s) at fatigue threshold (8h+)`] : []),
+          ];
+          const activeEscalations = incidents
+            .filter(i => i.status !== 'Resolved' && (i.severity === 'critical' || i.severity === 'high'))
+            .map(i => `${i.type} · ${i.pod} · ${i.status}`);
+
+          if (complianceRisks.length === 0 && staffingRisks.length === 0 && activeEscalations.length === 0) return null;
+
+          return (
+            <div className="grid grid-cols-3 gap-3">
+              {/* Compliance Risks */}
+              <div className={`rounded-xl border px-4 py-3 ${complianceRisks.length > 0 ? 'bg-red-500/5 border-red-500/25' : 'bg-slate-800/20 border-slate-700/30'}`}>
+                <div className="flex items-center gap-1.5 mb-2">
+                  <AlertOctagon className={`w-3.5 h-3.5 ${complianceRisks.length > 0 ? 'text-red-400' : 'text-slate-600'}`} />
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Compliance Risk</p>
+                  {complianceRisks.length > 0 && (
+                    <span className="text-[9px] px-1.5 py-0.5 bg-red-500/15 text-red-400 border border-red-500/20 rounded-full font-bold ml-auto">{complianceRisks.length}</span>
+                  )}
+                </div>
+                {complianceRisks.length === 0 ? (
+                  <p className="text-[11px] text-slate-600">No active compliance violations</p>
+                ) : (
+                  <ul className="space-y-0.5">
+                    {complianceRisks.map((r, i) => (
+                      <li key={i} className="text-[11px] text-slate-300 flex items-start gap-1.5">
+                        <span className="text-red-500 flex-shrink-0 mt-0.5">—</span>{r}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+
+              {/* Staffing Risks */}
+              <div className={`rounded-xl border px-4 py-3 ${staffingRisks.length > 0 ? 'bg-amber-500/5 border-amber-500/20' : 'bg-slate-800/20 border-slate-700/30'}`}>
+                <div className="flex items-center gap-1.5 mb-2">
+                  <Users className={`w-3.5 h-3.5 ${staffingRisks.length > 0 ? 'text-amber-400' : 'text-slate-600'}`} />
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Staffing Risk</p>
+                  {staffingRisks.length > 0 && (
+                    <span className="text-[9px] px-1.5 py-0.5 bg-amber-500/15 text-amber-400 border border-amber-500/20 rounded-full font-bold ml-auto">{staffingRisks.length}</span>
+                  )}
+                </div>
+                {staffingRisks.length === 0 ? (
+                  <p className="text-[11px] text-slate-600">Staffing within normal parameters</p>
+                ) : (
+                  <ul className="space-y-0.5">
+                    {staffingRisks.map((r, i) => (
+                      <li key={i} className="text-[11px] text-slate-300 flex items-start gap-1.5">
+                        <span className="text-amber-500 flex-shrink-0 mt-0.5">—</span>{r}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+
+              {/* Active Escalations */}
+              <div className={`rounded-xl border px-4 py-3 ${activeEscalations.length > 0 ? 'bg-amber-500/5 border-amber-500/20' : 'bg-slate-800/20 border-slate-700/30'}`}>
+                <div className="flex items-center gap-1.5 mb-2">
+                  <AlertTriangle className={`w-3.5 h-3.5 ${activeEscalations.length > 0 ? 'text-amber-400' : 'text-slate-600'}`} />
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Active Escalations</p>
+                  {activeEscalations.length > 0 && (
+                    <span className="text-[9px] px-1.5 py-0.5 bg-amber-500/15 text-amber-400 border border-amber-500/20 rounded-full font-bold ml-auto">{activeEscalations.length}</span>
+                  )}
+                </div>
+                {activeEscalations.length === 0 ? (
+                  <p className="text-[11px] text-slate-600">No open high-severity incidents</p>
+                ) : (
+                  <ul className="space-y-0.5">
+                    {activeEscalations.map((r, i) => (
+                      <li key={i} className="text-[11px] text-slate-300 flex items-start gap-1.5">
+                        <span className="text-amber-500 flex-shrink-0 mt-0.5">—</span>{r}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </div>
+          );
+        })()}
+
         {/* ── Critical Operational Issues ──────────────────── */}
         {criticalIssues.length > 0 && (
           <div className="border border-red-500/30 bg-red-500/5 rounded-xl overflow-hidden">
@@ -470,10 +583,20 @@ export default function CustodyOperations() {
                       </div>
 
                       {/* Recommended action + buttons */}
-                      <div className="flex flex-col gap-2 flex-shrink-0 max-w-[200px]">
+                      <div className="flex flex-col gap-2 flex-shrink-0 max-w-[210px]">
                         <div className="bg-slate-800/60 border border-slate-700/50 rounded-lg px-2.5 py-2">
-                          <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1">Recommended</p>
-                          <p className="text-[11px] text-slate-200 leading-snug">{issue.recommendation}</p>
+                          <div className="flex items-center justify-between mb-1">
+                            <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold">Recommended</p>
+                            <span className={`text-[8px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider ${
+                              issue.confidence === 'High'
+                                ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/20'
+                                : 'bg-slate-700/30 text-slate-400 border border-slate-700/40'
+                            }`}>{issue.confidence} confidence</span>
+                          </div>
+                          <p className="text-[11px] text-slate-200 leading-snug mb-1.5">{issue.recommendation}</p>
+                          <p className="text-[10px] text-slate-500 leading-snug border-t border-slate-700/40 pt-1.5">
+                            Expected: {issue.outcome}
+                          </p>
                         </div>
                         <div className="flex flex-col gap-1">
                           {issue.actions.map(action => {
@@ -806,6 +929,7 @@ export default function CustodyOperations() {
               {movements.map(mov => {
                 const Icon = getMovementIcon(mov.type);
                 const isActive = mov.status === 'In Progress' || mov.status === 'Staging';
+                const decision = getMovementDecision(mov);
                 return (
                   <div key={mov.id} className="flex items-start gap-3 px-5 py-3 hover:bg-slate-700/10 transition-colors">
                     <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5 bg-slate-700/30">
@@ -818,6 +942,12 @@ export default function CustodyOperations() {
                       </div>
                       <p className="text-[11px] text-slate-400">{mov.type} · {mov.from} → {mov.to}</p>
                       <p className="text-[10px] text-slate-500 mt-0.5">{mov.escort} · Started {mov.startTime} · ETA {mov.eta}</p>
+                      {isActive && decision.risk && (
+                        <p className="text-[10px] text-amber-400/80 mt-1">⚠ {decision.risk}</p>
+                      )}
+                      {isActive && decision.action && (
+                        <p className="text-[10px] text-slate-400 mt-0.5">→ {decision.action}</p>
+                      )}
                     </div>
                     {isActive && (
                       <div className="flex flex-col gap-1 flex-shrink-0">
@@ -902,6 +1032,35 @@ export default function CustodyOperations() {
                         <p className="text-[11px] text-slate-300 leading-relaxed bg-slate-900/30 rounded-lg p-3 border border-slate-700/40">
                           {inc.description}
                         </p>
+
+                        {/* Escalation likelihood + recommended action — open incidents only */}
+                        {inc.status !== 'Resolved' && (() => {
+                          const escalation =
+                            inc.type === 'Fight'
+                              ? { level: 'High', text: 'Typically escalates to use-of-force within 30 min without supervisor on-scene', action: `Assign supervisor to ${inc.pod} — ${inc.reportingOfficer} needs immediate support` }
+                              : inc.type === 'Contraband'
+                              ? { level: 'Medium', text: 'Contained, but risk spreads if sweep not completed before next dayroom', action: 'Lock E2 for sweep — complete before 16:00 dayroom window' }
+                              : { level: 'Low', text: 'Unlikely to escalate if documented and closed this shift', action: 'Supervisor sign-off required — close before 22:00' };
+                          return (
+                            <div className="flex items-stretch gap-2">
+                              <div className="flex-1 bg-slate-900/50 border border-slate-700/40 rounded-lg px-3 py-2">
+                                <div className="flex items-center gap-1.5 mb-1">
+                                  <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold">Escalation Likelihood</p>
+                                  <span className={`text-[8px] px-1.5 py-0.5 rounded font-bold uppercase ${
+                                    escalation.level === 'High'   ? 'bg-red-500/15 text-red-400 border border-red-500/20' :
+                                    escalation.level === 'Medium' ? 'bg-amber-500/15 text-amber-400 border border-amber-500/20' :
+                                                                    'bg-slate-700/30 text-slate-400 border border-slate-700/40'
+                                  }`}>{escalation.level}</span>
+                                </div>
+                                <p className="text-[11px] text-slate-300 leading-snug">{escalation.text}</p>
+                              </div>
+                              <div className="flex-1 bg-slate-900/50 border border-slate-700/40 rounded-lg px-3 py-2">
+                                <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1">Recommended Action</p>
+                                <p className="text-[11px] text-slate-200 leading-snug">{escalation.action}</p>
+                              </div>
+                            </div>
+                          );
+                        })()}
 
                         {/* Operational Impact — only for open incidents */}
                         {inc.status !== 'Resolved' && (
