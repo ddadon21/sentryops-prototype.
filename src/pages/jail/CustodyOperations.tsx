@@ -196,37 +196,122 @@ const getOfficerStatusColors = (status: Officer['status']) => {
 
 // ── Component ──────────────────────────────────────────────────
 
+type Priority = 'Immediate' | 'High Priority' | 'Monitor';
+
+interface CriticalIssue {
+  id: string;
+  priority: Priority;
+  severity: 'critical' | 'high' | 'medium';
+  label: string;
+  detail: string;
+  impact: string[];
+  actions: string[];
+}
+
+const PRIORITY_ORDER: Record<Priority, number> = { Immediate: 0, 'High Priority': 1, Monitor: 2 };
+
+const IMPACT_PREVIEWS: Record<string, string[]> = {
+  'Redistribute Inmates': [
+    'H2-Pod: 36 → 28 inmates · reduces to 87% capacity',
+    'G2-Pod: 35 → 43 inmates · remains within rated capacity',
+    'ACA compliance violation on H2-Pod cleared',
+    'Requires 2-officer escort team · estimated 45 min',
+  ],
+  'Call Backup': [
+    'Off-duty Deputy eligible — estimated arrival 30 min',
+    'Covers float gap on C2 / G2 rotation',
+    'Overtime cost: ~$52/hr for remainder of shift',
+    'Shift staffing: 13/14 → 14/14 · ACA minimum restored',
+  ],
+  'Approve OT': [
+    'Smith absence covered through end of B-Shift (22:00)',
+    'Staffing ratio: 93% → 100%',
+    'Overtime cost: ~$52/hr · ~6 hours remaining',
+    'Requires watch commander authorization',
+  ],
+  'Lock Unit': [
+    'All inmates returned to cells — dayroom suspended',
+    'Movement in/out of pod halted until command clearance',
+    'Investigating officer and supervisor notified',
+    'Duration: until incident resolved or cleared',
+  ],
+};
+
 export default function CustodyOperations() {
   const navigate = useNavigate();
   const [expandedPod, setExpandedPod] = useState<string | null>(null);
   const [expandedIncident, setExpandedIncident] = useState<number | null>(null);
+  const [activePreview, setActivePreview] = useState<{ issueId: string; action: string } | null>(null);
 
   const staffPct = Math.round((currentShift.present / currentShift.scheduled) * 100);
   const unassignedPods = pods.filter(p => !p.assignedOfficer).length;
   const openIncidents = incidents.filter(i => i.status !== 'Resolved').length;
   const activeMovementCount = movements.filter(m => m.status === 'In Progress' || m.status === 'Staging').length;
+  const overCapacityPods = pods.filter(p => p.status === 'Over Capacity');
+  const nearCapacityPods = pods.filter(p => p.status === 'Near Capacity');
 
-  // Derive critical issues for top panel
-  const criticalIssues = [
-    ...pods.filter(p => p.status === 'Over Capacity').map(p => ({
-      id: `pod-${p.id}`, severity: 'critical' as const,
+  // ── System Status ─────────────────────────────────────────────
+  const systemStatus: 'Critical' | 'Strained' | 'Stable' = (() => {
+    const hasOpenCritical = incidents.some(i => i.status !== 'Resolved' && i.severity === 'critical');
+    if (overCapacityPods.length > 0 || hasOpenCritical) return 'Critical';
+    const hasOpenHigh = incidents.some(i => i.status !== 'Resolved' && i.severity === 'high');
+    if (hasOpenHigh || staffPct < 93 || nearCapacityPods.length > 2) return 'Strained';
+    return 'Stable';
+  })();
+
+  // ── Critical Issues with Priority + Impact ────────────────────
+  const criticalIssues: CriticalIssue[] = [
+    ...overCapacityPods.map(p => ({
+      id: `pod-${p.id}`,
+      priority: 'Immediate' as Priority,
+      severity: 'critical' as const,
       label: `${p.name} — Over Capacity`,
-      detail: `${p.current}/${p.capacity} beds (${Math.round((p.current / p.capacity) * 100)}%) · ${p.type}`,
+      detail: `${p.current}/${p.capacity} beds · ${Math.round((p.current / p.capacity) * 100)}% occupied · ${p.type}`,
+      impact: [
+        'ACA compliance violation — reportable offense if unresolved',
+        'Emergency beds exhausted — no medical overflow capacity',
+        'Increased likelihood of inmate conflict and use-of-force',
+      ],
       actions: ['Redistribute Inmates', 'Contact USMS'],
     })),
-    ...incidents.filter(i => i.status !== 'Resolved' && (i.severity === 'critical' || i.severity === 'high')).map(i => ({
-      id: `inc-${i.id}`, severity: i.severity,
-      label: `${i.type} — ${i.pod}`,
-      detail: `${i.time} · ${i.reportingOfficer} · ${i.status}`,
-      actions: i.severity === 'critical' ? ['Escalate to Command', 'Lock Unit'] : ['Assign Supervisor', 'Escalate'],
-    })),
+    ...incidents
+      .filter(i => i.status !== 'Resolved' && (i.severity === 'critical' || i.severity === 'high'))
+      .map(i => ({
+        id: `inc-${i.id}`,
+        priority: (i.severity === 'critical' ? 'Immediate' : 'High Priority') as Priority,
+        severity: i.severity as 'critical' | 'high',
+        label: `${i.type} — ${i.pod}`,
+        detail: `${i.time} · ${i.reportingOfficer} · ${i.status}`,
+        impact:
+          i.type === 'Fight'
+            ? ['Risk of escalation to use-of-force if not contained', 'Injured inmate may require outside medical transport', 'Pod lockdown likely — disrupts inmate count cycle']
+            : i.type === 'Contraband'
+            ? ['Contraband in circulation elevates safety risk facility-wide', 'Investigative hold and search sweep required', 'Intel report required within 24 hours per SOP']
+            : ['Staff safety at risk without supervisor response', 'Potential ACA documentation requirement if unresolved'],
+        actions: i.severity === 'critical' ? ['Escalate to Command', 'Lock Unit'] : ['Assign Supervisor', 'Escalate'],
+      })),
     ...(staffPct < 93 ? [{
-      id: 'staff-short', severity: 'high' as const,
+      id: 'staff-short',
+      priority: 'High Priority' as Priority,
+      severity: 'high' as const,
       label: 'Shift Understaffed',
       detail: `${currentShift.present}/${currentShift.scheduled} present · ${currentShift.note}`,
+      impact: [
+        'Post coverage gap creates supervisory blind spot on unassigned pods',
+        'Remaining officers carrying double-post load — fatigue risk',
+        'ACA minimum ratio requires immediate action to restore coverage',
+      ],
       actions: ['Approve OT', 'Call Backup'],
     }] : []),
-  ];
+  ].sort((a, b) => PRIORITY_ORDER[a.priority] - PRIORITY_ORDER[b.priority]);
+
+  const togglePreview = (issueId: string, action: string) => {
+    if (activePreview?.issueId === issueId && activePreview?.action === action) {
+      setActivePreview(null);
+    } else {
+      setActivePreview({ issueId, action });
+    }
+  };
 
   return (
     <DashboardLayout>
@@ -241,6 +326,19 @@ export default function CustodyOperations() {
             </p>
           </div>
           <div className="flex items-center gap-2">
+            {/* System Status */}
+            <div className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border text-[12px] font-semibold ${
+              systemStatus === 'Critical' ? 'bg-red-500/10 border-red-500/30 text-red-400' :
+              systemStatus === 'Strained' ? 'bg-amber-500/10 border-amber-500/30 text-amber-400' :
+              'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
+            }`}>
+              <Circle className={`w-1.5 h-1.5 ${
+                systemStatus === 'Critical' ? 'fill-red-500 text-red-500' :
+                systemStatus === 'Strained' ? 'fill-amber-400 text-amber-400' :
+                'fill-emerald-500 text-emerald-500'
+              }`} />
+              System: {systemStatus}
+            </div>
             <div className="flex items-center gap-1.5 text-[11px] text-slate-500 bg-slate-800/30 border border-slate-700/50 rounded-lg px-3 py-1.5">
               <Circle className="w-1.5 h-1.5 fill-emerald-500 text-emerald-500" />
               Live
@@ -268,40 +366,98 @@ export default function CustodyOperations() {
                 </span>
               </div>
               <span className="text-[10px] text-slate-500 flex items-center gap-1">
-                <ArrowRight className="w-3 h-3" /> Reported to Command Center
+                <ArrowRight className="w-3 h-3" /> Synced to Command Center
               </span>
             </div>
             <div className="divide-y divide-red-500/10">
-              {criticalIssues.map(issue => (
-                <div key={issue.id} className="flex items-center gap-4 px-5 py-3">
-                  <div className={`w-1.5 self-stretch rounded-full flex-shrink-0 ${issue.severity === 'critical' ? 'bg-red-500' : 'bg-amber-500'}`} />
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-0.5">
-                      <span className={`text-[11px] px-1.5 py-0.5 rounded font-semibold uppercase tracking-wide ${
-                        issue.severity === 'critical'
-                          ? 'bg-red-500/15 text-red-400 border border-red-500/20'
-                          : 'bg-amber-500/15 text-amber-400 border border-amber-500/20'
-                      }`}>Action Required</span>
-                      <p className="text-[13px] font-semibold text-white">{issue.label}</p>
+              {criticalIssues.map(issue => {
+                const preview = activePreview?.issueId === issue.id ? IMPACT_PREVIEWS[activePreview.action] : null;
+                return (
+                  <div key={issue.id}>
+                    <div className="flex items-start gap-4 px-5 py-4">
+                      {/* Severity strip */}
+                      <div className={`w-1 self-stretch rounded-full flex-shrink-0 ${issue.severity === 'critical' ? 'bg-red-500' : 'bg-amber-500'}`} />
+                      <div className="flex-1 min-w-0">
+                        {/* Priority + title */}
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className={`text-[9px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider ${
+                            issue.priority === 'Immediate'     ? 'bg-red-500/20 text-red-400 border border-red-500/30' :
+                            issue.priority === 'High Priority' ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' :
+                                                                 'bg-slate-700/30 text-slate-400 border border-slate-700/40'
+                          }`}>{issue.priority}</span>
+                          <p className="text-[13px] font-semibold text-white">{issue.label}</p>
+                        </div>
+                        <p className="text-[11px] text-slate-400 mb-2.5">{issue.detail}</p>
+
+                        {/* Operational Impact */}
+                        <div className="bg-slate-900/50 border border-slate-700/40 rounded-lg px-3 py-2.5">
+                          <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1.5">Operational Impact — if no action taken</p>
+                          <ul className="space-y-1">
+                            {issue.impact.map((line, i) => (
+                              <li key={i} className="flex items-start gap-2 text-[11px] text-slate-300">
+                                <span className="text-slate-600 mt-0.5 flex-shrink-0">—</span>
+                                {line}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+
+                      {/* Action buttons */}
+                      <div className="flex flex-col gap-1.5 flex-shrink-0">
+                        {issue.actions.map(action => {
+                          const hasPreview = !!IMPACT_PREVIEWS[action];
+                          const isActive = activePreview?.issueId === issue.id && activePreview?.action === action;
+                          const isDestructive = action.toLowerCase().includes('escalate') || action.toLowerCase().includes('lock');
+                          return (
+                            <button
+                              key={action}
+                              onClick={() => hasPreview ? togglePreview(issue.id, action) : undefined}
+                              className={`text-[11px] px-3 py-1.5 rounded-lg font-medium transition-colors whitespace-nowrap ${
+                                isDestructive
+                                  ? isActive
+                                    ? 'bg-red-500/30 border border-red-500/50 text-red-300'
+                                    : 'bg-red-500/15 border border-red-500/25 text-red-400 hover:bg-red-500/25'
+                                  : isActive
+                                    ? 'bg-slate-600/60 border border-slate-500/60 text-white'
+                                    : 'bg-slate-700/50 border border-slate-600/50 text-slate-300 hover:bg-slate-700/70'
+                              }`}
+                            >
+                              {action}
+                              {hasPreview && (
+                                <span className="ml-1.5 text-[9px] opacity-50">{isActive ? '▲' : '▼'}</span>
+                              )}
+                            </button>
+                          );
+                        })}
+                      </div>
                     </div>
-                    <p className="text-[11px] text-slate-400">{issue.detail}</p>
+
+                    {/* Impact Preview — inline */}
+                    {preview && (
+                      <div className="mx-5 mb-4 bg-slate-900/70 border border-slate-700/60 rounded-lg p-3">
+                        <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-2">Impact Preview — {activePreview!.action}</p>
+                        <ul className="space-y-1 mb-3">
+                          {preview.map((line, i) => (
+                            <li key={i} className="flex items-start gap-2 text-[11px] text-slate-200">
+                              <span className="text-emerald-600 flex-shrink-0 mt-0.5">→</span>
+                              {line}
+                            </li>
+                          ))}
+                        </ul>
+                        <div className="flex items-center gap-2 pt-2 border-t border-slate-700/40">
+                          <button className="text-[11px] px-3 py-1.5 bg-slate-700/60 border border-slate-600/60 text-white rounded-lg hover:bg-slate-700 transition-colors font-medium">
+                            Confirm — {activePreview!.action}
+                          </button>
+                          <button onClick={() => setActivePreview(null)} className="text-[11px] text-slate-500 hover:text-slate-300 transition-colors px-2 py-1.5">
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                  <div className="flex items-center gap-2 flex-shrink-0">
-                    {issue.actions.map(action => (
-                      <button
-                        key={action}
-                        className={`text-[11px] px-3 py-1.5 rounded-lg font-medium transition-colors ${
-                          action.toLowerCase().includes('escalate') || action.toLowerCase().includes('lock') || action.toLowerCase().includes('backup')
-                            ? 'bg-red-500/15 border border-red-500/25 text-red-400 hover:bg-red-500/25'
-                            : 'bg-slate-700/50 border border-slate-600/50 text-slate-300 hover:bg-slate-700/70'
-                        }`}
-                      >
-                        {action}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         )}
@@ -447,6 +603,30 @@ export default function CustodyOperations() {
                   <button onClick={() => setExpandedPod(null)} className="text-slate-500 hover:text-slate-300 text-[11px] flex-shrink-0">Close</button>
                 </div>
 
+                {/* Operational Impact — only shown when there's a problem */}
+                {(pod.status !== 'Normal' || !pod.assignedOfficer || pod.incidents > 0) && (
+                  <div className="bg-slate-900/50 border border-slate-700/40 rounded-lg px-3 py-2.5 mb-3">
+                    <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1.5">Operational Impact — if no action taken</p>
+                    <ul className="space-y-0.5">
+                      {pod.status === 'Over Capacity' && (
+                        <>
+                          <li className="flex items-start gap-2 text-[11px] text-slate-300"><span className="text-slate-600 mt-0.5 flex-shrink-0">—</span>ACA compliance violation — reportable offense if unresolved at shift end</li>
+                          <li className="flex items-start gap-2 text-[11px] text-slate-300"><span className="text-slate-600 mt-0.5 flex-shrink-0">—</span>Emergency beds exhausted — no capacity for medical overflow or intake</li>
+                        </>
+                      )}
+                      {pod.status === 'Near Capacity' && (
+                        <li className="flex items-start gap-2 text-[11px] text-slate-300"><span className="text-slate-600 mt-0.5 flex-shrink-0">—</span>One additional intake pushes pod into non-compliance — no buffer remaining</li>
+                      )}
+                      {!pod.assignedOfficer && (
+                        <li className="flex items-start gap-2 text-[11px] text-slate-300"><span className="text-slate-600 mt-0.5 flex-shrink-0">—</span>Unassigned post creates supervisory blind spot — float coverage is non-dedicated</li>
+                      )}
+                      {pod.incidents > 0 && (
+                        <li className="flex items-start gap-2 text-[11px] text-slate-300"><span className="text-slate-600 mt-0.5 flex-shrink-0">—</span>Open incident may escalate — requires supervisory review and documentation</li>
+                      )}
+                    </ul>
+                  </div>
+                )}
+
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {/* Officer assignment */}
                   <div className={`border rounded-lg p-3 ${!pod.assignedOfficer ? 'bg-amber-500/5 border-amber-500/25' : 'bg-slate-800/30 border-slate-700/40'}`}>
@@ -461,7 +641,7 @@ export default function CustodyOperations() {
                           <span className="text-[12px] font-medium text-white">{pod.assignedOfficer}</span>
                         </div>
                         <button className="text-[10px] px-2 py-1 bg-slate-700/40 border border-slate-600/50 text-slate-300 hover:text-white rounded-lg transition-colors">
-                          Reassign Officer
+                          Reassign
                         </button>
                       </div>
                     ) : (
@@ -631,10 +811,37 @@ export default function CustodyOperations() {
                       </div>
                     </button>
                     {isExpanded && (
-                      <div className="px-5 pb-3 pl-12">
-                        <p className="text-[11px] text-slate-300 leading-relaxed bg-slate-900/30 rounded-lg p-3 border border-slate-700/40 mb-2">
+                      <div className="px-5 pb-3 pl-12 space-y-2">
+                        {/* Description */}
+                        <p className="text-[11px] text-slate-300 leading-relaxed bg-slate-900/30 rounded-lg p-3 border border-slate-700/40">
                           {inc.description}
                         </p>
+
+                        {/* Operational Impact — only for open incidents */}
+                        {inc.status !== 'Resolved' && (
+                          <div className="bg-slate-900/50 border border-slate-700/40 rounded-lg px-3 py-2.5">
+                            <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1.5">Operational Impact — if no action taken</p>
+                            <ul className="space-y-0.5">
+                              {inc.type === 'Fight' && (
+                                <>
+                                  <li className="flex items-start gap-2 text-[11px] text-slate-300"><span className="text-slate-600 mt-0.5 flex-shrink-0">—</span>Risk of escalation to use-of-force without supervisory intervention</li>
+                                  <li className="flex items-start gap-2 text-[11px] text-slate-300"><span className="text-slate-600 mt-0.5 flex-shrink-0">—</span>Injured inmate may require outside medical transport — pod movement halt</li>
+                                </>
+                              )}
+                              {inc.type === 'Contraband' && (
+                                <>
+                                  <li className="flex items-start gap-2 text-[11px] text-slate-300"><span className="text-slate-600 mt-0.5 flex-shrink-0">—</span>Contraband in circulation elevates safety risk facility-wide</li>
+                                  <li className="flex items-start gap-2 text-[11px] text-slate-300"><span className="text-slate-600 mt-0.5 flex-shrink-0">—</span>SOP requires intel report within 24 hours — documentation overdue</li>
+                                </>
+                              )}
+                              {(inc.type !== 'Fight' && inc.type !== 'Contraband') && (
+                                <li className="flex items-start gap-2 text-[11px] text-slate-300"><span className="text-slate-600 mt-0.5 flex-shrink-0">—</span>Unresolved incident may require ACA documentation — supervisor sign-off needed</li>
+                              )}
+                            </ul>
+                          </div>
+                        )}
+
+                        {/* Actions */}
                         <div className="flex flex-wrap gap-1.5">
                           {inc.status !== 'Resolved' && inc.severity === 'critical' && (
                             <button className="text-[10px] px-2.5 py-1.5 bg-red-500/15 border border-red-500/25 text-red-400 hover:bg-red-500/25 rounded-lg transition-colors font-medium">
@@ -658,8 +865,9 @@ export default function CustodyOperations() {
                             View Report
                           </button>
                         </div>
+
                         {inc.severity !== 'low' && inc.status !== 'Resolved' && (
-                          <p className="text-[10px] text-slate-600 mt-2 flex items-center gap-1">
+                          <p className="text-[10px] text-slate-600 flex items-center gap-1">
                             <ArrowRight className="w-3 h-3" /> {inc.severity === 'critical' ? 'Impacts Command Risk Level' : 'Reported to Command Center'}
                           </p>
                         )}
