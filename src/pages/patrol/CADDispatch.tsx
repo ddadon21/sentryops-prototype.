@@ -459,6 +459,32 @@ const CADDispatch = () => {
 
   const holdingActive = activeCalls.filter(c => c.status === 'Holding');
 
+  // Immediate Command Actions — computed from live data
+  const immediateActions: { id: string; urgency: 'critical' | 'high'; label: string; action: string }[] = [
+    ...(p1Active > 0 ? [{
+      id: 'p1-backup',
+      urgency: 'critical' as const,
+      label: 'P1 DV-Weapons — scene entry risk without perimeter cover',
+      action: 'Stage A-240 (Zone 4, nearest available) as perimeter unit — ETA 8 min · prevents single-point failure if suspect evades',
+    }] : []),
+    ...(() => {
+      const wc = activeCalls.find(c => c.type === 'Welfare Check' && c.status !== 'Holding');
+      if (wc) return [{
+        id: 'welfare',
+        urgency: 'high' as const,
+        label: `Welfare Check ${wc.elapsed} — approaching critical response threshold`,
+        action: `If no contact within 5 min, initiate medical standby — ${wc.assignedUnits.length > 0 ? `A-${wc.assignedUnits[0]} on scene, awaiting entry` : 'no unit assigned'}`,
+      }];
+      return [];
+    })(),
+    ...(holdingCalls.length > 0 ? [{
+      id: 'holding',
+      urgency: 'high' as const,
+      label: `${holdingCalls.length} call(s) holding — longest at ${holdingCalls[0].holdTime} over target`,
+      action: `Assign A-234 to #${holdingCalls[0].callNumber} (${holdingCalls[0].type}) — 6 min ETA · clears oldest backlog item`,
+    }] : []),
+  ].slice(0, 3);
+
   return (
     <DashboardLayout>
       <div className="p-6 space-y-5">
@@ -529,6 +555,49 @@ const CADDispatch = () => {
           </div>
         </div>
 
+        {/* ── Immediate Command Actions ────────────────────── */}
+        {immediateActions.length > 0 && (
+          <div className="border border-red-500/25 bg-red-500/5 rounded-xl overflow-hidden">
+            <div className="flex items-center justify-between px-5 py-3 border-b border-red-500/15">
+              <div className="flex items-center gap-2">
+                <Siren className="w-4 h-4 text-red-400" />
+                <span className="text-[13px] font-bold text-red-400 uppercase tracking-wide">Immediate Command Actions</span>
+                <span className="text-[10px] px-2 py-0.5 bg-red-500/15 text-red-400 border border-red-500/20 rounded-full">
+                  {immediateActions.length} requiring attention
+                </span>
+              </div>
+            </div>
+            <div className="divide-y divide-red-500/10">
+              {immediateActions.map(item => (
+                <div key={item.id} className="flex items-start gap-4 px-5 py-3.5">
+                  <div className={`w-1 self-stretch rounded-full flex-shrink-0 ${item.urgency === 'critical' ? 'bg-red-500' : 'bg-amber-400'}`} />
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <span className={`text-[9px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider ${
+                        item.urgency === 'critical'
+                          ? 'bg-red-500/20 text-red-400 border border-red-500/30'
+                          : 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
+                      }`}>{item.urgency === 'critical' ? 'Critical' : 'High Priority'}</span>
+                      <p className="text-[13px] font-semibold text-white">{item.label}</p>
+                    </div>
+                    <div className="bg-slate-900/50 border border-slate-700/40 rounded-lg px-3 py-2">
+                      <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-0.5">Recommended Action</p>
+                      <p className="text-[11px] text-slate-200 leading-snug">{item.action}</p>
+                    </div>
+                  </div>
+                  <div className="flex-shrink-0">
+                    <button className={`text-[11px] px-3 py-1.5 rounded-lg font-medium transition-colors whitespace-nowrap ${
+                      item.urgency === 'critical'
+                        ? 'bg-red-500/15 border border-red-500/25 text-red-400 hover:bg-red-500/25'
+                        : 'bg-slate-700/50 border border-slate-600/50 text-slate-300 hover:bg-slate-700/70'
+                    }`}>{item.urgency === 'critical' ? 'Execute Now' : 'Acknowledge'}</button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* ── Command Attention Needed ─────────────────────── */}
         <div className="grid grid-cols-3 gap-3">
           {/* P1 Emergencies */}
@@ -566,17 +635,17 @@ const CADDispatch = () => {
             </div>
             <ul className="space-y-0.5">
               <li className="text-[11px] text-slate-300 flex items-start gap-1.5">
-                <span className="text-slate-600 flex-shrink-0 mt-0.5">—</span>
-                {stats.unitsAvailable} of {activeUnitCount} units available ({availablePct}%)
+                <span className={`flex-shrink-0 mt-0.5 ${availablePct <= 30 ? 'text-red-500' : 'text-slate-600'}`}>—</span>
+                {stats.unitsAvailable}/{activeUnitCount} available — P2 response est. {availablePct <= 25 ? '12–15 min' : '8–10 min'}
               </li>
               <li className="text-[11px] text-slate-300 flex items-start gap-1.5">
                 <span className="text-slate-600 flex-shrink-0 mt-0.5">—</span>
-                {stats.unitsDeployed} deployed · {stats.unitsOutOfService} out of service
+                {stats.unitsDeployed} deployed · {stats.unitsOutOfService} OOS
               </li>
               {stats.unitsOutOfService > 0 && (
-                <li className="text-[11px] text-amber-400 flex items-start gap-1.5">
-                  <span className="text-amber-500 flex-shrink-0 mt-0.5">—</span>
-                  A-235 back in 8 min · A-242 back in 12 min
+                <li className="text-[11px] text-emerald-400 flex items-start gap-1.5">
+                  <span className="text-emerald-600 flex-shrink-0 mt-0.5">→</span>
+                  A-235 +8 min · A-242 +12 min — rises to {Math.round(((stats.unitsAvailable + 2) / activeUnitCount) * 100)}%
                 </li>
               )}
             </ul>
@@ -633,7 +702,11 @@ const CADDispatch = () => {
               return (
                 <div key={call.id}>
                   <div
-                    className="flex items-start gap-4 px-5 py-4 cursor-pointer hover:bg-slate-700/10 transition-colors"
+                    className={`flex items-start gap-4 px-5 py-4 cursor-pointer transition-colors ${
+                      call.priority === 'P1' ? 'bg-red-950/20 hover:bg-red-950/30' :
+                      call.priority === 'P2' ? 'hover:bg-amber-950/10' :
+                      'hover:bg-slate-700/10'
+                    }`}
                     onClick={() => setSelectedCall(isExpanded ? null : call.id)}
                   >
                     {/* Severity strip */}
@@ -652,7 +725,11 @@ const CADDispatch = () => {
                             call.priority === 'P2' ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' :
                             'bg-blue-500/20 text-blue-400 border border-blue-500/30'
                           }`}>{call.priority}</span>
-                          <p className={`text-[13px] font-semibold truncate ${call.priority === 'P1' ? 'text-red-100' : 'text-white'}`}>{call.type}</p>
+                          <p className={`text-[13px] font-semibold truncate ${
+                            call.priority === 'P1' ? 'text-red-100' :
+                            call.priority === 'P2' ? 'text-white' :
+                            'text-slate-400'
+                          }`}>{call.type}</p>
                           {call.backupRequested && (
                             <span className="text-[9px] px-1.5 py-0.5 bg-red-500/15 text-red-400 border border-red-500/20 rounded font-bold flex-shrink-0">BACKUP</span>
                           )}
@@ -806,6 +883,37 @@ const CADDispatch = () => {
           </div>
         </div>
 
+        {/* ── Predictive Signals ───────────────────────────── */}
+        <div className="bg-slate-800/30 border border-slate-700/50 rounded-xl px-5 py-4">
+          <p className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold mb-3">Predictive Signals — Next 60 Min</p>
+          <div className="grid grid-cols-3 gap-5">
+            <div>
+              <p className="text-[10px] text-amber-400 font-semibold mb-1 flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-400 inline-block" /> Projected Call Load
+              </p>
+              <p className="text-[11px] text-slate-300 leading-snug">
+                Volume running +12% vs yesterday — 2 additional P2 calls likely in next 45 min based on shift pattern
+              </p>
+            </div>
+            <div>
+              <p className="text-[10px] text-emerald-400 font-semibold mb-1 flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block" /> Coverage Trend
+              </p>
+              <p className="text-[11px] text-slate-300 leading-snug">
+                A-235 (+8 min) and A-242 (+12 min) returning — coverage rises to 33% · pressure eases ahead of B-Shift handoff
+              </p>
+            </div>
+            <div>
+              <p className="text-[10px] text-red-400 font-semibold mb-1 flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-red-400 inline-block" /> Escalation Watch
+              </p>
+              <p className="text-[11px] text-slate-300 leading-snug">
+                Welfare Check: escalate to medical if no contact by 15:10 · DV scene: request supervisor if not cleared by 15:00
+              </p>
+            </div>
+          </div>
+        </div>
+
         {/* ── Calls Holding + Unit Status ──────────────────── */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
 
@@ -843,15 +951,25 @@ const CADDispatch = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="flex items-center justify-between text-[11px] bg-emerald-500/5 border border-emerald-500/15 rounded-lg px-2.5 py-1.5">
-                      <div className="flex items-center gap-2 text-slate-400">
-                        <Car className="w-3 h-3 text-emerald-400" />
-                        <span className="text-emerald-400 font-medium">{idx === 0 ? 'A-234' : 'A-238'}</span>
-                        <span>ETA {idx === 0 ? '6' : '8'} min · {idx === 0 ? 'Zone 3 · 0 calls' : 'Zone 1 · 0 calls'}</span>
+                    <div className="bg-slate-900/50 border border-emerald-500/15 rounded-lg px-3 py-2.5">
+                      <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1.5">Recommended Assignment</p>
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-0.5">
+                            <span className="text-[12px] font-bold text-emerald-400">{idx === 0 ? 'A-234' : 'A-238'}</span>
+                            <span className="text-[10px] text-slate-400">ETA {idx === 0 ? '6' : '8'} min</span>
+                          </div>
+                          <p className="text-[10px] text-slate-500 leading-snug">
+                            {idx === 0 ? 'Nearest to Zone 7 · 0 active calls · last cleared 14:05' : 'Zone 1 · 0 active calls · closest available'}
+                          </p>
+                          <p className="text-[10px] text-emerald-400 leading-snug mt-0.5">
+                            {idx === 0 ? '↓ Reduces hold from 1h10m to ~6 min response' : '↓ Clears backlog · frees command attention'}
+                          </p>
+                        </div>
+                        <button className="text-[11px] px-2.5 py-1.5 bg-blue-500/15 border border-blue-500/25 text-blue-400 rounded-lg hover:bg-blue-500/25 transition-colors font-medium flex items-center gap-1 flex-shrink-0">
+                          Assign <ArrowRight className="w-3 h-3" />
+                        </button>
                       </div>
-                      <button className="text-blue-400 hover:text-blue-300 font-medium flex items-center gap-1">
-                        Assign <ArrowRight className="w-3 h-3" />
-                      </button>
                     </div>
                   </div>
                 ))}
