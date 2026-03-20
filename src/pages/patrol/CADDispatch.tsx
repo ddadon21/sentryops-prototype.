@@ -63,6 +63,7 @@ const CADDispatch = () => {
   const [aiInsightsVisible, setAiInsightsVisible] = useState(true);
   const [showMetrics, setShowMetrics] = useState(false);
   const [showShiftStatus, setShowShiftStatus] = useState(false);
+  const [showPressureDetail, setShowPressureDetail] = useState(false);
 
   // Active calls for service
   const activeCalls: ActiveCall[] = [
@@ -425,6 +426,49 @@ const CADDispatch = () => {
     unitsOutOfService: patrolUnits.filter(u => u.status === 'Out of Service').length
   };
 
+  // Operational Pressure
+  const activeUnitCount = patrolUnits.filter(u => u.status !== 'Out of Service').length;
+  const availablePct = Math.round((stats.unitsAvailable / activeUnitCount) * 100);
+  const p1Active = activeCalls.filter(c => c.priority === 'P1' && c.status !== 'Holding').length;
+  const operationalPressure: 'Low' | 'Moderate' | 'High' | 'Critical' = (() => {
+    if (p1Active > 0 && availablePct <= 25) return 'Critical';
+    if (p1Active > 0 || holdingCalls.length > 2 || availablePct < 30) return 'High';
+    if (holdingCalls.length > 0 || availablePct < 50) return 'Moderate';
+    return 'Low';
+  })();
+  const pressureFactors: string[] = [
+    p1Active > 0 ? `${p1Active} active P1 emergency — all available units committed` : '✓ No active P1 emergencies',
+    `Unit availability: ${availablePct}% (${stats.unitsAvailable}/${activeUnitCount}) — ${availablePct <= 25 ? 'critically low for new calls' : availablePct < 50 ? 'below optimal' : 'adequate'}`,
+    holdingCalls.length > 0 ? `${holdingCalls.length} call(s) holding without assigned units` : '✓ No calls waiting assignment',
+    stats.unitsOutOfService > 0 ? `${stats.unitsOutOfService} unit(s) out of service — ${patrolUnits.filter(u => u.status === 'Out of Service' && u.oosETA !== 'TBD').length} returning within 15 min` : '✓ All units operational',
+  ];
+
+  // Per-call risk intelligence
+  const getCallRisk = (call: ActiveCall): { delayRisk: string | null; escalation: 'High' | 'Medium' | 'Low'; escalationText: string } => {
+    if (call.priority === 'P3') return { delayRisk: null, escalation: 'Low', escalationText: 'Routine — low escalation potential' };
+    switch (call.type) {
+      case 'Domestic Violence - Weapons Involved':
+        return { delayRisk: 'Victim injury or fatality risk — armed subject, children present', escalation: 'High', escalationText: 'High likelihood of use-of-force or hostage situation' };
+      case 'Traffic Accident - Injuries':
+        return { delayRisk: 'Secondary collision risk — active highway lane blocked', escalation: 'Medium', escalationText: 'May escalate if injuries worsen before EMS clears scene' };
+      case 'Suspicious Person - Business District':
+        return { delayRisk: 'Potential theft or confrontation if left unchecked', escalation: 'Low', escalationText: 'Subject not aggressive — low escalation expected' };
+      case 'Alarm - Commercial':
+        return { delayRisk: `${call.elapsed} response — property loss exposure increases with delay`, escalation: 'Low', escalationText: 'Likely false alarm — 2 prior calls at this location' };
+      case 'Welfare Check':
+        return { delayRisk: 'Medical emergency possible — subject uncontacted 24+ hours', escalation: 'Medium', escalationText: 'May escalate to medical emergency or found-deceased scenario' };
+      default:
+        return { delayRisk: null, escalation: 'Low', escalationText: 'Routine — low escalation potential' };
+    }
+  };
+
+  // Unit reassign candidate check
+  const isReassignCandidate = (unit: PatrolUnit): boolean => {
+    if (!unit.currentCall || unit.status === 'Available') return false;
+    const call = activeCalls.find(c => c.callNumber === unit.currentCall);
+    return call?.priority === 'P3';
+  };
+
   // Today's metrics
   const todaysMetrics = {
     totalCallsToday: 47,
@@ -456,12 +500,45 @@ const CADDispatch = () => {
               <Radio className="w-7 h-7 text-amber-400" />
             </div>
             <div>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 flex-wrap">
                 <h1 className="text-2xl lg:text-3xl font-bold text-white">Field Operations</h1>
                 <span className="px-2 py-1 bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 rounded text-xs font-semibold flex items-center gap-1">
                   <Circle className="w-2 h-2 fill-emerald-400" />
                   LIVE
                 </span>
+                {/* Operational Pressure Badge */}
+                <div className="relative">
+                  <button
+                    onClick={() => setShowPressureDetail(!showPressureDetail)}
+                    className={`px-2.5 py-1 rounded text-xs font-bold flex items-center gap-1.5 border transition-all ${
+                      operationalPressure === 'Critical' ? 'bg-red-500/20 border-red-500/40 text-red-400 hover:bg-red-500/30' :
+                      operationalPressure === 'High' ? 'bg-amber-500/20 border-amber-500/40 text-amber-400 hover:bg-amber-500/30' :
+                      operationalPressure === 'Moderate' ? 'bg-yellow-500/20 border-yellow-500/40 text-yellow-400 hover:bg-yellow-500/30' :
+                      'bg-emerald-500/20 border-emerald-500/40 text-emerald-400 hover:bg-emerald-500/30'
+                    }`}
+                  >
+                    <Gauge className="w-3 h-3" />
+                    Pressure: {operationalPressure.toUpperCase()}
+                    <ChevronRight className={`w-3 h-3 transition-transform duration-150 ${showPressureDetail ? 'rotate-90' : ''}`} />
+                  </button>
+                  {showPressureDetail && (
+                    <div className="absolute top-full left-0 mt-1.5 bg-slate-800 border border-slate-600 rounded-xl p-3 w-80 z-30 shadow-2xl">
+                      <p className="text-[10px] text-slate-400 uppercase tracking-wider font-semibold mb-2">
+                        Why {operationalPressure}?
+                      </p>
+                      <ul className="space-y-1.5">
+                        {pressureFactors.map((f, i) => (
+                          <li key={i} className="text-xs text-slate-300 flex items-start gap-2">
+                            <span className={`mt-0.5 flex-shrink-0 ${f.startsWith('✓') ? 'text-emerald-400' : 'text-amber-400'}`}>
+                              {f.startsWith('✓') ? '✓' : '·'}
+                            </span>
+                            <span>{f.replace(/^✓ /, '')}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
               </div>
               <div className="flex items-center gap-4 text-sm">
                 <span className="text-slate-400">CAD/Dispatch Console</span>
@@ -704,9 +781,9 @@ const CADDispatch = () => {
                 <span className="text-purple-400 font-medium">4</span>
               </div>
             </div>
-            <div className="mt-2 pt-2 border-t border-slate-700 flex items-center gap-1 text-xs">
-              <TrendingUp className="w-3 h-3 text-emerald-400" />
-              <span className="text-emerald-400">+2 last 15 min</span>
+            <div className="mt-2 pt-2 border-t border-slate-700 flex items-center justify-between text-xs">
+              <span className="text-amber-400 font-bold">CALL LOAD: HIGH</span>
+              <span className="text-slate-500 flex items-center gap-1"><TrendingUp className="w-3 h-3" />+2 / 15m</span>
             </div>
           </div>
 
@@ -735,7 +812,7 @@ const CADDispatch = () => {
             </div>
             <div className="mt-2 pt-2 border-t border-slate-700 flex items-center gap-1 text-xs">
               <Circle className="w-2 h-2 fill-emerald-400 text-emerald-400" />
-              <span className="text-emerald-400">All units assigned</span>
+              <span className="text-emerald-400 font-bold">RESPONSE: ON TARGET</span>
             </div>
           </div>
 
@@ -764,7 +841,7 @@ const CADDispatch = () => {
             </div>
             <div className="mt-2 pt-2 border-t border-slate-700 flex items-center gap-1 text-xs">
               <Circle className="w-2 h-2 fill-emerald-400 text-emerald-400" />
-              <span className="text-emerald-400">Under target</span>
+              <span className="text-emerald-400 font-bold">RESPONSE: ON TARGET</span>
             </div>
           </div>
 
@@ -786,8 +863,8 @@ const CADDispatch = () => {
               </div>
             </div>
             <div className="mt-2 pt-2 border-t border-slate-700 flex items-center gap-1 text-xs">
-              <Circle className="w-2 h-2 fill-amber-400 text-amber-400" />
-              <span className="text-amber-400">Below optimal (5+)</span>
+              <Circle className="w-2 h-2 fill-red-400 text-red-400" />
+              <span className="text-red-400 font-bold">COVERAGE: CRITICAL</span>
             </div>
           </div>
 
@@ -917,19 +994,38 @@ const CADDispatch = () => {
                     </div>
                   </div>
 
-                  {/* Available units suggestion */}
-                  <div className="mt-3 pt-3 border-t border-slate-700/50 flex items-center justify-between text-xs">
-                    <div className="flex items-center gap-2 text-slate-400">
-                      <Car className="w-3 h-3" />
-                      <span>Nearest available:</span>
-                      <span className="px-2 py-0.5 bg-emerald-500/20 text-emerald-400 rounded font-medium">
-                        {idx === 0 ? 'A-234 (Zone 3)' : 'A-238 (Zone 1)'}
-                      </span>
-                      <span className="text-slate-500">ETA: {idx === 0 ? '6' : '8'} min</span>
+                  {/* Decision support layer */}
+                  <div className="mt-3 pt-3 border-t border-slate-700/50 space-y-2">
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-0.5">Risk if Not Handled</p>
+                        <p className="text-[11px] text-amber-300 leading-snug">
+                          {idx === 0 ? 'Fire lane blocked — liability if emergency vehicle access needed' : 'Property left unclaimed — chain-of-custody risk beyond 2 hrs'}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-0.5">Recommended Action</p>
+                        <p className="text-[11px] text-slate-300 leading-snug">
+                          {idx === 0 ? 'Assign A-234 (Zone 3) — lowest workload, nearest available' : 'Assign A-238 (Zone 1) — 8 min ETA, completing patrol'}
+                        </p>
+                      </div>
                     </div>
-                    <button className="text-blue-400 hover:text-blue-300 font-medium flex items-center gap-1">
-                      View Details <ArrowRight className="w-3 h-3" />
-                    </button>
+                    {/* Smart assign suggestion */}
+                    <div className="flex items-center justify-between text-xs bg-emerald-500/5 border border-emerald-500/15 rounded-lg px-2.5 py-1.5">
+                      <div className="flex items-center gap-2 text-slate-400">
+                        <Car className="w-3 h-3 text-emerald-400" />
+                        <span>Recommended unit:</span>
+                        <span className="px-2 py-0.5 bg-emerald-500/20 text-emerald-400 rounded font-medium">
+                          {idx === 0 ? 'A-234' : 'A-238'}
+                        </span>
+                        <span className="text-slate-500">ETA {idx === 0 ? '6' : '8'} min</span>
+                        <span className="text-slate-600">·</span>
+                        <span className="text-slate-500">{idx === 0 ? 'Zone 3 — 0 active calls' : 'Zone 1 — 0 active calls'}</span>
+                      </div>
+                      <button className="text-blue-400 hover:text-blue-300 font-medium flex items-center gap-1">
+                        Assign <ArrowRight className="w-3 h-3" />
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -1323,27 +1419,37 @@ const CADDispatch = () => {
                   <div
                     key={call.id}
                     onClick={() => setSelectedCall(call)}
-                    className={`border rounded-xl p-4 cursor-pointer transition-all hover:shadow-lg ${
-                      call.priority === 'P1' ? 'bg-red-500/5 border-red-500/30 hover:border-red-500/50' :
-                      call.priority === 'P2' ? 'bg-amber-500/5 border-amber-500/30 hover:border-amber-500/50' :
-                      'bg-slate-900/50 border-slate-700/30 hover:border-slate-600'
+                    className={`rounded-xl p-4 cursor-pointer transition-all hover:shadow-lg ${
+                      call.priority === 'P1' ? 'bg-red-500/10 border-2 border-red-500/50 hover:border-red-500/70 shadow-red-500/5 shadow-md' :
+                      call.priority === 'P2' ? 'bg-amber-500/5 border border-amber-500/30 hover:border-amber-500/50' :
+                      'bg-slate-900/50 border border-slate-700/30 hover:border-slate-600'
                     }`}
                   >
+                    {call.priority === 'P1' && (
+                      <div className="flex items-center gap-2 mb-2.5 -mx-1">
+                        <span className="flex items-center gap-1.5 px-2.5 py-1 bg-red-500/25 border border-red-500/40 text-red-300 rounded-lg text-[10px] font-bold uppercase tracking-widest">
+                          <Siren className="w-3 h-3" /> EMERGENCY RESPONSE ACTIVE
+                        </span>
+                        {call.supervisorNotified && (
+                          <span className="text-[10px] text-purple-400 font-semibold">· Supervisor Notified</span>
+                        )}
+                      </div>
+                    )}
                     <div className="flex items-start justify-between mb-3">
                       <div className="flex items-center gap-3">
                         <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                          call.priority === 'P1' ? 'bg-red-500/20' :
+                          call.priority === 'P1' ? 'bg-red-500/30' :
                           call.priority === 'P2' ? 'bg-amber-500/20' :
                           'bg-blue-500/20'
                         }`}>
                           <span className={`text-lg font-bold ${
-                            call.priority === 'P1' ? 'text-red-400' :
+                            call.priority === 'P1' ? 'text-red-300' :
                             call.priority === 'P2' ? 'text-amber-400' :
                             'text-blue-400'
                           }`}>{call.priority}</span>
                         </div>
                         <div>
-                          <div className="text-white font-semibold text-lg">{call.type}</div>
+                          <div className={`font-semibold text-lg ${call.priority === 'P1' ? 'text-red-100' : 'text-white'}`}>{call.type}</div>
                           <div className="flex items-center gap-2 text-xs text-slate-400">
                             <span>Call #{call.callNumber}</span>
                             {call.zone && (
@@ -1418,6 +1524,35 @@ const CADDispatch = () => {
                       </div>
                     )}
 
+                    {/* Risk + Escalation layer for P1/P2 */}
+                    {(call.priority === 'P1' || call.priority === 'P2') && (() => {
+                      const risk = getCallRisk(call);
+                      return (
+                        <div className={`mb-3 rounded-lg px-3 py-2.5 ${
+                          call.priority === 'P1' ? 'bg-red-950/40 border border-red-500/20' : 'bg-amber-500/5 border border-amber-500/15'
+                        }`}>
+                          <div className={`grid gap-x-4 gap-y-1.5 ${risk.delayRisk ? 'grid-cols-2' : 'grid-cols-1'}`}>
+                            {risk.delayRisk && (
+                              <div>
+                                <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-0.5">Risk if Delayed</p>
+                                <p className="text-[11px] text-amber-200 leading-snug">{risk.delayRisk}</p>
+                              </div>
+                            )}
+                            <div>
+                              <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-0.5">Escalation Likelihood</p>
+                              <div className="flex items-center gap-1.5">
+                                <span className={`text-[9px] px-1.5 py-0.5 rounded font-bold uppercase ${
+                                  risk.escalation === 'High' ? 'bg-red-500/20 text-red-400 border border-red-500/30' :
+                                  risk.escalation === 'Medium' ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' :
+                                  'bg-slate-700/40 text-slate-400 border border-slate-700/50'
+                                }`}>{risk.escalation}</span>
+                                <p className="text-[10px] text-slate-400 leading-snug">{risk.escalationText}</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })()}
                     <div className="flex items-center justify-between pt-3 border-t border-slate-700/50">
                       <div className="flex items-center gap-3 flex-wrap">
                         <div className="flex items-center gap-2">
@@ -1534,7 +1669,19 @@ const CADDispatch = () => {
                       <div className="mb-2 p-2 bg-slate-900/50 rounded-lg">
                         <div className="flex items-center justify-between text-xs">
                           <span className="text-slate-400">Call:</span>
-                          <span className="text-amber-400 font-medium">{unit.currentCall}</span>
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-amber-400 font-medium">{unit.currentCall}</span>
+                            {(() => {
+                              const assignedCall = activeCalls.find(c => c.callNumber === unit.currentCall);
+                              return assignedCall ? (
+                                <span className={`text-[9px] px-1 py-0.5 rounded font-bold ${
+                                  assignedCall.priority === 'P1' ? 'bg-red-500/20 text-red-400' :
+                                  assignedCall.priority === 'P2' ? 'bg-amber-500/20 text-amber-400' :
+                                  'bg-blue-500/20 text-blue-400'
+                                }`}>{assignedCall.priority}</span>
+                              ) : null;
+                            })()}
+                          </div>
                         </div>
                         {unit.eta && (
                           <div className="flex items-center justify-between text-xs mt-1">
@@ -1542,6 +1689,14 @@ const CADDispatch = () => {
                             <span className="text-blue-400 font-medium">{unit.eta}</span>
                           </div>
                         )}
+                      </div>
+                    )}
+                    {isReassignCandidate(unit) && (
+                      <div className="mb-2 flex items-center justify-between px-2 py-1 bg-amber-500/8 border border-amber-500/20 rounded-lg">
+                        <span className="text-[10px] text-amber-400 font-bold flex items-center gap-1">
+                          <ArrowRight className="w-3 h-3" /> Reassign Candidate
+                        </span>
+                        <span className="text-[9px] text-slate-500">P3 — can redeploy</span>
                       </div>
                     )}
 
