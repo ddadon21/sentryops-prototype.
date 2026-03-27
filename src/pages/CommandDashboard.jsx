@@ -27,6 +27,16 @@ export default function CommandDashboard() {
     return date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
   };
 
+  const getGreeting = (date, name) => {
+    const hour = date.getHours();
+    let greeting;
+    if (hour >= 5 && hour < 12) greeting = 'Good morning';
+    else if (hour >= 12 && hour < 17) greeting = 'Good afternoon';
+    else if (hour >= 17 && hour < 21) greeting = 'Good evening';
+    else greeting = 'Hey';
+    return name ? `${greeting}, ${name}` : greeting;
+  };
+
   // Approval items with tiered urgency:
   // critical = life/safety or legal/compliance risk within 24h
   // action   = operational risk requiring near-term decision
@@ -227,6 +237,7 @@ export default function CommandDashboard() {
         {/* Page Header */}
         <div className="mb-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           <div>
+            <p className="text-2xl font-bold text-white mb-1">{getGreeting(currentTime, 'Sheriff Thompson')}</p>
             <h2 className="text-xl font-bold text-white mb-1">Executive Command Dashboard</h2>
             <div className="flex items-center gap-2 text-[11px] text-slate-500">
               <span>{formatDate(currentTime)}</span>
