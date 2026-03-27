@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Search, Filter, X, Plus, Users, Scale,
   FlaskConical, BarChart3, Clock,
   CheckCircle, Link2, ChevronDown, ChevronUp,
   Activity, Phone, Mail, FileText,
   Database, FileWarning, Microscope, Circle,
-  AlertTriangle, Zap, TrendingUp, TrendingDown, ArrowRight
+  AlertTriangle, Zap, TrendingUp, TrendingDown, ArrowRight,
+  UserCheck, Eye, ArrowUpRight, ShieldAlert
 } from 'lucide-react';
 import DashboardLayout from '../../layouts/DashboardLayout';
 
@@ -41,6 +42,19 @@ const ActiveCasesDashboard = () => {
   const [showConnections, setShowConnections] = useState(false);
   const [showWorkload, setShowWorkload] = useState(false);
   const [selectedCase, setSelectedCase] = useState<Case | null>(null);
+  const [urgencySeconds, setUrgencySeconds] = useState(5 * 3600 + 47 * 60 + 22); // 5h 47m countdown
+
+  useEffect(() => {
+    const t = setInterval(() => setUrgencySeconds(s => Math.max(0, s - 1)), 1000);
+    return () => clearInterval(t);
+  }, []);
+
+  const fmtCountdown = (s: number) => {
+    const h = Math.floor(s / 3600);
+    const m = Math.floor((s % 3600) / 60);
+    const sec = s % 60;
+    return `${h}h ${String(m).padStart(2,'0')}m ${String(sec).padStart(2,'0')}s`;
+  };
 
   const cases: Case[] = [
     {
@@ -320,30 +334,65 @@ const ActiveCasesDashboard = () => {
             <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest">Command Priority — Action Required</span>
           </div>
           <div className="divide-y divide-slate-700/20">
-            <div className="flex items-center gap-4 px-5 py-3">
-              <span className="text-[11px] font-bold text-red-400 uppercase w-16 flex-shrink-0">URGENT</span>
-              <span className="text-[13px] text-white flex-1">Homicide #2024-0847 — Charge window closes in 14 hrs</span>
-              <span className="text-[11px] text-slate-500 flex-shrink-0">Ballistics overdue · GBI Lab</span>
+            {/* Row 1 */}
+            <div className="flex items-start gap-4 px-5 py-3.5">
+              <span className="text-[11px] font-bold text-red-400 uppercase w-16 flex-shrink-0 mt-0.5">URGENT</span>
+              <div className="flex-1 min-w-0">
+                <p className="text-[13px] text-white font-medium">Homicide #2024-0847 — Charge window closes in 14 hrs</p>
+                <p className="text-[11px] text-red-400/70 mt-0.5">If ignored: suspect released, case collapses. Risk: double jeopardy bars future prosecution.</p>
+              </div>
+              <div className="flex items-center gap-1.5 flex-shrink-0">
+                <button className="px-2.5 py-1 bg-red-500/10 border border-red-500/20 text-red-400 rounded text-[11px] font-medium hover:bg-red-500/20 transition-all">Escalate</button>
+                <button className="px-2.5 py-1 bg-slate-800/40 border border-slate-700/40 text-slate-400 rounded text-[11px] font-medium hover:bg-slate-700/40 transition-all">View</button>
+              </div>
             </div>
-            <div className="flex items-center gap-4 px-5 py-3">
-              <span className="text-[11px] font-bold text-red-400 uppercase w-16 flex-shrink-0">URGENT</span>
-              <span className="text-[13px] text-white flex-1">DEA Task Force — Surveillance extension approval expires EOD</span>
-              <span className="text-[11px] text-slate-500 flex-shrink-0">Sheriff signature required</span>
+            {/* Row 2 */}
+            <div className="flex items-start gap-4 px-5 py-3.5">
+              <span className="text-[11px] font-bold text-red-400 uppercase w-16 flex-shrink-0 mt-0.5">URGENT</span>
+              <div className="flex-1 min-w-0">
+                <p className="text-[13px] text-white font-medium">DEA Task Force — Surveillance extension expires EOD</p>
+                <p className="text-[11px] text-red-400/70 mt-0.5">If ignored: 84-day operation terminates. Risk: 8 suspects walk, fentanyl network reconstitutes.</p>
+              </div>
+              <div className="flex items-center gap-1.5 flex-shrink-0">
+                <button className="px-2.5 py-1 bg-red-500/10 border border-red-500/20 text-red-400 rounded text-[11px] font-medium hover:bg-red-500/20 transition-all">Approve</button>
+                <button className="px-2.5 py-1 bg-slate-800/40 border border-slate-700/40 text-slate-400 rounded text-[11px] font-medium hover:bg-slate-700/40 transition-all">View</button>
+              </div>
             </div>
-            <div className="flex items-center gap-4 px-5 py-3">
-              <span className="text-[11px] font-bold text-amber-400 uppercase w-16 flex-shrink-0">ACTION</span>
-              <span className="text-[13px] text-white flex-1">Meth Lab warrant hearing tomorrow — HAZMAT standby confirmation needed</span>
-              <span className="text-[11px] text-slate-500 flex-shrink-0">Dec 06 deadline</span>
+            {/* Row 3 */}
+            <div className="flex items-start gap-4 px-5 py-3.5">
+              <span className="text-[11px] font-bold text-amber-400 uppercase w-16 flex-shrink-0 mt-0.5">ACTION</span>
+              <div className="flex-1 min-w-0">
+                <p className="text-[13px] text-white font-medium">Meth Lab — HAZMAT standby confirmation needed by Dec 06</p>
+                <p className="text-[11px] text-amber-400/60 mt-0.5">If ignored: warrant execution proceeds without HAZMAT. Risk: officer exposure, scene contamination, evidence inadmissibility.</p>
+              </div>
+              <div className="flex items-center gap-1.5 flex-shrink-0">
+                <button className="px-2.5 py-1 bg-amber-500/10 border border-amber-500/20 text-amber-400 rounded text-[11px] font-medium hover:bg-amber-500/20 transition-all">Escalate</button>
+                <button className="px-2.5 py-1 bg-slate-800/40 border border-slate-700/40 text-slate-400 rounded text-[11px] font-medium hover:bg-slate-700/40 transition-all">View</button>
+              </div>
             </div>
-            <div className="flex items-center gap-4 px-5 py-3">
-              <span className="text-[11px] font-bold text-amber-400 uppercase w-16 flex-shrink-0">ACTION</span>
-              <span className="text-[13px] text-white flex-1">Pharmacy robbery series — 4th incident risk HIGH, task force not yet formed</span>
-              <span className="text-[11px] text-slate-500 flex-shrink-0">+15% robbery trend</span>
+            {/* Row 4 */}
+            <div className="flex items-start gap-4 px-5 py-3.5">
+              <span className="text-[11px] font-bold text-amber-400 uppercase w-16 flex-shrink-0 mt-0.5">ACTION</span>
+              <div className="flex-1 min-w-0">
+                <p className="text-[13px] text-white font-medium">Pharmacy robbery series — task force not formed, 4th incident imminent</p>
+                <p className="text-[11px] text-amber-400/60 mt-0.5">If ignored: series continues, public exposure increases. Risk: media scrutiny, victim harm, robbery rate hits 20-year high.</p>
+              </div>
+              <div className="flex items-center gap-1.5 flex-shrink-0">
+                <button className="px-2.5 py-1 bg-amber-500/10 border border-amber-500/20 text-amber-400 rounded text-[11px] font-medium hover:bg-amber-500/20 transition-all">Approve</button>
+                <button className="px-2.5 py-1 bg-slate-800/40 border border-slate-700/40 text-slate-400 rounded text-[11px] font-medium hover:bg-slate-700/40 transition-all">View</button>
+              </div>
             </div>
-            <div className="flex items-center gap-4 px-5 py-3">
-              <span className="text-[11px] font-bold text-amber-400 uppercase w-16 flex-shrink-0">ACTION</span>
-              <span className="text-[13px] text-white flex-1">Det. Rodriguez at capacity — critical case coverage at risk</span>
-              <span className="text-[11px] text-slate-500 flex-shrink-0">Reassignment recommended</span>
+            {/* Row 5 */}
+            <div className="flex items-start gap-4 px-5 py-3.5">
+              <span className="text-[11px] font-bold text-amber-400 uppercase w-16 flex-shrink-0 mt-0.5">ACTION</span>
+              <div className="flex-1 min-w-0">
+                <p className="text-[13px] text-white font-medium">Det. Rodriguez at capacity — critical homicide coverage at risk</p>
+                <p className="text-[11px] text-amber-400/60 mt-0.5">If ignored: homicide investigation slows. Risk: missed charge window, witness attrition on active gang case.</p>
+              </div>
+              <div className="flex items-center gap-1.5 flex-shrink-0">
+                <button className="px-2.5 py-1 bg-amber-500/10 border border-amber-500/20 text-amber-400 rounded text-[11px] font-medium hover:bg-amber-500/20 transition-all">Reassign</button>
+                <button className="px-2.5 py-1 bg-slate-800/40 border border-slate-700/40 text-slate-400 rounded text-[11px] font-medium hover:bg-slate-700/40 transition-all">View</button>
+              </div>
             </div>
           </div>
         </div>
@@ -556,11 +605,11 @@ const ActiveCasesDashboard = () => {
           </div>
           <div className="space-y-4">
             {[
-              { type: 'Homicide', cleared: 8, total: 8, percentage: 100, status: 'on-track', recommendation: 'Maintain current detective coverage. Cold case review ongoing — low risk.', impact: 'No action needed. Continue monitoring.' },
-              { type: 'Narcotics', cleared: 8, total: 9, percentage: 89, status: 'on-track', recommendation: 'DEA task force extension approval will sustain rate. Approve by EOD.', impact: 'Approval delay risks case collapse and rate drop to ~78%.' },
-              { type: 'Sexual Assault', cleared: 5, total: 6, percentage: 83, status: 'on-track', recommendation: 'Expedite GBI lab result for #2024-1678. Warrant ready pending DNA.', impact: 'Lab result expected Dec 12 — clearance achievable this month.' },
-              { type: 'Robbery', cleared: 17, total: 25, percentage: 68, status: 'below-target', recommendation: 'Form robbery task force immediately. Pharmacy series is highest leverage case.', impact: 'Clearing pharmacy series raises rate to ~72%. Task force closes gap.' },
-              { type: 'Burglary', cleared: 13, total: 21, percentage: 62, status: 'below-target', recommendation: 'Assign Det. Wilson (available) to electronics store case #2024-1712.', impact: 'Resolving 2 open burglaries reaches 71% — near target by year end.' }
+              { type: 'Homicide', cleared: 8, total: 8, percentage: 100, status: 'on-track', confidence: 99, recommendation: 'Maintain current detective coverage. Cold case review ongoing — low risk.', immediate: 'No action needed.', downstream: 'Cold case DNA result expected within 2 weeks.', outcome: 'Rate holds at 100% — strongest in department.', action: null },
+              { type: 'Narcotics', cleared: 8, total: 9, percentage: 89, status: 'on-track', confidence: 91, recommendation: 'Approve DEA task force extension by EOD to sustain rate.', immediate: 'Task force operation continues uninterrupted.', downstream: 'Arrest phase reached within 30 days.', outcome: 'Rate holds at 89%. 8 suspects prosecuted.', action: 'Approve Extension' },
+              { type: 'Sexual Assault', cleared: 5, total: 6, percentage: 83, status: 'on-track', confidence: 85, recommendation: 'Expedite GBI lab for #2024-1678. Warrant ready pending DNA confirmation.', immediate: 'Lab prioritization request filed.', downstream: 'DNA result by Dec 12 enables same-week arrest.', outcome: 'Rate reaches 100% (6/6). Victim safety secured.', action: 'Escalate Lab' },
+              { type: 'Robbery', cleared: 17, total: 25, percentage: 68, status: 'below-target', confidence: 78, recommendation: 'Form robbery task force. Pharmacy series is highest-leverage case to clear.', immediate: 'Task force authorized, Patel + 2 detectives assigned.', downstream: '4th pharmacy incident deterred. Arrest within 14 days.', outcome: 'Rate rises to ~72%. Closes 7-point gap to target.', action: 'Form Task Force' },
+              { type: 'Burglary', cleared: 13, total: 21, percentage: 62, status: 'below-target', confidence: 74, recommendation: 'Assign Det. Wilson (available) to electronics store case #2024-1712.', immediate: 'Wilson assigned. Rodriguez workload reduced.', downstream: 'Electronics case closes within 3 weeks via pawn monitoring.', outcome: 'Rate rises to ~67%. Two moves from annual target.', action: 'Auto Assign' }
             ].map((cat, idx) => (
               <div key={idx} className={`rounded-lg p-3.5 ${cat.status === 'below-target' ? 'bg-amber-500/5 border border-amber-500/10' : 'bg-slate-800/20 border border-slate-700/20'}`}>
                 <div className="flex items-center justify-between mb-2">
@@ -569,6 +618,7 @@ const ActiveCasesDashboard = () => {
                     <span className={`px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase ${cat.status === 'on-track' ? 'bg-emerald-500/10 text-emerald-400' : 'bg-amber-500/10 text-amber-400'}`}>
                       {cat.status === 'on-track' ? 'On Track' : 'Below Target'}
                     </span>
+                    <span className="text-[10px] text-slate-600">{cat.confidence}% confidence</span>
                   </div>
                   <div className="flex items-center gap-2.5">
                     <span className="text-xs text-slate-400">{cat.cleared}/{cat.total}</span>
@@ -579,11 +629,30 @@ const ActiveCasesDashboard = () => {
                   <div className={`h-full rounded-full ${cat.percentage >= 75 ? 'bg-emerald-500/40' : 'bg-amber-500/40'}`} style={{ width: `${cat.percentage}%` }} />
                   <div className="absolute top-[-3px] w-[1.5px] h-[calc(100%+6px)] bg-red-500/50 rounded-full" style={{ left: '75%' }} title="Target: 75%" />
                 </div>
-                <div className="flex items-start gap-1.5">
+                <div className="flex items-start gap-1.5 mb-2">
                   <ArrowRight className="w-3 h-3 text-slate-500 mt-0.5 flex-shrink-0" />
                   <p className="text-[11px] text-slate-400">{cat.recommendation}</p>
                 </div>
-                <p className="text-[10px] text-slate-600 mt-1 ml-4">{cat.impact}</p>
+                {/* Impact Chain */}
+                <div className="ml-4 grid grid-cols-3 gap-2 mb-2.5">
+                  <div>
+                    <p className="text-[9px] font-bold text-amber-400/60 uppercase mb-0.5">Immediate</p>
+                    <p className="text-[10px] text-slate-500">{cat.immediate}</p>
+                  </div>
+                  <div>
+                    <p className="text-[9px] font-bold text-slate-500 uppercase mb-0.5">Downstream</p>
+                    <p className="text-[10px] text-slate-500">{cat.downstream}</p>
+                  </div>
+                  <div>
+                    <p className="text-[9px] font-bold text-emerald-400/60 uppercase mb-0.5">Outcome</p>
+                    <p className="text-[10px] text-slate-500">{cat.outcome}</p>
+                  </div>
+                </div>
+                {cat.action && (
+                  <button className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-[11px] font-semibold transition-all ${cat.status === 'below-target' ? 'bg-amber-500/10 border border-amber-500/20 text-amber-400 hover:bg-amber-500/20' : 'bg-slate-700/30 border border-slate-600/30 text-slate-300 hover:bg-slate-700/50'}`}>
+                    <Zap className="w-3 h-3" /> {cat.action}
+                  </button>
+                )}
               </div>
             ))}
             <div className="flex items-center gap-3 pt-2 text-[10px] text-slate-500">
@@ -781,50 +850,93 @@ const ActiveCasesDashboard = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div className="flex items-start gap-2.5 p-3 bg-red-500/5 border border-red-500/10 rounded-lg">
               <AlertTriangle className="w-3.5 h-3.5 text-red-400 mt-0.5 flex-shrink-0" />
-              <div>
-                <p className="text-[11px] font-semibold text-red-400 mb-0.5">Urgent Deadlines</p>
-                <p className="text-[11px] text-slate-400">Homicide charge window closes in 14 hrs. DEA surveillance expires EOD. Meth warrant hearing Dec 06. 3 deadlines converging — command action required today.</p>
+              <div className="flex-1">
+                <div className="flex items-center justify-between mb-0.5">
+                  <p className="text-[11px] font-semibold text-red-400">Urgent Deadlines</p>
+                  <span className="text-[10px] font-bold text-red-400/70">97% confidence</span>
+                </div>
+                <p className="text-[11px] text-slate-400 mb-1">Homicide charge window closes in 14 hrs. DEA surveillance expires EOD. Meth warrant hearing Dec 06. 3 deadlines converging — command action required today.</p>
+                <p className="text-[10px] text-slate-600">Based on: case file deadlines, court scheduling data, lab SLA records</p>
               </div>
             </div>
             <div className="flex items-start gap-2.5 p-3 bg-amber-500/5 border border-amber-500/10 rounded-lg">
               <TrendingUp className="w-3.5 h-3.5 text-amber-400 mt-0.5 flex-shrink-0" />
-              <div>
-                <p className="text-[11px] font-semibold text-amber-400 mb-0.5">Crime Trends</p>
-                <p className="text-[11px] text-slate-400">Armed robberies +15% MoM. Pharmacy series (3 incidents) indicates organized ring. Gang shooting retaliation risk elevated. Burglary rate declining — pawn monitoring effective.</p>
+              <div className="flex-1">
+                <div className="flex items-center justify-between mb-0.5">
+                  <p className="text-[11px] font-semibold text-amber-400">Crime Trends</p>
+                  <span className="text-[10px] font-bold text-amber-400/70">88% confidence</span>
+                </div>
+                <p className="text-[11px] text-slate-400 mb-1">Armed robberies +15% MoM. Pharmacy series (3 incidents) indicates organized ring. Gang shooting retaliation risk elevated. Burglary rate declining.</p>
+                <p className="text-[10px] text-slate-600">Based on: 90-day incident reports, MO pattern matching, patrol CAD data</p>
               </div>
             </div>
             <div className="flex items-start gap-2.5 p-3 bg-slate-700/20 border border-slate-700/20 rounded-lg">
               <Users className="w-3.5 h-3.5 text-slate-400 mt-0.5 flex-shrink-0" />
-              <div>
-                <p className="text-[11px] font-semibold text-slate-300 mb-0.5">Workload Risk</p>
-                <p className="text-[11px] text-slate-400">Det. Rodriguez at capacity with 1 critical homicide. Det. Wilson has available bandwidth. One reassignment resolves imbalance and improves burglary clearance rate.</p>
+              <div className="flex-1">
+                <div className="flex items-center justify-between mb-0.5">
+                  <p className="text-[11px] font-semibold text-slate-300">Workload Risk</p>
+                  <span className="text-[10px] font-bold text-slate-500">92% confidence</span>
+                </div>
+                <p className="text-[11px] text-slate-400 mb-1">Det. Rodriguez at capacity with 1 critical homicide. Det. Wilson has available bandwidth. One reassignment resolves imbalance and improves burglary clearance.</p>
+                <p className="text-[10px] text-slate-600">Based on: active case loads, clearance history, detective availability status</p>
               </div>
             </div>
             <div className="flex items-start gap-2.5 p-3 bg-slate-700/20 border border-slate-700/20 rounded-lg">
               <TrendingDown className="w-3.5 h-3.5 text-slate-400 mt-0.5 flex-shrink-0" />
-              <div>
-                <p className="text-[11px] font-semibold text-slate-300 mb-0.5">Clearance Outlook</p>
-                <p className="text-[11px] text-slate-400">Overall 75% meets target. Robbery (68%) and Burglary (62%) below. Forming robbery task force and reassigning Wilson are the two highest-leverage moves to close year at target.</p>
+              <div className="flex-1">
+                <div className="flex items-center justify-between mb-0.5">
+                  <p className="text-[11px] font-semibold text-slate-300">Clearance Outlook</p>
+                  <span className="text-[10px] font-bold text-slate-500">81% confidence</span>
+                </div>
+                <p className="text-[11px] text-slate-400 mb-1">Overall 75% meets target. Robbery (68%) and Burglary (62%) below. Task force + Wilson reassignment are the two highest-leverage moves to close year at target.</p>
+                <p className="text-[10px] text-slate-600">Based on: YTD clearance trajectory, case complexity scores, historical close rates</p>
               </div>
             </div>
           </div>
         </div>
 
         {/* Recommended Action */}
-        <div className="bg-slate-900/60 border border-slate-600/30 rounded-xl p-5 border-l-2 border-l-amber-500/50">
-          <div className="flex items-center gap-2 mb-3">
-            <Zap className="w-4 h-4 text-amber-400" />
-            <h3 className="text-[13px] font-semibold text-amber-400 uppercase tracking-wide">Recommended Action</h3>
+        <div className="bg-slate-900/70 border border-amber-500/25 rounded-xl overflow-hidden">
+          {/* Urgency header */}
+          <div className="flex items-center justify-between px-5 py-3 bg-amber-500/8 border-b border-amber-500/15">
+            <div className="flex items-center gap-2">
+              <Zap className="w-4 h-4 text-amber-400" />
+              <span className="text-[12px] font-bold text-amber-400 uppercase tracking-widest">Recommended Action</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Clock className="w-3.5 h-3.5 text-red-400" />
+              <span className="text-[12px] font-bold text-red-400 tabular-nums">Must act within {fmtCountdown(urgencySeconds)}</span>
+            </div>
           </div>
-          <p className="text-[13px] text-white font-medium mb-1">Approve DEA surveillance extension + sign Homicide lab escalation request</p>
-          <p className="text-[11px] text-slate-400">These two actions resolve both URGENT items before EOD and protect 4 of 10 active cases from stalling. Total time: ~5 minutes. Estimated risk if deferred: task force collapse + missed charge window.</p>
-          <div className="flex items-center gap-2 mt-3">
-            <button className="flex items-center gap-2 px-4 py-2 bg-amber-500/15 border border-amber-500/25 text-amber-300 rounded-lg text-[12px] font-semibold hover:bg-amber-500/25 transition-all">
-              <CheckCircle className="w-3.5 h-3.5" /> Approve DEA Extension
-            </button>
-            <button className="flex items-center gap-2 px-4 py-2 bg-slate-800/40 border border-slate-700/40 text-slate-300 rounded-lg text-[12px] font-medium hover:bg-slate-800/60 transition-all">
-              <FileWarning className="w-3.5 h-3.5" /> Escalate Lab Request
-            </button>
+          <div className="p-5">
+            <p className="text-[15px] text-white font-semibold mb-1">Approve DEA surveillance extension + escalate Homicide lab request</p>
+            <p className="text-[12px] text-slate-400 mb-4">Two actions. ~5 minutes total. Resolves both URGENT items before EOD. Deferral risks: task force collapse + suspect release on homicide.</p>
+
+            {/* Impact Chain */}
+            <div className="mb-4 bg-slate-800/30 border border-slate-700/20 rounded-lg p-3.5 space-y-2">
+              <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest mb-1">Impact Chain</p>
+              <div className="flex items-start gap-2">
+                <span className="text-[10px] font-bold text-amber-400 uppercase w-24 flex-shrink-0 mt-0.5">Immediate</span>
+                <p className="text-[11px] text-slate-300">DEA surveillance continues. Lab escalation filed. Both URGENT items cleared from command queue.</p>
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="text-[10px] font-bold text-slate-400 uppercase w-24 flex-shrink-0 mt-0.5">Downstream</span>
+                <p className="text-[11px] text-slate-400">Fentanyl operation reaches arrest phase within 30 days. Homicide charge filed within 72 hrs pending ballistics.</p>
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="text-[10px] font-bold text-emerald-400 uppercase w-24 flex-shrink-0 mt-0.5">Outcome</span>
+                <p className="text-[11px] text-slate-400">4 of 10 active cases progress. Clearance rate protected at 75%. 0 missed legal windows.</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button className="flex items-center gap-2 px-4 py-2.5 bg-amber-500/15 border border-amber-500/30 text-amber-300 rounded-lg text-[13px] font-bold hover:bg-amber-500/25 transition-all">
+                <CheckCircle className="w-4 h-4" /> Approve DEA Extension
+              </button>
+              <button className="flex items-center gap-2 px-4 py-2.5 bg-slate-800/50 border border-slate-700/50 text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-700/50 transition-all">
+                <ArrowUpRight className="w-4 h-4" /> Escalate Lab Request
+              </button>
+            </div>
           </div>
         </div>
 
@@ -948,8 +1060,8 @@ const ActiveCasesDashboard = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-4 flex-shrink-0">
-                  <div className="text-right">
+                <div className="flex items-center gap-3 flex-shrink-0">
+                  <div className="text-right mr-1">
                     <span className={`text-sm font-semibold ${c.daysOpen > 60 ? 'text-red-400' : c.daysOpen > 30 ? 'text-amber-400' : 'text-slate-300'}`}>
                       {c.daysOpen}d
                     </span>
@@ -957,10 +1069,24 @@ const ActiveCasesDashboard = () => {
                   </div>
                   <button
                     onClick={(e) => { e.stopPropagation(); setSelectedCase(c); }}
-                    className="text-xs text-slate-400 hover:text-slate-300 font-medium"
+                    className="flex items-center gap-1 px-2.5 py-1.5 bg-slate-700/30 border border-slate-600/30 text-slate-300 rounded text-[11px] font-medium hover:bg-slate-700/50 transition-all"
                   >
-                    View →
+                    <Eye className="w-3 h-3" /> Open
                   </button>
+                  <button
+                    onClick={(e) => e.stopPropagation()}
+                    className="flex items-center gap-1 px-2.5 py-1.5 bg-slate-700/20 border border-slate-600/20 text-slate-400 rounded text-[11px] font-medium hover:bg-slate-700/40 transition-all"
+                  >
+                    <UserCheck className="w-3 h-3" /> Reassign
+                  </button>
+                  {(c.priority === 'Critical' || c.priority === 'High') && (
+                    <button
+                      onClick={(e) => e.stopPropagation()}
+                      className={`flex items-center gap-1 px-2.5 py-1.5 rounded text-[11px] font-medium transition-all ${c.priority === 'Critical' ? 'bg-red-500/10 border border-red-500/20 text-red-400 hover:bg-red-500/20' : 'bg-amber-500/10 border border-amber-500/20 text-amber-400 hover:bg-amber-500/20'}`}
+                    >
+                      <ShieldAlert className="w-3 h-3" /> Escalate
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
