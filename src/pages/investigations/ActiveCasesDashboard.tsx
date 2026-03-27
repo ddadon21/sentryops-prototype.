@@ -4,7 +4,8 @@ import {
   FlaskConical, BarChart3, Clock,
   CheckCircle, Link2, ChevronDown, ChevronUp,
   Activity, Phone, Mail, FileText,
-  Database, FileWarning, Microscope, Circle
+  Database, FileWarning, Microscope, Circle,
+  AlertTriangle, Zap, TrendingUp, TrendingDown, ArrowRight
 } from 'lucide-react';
 import DashboardLayout from '../../layouts/DashboardLayout';
 
@@ -28,6 +29,7 @@ interface Case {
   deadline?: string;
   multiAgency?: boolean;
   notes: string;
+  criticalReason?: string;
 }
 
 const ActiveCasesDashboard = () => {
@@ -59,6 +61,7 @@ const ActiveCasesDashboard = () => {
       witnesses: 8,
       nextAction: 'Ballistics results expected 12/08',
       deadline: '2024-12-15',
+      criticalReason: 'Charge window closes in 14 hrs — ballistics overdue',
       notes: 'Gang-related shooting. 2 suspects identified via surveillance. Witnesses cooperating. Ballistics analysis in progress at GBI lab.'
     },
     {
@@ -78,6 +81,7 @@ const ActiveCasesDashboard = () => {
       evidence: 23,
       witnesses: 4,
       nextAction: 'DNA re-analysis with new technology',
+      criticalReason: 'New DNA tech — time-sensitive re-test window before evidence degrades',
       notes: 'Cold case reopened due to new DNA technology. Original evidence being re-tested. One person of interest identified.'
     },
     {
@@ -99,6 +103,7 @@ const ActiveCasesDashboard = () => {
       nextAction: 'Surveillance extension requested - 30 days',
       deadline: '2024-12-20',
       multiAgency: true,
+      criticalReason: 'Surveillance authorization expires EOD — Sheriff approval required',
       notes: 'Multi-agency DEA task force. Identified major fentanyl distribution network. 30-day surveillance extension pending command approval. Estimated OT: $12K.'
     },
     {
@@ -119,6 +124,7 @@ const ActiveCasesDashboard = () => {
       witnesses: 6,
       nextAction: 'Search warrant hearing 12/06',
       deadline: '2024-12-06',
+      criticalReason: 'Warrant hearing tomorrow — HAZMAT confirmation still pending',
       notes: 'Suspected meth lab in residential neighborhood. Search warrant drafted. Hearing scheduled for 12/06. HAZMAT on standby.'
     },
     {
@@ -138,6 +144,7 @@ const ActiveCasesDashboard = () => {
       evidence: 12,
       witnesses: 3,
       nextAction: 'Surveillance review & suspect identification',
+      criticalReason: 'Strong surveillance footage — ID window narrowing as suspects may relocate',
       notes: '2 armed suspects. $2,400 cash taken. Excellent video surveillance. Suspects wore masks but distinctive clothing visible.'
     },
     {
@@ -158,6 +165,7 @@ const ActiveCasesDashboard = () => {
       witnesses: 9,
       nextAction: 'Pattern analysis & surveillance of target pharmacies',
       deadline: '2024-12-10',
+      criticalReason: 'Escalating series — 4th incident likely within 72 hrs based on pattern',
       notes: '3 pharmacy robberies - same MO. Targeting opioid pain medications. Suspects believed to be same 2 individuals. Surveillance on potential targets.'
     },
     {
@@ -178,6 +186,7 @@ const ActiveCasesDashboard = () => {
       witnesses: 4,
       nextAction: 'DNA results expected 12/12',
       deadline: '2024-12-12',
+      criticalReason: 'Suspect known to victim — ongoing safety risk until arrest',
       notes: 'Sexual assault case. Suspect known to victim. SANE exam completed. DNA submitted to GBI lab. Warrant ready pending lab confirmation.'
     },
     {
@@ -197,6 +206,7 @@ const ActiveCasesDashboard = () => {
       evidence: 15,
       witnesses: 2,
       nextAction: 'Pawn shop monitoring for stolen items',
+      criticalReason: 'Sophisticated entry method — repeat target risk at other electronics retailers',
       notes: '$45K in electronics stolen. Cut through roof access. Sophisticated operation. Monitoring pawn shops and online marketplaces.'
     },
     {
@@ -217,6 +227,7 @@ const ActiveCasesDashboard = () => {
       witnesses: 47,
       nextAction: 'Federal charges being prepared',
       multiAgency: true,
+      criticalReason: 'Federal charges pending — FBI coordination window time-sensitive',
       notes: 'Large-scale identity theft operation. 47 victims identified. $380K in fraudulent charges. Working with FBI. Federal charges pending.'
     },
     {
@@ -237,6 +248,7 @@ const ActiveCasesDashboard = () => {
       witnesses: 3,
       nextAction: 'Warrant execution planned 12/06',
       deadline: '2024-12-06',
+      criticalReason: 'Victim hospitalized — suspect at large, escalation risk',
       notes: 'Domestic violence - severe injuries. Victim hospitalized. Suspect fled scene. Warrant approved. Execution planned for 12/06 AM.'
     }
   ];
@@ -295,6 +307,44 @@ const ActiveCasesDashboard = () => {
             <span>75% clearance YTD</span>
             <span>·</span>
             <span>Updated 2 minutes ago</span>
+          </div>
+        </div>
+
+        {/* Command Priority Strip */}
+        <div className="bg-slate-900/60 border border-slate-700/40 rounded-xl overflow-hidden">
+          <div className="flex items-center gap-3 px-5 py-3 border-b border-slate-700/30">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+            </span>
+            <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest">Command Priority — Action Required</span>
+          </div>
+          <div className="divide-y divide-slate-700/20">
+            <div className="flex items-center gap-4 px-5 py-3">
+              <span className="text-[11px] font-bold text-red-400 uppercase w-16 flex-shrink-0">URGENT</span>
+              <span className="text-[13px] text-white flex-1">Homicide #2024-0847 — Charge window closes in 14 hrs</span>
+              <span className="text-[11px] text-slate-500 flex-shrink-0">Ballistics overdue · GBI Lab</span>
+            </div>
+            <div className="flex items-center gap-4 px-5 py-3">
+              <span className="text-[11px] font-bold text-red-400 uppercase w-16 flex-shrink-0">URGENT</span>
+              <span className="text-[13px] text-white flex-1">DEA Task Force — Surveillance extension approval expires EOD</span>
+              <span className="text-[11px] text-slate-500 flex-shrink-0">Sheriff signature required</span>
+            </div>
+            <div className="flex items-center gap-4 px-5 py-3">
+              <span className="text-[11px] font-bold text-amber-400 uppercase w-16 flex-shrink-0">ACTION</span>
+              <span className="text-[13px] text-white flex-1">Meth Lab warrant hearing tomorrow — HAZMAT standby confirmation needed</span>
+              <span className="text-[11px] text-slate-500 flex-shrink-0">Dec 06 deadline</span>
+            </div>
+            <div className="flex items-center gap-4 px-5 py-3">
+              <span className="text-[11px] font-bold text-amber-400 uppercase w-16 flex-shrink-0">ACTION</span>
+              <span className="text-[13px] text-white flex-1">Pharmacy robbery series — 4th incident risk HIGH, task force not yet formed</span>
+              <span className="text-[11px] text-slate-500 flex-shrink-0">+15% robbery trend</span>
+            </div>
+            <div className="flex items-center gap-4 px-5 py-3">
+              <span className="text-[11px] font-bold text-amber-400 uppercase w-16 flex-shrink-0">ACTION</span>
+              <span className="text-[13px] text-white flex-1">Det. Rodriguez at capacity — critical case coverage at risk</span>
+              <span className="text-[11px] text-slate-500 flex-shrink-0">Reassignment recommended</span>
+            </div>
           </div>
         </div>
 
@@ -504,33 +554,36 @@ const ActiveCasesDashboard = () => {
             <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">Clearance Rates by Type</h3>
             <span className="text-[11px] text-slate-500">YTD 2024 — National avg: 62%</span>
           </div>
-          <div className="space-y-3.5">
+          <div className="space-y-4">
             {[
-              { type: 'Homicide', cleared: 8, total: 8, percentage: 100, note: 'All cleared' },
-              { type: 'Narcotics', cleared: 8, total: 9, percentage: 89, note: '1 active task force' },
-              { type: 'Sexual Assault', cleared: 5, total: 6, percentage: 83, note: '1 awaiting lab' },
-              { type: 'Robbery', cleared: 17, total: 25, percentage: 68, note: 'Below 75% target' },
-              { type: 'Burglary', cleared: 13, total: 21, percentage: 62, note: 'Below 75% target' }
+              { type: 'Homicide', cleared: 8, total: 8, percentage: 100, status: 'on-track', recommendation: 'Maintain current detective coverage. Cold case review ongoing — low risk.', impact: 'No action needed. Continue monitoring.' },
+              { type: 'Narcotics', cleared: 8, total: 9, percentage: 89, status: 'on-track', recommendation: 'DEA task force extension approval will sustain rate. Approve by EOD.', impact: 'Approval delay risks case collapse and rate drop to ~78%.' },
+              { type: 'Sexual Assault', cleared: 5, total: 6, percentage: 83, status: 'on-track', recommendation: 'Expedite GBI lab result for #2024-1678. Warrant ready pending DNA.', impact: 'Lab result expected Dec 12 — clearance achievable this month.' },
+              { type: 'Robbery', cleared: 17, total: 25, percentage: 68, status: 'below-target', recommendation: 'Form robbery task force immediately. Pharmacy series is highest leverage case.', impact: 'Clearing pharmacy series raises rate to ~72%. Task force closes gap.' },
+              { type: 'Burglary', cleared: 13, total: 21, percentage: 62, status: 'below-target', recommendation: 'Assign Det. Wilson (available) to electronics store case #2024-1712.', impact: 'Resolving 2 open burglaries reaches 71% — near target by year end.' }
             ].map((cat, idx) => (
-              <div key={idx}>
-                <div className="flex items-center justify-between mb-1.5">
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm text-slate-300">{cat.type}</span>
-                    {cat.note && <span className="text-[10px] text-slate-400">({cat.note})</span>}
+              <div key={idx} className={`rounded-lg p-3.5 ${cat.status === 'below-target' ? 'bg-amber-500/5 border border-amber-500/10' : 'bg-slate-800/20 border border-slate-700/20'}`}>
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center gap-2.5">
+                    <span className="text-sm text-slate-300 font-medium">{cat.type}</span>
+                    <span className={`px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase ${cat.status === 'on-track' ? 'bg-emerald-500/10 text-emerald-400' : 'bg-amber-500/10 text-amber-400'}`}>
+                      {cat.status === 'on-track' ? 'On Track' : 'Below Target'}
+                    </span>
                   </div>
                   <div className="flex items-center gap-2.5">
                     <span className="text-xs text-slate-400">{cat.cleared}/{cat.total}</span>
                     <span className={`text-sm font-semibold ${cat.percentage >= 75 ? 'text-emerald-400' : 'text-amber-400'}`}>{cat.percentage}%</span>
                   </div>
                 </div>
-                <div className="relative w-full h-1 bg-slate-800/50 rounded-full overflow-visible">
+                <div className="relative w-full h-1 bg-slate-800/50 rounded-full overflow-visible mb-2.5">
                   <div className={`h-full rounded-full ${cat.percentage >= 75 ? 'bg-emerald-500/40' : 'bg-amber-500/40'}`} style={{ width: `${cat.percentage}%` }} />
-                  <div
-                    className="absolute top-[-3px] w-[1.5px] h-[calc(100%+6px)] bg-red-500/50 rounded-full"
-                    style={{ left: '75%' }}
-                    title="Target: 75%"
-                  />
+                  <div className="absolute top-[-3px] w-[1.5px] h-[calc(100%+6px)] bg-red-500/50 rounded-full" style={{ left: '75%' }} title="Target: 75%" />
                 </div>
+                <div className="flex items-start gap-1.5">
+                  <ArrowRight className="w-3 h-3 text-slate-500 mt-0.5 flex-shrink-0" />
+                  <p className="text-[11px] text-slate-400">{cat.recommendation}</p>
+                </div>
+                <p className="text-[10px] text-slate-600 mt-1 ml-4">{cat.impact}</p>
               </div>
             ))}
             <div className="flex items-center gap-3 pt-2 text-[10px] text-slate-500">
@@ -652,7 +705,21 @@ const ActiveCasesDashboard = () => {
           </button>
 
           {showWorkload && (
-            <div className="px-5 pb-5 space-y-2 border-t border-slate-700/20 pt-4">
+            <div className="px-5 pb-5 space-y-3 border-t border-slate-700/20 pt-4">
+              {/* Recommended Reassignment Banner */}
+              <div className="flex items-center justify-between px-4 py-3 bg-amber-500/5 border border-amber-500/15 rounded-lg">
+                <div className="flex items-start gap-2.5">
+                  <TrendingUp className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="text-[12px] font-medium text-amber-400">Recommended Reassignment</p>
+                    <p className="text-[11px] text-slate-400 mt-0.5">Burglary #2024-1712 → Det. Wilson (available, 80% clearance). Relieves Rodriguez and improves burglary rate.</p>
+                  </div>
+                </div>
+                <button className="ml-4 flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 bg-amber-500/15 border border-amber-500/25 text-amber-300 rounded-lg text-[11px] font-semibold hover:bg-amber-500/25 transition-all">
+                  <Zap className="w-3 h-3" /> Auto Assign
+                </button>
+              </div>
+
               {/* Rodriguez */}
               <div className="flex items-center gap-4 px-4 py-2.5 bg-slate-900/20 rounded border-l-[3px] border-l-red-800/60">
                 <div className="flex-1 min-w-0">
@@ -661,9 +728,8 @@ const ActiveCasesDashboard = () => {
                     <span className="text-[11px] text-slate-600">I-5234</span>
                     <span className="px-1.5 py-0.5 border rounded text-[11px] font-medium bg-red-500/10 border-red-500/20 text-red-400">AT CAPACITY</span>
                   </div>
-                  <div className="text-xs text-slate-400 mt-1">
-                    3 cases — Homicide (Critical) · Robbery (High) · Burglary (Medium)
-                  </div>
+                  <div className="text-xs text-slate-400 mt-1">3 cases — Homicide (Critical) · Robbery (High) · Burglary (Medium)</div>
+                  <div className="text-[10px] text-red-400/70 mt-0.5">Transfer Burglary #2024-1712 to free critical case capacity</div>
                 </div>
                 <div className="text-right flex-shrink-0">
                   <span className="text-xs text-slate-400">Clearance: 85%</span>
@@ -678,9 +744,8 @@ const ActiveCasesDashboard = () => {
                     <span className="text-[11px] text-slate-600">I-4892 / I-3456</span>
                     <span className="px-1.5 py-0.5 border rounded text-[11px] font-medium bg-amber-500/10 border-amber-500/20 text-amber-400">MODERATE</span>
                   </div>
-                  <div className="text-xs text-slate-400 mt-1">
-                    2 cases — Cold Case Homicide · DEA Task Force (Critical)
-                  </div>
+                  <div className="text-xs text-slate-400 mt-1">2 cases — Cold Case Homicide · DEA Task Force (Critical)</div>
+                  <div className="text-[10px] text-slate-500 mt-0.5">DEA approval will clear task force case — monitor closely</div>
                 </div>
                 <div className="text-right flex-shrink-0">
                   <span className="text-xs text-slate-400">Clearance: 72%</span>
@@ -688,16 +753,15 @@ const ActiveCasesDashboard = () => {
               </div>
 
               {/* Wilson */}
-              <div className="flex items-center gap-4 px-4 py-2.5 bg-slate-900/20 rounded border-l-[3px] border-l-slate-600/30">
+              <div className="flex items-center gap-4 px-4 py-2.5 bg-slate-900/20 rounded border-l-[3px] border-l-emerald-700/40">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3">
                     <span className="text-[13px] font-semibold text-white">Det. Wilson, Amanda</span>
                     <span className="text-[11px] text-slate-600">I-4521</span>
                     <span className="px-1.5 py-0.5 border rounded text-[11px] font-medium bg-emerald-500/10 border-emerald-500/20 text-emerald-400">AVAILABLE</span>
                   </div>
-                  <div className="text-xs text-slate-400 mt-1">
-                    1 case — Armed Robbery (High) · 4 days open
-                  </div>
+                  <div className="text-xs text-slate-400 mt-1">1 case — Armed Robbery (High) · 4 days open</div>
+                  <div className="text-[10px] text-emerald-400/60 mt-0.5">Capacity available — ideal for Burglary #2024-1712 reassignment</div>
                 </div>
                 <div className="text-right flex-shrink-0">
                   <span className="text-xs text-slate-400">Clearance: 80%</span>
@@ -705,6 +769,63 @@ const ActiveCasesDashboard = () => {
               </div>
             </div>
           )}
+        </div>
+
+        {/* AI Insight Panel */}
+        <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
+          <div className="flex items-center gap-2 mb-4">
+            <Activity className="w-4 h-4 text-slate-400" />
+            <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">AI Insight Summary</h3>
+            <span className="ml-auto text-[10px] text-slate-600">Synthesized · Updated 7:28 PM</span>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="flex items-start gap-2.5 p-3 bg-red-500/5 border border-red-500/10 rounded-lg">
+              <AlertTriangle className="w-3.5 h-3.5 text-red-400 mt-0.5 flex-shrink-0" />
+              <div>
+                <p className="text-[11px] font-semibold text-red-400 mb-0.5">Urgent Deadlines</p>
+                <p className="text-[11px] text-slate-400">Homicide charge window closes in 14 hrs. DEA surveillance expires EOD. Meth warrant hearing Dec 06. 3 deadlines converging — command action required today.</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-2.5 p-3 bg-amber-500/5 border border-amber-500/10 rounded-lg">
+              <TrendingUp className="w-3.5 h-3.5 text-amber-400 mt-0.5 flex-shrink-0" />
+              <div>
+                <p className="text-[11px] font-semibold text-amber-400 mb-0.5">Crime Trends</p>
+                <p className="text-[11px] text-slate-400">Armed robberies +15% MoM. Pharmacy series (3 incidents) indicates organized ring. Gang shooting retaliation risk elevated. Burglary rate declining — pawn monitoring effective.</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-2.5 p-3 bg-slate-700/20 border border-slate-700/20 rounded-lg">
+              <Users className="w-3.5 h-3.5 text-slate-400 mt-0.5 flex-shrink-0" />
+              <div>
+                <p className="text-[11px] font-semibold text-slate-300 mb-0.5">Workload Risk</p>
+                <p className="text-[11px] text-slate-400">Det. Rodriguez at capacity with 1 critical homicide. Det. Wilson has available bandwidth. One reassignment resolves imbalance and improves burglary clearance rate.</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-2.5 p-3 bg-slate-700/20 border border-slate-700/20 rounded-lg">
+              <TrendingDown className="w-3.5 h-3.5 text-slate-400 mt-0.5 flex-shrink-0" />
+              <div>
+                <p className="text-[11px] font-semibold text-slate-300 mb-0.5">Clearance Outlook</p>
+                <p className="text-[11px] text-slate-400">Overall 75% meets target. Robbery (68%) and Burglary (62%) below. Forming robbery task force and reassigning Wilson are the two highest-leverage moves to close year at target.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Recommended Action */}
+        <div className="bg-slate-900/60 border border-slate-600/30 rounded-xl p-5 border-l-2 border-l-amber-500/50">
+          <div className="flex items-center gap-2 mb-3">
+            <Zap className="w-4 h-4 text-amber-400" />
+            <h3 className="text-[13px] font-semibold text-amber-400 uppercase tracking-wide">Recommended Action</h3>
+          </div>
+          <p className="text-[13px] text-white font-medium mb-1">Approve DEA surveillance extension + sign Homicide lab escalation request</p>
+          <p className="text-[11px] text-slate-400">These two actions resolve both URGENT items before EOD and protect 4 of 10 active cases from stalling. Total time: ~5 minutes. Estimated risk if deferred: task force collapse + missed charge window.</p>
+          <div className="flex items-center gap-2 mt-3">
+            <button className="flex items-center gap-2 px-4 py-2 bg-amber-500/15 border border-amber-500/25 text-amber-300 rounded-lg text-[12px] font-semibold hover:bg-amber-500/25 transition-all">
+              <CheckCircle className="w-3.5 h-3.5" /> Approve DEA Extension
+            </button>
+            <button className="flex items-center gap-2 px-4 py-2 bg-slate-800/40 border border-slate-700/40 text-slate-300 rounded-lg text-[12px] font-medium hover:bg-slate-800/60 transition-all">
+              <FileWarning className="w-3.5 h-3.5" /> Escalate Lab Request
+            </button>
+          </div>
         </div>
 
         {/* Quick Actions */}
@@ -794,7 +915,7 @@ const ActiveCasesDashboard = () => {
                 <div className={`w-0.5 self-stretch rounded-full flex-shrink-0 ${getPriorityDot(c.priority)}`}></div>
 
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-1">
+                  <div className="flex items-center gap-2 mb-1 flex-wrap">
                     <span className="text-[13px] font-semibold text-white">{c.title}</span>
                     <span className={`px-1.5 py-0.5 border rounded text-[11px] font-medium ${getPriorityBadge(c.priority)}`}>{c.priority.toUpperCase()}</span>
                     {c.multiAgency && (
@@ -804,7 +925,13 @@ const ActiveCasesDashboard = () => {
                       <span className="px-1.5 py-0.5 border rounded text-[11px] font-medium bg-red-500/10 border-red-500/20 text-red-400">DEADLINE</span>
                     )}
                   </div>
-                  <div className="flex items-center gap-2 text-[11px]">
+                  {c.criticalReason && (
+                    <div className="flex items-center gap-1.5 mb-1">
+                      <AlertTriangle className="w-3 h-3 text-slate-500 flex-shrink-0" />
+                      <span className="text-[11px] text-slate-500 italic">{c.criticalReason}</span>
+                    </div>
+                  )}
+                  <div className="flex items-center gap-2 text-[11px] flex-wrap">
                     <span className="text-slate-400">{c.type}</span>
                     <span className="text-slate-600">·</span>
                     <span className="text-slate-400">#{c.caseNumber}</span>
