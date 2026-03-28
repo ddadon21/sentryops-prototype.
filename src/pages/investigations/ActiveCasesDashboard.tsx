@@ -312,7 +312,7 @@ const ActiveCasesDashboard = () => {
 
         {/* Page Header — matches Command */}
         <div>
-          <h2 className="text-xl font-bold text-white mb-1">Criminal Investigations</h2>
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-1">Criminal Investigations</h2>
           <div className="flex items-center gap-2 text-[11px] text-slate-500">
             <span>{stats.total} active cases</span>
             <span>·</span>
@@ -325,7 +325,7 @@ const ActiveCasesDashboard = () => {
         </div>
 
         {/* Command Priority Strip */}
-        <div className="bg-slate-900/60 border border-slate-700/40 rounded-xl overflow-hidden">
+        <div className="bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/40 rounded-xl overflow-hidden">
           <div className="flex items-center gap-3 px-5 py-3 border-b border-slate-700/30">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
@@ -338,7 +338,7 @@ const ActiveCasesDashboard = () => {
             <div className="flex items-start gap-4 px-5 py-3.5">
               <span className="text-[11px] font-bold text-red-400 uppercase w-16 flex-shrink-0 mt-0.5">URGENT</span>
               <div className="flex-1 min-w-0">
-                <p className="text-[13px] text-white font-medium">Homicide #2024-0847 — Charge window closes in 14 hrs</p>
+                <p className="text-[13px] text-slate-900 dark:text-white font-medium">Homicide #2024-0847 — Charge window closes in 14 hrs</p>
                 <p className="text-[11px] text-red-400/70 mt-0.5">If ignored: suspect released, case collapses. Risk: double jeopardy bars future prosecution.</p>
               </div>
               <div className="flex items-center gap-1.5 flex-shrink-0">
@@ -350,7 +350,7 @@ const ActiveCasesDashboard = () => {
             <div className="flex items-start gap-4 px-5 py-3.5">
               <span className="text-[11px] font-bold text-red-400 uppercase w-16 flex-shrink-0 mt-0.5">URGENT</span>
               <div className="flex-1 min-w-0">
-                <p className="text-[13px] text-white font-medium">DEA Task Force — Surveillance extension expires EOD</p>
+                <p className="text-[13px] text-slate-900 dark:text-white font-medium">DEA Task Force — Surveillance extension expires EOD</p>
                 <p className="text-[11px] text-red-400/70 mt-0.5">If ignored: 84-day operation terminates. Risk: 8 suspects walk, fentanyl network reconstitutes.</p>
               </div>
               <div className="flex items-center gap-1.5 flex-shrink-0">
@@ -362,7 +362,7 @@ const ActiveCasesDashboard = () => {
             <div className="flex items-start gap-4 px-5 py-3.5">
               <span className="text-[11px] font-bold text-amber-400 uppercase w-16 flex-shrink-0 mt-0.5">ACTION</span>
               <div className="flex-1 min-w-0">
-                <p className="text-[13px] text-white font-medium">Meth Lab — HAZMAT standby confirmation needed by Dec 06</p>
+                <p className="text-[13px] text-slate-900 dark:text-white font-medium">Meth Lab — HAZMAT standby confirmation needed by Dec 06</p>
                 <p className="text-[11px] text-amber-400/60 mt-0.5">If ignored: warrant execution proceeds without HAZMAT. Risk: officer exposure, scene contamination, evidence inadmissibility.</p>
               </div>
               <div className="flex items-center gap-1.5 flex-shrink-0">
@@ -374,7 +374,7 @@ const ActiveCasesDashboard = () => {
             <div className="flex items-start gap-4 px-5 py-3.5">
               <span className="text-[11px] font-bold text-amber-400 uppercase w-16 flex-shrink-0 mt-0.5">ACTION</span>
               <div className="flex-1 min-w-0">
-                <p className="text-[13px] text-white font-medium">Pharmacy robbery series — task force not formed, 4th incident imminent</p>
+                <p className="text-[13px] text-slate-900 dark:text-white font-medium">Pharmacy robbery series — task force not formed, 4th incident imminent</p>
                 <p className="text-[11px] text-amber-400/60 mt-0.5">If ignored: series continues, public exposure increases. Risk: media scrutiny, victim harm, robbery rate hits 20-year high.</p>
               </div>
               <div className="flex items-center gap-1.5 flex-shrink-0">
@@ -386,7 +386,7 @@ const ActiveCasesDashboard = () => {
             <div className="flex items-start gap-4 px-5 py-3.5">
               <span className="text-[11px] font-bold text-amber-400 uppercase w-16 flex-shrink-0 mt-0.5">ACTION</span>
               <div className="flex-1 min-w-0">
-                <p className="text-[13px] text-white font-medium">Det. Rodriguez at capacity — critical homicide coverage at risk</p>
+                <p className="text-[13px] text-slate-900 dark:text-white font-medium">Det. Rodriguez at capacity — critical homicide coverage at risk</p>
                 <p className="text-[11px] text-amber-400/60 mt-0.5">If ignored: homicide investigation slows. Risk: missed charge window, witness attrition on active gang case.</p>
               </div>
               <div className="flex items-center gap-1.5 flex-shrink-0">
@@ -399,17 +399,17 @@ const ActiveCasesDashboard = () => {
 
         {/* Executive Snapshot Row — matches Command metric cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
-          <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5 text-left hover:border-slate-600/40 transition-colors">
+          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-5 text-left hover:border-slate-600/40 transition-colors">
             <div className="flex items-center justify-between mb-3">
               <span className="text-xs text-slate-500 font-medium">Active Cases</span>
               <Circle className="w-2 h-2 fill-slate-400 text-slate-400" />
             </div>
-            <p className="text-3xl font-bold text-white mb-1">{stats.total}</p>
+            <p className="text-3xl font-bold text-slate-900 dark:text-white mb-1">{stats.total}</p>
             <p className="text-xs text-slate-400 mb-1">Major felony investigations</p>
             <p className="text-[11px] text-emerald-400">-2 from last month</p>
           </div>
 
-          <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5 text-left hover:border-slate-600/40 transition-colors">
+          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-5 text-left hover:border-slate-600/40 transition-colors">
             <div className="flex items-center justify-between mb-3">
               <span className="text-xs text-slate-500 font-medium">Critical Cases</span>
               <span className="relative flex h-2.5 w-2.5">
@@ -417,17 +417,17 @@ const ActiveCasesDashboard = () => {
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500"></span>
               </span>
             </div>
-            <p className="text-3xl font-extrabold text-white mb-1">{stats.critical}</p>
+            <p className="text-3xl font-extrabold text-slate-900 dark:text-white mb-1">{stats.critical}</p>
             <p className="text-xs text-slate-400 mb-1">Immediate attention required</p>
             <p className="text-[11px] text-red-400">All require command action today</p>
           </div>
 
-          <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5 text-left">
+          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-5 text-left">
             <div className="flex items-center justify-between mb-3">
               <span className="text-xs text-slate-500 font-medium">Clearance Rate (YTD)</span>
               <Circle className="w-2 h-2 fill-emerald-500 text-emerald-500" />
             </div>
-            <p className="text-3xl font-bold text-white mb-1">75%</p>
+            <p className="text-3xl font-bold text-slate-900 dark:text-white mb-1">75%</p>
             <div className="flex items-center gap-2 text-[11px] text-slate-400 mb-1">
               <span>65 of 87 cases</span>
               <span className="text-slate-600">·</span>
@@ -436,19 +436,19 @@ const ActiveCasesDashboard = () => {
             <p className="text-[11px] text-emerald-400">Meeting 75% target</p>
           </div>
 
-          <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5 text-left hover:border-slate-600/40 transition-colors">
+          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-5 text-left hover:border-slate-600/40 transition-colors">
             <div className="flex items-center justify-between mb-3">
               <span className="text-xs text-slate-500 font-medium">Multi-Agency Ops</span>
               <Circle className="w-2 h-2 fill-blue-500 text-blue-500" />
             </div>
-            <p className="text-3xl font-bold text-white mb-1">{stats.multiAgency}</p>
+            <p className="text-3xl font-bold text-slate-900 dark:text-white mb-1">{stats.multiAgency}</p>
             <p className="text-xs text-slate-400 mb-1">FBI & DEA active</p>
             <p className="text-[11px] text-amber-400">Federal charges pending: 2</p>
           </div>
         </div>
 
         {/* Intelligence Summary — collapsible, matches Command pattern */}
-        <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl border-l-2 border-l-slate-600/40">
+        <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl border-l-2 border-l-slate-600/40">
           <button
             onClick={() => setInsightsExpanded(!insightsExpanded)}
             className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-slate-800/10 transition-colors rounded-xl"
@@ -516,14 +516,14 @@ const ActiveCasesDashboard = () => {
 
         {/* Case Type Breakdown — matches Command division cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
+          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 bg-red-700/60 rounded-full"></div>
                 <span className="text-xs text-slate-500 uppercase tracking-wide font-medium">Homicide</span>
               </div>
             </div>
-            <p className="text-2xl font-semibold text-white mb-3">{stats.homicide}</p>
+            <p className="text-2xl font-semibold text-slate-900 dark:text-white mb-3">{stats.homicide}</p>
             <div className="space-y-1.5">
               <div className="flex items-center justify-between text-xs">
                 <span className="text-slate-500">Clearance YTD</span>
@@ -536,14 +536,14 @@ const ActiveCasesDashboard = () => {
             </div>
           </div>
 
-          <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
+          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 bg-amber-600/50 rounded-full"></div>
                 <span className="text-xs text-slate-500 uppercase tracking-wide font-medium">Robbery</span>
               </div>
             </div>
-            <p className="text-2xl font-semibold text-white mb-3">{stats.robbery}</p>
+            <p className="text-2xl font-semibold text-slate-900 dark:text-white mb-3">{stats.robbery}</p>
             <div className="space-y-1.5">
               <div className="flex items-center justify-between text-xs">
                 <span className="text-slate-500">Clearance YTD</span>
@@ -556,14 +556,14 @@ const ActiveCasesDashboard = () => {
             </div>
           </div>
 
-          <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
+          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 bg-slate-500/50 rounded-full"></div>
                 <span className="text-xs text-slate-500 uppercase tracking-wide font-medium">Narcotics</span>
               </div>
             </div>
-            <p className="text-2xl font-semibold text-white mb-3">{stats.narcotics}</p>
+            <p className="text-2xl font-semibold text-slate-900 dark:text-white mb-3">{stats.narcotics}</p>
             <div className="space-y-1.5">
               <div className="flex items-center justify-between text-xs">
                 <span className="text-slate-500">Clearance YTD</span>
@@ -576,14 +576,14 @@ const ActiveCasesDashboard = () => {
             </div>
           </div>
 
-          <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
+          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 bg-slate-500/50 rounded-full"></div>
                 <span className="text-xs text-slate-500 uppercase tracking-wide font-medium">Other</span>
               </div>
             </div>
-            <p className="text-2xl font-semibold text-white mb-3">4</p>
+            <p className="text-2xl font-semibold text-slate-900 dark:text-white mb-3">4</p>
             <div className="space-y-1.5">
               <div className="flex items-center justify-between text-xs">
                 <span className="text-slate-500">Sexual Assault</span>
@@ -598,9 +598,9 @@ const ActiveCasesDashboard = () => {
         </div>
 
         {/* Clearance Rate Detail — matches Command compliance section */}
-        <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
+        <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
           <div className="flex items-center justify-between mb-5">
-            <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">Clearance Rates by Type</h3>
+            <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Clearance Rates by Type</h3>
             <span className="text-[11px] text-slate-500">YTD 2024 — National avg: 62%</span>
           </div>
           <div className="space-y-4">
@@ -666,19 +666,19 @@ const ActiveCasesDashboard = () => {
 
         {/* Connected Cases & Patterns — collapsible */}
         {showConnections && (
-          <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
+          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
             <div className="flex items-center justify-between mb-5">
-              <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">Connected Cases & Patterns</h3>
+              <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Connected Cases & Patterns</h3>
               <button onClick={() => setShowConnections(false)} className="text-slate-500 hover:text-slate-400">
                 <X className="w-4 h-4" />
               </button>
             </div>
 
             <div className="space-y-2">
-              <div className="flex items-center gap-4 px-4 py-2.5 bg-slate-900/20 rounded border-l-[3px] border-l-amber-700/50">
+              <div className="flex items-center gap-4 px-4 py-2.5 bg-slate-50 dark:bg-slate-900/20 rounded border-l-[3px] border-l-amber-700/50">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3">
-                    <span className="text-[13px] font-semibold text-white">Pharmacy Robbery Series</span>
+                    <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Pharmacy Robbery Series</span>
                     <span className="text-[11px] text-slate-600">#2024-1489</span>
                     <span className="px-1.5 py-0.5 border rounded text-[11px] font-medium bg-amber-500/10 border-amber-500/20 text-amber-400">SERIES</span>
                   </div>
@@ -687,10 +687,10 @@ const ActiveCasesDashboard = () => {
                 <span className="text-xs text-slate-500 flex-shrink-0">20 days open</span>
               </div>
 
-              <div className="flex items-center gap-4 px-4 py-2.5 bg-slate-900/20 rounded border-l-[3px] border-l-red-800/60">
+              <div className="flex items-center gap-4 px-4 py-2.5 bg-slate-50 dark:bg-slate-900/20 rounded border-l-[3px] border-l-red-800/60">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3">
-                    <span className="text-[13px] font-semibold text-white">Gang-Related Shootings</span>
+                    <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Gang-Related Shootings</span>
                     <span className="text-[11px] text-slate-600">#2024-0847 + linked</span>
                     <span className="px-1.5 py-0.5 border rounded text-[11px] font-medium bg-red-500/10 border-red-500/20 text-red-400">CRITICAL</span>
                   </div>
@@ -699,10 +699,10 @@ const ActiveCasesDashboard = () => {
                 <span className="text-xs text-slate-500 flex-shrink-0">7 days open</span>
               </div>
 
-              <div className="flex items-center gap-4 px-4 py-2.5 bg-slate-900/20 rounded border-l-[3px] border-l-slate-600/30">
+              <div className="flex items-center gap-4 px-4 py-2.5 bg-slate-50 dark:bg-slate-900/20 rounded border-l-[3px] border-l-slate-600/30">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3">
-                    <span className="text-[13px] font-semibold text-white">Identity Theft Ring</span>
+                    <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Identity Theft Ring</span>
                     <span className="text-[11px] text-slate-600">#2024-1823</span>
                     <span className="px-1.5 py-0.5 border rounded text-[11px] font-medium bg-blue-500/10 border-blue-500/20 text-blue-400">MULTI-AGENCY</span>
                   </div>
@@ -716,9 +716,9 @@ const ActiveCasesDashboard = () => {
 
         {/* Case Analytics — collapsible */}
         {showAnalytics && (
-          <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
+          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
             <div className="flex items-center justify-between mb-5">
-              <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">Case Analytics</h3>
+              <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Case Analytics</h3>
               <button onClick={() => setShowAnalytics(false)} className="text-slate-500 hover:text-slate-400">
                 <X className="w-4 h-4" />
               </button>
@@ -726,7 +726,7 @@ const ActiveCasesDashboard = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               <div className="border border-slate-700/20 rounded-lg p-5">
-                <span className="text-sm font-medium text-white">Avg Time to Clearance</span>
+                <span className="text-sm font-medium text-slate-900 dark:text-white">Avg Time to Clearance</span>
                 <div className="space-y-2 mt-3 text-xs">
                   <div className="flex justify-between"><span className="text-slate-400">Homicide</span><span className="text-slate-300">45 days</span></div>
                   <div className="flex justify-between"><span className="text-slate-400">Robbery</span><span className="text-slate-300">22 days</span></div>
@@ -737,7 +737,7 @@ const ActiveCasesDashboard = () => {
               </div>
 
               <div className="border border-slate-700/20 rounded-lg p-5">
-                <span className="text-sm font-medium text-white">Evidence Processing</span>
+                <span className="text-sm font-medium text-slate-900 dark:text-white">Evidence Processing</span>
                 <div className="space-y-2 mt-3 text-xs">
                   <div className="flex justify-between"><span className="text-slate-400">Pending lab results</span><span className="text-amber-400">6 cases</span></div>
                   <div className="flex justify-between"><span className="text-slate-400">Avg lab turnaround</span><span className="text-red-400">18 days (target: 14)</span></div>
@@ -748,7 +748,7 @@ const ActiveCasesDashboard = () => {
               </div>
 
               <div className="border border-slate-700/20 rounded-lg p-5">
-                <span className="text-sm font-medium text-white">Comparisons</span>
+                <span className="text-sm font-medium text-slate-900 dark:text-white">Comparisons</span>
                 <div className="space-y-2 mt-3 text-xs">
                   <div className="flex justify-between"><span className="text-slate-400">Our clearance</span><span className="text-emerald-400">75%</span></div>
                   <div className="flex justify-between"><span className="text-slate-400">National avg</span><span className="text-slate-300">62% (+13%)</span></div>
@@ -761,7 +761,7 @@ const ActiveCasesDashboard = () => {
         )}
 
         {/* Detective Workload — collapsible, matches Command pattern */}
-        <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl">
+        <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl">
           <button
             onClick={() => setShowWorkload(!showWorkload)}
             className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-slate-800/10 transition-colors rounded-xl"
@@ -790,10 +790,10 @@ const ActiveCasesDashboard = () => {
               </div>
 
               {/* Rodriguez */}
-              <div className="flex items-center gap-4 px-4 py-2.5 bg-slate-900/20 rounded border-l-[3px] border-l-red-800/60">
+              <div className="flex items-center gap-4 px-4 py-2.5 bg-slate-50 dark:bg-slate-900/20 rounded border-l-[3px] border-l-red-800/60">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3">
-                    <span className="text-[13px] font-semibold text-white">Det. Rodriguez, Maria</span>
+                    <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Det. Rodriguez, Maria</span>
                     <span className="text-[11px] text-slate-600">I-5234</span>
                     <span className="px-1.5 py-0.5 border rounded text-[11px] font-medium bg-red-500/10 border-red-500/20 text-red-400">AT CAPACITY</span>
                   </div>
@@ -806,10 +806,10 @@ const ActiveCasesDashboard = () => {
               </div>
 
               {/* Anderson */}
-              <div className="flex items-center gap-4 px-4 py-2.5 bg-slate-900/20 rounded border-l-[3px] border-l-amber-700/50">
+              <div className="flex items-center gap-4 px-4 py-2.5 bg-slate-50 dark:bg-slate-900/20 rounded border-l-[3px] border-l-amber-700/50">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3">
-                    <span className="text-[13px] font-semibold text-white">Det. Anderson / Lt. Anderson</span>
+                    <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Det. Anderson / Lt. Anderson</span>
                     <span className="text-[11px] text-slate-600">I-4892 / I-3456</span>
                     <span className="px-1.5 py-0.5 border rounded text-[11px] font-medium bg-amber-500/10 border-amber-500/20 text-amber-400">MODERATE</span>
                   </div>
@@ -822,10 +822,10 @@ const ActiveCasesDashboard = () => {
               </div>
 
               {/* Wilson */}
-              <div className="flex items-center gap-4 px-4 py-2.5 bg-slate-900/20 rounded border-l-[3px] border-l-emerald-700/40">
+              <div className="flex items-center gap-4 px-4 py-2.5 bg-slate-50 dark:bg-slate-900/20 rounded border-l-[3px] border-l-emerald-700/40">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3">
-                    <span className="text-[13px] font-semibold text-white">Det. Wilson, Amanda</span>
+                    <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Det. Wilson, Amanda</span>
                     <span className="text-[11px] text-slate-600">I-4521</span>
                     <span className="px-1.5 py-0.5 border rounded text-[11px] font-medium bg-emerald-500/10 border-emerald-500/20 text-emerald-400">AVAILABLE</span>
                   </div>
@@ -841,10 +841,10 @@ const ActiveCasesDashboard = () => {
         </div>
 
         {/* AI Insight Panel */}
-        <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
+        <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
           <div className="flex items-center gap-2 mb-4">
             <Activity className="w-4 h-4 text-slate-400" />
-            <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">AI Insight Summary</h3>
+            <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">AI Insight Summary</h3>
             <span className="ml-auto text-[10px] text-slate-600">Synthesized · Updated 7:28 PM</span>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -896,7 +896,7 @@ const ActiveCasesDashboard = () => {
         </div>
 
         {/* Recommended Action */}
-        <div className="bg-slate-900/70 border border-amber-500/25 rounded-xl overflow-hidden">
+        <div className="bg-white dark:bg-slate-900/70 border border-amber-500/25 rounded-xl overflow-hidden">
           {/* Urgency header */}
           <div className="flex items-center justify-between px-5 py-3 bg-amber-500/8 border-b border-amber-500/15">
             <div className="flex items-center gap-2">
@@ -909,7 +909,7 @@ const ActiveCasesDashboard = () => {
             </div>
           </div>
           <div className="p-5">
-            <p className="text-[15px] text-white font-semibold mb-1">Approve DEA surveillance extension + escalate Homicide lab request</p>
+            <p className="text-[15px] text-slate-900 dark:text-white font-semibold mb-1">Approve DEA surveillance extension + escalate Homicide lab request</p>
             <p className="text-[12px] text-slate-400 mb-4">Two actions. ~5 minutes total. Resolves both URGENT items before EOD. Deferral risks: task force collapse + suspect release on homicide.</p>
 
             {/* Impact Chain */}
@@ -972,7 +972,7 @@ const ActiveCasesDashboard = () => {
         </div>
 
         {/* Filters — unified styling */}
-        <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
+        <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
           <div className="flex items-center gap-4 mb-4">
             <div className="flex-1 relative">
               <Search className="w-4 h-4 text-slate-500 absolute left-4 top-1/2 -translate-y-1/2" />
@@ -981,7 +981,7 @@ const ActiveCasesDashboard = () => {
                 placeholder="Search by case number, title, or detective..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-11 pr-4 py-2 bg-slate-800/40 border border-slate-700/40 rounded-lg text-[13px] text-white placeholder-slate-500 focus:outline-none focus:border-slate-600"
+                className="w-full pl-11 pr-4 py-2 bg-slate-100 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/40 rounded-lg text-[13px] text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-slate-400 dark:focus:border-slate-600"
               />
             </div>
           </div>
@@ -990,7 +990,7 @@ const ActiveCasesDashboard = () => {
             <select
               value={selectedType}
               onChange={(e) => setSelectedType(e.target.value)}
-              className="px-4 py-2 bg-slate-800/40 border border-slate-700/40 rounded-lg text-slate-300 text-[13px] focus:outline-none focus:border-slate-600"
+              className="px-4 py-2 bg-slate-100 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/40 rounded-lg text-slate-700 dark:text-slate-300 text-[13px] focus:outline-none focus:border-slate-400 dark:focus:border-slate-600"
             >
               <option value="all">All Types</option>
               <option value="Homicide">Homicide</option>
@@ -1004,7 +1004,7 @@ const ActiveCasesDashboard = () => {
             <select
               value={selectedPriority}
               onChange={(e) => setSelectedPriority(e.target.value)}
-              className="px-4 py-2 bg-slate-800/40 border border-slate-700/40 rounded-lg text-slate-300 text-[13px] focus:outline-none focus:border-slate-600"
+              className="px-4 py-2 bg-slate-100 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/40 rounded-lg text-slate-700 dark:text-slate-300 text-[13px] focus:outline-none focus:border-slate-400 dark:focus:border-slate-600"
             >
               <option value="all">All Priorities</option>
               <option value="Critical">Critical</option>
@@ -1020,7 +1020,7 @@ const ActiveCasesDashboard = () => {
           {filteredCases.map((c) => (
             <div
               key={c.id}
-              className="bg-slate-800/25 border border-slate-700/30 rounded-xl hover:border-slate-600/40 transition-colors cursor-pointer"
+              className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl hover:border-slate-600/40 transition-colors cursor-pointer"
               onClick={() => setSelectedCase(c)}
             >
               <div className="flex items-center gap-4 p-5">
@@ -1028,7 +1028,7 @@ const ActiveCasesDashboard = () => {
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1 flex-wrap">
-                    <span className="text-[13px] font-semibold text-white">{c.title}</span>
+                    <span className="text-[13px] font-semibold text-slate-900 dark:text-white">{c.title}</span>
                     <span className={`px-1.5 py-0.5 border rounded text-[11px] font-medium ${getPriorityBadge(c.priority)}`}>{c.priority.toUpperCase()}</span>
                     {c.multiAgency && (
                       <span className="px-1.5 py-0.5 border rounded text-[11px] font-medium bg-blue-500/10 border-blue-500/20 text-blue-400">MULTI-AGENCY</span>
@@ -1100,10 +1100,10 @@ const ActiveCasesDashboard = () => {
               className="absolute inset-0 bg-black/60 backdrop-blur-sm"
               onClick={() => setSelectedCase(null)}
             />
-            <div className="relative bg-slate-900 border border-slate-700/50 rounded-2xl p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+            <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
               <button
                 onClick={() => setSelectedCase(null)}
-                className="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors"
+                className="absolute top-4 right-4 text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
               >
                 <X className="w-6 h-6" />
               </button>
@@ -1118,18 +1118,18 @@ const ActiveCasesDashboard = () => {
                     <span className="px-1.5 py-0.5 border rounded text-[11px] font-medium bg-blue-500/10 border-blue-500/20 text-blue-400">MULTI-AGENCY</span>
                   )}
                 </div>
-                <h2 className="text-xl font-bold text-white mb-1">{selectedCase.title}</h2>
+                <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-1">{selectedCase.title}</h2>
                 <div className="text-[11px] text-slate-500">
                   Case #{selectedCase.caseNumber} · {selectedCase.daysOpen} days open · Opened {selectedCase.openedDate}
                 </div>
               </div>
 
               {/* Lead Detective */}
-              <div className="mb-5 bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
-                <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide mb-3">Lead Detective</h3>
+              <div className="mb-5 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
+                <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide mb-3">Lead Detective</h3>
                 <div className="flex items-center justify-between">
                   <div>
-                    <div className="text-[13px] text-white font-medium">{selectedCase.leadDetective}</div>
+                    <div className="text-[13px] text-slate-900 dark:text-white font-medium">{selectedCase.leadDetective}</div>
                     <div className="text-[11px] text-slate-500">Badge: {selectedCase.badge}</div>
                   </div>
                   <div className="flex gap-2">
@@ -1145,16 +1145,16 @@ const ActiveCasesDashboard = () => {
 
               {/* Status & Evidence */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
-                <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
-                  <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide mb-3">Status</h3>
+                <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
+                  <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide mb-3">Status</h3>
                   <div className="space-y-2 text-xs">
                     <div className="flex justify-between"><span className="text-slate-400">Current</span><span className="text-slate-300">{selectedCase.status}</span></div>
                     <div className="flex justify-between"><span className="text-slate-400">Opened</span><span className="text-slate-300">{selectedCase.openedDate}</span></div>
                     <div className="flex justify-between"><span className="text-slate-400">Last Update</span><span className="text-slate-300">2 hours ago</span></div>
                   </div>
                 </div>
-                <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
-                  <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide mb-3">Evidence & Witnesses</h3>
+                <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
+                  <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide mb-3">Evidence & Witnesses</h3>
                   <div className="space-y-2 text-xs">
                     <div className="flex justify-between"><span className="text-slate-400">Evidence</span><span className="text-slate-300">{selectedCase.evidence} collected</span></div>
                     <div className="flex justify-between"><span className="text-slate-400">Witnesses</span><span className="text-slate-300">{selectedCase.witnesses} interviewed</span></div>
@@ -1164,8 +1164,8 @@ const ActiveCasesDashboard = () => {
               </div>
 
               {/* Timeline */}
-              <div className="mb-5 bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
-                <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide mb-4">Case Timeline</h3>
+              <div className="mb-5 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
+                <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide mb-4">Case Timeline</h3>
                 <div className="space-y-3">
                   <div className="flex gap-3">
                     <div className="flex flex-col items-center">
@@ -1173,7 +1173,7 @@ const ActiveCasesDashboard = () => {
                       <div className="w-px h-full bg-slate-600 mt-1"></div>
                     </div>
                     <div className="flex-1 pb-4">
-                      <div className="text-[13px] text-white font-medium">Case Opened</div>
+                      <div className="text-[13px] text-slate-900 dark:text-white font-medium">Case Opened</div>
                       <div className="text-[11px] text-slate-500">{selectedCase.openedDate}</div>
                     </div>
                   </div>
@@ -1183,7 +1183,7 @@ const ActiveCasesDashboard = () => {
                       <div className="w-px h-full bg-slate-600 mt-1"></div>
                     </div>
                     <div className="flex-1 pb-4">
-                      <div className="text-[13px] text-white font-medium">Evidence Collected</div>
+                      <div className="text-[13px] text-slate-900 dark:text-white font-medium">Evidence Collected</div>
                       <div className="text-[11px] text-slate-500">{selectedCase.evidence} items logged</div>
                     </div>
                   </div>
@@ -1193,7 +1193,7 @@ const ActiveCasesDashboard = () => {
                       <div className="w-px h-full bg-slate-600 mt-1"></div>
                     </div>
                     <div className="flex-1 pb-4">
-                      <div className="text-[13px] text-white font-medium">Witnesses Interviewed</div>
+                      <div className="text-[13px] text-slate-900 dark:text-white font-medium">Witnesses Interviewed</div>
                       <div className="text-[11px] text-slate-500">{selectedCase.witnesses} statements</div>
                     </div>
                   </div>
@@ -1206,7 +1206,7 @@ const ActiveCasesDashboard = () => {
                       )}
                     </div>
                     <div className="flex-1">
-                      <div className="text-[13px] text-white font-medium">{selectedCase.nextAction}</div>
+                      <div className="text-[13px] text-slate-900 dark:text-white font-medium">{selectedCase.nextAction}</div>
                       {selectedCase.deadline && (
                         <div className="text-[11px] text-red-400">Deadline: {selectedCase.deadline}</div>
                       )}
@@ -1216,8 +1216,8 @@ const ActiveCasesDashboard = () => {
               </div>
 
               {/* Team */}
-              <div className="mb-5 bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
-                <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide mb-3">Assigned Team</h3>
+              <div className="mb-5 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
+                <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide mb-3">Assigned Team</h3>
                 <div className="flex flex-wrap gap-2">
                   {selectedCase.assignedTo.map((person, idx) => (
                     <span key={idx} className="px-3 py-1.5 bg-slate-700/30 text-slate-300 rounded-lg text-[13px]">
@@ -1228,8 +1228,8 @@ const ActiveCasesDashboard = () => {
               </div>
 
               {/* Notes */}
-              <div className="mb-5 bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
-                <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide mb-3">Case Summary</h3>
+              <div className="mb-5 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
+                <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide mb-3">Case Summary</h3>
                 <p className="text-[13px] text-slate-300">{selectedCase.notes}</p>
               </div>
 

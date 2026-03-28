@@ -237,8 +237,8 @@ export default function CommandDashboard() {
         {/* Page Header */}
         <div className="mb-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           <div>
-            <p className="text-2xl font-bold text-white mb-1">{getGreeting(currentTime, 'Sheriff Thompson')}</p>
-            <h2 className="text-xl font-bold text-white mb-1">Executive Command Dashboard</h2>
+            <p className="text-2xl font-bold text-slate-900 dark:text-white mb-1">{getGreeting(currentTime, 'Sheriff Thompson')}</p>
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-1">Executive Command Dashboard</h2>
             <div className="flex items-center gap-2 text-[11px] text-slate-500">
               <span>{formatDate(currentTime)}</span>
               <span className="text-slate-700">·</span>
@@ -254,7 +254,7 @@ export default function CommandDashboard() {
           {/* Personnel */}
           <button
             onClick={() => navigate(createPageUrl('PersonnelOverview'))}
-            className="bg-slate-800/30 border border-slate-700/50 rounded-xl p-5 text-left hover:border-slate-600/40 transition-colors"
+            className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5 text-left hover:border-slate-300 dark:hover:border-slate-600/40 transition-colors"
           >
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
@@ -263,7 +263,7 @@ export default function CommandDashboard() {
               </div>
             </div>
             <div className="flex items-baseline gap-2 mb-1">
-              <p className="text-2xl font-semibold text-white">164</p>
+              <p className="text-2xl font-semibold text-slate-900 dark:text-white">164</p>
               <span className="flex items-center gap-0.5 text-slate-400 text-xs font-medium">
                 <ArrowUpRight className="w-3 h-3" />+2
               </span>
@@ -275,7 +275,7 @@ export default function CommandDashboard() {
           {/* Active Critical Incidents — dominant */}
           <button
             onClick={() => navigate(createPageUrl('Approvals'))}
-            className="bg-slate-800/30 border border-slate-700/50 rounded-xl p-5 text-left hover:border-slate-600/40 transition-colors"
+            className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5 text-left hover:border-slate-300 dark:hover:border-slate-600/40 transition-colors"
           >
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
@@ -289,7 +289,7 @@ export default function CommandDashboard() {
               )}
             </div>
             <div className="flex items-baseline gap-2 mb-1">
-              <p className="text-2xl font-semibold text-white">{activeIncidentCount}</p>
+              <p className="text-2xl font-semibold text-slate-900 dark:text-white">{activeIncidentCount}</p>
               <span className="text-xs text-slate-400">Active (2 escalated)</span>
             </div>
             <p className="text-xs text-slate-400 mb-1">1 UOF · 1 Facility · 1 Staffing</p>
@@ -297,14 +297,14 @@ export default function CommandDashboard() {
           </button>
 
           {/* Compliance Status — with breakdown */}
-          <div className="bg-slate-800/30 border border-slate-700/50 rounded-xl p-5 text-left">
+          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5 text-left">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-amber-500"></div>
                 <span className="text-xs text-slate-500 font-medium uppercase tracking-wide">Compliance Readiness</span>
               </div>
             </div>
-            <p className="text-2xl font-semibold text-white mb-1">94%</p>
+            <p className="text-2xl font-semibold text-slate-900 dark:text-white mb-1">94%</p>
             <div className="flex items-center gap-2 text-[11px] text-slate-400 mb-1">
               <span>Policies 94%</span>
               <span className="text-slate-600">·</span>
@@ -318,7 +318,7 @@ export default function CommandDashboard() {
           {/* Budget Snapshot */}
           <button
             onClick={() => navigate(createPageUrl('BudgetResources'))}
-            className="bg-slate-800/30 border border-slate-700/50 rounded-xl p-5 text-left hover:border-slate-600/40 transition-colors"
+            className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5 text-left hover:border-slate-300 dark:hover:border-slate-600/40 transition-colors"
           >
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
@@ -327,7 +327,7 @@ export default function CommandDashboard() {
               </div>
             </div>
             <div className="flex items-baseline gap-2 mb-1">
-              <p className="text-2xl font-semibold text-white">85%</p>
+              <p className="text-2xl font-semibold text-slate-900 dark:text-white">85%</p>
               <span className="flex items-center gap-0.5 text-amber-400 text-xs font-medium">
                 <ArrowUpRight className="w-3 h-3" />+1.2%
               </span>
@@ -338,7 +338,7 @@ export default function CommandDashboard() {
         </div>
 
         {/* Executive Intelligence Summary */}
-        <div className="mb-8 bg-slate-800/30 border border-slate-700/50 rounded-xl border-l-2 border-l-slate-600/40">
+        <div className="mb-8 bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl border-l-2 border-l-slate-600/40">
           <button
             onClick={() => setAiBriefExpanded(!aiBriefExpanded)}
             className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-slate-800/10 transition-colors rounded-xl"
@@ -405,9 +405,9 @@ export default function CommandDashboard() {
         </div>
 
         {/* Pending Approvals — Top 3 only */}
-        <div className="mb-8 bg-slate-800/30 border border-slate-700/50 rounded-xl">
+        <div className="mb-8 bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl">
           <div className="flex items-center justify-between px-5 py-4 pb-3">
-            <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">Pending Approvals</h3>
+            <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Pending Approvals</h3>
             <button
               onClick={() => navigate(createPageUrl('Approvals'))}
               className="text-xs text-amber-400/80 hover:text-amber-300"
@@ -428,7 +428,7 @@ export default function CommandDashboard() {
 
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
-                        <p className="text-sm font-medium text-white">{item.type}</p>
+                        <p className="text-sm font-medium text-slate-900 dark:text-white">{item.type}</p>
                         {badge && <span className={`px-1.5 py-0.5 border rounded text-[11px] font-medium ${badge.classes}`}>{badge.text}</span>}
                         <span className="text-[11px] text-slate-500">{getTimePending(item.timePendingMinutes)} ago</span>
                       </div>
@@ -483,10 +483,10 @@ export default function CommandDashboard() {
         </div>
 
         {/* Federal Compliance & Audits — MOVED UP above Divisions/Staffing */}
-        <div className="mb-8 bg-slate-800/30 border border-slate-700/50 rounded-xl p-5">
+        <div className="mb-8 bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5">
           <div className="flex items-center justify-between mb-5">
             <div className="flex items-center gap-3">
-              <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">Federal Compliance & Audits</h3>
+              <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Federal Compliance & Audits</h3>
               <span className="text-[10px] text-red-400 font-medium">USMS Dec 12–14</span>
             </div>
           </div>
@@ -496,13 +496,13 @@ export default function CommandDashboard() {
             <div className="border border-slate-700/40 rounded-lg p-5">
               <div className="flex items-center gap-2 mb-4">
                 <Shield className="w-4 h-4 text-slate-500" />
-                <span className="text-sm font-medium text-white">USMS Inspection Readiness</span>
+                <span className="text-sm font-medium text-slate-900 dark:text-white">USMS Inspection Readiness</span>
               </div>
               <div className="space-y-3">
                 <div>
                   <div className="flex items-center justify-between mb-1 text-xs">
                     <span className="text-slate-400">Databases</span>
-                    <span className="text-white">47/47</span>
+                    <span className="text-slate-900 dark:text-white">47/47</span>
                   </div>
                   <div className="w-full h-1 bg-slate-800/50 rounded-full overflow-hidden">
                     <div className="h-full bg-slate-600/60 rounded-full" style={{width: '100%'}} />
@@ -537,7 +537,7 @@ export default function CommandDashboard() {
             <div className="border border-slate-700/40 rounded-lg p-5">
               <div className="flex items-center gap-2 mb-4">
                 <Shield className="w-4 h-4 text-slate-500" />
-                <span className="text-sm font-medium text-white">ACA Re-Accreditation</span>
+                <span className="text-sm font-medium text-slate-900 dark:text-white">ACA Re-Accreditation</span>
               </div>
               <div className="space-y-2.5 text-xs">
                 <div className="flex justify-between">
@@ -575,7 +575,7 @@ export default function CommandDashboard() {
 
         {/* Division Status — neutral text, colored dot only, hover drill */}
         <div className="mb-8">
-          <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide mb-4">Division Status</h3>
+          <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide mb-4">Division Status</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
             {divisions.map((div, idx) => (
               <button
@@ -583,10 +583,10 @@ export default function CommandDashboard() {
                 onClick={() => div.route && navigate(createPageUrl(div.route))}
                 onMouseEnter={() => setHoveredDivision(idx)}
                 onMouseLeave={() => setHoveredDivision(null)}
-                className="bg-slate-800/30 border border-slate-700/50 rounded-xl p-4 text-left hover:border-slate-600/40 transition-colors relative"
+                className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4 text-left hover:border-slate-600/40 transition-colors relative"
               >
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium text-white">{div.name}</span>
+                  <span className="text-sm font-medium text-slate-900 dark:text-white">{div.name}</span>
                   <div className={`w-2 h-2 rounded-full ${
                     div.severity === 'red' ? 'bg-red-500' :
                     div.severity === 'amber' ? 'bg-amber-500' : 'bg-emerald-500'
@@ -609,9 +609,9 @@ export default function CommandDashboard() {
         </div>
 
         {/* Staffing Levels — threshold markers */}
-        <div className="mb-8 bg-slate-800/30 border border-slate-700/50 rounded-xl p-5">
+        <div className="mb-8 bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5">
           <div className="flex items-center justify-between mb-5">
-            <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">Staffing Levels</h3>
+            <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Staffing Levels</h3>
             <span className="text-[11px] text-slate-500">164/178 authorized (92.1%)</span>
           </div>
           <div className="space-y-3.5">
@@ -663,7 +663,7 @@ export default function CommandDashboard() {
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={closeApprovalModal}
           />
-          <div className="relative bg-slate-900 border border-slate-700/50 rounded-2xl p-6 max-w-md w-full shadow-2xl">
+          <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl p-6 max-w-md w-full shadow-2xl">
             <div className="flex items-start gap-3 mb-5">
               <div className={`w-10 h-10 rounded-lg flex items-center justify-center border ${
                 approvalAction === 'approve' ? 'border-emerald-500/20' : 'border-red-500/20'
@@ -675,7 +675,7 @@ export default function CommandDashboard() {
                 )}
               </div>
               <div className="flex-1">
-                <h3 className="text-base font-semibold text-white mb-0.5">
+                <h3 className="text-base font-semibold text-slate-900 dark:text-white mb-0.5">
                   {approvalAction === 'approve' ? 'Approve' : 'Deny'} {selectedApproval.title}?
                 </h3>
                 <p className="text-xs text-slate-400">
@@ -693,20 +693,20 @@ export default function CommandDashboard() {
                 onChange={(e) => setActionComment(e.target.value)}
                 placeholder={approvalAction === 'approve' ? 'Add any comments...' : 'Please provide a reason...'}
                 rows={3}
-                className="w-full px-3.5 py-2.5 bg-slate-950/50 border border-slate-700/40 rounded-lg text-white placeholder-slate-600 focus:outline-none focus:border-slate-600 resize-none text-sm"
+                className="w-full px-3.5 py-2.5 bg-slate-100 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-700/40 rounded-lg text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-600 focus:outline-none focus:border-slate-400 dark:focus:border-slate-600 resize-none text-sm"
               />
             </div>
 
             <div className="flex gap-3">
               <button
                 onClick={closeApprovalModal}
-                className="flex-1 px-4 py-2.5 bg-slate-800/30 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-white text-sm font-medium transition-colors"
+                className="flex-1 px-4 py-2.5 bg-slate-100 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-800/60 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white text-sm font-medium transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={confirmApprovalAction}
-                className={`flex-1 px-4 py-2.5 rounded-xl text-white text-sm font-medium transition-colors ${
+                className={`flex-1 px-4 py-2.5 rounded-xl text-white dark:text-white text-sm font-medium transition-colors ${
                   approvalAction === 'approve'
                     ? 'bg-emerald-600 hover:bg-emerald-700'
                     : 'bg-red-600 hover:bg-red-700'
