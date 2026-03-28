@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTheme } from '../contexts/ThemeContext';
 import { Home, Users, FileText, LayoutDashboard, TrendingUp, AlertCircle, Settings, Bell, MessageCircle, Search, ChevronRight, DollarSign, CheckCircle, Shield, ShieldCheck, Sparkles, X, Send, Menu, ChevronLeft, LogOut, User, Lock, Palette, Globe, Clock, Smartphone, Mail, Monitor, Moon, Sun, Save, Camera, Building2, Radio, Target, Database, Wifi, Link, Key, HardDrive, Cloud, Zap, Server, Activity, RefreshCw, Download, Upload, Code, ExternalLink, Copy, Eye, EyeOff, AlertTriangle, Info, Cpu, HelpCircle, BarChart3, Package, Webhook, Terminal, FileJson, Settings as SettingsIcon, ChevronDown, ChevronUp, CheckCircle2, XCircle, Trash2, Plus, Edit3 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
@@ -6,6 +7,7 @@ import DashboardLayout from '../layouts/DashboardLayout';
 
 export default function SettingsPage() {
   const navigate = useNavigate();
+  const { theme: activeTheme, setTheme } = useTheme();
   const [activePage, setActivePage] = useState('settings');
   const [chatOpen, setChatOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -831,8 +833,8 @@ export default function SettingsPage() {
                         ].map(t => (
                           <button
                             key={t.value}
-                            onClick={() => setDisplaySettings({...displaySettings, theme: t.value})}
-                            className={`p-4 rounded-xl border-2 transition-all ${displaySettings.theme === t.value ? 'border-amber-500 bg-slate-800/60' : 'border-slate-700/50 bg-slate-800/20 hover:bg-slate-800/40'}`}
+                            onClick={() => setTheme(t.value)}
+                            className={`p-4 rounded-xl border-2 transition-all ${activeTheme === t.value ? 'border-amber-500 bg-slate-800/60' : 'border-slate-700/50 bg-slate-800/20 hover:bg-slate-800/40'}`}
                           >
                             <t.Icon className="w-6 h-6 text-slate-300 mb-2" />
                             <p className="text-sm font-medium text-white">{t.label}</p>

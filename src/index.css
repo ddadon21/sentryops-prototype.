@@ -6,10 +6,17 @@
   html,
   body {
     @apply m-0 p-0 antialiased bg-slate-950;
+    transition: background-color 0.2s ease, color 0.2s ease;
   }
 
   #root {
     @apply min-h-screen m-0 p-0;
+  }
+
+  *, *::before, *::after {
+    transition-property: background-color, border-color, color;
+    transition-duration: 0.2s;
+    transition-timing-function: ease;
   }
 }
 
