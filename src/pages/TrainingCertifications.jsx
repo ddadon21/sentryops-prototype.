@@ -457,7 +457,7 @@ export default function TrainingCertifications() {
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={() => setLogoutConfirmOpen(false)}
           />
-          <div className="relative bg-slate-900 border border-slate-700/50 rounded-2xl p-6 max-w-sm w-full shadow-2xl">
+          <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl p-6 max-w-sm w-full shadow-2xl">
             <div className="flex items-center gap-4 mb-4">
               <div className="w-12 h-12 bg-slate-800/60 rounded-xl flex items-center justify-center">
                 <LogOut className="w-6 h-6 text-slate-600 dark:text-slate-400" />
@@ -573,7 +573,7 @@ export default function TrainingCertifications() {
           <div className="max-w-7xl mx-auto">
             {/* GCSO Header */}
             <div className="mb-6">
-              <h2 className="text-2xl lg:text-3xl font-bold text-white mb-2">Training & Certifications Management</h2>
+              <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white mb-2">Training & Certifications Management</h2>
               <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-slate-600 dark:text-slate-400">
                 <span>Gwinnett County Sheriff's Office</span>
                 <span className="text-slate-600">•</span>
@@ -668,7 +668,7 @@ export default function TrainingCertifications() {
                 <div className="w-8 h-8 bg-red-500/20 rounded-lg flex items-center justify-center">
                   <AlertTriangle className="w-5 h-5 text-red-400" />
                 </div>
-                <h3 className="text-lg font-bold text-white">Critical Training Compliance Violations</h3>
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white">Critical Training Compliance Violations</h3>
                 <span className="px-2 py-1 bg-red-500/20 border border-red-500/30 rounded text-xs text-red-400 font-bold">IMMEDIATE ACTION</span>
               </div>
 
@@ -917,7 +917,7 @@ export default function TrainingCertifications() {
                 <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">
                   <GraduationCap className="w-5 h-5 text-blue-400" />
                 </div>
-                <h3 className="text-lg font-bold text-white">Training & Certification Categories</h3>
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white">Training & Certification Categories</h3>
               </div>
 
               {/* Category Filter Tabs */}

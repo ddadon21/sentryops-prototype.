@@ -379,7 +379,7 @@ export default function InvestigationTimeline() {
               <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4">
                 <div className="flex-1">
                   <div className="flex items-center gap-3 flex-wrap mb-2">
-                    <h2 className="text-2xl lg:text-3xl font-bold text-white">Investigation Timeline: {caseData.id}</h2>
+                    <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white">Investigation Timeline: {caseData.id}</h2>
                     <span className="px-2 py-1 bg-green-500/10 border border-green-500/30 rounded-lg text-green-400 text-xs flex items-center gap-1">
                       <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
                       LIVE
@@ -431,7 +431,7 @@ export default function InvestigationTimeline() {
             </div>
 
             {/* Case Progress Summary (replaced Timeline Analysis) */}
-            <div className="mb-6 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5">
+            <div className="mb-6 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5">
               <div className="flex items-center justify-between mb-4">
                 <h4 className="text-base font-semibold text-slate-900 dark:text-white">Case Progress Summary</h4>
                 <div className="flex items-center gap-2">
@@ -521,7 +521,7 @@ export default function InvestigationTimeline() {
             </div>
 
             {/* Investigation Stages (Sequential) */}
-            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-6 mb-6">
+            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-6 mb-6">
               <div className="flex items-center justify-between mb-4">
                 <div>
                   <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Investigation Stages (Sequential)</h3>
@@ -630,7 +630,7 @@ export default function InvestigationTimeline() {
                           {event.type === 'document' && <Upload className="w-4 h-4 text-blue-400" />}
                         </div>
 
-                        <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5 hover:border-amber-500/30 transition-colors">
+                        <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5 hover:border-amber-500/30 transition-colors">
                           <div className="flex items-start justify-between mb-3">
                             <div>
                               <h4 className="text-sm font-semibold text-slate-900 dark:text-white">{event.title}</h4>
@@ -683,7 +683,7 @@ export default function InvestigationTimeline() {
               {/* Stats Sidebar */}
               <div className="space-y-6">
                 {/* Case Statistics */}
-                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-6">
+                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-6">
                   <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-4">Case Statistics</h4>
                   <div className="space-y-3">
                     <div className="flex justify-between text-sm">
@@ -742,7 +742,7 @@ export default function InvestigationTimeline() {
                 </div>
 
                 {/* Case Information */}
-                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-6">
+                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-6">
                   <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-4">Case Information</h4>
                   <div className="space-y-3">
                     <div>
@@ -772,7 +772,7 @@ export default function InvestigationTimeline() {
                 </div>
 
                 {/* Upcoming Deadlines */}
-                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-6">
+                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-6">
                   <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-4">Upcoming Deadlines</h4>
                   <div className="space-y-3">
                     {/* Urgent */}

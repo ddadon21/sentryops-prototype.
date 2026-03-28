@@ -257,7 +257,7 @@ const MedicalManagement = () => {
           <div className="flex items-center gap-3 mb-2">
             <Hospital className="w-8 h-8 text-amber-500" />
             <div>
-              <h1 className="text-2xl lg:text-3xl font-bold text-white">Medical Management</h1>
+              <h1 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white">Medical Management</h1>
               <p className="text-slate-600 dark:text-slate-400">Inmate Health Services & Medical Monitoring</p>
             </div>
           </div>
@@ -517,7 +517,7 @@ const MedicalManagement = () => {
               <div key={idx} className="bg-slate-800 border border-slate-700 rounded-lg p-6">
                 <div className="flex items-start justify-between mb-3">
                   <div>
-                    <h3 className="text-lg font-bold text-white mb-1">{request.name}</h3>
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-1">{request.name}</h3>
                     <div className="flex items-center gap-4 text-sm text-slate-600 dark:text-slate-400">
                       <span>ID: {request.inmateId}</span>
                       <span>Housing: {request.housing}</span>
@@ -561,7 +561,7 @@ const MedicalManagement = () => {
               <div key={idx} className="bg-slate-800 border border-slate-700 rounded-lg p-6">
                 <div className="flex items-start justify-between mb-3">
                   <div>
-                    <h3 className="text-lg font-bold text-white mb-1">{record.name}</h3>
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-1">{record.name}</h3>
                     <div className="flex items-center gap-4 text-sm text-slate-600 dark:text-slate-400">
                       <span>ID: {record.inmateId}</span>
                       <span>Housing: {record.housing}</span>

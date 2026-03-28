@@ -202,7 +202,7 @@ export default function BudgetResources() {
             <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4 mb-6">
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-2">
-                  <h2 className="text-2xl lg:text-3xl font-bold text-white">Budget & Assets</h2>
+                  <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white">Budget & Assets</h2>
                   <div className="flex items-center gap-1.5 px-2.5 py-1 bg-green-500/20 border border-green-500/40 rounded-lg">
                     <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
                     <span className="text-xs font-bold text-green-600 dark:text-green-400">FISCAL ACTIVE</span>
@@ -278,7 +278,7 @@ export default function BudgetResources() {
                     <Bot className="w-6 h-6 text-purple-400" />
                   </div>
                   <div>
-                    <h4 className="text-base font-bold text-white flex items-center gap-2">
+                    <h4 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
                       AI BUDGET INTELLIGENCE
                     </h4>
                     <p className="text-xs text-slate-600 dark:text-slate-400">Real-time fiscal analysis and recommendations</p>
@@ -567,7 +567,7 @@ export default function BudgetResources() {
             {activeTab === 'overview' && (
               <div className="space-y-6">
                 {/* Enhanced Fiscal Year Progress */}
-                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-6">
+                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-6">
                   <div className="flex items-center gap-2 mb-4">
                     <PieChart className="w-5 h-5 text-blue-400" />
                     <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Fiscal Year Progress (FY 2024)</h3>
@@ -723,7 +723,7 @@ export default function BudgetResources() {
                 </div>
 
                 {/* Monthly Trend with Drill-Down */}
-                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-6">
+                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-6">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Monthly Spending Trend</h3>
                     <span className="text-xs text-slate-600 dark:text-slate-400">Click any month for details</span>
@@ -935,7 +935,7 @@ export default function BudgetResources() {
             {activeTab === 'resources' && (
               <div className="space-y-6">
                 {/* Personnel Breakdown */}
-                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-6">
+                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-6">
                   <div className="flex items-center gap-3 mb-6">
                     <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center">
                       <Users className="w-5 h-5 text-blue-400" />
@@ -1046,7 +1046,7 @@ export default function BudgetResources() {
                   </div>
                 </div>
                 {/* Vehicles */}
-                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-6">
+                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-6">
                   <div className="flex items-center gap-3 mb-6">
                     <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center">
                       <Truck className="w-5 h-5 text-blue-400" />
@@ -1086,7 +1086,7 @@ export default function BudgetResources() {
                 </div>
 
                 {/* Facilities */}
-                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-6">
+                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-6">
                   <div className="flex items-center gap-3 mb-6">
                     <div className="w-10 h-10 bg-purple-500/20 rounded-xl flex items-center justify-center">
                       <Building2 className="w-5 h-5 text-purple-400" />
@@ -1118,7 +1118,7 @@ export default function BudgetResources() {
                 </div>
 
                 {/* Equipment */}
-                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-6">
+                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-6">
                   <div className="flex items-center gap-3 mb-6">
                     <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center">
                       <Wrench className="w-5 h-5 text-green-600 dark:text-green-400" />
@@ -1155,7 +1155,7 @@ export default function BudgetResources() {
             {/* ENHANCED FORECAST TAB */}
             {activeTab === 'forecast' && (
               <div className="space-y-6">
-                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-6">
+                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-6">
                   <div className="flex items-center gap-2 mb-6">
                     <LineChart className="w-5 h-5 text-purple-400" />
                     <h3 className="text-lg font-semibold text-slate-900 dark:text-white">BUDGET FORECAST</h3>

@@ -255,7 +255,7 @@ const IncidentReports = () => {
             <div className="flex items-center gap-3">
               <Shield className="w-8 h-8 text-amber-500" />
               <div>
-                <h1 className="text-2xl lg:text-3xl font-bold text-white">Incident Reports</h1>
+                <h1 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white">Incident Reports</h1>
                 <p className="text-slate-600 dark:text-slate-400">Facility Incident Management & Documentation</p>
               </div>
             </div>

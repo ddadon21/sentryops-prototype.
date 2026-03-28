@@ -157,7 +157,7 @@ export default function JobPostings() {
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={() => setLogoutConfirmOpen(false)}
           />
-          <div className="relative bg-slate-900 border border-slate-700/50 rounded-2xl p-6 max-w-sm w-full shadow-2xl">
+          <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl p-6 max-w-sm w-full shadow-2xl">
             <div className="flex items-center gap-4 mb-4">
               <div className="w-12 h-12 bg-slate-800/60 rounded-xl flex items-center justify-center">
                 <LogOut className="w-6 h-6 text-slate-600 dark:text-slate-400" />
@@ -309,7 +309,7 @@ export default function JobPostings() {
 
             {/* Section Title */}
             <div className="border-b border-slate-700/50 pb-4">
-              <h2 className="text-lg font-bold text-white tracking-wide">ACTIVE JOB POSTINGS - GWINNETT COUNTY SHERIFF'S OFFICE</h2>
+              <h2 className="text-lg font-bold text-slate-900 dark:text-white tracking-wide">ACTIVE JOB POSTINGS - GWINNETT COUNTY SHERIFF'S OFFICE</h2>
             </div>
 
             {/* Deputy Sheriff I/II Posting */}
@@ -324,7 +324,7 @@ export default function JobPostings() {
                   </div>
                   <div className="text-left">
                     <div className="flex items-center gap-3 flex-wrap">
-                      <h3 className="text-lg font-bold text-white">DEPUTY SHERIFF I/II</h3>
+                      <h3 className="text-lg font-bold text-slate-900 dark:text-white">DEPUTY SHERIFF I/II</h3>
                       <span className="px-2 py-1 bg-green-500/20 border border-green-500/30 rounded text-xs text-green-400 font-bold">ACTIVE</span>
                       <span className="px-2 py-1 bg-red-500/20 border border-red-500/30 rounded text-xs text-red-400 font-bold">HIGH PRIORITY</span>
                     </div>
@@ -640,7 +640,7 @@ export default function JobPostings() {
                   </div>
                   <div className="text-left">
                     <div className="flex items-center gap-3 flex-wrap">
-                      <h3 className="text-lg font-bold text-white">BACKGROUND INVESTIGATOR</h3>
+                      <h3 className="text-lg font-bold text-slate-900 dark:text-white">BACKGROUND INVESTIGATOR</h3>
                       <span className="px-2 py-1 bg-green-500/20 border border-green-500/30 rounded text-xs text-green-400 font-bold">ACTIVE</span>
                       <span className="px-2 py-1 bg-red-500/20 border border-red-500/30 rounded text-xs text-red-400 font-bold">HIGH PRIORITY</span>
                     </div>
@@ -778,7 +778,7 @@ export default function JobPostings() {
                   </div>
                   <div className="text-left">
                     <div className="flex items-center gap-3 flex-wrap">
-                      <h3 className="text-lg font-bold text-white">DETENTION OFFICER</h3>
+                      <h3 className="text-lg font-bold text-slate-900 dark:text-white">DETENTION OFFICER</h3>
                       <span className="px-2 py-1 bg-green-500/20 border border-green-500/30 rounded text-xs text-green-400 font-bold">ACTIVE</span>
                     </div>
                     <p className="text-sm text-slate-600 dark:text-slate-400">Gwinnett County Detention Center • 750 Hi Hope Rd</p>
@@ -911,7 +911,7 @@ export default function JobPostings() {
                   </div>
                   <div className="text-left">
                     <div className="flex items-center gap-3 flex-wrap">
-                      <h3 className="text-lg font-bold text-white">ADMINISTRATIVE ASSISTANT</h3>
+                      <h3 className="text-lg font-bold text-slate-900 dark:text-white">ADMINISTRATIVE ASSISTANT</h3>
                       <span className="px-2 py-1 bg-green-500/20 border border-green-500/30 rounded text-xs text-green-400 font-bold">ACTIVE</span>
                       <span className="px-2 py-1 bg-red-500/20 border border-red-500/30 rounded text-xs text-red-400 font-bold animate-pulse">CRITICALLY LOW</span>
                     </div>

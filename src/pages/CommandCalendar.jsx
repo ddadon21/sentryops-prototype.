@@ -675,7 +675,7 @@ export default function CommandCalendar() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-6">
 
             {/* Calendar Grid */}
-            <div className="lg:col-span-2 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
+            <div className="lg:col-span-2 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-5">
               {/* Month Navigation */}
               <div className="flex items-center justify-between mb-5">
                 <button onClick={prevMonth} className="p-1.5 hover:bg-slate-700/30 rounded-lg transition-colors">
@@ -817,7 +817,7 @@ export default function CommandCalendar() {
             {/* ================================================================
                 HIGH PRIORITY UPCOMING — Upgraded with risk type, escalation, readiness
                 ================================================================ */}
-            <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
+            <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-5">
               <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide mb-4">High Priority Upcoming</h3>
 
               <div className="space-y-2">
@@ -879,7 +879,7 @@ export default function CommandCalendar() {
           </div>
         ) : (
           /* ===== TIMELINE VIEW ===== */
-          <div className="mb-6 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
+          <div className="mb-6 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-5">
             <div className="flex items-center justify-between mb-5">
               <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Next 7 Days — Hour by Hour</h3>
               <span className="text-xs text-slate-500">Dec {timelineDays[0]?.day} – Dec {timelineDays[timelineDays.length - 1]?.day}, {currentYear}</span>
@@ -986,7 +986,7 @@ export default function CommandCalendar() {
       {selectedEvent && (
         <>
           <div className="fixed inset-0 bg-black/30 z-40" onClick={() => setSelectedEvent(null)} />
-          <div className="fixed right-0 top-0 bottom-0 w-full max-w-md bg-slate-900 border-l border-slate-700/50 shadow-2xl z-50 overflow-y-auto">
+          <div className="fixed right-0 top-0 bottom-0 w-full max-w-md bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-700/50 shadow-2xl z-50 overflow-y-auto">
             <div className="p-6">
               <div className="flex items-start justify-between mb-6">
                 <div className="flex-1">
@@ -1014,7 +1014,7 @@ export default function CommandCalendar() {
 
               <div className="space-y-5">
                 {selectedEvent.status !== 'completed' && (
-                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-4">
+                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-4">
                     <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Countdown</span>
                     <div className="mt-2 flex items-baseline gap-2">
                       <p className="text-2xl font-semibold text-white">{getCountdown(selectedEvent.day)}</p>

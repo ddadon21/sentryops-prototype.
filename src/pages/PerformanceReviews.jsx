@@ -420,7 +420,7 @@ export default function PerformanceReviews() {
       {logoutConfirmOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setLogoutConfirmOpen(false)} />
-          <div className="relative bg-slate-900 border border-slate-700/50 rounded-2xl p-6 max-w-sm w-full shadow-2xl">
+          <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl p-6 max-w-sm w-full shadow-2xl">
             <div className="flex items-center gap-4 mb-4">
               <div className="w-12 h-12 bg-slate-800/60 rounded-xl flex items-center justify-center">
                 <LogOut className="w-6 h-6 text-slate-600 dark:text-slate-400" />
@@ -442,7 +442,7 @@ export default function PerformanceReviews() {
       {selectedReview && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setSelectedReview(null)} />
-          <div className="relative bg-slate-900 border border-slate-700/50 rounded-2xl p-6 max-w-3xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
+          <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl p-6 max-w-3xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
             <div className="flex items-start justify-between mb-6">
               <div className="flex items-center gap-4">
                 <div className={`w-14 h-14 rounded-full flex items-center justify-center ${selectedReview.status === 'overdue' ? 'bg-gradient-to-br from-red-500 to-red-600' : selectedReview.status === 'completed' ? 'bg-gradient-to-br from-green-500 to-green-600' : 'bg-gradient-to-br from-blue-500 to-blue-600'}`}>
@@ -473,33 +473,33 @@ export default function PerformanceReviews() {
 
             {/* Review Details Grid */}
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
                 <p className="text-xs text-slate-500 mb-1">Review Period</p>
                 <p className="text-white font-medium text-sm">{selectedReview.reviewPeriod}</p>
                 <p className="text-xs text-slate-600 dark:text-slate-400">{selectedReview.periodDates}</p>
               </div>
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
                 <p className="text-xs text-slate-500 mb-1">Reviewing Supervisor</p>
                 <p className="text-white font-medium text-sm">{selectedReview.supervisor}</p>
                 <p className="text-xs text-slate-600 dark:text-slate-400">{selectedReview.supervisorTitle}</p>
               </div>
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
                 <p className="text-xs text-slate-500 mb-1">Agency Deadline</p>
                 <p className="text-white font-medium text-sm">{selectedReview.deadline}</p>
                 {selectedReview.daysOverdue > 0 && selectedReview.status !== 'completed' && (
                   <p className="text-xs text-red-400 font-medium">{selectedReview.daysOverdue} days overdue</p>
                 )}
               </div>
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
                 <p className="text-xs text-slate-500 mb-1">Years of Service</p>
                 <p className="text-white font-medium text-sm">{selectedReview.yearsOfService}</p>
                 <p className="text-xs text-slate-600 dark:text-slate-400">Hired {selectedReview.hireDate}</p>
               </div>
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
                 <p className="text-xs text-slate-500 mb-1">Assignment</p>
                 <p className="text-white font-medium text-sm">{selectedReview.shift}</p>
               </div>
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
                 <p className="text-xs text-slate-500 mb-1">Review Type</p>
                 <p className="text-white font-medium text-sm">{selectedReview.reviewType}</p>
               </div>
@@ -516,7 +516,7 @@ export default function PerformanceReviews() {
                   { label: 'Signatures & Finalization', data: selectedReview.signatures },
                   { label: 'Personnel File Documentation', data: selectedReview.personnelFile }
                 ].map((step, idx) => (
-                  <div key={idx} className="flex items-start gap-3 p-3 bg-slate-800/30 border border-slate-700/30 rounded-lg">
+                  <div key={idx} className="flex items-start gap-3 p-3 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/30 rounded-lg">
                     <div className="mt-0.5">{getStepIcon(step.data.status)}</div>
                     <div className="flex-1">
                       <p className="text-sm text-white font-medium">Step {idx + 1}: {step.label}</p>
@@ -538,7 +538,7 @@ export default function PerformanceReviews() {
             <div className="mb-6">
               <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">GCSO Evaluation Categories (5-Point Scale)</h4>
               {selectedReview.status === 'completed' ? (
-                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
+                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
                   <div className="flex items-center gap-2 mb-3">
                     <Shield className="w-4 h-4 text-amber-400" />
                     <p className="text-sm text-amber-400 font-medium">Confidential — Supervisor & HR Eyes Only</p>
@@ -555,7 +555,7 @@ export default function PerformanceReviews() {
                   ))}
                 </div>
               )}
-              <div className="mt-3 p-3 bg-slate-800/30 border border-slate-700/30 rounded-lg">
+              <div className="mt-3 p-3 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/30 rounded-lg">
                 <p className="text-xs text-slate-500">Rating Scale: 1 = Unsatisfactory | 2 = Needs Improvement | 3 = Meets Expectations | 4 = Exceeds Expectations | 5 = Outstanding</p>
               </div>
             </div>
@@ -680,13 +680,13 @@ export default function PerformanceReviews() {
 
             {/* Page Title */}
             <div className="mb-6">
-              <h2 className="text-2xl lg:text-3xl font-bold text-white mb-1">Annual Performance Evaluations & Personnel Assessment</h2>
+              <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white mb-1">Annual Performance Evaluations & Personnel Assessment</h2>
               <p className="text-slate-600 dark:text-slate-400 text-sm">Gwinnett County Sheriff's Office • Lawrenceville, Georgia</p>
               <p className="text-slate-500 text-xs mt-1">Monday, February 21, 2026 • 12:20 AM EST</p>
             </div>
 
             {/* Info Bar */}
-            <div className="mb-6 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
+            <div className="mb-6 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-slate-600 dark:text-slate-400">
                 <div className="flex items-center gap-2">
                   <Users className="w-3.5 h-3.5 text-slate-500" />
@@ -867,7 +867,7 @@ export default function PerformanceReviews() {
 
             {/* Status Summary Cards (3 cards - no avg rating) */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5">
                 <div className="flex items-center justify-between mb-3">
                   <div className="w-10 h-10 bg-amber-500/20 rounded-xl flex items-center justify-center">
                     <Clock className="w-5 h-5 text-amber-400" />
@@ -878,7 +878,7 @@ export default function PerformanceReviews() {
                 <p className="text-xs text-slate-500">2 awaiting supervisor review • 1 self-assessment just submitted</p>
               </div>
 
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5">
                 <div className="flex items-center justify-between mb-3">
                   <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center">
                     <CheckCircle className="w-5 h-5 text-green-400" />
@@ -1256,7 +1256,7 @@ export default function PerformanceReviews() {
             </div>
 
             {/* Rating Scale Reference */}
-            <div className="mt-8 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5">
+            <div className="mt-8 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5">
               <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
                 <ClipboardCheck className="w-4 h-4 text-slate-600 dark:text-slate-400" /> GCSO Performance Evaluation Rating Scale Reference
               </h4>

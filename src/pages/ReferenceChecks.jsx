@@ -337,7 +337,7 @@ export default function ReferenceChecks() {
 
             {/* Page Header */}
             <div className="mb-6">
-              <h2 className="text-2xl lg:text-3xl font-bold text-white mb-2">Reference Checks</h2>
+              <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white mb-2">Reference Checks</h2>
               <p className="text-slate-600 dark:text-slate-400 mb-3">Professional and personal reference verification for background investigations</p>
               <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-slate-500">
                 <span className="flex items-center gap-1.5">
@@ -498,7 +498,7 @@ export default function ReferenceChecks() {
 
             {/* Status Cards */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5">
                 <div className="flex items-center justify-between mb-3">
                   <UserCheck className="w-8 h-8 text-blue-400" />
                   <span className="text-2xl font-bold text-slate-900 dark:text-white">{references.length}</span>
@@ -512,7 +512,7 @@ export default function ReferenceChecks() {
                 </div>
               </div>
 
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5">
                 <div className="flex items-center justify-between mb-3">
                   <CheckCircle className="w-8 h-8 text-green-400" />
                   <span className="text-2xl font-bold text-slate-900 dark:text-white">{completedRefs.length}</span>
@@ -545,10 +545,10 @@ export default function ReferenceChecks() {
                 </div>
               </div>
 
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5">
                 <div className="flex items-center justify-between mb-3">
                   <ClipboardList className="w-8 h-8 text-amber-400" />
-                  <span className="text-lg font-bold text-white">QUALITATIVE</span>
+                  <span className="text-lg font-bold text-slate-900 dark:text-white">QUALITATIVE</span>
                 </div>
                 <p className="text-sm font-medium text-slate-900 dark:text-white mb-1">Assessment Summary</p>
                 <p className="text-xs text-slate-500">Evaluated individually, not scored</p>
@@ -561,7 +561,7 @@ export default function ReferenceChecks() {
             </div>
 
             {/* Reference Actions */}
-            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5 mb-6">
+            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5 mb-6">
               <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                 <Settings className="w-4 h-4 text-amber-400" />Reference Check Actions
               </h3>
@@ -1003,7 +1003,7 @@ export default function ReferenceChecks() {
             </div>
 
             {/* Support & Resources Panel */}
-            <div className="mt-8 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-6">
+            <div className="mt-8 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-6">
               <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                 <HelpCircle className="w-5 h-5 text-amber-400" />
                 Support & Resources

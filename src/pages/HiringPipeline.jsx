@@ -508,7 +508,7 @@ export default function HiringPipeline() {
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={() => setLogoutConfirmOpen(false)}
           />
-          <div className="relative bg-slate-900 border border-slate-700/50 rounded-2xl p-6 max-w-sm w-full shadow-2xl">
+          <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl p-6 max-w-sm w-full shadow-2xl">
             <div className="flex items-center gap-4 mb-4">
               <div className="w-12 h-12 bg-slate-800/60 rounded-xl flex items-center justify-center">
                 <LogOut className="w-6 h-6 text-slate-600 dark:text-slate-400" />
@@ -618,7 +618,7 @@ export default function HiringPipeline() {
           <div className="max-w-7xl mx-auto">
             {/* GCSO Header */}
             <div className="mb-6">
-              <h2 className="text-2xl lg:text-3xl font-bold text-white mb-1">Recruitment Pipeline Analysis</h2>
+              <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white mb-1">Recruitment Pipeline Analysis</h2>
               <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-slate-600 dark:text-slate-400 mb-3">
                 <span className="flex items-center gap-1">
                   <MapPin className="w-4 h-4" />
@@ -662,7 +662,7 @@ export default function HiringPipeline() {
             </div>
 
             {/* Pipeline Overview */}
-            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5 mb-6">
+            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5 mb-6">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Active Applicants by Position</h3>
                 <div className="flex items-center gap-2">
@@ -1179,7 +1179,7 @@ export default function HiringPipeline() {
                               <div className="grid grid-cols-3 gap-4 text-sm">
                                 <div className="text-center p-3 bg-slate-900/50 rounded-lg">
                                   <p className="text-xs text-slate-500 mb-1">GCSO Deputy I</p>
-                                  <p className="text-lg font-bold text-white">${stage.salaryCompetitiveness.gcsoDeputy.toLocaleString()}</p>
+                                  <p className="text-lg font-bold text-slate-900 dark:text-white">${stage.salaryCompetitiveness.gcsoDeputy.toLocaleString()}</p>
                                 </div>
                                 <div className="text-center p-3 bg-slate-900/50 rounded-lg">
                                   <p className="text-xs text-slate-500 mb-1">Gwinnett County PD</p>

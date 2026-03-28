@@ -156,7 +156,7 @@ const BookingProcessing = () => {
           <div className="flex items-center gap-3 mb-2">
             <FileText className="w-8 h-8 text-amber-500" />
             <div>
-              <h1 className="text-2xl lg:text-3xl font-bold text-white">Booking & Processing</h1>
+              <h1 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white">Booking & Processing</h1>
               <p className="text-slate-600 dark:text-slate-400">Intake Management & Workflow Tracking</p>
             </div>
           </div>

@@ -407,7 +407,7 @@ export default function FinancialBackground() {
           <div className="mb-6">
             <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-4">
               <div>
-                <h2 className="text-2xl lg:text-3xl font-bold text-white mb-2">Financial Background</h2>
+                <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white mb-2">Financial Background</h2>
                 <p className="text-slate-600 dark:text-slate-400 mb-2">Credit history and financial responsibility assessment for law enforcement positions</p>
                 <div className="flex flex-wrap items-center gap-4 text-sm text-slate-500">
                   <span className="flex items-center gap-1.5">
@@ -456,7 +456,7 @@ export default function FinancialBackground() {
           </div>
 
           {/* Financial Responsibility Assessment Summary */}
-          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5 mb-6">
+          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5 mb-6">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center">
                 <ClipboardList className="w-5 h-5 text-blue-400" />
@@ -668,7 +668,7 @@ export default function FinancialBackground() {
                       </div>
                       <div className="flex items-center gap-4">
                         <div className="text-right">
-                          <p className="text-3xl font-bold text-white">{report.creditScore.score}</p>
+                          <p className="text-3xl font-bold text-slate-900 dark:text-white">{report.creditScore.score}</p>
                           <p className="text-xs text-slate-500">Credit Score ({report.creditScore.range})</p>
                           <p className={`text-xs ${report.creditScore.exceedsBy > 50 ? 'text-green-400' : 'text-amber-400'}`}>
                             {report.creditScore.exceedsBy > 0 ? `+${report.creditScore.exceedsBy} above minimum` : 'Meets minimum'}

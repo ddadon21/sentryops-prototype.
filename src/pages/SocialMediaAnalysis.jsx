@@ -421,7 +421,7 @@ export default function SocialMediaAnalysis() {
           <div className="mb-6">
             <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-4">
               <div>
-                <h2 className="text-2xl lg:text-3xl font-bold text-white mb-2">Social Media Analysis</h2>
+                <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white mb-2">Social Media Analysis</h2>
                 <p className="text-slate-600 dark:text-slate-400 mb-2">Public online presence, digital footprint, and professional conduct assessment</p>
                 <div className="flex flex-wrap items-center gap-4 text-sm text-slate-500">
                   <span className="flex items-center gap-1.5">
@@ -470,7 +470,7 @@ export default function SocialMediaAnalysis() {
           </div>
 
           {/* Social Media Review Status Summary */}
-          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5 mb-6">
+          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5 mb-6">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center">
                 <ClipboardList className="w-5 h-5 text-blue-400" />

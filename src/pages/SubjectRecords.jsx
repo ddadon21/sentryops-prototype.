@@ -445,7 +445,7 @@ export default function SubjectRecords() {
               <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-4">
                 <div>
                   <div className="flex items-center gap-3 mb-2">
-                    <h2 className="text-2xl lg:text-3xl font-bold text-white">Subject Records</h2>
+                    <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white">Subject Records</h2>
                     <span className="px-3 py-1 bg-red-500/10 text-red-400 rounded-lg text-xs font-bold uppercase">
                       {caseInfo.priority}
                     </span>
@@ -516,7 +516,7 @@ export default function SubjectRecords() {
               </div>
 
               {/* Verification Progress */}
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5">
                 <h4 className="text-base font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                   <CheckCircle className="w-5 h-5 text-green-400" />
                   Verification Summary
@@ -575,7 +575,7 @@ export default function SubjectRecords() {
             )}
 
             {/* Applicant Header Card */}
-            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-6 mb-6">
+            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-6 mb-6">
               <div className="flex flex-col lg:flex-row items-start gap-6">
                 <div className="w-24 h-24 bg-gradient-to-br from-amber-500 to-amber-600 rounded-2xl flex items-center justify-center text-white text-3xl font-bold flex-shrink-0">
                   RM

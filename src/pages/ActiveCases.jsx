@@ -324,7 +324,7 @@ export default function ActiveCases() {
           <div className="max-w-7xl mx-auto">
             <div className="mb-6">
               <div className="flex items-center gap-3 mb-2">
-                <h2 className="text-2xl lg:text-3xl font-bold text-white">Active Cases</h2>
+                <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white">Active Cases</h2>
                 <span className="px-3 py-1 bg-green-500/20 border border-green-500/30 text-green-400 text-xs font-bold rounded-full flex items-center gap-1.5">
                   <CircleDot className="w-3 h-3" />
                   LIVE
@@ -438,7 +438,7 @@ export default function ActiveCases() {
             )}
 
             {/* Search and Filters */}
-            <div className="mb-6 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4 lg:p-6">
+            <div className="mb-6 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4 lg:p-6">
               <div className="flex items-center gap-2 mb-4">
                 <Filter className="w-5 h-5 text-slate-600 dark:text-slate-400" />
                 <h3 className="text-sm font-semibold text-slate-900 dark:text-white uppercase">Search Active Cases</h3>

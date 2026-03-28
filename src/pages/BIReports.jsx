@@ -730,12 +730,12 @@ export default function BIReports() {
           <div className="max-w-[1600px] mx-auto">
             {/* Page Header */}
             <div className="mb-6">
-              <h2 className="text-2xl lg:text-3xl font-bold text-white mb-2">Background Investigation Reports</h2>
+              <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white mb-2">Background Investigation Reports</h2>
               <p className="text-slate-600 dark:text-slate-400">Comprehensive background check documentation and status tracking</p>
             </div>
 
             {/* Processing Standards Info */}
-            <div className="mb-6 bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
+            <div className="mb-6 bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
               <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
                 <Scale className="w-4 h-4 text-purple-400" />
                 Investigation Processing Standards
@@ -758,7 +758,7 @@ export default function BIReports() {
 
             {/* Stats Cards */}
             <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
-              <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
+              <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
                 <p className="text-slate-600 dark:text-slate-400 text-xs uppercase tracking-wide mb-1">Total Reports</p>
                 <p className="text-2xl font-bold text-slate-900 dark:text-white">{stats.total}</p>
               </div>
@@ -781,7 +781,7 @@ export default function BIReports() {
             </div>
 
             {/* Risk Level Definitions */}
-            <div className="mb-6 bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
+            <div className="mb-6 bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
               <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
                 <Shield className="w-4 h-4 text-purple-400" />
                 Risk Assessment Definitions

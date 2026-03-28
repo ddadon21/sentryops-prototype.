@@ -1816,7 +1816,7 @@ export default function OrgChart() {
             className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm"
             onClick={() => setDrawerOpen(false)}
           />
-          <div className="relative w-full max-w-[480px] bg-slate-900 border-l border-slate-700/50 shadow-2xl overflow-y-auto">
+          <div className="relative w-full max-w-[480px] bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-700/50 shadow-2xl overflow-y-auto">
             <div className="sticky top-0 bg-slate-900/95 backdrop-blur-xl border-b border-slate-700/50 p-6 z-10">
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center gap-3">
@@ -1894,7 +1894,7 @@ export default function OrgChart() {
                   <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50 space-y-3">
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-slate-700 dark:text-slate-300">Assigned Strength</span>
-                      <span className="text-lg font-bold text-white">{selectedNode.divisionStrength.current} / {selectedNode.divisionStrength.authorized}</span>
+                      <span className="text-lg font-bold text-slate-900 dark:text-white">{selectedNode.divisionStrength.current} / {selectedNode.divisionStrength.authorized}</span>
                     </div>
                     <div className="w-full h-2 bg-slate-700/50 rounded-full overflow-hidden">
                       <div
@@ -1913,7 +1913,7 @@ export default function OrgChart() {
                       <div className="pt-2 border-t border-slate-700/50 grid grid-cols-3 gap-3">
                         <div className="text-center">
                           <p className="text-[11px] text-slate-600 dark:text-slate-400 mb-0.5">Deployable</p>
-                          <p className="text-base font-bold text-white">{divisionMetrics[selectedNode.id].deployable}</p>
+                          <p className="text-base font-bold text-slate-900 dark:text-white">{divisionMetrics[selectedNode.id].deployable}</p>
                         </div>
                         <div className="text-center">
                           <p className="text-[11px] text-slate-600 dark:text-slate-400 mb-0.5">Vacancies</p>
@@ -1957,7 +1957,7 @@ export default function OrgChart() {
                       <Users className="w-5 h-5 text-slate-600 dark:text-slate-400" />
                       <span className="text-sm text-slate-700 dark:text-slate-300">Direct Reports</span>
                     </div>
-                    <span className="text-lg font-bold text-white">{selectedNode.reports}</span>
+                    <span className="text-lg font-bold text-slate-900 dark:text-white">{selectedNode.reports}</span>
                   </div>
                 </div>
               </div>
@@ -2149,12 +2149,12 @@ export default function OrgChart() {
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Team Size</p>
-                        <p className="text-lg font-bold text-white">{selectedNode.reports}</p>
+                        <p className="text-lg font-bold text-slate-900 dark:text-white">{selectedNode.reports}</p>
                         <p className="text-[10px] text-slate-500">Direct reports</p>
                       </div>
                       <div>
                         <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Avg Rating</p>
-                        <p className="text-lg font-bold text-white">4.5</p>
+                        <p className="text-lg font-bold text-slate-900 dark:text-white">4.5</p>
                         <div className="flex items-center gap-0.5">
                           {[...Array(5)].map((_, i) => (
                             <Star key={i} className={`w-2.5 h-2.5 ${
@@ -2200,7 +2200,7 @@ export default function OrgChart() {
                       </div>
                       <div className="flex items-center justify-between">
                         <span className="text-sm text-slate-700 dark:text-slate-300">Candidates in Pipeline</span>
-                        <span className="text-lg font-bold text-white">{selectedNode.candidatesInPipeline}</span>
+                        <span className="text-lg font-bold text-slate-900 dark:text-white">{selectedNode.candidatesInPipeline}</span>
                       </div>
                       <div className="flex items-center justify-between">
                         <span className="text-sm text-slate-700 dark:text-slate-300">Expected Fill Date</span>

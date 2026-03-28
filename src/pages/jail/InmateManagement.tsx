@@ -529,7 +529,7 @@ const InmateManagement = () => {
             <div className="flex items-center gap-3">
               <User className="w-8 h-8 text-amber-500" />
               <div>
-                <h1 className="text-2xl lg:text-3xl font-bold text-white">Inmate Management</h1>
+                <h1 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white">Inmate Management</h1>
                 <p className="text-slate-600 dark:text-slate-400">Current Population: {stats.total} Inmates</p>
               </div>
             </div>
@@ -706,7 +706,7 @@ const InmateManagement = () => {
               <div className="p-6 space-y-6">
                 {/* Personal Information */}
                 <div>
-                  <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
                     <User className="w-5 h-5 text-amber-400" />
                     Personal Information
                   </h3>
@@ -724,7 +724,7 @@ const InmateManagement = () => {
 
                 {/* Booking Information */}
                 <div>
-                  <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
                     <Calendar className="w-5 h-5 text-slate-600 dark:text-slate-400" />
                     Booking Information
                   </h3>
@@ -750,7 +750,7 @@ const InmateManagement = () => {
 
                 {/* Charges */}
                 <div>
-                  <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
                     <FileText className="w-5 h-5 text-red-400" />
                     Charges
                   </h3>
@@ -791,7 +791,7 @@ const InmateManagement = () => {
 
                 {/* Housing & Classification */}
                 <div>
-                  <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
                     <MapPin className="w-5 h-5 text-slate-600 dark:text-slate-400" />
                     Housing & Classification
                   </h3>
@@ -812,7 +812,7 @@ const InmateManagement = () => {
                 {/* Court Information */}
                 {selectedInmate.nextCourtDate && (
                   <div>
-                    <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
                       <Scale className="w-5 h-5 text-amber-400" />
                       Court Information
                     </h3>
@@ -832,7 +832,7 @@ const InmateManagement = () => {
                 {/* Flags & Alerts */}
                 {selectedInmate.flags.length > 0 && (
                   <div>
-                    <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
                       <AlertCircle className="w-5 h-5 text-red-400" />
                       Flags & Alerts
                     </h3>

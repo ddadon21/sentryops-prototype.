@@ -402,7 +402,7 @@ export default function ReportsAnalytics() {
             <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4 mb-6">
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-2">
-                  <h2 className="text-2xl lg:text-3xl font-bold text-white">Reports & Compliance</h2>
+                  <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white">Reports & Compliance</h2>
                   <div className="flex items-center gap-1.5 px-2.5 py-1 bg-green-500/20 border border-green-500/40 rounded-lg">
                     <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
                     <span className="text-xs font-bold text-green-600 dark:text-green-400">LIVE DATA</span>
@@ -499,7 +499,7 @@ export default function ReportsAnalytics() {
                       <Bot className="w-6 h-6 text-purple-400" />
                     </div>
                     <div>
-                      <h4 className="text-base font-bold text-white flex items-center gap-2">
+                      <h4 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
                         AI Analytics Intelligence
                       </h4>
                       <div className="flex items-center gap-3 text-xs text-slate-600 dark:text-slate-400">
@@ -894,7 +894,7 @@ export default function ReportsAnalytics() {
                 </div>
 
                 {/* Enhanced Monthly Trends */}
-                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-6">
+                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-6">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-2">
                       <TrendingUp className="w-5 h-5 text-blue-400" />
@@ -982,7 +982,7 @@ export default function ReportsAnalytics() {
             {/* OPERATIONS TAB */}
             {activeTab === 'operations' && (
               <div className="space-y-6">
-                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-6">
+                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-6">
                   <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Division Performance</h3>
                   <div className="space-y-4">
                     {divisionPerformance.map((division, idx) => (
@@ -1001,34 +1001,34 @@ export default function ReportsAnalytics() {
                           {division.calls > 0 && (
                             <div>
                               <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Calls</p>
-                              <p className="text-lg font-bold text-white">{division.calls.toLocaleString()}</p>
+                              <p className="text-lg font-bold text-slate-900 dark:text-white">{division.calls.toLocaleString()}</p>
                             </div>
                           )}
                           {division.responseTime > 0 && (
                             <div>
                               <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Response Time</p>
-                              <p className="text-lg font-bold text-white">{division.responseTime} min</p>
+                              <p className="text-lg font-bold text-slate-900 dark:text-white">{division.responseTime} min</p>
                             </div>
                           )}
                           {division.clearanceRate > 0 && (
                             <div>
                               <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Clearance Rate</p>
-                              <p className="text-lg font-bold text-white">{division.clearanceRate}%</p>
+                              <p className="text-lg font-bold text-slate-900 dark:text-white">{division.clearanceRate}%</p>
                             </div>
                           )}
                           <div>
                             <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Staffing</p>
-                            <p className="text-lg font-bold text-white">{division.staffing}%</p>
+                            <p className="text-lg font-bold text-slate-900 dark:text-white">{division.staffing}%</p>
                           </div>
                           {division.inmates && (
                             <>
                               <div>
                                 <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Inmates</p>
-                                <p className="text-lg font-bold text-white">{division.inmates}</p>
+                                <p className="text-lg font-bold text-slate-900 dark:text-white">{division.inmates}</p>
                               </div>
                               <div>
                                 <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Capacity</p>
-                                <p className="text-lg font-bold text-white">{division.capacity}</p>
+                                <p className="text-lg font-bold text-slate-900 dark:text-white">{division.capacity}</p>
                               </div>
                             </>
                           )}
@@ -1128,7 +1128,7 @@ export default function ReportsAnalytics() {
                   {filteredReports.map(report => {
                     const Icon = report.icon;
                     return (
-                      <div key={report.id} className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5 hover:border-slate-600/50 transition-all group">
+                      <div key={report.id} className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5 hover:border-slate-600/50 transition-all group">
                         <div className="flex items-start gap-4">
                           <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-blue-500/30 transition-colors">
                             <Icon className="w-6 h-6 text-blue-400" />

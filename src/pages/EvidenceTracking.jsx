@@ -511,7 +511,7 @@ export default function EvidenceTracking() {
 
             {/* Page Header */}
             <div className="mb-6">
-              <h2 className="text-2xl lg:text-3xl font-bold text-white mb-2">Evidence Tracking</h2>
+              <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white mb-2">Evidence Tracking</h2>
               <p className="text-slate-600 dark:text-slate-400 mb-3">Secure document repository and chain of custody management for background investigations</p>
               <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-slate-500">
                 <span className="flex items-center gap-1.5">
@@ -715,7 +715,7 @@ export default function EvidenceTracking() {
 
             {/* Status Cards */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5">
                 <div className="flex items-center justify-between mb-3">
                   <FileCheck className="w-8 h-8 text-blue-400" />
                   <span className="text-2xl font-bold text-slate-900 dark:text-white">{evidenceItems.length}</span>
@@ -729,7 +729,7 @@ export default function EvidenceTracking() {
                 </div>
               </div>
 
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5">
                 <div className="flex items-center justify-between mb-3">
                   <CheckCircle className="w-8 h-8 text-green-400" />
                   <span className="text-2xl font-bold text-slate-900 dark:text-white">{evidenceItems.filter(e => e.status === 'Verified').length}</span>
@@ -763,7 +763,7 @@ export default function EvidenceTracking() {
                 </div>
               </div>
 
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5">
                 <div className="flex items-center justify-between mb-3">
                   <Archive className="w-8 h-8 text-slate-600 dark:text-slate-400" />
                   <span className="text-2xl font-bold text-slate-900 dark:text-white">{evidenceItems.filter(e => e.status === 'Archived').length}</span>
@@ -778,7 +778,7 @@ export default function EvidenceTracking() {
             </div>
 
             {/* Evidence Management Actions */}
-            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5 mb-6">
+            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5 mb-6">
               <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                 <Settings className="w-4 h-4 text-amber-400" />
                 Evidence Management Actions
@@ -844,7 +844,7 @@ export default function EvidenceTracking() {
             </div>
 
             {/* Integrity Verification Status */}
-            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5 mb-6">
+            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5 mb-6">
               <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                 <ShieldCheck className="w-4 h-4 text-green-400" />
                 File Integrity Verification
@@ -899,7 +899,7 @@ export default function EvidenceTracking() {
             </div>
 
             {/* Filter & Search */}
-            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4 mb-6">
+            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4 mb-6">
               <div className="flex flex-col lg:flex-row lg:items-center gap-4">
                 <div className="flex items-center gap-2 flex-wrap flex-1">
                   <Tag className="w-4 h-4 text-slate-600 dark:text-slate-400" />
@@ -1275,7 +1275,7 @@ export default function EvidenceTracking() {
             </div>
 
             {/* Support & Resources Panel */}
-            <div className="mt-8 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-6">
+            <div className="mt-8 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-6">
               <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                 <HelpCircle className="w-5 h-5 text-amber-400" />
                 Support & Resources

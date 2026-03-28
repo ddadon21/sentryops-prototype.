@@ -152,10 +152,10 @@ function getCertColors(severity: CertAlert['severity']) {
 }
 
 function getDeploymentStatusColors(status: Deployment['status']) {
-  if (status === 'Active')     return 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20';
-  if (status === 'En Route')   return 'bg-blue-500/15 text-blue-400 border border-blue-500/20';
-  if (status === 'Staged')     return 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/20';
-  return 'bg-slate-500/15 text-slate-600 dark:text-slate-400 border border-slate-500/20';
+  if (status === 'Active')     return 'bg-emerald-100 dark:bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/20';
+  if (status === 'En Route')   return 'bg-blue-100 dark:bg-blue-500/15 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-500/20';
+  if (status === 'Staged')     return 'bg-amber-100 dark:bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-500/20';
+  return 'bg-slate-100 dark:bg-slate-500/15 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-500/20';
 }
 
 function getAlertColors(severity: CommandAlert['severity']) {
@@ -252,7 +252,7 @@ export default function CommandWarRoom() {
             const Icon = kpi.icon;
             return (
               <div key={kpi.label}
-                className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-4"
+                className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-4"
               >
                 <div className="flex items-center justify-between mb-3">
                   <Icon className="w-4 h-4 text-slate-600 dark:text-slate-400" />

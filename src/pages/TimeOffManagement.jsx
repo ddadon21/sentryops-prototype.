@@ -378,7 +378,7 @@ export default function TimeOffManagement() {
       {logoutConfirmOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setLogoutConfirmOpen(false)} />
-          <div className="relative bg-slate-900 border border-slate-700/50 rounded-2xl p-6 max-w-sm w-full shadow-2xl">
+          <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl p-6 max-w-sm w-full shadow-2xl">
             <div className="flex items-center gap-4 mb-4">
               <div className="w-12 h-12 bg-slate-800/60 rounded-xl flex items-center justify-center">
                 <LogOut className="w-6 h-6 text-slate-600 dark:text-slate-400" />
@@ -473,7 +473,7 @@ export default function TimeOffManagement() {
 
             {/* Page Title Section */}
             <div className="mb-6">
-              <h2 className="text-2xl lg:text-3xl font-bold text-white mb-2">Leave Request Management & Shift Coverage Planning</h2>
+              <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white mb-2">Leave Request Management & Shift Coverage Planning</h2>
               <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-slate-600 dark:text-slate-400">
                 <span>Gwinnett County Sheriff's Office</span>
                 <span className="text-slate-600">&bull;</span>
@@ -507,7 +507,7 @@ export default function TimeOffManagement() {
 
             {/* Summary Stat Cards */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
                 <div className="flex items-center gap-3 mb-2">
                   <div className="w-8 h-8 bg-amber-500/20 rounded-lg flex items-center justify-center">
                     <Clock className="w-4 h-4 text-amber-400" />
@@ -527,7 +527,7 @@ export default function TimeOffManagement() {
                 <p className="text-2xl font-bold text-red-400">1</p>
                 <p className="text-[10px] text-red-400 font-medium">CRITICAL - Federal deadline</p>
               </div>
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
                 <div className="flex items-center gap-3 mb-2">
                   <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">
                     <Calendar className="w-4 h-4 text-blue-400" />
@@ -537,7 +537,7 @@ export default function TimeOffManagement() {
                 <p className="text-2xl font-bold text-slate-900 dark:text-white">0</p>
                 <p className="text-[10px] text-slate-500">Next 7 days</p>
               </div>
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
                 <div className="flex items-center gap-3 mb-2">
                   <div className="w-8 h-8 bg-red-500/20 rounded-lg flex items-center justify-center">
                     <XCircle className="w-4 h-4 text-red-400" />
@@ -601,7 +601,7 @@ export default function TimeOffManagement() {
                 <div className="w-8 h-8 bg-red-500/20 rounded-lg flex items-center justify-center">
                   <ClipboardList className="w-5 h-5 text-red-400" />
                 </div>
-                <h3 className="text-lg font-bold text-white">FMLA Leave Requests - Federal Law Compliance</h3>
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white">FMLA Leave Requests - Federal Law Compliance</h3>
                 <span className="px-2 py-1 bg-red-500/20 border border-red-500/30 rounded text-xs text-red-400 font-bold">PRIORITY</span>
               </div>
 
@@ -879,7 +879,7 @@ export default function TimeOffManagement() {
                 <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">
                   <Clock className="w-5 h-5 text-blue-400" />
                 </div>
-                <h3 className="text-lg font-bold text-white">Pending Leave Requests - Supervisor Review Required</h3>
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white">Pending Leave Requests - Supervisor Review Required</h3>
                 <span className="text-xs text-slate-500">Showing {filteredRequests.length} of {leaveRequests.length}</span>
               </div>
 
@@ -980,7 +980,7 @@ export default function TimeOffManagement() {
                           <h5 className="text-xs font-semibold text-slate-700 dark:text-slate-300 mb-3">Leave Balance</h5>
                           <div className="grid grid-cols-3 gap-3 text-center mb-3">
                             <div>
-                              <p className="text-lg font-bold text-white">{request.balance.available}h</p>
+                              <p className="text-lg font-bold text-slate-900 dark:text-white">{request.balance.available}h</p>
                               <p className="text-[10px] text-slate-500">Available</p>
                             </div>
                             <div>
@@ -1013,7 +1013,7 @@ export default function TimeOffManagement() {
                           </h5>
                           <div className="grid grid-cols-2 md:grid-cols-5 gap-3 text-center mb-3">
                             <div>
-                              <p className="text-lg font-bold text-white">{request.shiftCoverage.normal}</p>
+                              <p className="text-lg font-bold text-slate-900 dark:text-white">{request.shiftCoverage.normal}</p>
                               <p className="text-[10px] text-slate-500">Normal Staffing</p>
                             </div>
                             <div>
@@ -1202,7 +1202,7 @@ export default function TimeOffManagement() {
                 <div className="w-8 h-8 bg-red-500/20 rounded-lg flex items-center justify-center">
                   <XCircle className="w-5 h-5 text-red-400" />
                 </div>
-                <h3 className="text-lg font-bold text-white">Recently Denied Requests</h3>
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white">Recently Denied Requests</h3>
               </div>
 
               <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
@@ -1250,7 +1250,7 @@ export default function TimeOffManagement() {
       {showApproveModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => { setShowApproveModal(null); setApproveComment(''); }} />
-          <div className="relative bg-slate-900 border border-green-500/30 rounded-2xl p-6 max-w-md w-full shadow-2xl">
+          <div className="relative bg-white dark:bg-slate-900 border border-green-500/30 rounded-2xl p-6 max-w-md w-full shadow-2xl">
             <div className="flex items-center gap-4 mb-4">
               <div className="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center">
                 <CheckCircle className="w-6 h-6 text-green-400" />
@@ -1289,7 +1289,7 @@ export default function TimeOffManagement() {
       {showDenyModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => { setShowDenyModal(null); setDenyReason(''); setDenyComment(''); }} />
-          <div className="relative bg-slate-900 border border-red-500/30 rounded-2xl p-6 max-w-md w-full shadow-2xl">
+          <div className="relative bg-white dark:bg-slate-900 border border-red-500/30 rounded-2xl p-6 max-w-md w-full shadow-2xl">
             <div className="flex items-center gap-4 mb-4">
               <div className="w-12 h-12 bg-red-500/20 rounded-xl flex items-center justify-center">
                 <XCircle className="w-6 h-6 text-red-400" />
@@ -1347,7 +1347,7 @@ export default function TimeOffManagement() {
       {showRequestInfoModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => { setShowRequestInfoModal(null); setRequestInfoText(''); }} />
-          <div className="relative bg-slate-900 border border-blue-500/30 rounded-2xl p-6 max-w-md w-full shadow-2xl">
+          <div className="relative bg-white dark:bg-slate-900 border border-blue-500/30 rounded-2xl p-6 max-w-md w-full shadow-2xl">
             <div className="flex items-center gap-4 mb-4">
               <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center">
                 <Info className="w-6 h-6 text-blue-400" />
@@ -1386,7 +1386,7 @@ export default function TimeOffManagement() {
       {showCoverageModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setShowCoverageModal(false)} />
-          <div className="relative bg-slate-900 border border-slate-700/50 rounded-2xl p-6 max-w-3xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
+          <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl p-6 max-w-3xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
             <div className="flex items-start justify-between mb-6">
               <div>
                 <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1">Shift Coverage Analysis</h3>
@@ -1406,7 +1406,7 @@ export default function TimeOffManagement() {
                 </div>
                 <div className="grid grid-cols-3 gap-2 text-center mb-3">
                   <div>
-                    <p className="text-lg font-bold text-white">9</p>
+                    <p className="text-lg font-bold text-slate-900 dark:text-white">9</p>
                     <p className="text-[10px] text-slate-500">Assigned</p>
                   </div>
                   <div>
@@ -1433,7 +1433,7 @@ export default function TimeOffManagement() {
                 </div>
                 <div className="grid grid-cols-3 gap-2 text-center mb-3">
                   <div>
-                    <p className="text-lg font-bold text-white">8</p>
+                    <p className="text-lg font-bold text-slate-900 dark:text-white">8</p>
                     <p className="text-[10px] text-slate-500">Assigned</p>
                   </div>
                   <div>
@@ -1461,7 +1461,7 @@ export default function TimeOffManagement() {
                 </div>
                 <div className="grid grid-cols-3 gap-2 text-center mb-3">
                   <div>
-                    <p className="text-lg font-bold text-white">8</p>
+                    <p className="text-lg font-bold text-slate-900 dark:text-white">8</p>
                     <p className="text-[10px] text-slate-500">Assigned</p>
                   </div>
                   <div>
@@ -1488,7 +1488,7 @@ export default function TimeOffManagement() {
                 </div>
                 <div className="grid grid-cols-3 gap-2 text-center mb-3">
                   <div>
-                    <p className="text-lg font-bold text-white">8</p>
+                    <p className="text-lg font-bold text-slate-900 dark:text-white">8</p>
                     <p className="text-[10px] text-slate-500">Assigned</p>
                   </div>
                   <div>
@@ -1524,7 +1524,7 @@ export default function TimeOffManagement() {
       {showFMLADashboard && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setShowFMLADashboard(false)} />
-          <div className="relative bg-slate-900 border border-slate-700/50 rounded-2xl p-6 max-w-3xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
+          <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl p-6 max-w-3xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
             <div className="flex items-start justify-between mb-6">
               <div>
                 <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1">FMLA Dashboard</h3>
@@ -1552,7 +1552,7 @@ export default function TimeOffManagement() {
             </div>
 
             {/* Active FMLA Case */}
-            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4 mb-4">
+            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4 mb-4">
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-10 h-10 bg-red-500/20 rounded-full flex items-center justify-center">
                   <span className="text-red-400 text-sm font-bold">AG</span>
@@ -1572,7 +1572,7 @@ export default function TimeOffManagement() {
             </div>
 
             {/* Compliance Checklist */}
-            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
+            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
               <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">FMLA Compliance Checklist - Garcia</h4>
               <div className="space-y-2">
                 {[

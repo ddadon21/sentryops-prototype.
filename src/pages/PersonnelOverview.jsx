@@ -416,7 +416,7 @@ export default function PersonnelOverview() {
                 {/* ── Workforce Status Row (4 cards) ──────────── */}
                 <div className="grid grid-cols-4 gap-3 mb-4">
                   {/* Workforce Health */}
-                  <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl p-3">
+                  <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-3">
                     <div className="flex items-center gap-2 mb-1.5">
                       <Gauge className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
                       <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Workforce Health</span>
@@ -834,7 +834,7 @@ export default function PersonnelOverview() {
             className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm"
             onClick={() => setQuickPeekOpen(false)}
           />
-          <div className="relative w-full max-w-[480px] bg-slate-900 border-l border-slate-700/50 shadow-2xl overflow-y-auto">
+          <div className="relative w-full max-w-[480px] bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-700/50 shadow-2xl overflow-y-auto">
             <div className="sticky top-0 bg-slate-900/95 backdrop-blur-xl border-b border-slate-700/50 p-6 z-10">
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center gap-3">
@@ -990,8 +990,8 @@ export default function PersonnelOverview() {
                 {/* Left Column - Main Info */}
                 <div className="lg:col-span-2 space-y-6">
                   {/* Status & Quick Info */}
-                  <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5">
-                    <h3 className="text-lg font-bold text-white mb-4">Status & Information</h3>
+                  <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5">
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4">Status & Information</h3>
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Current Status</p>
@@ -1030,8 +1030,8 @@ export default function PersonnelOverview() {
                   </div>
 
                   {/* Activity Stats */}
-                  <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5">
-                    <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                  <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5">
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                       <Activity className="w-5 h-5 text-slate-600 dark:text-slate-400" />
                       Activity Statistics (Last 30 Days)
                     </h3>
@@ -1062,8 +1062,8 @@ export default function PersonnelOverview() {
                   </div>
 
                   {/* Certifications & Training */}
-                  <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5">
-                    <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                  <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5">
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                       <Award className="w-5 h-5 text-slate-600 dark:text-slate-400" />
                       Certifications & Training History
                     </h3>
@@ -1105,8 +1105,8 @@ export default function PersonnelOverview() {
                   </div>
 
                   {/* Performance Reviews */}
-                  <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5">
-                    <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                  <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5">
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                       <Star className="w-5 h-5 text-slate-600 dark:text-slate-400" />
                       Performance Reviews
                     </h3>
@@ -1140,8 +1140,8 @@ export default function PersonnelOverview() {
                 {/* Right Column - Contact & Equipment */}
                 <div className="space-y-6">
                   {/* Contact Information */}
-                  <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5">
-                    <h3 className="text-lg font-bold text-white mb-4">Contact</h3>
+                  <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5">
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4">Contact</h3>
                     <div className="space-y-3">
                       <div>
                         <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Email</p>
@@ -1161,8 +1161,8 @@ export default function PersonnelOverview() {
                   </div>
 
                   {/* Equipment Assignments */}
-                  <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5">
-                    <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                  <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5">
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                       <Shield className="w-5 h-5 text-slate-600 dark:text-slate-400" />
                       Equipment
                     </h3>
@@ -1191,8 +1191,8 @@ export default function PersonnelOverview() {
                   </div>
 
                   {/* Action Buttons */}
-                  <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5">
-                    <h3 className="text-lg font-bold text-white mb-4">Actions</h3>
+                  <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5">
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4">Actions</h3>
                     <div className="space-y-2">
                       <button className="w-full flex items-center gap-3 px-4 py-2.5 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-sm font-medium transition-colors">
                         <UserCircle className="w-4 h-4" />

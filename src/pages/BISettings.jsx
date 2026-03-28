@@ -267,7 +267,7 @@ export default function BISettings() {
       <div className="p-5 lg:p-8 space-y-8 bg-slate-100 dark:bg-transparent min-h-full">
           <div className="max-w-6xl mx-auto">
             <div className="mb-6">
-              <h2 className="text-2xl lg:text-3xl font-bold text-white mb-2">BI Settings</h2>
+              <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white mb-2">BI Settings</h2>
               <p className="text-slate-600 dark:text-slate-400">Manage your account, notifications, and investigation system integrations</p>
             </div>
 
@@ -330,7 +330,7 @@ export default function BISettings() {
             <div className="space-y-6">
               {/* Profile Settings */}
               {activeSection === 'profile' && (
-                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-6">
+                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-6">
                   <div className="flex items-center justify-between mb-6">
                     <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Profile Information</h3>
                     <div className="flex items-center gap-2 px-3 py-1.5 bg-green-500/20 border border-green-500/30 rounded-lg">
@@ -444,7 +444,7 @@ export default function BISettings() {
 
               {/* Notification Settings */}
               {activeSection === 'notifications' && (
-                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-6">
+                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-6">
                   <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-6">Notification Preferences</h3>
 
                   <div className="space-y-6">
@@ -524,7 +524,7 @@ export default function BISettings() {
 
               {/* Display Settings */}
               {activeSection === 'display' && (
-                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-6">
+                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-6">
                   <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-6">Display & Appearance</h3>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -633,7 +633,7 @@ export default function BISettings() {
               {/* Security Settings */}
               {activeSection === 'security' && (
                 <div className="space-y-6">
-                  <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-6">
+                  <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-6">
                     <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-6">Security Settings</h3>
 
                     <div className="space-y-4">
@@ -720,7 +720,7 @@ export default function BISettings() {
                     </div>
                   </div>
 
-                  <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-6">
+                  <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-6">
                     <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Change Password</h3>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <div>
@@ -761,7 +761,7 @@ export default function BISettings() {
               {/* Integrations */}
               {activeSection === 'integrations' && (
                 <div className="space-y-6">
-                  <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-6">
+                  <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-6">
                     <div className="flex items-center justify-between mb-6">
                       <div>
                         <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Background Investigation Integrations</h3>
@@ -775,7 +775,7 @@ export default function BISettings() {
 
                     <div className="space-y-4">
                       {Object.entries(integrations).map(([key, integration]) => (
-                        <div key={key} className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5">
+                        <div key={key} className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5">
                           <div className="flex items-start justify-between">
                             <div className="flex items-start gap-4">
                               <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${

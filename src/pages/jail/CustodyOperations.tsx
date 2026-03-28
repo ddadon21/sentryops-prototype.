@@ -150,7 +150,7 @@ const getPodColors = (pod: Pod) => {
     card: 'bg-slate-800/35 border-slate-700/25',
     pct: 'text-slate-400',
     bar: 'bg-slate-600/50',
-    badge: 'bg-slate-700/30 text-slate-600 dark:text-slate-400 border border-slate-700/40',
+    badge: 'bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40',
   };
 };
 
@@ -165,10 +165,10 @@ const getMovementIcon = (type: Movement['type']) => {
 };
 
 const getMovementColors = (status: Movement['status']) => {
-  if (status === 'In Progress') return 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/20';
-  if (status === 'Staging')     return 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/20';
-  if (status === 'Pending')     return 'bg-slate-700/30 text-slate-600 dark:text-slate-400 border border-slate-700/40';
-  return 'bg-slate-700/30 text-slate-600 dark:text-slate-400 border border-slate-700/40';
+  if (status === 'In Progress') return 'bg-amber-100 dark:bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-500/20';
+  if (status === 'Staging')     return 'bg-amber-100 dark:bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-500/20';
+  if (status === 'Pending')     return 'bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40';
+  return 'bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40';
 };
 
 const getIncidentColors = (severity: Incident['severity'], status: Incident['status']) => {
@@ -176,7 +176,7 @@ const getIncidentColors = (severity: Incident['severity'], status: Incident['sta
   if (resolved) return { row: 'opacity-60', badge: 'bg-slate-500/15 text-slate-600 dark:text-slate-400 border border-slate-500/20', sev: '' };
   if (severity === 'critical') return { row: '', badge: 'bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/20',    sev: 'text-red-600 dark:text-red-400' };
   if (severity === 'high')     return { row: '', badge: 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/20', sev: 'text-amber-600 dark:text-amber-400' };
-  return { row: '', badge: 'bg-slate-700/30 text-slate-600 dark:text-slate-400 border border-slate-700/40', sev: 'text-slate-400' };
+  return { row: '', badge: 'bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40', sev: 'text-slate-400' };
 };
 
 const getIncidentIcon = (type: Incident['type']) => {
@@ -205,11 +205,11 @@ const getMovementDecision = (mov: Movement): { risk: string | null; action: stri
 };
 
 const getOfficerStatusColors = (status: Officer['status']) => {
-  if (status === 'On Post')        return 'bg-slate-700/30 text-slate-600 dark:text-slate-400 border border-slate-700/40';
-  if (status === 'Medical Escort') return 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/20';
-  if (status === 'OT Pending')     return 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/20';
-  if (status === 'Transport')      return 'bg-slate-700/30 text-slate-600 dark:text-slate-400 border border-slate-700/40';
-  return 'bg-slate-700/30 text-slate-600 dark:text-slate-400 border border-slate-700/40';
+  if (status === 'On Post')        return 'bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40';
+  if (status === 'Medical Escort') return 'bg-amber-100 dark:bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-500/20';
+  if (status === 'OT Pending')     return 'bg-amber-100 dark:bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-500/20';
+  if (status === 'Transport')      return 'bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40';
+  return 'bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40';
 };
 
 // ── Component ──────────────────────────────────────────────────
@@ -562,7 +562,7 @@ export default function CustodyOperations() {
                           <span className={`text-[9px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider ${
                             issue.priority === 'Immediate'     ? 'bg-red-500/20 text-red-600 dark:text-red-400 border border-red-500/30' :
                             issue.priority === 'High Priority' ? 'bg-amber-500/20 text-amber-600 dark:text-amber-400 border border-amber-500/30' :
-                                                                 'bg-slate-700/30 text-slate-600 dark:text-slate-400 border border-slate-700/40'
+                                                                 'bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40'
                           }`}>{issue.priority}</span>
                           <p className="text-[13px] font-semibold text-slate-900 dark:text-white">{issue.label}</p>
                         </div>
@@ -590,7 +590,7 @@ export default function CustodyOperations() {
                             <span className={`text-[8px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider ${
                               issue.confidence === 'High'
                                 ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20'
-                                : 'bg-slate-700/30 text-slate-600 dark:text-slate-400 border border-slate-700/40'
+                                : 'bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40'
                             }`}>{issue.confidence} confidence</span>
                           </div>
                           <p className="text-[11px] text-slate-200 leading-snug mb-1.5">{issue.recommendation}</p>
@@ -658,7 +658,7 @@ export default function CustodyOperations() {
         )}
 
         {/* ── Section 1: Shift Operations Overview ─────────── */}
-        <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5">
+        <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5">
           <div className="flex flex-col lg:flex-row items-start lg:items-center gap-5">
 
             {/* Shift identity */}
@@ -1049,7 +1049,7 @@ export default function CustodyOperations() {
                                   <span className={`text-[8px] px-1.5 py-0.5 rounded font-bold uppercase ${
                                     escalation.level === 'High'   ? 'bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/20' :
                                     escalation.level === 'Medium' ? 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/20' :
-                                                                    'bg-slate-700/30 text-slate-600 dark:text-slate-400 border border-slate-700/40'
+                                                                    'bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40'
                                   }`}>{escalation.level}</span>
                                 </div>
                                 <p className="text-[11px] text-slate-700 dark:text-slate-300 leading-snug">{escalation.text}</p>
