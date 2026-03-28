@@ -157,7 +157,7 @@ export default function DashboardLayout({
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-gradient-to-br dark:from-slate-950 dark:via-[#0d1424] dark:to-slate-950 flex">
       {/* ── Sidebar ──────────────────────────────────────── */}
-      <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-slate-200 dark:border-slate-800/30 backdrop-blur-xl bg-white dark:bg-slate-900/60 flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
+      <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-slate-200 dark:border-slate-800/30 backdrop-blur-xl bg-slate-100 dark:bg-slate-900/60 flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
         {/* Logo */}
         <div className="p-4 border-b border-slate-200 dark:border-slate-700/50 flex items-center justify-between">
           {!sidebarCollapsed && (
@@ -189,8 +189,8 @@ export default function DashboardLayout({
                   onClick={() => handleNavigation(item)}
                   className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all ${
                     isActive
-                      ? 'bg-slate-100 dark:bg-slate-700/40 text-slate-900 dark:text-white border-l-2 border-l-amber-500'
-                      : 'text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/30 hover:text-slate-800 dark:hover:text-slate-300'
+                      ? 'bg-slate-200 dark:bg-slate-700/40 text-slate-900 dark:text-white border-l-2 border-l-amber-500'
+                      : 'text-slate-600 dark:text-slate-400 hover:bg-slate-200/70 dark:hover:bg-slate-800/30 hover:text-slate-900 dark:hover:text-slate-300'
                   } ${sidebarCollapsed ? 'justify-center' : ''}`}
                   title={sidebarCollapsed ? item.label : ''}
                 >
@@ -200,7 +200,7 @@ export default function DashboardLayout({
                       <span className="flex-1 text-left text-[13px] font-medium truncate">{item.label}</span>
                       {item.badge && (
                         <span className={`px-1.5 py-0.5 rounded-full text-[11px] ${
-                          isActive ? 'bg-slate-200 dark:bg-white/10 text-slate-700 dark:text-white' : 'bg-red-500/15 text-red-500 dark:text-red-400 border border-red-500/20'
+                          isActive ? 'bg-slate-300 dark:bg-white/10 text-slate-800 dark:text-white' : 'bg-red-100 dark:bg-red-500/15 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-500/20'
                         }`}>{item.badge}</span>
                       )}
                       {item.hasSubmenu && (
@@ -220,7 +220,7 @@ export default function DashboardLayout({
                           key={sub.id}
                           onClick={() => handleSubmenuNavigation(sub.route)}
                           className={`w-full flex items-center gap-3 px-4 py-2 rounded-lg transition-all text-[13px] ${
-                            isSubActive ? 'bg-amber-500/10 text-amber-600 dark:text-amber-400' : 'text-slate-400 dark:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800/30 hover:text-slate-700 dark:hover:text-slate-300'
+                            isSubActive ? 'bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400' : 'text-slate-600 dark:text-slate-500 hover:bg-slate-200 dark:hover:bg-slate-800/30 hover:text-slate-900 dark:hover:text-slate-300'
                           }`}
                         >
                           <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
@@ -245,7 +245,7 @@ export default function DashboardLayout({
           <div className="p-4">
             <button
               onClick={() => setLogoutConfirmOpen(true)}
-              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/30 hover:text-slate-700 dark:hover:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
+              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800/30 hover:text-slate-900 dark:hover:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
               title={sidebarCollapsed ? 'Sign Out' : ''}
             >
               <LogOut className="w-[18px] h-[18px] flex-shrink-0" />
@@ -318,7 +318,7 @@ export default function DashboardLayout({
                 <input
                   type="text"
                   placeholder="Search..."
-                  className="w-full pl-11 pr-4 py-2 bg-slate-100 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/40 rounded-lg text-[13px] text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-slate-400 dark:focus:border-slate-600"
+                  className="w-full pl-11 pr-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 rounded-lg text-[13px] text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-slate-400 dark:focus:border-slate-600 shadow-sm dark:shadow-none"
                 />
               </div>
             </div>
