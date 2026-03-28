@@ -298,8 +298,8 @@ const ActiveCasesDashboard = () => {
 
   const getPriorityBadge = (priority: string) => {
     switch (priority) {
-      case 'Critical': return 'bg-red-500/10 border-red-500/20 text-red-400';
-      case 'High': return 'bg-amber-500/10 border-amber-500/20 text-amber-400';
+      case 'Critical': return 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400';
+      case 'High': return 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400';
       case 'Medium': return 'bg-slate-500/10 border-slate-500/20 text-slate-500 dark:text-slate-400';
       case 'Low': return 'bg-blue-500/10 border-blue-500/20 text-blue-400';
       default: return 'bg-slate-500/10 border-slate-500/20 text-slate-500 dark:text-slate-400';
@@ -326,71 +326,71 @@ const ActiveCasesDashboard = () => {
 
         {/* Command Priority Strip */}
         <div className="bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/40 rounded-xl overflow-hidden">
-          <div className="flex items-center gap-3 px-5 py-3 border-b border-slate-700/30">
+          <div className="flex items-center gap-3 px-5 py-3 border-b border-slate-200 dark:border-slate-700/30">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
             </span>
             <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Command Priority — Action Required</span>
           </div>
-          <div className="divide-y divide-slate-700/20">
+          <div className="divide-y divide-slate-200 dark:divide-slate-700/20">
             {/* Row 1 */}
             <div className="flex items-start gap-4 px-5 py-3.5">
-              <span className="text-[11px] font-bold text-red-400 uppercase w-16 flex-shrink-0 mt-0.5">URGENT</span>
+              <span className="text-[11px] font-bold text-red-700 dark:text-red-400 uppercase w-16 flex-shrink-0 mt-0.5">URGENT</span>
               <div className="flex-1 min-w-0">
                 <p className="text-[13px] text-slate-900 dark:text-white font-medium">Homicide #2024-0847 — Charge window closes in 14 hrs</p>
-                <p className="text-[11px] text-red-400/70 mt-0.5">If ignored: suspect released, case collapses. Risk: double jeopardy bars future prosecution.</p>
+                <p className="text-[11px] text-red-700 dark:text-red-700 dark:text-red-400/70 mt-0.5">If ignored: suspect released, case collapses. Risk: double jeopardy bars future prosecution.</p>
               </div>
               <div className="flex items-center gap-1.5 flex-shrink-0">
-                <button className="px-2.5 py-1 bg-red-500/10 border border-red-500/20 text-red-400 rounded text-[11px] font-medium hover:bg-red-500/20 transition-all">Escalate</button>
+                <button className="px-2.5 py-1 bg-red-100 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-700 dark:text-red-400 rounded text-[11px] font-medium hover:bg-red-200 dark:hover:bg-red-500/20 transition-all">Escalate</button>
                 <button className="px-2.5 py-1 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-600 dark:text-slate-400 rounded text-[11px] font-medium hover:bg-slate-200 dark:hover:bg-slate-700/40 transition-all">View</button>
               </div>
             </div>
             {/* Row 2 */}
             <div className="flex items-start gap-4 px-5 py-3.5">
-              <span className="text-[11px] font-bold text-red-400 uppercase w-16 flex-shrink-0 mt-0.5">URGENT</span>
+              <span className="text-[11px] font-bold text-red-700 dark:text-red-400 uppercase w-16 flex-shrink-0 mt-0.5">URGENT</span>
               <div className="flex-1 min-w-0">
                 <p className="text-[13px] text-slate-900 dark:text-white font-medium">DEA Task Force — Surveillance extension expires EOD</p>
-                <p className="text-[11px] text-red-400/70 mt-0.5">If ignored: 84-day operation terminates. Risk: 8 suspects walk, fentanyl network reconstitutes.</p>
+                <p className="text-[11px] text-red-700 dark:text-red-700 dark:text-red-400/70 mt-0.5">If ignored: 84-day operation terminates. Risk: 8 suspects walk, fentanyl network reconstitutes.</p>
               </div>
               <div className="flex items-center gap-1.5 flex-shrink-0">
-                <button className="px-2.5 py-1 bg-red-500/10 border border-red-500/20 text-red-400 rounded text-[11px] font-medium hover:bg-red-500/20 transition-all">Approve</button>
+                <button className="px-2.5 py-1 bg-red-100 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-700 dark:text-red-400 rounded text-[11px] font-medium hover:bg-red-200 dark:hover:bg-red-500/20 transition-all">Approve</button>
                 <button className="px-2.5 py-1 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-600 dark:text-slate-400 rounded text-[11px] font-medium hover:bg-slate-200 dark:hover:bg-slate-700/40 transition-all">View</button>
               </div>
             </div>
             {/* Row 3 */}
             <div className="flex items-start gap-4 px-5 py-3.5">
-              <span className="text-[11px] font-bold text-amber-400 uppercase w-16 flex-shrink-0 mt-0.5">ACTION</span>
+              <span className="text-[11px] font-bold text-amber-700 dark:text-amber-400 uppercase w-16 flex-shrink-0 mt-0.5">ACTION</span>
               <div className="flex-1 min-w-0">
                 <p className="text-[13px] text-slate-900 dark:text-white font-medium">Meth Lab — HAZMAT standby confirmation needed by Dec 06</p>
-                <p className="text-[11px] text-amber-400/60 mt-0.5">If ignored: warrant execution proceeds without HAZMAT. Risk: officer exposure, scene contamination, evidence inadmissibility.</p>
+                <p className="text-[11px] text-amber-700 dark:text-amber-700 dark:text-amber-400/60 mt-0.5">If ignored: warrant execution proceeds without HAZMAT. Risk: officer exposure, scene contamination, evidence inadmissibility.</p>
               </div>
               <div className="flex items-center gap-1.5 flex-shrink-0">
-                <button className="px-2.5 py-1 bg-amber-500/10 border border-amber-500/20 text-amber-400 rounded text-[11px] font-medium hover:bg-amber-500/20 transition-all">Escalate</button>
+                <button className="px-2.5 py-1 bg-amber-100 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 text-amber-700 dark:text-amber-400 rounded text-[11px] font-medium hover:bg-amber-200 dark:hover:bg-amber-500/20 transition-all">Escalate</button>
                 <button className="px-2.5 py-1 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-600 dark:text-slate-400 rounded text-[11px] font-medium hover:bg-slate-200 dark:hover:bg-slate-700/40 transition-all">View</button>
               </div>
             </div>
             {/* Row 4 */}
             <div className="flex items-start gap-4 px-5 py-3.5">
-              <span className="text-[11px] font-bold text-amber-400 uppercase w-16 flex-shrink-0 mt-0.5">ACTION</span>
+              <span className="text-[11px] font-bold text-amber-700 dark:text-amber-400 uppercase w-16 flex-shrink-0 mt-0.5">ACTION</span>
               <div className="flex-1 min-w-0">
                 <p className="text-[13px] text-slate-900 dark:text-white font-medium">Pharmacy robbery series — task force not formed, 4th incident imminent</p>
-                <p className="text-[11px] text-amber-400/60 mt-0.5">If ignored: series continues, public exposure increases. Risk: media scrutiny, victim harm, robbery rate hits 20-year high.</p>
+                <p className="text-[11px] text-amber-700 dark:text-amber-700 dark:text-amber-400/60 mt-0.5">If ignored: series continues, public exposure increases. Risk: media scrutiny, victim harm, robbery rate hits 20-year high.</p>
               </div>
               <div className="flex items-center gap-1.5 flex-shrink-0">
-                <button className="px-2.5 py-1 bg-amber-500/10 border border-amber-500/20 text-amber-400 rounded text-[11px] font-medium hover:bg-amber-500/20 transition-all">Approve</button>
+                <button className="px-2.5 py-1 bg-amber-100 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 text-amber-700 dark:text-amber-400 rounded text-[11px] font-medium hover:bg-amber-200 dark:hover:bg-amber-500/20 transition-all">Approve</button>
                 <button className="px-2.5 py-1 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-600 dark:text-slate-400 rounded text-[11px] font-medium hover:bg-slate-200 dark:hover:bg-slate-700/40 transition-all">View</button>
               </div>
             </div>
             {/* Row 5 */}
             <div className="flex items-start gap-4 px-5 py-3.5">
-              <span className="text-[11px] font-bold text-amber-400 uppercase w-16 flex-shrink-0 mt-0.5">ACTION</span>
+              <span className="text-[11px] font-bold text-amber-700 dark:text-amber-400 uppercase w-16 flex-shrink-0 mt-0.5">ACTION</span>
               <div className="flex-1 min-w-0">
                 <p className="text-[13px] text-slate-900 dark:text-white font-medium">Det. Rodriguez at capacity — critical homicide coverage at risk</p>
-                <p className="text-[11px] text-amber-400/60 mt-0.5">If ignored: homicide investigation slows. Risk: missed charge window, witness attrition on active gang case.</p>
+                <p className="text-[11px] text-amber-700 dark:text-amber-700 dark:text-amber-400/60 mt-0.5">If ignored: homicide investigation slows. Risk: missed charge window, witness attrition on active gang case.</p>
               </div>
               <div className="flex items-center gap-1.5 flex-shrink-0">
-                <button className="px-2.5 py-1 bg-amber-500/10 border border-amber-500/20 text-amber-400 rounded text-[11px] font-medium hover:bg-amber-500/20 transition-all">Reassign</button>
+                <button className="px-2.5 py-1 bg-amber-100 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 text-amber-700 dark:text-amber-400 rounded text-[11px] font-medium hover:bg-amber-200 dark:hover:bg-amber-500/20 transition-all">Reassign</button>
                 <button className="px-2.5 py-1 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-600 dark:text-slate-400 rounded text-[11px] font-medium hover:bg-slate-200 dark:hover:bg-slate-700/40 transition-all">View</button>
               </div>
             </div>
@@ -406,7 +406,7 @@ const ActiveCasesDashboard = () => {
             </div>
             <p className="text-3xl font-bold text-slate-900 dark:text-white mb-1">{stats.total}</p>
             <p className="text-xs text-slate-500 dark:text-slate-400 mb-1">Major felony investigations</p>
-            <p className="text-[11px] text-emerald-400">-2 from last month</p>
+            <p className="text-[11px] text-emerald-700 dark:text-emerald-400">-2 from last month</p>
           </div>
 
           <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 text-left hover:border-slate-600/40 transition-colors">
@@ -419,7 +419,7 @@ const ActiveCasesDashboard = () => {
             </div>
             <p className="text-3xl font-extrabold text-slate-900 dark:text-white mb-1">{stats.critical}</p>
             <p className="text-xs text-slate-500 dark:text-slate-400 mb-1">Immediate attention required</p>
-            <p className="text-[11px] text-red-400">All require command action today</p>
+            <p className="text-[11px] text-red-700 dark:text-red-400">All require command action today</p>
           </div>
 
           <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 text-left">
@@ -433,7 +433,7 @@ const ActiveCasesDashboard = () => {
               <span className="text-slate-600">·</span>
               <span>+3% vs 2023</span>
             </div>
-            <p className="text-[11px] text-emerald-400">Meeting 75% target</p>
+            <p className="text-[11px] text-emerald-700 dark:text-emerald-400">Meeting 75% target</p>
           </div>
 
           <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 text-left hover:border-slate-600/40 transition-colors">
@@ -443,7 +443,7 @@ const ActiveCasesDashboard = () => {
             </div>
             <p className="text-3xl font-bold text-slate-900 dark:text-white mb-1">{stats.multiAgency}</p>
             <p className="text-xs text-slate-500 dark:text-slate-400 mb-1">FBI & DEA active</p>
-            <p className="text-[11px] text-amber-400">Federal charges pending: 2</p>
+            <p className="text-[11px] text-amber-700 dark:text-amber-400">Federal charges pending: 2</p>
           </div>
         </div>
 
@@ -464,12 +464,12 @@ const ActiveCasesDashboard = () => {
           </button>
 
           {insightsExpanded && (
-            <div className="px-5 pb-5 space-y-4 border-t border-slate-700/20 pt-4">
+            <div className="px-5 pb-5 space-y-4 border-t border-slate-200 dark:border-slate-700/20 pt-4">
               {/* Critical */}
               <div className="flex items-start gap-3">
                 <div className="w-1.5 h-1.5 rounded-full bg-red-500 mt-1.5 flex-shrink-0"></div>
                 <div className="space-y-1">
-                  <p className="text-sm font-medium text-red-400">Homicide #2024-0847 — Ballistics OVERDUE</p>
+                  <p className="text-sm font-medium text-red-700 dark:text-red-400">Homicide #2024-0847 — Ballistics OVERDUE</p>
                   <ul className="space-y-0.5 text-[13px] text-slate-600 dark:text-slate-300">
                     <li>GBI Lab results due today — not received</li>
                     <li>Must charge within 72 hrs (tomorrow 1400)</li>
@@ -483,7 +483,7 @@ const ActiveCasesDashboard = () => {
               <div className="flex items-start gap-3">
                 <div className="w-1.5 h-1.5 rounded-full bg-red-500 mt-1.5 flex-shrink-0"></div>
                 <div className="space-y-1">
-                  <p className="text-sm font-medium text-red-400">DEA Task Force — Approval Required by EOD</p>
+                  <p className="text-sm font-medium text-red-700 dark:text-red-400">DEA Task Force — Approval Required by EOD</p>
                   <ul className="space-y-0.5 text-[13px] text-slate-600 dark:text-slate-300">
                     <li>30-day surveillance extension expires today</li>
                     <li>Sheriff approval required for continuation</li>
@@ -497,7 +497,7 @@ const ActiveCasesDashboard = () => {
               <div className="flex items-start gap-3">
                 <div className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 flex-shrink-0"></div>
                 <div className="space-y-1">
-                  <p className="text-sm font-medium text-amber-400">Armed Robberies +15% — Trend Alert</p>
+                  <p className="text-sm font-medium text-amber-700 dark:text-amber-400">Armed Robberies +15% — Trend Alert</p>
                   <ul className="space-y-0.5 text-[13px] text-slate-600 dark:text-slate-300">
                     <li>Dec 2024: 23 incidents (vs 20 Nov)</li>
                     <li>Pharmacy series (3 incidents) — same MO confirmed</li>
@@ -615,18 +615,18 @@ const ActiveCasesDashboard = () => {
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2.5">
                     <span className="text-sm text-slate-600 dark:text-slate-300 font-medium">{cat.type}</span>
-                    <span className={`px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase ${cat.status === 'on-track' ? 'bg-emerald-500/10 text-emerald-400' : 'bg-amber-500/10 text-amber-400'}`}>
+                    <span className={`px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase ${cat.status === 'on-track' ? 'bg-emerald-100 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400' : 'bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400'}`}>
                       {cat.status === 'on-track' ? 'On Track' : 'Below Target'}
                     </span>
                     <span className="text-[10px] text-slate-600">{cat.confidence}% confidence</span>
                   </div>
                   <div className="flex items-center gap-2.5">
                     <span className="text-xs text-slate-500 dark:text-slate-400">{cat.cleared}/{cat.total}</span>
-                    <span className={`text-sm font-semibold ${cat.percentage >= 75 ? 'text-emerald-400' : 'text-amber-400'}`}>{cat.percentage}%</span>
+                    <span className={`text-sm font-semibold ${cat.percentage >= 75 ? 'text-emerald-700 dark:text-emerald-400' : 'text-amber-700 dark:text-amber-400'}`}>{cat.percentage}%</span>
                   </div>
                 </div>
                 <div className="relative w-full h-1 bg-slate-200 dark:bg-slate-800/50 rounded-full overflow-visible mb-2.5">
-                  <div className={`h-full rounded-full ${cat.percentage >= 75 ? 'bg-emerald-500/40' : 'bg-amber-500/40'}`} style={{ width: `${cat.percentage}%` }} />
+                  <div className={`h-full rounded-full ${cat.percentage >= 75 ? 'bg-emerald-500 dark:bg-emerald-500/40' : 'bg-amber-500 dark:bg-amber-500/40'}`} style={{ width: `${cat.percentage}%` }} />
                   <div className="absolute top-[-3px] w-[1.5px] h-[calc(100%+6px)] bg-red-500/50 rounded-full" style={{ left: '75%' }} title="Target: 75%" />
                 </div>
                 <div className="flex items-start gap-1.5 mb-2">
@@ -636,7 +636,7 @@ const ActiveCasesDashboard = () => {
                 {/* Impact Chain */}
                 <div className="ml-4 grid grid-cols-3 gap-2 mb-2.5">
                   <div>
-                    <p className="text-[9px] font-bold text-amber-400/60 uppercase mb-0.5">Immediate</p>
+                    <p className="text-[9px] font-bold text-amber-700 dark:text-amber-400/60 uppercase mb-0.5">Immediate</p>
                     <p className="text-[10px] text-slate-500">{cat.immediate}</p>
                   </div>
                   <div>
@@ -644,12 +644,12 @@ const ActiveCasesDashboard = () => {
                     <p className="text-[10px] text-slate-500">{cat.downstream}</p>
                   </div>
                   <div>
-                    <p className="text-[9px] font-bold text-emerald-400/60 uppercase mb-0.5">Outcome</p>
+                    <p className="text-[9px] font-bold text-emerald-700 dark:text-emerald-400/60 uppercase mb-0.5">Outcome</p>
                     <p className="text-[10px] text-slate-500">{cat.outcome}</p>
                   </div>
                 </div>
                 {cat.action && (
-                  <button className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-[11px] font-semibold transition-all ${cat.status === 'below-target' ? 'bg-amber-500/10 border border-amber-500/20 text-amber-400 hover:bg-amber-500/20' : 'bg-slate-100 dark:bg-slate-700/30 border border-slate-300 dark:border-slate-600/30 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700/50'}`}>
+                  <button className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-[11px] font-semibold transition-all ${cat.status === 'below-target' ? 'bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-400 hover:bg-amber-500/20' : 'bg-slate-100 dark:bg-slate-700/30 border border-slate-300 dark:border-slate-600/30 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700/50'}`}>
                     <Zap className="w-3 h-3" /> {cat.action}
                   </button>
                 )}
@@ -680,7 +680,7 @@ const ActiveCasesDashboard = () => {
                   <div className="flex items-center gap-3">
                     <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Pharmacy Robbery Series</span>
                     <span className="text-[11px] text-slate-600">#2024-1489</span>
-                    <span className="px-1.5 py-0.5 border rounded text-[11px] font-medium bg-amber-500/10 border-amber-500/20 text-amber-400">SERIES</span>
+                    <span className="px-1.5 py-0.5 border rounded text-[11px] font-medium bg-amber-100 dark:bg-amber-500/10 border-amber-200 dark:border-amber-500/20 text-amber-700 dark:text-amber-400">SERIES</span>
                   </div>
                   <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">3 incidents, same MO — targeting opioid medications</p>
                 </div>
@@ -692,7 +692,7 @@ const ActiveCasesDashboard = () => {
                   <div className="flex items-center gap-3">
                     <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Gang-Related Shootings</span>
                     <span className="text-[11px] text-slate-600">#2024-0847 + linked</span>
-                    <span className="px-1.5 py-0.5 border rounded text-[11px] font-medium bg-red-500/10 border-red-500/20 text-red-400">CRITICAL</span>
+                    <span className="px-1.5 py-0.5 border rounded text-[11px] font-medium bg-red-100 dark:bg-red-500/10 border-red-200 dark:border-red-500/20 text-red-700 dark:text-red-400">CRITICAL</span>
                   </div>
                   <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Territory dispute — retaliation risk HIGH</p>
                 </div>
@@ -739,10 +739,10 @@ const ActiveCasesDashboard = () => {
               <div className="border border-slate-700/20 rounded-lg p-5">
                 <span className="text-sm font-medium text-slate-900 dark:text-white">Evidence Processing</span>
                 <div className="space-y-2 mt-3 text-xs">
-                  <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Pending lab results</span><span className="text-amber-400">6 cases</span></div>
-                  <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Avg lab turnaround</span><span className="text-red-400">18 days (target: 14)</span></div>
-                  <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Ballistics backlog</span><span className="text-amber-400">2 cases</span></div>
-                  <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">DNA backlog</span><span className="text-emerald-400">0 cases</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Pending lab results</span><span className="text-amber-700 dark:text-amber-400">6 cases</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Avg lab turnaround</span><span className="text-red-700 dark:text-red-400">18 days (target: 14)</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Ballistics backlog</span><span className="text-amber-700 dark:text-amber-400">2 cases</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">DNA backlog</span><span className="text-emerald-700 dark:text-emerald-400">0 cases</span></div>
                   <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Fingerprint match</span><span className="text-slate-600 dark:text-slate-300">42%</span></div>
                 </div>
               </div>
@@ -750,10 +750,10 @@ const ActiveCasesDashboard = () => {
               <div className="border border-slate-700/20 rounded-lg p-5">
                 <span className="text-sm font-medium text-slate-900 dark:text-white">Comparisons</span>
                 <div className="space-y-2 mt-3 text-xs">
-                  <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Our clearance</span><span className="text-emerald-400">75%</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Our clearance</span><span className="text-emerald-700 dark:text-emerald-400">75%</span></div>
                   <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">National avg</span><span className="text-slate-600 dark:text-slate-300">62% (+13%)</span></div>
                   <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Georgia avg</span><span className="text-slate-600 dark:text-slate-300">68% (+7%)</span></div>
-                  <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Cases vs Nov</span><span className="text-emerald-400">-2 (improving)</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Cases vs Nov</span><span className="text-emerald-700 dark:text-emerald-400">-2 (improving)</span></div>
                 </div>
               </div>
             </div>
@@ -774,17 +774,17 @@ const ActiveCasesDashboard = () => {
           </button>
 
           {showWorkload && (
-            <div className="px-5 pb-5 space-y-3 border-t border-slate-700/20 pt-4">
+            <div className="px-5 pb-5 space-y-3 border-t border-slate-200 dark:border-slate-700/20 pt-4">
               {/* Recommended Reassignment Banner */}
               <div className="flex items-center justify-between px-4 py-3 bg-amber-500/5 border border-amber-500/15 rounded-lg">
                 <div className="flex items-start gap-2.5">
-                  <TrendingUp className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
+                  <TrendingUp className="w-4 h-4 text-amber-700 dark:text-amber-400 mt-0.5 flex-shrink-0" />
                   <div>
-                    <p className="text-[12px] font-medium text-amber-400">Recommended Reassignment</p>
+                    <p className="text-[12px] font-medium text-amber-700 dark:text-amber-400">Recommended Reassignment</p>
                     <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Burglary #2024-1712 → Det. Wilson (available, 80% clearance). Relieves Rodriguez and improves burglary rate.</p>
                   </div>
                 </div>
-                <button className="ml-4 flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 bg-amber-500/15 border border-amber-500/25 text-amber-300 rounded-lg text-[11px] font-semibold hover:bg-amber-500/25 transition-all">
+                <button className="ml-4 flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 bg-amber-100 dark:bg-amber-500/15 border border-amber-200 dark:border-amber-500/25 text-amber-700 dark:text-amber-300 rounded-lg text-[11px] font-semibold hover:bg-amber-200 dark:hover:bg-amber-500/25 transition-all">
                   <Zap className="w-3 h-3" /> Auto Assign
                 </button>
               </div>
@@ -795,10 +795,10 @@ const ActiveCasesDashboard = () => {
                   <div className="flex items-center gap-3">
                     <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Det. Rodriguez, Maria</span>
                     <span className="text-[11px] text-slate-600">I-5234</span>
-                    <span className="px-1.5 py-0.5 border rounded text-[11px] font-medium bg-red-500/10 border-red-500/20 text-red-400">AT CAPACITY</span>
+                    <span className="px-1.5 py-0.5 border rounded text-[11px] font-medium bg-red-100 dark:bg-red-500/10 border-red-200 dark:border-red-500/20 text-red-700 dark:text-red-400">AT CAPACITY</span>
                   </div>
                   <div className="text-xs text-slate-500 dark:text-slate-400 mt-1">3 cases — Homicide (Critical) · Robbery (High) · Burglary (Medium)</div>
-                  <div className="text-[10px] text-red-400/70 mt-0.5">Transfer Burglary #2024-1712 to free critical case capacity</div>
+                  <div className="text-[10px] text-red-700 dark:text-red-700 dark:text-red-400/70 mt-0.5">Transfer Burglary #2024-1712 to free critical case capacity</div>
                 </div>
                 <div className="text-right flex-shrink-0">
                   <span className="text-xs text-slate-500 dark:text-slate-400">Clearance: 85%</span>
@@ -811,7 +811,7 @@ const ActiveCasesDashboard = () => {
                   <div className="flex items-center gap-3">
                     <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Det. Anderson / Lt. Anderson</span>
                     <span className="text-[11px] text-slate-600">I-4892 / I-3456</span>
-                    <span className="px-1.5 py-0.5 border rounded text-[11px] font-medium bg-amber-500/10 border-amber-500/20 text-amber-400">MODERATE</span>
+                    <span className="px-1.5 py-0.5 border rounded text-[11px] font-medium bg-amber-100 dark:bg-amber-500/10 border-amber-200 dark:border-amber-500/20 text-amber-700 dark:text-amber-400">MODERATE</span>
                   </div>
                   <div className="text-xs text-slate-500 dark:text-slate-400 mt-1">2 cases — Cold Case Homicide · DEA Task Force (Critical)</div>
                   <div className="text-[10px] text-slate-500 mt-0.5">DEA approval will clear task force case — monitor closely</div>
@@ -827,10 +827,10 @@ const ActiveCasesDashboard = () => {
                   <div className="flex items-center gap-3">
                     <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Det. Wilson, Amanda</span>
                     <span className="text-[11px] text-slate-600">I-4521</span>
-                    <span className="px-1.5 py-0.5 border rounded text-[11px] font-medium bg-emerald-500/10 border-emerald-500/20 text-emerald-400">AVAILABLE</span>
+                    <span className="px-1.5 py-0.5 border rounded text-[11px] font-medium bg-emerald-500/10 border-emerald-500/20 text-emerald-700 dark:text-emerald-400">AVAILABLE</span>
                   </div>
                   <div className="text-xs text-slate-500 dark:text-slate-400 mt-1">1 case — Armed Robbery (High) · 4 days open</div>
-                  <div className="text-[10px] text-emerald-400/60 mt-0.5">Capacity available — ideal for Burglary #2024-1712 reassignment</div>
+                  <div className="text-[10px] text-emerald-700 dark:text-emerald-400/60 mt-0.5">Capacity available — ideal for Burglary #2024-1712 reassignment</div>
                 </div>
                 <div className="text-right flex-shrink-0">
                   <span className="text-xs text-slate-500 dark:text-slate-400">Clearance: 80%</span>
@@ -849,22 +849,22 @@ const ActiveCasesDashboard = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div className="flex items-start gap-2.5 p-3 bg-red-500/5 border border-red-500/10 rounded-lg">
-              <AlertTriangle className="w-3.5 h-3.5 text-red-400 mt-0.5 flex-shrink-0" />
+              <AlertTriangle className="w-3.5 h-3.5 text-red-700 dark:text-red-400 mt-0.5 flex-shrink-0" />
               <div className="flex-1">
                 <div className="flex items-center justify-between mb-0.5">
-                  <p className="text-[11px] font-semibold text-red-400">Urgent Deadlines</p>
-                  <span className="text-[10px] font-bold text-red-400/70">97% confidence</span>
+                  <p className="text-[11px] font-semibold text-red-700 dark:text-red-400">Urgent Deadlines</p>
+                  <span className="text-[10px] font-bold text-red-700 dark:text-red-700 dark:text-red-400/70">97% confidence</span>
                 </div>
                 <p className="text-[11px] text-slate-500 dark:text-slate-400 mb-1">Homicide charge window closes in 14 hrs. DEA surveillance expires EOD. Meth warrant hearing Dec 06. 3 deadlines converging — command action required today.</p>
                 <p className="text-[10px] text-slate-600">Based on: case file deadlines, court scheduling data, lab SLA records</p>
               </div>
             </div>
             <div className="flex items-start gap-2.5 p-3 bg-amber-500/5 border border-amber-500/10 rounded-lg">
-              <TrendingUp className="w-3.5 h-3.5 text-amber-400 mt-0.5 flex-shrink-0" />
+              <TrendingUp className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400 mt-0.5 flex-shrink-0" />
               <div className="flex-1">
                 <div className="flex items-center justify-between mb-0.5">
-                  <p className="text-[11px] font-semibold text-amber-400">Crime Trends</p>
-                  <span className="text-[10px] font-bold text-amber-400/70">88% confidence</span>
+                  <p className="text-[11px] font-semibold text-amber-700 dark:text-amber-400">Crime Trends</p>
+                  <span className="text-[10px] font-bold text-amber-700 dark:text-amber-400/70">88% confidence</span>
                 </div>
                 <p className="text-[11px] text-slate-500 dark:text-slate-400 mb-1">Armed robberies +15% MoM. Pharmacy series (3 incidents) indicates organized ring. Gang shooting retaliation risk elevated. Burglary rate declining.</p>
                 <p className="text-[10px] text-slate-600">Based on: 90-day incident reports, MO pattern matching, patrol CAD data</p>
@@ -900,12 +900,12 @@ const ActiveCasesDashboard = () => {
           {/* Urgency header */}
           <div className="flex items-center justify-between px-5 py-3 bg-amber-500/8 border-b border-amber-500/15">
             <div className="flex items-center gap-2">
-              <Zap className="w-4 h-4 text-amber-400" />
-              <span className="text-[12px] font-bold text-amber-400 uppercase tracking-widest">Recommended Action</span>
+              <Zap className="w-4 h-4 text-amber-700 dark:text-amber-400" />
+              <span className="text-[12px] font-bold text-amber-700 dark:text-amber-400 uppercase tracking-widest">Recommended Action</span>
             </div>
             <div className="flex items-center gap-2">
-              <Clock className="w-3.5 h-3.5 text-red-400" />
-              <span className="text-[12px] font-bold text-red-400 tabular-nums">Must act within {fmtCountdown(urgencySeconds)}</span>
+              <Clock className="w-3.5 h-3.5 text-red-700 dark:text-red-400" />
+              <span className="text-[12px] font-bold text-red-700 dark:text-red-400 tabular-nums">Must act within {fmtCountdown(urgencySeconds)}</span>
             </div>
           </div>
           <div className="p-5">
@@ -916,7 +916,7 @@ const ActiveCasesDashboard = () => {
             <div className="mb-4 bg-slate-100 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/20 rounded-lg p-3.5 space-y-2">
               <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest mb-1">Impact Chain</p>
               <div className="flex items-start gap-2">
-                <span className="text-[10px] font-bold text-amber-400 uppercase w-24 flex-shrink-0 mt-0.5">Immediate</span>
+                <span className="text-[10px] font-bold text-amber-700 dark:text-amber-400 uppercase w-24 flex-shrink-0 mt-0.5">Immediate</span>
                 <p className="text-[11px] text-slate-600 dark:text-slate-300">DEA surveillance continues. Lab escalation filed. Both URGENT items cleared from command queue.</p>
               </div>
               <div className="flex items-start gap-2">
@@ -924,13 +924,13 @@ const ActiveCasesDashboard = () => {
                 <p className="text-[11px] text-slate-500 dark:text-slate-400">Fentanyl operation reaches arrest phase within 30 days. Homicide charge filed within 72 hrs pending ballistics.</p>
               </div>
               <div className="flex items-start gap-2">
-                <span className="text-[10px] font-bold text-emerald-400 uppercase w-24 flex-shrink-0 mt-0.5">Outcome</span>
+                <span className="text-[10px] font-bold text-emerald-700 dark:text-emerald-400 uppercase w-24 flex-shrink-0 mt-0.5">Outcome</span>
                 <p className="text-[11px] text-slate-500 dark:text-slate-400">4 of 10 active cases progress. Clearance rate protected at 75%. 0 missed legal windows.</p>
               </div>
             </div>
 
             <div className="flex items-center gap-2">
-              <button className="flex items-center gap-2 px-4 py-2.5 bg-amber-500/15 border border-amber-500/30 text-amber-300 rounded-lg text-[13px] font-bold hover:bg-amber-500/25 transition-all">
+              <button className="flex items-center gap-2 px-4 py-2.5 bg-amber-500 dark:bg-amber-500/15 border border-amber-500 dark:border-amber-500/30 text-white dark:text-amber-300 rounded-lg text-[13px] font-bold hover:bg-amber-600 dark:hover:bg-amber-500/25 transition-all">
                 <CheckCircle className="w-4 h-4" /> Approve DEA Extension
               </button>
               <button className="flex items-center gap-2 px-4 py-2.5 bg-slate-100 dark:bg-slate-800/50 border border-slate-300 dark:border-slate-700/50 text-slate-600 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-200 dark:hover:bg-slate-700/50 transition-all">
@@ -1034,7 +1034,7 @@ const ActiveCasesDashboard = () => {
                       <span className="px-1.5 py-0.5 border rounded text-[11px] font-medium bg-blue-500/10 border-blue-500/20 text-blue-400">MULTI-AGENCY</span>
                     )}
                     {c.deadline && new Date(c.deadline) < new Date(Date.now() + 86400000) && (
-                      <span className="px-1.5 py-0.5 border rounded text-[11px] font-medium bg-red-500/10 border-red-500/20 text-red-400">DEADLINE</span>
+                      <span className="px-1.5 py-0.5 border rounded text-[11px] font-medium bg-red-100 dark:bg-red-500/10 border-red-200 dark:border-red-500/20 text-red-700 dark:text-red-400">DEADLINE</span>
                     )}
                   </div>
                   {c.criticalReason && (
@@ -1054,7 +1054,7 @@ const ActiveCasesDashboard = () => {
                     {c.nextAction && (
                       <>
                         <span className="text-slate-600">·</span>
-                        <span className={c.priority === 'Critical' ? 'text-red-400' : 'text-amber-400'}>{c.nextAction}</span>
+                        <span className={c.priority === 'Critical' ? 'text-red-700 dark:text-red-400' : 'text-amber-700 dark:text-amber-400'}>{c.nextAction}</span>
                       </>
                     )}
                   </div>
@@ -1062,7 +1062,7 @@ const ActiveCasesDashboard = () => {
 
                 <div className="flex items-center gap-3 flex-shrink-0">
                   <div className="text-right mr-1">
-                    <span className={`text-sm font-semibold ${c.daysOpen > 60 ? 'text-red-400' : c.daysOpen > 30 ? 'text-amber-400' : 'text-slate-600 dark:text-slate-300'}`}>
+                    <span className={`text-sm font-semibold ${c.daysOpen > 60 ? 'text-red-700 dark:text-red-400' : c.daysOpen > 30 ? 'text-amber-700 dark:text-amber-400' : 'text-slate-600 dark:text-slate-300'}`}>
                       {c.daysOpen}d
                     </span>
                     <div className="text-[11px] text-slate-500">open</div>
@@ -1082,7 +1082,7 @@ const ActiveCasesDashboard = () => {
                   {(c.priority === 'Critical' || c.priority === 'High') && (
                     <button
                       onClick={(e) => e.stopPropagation()}
-                      className={`flex items-center gap-1 px-2.5 py-1.5 rounded text-[11px] font-medium transition-all ${c.priority === 'Critical' ? 'bg-red-500/10 border border-red-500/20 text-red-400 hover:bg-red-500/20' : 'bg-amber-500/10 border border-amber-500/20 text-amber-400 hover:bg-amber-500/20'}`}
+                      className={`flex items-center gap-1 px-2.5 py-1.5 rounded text-[11px] font-medium transition-all ${c.priority === 'Critical' ? 'bg-red-500/10 border border-red-500/20 text-red-700 dark:text-red-400 hover:bg-red-500/20' : 'bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-400 hover:bg-amber-500/20'}`}
                     >
                       <ShieldAlert className="w-3 h-3" /> Escalate
                     </button>
@@ -1169,7 +1169,7 @@ const ActiveCasesDashboard = () => {
                 <div className="space-y-3">
                   <div className="flex gap-3">
                     <div className="flex flex-col items-center">
-                      <CheckCircle className="w-4 h-4 text-emerald-400" />
+                      <CheckCircle className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
                       <div className="w-px h-full bg-slate-600 mt-1"></div>
                     </div>
                     <div className="flex-1 pb-4">
@@ -1179,7 +1179,7 @@ const ActiveCasesDashboard = () => {
                   </div>
                   <div className="flex gap-3">
                     <div className="flex flex-col items-center">
-                      <CheckCircle className="w-4 h-4 text-emerald-400" />
+                      <CheckCircle className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
                       <div className="w-px h-full bg-slate-600 mt-1"></div>
                     </div>
                     <div className="flex-1 pb-4">
@@ -1189,7 +1189,7 @@ const ActiveCasesDashboard = () => {
                   </div>
                   <div className="flex gap-3">
                     <div className="flex flex-col items-center">
-                      <CheckCircle className="w-4 h-4 text-emerald-400" />
+                      <CheckCircle className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
                       <div className="w-px h-full bg-slate-600 mt-1"></div>
                     </div>
                     <div className="flex-1 pb-4">
@@ -1200,15 +1200,15 @@ const ActiveCasesDashboard = () => {
                   <div className="flex gap-3">
                     <div className="flex flex-col items-center">
                       {selectedCase.status === 'Awaiting Lab Results' ? (
-                        <Clock className="w-4 h-4 text-amber-400" />
+                        <Clock className="w-4 h-4 text-amber-700 dark:text-amber-400" />
                       ) : (
-                        <CheckCircle className="w-4 h-4 text-emerald-400" />
+                        <CheckCircle className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
                       )}
                     </div>
                     <div className="flex-1">
                       <div className="text-[13px] text-slate-900 dark:text-white font-medium">{selectedCase.nextAction}</div>
                       {selectedCase.deadline && (
-                        <div className="text-[11px] text-red-400">Deadline: {selectedCase.deadline}</div>
+                        <div className="text-[11px] text-red-700 dark:text-red-400">Deadline: {selectedCase.deadline}</div>
                       )}
                     </div>
                   </div>
