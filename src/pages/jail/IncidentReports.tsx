@@ -232,8 +232,8 @@ const IncidentReports = () => {
       case 'Critical': return 'bg-red-500/20 text-red-400 border-red-500/30';
       case 'High': return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
       case 'Medium': return 'bg-amber-500/20 text-amber-400 border-amber-500/30';
-      case 'Low': return 'bg-slate-700/40 text-slate-300 border-slate-600/50';
-      default: return 'bg-slate-500/20 text-slate-400 border-slate-500/30';
+      case 'Low': return 'bg-slate-700/40 text-slate-700 dark:text-slate-300 border-slate-600/50';
+      default: return 'bg-slate-500/20 text-slate-600 dark:text-slate-400 border-slate-500/30';
     }
   };
 
@@ -256,7 +256,7 @@ const IncidentReports = () => {
               <Shield className="w-8 h-8 text-amber-500" />
               <div>
                 <h1 className="text-2xl lg:text-3xl font-bold text-white">Incident Reports</h1>
-                <p className="text-slate-400">Facility Incident Management & Documentation</p>
+                <p className="text-slate-600 dark:text-slate-400">Facility Incident Management & Documentation</p>
               </div>
             </div>
             <button className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-slate-900 font-semibold rounded-lg transition-colors text-sm">
@@ -268,19 +268,19 @@ const IncidentReports = () => {
         {/* Stats */}
         <div className="grid grid-cols-4 gap-4 mb-6">
           <div className="bg-slate-800 border border-slate-700 rounded-lg p-4">
-            <div className="text-sm text-slate-400 mb-1">Total Incidents (7 Days)</div>
-            <div className="text-2xl font-bold text-white">{stats.total}</div>
+            <div className="text-sm text-slate-600 dark:text-slate-400 mb-1">Total Incidents (7 Days)</div>
+            <div className="text-2xl font-bold text-slate-900 dark:text-white">{stats.total}</div>
           </div>
           <div className="bg-slate-800 border border-slate-700 rounded-lg p-4">
-            <div className="text-sm text-slate-400 mb-1">Critical</div>
+            <div className="text-sm text-slate-600 dark:text-slate-400 mb-1">Critical</div>
             <div className="text-2xl font-bold text-red-400">{stats.critical}</div>
           </div>
           <div className="bg-slate-800 border border-slate-700 rounded-lg p-4">
-            <div className="text-sm text-slate-400 mb-1">Use of Force</div>
+            <div className="text-sm text-slate-600 dark:text-slate-400 mb-1">Use of Force</div>
             <div className="text-2xl font-bold text-orange-400">{stats.useOfForce}</div>
           </div>
           <div className="bg-slate-800 border border-slate-700 rounded-lg p-4">
-            <div className="text-sm text-slate-400 mb-1">Under Review</div>
+            <div className="text-sm text-slate-600 dark:text-slate-400 mb-1">Under Review</div>
             <div className="text-2xl font-bold text-amber-400">{stats.underReview}</div>
           </div>
         </div>
@@ -289,7 +289,7 @@ const IncidentReports = () => {
         <div className="bg-slate-800 border border-slate-700 rounded-lg p-4 mb-6">
           <div className="flex items-center gap-4">
             <div className="flex-1 relative">
-              <Search className="w-5 h-5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <Search className="w-5 h-5 text-slate-600 dark:text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
                 placeholder="Search incidents..."
@@ -299,7 +299,7 @@ const IncidentReports = () => {
               />
             </div>
             <div className="flex items-center gap-2">
-              <Filter className="w-5 h-5 text-slate-400" />
+              <Filter className="w-5 h-5 text-slate-600 dark:text-slate-400" />
               <select
                 value={selectedFilter}
                 onChange={(e) => setSelectedFilter(e.target.value)}
@@ -323,7 +323,7 @@ const IncidentReports = () => {
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
-                      <h3 className="text-xl font-bold text-white">{incident.type}</h3>
+                      <h3 className="text-xl font-bold text-slate-900 dark:text-white">{incident.type}</h3>
                       <span className={`px-3 py-1 rounded text-sm font-bold border ${getSeverityColor(incident.severity)}`}>
                         {incident.severity.toUpperCase()}
                       </span>
@@ -336,7 +336,7 @@ const IncidentReports = () => {
                         </span>
                       )}
                     </div>
-                    <div className="flex items-center gap-6 text-sm text-slate-400">
+                    <div className="flex items-center gap-6 text-sm text-slate-600 dark:text-slate-400">
                       <div className="flex items-center gap-1">
                         <FileText className="w-4 h-4" />
                         <span>{incident.id}</span>
@@ -360,9 +360,9 @@ const IncidentReports = () => {
                     className="p-2 hover:bg-slate-700 rounded-lg transition-colors"
                   >
                     {expandedIncident === incident.id ? (
-                      <ChevronUp className="w-5 h-5 text-slate-400" />
+                      <ChevronUp className="w-5 h-5 text-slate-600 dark:text-slate-400" />
                     ) : (
-                      <ChevronDown className="w-5 h-5 text-slate-400" />
+                      <ChevronDown className="w-5 h-5 text-slate-600 dark:text-slate-400" />
                     )}
                   </button>
                 </div>
@@ -370,22 +370,22 @@ const IncidentReports = () => {
                 {/* Summary Info */}
                 <div className="grid grid-cols-4 gap-4 mb-4">
                   <div className="bg-slate-900/50 border border-slate-700 rounded p-3">
-                    <div className="text-xs text-slate-400 mb-1">Inmates Involved</div>
+                    <div className="text-xs text-slate-600 dark:text-slate-400 mb-1">Inmates Involved</div>
                     <div className="text-white font-semibold">{incident.inmatesInvolved.length}</div>
                   </div>
                   <div className="bg-slate-900/50 border border-slate-700 rounded p-3">
-                    <div className="text-xs text-slate-400 mb-1">Staff Involved</div>
+                    <div className="text-xs text-slate-600 dark:text-slate-400 mb-1">Staff Involved</div>
                     <div className="text-white font-semibold">{incident.staffInvolved.length}</div>
                   </div>
                   <div className="bg-slate-900/50 border border-slate-700 rounded p-3">
-                    <div className="text-xs text-slate-400 mb-1">Witness Statements</div>
+                    <div className="text-xs text-slate-600 dark:text-slate-400 mb-1">Witness Statements</div>
                     <div className="text-white font-semibold">{incident.witnessStatements}</div>
                   </div>
                   <div className="bg-slate-900/50 border border-slate-700 rounded p-3">
-                    <div className="text-xs text-slate-400 mb-1">Evidence</div>
+                    <div className="text-xs text-slate-600 dark:text-slate-400 mb-1">Evidence</div>
                     <div className="flex gap-2">
                       {incident.videoEvidence && (
-                        <div className="flex items-center gap-1 text-slate-400 text-xs">
+                        <div className="flex items-center gap-1 text-slate-600 dark:text-slate-400 text-xs">
                           <Video className="w-4 h-4" />
                           <span>Video</span>
                         </div>
@@ -402,14 +402,14 @@ const IncidentReports = () => {
                     </span>
                   )}
                   {incident.medicalCalled && (
-                    <span className="px-2 py-1 bg-slate-700/40 text-slate-300 rounded text-xs font-medium">
+                    <span className="px-2 py-1 bg-slate-700/40 text-slate-700 dark:text-slate-300 rounded text-xs font-medium">
                       Medical Response
                     </span>
                   )}
                 </div>
 
                 {/* Description Preview */}
-                <div className="text-slate-300 text-sm">
+                <div className="text-slate-700 dark:text-slate-300 text-sm">
                   {incident.description.slice(0, 200)}...
                 </div>
               </div>
@@ -420,7 +420,7 @@ const IncidentReports = () => {
                   <div className="grid grid-cols-2 gap-6">
                     <div>
                       <h4 className="text-white font-semibold mb-3">Full Description</h4>
-                      <p className="text-slate-300 text-sm mb-4">{incident.description}</p>
+                      <p className="text-slate-700 dark:text-slate-300 text-sm mb-4">{incident.description}</p>
 
                       <h4 className="text-white font-semibold mb-3">Inmates Involved</h4>
                       <div className="space-y-1 mb-4">
@@ -432,14 +432,14 @@ const IncidentReports = () => {
                       <h4 className="text-white font-semibold mb-3">Staff Involved</h4>
                       <div className="space-y-1">
                         {incident.staffInvolved.map((staff, idx) => (
-                          <div key={idx} className="text-sm text-slate-300">• {staff}</div>
+                          <div key={idx} className="text-sm text-slate-700 dark:text-slate-300">• {staff}</div>
                         ))}
                       </div>
                     </div>
 
                     <div>
                       <h4 className="text-white font-semibold mb-3">Action Taken</h4>
-                      <p className="text-slate-300 text-sm">{incident.actionTaken}</p>
+                      <p className="text-slate-700 dark:text-slate-300 text-sm">{incident.actionTaken}</p>
                     </div>
                   </div>
 

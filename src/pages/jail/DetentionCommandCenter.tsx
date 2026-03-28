@@ -116,8 +116,8 @@ const getPct = (pod: HousingPod) => Math.round((pod.current / pod.capacity) * 10
 
 const getShiftColors = (shift: ShiftStatus) => {
   const pct = (shift.present / shift.scheduled) * 100;
-  if (pct < 93) return { text: 'text-red-400',   bg: 'bg-red-500/10 border-red-500/20',     dot: 'bg-red-400' };
-  if (pct < 100) return { text: 'text-amber-400', bg: 'bg-amber-500/10 border-amber-500/20', dot: 'bg-amber-400' };
+  if (pct < 93) return { text: 'text-red-600 dark:text-red-400',   bg: 'bg-red-500/10 border-red-500/20',     dot: 'bg-red-400' };
+  if (pct < 100) return { text: 'text-amber-600 dark:text-amber-400', bg: 'bg-amber-500/10 border-amber-500/20', dot: 'bg-amber-400' };
   return { text: 'text-slate-300', bg: 'bg-slate-800/35 border-slate-700/40', dot: 'bg-slate-500' };
 };
 
@@ -125,7 +125,7 @@ const getRunStatus = (status: CourtRun['status']) => {
   switch (status) {
     case 'Completed': return 'text-slate-400';
     case 'En Route':  return 'text-slate-300';
-    case 'Staging':   return 'text-amber-400';
+    case 'Staging':   return 'text-amber-600 dark:text-amber-400';
     default:          return 'text-slate-500';
   }
 };
@@ -164,9 +164,9 @@ export default function DetentionCommandCenter() {
   const overallReadiness = facilityReadiness === 'Critical' || staffReadiness === 'Critical' ? 'Critical' : 'Warning';
 
   const readinessBadge = (r: string) => {
-    if (r === 'Critical') return 'bg-red-500/15 text-red-400 border border-red-500/25';
-    if (r === 'Warning')  return 'bg-amber-500/15 text-amber-400 border border-amber-500/25';
-    return 'bg-slate-700/30 text-slate-400 border border-slate-700/40';
+    if (r === 'Critical') return 'bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/25';
+    if (r === 'Warning')  return 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/25';
+    return 'bg-slate-700/30 text-slate-600 dark:text-slate-400 border border-slate-700/40';
   };
 
   return (
@@ -177,7 +177,7 @@ export default function DetentionCommandCenter() {
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-3">
           <div>
             <div className="flex items-center gap-3 mb-1">
-              <h1 className="text-xl font-bold text-white">Detention Command Center</h1>
+              <h1 className="text-xl font-bold text-slate-900 dark:text-white">Detention Command Center</h1>
               <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-semibold ${readinessBadge(overallReadiness)}`}>
                 {overallReadiness === 'Critical' ? '⬤' : '⚠'} {overallReadiness}
               </span>
@@ -186,7 +186,7 @@ export default function DetentionCommandCenter() {
           </div>
           <div className="flex items-center gap-2 text-[11px] text-slate-500">
             <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> Last updated 6:38 PM EST</span>
-            <button className="flex items-center gap-1 text-amber-400/70 hover:text-amber-400 transition-colors ml-2">
+            <button className="flex items-center gap-1 text-amber-600 dark:text-amber-400/70 hover:text-amber-600 dark:text-amber-400 transition-colors ml-2">
               <RefreshCw className="w-3 h-3" /> Refresh
             </button>
           </div>
@@ -197,25 +197,25 @@ export default function DetentionCommandCenter() {
           {/* Facility Capacity */}
           <div className={`bg-slate-800/30 border rounded-xl p-4 ${capacityPct >= 95 ? 'border-red-500/30' : capacityPct >= 85 ? 'border-amber-500/30' : 'border-slate-700/50'}`}>
             <div className="flex items-center gap-1.5 mb-2">
-              <Building2 className="w-3.5 h-3.5 text-slate-400" />
+              <Building2 className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
               <span className="text-[10px] text-slate-500 font-medium uppercase tracking-wide">Capacity</span>
             </div>
-            <p className="text-xl font-bold text-white">{facilityMetrics.currentPopulation}<span className="text-sm text-slate-500">/{facilityMetrics.totalCapacity}</span></p>
-            <p className={`text-[11px] font-semibold mt-0.5 ${capacityPct >= 95 ? 'text-red-400' : capacityPct >= 85 ? 'text-amber-400' : 'text-slate-300'}`}>{capacityPct}% full</p>
+            <p className="text-xl font-bold text-slate-900 dark:text-white">{facilityMetrics.currentPopulation}<span className="text-sm text-slate-500">/{facilityMetrics.totalCapacity}</span></p>
+            <p className={`text-[11px] font-semibold mt-0.5 ${capacityPct >= 95 ? 'text-red-600 dark:text-red-400' : capacityPct >= 85 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-300'}`}>{capacityPct}% full</p>
             <div className="w-full h-1 bg-slate-700/50 rounded-full mt-1.5 overflow-hidden">
               <div className={`h-full rounded-full ${capacityPct >= 95 ? 'bg-red-500' : capacityPct >= 85 ? 'bg-amber-500' : 'bg-slate-500/60'}`} style={{ width: `${Math.min(capacityPct, 100)}%` }} />
             </div>
           </div>
 
           {/* Net Population Change */}
-          <div className="bg-slate-800/30 border border-slate-700/50 rounded-xl p-4">
+          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
             <div className="flex items-center gap-1.5 mb-2">
-              <Activity className="w-3.5 h-3.5 text-slate-400" />
+              <Activity className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
               <span className="text-[10px] text-slate-500 font-medium uppercase tracking-wide">Population</span>
             </div>
-            <p className="text-xl font-bold text-white">{facilityMetrics.bookingsToday}<span className="text-[11px] text-slate-400 ml-1">in</span></p>
-            <p className="text-[11px] text-slate-400 mt-0.5">{facilityMetrics.releasesToday} releases</p>
-            <p className={`text-[11px] font-semibold mt-0.5 flex items-center gap-0.5 ${facilityMetrics.netChange > 0 ? 'text-amber-400' : 'text-slate-400'}`}>
+            <p className="text-xl font-bold text-slate-900 dark:text-white">{facilityMetrics.bookingsToday}<span className="text-[11px] text-slate-600 dark:text-slate-400 ml-1">in</span></p>
+            <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-0.5">{facilityMetrics.releasesToday} releases</p>
+            <p className={`text-[11px] font-semibold mt-0.5 flex items-center gap-0.5 ${facilityMetrics.netChange > 0 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-400'}`}>
               {facilityMetrics.netChange > 0 ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
               Net {facilityMetrics.netChange > 0 ? '+' : ''}{facilityMetrics.netChange} today
             </p>
@@ -224,45 +224,45 @@ export default function DetentionCommandCenter() {
           {/* Staff Coverage */}
           <div className={`bg-slate-800/30 border rounded-xl p-4 ${staffReadiness === 'Critical' ? 'border-red-500/30' : staffReadiness === 'Warning' ? 'border-amber-500/30' : 'border-slate-700/50'}`}>
             <div className="flex items-center gap-1.5 mb-2">
-              <Users className="w-3.5 h-3.5 text-slate-400" />
+              <Users className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
               <span className="text-[10px] text-slate-500 font-medium uppercase tracking-wide">Staff</span>
             </div>
-            <p className="text-xl font-bold text-white">{totalPresent}<span className="text-sm text-slate-500">/{totalStaff}</span></p>
-            <p className={`text-[11px] font-semibold mt-0.5 ${staffReadiness === 'Critical' ? 'text-red-400' : staffReadiness === 'Warning' ? 'text-amber-400' : 'text-slate-300'}`}>{staffPct}% coverage</p>
+            <p className="text-xl font-bold text-slate-900 dark:text-white">{totalPresent}<span className="text-sm text-slate-500">/{totalStaff}</span></p>
+            <p className={`text-[11px] font-semibold mt-0.5 ${staffReadiness === 'Critical' ? 'text-red-600 dark:text-red-400' : staffReadiness === 'Warning' ? 'text-amber-600 dark:text-amber-400' : 'text-slate-300'}`}>{staffPct}% coverage</p>
             <p className="text-[10px] text-slate-500 mt-0.5">B-Shift gap</p>
           </div>
 
           {/* Active Alerts */}
           <div className={`bg-slate-800/30 border rounded-xl p-4 ${criticalCount > 0 ? 'border-red-500/30' : warningCount > 0 ? 'border-amber-500/30' : 'border-slate-700/50'}`}>
             <div className="flex items-center gap-1.5 mb-2">
-              <AlertTriangle className="w-3.5 h-3.5 text-red-400" />
+              <AlertTriangle className="w-3.5 h-3.5 text-red-600 dark:text-red-400" />
               <span className="text-[10px] text-slate-500 font-medium uppercase tracking-wide">Alerts</span>
             </div>
-            <p className="text-xl font-bold text-white">{visibleAlerts.length}</p>
-            <p className="text-[11px] font-semibold mt-0.5 text-red-400">{criticalCount} critical</p>
+            <p className="text-xl font-bold text-slate-900 dark:text-white">{visibleAlerts.length}</p>
+            <p className="text-[11px] font-semibold mt-0.5 text-red-600 dark:text-red-400">{criticalCount} critical</p>
             <p className="text-[10px] text-slate-500 mt-0.5">{warningCount} warning</p>
           </div>
 
           {/* Medical Unit */}
           <div className={`bg-slate-800/30 border rounded-xl p-4 ${medicalReadiness === 'Warning' ? 'border-amber-500/30' : 'border-slate-700/50'}`}>
             <div className="flex items-center gap-1.5 mb-2">
-              <Hospital className="w-3.5 h-3.5 text-slate-400" />
+              <Hospital className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
               <span className="text-[10px] text-slate-500 font-medium uppercase tracking-wide">Medical</span>
             </div>
-            <p className="text-xl font-bold text-white">E-Pod</p>
-            <p className="text-[11px] font-semibold mt-0.5 text-amber-400">92% occupied</p>
+            <p className="text-xl font-bold text-slate-900 dark:text-white">E-Pod</p>
+            <p className="text-[11px] font-semibold mt-0.5 text-amber-600 dark:text-amber-400">92% occupied</p>
             <p className="text-[10px] text-slate-500 mt-0.5">44 / 48 beds</p>
           </div>
 
           {/* Court Transports */}
-          <div className="bg-slate-800/30 border border-slate-700/50 rounded-xl p-4">
+          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
             <div className="flex items-center gap-1.5 mb-2">
-              <Truck className="w-3.5 h-3.5 text-slate-400" />
+              <Truck className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
               <span className="text-[10px] text-slate-500 font-medium uppercase tracking-wide">Transports</span>
             </div>
-            <p className="text-xl font-bold text-white">{facilityMetrics.courtTransports}</p>
-            <p className="text-[11px] text-slate-400 mt-0.5">5 runs today</p>
-            <p className="text-[10px] text-amber-400 mt-0.5">31 tomorrow ⚠</p>
+            <p className="text-xl font-bold text-slate-900 dark:text-white">{facilityMetrics.courtTransports}</p>
+            <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-0.5">5 runs today</p>
+            <p className="text-[10px] text-amber-600 dark:text-amber-400 mt-0.5">31 tomorrow ⚠</p>
           </div>
         </div>
 
@@ -270,19 +270,19 @@ export default function DetentionCommandCenter() {
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-5">
 
           {/* Active Alerts */}
-          <div className="lg:col-span-2 bg-slate-800/30 border border-slate-700/50 rounded-xl p-4">
+          <div className="lg:col-span-2 bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
-                <AlertOctagon className="w-4 h-4 text-red-400" />
-                <h3 className="text-sm font-semibold text-white">Active Alerts</h3>
+                <AlertOctagon className="w-4 h-4 text-red-600 dark:text-red-400" />
+                <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Active Alerts</h3>
                 {criticalCount > 0 && (
-                  <span className="px-1.5 py-0.5 bg-red-500/15 text-red-400 text-[9px] font-bold rounded border border-red-500/20">{criticalCount} CRITICAL</span>
+                  <span className="px-1.5 py-0.5 bg-red-500/15 text-red-600 dark:text-red-400 text-[9px] font-bold rounded border border-red-500/20">{criticalCount} CRITICAL</span>
                 )}
               </div>
             </div>
             <div className="space-y-2">
               {visibleAlerts.length === 0 ? (
-                <div className="flex items-center gap-2 text-slate-300 text-sm py-2">
+                <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300 text-sm py-2">
                   <CheckCircle className="w-4 h-4" />
                   <span>No active alerts</span>
                 </div>
@@ -292,9 +292,9 @@ export default function DetentionCommandCenter() {
                     ? 'bg-red-500/8 border-red-500/20'
                     : 'bg-amber-500/8 border-amber-500/20'
                 }`}>
-                  <AlertTriangle className={`w-3.5 h-3.5 flex-shrink-0 mt-0.5 ${alert.type === 'critical' ? 'text-red-400' : 'text-amber-400'}`} />
+                  <AlertTriangle className={`w-3.5 h-3.5 flex-shrink-0 mt-0.5 ${alert.type === 'critical' ? 'text-red-600 dark:text-red-400' : 'text-amber-600 dark:text-amber-400'}`} />
                   <span className={alert.type === 'critical' ? 'text-red-200' : 'text-amber-200'}>{alert.msg}</span>
-                  <button onClick={() => dismiss(alert.id)} className="ml-auto flex-shrink-0 text-slate-600 hover:text-slate-400 transition-colors">
+                  <button onClick={() => dismiss(alert.id)} className="ml-auto flex-shrink-0 text-slate-600 hover:text-slate-600 dark:text-slate-400 transition-colors">
                     <X className="w-3 h-3" />
                   </button>
                 </div>
@@ -321,31 +321,31 @@ export default function DetentionCommandCenter() {
           </div>
 
           {/* AI Command Intelligence */}
-          <div className="lg:col-span-3 bg-slate-800/30 border border-slate-700/50 rounded-xl p-4">
+          <div className="lg:col-span-3 bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <div className="w-7 h-7 bg-slate-700/30 rounded-lg flex items-center justify-center">
-                  <Sparkles className="w-4 h-4 text-slate-400" />
+                  <Sparkles className="w-4 h-4 text-slate-600 dark:text-slate-400" />
                 </div>
-                <h3 className="text-sm font-semibold text-white">AI Command Intelligence</h3>
+                <h3 className="text-sm font-semibold text-slate-900 dark:text-white">AI Command Intelligence</h3>
               </div>
-              <button onClick={() => setAiExpanded(!aiExpanded)} className="text-slate-500 hover:text-slate-300 transition-colors text-[10px]">
+              <button onClick={() => setAiExpanded(!aiExpanded)} className="text-slate-500 hover:text-slate-700 dark:text-slate-300 transition-colors text-[10px]">
                 {aiExpanded ? 'Collapse' : 'Expand'}
               </button>
             </div>
             {aiExpanded && (
               <div className="space-y-2.5 text-[12px]">
                 <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3">
-                  <p className="text-red-300 font-semibold mb-1 flex items-center gap-1.5"><Circle className="w-2.5 h-2.5 fill-red-400 text-red-400" /> H2-Pod capacity violation — federal audit Dec 12</p>
-                  <p className="text-slate-300">Transfer 2 minimum-security detainees to E-Pod observation beds (44/48 — space available) OR coordinate with USMS for early bond review.</p>
+                  <p className="text-red-300 font-semibold mb-1 flex items-center gap-1.5"><Circle className="w-2.5 h-2.5 fill-red-400 text-red-600 dark:text-red-400" /> H2-Pod capacity violation — federal audit Dec 12</p>
+                  <p className="text-slate-700 dark:text-slate-300">Transfer 2 minimum-security detainees to E-Pod observation beds (44/48 — space available) OR coordinate with USMS for early bond review.</p>
                 </div>
                 <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3">
-                  <p className="text-red-300 font-semibold mb-1 flex items-center gap-1.5"><Circle className="w-2.5 h-2.5 fill-red-400 text-red-400" /> B-Shift below ACA minimum (13/14 officers for 842 inmates)</p>
-                  <p className="text-slate-300">Authorize 8-hr OT for off-duty officer <span className="text-amber-300 font-medium">or</span> reassign Officer Johnson from A-Shift overlap (1400–1430).</p>
+                  <p className="text-red-300 font-semibold mb-1 flex items-center gap-1.5"><Circle className="w-2.5 h-2.5 fill-red-400 text-red-600 dark:text-red-400" /> B-Shift below ACA minimum (13/14 officers for 842 inmates)</p>
+                  <p className="text-slate-700 dark:text-slate-300">Authorize 8-hr OT for off-duty officer <span className="text-amber-300 font-medium">or</span> reassign Officer Johnson from A-Shift overlap (1400–1430).</p>
                 </div>
                 <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
-                  <p className="text-amber-300 font-semibold mb-1 flex items-center gap-1.5"><Circle className="w-2.5 h-2.5 fill-amber-400 text-amber-400" /> 31 court transports tomorrow — only 4 vans available (need 5)</p>
-                  <p className="text-slate-300">Request 1 additional van from Fleet or stagger: Group 1 depart 0630, Group 2 depart 0800.</p>
+                  <p className="text-amber-300 font-semibold mb-1 flex items-center gap-1.5"><Circle className="w-2.5 h-2.5 fill-amber-400 text-amber-600 dark:text-amber-400" /> 31 court transports tomorrow — only 4 vans available (need 5)</p>
+                  <p className="text-slate-700 dark:text-slate-300">Request 1 additional van from Fleet or stagger: Group 1 depart 0630, Group 2 depart 0800.</p>
                 </div>
               </div>
             )}
@@ -354,7 +354,7 @@ export default function DetentionCommandCenter() {
             )}
             <div className="mt-3 pt-2.5 border-t border-slate-700/40 flex items-center justify-between">
               <span className="text-[10px] text-slate-600">AI-assisted · 4 sources · 3m ago</span>
-              <button className="text-[11px] text-slate-400 hover:text-slate-300 transition-colors flex items-center gap-1">
+              <button className="text-[11px] text-slate-600 dark:text-slate-400 hover:text-slate-700 dark:text-slate-300 transition-colors flex items-center gap-1">
                 Full intelligence brief <ArrowRight className="w-3 h-3" />
               </button>
             </div>
@@ -365,11 +365,11 @@ export default function DetentionCommandCenter() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
 
           {/* Housing Unit Map */}
-          <div className="bg-slate-800/30 border border-slate-700/50 rounded-xl p-4">
+          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
-                <Shield className="w-4 h-4 text-slate-400" />
-                <h3 className="text-sm font-semibold text-white">Housing Unit Status</h3>
+                <Shield className="w-4 h-4 text-slate-600 dark:text-slate-400" />
+                <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Housing Unit Status</h3>
               </div>
               <div className="flex items-center gap-2 text-[9px] text-slate-500">
                 <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-sm bg-slate-600 inline-block" />Normal</span>
@@ -399,10 +399,10 @@ export default function DetentionCommandCenter() {
           </div>
 
           {/* Staff Coverage */}
-          <div className="bg-slate-800/30 border border-slate-700/50 rounded-xl p-4">
+          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
             <div className="flex items-center gap-2 mb-3">
-              <Users className="w-4 h-4 text-slate-400" />
-              <h3 className="text-sm font-semibold text-white">Staff Coverage</h3>
+              <Users className="w-4 h-4 text-slate-600 dark:text-slate-400" />
+              <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Staff Coverage</h3>
             </div>
             <div className="space-y-2.5">
               {shifts.map(shift => {
@@ -431,16 +431,16 @@ export default function DetentionCommandCenter() {
           </div>
 
           {/* Court Transport Schedule */}
-          <div className="bg-slate-800/30 border border-slate-700/50 rounded-xl p-4">
+          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
             <div className="flex items-center gap-2 mb-3">
-              <Truck className="w-4 h-4 text-slate-400" />
-              <h3 className="text-sm font-semibold text-white">Court Transport Schedule</h3>
+              <Truck className="w-4 h-4 text-slate-600 dark:text-slate-400" />
+              <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Court Transport Schedule</h3>
             </div>
             <div className="space-y-2">
               {courtRuns.map((run, i) => (
                 <div key={i} className="flex items-start gap-3 py-2 border-b border-slate-700/25 last:border-0">
                   <div className="w-12 text-right flex-shrink-0">
-                    <p className="text-[11px] font-bold text-slate-300">{run.time}</p>
+                    <p className="text-[11px] font-bold text-slate-700 dark:text-slate-300">{run.time}</p>
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-[12px] font-medium text-white truncate">{run.court}</p>
@@ -454,7 +454,7 @@ export default function DetentionCommandCenter() {
               ))}
             </div>
             <div className="mt-2 pt-2 border-t border-slate-700/50">
-              <p className="text-[10px] text-amber-400 flex items-center gap-1">
+              <p className="text-[10px] text-amber-600 dark:text-amber-400 flex items-center gap-1">
                 <AlertTriangle className="w-3 h-3" />
                 31 scheduled tomorrow — request 5th transport van
               </p>
@@ -466,11 +466,11 @@ export default function DetentionCommandCenter() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
 
           {/* Population Trend */}
-          <div className="bg-slate-800/30 border border-slate-700/50 rounded-xl p-4">
+          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
-                <TrendingUp className="w-4 h-4 text-slate-400" />
-                <h3 className="text-sm font-semibold text-white">Population Trend</h3>
+                <TrendingUp className="w-4 h-4 text-slate-600 dark:text-slate-400" />
+                <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Population Trend</h3>
               </div>
               <span className="text-[10px] text-slate-500">7-day</span>
             </div>
@@ -495,9 +495,9 @@ export default function DetentionCommandCenter() {
                 </div>
               </div>
               <div className="text-right">
-                <p className="text-2xl font-bold text-white">{facilityMetrics.currentPopulation}</p>
-                <p className="text-[10px] text-slate-400">{facilityMetrics.sevenDayAverage} avg</p>
-                <p className="text-[11px] text-amber-400 font-medium">+4 today</p>
+                <p className="text-2xl font-bold text-slate-900 dark:text-white">{facilityMetrics.currentPopulation}</p>
+                <p className="text-[10px] text-slate-600 dark:text-slate-400">{facilityMetrics.sevenDayAverage} avg</p>
+                <p className="text-[11px] text-amber-600 dark:text-amber-400 font-medium">+4 today</p>
               </div>
             </div>
             <div className="mt-3 pt-2.5 border-t border-slate-700/50 grid grid-cols-3 gap-2 text-center">
@@ -511,16 +511,16 @@ export default function DetentionCommandCenter() {
               </div>
               <div>
                 <p className="text-[10px] text-slate-500">7-Day Fore.</p>
-                <p className="text-[12px] font-semibold text-amber-400">840–850</p>
+                <p className="text-[12px] font-semibold text-amber-600 dark:text-amber-400">840–850</p>
               </div>
             </div>
           </div>
 
           {/* Medical Monitoring */}
-          <div className="bg-slate-800/30 border border-slate-700/50 rounded-xl p-4">
+          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
             <div className="flex items-center gap-2 mb-3">
               <Heart className="w-4 h-4 text-pink-400" />
-              <h3 className="text-sm font-semibold text-white">Medical Monitoring</h3>
+              <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Medical Monitoring</h3>
             </div>
             <div className="space-y-2.5">
               {[
@@ -533,7 +533,7 @@ export default function DetentionCommandCenter() {
                   <div className="flex-1">
                     <div className="flex items-center justify-between mb-0.5">
                       <p className="text-[11px] font-medium text-slate-200">{item.label}</p>
-                      <span className={`text-[10px] font-semibold ${item.pct && item.pct >= 90 ? 'text-amber-400' : 'text-slate-400'}`}>{item.value}</span>
+                      <span className={`text-[10px] font-semibold ${item.pct && item.pct >= 90 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-400'}`}>{item.value}</span>
                     </div>
                     {item.pct !== null && (
                       <div className="w-full h-1 bg-slate-700/50 rounded-full overflow-hidden mb-0.5">
@@ -551,10 +551,10 @@ export default function DetentionCommandCenter() {
           </div>
 
           {/* Critical Tasks */}
-          <div className="bg-slate-800/30 border border-slate-700/50 rounded-xl p-4">
+          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
             <div className="flex items-center gap-2 mb-3">
-              <Zap className="w-4 h-4 text-amber-400" />
-              <h3 className="text-sm font-semibold text-white">Command Actions</h3>
+              <Zap className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+              <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Command Actions</h3>
             </div>
             <div className="space-y-2">
               {criticalTasks.map((task, i) => (
@@ -569,7 +569,7 @@ export default function DetentionCommandCenter() {
             <div className="mt-3 pt-2.5 border-t border-slate-700/50">
               <button
                 onClick={() => navigate('/jail/dashboard')}
-                className="w-full flex items-center justify-center gap-2 text-[11px] text-slate-400 hover:text-white transition-colors py-1"
+                className="w-full flex items-center justify-center gap-2 text-[11px] text-slate-600 dark:text-slate-400 hover:text-white transition-colors py-1"
               >
                 <span>View Custody Operations</span>
                 <ArrowRight className="w-3.5 h-3.5" />

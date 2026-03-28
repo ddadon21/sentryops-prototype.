@@ -352,7 +352,7 @@ export default function RiskCompliance() {
   ));
 
   const opiLevel = opiScore >= 75 ? 'Critical' : opiScore >= 50 ? 'High' : opiScore >= 25 ? 'Moderate' : 'Low';
-  const opiColor = opiScore >= 75 ? 'text-red-400' : opiScore >= 50 ? 'text-amber-400' : 'text-green-400';
+  const opiColor = opiScore >= 75 ? 'text-red-600 dark:text-red-400' : opiScore >= 50 ? 'text-amber-600 dark:text-amber-400' : 'text-green-600 dark:text-green-400';
 
   const opiBreakdown = [
     { label: 'Risk severity', weight: OPI_WEIGHTS.risk, score: opiComponents.risk, max: 25, detail: `${criticalCount}×12 + ${mediumCount}×5 + ${lowCount}×1.5 = ${riskSeverityRaw.toFixed(1)}`, weighted: Math.round(OPI_WEIGHTS.risk * opiComponents.risk / 25 * 100) },
@@ -375,9 +375,9 @@ export default function RiskCompliance() {
   };
 
   const getReadinessColor = (readiness, daysOut) => {
-    if (readiness < 70 && daysOut < 30) return 'text-red-400';
-    if (readiness < 80 && daysOut < 60) return 'text-amber-400';
-    return 'text-green-400';
+    if (readiness < 70 && daysOut < 30) return 'text-red-600 dark:text-red-400';
+    if (readiness < 80 && daysOut < 60) return 'text-amber-600 dark:text-amber-400';
+    return 'text-green-600 dark:text-green-400';
   };
 
   const getReadinessWarning = (readiness, daysOut) => {
@@ -440,9 +440,9 @@ export default function RiskCompliance() {
 
   const getDecisionConfig = (decision) => {
     const configs = {
-      approved: { bg: 'bg-green-500/10', border: 'border-green-500/20', text: 'text-green-400', label: 'APPROVED', icon: CheckCircle },
-      denied: { bg: 'bg-red-500/10', border: 'border-red-500/20', text: 'text-red-400', label: 'DENIED', icon: X },
-      escalated: { bg: 'bg-amber-500/10', border: 'border-amber-500/20', text: 'text-amber-400', label: 'ESCALATED', icon: ArrowRight },
+      approved: { bg: 'bg-green-500/10', border: 'border-green-500/20', text: 'text-green-600 dark:text-green-400', label: 'APPROVED', icon: CheckCircle },
+      denied: { bg: 'bg-red-500/10', border: 'border-red-500/20', text: 'text-red-600 dark:text-red-400', label: 'DENIED', icon: X },
+      escalated: { bg: 'bg-amber-500/10', border: 'border-amber-500/20', text: 'text-amber-600 dark:text-amber-400', label: 'ESCALATED', icon: ArrowRight },
       deferred: { bg: 'bg-slate-700/20', border: 'border-slate-600/20', text: 'text-slate-400', label: 'DEFERRED', icon: Clock },
     };
     return configs[decision] || configs.deferred;
@@ -461,7 +461,7 @@ export default function RiskCompliance() {
           <div className="mb-6">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-xl font-bold text-white mb-1">Risk & Compliance</h2>
+                <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-1">Risk & Compliance</h2>
                 <div className="flex items-center gap-2 text-[11px] text-slate-500">
                   <span>Early warning + audit defense</span>
                   <span className="text-slate-700">&middot;</span>
@@ -469,16 +469,16 @@ export default function RiskCompliance() {
                   {criticalCount > 0 && (
                     <>
                       <span className="text-slate-700">&middot;</span>
-                      <span className="text-red-400 font-semibold">{criticalCount} critical</span>
+                      <span className="text-red-600 dark:text-red-400 font-semibold">{criticalCount} critical</span>
                     </>
                   )}
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <span className={`px-2.5 py-1 bg-green-500/8 border border-green-500/15 rounded text-[10px] font-semibold ${overallCompliance >= 90 ? 'text-green-400' : 'text-amber-400'}`}>
+                <span className={`px-2.5 py-1 bg-green-500/8 border border-green-500/15 rounded text-[10px] font-semibold ${overallCompliance >= 90 ? 'text-green-600 dark:text-green-400' : 'text-amber-600 dark:text-amber-400'}`}>
                   {overallCompliance}% Compliant
                 </span>
-                <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/30 border border-slate-700/50 rounded-lg text-[11px] text-slate-400 hover:text-white transition-colors">
+                <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/30 border border-slate-700/50 rounded-lg text-[11px] text-slate-600 dark:text-slate-400 hover:text-white transition-colors">
                   <Download className="w-3 h-3" />
                   Compliance Report
                 </button>
@@ -493,16 +493,16 @@ export default function RiskCompliance() {
               opiScore >= 75 ? 'border-red-500/20' : opiScore >= 50 ? 'border-amber-500/20' : 'border-slate-700/30'
             }`}>
               <div className="flex items-center gap-2 mb-1.5">
-                <Gauge className="w-3.5 h-3.5 text-amber-400" />
+                <Gauge className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
                 <span className="text-[10px] font-medium text-slate-500 uppercase tracking-wider">Pressure Index</span>
               </div>
               <div className="flex items-baseline gap-2">
                 <span className={`text-xl font-bold ${opiColor}`}>{opiScore}</span>
                 <span className="text-[10px] text-slate-600">/ 100</span>
                 <span className={`px-1.5 py-px rounded text-[9px] font-bold uppercase border ${
-                  opiScore >= 75 ? 'bg-red-500/10 border-red-500/20 text-red-400' :
-                  opiScore >= 50 ? 'bg-amber-500/10 border-amber-500/20 text-amber-400' :
-                  'bg-green-500/10 border-green-500/20 text-green-400'
+                  opiScore >= 75 ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
+                  opiScore >= 50 ? 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
+                  'bg-green-100 border-green-200 text-green-700 dark:bg-green-500/10 dark:border-green-500/20 dark:text-green-400'
                 }`}>{opiLevel}</span>
               </div>
               <div className="mt-1 space-y-px">
@@ -524,19 +524,19 @@ export default function RiskCompliance() {
             {/* Open Risk Items */}
             <div className="bg-slate-800/35 border border-slate-700/25 rounded-xl px-3 py-2.5">
               <div className="flex items-center gap-2 mb-1.5">
-                <AlertTriangle className="w-3.5 h-3.5 text-amber-400" />
+                <AlertTriangle className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
                 <span className="text-[10px] font-medium text-slate-500 uppercase tracking-wider">Open Risks</span>
               </div>
               <div className="flex items-baseline gap-2">
-                <span className="text-xl font-bold text-white">{openRisks.length}</span>
+                <span className="text-xl font-bold text-slate-900 dark:text-white">{openRisks.length}</span>
                 <div className="flex items-center gap-1.5 text-[10px]">
-                  <span className="text-red-400 font-semibold">{criticalCount} critical</span>
+                  <span className="text-red-600 dark:text-red-400 font-semibold">{criticalCount} critical</span>
                   <span className="text-slate-700">&middot;</span>
-                  <span className="text-amber-400">{mediumCount} medium</span>
+                  <span className="text-amber-600 dark:text-amber-400">{mediumCount} medium</span>
                   {lowCount > 0 && (
                     <>
                       <span className="text-slate-700">&middot;</span>
-                      <span className="text-slate-400">{lowCount} low</span>
+                      <span className="text-slate-600 dark:text-slate-400">{lowCount} low</span>
                     </>
                   )}
                 </div>
@@ -546,7 +546,7 @@ export default function RiskCompliance() {
             {/* Next Audit */}
             <div className="bg-slate-800/35 border border-slate-700/25 rounded-xl px-3 py-2.5">
               <div className="flex items-center gap-2 mb-1.5">
-                <Calendar className="w-3.5 h-3.5 text-slate-400" />
+                <Calendar className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
                 <span className="text-[10px] font-medium text-slate-500 uppercase tracking-wider">Next Audit</span>
               </div>
               <div className="flex items-baseline gap-2">
@@ -562,7 +562,7 @@ export default function RiskCompliance() {
                 {nextAudit.risks > 0 && (
                   <>
                     <span className="text-slate-700">&middot;</span>
-                    <span className="text-red-400">{nextAudit.risks} linked risk</span>
+                    <span className="text-red-600 dark:text-red-400">{nextAudit.risks} linked risk</span>
                   </>
                 )}
               </div>
@@ -571,12 +571,12 @@ export default function RiskCompliance() {
             {/* Compliance Rate */}
             <div className="bg-slate-800/35 border border-slate-700/25 rounded-xl px-3 py-2.5">
               <div className="flex items-center gap-2 mb-1.5">
-                <Shield className="w-3.5 h-3.5 text-green-400" />
+                <Shield className="w-3.5 h-3.5 text-green-600 dark:text-green-400" />
                 <span className="text-[10px] font-medium text-slate-500 uppercase tracking-wider">Compliance Rate</span>
               </div>
               <div className="flex items-baseline gap-2">
-                <span className={`text-xl font-bold ${overallCompliance >= 90 ? 'text-green-400' : 'text-amber-400'}`}>{overallCompliance}%</span>
-                <div className="flex items-center gap-1 text-[10px] text-green-400">
+                <span className={`text-xl font-bold ${overallCompliance >= 90 ? 'text-green-600 dark:text-green-400' : 'text-amber-600 dark:text-amber-400'}`}>{overallCompliance}%</span>
+                <div className="flex items-center gap-1 text-[10px] text-green-600 dark:text-green-400">
                   <TrendingUp className="w-3 h-3" />
                   +1.2% vs Q3
                 </div>
@@ -588,10 +588,10 @@ export default function RiskCompliance() {
           <div className="mb-4">
             <button
               onClick={() => setAiSummaryExpanded(!aiSummaryExpanded)}
-              className="w-full flex items-center gap-2 px-3 py-2 bg-slate-800/35 border border-slate-700/30 rounded hover:bg-slate-800/30 transition-colors"
+              className="w-full flex items-center gap-2 px-3 py-2 bg-slate-50 dark:bg-slate-800/35 border border-slate-200 dark:border-slate-700/30 rounded hover:bg-slate-800/30 transition-colors"
             >
               <Sparkles className="w-3 h-3 text-slate-500" />
-              <span className="text-[11px] text-slate-300 flex-1 text-left">
+              <span className="text-[11px] text-slate-700 dark:text-slate-300 flex-1 text-left">
                 {criticalCount} critical risks threaten Dec 12 audit. Equipment ↑16%. {pendingApprovalCount} approvals pending — projected compliance: 96.1% if approved.
               </span>
               <span className="text-[10px] text-slate-600 flex-shrink-0">{aiSummaryExpanded ? 'Less' : 'Details'}</span>
@@ -599,13 +599,13 @@ export default function RiskCompliance() {
             </button>
 
             {aiSummaryExpanded && (
-              <div className="mt-1 px-3 py-2.5 bg-slate-800/15 border border-slate-700/10 rounded space-y-1.5">
-                <p className="text-[10px] text-red-400">&bull; HVAC 84&deg;F. USMS inspection in 4 days. Federal housing contract exposure: $1.2M/yr. Contractor on-site.</p>
-                <p className="text-[10px] text-red-400">&bull; Body cams EOL Dec 31. $125K approval pending. If denied: 142 active cases with evidence gaps. State compliance revoked.</p>
-                <p className="text-[10px] text-amber-400">&bull; ACA re-accreditation: 62% ready, 72 days out. 2 documentation findings open. Below 70% at 30d triggers AT RISK.</p>
-                <p className="text-[10px] text-amber-400">&bull; 2 POST certifications expire Jan 31. Training budget ($43K) pending. If denied: 2 deputies removed from patrol.</p>
-                <p className="text-[10px] text-green-400">&bull; CJIS: compliant. PREA: compliant. UOF review rate: 97.2%. Training deficiency trend: &darr;40%.</p>
-                <p className="text-[10px] text-slate-400">&bull; {pendingApprovalCount} pending approvals ($186K) resolve {pendingApprovalCount} of {openRisks.length} open risks. Projected compliance: 94.7% &rarr; 96.1%.</p>
+              <div className="mt-1 px-3 py-2.5 bg-slate-50 dark:bg-slate-800/15 border border-slate-100 dark:border-slate-700/10 rounded space-y-1.5">
+                <p className="text-[10px] text-red-600 dark:text-red-400">&bull; HVAC 84&deg;F. USMS inspection in 4 days. Federal housing contract exposure: $1.2M/yr. Contractor on-site.</p>
+                <p className="text-[10px] text-red-600 dark:text-red-400">&bull; Body cams EOL Dec 31. $125K approval pending. If denied: 142 active cases with evidence gaps. State compliance revoked.</p>
+                <p className="text-[10px] text-amber-600 dark:text-amber-400">&bull; ACA re-accreditation: 62% ready, 72 days out. 2 documentation findings open. Below 70% at 30d triggers AT RISK.</p>
+                <p className="text-[10px] text-amber-600 dark:text-amber-400">&bull; 2 POST certifications expire Jan 31. Training budget ($43K) pending. If denied: 2 deputies removed from patrol.</p>
+                <p className="text-[10px] text-green-600 dark:text-green-400">&bull; CJIS: compliant. PREA: compliant. UOF review rate: 97.2%. Training deficiency trend: &darr;40%.</p>
+                <p className="text-[10px] text-slate-600 dark:text-slate-400">&bull; {pendingApprovalCount} pending approvals ($186K) resolve {pendingApprovalCount} of {openRisks.length} open risks. Projected compliance: 94.7% &rarr; 96.1%.</p>
               </div>
             )}
           </div>
@@ -617,9 +617,9 @@ export default function RiskCompliance() {
           {/* ── Open Risk Items ────────────────────────────── */}
           <div className="mb-4">
             <div className="flex items-center gap-2 mb-2 px-1">
-              <AlertTriangle className="w-3.5 h-3.5 text-red-400" />
+              <AlertTriangle className="w-3.5 h-3.5 text-red-600 dark:text-red-400" />
               <span className="text-[12px] font-bold text-white">Open Risk Items</span>
-              <span className="px-1.5 py-px bg-red-500/10 border border-red-500/20 rounded text-[10px] font-bold text-red-400">
+              <span className="px-1.5 py-px bg-red-500/10 border border-red-500/20 rounded text-[10px] font-bold text-red-600 dark:text-red-400">
                 {openRisks.length}
               </span>
               <div className="flex-1" />
@@ -667,8 +667,8 @@ export default function RiskCompliance() {
 
                       {/* Severity pill */}
                       <span className={`px-1.5 py-px border rounded text-[10px] font-bold flex-shrink-0 uppercase leading-tight ${
-                        risk.severity === 'critical' ? 'bg-red-500/10 border-red-500/20 text-red-400' :
-                        risk.severity === 'medium' ? 'bg-amber-500/10 border-amber-500/20 text-amber-400' :
+                        risk.severity === 'critical' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
+                        risk.severity === 'medium' ? 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
                         'bg-slate-400/10 border-slate-400/20 text-slate-400'
                       }`}>
                         {risk.severity}
@@ -678,8 +678,8 @@ export default function RiskCompliance() {
                       <span className="hidden md:flex items-center gap-1 flex-shrink-0">
                         {risk.impactTags.slice(0, 2).map((tag, i) => (
                           <span key={i} className={`px-1 py-px rounded text-[9px] font-semibold border ${
-                            tag.includes('Liability') || tag.includes('Safety') ? 'bg-red-500/8 border-red-500/15 text-red-400/90' :
-                            tag.includes('Compliance') || tag.includes('Integrity') ? 'bg-amber-500/8 border-amber-500/15 text-amber-400/90' :
+                            tag.includes('Liability') || tag.includes('Safety') ? 'bg-red-500/8 border-red-500/15 text-red-600 dark:text-red-400/90' :
+                            tag.includes('Compliance') || tag.includes('Integrity') ? 'bg-amber-500/8 border-amber-500/15 text-amber-600 dark:text-amber-400/90' :
                             'bg-slate-700/30 border-slate-700/40 text-slate-400'
                           }`}>{tag}</span>
                         ))}
@@ -700,8 +700,8 @@ export default function RiskCompliance() {
 
                       {/* Due date */}
                       <span className={`px-1.5 py-px border rounded text-[10px] font-bold flex-shrink-0 ${
-                        risk.dueUrgency === 'critical' ? 'bg-red-500/10 border-red-500/20 text-red-400' :
-                        risk.dueUrgency === 'soon' ? 'bg-amber-500/8 border-amber-500/15 text-amber-400' :
+                        risk.dueUrgency === 'critical' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
+                        risk.dueUrgency === 'soon' ? 'bg-amber-500/8 border-amber-500/15 text-amber-600 dark:text-amber-400' :
                         'bg-slate-700/30 border-slate-700/40 text-slate-400'
                       }`}>
                         {risk.daysLeft}d left
@@ -710,8 +710,8 @@ export default function RiskCompliance() {
                       {/* Linked approval indicator */}
                       {risk.linkedApproval && (
                         <span className={`hidden md:inline-flex items-center gap-1 px-1.5 py-px rounded text-[10px] font-semibold flex-shrink-0 ${
-                          risk.linkedApproval.status === 'approved' ? 'text-green-400/80' :
-                          risk.linkedApproval.status === 'pending' ? 'text-amber-400/80' :
+                          risk.linkedApproval.status === 'approved' ? 'text-green-600 dark:text-green-400/80' :
+                          risk.linkedApproval.status === 'pending' ? 'text-amber-600 dark:text-amber-400/80' :
                           'text-slate-400'
                         }`}>
                           <Link2 className="w-2.5 h-2.5" />
@@ -722,7 +722,7 @@ export default function RiskCompliance() {
                       {/* Expand */}
                       <button
                         onClick={() => toggleRiskExpand(risk.id)}
-                        className="p-1 rounded hover:bg-slate-700/30 transition-colors flex-shrink-0"
+                        className="p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-700/30 transition-colors flex-shrink-0"
                       >
                         {isExpanded ? <ChevronUp className="w-3.5 h-3.5 text-slate-500" /> : <ChevronDown className="w-3.5 h-3.5 text-slate-500" />}
                       </button>
@@ -733,12 +733,12 @@ export default function RiskCompliance() {
                       <div className="px-3.5 pb-3 pt-1 ml-[26px] space-y-2">
                         {/* Description + impact tags */}
                         <div>
-                          <p className="text-[11px] text-slate-400 mb-1.5">{risk.description}</p>
+                          <p className="text-[11px] text-slate-600 dark:text-slate-400 mb-1.5">{risk.description}</p>
                           <div className="flex items-center gap-1 flex-wrap">
                             {risk.impactTags.map((tag, i) => (
                               <span key={i} className={`px-1.5 py-px rounded text-[9px] font-semibold border ${
-                                tag.includes('Liability') || tag.includes('Safety') ? 'bg-red-500/8 border-red-500/15 text-red-400' :
-                                tag.includes('Compliance') || tag.includes('Integrity') || tag.includes('Accreditation') ? 'bg-amber-500/8 border-amber-500/15 text-amber-400' :
+                                tag.includes('Liability') || tag.includes('Safety') ? 'bg-red-500/8 border-red-500/15 text-red-600 dark:text-red-400' :
+                                tag.includes('Compliance') || tag.includes('Integrity') || tag.includes('Accreditation') ? 'bg-amber-500/8 border-amber-500/15 text-amber-600 dark:text-amber-400' :
                                 'bg-slate-700/30 border-slate-700/40 text-slate-400'
                               }`}>{tag}</span>
                             ))}
@@ -746,21 +746,21 @@ export default function RiskCompliance() {
                         </div>
 
                         {/* Key details row */}
-                        <div className="flex items-center gap-3 text-[10px] text-slate-400 flex-wrap">
+                        <div className="flex items-center gap-3 text-[10px] text-slate-600 dark:text-slate-400 flex-wrap">
                           <span>Owner: <span className="text-white font-medium">{risk.owner}</span></span>
                           <span className="text-slate-700">&middot;</span>
                           <span>Due: <span className="text-white font-medium">{risk.due}</span></span>
                         </div>
 
                         {/* Status */}
-                        <div className="bg-slate-900/30 rounded p-2 border border-slate-700/30">
+                        <div className="bg-slate-50 dark:bg-slate-900/30 rounded border border-slate-200 dark:border-slate-700/30">
                           <p className="text-[10px] text-slate-500 font-semibold mb-0.5">Current Status</p>
-                          <p className="text-[11px] text-slate-300">{risk.status}</p>
+                          <p className="text-[11px] text-slate-700 dark:text-slate-300">{risk.status}</p>
                         </div>
 
                         {/* Audit impact */}
                         {risk.auditImpact && (
-                          <div className="flex items-center gap-2 text-[10px] text-amber-400">
+                          <div className="flex items-center gap-2 text-[10px] text-amber-600 dark:text-amber-400">
                             <AlertTriangle className="w-3 h-3 flex-shrink-0" />
                             <span>Audit impact: {risk.auditImpact}</span>
                           </div>
@@ -769,9 +769,9 @@ export default function RiskCompliance() {
                         {/* If unresolved — cascade chain */}
                         {risk.ifUnresolved && (
                           <div className="bg-red-500/[0.02] border border-red-500/10 rounded p-2">
-                            <p className="text-[10px] text-red-400 font-bold mb-1">IF UNRESOLVED:</p>
+                            <p className="text-[10px] text-red-600 dark:text-red-400 font-bold mb-1">IF UNRESOLVED:</p>
                             {risk.ifUnresolved.map((consequence, i) => (
-                              <p key={i} className="text-[10px] text-red-400/80 pl-2">→ {consequence}</p>
+                              <p key={i} className="text-[10px] text-red-600 dark:text-red-400/80 pl-2">→ {consequence}</p>
                             ))}
                           </div>
                         )}
@@ -789,8 +789,8 @@ export default function RiskCompliance() {
                                 isLogged
                                   ? `${statusCfg.bg} ${statusCfg.border}`
                                   : risk.linkedApproval.status === 'approved'
-                                    ? 'bg-green-500/[0.03] border-green-500/15 text-green-400'
-                                    : 'bg-amber-500/[0.03] border-amber-500/15 text-amber-400 cursor-pointer hover:bg-amber-500/[0.06]'
+                                    ? 'bg-green-500/[0.03] border-green-500/15 text-green-600 dark:text-green-400'
+                                    : 'bg-amber-500/[0.03] border-amber-500/15 text-amber-600 dark:text-amber-400 cursor-pointer hover:bg-amber-500/[0.06]'
                               } transition-all`}
                               onClick={() => {
                                 if (!isLogged && risk.linkedApproval.status === 'pending') {
@@ -806,7 +806,7 @@ export default function RiskCompliance() {
                               <span className="text-slate-700">&mdash;</span>
                               <span className={`font-bold uppercase ${
                                 isLogged ? statusCfg.text :
-                                risk.linkedApproval.status === 'approved' ? 'text-green-400' : 'text-amber-400'
+                                risk.linkedApproval.status === 'approved' ? 'text-green-600 dark:text-green-400' : 'text-amber-600 dark:text-amber-400'
                               }`}>
                                 {displayStatus}
                               </span>
@@ -814,7 +814,7 @@ export default function RiskCompliance() {
                                 <span className="text-[9px] text-slate-600 font-mono ml-1">{logEntry.displayTime}</span>
                               )}
                               {!isLogged && risk.linkedApproval.status === 'pending' && (
-                                <span className="text-[9px] text-amber-400/70 ml-1">→ Click to decide</span>
+                                <span className="text-[9px] text-amber-600 dark:text-amber-400/70 ml-1">→ Click to decide</span>
                               )}
                             </div>
                           );
@@ -830,7 +830,7 @@ export default function RiskCompliance() {
           {/* ── Upcoming Audits & Inspections ─────────────── */}
           <div className="mb-4">
             <div className="flex items-center gap-2 mb-2 px-1">
-              <Calendar className="w-3.5 h-3.5 text-slate-400" />
+              <Calendar className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
               <span className="text-[12px] font-bold text-white">Upcoming Audits</span>
             </div>
             <div className="border border-slate-700/25 rounded-xl overflow-hidden">
@@ -868,7 +868,7 @@ export default function RiskCompliance() {
                           <span className="text-[11px] font-semibold text-white">{audit.agency}</span>
                         </td>
                         <td className="px-3 py-2.5">
-                          <span className="text-[11px] text-slate-400">{audit.scope}</span>
+                          <span className="text-[11px] text-slate-600 dark:text-slate-400">{audit.scope}</span>
                         </td>
                         <td className="px-3 py-2.5">
                           <span className="text-[10px] text-slate-500">{audit.lead}</span>
@@ -881,8 +881,8 @@ export default function RiskCompliance() {
                             {readinessWarning && (
                               <span className={`px-1 py-px rounded text-[9px] font-bold border ${
                                 readinessWarning === 'AT RISK'
-                                  ? 'bg-red-500/10 border-red-500/20 text-red-400'
-                                  : 'bg-amber-500/10 border-amber-500/20 text-amber-400'
+                                  ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400'
+                                  : 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400'
                               }`}>
                                 {readinessWarning}
                               </span>
@@ -891,7 +891,7 @@ export default function RiskCompliance() {
                         </td>
                         <td className="px-3 py-2.5">
                           {audit.risks > 0 ? (
-                            <span className="text-[10px] font-semibold text-red-400">{audit.risks} linked</span>
+                            <span className="text-[10px] font-semibold text-red-600 dark:text-red-400">{audit.risks} linked</span>
                           ) : (
                             <span className="text-[10px] text-slate-600">0</span>
                           )}
@@ -914,7 +914,7 @@ export default function RiskCompliance() {
             {/* Risk Trends — Narrative */}
             <div className="bg-slate-800/35 border border-slate-700/25 rounded-xl p-3">
               <div className="flex items-center gap-2 mb-2.5">
-                <TrendingUp className="w-3.5 h-3.5 text-slate-400" />
+                <TrendingUp className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
                 <span className="text-[12px] font-bold text-white">Risk Trends</span>
                 <span className="text-[10px] text-slate-600 ml-1">6-month analysis</span>
               </div>
@@ -931,8 +931,8 @@ export default function RiskCompliance() {
                       <div className="flex items-center gap-2">
                         <span className="text-[10px] font-semibold text-slate-500 uppercase">{insight.label}</span>
                         <span className={`text-[10px] font-bold ${
-                          insight.direction === 'up' ? 'text-red-400' :
-                          insight.direction === 'down' ? 'text-green-400' :
+                          insight.direction === 'up' ? 'text-red-600 dark:text-red-400' :
+                          insight.direction === 'down' ? 'text-green-600 dark:text-green-400' :
                           'text-slate-400'
                         }`}>
                           {insight.direction === 'up' ? '↑' : insight.direction === 'down' ? '↓' : '→'} {insight.change}
@@ -946,7 +946,7 @@ export default function RiskCompliance() {
               </div>
 
               <div className="mt-3 pt-2.5 border-t border-red-500/10">
-                <p className="text-[10px] text-red-400 font-semibold">
+                <p className="text-[10px] text-red-600 dark:text-red-400 font-semibold">
                   Projected risk exposure if no action: <span className="text-red-300">+9% next 30 days</span>
                 </p>
                 <p className="text-[9px] text-slate-600 mt-0.5">Driven by equipment EOL + ACA readiness gap + 2 expiring certs</p>
@@ -962,7 +962,7 @@ export default function RiskCompliance() {
             {/* Policy Compliance */}
             <div className="bg-slate-800/35 border border-slate-700/25 rounded-xl p-3">
               <div className="flex items-center gap-2 mb-2.5">
-                <FileText className="w-3.5 h-3.5 text-slate-400" />
+                <FileText className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
                 <span className="text-[12px] font-bold text-white">Policy Compliance</span>
               </div>
 
@@ -977,20 +977,20 @@ export default function RiskCompliance() {
                         <div className="flex items-center gap-2">
                           <span className="text-[11px] font-semibold text-white">{policy.name}</span>
                           {breached && (
-                            <span className="px-1 py-px rounded text-[9px] font-bold border bg-red-500/10 border-red-500/20 text-red-400">
+                            <span className="px-1 py-px rounded text-[9px] font-bold border bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400">
                               BELOW {policy.threshold}%
                             </span>
                           )}
                         </div>
                         <div className="flex items-center gap-1.5">
                           <span className={`text-[13px] font-bold ${
-                            policy.rate >= policy.threshold ? 'text-green-400' :
-                            policy.rate >= policy.threshold - 5 ? 'text-amber-400' :
-                            'text-red-400'
+                            policy.rate >= policy.threshold ? 'text-green-600 dark:text-green-400' :
+                            policy.rate >= policy.threshold - 5 ? 'text-amber-600 dark:text-amber-400' :
+                            'text-red-600 dark:text-red-400'
                           }`}>{policy.rate}%</span>
                           <span className={`text-[10px] font-semibold ${
-                            policy.trend === 'down' ? 'text-red-400' :
-                            policy.trend === 'up' ? 'text-green-400' :
+                            policy.trend === 'down' ? 'text-red-600 dark:text-red-400' :
+                            policy.trend === 'up' ? 'text-green-600 dark:text-green-400' :
                             'text-slate-500'
                           }`}>
                             {policy.trend === 'down' ? '↓' : policy.trend === 'up' ? '↑' : '→'}
@@ -999,17 +999,17 @@ export default function RiskCompliance() {
                       </div>
                       <p className="text-[10px] text-slate-500">{policy.detail}</p>
                       {policy.status && <p className="text-[10px] text-slate-500">{policy.status}</p>}
-                      {policy.warning && <p className="text-[10px] text-amber-400">{policy.warning}</p>}
+                      {policy.warning && <p className="text-[10px] text-amber-600 dark:text-amber-400">{policy.warning}</p>}
                       {breached && policy.operationalImpact && (
-                        <p className="text-[10px] text-red-400 mt-0.5">
+                        <p className="text-[10px] text-red-600 dark:text-red-400 mt-0.5">
                           <span className="font-semibold">Impact:</span> {policy.operationalImpact}
                         </p>
                       )}
                       {breached && policy.autoActions && (
                         <div className="mt-1.5 pt-1.5 border-t border-red-500/10">
-                          <p className="text-[9px] text-red-400/80 font-bold uppercase mb-0.5">Auto-escalation triggered:</p>
+                          <p className="text-[9px] text-red-600 dark:text-red-400/80 font-bold uppercase mb-0.5">Auto-escalation triggered:</p>
                           {policy.autoActions.map((action, i) => (
-                            <p key={i} className="text-[10px] text-red-400/70 pl-2">→ {action}</p>
+                            <p key={i} className="text-[10px] text-red-600 dark:text-red-400/70 pl-2">→ {action}</p>
                           ))}
                         </div>
                       )}
@@ -1024,9 +1024,9 @@ export default function RiskCompliance() {
           <div className="border border-red-500/15 rounded overflow-hidden">
             <div className="px-3 py-2.5 bg-red-500/[0.03] border-b border-red-500/10">
               <div className="flex items-center gap-2">
-                <Zap className="w-3.5 h-3.5 text-red-400" />
+                <Zap className="w-3.5 h-3.5 text-red-600 dark:text-red-400" />
                 <span className="text-[12px] font-bold text-white">30-Day Cascade Projection</span>
-                <span className="px-1.5 py-px bg-red-500/10 border border-red-500/20 rounded text-[9px] font-bold text-red-400 uppercase">If Unresolved</span>
+                <span className="px-1.5 py-px bg-red-500/10 border border-red-500/20 rounded text-[9px] font-bold text-red-600 dark:text-red-400 uppercase">If Unresolved</span>
               </div>
               <p className="text-[10px] text-slate-500 mt-0.5 ml-[22px]">Projected system state if POST, Training, and Equipment issues remain unresolved through Jan 8, 2025</p>
             </div>
@@ -1046,11 +1046,11 @@ export default function RiskCompliance() {
                     <span className="text-[11px] text-slate-500 line-through">{metric.current}</span>
                     <span className="text-[10px] text-slate-600">→</span>
                     <span className={`text-[11px] font-bold ${
-                      metric.severity === 'critical' ? 'text-red-400' : 'text-amber-400'
+                      metric.severity === 'critical' ? 'text-red-600 dark:text-red-400' : 'text-amber-600 dark:text-amber-400'
                     }`}>{metric.projected}</span>
                     {metric.direction === 'down'
-                      ? <TrendingDown className="w-2.5 h-2.5 text-red-400" />
-                      : <TrendingUp className="w-2.5 h-2.5 text-red-400" />
+                      ? <TrendingDown className="w-2.5 h-2.5 text-red-600 dark:text-red-400" />
+                      : <TrendingUp className="w-2.5 h-2.5 text-red-600 dark:text-red-400" />
                     }
                   </div>
                 </div>
@@ -1061,37 +1061,37 @@ export default function RiskCompliance() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-px bg-slate-800/10">
               {/* POST Chain */}
               <div className="px-3 py-2.5 bg-slate-900/20">
-                <p className="text-[10px] font-bold text-red-400 mb-1.5">POST Certification Cascade</p>
+                <p className="text-[10px] font-bold text-red-600 dark:text-red-400 mb-1.5">POST Certification Cascade</p>
                 <div className="space-y-1">
-                  <p className="text-[10px] text-slate-400">Trigger: 2 certifications expire Jan 31</p>
-                  <p className="text-[10px] text-red-400/80 pl-1.5">→ Uncertified deputies: 14 of 170</p>
-                  <p className="text-[10px] text-red-400/80 pl-3">→ Staffing projection: 97% → 93.5%</p>
-                  <p className="text-[10px] text-red-400/80 pl-4.5">→ Shift coverage: 3 below minimum staffing</p>
-                  <p className="text-[10px] text-red-400/80 pl-6">→ POST inspection exposure: documented finding</p>
+                  <p className="text-[10px] text-slate-600 dark:text-slate-400">Trigger: 2 certifications expire Jan 31</p>
+                  <p className="text-[10px] text-red-600 dark:text-red-400/80 pl-1.5">→ Uncertified deputies: 14 of 170</p>
+                  <p className="text-[10px] text-red-600 dark:text-red-400/80 pl-3">→ Staffing projection: 97% → 93.5%</p>
+                  <p className="text-[10px] text-red-600 dark:text-red-400/80 pl-4.5">→ Shift coverage: 3 below minimum staffing</p>
+                  <p className="text-[10px] text-red-600 dark:text-red-400/80 pl-6">→ POST inspection exposure: documented finding</p>
                 </div>
               </div>
 
               {/* Equipment Chain */}
               <div className="px-3 py-2.5 bg-slate-900/20">
-                <p className="text-[10px] font-bold text-red-400 mb-1.5">Equipment Compliance Cascade</p>
+                <p className="text-[10px] font-bold text-red-600 dark:text-red-400 mb-1.5">Equipment Compliance Cascade</p>
                 <div className="space-y-1">
-                  <p className="text-[10px] text-slate-400">Trigger: 68 body cams EOL Dec 31 + 9 fleet overdue</p>
-                  <p className="text-[10px] text-red-400/80 pl-1.5">→ Equipment compliance projection: 86% → 72%</p>
-                  <p className="text-[10px] text-red-400/80 pl-3">→ Evidence integrity: 142 active cases affected</p>
-                  <p className="text-[10px] text-red-400/80 pl-4.5">→ Civil liability exposure: unrecorded UOF incidents</p>
-                  <p className="text-[10px] text-red-400/80 pl-6">→ Insurance carrier action: agency flagged</p>
+                  <p className="text-[10px] text-slate-600 dark:text-slate-400">Trigger: 68 body cams EOL Dec 31 + 9 fleet overdue</p>
+                  <p className="text-[10px] text-red-600 dark:text-red-400/80 pl-1.5">→ Equipment compliance projection: 86% → 72%</p>
+                  <p className="text-[10px] text-red-600 dark:text-red-400/80 pl-3">→ Evidence integrity: 142 active cases affected</p>
+                  <p className="text-[10px] text-red-600 dark:text-red-400/80 pl-4.5">→ Civil liability exposure: unrecorded UOF incidents</p>
+                  <p className="text-[10px] text-red-600 dark:text-red-400/80 pl-6">→ Insurance carrier action: agency flagged</p>
                 </div>
               </div>
 
               {/* ACA Chain */}
               <div className="px-3 py-2.5 bg-slate-900/20">
-                <p className="text-[10px] font-bold text-amber-400 mb-1.5">ACA Accreditation Cascade</p>
+                <p className="text-[10px] font-bold text-amber-600 dark:text-amber-400 mb-1.5">ACA Accreditation Cascade</p>
                 <div className="space-y-1">
-                  <p className="text-[10px] text-slate-400">Trigger: Readiness 62%, 2 documentation findings open</p>
-                  <p className="text-[10px] text-amber-400/80 pl-1.5">→ Feb 18 audit readiness projection: below 50%</p>
-                  <p className="text-[10px] text-amber-400/80 pl-3">→ Re-accreditation outcome: conditional status</p>
-                  <p className="text-[10px] text-amber-400/80 pl-4.5">→ Federal housing contract: under review</p>
-                  <p className="text-[10px] text-amber-400/80 pl-6">→ USMS revenue exposure: $1.2M/yr</p>
+                  <p className="text-[10px] text-slate-600 dark:text-slate-400">Trigger: Readiness 62%, 2 documentation findings open</p>
+                  <p className="text-[10px] text-amber-600 dark:text-amber-400/80 pl-1.5">→ Feb 18 audit readiness projection: below 50%</p>
+                  <p className="text-[10px] text-amber-600 dark:text-amber-400/80 pl-3">→ Re-accreditation outcome: conditional status</p>
+                  <p className="text-[10px] text-amber-600 dark:text-amber-400/80 pl-4.5">→ Federal housing contract: under review</p>
+                  <p className="text-[10px] text-amber-600 dark:text-amber-400/80 pl-6">→ USMS revenue exposure: $1.2M/yr</p>
                 </div>
               </div>
             </div>
@@ -1113,9 +1113,9 @@ export default function RiskCompliance() {
                       : 'bg-amber-500/[0.02] border-amber-500/15'
                   }`}>
                     <p className={`text-[9px] font-bold uppercase ${
-                      ripple.color === 'red' ? 'text-red-400' : 'text-amber-400'
+                      ripple.color === 'red' ? 'text-red-600 dark:text-red-400' : 'text-amber-600 dark:text-amber-400'
                     }`}>{ripple.system}</p>
-                    <p className="text-[10px] text-slate-400 mt-0.5">{ripple.action}</p>
+                    <p className="text-[10px] text-slate-600 dark:text-slate-400 mt-0.5">{ripple.action}</p>
                   </div>
                 ))}
               </div>
@@ -1126,9 +1126,9 @@ export default function RiskCompliance() {
               <div className="px-4 py-3">
                 <div className="flex items-center gap-2 mb-3">
                   <div className="w-5 h-5 bg-amber-500/20 rounded flex items-center justify-center">
-                    <FileSignature className="w-3 h-3 text-amber-400" />
+                    <FileSignature className="w-3 h-3 text-amber-600 dark:text-amber-400" />
                   </div>
-                  <span className="text-[11px] font-bold text-amber-400 uppercase tracking-wider">Action Required — {pendingActions.length} Pending Decisions</span>
+                  <span className="text-[11px] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider">Action Required — {pendingActions.length} Pending Decisions</span>
                   <span className="text-[10px] text-slate-500 ml-1">${pendingActions.reduce((s, a) => s + a.amount, 0).toLocaleString()} total</span>
                 </div>
 
@@ -1148,10 +1148,10 @@ export default function RiskCompliance() {
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-0.5">
                               <span className={`px-1.5 py-px rounded text-[9px] font-bold border ${
-                                action.severity === 'critical' ? 'bg-red-500/10 border-red-500/20 text-red-400' : 'bg-amber-500/10 border-amber-500/20 text-amber-400'
+                                action.severity === 'critical' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' : 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400'
                               }`}>{action.severity.toUpperCase()}</span>
                               <span className="text-[11px] font-semibold text-white truncate">{action.title}</span>
-                              <span className="text-[10px] font-mono text-slate-400">${action.amount.toLocaleString()}</span>
+                              <span className="text-[10px] font-mono text-slate-600 dark:text-slate-400">${action.amount.toLocaleString()}</span>
                             </div>
                             <div className="flex items-center gap-2 text-[10px] text-slate-500">
                               <span>Risk: {action.riskTitle}</span>
@@ -1173,7 +1173,7 @@ export default function RiskCompliance() {
                           ) : (
                             <button
                               onClick={() => setApprovalModal(action)}
-                              className="flex items-center gap-1.5 px-3 py-2 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/30 hover:border-amber-500/50 text-amber-400 rounded-lg text-[11px] font-bold transition-all flex-shrink-0"
+                              className="flex items-center gap-1.5 px-3 py-2 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/30 hover:border-amber-500/50 text-amber-600 dark:text-amber-400 rounded-lg text-[11px] font-bold transition-all flex-shrink-0"
                             >
                               <Lock className="w-3 h-3" />
                               Review & Decide
@@ -1185,8 +1185,8 @@ export default function RiskCompliance() {
                   </div>
                 ) : (
                   <div className="flex items-center gap-2 px-3 py-2.5 rounded-lg bg-green-500/[0.03] border border-green-500/15">
-                    <CheckCircle className="w-3.5 h-3.5 text-green-400" />
-                    <p className="text-[10px] text-green-400 font-semibold">All pending approvals resolved. Projected compliance: 96.1% — GREEN status.</p>
+                    <CheckCircle className="w-3.5 h-3.5 text-green-600 dark:text-green-400" />
+                    <p className="text-[10px] text-green-600 dark:text-green-400 font-semibold">All pending approvals resolved. Projected compliance: 96.1% — GREEN status.</p>
                   </div>
                 )}
 
@@ -1223,7 +1223,7 @@ export default function RiskCompliance() {
           {/* ── Regulatory Standards (Reference) ─────────── */}
           <div className="mt-4">
             <div className="flex items-center gap-2 mb-2 px-1">
-              <Shield className="w-3.5 h-3.5 text-slate-400" />
+              <Shield className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
               <span className="text-[12px] font-bold text-white">Regulatory Standards</span>
               <span className="text-[10px] text-slate-600">Reference</span>
             </div>
@@ -1241,17 +1241,17 @@ export default function RiskCompliance() {
                 </thead>
                 <tbody>
                   {complianceStandards.map((std) => (
-                    <tr key={std.id} className="border-b border-slate-800/10 hover:bg-slate-800/15 transition-colors">
+                    <tr key={std.id} className="border-b border-slate-800/10 hover:bg-slate-50 dark:hover:bg-slate-800/15 transition-colors">
                       <td className="px-3 py-2">
                         <span className="text-[11px] font-semibold text-white">{std.name}</span>
                       </td>
                       <td className="px-3 py-2">
                         <span className={`inline-flex items-center gap-1 px-1.5 py-px rounded text-[10px] font-bold border ${
                           std.status === 'compliant'
-                            ? 'bg-green-500/10 border-green-500/20 text-green-400'
+                            ? 'bg-green-100 border-green-200 text-green-700 dark:bg-green-500/10 dark:border-green-500/20 dark:text-green-400'
                             : std.status === 'warning'
-                            ? 'bg-amber-500/10 border-amber-500/20 text-amber-400'
-                            : 'bg-red-500/10 border-red-500/20 text-red-400'
+                            ? 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400'
+                            : 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400'
                         }`}>
                           {std.status === 'compliant' ? <CheckCircle className="w-2.5 h-2.5" /> : <AlertTriangle className="w-2.5 h-2.5" />}
                           {std.statusLabel || (std.status === 'compliant' ? 'Compliant' : std.status === 'warning' ? 'At Risk' : 'Non-Compliant')}
@@ -1259,22 +1259,22 @@ export default function RiskCompliance() {
                       </td>
                       <td className="px-3 py-2">
                         <span className={`px-1.5 py-px rounded text-[9px] font-bold uppercase border ${
-                          std.exposure === 'high' ? 'bg-red-500/10 border-red-500/20 text-red-400' :
-                          std.exposure === 'moderate' ? 'bg-amber-500/10 border-amber-500/20 text-amber-400' :
+                          std.exposure === 'high' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
+                          std.exposure === 'moderate' ? 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
                           'bg-slate-700/30 border-slate-700/40 text-slate-500'
                         }`}>{std.exposure}</span>
                       </td>
                       <td className="px-3 py-2">
                         {std.openFindings > 0 ? (
-                          <span className="text-[10px] font-semibold text-amber-400">{std.openFindings} open</span>
+                          <span className="text-[10px] font-semibold text-amber-600 dark:text-amber-400">{std.openFindings} open</span>
                         ) : (
                           <span className="text-[10px] text-slate-600">0</span>
                         )}
                       </td>
                       <td className="px-3 py-2">
                         <span className={`text-[10px] font-semibold ${
-                          std.trend === 'down' ? 'text-green-400' :
-                          std.trend === 'up' ? 'text-red-400' :
+                          std.trend === 'down' ? 'text-green-600 dark:text-green-400' :
+                          std.trend === 'up' ? 'text-red-600 dark:text-red-400' :
                           'text-slate-500'
                         }`}>
                           {std.trend === 'down' ? '↓' : std.trend === 'up' ? '↑' : '→'}
@@ -1283,7 +1283,7 @@ export default function RiskCompliance() {
                       <td className="px-3 py-2">
                         <span className="text-[10px] text-slate-500">{std.detail}</span>
                         {std.autoAction && (
-                          <span className="text-[9px] text-amber-400 ml-1">⚡ {std.autoAction}</span>
+                          <span className="text-[9px] text-amber-600 dark:text-amber-400 ml-1">⚡ {std.autoAction}</span>
                         )}
                       </td>
                     </tr>
@@ -1302,20 +1302,20 @@ export default function RiskCompliance() {
       {approvalModal && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={closeApprovalModal} />
-          <div className="relative bg-slate-900 border border-slate-700/50 rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden">
+          <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden">
 
             {/* Modal Header */}
             <div className="px-5 py-4 border-b border-slate-700/50 bg-slate-800/30">
               <div className="flex items-start justify-between">
                 <div>
                   <div className="flex items-center gap-2 mb-1">
-                    <Lock className="w-4 h-4 text-amber-400" />
+                    <Lock className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                     <h3 className="text-sm font-bold text-white">Authorization Required</h3>
                   </div>
                   <p className="text-[10px] text-slate-500">Decision will be logged with timestamp, actor, and OPI context</p>
                 </div>
-                <button onClick={closeApprovalModal} className="p-1.5 hover:bg-slate-800/50 rounded-lg transition-colors">
-                  <X className="w-4 h-4 text-slate-400" />
+                <button onClick={closeApprovalModal} className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors">
+                  <X className="w-4 h-4 text-slate-600 dark:text-slate-400" />
                 </button>
               </div>
             </div>
@@ -1327,17 +1327,17 @@ export default function RiskCompliance() {
                   <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
                     <div className="flex items-center gap-2 mb-2">
                       <span className={`px-1.5 py-px rounded text-[9px] font-bold border ${
-                        approvalModal.severity === 'critical' ? 'bg-red-500/10 border-red-500/20 text-red-400' : 'bg-amber-500/10 border-amber-500/20 text-amber-400'
+                        approvalModal.severity === 'critical' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' : 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400'
                       }`}>{approvalModal.severity.toUpperCase()}</span>
-                      <span className="text-sm font-semibold text-white">{approvalModal.title}</span>
+                      <span className="text-sm font-semibold text-slate-900 dark:text-white">{approvalModal.title}</span>
                     </div>
                     <div className="grid grid-cols-2 gap-2 text-[10px]">
                       <div><span className="text-slate-500">Amount:</span> <span className="text-white font-bold font-mono">${approvalModal.amount.toLocaleString()}</span></div>
                       <div><span className="text-slate-500">Linked Risk:</span> <span className="text-white">{approvalModal.riskTitle}</span></div>
                       <div><span className="text-slate-500">Owner:</span> <span className="text-white">{approvalModal.owner}</span></div>
-                      <div><span className="text-slate-500">Days Remaining:</span> <span className={`font-bold ${approvalModal.daysLeft <= 7 ? 'text-red-400' : 'text-amber-400'}`}>{approvalModal.daysLeft}d</span></div>
-                      <div><span className="text-slate-500">Cascade Chains:</span> <span className="text-red-400 font-bold">{approvalModal.cascadeCount} consequences</span></div>
-                      {approvalModal.auditImpact && <div><span className="text-slate-500">Audit Impact:</span> <span className="text-amber-400">{approvalModal.auditImpact}</span></div>}
+                      <div><span className="text-slate-500">Days Remaining:</span> <span className={`font-bold ${approvalModal.daysLeft <= 7 ? 'text-red-600 dark:text-red-400' : 'text-amber-600 dark:text-amber-400'}`}>{approvalModal.daysLeft}d</span></div>
+                      <div><span className="text-slate-500">Cascade Chains:</span> <span className="text-red-600 dark:text-red-400 font-bold">{approvalModal.cascadeCount} consequences</span></div>
+                      {approvalModal.auditImpact && <div><span className="text-slate-500">Audit Impact:</span> <span className="text-amber-600 dark:text-amber-400">{approvalModal.auditImpact}</span></div>}
                     </div>
                   </div>
 
@@ -1351,18 +1351,18 @@ export default function RiskCompliance() {
                       </div>
                       <div className="text-center">
                         <p className="text-slate-500">Compliance</p>
-                        <p className="font-bold text-sm text-amber-400">{overallCompliance}%</p>
+                        <p className="font-bold text-sm text-amber-600 dark:text-amber-400">{overallCompliance}%</p>
                       </div>
                       <div className="text-center">
                         <p className="text-slate-500">Timestamp</p>
-                        <p className="font-bold text-[10px] text-slate-300 font-mono">{new Date().toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
+                        <p className="font-bold text-[10px] text-slate-700 dark:text-slate-300 font-mono">{new Date().toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
                       </div>
                     </div>
                   </div>
 
                   {/* Decision note */}
                   <div>
-                    <label className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-1.5 block">Decision Rationale (required for audit trail)</label>
+                    <label className="text-[10px] font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1.5 block">Decision Rationale (required for audit trail)</label>
                     <textarea
                       value={approvalNote}
                       onChange={(e) => setApprovalNote(e.target.value)}
@@ -1383,7 +1383,7 @@ export default function RiskCompliance() {
                     <button
                       onClick={() => handleApprovalAction('approved')}
                       disabled={!approvalNote.trim()}
-                      className="px-3 py-2.5 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-400 rounded-lg text-[11px] font-bold transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                      className="px-3 py-2.5 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-600 dark:text-green-400 rounded-lg text-[11px] font-bold transition-all disabled:opacity-30 disabled:cursor-not-allowed"
                     >
                       <CheckCircle className="w-3.5 h-3.5 mx-auto mb-1" />
                       Approve
@@ -1391,7 +1391,7 @@ export default function RiskCompliance() {
                     <button
                       onClick={() => handleApprovalAction('denied')}
                       disabled={!approvalNote.trim()}
-                      className="px-3 py-2.5 bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 text-red-400 rounded-lg text-[11px] font-bold transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                      className="px-3 py-2.5 bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 text-red-600 dark:text-red-400 rounded-lg text-[11px] font-bold transition-all disabled:opacity-30 disabled:cursor-not-allowed"
                     >
                       <X className="w-3.5 h-3.5 mx-auto mb-1" />
                       Deny
@@ -1399,7 +1399,7 @@ export default function RiskCompliance() {
                     <button
                       onClick={() => handleApprovalAction('escalated')}
                       disabled={!approvalNote.trim()}
-                      className="px-3 py-2.5 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/30 text-amber-400 rounded-lg text-[11px] font-bold transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                      className="px-3 py-2.5 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/30 text-amber-600 dark:text-amber-400 rounded-lg text-[11px] font-bold transition-all disabled:opacity-30 disabled:cursor-not-allowed"
                     >
                       <ArrowRight className="w-3.5 h-3.5 mx-auto mb-1" />
                       Escalate
@@ -1407,7 +1407,7 @@ export default function RiskCompliance() {
                     <button
                       onClick={() => handleApprovalAction('deferred')}
                       disabled={!approvalNote.trim()}
-                      className="px-3 py-2.5 bg-slate-700/30 hover:bg-slate-700/50 border border-slate-600/30 text-slate-400 rounded-lg text-[11px] font-bold transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                      className="px-3 py-2.5 bg-slate-700/30 hover:bg-slate-700/50 border border-slate-600/30 text-slate-600 dark:text-slate-400 rounded-lg text-[11px] font-bold transition-all disabled:opacity-30 disabled:cursor-not-allowed"
                     >
                       <Clock className="w-3.5 h-3.5 mx-auto mb-1" />
                       Defer
@@ -1428,7 +1428,7 @@ export default function RiskCompliance() {
                           <Icon className={`w-7 h-7 ${cfg.text}`} />
                         </div>
                         <h4 className={`text-lg font-bold ${cfg.text}`}>{cfg.label}</h4>
-                        <p className="text-xs text-slate-400 mt-1">{approvalModal.title} — ${approvalModal.amount.toLocaleString()}</p>
+                        <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">{approvalModal.title} — ${approvalModal.amount.toLocaleString()}</p>
                       </>
                     );
                   })()}
@@ -1458,13 +1458,13 @@ export default function RiskCompliance() {
                   {approvalDecision.entry.note && (
                     <div className="pt-2 border-t border-slate-700/50">
                       <span className="text-slate-500">Rationale:</span>
-                      <p className="text-slate-300 mt-0.5">{approvalDecision.entry.note}</p>
+                      <p className="text-slate-700 dark:text-slate-300 mt-0.5">{approvalDecision.entry.note}</p>
                     </div>
                   )}
                 </div>
 
                 <div className="mt-4 p-2.5 bg-slate-800/30 border border-slate-700/40 rounded-lg">
-                  <p className="text-[9px] text-slate-400 flex items-center gap-1.5">
+                  <p className="text-[9px] text-slate-600 dark:text-slate-400 flex items-center gap-1.5">
                     <CircleDot className="w-3 h-3" />
                     This decision has been recorded to the audit trail and will persist across sessions. Cascade projections will recalculate on next refresh.
                   </p>

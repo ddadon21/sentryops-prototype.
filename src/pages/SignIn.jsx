@@ -84,7 +84,7 @@ export default function SignIn() {
       {/* Back link */}
       <Link
         to={createPageUrl('Landing')}
-        className="absolute top-12 left-6 flex items-center gap-2 text-slate-500 hover:text-slate-300 transition-colors group mt-2"
+        className="absolute top-12 left-6 flex items-center gap-2 text-slate-500 hover:text-slate-700 dark:text-slate-300 transition-colors group mt-2"
       >
         <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
         <span className="text-xs font-medium">Back</span>
@@ -102,15 +102,15 @@ export default function SignIn() {
             </div>
           </div>
           <div className="space-y-1">
-            <h1 className="text-xl font-bold text-white tracking-tight">SentryOps Command Platform</h1>
+            <h1 className="text-xl font-bold text-slate-900 dark:text-white tracking-tight">SentryOps Command Platform</h1>
             <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-widest">Secure Access Portal</p>
           </div>
           {/* Role display when selected */}
           {selectedDemo && (
             <div className="mt-4 bg-slate-900/60 border border-slate-700/40 rounded-lg px-4 py-2.5 text-left">
               <p className="text-[10px] text-slate-500 uppercase tracking-widest mb-1">Signing in as</p>
-              <p className="text-sm font-semibold text-white">{selectedDemo.title}</p>
-              <p className="text-xs text-slate-400">{selectedDemo.clearance}</p>
+              <p className="text-sm font-semibold text-slate-900 dark:text-white">{selectedDemo.title}</p>
+              <p className="text-xs text-slate-600 dark:text-slate-400">{selectedDemo.clearance}</p>
             </div>
           )}
         </div>
@@ -145,12 +145,12 @@ export default function SignIn() {
             <div>
               {selectedDemo ? (
                 <>
-                  <p className="text-sm font-medium text-white">{selectedDemo.title}</p>
+                  <p className="text-sm font-medium text-slate-900 dark:text-white">{selectedDemo.title}</p>
                   <p className="text-[11px] text-slate-500">{selectedDemo.role}</p>
                 </>
               ) : (
                 <>
-                  <p className="text-sm text-slate-400">Select access level</p>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">Select access level</p>
                   <p className="text-[11px] text-slate-600">Choose permission scope</p>
                 </>
               )}
@@ -169,7 +169,7 @@ export default function SignIn() {
                     idx < demoAccounts.length - 1 ? 'border-b border-slate-700/40' : ''
                   } ${selectedDemo?.id === account.id ? 'bg-slate-800/40' : 'bg-slate-900/40'}`}
                 >
-                  <p className="text-sm font-medium text-white">{account.title}</p>
+                  <p className="text-sm font-medium text-slate-900 dark:text-white">{account.title}</p>
                   <p className="text-[11px] text-slate-500">{account.clearance}</p>
                 </button>
               ))}
@@ -183,7 +183,7 @@ export default function SignIn() {
 
             {/* Email */}
             <div>
-              <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1.5">
+              <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wide mb-1.5">
                 Government Email
               </label>
               <div className="relative">
@@ -200,7 +200,7 @@ export default function SignIn() {
 
             {/* Password */}
             <div>
-              <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1.5">
+              <label className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wide mb-1.5">
                 Password
               </label>
               <div className="relative">
@@ -215,7 +215,7 @@ export default function SignIn() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-600 hover:text-slate-300 transition-colors"
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-600 hover:text-slate-700 dark:text-slate-300 transition-colors"
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
@@ -239,13 +239,13 @@ export default function SignIn() {
                     </svg>
                   )}
                 </div>
-                <span className="text-xs text-slate-400 group-hover:text-slate-300 transition-colors">
+                <span className="text-xs text-slate-600 dark:text-slate-400 group-hover:text-slate-700 dark:text-slate-300 transition-colors">
                   Remember this device <span className="text-slate-600">(secure)</span>
                 </span>
               </label>
               <button
                 onClick={() => setError('restricted')}
-                className="text-xs text-slate-500 hover:text-slate-300 transition-colors"
+                className="text-xs text-slate-500 hover:text-slate-700 dark:text-slate-300 transition-colors"
               >
                 Forgot password?
               </button>
@@ -280,7 +280,7 @@ export default function SignIn() {
         <div className="mt-5 text-center space-y-2">
           <p className="text-xs text-slate-600">
             Need access?{' '}
-            <button className="text-slate-400 hover:text-white transition-colors">
+            <button className="text-slate-600 dark:text-slate-400 hover:text-white transition-colors">
               Contact IT Support
             </button>
           </p>

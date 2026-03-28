@@ -91,7 +91,7 @@ export default function ApplicantTracking() {
           {!sidebarCollapsed && (
             <div className="flex items-center gap-2">
               <Shield className="w-8 h-8 text-amber-500" />
-              <h1 className="text-xl font-bold text-white">SentryOps</h1>
+              <h1 className="text-xl font-bold text-slate-900 dark:text-white">SentryOps</h1>
             </div>
           )}
           {sidebarCollapsed && (
@@ -101,7 +101,7 @@ export default function ApplicantTracking() {
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
             className="p-2 hover:bg-slate-800/50 rounded-lg transition-colors hidden lg:block"
           >
-            {sidebarCollapsed ? <ChevronRight className="w-5 h-5 text-slate-400" /> : <ChevronLeft className="w-5 h-5 text-slate-400" />}
+            {sidebarCollapsed ? <ChevronRight className="w-5 h-5 text-slate-600 dark:text-slate-400" /> : <ChevronLeft className="w-5 h-5 text-slate-600 dark:text-slate-400" />}
           </button>
         </div>
 
@@ -114,7 +114,7 @@ export default function ApplicantTracking() {
                 key={item.id}
                 onClick={() => handleNavigation(item)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'
+                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-800/50 hover:text-white'
                 } ${sidebarCollapsed ? 'justify-center' : ''}`}
                 title={sidebarCollapsed ? item.label : ''}
               >
@@ -137,7 +137,7 @@ export default function ApplicantTracking() {
           <div className="p-4">
             <button
               onClick={() => setLogoutConfirmOpen(true)}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-slate-400 hover:bg-slate-800/40 hover:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-slate-600 dark:text-slate-400 hover:bg-slate-800/40 hover:text-slate-700 dark:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
               title={sidebarCollapsed ? 'Sign Out' : ''}
             >
               <LogOut className="w-5 h-5 flex-shrink-0" />
@@ -165,11 +165,11 @@ export default function ApplicantTracking() {
           <div className="relative bg-slate-900 border border-slate-700/50 rounded-2xl p-6 max-w-sm w-full shadow-2xl">
             <div className="flex items-center gap-4 mb-4">
               <div className="w-12 h-12 bg-slate-800/60 rounded-xl flex items-center justify-center">
-                <LogOut className="w-6 h-6 text-slate-400" />
+                <LogOut className="w-6 h-6 text-slate-600 dark:text-slate-400" />
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-white">Sign Out</h3>
-                <p className="text-sm text-slate-400">Are you sure you want to sign out?</p>
+                <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Sign Out</h3>
+                <p className="text-sm text-slate-600 dark:text-slate-400">Are you sure you want to sign out?</p>
               </div>
             </div>
             <div className="flex gap-3 mt-6">
@@ -200,11 +200,11 @@ export default function ApplicantTracking() {
                   onClick={() => setSidebarOpen(!sidebarOpen)}
                   className="lg:hidden p-2 hover:bg-slate-800/50 rounded-lg"
                 >
-                  <Menu className="w-5 h-5 text-slate-400" />
+                  <Menu className="w-5 h-5 text-slate-600 dark:text-slate-400" />
                 </button>
                 <div>
-                  <h1 className="text-xl lg:text-2xl font-bold text-white">Applicant Tracking & Pipeline Management</h1>
-                  <p className="text-sm text-slate-400">Gwinnett County Sheriff's Office • Lawrenceville, Georgia</p>
+                  <h1 className="text-xl lg:text-2xl font-bold text-slate-900 dark:text-white">Applicant Tracking & Pipeline Management</h1>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">Gwinnett County Sheriff's Office • Lawrenceville, Georgia</p>
                 </div>
               </div>
               <div className="flex items-center gap-2 lg:gap-3">
@@ -213,14 +213,14 @@ export default function ApplicantTracking() {
                     onClick={() => setNotificationsOpen(!notificationsOpen)}
                     className="p-2 hover:bg-slate-800/50 rounded-lg relative"
                   >
-                    <Bell className="w-5 h-5 text-slate-400" />
+                    <Bell className="w-5 h-5 text-slate-600 dark:text-slate-400" />
                     <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                   </button>
 
                   {notificationsOpen && (
                     <div className="absolute right-0 top-full mt-2 w-96 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-2xl z-50">
                       <div className="p-4 border-b border-slate-700/50">
-                        <h3 className="text-sm font-semibold text-white">Notifications</h3>
+                        <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Notifications</h3>
                       </div>
                       <div className="max-h-96 overflow-y-auto">
                         {notifications.map(notification => (
@@ -228,8 +228,8 @@ export default function ApplicantTracking() {
                             <div className="flex items-start gap-3">
                               <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-amber-400' : 'bg-blue-400'}`}></div>
                               <div className="flex-1 min-w-0">
-                                <p className="text-sm font-medium text-white mb-1">{notification.title}</p>
-                                <p className="text-xs text-slate-400 mb-2">{notification.message}</p>
+                                <p className="text-sm font-medium text-slate-900 dark:text-white mb-1">{notification.title}</p>
+                                <p className="text-xs text-slate-600 dark:text-slate-400 mb-2">{notification.message}</p>
                                 <p className="text-xs text-slate-500">{notification.time}</p>
                               </div>
                             </div>
@@ -247,15 +247,15 @@ export default function ApplicantTracking() {
                     <span className="text-white text-sm font-bold">HR</span>
                   </div>
                   <div className="hidden sm:block">
-                    <p className="text-sm font-medium text-white">HR Director</p>
-                    <p className="text-xs text-slate-400">Human Resources</p>
+                    <p className="text-sm font-medium text-slate-900 dark:text-white">HR Director</p>
+                    <p className="text-xs text-slate-600 dark:text-slate-400">Human Resources</p>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Date/Time and System Info */}
-            <div className="flex flex-wrap items-center gap-4 text-xs text-slate-400 mb-4">
+            <div className="flex flex-wrap items-center gap-4 text-xs text-slate-600 dark:text-slate-400 mb-4">
               <span>{formattedDate} • {formattedTime} EST</span>
               <span className="text-slate-600">|</span>
               <span>Total Active Applicants: <span className="text-white font-medium">77</span></span>
@@ -264,7 +264,7 @@ export default function ApplicantTracking() {
             </div>
 
             {/* Pipeline Status */}
-            <div className="flex flex-wrap items-center gap-4 text-xs text-slate-400 mb-4">
+            <div className="flex flex-wrap items-center gap-4 text-xs text-slate-600 dark:text-slate-400 mb-4">
               <span>Pipeline Status:</span>
               <span className="px-2 py-1 bg-amber-500/20 text-amber-400 rounded">9 interviews scheduled</span>
               <span className="px-2 py-1 bg-purple-500/20 text-purple-400 rounded">5 backgrounds in progress</span>
@@ -273,19 +273,19 @@ export default function ApplicantTracking() {
 
             {/* Quick Actions */}
             <div className="flex flex-wrap gap-2 mb-4">
-              <button className="flex items-center gap-2 px-3 py-2 bg-slate-800/60 hover:bg-slate-800/80 border border-slate-700/50 text-slate-300 rounded-lg text-sm transition-all">
+              <button className="flex items-center gap-2 px-3 py-2 bg-slate-800/60 hover:bg-slate-800/80 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-lg text-sm transition-all">
                 <Download className="w-4 h-4" />
                 Export Applicant List
               </button>
-              <button className="flex items-center gap-2 px-3 py-2 bg-slate-800/60 hover:bg-slate-800/80 border border-slate-700/50 text-slate-300 rounded-lg text-sm transition-all">
+              <button className="flex items-center gap-2 px-3 py-2 bg-slate-800/60 hover:bg-slate-800/80 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-lg text-sm transition-all">
                 <Mail className="w-4 h-4" />
                 Bulk Email Applicants
               </button>
-              <button className="flex items-center gap-2 px-3 py-2 bg-slate-800/60 hover:bg-slate-800/80 border border-slate-700/50 text-slate-300 rounded-lg text-sm transition-all">
+              <button className="flex items-center gap-2 px-3 py-2 bg-slate-800/60 hover:bg-slate-800/80 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-lg text-sm transition-all">
                 <Calendar className="w-4 h-4" />
                 Schedule Interviews
               </button>
-              <button className="flex items-center gap-2 px-3 py-2 bg-slate-800/60 hover:bg-slate-800/80 border border-slate-700/50 text-slate-300 rounded-lg text-sm transition-all">
+              <button className="flex items-center gap-2 px-3 py-2 bg-slate-800/60 hover:bg-slate-800/80 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-lg text-sm transition-all">
                 <LayoutDashboard className="w-4 h-4" />
                 Pipeline Analytics
               </button>
@@ -338,7 +338,7 @@ export default function ApplicantTracking() {
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
                   className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all relative whitespace-nowrap ${
-                    activeTab === tab.id ? 'text-amber-400' : 'text-slate-400 hover:text-slate-300'
+                    activeTab === tab.id ? 'text-amber-400' : 'text-slate-600 dark:text-slate-400 hover:text-slate-300'
                   }`}
                 >
                   {tab.label}
@@ -359,13 +359,13 @@ export default function ApplicantTracking() {
                 <input
                   type="text"
                   placeholder="Search applicants by name, reference #, position..."
-                  className="w-full pl-12 pr-4 py-2.5 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
+                  className="w-full pl-12 pr-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
                 />
               </div>
               <select
                 value={filterPosition}
                 onChange={(e) => setFilterPosition(e.target.value)}
-                className="px-4 py-2.5 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer"
+                className="px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer"
               >
                 <option value="all">All Positions</option>
                 <option value="deputy">Deputy Sheriff (23)</option>
@@ -373,13 +373,13 @@ export default function ApplicantTracking() {
                 <option value="detention">Detention Officer (8)</option>
                 <option value="admin">Administrative Assistant (4)</option>
               </select>
-              <select className="px-4 py-2.5 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer">
+              <select className="px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer">
                 <option>Sort: Application Date</option>
                 <option>Sort: Last Name A-Z</option>
                 <option>Sort: Position</option>
                 <option>Sort: Pipeline Stage</option>
               </select>
-              <button className="flex items-center gap-2 px-4 py-2.5 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white text-sm hover:bg-slate-800/60 transition-all">
+              <button className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white text-sm hover:bg-slate-800/60 transition-all">
                 <Filter className="w-4 h-4" />
                 More Filters
               </button>
@@ -389,7 +389,7 @@ export default function ApplicantTracking() {
             <div className="space-y-4">
 
               {/* Marcus Johnson - Screening Stage */}
-              <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl overflow-hidden">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
                 <button
                   onClick={() => toggleApplicant('marcus')}
                   className="w-full p-5 flex items-center justify-between hover:bg-slate-800/60 transition-colors"
@@ -403,7 +403,7 @@ export default function ApplicantTracking() {
                         <h3 className="text-lg font-bold text-white">MARCUS JOHNSON</h3>
                         <span className="px-2 py-1 bg-purple-500/20 border border-purple-500/30 rounded text-xs text-purple-400 font-bold">SCREENING</span>
                       </div>
-                      <p className="text-sm text-slate-400">Deputy Sheriff (Patrol Division) • Ref: 2026-APP-0142</p>
+                      <p className="text-sm text-slate-600 dark:text-slate-400">Deputy Sheriff (Patrol Division) • Ref: 2026-APP-0142</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
@@ -411,7 +411,7 @@ export default function ApplicantTracking() {
                       <p className="text-sm text-white font-medium">Applied: Oct 12, 2024</p>
                       <p className="text-xs text-amber-400">Interview Scheduled: Feb 06</p>
                     </div>
-                    {expandedApplicant === 'marcus' ? <ChevronUp className="w-5 h-5 text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-400" />}
+                    {expandedApplicant === 'marcus' ? <ChevronUp className="w-5 h-5 text-slate-600 dark:text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-600 dark:text-slate-400" />}
                   </div>
                 </button>
 
@@ -421,19 +421,19 @@ export default function ApplicantTracking() {
                     <div className="pt-5 grid grid-cols-2 md:grid-cols-4 gap-4">
                       <div className="flex items-center gap-2 text-sm">
                         <Mail className="w-4 h-4 text-slate-500" />
-                        <span className="text-slate-300">marcus.johnson@email.com</span>
+                        <span className="text-slate-700 dark:text-slate-300">marcus.johnson@email.com</span>
                       </div>
                       <div className="flex items-center gap-2 text-sm">
                         <Phone className="w-4 h-4 text-slate-500" />
-                        <span className="text-slate-300">(555) 234-5678</span>
+                        <span className="text-slate-700 dark:text-slate-300">(555) 234-5678</span>
                       </div>
                       <div className="flex items-center gap-2 text-sm">
                         <MapPin className="w-4 h-4 text-slate-500" />
-                        <span className="text-slate-300">Lawrenceville, GA 30046</span>
+                        <span className="text-slate-700 dark:text-slate-300">Lawrenceville, GA 30046</span>
                       </div>
                       <div className="flex items-center gap-2 text-sm">
                         <Calendar className="w-4 h-4 text-slate-500" />
-                        <span className="text-slate-300">Applied: Oct 12, 2024 (113 days)</span>
+                        <span className="text-slate-700 dark:text-slate-300">Applied: Oct 12, 2024 (113 days)</span>
                       </div>
                     </div>
 
@@ -444,14 +444,14 @@ export default function ApplicantTracking() {
                         <div>
                           <p className="text-xs text-slate-500 mb-1">Experience</p>
                           <p className="text-sm text-white font-medium">5 years law enforcement</p>
-                          <p className="text-xs text-slate-400">Metro Atlanta Police Department (2019-2024) • Patrol Officer, North Precinct</p>
-                          <p className="text-xs text-slate-400">Reason for leaving: Seeking career advancement with GCSO</p>
+                          <p className="text-xs text-slate-600 dark:text-slate-400">Metro Atlanta Police Department (2019-2024) • Patrol Officer, North Precinct</p>
+                          <p className="text-xs text-slate-600 dark:text-slate-400">Reason for leaving: Seeking career advancement with GCSO</p>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div>
                             <p className="text-xs text-slate-500 mb-1">Education</p>
                             <p className="text-sm text-white">Bachelor's Degree - Criminal Justice</p>
-                            <p className="text-xs text-slate-400">Georgia State University (Graduated 2018)</p>
+                            <p className="text-xs text-slate-600 dark:text-slate-400">Georgia State University (Graduated 2018)</p>
                           </div>
                           <div>
                             <p className="text-xs text-slate-500 mb-1">POST Certification</p>
@@ -476,23 +476,23 @@ export default function ApplicantTracking() {
                       <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                         <div className="flex items-center gap-2 text-sm">
                           <CheckCircle className="w-4 h-4 text-green-400" />
-                          <span className="text-slate-300">Employment Application</span>
+                          <span className="text-slate-700 dark:text-slate-300">Employment Application</span>
                         </div>
                         <div className="flex items-center gap-2 text-sm">
                           <CheckCircle className="w-4 h-4 text-green-400" />
-                          <span className="text-slate-300">Resume (2 pages)</span>
+                          <span className="text-slate-700 dark:text-slate-300">Resume (2 pages)</span>
                         </div>
                         <div className="flex items-center gap-2 text-sm">
                           <CheckCircle className="w-4 h-4 text-green-400" />
-                          <span className="text-slate-300">Cover Letter</span>
+                          <span className="text-slate-700 dark:text-slate-300">Cover Letter</span>
                         </div>
                         <div className="flex items-center gap-2 text-sm">
                           <CheckCircle className="w-4 h-4 text-green-400" />
-                          <span className="text-slate-300">POST Certificate</span>
+                          <span className="text-slate-700 dark:text-slate-300">POST Certificate</span>
                         </div>
                         <div className="flex items-center gap-2 text-sm">
                           <CheckCircle className="w-4 h-4 text-green-400" />
-                          <span className="text-slate-300">College Transcript</span>
+                          <span className="text-slate-700 dark:text-slate-300">College Transcript</span>
                         </div>
                         <div className="flex items-center gap-2 text-sm text-slate-500">
                           <div className="w-4 h-4 border border-slate-600 rounded-full"></div>
@@ -509,24 +509,24 @@ export default function ApplicantTracking() {
                           <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
                           <div>
                             <p className="text-sm text-white font-medium">Initial Application Review: PASSED (10/15/2024)</p>
-                            <p className="text-xs text-slate-400">Reviewed by: HR Specialist J. Martinez</p>
-                            <p className="text-xs text-slate-400">Met minimum qualifications: Age 21+ ✓, POST cert ✓, HS/GED ✓</p>
+                            <p className="text-xs text-slate-600 dark:text-slate-400">Reviewed by: HR Specialist J. Martinez</p>
+                            <p className="text-xs text-slate-600 dark:text-slate-400">Met minimum qualifications: Age 21+ ✓, POST cert ✓, HS/GED ✓</p>
                           </div>
                         </div>
                         <div className="flex items-start gap-3">
                           <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
                           <div>
                             <p className="text-sm text-white font-medium">Background Pre-Screen: PASSED (10/18/2024)</p>
-                            <p className="text-xs text-slate-400">GCIC check: No disqualifying convictions ✓</p>
-                            <p className="text-xs text-slate-400">Driving record: Clean ✓ | Employment: Verified current employment ✓</p>
+                            <p className="text-xs text-slate-600 dark:text-slate-400">GCIC check: No disqualifying convictions ✓</p>
+                            <p className="text-xs text-slate-600 dark:text-slate-400">Driving record: Clean ✓ | Employment: Verified current employment ✓</p>
                           </div>
                         </div>
                         <div className="flex items-start gap-3">
                           <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
                           <div>
                             <p className="text-sm text-white font-medium">Physical Fitness Test: PASSED (10/22/2024)</p>
-                            <p className="text-xs text-slate-400">Location: GCSO Training Center (Cooper Standards)</p>
-                            <p className="text-xs text-slate-400">1.5-mi run: 11:45 (PASS) | Push-ups: 42 (PASS) | Sit-ups: 48 (PASS) | 300m: 52s (PASS)</p>
+                            <p className="text-xs text-slate-600 dark:text-slate-400">Location: GCSO Training Center (Cooper Standards)</p>
+                            <p className="text-xs text-slate-600 dark:text-slate-400">1.5-mi run: 11:45 (PASS) | Push-ups: 42 (PASS) | Sit-ups: 48 (PASS) | 300m: 52s (PASS)</p>
                           </div>
                         </div>
                       </div>
@@ -538,7 +538,7 @@ export default function ApplicantTracking() {
                         <Calendar className="w-5 h-5 text-amber-400" />
                         <span className="text-sm font-bold text-amber-400">ORAL BOARD INTERVIEW SCHEDULED</span>
                       </div>
-                      <div className="text-sm text-slate-300 space-y-1">
+                      <div className="text-sm text-slate-700 dark:text-slate-300 space-y-1">
                         <p><span className="text-white font-medium">Date:</span> February 06, 2026 • 09:30 AM (30-minute slot)</p>
                         <p><span className="text-white font-medium">Location:</span> GCSO Headquarters, 2900 Commons Dr, Conference Room B</p>
                         <p><span className="text-white font-medium">Panel:</span> Major R. Davis (Chair), Lt. K. Williams, Lt. M. Thompson</p>
@@ -571,7 +571,7 @@ export default function ApplicantTracking() {
               </div>
 
               {/* Sarah Chen - Interview Stage */}
-              <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl overflow-hidden">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
                 <button
                   onClick={() => toggleApplicant('sarah')}
                   className="w-full p-5 flex items-center justify-between hover:bg-slate-800/60 transition-colors"
@@ -586,7 +586,7 @@ export default function ApplicantTracking() {
                         <span className="px-2 py-1 bg-amber-500/20 border border-amber-500/30 rounded text-xs text-amber-400 font-bold">INTERVIEW COMPLETED</span>
                         <span className="px-2 py-1 bg-green-500/20 border border-green-500/30 rounded text-xs text-green-400 font-bold">TOP CANDIDATE</span>
                       </div>
-                      <p className="text-sm text-slate-400">Background Investigator (HR/IA) • Ref: 2026-APP-0087</p>
+                      <p className="text-sm text-slate-600 dark:text-slate-400">Background Investigator (HR/IA) • Ref: 2026-APP-0087</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
@@ -594,7 +594,7 @@ export default function ApplicantTracking() {
                       <p className="text-sm text-white font-medium">Interview Score: 144/150 (96%)</p>
                       <p className="text-xs text-green-400">Ranked #1 - Awaiting Sheriff Approval</p>
                     </div>
-                    {expandedApplicant === 'sarah' ? <ChevronUp className="w-5 h-5 text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-400" />}
+                    {expandedApplicant === 'sarah' ? <ChevronUp className="w-5 h-5 text-slate-600 dark:text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-600 dark:text-slate-400" />}
                   </div>
                 </button>
 
@@ -604,19 +604,19 @@ export default function ApplicantTracking() {
                     <div className="pt-5 grid grid-cols-2 md:grid-cols-4 gap-4">
                       <div className="flex items-center gap-2 text-sm">
                         <Mail className="w-4 h-4 text-slate-500" />
-                        <span className="text-slate-300">sarah.chen@email.com</span>
+                        <span className="text-slate-700 dark:text-slate-300">sarah.chen@email.com</span>
                       </div>
                       <div className="flex items-center gap-2 text-sm">
                         <Phone className="w-4 h-4 text-slate-500" />
-                        <span className="text-slate-300">(555) 345-6789</span>
+                        <span className="text-slate-700 dark:text-slate-300">(555) 345-6789</span>
                       </div>
                       <div className="flex items-center gap-2 text-sm">
                         <MapPin className="w-4 h-4 text-slate-500" />
-                        <span className="text-slate-300">Duluth, GA 30096</span>
+                        <span className="text-slate-700 dark:text-slate-300">Duluth, GA 30096</span>
                       </div>
                       <div className="flex items-center gap-2 text-sm">
                         <Calendar className="w-4 h-4 text-slate-500" />
-                        <span className="text-slate-300">Applied: Oct 27, 2024 (98 days)</span>
+                        <span className="text-slate-700 dark:text-slate-300">Applied: Oct 27, 2024 (98 days)</span>
                       </div>
                     </div>
 
@@ -627,14 +627,14 @@ export default function ApplicantTracking() {
                         <div>
                           <p className="text-xs text-slate-500 mb-1">Experience</p>
                           <p className="text-sm text-white font-medium">7 years FBI Special Agent</p>
-                          <p className="text-xs text-slate-400">FBI Atlanta Field Office (2017-2024) • Public Corruption Unit</p>
-                          <p className="text-xs text-slate-400">Reason: Seeking work-life balance, local LE closer to family</p>
+                          <p className="text-xs text-slate-600 dark:text-slate-400">FBI Atlanta Field Office (2017-2024) • Public Corruption Unit</p>
+                          <p className="text-xs text-slate-600 dark:text-slate-400">Reason: Seeking work-life balance, local LE closer to family</p>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div>
                             <p className="text-xs text-slate-500 mb-1">Education</p>
                             <p className="text-sm text-white">Master's Degree - Psychology (Emory 2016)</p>
-                            <p className="text-xs text-slate-400">Bachelor's - Criminal Justice (UGA 2014)</p>
+                            <p className="text-xs text-slate-600 dark:text-slate-400">Bachelor's - Criminal Justice (UGA 2014)</p>
                           </div>
                           <div>
                             <p className="text-xs text-slate-500 mb-1">POST & Federal Certifications</p>
@@ -661,7 +661,7 @@ export default function ApplicantTracking() {
                         <div className="flex items-center justify-between mb-4">
                           <div>
                             <p className="text-sm font-bold text-green-400">ORAL BOARD INTERVIEW COMPLETED</p>
-                            <p className="text-xs text-slate-400">February 11, 2026 • GCSO HQ, Sheriff's Conference Room</p>
+                            <p className="text-xs text-slate-600 dark:text-slate-400">February 11, 2026 • GCSO HQ, Sheriff's Conference Room</p>
                           </div>
                           <div className="text-right">
                             <p className="text-2xl font-bold text-green-400">144/150</p>
@@ -669,7 +669,7 @@ export default function ApplicantTracking() {
                           </div>
                         </div>
                         <div className="space-y-2 mb-4">
-                          <p className="text-xs text-slate-400">Panel Scoring (50 pts each, 150 max):</p>
+                          <p className="text-xs text-slate-600 dark:text-slate-400">Panel Scoring (50 pts each, 150 max):</p>
                           <div className="grid grid-cols-3 gap-2 text-sm">
                             <div className="bg-slate-800/40 rounded p-2 text-center">
                               <p className="text-white font-medium">Major R. Davis</p>
@@ -685,7 +685,7 @@ export default function ApplicantTracking() {
                             </div>
                           </div>
                         </div>
-                        <div className="text-sm text-slate-300 space-y-1">
+                        <div className="text-sm text-slate-700 dark:text-slate-300 space-y-1">
                           <p><span className="text-white font-medium">Panel Comments:</span></p>
                           <p className="text-xs italic">"Exceptional interview - most qualified candidate for this position"</p>
                           <p className="text-xs italic">"FBI investigative experience directly applicable to GCSO backgrounds"</p>
@@ -701,7 +701,7 @@ export default function ApplicantTracking() {
                         <AlertCircle className="w-5 h-5 text-amber-400" />
                         <span className="text-sm font-bold text-amber-400">AWAITING SHERIFF'S APPROVAL FOR CONDITIONAL OFFER</span>
                       </div>
-                      <div className="text-sm text-slate-300 space-y-1">
+                      <div className="text-sm text-slate-700 dark:text-slate-300 space-y-1">
                         <p>• Interview panel recommendation forwarded to Sheriff Taylor: 02/11/2026</p>
                         <p>• Sheriff review meeting: <span className="text-white font-medium">February 14, 2026</span></p>
                         <p>• If approved: Conditional offer pending GCSO background, medical, psychological</p>
@@ -743,15 +743,15 @@ export default function ApplicantTracking() {
                         <h3 className="text-lg font-bold text-white">ROBERT MARTINEZ</h3>
                         <span className="px-2 py-1 bg-green-500/20 border border-green-500/30 rounded text-xs text-green-400 font-bold">OFFER ACCEPTED</span>
                       </div>
-                      <p className="text-sm text-slate-400">Deputy Sheriff (Patrol Division) • Ref: 2026-APP-0124</p>
+                      <p className="text-sm text-slate-600 dark:text-slate-400">Deputy Sheriff (Patrol Division) • Ref: 2026-APP-0124</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
                     <div className="text-right hidden md:block">
                       <p className="text-sm text-green-400 font-medium">Start Date: March 03, 2026</p>
-                      <p className="text-xs text-slate-400">Lateral from Clayton County Sheriff</p>
+                      <p className="text-xs text-slate-600 dark:text-slate-400">Lateral from Clayton County Sheriff</p>
                     </div>
-                    {expandedApplicant === 'robert' ? <ChevronUp className="w-5 h-5 text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-400" />}
+                    {expandedApplicant === 'robert' ? <ChevronUp className="w-5 h-5 text-slate-600 dark:text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-600 dark:text-slate-400" />}
                   </div>
                 </button>
 
@@ -763,35 +763,35 @@ export default function ApplicantTracking() {
                       <div className="bg-slate-900/40 rounded-lg p-4 border border-slate-700/30 space-y-2">
                         <div className="flex items-center gap-3 text-sm">
                           <CheckCircle className="w-4 h-4 text-green-400" />
-                          <span className="text-slate-300">Application Received: 10/23/2024</span>
+                          <span className="text-slate-700 dark:text-slate-300">Application Received: 10/23/2024</span>
                         </div>
                         <div className="flex items-center gap-3 text-sm">
                           <CheckCircle className="w-4 h-4 text-green-400" />
-                          <span className="text-slate-300">Initial Screening: PASSED (10/25/2024)</span>
+                          <span className="text-slate-700 dark:text-slate-300">Initial Screening: PASSED (10/25/2024)</span>
                         </div>
                         <div className="flex items-center gap-3 text-sm">
                           <CheckCircle className="w-4 h-4 text-green-400" />
-                          <span className="text-slate-300">Physical Fitness: PASSED (10/30/2024)</span>
+                          <span className="text-slate-700 dark:text-slate-300">Physical Fitness: PASSED (10/30/2024)</span>
                         </div>
                         <div className="flex items-center gap-3 text-sm">
                           <CheckCircle className="w-4 h-4 text-green-400" />
-                          <span className="text-slate-300">Oral Board Interview: 136/150 (90.7%) - 11/15/2024</span>
+                          <span className="text-slate-700 dark:text-slate-300">Oral Board Interview: 136/150 (90.7%) - 11/15/2024</span>
                         </div>
                         <div className="flex items-center gap-3 text-sm">
                           <CheckCircle className="w-4 h-4 text-green-400" />
-                          <span className="text-slate-300">Background Investigation: CLEARED (01/20/2026) - Lt. K. Hayes</span>
+                          <span className="text-slate-700 dark:text-slate-300">Background Investigation: CLEARED (01/20/2026) - Lt. K. Hayes</span>
                         </div>
                         <div className="flex items-center gap-3 text-sm">
                           <CheckCircle className="w-4 h-4 text-green-400" />
-                          <span className="text-slate-300">Medical Exam: PASSED (01/24/2026)</span>
+                          <span className="text-slate-700 dark:text-slate-300">Medical Exam: PASSED (01/24/2026)</span>
                         </div>
                         <div className="flex items-center gap-3 text-sm">
                           <CheckCircle className="w-4 h-4 text-green-400" />
-                          <span className="text-slate-300">Psychological Eval: PASSED (01/27/2026)</span>
+                          <span className="text-slate-700 dark:text-slate-300">Psychological Eval: PASSED (01/27/2026)</span>
                         </div>
                         <div className="flex items-center gap-3 text-sm">
                           <CheckCircle className="w-4 h-4 text-green-400" />
-                          <span className="text-slate-300">Sheriff's Approval: APPROVED (01/30/2026)</span>
+                          <span className="text-slate-700 dark:text-slate-300">Sheriff's Approval: APPROVED (01/30/2026)</span>
                         </div>
                       </div>
                     </div>
@@ -802,7 +802,7 @@ export default function ApplicantTracking() {
                         <CheckCircle className="w-5 h-5 text-green-400" />
                         <span className="text-sm font-bold text-green-400">CONDITIONAL OFFER ACCEPTED</span>
                       </div>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-slate-300">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-slate-700 dark:text-slate-300">
                         <div>
                           <p><span className="text-white font-medium">Offer Extended:</span> February 01, 2026</p>
                           <p><span className="text-white font-medium">Salary:</span> $55,200/year (Step 5 - 8 yrs exp)</p>
@@ -822,35 +822,35 @@ export default function ApplicantTracking() {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         <div className="flex items-center gap-2 text-sm">
                           <div className="w-4 h-4 border border-amber-500 rounded-full"></div>
-                          <span className="text-slate-400">I-9 Form - Due: 03/03/2026</span>
+                          <span className="text-slate-600 dark:text-slate-400">I-9 Form - Due: 03/03/2026</span>
                         </div>
                         <div className="flex items-center gap-2 text-sm">
                           <div className="w-4 h-4 border border-slate-600 rounded-full"></div>
-                          <span className="text-slate-400">W-4/G-4 Tax Forms - Pending</span>
+                          <span className="text-slate-600 dark:text-slate-400">W-4/G-4 Tax Forms - Pending</span>
                         </div>
                         <div className="flex items-center gap-2 text-sm">
                           <CheckCircle className="w-4 h-4 text-green-400" />
-                          <span className="text-slate-300">POST Cert Transfer - VERIFIED</span>
+                          <span className="text-slate-700 dark:text-slate-300">POST Cert Transfer - VERIFIED</span>
                         </div>
                         <div className="flex items-center gap-2 text-sm">
                           <CheckCircle className="w-4 h-4 text-green-400" />
-                          <span className="text-slate-300">Oath of Office - Scheduled 03/03 08:00 AM</span>
+                          <span className="text-slate-700 dark:text-slate-300">Oath of Office - Scheduled 03/03 08:00 AM</span>
                         </div>
                         <div className="flex items-center gap-2 text-sm">
                           <CheckCircle className="w-4 h-4 text-green-400" />
-                          <span className="text-slate-300">Uniform/Equipment - Pickup 02/28</span>
+                          <span className="text-slate-700 dark:text-slate-300">Uniform/Equipment - Pickup 02/28</span>
                         </div>
                         <div className="flex items-center gap-2 text-sm">
                           <CheckCircle className="w-4 h-4 text-green-400" />
-                          <span className="text-slate-300">Duty Weapon - Glock 17 #GC48291</span>
+                          <span className="text-slate-700 dark:text-slate-300">Duty Weapon - Glock 17 #GC48291</span>
                         </div>
                         <div className="flex items-center gap-2 text-sm">
                           <CheckCircle className="w-4 h-4 text-green-400" />
-                          <span className="text-slate-300">FTO Assigned - Cpl. J. Williams (B-Shift)</span>
+                          <span className="text-slate-700 dark:text-slate-300">FTO Assigned - Cpl. J. Williams (B-Shift)</span>
                         </div>
                         <div className="flex items-center gap-2 text-sm">
                           <CheckCircle className="w-4 h-4 text-green-400" />
-                          <span className="text-slate-300">Patrol Vehicle - Unit 391 (2023 Tahoe)</span>
+                          <span className="text-slate-700 dark:text-slate-300">Patrol Vehicle - Unit 391 (2023 Tahoe)</span>
                         </div>
                       </div>
                     </div>
@@ -879,7 +879,7 @@ export default function ApplicantTracking() {
               </div>
 
               {/* David Brown - Background Check Stage */}
-              <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl overflow-hidden">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
                 <button
                   onClick={() => toggleApplicant('david')}
                   className="w-full p-5 flex items-center justify-between hover:bg-slate-800/60 transition-colors"
@@ -893,7 +893,7 @@ export default function ApplicantTracking() {
                         <h3 className="text-lg font-bold text-white">DAVID BROWN</h3>
                         <span className="px-2 py-1 bg-cyan-500/20 border border-cyan-500/30 rounded text-xs text-cyan-400 font-bold">BACKGROUND CHECK</span>
                       </div>
-                      <p className="text-sm text-slate-400">Deputy Sheriff (Patrol Division) • Ref: 2026-APP-0178</p>
+                      <p className="text-sm text-slate-600 dark:text-slate-400">Deputy Sheriff (Patrol Division) • Ref: 2026-APP-0178</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
@@ -901,7 +901,7 @@ export default function ApplicantTracking() {
                       <p className="text-sm text-white font-medium">67 days in progress</p>
                       <p className="text-xs text-cyan-400">Investigator: Cpl. J. Adams</p>
                     </div>
-                    {expandedApplicant === 'david' ? <ChevronUp className="w-5 h-5 text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-400" />}
+                    {expandedApplicant === 'david' ? <ChevronUp className="w-5 h-5 text-slate-600 dark:text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-600 dark:text-slate-400" />}
                   </div>
                 </button>
 
@@ -911,19 +911,19 @@ export default function ApplicantTracking() {
                     <div className="pt-5 grid grid-cols-2 md:grid-cols-4 gap-4">
                       <div className="flex items-center gap-2 text-sm">
                         <Mail className="w-4 h-4 text-slate-500" />
-                        <span className="text-slate-300">david.brown@email.com</span>
+                        <span className="text-slate-700 dark:text-slate-300">david.brown@email.com</span>
                       </div>
                       <div className="flex items-center gap-2 text-sm">
                         <Phone className="w-4 h-4 text-slate-500" />
-                        <span className="text-slate-300">(555) 678-9012</span>
+                        <span className="text-slate-700 dark:text-slate-300">(555) 678-9012</span>
                       </div>
                       <div className="flex items-center gap-2 text-sm">
                         <MapPin className="w-4 h-4 text-slate-500" />
-                        <span className="text-slate-300">Buford, GA 30518</span>
+                        <span className="text-slate-700 dark:text-slate-300">Buford, GA 30518</span>
                       </div>
                       <div className="flex items-center gap-2 text-sm">
                         <BadgeCheck className="w-4 h-4 text-slate-500" />
-                        <span className="text-slate-300">6 yrs Hall County Sheriff</span>
+                        <span className="text-slate-700 dark:text-slate-300">6 yrs Hall County Sheriff</span>
                       </div>
                     </div>
 
@@ -934,10 +934,10 @@ export default function ApplicantTracking() {
                         <div className="flex items-center justify-between mb-3">
                           <div>
                             <p className="text-sm font-bold text-cyan-400">IN PROGRESS - 67 DAYS</p>
-                            <p className="text-xs text-slate-400">Case #: BI-2024-0178 | Investigator: Cpl. J. Adams (GCSO IA)</p>
+                            <p className="text-xs text-slate-600 dark:text-slate-400">Case #: BI-2024-0178 | Investigator: Cpl. J. Adams (GCSO IA)</p>
                           </div>
                           <div className="text-right">
-                            <p className="text-xs text-slate-400">Target Completion</p>
+                            <p className="text-xs text-slate-600 dark:text-slate-400">Target Completion</p>
                             <p className="text-sm text-white font-medium">Feb 15, 2026</p>
                           </div>
                         </div>
@@ -948,56 +948,56 @@ export default function ApplicantTracking() {
                           <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
                           <div className="flex-1">
                             <p className="text-sm text-white">Initial Interview - COMPLETED (11/25/2024)</p>
-                            <p className="text-xs text-slate-400">2 hours at GCSO HQ. Notes: "Applicant cooperative, professional, no concerns."</p>
+                            <p className="text-xs text-slate-600 dark:text-slate-400">2 hours at GCSO HQ. Notes: "Applicant cooperative, professional, no concerns."</p>
                           </div>
                         </div>
                         <div className="flex items-start gap-3">
                           <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
                           <div className="flex-1">
                             <p className="text-sm text-white">Criminal History Check - COMPLETED (11/26/2024)</p>
-                            <p className="text-xs text-slate-400">GCIC/NCIC: No record ✓ | FBI fingerprint: No arrests ✓ | Court records: Clear ✓</p>
+                            <p className="text-xs text-slate-600 dark:text-slate-400">GCIC/NCIC: No record ✓ | FBI fingerprint: No arrests ✓ | Court records: Clear ✓</p>
                           </div>
                         </div>
                         <div className="flex items-start gap-3">
                           <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
                           <div className="flex-1">
                             <p className="text-sm text-white">Driving Record - COMPLETED (11/26/2024)</p>
-                            <p className="text-xs text-slate-400">1 speeding ticket (2021, 15 mph over, paid). No DUI/suspensions. Acceptable ✓</p>
+                            <p className="text-xs text-slate-600 dark:text-slate-400">1 speeding ticket (2021, 15 mph over, paid). No DUI/suspensions. Acceptable ✓</p>
                           </div>
                         </div>
                         <div className="flex items-start gap-3">
                           <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
                           <div className="flex-1">
                             <p className="text-sm text-white">Employment Verification - COMPLETED (12/10/2024)</p>
-                            <p className="text-xs text-slate-400">Hall County Sheriff: "Good deputy, reliable, no disciplinary issues, eligible for rehire"</p>
+                            <p className="text-xs text-slate-600 dark:text-slate-400">Hall County Sheriff: "Good deputy, reliable, no disciplinary issues, eligible for rehire"</p>
                           </div>
                         </div>
                         <div className="flex items-start gap-3">
                           <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
                           <div className="flex-1">
                             <p className="text-sm text-white">Education/Residence Verification - COMPLETED</p>
-                            <p className="text-xs text-slate-400">UNG Bachelor's CJ (2017) verified ✓ | Current address verified ✓</p>
+                            <p className="text-xs text-slate-600 dark:text-slate-400">UNG Bachelor's CJ (2017) verified ✓ | Current address verified ✓</p>
                           </div>
                         </div>
                         <div className="flex items-start gap-3">
                           <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
                           <div className="flex-1">
                             <p className="text-sm text-white">Credit History - COMPLETED (01/25/2026)</p>
-                            <p className="text-xs text-slate-400">Score: 720 (Good). No bankruptcies, collections, or judgments ✓</p>
+                            <p className="text-xs text-slate-600 dark:text-slate-400">Score: 720 (Good). No bankruptcies, collections, or judgments ✓</p>
                           </div>
                         </div>
                         <div className="flex items-start gap-3">
                           <div className="w-4 h-4 border-2 border-amber-400 rounded-full flex-shrink-0 mt-0.5 animate-pulse"></div>
                           <div className="flex-1">
                             <p className="text-sm text-amber-400">Reference Interviews - IN PROGRESS (4 of 5)</p>
-                            <p className="text-xs text-slate-400">Reference #5 (Lt. J. Davis) scheduled 02/05/2026 - Lt. returning from vacation</p>
+                            <p className="text-xs text-slate-600 dark:text-slate-400">Reference #5 (Lt. J. Davis) scheduled 02/05/2026 - Lt. returning from vacation</p>
                           </div>
                         </div>
                         <div className="flex items-start gap-3">
                           <div className="w-4 h-4 border border-slate-600 rounded-full flex-shrink-0 mt-0.5"></div>
                           <div className="flex-1">
                             <p className="text-sm text-white">Polygraph Examination - SCHEDULED</p>
-                            <p className="text-xs text-slate-400">February 12, 2026 • 09:00 AM • Examiner: Sgt. R. Johnson (ret. GBI)</p>
+                            <p className="text-xs text-slate-600 dark:text-slate-400">February 12, 2026 • 09:00 AM • Examiner: Sgt. R. Johnson (ret. GBI)</p>
                           </div>
                         </div>
                       </div>
@@ -1006,7 +1006,7 @@ export default function ApplicantTracking() {
                     {/* Investigator Notes */}
                     <div className="bg-slate-900/40 rounded-lg p-4 border border-slate-700/30">
                       <p className="text-xs text-slate-500 mb-2">INVESTIGATOR NOTES (Cpl. Adams - 02/02/2026):</p>
-                      <p className="text-sm text-slate-300 italic">"Background investigation proceeding well. No disqualifying issues to date. Strong recommendations from Hall County. Awaiting final reference (02/05) and polygraph (02/12). Preliminary assessment: Likely to recommend for hire pending successful polygraph."</p>
+                      <p className="text-sm text-slate-700 dark:text-slate-300 italic">"Background investigation proceeding well. No disqualifying issues to date. Strong recommendations from Hall County. Awaiting final reference (02/05) and polygraph (02/12). Preliminary assessment: Likely to recommend for hire pending successful polygraph."</p>
                     </div>
 
                     {/* Actions */}
@@ -1029,7 +1029,7 @@ export default function ApplicantTracking() {
               </div>
 
               {/* Lisa Williams - New Stage */}
-              <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl overflow-hidden">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
                 <button
                   onClick={() => toggleApplicant('lisa')}
                   className="w-full p-5 flex items-center justify-between hover:bg-slate-800/60 transition-colors"
@@ -1043,7 +1043,7 @@ export default function ApplicantTracking() {
                         <h3 className="text-lg font-bold text-white">LISA WILLIAMS</h3>
                         <span className="px-2 py-1 bg-blue-500/20 border border-blue-500/30 rounded text-xs text-blue-400 font-bold">NEW</span>
                       </div>
-                      <p className="text-sm text-slate-400">Detention Officer • Ref: 2026-APP-0201</p>
+                      <p className="text-sm text-slate-600 dark:text-slate-400">Detention Officer • Ref: 2026-APP-0201</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
@@ -1051,7 +1051,7 @@ export default function ApplicantTracking() {
                       <p className="text-sm text-white font-medium">Applied: Nov 01, 2024</p>
                       <p className="text-xs text-amber-400">Pending Initial Screening</p>
                     </div>
-                    {expandedApplicant === 'lisa' ? <ChevronUp className="w-5 h-5 text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-400" />}
+                    {expandedApplicant === 'lisa' ? <ChevronUp className="w-5 h-5 text-slate-600 dark:text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-600 dark:text-slate-400" />}
                   </div>
                 </button>
 
@@ -1062,7 +1062,7 @@ export default function ApplicantTracking() {
                         <div>
                           <p className="text-xs text-slate-500 mb-1">Experience</p>
                           <p className="text-sm text-white font-medium">3 years GA Dept of Corrections</p>
-                          <p className="text-xs text-slate-400">Correctional Officer II, Metro State Prison (2021-2024)</p>
+                          <p className="text-xs text-slate-600 dark:text-slate-400">Correctional Officer II, Metro State Prison (2021-2024)</p>
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                           <div>
@@ -1083,7 +1083,7 @@ export default function ApplicantTracking() {
                         <AlertCircle className="w-5 h-5 text-amber-400" />
                         <span className="text-sm font-bold text-amber-400">PENDING INITIAL SCREENING REVIEW</span>
                       </div>
-                      <div className="text-sm text-slate-300 space-y-1">
+                      <div className="text-sm text-slate-700 dark:text-slate-300 space-y-1">
                         <p>• Application received 93 days ago - awaiting HR review</p>
                         <p>• Assigned to: HR Specialist J. Martinez</p>
                         <p>• Status: Backlog due to Deputy Sheriff hiring priority</p>
@@ -1124,15 +1124,15 @@ export default function ApplicantTracking() {
                         <h3 className="text-lg font-bold text-white">MICHAEL DAVIS</h3>
                         <span className="px-2 py-1 bg-red-500/20 border border-red-500/30 rounded text-xs text-red-400 font-bold">DISQUALIFIED</span>
                       </div>
-                      <p className="text-sm text-slate-400">Deputy Sheriff • Ref: 2026-APP-0156</p>
+                      <p className="text-sm text-slate-600 dark:text-slate-400">Deputy Sheriff • Ref: 2026-APP-0156</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
                     <div className="text-right hidden md:block">
                       <p className="text-sm text-red-400 font-medium">Did not meet POST requirements</p>
-                      <p className="text-xs text-slate-400">Disqualified: 10/31/2024</p>
+                      <p className="text-xs text-slate-600 dark:text-slate-400">Disqualified: 10/31/2024</p>
                     </div>
-                    {expandedApplicant === 'michael' ? <ChevronUp className="w-5 h-5 text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-400" />}
+                    {expandedApplicant === 'michael' ? <ChevronUp className="w-5 h-5 text-slate-600 dark:text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-600 dark:text-slate-400" />}
                   </div>
                 </button>
 
@@ -1141,9 +1141,9 @@ export default function ApplicantTracking() {
                     <div className="pt-5">
                       <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
                         <p className="text-sm font-bold text-red-400 mb-2">DISQUALIFICATION REASON:</p>
-                        <p className="text-sm text-slate-300">Applicant is 19 years old. Georgia POST requires age 21+ for armed patrol deputy positions. Applicant does not meet minimum age requirement per POST standards and GCSO Policy 2.01.</p>
-                        <p className="text-xs text-slate-400 mt-2">Reviewed by: HR Specialist J. Martinez (10/31/2024)</p>
-                        <p className="text-xs text-slate-400">Notification sent: 11/01/2024 via email and certified mail</p>
+                        <p className="text-sm text-slate-700 dark:text-slate-300">Applicant is 19 years old. Georgia POST requires age 21+ for armed patrol deputy positions. Applicant does not meet minimum age requirement per POST standards and GCSO Policy 2.01.</p>
+                        <p className="text-xs text-slate-600 dark:text-slate-400 mt-2">Reviewed by: HR Specialist J. Martinez (10/31/2024)</p>
+                        <p className="text-xs text-slate-600 dark:text-slate-400">Notification sent: 11/01/2024 via email and certified mail</p>
                       </div>
                     </div>
                     <div className="text-xs text-slate-500">
@@ -1182,7 +1182,7 @@ export default function ApplicantTracking() {
                 <MessageSquare className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h3 className="text-sm font-semibold text-white">GCSO HR Assistant</h3>
+                <h3 className="text-sm font-semibold text-slate-900 dark:text-white">GCSO HR Assistant</h3>
                 <p className="text-xs text-green-400">Online</p>
               </div>
             </div>
@@ -1201,7 +1201,7 @@ export default function ApplicantTracking() {
           </div>
           <div className="p-4 border-t border-slate-700/50">
             <div className="flex items-center gap-2">
-              <input type="text" placeholder="Ask about applicants..." className="flex-1 px-4 py-2 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-blue-500/50" />
+              <input type="text" placeholder="Ask about applicants..." className="flex-1 px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-blue-500/50" />
               <button className="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center">
                 <Send className="w-5 h-5 text-white" />
               </button>

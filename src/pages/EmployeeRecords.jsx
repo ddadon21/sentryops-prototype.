@@ -421,7 +421,7 @@ export default function EmployeeRecords() {
           {!sidebarCollapsed && (
             <div className="flex items-center gap-2">
               <Shield className="w-8 h-8 text-amber-500" />
-              <h1 className="text-xl font-bold text-white">SentryOps</h1>
+              <h1 className="text-xl font-bold text-slate-900 dark:text-white">SentryOps</h1>
             </div>
           )}
           {sidebarCollapsed && (
@@ -431,7 +431,7 @@ export default function EmployeeRecords() {
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
             className="p-2 hover:bg-slate-800/50 rounded-lg transition-colors hidden lg:block"
           >
-            {sidebarCollapsed ? <ChevronRight className="w-5 h-5 text-slate-400" /> : <ChevronLeft className="w-5 h-5 text-slate-400" />}
+            {sidebarCollapsed ? <ChevronRight className="w-5 h-5 text-slate-600 dark:text-slate-400" /> : <ChevronLeft className="w-5 h-5 text-slate-600 dark:text-slate-400" />}
           </button>
         </div>
 
@@ -444,7 +444,7 @@ export default function EmployeeRecords() {
                 key={item.id}
                 onClick={() => handleNavigation(item)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'
+                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-800/50 hover:text-white'
                 } ${sidebarCollapsed ? 'justify-center' : ''}`}
                 title={sidebarCollapsed ? item.label : ''}
               >
@@ -466,7 +466,7 @@ export default function EmployeeRecords() {
           <div className="p-4">
             <button
               onClick={() => setLogoutConfirmOpen(true)}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-slate-400 hover:bg-slate-800/40 hover:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-slate-600 dark:text-slate-400 hover:bg-slate-800/40 hover:text-slate-700 dark:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
               title={sidebarCollapsed ? 'Sign Out' : ''}
             >
               <LogOut className="w-5 h-5 flex-shrink-0" />
@@ -488,11 +488,11 @@ export default function EmployeeRecords() {
           <div className="relative bg-slate-900 border border-slate-700/50 rounded-2xl p-6 max-w-sm w-full shadow-2xl">
             <div className="flex items-center gap-4 mb-4">
               <div className="w-12 h-12 bg-slate-800/60 rounded-xl flex items-center justify-center">
-                <LogOut className="w-6 h-6 text-slate-400" />
+                <LogOut className="w-6 h-6 text-slate-600 dark:text-slate-400" />
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-white">Sign Out</h3>
-                <p className="text-sm text-slate-400">Are you sure you want to sign out?</p>
+                <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Sign Out</h3>
+                <p className="text-sm text-slate-600 dark:text-slate-400">Are you sure you want to sign out?</p>
               </div>
             </div>
             <div className="flex gap-3 mt-6">
@@ -508,10 +508,10 @@ export default function EmployeeRecords() {
           <div className="px-4 lg:px-6 py-4 flex items-center justify-between gap-4">
             <div className="flex items-center gap-4 flex-1 min-w-0">
               <button onClick={() => setSidebarOpen(!sidebarOpen)} className="lg:hidden p-2 hover:bg-slate-800/50 rounded-lg">
-                <Menu className="w-5 h-5 text-slate-400" />
+                <Menu className="w-5 h-5 text-slate-600 dark:text-slate-400" />
               </button>
               <div className="flex items-center gap-2 text-sm">
-                <button onClick={() => navigate(createPageUrl('HRDashboard'))} className="text-slate-400 hover:text-white transition-colors">HR Dashboard</button>
+                <button onClick={() => navigate(createPageUrl('HRDashboard'))} className="text-slate-600 dark:text-slate-400 hover:text-white transition-colors">HR Dashboard</button>
                 <ChevronRight className="w-4 h-4 text-slate-600" />
                 <span className="text-white">Employee Records</span>
               </div>
@@ -521,24 +521,24 @@ export default function EmployeeRecords() {
                 <Download className="w-4 h-4" />
                 <span className="hidden sm:inline">Export Roster</span>
               </button>
-              <button className="hidden md:flex items-center gap-2 px-3 py-2 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-slate-300 rounded-xl text-sm transition-all">
+              <button className="hidden md:flex items-center gap-2 px-3 py-2 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl text-sm transition-all">
                 <ClipboardCheck className="w-4 h-4" />
                 <span>Audit Report</span>
               </button>
-              <button onClick={() => navigate(createPageUrl('NewHireOnboarding'))} className="hidden lg:flex items-center gap-2 px-3 py-2 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-slate-300 rounded-xl text-sm transition-all">
+              <button onClick={() => navigate(createPageUrl('NewHireOnboarding'))} className="hidden lg:flex items-center gap-2 px-3 py-2 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl text-sm transition-all">
                 <UserPlus className="w-4 h-4" />
                 <span>Add Employee</span>
               </button>
 
               <div className="relative">
                 <button onClick={() => setNotificationsOpen(!notificationsOpen)} className="p-2 hover:bg-slate-800/50 rounded-lg relative">
-                  <Bell className="w-5 h-5 text-slate-400" />
+                  <Bell className="w-5 h-5 text-slate-600 dark:text-slate-400" />
                   <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                 </button>
                 {notificationsOpen && (
                   <div className="absolute right-0 top-full mt-2 w-96 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-2xl z-50">
                     <div className="p-4 border-b border-slate-700/50">
-                      <h3 className="text-sm font-semibold text-white">Personnel Notifications</h3>
+                      <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Personnel Notifications</h3>
                     </div>
                     <div className="max-h-96 overflow-y-auto">
                       {notifications.map(notification => (
@@ -546,8 +546,8 @@ export default function EmployeeRecords() {
                           <div className="flex items-start gap-3">
                             <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-red-400' : 'bg-blue-400'}`}></div>
                             <div className="flex-1 min-w-0">
-                              <p className="text-sm font-medium text-white mb-1">{notification.title}</p>
-                              <p className="text-xs text-slate-400 mb-2">{notification.message}</p>
+                              <p className="text-sm font-medium text-slate-900 dark:text-white mb-1">{notification.title}</p>
+                              <p className="text-xs text-slate-600 dark:text-slate-400 mb-2">{notification.message}</p>
                               <p className="text-xs text-slate-500">{notification.time}</p>
                             </div>
                           </div>
@@ -564,8 +564,8 @@ export default function EmployeeRecords() {
                   <span className="text-white text-sm font-bold">HR</span>
                 </div>
                 <div className="hidden sm:block">
-                  <p className="text-sm font-medium text-white">HR Director</p>
-                  <p className="text-xs text-slate-400">Human Resources</p>
+                  <p className="text-sm font-medium text-slate-900 dark:text-white">HR Director</p>
+                  <p className="text-xs text-slate-600 dark:text-slate-400">Human Resources</p>
                 </div>
               </div>
             </div>
@@ -577,7 +577,7 @@ export default function EmployeeRecords() {
             {/* GCSO Header */}
             <div className="mb-6">
               <h2 className="text-2xl lg:text-3xl font-bold text-white mb-2">Personnel Records & Employee Information</h2>
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-slate-400">
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-slate-600 dark:text-slate-400">
                 <span>Gwinnett County Sheriff's Office</span>
                 <span className="text-slate-600">•</span>
                 <span>Lawrenceville, Georgia</span>
@@ -602,7 +602,7 @@ export default function EmployeeRecords() {
                   <AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <div className="flex-1">
                     <p className="text-sm font-medium text-red-400 mb-1">Deputy R. Martinez (#D-2362): Expired Firearms Qualification - 25 Days Overdue</p>
-                    <p className="text-xs text-slate-400">Duty weapon removed, desk duty assigned. Range day scheduled February 12, 2026. Written counseling pending.</p>
+                    <p className="text-xs text-slate-600 dark:text-slate-400">Duty weapon removed, desk duty assigned. Range day scheduled February 12, 2026. Written counseling pending.</p>
                   </div>
                   <span className="px-2 py-1 bg-red-500/20 border border-red-500/40 text-red-400 rounded-lg text-xs font-bold whitespace-nowrap">CRITICAL</span>
                 </div>
@@ -613,7 +613,7 @@ export default function EmployeeRecords() {
                   <Clock className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
                   <div className="flex-1">
                     <p className="text-sm font-medium text-amber-400 mb-1">Deputy M. Chen (#D-2345): CIT Certification Expires in 19 Days - Renewal NOT Scheduled</p>
-                    <p className="text-xs text-slate-400">CIT expires Feb 27, next recert class not until Mar 10. Urgent: research external courses or plan coverage gap.</p>
+                    <p className="text-xs text-slate-600 dark:text-slate-400">CIT expires Feb 27, next recert class not until Mar 10. Urgent: research external courses or plan coverage gap.</p>
                   </div>
                 </div>
               </div>
@@ -623,7 +623,7 @@ export default function EmployeeRecords() {
                   <CheckCircle className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
                   <div className="flex-1">
                     <p className="text-sm font-medium text-blue-400 mb-1">5 Performance Reviews Scheduled - All On Track</p>
-                    <p className="text-xs text-slate-400">Chen (Feb 15), Williams (Mar 20), Taylor (Mar 5), Garcia (May 1), Davis (deferred - medical leave)</p>
+                    <p className="text-xs text-slate-600 dark:text-slate-400">Chen (Feb 15), Williams (Mar 20), Taylor (Mar 5), Garcia (May 1), Davis (deferred - medical leave)</p>
                   </div>
                 </div>
               </div>
@@ -631,33 +631,33 @@ export default function EmployeeRecords() {
 
             {/* Personnel Summary Cards */}
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-6">
-              <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-4">
-                <p className="text-xs text-slate-400 mb-1">Total Personnel</p>
-                <p className="text-xl font-bold text-white">{personnelStats.total}</p>
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
+                <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Total Personnel</p>
+                <p className="text-xl font-bold text-slate-900 dark:text-white">{personnelStats.total}</p>
                 <p className="text-[10px] text-slate-500">{personnelStats.sworn} sworn / {personnelStats.civilian} civilian</p>
               </div>
               <div className="bg-slate-800/40 border border-green-500/30 rounded-xl p-4">
-                <p className="text-xs text-slate-400 mb-1">Active Duty</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Active Duty</p>
                 <p className="text-xl font-bold text-green-400">{personnelStats.active}</p>
                 <p className="text-[10px] text-slate-500">Full duty personnel</p>
               </div>
               <div className="bg-slate-800/40 border border-amber-500/30 rounded-xl p-4">
-                <p className="text-xs text-slate-400 mb-1">On Leave</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">On Leave</p>
                 <p className="text-xl font-bold text-amber-400">{personnelStats.onLeave}</p>
                 <p className="text-[10px] text-slate-500">FMLA / Medical / Military</p>
               </div>
               <div className="bg-slate-800/40 border border-red-500/30 rounded-xl p-4">
-                <p className="text-xs text-slate-400 mb-1">Suspended</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Suspended</p>
                 <p className="text-xl font-bold text-red-400">{personnelStats.suspended}</p>
                 <p className="text-[10px] text-slate-500">Pending investigation</p>
               </div>
               <div className="bg-slate-800/40 border border-red-500/30 rounded-xl p-4">
-                <p className="text-xs text-slate-400 mb-1">Cert Issues</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Cert Issues</p>
                 <p className="text-xl font-bold text-red-400">1</p>
                 <p className="text-[10px] text-slate-500">Expired certification</p>
               </div>
               <div className="bg-slate-800/40 border border-amber-500/30 rounded-xl p-4">
-                <p className="text-xs text-slate-400 mb-1">Expiring Soon</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Expiring Soon</p>
                 <p className="text-xl font-bold text-amber-400">1</p>
                 <p className="text-[10px] text-slate-500">Within 30 days</p>
               </div>
@@ -680,12 +680,12 @@ export default function EmployeeRecords() {
                     <Crosshair className="w-5 h-5 text-red-400" />
                     <div className="text-left">
                       <h4 className="text-sm font-semibold text-red-400">Deputy Robert Martinez - Expired Firearms Qualification</h4>
-                      <p className="text-xs text-slate-400 mt-0.5">Badge #D-2362 | Patrol Division | B-Shift (14:00-02:00) | 25 days overdue</p>
+                      <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">Badge #D-2362 | Patrol Division | B-Shift (14:00-02:00) | 25 days overdue</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="px-2 py-1 bg-red-500/20 border border-red-500/40 rounded text-xs text-red-400 font-bold">EXPIRED</span>
-                    {expandedIssue.martinez ? <ChevronUp className="w-4 h-4 text-slate-400" /> : <ChevronDown className="w-4 h-4 text-slate-400" />}
+                    {expandedIssue.martinez ? <ChevronUp className="w-4 h-4 text-slate-600 dark:text-slate-400" /> : <ChevronDown className="w-4 h-4 text-slate-600 dark:text-slate-400" />}
                   </div>
                 </button>
 
@@ -693,7 +693,7 @@ export default function EmployeeRecords() {
                   <div className="px-5 pb-5 border-t border-red-500/20">
                     <div className="mt-4 bg-red-500/5 border border-red-500/20 rounded-lg p-4">
                       <h5 className="text-xs font-semibold text-red-400 mb-3">Compliance Violation:</h5>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-slate-400">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-slate-600 dark:text-slate-400">
                         <div><span className="text-slate-500">Certification:</span> Annual Firearms Qualification (GCSO Policy 4.12)</div>
                         <div><span className="text-slate-500">Last Qualification:</span> January 14, 2025</div>
                         <div><span className="text-slate-500">Deadline:</span> January 31, 2026 (annual requirement)</div>
@@ -703,12 +703,12 @@ export default function EmployeeRecords() {
 
                     <div className="mt-4 bg-amber-500/5 border border-amber-500/20 rounded-lg p-4">
                       <h5 className="text-xs font-semibold text-amber-400 mb-2">Operational Impact:</h5>
-                      <p className="text-xs text-slate-400">Deputy Martinez CANNOT carry firearm without current annual qualification per GCSO Policy 4.12 and Georgia POST standards.</p>
+                      <p className="text-xs text-slate-600 dark:text-slate-400">Deputy Martinez CANNOT carry firearm without current annual qualification per GCSO Policy 4.12 and Georgia POST standards.</p>
                     </div>
 
                     <div className="mt-4">
-                      <h5 className="text-xs font-semibold text-slate-300 mb-3">Current Status:</h5>
-                      <div className="space-y-2 text-xs text-slate-400">
+                      <h5 className="text-xs font-semibold text-slate-700 dark:text-slate-300 mb-3">Current Status:</h5>
+                      <div className="space-y-2 text-xs text-slate-600 dark:text-slate-400">
                         <div className="flex items-start gap-2">
                           <AlertCircle className="w-3.5 h-3.5 text-red-400 mt-0.5 flex-shrink-0" />
                           <span>Duty weapon (Glock 17 #GC2362) removed from duty belt and secured in armory as of 02/06/2026</span>
@@ -753,18 +753,18 @@ export default function EmployeeRecords() {
                     </div>
 
                     <div className="mt-4 bg-slate-900/40 border border-slate-700/30 rounded-lg p-3">
-                      <h5 className="text-xs font-semibold text-slate-300 mb-2">Disciplinary Action (Pending):</h5>
-                      <p className="text-xs text-slate-400">Written counseling for missing annual qualification deadline (25 days overdue indicates lack of personal responsibility for tracking certification requirements). Documentation in personnel file per GCSO disciplinary policy.</p>
+                      <h5 className="text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2">Disciplinary Action (Pending):</h5>
+                      <p className="text-xs text-slate-600 dark:text-slate-400">Written counseling for missing annual qualification deadline (25 days overdue indicates lack of personal responsibility for tracking certification requirements). Documentation in personnel file per GCSO disciplinary policy.</p>
                     </div>
 
                     <div className="mt-4 flex flex-wrap gap-2">
                       <button className="px-3 py-2 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 text-blue-400 rounded-lg text-xs font-medium transition-all flex items-center gap-2">
                         <Eye className="w-3.5 h-3.5" />View Full Personnel Record
                       </button>
-                      <button className="px-3 py-2 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-300 rounded-lg text-xs font-medium transition-all flex items-center gap-2">
+                      <button className="px-3 py-2 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-all flex items-center gap-2">
                         <Crosshair className="w-3.5 h-3.5" />View Firearms History
                       </button>
-                      <button className="px-3 py-2 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-300 rounded-lg text-xs font-medium transition-all flex items-center gap-2">
+                      <button className="px-3 py-2 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-all flex items-center gap-2">
                         <FileText className="w-3.5 h-3.5" />Document Counseling
                       </button>
                     </div>
@@ -779,12 +779,12 @@ export default function EmployeeRecords() {
                     <ShieldAlert className="w-5 h-5 text-amber-400" />
                     <div className="text-left">
                       <h4 className="text-sm font-semibold text-amber-400">Deputy Marcus Chen - CIT Certification Expiring (19 Days)</h4>
-                      <p className="text-xs text-slate-400 mt-0.5">Badge #D-2345 | Patrol Division | C-Shift (18:00-06:00) | Recertification NOT scheduled</p>
+                      <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">Badge #D-2345 | Patrol Division | C-Shift (18:00-06:00) | Recertification NOT scheduled</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="px-2 py-1 bg-amber-500/20 border border-amber-500/40 rounded text-xs text-amber-400 font-bold">EXPIRING</span>
-                    {expandedIssue.chen ? <ChevronUp className="w-4 h-4 text-slate-400" /> : <ChevronDown className="w-4 h-4 text-slate-400" />}
+                    {expandedIssue.chen ? <ChevronUp className="w-4 h-4 text-slate-600 dark:text-slate-400" /> : <ChevronDown className="w-4 h-4 text-slate-600 dark:text-slate-400" />}
                   </div>
                 </button>
 
@@ -792,7 +792,7 @@ export default function EmployeeRecords() {
                   <div className="px-5 pb-5 border-t border-amber-500/20">
                     <div className="mt-4 bg-amber-500/5 border border-amber-500/20 rounded-lg p-4">
                       <h5 className="text-xs font-semibold text-amber-400 mb-3">Certification Expiring Soon:</h5>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-slate-400">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-slate-600 dark:text-slate-400">
                         <div><span className="text-slate-500">Certification:</span> Crisis Intervention Training (CIT) - 40 hours</div>
                         <div><span className="text-slate-500">Initial Certification:</span> February 27, 2024</div>
                         <div><span className="text-slate-500">Certificate Number:</span> CIT-2024-1287</div>
@@ -804,7 +804,7 @@ export default function EmployeeRecords() {
 
                     <div className="mt-4 bg-blue-500/5 border border-blue-500/20 rounded-lg p-4">
                       <h5 className="text-xs font-semibold text-blue-400 mb-2">Operational Impact:</h5>
-                      <div className="space-y-1 text-xs text-slate-400">
+                      <div className="space-y-1 text-xs text-slate-600 dark:text-slate-400">
                         <p>CIT certification allows Deputy Chen to serve as primary responder for mental health crisis calls (specialized training in de-escalation, mental health assessment, crisis resources).</p>
                         <p className="mt-2">GCSO maintains roster of 47 CIT-certified deputies (28% of patrol force). If certification lapses, Deputy Chen removed from CIT roster until recertified.</p>
                       </div>
@@ -812,7 +812,7 @@ export default function EmployeeRecords() {
 
                     <div className="mt-4 bg-red-500/5 border border-red-500/20 rounded-lg p-4">
                       <h5 className="text-xs font-semibold text-red-400 mb-2">Renewal Status: RECERTIFICATION NOT SCHEDULED</h5>
-                      <div className="space-y-1 text-xs text-slate-400">
+                      <div className="space-y-1 text-xs text-slate-600 dark:text-slate-400">
                         <p>CIT recertification requires 40-hour course (same as initial certification).</p>
                         <p>Next available GCSO CIT recertification class: <span className="text-amber-400">March 10-14, 2026</span> (AFTER expiration date).</p>
                         <p>Previous CIT class: January 13-17, 2026 (MISSED - Deputy Chen was not enrolled).</p>
@@ -824,21 +824,21 @@ export default function EmployeeRecords() {
                       <div className="space-y-2">
                         <div className="flex items-start gap-3 px-3 py-2 rounded-lg bg-slate-900/30">
                           <span className="text-xs text-amber-400 font-bold mt-0.5">1.</span>
-                          <p className="text-xs text-slate-300">Enroll in external CIT recertification course (check local LE training providers, NAMI Georgia)</p>
+                          <p className="text-xs text-slate-700 dark:text-slate-300">Enroll in external CIT recertification course (check local LE training providers, NAMI Georgia)</p>
                         </div>
                         <div className="flex items-start gap-3 px-3 py-2 rounded-lg bg-slate-900/30">
                           <span className="text-xs text-amber-400 font-bold mt-0.5">2.</span>
-                          <p className="text-xs text-slate-300">Request Sheriff approval for special CIT recert class (requires min. 10 deputies, coordinate with Training Division)</p>
+                          <p className="text-xs text-slate-700 dark:text-slate-300">Request Sheriff approval for special CIT recert class (requires min. 10 deputies, coordinate with Training Division)</p>
                         </div>
                         <div className="flex items-start gap-3 px-3 py-2 rounded-lg bg-slate-900/30">
                           <span className="text-xs text-amber-400 font-bold mt-0.5">3.</span>
-                          <p className="text-xs text-slate-300">Allow certification to lapse, remove from CIT roster, recertify in March 2026 class (10+ days without CIT coverage on C-Shift)</p>
+                          <p className="text-xs text-slate-700 dark:text-slate-300">Allow certification to lapse, remove from CIT roster, recertify in March 2026 class (10+ days without CIT coverage on C-Shift)</p>
                         </div>
                       </div>
                     </div>
 
                     <div className="mt-4">
-                      <h5 className="text-xs font-semibold text-slate-300 mb-3">Action Required:</h5>
+                      <h5 className="text-xs font-semibold text-slate-700 dark:text-slate-300 mb-3">Action Required:</h5>
                       <div className="space-y-2">
                         {[
                           { action: 'HR Director contact Deputy Chen: Urgent notice of impending expiration', completed: false },
@@ -857,10 +857,10 @@ export default function EmployeeRecords() {
                       <button className="px-3 py-2 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 text-blue-400 rounded-lg text-xs font-medium transition-all flex items-center gap-2">
                         <Eye className="w-3.5 h-3.5" />View CIT Certification
                       </button>
-                      <button className="px-3 py-2 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-300 rounded-lg text-xs font-medium transition-all flex items-center gap-2">
+                      <button className="px-3 py-2 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-all flex items-center gap-2">
                         <Mail className="w-3.5 h-3.5" />Contact Deputy Chen
                       </button>
-                      <button className="px-3 py-2 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-300 rounded-lg text-xs font-medium transition-all flex items-center gap-2">
+                      <button className="px-3 py-2 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-all flex items-center gap-2">
                         <Search className="w-3.5 h-3.5" />Research External CIT Courses
                       </button>
                     </div>
@@ -879,11 +879,11 @@ export default function EmployeeRecords() {
                     </div>
                     <div>
                       <h3 className="text-sm font-bold text-white">AI Workforce Insights</h3>
-                      <p className="text-[10px] text-slate-400">Real-time personnel analytics • Updated {new Date().toLocaleDateString()}</p>
+                      <p className="text-[10px] text-slate-600 dark:text-slate-400">Real-time personnel analytics • Updated {new Date().toLocaleDateString()}</p>
                     </div>
                   </div>
                   <button onClick={() => setAiInsightsVisible(false)} className="p-1.5 hover:bg-slate-800/50 rounded-lg transition-colors">
-                    <X className="w-4 h-4 text-slate-400" />
+                    <X className="w-4 h-4 text-slate-600 dark:text-slate-400" />
                   </button>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -892,7 +892,7 @@ export default function EmployeeRecords() {
                       <AlertTriangle className="w-4 h-4 text-red-400" />
                       <span className="text-xs font-semibold text-red-400">Certification Risk</span>
                     </div>
-                    <p className="text-xs text-slate-300">2 personnel with certification issues affecting operational readiness. Martinez (firearms expired, desk duty) and Chen (CIT expiring in 19 days, no renewal scheduled).</p>
+                    <p className="text-xs text-slate-700 dark:text-slate-300">2 personnel with certification issues affecting operational readiness. Martinez (firearms expired, desk duty) and Chen (CIT expiring in 19 days, no renewal scheduled).</p>
                     <div className="mt-2 flex items-center gap-1">
                       <ArrowUpRight className="w-3 h-3 text-red-400" />
                       <span className="text-[10px] text-red-400">Immediate action required for both</span>
@@ -903,7 +903,7 @@ export default function EmployeeRecords() {
                       <Activity className="w-4 h-4 text-amber-400" />
                       <span className="text-xs font-semibold text-amber-400">Staffing Pressure</span>
                     </div>
-                    <p className="text-xs text-slate-300">Patrol Division operating at reduced capacity: 1 deputy on desk duty (Martinez), 1 detention officer on FMLA (Davis). B-Shift most impacted with coverage gaps.</p>
+                    <p className="text-xs text-slate-700 dark:text-slate-300">Patrol Division operating at reduced capacity: 1 deputy on desk duty (Martinez), 1 detention officer on FMLA (Davis). B-Shift most impacted with coverage gaps.</p>
                     <div className="mt-2 flex items-center gap-1">
                       <TrendingDown className="w-3 h-3 text-amber-400" />
                       <span className="text-[10px] text-amber-400">2 positions effectively offline</span>
@@ -914,7 +914,7 @@ export default function EmployeeRecords() {
                       <BarChart3 className="w-4 h-4 text-green-400" />
                       <span className="text-xs font-semibold text-green-400">Workforce Health</span>
                     </div>
-                    <p className="text-xs text-slate-300">Overall compliance: 96.6% (172/178 fully compliant). Performance review completion: 100% on file. Average tenure: 6.4 years. 3 commendations in last 12 months.</p>
+                    <p className="text-xs text-slate-700 dark:text-slate-300">Overall compliance: 96.6% (172/178 fully compliant). Performance review completion: 100% on file. Average tenure: 6.4 years. 3 commendations in last 12 months.</p>
                     <div className="mt-2 flex items-center gap-1">
                       <CheckCircle2 className="w-3 h-3 text-green-400" />
                       <span className="text-[10px] text-green-400">Strong institutional health indicators</span>
@@ -944,14 +944,14 @@ export default function EmployeeRecords() {
                 <div className="flex items-center gap-1 bg-slate-800/40 border border-slate-700/50 rounded-lg p-1">
                   <button
                     onClick={() => setViewMode('card')}
-                    className={`p-2 rounded-md transition-all ${viewMode === 'card' ? 'bg-amber-500/20 text-amber-400' : 'text-slate-400 hover:text-white'}`}
+                    className={`p-2 rounded-md transition-all ${viewMode === 'card' ? 'bg-amber-500/20 text-amber-400' : 'text-slate-600 dark:text-slate-400 hover:text-white'}`}
                     title="Card View"
                   >
                     <LayoutGrid className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => setViewMode('list')}
-                    className={`p-2 rounded-md transition-all ${viewMode === 'list' ? 'bg-amber-500/20 text-amber-400' : 'text-slate-400 hover:text-white'}`}
+                    className={`p-2 rounded-md transition-all ${viewMode === 'list' ? 'bg-amber-500/20 text-amber-400' : 'text-slate-600 dark:text-slate-400 hover:text-white'}`}
                     title="List View"
                   >
                     <List className="w-4 h-4" />
@@ -968,23 +968,23 @@ export default function EmployeeRecords() {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search by name, badge, position, department..."
-                    className="w-full pl-10 pr-4 py-2.5 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white text-sm placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
+                    className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white text-sm placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
                   />
                 </div>
-                <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} className="px-3 py-2.5 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer">
+                <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} className="px-3 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer">
                   <option value="all">All Status</option>
                   <option value="active">Active</option>
                   <option value="on-leave">On Leave</option>
                   <option value="suspended">Suspended</option>
                 </select>
-                <select value={filterDepartment} onChange={(e) => setFilterDepartment(e.target.value)} className="px-3 py-2.5 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer">
+                <select value={filterDepartment} onChange={(e) => setFilterDepartment(e.target.value)} className="px-3 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer">
                   <option value="all">All Divisions</option>
                   <option value="Patrol">Patrol Division</option>
                   <option value="Administrative">Administrative</option>
                   <option value="Human Resources">Human Resources</option>
                   <option value="Detention">Detention Center</option>
                 </select>
-                <select value={filterCertStatus} onChange={(e) => setFilterCertStatus(e.target.value)} className="px-3 py-2.5 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer">
+                <select value={filterCertStatus} onChange={(e) => setFilterCertStatus(e.target.value)} className="px-3 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer">
                   <option value="all">All Cert Status</option>
                   <option value="compliant">Compliant</option>
                   <option value="expiring">Expiring</option>
@@ -994,8 +994,8 @@ export default function EmployeeRecords() {
 
               {/* Employee List View */}
               {viewMode === 'list' && (
-                <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl overflow-hidden">
-                  <div className="grid grid-cols-[1fr_120px_140px_120px_100px_80px] gap-2 px-5 py-3 bg-slate-800/60 border-b border-slate-700/50 text-[10px] font-semibold text-slate-400 uppercase tracking-wider">
+                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
+                  <div className="grid grid-cols-[1fr_120px_140px_120px_100px_80px] gap-2 px-5 py-3 bg-slate-800/60 border-b border-slate-700/50 text-[10px] font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">
                     <span>Employee</span>
                     <span>Badge</span>
                     <span>Department</span>
@@ -1020,12 +1020,12 @@ export default function EmployeeRecords() {
                             )}
                           </div>
                           <div className="min-w-0">
-                            <p className="text-sm font-medium text-white truncate">{employee.name}</p>
-                            <p className="text-[10px] text-slate-400 truncate">{employee.position}</p>
+                            <p className="text-sm font-medium text-slate-900 dark:text-white truncate">{employee.name}</p>
+                            <p className="text-[10px] text-slate-600 dark:text-slate-400 truncate">{employee.position}</p>
                           </div>
                         </div>
-                        <span className="text-xs text-slate-300 font-mono">{employee.badge}</span>
-                        <span className="text-xs text-slate-400 truncate">{employee.department}</span>
+                        <span className="text-xs text-slate-700 dark:text-slate-300 font-mono">{employee.badge}</span>
+                        <span className="text-xs text-slate-600 dark:text-slate-400 truncate">{employee.department}</span>
                         <span className={`px-2 py-0.5 rounded text-[10px] font-bold border w-fit ${statusConfig.bg} ${statusConfig.text} ${statusConfig.border}`}>
                           {statusConfig.label}
                         </span>
@@ -1081,8 +1081,8 @@ export default function EmployeeRecords() {
 
                             <div className="flex-1 min-w-0">
                               <div className="flex items-center gap-2 mb-2 flex-wrap">
-                                <h4 className="text-lg font-semibold text-white">{employee.name}</h4>
-                                <span className="px-2 py-0.5 bg-slate-700/50 rounded text-xs text-slate-300 font-mono">{employee.badge}</span>
+                                <h4 className="text-lg font-semibold text-slate-900 dark:text-white">{employee.name}</h4>
+                                <span className="px-2 py-0.5 bg-slate-700/50 rounded text-xs text-slate-700 dark:text-slate-300 font-mono">{employee.badge}</span>
                                 <span className={`px-2 py-0.5 rounded text-xs font-bold border ${statusConfig.bg} ${statusConfig.text} ${statusConfig.border}`}>
                                   {statusConfig.label}
                                 </span>
@@ -1100,9 +1100,9 @@ export default function EmployeeRecords() {
                                 )}
                               </div>
 
-                              <p className="text-sm text-slate-300 mb-1">{employee.position} • {employee.department}</p>
+                              <p className="text-sm text-slate-700 dark:text-slate-300 mb-1">{employee.position} • {employee.department}</p>
 
-                              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-400 mb-2">
+                              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-600 dark:text-slate-400 mb-2">
                                 <span className="flex items-center gap-1"><Clock className="w-3 h-3" />{employee.yearsOfService}</span>
                                 <span className="flex items-center gap-1"><MapPin className="w-3 h-3" />{employee.assignment}</span>
                                 {employee.shift && <span className="flex items-center gap-1"><Calendar className="w-3 h-3" />{employee.shift}</span>}
@@ -1140,7 +1140,7 @@ export default function EmployeeRecords() {
                                   <div className="flex items-center justify-between text-xs">
                                     <div className="flex items-center gap-2">
                                       <Shield className="w-3.5 h-3.5 text-blue-400" />
-                                      <span className="text-slate-300">{employee.postCert.type} {employee.postCert.number}</span>
+                                      <span className="text-slate-700 dark:text-slate-300">{employee.postCert.type} {employee.postCert.number}</span>
                                     </div>
                                     <span className={`${employee.postCert.status === 'current' ? 'text-green-400' : 'text-red-400'}`}>
                                       Expires: {employee.postCert.expires} ({employee.postCert.daysRemaining} days)
@@ -1156,7 +1156,7 @@ export default function EmployeeRecords() {
                                   return (
                                     <div key={idx} className={`px-3 py-2 rounded-lg border ${certConfig.border} ${cert.status === 'expired' ? 'bg-red-500/5' : cert.status === 'expiring' ? 'bg-amber-500/5' : 'bg-slate-900/30'}`}>
                                       <div className="flex items-center justify-between">
-                                        <p className="text-[10px] font-medium text-slate-300 truncate flex-1">{cert.name}</p>
+                                        <p className="text-[10px] font-medium text-slate-700 dark:text-slate-300 truncate flex-1">{cert.name}</p>
                                         <span className={`px-1.5 py-0.5 rounded text-[9px] font-bold ml-2 ${certConfig.bg} ${certConfig.text}`}>
                                           {certConfig.label}
                                         </span>
@@ -1180,7 +1180,7 @@ export default function EmployeeRecords() {
                               <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-2">
                                 <div className="px-3 py-2 bg-slate-900/30 rounded-lg">
                                   <p className="text-[10px] text-slate-500 mb-1">Last Annual Evaluation</p>
-                                  <p className="text-xs text-slate-300">{employee.performance.lastEvaluation} - {employee.performance.rating}</p>
+                                  <p className="text-xs text-slate-700 dark:text-slate-300">{employee.performance.lastEvaluation} - {employee.performance.rating}</p>
                                   <p className="text-[10px] text-slate-500 mt-0.5">Evaluator: {employee.performance.evaluator}</p>
                                 </div>
                                 <div className={`px-3 py-2 rounded-lg ${employee.disciplinary.status === 'clean' ? 'bg-slate-900/30' : 'bg-red-500/5 border border-red-500/20'}`}>
@@ -1201,7 +1201,7 @@ export default function EmployeeRecords() {
                               <Eye className="w-4 h-4" />
                               Full Record
                             </button>
-                            <button className="px-4 py-2 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-300 rounded-lg text-sm font-medium transition-all flex items-center gap-2">
+                            <button className="px-4 py-2 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium transition-all flex items-center gap-2">
                               <Download className="w-4 h-4" />
                               Export
                             </button>
@@ -1224,12 +1224,12 @@ export default function EmployeeRecords() {
           <div className="relative bg-slate-900 border border-slate-700/50 rounded-2xl p-6 max-w-4xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
             <div className="flex items-start justify-between mb-6">
               <div>
-                <h3 className="text-2xl font-bold text-white mb-2">{selectedEmployee.name}</h3>
-                <p className="text-sm text-slate-400">{selectedEmployee.position} • Badge {selectedEmployee.badge} • {selectedEmployee.department}</p>
+                <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">{selectedEmployee.name}</h3>
+                <p className="text-sm text-slate-600 dark:text-slate-400">{selectedEmployee.position} • Badge {selectedEmployee.badge} • {selectedEmployee.department}</p>
                 {selectedEmployee.hireDate && <p className="text-xs text-slate-500 mt-1">Hire Date: {selectedEmployee.hireDate} ({selectedEmployee.yearsOfService})</p>}
               </div>
               <button onClick={() => setSelectedEmployee(null)} className="p-2 hover:bg-slate-800/50 rounded-lg transition-colors">
-                <X className="w-5 h-5 text-slate-400" />
+                <X className="w-5 h-5 text-slate-600 dark:text-slate-400" />
               </button>
             </div>
 
@@ -1238,15 +1238,15 @@ export default function EmployeeRecords() {
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                 <div className="bg-slate-800/40 rounded-xl p-3 border border-slate-700/50">
                   <p className="text-[10px] text-slate-500 mb-1">Email</p>
-                  <p className="text-xs text-slate-300">{selectedEmployee.email}</p>
+                  <p className="text-xs text-slate-700 dark:text-slate-300">{selectedEmployee.email}</p>
                 </div>
                 <div className="bg-slate-800/40 rounded-xl p-3 border border-slate-700/50">
                   <p className="text-[10px] text-slate-500 mb-1">Phone</p>
-                  <p className="text-xs text-slate-300">{selectedEmployee.phone}</p>
+                  <p className="text-xs text-slate-700 dark:text-slate-300">{selectedEmployee.phone}</p>
                 </div>
                 <div className="bg-slate-800/40 rounded-xl p-3 border border-slate-700/50">
                   <p className="text-[10px] text-slate-500 mb-1">Supervisor</p>
-                  <p className="text-xs text-slate-300">{selectedEmployee.supervisor}</p>
+                  <p className="text-xs text-slate-700 dark:text-slate-300">{selectedEmployee.supervisor}</p>
                 </div>
                 <div className="bg-slate-800/40 rounded-xl p-3 border border-slate-700/50">
                   <p className="text-[10px] text-slate-500 mb-1">Duty Status</p>
@@ -1254,12 +1254,12 @@ export default function EmployeeRecords() {
                 </div>
                 <div className="bg-slate-800/40 rounded-xl p-3 border border-slate-700/50">
                   <p className="text-[10px] text-slate-500 mb-1">Assignment</p>
-                  <p className="text-xs text-slate-300">{selectedEmployee.assignment}</p>
+                  <p className="text-xs text-slate-700 dark:text-slate-300">{selectedEmployee.assignment}</p>
                 </div>
                 {selectedEmployee.takeHomeVehicle && (
                   <div className="bg-slate-800/40 rounded-xl p-3 border border-slate-700/50">
                     <p className="text-[10px] text-slate-500 mb-1">Vehicle</p>
-                    <p className="text-xs text-slate-300">{selectedEmployee.takeHomeVehicle}</p>
+                    <p className="text-xs text-slate-700 dark:text-slate-300">{selectedEmployee.takeHomeVehicle}</p>
                   </div>
                 )}
               </div>
@@ -1271,9 +1271,9 @@ export default function EmployeeRecords() {
                     <Shield className="w-4 h-4" />POST Certification
                   </h4>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
-                    <div><span className="text-slate-500">Type:</span> <span className="text-slate-300">{selectedEmployee.postCert.type}</span></div>
-                    <div><span className="text-slate-500">Number:</span> <span className="text-slate-300">{selectedEmployee.postCert.number}</span></div>
-                    <div><span className="text-slate-500">Issued:</span> <span className="text-slate-300">{selectedEmployee.postCert.issued}</span></div>
+                    <div><span className="text-slate-500">Type:</span> <span className="text-slate-700 dark:text-slate-300">{selectedEmployee.postCert.type}</span></div>
+                    <div><span className="text-slate-500">Number:</span> <span className="text-slate-700 dark:text-slate-300">{selectedEmployee.postCert.number}</span></div>
+                    <div><span className="text-slate-500">Issued:</span> <span className="text-slate-700 dark:text-slate-300">{selectedEmployee.postCert.issued}</span></div>
                     <div><span className="text-slate-500">Expires:</span> <span className="text-green-400">{selectedEmployee.postCert.expires} ({selectedEmployee.postCert.daysRemaining} days)</span></div>
                   </div>
                 </div>
@@ -1281,7 +1281,7 @@ export default function EmployeeRecords() {
 
               {/* All Certifications */}
               <div>
-                <h4 className="text-sm font-semibold text-white mb-3">Certifications & Qualifications</h4>
+                <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Certifications & Qualifications</h4>
                 <div className="space-y-2">
                   {selectedEmployee.certifications.map((cert, idx) => {
                     const certConfig = getCertStatusConfig(cert.status);
@@ -1291,7 +1291,7 @@ export default function EmployeeRecords() {
                           <p className="text-xs font-medium text-white">{cert.name}</p>
                           <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${certConfig.bg} ${certConfig.text}`}>{certConfig.label}</span>
                         </div>
-                        <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-[10px] text-slate-400">
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-[10px] text-slate-600 dark:text-slate-400">
                           <div>Last: {cert.lastDate}</div>
                           {cert.score && <div>Score: {cert.score}</div>}
                           {cert.certNumber && <div>Cert #: {cert.certNumber}</div>}
@@ -1307,35 +1307,35 @@ export default function EmployeeRecords() {
 
               {/* Performance */}
               <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
-                <h4 className="text-sm font-semibold text-white mb-3">Performance Evaluations</h4>
+                <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Performance Evaluations</h4>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3 text-xs">
-                  <div><span className="text-slate-500">Last Evaluation:</span> <span className="text-slate-300">{selectedEmployee.performance.lastEvaluation}</span></div>
-                  <div><span className="text-slate-500">Evaluator:</span> <span className="text-slate-300">{selectedEmployee.performance.evaluator}</span></div>
-                  <div><span className="text-slate-500">Rating:</span> <span className="text-slate-300">{selectedEmployee.performance.rating}</span></div>
-                  <div><span className="text-slate-500">Review Period:</span> <span className="text-slate-300">{selectedEmployee.performance.reviewPeriod}</span></div>
-                  <div><span className="text-slate-500">Next Due:</span> <span className="text-slate-300">{selectedEmployee.performance.nextDue}</span></div>
+                  <div><span className="text-slate-500">Last Evaluation:</span> <span className="text-slate-700 dark:text-slate-300">{selectedEmployee.performance.lastEvaluation}</span></div>
+                  <div><span className="text-slate-500">Evaluator:</span> <span className="text-slate-700 dark:text-slate-300">{selectedEmployee.performance.evaluator}</span></div>
+                  <div><span className="text-slate-500">Rating:</span> <span className="text-slate-700 dark:text-slate-300">{selectedEmployee.performance.rating}</span></div>
+                  <div><span className="text-slate-500">Review Period:</span> <span className="text-slate-700 dark:text-slate-300">{selectedEmployee.performance.reviewPeriod}</span></div>
+                  <div><span className="text-slate-500">Next Due:</span> <span className="text-slate-700 dark:text-slate-300">{selectedEmployee.performance.nextDue}</span></div>
                   <div><span className="text-slate-500">On File:</span> <span className="text-green-400">{selectedEmployee.performance.onFile ? 'Yes' : 'No'}</span></div>
                 </div>
               </div>
 
               {/* Personnel Summary */}
               <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
-                <h4 className="text-sm font-semibold text-white mb-3">Personnel File Summary</h4>
+                <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Personnel File Summary</h4>
                 <div className="space-y-2 text-xs">
-                  <div><span className="text-slate-500">Position Changes:</span> <span className="text-slate-300">{selectedEmployee.personnelSummary.positionChanges}</span></div>
+                  <div><span className="text-slate-500">Position Changes:</span> <span className="text-slate-700 dark:text-slate-300">{selectedEmployee.personnelSummary.positionChanges}</span></div>
                   {selectedEmployee.personnelSummary.commendations.length > 0 && (
                     <div>
                       <span className="text-slate-500">Commendations:</span>
                       <div className="ml-4 mt-1 space-y-1">
                         {selectedEmployee.personnelSummary.commendations.map((c, i) => (
-                          <p key={i} className="text-slate-300 flex items-center gap-2">
+                          <p key={i} className="text-slate-700 dark:text-slate-300 flex items-center gap-2">
                             <Award className="w-3 h-3 text-amber-400" />{c}
                           </p>
                         ))}
                       </div>
                     </div>
                   )}
-                  <div><span className="text-slate-500">Specialized Training:</span> <span className="text-slate-300">{selectedEmployee.personnelSummary.specializedTraining.join(', ')}</span></div>
+                  <div><span className="text-slate-500">Specialized Training:</span> <span className="text-slate-700 dark:text-slate-300">{selectedEmployee.personnelSummary.specializedTraining.join(', ')}</span></div>
                 </div>
               </div>
 
@@ -1343,7 +1343,7 @@ export default function EmployeeRecords() {
                 <button className="flex-1 px-4 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-xl font-medium transition-all text-sm">Print Personnel File</button>
                 <button onClick={() => navigate(createPageUrl('PerformanceReviews'))} className="flex-1 px-4 py-3 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-400 rounded-xl font-medium transition-all text-sm">View Performance</button>
                 <button onClick={() => navigate(createPageUrl('TrainingCertifications'))} className="flex-1 px-4 py-3 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-white rounded-xl font-medium transition-all text-sm">Training History</button>
-                <button onClick={() => setSelectedEmployee(null)} className="px-4 py-3 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-slate-300 rounded-xl font-medium transition-all text-sm">Close</button>
+                <button onClick={() => setSelectedEmployee(null)} className="px-4 py-3 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl font-medium transition-all text-sm">Close</button>
               </div>
             </div>
           </div>
@@ -1362,32 +1362,32 @@ export default function EmployeeRecords() {
         {supportOpen && (
           <div className="absolute bottom-16 right-0 w-80 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-2xl overflow-hidden">
             <div className="p-4 border-b border-slate-700/50">
-              <h3 className="text-sm font-semibold text-white">Personnel Records Support</h3>
-              <p className="text-xs text-slate-400 mt-1">GCSO Human Resources Division</p>
+              <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Personnel Records Support</h3>
+              <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">GCSO Human Resources Division</p>
             </div>
             <div className="p-4 space-y-3">
               <div className="p-3 bg-slate-800/40 rounded-lg hover:bg-slate-800/60 cursor-pointer transition-colors">
-                <p className="text-sm font-medium text-white">HR Director</p>
-                <p className="text-xs text-slate-400">Personnel file access, confidential records</p>
+                <p className="text-sm font-medium text-slate-900 dark:text-white">HR Director</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400">Personnel file access, confidential records</p>
                 <p className="text-xs text-amber-400 mt-1">Ext. 4500</p>
               </div>
               <div className="p-3 bg-slate-800/40 rounded-lg hover:bg-slate-800/60 cursor-pointer transition-colors">
-                <p className="text-sm font-medium text-white">Records Custodian</p>
-                <p className="text-xs text-slate-400">HR Specialist J. Martinez</p>
+                <p className="text-sm font-medium text-slate-900 dark:text-white">Records Custodian</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400">HR Specialist J. Martinez</p>
                 <p className="text-xs text-amber-400 mt-1">Ext. 4505</p>
               </div>
               <div className="p-3 bg-slate-800/40 rounded-lg hover:bg-slate-800/60 cursor-pointer transition-colors">
-                <p className="text-sm font-medium text-white">Training Division</p>
-                <p className="text-xs text-slate-400">Sgt. R. Martinez - Certifications & Training</p>
+                <p className="text-sm font-medium text-slate-900 dark:text-white">Training Division</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400">Sgt. R. Martinez - Certifications & Training</p>
                 <p className="text-xs text-amber-400 mt-1">Ext. 4521</p>
               </div>
               <div className="p-3 bg-slate-800/40 rounded-lg hover:bg-slate-800/60 cursor-pointer transition-colors">
-                <p className="text-sm font-medium text-white">Open Records Requests</p>
-                <p className="text-xs text-slate-400">GA Open Records Act (O.C.G.A. 50-18-70)</p>
+                <p className="text-sm font-medium text-slate-900 dark:text-white">Open Records Requests</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400">GA Open Records Act (O.C.G.A. 50-18-70)</p>
               </div>
               <div className="p-3 bg-slate-800/40 rounded-lg hover:bg-slate-800/60 cursor-pointer transition-colors">
-                <p className="text-sm font-medium text-white">GCSO Personnel Policies</p>
-                <p className="text-xs text-slate-400">Personnel file management, retention schedule</p>
+                <p className="text-sm font-medium text-slate-900 dark:text-white">GCSO Personnel Policies</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400">Personnel file management, retention schedule</p>
               </div>
             </div>
           </div>

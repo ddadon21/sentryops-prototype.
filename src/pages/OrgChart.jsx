@@ -1138,7 +1138,7 @@ export default function OrgChart() {
                 </p>
                 {bm && (
                   <div className="flex items-center justify-center gap-3 text-[10px] flex-wrap">
-                    <span className="text-slate-400">{bm.personnel} personnel</span>
+                    <span className="text-slate-600 dark:text-slate-400">{bm.personnel} personnel</span>
                     <span className="text-slate-600">·</span>
                     <span className={pct >= 95 ? 'text-emerald-400' : pct >= 80 ? 'text-amber-400' : 'text-red-400'}>
                       {pct}% staffed
@@ -1198,7 +1198,7 @@ export default function OrgChart() {
         {showSectionLabel && !isCollapsed && (
           <div className="mb-2">
             <div className="px-4 py-1 bg-slate-700/40 backdrop-blur-xl border border-slate-600/50 rounded-lg shadow">
-              <p className="text-[10px] font-medium text-slate-300 tracking-wide text-center whitespace-nowrap">
+              <p className="text-[10px] font-medium text-slate-700 dark:text-slate-300 tracking-wide text-center whitespace-nowrap">
                 {sectionLabelText}
               </p>
             </div>
@@ -1287,7 +1287,7 @@ export default function OrgChart() {
                       <div className={`text-amber-400 ${size === 'lg' ? 'text-[10px]' : 'text-[9px]'}`}>
                         {node.daysVacant} days vacant
                       </div>
-                      <div className={`text-slate-400 ${size === 'lg' ? 'text-[10px]' : 'text-[9px]'}`}>
+                      <div className={`text-slate-600 dark:text-slate-400 ${size === 'lg' ? 'text-[10px]' : 'text-[9px]'}`}>
                         {node.candidatesInPipeline} candidate{node.candidatesInPipeline !== 1 ? 's' : ''}
                       </div>
                     </>
@@ -1304,7 +1304,7 @@ export default function OrgChart() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <h4 className={`font-bold text-white truncate ${size === 'lg' ? 'text-xs' : 'text-[11px]'}`}>{node.name}</h4>
-                      <p className={`text-slate-400 truncate ${size === 'lg' ? 'text-[10px]' : 'text-[9px]'}`}>{node.rank}</p>
+                      <p className={`text-slate-600 dark:text-slate-400 truncate ${size === 'lg' ? 'text-[10px]' : 'text-[9px]'}`}>{node.rank}</p>
                     </div>
                   </div>
                   {size !== 'xs' && (
@@ -1320,11 +1320,11 @@ export default function OrgChart() {
                                 : 'text-slate-600'
                             }`} />
                           ))}
-                          <span className="text-[8px] text-slate-400 ml-0.5">{node.performance.toFixed(1)}</span>
+                          <span className="text-[8px] text-slate-600 dark:text-slate-400 ml-0.5">{node.performance.toFixed(1)}</span>
                         </div>
                       )}
                       {node.reports > 0 && (
-                        <div className={`flex items-center gap-1 text-slate-400 ${size === 'lg' ? 'text-[10px]' : 'text-[9px]'}`}>
+                        <div className={`flex items-center gap-1 text-slate-600 dark:text-slate-400 ${size === 'lg' ? 'text-[10px]' : 'text-[9px]'}`}>
                           <Users className="w-2.5 h-2.5" />
                           <span>{node.reports}</span>
                         </div>
@@ -1360,7 +1360,7 @@ export default function OrgChart() {
                       )}
                       {/* Promotion candidates */}
                       {node.promotionCandidates && node.promotionCandidates.length > 0 && size === 'lg' && (
-                        <div className="flex items-center gap-1 mt-0.5 text-[9px] text-slate-400">
+                        <div className="flex items-center gap-1 mt-0.5 text-[9px] text-slate-600 dark:text-slate-400">
                           <ArrowRight className="w-2 h-2 text-slate-500" />
                           <span className="truncate">{node.promotionCandidates[0]}</span>
                         </div>
@@ -1384,19 +1384,19 @@ export default function OrgChart() {
 
             <div className="absolute left-full ml-2 top-0 w-64 bg-slate-900/95 border border-slate-700/50 rounded-lg p-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 shadow-2xl pointer-events-none">
               <div className="space-y-2 text-xs">
-                <div className="flex items-center gap-2 text-slate-300">
-                  <Mail className="w-3 h-3 text-slate-400" />
+                <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
+                  <Mail className="w-3 h-3 text-slate-600 dark:text-slate-400" />
                   <span className="truncate">{node.email}</span>
                 </div>
                 {node.phone && (
-                  <div className="flex items-center gap-2 text-slate-300">
-                    <Phone className="w-3 h-3 text-slate-400" />
+                  <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
+                    <Phone className="w-3 h-3 text-slate-600 dark:text-slate-400" />
                     <span>{node.phone}</span>
                   </div>
                 )}
                 {node.yearsOfService && (
-                  <div className="flex items-center gap-2 text-slate-300">
-                    <Award className="w-3 h-3 text-slate-400" />
+                  <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
+                    <Award className="w-3 h-3 text-slate-600 dark:text-slate-400" />
                     <span>{node.yearsOfService} years</span>
                   </div>
                 )}
@@ -1473,14 +1473,14 @@ export default function OrgChart() {
         <div className="h-full flex flex-col max-w-[1400px] mx-auto">
             <div className="mb-5 flex items-center justify-between">
               <div>
-                <h2 className="text-xl font-bold text-white mb-1">Organization Chart</h2>
+                <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-1">Organization Chart</h2>
                 <div className="flex items-center gap-2 text-[11px] text-slate-500">
                   <span>Full command hierarchy · 170 personnel · 95.5% of 178 authorized</span>
                   <span className="text-slate-700">·</span>
                   <Clock className="w-3 h-3" />
                   <span>Updated 09:32 EST</span>
                   <button
-                    className="flex items-center gap-1 text-slate-500 hover:text-slate-300 transition-colors"
+                    className="flex items-center gap-1 text-slate-500 hover:text-slate-700 dark:text-slate-300 transition-colors"
                     title="Refresh org chart data"
                   >
                     <RefreshCw className="w-3 h-3" />
@@ -1491,15 +1491,15 @@ export default function OrgChart() {
 
               {!isFullscreen && (
                 <div className="flex items-center gap-2">
-                  <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/30 border border-slate-700/50 rounded text-[11px] text-slate-400 hover:text-white transition-colors" title="Export org chart">
+                  <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/30 border border-slate-700/50 rounded text-[11px] text-slate-600 dark:text-slate-400 hover:text-white transition-colors" title="Export org chart">
                     <Download className="w-3 h-3" />
                     <span className="hidden sm:inline">Export</span>
                   </button>
-                  <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/30 border border-slate-700/50 rounded text-[11px] text-slate-400 hover:text-white transition-colors">
+                  <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/30 border border-slate-700/50 rounded text-[11px] text-slate-600 dark:text-slate-400 hover:text-white transition-colors">
                     <Printer className="w-3 h-3" />
                     <span className="hidden sm:inline">Print</span>
                   </button>
-                  <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/30 border border-slate-700/50 rounded text-[11px] text-slate-400 hover:text-white transition-colors">
+                  <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/30 border border-slate-700/50 rounded text-[11px] text-slate-600 dark:text-slate-400 hover:text-white transition-colors">
                     <Share2 className="w-3 h-3" />
                     <span className="hidden sm:inline">Share</span>
                   </button>
@@ -1508,7 +1508,7 @@ export default function OrgChart() {
             </div>
 
             {/* Command Radar Panel — collapsible intelligence bar */}
-            <div className="mb-4 bg-slate-800/30 border border-slate-700/50 rounded-xl overflow-hidden">
+            <div className="mb-4 bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
               <div className="flex items-start justify-between px-4 py-2.5 gap-3">
                 <div className="flex items-center gap-2 flex-wrap min-w-0">
                   <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide shrink-0">Command Radar</span>
@@ -1522,7 +1522,7 @@ export default function OrgChart() {
                           ? 'bg-red-500/10 text-red-400 border-red-500/20 hover:bg-red-500/20'
                           : alert.type === 'warning'
                             ? 'bg-amber-500/10 text-amber-400 border-amber-500/20 hover:bg-amber-500/20'
-                            : 'bg-slate-700/25 text-slate-400 border-slate-700/50 hover:bg-slate-700/40'
+                            : 'bg-slate-700/25 text-slate-600 dark:text-slate-400 border-slate-700/50 hover:bg-slate-700/40'
                       }`}
                     >
                       {alert.type === 'critical' ? '⬤' : alert.type === 'warning' ? '⚠' : '●'} {alert.short}
@@ -1531,7 +1531,7 @@ export default function OrgChart() {
                 </div>
                 <button
                   onClick={() => setInsightsExpanded(!insightsExpanded)}
-                  className="shrink-0 flex items-center gap-1 text-[10px] text-slate-600 hover:text-slate-400 transition-colors pt-0.5"
+                  className="shrink-0 flex items-center gap-1 text-[10px] text-slate-600 hover:text-slate-600 dark:text-slate-400 transition-colors pt-0.5"
                 >
                   <span className="hidden sm:inline">Details</span>
                   {insightsExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
@@ -1587,7 +1587,7 @@ export default function OrgChart() {
                 {searchQuery && (
                   <button
                     onClick={() => { setSearchQuery(''); setHighlightedNode(null); }}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white transition-colors"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-400 hover:text-white transition-colors"
                   >
                     <X className="w-4 h-4" />
                   </button>
@@ -1596,7 +1596,7 @@ export default function OrgChart() {
 
               <div className="flex gap-2">
                 <div className="relative">
-                  <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400" />
+                  <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
                   <select value={filterDivision} onChange={(e) => setFilterDivision(e.target.value)} className="pl-8 pr-3 py-2 bg-slate-800/30 border border-slate-700/50 rounded text-[11px] text-white focus:outline-none focus:border-slate-500/50 cursor-pointer">
                     <option value="all">All Divisions (170)</option>
                     <option value="Patrol">Patrol Division (65)</option>
@@ -1609,7 +1609,7 @@ export default function OrgChart() {
                 </div>
 
                 <div className="relative">
-                  <Users className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400" />
+                  <Users className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
                   <select value={filterRank} onChange={(e) => setFilterRank(e.target.value)} className="pl-8 pr-3 py-2 bg-slate-800/30 border border-slate-700/50 rounded text-[11px] text-white focus:outline-none focus:border-slate-500/50 cursor-pointer">
                     <option value="all">All Ranks (170)</option>
                     <option value="Sheriff">Sheriff (1)</option>
@@ -1631,7 +1631,7 @@ export default function OrgChart() {
                     className={`flex items-center gap-1.5 px-2.5 py-2 text-[11px] font-medium transition-all ${
                       viewMode === 'hierarchy'
                         ? 'bg-slate-700/60 text-white'
-                        : 'text-slate-400 hover:text-slate-300'
+                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-300'
                     }`}
                   >
                     <Layers className="w-3.5 h-3.5" />
@@ -1643,7 +1643,7 @@ export default function OrgChart() {
                     className={`flex items-center gap-1.5 px-2.5 py-2 text-[11px] font-medium transition-all ${
                       viewMode === 'operational'
                         ? 'bg-amber-500/20 text-amber-400'
-                        : 'text-slate-400 hover:text-slate-300'
+                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-300'
                     }`}
                   >
                     <Activity className="w-3.5 h-3.5" />
@@ -1670,33 +1670,33 @@ export default function OrgChart() {
                 {/* Zoom Controls */}
                 <div className="flex items-center gap-2 bg-slate-900/90 border border-slate-700/50 rounded-xl px-3 py-2 shadow-lg">
                   <button onClick={() => setZoomLevel(Math.max(25, zoomLevel - 10))} className="p-1 hover:bg-slate-700/50 rounded transition-colors" title="Zoom out (-)">
-                    <ZoomOut className="w-4 h-4 text-slate-300" />
+                    <ZoomOut className="w-4 h-4 text-slate-700 dark:text-slate-300" />
                   </button>
                   <span className="text-sm text-white font-medium w-14 text-center">{zoomLevel}%</span>
                   <button onClick={() => setZoomLevel(Math.min(200, zoomLevel + 10))} className="p-1 hover:bg-slate-700/50 rounded transition-colors" title="Zoom in (+)">
-                    <ZoomIn className="w-4 h-4 text-slate-300" />
+                    <ZoomIn className="w-4 h-4 text-slate-700 dark:text-slate-300" />
                   </button>
                 </div>
 
                 {/* Action Buttons */}
-                <button onClick={fitToScreen} className="flex items-center justify-center gap-2 px-4 py-2 bg-slate-900/90 border border-slate-700/50 rounded-xl text-slate-300 hover:border-slate-600/50 hover:bg-slate-800/90 transition-all shadow-lg" title="Fit to Screen">
+                <button onClick={fitToScreen} className="flex items-center justify-center gap-2 px-4 py-2 bg-slate-900/90 border border-slate-700/50 rounded-xl text-slate-700 dark:text-slate-300 hover:border-slate-600/50 hover:bg-slate-800/90 transition-all shadow-lg" title="Fit to Screen">
                   <Maximize className="w-4 h-4" />
                   <span className="text-sm">Fit to Screen</span>
                 </button>
 
-                <button onClick={() => setCollapsedNodes(new Set())} className="flex items-center justify-center gap-2 px-4 py-2 bg-slate-900/90 border border-slate-700/50 rounded-xl text-slate-300 hover:border-slate-600/50 hover:bg-slate-800/90 transition-all shadow-lg" title="Expand all nodes">
+                <button onClick={() => setCollapsedNodes(new Set())} className="flex items-center justify-center gap-2 px-4 py-2 bg-slate-900/90 border border-slate-700/50 rounded-xl text-slate-700 dark:text-slate-300 hover:border-slate-600/50 hover:bg-slate-800/90 transition-all shadow-lg" title="Expand all nodes">
                   <Expand className="w-4 h-4" />
                   <span className="text-sm">Expand All</span>
                 </button>
 
-                <button onClick={toggleFullscreen} className="flex items-center justify-center gap-2 px-4 py-2 bg-slate-900/90 border border-slate-700/50 rounded-xl text-slate-300 hover:border-slate-600/50 hover:bg-slate-800/90 transition-all shadow-lg" title={isFullscreen ? "Exit Full View (Esc)" : "Enter Full View"}>
+                <button onClick={toggleFullscreen} className="flex items-center justify-center gap-2 px-4 py-2 bg-slate-900/90 border border-slate-700/50 rounded-xl text-slate-700 dark:text-slate-300 hover:border-slate-600/50 hover:bg-slate-800/90 transition-all shadow-lg" title={isFullscreen ? "Exit Full View (Esc)" : "Enter Full View"}>
                   {isFullscreen ? <ArrowLeft className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
                   <span className="text-sm">{isFullscreen ? 'Exit Full View' : 'Full View'}</span>
                 </button>
 
                 {/* Keyboard Shortcuts Info */}
-                <div className="bg-slate-900/90 border border-slate-700/50 rounded-xl px-3 py-2 shadow-lg text-[9px] text-slate-400 hidden lg:block">
-                  <p className="text-[10px] text-slate-300 font-medium mb-1">Keyboard:</p>
+                <div className="bg-slate-900/90 border border-slate-700/50 rounded-xl px-3 py-2 shadow-lg text-[9px] text-slate-600 dark:text-slate-400 hidden lg:block">
+                  <p className="text-[10px] text-slate-700 dark:text-slate-300 font-medium mb-1">Keyboard:</p>
                   <p>+/− : Zoom in/out</p>
                   <p>Space + drag : Pan</p>
                   <p>Esc : Exit full view</p>
@@ -1707,8 +1707,8 @@ export default function OrgChart() {
               {/* MiniMap */}
               <div className="absolute bottom-4 right-4 w-56 bg-slate-900/90 border border-slate-700/50 rounded-lg overflow-hidden z-40 hidden lg:block">
                 <div className="p-2 border-b border-slate-700/50 flex items-center justify-between">
-                  <span className="text-[10px] font-semibold text-slate-300">MiniMap</span>
-                  <button className="text-slate-400 hover:text-slate-300">
+                  <span className="text-[10px] font-semibold text-slate-700 dark:text-slate-300">MiniMap</span>
+                  <button className="text-slate-600 dark:text-slate-400 hover:text-slate-700 dark:text-slate-300">
                     <Minimize2 className="w-3 h-3" />
                   </button>
                 </div>
@@ -1721,19 +1721,19 @@ export default function OrgChart() {
                 </div>
                 <div className="p-2 space-y-1.5">
                   <div className="flex items-center justify-between text-[9px]">
-                    <span className="text-slate-400">Current View:</span>
-                    <span className="text-slate-300">Command Level</span>
+                    <span className="text-slate-600 dark:text-slate-400">Current View:</span>
+                    <span className="text-slate-700 dark:text-slate-300">Command Level</span>
                   </div>
                   <div className="flex items-center justify-between text-[9px]">
-                    <span className="text-slate-400">Visible:</span>
-                    <span className="text-slate-300">47 of 170 personnel</span>
+                    <span className="text-slate-600 dark:text-slate-400">Visible:</span>
+                    <span className="text-slate-700 dark:text-slate-300">47 of 170 personnel</span>
                   </div>
                   <div className="flex items-center justify-between text-[9px]">
-                    <span className="text-slate-400">Zoom:</span>
-                    <span className="text-slate-300">{zoomLevel}%</span>
+                    <span className="text-slate-600 dark:text-slate-400">Zoom:</span>
+                    <span className="text-slate-700 dark:text-slate-300">{zoomLevel}%</span>
                   </div>
                   <div className="pt-1.5 border-t border-slate-700/50 space-y-1">
-                    <button onClick={() => { setPanOffset({ x: 0, y: 0 }); setZoomLevel(100); }} className="w-full px-2 py-1 bg-slate-700/40 hover:bg-slate-700/60 text-[9px] text-slate-300 rounded transition-colors text-left">
+                    <button onClick={() => { setPanOffset({ x: 0, y: 0 }); setZoomLevel(100); }} className="w-full px-2 py-1 bg-slate-700/40 hover:bg-slate-700/60 text-[9px] text-slate-700 dark:text-slate-300 rounded transition-colors text-left">
                       Center on Sheriff
                     </button>
                     <button className="w-full px-2 py-1 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/30 text-[9px] text-amber-400 rounded transition-colors text-left">
@@ -1759,47 +1759,47 @@ export default function OrgChart() {
               {/* Readiness */}
               <div className="flex items-center gap-1.5">
                 <div className="w-2 h-2 rounded-full bg-emerald-400"></div>
-                <span className="text-slate-400">Fully staffed</span>
+                <span className="text-slate-600 dark:text-slate-400">Fully staffed</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <div className="w-2 h-2 rounded-full bg-amber-400"></div>
-                <span className="text-slate-400">At risk / acting</span>
+                <span className="text-slate-600 dark:text-slate-400">At risk / acting</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <div className="w-2 h-2 rounded-full bg-red-400"></div>
-                <span className="text-slate-400">Leadership vacancy</span>
+                <span className="text-slate-600 dark:text-slate-400">Leadership vacancy</span>
               </div>
               <div className="text-slate-700">·</div>
               {/* Heatmap */}
               <div className="flex items-center gap-1.5">
                 <div className="w-3 h-3 bg-emerald-900/40 border border-l-2 border-emerald-500 rounded"></div>
-                <span className="text-slate-400">95%+ staffed</span>
+                <span className="text-slate-600 dark:text-slate-400">95%+ staffed</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <div className="w-3 h-3 bg-amber-900/30 border border-l-2 border-amber-500 rounded"></div>
-                <span className="text-slate-400">80–94%</span>
+                <span className="text-slate-600 dark:text-slate-400">80–94%</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <div className="w-3 h-3 bg-red-900/30 border border-l-2 border-red-500 rounded"></div>
-                <span className="text-slate-400">&lt;80%</span>
+                <span className="text-slate-600 dark:text-slate-400">&lt;80%</span>
               </div>
               <div className="text-slate-700">·</div>
               {/* Special */}
               <div className="flex items-center gap-1.5">
                 <div className="w-3 h-3 border-2 border-dashed border-red-500/40 rounded"></div>
-                <span className="text-slate-400">Vacant</span>
+                <span className="text-slate-600 dark:text-slate-400">Vacant</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <div className="px-1 py-0.5 bg-amber-600 rounded text-[7px] font-bold text-white">ACT</div>
-                <span className="text-slate-400">Acting supervisor</span>
+                <span className="text-slate-600 dark:text-slate-400">Acting supervisor</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <AlertTriangle className="w-3 h-3 text-amber-400" />
-                <span className="text-slate-400">Span of control alert</span>
+                <span className="text-slate-600 dark:text-slate-400">Span of control alert</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <Clock className="w-3 h-3 text-slate-400" />
-                <span className="text-slate-400">Retirement signal</span>
+                <Clock className="w-3 h-3 text-slate-600 dark:text-slate-400" />
+                <span className="text-slate-600 dark:text-slate-400">Retirement signal</span>
               </div>
               <div className="text-slate-700">·</div>
               <div className="flex items-center gap-1.5">
@@ -1824,15 +1824,15 @@ export default function OrgChart() {
                     <span className="text-white font-medium">{selectedNode.photo}</span>
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-white">{selectedNode.name}</h3>
-                    <p className="text-sm text-slate-400">{selectedNode.title}</p>
+                    <h3 className="text-lg font-semibold text-slate-900 dark:text-white">{selectedNode.name}</h3>
+                    <p className="text-sm text-slate-600 dark:text-slate-400">{selectedNode.title}</p>
                   </div>
                 </div>
                 <button
                   onClick={() => setDrawerOpen(false)}
                   className="p-2 hover:bg-slate-800/50 rounded-lg transition-colors"
                 >
-                  <X className="w-5 h-5 text-slate-400" />
+                  <X className="w-5 h-5 text-slate-600 dark:text-slate-400" />
                 </button>
               </div>
 
@@ -1841,11 +1841,11 @@ export default function OrgChart() {
                   <Users className="w-3 h-3" />
                   Profile
                 </button>
-                <button className="px-3 py-2 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-300 rounded-lg text-xs font-medium transition-colors flex items-center justify-center gap-1">
+                <button className="px-3 py-2 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors flex items-center justify-center gap-1">
                   <Mail className="w-3 h-3" />
                   Message
                 </button>
-                <button className="px-3 py-2 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-300 rounded-lg text-xs font-medium transition-colors flex items-center justify-center gap-1">
+                <button className="px-3 py-2 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors flex items-center justify-center gap-1">
                   <UserPlus className="w-3 h-3" />
                   Reassign
                 </button>
@@ -1855,33 +1855,33 @@ export default function OrgChart() {
             <div className="p-6 space-y-6">
               <div className="grid grid-cols-2 gap-4">
                 <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
-                  <p className="text-xs text-slate-400 mb-1">Badge</p>
-                  <p className="text-sm font-medium text-white font-mono">{selectedNode.badge}</p>
+                  <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Badge</p>
+                  <p className="text-sm font-medium text-slate-900 dark:text-white font-mono">{selectedNode.badge}</p>
                 </div>
                 {selectedNode.yearsOfService && (
                   <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
-                    <p className="text-xs text-slate-400 mb-1">Tenure</p>
-                    <p className="text-sm font-medium text-white">{selectedNode.yearsOfService} years</p>
+                    <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Tenure</p>
+                    <p className="text-sm font-medium text-slate-900 dark:text-white">{selectedNode.yearsOfService} years</p>
                   </div>
                 )}
                 {selectedNode.division && (
                   <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50 col-span-2">
-                    <p className="text-xs text-slate-400 mb-1">Division</p>
-                    <p className="text-sm font-medium text-white">{selectedNode.division}</p>
+                    <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Division</p>
+                    <p className="text-sm font-medium text-slate-900 dark:text-white">{selectedNode.division}</p>
                   </div>
                 )}
               </div>
 
               {selectedNode.email && (
                 <div>
-                  <h4 className="text-sm font-semibold text-white mb-3">Contact Information</h4>
+                  <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Contact Information</h4>
                   <div className="space-y-2">
-                    <div className="flex items-center gap-2 text-sm text-slate-300">
-                      <Mail className="w-4 h-4 text-slate-400" />
+                    <div className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
+                      <Mail className="w-4 h-4 text-slate-600 dark:text-slate-400" />
                       <span>{selectedNode.email}</span>
                     </div>
-                    <div className="flex items-center gap-2 text-sm text-slate-300">
-                      <Phone className="w-4 h-4 text-slate-400" />
+                    <div className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
+                      <Phone className="w-4 h-4 text-slate-600 dark:text-slate-400" />
                       <span>{selectedNode.phone}</span>
                     </div>
                   </div>
@@ -1890,10 +1890,10 @@ export default function OrgChart() {
 
               {selectedNode.divisionStrength && (
                 <div>
-                  <h4 className="text-sm font-semibold text-white mb-3">Staffing Overview</h4>
+                  <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Staffing Overview</h4>
                   <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50 space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-slate-300">Assigned Strength</span>
+                      <span className="text-sm text-slate-700 dark:text-slate-300">Assigned Strength</span>
                       <span className="text-lg font-bold text-white">{selectedNode.divisionStrength.current} / {selectedNode.divisionStrength.authorized}</span>
                     </div>
                     <div className="w-full h-2 bg-slate-700/50 rounded-full overflow-hidden">
@@ -1905,24 +1905,24 @@ export default function OrgChart() {
                         style={{ width: `${Math.min((selectedNode.divisionStrength.current / selectedNode.divisionStrength.authorized) * 100, 100)}%` }}
                       />
                     </div>
-                    <p className="text-xs text-slate-400">
+                    <p className="text-xs text-slate-600 dark:text-slate-400">
                       {Math.round((selectedNode.divisionStrength.current / selectedNode.divisionStrength.authorized) * 100)}% of authorized strength
                     </p>
                     {/* Enriched metrics from divisionMetrics */}
                     {divisionMetrics[selectedNode.id] && (
                       <div className="pt-2 border-t border-slate-700/50 grid grid-cols-3 gap-3">
                         <div className="text-center">
-                          <p className="text-[11px] text-slate-400 mb-0.5">Deployable</p>
+                          <p className="text-[11px] text-slate-600 dark:text-slate-400 mb-0.5">Deployable</p>
                           <p className="text-base font-bold text-white">{divisionMetrics[selectedNode.id].deployable}</p>
                         </div>
                         <div className="text-center">
-                          <p className="text-[11px] text-slate-400 mb-0.5">Vacancies</p>
+                          <p className="text-[11px] text-slate-600 dark:text-slate-400 mb-0.5">Vacancies</p>
                           <p className={`text-base font-bold ${divisionMetrics[selectedNode.id].vacancies > 0 ? 'text-red-400' : 'text-white'}`}>
                             {divisionMetrics[selectedNode.id].vacancies}
                           </p>
                         </div>
                         <div className="text-center">
-                          <p className="text-[11px] text-slate-400 mb-0.5">Cert Risk</p>
+                          <p className="text-[11px] text-slate-600 dark:text-slate-400 mb-0.5">Cert Risk</p>
                           <p className={`text-base font-bold ${divisionMetrics[selectedNode.id].certRisk > 2 ? 'text-amber-400' : 'text-slate-300'}`}>
                             {divisionMetrics[selectedNode.id].certRisk}
                           </p>
@@ -1941,7 +1941,7 @@ export default function OrgChart() {
                     {/* Recommended action */}
                     {divisionMetrics[selectedNode.id]?.action && (
                       <div className="flex items-start gap-2 text-xs">
-                        <ArrowRight className="w-3.5 h-3.5 text-slate-400 mt-0.5 flex-shrink-0" />
+                        <ArrowRight className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400 mt-0.5 flex-shrink-0" />
                         <span className="text-emerald-300 font-medium">{divisionMetrics[selectedNode.id].action}</span>
                       </div>
                     )}
@@ -1950,12 +1950,12 @@ export default function OrgChart() {
               )}
 
               <div>
-                <h4 className="text-sm font-semibold text-white mb-3">Team Information</h4>
+                <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Team Information</h4>
                 <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <Users className="w-5 h-5 text-slate-400" />
-                      <span className="text-sm text-slate-300">Direct Reports</span>
+                      <Users className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+                      <span className="text-sm text-slate-700 dark:text-slate-300">Direct Reports</span>
                     </div>
                     <span className="text-lg font-bold text-white">{selectedNode.reports}</span>
                   </div>
@@ -1965,7 +1965,7 @@ export default function OrgChart() {
               {/* Performance Rating */}
               {selectedNode.performance && (
                 <div>
-                  <h4 className="text-sm font-semibold text-white mb-3">Performance Rating</h4>
+                  <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Performance Rating</h4>
                   <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center gap-2">
@@ -1977,9 +1977,9 @@ export default function OrgChart() {
                           }`} />
                         ))}
                       </div>
-                      <span className="text-2xl font-bold text-white">{selectedNode.performance.toFixed(1)}</span>
+                      <span className="text-2xl font-bold text-slate-900 dark:text-white">{selectedNode.performance.toFixed(1)}</span>
                     </div>
-                    <p className="text-xs text-slate-400">Excellent performance rating</p>
+                    <p className="text-xs text-slate-600 dark:text-slate-400">Excellent performance rating</p>
                   </div>
                 </div>
               )}
@@ -1987,7 +1987,7 @@ export default function OrgChart() {
               {/* Leadership Pipeline — retirement + promotion candidates */}
               {(selectedNode.retirementMonths !== undefined || selectedNode.promotionCandidates) && (
                 <div>
-                  <h4 className="text-sm font-semibold text-white mb-3">Leadership Pipeline</h4>
+                  <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Leadership Pipeline</h4>
                   <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50 space-y-3">
                     {selectedNode.retirementMonths !== undefined && (
                       <div className="flex items-start gap-3">
@@ -2004,20 +2004,20 @@ export default function OrgChart() {
                             }
                           </p>
                           {selectedNode.retirementEligible && (
-                            <p className="text-xs text-slate-400">Eligible since: {selectedNode.retirementEligible}</p>
+                            <p className="text-xs text-slate-600 dark:text-slate-400">Eligible since: {selectedNode.retirementEligible}</p>
                           )}
                         </div>
                       </div>
                     )}
                     {selectedNode.promotionCandidates && selectedNode.promotionCandidates.length > 0 && (
                       <div>
-                        <p className="text-xs text-slate-400 mb-2">Promotion Candidates</p>
+                        <p className="text-xs text-slate-600 dark:text-slate-400 mb-2">Promotion Candidates</p>
                         <div className="space-y-1.5">
                           {selectedNode.promotionCandidates.map((candidate, idx) => (
                             <div key={idx} className="flex items-center gap-2 text-sm">
                               <ArrowRight className="w-3 h-3 text-emerald-500" />
                               <span className="text-white">{candidate}</span>
-                              {idx === 0 && <span className="text-[10px] px-1.5 py-0.5 bg-slate-700/40 text-slate-300 rounded border border-slate-600/50">Primary</span>}
+                              {idx === 0 && <span className="text-[10px] px-1.5 py-0.5 bg-slate-700/40 text-slate-700 dark:text-slate-300 rounded border border-slate-600/50">Primary</span>}
                             </div>
                           ))}
                         </div>
@@ -2038,7 +2038,7 @@ export default function OrgChart() {
               {/* Succession Planning (legacy — shown when no pipeline data but succession exists) */}
               {selectedNode.succession && !selectedNode.promotionCandidates && (
                 <div>
-                  <h4 className="text-sm font-semibold text-white mb-3">Succession Planning</h4>
+                  <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Succession Planning</h4>
                   <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50 space-y-3">
                     <div className="flex items-center gap-2">
                       <CheckCircle className="w-4 h-4 text-green-400" />
@@ -2046,13 +2046,13 @@ export default function OrgChart() {
                     </div>
                     {selectedNode.succession.successor && (
                       <div>
-                        <p className="text-xs text-slate-400 mb-1">Identified Successor</p>
+                        <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Identified Successor</p>
                         <p className="text-sm text-white font-medium">{selectedNode.succession.successor}</p>
                       </div>
                     )}
                     {selectedNode.succession.successors && (
                       <div>
-                        <p className="text-xs text-slate-400 mb-1">Identified Successors</p>
+                        <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Identified Successors</p>
                         <div className="space-y-1">
                           {selectedNode.succession.successors.map((successor, idx) => (
                             <p key={idx} className="text-sm text-white">• {successor}</p>
@@ -2062,7 +2062,7 @@ export default function OrgChart() {
                     )}
                     {selectedNode.retirementEligible && (
                       <div>
-                        <p className="text-xs text-slate-400 mb-1">Retirement Eligibility</p>
+                        <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Retirement Eligibility</p>
                         <p className="text-sm text-white">{selectedNode.retirementEligible}</p>
                       </div>
                     )}
@@ -2073,7 +2073,7 @@ export default function OrgChart() {
               {/* Span of Control Warning — show in drawer if flagged */}
               {selectedNode.spanWarning && (
                 <div>
-                  <h4 className="text-sm font-semibold text-white mb-3">Span of Control</h4>
+                  <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Span of Control</h4>
                   <div className={`rounded-xl p-4 border space-y-3 ${
                     selectedNode.spanWarning === 'high'
                       ? 'bg-amber-500/10 border-amber-500/30'
@@ -2086,7 +2086,7 @@ export default function OrgChart() {
                       </span>
                     </div>
                     {selectedNode.spanRecommendation && (
-                      <p className="text-xs text-slate-300">
+                      <p className="text-xs text-slate-700 dark:text-slate-300">
                         Recommendation: {selectedNode.spanRecommendation}
                       </p>
                     )}
@@ -2100,7 +2100,7 @@ export default function OrgChart() {
               {/* Vacancy Impact Simulation — shown for leadership roles */}
               {vacancyImpactData[selectedNode.id] && !selectedNode.isVacant && (
                 <div>
-                  <h4 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+                  <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
                     <Zap className="w-4 h-4 text-amber-400" />
                     Vacancy Impact Simulation
                   </h4>
@@ -2112,28 +2112,28 @@ export default function OrgChart() {
                         : 'bg-slate-800/30 border-slate-700/50'
                   }`}>
                     <div className="flex items-center justify-between">
-                      <p className="text-xs text-slate-400">If this position becomes vacant:</p>
+                      <p className="text-xs text-slate-600 dark:text-slate-400">If this position becomes vacant:</p>
                       <span className={`text-[10px] font-bold px-2 py-0.5 rounded border ${
                         vacancyImpactData[selectedNode.id].riskLevel === 'critical'
                           ? 'bg-red-500/20 text-red-400 border-red-500/30'
                           : vacancyImpactData[selectedNode.id].riskLevel === 'high'
                             ? 'bg-amber-500/20 text-amber-400 border-amber-500/30'
-                            : 'bg-slate-700/40 text-slate-400 border-slate-600/30'
+                            : 'bg-slate-700/40 text-slate-600 dark:text-slate-400 border-slate-600/30'
                       }`}>
                         {vacancyImpactData[selectedNode.id].riskLevel.toUpperCase()} RISK
                       </span>
                     </div>
                     <div className="space-y-1.5">
                       {vacancyImpactData[selectedNode.id].impacts.map((impact, idx) => (
-                        <p key={idx} className="text-xs text-slate-300 flex items-start gap-2">
+                        <p key={idx} className="text-xs text-slate-700 dark:text-slate-300 flex items-start gap-2">
                           <span className="text-slate-500 mt-0.5">•</span>
                           {impact}
                         </p>
                       ))}
                     </div>
                     <div className="pt-2 border-t border-slate-700/50">
-                      <p className="text-xs text-slate-400 mb-1">Suggested action:</p>
-                      <p className="text-sm text-slate-300 font-medium">
+                      <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Suggested action:</p>
+                      <p className="text-sm text-slate-700 dark:text-slate-300 font-medium">
                         → {vacancyImpactData[selectedNode.id].suggestedAction}
                       </p>
                     </div>
@@ -2144,16 +2144,16 @@ export default function OrgChart() {
               {/* Team Performance Metrics */}
               {selectedNode.reports > 0 && !selectedNode.isVacant && (
                 <div>
-                  <h4 className="text-sm font-semibold text-white mb-3">Team Performance</h4>
+                  <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Team Performance</h4>
                   <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <p className="text-xs text-slate-400 mb-1">Team Size</p>
+                        <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Team Size</p>
                         <p className="text-lg font-bold text-white">{selectedNode.reports}</p>
                         <p className="text-[10px] text-slate-500">Direct reports</p>
                       </div>
                       <div>
-                        <p className="text-xs text-slate-400 mb-1">Avg Rating</p>
+                        <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Avg Rating</p>
                         <p className="text-lg font-bold text-white">4.5</p>
                         <div className="flex items-center gap-0.5">
                           {[...Array(5)].map((_, i) => (
@@ -2164,23 +2164,23 @@ export default function OrgChart() {
                         </div>
                       </div>
                       <div>
-                        <p className="text-xs text-slate-400 mb-1">On Duty</p>
+                        <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">On Duty</p>
                         <p className="text-lg font-bold text-green-400">{Math.floor(selectedNode.reports * 0.8)}</p>
                         <p className="text-[10px] text-slate-500">Currently active</p>
                       </div>
                       <div>
-                        <p className="text-xs text-slate-400 mb-1">Cert Compliance</p>
+                        <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Cert Compliance</p>
                         <p className="text-lg font-bold text-green-400">92%</p>
                         <p className="text-[10px] text-slate-500">All current</p>
                       </div>
                     </div>
                     <div className="mt-4 pt-4 border-t border-slate-700/50 grid grid-cols-2 gap-4">
                       <div>
-                        <p className="text-xs text-slate-400 mb-1">Commendations</p>
+                        <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Commendations</p>
                         <p className="text-sm font-bold text-white">8 this month</p>
                       </div>
                       <div>
-                        <p className="text-xs text-slate-400 mb-1">Disciplinary</p>
+                        <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Disciplinary</p>
                         <p className="text-sm font-bold text-green-400">0</p>
                       </div>
                     </div>
@@ -2191,20 +2191,20 @@ export default function OrgChart() {
               {/* Vacancy Information */}
               {selectedNode.isVacant && (
                 <div>
-                  <h4 className="text-sm font-semibold text-white mb-3">Vacancy Details</h4>
+                  <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Vacancy Details</h4>
                   <div className="bg-red-500/10 rounded-xl p-4 border border-red-500/30">
                     <div className="space-y-3">
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-slate-300">Days Vacant</span>
+                        <span className="text-sm text-slate-700 dark:text-slate-300">Days Vacant</span>
                         <span className="text-lg font-bold text-red-400">{selectedNode.daysVacant}</span>
                       </div>
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-slate-300">Candidates in Pipeline</span>
+                        <span className="text-sm text-slate-700 dark:text-slate-300">Candidates in Pipeline</span>
                         <span className="text-lg font-bold text-white">{selectedNode.candidatesInPipeline}</span>
                       </div>
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-slate-300">Expected Fill Date</span>
-                        <span className="text-sm font-medium text-white">{selectedNode.expectedFill}</span>
+                        <span className="text-sm text-slate-700 dark:text-slate-300">Expected Fill Date</span>
+                        <span className="text-sm font-medium text-slate-900 dark:text-white">{selectedNode.expectedFill}</span>
                       </div>
                       <button className="w-full mt-2 px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg text-sm font-medium transition-colors">
                         View Applicants
@@ -2232,16 +2232,16 @@ export default function OrgChart() {
               <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
                 <Sparkles className="w-4 h-4 text-white" />
               </div>
-              <h3 className="text-lg font-semibold text-white">Org Chart AI Assistant</h3>
+              <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Org Chart AI Assistant</h3>
             </div>
             <button onClick={() => setChatOpen(false)} className="p-1 hover:bg-slate-800/50 rounded-lg transition-colors">
-              <X className="w-5 h-5 text-slate-400" />
+              <X className="w-5 h-5 text-slate-600 dark:text-slate-400" />
             </button>
           </div>
 
           <div className="flex-1 overflow-y-auto p-4">
             <div className="bg-slate-800/30 rounded-lg p-3 mb-3">
-              <p className="text-sm text-slate-300">Hello! I can help you navigate the org chart, find personnel, analyze department structure, and answer questions about reporting relationships. What would you like to know?</p>
+              <p className="text-sm text-slate-700 dark:text-slate-300">Hello! I can help you navigate the org chart, find personnel, analyze department structure, and answer questions about reporting relationships. What would you like to know?</p>
             </div>
           </div>
 

@@ -506,7 +506,7 @@ export default function Approvals() {
             <div className="mb-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-xl font-bold text-white mb-1">Command Approvals</h2>
+                  <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-1">Command Approvals</h2>
                   <div className="flex items-center gap-2 text-[11px] text-slate-500">
                     <span>Decision execution surface</span>
                     <span className="text-slate-700">·</span>
@@ -514,22 +514,22 @@ export default function Approvals() {
                     {urgentCount > 0 && (
                       <>
                         <span className="text-slate-700">·</span>
-                        <span className="text-red-400 font-semibold">{urgentCount} urgent</span>
+                        <span className="text-red-600 dark:text-red-400 font-semibold">{urgentCount} urgent</span>
                       </>
                     )}
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="px-2.5 py-1 bg-green-500/8 border border-green-500/15 rounded text-[10px] font-semibold text-green-400">
+                  <span className="px-2.5 py-1 bg-green-500/8 border border-green-500/15 rounded text-[10px] font-semibold text-green-600 dark:text-green-400">
                     FY24 Remaining: $550K
                   </span>
                   {activeTab === 'pending' && pendingAmount > 0 && (
-                    <span className="px-2.5 py-1 bg-amber-500/8 border border-amber-500/15 rounded text-[10px] font-semibold text-amber-400">
+                    <span className="px-2.5 py-1 bg-amber-500/8 border border-amber-500/15 rounded text-[10px] font-semibold text-amber-600 dark:text-amber-400">
                       ${pendingAmount.toLocaleString()} pending
                     </span>
                   )}
                   {activeTab === 'decision-log' && (
-                    <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/30 border border-slate-700/50 rounded-lg text-[11px] text-slate-400 hover:text-white transition-colors">
+                    <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/30 border border-slate-700/50 rounded-lg text-[11px] text-slate-600 dark:text-slate-400 hover:text-white transition-colors">
                       <Download className="w-3 h-3" />
                       Export
                     </button>
@@ -547,7 +547,7 @@ export default function Approvals() {
                 }`}
               >
                 Pending
-                <span className={`px-1 py-px rounded text-[10px] ${activeTab === 'pending' ? 'bg-amber-500/15 text-amber-400' : 'bg-slate-800/50 text-slate-500'}`}>
+                <span className={`px-1 py-px rounded text-[10px] ${activeTab === 'pending' ? 'bg-amber-500/15 text-amber-600 dark:text-amber-400' : 'bg-slate-200 dark:bg-slate-800/50 text-slate-600 dark:text-slate-500'}`}>
                   {approvalsList.length}
                 </span>
                 {activeTab === 'pending' && <div className="absolute bottom-0 left-0 right-0 h-px bg-amber-500"></div>}
@@ -568,28 +568,28 @@ export default function Approvals() {
               <div className="mb-4">
                 <button
                   onClick={() => setAiSummaryExpanded(!aiSummaryExpanded)}
-                  className="w-full flex items-center gap-2 px-3 py-2 bg-slate-800/35 border border-slate-700/30 rounded hover:bg-slate-800/30 transition-colors"
+                  className="w-full flex items-center gap-2 px-3 py-2 bg-slate-50 dark:bg-slate-800/35 border border-slate-200 dark:border-slate-700/30 rounded hover:bg-slate-100 dark:hover:bg-slate-800/30 transition-colors"
                 >
                   <Sparkles className="w-3 h-3 text-slate-500" />
-                  <span className="text-[11px] text-slate-400 flex-1 text-left">
+                  <span className="text-[11px] text-slate-600 dark:text-slate-400 flex-1 text-left">
                     <span className="text-slate-500 font-medium">AI Summary:</span>{' '}
-                    <span className="text-red-400">{urgentCount} items need decision within 24h</span>
+                    <span className="text-red-600 dark:text-red-400">{urgentCount} items need decision within 24h</span>
                     <span className="text-slate-600 mx-1">·</span>
-                    <span className="text-green-400">All recs high confidence</span>
+                    <span className="text-green-600 dark:text-green-400">All recs high confidence</span>
                     <span className="text-slate-600 mx-1">·</span>
-                    <span className="text-slate-400">No projected deficit risk</span>
+                    <span className="text-slate-600 dark:text-slate-400">No projected deficit risk</span>
                   </span>
                   {aiSummaryExpanded ? <ChevronUp className="w-3 h-3 text-slate-600" /> : <ChevronDown className="w-3 h-3 text-slate-600" />}
                 </button>
 
                 {aiSummaryExpanded && (
-                  <div className="mt-1 px-3 py-2.5 bg-slate-800/15 border border-slate-700/10 rounded space-y-1.5">
-                    <p className="text-[10px] text-red-400">• B-Shift OT ($2,808) — deputies need confirmation in 3h. Single-officer patrol safety violation.</p>
-                    <p className="text-[10px] text-red-400">• Training budget ($43K) — vendor payment deadline 1700 today. Forfeits group rate if late.</p>
-                    <p className="text-[10px] text-red-400">• Detention HVAC emergency ($18.5K) — H2-Pod at 84°F. Contractor on standby. Must authorize by 1200.</p>
-                    <p className="text-[10px] text-amber-400">• Federal Deputy hire (Jane Doe) — offer expires in 3 days. Competing offer from Fulton County.</p>
-                    <p className="text-[10px] text-green-400">• Body camera upgrade ($125K) — 88% confidence. DOJ grant pending ($37.5K offset).</p>
-                    <p className="text-[10px] text-slate-400">• Total pending: ${pendingAmount.toLocaleString()} / $550K remaining FY24. No constraints.</p>
+                  <div className="mt-1 px-3 py-2.5 bg-slate-50 dark:bg-slate-800/15 border border-slate-100 dark:border-slate-700/10 rounded space-y-1.5">
+                    <p className="text-[10px] text-red-600 dark:text-red-400">• B-Shift OT ($2,808) — deputies need confirmation in 3h. Single-officer patrol safety violation.</p>
+                    <p className="text-[10px] text-red-600 dark:text-red-400">• Training budget ($43K) — vendor payment deadline 1700 today. Forfeits group rate if late.</p>
+                    <p className="text-[10px] text-red-600 dark:text-red-400">• Detention HVAC emergency ($18.5K) — H2-Pod at 84°F. Contractor on standby. Must authorize by 1200.</p>
+                    <p className="text-[10px] text-amber-600 dark:text-amber-400">• Federal Deputy hire (Jane Doe) — offer expires in 3 days. Competing offer from Fulton County.</p>
+                    <p className="text-[10px] text-green-600 dark:text-green-400">• Body camera upgrade ($125K) — 88% confidence. DOJ grant pending ($37.5K offset).</p>
+                    <p className="text-[10px] text-slate-600 dark:text-slate-400">• Total pending: ${pendingAmount.toLocaleString()} / $550K remaining FY24. No constraints.</p>
                   </div>
                 )}
               </div>
@@ -615,7 +615,7 @@ export default function Approvals() {
                     className={`px-2.5 py-1 rounded text-[11px] font-medium border transition-all ${
                       filterType === opt.id
                         ? 'bg-slate-700/50 border-slate-600/50 text-white'
-                        : 'bg-transparent border-slate-700/40 text-slate-500 hover:text-slate-300 hover:border-slate-600/30'
+                        : 'bg-transparent border-slate-700/40 text-slate-500 hover:text-slate-700 dark:text-slate-300 hover:border-slate-600/30'
                     }`}
                   >
                     {opt.label}
@@ -654,21 +654,21 @@ export default function Approvals() {
                 {/* Bulk Actions Toolbar */}
                 {selectedItems.length > 0 && (
                   <div className="mb-3 flex items-center gap-2 px-3 py-2 bg-slate-800/35 border border-slate-700/30 rounded">
-                    <CheckSquare className="w-3.5 h-3.5 text-slate-400" />
+                    <CheckSquare className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
                     <span className="text-[11px] font-semibold text-white">
                       {selectedItems.length} selected
                     </span>
                     <div className="flex-1" />
-                    <button onClick={bulkApprove} className="px-2 py-1 text-[10px] font-medium text-green-400 hover:bg-green-500/10 rounded transition-colors">Approve All</button>
-                    <button onClick={bulkDeny} className="px-2 py-1 text-[10px] font-medium text-red-400 hover:bg-red-500/10 rounded transition-colors">Deny All</button>
+                    <button onClick={bulkApprove} className="px-2 py-1 text-[10px] font-medium text-green-600 dark:text-green-400 hover:bg-green-500/10 rounded transition-colors">Approve All</button>
+                    <button onClick={bulkDeny} className="px-2 py-1 text-[10px] font-medium text-red-600 dark:text-red-400 hover:bg-red-500/10 rounded transition-colors">Deny All</button>
                     <button onClick={() => setSelectedItems([])} className="px-2 py-1 text-[10px] font-medium text-slate-500 hover:text-white rounded transition-colors">Clear</button>
                   </div>
                 )}
 
                 {filteredApprovals.length === 0 ? (
                   <div className="py-12 text-center">
-                    <CheckCircle className="w-10 h-10 text-green-400/50 mx-auto mb-3" />
-                    <p className="text-sm font-semibold text-white mb-1">All caught up</p>
+                    <CheckCircle className="w-10 h-10 text-green-600 dark:text-green-400/50 mx-auto mb-3" />
+                    <p className="text-sm font-semibold text-slate-900 dark:text-white mb-1">All caught up</p>
                     <p className="text-[11px] text-slate-500">No pending approvals.</p>
                   </div>
                 ) : (
@@ -680,7 +680,7 @@ export default function Approvals() {
                         className="flex items-center gap-1.5 text-[11px] text-slate-500 hover:text-white transition-colors"
                       >
                         {selectedItems.length === filteredApprovals.length ? (
-                          <CheckSquare className="w-3.5 h-3.5 text-slate-400" />
+                          <CheckSquare className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
                         ) : (
                           <Square className="w-3.5 h-3.5" />
                         )}
@@ -701,7 +701,7 @@ export default function Approvals() {
                             key={approval.id}
                             className={`rounded border transition-colors ${
                               isSelected ? 'border-slate-600/40 bg-slate-700/[0.1]' :
-                              'border-slate-700/30 bg-slate-800/15 hover:bg-slate-800/30'
+                              'border-slate-200 dark:border-slate-700/30 bg-white dark:bg-slate-800/15 hover:bg-slate-50 dark:hover:bg-slate-800/30'
                             }`}
                           >
                             {/* ── Compact Row ──────────────────────── */}
@@ -717,22 +717,22 @@ export default function Approvals() {
                               {/* Checkbox */}
                               <button onClick={() => toggleSelectItem(approval.id)} className="flex-shrink-0">
                                 {isSelected ? (
-                                  <CheckSquare className="w-3.5 h-3.5 text-slate-400" />
+                                  <CheckSquare className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
                                 ) : (
-                                  <Square className="w-3.5 h-3.5 text-slate-600 hover:text-slate-400 transition-colors" />
+                                  <Square className="w-3.5 h-3.5 text-slate-600 hover:text-slate-600 dark:text-slate-400 transition-colors" />
                                 )}
                               </button>
 
                               {/* Type pill */}
                               <span className={`px-1.5 py-px border rounded text-[10px] font-semibold flex-shrink-0 leading-tight ${
                                 approval.type === 'leave' ? 'bg-slate-700/40 border-slate-600/50 text-slate-300' :
-                                approval.type === 'budget' ? 'bg-green-500/10 border-green-500/20 text-green-400' :
+                                approval.type === 'budget' ? 'bg-green-100 border-green-200 text-green-700 dark:bg-green-500/10 dark:border-green-500/20 dark:text-green-400' :
                                 approval.type === 'hiring' ? 'bg-slate-700/40 border-slate-600/50 text-slate-300' :
-                                approval.type === 'overtime' ? 'bg-amber-500/10 border-amber-500/20 text-amber-400' :
-                                approval.type === 'emergency' ? 'bg-red-500/10 border-red-500/20 text-red-400' :
+                                approval.type === 'overtime' ? 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
+                                approval.type === 'emergency' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
                                 approval.type === 'policy' ? 'bg-slate-400/10 border-slate-400/20 text-slate-400' :
                                 approval.type === 'mutual-aid' ? 'bg-cyan-500/10 border-cyan-500/20 text-cyan-400' :
-                                'bg-amber-500/10 border-amber-500/20 text-amber-400'
+                                'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400'
                               }`}>
                                 {approval.type === 'mutual-aid' ? 'Mutual Aid' :
                                  approval.type === 'overtime' ? 'OT' :
@@ -746,7 +746,7 @@ export default function Approvals() {
 
                               {/* Amount */}
                               {approval.amount && (
-                                <span className="text-[11px] font-semibold text-green-400 flex-shrink-0 font-mono">
+                                <span className="text-[11px] font-semibold text-green-600 dark:text-green-400 flex-shrink-0 font-mono">
                                   ${approval.amount.toLocaleString()}
                                 </span>
                               )}
@@ -764,9 +764,9 @@ export default function Approvals() {
                               {/* Deadline indicator */}
                               {deadlineLabel && (
                                 <span className={`px-1.5 py-px border rounded text-[10px] font-bold flex-shrink-0 ${
-                                  urgencyState === 'overdue' ? 'bg-red-500/15 border-red-500/25 text-red-400' :
-                                  urgencyState === 'critical' ? 'bg-red-500/10 border-red-500/20 text-red-400' :
-                                  'bg-amber-500/8 border-amber-500/15 text-amber-400'
+                                  urgencyState === 'overdue' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/15 dark:border-red-500/25 dark:text-red-400' :
+                                  urgencyState === 'critical' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
+                                  'bg-amber-500/8 border-amber-500/15 text-amber-600 dark:text-amber-400'
                                 }`}>
                                   {deadlineLabel}
                                 </span>
@@ -781,8 +781,8 @@ export default function Approvals() {
                               {approval.aiRecommendation && (
                                 <span className={`hidden md:inline-flex items-center gap-1 px-1.5 py-px rounded text-[10px] font-semibold flex-shrink-0 ${
                                   approval.aiRecommendation.decision === 'approve'
-                                    ? 'text-green-400/80'
-                                    : 'text-red-400/80'
+                                    ? 'text-green-600 dark:text-green-400/80'
+                                    : 'text-red-600 dark:text-red-400/80'
                                 }`}>
                                   <Sparkles className="w-2.5 h-2.5" />
                                   {approval.aiRecommendation.decision === 'approve' ? 'Approve' : 'Deny'} ({approval.aiRecommendation.confidence}%)
@@ -796,14 +796,14 @@ export default function Approvals() {
                                   className="p-1 rounded hover:bg-green-500/15 transition-colors"
                                   title="Approve"
                                 >
-                                  <ThumbsUp className="w-3.5 h-3.5 text-green-400" />
+                                  <ThumbsUp className="w-3.5 h-3.5 text-green-600 dark:text-green-400" />
                                 </button>
                                 <button
                                   onClick={() => openApprovalModal(approval, 'deny')}
                                   className="p-1 rounded hover:bg-red-500/15 transition-colors"
                                   title="Deny"
                                 >
-                                  <XCircle className="w-3.5 h-3.5 text-red-400" />
+                                  <XCircle className="w-3.5 h-3.5 text-red-600 dark:text-red-400" />
                                 </button>
                                 <button
                                   onClick={() => toggleExpandCard(approval.id)}
@@ -819,7 +819,7 @@ export default function Approvals() {
                             {isExpanded && (
                               <div className="px-3.5 pb-3 pt-1 ml-[26px] space-y-2.5">
                                 {/* Key context row */}
-                                <div className="flex items-center gap-3 text-[10px] text-slate-400 flex-wrap">
+                                <div className="flex items-center gap-3 text-[10px] text-slate-600 dark:text-slate-400 flex-wrap">
                                   <span className="flex items-center gap-1">
                                     <Building2 className="w-3 h-3" />
                                     {approval.division}
@@ -839,7 +839,7 @@ export default function Approvals() {
                                   {approval.backgroundCleared && (
                                     <>
                                       <span className="text-slate-700">·</span>
-                                      <span className="text-green-400">Background cleared</span>
+                                      <span className="text-green-600 dark:text-green-400">Background cleared</span>
                                     </>
                                   )}
                                   {approval.vendor && (
@@ -857,35 +857,35 @@ export default function Approvals() {
                                 </div>
 
                                 {/* Justification */}
-                                <div className="bg-slate-900/30 rounded p-2.5 border border-slate-700/30">
+                                <div className="bg-slate-50 dark:bg-slate-900/30 rounded p-2.5 border border-slate-200 dark:border-slate-700/30">
                                   <p className="text-[10px] text-slate-500 font-semibold mb-1">Justification</p>
-                                  <p className="text-[11px] text-slate-300 leading-relaxed">{approval.justification}</p>
+                                  <p className="text-[11px] text-slate-700 dark:text-slate-300 leading-relaxed">{approval.justification}</p>
                                 </div>
 
                                 {/* Impact Analysis */}
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                                   <div className="bg-green-500/[0.03] border border-green-500/10 rounded p-2.5">
-                                    <p className="text-[10px] font-bold text-green-400 mb-1">IF APPROVED</p>
-                                    <p className="text-[10px] text-slate-400 leading-relaxed">{approval.impact.approved}</p>
+                                    <p className="text-[10px] font-bold text-green-600 dark:text-green-400 mb-1">IF APPROVED</p>
+                                    <p className="text-[10px] text-slate-600 dark:text-slate-400 leading-relaxed">{approval.impact.approved}</p>
                                   </div>
                                   <div className="bg-red-500/[0.03] border border-red-500/10 rounded p-2.5">
-                                    <p className="text-[10px] font-bold text-red-400 mb-1">IF DENIED</p>
-                                    <p className="text-[10px] text-slate-400 leading-relaxed">{approval.impact.denied}</p>
+                                    <p className="text-[10px] font-bold text-red-600 dark:text-red-400 mb-1">IF DENIED</p>
+                                    <p className="text-[10px] text-slate-600 dark:text-slate-400 leading-relaxed">{approval.impact.denied}</p>
                                   </div>
                                 </div>
 
                                 {/* Budget impact (inline if exists) */}
                                 {approval.budgetImpact && (
-                                  <div className="flex items-center gap-4 text-[10px] text-slate-400 bg-slate-900/20 rounded px-2.5 py-2 border border-slate-700/10">
+                                  <div className="flex items-center gap-4 text-[10px] text-slate-600 dark:text-slate-400 bg-slate-900/20 rounded px-2.5 py-2 border border-slate-700/10">
                                     <span className="text-slate-500 font-semibold">Budget:</span>
                                     <span>{approval.budgetImpact.category}</span>
                                     {approval.budgetImpact.allocated && <span>Allocated ${approval.budgetImpact.allocated.toLocaleString()}</span>}
                                     {approval.budgetImpact.spent && <span>Spent ${approval.budgetImpact.spent.toLocaleString()}</span>}
                                     {approval.budgetImpact.percentUsed && (
                                       <span className={
-                                        approval.budgetImpact.percentUsed >= 90 ? 'text-red-400' :
-                                        approval.budgetImpact.percentUsed >= 75 ? 'text-amber-400' :
-                                        'text-green-400'
+                                        approval.budgetImpact.percentUsed >= 90 ? 'text-red-600 dark:text-red-400' :
+                                        approval.budgetImpact.percentUsed >= 75 ? 'text-amber-600 dark:text-amber-400' :
+                                        'text-green-600 dark:text-green-400'
                                       }>{approval.budgetImpact.percentUsed}% used</span>
                                     )}
                                   </div>
@@ -893,16 +893,16 @@ export default function Approvals() {
 
                                 {/* AI Analysis (expanded, still subdued) */}
                                 {approval.aiRecommendation && (
-                                  <div className="flex items-start gap-2 text-[10px] text-slate-400">
+                                  <div className="flex items-start gap-2 text-[10px] text-slate-600 dark:text-slate-400">
                                     <Sparkles className="w-3 h-3 text-slate-500 mt-0.5 flex-shrink-0" />
                                     <div>
                                       <span className="text-slate-500 font-semibold">AI Analysis:</span>{' '}
                                       <span>{approval.aiRecommendation.reasoning}</span>
                                       {approval.aiRecommendation.urgencyNote && (
-                                        <span className="text-amber-400 ml-1">⚠ {approval.aiRecommendation.urgencyNote}</span>
+                                        <span className="text-amber-600 dark:text-amber-400 ml-1">⚠ {approval.aiRecommendation.urgencyNote}</span>
                                       )}
                                       {approval.aiRecommendation.considerations && (
-                                        <span className="text-slate-300 ml-1">{approval.aiRecommendation.considerations}</span>
+                                        <span className="text-slate-700 dark:text-slate-300 ml-1">{approval.aiRecommendation.considerations}</span>
                                       )}
                                     </div>
                                   </div>
@@ -915,7 +915,7 @@ export default function Approvals() {
                                     {approval.documents.map((doc, idx) => (
                                       <button
                                         key={idx}
-                                        className="flex items-center gap-1 px-1.5 py-0.5 bg-slate-800/30 hover:bg-slate-700/30 border border-slate-700/30 rounded text-[10px] text-slate-300 transition-colors"
+                                        className="flex items-center gap-1 px-1.5 py-0.5 bg-slate-800/30 hover:bg-slate-700/30 border border-slate-700/30 rounded text-[10px] text-slate-700 dark:text-slate-300 transition-colors"
                                       >
                                         <FileText className="w-2.5 h-2.5" />
                                         {doc}
@@ -928,7 +928,7 @@ export default function Approvals() {
                                 <div className="flex items-center gap-2 pt-1">
                                   <button
                                     onClick={() => openRequestInfoModal(approval)}
-                                    className="px-2 py-1 text-[10px] font-medium text-slate-300 hover:bg-slate-700/20 rounded transition-colors flex items-center gap-1"
+                                    className="px-2 py-1 text-[10px] font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-700/20 rounded transition-colors flex items-center gap-1"
                                   >
                                     <Info className="w-3 h-3" />
                                     Request Info
@@ -936,14 +936,14 @@ export default function Approvals() {
                                   <div className="flex-1" />
                                   <button
                                     onClick={() => openApprovalModal(approval, 'approve')}
-                                    className="px-3 py-1.5 bg-green-500/10 border border-green-500/20 hover:bg-green-500/20 rounded text-[11px] font-semibold text-green-400 transition-colors flex items-center gap-1.5"
+                                    className="px-3 py-1.5 bg-green-500/10 border border-green-500/20 hover:bg-green-500/20 rounded text-[11px] font-semibold text-green-600 dark:text-green-400 transition-colors flex items-center gap-1.5"
                                   >
                                     <ThumbsUp className="w-3 h-3" />
                                     Approve
                                   </button>
                                   <button
                                     onClick={() => openApprovalModal(approval, 'deny')}
-                                    className="px-3 py-1.5 bg-red-500/10 border border-red-500/20 hover:bg-red-500/20 rounded text-[11px] font-semibold text-red-400 transition-colors flex items-center gap-1.5"
+                                    className="px-3 py-1.5 bg-red-500/10 border border-red-500/20 hover:bg-red-500/20 rounded text-[11px] font-semibold text-red-600 dark:text-red-400 transition-colors flex items-center gap-1.5"
                                   >
                                     <XCircle className="w-3 h-3" />
                                     Deny
@@ -978,7 +978,7 @@ export default function Approvals() {
                       className={`px-2.5 py-1 rounded text-[11px] font-medium border transition-all ${
                         logFilter === opt.id
                           ? 'bg-slate-700/50 border-slate-600/50 text-white'
-                          : 'bg-transparent border-slate-700/40 text-slate-500 hover:text-slate-300 hover:border-slate-600/30'
+                          : 'bg-transparent border-slate-700/40 text-slate-500 hover:text-slate-700 dark:text-slate-300 hover:border-slate-600/30'
                       }`}
                     >
                       {opt.label}
@@ -991,7 +991,7 @@ export default function Approvals() {
                     <input
                       type="text"
                       placeholder="Search log..."
-                      className="w-full pl-8 pr-3 py-1 bg-slate-800/30 border border-slate-700/40 rounded text-[11px] text-white placeholder-slate-600 focus:outline-none focus:border-slate-600/50"
+                      className="w-full pl-8 pr-3 py-1 bg-white dark:bg-slate-800/30 border border-slate-300 dark:border-slate-700/40 rounded text-[11px] text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-600 focus:outline-none focus:border-slate-600/50"
                     />
                   </div>
                 </div>
@@ -1013,20 +1013,20 @@ export default function Approvals() {
                     </thead>
                     <tbody>
                       {filteredHistory.map((item) => (
-                        <tr key={item.id} className="border-b border-slate-800/10 hover:bg-slate-800/15 transition-colors">
+                        <tr key={item.id} className="border-b border-slate-100 dark:border-slate-800/10 hover:bg-slate-50 dark:hover:bg-slate-800/15 transition-colors">
                           <td className="px-3 py-2.5">
-                            <span className="text-[11px] text-slate-400 capitalize">{item.type}</span>
+                            <span className="text-[11px] text-slate-600 dark:text-slate-400 capitalize">{item.type}</span>
                           </td>
                           <td className="px-3 py-2.5">
                             <p className="text-[11px] font-semibold text-white">{item.title}</p>
                             <p className="text-[10px] text-slate-500">{item.submittedBy} · {item.details}</p>
                           </td>
                           <td className="px-3 py-2.5">
-                            <span className="text-[11px] text-slate-400">{item.division}</span>
+                            <span className="text-[11px] text-slate-600 dark:text-slate-400">{item.division}</span>
                           </td>
                           <td className="px-3 py-2.5">
                             {item.amount ? (
-                              <span className="text-[11px] font-mono text-green-400">${item.amount.toLocaleString()}</span>
+                              <span className="text-[11px] font-mono text-green-600 dark:text-green-400">${item.amount.toLocaleString()}</span>
                             ) : (
                               <span className="text-[11px] text-slate-600">—</span>
                             )}
@@ -1034,15 +1034,15 @@ export default function Approvals() {
                           <td className="px-3 py-2.5">
                             <span className={`inline-flex items-center gap-1 px-1.5 py-px rounded text-[10px] font-bold border ${
                               item.decision === 'approved'
-                                ? 'bg-green-500/10 border-green-500/20 text-green-400'
-                                : 'bg-red-500/10 border-red-500/20 text-red-400'
+                                ? 'bg-green-100 border-green-200 text-green-700 dark:bg-green-500/10 dark:border-green-500/20 dark:text-green-400'
+                                : 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400'
                             }`}>
                               {item.decision === 'approved' ? <CheckCircle className="w-2.5 h-2.5" /> : <XCircle className="w-2.5 h-2.5" />}
                               {item.decision === 'approved' ? 'Approved' : 'Denied'}
                             </span>
                           </td>
                           <td className="px-3 py-2.5">
-                            <span className="text-[11px] text-slate-400">{item.decidedBy}</span>
+                            <span className="text-[11px] text-slate-600 dark:text-slate-400">{item.decidedBy}</span>
                           </td>
                           <td className="px-3 py-2.5">
                             <span className="text-[10px] text-slate-500 font-mono">{new Date(item.decidedDate).toLocaleDateString()}</span>
@@ -1050,7 +1050,7 @@ export default function Approvals() {
                           <td className="px-3 py-2.5 text-right">
                             <button
                               onClick={() => setHistoryDetailModal(item)}
-                              className="text-[10px] text-slate-400 hover:text-slate-300 transition-colors"
+                              className="text-[10px] text-slate-600 dark:text-slate-400 hover:text-slate-700 dark:text-slate-300 transition-colors"
                             >
                               View
                             </button>
@@ -1072,29 +1072,29 @@ export default function Approvals() {
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={closeApprovalModal}
           />
-          <div className="relative bg-slate-900 border border-slate-700/50 rounded-2xl p-6 max-w-md w-full shadow-2xl">
+          <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl p-6 max-w-md w-full shadow-2xl">
             <div className="flex items-start gap-4 mb-6">
               <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
                 approvalAction === 'approve' ? 'bg-green-500/20' : 'bg-red-500/20'
               }`}>
                 {approvalAction === 'approve' ? (
-                  <ThumbsUp className="w-6 h-6 text-green-400" />
+                  <ThumbsUp className="w-6 h-6 text-green-600 dark:text-green-400" />
                 ) : (
-                  <XCircle className="w-6 h-6 text-red-400" />
+                  <XCircle className="w-6 h-6 text-red-600 dark:text-red-400" />
                 )}
               </div>
               <div className="flex-1">
-                <h3 className="text-xl font-bold text-white mb-1">
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1">
                   {approvalAction === 'approve' ? 'Approve' : 'Deny'} {selectedApproval.title}?
                 </h3>
-                <p className="text-sm text-slate-400">
+                <p className="text-sm text-slate-600 dark:text-slate-400">
                   {selectedApproval.submittedBy} • {selectedApproval.details}
                 </p>
               </div>
             </div>
 
             <div className="mb-6">
-              <label className="block text-sm font-medium text-slate-300 mb-2">
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
                 {approvalAction === 'approve' ? 'Comments (optional)' : 'Reason for denial (required)'}
               </label>
               <textarea
@@ -1102,14 +1102,14 @@ export default function Approvals() {
                 onChange={(e) => setActionComment(e.target.value)}
                 placeholder={approvalAction === 'approve' ? 'Add any comments...' : 'Please provide a reason...'}
                 rows={4}
-                className="w-full px-4 py-3 bg-slate-800/30 border border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-amber-500/50 resize-none"
+                className="w-full px-4 py-3 bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-amber-500/50 resize-none"
               />
             </div>
 
             <div className="flex gap-3">
               <button
                 onClick={closeApprovalModal}
-                className="flex-1 px-4 py-3 bg-slate-800/30 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-white font-medium transition-all"
+                className="flex-1 px-4 py-3 bg-slate-100 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-800/60 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all"
               >
                 Cancel
               </button>
@@ -1134,39 +1134,39 @@ export default function Approvals() {
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={() => setHistoryDetailModal(null)}
           />
-          <div className="relative bg-slate-900 border border-slate-700/50 rounded-2xl p-6 max-w-2xl w-full shadow-2xl max-h-[80vh] overflow-y-auto">
+          <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl p-6 max-w-2xl w-full shadow-2xl max-h-[80vh] overflow-y-auto">
             <div className="flex items-start justify-between mb-6">
               <div>
-                <h3 className="text-xl font-bold text-white mb-1">{historyDetailModal.title}</h3>
-                <p className="text-sm text-slate-400">{historyDetailModal.details}</p>
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1">{historyDetailModal.title}</h3>
+                <p className="text-sm text-slate-600 dark:text-slate-400">{historyDetailModal.details}</p>
               </div>
               <button
                 onClick={() => setHistoryDetailModal(null)}
-                className="p-2 hover:bg-slate-800/50 rounded-lg transition-colors"
+                className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors"
               >
-                <X className="w-5 h-5 text-slate-400" />
+                <X className="w-5 h-5 text-slate-600 dark:text-slate-400" />
               </button>
             </div>
 
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
-                  <p className="text-xs text-slate-400 mb-1">Submitted By</p>
-                  <p className="text-sm font-medium text-white">{historyDetailModal.submittedBy}</p>
+                  <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Submitted By</p>
+                  <p className="text-sm font-medium text-slate-900 dark:text-white">{historyDetailModal.submittedBy}</p>
                 </div>
                 <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
-                  <p className="text-xs text-slate-400 mb-1">Division</p>
-                  <p className="text-sm font-medium text-white">{historyDetailModal.division}</p>
+                  <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Division</p>
+                  <p className="text-sm font-medium text-slate-900 dark:text-white">{historyDetailModal.division}</p>
                 </div>
                 {historyDetailModal.amount && (
                   <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
-                    <p className="text-xs text-slate-400 mb-1">Amount</p>
-                    <p className="text-sm font-medium text-green-400">${historyDetailModal.amount.toLocaleString()}</p>
+                    <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Amount</p>
+                    <p className="text-sm font-medium text-green-600 dark:text-green-400">${historyDetailModal.amount.toLocaleString()}</p>
                   </div>
                 )}
                 <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
-                  <p className="text-xs text-slate-400 mb-1">Submitted Date</p>
-                  <p className="text-sm font-medium text-white">{new Date(historyDetailModal.submittedDate).toLocaleDateString()}</p>
+                  <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Submitted Date</p>
+                  <p className="text-sm font-medium text-slate-900 dark:text-white">{new Date(historyDetailModal.submittedDate).toLocaleDateString()}</p>
                 </div>
               </div>
 
@@ -1178,19 +1178,19 @@ export default function Approvals() {
                 <div className="flex items-center justify-between mb-3">
                   <span className={`inline-flex items-center gap-2 px-3 py-1 rounded text-sm font-bold ${
                     historyDetailModal.decision === 'approved'
-                      ? 'bg-green-500/20 text-green-400'
-                      : 'bg-red-500/20 text-red-400'
+                      ? 'bg-green-500/20 text-green-600 dark:text-green-400'
+                      : 'bg-red-500/20 text-red-600 dark:text-red-400'
                   }`}>
                     {historyDetailModal.decision === 'approved' ? <CheckCircle className="w-4 h-4" /> : <XCircle className="w-4 h-4" />}
                     {historyDetailModal.decision.toUpperCase()}
                   </span>
                   <div className="text-right">
-                    <p className="text-sm text-slate-300">{historyDetailModal.decidedBy}</p>
+                    <p className="text-sm text-slate-700 dark:text-slate-300">{historyDetailModal.decidedBy}</p>
                     <p className="text-xs text-slate-500">{new Date(historyDetailModal.decidedDate).toLocaleDateString()}</p>
                   </div>
                 </div>
                 <div className="bg-slate-900/50 rounded-lg p-3">
-                  <p className="text-xs text-slate-400 mb-1">Decision Notes</p>
+                  <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Decision Notes</p>
                   <p className="text-sm text-slate-200">{historyDetailModal.decisionNotes}</p>
                 </div>
               </div>
@@ -1205,27 +1205,27 @@ export default function Approvals() {
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={closeRequestInfoModal}
           />
-          <div className="relative bg-slate-900 border border-slate-700/50 rounded-2xl p-6 max-w-lg w-full shadow-2xl">
+          <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl p-6 max-w-lg w-full shadow-2xl">
             <div className="flex items-start gap-4 mb-6">
               <div className="w-12 h-12 bg-slate-700/60 rounded-xl flex items-center justify-center flex-shrink-0">
-                <Info className="w-6 h-6 text-slate-400" />
+                <Info className="w-6 h-6 text-slate-600 dark:text-slate-400" />
               </div>
               <div className="flex-1">
-                <h3 className="text-xl font-bold text-white mb-1">Request More Information</h3>
-                <p className="text-sm text-slate-400">
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1">Request More Information</h3>
+                <p className="text-sm text-slate-600 dark:text-slate-400">
                   {requestInfoModal.submittedBy} • {requestInfoModal.title}
                 </p>
               </div>
               <button
                 onClick={closeRequestInfoModal}
-                className="p-2 hover:bg-slate-800/50 rounded-lg transition-colors"
+                className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors"
               >
-                <X className="w-5 h-5 text-slate-400" />
+                <X className="w-5 h-5 text-slate-600 dark:text-slate-400" />
               </button>
             </div>
 
             <div className="mb-6">
-              <label className="block text-sm font-medium text-slate-300 mb-2">
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
                 What additional information do you need?
               </label>
               <textarea
@@ -1233,7 +1233,7 @@ export default function Approvals() {
                 onChange={(e) => setInfoRequest(e.target.value)}
                 placeholder="Example: Please provide detailed cost breakdown and vendor comparison..."
                 rows={6}
-                className="w-full px-4 py-3 bg-slate-800/30 border border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-blue-500/50 resize-none"
+                className="w-full px-4 py-3 bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-blue-500/50 resize-none"
               />
               <p className="text-xs text-slate-500 mt-2">
                 The requester will receive an email notification and can respond directly.
@@ -1243,7 +1243,7 @@ export default function Approvals() {
             <div className="flex gap-3">
               <button
                 onClick={closeRequestInfoModal}
-                className="flex-1 px-4 py-3 bg-slate-800/30 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-white font-medium transition-all"
+                className="flex-1 px-4 py-3 bg-slate-100 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-800/60 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all"
               >
                 Cancel
               </button>
@@ -1263,8 +1263,8 @@ export default function Approvals() {
         <div className="fixed bottom-6 right-6 z-50 animate-slide-up">
           <div className={`px-6 py-4 rounded-xl border shadow-2xl flex items-center gap-3 ${
             toastMessage.type === 'success'
-              ? 'bg-green-500/20 border-green-500/30 text-green-400'
-              : 'bg-red-500/20 border-red-500/30 text-red-400'
+              ? 'bg-green-500/20 border-green-500/30 text-green-600 dark:text-green-400'
+              : 'bg-red-500/20 border-red-500/30 text-red-600 dark:text-red-400'
           }`}>
             {toastMessage.type === 'success' ? (
               <CheckCircle className="w-5 h-5" />

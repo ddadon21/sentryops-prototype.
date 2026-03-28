@@ -245,8 +245,8 @@ const MedicalManagement = () => {
       case 'Critical': return 'text-red-400 bg-red-500/20 border-red-500/30';
       case 'High': return 'text-orange-400 bg-orange-500/20 border-orange-500/30';
       case 'Medium': return 'text-amber-400 bg-amber-500/20 border-amber-500/30';
-      case 'Low': return 'text-slate-400 bg-slate-700/40 border-slate-600/50';
-      default: return 'text-slate-400 bg-slate-500/20 border-slate-500/30';
+      case 'Low': return 'text-slate-600 dark:text-slate-400 bg-slate-700/40 border-slate-600/50';
+      default: return 'text-slate-600 dark:text-slate-400 bg-slate-500/20 border-slate-500/30';
     }
   };
 
@@ -258,7 +258,7 @@ const MedicalManagement = () => {
             <Hospital className="w-8 h-8 text-amber-500" />
             <div>
               <h1 className="text-2xl lg:text-3xl font-bold text-white">Medical Management</h1>
-              <p className="text-slate-400">Inmate Health Services & Medical Monitoring</p>
+              <p className="text-slate-600 dark:text-slate-400">Inmate Health Services & Medical Monitoring</p>
             </div>
           </div>
         </div>
@@ -279,28 +279,28 @@ const MedicalManagement = () => {
         <div className="grid grid-cols-4 gap-4 mb-6">
           <div className="bg-slate-800 border border-slate-700 rounded-lg p-4">
             <div className="flex items-center justify-between mb-2">
-              <div className="text-sm text-slate-400">Total Under Medical Care</div>
-              <Hospital className="w-5 h-5 text-slate-400" />
+              <div className="text-sm text-slate-600 dark:text-slate-400">Total Under Medical Care</div>
+              <Hospital className="w-5 h-5 text-slate-600 dark:text-slate-400" />
             </div>
-            <div className="text-2xl font-bold text-white">{medicalStats.totalUnderCare}</div>
+            <div className="text-2xl font-bold text-slate-900 dark:text-white">{medicalStats.totalUnderCare}</div>
           </div>
           <div className="bg-slate-800 border border-slate-700 rounded-lg p-4">
             <div className="flex items-center justify-between mb-2">
-              <div className="text-sm text-slate-400">Critical Cases</div>
+              <div className="text-sm text-slate-600 dark:text-slate-400">Critical Cases</div>
               <AlertTriangle className="w-5 h-5 text-red-400" />
             </div>
             <div className="text-2xl font-bold text-red-400">{medicalStats.critical}</div>
           </div>
           <div className="bg-slate-800 border border-slate-700 rounded-lg p-4">
             <div className="flex items-center justify-between mb-2">
-              <div className="text-sm text-slate-400">Active Medications</div>
-              <Pill className="w-5 h-5 text-slate-400" />
+              <div className="text-sm text-slate-600 dark:text-slate-400">Active Medications</div>
+              <Pill className="w-5 h-5 text-slate-600 dark:text-slate-400" />
             </div>
-            <div className="text-2xl font-bold text-white">{medicalStats.activeMedications}</div>
+            <div className="text-2xl font-bold text-slate-900 dark:text-white">{medicalStats.activeMedications}</div>
           </div>
           <div className="bg-slate-800 border border-slate-700 rounded-lg p-4">
             <div className="flex items-center justify-between mb-2">
-              <div className="text-sm text-slate-400">Sick Call Pending</div>
+              <div className="text-sm text-slate-600 dark:text-slate-400">Sick Call Pending</div>
               <FileText className="w-5 h-5 text-amber-400" />
             </div>
             <div className="text-2xl font-bold text-amber-400">{medicalStats.sickCallPending}</div>
@@ -317,17 +317,17 @@ const MedicalManagement = () => {
                 <div>
                   <span className="text-white font-medium">Hospital Guards:</span>{' '}
                   <span className="text-red-400">{medicalStats.hospitalGuards} active</span>
-                  <div className="text-slate-400 text-xs mt-1">Anderson, R. - Gwinnett Medical</div>
+                  <div className="text-slate-600 dark:text-slate-400 text-xs mt-1">Anderson, R. - Gwinnett Medical</div>
                 </div>
                 <div>
                   <span className="text-white font-medium">Suicide Watch:</span>{' '}
                   <span className="text-red-400">{medicalStats.suicideWatch} inmates</span>
-                  <div className="text-slate-400 text-xs mt-1">24/7 one-on-one observation</div>
+                  <div className="text-slate-600 dark:text-slate-400 text-xs mt-1">24/7 one-on-one observation</div>
                 </div>
                 <div>
                   <span className="text-white font-medium">Isolation Cells:</span>{' '}
                   <span className="text-red-400">{medicalStats.isolationCells} occupied</span>
-                  <div className="text-slate-400 text-xs mt-1">Infectious disease protocol</div>
+                  <div className="text-slate-600 dark:text-slate-400 text-xs mt-1">Infectious disease protocol</div>
                 </div>
               </div>
             </div>
@@ -341,7 +341,7 @@ const MedicalManagement = () => {
             className={`px-6 py-3 rounded-lg font-medium transition-colors ${
               selectedTab === 'critical'
                 ? 'bg-amber-500 text-slate-900'
-                : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+                : 'bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-700'
             }`}
           >
             Critical Cases ({criticalCases.length})
@@ -351,7 +351,7 @@ const MedicalManagement = () => {
             className={`px-6 py-3 rounded-lg font-medium transition-colors ${
               selectedTab === 'medications'
                 ? 'bg-amber-500 text-slate-900'
-                : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+                : 'bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-700'
             }`}
           >
             Medication Schedule
@@ -361,7 +361,7 @@ const MedicalManagement = () => {
             className={`px-6 py-3 rounded-lg font-medium transition-colors ${
               selectedTab === 'sick-call'
                 ? 'bg-amber-500 text-slate-900'
-                : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+                : 'bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-700'
             }`}
           >
             Sick Call Requests ({sickCallRequests.length})
@@ -371,7 +371,7 @@ const MedicalManagement = () => {
             className={`px-6 py-3 rounded-lg font-medium transition-colors ${
               selectedTab === 'all'
                 ? 'bg-amber-500 text-slate-900'
-                : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+                : 'bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-700'
             }`}
           >
             Chronic Conditions ({chronicCases.length})
@@ -386,28 +386,28 @@ const MedicalManagement = () => {
                 <div className="flex items-start justify-between mb-4">
                   <div>
                     <div className="flex items-center gap-3 mb-2">
-                      <h3 className="text-xl font-bold text-white">{record.name}</h3>
+                      <h3 className="text-xl font-bold text-slate-900 dark:text-white">{record.name}</h3>
                       <span className={`px-3 py-1 rounded text-sm font-bold border ${getPriorityColor(record.priority)}`}>
                         {record.priority.toUpperCase()}
                       </span>
                     </div>
                     <div className="grid grid-cols-3 gap-4 text-sm">
                       <div>
-                        <span className="text-slate-400">Inmate ID:</span>{' '}
+                        <span className="text-slate-600 dark:text-slate-400">Inmate ID:</span>{' '}
                         <span className="text-amber-400 font-mono">{record.inmateId}</span>
                       </div>
                       <div>
-                        <span className="text-slate-400">Housing:</span>{' '}
+                        <span className="text-slate-600 dark:text-slate-400">Housing:</span>{' '}
                         <span className="text-white font-semibold">{record.housing}</span>
                       </div>
                       <div>
-                        <span className="text-slate-400">Age:</span>{' '}
+                        <span className="text-slate-600 dark:text-slate-400">Age:</span>{' '}
                         <span className="text-white">{record.age} ({record.dob})</span>
                       </div>
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="text-sm text-slate-400 mb-1">Status</div>
+                    <div className="text-sm text-slate-600 dark:text-slate-400 mb-1">Status</div>
                     <div className="text-red-400 font-bold">{record.status}</div>
                   </div>
                 </div>
@@ -417,18 +417,18 @@ const MedicalManagement = () => {
                     <AlertTriangle className="w-5 h-5 text-red-400" />
                     <h4 className="text-white font-semibold">{record.condition}</h4>
                   </div>
-                  <p className="text-slate-300 text-sm">{record.notes}</p>
+                  <p className="text-slate-700 dark:text-slate-300 text-sm">{record.notes}</p>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <h4 className="text-white font-semibold mb-2 flex items-center gap-2">
-                      <Pill className="w-4 h-4 text-slate-400" />
+                      <Pill className="w-4 h-4 text-slate-600 dark:text-slate-400" />
                       Current Medications
                     </h4>
                     <div className="space-y-1">
                       {record.medications.map((med, idx) => (
-                        <div key={idx} className="text-sm text-slate-300 bg-slate-900/50 border border-slate-700 rounded p-2">
+                        <div key={idx} className="text-sm text-slate-700 dark:text-slate-300 bg-slate-900/50 border border-slate-700 rounded p-2">
                           • {med}
                         </div>
                       ))}
@@ -441,11 +441,11 @@ const MedicalManagement = () => {
                   </div>
                   <div>
                     <h4 className="text-white font-semibold mb-2 flex items-center gap-2">
-                      <User className="w-4 h-4 text-slate-400" />
+                      <User className="w-4 h-4 text-slate-600 dark:text-slate-400" />
                       Medical Provider
                     </h4>
-                    <div className="text-sm text-slate-300 mb-2">{record.provider}</div>
-                    <div className="text-sm text-slate-400">Last seen: {record.lastSeen}</div>
+                    <div className="text-sm text-slate-700 dark:text-slate-300 mb-2">{record.provider}</div>
+                    <div className="text-sm text-slate-600 dark:text-slate-400">Last seen: {record.lastSeen}</div>
                   </div>
                 </div>
               </div>
@@ -457,13 +457,13 @@ const MedicalManagement = () => {
         {selectedTab === 'medications' && (
           <div className="space-y-4">
             <div className="bg-slate-800 border border-slate-700 rounded-lg p-6">
-              <h3 className="text-xl font-bold text-white mb-4">Today's Medication Rounds</h3>
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4">Today's Medication Rounds</h3>
               <div className="space-y-3">
                 {medicationSchedule.map((round, idx) => (
                   <div key={idx} className="bg-slate-900/50 border border-slate-700 rounded-lg p-4">
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-4">
-                        <div className="text-2xl font-bold text-white">{round.time}</div>
+                        <div className="text-2xl font-bold text-slate-900 dark:text-white">{round.time}</div>
                         <span className={`px-3 py-1 rounded text-sm font-medium ${
                           round.status === 'Completed' ? 'bg-emerald-500/20 text-emerald-400' :
                           round.status === 'In Progress' ? 'bg-amber-500/20 text-amber-400' :
@@ -473,21 +473,21 @@ const MedicalManagement = () => {
                         </span>
                       </div>
                       <div className="text-right">
-                        <div className="text-sm text-slate-400">Nurse</div>
+                        <div className="text-sm text-slate-600 dark:text-slate-400">Nurse</div>
                         <div className="text-white font-medium">{round.nurse}</div>
                       </div>
                     </div>
                     <div className="grid grid-cols-3 gap-4 text-sm">
                       <div>
-                        <span className="text-slate-400">Total Inmates:</span>{' '}
+                        <span className="text-slate-600 dark:text-slate-400">Total Inmates:</span>{' '}
                         <span className="text-white font-semibold">{round.inmates}</span>
                       </div>
                       <div>
-                        <span className="text-slate-400">Administered:</span>{' '}
+                        <span className="text-slate-600 dark:text-slate-400">Administered:</span>{' '}
                         <span className="text-emerald-400 font-semibold">{round.administered}</span>
                       </div>
                       <div>
-                        <span className="text-slate-400">Refused:</span>{' '}
+                        <span className="text-slate-600 dark:text-slate-400">Refused:</span>{' '}
                         <span className={round.refused > 0 ? 'text-red-400 font-semibold' : 'text-slate-500'}>
                           {round.refused}
                         </span>
@@ -518,7 +518,7 @@ const MedicalManagement = () => {
                 <div className="flex items-start justify-between mb-3">
                   <div>
                     <h3 className="text-lg font-bold text-white mb-1">{request.name}</h3>
-                    <div className="flex items-center gap-4 text-sm text-slate-400">
+                    <div className="flex items-center gap-4 text-sm text-slate-600 dark:text-slate-400">
                       <span>ID: {request.inmateId}</span>
                       <span>Housing: {request.housing}</span>
                       <span>Submitted: {request.submitted}</span>
@@ -529,7 +529,7 @@ const MedicalManagement = () => {
                   </span>
                 </div>
                 <div className="bg-slate-900/50 border border-slate-700 rounded-lg p-4 mb-3">
-                  <div className="text-sm text-slate-400 mb-1">Complaint:</div>
+                  <div className="text-sm text-slate-600 dark:text-slate-400 mb-1">Complaint:</div>
                   <div className="text-white">{request.complaint}</div>
                 </div>
                 <div className="flex items-center justify-between">
@@ -562,7 +562,7 @@ const MedicalManagement = () => {
                 <div className="flex items-start justify-between mb-3">
                   <div>
                     <h3 className="text-lg font-bold text-white mb-1">{record.name}</h3>
-                    <div className="flex items-center gap-4 text-sm text-slate-400">
+                    <div className="flex items-center gap-4 text-sm text-slate-600 dark:text-slate-400">
                       <span>ID: {record.inmateId}</span>
                       <span>Housing: {record.housing}</span>
                     </div>
@@ -576,21 +576,21 @@ const MedicalManagement = () => {
                   </span>
                 </div>
                 <div className="bg-slate-800/60 border border-slate-700/50 rounded-lg p-4 mb-3">
-                  <h4 className="text-slate-300 font-semibold mb-2">{record.condition}</h4>
+                  <h4 className="text-slate-700 dark:text-slate-300 font-semibold mb-2">{record.condition}</h4>
                   <div className="space-y-1">
                     {record.medications.map((med, medIdx) => (
-                      <div key={medIdx} className="text-sm text-slate-300">• {med}</div>
+                      <div key={medIdx} className="text-sm text-slate-700 dark:text-slate-300">• {med}</div>
                     ))}
                   </div>
                 </div>
                 <div className="flex items-center justify-between text-sm">
                   <div>
-                    <span className="text-slate-400">Next Check:</span>{' '}
+                    <span className="text-slate-600 dark:text-slate-400">Next Check:</span>{' '}
                     <span className="text-white font-medium">{record.nextCheck}</span>
                   </div>
                   <div>
-                    <span className="text-slate-400">Last Reading:</span>{' '}
-                    <span className="text-slate-300 font-medium">{record.lastReading}</span>
+                    <span className="text-slate-600 dark:text-slate-400">Last Reading:</span>{' '}
+                    <span className="text-slate-700 dark:text-slate-300 font-medium">{record.lastReading}</span>
                   </div>
                 </div>
               </div>

@@ -598,7 +598,7 @@ export default function SettingsPage() {
 
   return (
     <DashboardLayout>
-      <div className="p-5 lg:p-8 space-y-8">
+      <div className="p-5 lg:p-8 space-y-8 bg-slate-100 dark:bg-transparent min-h-full">
           <div className="max-w-[1600px] mx-auto">
             <div className="mb-6">
               <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-1">Settings & Configuration</h2>
@@ -663,7 +663,7 @@ export default function SettingsPage() {
               {/* Profile Settings */}
               {activeSection === 'profile' && (
                 <>
-                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-6 shadow-sm dark:shadow-none">
+                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-6 shadow-md dark:shadow-none">
                     <div className="flex items-center justify-between mb-1">
                       <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Profile Information</h3>
                       <span className="text-[10px] text-slate-500">Last updated: Dec 11, 2025 09:14 AM</span>
@@ -758,8 +758,8 @@ export default function SettingsPage() {
                   </div>
 
                   {/* Profile Photo */}
-                  <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-6 shadow-sm dark:shadow-none">
-                    <h3 className="text-lg font-semibold text-white mb-4">Profile Photo</h3>
+                  <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-6 shadow-md dark:shadow-none">
+                    <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Profile Photo</h3>
                     <div className="flex items-center gap-6">
                       <div className="w-24 h-24 bg-gradient-to-br from-amber-500 to-amber-600 rounded-full flex items-center justify-center">
                         <span className="text-white text-3xl font-bold">ST</span>
@@ -783,7 +783,7 @@ export default function SettingsPage() {
 
               {/* Notifications Settings */}
               {activeSection === 'notifications' && (
-                <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-6 shadow-sm dark:shadow-none">
+                <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-6 shadow-md dark:shadow-none">
                   <div className="flex items-center justify-between mb-1">
                     <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Operational Alert Preferences</h3>
                     <span className="text-[10px] text-slate-500">Last updated: Dec 11, 2025 09:14 AM</span>
@@ -799,7 +799,7 @@ export default function SettingsPage() {
                     ].map((item, idx, arr) => (
                       <div key={item.key} className={`flex items-center justify-between py-3 ${idx < arr.length - 1 ? 'border-b border-slate-700/20' : ''}`}>
                         <div className="flex-1">
-                          <h4 className="text-sm font-medium text-white">{item.title}</h4>
+                          <h4 className="text-sm font-medium text-slate-900 dark:text-white">{item.title}</h4>
                           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">{item.desc}</p>
                         </div>
                         <button
@@ -816,7 +816,7 @@ export default function SettingsPage() {
 
               {/* Display Settings */}
               {activeSection === 'display' && (
-                <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-6 shadow-sm dark:shadow-none">
+                <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-6 shadow-md dark:shadow-none">
                   <div className="flex items-center justify-between mb-1">
                     <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Display Preferences</h3>
                     <span className="text-[10px] text-slate-500">Last updated: Dec 10, 2025 02:30 PM</span>
@@ -886,7 +886,7 @@ export default function SettingsPage() {
               {/* Security Settings */}
               {activeSection === 'security' && (
                 <div className="space-y-6">
-                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-6 shadow-sm dark:shadow-none">
+                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-6 shadow-md dark:shadow-none">
                     <div className="flex items-center justify-between mb-1">
                       <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Authentication & Access</h3>
                       <span className="text-[10px] text-slate-500">Last updated: Dec 9, 2025 11:42 AM</span>
@@ -895,7 +895,7 @@ export default function SettingsPage() {
                     <div className="space-y-4">
                       <div className="flex items-center justify-between py-3 border-b border-slate-700/30">
                         <div className="flex-1">
-                          <h4 className="text-sm font-medium text-white">Two-Factor Authentication</h4>
+                          <h4 className="text-sm font-medium text-slate-900 dark:text-white">Two-Factor Authentication</h4>
                           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Require 2FA for account access</p>
                         </div>
                         <div className="flex items-center gap-3">
@@ -924,7 +924,7 @@ export default function SettingsPage() {
                       </div>
                       <div className="flex items-center justify-between py-3 border-b border-slate-700/30">
                         <div className="flex-1">
-                          <h4 className="text-sm font-medium text-white">Login Notifications</h4>
+                          <h4 className="text-sm font-medium text-slate-900 dark:text-white">Login Notifications</h4>
                           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Notify on new device login</p>
                         </div>
                         <button
@@ -950,7 +950,7 @@ export default function SettingsPage() {
                       </div>
                       <div className="flex items-center justify-between py-3 border-b border-slate-700/30">
                         <div className="flex-1">
-                          <h4 className="text-sm font-medium text-white">IP Whitelist</h4>
+                          <h4 className="text-sm font-medium text-slate-900 dark:text-white">IP Whitelist</h4>
                           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Restrict access to approved IPs</p>
                         </div>
                         <button
@@ -962,7 +962,7 @@ export default function SettingsPage() {
                       </div>
                       <div className="flex items-center justify-between py-3 border-b border-slate-700/30">
                         <div className="flex-1">
-                          <h4 className="text-sm font-medium text-white">Audit Logging</h4>
+                          <h4 className="text-sm font-medium text-slate-900 dark:text-white">Audit Logging</h4>
                           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Track all user actions</p>
                         </div>
                         <div className="flex items-center gap-3">
@@ -977,7 +977,7 @@ export default function SettingsPage() {
                       </div>
                       <div className="flex items-center justify-between py-3">
                         <div className="flex-1">
-                          <h4 className="text-sm font-medium text-white">SSO Integration</h4>
+                          <h4 className="text-sm font-medium text-slate-900 dark:text-white">SSO Integration</h4>
                           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Single Sign-On with County AD</p>
                         </div>
                         <div className="flex items-center gap-3">
@@ -993,7 +993,7 @@ export default function SettingsPage() {
                     </div>
                   </div>
 
-                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-6 shadow-sm dark:shadow-none">
+                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-6 shadow-md dark:shadow-none">
                     <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-6">Active Sessions</h3>
                     <div className="space-y-3">
                       <div className="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/30 rounded-xl">
@@ -1001,7 +1001,7 @@ export default function SettingsPage() {
                           <Monitor className="w-5 h-5 text-green-400" />
                         </div>
                         <div className="flex-1">
-                          <p className="text-sm font-medium text-white">Chrome on Windows • Current Session</p>
+                          <p className="text-sm font-medium text-slate-900 dark:text-white">Chrome on Windows • Current Session</p>
                           <p className="text-xs text-slate-500 dark:text-slate-400">Gwinnett County Sheriff HQ • 172.16.45.102</p>
                           <p className="text-xs text-slate-500 mt-1">Last active: Just now</p>
                         </div>
@@ -1014,7 +1014,7 @@ export default function SettingsPage() {
                           <Smartphone className="w-5 h-5 text-blue-400" />
                         </div>
                         <div className="flex-1">
-                          <p className="text-sm font-medium text-white">Mobile App • iPhone 14 Pro</p>
+                          <p className="text-sm font-medium text-slate-900 dark:text-white">Mobile App • iPhone 14 Pro</p>
                           <p className="text-xs text-slate-500 dark:text-slate-400">Patrol Unit 203 • Mobile Network</p>
                           <p className="text-xs text-slate-500 mt-1">Last active: 45 min ago</p>
                         </div>
@@ -1025,7 +1025,7 @@ export default function SettingsPage() {
                     </div>
                   </div>
 
-                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-6 shadow-sm dark:shadow-none">
+                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-6 shadow-md dark:shadow-none">
                     <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-4">Change Password</h3>
                     <div className="space-y-4">
                       <div>
@@ -1072,7 +1072,7 @@ export default function SettingsPage() {
                     const Icon = getIntegrationIcon(integration.type);
                     const isExpanded = expandedIntegration === key;
                     return (
-                      <div key={key} className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl overflow-hidden shadow-sm dark:shadow-none">
+                      <div key={key} className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl overflow-hidden shadow-md dark:shadow-none">
                         <div
                           onClick={() => setExpandedIntegration(isExpanded ? null : key)}
                           className="p-6 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/20 transition-colors"
@@ -1365,7 +1365,7 @@ export default function SettingsPage() {
               {/* Backup & Retention */}
               {activeSection === 'data' && (
                 <div className="space-y-6">
-                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-6 shadow-sm dark:shadow-none">
+                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-6 shadow-md dark:shadow-none">
                     <div className="flex items-center justify-between mb-1">
                       <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Data Export</h3>
                       <span className="text-[10px] text-slate-500">Last updated: Dec 11, 2025 02:00 AM</span>
@@ -1379,7 +1379,7 @@ export default function SettingsPage() {
                               <Database className="w-5 h-5 text-blue-400" />
                             </div>
                             <div>
-                              <h4 className="text-sm font-medium text-white">Personnel Records</h4>
+                              <h4 className="text-sm font-medium text-slate-900 dark:text-white">Personnel Records</h4>
                               <p className="text-xs text-slate-500 dark:text-slate-400">Export all personnel data</p>
                             </div>
                           </div>
@@ -1396,7 +1396,7 @@ export default function SettingsPage() {
                               <FileText className="w-5 h-5 text-green-400" />
                             </div>
                             <div>
-                              <h4 className="text-sm font-medium text-white">Reports & Analytics</h4>
+                              <h4 className="text-sm font-medium text-slate-900 dark:text-white">Reports & Analytics</h4>
                               <p className="text-xs text-slate-500 dark:text-slate-400">Export all generated reports</p>
                             </div>
                           </div>
@@ -1413,7 +1413,7 @@ export default function SettingsPage() {
                               <FileJson className="w-5 h-5 text-purple-400" />
                             </div>
                             <div>
-                              <h4 className="text-sm font-medium text-white">Integration Logs</h4>
+                              <h4 className="text-sm font-medium text-slate-900 dark:text-white">Integration Logs</h4>
                               <p className="text-xs text-slate-500 dark:text-slate-400">Export API sync logs</p>
                             </div>
                           </div>
@@ -1430,7 +1430,7 @@ export default function SettingsPage() {
                               <Shield className="w-5 h-5 text-amber-400" />
                             </div>
                             <div>
-                              <h4 className="text-sm font-medium text-white">Audit Trail</h4>
+                              <h4 className="text-sm font-medium text-slate-900 dark:text-white">Audit Trail</h4>
                               <p className="text-xs text-slate-500 dark:text-slate-400">Export security audit logs</p>
                             </div>
                           </div>
@@ -1443,13 +1443,13 @@ export default function SettingsPage() {
                     </div>
                   </div>
 
-                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-6 shadow-sm dark:shadow-none">
+                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-6 shadow-md dark:shadow-none">
                     <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-6">Backup & Restore</h3>
                     <div className="space-y-4">
                       <div className="p-4 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/30 rounded-xl">
                         <div className="flex items-center justify-between mb-3">
                           <div>
-                            <h4 className="text-sm font-medium text-white mb-1">Last Backup</h4>
+                            <h4 className="text-sm font-medium text-slate-900 dark:text-white mb-1">Last Backup</h4>
                             <p className="text-xs text-slate-500 dark:text-slate-400">December 11, 2025 at 2:00 AM EST</p>
                           </div>
                           <div className="flex items-center gap-2 px-3 py-1.5 bg-green-500/20 border border-green-500/30 rounded-lg">
@@ -1480,7 +1480,7 @@ export default function SettingsPage() {
                     </div>
                   </div>
 
-                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-6 shadow-sm dark:shadow-none">
+                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-6 shadow-md dark:shadow-none">
                     <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-6">Data Retention</h3>
                     <div className="space-y-4">
                       <div>
@@ -1536,7 +1536,7 @@ export default function SettingsPage() {
                   </div>
 
                   {/* API Management */}
-                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-6 shadow-sm dark:shadow-none">
+                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-6 shadow-md dark:shadow-none">
                     <div className="flex items-center justify-between mb-1">
                       <h3 className="text-sm font-semibold text-slate-900 dark:text-white">API Management</h3>
                       <span className="text-[10px] text-slate-500">Last updated: Dec 11, 2025 08:22 AM</span>
@@ -1556,7 +1556,7 @@ export default function SettingsPage() {
                             <Key className={`w-5 h-5 ${apiKey.status === 'active' ? 'text-green-400' : 'text-slate-500'}`} />
                           </div>
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-white">{apiKey.name}</p>
+                            <p className="text-sm font-medium text-slate-900 dark:text-white">{apiKey.name}</p>
                             <div className="flex items-center gap-2 mt-1">
                               <code className="text-xs text-amber-600 dark:text-amber-400 bg-slate-100 dark:bg-slate-900/50 px-2 py-1 rounded border border-slate-300 dark:border-slate-700/50">
                                 {showApiKey[`api_${apiKey.id}`] ? apiKey.key : '\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022'}
@@ -1592,12 +1592,12 @@ export default function SettingsPage() {
                         { icon: Clock, color: 'text-amber-400', label: 'Avg Response', value: '187ms', sub: '-23ms vs last month', subColor: 'text-green-400' },
                         { icon: Zap, color: 'text-purple-400', label: 'Peak RPS', value: '1,247', sub: 'requests/second', subColor: 'text-slate-500 dark:text-slate-400' },
                       ].map((s, i) => (
-                        <div key={i} className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-4 shadow-sm dark:shadow-none">
+                        <div key={i} className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-4 shadow-md dark:shadow-none">
                           <div className="flex items-center gap-2 mb-2">
                             <s.icon className={`w-4 h-4 ${s.color}`} />
                             <p className="text-[10px] font-medium text-slate-500 dark:text-slate-400">{s.label}</p>
                           </div>
-                          <p className="text-xl font-bold text-white">{s.value}</p>
+                          <p className="text-xl font-bold text-slate-900 dark:text-white">{s.value}</p>
                           <p className={`text-[10px] ${s.subColor} mt-1`}>{s.sub}</p>
                         </div>
                       ))}
@@ -1617,7 +1617,7 @@ export default function SettingsPage() {
                   </div>
 
                   {/* System Health */}
-                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-6 shadow-sm dark:shadow-none">
+                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-6 shadow-md dark:shadow-none">
                     <div className="flex items-center justify-between mb-1">
                       <h3 className="text-sm font-semibold text-slate-900 dark:text-white">System Health</h3>
                       <span className="text-[10px] text-slate-500">Last updated: Dec 11, 2025 09:15 AM</span>
@@ -1630,12 +1630,12 @@ export default function SettingsPage() {
                         { icon: Database, color: 'amber', label: 'Storage Used', value: '42%', pct: 42 },
                         { icon: Activity, color: 'purple', label: 'Active Connections', value: '234' },
                       ].map((m, i) => (
-                        <div key={i} className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-4 shadow-sm dark:shadow-none">
+                        <div key={i} className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-4 shadow-md dark:shadow-none">
                           <div className="flex items-center gap-2 mb-2">
                             <m.icon className={`w-4 h-4 text-${m.color}-400`} />
                             <p className="text-[10px] font-medium text-slate-500 dark:text-slate-400">{m.label}</p>
                           </div>
-                          <p className="text-xl font-bold text-white">{m.value}</p>
+                          <p className="text-xl font-bold text-slate-900 dark:text-white">{m.value}</p>
                           {m.pct !== undefined && (
                             <div className="mt-2 h-1.5 bg-slate-200 dark:bg-slate-700/40 rounded-full overflow-hidden">
                               <div className={`h-full bg-${m.color}-500`} style={{width: `${m.pct}%`}}></div>
@@ -1663,7 +1663,7 @@ export default function SettingsPage() {
                   </div>
 
                   {/* DevOps / Infrastructure Controls */}
-                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-6 shadow-sm dark:shadow-none">
+                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-6 shadow-md dark:shadow-none">
                     <div className="flex items-center justify-between mb-1">
                       <h3 className="text-sm font-semibold text-slate-900 dark:text-white">DevOps / Infrastructure Controls</h3>
                       <span className="text-[10px] text-slate-500">Last action: Dec 10, 2025 02:00 AM</span>
@@ -1681,7 +1681,7 @@ export default function SettingsPage() {
                               <action.icon className={`w-5 h-5 text-${action.color}-400`} />
                             </div>
                             <div className="text-left">
-                              <p className="text-sm font-medium text-white">{action.title}</p>
+                              <p className="text-sm font-medium text-slate-900 dark:text-white">{action.title}</p>
                               <p className="text-xs text-slate-500 dark:text-slate-400">{action.desc}</p>
                             </div>
                           </div>
@@ -1695,7 +1695,7 @@ export default function SettingsPage() {
 
               {/* Audit & Compliance */}
               {activeSection === 'audit' && (
-                <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-6 shadow-sm dark:shadow-none">
+                <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-6 shadow-md dark:shadow-none">
                   <div className="flex items-center justify-between mb-6">
                     <div>
                       <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Audit & Compliance Trail</h3>
@@ -1714,7 +1714,7 @@ export default function SettingsPage() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
-                          <p className="text-sm font-medium text-white">Settings Updated</p>
+                          <p className="text-sm font-medium text-slate-900 dark:text-white">Settings Updated</p>
                           <span className="px-2 py-0.5 bg-blue-500/20 border border-blue-500/30 rounded text-xs text-blue-400">Settings</span>
                         </div>
                         <p className="text-xs text-slate-500 dark:text-slate-400">Sheriff Thompson updated notification preferences</p>
@@ -1732,7 +1732,7 @@ export default function SettingsPage() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
-                          <p className="text-sm font-medium text-white">Successful Login</p>
+                          <p className="text-sm font-medium text-slate-900 dark:text-white">Successful Login</p>
                           <span className="px-2 py-0.5 bg-green-500/20 border border-green-500/30 rounded text-xs text-green-400">Authentication</span>
                         </div>
                         <p className="text-xs text-slate-500 dark:text-slate-400">Sheriff Thompson logged in from headquarters</p>
@@ -1750,7 +1750,7 @@ export default function SettingsPage() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
-                          <p className="text-sm font-medium text-white">Integration Synced</p>
+                          <p className="text-sm font-medium text-slate-900 dark:text-white">Integration Synced</p>
                           <span className="px-2 py-0.5 bg-purple-500/20 border border-purple-500/30 rounded text-xs text-purple-400">Integration</span>
                         </div>
                         <p className="text-xs text-slate-500 dark:text-slate-400">Versaterm CAD completed automatic sync</p>
@@ -1768,7 +1768,7 @@ export default function SettingsPage() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
-                          <p className="text-sm font-medium text-white">API Key Rotated</p>
+                          <p className="text-sm font-medium text-slate-900 dark:text-white">API Key Rotated</p>
                           <span className="px-2 py-0.5 bg-amber-500/20 border border-amber-500/30 rounded text-xs text-amber-400">Security</span>
                         </div>
                         <p className="text-xs text-slate-500 dark:text-slate-400">Axon Evidence.com API key was rotated</p>
@@ -1786,7 +1786,7 @@ export default function SettingsPage() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
-                          <p className="text-sm font-medium text-white">Failed Login Attempt</p>
+                          <p className="text-sm font-medium text-slate-900 dark:text-white">Failed Login Attempt</p>
                           <span className="px-2 py-0.5 bg-red-500/20 border border-red-500/30 rounded text-xs text-red-400">Security Alert</span>
                         </div>
                         <p className="text-xs text-slate-500 dark:text-slate-400">Multiple failed login attempts detected</p>
@@ -1804,7 +1804,7 @@ export default function SettingsPage() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
-                          <p className="text-sm font-medium text-white">Database Backup</p>
+                          <p className="text-sm font-medium text-slate-900 dark:text-white">Database Backup</p>
                           <span className="px-2 py-0.5 bg-green-500/20 border border-green-500/30 rounded text-xs text-green-400">System</span>
                         </div>
                         <p className="text-xs text-slate-500 dark:text-slate-400">Automated database backup completed successfully</p>
@@ -1827,9 +1827,9 @@ export default function SettingsPage() {
             </div>
 
             {/* Save Changes Button */}
-            <div className="mt-8 flex items-center justify-between p-5 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none">
+            <div className="mt-8 flex items-center justify-between p-5 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none">
               <div>
-                <p className="text-sm font-medium text-white">Unsaved Changes</p>
+                <p className="text-sm font-medium text-slate-900 dark:text-white">Unsaved Changes</p>
                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Save your changes to apply the new settings</p>
               </div>
               <div className="flex gap-3">

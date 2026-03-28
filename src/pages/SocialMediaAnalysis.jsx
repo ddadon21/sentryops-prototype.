@@ -416,13 +416,13 @@ export default function SocialMediaAnalysis() {
       notifications={biNotifications}
       settingsRoute="/bi/settings"
     >
-      <div className="p-5 lg:p-8 space-y-8">
+      <div className="p-5 lg:p-8 space-y-8 bg-slate-100 dark:bg-transparent min-h-full">
           {/* Page Header */}
           <div className="mb-6">
             <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-4">
               <div>
                 <h2 className="text-2xl lg:text-3xl font-bold text-white mb-2">Social Media Analysis</h2>
-                <p className="text-slate-400 mb-2">Public online presence, digital footprint, and professional conduct assessment</p>
+                <p className="text-slate-600 dark:text-slate-400 mb-2">Public online presence, digital footprint, and professional conduct assessment</p>
                 <div className="flex flex-wrap items-center gap-4 text-sm text-slate-500">
                   <span className="flex items-center gap-1.5">
                     <Calendar className="w-4 h-4" />
@@ -438,13 +438,13 @@ export default function SocialMediaAnalysis() {
                 <button className="flex items-center gap-2 px-4 py-2 bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 rounded-xl text-sm font-medium transition-colors border border-purple-500/20">
                   <Plus className="w-4 h-4" />Add Profile
                 </button>
-                <button className="flex items-center gap-2 px-3 py-2 bg-slate-800/40 hover:bg-slate-800/60 text-slate-300 rounded-xl text-sm font-medium transition-colors border border-slate-700/50">
+                <button className="flex items-center gap-2 px-3 py-2 bg-slate-800/40 hover:bg-slate-800/60 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium transition-colors border border-slate-700/50">
                   <BookOpen className="w-4 h-4" />Policy Guidelines
                 </button>
-                <button className="flex items-center gap-2 px-3 py-2 bg-slate-800/40 hover:bg-slate-800/60 text-slate-300 rounded-xl text-sm font-medium transition-colors border border-slate-700/50">
+                <button className="flex items-center gap-2 px-3 py-2 bg-slate-800/40 hover:bg-slate-800/60 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium transition-colors border border-slate-700/50">
                   <Download className="w-4 h-4" />Export
                 </button>
-                <button className="flex items-center gap-2 px-3 py-2 bg-slate-800/40 hover:bg-slate-800/60 text-slate-300 rounded-xl text-sm font-medium transition-colors border border-slate-700/50">
+                <button className="flex items-center gap-2 px-3 py-2 bg-slate-800/40 hover:bg-slate-800/60 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium transition-colors border border-slate-700/50">
                   <Printer className="w-4 h-4" />Print
                 </button>
               </div>
@@ -463,20 +463,20 @@ export default function SocialMediaAnalysis() {
 
             {/* Quick Stats */}
             <div className="flex flex-wrap items-center gap-4 text-sm">
-              <span className="text-slate-400">Total profiles analyzed: <span className="text-white font-medium">{socialMediaReports.length} subjects</span></span>
+              <span className="text-slate-600 dark:text-slate-400">Total profiles analyzed: <span className="text-white font-medium">{socialMediaReports.length} subjects</span></span>
               <span className="text-slate-500">|</span>
-              <span className="text-slate-400">Platforms reviewed: <span className="text-white font-medium">Facebook, LinkedIn, Twitter/X, Instagram</span></span>
+              <span className="text-slate-600 dark:text-slate-400">Platforms reviewed: <span className="text-white font-medium">Facebook, LinkedIn, Twitter/X, Instagram</span></span>
             </div>
           </div>
 
           {/* Social Media Review Status Summary */}
-          <div className="bg-slate-800/30 border border-slate-700/50 rounded-xl p-5 mb-6">
+          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5 mb-6">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center">
                 <ClipboardList className="w-5 h-5 text-blue-400" />
               </div>
               <div>
-                <h3 className="text-base font-semibold text-white">Social Media Review Status Summary</h3>
+                <h3 className="text-base font-semibold text-slate-900 dark:text-white">Social Media Review Status Summary</h3>
                 <p className="text-xs text-slate-500">As of January 30, 2026 at 10:32 AM EST</p>
               </div>
             </div>
@@ -484,7 +484,7 @@ export default function SocialMediaAnalysis() {
             {/* Overall Status */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div>
-                <h4 className="text-sm font-medium text-slate-300 mb-3">Overall Status</h4>
+                <h4 className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">Overall Status</h4>
                 <div className="space-y-2 text-sm">
                   <div className="flex items-center gap-2">
                     <span className="text-slate-500">Total subjects reviewed:</span>
@@ -492,30 +492,30 @@ export default function SocialMediaAnalysis() {
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-400" />
-                    <span className="text-slate-400">Approved (no concerns):</span>
+                    <span className="text-slate-600 dark:text-slate-400">Approved (no concerns):</span>
                     <span className="text-green-400 font-medium">{clearCount}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <AlertCircle className="w-4 h-4 text-amber-400" />
-                    <span className="text-slate-400">Conditional (requires discussion):</span>
+                    <span className="text-slate-600 dark:text-slate-400">Conditional (requires discussion):</span>
                     <span className="text-amber-400 font-medium">{reviewCount}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Clock className="w-4 h-4 text-blue-400" />
-                    <span className="text-slate-400">In progress:</span>
+                    <span className="text-slate-600 dark:text-slate-400">In progress:</span>
                     <span className="text-blue-400 font-medium">{progressCount}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Ban className="w-4 h-4 text-red-400" />
-                    <span className="text-slate-400">Disqualified:</span>
+                    <span className="text-slate-600 dark:text-slate-400">Disqualified:</span>
                     <span className="text-red-400 font-medium">0</span>
                   </div>
                 </div>
               </div>
 
               <div>
-                <h4 className="text-sm font-medium text-slate-300 mb-3">Review Guidelines</h4>
-                <div className="space-y-1.5 text-xs text-slate-400">
+                <h4 className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">Review Guidelines</h4>
+                <div className="space-y-1.5 text-xs text-slate-600 dark:text-slate-400">
                   <div className="flex items-start gap-2">
                     <Globe className="w-3.5 h-3.5 text-blue-500 mt-0.5 flex-shrink-0" />
                     <span>Public content only (no private account access)</span>
@@ -550,7 +550,7 @@ export default function SocialMediaAnalysis() {
                     <span className="text-sm font-medium text-green-400">Approved - No Concerns ({clearCount})</span>
                   </div>
                   {socialMediaReports.filter(r => r.statusCategory === 'clear').map(r => (
-                    <div key={r.id} className="text-xs text-slate-300 mb-1">
+                    <div key={r.id} className="text-xs text-slate-700 dark:text-slate-300 mb-1">
                       <span className="font-medium">{r.subject}</span> ({r.caseId})
                       <div className="text-slate-500 ml-2">{r.totalPostsReviewed} posts | Professional presence</div>
                     </div>
@@ -564,7 +564,7 @@ export default function SocialMediaAnalysis() {
                     <span className="text-sm font-medium text-amber-400">Conditional - Discussion Required ({reviewCount})</span>
                   </div>
                   {socialMediaReports.filter(r => r.statusCategory === 'review').map(r => (
-                    <div key={r.id} className="text-xs text-slate-300 mb-1">
+                    <div key={r.id} className="text-xs text-slate-700 dark:text-slate-300 mb-1">
                       <span className="font-medium">{r.subject}</span> ({r.caseId})
                       <div className="text-slate-500 ml-2">{r.flaggedPosts} flagged posts (old content)</div>
                       <div className="text-amber-400/80 ml-2 mt-1">Action: {r.conditionalAction}</div>
@@ -579,7 +579,7 @@ export default function SocialMediaAnalysis() {
                     <span className="text-sm font-medium text-blue-400">In Progress ({progressCount})</span>
                   </div>
                   {socialMediaReports.filter(r => r.statusCategory === 'progress').map(r => (
-                    <div key={r.id} className="text-xs text-slate-300 mb-1">
+                    <div key={r.id} className="text-xs text-slate-700 dark:text-slate-300 mb-1">
                       <span className="font-medium">{r.subject}</span> ({r.caseId})
                       <div className="text-slate-500 ml-2">Minimal online presence</div>
                       <div className="text-blue-400/80 ml-2 mt-1">Expected: {r.expectedCompletion}</div>
@@ -591,14 +591,14 @@ export default function SocialMediaAnalysis() {
 
             {/* Important Notes */}
             <div className="mt-4 pt-4 border-t border-slate-700/50">
-              <h4 className="text-sm font-medium text-slate-300 mb-2">Important Notes on Social Media Review</h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs text-slate-400">
+              <h4 className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Important Notes on Social Media Review</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs text-slate-600 dark:text-slate-400">
                 <div className="bg-slate-900/40 rounded-lg p-3">
-                  <p className="font-medium text-slate-300 mb-1">First Amendment Considerations</p>
+                  <p className="font-medium text-slate-700 dark:text-slate-300 mb-1">First Amendment Considerations</p>
                   <p>Applicants have constitutional right to free speech. Political opinions, religious views, and other protected speech cannot be basis for disqualification unless content demonstrates clear unsuitability (explicit threats, hate speech, advocacy of illegal activity).</p>
                 </div>
                 <div className="bg-slate-900/40 rounded-lg p-3">
-                  <p className="font-medium text-slate-300 mb-1">Time Context Matters</p>
+                  <p className="font-medium text-slate-700 dark:text-slate-300 mb-1">Time Context Matters</p>
                   <p>Posts from many years ago (especially college years) are evaluated with context. People mature and change. Old posts may not reflect current character. Focus is on recent behavior and patterns.</p>
                 </div>
               </div>
@@ -609,13 +609,13 @@ export default function SocialMediaAnalysis() {
           <div className="flex flex-wrap gap-2 mb-4">
             <button
               onClick={() => setActiveTab('all')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'all' ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30' : 'bg-slate-800/40 text-slate-400 hover:text-white border border-slate-700/50'}`}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'all' ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30' : 'bg-slate-800/40 text-slate-600 dark:text-slate-400 hover:text-white border border-slate-700/50'}`}
             >
               All Profiles ({socialMediaReports.length})
             </button>
             <button
               onClick={() => setActiveTab('clear')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'clear' ? 'bg-green-500/20 text-green-400 border border-green-500/30' : 'bg-slate-800/40 text-slate-400 hover:text-white border border-slate-700/50'}`}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'clear' ? 'bg-green-500/20 text-green-400 border border-green-500/30' : 'bg-slate-800/40 text-slate-600 dark:text-slate-400 hover:text-white border border-slate-700/50'}`}
             >
               <span className="flex items-center gap-2">
                 <CheckCircle className="w-4 h-4" />
@@ -624,7 +624,7 @@ export default function SocialMediaAnalysis() {
             </button>
             <button
               onClick={() => setActiveTab('review')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'review' ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' : 'bg-slate-800/40 text-slate-400 hover:text-white border border-slate-700/50'}`}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'review' ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' : 'bg-slate-800/40 text-slate-600 dark:text-slate-400 hover:text-white border border-slate-700/50'}`}
             >
               <span className="flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4" />
@@ -633,7 +633,7 @@ export default function SocialMediaAnalysis() {
             </button>
             <button
               onClick={() => setActiveTab('progress')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'progress' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' : 'bg-slate-800/40 text-slate-400 hover:text-white border border-slate-700/50'}`}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'progress' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' : 'bg-slate-800/40 text-slate-600 dark:text-slate-400 hover:text-white border border-slate-700/50'}`}
             >
               <span className="flex items-center gap-2">
                 <Clock className="w-4 h-4" />
@@ -680,19 +680,19 @@ export default function SocialMediaAnalysis() {
                               <Globe className="w-3 h-3" /> Public Info Only
                             </span>
                           </div>
-                          <h3 className="text-lg font-semibold text-white">{report.subject}</h3>
+                          <h3 className="text-lg font-semibold text-slate-900 dark:text-white">{report.subject}</h3>
                           <p className="text-sm text-purple-400">{report.caseId} - {report.position}</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-4">
                         <div className="text-right">
-                          <p className="text-2xl font-bold text-white">{report.totalPostsReviewed}</p>
+                          <p className="text-2xl font-bold text-slate-900 dark:text-white">{report.totalPostsReviewed}</p>
                           <p className="text-xs text-slate-500">Posts Reviewed</p>
                           {report.flaggedPosts > 0 && (
                             <p className="text-xs text-amber-400">{report.flaggedPosts} flagged (old content)</p>
                           )}
                         </div>
-                        {isExpanded ? <ChevronUp className="w-5 h-5 text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-400" />}
+                        {isExpanded ? <ChevronUp className="w-5 h-5 text-slate-600 dark:text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-600 dark:text-slate-400" />}
                       </div>
                     </div>
 
@@ -713,33 +713,33 @@ export default function SocialMediaAnalysis() {
                     <div className="border-t border-slate-700/50 p-5">
                       {/* Review Summary */}
                       <div className="mb-6">
-                        <h4 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+                        <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
                           <FileText className="w-4 h-4 text-purple-400" />
                           Social Media Review Summary
                         </h4>
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                           <div>
                             <span className="text-slate-500">Review date:</span>
-                            <span className="text-slate-300 ml-2">{new Date(report.reviewDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+                            <span className="text-slate-700 dark:text-slate-300 ml-2">{new Date(report.reviewDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
                           </div>
                           <div>
                             <span className="text-slate-500">Review period:</span>
-                            <span className="text-slate-300 ml-2">{report.reviewPeriod}</span>
+                            <span className="text-slate-700 dark:text-slate-300 ml-2">{report.reviewPeriod}</span>
                           </div>
                           <div>
                             <span className="text-slate-500">Reviewed by:</span>
-                            <span className="text-slate-300 ml-2">{report.reviewedBy} (#{report.reviewerBadge})</span>
+                            <span className="text-slate-700 dark:text-slate-300 ml-2">{report.reviewedBy} (#{report.reviewerBadge})</span>
                           </div>
                           <div>
                             <span className="text-slate-500">Platforms:</span>
-                            <span className="text-slate-300 ml-2">{report.platforms.length} identified</span>
+                            <span className="text-slate-700 dark:text-slate-300 ml-2">{report.platforms.length} identified</span>
                           </div>
                         </div>
                       </div>
 
                       {/* Platform Details */}
                       <div className="mb-6">
-                        <h4 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+                        <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
                           <Share2 className="w-4 h-4 text-purple-400" />
                           Platforms Reviewed
                         </h4>
@@ -747,12 +747,12 @@ export default function SocialMediaAnalysis() {
                           {report.platforms.map((platform, idx) => (
                             <div key={idx} className="bg-slate-900/40 rounded-lg p-3">
                               <div className="flex items-center justify-between mb-2">
-                                <span className="text-sm font-medium text-white">{platform.name}</span>
+                                <span className="text-sm font-medium text-slate-900 dark:text-white">{platform.name}</span>
                                 <span className={`text-xs px-2 py-0.5 rounded ${platform.posts > 0 ? 'bg-green-500/20 text-green-400' : 'bg-slate-700/50 text-slate-500'}`}>
                                   {platform.posts > 0 ? `${platform.posts} posts` : 'No public posts'}
                                 </span>
                               </div>
-                              <div className="text-xs text-slate-400">
+                              <div className="text-xs text-slate-600 dark:text-slate-400">
                                 <p>Handle: {platform.handle || 'N/A'}</p>
                                 <p>Status: {platform.status}</p>
                                 {platform.connections && <p>Connections: {platform.connections}</p>}
@@ -765,7 +765,7 @@ export default function SocialMediaAnalysis() {
                       {/* Content Themes (if available) */}
                       {report.contentThemes && report.contentThemes.length > 0 && (
                         <div className="mb-6">
-                          <h4 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+                          <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
                             <Hash className="w-4 h-4 text-purple-400" />
                             Content Analysis
                           </h4>
@@ -774,8 +774,8 @@ export default function SocialMediaAnalysis() {
                               {report.contentThemes.map((theme, idx) => (
                                 <div key={idx}>
                                   <div className="flex items-center justify-between mb-1">
-                                    <span className="text-sm text-slate-300">{theme.theme}</span>
-                                    <span className="text-sm text-slate-400">{theme.percentage}%</span>
+                                    <span className="text-sm text-slate-700 dark:text-slate-300">{theme.theme}</span>
+                                    <span className="text-sm text-slate-600 dark:text-slate-400">{theme.percentage}%</span>
                                   </div>
                                   <div className="w-full bg-slate-700/50 rounded-full h-2">
                                     <div
@@ -797,16 +797,16 @@ export default function SocialMediaAnalysis() {
                       {/* Political Content Assessment */}
                       {report.politicalContent && (
                         <div className="mb-6">
-                          <h4 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+                          <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
                             <Scale className="w-4 h-4 text-purple-400" />
                             Political Content Assessment
                           </h4>
                           <div className={`rounded-xl p-4 ${report.politicalContent.isProtected ? 'bg-blue-500/10 border border-blue-500/30' : 'bg-slate-900/40'}`}>
                             <div className="flex items-center justify-between mb-2">
-                              <span className="text-sm text-slate-300">Political posts found:</span>
+                              <span className="text-sm text-slate-700 dark:text-slate-300">Political posts found:</span>
                               <span className="text-sm text-white font-medium">{report.politicalContent.posts} of {report.politicalContent.totalPosts} posts</span>
                             </div>
-                            <p className="text-sm text-slate-400 mb-2">{report.politicalContent.description}</p>
+                            <p className="text-sm text-slate-600 dark:text-slate-400 mb-2">{report.politicalContent.description}</p>
                             <div className="bg-blue-500/10 rounded-lg p-3 mt-2">
                               <p className="text-xs text-blue-300 flex items-start gap-2">
                                 <Scale className="w-4 h-4 flex-shrink-0 mt-0.5" />
@@ -837,14 +837,14 @@ export default function SocialMediaAnalysis() {
                                 <div className="grid grid-cols-2 gap-2 text-xs mb-2">
                                   <div>
                                     <span className="text-slate-500">Age at time:</span>
-                                    <span className="text-slate-300 ml-1">{flagged.ageAtTime} years old</span>
+                                    <span className="text-slate-700 dark:text-slate-300 ml-1">{flagged.ageAtTime} years old</span>
                                   </div>
                                   <div>
                                     <span className="text-slate-500">Type:</span>
-                                    <span className="text-slate-300 ml-1">{flagged.type}</span>
+                                    <span className="text-slate-700 dark:text-slate-300 ml-1">{flagged.type}</span>
                                   </div>
                                 </div>
-                                <p className="text-sm text-slate-300 mb-1">{flagged.description}</p>
+                                <p className="text-sm text-slate-700 dark:text-slate-300 mb-1">{flagged.description}</p>
                                 <p className="text-xs text-slate-500">Context: {flagged.context}</p>
                                 <p className="text-xs text-amber-400/80 mt-1">Severity: {flagged.severity}</p>
                               </div>
@@ -854,22 +854,22 @@ export default function SocialMediaAnalysis() {
                           {/* Time Context */}
                           {report.timeContext && (
                             <div className="mt-4 bg-slate-900/60 rounded-lg p-4">
-                              <h5 className="text-sm font-medium text-white mb-2 flex items-center gap-2">
+                              <h5 className="text-sm font-medium text-slate-900 dark:text-white mb-2 flex items-center gap-2">
                                 <History className="w-4 h-4 text-blue-400" />
                                 Time Context (Important)
                               </h5>
                               <div className="grid grid-cols-2 gap-2 text-xs">
                                 <div>
                                   <span className="text-slate-500">Flagged posts age:</span>
-                                  <span className="text-slate-300 ml-1">{report.timeContext.flaggedPostsAge}</span>
+                                  <span className="text-slate-700 dark:text-slate-300 ml-1">{report.timeContext.flaggedPostsAge}</span>
                                 </div>
                                 <div>
                                   <span className="text-slate-500">Subject's age at time:</span>
-                                  <span className="text-slate-300 ml-1">{report.timeContext.subjectAgeAtTime}</span>
+                                  <span className="text-slate-700 dark:text-slate-300 ml-1">{report.timeContext.subjectAgeAtTime}</span>
                                 </div>
                                 <div>
                                   <span className="text-slate-500">Time elapsed:</span>
-                                  <span className="text-slate-300 ml-1">{report.timeContext.timeElapsed}</span>
+                                  <span className="text-slate-700 dark:text-slate-300 ml-1">{report.timeContext.timeElapsed}</span>
                                 </div>
                                 <div>
                                   <span className="text-slate-500">Recent behavior:</span>
@@ -893,8 +893,8 @@ export default function SocialMediaAnalysis() {
                               <CheckCircle className="w-4 h-4 text-green-400" />
                               <span className="text-sm text-green-400">Recent posts are professional and appropriate</span>
                             </div>
-                            <p className="text-sm text-slate-300">Assessment: {report.recentBehavior.assessment}</p>
-                            <p className="text-xs text-slate-400 mt-1">Tone: {report.recentBehavior.tone}</p>
+                            <p className="text-sm text-slate-700 dark:text-slate-300">Assessment: {report.recentBehavior.assessment}</p>
+                            <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">Tone: {report.recentBehavior.tone}</p>
                             {report.recentBehavior.showsGrowth && (
                               <p className="text-xs text-green-400 mt-2">Subject appears to have matured significantly over time.</p>
                             )}
@@ -905,14 +905,14 @@ export default function SocialMediaAnalysis() {
                       {/* Mitigating Factors (for review cases) */}
                       {report.mitigatingFactors && report.mitigatingFactors.length > 0 && (
                         <div className="mb-6">
-                          <h4 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+                          <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
                             <Award className="w-4 h-4 text-purple-400" />
                             Mitigating Factors
                           </h4>
                           <div className="bg-slate-900/40 rounded-lg p-4">
                             <ul className="space-y-1.5">
                               {report.mitigatingFactors.map((factor, idx) => (
-                                <li key={idx} className="text-sm text-slate-300 flex items-start gap-2">
+                                <li key={idx} className="text-sm text-slate-700 dark:text-slate-300 flex items-start gap-2">
                                   <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
                                   {factor}
                                 </li>
@@ -925,7 +925,7 @@ export default function SocialMediaAnalysis() {
                       {/* Professional Boundaries */}
                       {report.professionalBoundaries && (
                         <div className="mb-6">
-                          <h4 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+                          <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
                             <ShieldAlert className="w-4 h-4 text-purple-400" />
                             Professional Boundaries Assessment
                           </h4>
@@ -952,26 +952,26 @@ export default function SocialMediaAnalysis() {
                       {/* Preliminary Findings (for in-progress) */}
                       {report.preliminaryFindings && (
                         <div className="mb-6">
-                          <h4 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+                          <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
                             <Search className="w-4 h-4 text-purple-400" />
                             Preliminary Findings
                           </h4>
                           <div className="bg-slate-900/40 rounded-lg p-4">
                             <div className="space-y-2 text-sm">
                               {report.preliminaryFindings.minimalPresence && (
-                                <p className="text-slate-300 flex items-center gap-2">
+                                <p className="text-slate-700 dark:text-slate-300 flex items-center gap-2">
                                   <CheckCircle className="w-4 h-4 text-blue-400" />
                                   Subject has minimal social media presence
                                 </p>
                               )}
                               {report.preliminaryFindings.linkedInProfessional && (
-                                <p className="text-slate-300 flex items-center gap-2">
+                                <p className="text-slate-700 dark:text-slate-300 flex items-center gap-2">
                                   <CheckCircle className="w-4 h-4 text-green-400" />
                                   LinkedIn profile is professional
                                 </p>
                               )}
                               {report.preliminaryFindings.mostAccountsPrivateOrInactive && (
-                                <p className="text-slate-300 flex items-center gap-2">
+                                <p className="text-slate-700 dark:text-slate-300 flex items-center gap-2">
                                   <CheckCircle className="w-4 h-4 text-blue-400" />
                                   Most accounts appear private or inactive
                                 </p>
@@ -982,7 +982,7 @@ export default function SocialMediaAnalysis() {
                                 <p className="text-xs text-slate-500 mb-2">Next Actions:</p>
                                 <ul className="space-y-1">
                                   {report.nextActions.map((action, idx) => (
-                                    <li key={idx} className="text-xs text-slate-400 flex items-center gap-2">
+                                    <li key={idx} className="text-xs text-slate-600 dark:text-slate-400 flex items-center gap-2">
                                       <Clock className="w-3 h-3 text-blue-400" />
                                       {action}
                                     </li>
@@ -997,8 +997,8 @@ export default function SocialMediaAnalysis() {
 
                       {/* Investigator Assessment */}
                       <div className="mb-6 bg-slate-900/40 rounded-xl p-4">
-                        <h4 className="text-sm font-semibold text-white mb-2">Investigator Assessment</h4>
-                        <p className="text-sm text-slate-300 mb-4">{report.investigatorAssessment}</p>
+                        <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-2">Investigator Assessment</h4>
+                        <p className="text-sm text-slate-700 dark:text-slate-300 mb-4">{report.investigatorAssessment}</p>
 
                         <div className={`p-4 rounded-lg ${
                           report.statusCategory === 'clear' ? 'bg-green-500/10 border border-green-500/30' :
@@ -1013,7 +1013,7 @@ export default function SocialMediaAnalysis() {
                               RECOMMENDATION: {report.recommendation.toUpperCase()}
                             </span>
                           </div>
-                          <p className="text-sm text-slate-300">{report.recommendationNote}</p>
+                          <p className="text-sm text-slate-700 dark:text-slate-300">{report.recommendationNote}</p>
                           {report.approvedBy && (
                             <p className="text-xs text-slate-500 mt-2">
                               Approved by: {report.approvedBy} ({report.approvalDate})
@@ -1046,7 +1046,7 @@ export default function SocialMediaAnalysis() {
                           <Eye className="w-4 h-4" />View Detailed Analysis
                         </button>
                         {report.statusCategory === 'clear' && (
-                          <button className="flex items-center gap-2 px-4 py-2 bg-slate-800/40 hover:bg-slate-800/60 text-slate-300 rounded-xl text-sm font-medium transition-colors border border-slate-700/50">
+                          <button className="flex items-center gap-2 px-4 py-2 bg-slate-800/40 hover:bg-slate-800/60 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium transition-colors border border-slate-700/50">
                             <Image className="w-4 h-4" />View Sample Posts
                           </button>
                         )}
@@ -1065,7 +1065,7 @@ export default function SocialMediaAnalysis() {
                             <CheckCircle className="w-4 h-4" />Complete Analysis
                           </button>
                         )}
-                        <button className="flex items-center gap-2 px-4 py-2 bg-slate-800/40 hover:bg-slate-800/60 text-slate-300 rounded-xl text-sm font-medium transition-colors border border-slate-700/50">
+                        <button className="flex items-center gap-2 px-4 py-2 bg-slate-800/40 hover:bg-slate-800/60 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium transition-colors border border-slate-700/50">
                           <Printer className="w-4 h-4" />Print Report
                         </button>
                       </div>

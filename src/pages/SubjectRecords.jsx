@@ -29,7 +29,7 @@ const getStatusBadge = (status) => {
     case 'requires_attention':
       return <span className="px-2.5 py-1 bg-red-500/10 text-red-400 rounded-lg text-xs font-medium flex items-center gap-1.5"><AlertCircle className="w-3 h-3" />Action Required</span>;
     case 'restricted':
-      return <span className="px-2.5 py-1 bg-slate-500/10 text-slate-400 rounded-lg text-xs font-medium flex items-center gap-1.5"><Shield className="w-3 h-3" />Restricted</span>;
+      return <span className="px-2.5 py-1 bg-slate-500/10 text-slate-600 dark:text-slate-400 rounded-lg text-xs font-medium flex items-center gap-1.5"><Shield className="w-3 h-3" />Restricted</span>;
     case 'active':
       return <span className="px-2.5 py-1 bg-green-500/10 text-green-400 rounded-lg text-xs font-medium">Active</span>;
     case 'expiring_soon':
@@ -43,7 +43,7 @@ const getStatusBadge = (status) => {
     case 'awaiting_response':
       return <span className="px-2.5 py-1 bg-amber-500/10 text-amber-400 rounded-lg text-xs font-medium">Awaiting Response</span>;
     default:
-      return <span className="px-2.5 py-1 bg-slate-500/10 text-slate-400 rounded-lg text-xs font-medium">{status}</span>;
+      return <span className="px-2.5 py-1 bg-slate-500/10 text-slate-600 dark:text-slate-400 rounded-lg text-xs font-medium">{status}</span>;
   }
 };
 
@@ -438,7 +438,7 @@ export default function SubjectRecords() {
       notifications={biNotifications}
       settingsRoute="/bi/settings"
     >
-      <div className="p-5 lg:p-8 space-y-8">
+      <div className="p-5 lg:p-8 space-y-8 bg-slate-100 dark:bg-transparent min-h-full">
           <div className="max-w-7xl mx-auto">
             {/* Page Header with Case Context */}
             <div className="mb-6">
@@ -456,23 +456,23 @@ export default function SubjectRecords() {
                       </span>
                     )}
                   </div>
-                  <p className="text-slate-400">{caseInfo.applicantName} — {caseInfo.position} Application</p>
+                  <p className="text-slate-600 dark:text-slate-400">{caseInfo.applicantName} — {caseInfo.position} Application</p>
                 </div>
                 <div className="flex flex-wrap items-center gap-3 text-sm">
                   <div className="flex items-center gap-2 px-3 py-2 bg-slate-800/40 rounded-lg border border-slate-700/50">
                     <FileText className="w-4 h-4 text-slate-500" />
-                    <span className="text-slate-400">Case:</span>
+                    <span className="text-slate-600 dark:text-slate-400">Case:</span>
                     <span className="text-amber-400 font-medium">{caseInfo.caseId}</span>
                   </div>
                   <div className="flex items-center gap-2 px-3 py-2 bg-slate-800/40 rounded-lg border border-slate-700/50">
                     <Clock className="w-4 h-4 text-slate-500" />
-                    <span className="text-slate-400">Stage:</span>
+                    <span className="text-slate-600 dark:text-slate-400">Stage:</span>
                     <span className="text-white font-medium">{caseInfo.currentStage}</span>
                   </div>
                 </div>
               </div>
               <div className="flex items-center gap-4 text-xs text-slate-500">
-                <span>Assigned to: <span className="text-slate-300">{caseInfo.investigator}</span></span>
+                <span>Assigned to: <span className="text-slate-700 dark:text-slate-300">{caseInfo.investigator}</span></span>
                 <span className="text-slate-700">•</span>
                 <span>Last updated: {caseInfo.lastUpdated}</span>
               </div>
@@ -487,7 +487,7 @@ export default function SubjectRecords() {
                     <AlertTriangle className="w-6 h-6 text-red-400" />
                   </div>
                   <div className="flex-1">
-                    <h4 className="text-base font-semibold text-white mb-3">Items Requiring Attention</h4>
+                    <h4 className="text-base font-semibold text-slate-900 dark:text-white mb-3">Items Requiring Attention</h4>
                     <div className="space-y-2">
                       <div className="flex items-start gap-2 p-2 bg-red-500/10 rounded-lg">
                         <AlertCircle className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0 animate-pulse" />
@@ -516,39 +516,39 @@ export default function SubjectRecords() {
               </div>
 
               {/* Verification Progress */}
-              <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
-                <h4 className="text-base font-semibold text-white mb-4 flex items-center gap-2">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5">
+                <h4 className="text-base font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                   <CheckCircle className="w-5 h-5 text-green-400" />
                   Verification Summary
                 </h4>
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-slate-400">Personal Information</span>
+                    <span className="text-sm text-slate-600 dark:text-slate-400">Personal Information</span>
                     {getStatusBadge('verified')}
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-slate-400">Employment History</span>
+                    <span className="text-sm text-slate-600 dark:text-slate-400">Employment History</span>
                     {getStatusBadge('in_progress')}
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-slate-400">Education Records</span>
+                    <span className="text-sm text-slate-600 dark:text-slate-400">Education Records</span>
                     {getStatusBadge('verified')}
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-slate-400">Certifications</span>
+                    <span className="text-sm text-slate-600 dark:text-slate-400">Certifications</span>
                     {getStatusBadge('requires_attention')}
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-slate-400">References</span>
-                    <span className="text-xs text-slate-400">4 of 5 completed</span>
+                    <span className="text-sm text-slate-600 dark:text-slate-400">References</span>
+                    <span className="text-xs text-slate-600 dark:text-slate-400">4 of 5 completed</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-slate-400">Criminal History</span>
+                    <span className="text-sm text-slate-600 dark:text-slate-400">Criminal History</span>
                     {getStatusBadge('verified')}
                   </div>
                   <div className="pt-2 border-t border-slate-700/50">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-slate-300 font-medium">Brady/Giglio Review</span>
+                      <span className="text-sm text-slate-700 dark:text-slate-300 font-medium">Brady/Giglio Review</span>
                       {getStatusBadge('pending')}
                     </div>
                     <p className="text-xs text-slate-500 mt-1">Pending IA records completion</p>
@@ -575,14 +575,14 @@ export default function SubjectRecords() {
             )}
 
             {/* Applicant Header Card */}
-            <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6 mb-6">
+            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-6 mb-6">
               <div className="flex flex-col lg:flex-row items-start gap-6">
                 <div className="w-24 h-24 bg-gradient-to-br from-amber-500 to-amber-600 rounded-2xl flex items-center justify-center text-white text-3xl font-bold flex-shrink-0">
                   RM
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3 mb-3">
-                    <h3 className="text-2xl font-bold text-white">{subjectData.personal.fullName}</h3>
+                    <h3 className="text-2xl font-bold text-slate-900 dark:text-white">{subjectData.personal.fullName}</h3>
                     <CheckCircle2 className="w-5 h-5 text-green-400" title="Identity Verified" />
                   </div>
 
@@ -591,14 +591,14 @@ export default function SubjectRecords() {
                       <Calendar className="w-4 h-4 text-slate-500 mt-0.5" />
                       <div>
                         <p className="text-xs text-slate-500">Date of Birth</p>
-                        <p className="text-slate-300">{subjectData.personal.dob} ({subjectData.personal.age})</p>
+                        <p className="text-slate-700 dark:text-slate-300">{subjectData.personal.dob} ({subjectData.personal.age})</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-2">
                       <Shield className="w-4 h-4 text-slate-500 mt-0.5" />
                       <div>
                         <p className="text-xs text-slate-500">SSN (Restricted)</p>
-                        <p className="text-slate-300">{subjectData.personal.ssn.value}</p>
+                        <p className="text-slate-700 dark:text-slate-300">{subjectData.personal.ssn.value}</p>
                         <p className="text-xs text-green-400/70">{subjectData.personal.ssn.verificationMethod}</p>
                       </div>
                     </div>
@@ -606,7 +606,7 @@ export default function SubjectRecords() {
                       <FileText className="w-4 h-4 text-slate-500 mt-0.5" />
                       <div>
                         <p className="text-xs text-slate-500">Driver's License</p>
-                        <p className="text-slate-300">{subjectData.personal.driversLicense.number}</p>
+                        <p className="text-slate-700 dark:text-slate-300">{subjectData.personal.driversLicense.number}</p>
                         <p className="text-xs text-slate-500">{subjectData.personal.driversLicense.state} • Exp: {subjectData.personal.driversLicense.expiration}</p>
                       </div>
                     </div>
@@ -614,8 +614,8 @@ export default function SubjectRecords() {
                       <Phone className="w-4 h-4 text-slate-500 mt-0.5" />
                       <div>
                         <p className="text-xs text-slate-500">Contact</p>
-                        <p className="text-slate-300">{subjectData.personal.phone}</p>
-                        <p className="text-xs text-slate-400">{subjectData.personal.email}</p>
+                        <p className="text-slate-700 dark:text-slate-300">{subjectData.personal.phone}</p>
+                        <p className="text-xs text-slate-600 dark:text-slate-400">{subjectData.personal.email}</p>
                       </div>
                     </div>
                   </div>
@@ -625,7 +625,7 @@ export default function SubjectRecords() {
                       <MapPin className="w-4 h-4 text-slate-500 mt-0.5" />
                       <div>
                         <p className="text-xs text-slate-500">Current Address</p>
-                        <p className="text-slate-300">{subjectData.personal.address.street}, {subjectData.personal.address.city}, {subjectData.personal.address.state} {subjectData.personal.address.zip}</p>
+                        <p className="text-slate-700 dark:text-slate-300">{subjectData.personal.address.street}, {subjectData.personal.address.city}, {subjectData.personal.address.state} {subjectData.personal.address.zip}</p>
                         <p className="text-xs text-green-400/70 flex items-center gap-1">
                           <CheckCircle2 className="w-3 h-3" />
                           Verified: {subjectData.personal.address.verificationMethod}
@@ -636,8 +636,8 @@ export default function SubjectRecords() {
                       <Users className="w-4 h-4 text-slate-500 mt-0.5" />
                       <div>
                         <p className="text-xs text-slate-500">Emergency Contact</p>
-                        <p className="text-slate-300">{subjectData.personal.emergencyContact.name} ({subjectData.personal.emergencyContact.relationship})</p>
-                        <p className="text-xs text-slate-400">{subjectData.personal.emergencyContact.phone}</p>
+                        <p className="text-slate-700 dark:text-slate-300">{subjectData.personal.emergencyContact.name} ({subjectData.personal.emergencyContact.relationship})</p>
+                        <p className="text-xs text-slate-600 dark:text-slate-400">{subjectData.personal.emergencyContact.phone}</p>
                       </div>
                     </div>
                   </div>
@@ -656,35 +656,35 @@ export default function SubjectRecords() {
             </div>
 
             {/* Tabs */}
-            <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl overflow-hidden">
+            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
               <div className="flex border-b border-slate-700/50 overflow-x-auto">
                 <button
                   onClick={() => setSelectedTab('personal')}
-                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedTab === 'personal' ? 'bg-amber-500/10 text-amber-400 border-b-2 border-amber-500' : 'text-slate-400 hover:text-white'}`}
+                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedTab === 'personal' ? 'bg-amber-500/10 text-amber-400 border-b-2 border-amber-500' : 'text-slate-600 dark:text-slate-400 hover:text-white'}`}
                 >
                   Personal Info
                 </button>
                 <button
                   onClick={() => setSelectedTab('employment')}
-                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedTab === 'employment' ? 'bg-amber-500/10 text-amber-400 border-b-2 border-amber-500' : 'text-slate-400 hover:text-white'}`}
+                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedTab === 'employment' ? 'bg-amber-500/10 text-amber-400 border-b-2 border-amber-500' : 'text-slate-600 dark:text-slate-400 hover:text-white'}`}
                 >
                   Employment History
                 </button>
                 <button
                   onClick={() => setSelectedTab('education')}
-                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedTab === 'education' ? 'bg-amber-500/10 text-amber-400 border-b-2 border-amber-500' : 'text-slate-400 hover:text-white'}`}
+                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedTab === 'education' ? 'bg-amber-500/10 text-amber-400 border-b-2 border-amber-500' : 'text-slate-600 dark:text-slate-400 hover:text-white'}`}
                 >
                   Education
                 </button>
                 <button
                   onClick={() => setSelectedTab('certifications')}
-                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedTab === 'certifications' ? 'bg-amber-500/10 text-amber-400 border-b-2 border-amber-500' : 'text-slate-400 hover:text-white'}`}
+                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedTab === 'certifications' ? 'bg-amber-500/10 text-amber-400 border-b-2 border-amber-500' : 'text-slate-600 dark:text-slate-400 hover:text-white'}`}
                 >
                   Certifications
                 </button>
                 <button
                   onClick={() => setSelectedTab('references')}
-                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedTab === 'references' ? 'bg-amber-500/10 text-amber-400 border-b-2 border-amber-500' : 'text-slate-400 hover:text-white'}`}
+                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedTab === 'references' ? 'bg-amber-500/10 text-amber-400 border-b-2 border-amber-500' : 'text-slate-600 dark:text-slate-400 hover:text-white'}`}
                 >
                   References
                 </button>
@@ -696,7 +696,7 @@ export default function SubjectRecords() {
                   <div className="space-y-6">
                     {/* Identity Verification */}
                     <div className="bg-slate-900/40 rounded-xl p-4">
-                      <h4 className="text-sm font-semibold text-white mb-4 flex items-center gap-2">
+                      <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                         <User className="w-4 h-4 text-amber-400" />
                         Identity Information
                       </h4>
@@ -745,7 +745,7 @@ export default function SubjectRecords() {
 
                     {/* Driver's License Details */}
                     <div className="bg-slate-900/40 rounded-xl p-4">
-                      <h4 className="text-sm font-semibold text-white mb-4 flex items-center gap-2">
+                      <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                         <FileText className="w-4 h-4 text-amber-400" />
                         Driver's License
                       </h4>
@@ -778,7 +778,7 @@ export default function SubjectRecords() {
 
                     {/* Contact & Address */}
                     <div className="bg-slate-900/40 rounded-xl p-4">
-                      <h4 className="text-sm font-semibold text-white mb-4 flex items-center gap-2">
+                      <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                         <MapPin className="w-4 h-4 text-amber-400" />
                         Contact & Residence
                       </h4>
@@ -791,8 +791,8 @@ export default function SubjectRecords() {
                           <p className="text-sm text-white font-medium">{subjectData.personal.address.street}</p>
                           <p className="text-sm text-white">{subjectData.personal.address.city}, {subjectData.personal.address.state} {subjectData.personal.address.zip}</p>
                           <div className="mt-2 space-y-1">
-                            <p className="text-xs text-slate-400">Duration at Address: {subjectData.personal.address.residenceDuration}</p>
-                            <p className="text-xs text-slate-400">Ownership: {subjectData.personal.address.ownership}</p>
+                            <p className="text-xs text-slate-600 dark:text-slate-400">Duration at Address: {subjectData.personal.address.residenceDuration}</p>
+                            <p className="text-xs text-slate-600 dark:text-slate-400">Ownership: {subjectData.personal.address.ownership}</p>
                             <p className="text-xs text-green-400/70">{subjectData.personal.address.verificationMethod}</p>
                           </div>
                         </div>
@@ -812,7 +812,7 @@ export default function SubjectRecords() {
                     {/* Military Service */}
                     {subjectData.personal.militaryService.served && (
                       <div className="bg-slate-900/40 rounded-xl p-4">
-                        <h4 className="text-sm font-semibold text-white mb-4 flex items-center gap-2">
+                        <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                           <Shield className="w-4 h-4 text-amber-400" />
                           Military Service
                         </h4>
@@ -845,7 +845,7 @@ export default function SubjectRecords() {
 
                     {/* Emergency Contact */}
                     <div className="bg-slate-900/40 rounded-xl p-4">
-                      <h4 className="text-sm font-semibold text-white mb-4 flex items-center gap-2">
+                      <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                         <Users className="w-4 h-4 text-amber-400" />
                         Emergency Contact
                       </h4>
@@ -891,7 +891,7 @@ export default function SubjectRecords() {
                         <div className="flex items-start justify-between mb-4">
                           <div>
                             <div className="flex items-center gap-2 mb-1">
-                              <h4 className="text-base font-semibold text-white">{job.position}</h4>
+                              <h4 className="text-base font-semibold text-slate-900 dark:text-white">{job.position}</h4>
                               {job.badge && <span className="text-xs text-slate-500">Badge {job.badge}</span>}
                             </div>
                             <p className="text-sm text-amber-400">{job.employer}</p>
@@ -902,33 +902,33 @@ export default function SubjectRecords() {
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm mb-4">
                           <div>
                             <p className="text-slate-500 text-xs mb-1">Duration</p>
-                            <p className="text-slate-300">{job.duration}</p>
+                            <p className="text-slate-700 dark:text-slate-300">{job.duration}</p>
                           </div>
                           <div>
                             <p className="text-slate-500 text-xs mb-1">Supervisor</p>
-                            <p className="text-slate-300">{job.supervisor}</p>
+                            <p className="text-slate-700 dark:text-slate-300">{job.supervisor}</p>
                             <p className="text-xs text-slate-500">{job.supervisorPhone}</p>
                           </div>
                           <div>
                             <p className="text-slate-500 text-xs mb-1">Salary</p>
-                            <p className="text-slate-300">{job.salary}</p>
+                            <p className="text-slate-700 dark:text-slate-300">{job.salary}</p>
                           </div>
                           <div>
                             <p className="text-slate-500 text-xs mb-1">Reason for Leaving</p>
-                            <p className="text-slate-300">{job.reason}</p>
+                            <p className="text-slate-700 dark:text-slate-300">{job.reason}</p>
                           </div>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm mb-4">
                           <div>
                             <p className="text-slate-500 text-xs mb-1">Disciplinary History</p>
-                            <p className={`text-slate-300 ${job.disciplinaryHistory === 'None on file' ? 'text-green-400' : ''}`}>
+                            <p className={`text-slate-700 dark:text-slate-300 ${job.disciplinaryHistory === 'None on file' ? 'text-green-400' : ''}`}>
                               {job.disciplinaryHistory}
                             </p>
                           </div>
                           <div>
                             <p className="text-slate-500 text-xs mb-1">Performance Rating</p>
-                            <p className="text-slate-300">{job.performanceRating}</p>
+                            <p className="text-slate-700 dark:text-slate-300">{job.performanceRating}</p>
                           </div>
                         </div>
 
@@ -957,7 +957,7 @@ export default function SubjectRecords() {
                         {job.notes && (
                           <div className="mt-4 pt-4 border-t border-slate-700/50">
                             <p className="text-xs text-slate-500 mb-1">Investigator Notes</p>
-                            <p className="text-sm text-slate-400">{job.notes}</p>
+                            <p className="text-sm text-slate-600 dark:text-slate-400">{job.notes}</p>
                           </div>
                         )}
 
@@ -979,7 +979,7 @@ export default function SubjectRecords() {
                         <div className="flex items-start justify-between mb-4">
                           <div>
                             <div className="flex items-center gap-2 mb-1">
-                              <h4 className="text-base font-semibold text-white">{edu.degree}</h4>
+                              <h4 className="text-base font-semibold text-slate-900 dark:text-white">{edu.degree}</h4>
                               {edu.honors && (
                                 <span className="px-2 py-0.5 bg-amber-500/10 text-amber-400 rounded text-xs font-medium">
                                   {edu.honors}
@@ -994,21 +994,21 @@ export default function SubjectRecords() {
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm mb-4">
                           <div>
                             <p className="text-slate-500 text-xs mb-1">Major</p>
-                            <p className="text-slate-300">{edu.major}</p>
+                            <p className="text-slate-700 dark:text-slate-300">{edu.major}</p>
                           </div>
                           {edu.minor && (
                             <div>
                               <p className="text-slate-500 text-xs mb-1">Minor</p>
-                              <p className="text-slate-300">{edu.minor}</p>
+                              <p className="text-slate-700 dark:text-slate-300">{edu.minor}</p>
                             </div>
                           )}
                           <div>
                             <p className="text-slate-500 text-xs mb-1">Graduated</p>
-                            <p className="text-slate-300">{edu.graduated}</p>
+                            <p className="text-slate-700 dark:text-slate-300">{edu.graduated}</p>
                           </div>
                           <div>
                             <p className="text-slate-500 text-xs mb-1">GPA / Standing</p>
-                            <p className="text-slate-300">{edu.gpa}</p>
+                            <p className="text-slate-700 dark:text-slate-300">{edu.gpa}</p>
                           </div>
                         </div>
 
@@ -1017,12 +1017,12 @@ export default function SubjectRecords() {
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm mb-4">
                             <div>
                               <p className="text-slate-500 text-xs mb-1">Academy Rank</p>
-                              <p className="text-slate-300">{edu.academyRank}</p>
+                              <p className="text-slate-700 dark:text-slate-300">{edu.academyRank}</p>
                             </div>
                             {edu.specializations && (
                               <div>
                                 <p className="text-slate-500 text-xs mb-1">Specializations</p>
-                                <p className="text-slate-300">{edu.specializations}</p>
+                                <p className="text-slate-700 dark:text-slate-300">{edu.specializations}</p>
                               </div>
                             )}
                           </div>
@@ -1032,7 +1032,7 @@ export default function SubjectRecords() {
                         {edu.relevantCoursework && (
                           <div className="mb-4">
                             <p className="text-slate-500 text-xs mb-1">Relevant Coursework</p>
-                            <p className="text-slate-300 text-sm">{edu.relevantCoursework}</p>
+                            <p className="text-slate-700 dark:text-slate-300 text-sm">{edu.relevantCoursework}</p>
                           </div>
                         )}
 
@@ -1092,9 +1092,9 @@ export default function SubjectRecords() {
                         <div className="flex items-start justify-between mb-4">
                           <div>
                             <div className="flex items-center gap-2 mb-1">
-                              <h4 className="text-base font-semibold text-white">{cert.name}</h4>
+                              <h4 className="text-base font-semibold text-slate-900 dark:text-white">{cert.name}</h4>
                             </div>
-                            <p className="text-sm text-slate-400">{cert.issuingAuthority}</p>
+                            <p className="text-sm text-slate-600 dark:text-slate-400">{cert.issuingAuthority}</p>
                           </div>
                           {getStatusBadge(cert.status)}
                         </div>
@@ -1102,11 +1102,11 @@ export default function SubjectRecords() {
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm mb-4">
                           <div>
                             <p className="text-slate-500 text-xs mb-1">Certificate Number</p>
-                            <p className="text-slate-300">{cert.certNumber}</p>
+                            <p className="text-slate-700 dark:text-slate-300">{cert.certNumber}</p>
                           </div>
                           <div>
                             <p className="text-slate-500 text-xs mb-1">Date Issued</p>
-                            <p className="text-slate-300">{cert.issued}</p>
+                            <p className="text-slate-700 dark:text-slate-300">{cert.issued}</p>
                           </div>
                           <div>
                             <p className="text-slate-500 text-xs mb-1">Expiration Date</p>
@@ -1148,9 +1148,9 @@ export default function SubjectRecords() {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <Users className="w-5 h-5 text-amber-400" />
-                          <span className="text-sm font-medium text-white">Reference Check Progress</span>
+                          <span className="text-sm font-medium text-slate-900 dark:text-white">Reference Check Progress</span>
                         </div>
-                        <span className="text-sm text-slate-400">
+                        <span className="text-sm text-slate-600 dark:text-slate-400">
                           {subjectData.references.filter(r => r.status === 'interviewed').length} of {subjectData.references.length} completed
                         </span>
                       </div>
@@ -1173,7 +1173,7 @@ export default function SubjectRecords() {
 
                         <div className="flex items-start justify-between mb-4">
                           <div>
-                            <h4 className="text-base font-semibold text-white mb-1">{ref.name}</h4>
+                            <h4 className="text-base font-semibold text-slate-900 dark:text-white mb-1">{ref.name}</h4>
                             <p className="text-sm text-amber-400">{ref.relationship}</p>
                           </div>
                           {getStatusBadge(ref.status)}
@@ -1182,31 +1182,31 @@ export default function SubjectRecords() {
                         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm mb-4">
                           <div>
                             <p className="text-slate-500 text-xs mb-1">Contact</p>
-                            <p className="text-slate-300">{ref.phone}</p>
+                            <p className="text-slate-700 dark:text-slate-300">{ref.phone}</p>
                             {ref.email && <p className="text-xs text-slate-500">{ref.email}</p>}
                           </div>
                           {ref.yearsKnown && (
                             <div>
                               <p className="text-slate-500 text-xs mb-1">Years Known</p>
-                              <p className="text-slate-300">{ref.yearsKnown}</p>
+                              <p className="text-slate-700 dark:text-slate-300">{ref.yearsKnown}</p>
                             </div>
                           )}
                           {ref.interviewDate && (
                             <div>
                               <p className="text-slate-500 text-xs mb-1">Interview Date</p>
-                              <p className="text-slate-300">{ref.interviewDate}</p>
+                              <p className="text-slate-700 dark:text-slate-300">{ref.interviewDate}</p>
                             </div>
                           )}
                           {ref.requestDate && !ref.interviewDate && (
                             <div>
                               <p className="text-slate-500 text-xs mb-1">Request Submitted</p>
-                              <p className="text-slate-300">{ref.requestDate}</p>
+                              <p className="text-slate-700 dark:text-slate-300">{ref.requestDate}</p>
                             </div>
                           )}
                           {ref.interviewMethod && (
                             <div>
                               <p className="text-slate-500 text-xs mb-1">Interview Method</p>
-                              <p className="text-slate-300">{ref.interviewMethod}</p>
+                              <p className="text-slate-700 dark:text-slate-300">{ref.interviewMethod}</p>
                             </div>
                           )}
                         </div>
@@ -1215,7 +1215,7 @@ export default function SubjectRecords() {
                         {ref.summary && (
                           <div className="bg-slate-800/40 rounded-lg p-3 mb-4">
                             <p className="text-xs text-slate-500 mb-2 font-medium">Interview Summary</p>
-                            <p className="text-sm text-slate-300">{ref.summary}</p>
+                            <p className="text-sm text-slate-700 dark:text-slate-300">{ref.summary}</p>
                           </div>
                         )}
 

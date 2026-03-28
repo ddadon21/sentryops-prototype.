@@ -369,8 +369,8 @@ export default function ReportsAnalytics() {
   };
 
   const getChangeColor = (change) => {
-    if (change > 0) return 'text-green-400';
-    if (change < 0) return 'text-red-400';
+    if (change > 0) return 'text-green-600 dark:text-green-400';
+    if (change < 0) return 'text-red-600 dark:text-red-400';
     return 'text-slate-400';
   };
 
@@ -396,7 +396,7 @@ export default function ReportsAnalytics() {
 
   return (
     <DashboardLayout>
-      <div className="p-5 lg:p-8 space-y-8">
+      <div className="p-5 lg:p-8 space-y-8 bg-slate-100 dark:bg-transparent min-h-full">
           <div className="max-w-7xl mx-auto">
             {/* Enhanced Page Header with KPI Metrics */}
             <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4 mb-6">
@@ -405,32 +405,32 @@ export default function ReportsAnalytics() {
                   <h2 className="text-2xl lg:text-3xl font-bold text-white">Reports & Compliance</h2>
                   <div className="flex items-center gap-1.5 px-2.5 py-1 bg-green-500/20 border border-green-500/40 rounded-lg">
                     <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                    <span className="text-xs font-bold text-green-400">LIVE DATA</span>
+                    <span className="text-xs font-bold text-green-600 dark:text-green-400">LIVE DATA</span>
                   </div>
                 </div>
-                <p className="text-slate-400 text-sm mb-3">Enterprise-grade insights and performance intelligence</p>
+                <p className="text-slate-600 dark:text-slate-400 text-sm mb-3">Enterprise-grade insights and performance intelligence</p>
 
                 {/* YTD Performance At-a-Glance */}
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
                   <div className="flex items-center gap-2 px-3 py-1.5 bg-blue-500/10 border border-blue-500/30 rounded-lg">
                     <Phone className="w-4 h-4 text-blue-400" />
-                    <span className="text-slate-400">YTD:</span>
+                    <span className="text-slate-600 dark:text-slate-400">YTD:</span>
                     <span className="font-bold text-blue-400">{keyMetrics.callsForService.total.toLocaleString()} calls</span>
                   </div>
                   <div className="flex items-center gap-2 px-3 py-1.5 bg-green-500/10 border border-green-500/30 rounded-lg">
-                    <Clock className="w-4 h-4 text-green-400" />
-                    <span className="text-slate-400">Avg Response:</span>
-                    <span className="font-bold text-green-400">{keyMetrics.responseTime.average} min</span>
+                    <Clock className="w-4 h-4 text-green-600 dark:text-green-400" />
+                    <span className="text-slate-600 dark:text-slate-400">Avg Response:</span>
+                    <span className="font-bold text-green-600 dark:text-green-400">{keyMetrics.responseTime.average} min</span>
                   </div>
                   <div className="flex items-center gap-2 px-3 py-1.5 bg-purple-500/10 border border-purple-500/30 rounded-lg">
                     <CheckCircle className="w-4 h-4 text-purple-400" />
-                    <span className="text-slate-400">Clearance:</span>
+                    <span className="text-slate-600 dark:text-slate-400">Clearance:</span>
                     <span className="font-bold text-purple-400">{keyMetrics.crimeClearanceRate.rate}%</span>
                   </div>
                   <div className="flex items-center gap-2 px-3 py-1.5 bg-amber-500/10 border border-amber-500/30 rounded-lg">
-                    <Users className="w-4 h-4 text-amber-400" />
-                    <span className="text-slate-400">Staffing:</span>
-                    <span className="font-bold text-amber-400">{keyMetrics.staffing.percentage}%</span>
+                    <Users className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+                    <span className="text-slate-600 dark:text-slate-400">Staffing:</span>
+                    <span className="font-bold text-amber-600 dark:text-amber-400">{keyMetrics.staffing.percentage}%</span>
                   </div>
                 </div>
               </div>
@@ -440,7 +440,7 @@ export default function ReportsAnalytics() {
                 <select
                   value={timeRange}
                   onChange={(e) => setTimeRange(e.target.value)}
-                  className="px-3 py-2 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white text-sm focus:outline-none focus:border-amber-500/50"
+                  className="px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white text-sm focus:outline-none focus:border-amber-500/50"
                 >
                   <option value="ytd">Year to Date</option>
                   <option value="last30">Last 30 Days</option>
@@ -455,7 +455,7 @@ export default function ReportsAnalytics() {
                 </select>
                 <button
                   onClick={() => setComparisonModal(true)}
-                  className="hidden md:flex items-center gap-2 px-3 py-2 bg-slate-800/40 border border-slate-700/50 rounded-xl text-slate-300 hover:bg-slate-800/60 transition-all"
+                  className="hidden md:flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-800/60 transition-all"
                 >
                   <BarChart3 className="w-4 h-4" />
                   <span className="text-sm">Compare</span>
@@ -469,14 +469,14 @@ export default function ReportsAnalytics() {
                 </button>
                 <button
                   onClick={() => setExportModal(true)}
-                  className="flex items-center gap-2 px-3 py-2 bg-slate-800/40 border border-slate-700/50 rounded-xl text-slate-300 hover:bg-slate-800/60 transition-all"
+                  className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-800/60 transition-all"
                 >
                   <FileSpreadsheet className="w-4 h-4" />
                   <span className="hidden sm:inline text-sm">Excel</span>
                 </button>
                 <button
                   onClick={() => setScheduleModal(true)}
-                  className="hidden lg:flex items-center gap-2 px-3 py-2 bg-slate-800/40 border border-slate-700/50 rounded-xl text-slate-300 hover:bg-slate-800/60 transition-all"
+                  className="hidden lg:flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-800/60 transition-all"
                 >
                   <CalendarClock className="w-4 h-4" />
                   <span className="text-sm">Schedule</span>
@@ -502,10 +502,10 @@ export default function ReportsAnalytics() {
                       <h4 className="text-base font-bold text-white flex items-center gap-2">
                         AI Analytics Intelligence
                       </h4>
-                      <div className="flex items-center gap-3 text-xs text-slate-400">
+                      <div className="flex items-center gap-3 text-xs text-slate-600 dark:text-slate-400">
                         <span className="flex items-center gap-1.5">
                           <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                          <span className="text-green-400 font-medium">LIVE</span>
+                          <span className="text-green-600 dark:text-green-400 font-medium">LIVE</span>
                         </span>
                         <span>Last updated: 4:23 PM</span>
                         <span>Auto-refresh: Every 15 min</span>
@@ -525,25 +525,25 @@ export default function ReportsAnalytics() {
                     {/* Performance Highlights Summary */}
                     <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
                       <div className="flex items-center gap-2 mb-3">
-                        <TrendingUp className="w-4 h-4 text-green-400" />
-                        <h5 className="text-sm font-bold text-green-400">PERFORMANCE HIGHLIGHTS</h5>
+                        <TrendingUp className="w-4 h-4 text-green-600 dark:text-green-400" />
+                        <h5 className="text-sm font-bold text-green-600 dark:text-green-400">PERFORMANCE HIGHLIGHTS</h5>
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
                         <div className="flex items-start gap-2">
-                          <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
-                          <p className="text-slate-300"><span className="font-bold text-green-400">Response times improved 12.3%</span> this month - excellent progress toward 8-minute target</p>
+                          <CheckCircle className="w-4 h-4 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
+                          <p className="text-slate-700 dark:text-slate-300"><span className="font-bold text-green-600 dark:text-green-400">Response times improved 12.3%</span> this month - excellent progress toward 8-minute target</p>
                         </div>
                         <div className="flex items-start gap-2">
-                          <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
-                          <p className="text-slate-300"><span className="font-bold text-blue-400">Crime clearance rate</span> at 68.5%, up 3.8% YoY - investigations performing well</p>
+                          <CheckCircle className="w-4 h-4 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
+                          <p className="text-slate-700 dark:text-slate-300"><span className="font-bold text-blue-400">Crime clearance rate</span> at 68.5%, up 3.8% YoY - investigations performing well</p>
                         </div>
                         <div className="flex items-start gap-2">
-                          <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
-                          <p className="text-slate-300"><span className="font-bold text-amber-400">Property crime down 5.8%</span> - community policing initiatives showing impact</p>
+                          <CheckCircle className="w-4 h-4 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
+                          <p className="text-slate-700 dark:text-slate-300"><span className="font-bold text-amber-600 dark:text-amber-400">Property crime down 5.8%</span> - community policing initiatives showing impact</p>
                         </div>
                         <div className="flex items-start gap-2">
-                          <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
-                          <p className="text-slate-300"><span className="font-bold text-purple-400">Overtime costs decreased 8.5%</span> - efficient scheduling reducing budget pressure</p>
+                          <CheckCircle className="w-4 h-4 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
+                          <p className="text-slate-700 dark:text-slate-300"><span className="font-bold text-purple-400">Overtime costs decreased 8.5%</span> - efficient scheduling reducing budget pressure</p>
                         </div>
                       </div>
                     </div>
@@ -553,21 +553,21 @@ export default function ReportsAnalytics() {
                       {/* Performance Improvements */}
                       <div className="bg-slate-900/40 rounded-lg p-4 border border-slate-700/30">
                         <div className="flex items-center gap-2 mb-3">
-                          <TrendingUp className="w-4 h-4 text-green-400" />
-                          <p className="text-xs font-bold text-green-400">PERFORMANCE</p>
+                          <TrendingUp className="w-4 h-4 text-green-600 dark:text-green-400" />
+                          <p className="text-xs font-bold text-green-600 dark:text-green-400">PERFORMANCE</p>
                         </div>
-                        <div className="space-y-2 text-xs text-slate-300">
+                        <div className="space-y-2 text-xs text-slate-700 dark:text-slate-300">
                           <div className="flex justify-between">
                             <span>Patrol response:</span>
-                            <span className="font-bold text-white">7.8 min <span className="text-green-400">(↓0.6)</span></span>
+                            <span className="font-bold text-white">7.8 min <span className="text-green-600 dark:text-green-400">(↓0.6)</span></span>
                           </div>
                           <div className="flex justify-between">
                             <span>Case closure:</span>
-                            <span className="font-bold text-white">82.3% <span className="text-green-400">(↑4.1%)</span></span>
+                            <span className="font-bold text-white">82.3% <span className="text-green-600 dark:text-green-400">(↑4.1%)</span></span>
                           </div>
                           <div className="flex justify-between">
                             <span>Training complete:</span>
-                            <span className="font-bold text-white">94% <span className="text-green-400">(↑8%)</span></span>
+                            <span className="font-bold text-white">94% <span className="text-green-600 dark:text-green-400">(↑8%)</span></span>
                           </div>
                         </div>
                       </div>
@@ -575,21 +575,21 @@ export default function ReportsAnalytics() {
                       {/* Areas Requiring Attention */}
                       <div className="bg-slate-900/40 rounded-lg p-4 border border-amber-500/30">
                         <div className="flex items-center gap-2 mb-3">
-                          <AlertTriangle className="w-4 h-4 text-amber-400" />
-                          <p className="text-xs font-bold text-amber-400">ATTENTION NEEDED</p>
+                          <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+                          <p className="text-xs font-bold text-amber-600 dark:text-amber-400">ATTENTION NEEDED</p>
                         </div>
-                        <div className="space-y-2 text-xs text-slate-300">
+                        <div className="space-y-2 text-xs text-slate-700 dark:text-slate-300">
                           <div className="flex justify-between">
                             <span>Staffing level:</span>
-                            <span className="font-bold text-amber-400">92.1% (14 open)</span>
+                            <span className="font-bold text-amber-600 dark:text-amber-400">92.1% (14 open)</span>
                           </div>
                           <div className="flex justify-between">
                             <span>Certs expiring:</span>
-                            <span className="font-bold text-amber-400">45 in 30 days</span>
+                            <span className="font-bold text-amber-600 dark:text-amber-400">45 in 30 days</span>
                           </div>
                           <div className="flex justify-between">
                             <span>Equipment budget:</span>
-                            <span className="font-bold text-red-400">95% utilized</span>
+                            <span className="font-bold text-red-600 dark:text-red-400">95% utilized</span>
                           </div>
                         </div>
                       </div>
@@ -600,14 +600,14 @@ export default function ReportsAnalytics() {
                           <DollarSign className="w-4 h-4 text-blue-400" />
                           <p className="text-xs font-bold text-blue-400">BUDGET INSIGHTS</p>
                         </div>
-                        <div className="space-y-2 text-xs text-slate-300">
+                        <div className="space-y-2 text-xs text-slate-700 dark:text-slate-300">
                           <div className="flex justify-between">
                             <span>YTD spending:</span>
                             <span className="font-bold text-white">85% of budget</span>
                           </div>
                           <div className="flex justify-between">
                             <span>Year-end proj:</span>
-                            <span className="font-bold text-amber-400">100.5%</span>
+                            <span className="font-bold text-amber-600 dark:text-amber-400">100.5%</span>
                           </div>
                           <div className="flex justify-between">
                             <span>Recommend:</span>
@@ -622,7 +622,7 @@ export default function ReportsAnalytics() {
                           <Lightbulb className="w-4 h-4 text-purple-400" />
                           <p className="text-xs font-bold text-purple-400">RECOMMENDATIONS</p>
                         </div>
-                        <div className="space-y-2 text-xs text-slate-300">
+                        <div className="space-y-2 text-xs text-slate-700 dark:text-slate-300">
                           <div className="flex items-start gap-1.5">
                             <span className="text-purple-400 mt-0.5">•</span>
                             <span>Focus hiring on patrol division</span>
@@ -651,7 +651,7 @@ export default function ReportsAnalytics() {
                       </button>
                       <button
                         onClick={() => setComparisonModal(true)}
-                        className="flex items-center gap-2 px-3 py-1.5 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-400 rounded-lg text-xs font-medium transition-all"
+                        className="flex items-center gap-2 px-3 py-1.5 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-600 dark:text-green-400 rounded-lg text-xs font-medium transition-all"
                       >
                         <BarChart3 className="w-3.5 h-3.5" />
                         COMPARE PERIODS
@@ -674,7 +674,7 @@ export default function ReportsAnalytics() {
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
                   className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all relative whitespace-nowrap ${
-                    activeTab === tab.id ? 'text-amber-400' : 'text-slate-400 hover:text-slate-300'
+                    activeTab === tab.id ? 'text-amber-600 dark:text-amber-400' : 'text-slate-600 dark:text-slate-400 hover:text-slate-300'
                   }`}
                 >
                   <tab.icon className="w-4 h-4" />
@@ -699,22 +699,22 @@ export default function ReportsAnalytics() {
                       </div>
                       <span className="text-xs font-medium text-blue-400">CALLS FOR SERVICE</span>
                     </div>
-                    <p className="text-2xl font-bold text-white mb-1">{keyMetrics.callsForService.total.toLocaleString()}</p>
-                    <p className="text-sm text-slate-400 mb-3">Year to Date (Jan 1 - Jan 21, 2026)</p>
+                    <p className="text-2xl font-bold text-slate-900 dark:text-white mb-1">{keyMetrics.callsForService.total.toLocaleString()}</p>
+                    <p className="text-sm text-slate-600 dark:text-slate-400 mb-3">Year to Date (Jan 1 - Jan 21, 2026)</p>
                     <div className="space-y-1.5 border-t border-slate-700/50 pt-3">
                       <div className="flex justify-between text-xs">
-                        <span className="text-slate-400">Trend vs 2025:</span>
+                        <span className="text-slate-600 dark:text-slate-400">Trend vs 2025:</span>
                         <span className={`font-bold flex items-center gap-1 ${getChangeColor(keyMetrics.callsForService.change)}`}>
                           {getChangeIcon(keyMetrics.callsForService.change)}
                           {Math.abs(keyMetrics.callsForService.change)}%
                         </span>
                       </div>
                       <div className="flex justify-between text-xs">
-                        <span className="text-slate-400">Avg per day:</span>
+                        <span className="text-slate-600 dark:text-slate-400">Avg per day:</span>
                         <span className="font-medium text-white">6,936 calls</span>
                       </div>
                       <div className="flex justify-between text-xs">
-                        <span className="text-slate-400">Peak hours:</span>
+                        <span className="text-slate-600 dark:text-slate-400">Peak hours:</span>
                         <span className="font-medium text-white">1400-1800 hrs</span>
                       </div>
                     </div>
@@ -724,16 +724,16 @@ export default function ReportsAnalytics() {
                   <div className="bg-slate-800/40 border border-green-500/30 rounded-xl p-5">
                     <div className="flex items-center justify-between mb-3">
                       <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center">
-                        <Clock className="w-5 h-5 text-green-400" />
+                        <Clock className="w-5 h-5 text-green-600 dark:text-green-400" />
                       </div>
-                      <span className="text-xs font-medium text-green-400">AVG RESPONSE TIME</span>
+                      <span className="text-xs font-medium text-green-600 dark:text-green-400">AVG RESPONSE TIME</span>
                     </div>
-                    <p className="text-2xl font-bold text-white mb-1">{keyMetrics.responseTime.average} min</p>
-                    <p className="text-sm text-slate-400 mb-3">All priorities combined</p>
+                    <p className="text-2xl font-bold text-slate-900 dark:text-white mb-1">{keyMetrics.responseTime.average} min</p>
+                    <p className="text-sm text-slate-600 dark:text-slate-400 mb-3">All priorities combined</p>
                     <div className="mb-3">
                       <div className="flex justify-between text-xs mb-1">
-                        <span className="text-slate-400">Target: {keyMetrics.responseTime.target} min</span>
-                        <span className="font-bold text-green-400">0.4 min above</span>
+                        <span className="text-slate-600 dark:text-slate-400">Target: {keyMetrics.responseTime.target} min</span>
+                        <span className="font-bold text-green-600 dark:text-green-400">0.4 min above</span>
                       </div>
                       <div className="w-full h-2 bg-slate-700/50 rounded-full overflow-hidden">
                         <div className="h-full bg-green-500" style={{ width: '95%' }} />
@@ -741,16 +741,16 @@ export default function ReportsAnalytics() {
                     </div>
                     <div className="space-y-1.5 border-t border-slate-700/50 pt-3">
                       <div className="flex justify-between text-xs">
-                        <span className="text-slate-400">P1 (Emergency):</span>
-                        <span className="font-medium text-green-400">3.2 min <CheckCircle className="w-3 h-3 inline" /></span>
+                        <span className="text-slate-600 dark:text-slate-400">P1 (Emergency):</span>
+                        <span className="font-medium text-green-600 dark:text-green-400">3.2 min <CheckCircle className="w-3 h-3 inline" /></span>
                       </div>
                       <div className="flex justify-between text-xs">
-                        <span className="text-slate-400">P2 (Urgent):</span>
-                        <span className="font-medium text-green-400">7.8 min <CheckCircle className="w-3 h-3 inline" /></span>
+                        <span className="text-slate-600 dark:text-slate-400">P2 (Urgent):</span>
+                        <span className="font-medium text-green-600 dark:text-green-400">7.8 min <CheckCircle className="w-3 h-3 inline" /></span>
                       </div>
                       <div className="flex justify-between text-xs">
-                        <span className="text-slate-400">P3 (Routine):</span>
-                        <span className="font-medium text-green-400">18.4 min <CheckCircle className="w-3 h-3 inline" /></span>
+                        <span className="text-slate-600 dark:text-slate-400">P3 (Routine):</span>
+                        <span className="font-medium text-green-600 dark:text-green-400">18.4 min <CheckCircle className="w-3 h-3 inline" /></span>
                       </div>
                     </div>
                   </div>
@@ -763,12 +763,12 @@ export default function ReportsAnalytics() {
                       </div>
                       <span className="text-xs font-medium text-purple-400">CLEARANCE RATE</span>
                     </div>
-                    <p className="text-2xl font-bold text-white mb-1">{keyMetrics.crimeClearanceRate.rate}%</p>
-                    <p className="text-sm text-slate-400 mb-3">Cases closed/solved vs total</p>
+                    <p className="text-2xl font-bold text-slate-900 dark:text-white mb-1">{keyMetrics.crimeClearanceRate.rate}%</p>
+                    <p className="text-sm text-slate-600 dark:text-slate-400 mb-3">Cases closed/solved vs total</p>
                     <div className="mb-3">
                       <div className="flex justify-between text-xs mb-1">
-                        <span className="text-slate-400">Target: {keyMetrics.crimeClearanceRate.target}%</span>
-                        <span className="font-bold text-amber-400">1.5 pts below</span>
+                        <span className="text-slate-600 dark:text-slate-400">Target: {keyMetrics.crimeClearanceRate.target}%</span>
+                        <span className="font-bold text-amber-600 dark:text-amber-400">1.5 pts below</span>
                       </div>
                       <div className="w-full h-2 bg-slate-700/50 rounded-full overflow-hidden">
                         <div className="h-full bg-purple-500" style={{ width: '97.9%' }} />
@@ -776,16 +776,16 @@ export default function ReportsAnalytics() {
                     </div>
                     <div className="space-y-1.5 border-t border-slate-700/50 pt-3">
                       <div className="flex justify-between text-xs">
-                        <span className="text-slate-400">Violent crimes:</span>
-                        <span className="font-medium text-green-400">82.1% <CheckCircle className="w-3 h-3 inline" /></span>
+                        <span className="text-slate-600 dark:text-slate-400">Violent crimes:</span>
+                        <span className="font-medium text-green-600 dark:text-green-400">82.1% <CheckCircle className="w-3 h-3 inline" /></span>
                       </div>
                       <div className="flex justify-between text-xs">
-                        <span className="text-slate-400">Property crimes:</span>
-                        <span className="font-medium text-amber-400">56.8%</span>
+                        <span className="text-slate-600 dark:text-slate-400">Property crimes:</span>
+                        <span className="font-medium text-amber-600 dark:text-amber-400">56.8%</span>
                       </div>
                       <div className="flex justify-between text-xs">
-                        <span className="text-slate-400">YoY change:</span>
-                        <span className="font-medium text-green-400 flex items-center gap-1">
+                        <span className="text-slate-600 dark:text-slate-400">YoY change:</span>
+                        <span className="font-medium text-green-600 dark:text-green-400 flex items-center gap-1">
                           <ArrowUpRight className="w-3 h-3" />+3.8 pts
                         </span>
                       </div>
@@ -796,26 +796,26 @@ export default function ReportsAnalytics() {
                   <div className="bg-slate-800/40 border border-amber-500/30 rounded-xl p-5">
                     <div className="flex items-center justify-between mb-3">
                       <div className="w-10 h-10 bg-amber-500/20 rounded-xl flex items-center justify-center">
-                        <ShieldCheck className="w-5 h-5 text-amber-400" />
+                        <ShieldCheck className="w-5 h-5 text-amber-600 dark:text-amber-400" />
                       </div>
-                      <span className="text-xs font-medium text-amber-400">ARRESTS (YTD)</span>
+                      <span className="text-xs font-medium text-amber-600 dark:text-amber-400">ARRESTS (YTD)</span>
                     </div>
-                    <p className="text-2xl font-bold text-white mb-1">{keyMetrics.arrestsYTD.total.toLocaleString()}</p>
-                    <p className="text-sm text-slate-400 mb-3">Jan 1 - Jan 21, 2026</p>
+                    <p className="text-2xl font-bold text-slate-900 dark:text-white mb-1">{keyMetrics.arrestsYTD.total.toLocaleString()}</p>
+                    <p className="text-sm text-slate-600 dark:text-slate-400 mb-3">Jan 1 - Jan 21, 2026</p>
                     <div className="space-y-1.5 border-t border-slate-700/50 pt-3">
                       <div className="flex justify-between text-xs">
-                        <span className="text-slate-400">Trend vs 2025:</span>
-                        <span className="font-bold text-green-400 flex items-center gap-1">
+                        <span className="text-slate-600 dark:text-slate-400">Trend vs 2025:</span>
+                        <span className="font-bold text-green-600 dark:text-green-400 flex items-center gap-1">
                           <ArrowDownRight className="w-3 h-3" />-2.1% (fewer crimes)
                         </span>
                       </div>
                       <div className="flex justify-between text-xs">
-                        <span className="text-slate-400">Felony:</span>
+                        <span className="text-slate-600 dark:text-slate-400">Felony:</span>
                         <span className="font-medium text-white">3,487 (28%)</span>
                       </div>
                       <div className="flex justify-between text-xs">
-                        <span className="text-slate-400">Prosecution rate:</span>
-                        <span className="font-medium text-green-400">87.4% <CheckCircle className="w-3 h-3 inline" /></span>
+                        <span className="text-slate-600 dark:text-slate-400">Prosecution rate:</span>
+                        <span className="font-medium text-green-600 dark:text-green-400">87.4% <CheckCircle className="w-3 h-3 inline" /></span>
                       </div>
                     </div>
                   </div>
@@ -828,12 +828,12 @@ export default function ReportsAnalytics() {
                       </div>
                       <span className="text-xs font-medium text-blue-400">STAFFING LEVEL</span>
                     </div>
-                    <p className="text-2xl font-bold text-white mb-1">{keyMetrics.staffing.percentage}%</p>
-                    <p className="text-sm text-slate-400 mb-3">{keyMetrics.staffing.current} / {keyMetrics.staffing.authorized} positions</p>
+                    <p className="text-2xl font-bold text-slate-900 dark:text-white mb-1">{keyMetrics.staffing.percentage}%</p>
+                    <p className="text-sm text-slate-600 dark:text-slate-400 mb-3">{keyMetrics.staffing.current} / {keyMetrics.staffing.authorized} positions</p>
                     <div className="mb-3">
                       <div className="flex justify-between text-xs mb-1">
-                        <span className="text-slate-400">Target: 95% (169 pos)</span>
-                        <span className="font-bold text-amber-400">-5 positions</span>
+                        <span className="text-slate-600 dark:text-slate-400">Target: 95% (169 pos)</span>
+                        <span className="font-bold text-amber-600 dark:text-amber-400">-5 positions</span>
                       </div>
                       <div className="w-full h-2 bg-slate-700/50 rounded-full overflow-hidden">
                         <div className="h-full bg-blue-500" style={{ width: `${keyMetrics.staffing.percentage}%` }} />
@@ -841,16 +841,16 @@ export default function ReportsAnalytics() {
                     </div>
                     <div className="space-y-1.5 border-t border-slate-700/50 pt-3">
                       <div className="flex justify-between text-xs">
-                        <span className="text-slate-400">Vacancies:</span>
-                        <span className="font-medium text-amber-400">14 open positions</span>
+                        <span className="text-slate-600 dark:text-slate-400">Vacancies:</span>
+                        <span className="font-medium text-amber-600 dark:text-amber-400">14 open positions</span>
                       </div>
                       <div className="flex justify-between text-xs">
-                        <span className="text-slate-400">Pipeline:</span>
+                        <span className="text-slate-600 dark:text-slate-400">Pipeline:</span>
                         <span className="font-medium text-white">12 candidates</span>
                       </div>
                       <div className="flex justify-between text-xs">
-                        <span className="text-slate-400">Vacancy OT cost:</span>
-                        <span className="font-medium text-red-400">$588K/year</span>
+                        <span className="text-slate-600 dark:text-slate-400">Vacancy OT cost:</span>
+                        <span className="font-medium text-red-600 dark:text-red-400">$588K/year</span>
                       </div>
                     </div>
                   </div>
@@ -859,16 +859,16 @@ export default function ReportsAnalytics() {
                   <div className="bg-slate-800/40 border border-green-500/30 rounded-xl p-5">
                     <div className="flex items-center justify-between mb-3">
                       <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center">
-                        <DollarSign className="w-5 h-5 text-green-400" />
+                        <DollarSign className="w-5 h-5 text-green-600 dark:text-green-400" />
                       </div>
-                      <span className="text-xs font-medium text-green-400">OVERTIME COST</span>
+                      <span className="text-xs font-medium text-green-600 dark:text-green-400">OVERTIME COST</span>
                     </div>
-                    <p className="text-2xl font-bold text-white mb-1">${(keyMetrics.overtime.cost / 1000000).toFixed(1)}M</p>
-                    <p className="text-sm text-slate-400 mb-3">{keyMetrics.overtime.hours.toLocaleString()} hours YTD</p>
+                    <p className="text-2xl font-bold text-slate-900 dark:text-white mb-1">${(keyMetrics.overtime.cost / 1000000).toFixed(1)}M</p>
+                    <p className="text-sm text-slate-600 dark:text-slate-400 mb-3">{keyMetrics.overtime.hours.toLocaleString()} hours YTD</p>
                     <div className="mb-3">
                       <div className="flex justify-between text-xs mb-1">
-                        <span className="text-slate-400">Target: &lt;10% of budget</span>
-                        <span className="font-bold text-green-400">8.9% <CheckCircle className="w-3 h-3 inline" /></span>
+                        <span className="text-slate-600 dark:text-slate-400">Target: &lt;10% of budget</span>
+                        <span className="font-bold text-green-600 dark:text-green-400">8.9% <CheckCircle className="w-3 h-3 inline" /></span>
                       </div>
                       <div className="w-full h-2 bg-slate-700/50 rounded-full overflow-hidden">
                         <div className="h-full bg-green-500" style={{ width: '89%' }} />
@@ -876,30 +876,30 @@ export default function ReportsAnalytics() {
                     </div>
                     <div className="space-y-1.5 border-t border-slate-700/50 pt-3">
                       <div className="flex justify-between text-xs">
-                        <span className="text-slate-400">YoY change:</span>
-                        <span className="font-medium text-green-400 flex items-center gap-1">
+                        <span className="text-slate-600 dark:text-slate-400">YoY change:</span>
+                        <span className="font-medium text-green-600 dark:text-green-400 flex items-center gap-1">
                           <ArrowDownRight className="w-3 h-3" />-8.5% ($110K saved)
                         </span>
                       </div>
                       <div className="flex justify-between text-xs">
-                        <span className="text-slate-400">Shift coverage:</span>
+                        <span className="text-slate-600 dark:text-slate-400">Shift coverage:</span>
                         <span className="font-medium text-white">54% of OT</span>
                       </div>
                       <div className="flex justify-between text-xs">
-                        <span className="text-slate-400">vs National avg:</span>
-                        <span className="font-medium text-green-400">12-26% below</span>
+                        <span className="text-slate-600 dark:text-slate-400">vs National avg:</span>
+                        <span className="font-medium text-green-600 dark:text-green-400">12-26% below</span>
                       </div>
                     </div>
                   </div>
                 </div>
 
                 {/* Enhanced Monthly Trends */}
-                <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
+                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-6">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-2">
                       <TrendingUp className="w-5 h-5 text-blue-400" />
-                      <h3 className="text-lg font-semibold text-white">Monthly Trends</h3>
-                      <span className="text-xs text-slate-400">(Last 12 Months - Rolling)</span>
+                      <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Monthly Trends</h3>
+                      <span className="text-xs text-slate-600 dark:text-slate-400">(Last 12 Months - Rolling)</span>
                     </div>
                     <div className="flex items-center gap-2 text-xs">
                       <span className="px-2 py-1 bg-blue-500/20 text-blue-400 rounded">Click for details</span>
@@ -913,31 +913,31 @@ export default function ReportsAnalytics() {
                         <div key={idx} className="hover:bg-slate-900/30 rounded-lg p-2 -mx-2 cursor-pointer transition-colors">
                           <div className="flex items-center justify-between mb-2">
                             <div className="flex items-center gap-3">
-                              <span className="text-sm font-medium text-white w-8">{month.month}</span>
+                              <span className="text-sm font-medium text-slate-900 dark:text-white w-8">{month.month}</span>
                               {idx === monthlyTrends.length - 1 && (
-                                <span className="text-xs px-1.5 py-0.5 bg-amber-500/20 text-amber-400 rounded">Current</span>
+                                <span className="text-xs px-1.5 py-0.5 bg-amber-500/20 text-amber-600 dark:text-amber-400 rounded">Current</span>
                               )}
                             </div>
                             <div className="flex items-center gap-6 text-xs">
                               <div className="flex items-center gap-2">
-                                <Phone className="w-3 h-3 text-slate-400" />
-                                <span className="text-slate-400">Calls:</span>
+                                <Phone className="w-3 h-3 text-slate-600 dark:text-slate-400" />
+                                <span className="text-slate-600 dark:text-slate-400">Calls:</span>
                                 <span className="font-bold text-white">{month.calls.toLocaleString()}</span>
                                 {prevMonth && (
-                                  <span className={`font-medium ${parseFloat(callsChange) >= 0 ? 'text-amber-400' : 'text-green-400'}`}>
+                                  <span className={`font-medium ${parseFloat(callsChange) >= 0 ? 'text-amber-600 dark:text-amber-400' : 'text-green-600 dark:text-green-400'}`}>
                                     ({parseFloat(callsChange) >= 0 ? '+' : ''}{callsChange}%)
                                   </span>
                                 )}
                               </div>
                               <div className="flex items-center gap-2">
                                 <ShieldCheck className="w-3 h-3 text-blue-400" />
-                                <span className="text-slate-400">Arrests:</span>
+                                <span className="text-slate-600 dark:text-slate-400">Arrests:</span>
                                 <span className="font-bold text-blue-400">{month.arrests.toLocaleString()}</span>
                               </div>
                               <div className="flex items-center gap-2">
-                                <CheckCircle className="w-3 h-3 text-green-400" />
-                                <span className="text-slate-400">Clear:</span>
-                                <span className={`font-bold ${month.clearance >= 68 ? 'text-green-400' : 'text-amber-400'}`}>{month.clearance}%</span>
+                                <CheckCircle className="w-3 h-3 text-green-600 dark:text-green-400" />
+                                <span className="text-slate-600 dark:text-slate-400">Clear:</span>
+                                <span className={`font-bold ${month.clearance >= 68 ? 'text-green-600 dark:text-green-400' : 'text-amber-600 dark:text-amber-400'}`}>{month.clearance}%</span>
                               </div>
                             </div>
                           </div>
@@ -951,27 +951,27 @@ export default function ReportsAnalytics() {
 
                   {/* Seasonal Patterns Summary */}
                   <div className="mt-4 pt-4 border-t border-slate-700/50">
-                    <h4 className="text-sm font-semibold text-white mb-3">Seasonal Patterns Identified</h4>
+                    <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Seasonal Patterns Identified</h4>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
                       <div className="bg-slate-900/40 rounded-lg p-3">
-                        <p className="text-slate-400 mb-1">Summer Peak (Jun-Aug)</p>
+                        <p className="text-slate-600 dark:text-slate-400 mb-1">Summer Peak (Jun-Aug)</p>
                         <p className="font-bold text-white">14,782 calls/mo</p>
-                        <p className="text-amber-400">+18% vs winter</p>
+                        <p className="text-amber-600 dark:text-amber-400">+18% vs winter</p>
                       </div>
                       <div className="bg-slate-900/40 rounded-lg p-3">
-                        <p className="text-slate-400 mb-1">Winter Low (Nov-Feb)</p>
+                        <p className="text-slate-600 dark:text-slate-400 mb-1">Winter Low (Nov-Feb)</p>
                         <p className="font-bold text-white">12,404 calls/mo</p>
-                        <p className="text-green-400">Lowest volume</p>
+                        <p className="text-green-600 dark:text-green-400">Lowest volume</p>
                       </div>
                       <div className="bg-slate-900/40 rounded-lg p-3">
-                        <p className="text-slate-400 mb-1">YoY Total 2025</p>
+                        <p className="text-slate-600 dark:text-slate-400 mb-1">YoY Total 2025</p>
                         <p className="font-bold text-white">157,423 calls</p>
-                        <p className="text-green-400">+5.0% vs 2024</p>
+                        <p className="text-green-600 dark:text-green-400">+5.0% vs 2024</p>
                       </div>
                       <div className="bg-slate-900/40 rounded-lg p-3">
-                        <p className="text-slate-400 mb-1">Best Clearance</p>
+                        <p className="text-slate-600 dark:text-slate-400 mb-1">Best Clearance</p>
                         <p className="font-bold text-white">July - 69.5%</p>
-                        <p className="text-green-400">Peak performance</p>
+                        <p className="text-green-600 dark:text-green-400">Peak performance</p>
                       </div>
                     </div>
                   </div>
@@ -982,16 +982,16 @@ export default function ReportsAnalytics() {
             {/* OPERATIONS TAB */}
             {activeTab === 'operations' && (
               <div className="space-y-6">
-                <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
-                  <h3 className="text-lg font-semibold text-white mb-4">Division Performance</h3>
+                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-6">
+                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Division Performance</h3>
                   <div className="space-y-4">
                     {divisionPerformance.map((division, idx) => (
                       <div key={idx} className="bg-slate-900/50 rounded-xl p-5">
                         <div className="flex items-center justify-between mb-4">
-                          <h4 className="text-base font-semibold text-white">{division.name}</h4>
+                          <h4 className="text-base font-semibold text-slate-900 dark:text-white">{division.name}</h4>
                           <div className={`px-3 py-1 rounded-full text-xs font-bold ${
-                            division.efficiency >= 90 ? 'bg-green-500/20 text-green-400' :
-                            division.efficiency >= 85 ? 'bg-amber-500/20 text-amber-400' : 'bg-red-500/20 text-red-400'
+                            division.efficiency >= 90 ? 'bg-green-500/20 text-green-600 dark:text-green-400' :
+                            division.efficiency >= 85 ? 'bg-amber-500/20 text-amber-600 dark:text-amber-400' : 'bg-red-500/20 text-red-600 dark:text-red-400'
                           }`}>
                             {division.efficiency}% Efficiency
                           </div>
@@ -1000,34 +1000,34 @@ export default function ReportsAnalytics() {
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                           {division.calls > 0 && (
                             <div>
-                              <p className="text-xs text-slate-400 mb-1">Calls</p>
+                              <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Calls</p>
                               <p className="text-lg font-bold text-white">{division.calls.toLocaleString()}</p>
                             </div>
                           )}
                           {division.responseTime > 0 && (
                             <div>
-                              <p className="text-xs text-slate-400 mb-1">Response Time</p>
+                              <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Response Time</p>
                               <p className="text-lg font-bold text-white">{division.responseTime} min</p>
                             </div>
                           )}
                           {division.clearanceRate > 0 && (
                             <div>
-                              <p className="text-xs text-slate-400 mb-1">Clearance Rate</p>
+                              <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Clearance Rate</p>
                               <p className="text-lg font-bold text-white">{division.clearanceRate}%</p>
                             </div>
                           )}
                           <div>
-                            <p className="text-xs text-slate-400 mb-1">Staffing</p>
+                            <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Staffing</p>
                             <p className="text-lg font-bold text-white">{division.staffing}%</p>
                           </div>
                           {division.inmates && (
                             <>
                               <div>
-                                <p className="text-xs text-slate-400 mb-1">Inmates</p>
+                                <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Inmates</p>
                                 <p className="text-lg font-bold text-white">{division.inmates}</p>
                               </div>
                               <div>
-                                <p className="text-xs text-slate-400 mb-1">Capacity</p>
+                                <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Capacity</p>
                                 <p className="text-lg font-bold text-white">{division.capacity}</p>
                               </div>
                             </>
@@ -1043,26 +1043,26 @@ export default function ReportsAnalytics() {
             {/* CRIME STATS TAB */}
             {activeTab === 'crime' && (
               <div className="space-y-6">
-                <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl overflow-hidden">
+                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
                   <div className="overflow-x-auto">
                     <table className="w-full">
                       <thead className="bg-slate-900/50 border-b border-slate-700/50">
                         <tr>
-                          <th className="px-4 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Category</th>
-                          <th className="px-4 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Incidents</th>
-                          <th className="px-4 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">YoY Change</th>
-                          <th className="px-4 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Arrests</th>
-                          <th className="px-4 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Clearance Rate</th>
+                          <th className="px-4 py-3 text-left text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Category</th>
+                          <th className="px-4 py-3 text-left text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Incidents</th>
+                          <th className="px-4 py-3 text-left text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">YoY Change</th>
+                          <th className="px-4 py-3 text-left text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Arrests</th>
+                          <th className="px-4 py-3 text-left text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Clearance Rate</th>
                         </tr>
                       </thead>
                       <tbody>
                         {crimeStats.map((stat, idx) => (
                           <tr key={idx} className="border-b border-slate-800/30 hover:bg-slate-800/30 transition-colors">
                             <td className="px-4 py-4">
-                              <p className="text-sm font-medium text-white">{stat.category}</p>
+                              <p className="text-sm font-medium text-slate-900 dark:text-white">{stat.category}</p>
                             </td>
                             <td className="px-4 py-4">
-                              <p className="text-sm text-slate-300">{stat.incidents.toLocaleString()}</p>
+                              <p className="text-sm text-slate-700 dark:text-slate-300">{stat.incidents.toLocaleString()}</p>
                             </td>
                             <td className="px-4 py-4">
                               <div className={`flex items-center gap-1 ${getChangeColor(stat.change)}`}>
@@ -1071,13 +1071,13 @@ export default function ReportsAnalytics() {
                               </div>
                             </td>
                             <td className="px-4 py-4">
-                              <p className="text-sm text-slate-300">{stat.arrests.toLocaleString()}</p>
+                              <p className="text-sm text-slate-700 dark:text-slate-300">{stat.arrests.toLocaleString()}</p>
                             </td>
                             <td className="px-4 py-4">
                               <div className="flex items-center gap-3">
                                 <span className={`text-sm font-bold ${
-                                  stat.clearance >= 80 ? 'text-green-400' :
-                                  stat.clearance >= 65 ? 'text-amber-400' : 'text-red-400'
+                                  stat.clearance >= 80 ? 'text-green-600 dark:text-green-400' :
+                                  stat.clearance >= 65 ? 'text-amber-600 dark:text-amber-400' : 'text-red-600 dark:text-red-400'
                                 }`}>{stat.clearance}%</span>
                                 <div className="flex-1 h-2 bg-slate-700/50 rounded-full overflow-hidden max-w-[100px]">
                                   <div className={`h-full ${
@@ -1105,13 +1105,13 @@ export default function ReportsAnalytics() {
                     <input
                       type="text"
                       placeholder="Search reports..."
-                      className="w-full pl-12 pr-4 py-2.5 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
+                      className="w-full pl-12 pr-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
                     />
                   </div>
                   <select
                     value={filterCategory}
                     onChange={(e) => setFilterCategory(e.target.value)}
-                    className="px-4 py-2.5 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer"
+                    className="px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer"
                   >
                     <option value="all">All Categories</option>
                     <option value="Executive">Executive</option>
@@ -1128,24 +1128,24 @@ export default function ReportsAnalytics() {
                   {filteredReports.map(report => {
                     const Icon = report.icon;
                     return (
-                      <div key={report.id} className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5 hover:border-slate-600/50 transition-all group">
+                      <div key={report.id} className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5 hover:border-slate-600/50 transition-all group">
                         <div className="flex items-start gap-4">
                           <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-blue-500/30 transition-colors">
                             <Icon className="w-6 h-6 text-blue-400" />
                           </div>
                           <div className="flex-1">
                             <div className="flex items-start justify-between mb-1">
-                              <h4 className="text-base font-semibold text-white">{report.name}</h4>
+                              <h4 className="text-base font-semibold text-slate-900 dark:text-white">{report.name}</h4>
                               <div className="flex items-center gap-1">
                                 {report.scheduled && (
-                                  <div className="px-2 py-0.5 bg-green-500/20 text-green-400 text-xs rounded-full flex items-center gap-1">
+                                  <div className="px-2 py-0.5 bg-green-500/20 text-green-600 dark:text-green-400 text-xs rounded-full flex items-center gap-1">
                                     <Clock className="w-3 h-3" />
                                     Auto
                                   </div>
                                 )}
                               </div>
                             </div>
-                            <p className="text-sm text-slate-400 mb-3">{report.description}</p>
+                            <p className="text-sm text-slate-600 dark:text-slate-400 mb-3">{report.description}</p>
                             <div className="flex items-center gap-3 text-xs text-slate-500 mb-3">
                               <span className="flex items-center gap-1">
                                 <Calendar className="w-3 h-3" />

@@ -355,7 +355,7 @@ export default function PerformanceReviews() {
           {!sidebarCollapsed && (
             <div className="flex items-center gap-2">
               <Shield className="w-8 h-8 text-amber-500" />
-              <h1 className="text-xl font-bold text-white">SentryOps</h1>
+              <h1 className="text-xl font-bold text-slate-900 dark:text-white">SentryOps</h1>
             </div>
           )}
           {sidebarCollapsed && (
@@ -365,7 +365,7 @@ export default function PerformanceReviews() {
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
             className="p-2 hover:bg-slate-800/50 rounded-lg transition-colors hidden lg:block"
           >
-            {sidebarCollapsed ? <ChevronRight className="w-5 h-5 text-slate-400" /> : <ChevronLeft className="w-5 h-5 text-slate-400" />}
+            {sidebarCollapsed ? <ChevronRight className="w-5 h-5 text-slate-600 dark:text-slate-400" /> : <ChevronLeft className="w-5 h-5 text-slate-600 dark:text-slate-400" />}
           </button>
         </div>
 
@@ -378,7 +378,7 @@ export default function PerformanceReviews() {
                 key={item.id}
                 onClick={() => handleNavigation(item)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'
+                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-800/50 hover:text-white'
                 } ${sidebarCollapsed ? 'justify-center' : ''}`}
                 title={sidebarCollapsed ? item.label : ''}
               >
@@ -400,7 +400,7 @@ export default function PerformanceReviews() {
           <div className="p-4">
             <button
               onClick={() => setLogoutConfirmOpen(true)}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-slate-400 hover:bg-slate-800/40 hover:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-slate-600 dark:text-slate-400 hover:bg-slate-800/40 hover:text-slate-700 dark:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
               title={sidebarCollapsed ? 'Sign Out' : ''}
             >
               <LogOut className="w-5 h-5 flex-shrink-0" />
@@ -423,11 +423,11 @@ export default function PerformanceReviews() {
           <div className="relative bg-slate-900 border border-slate-700/50 rounded-2xl p-6 max-w-sm w-full shadow-2xl">
             <div className="flex items-center gap-4 mb-4">
               <div className="w-12 h-12 bg-slate-800/60 rounded-xl flex items-center justify-center">
-                <LogOut className="w-6 h-6 text-slate-400" />
+                <LogOut className="w-6 h-6 text-slate-600 dark:text-slate-400" />
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-white">Sign Out</h3>
-                <p className="text-sm text-slate-400">Are you sure you want to sign out?</p>
+                <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Sign Out</h3>
+                <p className="text-sm text-slate-600 dark:text-slate-400">Are you sure you want to sign out?</p>
               </div>
             </div>
             <div className="flex gap-3 mt-6">
@@ -449,13 +449,13 @@ export default function PerformanceReviews() {
                   <span className="text-white text-lg font-bold">{selectedReview.employee.split(' ').map(n => n[0]).join('')}</span>
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-white">{selectedReview.employee}</h3>
-                  <p className="text-sm text-slate-400">{selectedReview.position} • {selectedReview.department}</p>
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white">{selectedReview.employee}</h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">{selectedReview.position} • {selectedReview.department}</p>
                   <p className="text-xs text-slate-500 font-mono">Badge #{selectedReview.badge}</p>
                 </div>
               </div>
               <button onClick={() => setSelectedReview(null)} className="p-2 hover:bg-slate-800/50 rounded-lg transition-colors">
-                <X className="w-5 h-5 text-slate-400" />
+                <X className="w-5 h-5 text-slate-600 dark:text-slate-400" />
               </button>
             </div>
 
@@ -473,33 +473,33 @@ export default function PerformanceReviews() {
 
             {/* Review Details Grid */}
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-              <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-4">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
                 <p className="text-xs text-slate-500 mb-1">Review Period</p>
                 <p className="text-white font-medium text-sm">{selectedReview.reviewPeriod}</p>
-                <p className="text-xs text-slate-400">{selectedReview.periodDates}</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400">{selectedReview.periodDates}</p>
               </div>
-              <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-4">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
                 <p className="text-xs text-slate-500 mb-1">Reviewing Supervisor</p>
                 <p className="text-white font-medium text-sm">{selectedReview.supervisor}</p>
-                <p className="text-xs text-slate-400">{selectedReview.supervisorTitle}</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400">{selectedReview.supervisorTitle}</p>
               </div>
-              <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-4">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
                 <p className="text-xs text-slate-500 mb-1">Agency Deadline</p>
                 <p className="text-white font-medium text-sm">{selectedReview.deadline}</p>
                 {selectedReview.daysOverdue > 0 && selectedReview.status !== 'completed' && (
                   <p className="text-xs text-red-400 font-medium">{selectedReview.daysOverdue} days overdue</p>
                 )}
               </div>
-              <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-4">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
                 <p className="text-xs text-slate-500 mb-1">Years of Service</p>
                 <p className="text-white font-medium text-sm">{selectedReview.yearsOfService}</p>
-                <p className="text-xs text-slate-400">Hired {selectedReview.hireDate}</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400">Hired {selectedReview.hireDate}</p>
               </div>
-              <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-4">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
                 <p className="text-xs text-slate-500 mb-1">Assignment</p>
                 <p className="text-white font-medium text-sm">{selectedReview.shift}</p>
               </div>
-              <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-4">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
                 <p className="text-xs text-slate-500 mb-1">Review Type</p>
                 <p className="text-white font-medium text-sm">{selectedReview.reviewType}</p>
               </div>
@@ -507,7 +507,7 @@ export default function PerformanceReviews() {
 
             {/* 5-Step Workflow */}
             <div className="mb-6">
-              <h4 className="text-sm font-semibold text-white mb-3">Evaluation Workflow Progress</h4>
+              <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Evaluation Workflow Progress</h4>
               <div className="space-y-3">
                 {[
                   { label: 'Employee Self-Assessment', data: selectedReview.selfAssessment },
@@ -520,8 +520,8 @@ export default function PerformanceReviews() {
                     <div className="mt-0.5">{getStepIcon(step.data.status)}</div>
                     <div className="flex-1">
                       <p className="text-sm text-white font-medium">Step {idx + 1}: {step.label}</p>
-                      {step.data.date && <p className="text-xs text-slate-400 mt-1">Completed: {step.data.date}</p>}
-                      {step.data.note && <p className="text-xs text-slate-400 mt-1">{step.data.note}</p>}
+                      {step.data.date && <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">Completed: {step.data.date}</p>}
+                      {step.data.note && <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">{step.data.note}</p>}
                       {step.data.daysOverdue > 0 && (
                         <p className="text-xs text-red-400 mt-1 font-medium">{step.data.daysOverdue} days overdue</p>
                       )}
@@ -536,21 +536,21 @@ export default function PerformanceReviews() {
 
             {/* Evaluation Categories */}
             <div className="mb-6">
-              <h4 className="text-sm font-semibold text-white mb-3">GCSO Evaluation Categories (5-Point Scale)</h4>
+              <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">GCSO Evaluation Categories (5-Point Scale)</h4>
               {selectedReview.status === 'completed' ? (
-                <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-4">
+                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
                   <div className="flex items-center gap-2 mb-3">
                     <Shield className="w-4 h-4 text-amber-400" />
                     <p className="text-sm text-amber-400 font-medium">Confidential — Supervisor & HR Eyes Only</p>
                   </div>
-                  <p className="text-xs text-slate-400">Evaluation ratings are confidential personnel records. Accessible only to: employee, reviewing supervisor, HR Director, command staff, and Sheriff Taylor. Contact HR Director for authorized access.</p>
+                  <p className="text-xs text-slate-600 dark:text-slate-400">Evaluation ratings are confidential personnel records. Accessible only to: employee, reviewing supervisor, HR Director, command staff, and Sheriff Taylor. Contact HR Director for authorized access.</p>
                 </div>
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {evaluationCategories.map((cat, idx) => (
                     <div key={idx} className="flex items-center gap-2 p-2 bg-slate-800/30 border border-slate-700/30 rounded-lg">
                       <Square className="w-3.5 h-3.5 text-slate-500" />
-                      <span className="text-xs text-slate-400">{idx + 1}. {cat}</span>
+                      <span className="text-xs text-slate-600 dark:text-slate-400">{idx + 1}. {cat}</span>
                     </div>
                   ))}
                 </div>
@@ -592,7 +592,7 @@ export default function PerformanceReviews() {
                   </button>
                 </>
               )}
-              <button onClick={() => setSelectedReview(null)} className="px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-slate-300 rounded-xl font-medium transition-all text-sm">Close</button>
+              <button onClick={() => setSelectedReview(null)} className="px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl font-medium transition-all text-sm">Close</button>
             </div>
           </div>
         </div>
@@ -605,10 +605,10 @@ export default function PerformanceReviews() {
           <div className="px-4 lg:px-6 py-4 flex items-center justify-between gap-4">
             <div className="flex items-center gap-4 flex-1 min-w-0">
               <button onClick={() => setSidebarOpen(!sidebarOpen)} className="lg:hidden p-2 hover:bg-slate-800/50 rounded-lg">
-                <Menu className="w-5 h-5 text-slate-400" />
+                <Menu className="w-5 h-5 text-slate-600 dark:text-slate-400" />
               </button>
               <div className="flex items-center gap-2 text-sm">
-                <button onClick={() => navigate(createPageUrl('HRDashboard'))} className="text-slate-400 hover:text-white transition-colors">HR Dashboard</button>
+                <button onClick={() => navigate(createPageUrl('HRDashboard'))} className="text-slate-600 dark:text-slate-400 hover:text-white transition-colors">HR Dashboard</button>
                 <ChevronRight className="w-4 h-4 text-slate-600" />
                 <span className="text-white">Performance Reviews</span>
               </div>
@@ -618,25 +618,25 @@ export default function PerformanceReviews() {
                 <Award className="w-4 h-4" />
                 <span className="hidden sm:inline">New Review</span>
               </button>
-              <button className="hidden md:flex items-center gap-2 px-3 py-2 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-300 font-medium transition-all text-sm">
+              <button className="hidden md:flex items-center gap-2 px-3 py-2 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-700 dark:text-slate-300 font-medium transition-all text-sm">
                 <BarChart3 className="w-4 h-4" />
                 <span>Analytics</span>
               </button>
-              <button className="hidden lg:flex items-center gap-2 px-3 py-2 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-300 font-medium transition-all text-sm">
+              <button className="hidden lg:flex items-center gap-2 px-3 py-2 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-700 dark:text-slate-300 font-medium transition-all text-sm">
                 <AlertTriangle className="w-4 h-4" />
                 <span>Overdue Report</span>
               </button>
 
               <div className="relative">
                 <button onClick={() => setNotificationsOpen(!notificationsOpen)} className="p-2 hover:bg-slate-800/50 rounded-lg relative">
-                  <Bell className="w-5 h-5 text-slate-400" />
+                  <Bell className="w-5 h-5 text-slate-600 dark:text-slate-400" />
                   <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                 </button>
 
                 {notificationsOpen && (
                   <div className="absolute right-0 top-full mt-2 w-96 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-2xl z-50">
                     <div className="p-4 border-b border-slate-700/50">
-                      <h3 className="text-sm font-semibold text-white">Notifications</h3>
+                      <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Notifications</h3>
                     </div>
                     <div className="max-h-96 overflow-y-auto">
                       {notifications.map(notification => (
@@ -644,8 +644,8 @@ export default function PerformanceReviews() {
                           <div className="flex items-start gap-3">
                             <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-amber-400' : 'bg-blue-400'}`}></div>
                             <div className="flex-1 min-w-0">
-                              <p className="text-sm font-medium text-white mb-1">{notification.title}</p>
-                              <p className="text-xs text-slate-400 mb-2">{notification.message}</p>
+                              <p className="text-sm font-medium text-slate-900 dark:text-white mb-1">{notification.title}</p>
+                              <p className="text-xs text-slate-600 dark:text-slate-400 mb-2">{notification.message}</p>
                               <p className="text-xs text-slate-500">{notification.time}</p>
                             </div>
                           </div>
@@ -666,8 +666,8 @@ export default function PerformanceReviews() {
                   <span className="text-white text-sm font-bold">HR</span>
                 </div>
                 <div className="hidden sm:block">
-                  <p className="text-sm font-medium text-white">HR Director</p>
-                  <p className="text-xs text-slate-400">Human Resources</p>
+                  <p className="text-sm font-medium text-slate-900 dark:text-white">HR Director</p>
+                  <p className="text-xs text-slate-600 dark:text-slate-400">Human Resources</p>
                 </div>
               </div>
             </div>
@@ -681,20 +681,20 @@ export default function PerformanceReviews() {
             {/* Page Title */}
             <div className="mb-6">
               <h2 className="text-2xl lg:text-3xl font-bold text-white mb-1">Annual Performance Evaluations & Personnel Assessment</h2>
-              <p className="text-slate-400 text-sm">Gwinnett County Sheriff's Office • Lawrenceville, Georgia</p>
+              <p className="text-slate-600 dark:text-slate-400 text-sm">Gwinnett County Sheriff's Office • Lawrenceville, Georgia</p>
               <p className="text-slate-500 text-xs mt-1">Monday, February 21, 2026 • 12:20 AM EST</p>
             </div>
 
             {/* Info Bar */}
-            <div className="mb-6 bg-slate-800/40 border border-slate-700/50 rounded-xl p-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-slate-400">
+            <div className="mb-6 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-slate-600 dark:text-slate-400">
                 <div className="flex items-center gap-2">
                   <Users className="w-3.5 h-3.5 text-slate-500" />
-                  <span>HR Director: <span className="text-slate-300">Personnel Admin</span> | Sheriff: <span className="text-slate-300">Keybo Taylor</span> | Eval Coordinator: <span className="text-slate-300">HR Specialist J. Martinez</span></span>
+                  <span>HR Director: <span className="text-slate-700 dark:text-slate-300">Personnel Admin</span> | Sheriff: <span className="text-slate-700 dark:text-slate-300">Keybo Taylor</span> | Eval Coordinator: <span className="text-slate-700 dark:text-slate-300">HR Specialist J. Martinez</span></span>
                 </div>
                 <div className="flex items-center gap-2">
                   <FileText className="w-3.5 h-3.5 text-slate-500" />
-                  <span>Total Personnel: <span className="text-slate-300">178 (164 sworn, 14 civilian)</span> | Review Period: <span className="text-slate-300">Q4 2024 (Oct-Dec 2024)</span></span>
+                  <span>Total Personnel: <span className="text-slate-700 dark:text-slate-300">178 (164 sworn, 14 civilian)</span> | Review Period: <span className="text-slate-700 dark:text-slate-300">Q4 2024 (Oct-Dec 2024)</span></span>
                 </div>
               </div>
               <div className="mt-2 text-xs text-slate-500 flex items-center gap-2">
@@ -707,19 +707,19 @@ export default function PerformanceReviews() {
             <div className="mb-6 space-y-2">
               <div className="flex items-start gap-3 p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg">
                 <AlertTriangle className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                <p className="text-sm text-slate-300">Review cycle on track: <span className="text-amber-400 font-medium">89% completion rate</span> for Q4 2024 reviews (due 01/31/2025)</p>
+                <p className="text-sm text-slate-700 dark:text-slate-300">Review cycle on track: <span className="text-amber-400 font-medium">89% completion rate</span> for Q4 2024 reviews (due 01/31/2025)</p>
               </div>
               <div className="flex items-start gap-3 p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg">
                 <AlertTriangle className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                <p className="text-sm text-slate-300"><span className="text-amber-400 font-medium">3 supervisor reviews pending:</span> Marcus Chen, Sarah Williams, Robert Martinez need supervisor input</p>
+                <p className="text-sm text-slate-700 dark:text-slate-300"><span className="text-amber-400 font-medium">3 supervisor reviews pending:</span> Marcus Chen, Sarah Williams, Robert Martinez need supervisor input</p>
               </div>
               <div className="flex items-start gap-3 p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
                 <AlertCircle className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
-                <p className="text-sm text-slate-300"><span className="text-red-400 font-bold">CRITICAL:</span> 1 overdue review — Michael Davis (Q3 2024) — <span className="text-red-400 font-medium">510+ days overdue</span> — escalate to Major Wilson immediately</p>
+                <p className="text-sm text-slate-700 dark:text-slate-300"><span className="text-red-400 font-bold">CRITICAL:</span> 1 overdue review — Michael Davis (Q3 2024) — <span className="text-red-400 font-medium">510+ days overdue</span> — escalate to Major Wilson immediately</p>
               </div>
               <div className="flex items-start gap-3 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
                 <Info className="w-4 h-4 text-blue-400 mt-0.5 flex-shrink-0" />
-                <p className="text-sm text-slate-300">Top performers identified for <span className="text-blue-400 font-medium">confidential promotion eligibility review</span> (2 candidates exceed expectations — details restricted to HR Director and Sheriff)</p>
+                <p className="text-sm text-slate-700 dark:text-slate-300">Top performers identified for <span className="text-blue-400 font-medium">confidential promotion eligibility review</span> (2 candidates exceed expectations — details restricted to HR Director and Sheriff)</p>
               </div>
             </div>
 
@@ -736,7 +736,7 @@ export default function PerformanceReviews() {
                     </div>
                     <div className="text-left">
                       <h3 className="text-lg font-bold text-red-400">OVERDUE PERFORMANCE EVALUATION — SUPERVISOR ACCOUNTABILITY</h3>
-                      <p className="text-sm text-slate-400">{overdueReview.employee} • Badge #{overdueReview.badge} • {overdueReview.position} • {overdueReview.department}</p>
+                      <p className="text-sm text-slate-600 dark:text-slate-400">{overdueReview.employee} • Badge #{overdueReview.badge} • {overdueReview.position} • {overdueReview.department}</p>
                     </div>
                   </div>
                   {expandedOverdue ? <ChevronUp className="w-5 h-5 text-red-400" /> : <ChevronDown className="w-5 h-5 text-red-400" />}
@@ -746,15 +746,15 @@ export default function PerformanceReviews() {
                   <div className="px-5 pb-5 space-y-5">
                     {/* Evaluation Details */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                      <div className="bg-slate-900/60 border border-slate-700/50 rounded-xl p-4">
+                      <div className="bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
                         <p className="text-xs text-slate-500 mb-1">Review Period</p>
                         <p className="text-white font-medium">{overdueReview.reviewPeriod}</p>
-                        <p className="text-xs text-slate-400">{overdueReview.periodDates}</p>
+                        <p className="text-xs text-slate-600 dark:text-slate-400">{overdueReview.periodDates}</p>
                       </div>
-                      <div className="bg-slate-900/60 border border-slate-700/50 rounded-xl p-4">
+                      <div className="bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
                         <p className="text-xs text-slate-500 mb-1">Evaluation Deadline</p>
                         <p className="text-white font-medium">{overdueReview.deadline}</p>
-                        <p className="text-xs text-slate-400">GCSO Policy - 30 days after review period end</p>
+                        <p className="text-xs text-slate-600 dark:text-slate-400">GCSO Policy - 30 days after review period end</p>
                       </div>
                       <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-4">
                         <p className="text-xs text-red-300 mb-1">Days Overdue</p>
@@ -764,17 +764,17 @@ export default function PerformanceReviews() {
                     </div>
 
                     {/* Assigned Supervisor */}
-                    <div className="bg-slate-900/60 border border-slate-700/50 rounded-xl p-4">
-                      <h4 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
-                        <Users className="w-4 h-4 text-slate-400" /> Assigned Supervisor
+                    <div className="bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
+                      <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
+                        <Users className="w-4 h-4 text-slate-600 dark:text-slate-400" /> Assigned Supervisor
                       </h4>
-                      <p className="text-sm text-slate-300 mb-3">Reviewing Supervisor: <span className="text-white font-medium">{overdueReview.supervisor}</span> ({overdueReview.supervisorTitle})</p>
+                      <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">Reviewing Supervisor: <span className="text-white font-medium">{overdueReview.supervisor}</span> ({overdueReview.supervisorTitle})</p>
                       <div className="space-y-2">
                         <p className="text-xs text-slate-500 font-medium mb-2">ESCALATION TIMELINE:</p>
                         {overdueReview.escalationHistory.map((item, idx) => (
                           <div key={idx} className={`flex items-start gap-3 p-2 rounded-lg ${item.icon === 'current' ? 'bg-red-500/10 border border-red-500/20' : 'bg-slate-800/30'}`}>
                             <div className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${item.icon === 'current' ? 'bg-red-500/30' : 'bg-slate-700/50'}`}>
-                              {item.icon === 'current' ? <AlertCircle className="w-3.5 h-3.5 text-red-400" /> : <CheckCircle className="w-3.5 h-3.5 text-slate-400" />}
+                              {item.icon === 'current' ? <AlertCircle className="w-3.5 h-3.5 text-red-400" /> : <CheckCircle className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />}
                             </div>
                             <div>
                               <p className={`text-sm ${item.icon === 'current' ? 'text-red-400 font-medium' : 'text-slate-300'}`}>{item.action}</p>
@@ -794,7 +794,7 @@ export default function PerformanceReviews() {
                         {overdueReview.impact.map((item, idx) => (
                           <div key={idx} className="flex items-start gap-2">
                             <XCircle className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                            <p className="text-sm text-slate-300">{item}</p>
+                            <p className="text-sm text-slate-700 dark:text-slate-300">{item}</p>
                           </div>
                         ))}
                       </div>
@@ -805,7 +805,7 @@ export default function PerformanceReviews() {
                       <h4 className="text-sm font-semibold text-blue-400 mb-2 flex items-center gap-2">
                         <Info className="w-4 h-4" /> Current Employee Status
                       </h4>
-                      <p className="text-sm text-slate-300">{overdueReview.currentNote}</p>
+                      <p className="text-sm text-slate-700 dark:text-slate-300">{overdueReview.currentNote}</p>
                     </div>
 
                     {/* Required Immediate Actions */}
@@ -817,22 +817,22 @@ export default function PerformanceReviews() {
                         {overdueReview.requiredActions.map((action, idx) => (
                           <div key={idx} className="flex items-start gap-3 p-2 bg-slate-800/30 rounded-lg">
                             <Square className="w-4 h-4 text-slate-500 mt-0.5 flex-shrink-0" />
-                            <p className="text-sm text-slate-300">{action}</p>
+                            <p className="text-sm text-slate-700 dark:text-slate-300">{action}</p>
                           </div>
                         ))}
                       </div>
                       <div className="mt-4 p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
                         <p className="text-sm text-red-400 font-medium">Deadline: Evaluation completed by February 28, 2026 (7 days)</p>
-                        <p className="text-xs text-slate-400 mt-1">Responsible: HR Director (enforce policy), Sheriff Taylor (ultimate accountability), Major Wilson (complete evaluation)</p>
+                        <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">Responsible: HR Director (enforce policy), Sheriff Taylor (ultimate accountability), Major Wilson (complete evaluation)</p>
                       </div>
                     </div>
 
                     {/* Supervisor Accountability */}
-                    <div className="bg-slate-900/60 border border-slate-700/50 rounded-xl p-4">
-                      <h4 className="text-sm font-semibold text-white mb-2 flex items-center gap-2">
-                        <Shield className="w-4 h-4 text-slate-400" /> Supervisor Accountability — Major R. Wilson
+                    <div className="bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
+                      <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-2 flex items-center gap-2">
+                        <Shield className="w-4 h-4 text-slate-600 dark:text-slate-400" /> Supervisor Accountability — Major R. Wilson
                       </h4>
-                      <div className="space-y-2 text-sm text-slate-300">
+                      <div className="space-y-2 text-sm text-slate-700 dark:text-slate-300">
                         <p>• Major Wilson has been reminded multiple times (email, meeting, Sheriff directive) without completion</p>
                         <p>• This represents failure to perform essential supervisory duty</p>
                         <p>• Requires escalated accountability: Written counseling, documented improvement plan, potential disciplinary action if not corrected immediately</p>
@@ -855,7 +855,7 @@ export default function PerformanceReviews() {
                       </button>
                       <button
                         onClick={() => setSelectedReview(overdueReview)}
-                        className="px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-slate-300 rounded-xl font-medium transition-all text-sm flex items-center gap-2"
+                        className="px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl font-medium transition-all text-sm flex items-center gap-2"
                       >
                         <Eye className="w-4 h-4" /> View Personnel File
                       </button>
@@ -867,25 +867,25 @@ export default function PerformanceReviews() {
 
             {/* Status Summary Cards (3 cards - no avg rating) */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-              <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5">
                 <div className="flex items-center justify-between mb-3">
                   <div className="w-10 h-10 bg-amber-500/20 rounded-xl flex items-center justify-center">
                     <Clock className="w-5 h-5 text-amber-400" />
                   </div>
                 </div>
-                <p className="text-2xl font-bold text-white mb-1">{statusCounts['in-progress']}</p>
-                <p className="text-sm text-slate-400 mb-2">In Progress</p>
+                <p className="text-2xl font-bold text-slate-900 dark:text-white mb-1">{statusCounts['in-progress']}</p>
+                <p className="text-sm text-slate-600 dark:text-slate-400 mb-2">In Progress</p>
                 <p className="text-xs text-slate-500">2 awaiting supervisor review • 1 self-assessment just submitted</p>
               </div>
 
-              <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5">
                 <div className="flex items-center justify-between mb-3">
                   <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center">
                     <CheckCircle className="w-5 h-5 text-green-400" />
                   </div>
                 </div>
-                <p className="text-2xl font-bold text-white mb-1">{statusCounts.completed}</p>
-                <p className="text-sm text-slate-400 mb-2">Completed</p>
+                <p className="text-2xl font-bold text-slate-900 dark:text-white mb-1">{statusCounts.completed}</p>
+                <p className="text-sm text-slate-600 dark:text-slate-400 mb-2">Completed</p>
                 <p className="text-xs text-slate-500">All completed ahead of Jan 31, 2025 deadline</p>
               </div>
 
@@ -896,7 +896,7 @@ export default function PerformanceReviews() {
                   </div>
                 </div>
                 <p className="text-2xl font-bold text-red-400 mb-1">{statusCounts.overdue}</p>
-                <p className="text-sm text-slate-400 mb-2">Overdue</p>
+                <p className="text-sm text-slate-600 dark:text-slate-400 mb-2">Overdue</p>
                 <p className="text-xs text-red-400">Michael Davis Q3 2024 — CRITICAL, 510+ days</p>
               </div>
             </div>
@@ -910,13 +910,13 @@ export default function PerformanceReviews() {
                   placeholder="Search by name, badge, or department..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-amber-500/50 text-sm"
+                  className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-amber-500/50 text-sm"
                 />
               </div>
               <select
                 value={filterDivision}
                 onChange={(e) => setFilterDivision(e.target.value)}
-                className="px-4 py-2.5 bg-slate-800/40 border border-slate-700/50 rounded-xl text-slate-300 focus:outline-none focus:border-amber-500/50 text-sm"
+                className="px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-700 dark:text-slate-300 focus:outline-none focus:border-amber-500/50 text-sm"
               >
                 <option value="all">All Divisions</option>
                 <option value="Patrol Division">Patrol Division</option>
@@ -937,7 +937,7 @@ export default function PerformanceReviews() {
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
                   className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all relative whitespace-nowrap ${
-                    activeTab === tab.id ? 'text-amber-400' : 'text-slate-400 hover:text-slate-300'
+                    activeTab === tab.id ? 'text-amber-400' : 'text-slate-600 dark:text-slate-400 hover:text-slate-300'
                   }`}
                 >
                   {tab.label}
@@ -958,7 +958,7 @@ export default function PerformanceReviews() {
                 const isExpanded = expandedCards[review.id];
 
                 return (
-                  <div key={review.id} className="bg-slate-800/40 border border-slate-700/50 rounded-xl overflow-hidden hover:bg-slate-800/50 transition-all">
+                  <div key={review.id} className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden hover:bg-slate-800/50 transition-all">
                     {/* Card Header */}
                     <div className="p-5">
                       <div className="flex items-start justify-between gap-4">
@@ -969,16 +969,16 @@ export default function PerformanceReviews() {
 
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-3 mb-2 flex-wrap">
-                              <h3 className="text-lg font-semibold text-white">{review.employee}</h3>
-                              <span className="px-2 py-1 bg-slate-700/50 rounded text-xs text-slate-300 font-mono">#{review.badge}</span>
+                              <h3 className="text-lg font-semibold text-slate-900 dark:text-white">{review.employee}</h3>
+                              <span className="px-2 py-1 bg-slate-700/50 rounded text-xs text-slate-700 dark:text-slate-300 font-mono">#{review.badge}</span>
                               <span className={`px-3 py-1 rounded-full text-xs font-bold border ${statusConfig.bg} ${statusConfig.text} ${statusConfig.border}`}>
                                 {statusConfig.label}
                               </span>
                             </div>
 
-                            <p className="text-sm text-slate-400 mb-3">{review.position} • {review.department} • {review.shift}</p>
+                            <p className="text-sm text-slate-600 dark:text-slate-400 mb-3">{review.position} • {review.department} • {review.shift}</p>
 
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs text-slate-400 mb-3">
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs text-slate-600 dark:text-slate-400 mb-3">
                               <div className="flex items-center gap-2">
                                 <Calendar className="w-3 h-3" />
                                 <span>{review.reviewPeriod}</span>
@@ -1001,7 +1001,7 @@ export default function PerformanceReviews() {
                             <div className="mb-3">
                               <div className="flex items-center justify-between mb-1">
                                 <span className="text-xs text-slate-500">Evaluation Progress</span>
-                                <span className="text-xs text-slate-400 font-medium">{review.progress}%</span>
+                                <span className="text-xs text-slate-600 dark:text-slate-400 font-medium">{review.progress}%</span>
                               </div>
                               <div className="w-full h-2 bg-slate-700/50 rounded-full overflow-hidden">
                                 <div
@@ -1042,13 +1042,13 @@ export default function PerformanceReviews() {
                             onClick={() => setSelectedReview(review)}
                             className="p-2 hover:bg-slate-700/50 rounded-lg transition-colors"
                           >
-                            <Eye className="w-5 h-5 text-slate-400" />
+                            <Eye className="w-5 h-5 text-slate-600 dark:text-slate-400" />
                           </button>
                           <button
                             onClick={() => toggleCardExpanded(review.id)}
                             className="p-2 hover:bg-slate-700/50 rounded-lg transition-colors"
                           >
-                            {isExpanded ? <ChevronUp className="w-5 h-5 text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-400" />}
+                            {isExpanded ? <ChevronUp className="w-5 h-5 text-slate-600 dark:text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-600 dark:text-slate-400" />}
                           </button>
                         </div>
                       </div>
@@ -1059,7 +1059,7 @@ export default function PerformanceReviews() {
                       <div className="px-5 pb-5 border-t border-slate-700/30 pt-4 space-y-4">
                         {/* Self-Assessment Details */}
                         <div className="bg-slate-900/40 border border-slate-700/30 rounded-xl p-4">
-                          <h4 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+                          <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
                             <CheckCircle className="w-4 h-4 text-green-400" /> Step 1: Employee Self-Assessment
                           </h4>
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
@@ -1072,7 +1072,7 @@ export default function PerformanceReviews() {
                             {review.selfAssessment.date && (
                               <div>
                                 <p className="text-xs text-slate-500 mb-1">Completion Date</p>
-                                <p className="text-slate-300">{review.selfAssessment.date}</p>
+                                <p className="text-slate-700 dark:text-slate-300">{review.selfAssessment.date}</p>
                               </div>
                             )}
                           </div>
@@ -1086,7 +1086,7 @@ export default function PerformanceReviews() {
                                 {review.selfAssessment.components.map((comp, idx) => (
                                   <div key={idx} className="flex items-center gap-2">
                                     <CheckCircle className="w-3 h-3 text-green-400" />
-                                    <span className="text-xs text-slate-400">{comp}</span>
+                                    <span className="text-xs text-slate-600 dark:text-slate-400">{comp}</span>
                                   </div>
                                 ))}
                               </div>
@@ -1096,7 +1096,7 @@ export default function PerformanceReviews() {
 
                         {/* Supervisor Review Details */}
                         <div className="bg-slate-900/40 border border-slate-700/30 rounded-xl p-4">
-                          <h4 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+                          <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
                             {getStepIcon(review.supervisorReview.status)} Step 2: Supervisor Review & Rating
                           </h4>
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
@@ -1108,18 +1108,18 @@ export default function PerformanceReviews() {
                             </div>
                             <div>
                               <p className="text-xs text-slate-500 mb-1">Assigned Supervisor</p>
-                              <p className="text-slate-300">{review.supervisor} ({review.supervisorTitle})</p>
+                              <p className="text-slate-700 dark:text-slate-300">{review.supervisor} ({review.supervisorTitle})</p>
                             </div>
                             {review.supervisorDeadline && (
                               <div>
                                 <p className="text-xs text-slate-500 mb-1">Supervisor Deadline</p>
-                                <p className="text-slate-300">{review.supervisorDeadline}</p>
+                                <p className="text-slate-700 dark:text-slate-300">{review.supervisorDeadline}</p>
                               </div>
                             )}
                             {review.supervisorReview.date && (
                               <div>
                                 <p className="text-xs text-slate-500 mb-1">Completion Date</p>
-                                <p className="text-slate-300">{review.supervisorReview.date}</p>
+                                <p className="text-slate-700 dark:text-slate-300">{review.supervisorReview.date}</p>
                               </div>
                             )}
                           </div>
@@ -1127,7 +1127,7 @@ export default function PerformanceReviews() {
                             <p className="text-xs text-amber-400 mt-2">Reminders sent: {review.supervisorReview.reminders.join(', ')}</p>
                           )}
                           {review.supervisorReview.note && (
-                            <p className="text-xs text-slate-400 mt-2">{review.supervisorReview.note}</p>
+                            <p className="text-xs text-slate-600 dark:text-slate-400 mt-2">{review.supervisorReview.note}</p>
                           )}
                           {review.supervisorPattern && (
                             <div className="mt-3 p-2 bg-amber-500/10 border border-amber-500/20 rounded-lg">
@@ -1145,40 +1145,40 @@ export default function PerformanceReviews() {
                             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
                               <div>
                                 <p className="text-slate-500">Review Meeting</p>
-                                <p className="text-slate-300">{review.reviewMeeting.date}</p>
+                                <p className="text-slate-700 dark:text-slate-300">{review.reviewMeeting.date}</p>
                               </div>
                               <div>
                                 <p className="text-slate-500">Signatures Obtained</p>
-                                <p className="text-slate-300">{review.signatures.date}</p>
+                                <p className="text-slate-700 dark:text-slate-300">{review.signatures.date}</p>
                               </div>
                               <div>
                                 <p className="text-slate-500">Filed in Personnel Record</p>
-                                <p className="text-slate-300">{review.personnelFile.date}</p>
+                                <p className="text-slate-700 dark:text-slate-300">{review.personnelFile.date}</p>
                               </div>
                             </div>
                             <p className="text-xs text-green-400 mt-3">{review.completionNote}</p>
                           </div>
                         ) : (
                           <div className="bg-slate-900/40 border border-slate-700/30 rounded-xl p-4">
-                            <h4 className="text-sm font-semibold text-white mb-3">Steps 3-5: Pending</h4>
+                            <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Steps 3-5: Pending</h4>
                             <div className="space-y-2 text-xs">
                               <div className="flex items-center gap-2">
                                 <Circle className="w-3.5 h-3.5 text-slate-500" />
-                                <span className="text-slate-400">Step 3: Review Meeting — {review.reviewMeeting.note || 'Pending supervisor review completion'}</span>
+                                <span className="text-slate-600 dark:text-slate-400">Step 3: Review Meeting — {review.reviewMeeting.note || 'Pending supervisor review completion'}</span>
                               </div>
                               <div className="flex items-center gap-2">
                                 <Circle className="w-3.5 h-3.5 text-slate-500" />
-                                <span className="text-slate-400">Step 4: Signatures & Finalization — Pending</span>
+                                <span className="text-slate-600 dark:text-slate-400">Step 4: Signatures & Finalization — Pending</span>
                               </div>
                               <div className="flex items-center gap-2">
                                 <Circle className="w-3.5 h-3.5 text-slate-500" />
-                                <span className="text-slate-400">Step 5: Personnel File Documentation — Pending</span>
+                                <span className="text-slate-600 dark:text-slate-400">Step 5: Personnel File Documentation — Pending</span>
                               </div>
                             </div>
                             {review.nextDeadline && (
                               <div className="mt-3 p-2 bg-amber-500/10 border border-amber-500/20 rounded-lg">
                                 <p className="text-xs text-amber-400">Next Deadline: {review.nextDeadline}</p>
-                                {review.escalationNote && <p className="text-xs text-slate-400 mt-1">{review.escalationNote}</p>}
+                                {review.escalationNote && <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">{review.escalationNote}</p>}
                               </div>
                             )}
                           </div>
@@ -1191,16 +1191,16 @@ export default function PerformanceReviews() {
                               <Shield className="w-4 h-4 text-amber-400" />
                               <p className="text-sm text-amber-400 font-medium">Evaluation Ratings — Confidential</p>
                             </div>
-                            <p className="text-xs text-slate-400">Performance ratings for {review.employee} are confidential personnel records. Access restricted to: employee, reviewing supervisor ({review.supervisor}), HR Director, command staff, and Sheriff Taylor.</p>
+                            <p className="text-xs text-slate-600 dark:text-slate-400">Performance ratings for {review.employee} are confidential personnel records. Access restricted to: employee, reviewing supervisor ({review.supervisor}), HR Director, command staff, and Sheriff Taylor.</p>
                           </div>
                         ) : (
                           <div className="bg-slate-900/40 border border-slate-700/30 rounded-xl p-4">
-                            <h4 className="text-sm font-semibold text-white mb-3">GCSO Evaluation Categories (Pending Supervisor Rating)</h4>
+                            <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">GCSO Evaluation Categories (Pending Supervisor Rating)</h4>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
                               {evaluationCategories.map((cat, idx) => (
                                 <div key={idx} className="flex items-center gap-2 p-1.5">
                                   <Square className="w-3 h-3 text-slate-600" />
-                                  <span className="text-xs text-slate-400">{idx + 1}. {cat}</span>
+                                  <span className="text-xs text-slate-600 dark:text-slate-400">{idx + 1}. {cat}</span>
                                 </div>
                               ))}
                             </div>
@@ -1235,7 +1235,7 @@ export default function PerformanceReviews() {
                           )}
                           <button
                             onClick={() => setSelectedReview(review)}
-                            className="px-4 py-2 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-slate-300 rounded-xl font-medium transition-all text-sm flex items-center gap-2"
+                            className="px-4 py-2 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl font-medium transition-all text-sm flex items-center gap-2"
                           >
                             <ExternalLink className="w-4 h-4" /> Full Details
                           </button>
@@ -1249,22 +1249,22 @@ export default function PerformanceReviews() {
               {filteredReviews.length === 0 && (
                 <div className="text-center py-12">
                   <Search className="w-12 h-12 text-slate-600 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold text-white mb-2">No Reviews Found</h3>
-                  <p className="text-slate-400 text-sm">Try adjusting your search or filter criteria.</p>
+                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">No Reviews Found</h3>
+                  <p className="text-slate-600 dark:text-slate-400 text-sm">Try adjusting your search or filter criteria.</p>
                 </div>
               )}
             </div>
 
             {/* Rating Scale Reference */}
-            <div className="mt-8 bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
-              <h4 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
-                <ClipboardCheck className="w-4 h-4 text-slate-400" /> GCSO Performance Evaluation Rating Scale Reference
+            <div className="mt-8 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5">
+              <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
+                <ClipboardCheck className="w-4 h-4 text-slate-600 dark:text-slate-400" /> GCSO Performance Evaluation Rating Scale Reference
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-5 gap-3">
                 {ratingScale.map(rating => (
                   <div key={rating.score} className="bg-slate-900/40 border border-slate-700/30 rounded-lg p-3 text-center">
-                    <p className="text-xl font-bold text-white mb-1">{rating.score}</p>
-                    <p className="text-xs text-slate-400">{rating.label}</p>
+                    <p className="text-xl font-bold text-slate-900 dark:text-white mb-1">{rating.score}</p>
+                    <p className="text-xs text-slate-600 dark:text-slate-400">{rating.label}</p>
                   </div>
                 ))}
               </div>
@@ -1291,32 +1291,32 @@ export default function PerformanceReviews() {
         {supportOpen && (
           <div className="absolute bottom-16 right-0 w-80 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-2xl overflow-hidden">
             <div className="p-4 border-b border-slate-700/50">
-              <h3 className="text-sm font-semibold text-white">Performance Evaluation Support</h3>
-              <p className="text-xs text-slate-400 mt-1">GCSO Human Resources Division</p>
+              <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Performance Evaluation Support</h3>
+              <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">GCSO Human Resources Division</p>
             </div>
             <div className="p-4 space-y-3">
               <div className="p-3 bg-slate-800/40 rounded-lg hover:bg-slate-800/60 cursor-pointer transition-colors">
-                <p className="text-sm font-medium text-white">HR Director</p>
-                <p className="text-xs text-slate-400">Evaluation policy, confidential records access</p>
+                <p className="text-sm font-medium text-slate-900 dark:text-white">HR Director</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400">Evaluation policy, confidential records access</p>
                 <p className="text-xs text-amber-400 mt-1">Ext. 4500</p>
               </div>
               <div className="p-3 bg-slate-800/40 rounded-lg hover:bg-slate-800/60 cursor-pointer transition-colors">
-                <p className="text-sm font-medium text-white">Evaluation Coordinator</p>
-                <p className="text-xs text-slate-400">HR Specialist J. Martinez — scheduling, deadlines</p>
+                <p className="text-sm font-medium text-slate-900 dark:text-white">Evaluation Coordinator</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400">HR Specialist J. Martinez — scheduling, deadlines</p>
                 <p className="text-xs text-amber-400 mt-1">Ext. 4505</p>
               </div>
               <div className="p-3 bg-slate-800/40 rounded-lg hover:bg-slate-800/60 cursor-pointer transition-colors">
-                <p className="text-sm font-medium text-white">Training Division</p>
-                <p className="text-xs text-slate-400">Professional development, certification tracking</p>
+                <p className="text-sm font-medium text-slate-900 dark:text-white">Training Division</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400">Professional development, certification tracking</p>
                 <p className="text-xs text-amber-400 mt-1">Ext. 4521</p>
               </div>
               <div className="p-3 bg-slate-800/40 rounded-lg hover:bg-slate-800/60 cursor-pointer transition-colors">
-                <p className="text-sm font-medium text-white">GCSO Evaluation Policy</p>
-                <p className="text-xs text-slate-400">Policy 6.01 — Performance Evaluations</p>
+                <p className="text-sm font-medium text-slate-900 dark:text-white">GCSO Evaluation Policy</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400">Policy 6.01 — Performance Evaluations</p>
               </div>
               <div className="p-3 bg-slate-800/40 rounded-lg hover:bg-slate-800/60 cursor-pointer transition-colors">
-                <p className="text-sm font-medium text-white">Georgia POST Requirements</p>
-                <p className="text-xs text-slate-400">Peace Officer Standards & Training</p>
+                <p className="text-sm font-medium text-slate-900 dark:text-white">Georgia POST Requirements</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400">Peace Officer Standards & Training</p>
               </div>
             </div>
           </div>

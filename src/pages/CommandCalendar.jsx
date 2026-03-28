@@ -418,21 +418,21 @@ export default function CommandCalendar() {
 
   const getStatusBadge = (status) => {
     switch (status) {
-      case 'pending': return { text: 'Pending', classes: 'bg-amber-500/10 border-amber-500/20 text-amber-400' };
-      case 'in_progress': return { text: 'In Progress', classes: 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400' };
+      case 'pending': return { text: 'Pending', classes: 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' };
+      case 'in_progress': return { text: 'In Progress', classes: 'bg-emerald-100 border-emerald-200 text-emerald-700 dark:bg-emerald-500/10 dark:border-emerald-500/20 dark:text-emerald-400' };
       case 'completed': return { text: 'Completed', classes: 'bg-slate-500/10 border-slate-500/20 text-slate-400' };
-      case 'overdue': return { text: 'Overdue', classes: 'bg-red-500/10 border-red-500/20 text-red-400' };
+      case 'overdue': return { text: 'Overdue', classes: 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' };
       default: return { text: status, classes: 'bg-slate-500/10 border-slate-500/20 text-slate-400' };
     }
   };
 
   const getRiskTypeBadge = (category) => {
     switch (category) {
-      case 'compliance': return { text: 'Compliance', classes: 'bg-red-500/10 border-red-500/20 text-red-400' };
-      case 'staffing': return { text: 'Staffing', classes: 'bg-amber-500/10 border-amber-500/20 text-amber-400' };
+      case 'compliance': return { text: 'Compliance', classes: 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' };
+      case 'staffing': return { text: 'Staffing', classes: 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' };
       case 'operational': return { text: 'Operational', classes: 'bg-slate-500/10 border-slate-500/20 text-slate-300' };
-      case 'training': return { text: 'Training', classes: 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400' };
-      case 'maintenance': return { text: 'Maintenance', classes: 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400' };
+      case 'training': return { text: 'Training', classes: 'bg-emerald-100 border-emerald-200 text-emerald-700 dark:bg-emerald-500/10 dark:border-emerald-500/20 dark:text-emerald-400' };
+      case 'maintenance': return { text: 'Maintenance', classes: 'bg-emerald-100 border-emerald-200 text-emerald-700 dark:bg-emerald-500/10 dark:border-emerald-500/20 dark:text-emerald-400' };
       default: return { text: category, classes: 'bg-slate-500/10 border-slate-500/20 text-slate-400' };
     }
   };
@@ -552,13 +552,13 @@ export default function CommandCalendar() {
 
   return (
     <DashboardLayout>
-      <div className="p-5 lg:p-8">
+      <div className="p-5 lg:p-8 bg-slate-100 dark:bg-transparent min-h-full">
         <div className="max-w-7xl mx-auto">
 
         {/* Page Header */}
         <div className="mb-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           <div>
-            <h2 className="text-xl font-bold text-white mb-1">Calendar & Timeline</h2>
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-1">Calendar & Timeline</h2>
             <div className="flex items-center gap-2 text-[11px] text-slate-500">
               <span>{formatDate(currentTime)}</span>
               <span className="text-slate-700">·</span>
@@ -573,8 +573,8 @@ export default function CommandCalendar() {
               onClick={() => setShowStaffingOverlay(!showStaffingOverlay)}
               className={`flex items-center gap-2 px-3 py-2 border rounded-lg text-[13px] font-medium transition-all ${
                 showStaffingOverlay
-                  ? 'bg-amber-500/10 border-amber-500/30 text-amber-400'
-                  : 'bg-slate-800/40 border-slate-700/40 text-slate-400 hover:text-slate-300'
+                  ? 'bg-amber-500/10 border-amber-500/30 text-amber-600 dark:text-amber-400'
+                  : 'bg-slate-800/40 border-slate-700/40 text-slate-600 dark:text-slate-400 hover:text-slate-300'
               }`}
             >
               <Users className="w-4 h-4" />
@@ -585,8 +585,8 @@ export default function CommandCalendar() {
               onClick={() => setShowRiskOverlay(!showRiskOverlay)}
               className={`flex items-center gap-2 px-3 py-2 border rounded-lg text-[13px] font-medium transition-all ${
                 showRiskOverlay
-                  ? 'bg-red-500/10 border-red-500/30 text-red-400'
-                  : 'bg-slate-800/40 border-slate-700/40 text-slate-400 hover:text-slate-300'
+                  ? 'bg-red-500/10 border-red-500/30 text-red-600 dark:text-red-400'
+                  : 'bg-slate-800/40 border-slate-700/40 text-slate-600 dark:text-slate-400 hover:text-slate-300'
               }`}
             >
               <Eye className="w-4 h-4" />
@@ -595,13 +595,13 @@ export default function CommandCalendar() {
             <div className="flex bg-slate-800/40 border border-slate-700/40 rounded-lg overflow-hidden">
               <button
                 onClick={() => setViewMode('month')}
-                className={`px-3 py-2 text-[13px] font-medium transition-all ${viewMode === 'month' ? 'bg-slate-700/50 text-white' : 'text-slate-400 hover:text-slate-300'}`}
+                className={`px-3 py-2 text-[13px] font-medium transition-all ${viewMode === 'month' ? 'bg-slate-700/50 text-white' : 'text-slate-600 dark:text-slate-400 hover:text-slate-300'}`}
               >
                 Month
               </button>
               <button
                 onClick={() => setViewMode('timeline')}
-                className={`px-3 py-2 text-[13px] font-medium transition-all ${viewMode === 'timeline' ? 'bg-slate-700/50 text-white' : 'text-slate-400 hover:text-slate-300'}`}
+                className={`px-3 py-2 text-[13px] font-medium transition-all ${viewMode === 'timeline' ? 'bg-slate-700/50 text-white' : 'text-slate-600 dark:text-slate-400 hover:text-slate-300'}`}
               >
                 Timeline
               </button>
@@ -624,20 +624,20 @@ export default function CommandCalendar() {
                     : 'bg-slate-800/25 border-slate-700/30'
                 }`}
               >
-                <Zap className={`w-4 h-4 mt-0.5 flex-shrink-0 ${conflict.severity === 'high' ? 'text-amber-400' : 'text-slate-400'}`} />
+                <Zap className={`w-4 h-4 mt-0.5 flex-shrink-0 ${conflict.severity === 'high' ? 'text-amber-600 dark:text-amber-400' : 'text-slate-400'}`} />
                 <div className="flex-1">
                   <div className="flex items-center gap-2">
-                    <span className={`text-[13px] font-semibold ${conflict.severity === 'high' ? 'text-amber-400' : 'text-slate-300'}`}>
+                    <span className={`text-[13px] font-semibold ${conflict.severity === 'high' ? 'text-amber-600 dark:text-amber-400' : 'text-slate-300'}`}>
                       Conflict Detected:
                     </span>
                     <span className="text-[13px] text-white font-medium">{conflict.title}</span>
                     <span className={`px-1.5 py-0.5 border rounded text-[10px] font-semibold ${
-                      conflict.severity === 'critical' ? 'bg-red-500/10 border-red-500/20 text-red-400' :
-                      conflict.severity === 'high' ? 'bg-amber-500/10 border-amber-500/20 text-amber-400' :
+                      conflict.severity === 'critical' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
+                      conflict.severity === 'high' ? 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
                       'bg-slate-500/10 border-slate-500/20 text-slate-400'
                     }`}>{conflict.severity === 'high' ? 'High' : conflict.severity === 'critical' ? 'Critical' : 'Moderate'}</span>
                   </div>
-                  <p className="text-[11px] text-slate-400 mt-0.5">{conflict.detail}</p>
+                  <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-0.5">{conflict.detail}</p>
                 </div>
                 <span className="text-[11px] text-slate-500 flex-shrink-0">Dec {conflict.days.join(', ')}</span>
               </div>
@@ -655,15 +655,15 @@ export default function CommandCalendar() {
             <div className="h-3 w-px bg-slate-700/25"></div>
             <div className="flex items-center gap-4 flex-wrap">
               <div className="flex items-center gap-1.5">
-                <span className="px-1.5 py-0.5 bg-red-500/10 border border-red-500/20 rounded text-[10px] font-semibold text-red-400">Elevated</span>
+                <span className="px-1.5 py-0.5 bg-red-500/10 border border-red-500/20 rounded text-[10px] font-semibold text-red-600 dark:text-red-400">Elevated</span>
                 <span className="text-[10px] text-slate-500">Compliance: Inspection / POST / PREA</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <span className="px-1.5 py-0.5 bg-amber-500/10 border border-amber-500/20 rounded text-[10px] font-semibold text-amber-400">Moderate</span>
+                <span className="px-1.5 py-0.5 bg-amber-500/10 border border-amber-500/20 rounded text-[10px] font-semibold text-amber-600 dark:text-amber-400">Moderate</span>
                 <span className="text-[10px] text-slate-500">Staffing: B-Shift + 12 at range</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <span className="px-1.5 py-0.5 bg-emerald-500/10 border border-emerald-500/20 rounded text-[10px] font-semibold text-emerald-400">Low</span>
+                <span className="px-1.5 py-0.5 bg-emerald-500/10 border border-emerald-500/20 rounded text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">Low</span>
                 <span className="text-[10px] text-slate-500">Facility: HVAC contained to H2-Pod</span>
               </div>
             </div>
@@ -675,15 +675,15 @@ export default function CommandCalendar() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-6">
 
             {/* Calendar Grid */}
-            <div className="lg:col-span-2 bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
+            <div className="lg:col-span-2 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
               {/* Month Navigation */}
               <div className="flex items-center justify-between mb-5">
                 <button onClick={prevMonth} className="p-1.5 hover:bg-slate-700/30 rounded-lg transition-colors">
-                  <ChevronLeft className="w-4 h-4 text-slate-400" />
+                  <ChevronLeft className="w-4 h-4 text-slate-600 dark:text-slate-400" />
                 </button>
-                <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">{monthName}</h3>
+                <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">{monthName}</h3>
                 <button onClick={nextMonth} className="p-1.5 hover:bg-slate-700/30 rounded-lg transition-colors">
-                  <ChevronRight className="w-4 h-4 text-slate-400" />
+                  <ChevronRight className="w-4 h-4 text-slate-600 dark:text-slate-400" />
                 </button>
               </div>
 
@@ -730,12 +730,12 @@ export default function CommandCalendar() {
                       {/* Day number + density dots */}
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-1">
-                          <span className={`text-[11px] font-semibold ${isToday ? 'text-amber-400' : 'text-slate-500'}`}>{day}</span>
+                          <span className={`text-[11px] font-semibold ${isToday ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500'}`}>{day}</span>
                           {isToday && <span className="text-[9px] text-amber-500/60 font-medium uppercase">Today</span>}
                         </div>
                         <div className="flex items-center gap-1">
                           {showStaffingOverlay && staffingImpactDays[day] && (
-                            <Users className={`w-2.5 h-2.5 ${staffingBelow80 ? 'text-amber-400' : 'text-slate-500'}`} />
+                            <Users className={`w-2.5 h-2.5 ${staffingBelow80 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500'}`} />
                           )}
                           {showRiskOverlay && getDensityDots(density)}
                         </div>
@@ -747,16 +747,16 @@ export default function CommandCalendar() {
                           <button
                             key={event.id}
                             onClick={() => setSelectedEvent(event)}
-                            className="w-full flex items-center gap-1 px-1 py-0.5 rounded hover:bg-slate-700/30 transition-colors text-left group"
+                            className="w-full flex items-center gap-1 px-1 py-0.5 rounded hover:bg-slate-100 dark:hover:bg-slate-700/30 transition-colors text-left group"
                           >
                             <div className={`w-0.5 h-3 rounded-full flex-shrink-0 ${getCategoryAccent(event.category)}`}></div>
-                            <span className="text-[10px] text-slate-300 truncate group-hover:text-white transition-colors">{event.title}</span>
+                            <span className="text-[10px] text-slate-700 dark:text-slate-300 truncate group-hover:text-white transition-colors">{event.title}</span>
                           </button>
                         ))}
                         {dayEvents.length > 2 && (
                           <button
                             onClick={() => setSelectedEvent(dayEvents[2])}
-                            className="text-[10px] text-slate-500 pl-2 hover:text-slate-300 transition-colors"
+                            className="text-[10px] text-slate-500 pl-2 hover:text-slate-700 dark:text-slate-300 transition-colors"
                           >
                             +{dayEvents.length - 2} more
                           </button>
@@ -806,8 +806,8 @@ export default function CommandCalendar() {
                   <>
                     <div className="h-3 w-px bg-slate-700/30"></div>
                     <div className="flex items-center gap-1.5">
-                      <Users className="w-2.5 h-2.5 text-amber-400" />
-                      <span className="text-[10px] text-amber-400/60">Staffing impacted</span>
+                      <Users className="w-2.5 h-2.5 text-amber-600 dark:text-amber-400" />
+                      <span className="text-[10px] text-amber-600 dark:text-amber-400/60">Staffing impacted</span>
                     </div>
                   </>
                 )}
@@ -817,8 +817,8 @@ export default function CommandCalendar() {
             {/* ================================================================
                 HIGH PRIORITY UPCOMING — Upgraded with risk type, escalation, readiness
                 ================================================================ */}
-            <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
-              <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide mb-4">High Priority Upcoming</h3>
+            <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
+              <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide mb-4">High Priority Upcoming</h3>
 
               <div className="space-y-2">
                 {upcomingDeadlines.map(event => {
@@ -837,7 +837,7 @@ export default function CommandCalendar() {
                     >
                       <div className="p-3">
                         {/* Title */}
-                        <p className="text-[13px] font-medium text-white mb-1.5 leading-tight">{event.title}</p>
+                        <p className="text-[13px] font-medium text-slate-900 dark:text-white mb-1.5 leading-tight">{event.title}</p>
 
                         {/* Badges row: risk type + severity + countdown */}
                         <div className="flex items-center gap-1.5 mb-1.5 flex-wrap">
@@ -845,19 +845,19 @@ export default function CommandCalendar() {
                             {riskBadge.text}
                           </span>
                           <span className={`px-1.5 py-0.5 border rounded text-[10px] font-semibold ${
-                            event.severity === 'critical' ? 'bg-red-500/10 border-red-500/20 text-red-400' :
-                            event.severity === 'high' ? 'bg-amber-500/10 border-amber-500/20 text-amber-400' :
+                            event.severity === 'critical' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
+                            event.severity === 'high' ? 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
                             'bg-slate-500/10 border-slate-500/20 text-slate-400'
                           }`}>
                             {countdown}
                           </span>
                           {isEscalating && (
-                            <span className="px-1.5 py-0.5 bg-red-500/10 border border-red-500/20 rounded text-[10px] font-semibold text-red-400">
+                            <span className="px-1.5 py-0.5 bg-red-500/10 border border-red-500/20 rounded text-[10px] font-semibold text-red-600 dark:text-red-400">
                               Escalating
                             </span>
                           )}
                           {event.staffingImpact && (
-                            <span className="px-1.5 py-0.5 bg-amber-500/8 border border-amber-500/15 rounded text-[10px] font-medium text-amber-400/70">
+                            <span className="px-1.5 py-0.5 bg-amber-500/8 border border-amber-500/15 rounded text-[10px] font-medium text-amber-600 dark:text-amber-400/70">
                               <Users className="w-2.5 h-2.5 inline mr-0.5 -mt-0.5" />
                               {event.deputiesAffected ? `${event.deputiesAffected} deputies` : 'Staffing'}
                             </span>
@@ -879,9 +879,9 @@ export default function CommandCalendar() {
           </div>
         ) : (
           /* ===== TIMELINE VIEW ===== */
-          <div className="mb-6 bg-slate-800/25 border border-slate-700/30 rounded-xl p-5">
+          <div className="mb-6 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
             <div className="flex items-center justify-between mb-5">
-              <h3 className="text-[13px] font-semibold text-white uppercase tracking-wide">Next 7 Days — Hour by Hour</h3>
+              <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Next 7 Days — Hour by Hour</h3>
               <span className="text-xs text-slate-500">Dec {timelineDays[0]?.day} – Dec {timelineDays[timelineDays.length - 1]?.day}, {currentYear}</span>
             </div>
 
@@ -900,7 +900,7 @@ export default function CommandCalendar() {
                           d.isToday ? 'bg-amber-500/[0.07] ring-1 ring-amber-500/20' : ''
                         }`}
                       >
-                        <span className={`text-[11px] font-semibold uppercase tracking-wider ${d.isToday ? 'text-amber-400' : 'text-slate-500'}`}>
+                        <span className={`text-[11px] font-semibold uppercase tracking-wider ${d.isToday ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500'}`}>
                           {d.dayName}
                         </span>
                         <span className={`block text-[13px] font-semibold ${d.isToday ? 'text-amber-300' : 'text-white'}`}>
@@ -909,7 +909,7 @@ export default function CommandCalendar() {
                         <div className="flex items-center justify-center gap-1 mt-0.5">
                           {d.isToday && <span className="text-[9px] text-amber-500/60 font-medium">TODAY</span>}
                           {showRiskOverlay && getDensityDots(density)}
-                          {hasStaffing && <Users className="w-2.5 h-2.5 text-amber-400/60" />}
+                          {hasStaffing && <Users className="w-2.5 h-2.5 text-amber-600 dark:text-amber-400/60" />}
                         </div>
                       </div>
                     );
@@ -945,7 +945,7 @@ export default function CommandCalendar() {
                                 }`}
                               >
                                 <div className={`w-1 h-1 rounded-full flex-shrink-0 ${getCategoryAccent(event.category)}`}></div>
-                                <span className="text-[10px] text-slate-300 truncate">{event.title}</span>
+                                <span className="text-[10px] text-slate-700 dark:text-slate-300 truncate">{event.title}</span>
                               </button>
                             ))}
                           </div>
@@ -990,7 +990,7 @@ export default function CommandCalendar() {
             <div className="p-6">
               <div className="flex items-start justify-between mb-6">
                 <div className="flex-1">
-                  <h3 className="text-base font-semibold text-white mb-2">{selectedEvent.title}</h3>
+                  <h3 className="text-base font-semibold text-slate-900 dark:text-white mb-2">{selectedEvent.title}</h3>
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className={`px-1.5 py-0.5 border rounded text-[11px] font-medium ${getStatusBadge(selectedEvent.status).classes}`}>
                       {getStatusBadge(selectedEvent.status).text}
@@ -999,26 +999,26 @@ export default function CommandCalendar() {
                       {getRiskTypeBadge(selectedEvent.category).text}
                     </span>
                     <span className={`px-1.5 py-0.5 border rounded text-[11px] font-medium ${
-                      selectedEvent.severity === 'critical' ? 'bg-red-500/10 border-red-500/20 text-red-400' :
-                      selectedEvent.severity === 'high' ? 'bg-amber-500/10 border-amber-500/20 text-amber-400' :
+                      selectedEvent.severity === 'critical' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
+                      selectedEvent.severity === 'high' ? 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
                       'bg-slate-500/10 border-slate-500/20 text-slate-400'
                     }`}>
                       {selectedEvent.severity.toUpperCase()}
                     </span>
                   </div>
                 </div>
-                <button onClick={() => setSelectedEvent(null)} className="text-slate-400 hover:text-white transition-colors">
+                <button onClick={() => setSelectedEvent(null)} className="text-slate-600 dark:text-slate-400 hover:text-white transition-colors">
                   <X className="w-5 h-5" />
                 </button>
               </div>
 
               <div className="space-y-5">
                 {selectedEvent.status !== 'completed' && (
-                  <div className="bg-slate-800/25 border border-slate-700/30 rounded-xl p-4">
+                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl p-4">
                     <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Countdown</span>
                     <div className="mt-2 flex items-baseline gap-2">
                       <p className="text-2xl font-semibold text-white">{getCountdown(selectedEvent.day)}</p>
-                      <span className="text-xs text-slate-400">until deadline</span>
+                      <span className="text-xs text-slate-600 dark:text-slate-400">until deadline</span>
                     </div>
                   </div>
                 )}
@@ -1034,8 +1034,8 @@ export default function CommandCalendar() {
                   </div>
                   {selectedEvent.staffingImpact && (
                     <div className="border-t border-slate-700/20 pt-3">
-                      <span className="text-[11px] font-semibold text-amber-400/80 uppercase tracking-wider">Staffing Impact</span>
-                      <p className="text-sm text-amber-400 mt-1">
+                      <span className="text-[11px] font-semibold text-amber-600 dark:text-amber-400/80 uppercase tracking-wider">Staffing Impact</span>
+                      <p className="text-sm text-amber-600 dark:text-amber-400 mt-1">
                         {selectedEvent.deputiesAffected ? `${selectedEvent.deputiesAffected} deputies removed from field duty` : 'Staffing coverage affected'}
                       </p>
                     </div>
@@ -1044,7 +1044,7 @@ export default function CommandCalendar() {
                     <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Linked Module</span>
                     <button
                       onClick={() => { setSelectedEvent(null); navigate(selectedEvent.linkedModule); }}
-                      className="flex items-center gap-1.5 mt-1 text-sm text-amber-400/80 hover:text-amber-300 transition-colors"
+                      className="flex items-center gap-1.5 mt-1 text-sm text-amber-600 dark:text-amber-400/80 hover:text-amber-300 transition-colors"
                     >
                       {selectedEvent.linkedModule}
                       <ExternalLink className="w-3 h-3" />
@@ -1052,18 +1052,18 @@ export default function CommandCalendar() {
                   </div>
                   <div className="border-t border-slate-700/20 pt-3">
                     <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Notes</span>
-                    <p className="text-[13px] text-slate-300 leading-relaxed mt-1">{selectedEvent.notes}</p>
+                    <p className="text-[13px] text-slate-700 dark:text-slate-300 leading-relaxed mt-1">{selectedEvent.notes}</p>
                   </div>
                 </div>
 
                 <div className="flex gap-2 pt-3 border-t border-slate-700/20">
                   <button
                     onClick={() => { setSelectedEvent(null); navigate(selectedEvent.linkedModule); }}
-                    className="flex-1 px-3 py-2 text-xs font-medium text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/10 rounded-lg transition-colors"
+                    className="flex-1 px-3 py-2 text-xs font-medium text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/10 rounded-lg transition-colors"
                   >
                     Open Module
                   </button>
-                  <button className="flex-1 px-3 py-2 text-xs font-medium text-slate-400 border border-slate-700/30 hover:bg-slate-700/20 rounded-lg transition-colors">
+                  <button className="flex-1 px-3 py-2 text-xs font-medium text-slate-600 dark:text-slate-400 border border-slate-700/30 hover:bg-slate-700/20 rounded-lg transition-colors">
                     Edit Event
                   </button>
                 </div>

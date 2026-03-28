@@ -315,16 +315,16 @@ export default function CaseClosure() {
       notifications={biNotifications}
       settingsRoute="/bi/settings"
     >
-      <div className="p-5 lg:p-8 space-y-8">
+      <div className="p-5 lg:p-8 space-y-8 bg-slate-100 dark:bg-transparent min-h-full">
           {/* Page Header */}
           <div className="mb-6">
             <h2 className="text-2xl lg:text-3xl font-bold text-white mb-2">
               Case Closure - {caseData.subject} ({caseData.caseId})
             </h2>
-            <p className="text-slate-400 mb-1">Final investigation review and case disposition for hiring decision</p>
+            <p className="text-slate-600 dark:text-slate-400 mb-1">Final investigation review and case disposition for hiring decision</p>
             <p className="text-sm text-slate-500 mb-4">Current date: {currentDate}</p>
 
-            <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-4 mb-4">
+            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4 mb-4">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
                 <div>
                   <p className="text-xs text-slate-500 mb-1">BI Supervisor</p>
@@ -365,11 +365,11 @@ export default function CaseClosure() {
                   <Download className="w-4 h-4" />
                   Download Complete Report
                 </button>
-                <button className="px-4 py-2 bg-slate-700/50 hover:bg-slate-700/70 text-slate-300 rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
+                <button className="px-4 py-2 bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
                   <Archive className="w-4 h-4" />
                   Archive Case
                 </button>
-                <button className="px-4 py-2 bg-slate-700/50 hover:bg-slate-700/70 text-slate-300 rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
+                <button className="px-4 py-2 bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
                   <Printer className="w-4 h-4" />
                   Print Case Summary
                 </button>
@@ -378,14 +378,14 @@ export default function CaseClosure() {
           </div>
 
           {/* Case Disposition Summary */}
-          <div className="mb-6 bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
+          <div className="mb-6 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-6">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 bg-purple-500/20 rounded-xl flex items-center justify-center">
                 <ClipboardCheck className="w-6 h-6 text-purple-400" />
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-white">CASE DISPOSITION SUMMARY</h3>
-                <p className="text-sm text-slate-400">Investigation Completed: {caseData.investigationCompleted}</p>
+                <h3 className="text-lg font-semibold text-slate-900 dark:text-white">CASE DISPOSITION SUMMARY</h3>
+                <p className="text-sm text-slate-600 dark:text-slate-400">Investigation Completed: {caseData.investigationCompleted}</p>
               </div>
             </div>
 
@@ -396,47 +396,47 @@ export default function CaseClosure() {
                 <div className="space-y-2 text-sm">
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
-                    <span className="text-slate-400">Applicant:</span>
+                    <span className="text-slate-600 dark:text-slate-400">Applicant:</span>
                     <span className="text-white">{caseData.subject}</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
-                    <span className="text-slate-400">Case ID:</span>
+                    <span className="text-slate-600 dark:text-slate-400">Case ID:</span>
                     <span className="text-white">{caseData.caseId}</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
-                    <span className="text-slate-400">Position:</span>
+                    <span className="text-slate-600 dark:text-slate-400">Position:</span>
                     <span className="text-white">{caseData.position}</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
-                    <span className="text-slate-400">Assignment:</span>
+                    <span className="text-slate-600 dark:text-slate-400">Assignment:</span>
                     <span className="text-white">{caseData.assignment}</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
-                    <span className="text-slate-400">Application date:</span>
+                    <span className="text-slate-600 dark:text-slate-400">Application date:</span>
                     <span className="text-white">{caseData.applicationDate}</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
-                    <span className="text-slate-400">Investigation dates:</span>
+                    <span className="text-slate-600 dark:text-slate-400">Investigation dates:</span>
                     <span className="text-white">{caseData.investigationStarted} - {caseData.investigationCompleted}</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
-                    <span className="text-slate-400">Investigation duration:</span>
+                    <span className="text-slate-600 dark:text-slate-400">Investigation duration:</span>
                     <span className="text-white">{caseData.duration} days (acceptable for lateral transfer)</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
-                    <span className="text-slate-400">Assigned investigator:</span>
+                    <span className="text-slate-600 dark:text-slate-400">Assigned investigator:</span>
                     <span className="text-white">{caseData.investigator} (Badge #{caseData.investigatorBadge})</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">└─</span>
-                    <span className="text-slate-400">Supervisor reviewer:</span>
+                    <span className="text-slate-600 dark:text-slate-400">Supervisor reviewer:</span>
                     <span className="text-white">{caseData.supervisorReviewer}</span>
                   </div>
                 </div>
@@ -448,23 +448,23 @@ export default function CaseClosure() {
                 <div className="space-y-2 text-sm mb-4">
                   <div className="flex items-center gap-2">
                     <CheckCircle className="w-4 h-4 text-green-400" />
-                    <span className="text-slate-300">Background investigation complete</span>
+                    <span className="text-slate-700 dark:text-slate-300">Background investigation complete</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle className="w-4 h-4 text-green-400" />
-                    <span className="text-slate-300">All required checks completed</span>
+                    <span className="text-slate-700 dark:text-slate-300">All required checks completed</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle className="w-4 h-4 text-green-400" />
-                    <span className="text-slate-300">All documentation collected and archived</span>
+                    <span className="text-slate-700 dark:text-slate-300">All documentation collected and archived</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle className="w-4 h-4 text-green-400" />
-                    <span className="text-slate-300">Investigator assessment complete</span>
+                    <span className="text-slate-700 dark:text-slate-300">Investigator assessment complete</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle className="w-4 h-4 text-green-400" />
-                    <span className="text-slate-300">Supervisor review complete</span>
+                    <span className="text-slate-700 dark:text-slate-300">Supervisor review complete</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Clock className="w-4 h-4 text-amber-400" />
@@ -476,38 +476,38 @@ export default function CaseClosure() {
                 <div className="space-y-2 text-sm">
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
-                    <span className="text-slate-300">Select final disposition above</span>
+                    <span className="text-slate-700 dark:text-slate-300">Select final disposition above</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
-                    <span className="text-slate-300">Enter disposition rationale (required)</span>
+                    <span className="text-slate-700 dark:text-slate-300">Enter disposition rationale (required)</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
-                    <span className="text-slate-300">Generate final investigation report</span>
+                    <span className="text-slate-700 dark:text-slate-300">Generate final investigation report</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">└─</span>
-                    <span className="text-slate-300">Archive case with final decision documented</span>
+                    <span className="text-slate-700 dark:text-slate-300">Archive case with final decision documented</span>
                   </div>
                 </div>
               </div>
             </div>
 
             <div className="flex flex-wrap gap-2 mt-4">
-              <button className="px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700/70 text-slate-300 rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
+              <button className="px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
                 <FileSearch className="w-3 h-3" />
                 View Complete Investigation File
               </button>
-              <button className="px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700/70 text-slate-300 rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
+              <button className="px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
                 <Eye className="w-3 h-3" />
                 Review All Evidence
               </button>
-              <button className="px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700/70 text-slate-300 rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
+              <button className="px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
                 <History className="w-3 h-3" />
                 View Investigation Timeline
               </button>
-              <button className="px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700/70 text-slate-300 rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
+              <button className="px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
                 <FileText className="w-3 h-3" />
                 Generate Final Report
               </button>
@@ -517,37 +517,37 @@ export default function CaseClosure() {
           {/* Main Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
             {/* Case Overview */}
-            <div className="lg:col-span-2 bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
-              <h3 className="text-lg font-semibold text-white mb-1">CASE OVERVIEW - {caseData.subject.toUpperCase()}</h3>
+            <div className="lg:col-span-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-6">
+              <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-1">CASE OVERVIEW - {caseData.subject.toUpperCase()}</h3>
               <p className="text-sm text-purple-400 mb-4">Case ID: {caseData.caseId}</p>
 
               {/* Applicant Information */}
               <div className="bg-slate-900/40 rounded-xl p-4 mb-4">
-                <h4 className="text-sm font-semibold text-slate-300 mb-3">APPLICANT INFORMATION</h4>
+                <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">APPLICANT INFORMATION</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
-                    <span className="text-slate-400">Full name:</span>
+                    <span className="text-slate-600 dark:text-slate-400">Full name:</span>
                     <span className="text-white">{caseData.subject}</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
-                    <span className="text-slate-400">Position applied:</span>
+                    <span className="text-slate-600 dark:text-slate-400">Position applied:</span>
                     <span className="text-white">{caseData.position}</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
-                    <span className="text-slate-400">Assignment:</span>
+                    <span className="text-slate-600 dark:text-slate-400">Assignment:</span>
                     <span className="text-white">{caseData.assignment}</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
-                    <span className="text-slate-400">Application type:</span>
+                    <span className="text-slate-600 dark:text-slate-400">Application type:</span>
                     <span className="text-white">{caseData.applicationType}</span>
                   </div>
                   <div className="flex items-start gap-2 md:col-span-2">
                     <span className="text-slate-500">└─</span>
-                    <span className="text-slate-400">Current agency:</span>
+                    <span className="text-slate-600 dark:text-slate-400">Current agency:</span>
                     <span className="text-white">{caseData.currentAgency}</span>
                   </div>
                 </div>
@@ -555,31 +555,31 @@ export default function CaseClosure() {
 
               {/* Investigation Timeline */}
               <div className="bg-slate-900/40 rounded-xl p-4 mb-4">
-                <h4 className="text-sm font-semibold text-slate-300 mb-3">INVESTIGATION TIMELINE</h4>
+                <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">INVESTIGATION TIMELINE</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
-                    <span className="text-slate-400">Application received:</span>
+                    <span className="text-slate-600 dark:text-slate-400">Application received:</span>
                     <span className="text-white">{caseData.applicationDate}</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
-                    <span className="text-slate-400">Investigation initiated:</span>
+                    <span className="text-slate-600 dark:text-slate-400">Investigation initiated:</span>
                     <span className="text-white">{caseData.investigationStarted}</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
-                    <span className="text-slate-400">Investigation completed:</span>
+                    <span className="text-slate-600 dark:text-slate-400">Investigation completed:</span>
                     <span className="text-white">{caseData.investigationCompleted}</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
-                    <span className="text-slate-400">Total duration:</span>
+                    <span className="text-slate-600 dark:text-slate-400">Total duration:</span>
                     <span className="text-white">{caseData.duration} days (acceptable for lateral transfer)</span>
                   </div>
                   <div className="flex items-start gap-2 md:col-span-2">
                     <span className="text-slate-500">└─</span>
-                    <span className="text-slate-400">Standard timeframe:</span>
+                    <span className="text-slate-600 dark:text-slate-400">Standard timeframe:</span>
                     <span className="text-white">{caseData.standardTimeframe}</span>
                   </div>
                 </div>
@@ -587,21 +587,21 @@ export default function CaseClosure() {
 
               {/* Investigation Team */}
               <div className="bg-slate-900/40 rounded-xl p-4 mb-4">
-                <h4 className="text-sm font-semibold text-slate-300 mb-3">INVESTIGATION TEAM</h4>
+                <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">INVESTIGATION TEAM</h4>
                 <div className="space-y-2 text-sm">
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
-                    <span className="text-slate-400">Primary investigator:</span>
+                    <span className="text-slate-600 dark:text-slate-400">Primary investigator:</span>
                     <span className="text-white">{caseData.investigator} (Badge #{caseData.investigatorBadge})</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
-                    <span className="text-slate-400">Supervisor reviewer:</span>
+                    <span className="text-slate-600 dark:text-slate-400">Supervisor reviewer:</span>
                     <span className="text-white">{caseData.supervisorReviewer}</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">└─</span>
-                    <span className="text-slate-400">Final approver:</span>
+                    <span className="text-slate-600 dark:text-slate-400">Final approver:</span>
                     <span className="text-amber-400">[Pending - Hiring Authority]</span>
                   </div>
                 </div>
@@ -610,33 +610,33 @@ export default function CaseClosure() {
               {/* Investigation Status */}
               <div className="bg-slate-900/40 rounded-xl p-4 mb-4">
                 <div className="flex items-center gap-2 mb-3">
-                  <h4 className="text-sm font-semibold text-slate-300">INVESTIGATION STATUS:</h4>
+                  <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300">INVESTIGATION STATUS:</h4>
                   <span className="px-2 py-0.5 bg-green-500/10 text-green-400 rounded text-xs font-medium">✓ COMPLETE</span>
                 </div>
                 <div className="space-y-2 text-sm">
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
-                    <span className="text-slate-400">All required checks:</span>
+                    <span className="text-slate-600 dark:text-slate-400">All required checks:</span>
                     <span className="text-white">Complete (8 of 8)</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
-                    <span className="text-slate-400">All documentation:</span>
+                    <span className="text-slate-600 dark:text-slate-400">All documentation:</span>
                     <span className="text-white">Collected and archived (6 items)</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
-                    <span className="text-slate-400">Investigator assessment:</span>
+                    <span className="text-slate-600 dark:text-slate-400">Investigator assessment:</span>
                     <span className="text-white">Complete</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
-                    <span className="text-slate-400">Supervisor review:</span>
+                    <span className="text-slate-600 dark:text-slate-400">Supervisor review:</span>
                     <span className="text-white">Complete</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">└─</span>
-                    <span className="text-slate-400">Awaiting:</span>
+                    <span className="text-slate-600 dark:text-slate-400">Awaiting:</span>
                     <span className="text-amber-400">Final hiring authority decision</span>
                   </div>
                 </div>
@@ -680,10 +680,10 @@ export default function CaseClosure() {
 
             {/* Sidebar - Case Disposition Actions */}
             <div className="space-y-6">
-              <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
-                <h4 className="text-sm font-semibold text-white mb-4">CASE DISPOSITION ACTIONS</h4>
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-6">
+                <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-4">CASE DISPOSITION ACTIONS</h4>
 
-                <p className="text-xs text-slate-400 mb-3">PRIMARY ACTIONS (Select Final Disposition):</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400 mb-3">PRIMARY ACTIONS (Select Final Disposition):</p>
 
                 <div className="space-y-3 mb-4">
                   <button className="w-full p-3 bg-green-500/10 hover:bg-green-500/20 border border-green-500/30 rounded-xl text-left transition-colors">
@@ -691,7 +691,7 @@ export default function CaseClosure() {
                       <CheckCircle className="w-4 h-4 text-green-400" />
                       <span className="text-sm font-medium text-green-400">APPROVE & CLOSE CASE</span>
                     </div>
-                    <p className="text-xs text-slate-400 ml-6">Recommend applicant for hire (contingent offer approved)</p>
+                    <p className="text-xs text-slate-600 dark:text-slate-400 ml-6">Recommend applicant for hire (contingent offer approved)</p>
                     <p className="text-xs text-amber-400 ml-6 mt-1">⚠️ Requires: Disposition rationale, supervisor approval</p>
                     <p className="text-xs text-amber-400 ml-6">⚠️ Note: Final clearance contingent on IA review completion</p>
                   </button>
@@ -701,7 +701,7 @@ export default function CaseClosure() {
                       <XCircle className="w-4 h-4 text-red-400" />
                       <span className="text-sm font-medium text-red-400">REJECT CANDIDATE</span>
                     </div>
-                    <p className="text-xs text-slate-400 ml-6">Do not recommend applicant for hire (disqualifying factors)</p>
+                    <p className="text-xs text-slate-600 dark:text-slate-400 ml-6">Do not recommend applicant for hire (disqualifying factors)</p>
                     <p className="text-xs text-amber-400 ml-6 mt-1">⚠️ Requires: Specific disqualification reason, adverse action notice per FCRA (if credit/background basis)</p>
                   </button>
 
@@ -710,31 +710,31 @@ export default function CaseClosure() {
                       <RotateCcw className="w-4 h-4 text-amber-400" />
                       <span className="text-sm font-medium text-amber-400">RETURN FOR ADDITIONAL INVESTIGATION</span>
                     </div>
-                    <p className="text-xs text-slate-400 ml-6">Require additional checks, clarification, or follow-up</p>
+                    <p className="text-xs text-slate-600 dark:text-slate-400 ml-6">Require additional checks, clarification, or follow-up</p>
                     <p className="text-xs text-amber-400 ml-6 mt-1">⚠️ Requires: Specific areas requiring additional investigation</p>
                   </button>
                 </div>
 
                 <div className="border-t border-slate-700/50 pt-4 mb-4">
-                  <p className="text-xs text-slate-400 mb-3">CASE MANAGEMENT ACTIONS:</p>
+                  <p className="text-xs text-slate-600 dark:text-slate-400 mb-3">CASE MANAGEMENT ACTIONS:</p>
                   <div className="space-y-2">
-                    <button className="w-full px-3 py-2 bg-slate-700/30 hover:bg-slate-700/50 text-slate-300 rounded-lg text-xs font-medium transition-colors flex items-center gap-2">
+                    <button className="w-full px-3 py-2 bg-slate-700/30 hover:bg-slate-700/50 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors flex items-center gap-2">
                       <Download className="w-3 h-3" />
                       Download Complete Report (PDF)
                     </button>
-                    <button className="w-full px-3 py-2 bg-slate-700/30 hover:bg-slate-700/50 text-slate-300 rounded-lg text-xs font-medium transition-colors flex items-center gap-2">
+                    <button className="w-full px-3 py-2 bg-slate-700/30 hover:bg-slate-700/50 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors flex items-center gap-2">
                       <Archive className="w-3 h-3" />
                       Archive Case (after disposition)
                     </button>
-                    <button className="w-full px-3 py-2 bg-slate-700/30 hover:bg-slate-700/50 text-slate-300 rounded-lg text-xs font-medium transition-colors flex items-center gap-2">
+                    <button className="w-full px-3 py-2 bg-slate-700/30 hover:bg-slate-700/50 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors flex items-center gap-2">
                       <Printer className="w-3 h-3" />
                       Print Case Summary
                     </button>
-                    <button className="w-full px-3 py-2 bg-slate-700/30 hover:bg-slate-700/50 text-slate-300 rounded-lg text-xs font-medium transition-colors flex items-center gap-2">
+                    <button className="w-full px-3 py-2 bg-slate-700/30 hover:bg-slate-700/50 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors flex items-center gap-2">
                       <Mail className="w-3 h-3" />
                       Send to Hiring Authority
                     </button>
-                    <button className="w-full px-3 py-2 bg-slate-700/30 hover:bg-slate-700/50 text-slate-300 rounded-lg text-xs font-medium transition-colors flex items-center gap-2">
+                    <button className="w-full px-3 py-2 bg-slate-700/30 hover:bg-slate-700/50 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors flex items-center gap-2">
                       <Clock className="w-3 h-3" />
                       Request Additional Time
                     </button>
@@ -742,7 +742,7 @@ export default function CaseClosure() {
                 </div>
 
                 <div className="border-t border-slate-700/50 pt-4">
-                  <p className="text-xs text-slate-400 mb-3">CASE STATISTICS:</p>
+                  <p className="text-xs text-slate-600 dark:text-slate-400 mb-3">CASE STATISTICS:</p>
                   <div className="space-y-2 text-xs">
                     <div className="flex justify-between">
                       <span className="text-slate-500">Documents collected:</span>
@@ -775,8 +775,8 @@ export default function CaseClosure() {
           </div>
 
           {/* Investigation Sections Checklist */}
-          <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6 mb-6">
-            <h3 className="text-lg font-semibold text-white mb-4">INVESTIGATION SECTIONS - COMPLETION STATUS</h3>
+          <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-6 mb-6">
+            <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">INVESTIGATION SECTIONS - COMPLETION STATUS</h3>
 
             <div className="space-y-3">
               {investigationSections.map((section) => {
@@ -792,18 +792,18 @@ export default function CaseClosure() {
                         <CheckCircle className="w-5 h-5 text-green-400" />
                         <Icon className="w-5 h-5 text-purple-400" />
                         <div className="text-left">
-                          <span className="text-sm font-medium text-white">{section.title}</span>
+                          <span className="text-sm font-medium text-slate-900 dark:text-white">{section.title}</span>
                           <div className="flex items-center gap-2 mt-0.5">
-                            <span className="text-xs text-slate-400">Status: {section.status}</span>
+                            <span className="text-xs text-slate-600 dark:text-slate-400">Status: {section.status}</span>
                             <span className="text-xs text-slate-500">|</span>
-                            <span className="text-xs text-slate-400">Completion: {section.completion}</span>
+                            <span className="text-xs text-slate-600 dark:text-slate-400">Completion: {section.completion}</span>
                           </div>
                         </div>
                       </div>
                       {isExpanded ? (
-                        <ChevronUp className="w-5 h-5 text-slate-400" />
+                        <ChevronUp className="w-5 h-5 text-slate-600 dark:text-slate-400" />
                       ) : (
-                        <ChevronDown className="w-5 h-5 text-slate-400" />
+                        <ChevronDown className="w-5 h-5 text-slate-600 dark:text-slate-400" />
                       )}
                     </button>
 
@@ -814,7 +814,7 @@ export default function CaseClosure() {
                             <div key={idx} className="text-sm">
                               <div className="flex items-start gap-2">
                                 <span className="text-slate-500">{idx === section.details.length - 1 ? '└─' : '├─'}</span>
-                                <span className="text-slate-400">{detail.label}:</span>
+                                <span className="text-slate-600 dark:text-slate-400">{detail.label}:</span>
                                 <span className="text-white">{detail.value}</span>
                               </div>
                               {detail.subValue && (
@@ -825,7 +825,7 @@ export default function CaseClosure() {
                         </div>
                         <div className="flex flex-wrap gap-2 mt-3 pt-3 border-t border-slate-800/50">
                           {section.actions.map((action, idx) => (
-                            <button key={idx} className="px-2 py-1 bg-slate-700/30 hover:bg-slate-700/50 text-slate-400 hover:text-slate-300 rounded text-xs transition-colors">
+                            <button key={idx} className="px-2 py-1 bg-slate-700/30 hover:bg-slate-700/50 text-slate-600 dark:text-slate-400 hover:text-slate-700 dark:text-slate-300 rounded text-xs transition-colors">
                               {action}
                             </button>
                           ))}
@@ -891,18 +891,18 @@ export default function CaseClosure() {
           </div>
 
           {/* Investigator Assessment & Key Findings */}
-          <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6 mb-6">
+          <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-6 mb-6">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h3 className="text-lg font-semibold text-white">INVESTIGATOR ASSESSMENT & KEY FINDINGS</h3>
-                <p className="text-sm text-slate-400">Prepared by: {caseData.investigator}, Badge #{caseData.investigatorBadge} | Review date: {caseData.investigationCompleted}</p>
+                <h3 className="text-lg font-semibold text-slate-900 dark:text-white">INVESTIGATOR ASSESSMENT & KEY FINDINGS</h3>
+                <p className="text-sm text-slate-600 dark:text-slate-400">Prepared by: {caseData.investigator}, Badge #{caseData.investigatorBadge} | Review date: {caseData.investigationCompleted}</p>
               </div>
             </div>
 
             {/* Overall Assessment */}
             <div className="bg-slate-900/40 rounded-xl p-4 mb-4">
               <h4 className="text-sm font-semibold text-purple-400 mb-3">OVERALL ASSESSMENT</h4>
-              <p className="text-sm text-slate-300 leading-relaxed">
+              <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
                 Applicant is a currently-employed sworn law enforcement officer seeking lateral transfer from Metro Atlanta Police Department.
                 Comprehensive background investigation completed. All checks passed POST and agency standards. No disqualifying factors
                 identified. Strong supervisory references. Responsible financial management. Professional online presence. Minor concerns
@@ -917,7 +917,7 @@ export default function CaseClosure() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <p className="text-xs font-medium text-white mb-2">1. CLEAN CRIMINAL RECORD:</p>
-                  <ul className="text-xs text-slate-400 space-y-1 ml-3">
+                  <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1 ml-3">
                     <li>└─ No criminal convictions, arrests, or warrants</li>
                     <li>└─ GCIC and FBI NCIC checks: Clear</li>
                     <li>└─ Meets POST standards for law enforcement</li>
@@ -925,7 +925,7 @@ export default function CaseClosure() {
                 </div>
                 <div>
                   <p className="text-xs font-medium text-white mb-2">2. PROVEN LAW ENFORCEMENT EXPERIENCE:</p>
-                  <ul className="text-xs text-slate-400 space-y-1 ml-3">
+                  <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1 ml-3">
                     <li>└─ 7 years sworn law enforcement (Metro Atlanta PD)</li>
                     <li>└─ Current position: Patrol Officer (Zone 3)</li>
                     <li>└─ Active Georgia POST certification (verified)</li>
@@ -934,7 +934,7 @@ export default function CaseClosure() {
                 </div>
                 <div>
                   <p className="text-xs font-medium text-white mb-2">3. EXCELLENT SUPERVISORY REFERENCES:</p>
-                  <ul className="text-xs text-slate-400 space-y-1 ml-3">
+                  <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1 ml-3">
                     <li>└─ Current supervisor: Strongly recommends ("top 25%")</li>
                     <li>└─ Former supervisor: Recommends for hire</li>
                     <li>└─ Both describe: Professional, reliable, good judgment</li>
@@ -942,7 +942,7 @@ export default function CaseClosure() {
                 </div>
                 <div>
                   <p className="text-xs font-medium text-white mb-2">4. STABLE EMPLOYMENT HISTORY:</p>
-                  <ul className="text-xs text-slate-400 space-y-1 ml-3">
+                  <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1 ml-3">
                     <li>└─ Continuous employment since 2012 (12+ years)</li>
                     <li>└─ Career progression: Security → Supervisor → Sworn LE</li>
                     <li>└─ All employers would rehire (100%)</li>
@@ -950,7 +950,7 @@ export default function CaseClosure() {
                 </div>
                 <div>
                   <p className="text-xs font-medium text-white mb-2">5. RESPONSIBLE FINANCIAL MANAGEMENT:</p>
-                  <ul className="text-xs text-slate-400 space-y-1 ml-3">
+                  <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1 ml-3">
                     <li>└─ Credit score 742 (Good, above 650 minimum)</li>
                     <li>└─ Debt-to-income 34% (manageable, under 50%)</li>
                     <li>└─ No bankruptcies, foreclosures, or collections</li>
@@ -958,7 +958,7 @@ export default function CaseClosure() {
                 </div>
                 <div>
                   <p className="text-xs font-medium text-white mb-2">6. PROFESSIONAL ONLINE PRESENCE:</p>
-                  <ul className="text-xs text-slate-400 space-y-1 ml-3">
+                  <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1 ml-3">
                     <li>└─ 142 public posts reviewed (last 5 years)</li>
                     <li>└─ Content: LE-related, community engagement</li>
                     <li>└─ No concerning behavior or associations</li>
@@ -973,7 +973,7 @@ export default function CaseClosure() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <p className="text-xs font-medium text-white mb-2">1. TRAFFIC VIOLATIONS:</p>
-                  <ul className="text-xs text-slate-400 space-y-1 ml-3">
+                  <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1 ml-3">
                     <li>└─ 2 minor speeding tickets (2019: 15 mph over, 2021: 12 over)</li>
                     <li>└─ Both paid/closed, no license suspensions</li>
                     <li>└─ Disclosed by applicant (demonstrates honesty)</li>
@@ -982,7 +982,7 @@ export default function CaseClosure() {
                 </div>
                 <div>
                   <p className="text-xs font-medium text-white mb-2">2. CREDIT - SINGLE LATE PAYMENT:</p>
-                  <ul className="text-xs text-slate-400 space-y-1 ml-3">
+                  <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1 ml-3">
                     <li>└─ 1 late payment (April 2020, credit card, 30 days)</li>
                     <li>└─ Context: During COVID-19 pandemic period</li>
                     <li>└─ Resolution: Caught up immediately, no other lates</li>
@@ -998,7 +998,7 @@ export default function CaseClosure() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <p className="text-xs font-medium text-white mb-2">TRAFFIC VIOLATIONS:</p>
-                  <ul className="text-xs text-slate-400 space-y-1">
+                  <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1">
                     <li>• Minor violations: 15 mph and 12 mph over (not excessive)</li>
                     <li>• Infrequent: 2 tickets over 7 years (not pattern)</li>
                     <li>• Disclosed: Applicant disclosed before being asked (honesty)</li>
@@ -1007,7 +1007,7 @@ export default function CaseClosure() {
                 </div>
                 <div>
                   <p className="text-xs font-medium text-white mb-2">LATE PAYMENT:</p>
-                  <ul className="text-xs text-slate-400 space-y-1">
+                  <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1">
                     <li>• Single occurrence: Only 1 late payment in entire credit history</li>
                     <li>• Pandemic timing: April 2020 (COVID-19 economic impact)</li>
                     <li>• Immediate resolution: Caught up same month, no recurrence</li>
@@ -1016,7 +1016,7 @@ export default function CaseClosure() {
                 </div>
                 <div className="md:col-span-2">
                   <p className="text-xs font-medium text-white mb-2">CURRENT SUPERVISOR ENDORSEMENT:</p>
-                  <ul className="text-xs text-slate-400 space-y-1">
+                  <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1">
                     <li>• Strong recommendation: Sgt. Davis "strongly recommends"</li>
                     <li>• Performance rating: "Above average - top 25% of officers"</li>
                     <li>• Character assessment: "Excellent judgment, professional"</li>
@@ -1033,27 +1033,27 @@ export default function CaseClosure() {
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 text-xs">
                     <CheckCircle className="w-4 h-4 text-green-400" />
-                    <span className="text-slate-300">No disqualifying criminal convictions</span>
+                    <span className="text-slate-700 dark:text-slate-300">No disqualifying criminal convictions</span>
                   </div>
                   <div className="flex items-center gap-2 text-xs">
                     <CheckCircle className="w-4 h-4 text-green-400" />
-                    <span className="text-slate-300">No domestic violence convictions</span>
+                    <span className="text-slate-700 dark:text-slate-300">No domestic violence convictions</span>
                   </div>
                   <div className="flex items-center gap-2 text-xs">
                     <CheckCircle className="w-4 h-4 text-green-400" />
-                    <span className="text-slate-300">No sex offenses</span>
+                    <span className="text-slate-700 dark:text-slate-300">No sex offenses</span>
                   </div>
                   <div className="flex items-center gap-2 text-xs">
                     <CheckCircle className="w-4 h-4 text-green-400" />
-                    <span className="text-slate-300">No drug trafficking convictions</span>
+                    <span className="text-slate-700 dark:text-slate-300">No drug trafficking convictions</span>
                   </div>
                   <div className="flex items-center gap-2 text-xs">
                     <CheckCircle className="w-4 h-4 text-green-400" />
-                    <span className="text-slate-300">Active POST certification (verified)</span>
+                    <span className="text-slate-700 dark:text-slate-300">Active POST certification (verified)</span>
                   </div>
                   <div className="flex items-center gap-2 text-xs">
                     <CheckCircle className="w-4 h-4 text-green-400" />
-                    <span className="text-slate-300">Meets character and fitness standards</span>
+                    <span className="text-slate-700 dark:text-slate-300">Meets character and fitness standards</span>
                   </div>
                 </div>
               </div>
@@ -1062,27 +1062,27 @@ export default function CaseClosure() {
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 text-xs">
                     <CheckCircle className="w-4 h-4 text-green-400" />
-                    <span className="text-slate-300">Credit score above 650 minimum (742)</span>
+                    <span className="text-slate-700 dark:text-slate-300">Credit score above 650 minimum (742)</span>
                   </div>
                   <div className="flex items-center gap-2 text-xs">
                     <CheckCircle className="w-4 h-4 text-green-400" />
-                    <span className="text-slate-300">No bankruptcies (last 2 years)</span>
+                    <span className="text-slate-700 dark:text-slate-300">No bankruptcies (last 2 years)</span>
                   </div>
                   <div className="flex items-center gap-2 text-xs">
                     <CheckCircle className="w-4 h-4 text-green-400" />
-                    <span className="text-slate-300">No foreclosures (last 3 years)</span>
+                    <span className="text-slate-700 dark:text-slate-300">No foreclosures (last 3 years)</span>
                   </div>
                   <div className="flex items-center gap-2 text-xs">
                     <CheckCircle className="w-4 h-4 text-green-400" />
-                    <span className="text-slate-300">Debt-to-income under 50% (34%)</span>
+                    <span className="text-slate-700 dark:text-slate-300">Debt-to-income under 50% (34%)</span>
                   </div>
                   <div className="flex items-center gap-2 text-xs">
                     <CheckCircle className="w-4 h-4 text-green-400" />
-                    <span className="text-slate-300">No excessive collections (none)</span>
+                    <span className="text-slate-700 dark:text-slate-300">No excessive collections (none)</span>
                   </div>
                   <div className="flex items-center gap-2 text-xs">
                     <CheckCircle className="w-4 h-4 text-green-400" />
-                    <span className="text-slate-300">Professional references obtained (2 supervisory)</span>
+                    <span className="text-slate-700 dark:text-slate-300">Professional references obtained (2 supervisory)</span>
                   </div>
                 </div>
               </div>
@@ -1096,7 +1096,7 @@ export default function CaseClosure() {
               </div>
               <div className="mb-3">
                 <p className="text-xs font-medium text-white mb-2">RATIONALE:</p>
-                <p className="text-xs text-slate-300 leading-relaxed">
+                <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
                   Applicant meets all POST standards and agency policy requirements for deputy sheriff position. No disqualifying factors identified.
                   Proven law enforcement experience (7 years sworn). Excellent supervisory references from current and former supervisors at
                   Metro Atlanta PD. Strong character and professional reputation. Minor concerns (traffic violations, single late payment) are
@@ -1112,7 +1112,7 @@ export default function CaseClosure() {
                   findings, recommend approval for hire.
                 </p>
               </div>
-              <div className="border-t border-green-500/20 pt-3 text-xs text-slate-400">
+              <div className="border-t border-green-500/20 pt-3 text-xs text-slate-600 dark:text-slate-400">
                 <p>Prepared by: {caseData.investigator} (Badge #{caseData.investigatorBadge})</p>
                 <p>Date: {caseData.investigationCompleted}</p>
                 <p>Supervisor Review: {caseData.supervisorReviewer} (Approved {caseData.investigationCompleted})</p>
@@ -1122,13 +1122,13 @@ export default function CaseClosure() {
             {/* Supervisor Concurrence */}
             <div className="bg-slate-900/40 rounded-xl p-4">
               <h4 className="text-sm font-semibold text-purple-400 mb-3">SUPERVISOR CONCURRENCE</h4>
-              <p className="text-xs text-slate-300 leading-relaxed mb-3">
+              <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed mb-3">
                 I have reviewed the complete background investigation file for Robert Martinez ({caseData.caseId}) and concur with the investigator's
                 findings and recommendation. Applicant meets all POST standards and agency policy requirements. Recommend approval for hire
                 contingent upon completion of Internal Affairs review from Metro Atlanta Police Department. No concerns identified that would
                 preclude employment as deputy sheriff.
               </p>
-              <div className="text-xs text-slate-400">
+              <div className="text-xs text-slate-600 dark:text-slate-400">
                 <p>Approved by: {caseData.supervisorReviewer}</p>
                 <p>Date: {caseData.investigationCompleted}</p>
               </div>
@@ -1136,13 +1136,13 @@ export default function CaseClosure() {
           </div>
 
           {/* Final Disposition Form */}
-          <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
-            <h3 className="text-lg font-semibold text-white mb-2">FINAL CASE DISPOSITION</h3>
-            <p className="text-sm text-slate-400 mb-6">To be completed by Hiring Authority</p>
+          <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-6">
+            <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">FINAL CASE DISPOSITION</h3>
+            <p className="text-sm text-slate-600 dark:text-slate-400 mb-6">To be completed by Hiring Authority</p>
 
             {/* Disposition Selection */}
             <div className="mb-6">
-              <p className="text-sm font-medium text-slate-300 mb-3">SELECT FINAL DISPOSITION:</p>
+              <p className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">SELECT FINAL DISPOSITION:</p>
               <div className="space-y-3">
                 <label className={`flex items-start gap-3 p-4 rounded-xl border cursor-pointer transition-colors ${selectedDisposition === 'approve' ? 'bg-green-500/10 border-green-500/30' : 'bg-slate-900/40 border-slate-700/50 hover:border-slate-600/50'}`}>
                   <input
@@ -1155,7 +1155,7 @@ export default function CaseClosure() {
                   />
                   <div>
                     <p className="text-sm font-medium text-green-400">APPROVE FOR HIRE</p>
-                    <p className="text-xs text-slate-400">Applicant recommended for hire (contingent offer approved)</p>
+                    <p className="text-xs text-slate-600 dark:text-slate-400">Applicant recommended for hire (contingent offer approved)</p>
                     <p className="text-xs text-slate-500 mt-1">Requires: IA clearance, drug screen, physical, polygraph</p>
                   </div>
                 </label>
@@ -1171,7 +1171,7 @@ export default function CaseClosure() {
                   />
                   <div>
                     <p className="text-sm font-medium text-red-400">REJECT - DISQUALIFYING FACTORS</p>
-                    <p className="text-xs text-slate-400">Applicant not recommended due to disqualifying factors</p>
+                    <p className="text-xs text-slate-600 dark:text-slate-400">Applicant not recommended due to disqualifying factors</p>
                     <p className="text-xs text-slate-500 mt-1">Requires: Specific disqualification reason (select below)</p>
                   </div>
                 </label>
@@ -1187,7 +1187,7 @@ export default function CaseClosure() {
                   />
                   <div>
                     <p className="text-sm font-medium text-amber-400">RETURN FOR ADDITIONAL INVESTIGATION</p>
-                    <p className="text-xs text-slate-400">Require additional checks, clarification, or follow-up</p>
+                    <p className="text-xs text-slate-600 dark:text-slate-400">Require additional checks, clarification, or follow-up</p>
                     <p className="text-xs text-slate-500 mt-1">Requires: Specific areas for additional investigation</p>
                   </div>
                 </label>
@@ -1198,7 +1198,7 @@ export default function CaseClosure() {
             {selectedDisposition === 'reject' && (
               <div className="mb-6 p-4 bg-red-500/5 border border-red-500/20 rounded-xl">
                 <p className="text-sm font-medium text-red-400 mb-3">IF REJECTING, SELECT DISQUALIFICATION REASON:</p>
-                <p className="text-xs text-slate-400 mb-3">(Required for adverse action notice per FCRA)</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400 mb-3">(Required for adverse action notice per FCRA)</p>
                 <div className="space-y-2">
                   {[
                     { value: 'criminal', label: 'Criminal history' },
@@ -1218,7 +1218,7 @@ export default function CaseClosure() {
                         className="mt-0.5"
                       />
                       <div>
-                        <span className="text-sm text-slate-300">{reason.label}</span>
+                        <span className="text-sm text-slate-700 dark:text-slate-300">{reason.label}</span>
                         {reason.note && <span className="text-xs text-amber-400 ml-2">{reason.note}</span>}
                       </div>
                     </label>
@@ -1226,7 +1226,7 @@ export default function CaseClosure() {
                 </div>
                 {rejectReason && (
                   <div className="mt-3">
-                    <label className="text-xs text-slate-400 mb-1 block">Specify details:</label>
+                    <label className="text-xs text-slate-600 dark:text-slate-400 mb-1 block">Specify details:</label>
                     <input
                       type="text"
                       value={rejectDetails}
@@ -1241,23 +1241,23 @@ export default function CaseClosure() {
 
             {/* Disposition Rationale */}
             <div className="mb-6">
-              <label className="text-sm font-medium text-slate-300 mb-2 block">DISPOSITION RATIONALE:</label>
-              <p className="text-xs text-slate-400 mb-2">(Required - explain basis for decision)</p>
+              <label className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 block">DISPOSITION RATIONALE:</label>
+              <p className="text-xs text-slate-600 dark:text-slate-400 mb-2">(Required - explain basis for decision)</p>
               <textarea
                 value={dispositionRationale}
                 onChange={(e) => setDispositionRationale(e.target.value)}
                 rows={4}
-                className="w-full px-4 py-3 bg-slate-900/40 border border-slate-700/50 rounded-xl text-white text-sm placeholder-slate-500 focus:outline-none focus:border-purple-500/50 resize-none"
+                className="w-full px-4 py-3 bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white text-sm placeholder-slate-500 focus:outline-none focus:border-purple-500/50 resize-none"
                 placeholder="Enter detailed rationale for this disposition decision..."
               />
             </div>
 
             {/* Hiring Authority Approval */}
             <div className="mb-6 p-4 bg-slate-900/40 rounded-xl">
-              <p className="text-sm font-medium text-slate-300 mb-3">HIRING AUTHORITY APPROVAL:</p>
+              <p className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">HIRING AUTHORITY APPROVAL:</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="text-xs text-slate-400 mb-1 block">Name:</label>
+                  <label className="text-xs text-slate-600 dark:text-slate-400 mb-1 block">Name:</label>
                   <input
                     type="text"
                     className="w-full px-3 py-2 bg-slate-800/40 border border-slate-700/50 rounded-lg text-white text-sm placeholder-slate-500 focus:outline-none focus:border-purple-500/50"
@@ -1265,7 +1265,7 @@ export default function CaseClosure() {
                   />
                 </div>
                 <div>
-                  <label className="text-xs text-slate-400 mb-1 block">Title:</label>
+                  <label className="text-xs text-slate-600 dark:text-slate-400 mb-1 block">Title:</label>
                   <input
                     type="text"
                     className="w-full px-3 py-2 bg-slate-800/40 border border-slate-700/50 rounded-lg text-white text-sm placeholder-slate-500 focus:outline-none focus:border-purple-500/50"
@@ -1273,14 +1273,14 @@ export default function CaseClosure() {
                   />
                 </div>
                 <div>
-                  <label className="text-xs text-slate-400 mb-1 block">Date:</label>
+                  <label className="text-xs text-slate-600 dark:text-slate-400 mb-1 block">Date:</label>
                   <input
                     type="date"
                     className="w-full px-3 py-2 bg-slate-800/40 border border-slate-700/50 rounded-lg text-white text-sm focus:outline-none focus:border-purple-500/50"
                   />
                 </div>
                 <div>
-                  <label className="text-xs text-slate-400 mb-1 block">Digital Signature:</label>
+                  <label className="text-xs text-slate-600 dark:text-slate-400 mb-1 block">Digital Signature:</label>
                   <input
                     type="text"
                     className="w-full px-3 py-2 bg-slate-800/40 border border-slate-700/50 rounded-lg text-white text-sm placeholder-slate-500 focus:outline-none focus:border-purple-500/50"
@@ -1295,10 +1295,10 @@ export default function CaseClosure() {
               <button className="px-6 py-2.5 bg-purple-500 hover:bg-purple-600 text-white rounded-xl text-sm font-medium transition-colors">
                 Submit Final Disposition
               </button>
-              <button className="px-6 py-2.5 bg-slate-700/50 hover:bg-slate-700/70 text-slate-300 rounded-xl text-sm font-medium transition-colors">
+              <button className="px-6 py-2.5 bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium transition-colors">
                 Save Draft
               </button>
-              <button className="px-6 py-2.5 bg-slate-700/50 hover:bg-slate-700/70 text-slate-300 rounded-xl text-sm font-medium transition-colors">
+              <button className="px-6 py-2.5 bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium transition-colors">
                 Cancel
               </button>
             </div>

@@ -308,7 +308,7 @@ const ActiveCasesDashboard = () => {
 
   return (
     <DashboardLayout>
-      <div className="p-5 lg:p-8 space-y-8">
+      <div className="p-5 lg:p-8 space-y-8 bg-slate-100 dark:bg-transparent min-h-full">
 
         {/* Page Header — matches Command */}
         <div>
@@ -399,7 +399,7 @@ const ActiveCasesDashboard = () => {
 
         {/* Executive Snapshot Row — matches Command metric cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
-          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 text-left hover:border-slate-600/40 transition-colors">
+          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-5 text-left hover:border-slate-600/40 transition-colors">
             <div className="flex items-center justify-between mb-3">
               <span className="text-xs text-slate-500 font-medium">Active Cases</span>
               <Circle className="w-2 h-2 fill-slate-400 text-slate-500 dark:text-slate-400" />
@@ -409,7 +409,7 @@ const ActiveCasesDashboard = () => {
             <p className="text-[11px] text-emerald-700 dark:text-emerald-400">-2 from last month</p>
           </div>
 
-          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 text-left hover:border-slate-600/40 transition-colors">
+          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-5 text-left hover:border-slate-600/40 transition-colors">
             <div className="flex items-center justify-between mb-3">
               <span className="text-xs text-slate-500 font-medium">Critical Cases</span>
               <span className="relative flex h-2.5 w-2.5">
@@ -422,7 +422,7 @@ const ActiveCasesDashboard = () => {
             <p className="text-[11px] text-red-700 dark:text-red-400">All require command action today</p>
           </div>
 
-          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 text-left">
+          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-5 text-left">
             <div className="flex items-center justify-between mb-3">
               <span className="text-xs text-slate-500 font-medium">Clearance Rate (YTD)</span>
               <Circle className="w-2 h-2 fill-emerald-500 text-emerald-500" />
@@ -436,7 +436,7 @@ const ActiveCasesDashboard = () => {
             <p className="text-[11px] text-emerald-700 dark:text-emerald-400">Meeting 75% target</p>
           </div>
 
-          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 text-left hover:border-slate-600/40 transition-colors">
+          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-5 text-left hover:border-slate-600/40 transition-colors">
             <div className="flex items-center justify-between mb-3">
               <span className="text-xs text-slate-500 font-medium">Multi-Agency Ops</span>
               <Circle className="w-2 h-2 fill-blue-500 text-blue-500" />
@@ -448,7 +448,7 @@ const ActiveCasesDashboard = () => {
         </div>
 
         {/* Intelligence Summary — collapsible, matches Command pattern */}
-        <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none border-l-2 border-l-slate-600/40">
+        <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none border-l-2 border-l-slate-600/40">
           <button
             onClick={() => setInsightsExpanded(!insightsExpanded)}
             className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-slate-50 dark:hover:bg-slate-800/10 transition-colors rounded-xl"
@@ -516,7 +516,7 @@ const ActiveCasesDashboard = () => {
 
         {/* Case Type Breakdown — matches Command division cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-5">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 bg-red-700/60 rounded-full"></div>
@@ -536,7 +536,7 @@ const ActiveCasesDashboard = () => {
             </div>
           </div>
 
-          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-5">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 bg-amber-600/50 rounded-full"></div>
@@ -556,7 +556,7 @@ const ActiveCasesDashboard = () => {
             </div>
           </div>
 
-          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-5">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 bg-slate-500/50 rounded-full"></div>
@@ -576,7 +576,7 @@ const ActiveCasesDashboard = () => {
             </div>
           </div>
 
-          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-5">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 bg-slate-500/50 rounded-full"></div>
@@ -598,7 +598,7 @@ const ActiveCasesDashboard = () => {
         </div>
 
         {/* Clearance Rate Detail — matches Command compliance section */}
-        <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+        <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-5">
           <div className="flex items-center justify-between mb-5">
             <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Clearance Rates by Type</h3>
             <span className="text-[11px] text-slate-500">YTD 2024 — National avg: 62%</span>
@@ -666,7 +666,7 @@ const ActiveCasesDashboard = () => {
 
         {/* Connected Cases & Patterns — collapsible */}
         {showConnections && (
-          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-5">
             <div className="flex items-center justify-between mb-5">
               <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Connected Cases & Patterns</h3>
               <button onClick={() => setShowConnections(false)} className="text-slate-500 hover:text-slate-500 dark:text-slate-400">
@@ -716,7 +716,7 @@ const ActiveCasesDashboard = () => {
 
         {/* Case Analytics — collapsible */}
         {showAnalytics && (
-          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-5">
             <div className="flex items-center justify-between mb-5">
               <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Case Analytics</h3>
               <button onClick={() => setShowAnalytics(false)} className="text-slate-500 hover:text-slate-500 dark:text-slate-400">
@@ -761,7 +761,7 @@ const ActiveCasesDashboard = () => {
         )}
 
         {/* Detective Workload — collapsible, matches Command pattern */}
-        <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none">
+        <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none">
           <button
             onClick={() => setShowWorkload(!showWorkload)}
             className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-slate-50 dark:hover:bg-slate-800/10 transition-colors rounded-xl"
@@ -841,7 +841,7 @@ const ActiveCasesDashboard = () => {
         </div>
 
         {/* AI Insight Panel */}
-        <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+        <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-5">
           <div className="flex items-center gap-2 mb-4">
             <Activity className="w-4 h-4 text-slate-500 dark:text-slate-400" />
             <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">AI Insight Summary</h3>
@@ -972,7 +972,7 @@ const ActiveCasesDashboard = () => {
         </div>
 
         {/* Filters — unified styling */}
-        <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+        <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-5">
           <div className="flex items-center gap-4 mb-4">
             <div className="flex-1 relative">
               <Search className="w-4 h-4 text-slate-500 absolute left-4 top-1/2 -translate-y-1/2" />
@@ -1020,7 +1020,7 @@ const ActiveCasesDashboard = () => {
           {filteredCases.map((c) => (
             <div
               key={c.id}
-              className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none hover:border-slate-600/40 transition-colors cursor-pointer"
+              className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none hover:border-slate-600/40 transition-colors cursor-pointer"
               onClick={() => setSelectedCase(c)}
             >
               <div className="flex items-center gap-4 p-5">
@@ -1125,7 +1125,7 @@ const ActiveCasesDashboard = () => {
               </div>
 
               {/* Lead Detective */}
-              <div className="mb-5 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+              <div className="mb-5 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-5">
                 <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide mb-3">Lead Detective</h3>
                 <div className="flex items-center justify-between">
                   <div>
@@ -1145,7 +1145,7 @@ const ActiveCasesDashboard = () => {
 
               {/* Status & Evidence */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
-                <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+                <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-5">
                   <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide mb-3">Status</h3>
                   <div className="space-y-2 text-xs">
                     <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Current</span><span className="text-slate-600 dark:text-slate-300">{selectedCase.status}</span></div>
@@ -1153,7 +1153,7 @@ const ActiveCasesDashboard = () => {
                     <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Last Update</span><span className="text-slate-600 dark:text-slate-300">2 hours ago</span></div>
                   </div>
                 </div>
-                <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+                <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-5">
                   <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide mb-3">Evidence & Witnesses</h3>
                   <div className="space-y-2 text-xs">
                     <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Evidence</span><span className="text-slate-600 dark:text-slate-300">{selectedCase.evidence} collected</span></div>
@@ -1164,7 +1164,7 @@ const ActiveCasesDashboard = () => {
               </div>
 
               {/* Timeline */}
-              <div className="mb-5 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+              <div className="mb-5 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-5">
                 <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide mb-4">Case Timeline</h3>
                 <div className="space-y-3">
                   <div className="flex gap-3">
@@ -1216,7 +1216,7 @@ const ActiveCasesDashboard = () => {
               </div>
 
               {/* Team */}
-              <div className="mb-5 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+              <div className="mb-5 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-5">
                 <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide mb-3">Assigned Team</h3>
                 <div className="flex flex-wrap gap-2">
                   {selectedCase.assignedTo.map((person, idx) => (
@@ -1228,7 +1228,7 @@ const ActiveCasesDashboard = () => {
               </div>
 
               {/* Notes */}
-              <div className="mb-5 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+              <div className="mb-5 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-5">
                 <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide mb-3">Case Summary</h3>
                 <p className="text-[13px] text-slate-600 dark:text-slate-300">{selectedCase.notes}</p>
               </div>

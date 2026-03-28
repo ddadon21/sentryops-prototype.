@@ -209,9 +209,9 @@ export default function CommandAlerts() {
   // ============================================================
   const getSeverityConfig = (severity) => {
     const configs = {
-      critical: { strip: 'bg-red-500', pill: 'bg-red-500/10 border-red-500/20 text-red-400', label: 'Critical' },
-      high: { strip: 'bg-amber-500', pill: 'bg-amber-500/10 border-amber-500/20 text-amber-400', label: 'High' },
-      medium: { strip: 'bg-amber-500/60', pill: 'bg-amber-500/8 border-amber-500/15 text-amber-400/80', label: 'Medium' },
+      critical: { strip: 'bg-red-500', pill: 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400', label: 'Critical' },
+      high: { strip: 'bg-amber-500', pill: 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400', label: 'High' },
+      medium: { strip: 'bg-amber-500/60', pill: 'bg-amber-500/8 border-amber-500/15 text-amber-600 dark:text-amber-400/80', label: 'Medium' },
       low: { strip: 'bg-slate-400', pill: 'bg-slate-500/10 border-slate-500/20 text-slate-400', label: 'Low' },
       info: { strip: 'bg-slate-500', pill: 'bg-slate-500/10 border-slate-500/20 text-slate-500', label: 'Info' }
     };
@@ -219,12 +219,12 @@ export default function CommandAlerts() {
   };
 
   const getStatusConfig = (status, escalation) => {
-    if (escalation === 'overdue') return { pill: 'bg-red-500/15 border-red-500/25 text-red-400', label: 'Overdue' };
-    if (escalation === 'escalating') return { pill: 'bg-red-500/10 border-red-500/20 text-red-400', label: 'Escalating' };
+    if (escalation === 'overdue') return { pill: 'bg-red-500/15 border-red-500/25 text-red-600 dark:text-red-400', label: 'Overdue' };
+    if (escalation === 'escalating') return { pill: 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400', label: 'Escalating' };
     const configs = {
-      new: { pill: 'bg-amber-500/10 border-amber-500/20 text-amber-400', label: 'New' },
+      new: { pill: 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400', label: 'New' },
       acknowledged: { pill: 'bg-slate-500/10 border-slate-500/20 text-slate-400', label: 'Acknowledged' },
-      resolved: { pill: 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400', label: 'Resolved' }
+      resolved: { pill: 'bg-emerald-100 border-emerald-200 text-emerald-700 dark:bg-emerald-500/10 dark:border-emerald-500/20 dark:text-emerald-400', label: 'Resolved' }
     };
     return configs[status] || configs.acknowledged;
   };
@@ -321,7 +321,7 @@ export default function CommandAlerts() {
 
         {/* ── Page Header ────────────────────────────────── */}
         <div className="mb-6">
-          <h2 className="text-xl font-bold text-white mb-1">Command Alerts</h2>
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-1">Command Alerts</h2>
           <div className="flex items-center gap-2 text-[11px] text-slate-500">
             <span>{formatDate(currentTime)}</span>
             <span className="text-slate-700">·</span>
@@ -340,7 +340,7 @@ export default function CommandAlerts() {
               className={`px-2.5 py-1 rounded text-[11px] font-medium border transition-all ${
                 filterSeverity === opt.id
                   ? 'bg-slate-700/50 border-slate-600/50 text-white'
-                  : 'bg-transparent border-slate-700/40 text-slate-500 hover:text-slate-300 hover:border-slate-600/30'
+                  : 'bg-transparent border-slate-700/40 text-slate-500 hover:text-slate-700 dark:text-slate-300 hover:border-slate-600/30'
               }`}
             >
               {opt.label}
@@ -390,7 +390,7 @@ export default function CommandAlerts() {
                   </span>
 
                   {/* Impact — max ~12 words */}
-                  <span className="hidden xl:block text-[10px] text-slate-400 max-w-[240px] truncate flex-shrink-0">
+                  <span className="hidden xl:block text-[10px] text-slate-600 dark:text-slate-400 max-w-[240px] truncate flex-shrink-0">
                     {alert.impact}
                   </span>
 
@@ -407,7 +407,7 @@ export default function CommandAlerts() {
                   {/* Open duration */}
                   {!isResolved && (
                     <span className={`text-[10px] flex-shrink-0 font-mono whitespace-nowrap ${
-                      escalation === 'overdue' ? 'text-red-400 font-semibold' : 'text-slate-600'
+                      escalation === 'overdue' ? 'text-red-600 dark:text-red-400 font-semibold' : 'text-slate-600'
                     }`}>
                       {getOpenDuration(alert.timestamp)}
                     </span>
@@ -437,7 +437,7 @@ export default function CommandAlerts() {
                     )}
                     <button
                       onClick={() => toggleExpanded(alert.id)}
-                      className="p-0.5 text-slate-500 hover:text-slate-300 transition-colors"
+                      className="p-0.5 text-slate-500 hover:text-slate-700 dark:text-slate-300 transition-colors"
                     >
                       {isExpanded
                         ? <ChevronUp className="w-3 h-3" />
@@ -449,17 +449,17 @@ export default function CommandAlerts() {
 
                 {/* Mobile: impact line */}
                 <div className="xl:hidden px-3.5 pb-1.5 -mt-0.5 pl-[26px]">
-                  <span className="text-[10px] text-slate-400">{alert.impact}</span>
+                  <span className="text-[10px] text-slate-600 dark:text-slate-400">{alert.impact}</span>
                 </div>
 
                 {/* ── Expanded Detail ───────────────────── */}
                 {isExpanded && (
                   <div className="px-3 pb-2.5 border-t border-slate-700/8 pt-2.5 ml-[22px]">
-                    <p className="text-[11px] text-slate-400 mb-2 leading-relaxed max-w-3xl">{alert.description}</p>
+                    <p className="text-[11px] text-slate-600 dark:text-slate-400 mb-2 leading-relaxed max-w-3xl">{alert.description}</p>
 
                     {/* Metadata */}
                     <div className="flex items-center gap-3 mb-2 text-[10px] text-slate-500 flex-wrap">
-                      <span>Owner: <span className="text-slate-300">{alert.owner}</span></span>
+                      <span>Owner: <span className="text-slate-700 dark:text-slate-300">{alert.owner}</span></span>
                       <span className="text-slate-700">|</span>
                       <span>Detected {alert.detectedTime}</span>
                       <span className="text-slate-700">|</span>
@@ -467,7 +467,7 @@ export default function CommandAlerts() {
                       {escalation && (
                         <>
                           <span className="text-slate-700">|</span>
-                          <span className={escalation === 'overdue' ? 'text-red-400 font-bold' : 'text-red-400 font-semibold'}>
+                          <span className={escalation === 'overdue' ? 'text-red-600 dark:text-red-400 font-bold' : 'text-red-600 dark:text-red-400 font-semibold'}>
                             {escalation === 'overdue' ? 'OVERDUE' : 'Escalating'}
                           </span>
                         </>
@@ -482,7 +482,7 @@ export default function CommandAlerts() {
                           {alert.recommendations.map((rec, idx) => (
                             <div key={idx} className="flex items-start gap-1.5 text-[10px]">
                               <ChevronRight className="w-2.5 h-2.5 mt-0.5 text-slate-600 flex-shrink-0" />
-                              <span className="text-slate-400">{rec}</span>
+                              <span className="text-slate-600 dark:text-slate-400">{rec}</span>
                             </div>
                           ))}
                         </div>
@@ -493,7 +493,7 @@ export default function CommandAlerts() {
                     {isResolved && alert.resolution && (
                       <div className="mb-2 bg-slate-700/20 border border-slate-700/50 rounded px-2.5 py-1.5">
                         <span className="text-[9px] font-semibold text-slate-400/70 uppercase tracking-wider">Resolution</span>
-                        <p className="text-[10px] text-slate-400 mt-0.5">{alert.resolution}</p>
+                        <p className="text-[10px] text-slate-600 dark:text-slate-400 mt-0.5">{alert.resolution}</p>
                         <div className="mt-0.5 text-[9px] text-slate-500">
                           {alert.resolvedBy} · {alert.resolvedAt && new Date(alert.resolvedAt).toLocaleString()}
                         </div>
@@ -505,7 +505,7 @@ export default function CommandAlerts() {
                       <div className="flex items-center gap-3 mb-2 text-[10px]">
                         {Object.entries(alert.relatedData).map(([key, value]) => (
                           <span key={key} className="text-slate-500">
-                            <span className="text-slate-300 font-medium">{value}</span>{' '}
+                            <span className="text-slate-700 dark:text-slate-300 font-medium">{value}</span>{' '}
                             {key.replace(/([A-Z])/g, ' $1').toLowerCase()}
                           </span>
                         ))}
@@ -518,20 +518,20 @@ export default function CommandAlerts() {
                         {!isAcknowledged && (
                           <button
                             onClick={() => acknowledgeAlert(alert.id)}
-                            className="px-2.5 py-1 text-[10px] font-medium text-slate-400 border border-slate-700/30 hover:bg-slate-700/15 rounded transition-colors"
+                            className="px-2.5 py-1 text-[10px] font-medium text-slate-600 dark:text-slate-400 border border-slate-700/30 hover:bg-slate-700/15 rounded transition-colors"
                           >
                             Acknowledge
                           </button>
                         )}
                         <button
                           onClick={() => { setAlertToAction(alert); setAssignModalOpen(true); }}
-                          className="px-2.5 py-1 text-[10px] font-medium text-slate-400 border border-slate-700/30 hover:bg-slate-700/15 rounded transition-colors"
+                          className="px-2.5 py-1 text-[10px] font-medium text-slate-600 dark:text-slate-400 border border-slate-700/30 hover:bg-slate-700/15 rounded transition-colors"
                         >
                           Assign
                         </button>
                         <button
                           onClick={() => { setAlertToAction(alert); setResolveModalOpen(true); }}
-                          className="px-2.5 py-1 text-[10px] font-medium text-slate-300 border border-slate-600/30 hover:bg-slate-700/20 rounded transition-colors"
+                          className="px-2.5 py-1 text-[10px] font-medium text-slate-700 dark:text-slate-300 border border-slate-600/30 hover:bg-slate-700/20 rounded transition-colors"
                         >
                           Resolve
                         </button>
@@ -573,8 +573,8 @@ export default function CommandAlerts() {
           <div className="fixed inset-0 bg-black/40 z-40" onClick={() => { setAssignModalOpen(false); setAlertToAction(null); setAssignPersonnel(''); }} />
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
             <div className="bg-slate-900 border border-slate-700/50 rounded-xl p-5 max-w-sm w-full shadow-2xl">
-              <h3 className="text-sm font-semibold text-white mb-1">Assign Alert</h3>
-              <p className="text-[11px] text-slate-400 mb-3">{alertToAction.title}</p>
+              <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-1">Assign Alert</h3>
+              <p className="text-[11px] text-slate-600 dark:text-slate-400 mb-3">{alertToAction.title}</p>
               <input
                 type="text"
                 value={assignPersonnel}
@@ -585,7 +585,7 @@ export default function CommandAlerts() {
               <div className="flex gap-2">
                 <button
                   onClick={() => { setAssignModalOpen(false); setAlertToAction(null); setAssignPersonnel(''); }}
-                  className="flex-1 px-3 py-1.5 text-xs font-medium text-slate-400 border border-slate-700/50 hover:bg-slate-700/20 rounded-lg transition-colors"
+                  className="flex-1 px-3 py-1.5 text-xs font-medium text-slate-600 dark:text-slate-400 border border-slate-700/50 hover:bg-slate-700/20 rounded-lg transition-colors"
                 >
                   Cancel
                 </button>
@@ -607,8 +607,8 @@ export default function CommandAlerts() {
           <div className="fixed inset-0 bg-black/40 z-40" onClick={() => { setResolveModalOpen(false); setAlertToAction(null); setResolveNotes(''); }} />
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
             <div className="bg-slate-900 border border-slate-700/50 rounded-xl p-5 max-w-sm w-full shadow-2xl">
-              <h3 className="text-sm font-semibold text-white mb-1">Resolve Alert</h3>
-              <p className="text-[11px] text-slate-400 mb-3">{alertToAction.title}</p>
+              <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-1">Resolve Alert</h3>
+              <p className="text-[11px] text-slate-600 dark:text-slate-400 mb-3">{alertToAction.title}</p>
               <textarea
                 value={resolveNotes}
                 onChange={(e) => setResolveNotes(e.target.value)}
@@ -619,13 +619,13 @@ export default function CommandAlerts() {
               <div className="flex gap-2">
                 <button
                   onClick={() => { setResolveModalOpen(false); setAlertToAction(null); setResolveNotes(''); }}
-                  className="flex-1 px-3 py-1.5 text-xs font-medium text-slate-400 border border-slate-700/50 hover:bg-slate-700/20 rounded-lg transition-colors"
+                  className="flex-1 px-3 py-1.5 text-xs font-medium text-slate-600 dark:text-slate-400 border border-slate-700/50 hover:bg-slate-700/20 rounded-lg transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={() => handleResolve(alertToAction.id)}
-                  className="flex-1 px-3 py-1.5 text-xs font-medium text-slate-300 border border-slate-600/40 hover:bg-slate-700/30 rounded-lg transition-colors"
+                  className="flex-1 px-3 py-1.5 text-xs font-medium text-slate-700 dark:text-slate-300 border border-slate-600/40 hover:bg-slate-700/30 rounded-lg transition-colors"
                 >
                   Resolve
                 </button>
