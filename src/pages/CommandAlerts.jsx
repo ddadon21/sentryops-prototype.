@@ -339,8 +339,8 @@ export default function CommandAlerts() {
               onClick={() => setFilterSeverity(opt.id)}
               className={`px-2.5 py-1 rounded text-[11px] font-medium border transition-all ${
                 filterSeverity === opt.id
-                  ? 'bg-slate-700/50 border-slate-600/50 text-white'
-                  : 'bg-transparent border-slate-700/40 text-slate-500 hover:text-slate-700 dark:text-slate-300 hover:border-slate-600/30'
+                  ? 'bg-slate-200 dark:bg-slate-700/50 border-slate-300 dark:border-slate-600/50 text-slate-900 dark:text-white'
+                  : 'bg-transparent border-slate-300 dark:border-slate-700/40 text-slate-500 hover:text-slate-700 dark:text-slate-300 hover:border-slate-400 dark:hover:border-slate-600/30'
               }`}
             >
               {opt.label}
@@ -368,10 +368,10 @@ export default function CommandAlerts() {
                 key={alert.id}
                 className={`rounded border transition-colors ${
                   isResolved
-                    ? 'border-slate-800/10 bg-slate-800/[0.06] opacity-[0.30]'
+                    ? 'border-slate-200 dark:border-slate-800/10 bg-slate-50 dark:bg-slate-800/[0.06] opacity-[0.30]'
                     : isAcknowledged
-                    ? 'border-slate-700/30 bg-slate-800/15 opacity-70'
-                    : 'border-slate-700/30 bg-slate-800/15 hover:bg-slate-800/30'
+                    ? 'border-slate-200 dark:border-slate-700/30 bg-white dark:bg-slate-800/15 opacity-70'
+                    : 'border-slate-200 dark:border-slate-700/30 bg-white dark:bg-slate-800/15 hover:bg-slate-50 dark:hover:bg-slate-800/30'
                 }`}
               >
                 {/* ── Compact Row ──────────────────────── */}
@@ -385,7 +385,7 @@ export default function CommandAlerts() {
                   </span>
 
                   {/* Title */}
-                  <span className={`text-[13px] font-bold flex-1 min-w-0 truncate ${isResolved ? 'text-slate-500' : 'text-white'}`}>
+                  <span className={`text-[13px] font-bold flex-1 min-w-0 truncate ${isResolved ? 'text-slate-500' : 'text-slate-900 dark:text-white'}`}>
                     {alert.title}
                   </span>
 
@@ -491,7 +491,7 @@ export default function CommandAlerts() {
 
                     {/* Resolution */}
                     {isResolved && alert.resolution && (
-                      <div className="mb-2 bg-slate-700/20 border border-slate-700/50 rounded px-2.5 py-1.5">
+                      <div className="mb-2 bg-slate-50 dark:bg-slate-700/20 border border-slate-200 dark:border-slate-700/50 rounded px-2.5 py-1.5">
                         <span className="text-[9px] font-semibold text-slate-500/70 uppercase tracking-wider">Resolution</span>
                         <p className="text-[10px] text-slate-600 dark:text-slate-400 mt-0.5">{alert.resolution}</p>
                         <div className="mt-0.5 text-[9px] text-slate-500">
