@@ -505,7 +505,7 @@ export default function ReferenceChecks() {
                 </div>
                 <p className="text-sm font-medium text-slate-900 dark:text-white mb-1">Total References</p>
                 <p className="text-xs text-slate-500">Case BI-2024-145 (Martinez)</p>
-                <div className="mt-3 pt-3 border-t border-slate-700/30 space-y-1">
+                <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-700/30 space-y-1">
                   <p className="text-xs text-slate-600 dark:text-slate-400">Employment: 2 (current + former supervisor)</p>
                   <p className="text-xs text-slate-600 dark:text-slate-400">Professional LE: 1 (colleague/FTO)</p>
                   <p className="text-xs text-slate-600 dark:text-slate-400">Personal: 1 (need 2–3 per policy)</p>
@@ -519,7 +519,7 @@ export default function ReferenceChecks() {
                 </div>
                 <p className="text-sm font-medium text-slate-900 dark:text-white mb-1">Completed</p>
                 <p className="text-xs text-slate-500">Interview notes documented</p>
-                <div className="mt-3 pt-3 border-t border-slate-700/30 space-y-1">
+                <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-700/30 space-y-1">
                   <p className="text-xs text-green-400/80">Sgt. Davis — Strongly Positive</p>
                   <p className="text-xs text-green-400/80">Capt. Williams — Positive</p>
                   <p className="text-xs text-slate-500 mt-1">Both recommend for hire</p>
@@ -533,7 +533,7 @@ export default function ReferenceChecks() {
                 </div>
                 <p className="text-sm font-medium text-slate-900 dark:text-white mb-1">Pending</p>
                 <p className="text-xs text-slate-500">Awaiting contact/callback</p>
-                <div className="mt-3 pt-3 border-t border-slate-700/30 space-y-1.5">
+                <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-700/30 space-y-1.5">
                   <div>
                     <p className="text-xs text-amber-400/80">Officer Brown — Awaiting callback</p>
                     <p className="text-xs text-slate-500 ml-2">1 contact attempt (Jan 23)</p>
@@ -552,7 +552,7 @@ export default function ReferenceChecks() {
                 </div>
                 <p className="text-sm font-medium text-slate-900 dark:text-white mb-1">Assessment Summary</p>
                 <p className="text-xs text-slate-500">Evaluated individually, not scored</p>
-                <div className="mt-3 pt-3 border-t border-slate-700/30 space-y-1">
+                <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-700/30 space-y-1">
                   <p className="text-xs text-green-400/80">Would recommend: 2/2 YES</p>
                   <p className="text-xs text-green-400/80">Concerns identified: 0</p>
                   <p className="text-xs text-green-400/80">Brady/Giglio concerns: 0</p>
@@ -953,7 +953,7 @@ export default function ReferenceChecks() {
                       )}
 
                       {/* Action Buttons */}
-                      <div className="flex items-center justify-between pt-4 border-t border-slate-700/30 mt-2">
+                      <div className="flex items-center justify-between pt-4 border-t border-slate-200 dark:border-slate-700/30 mt-2">
                         <div className="text-sm text-slate-600 dark:text-slate-400">
                           Case: <span className="text-slate-900 dark:text-white font-medium">{ref.caseId}</span> — {ref.subject}
                         </div>

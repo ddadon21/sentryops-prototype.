@@ -663,7 +663,7 @@ export default function ReportsAnalytics() {
             </div>
 
             {/* Tabs */}
-            <div className="mb-6 flex gap-2 border-b border-slate-700/50 overflow-x-auto">
+            <div className="mb-6 flex gap-2 border-b border-slate-200 dark:border-slate-700/50 overflow-x-auto">
               {[
                 { id: 'overview', label: 'Overview', icon: Zap },
                 { id: 'operations', label: 'Operations', icon: Activity },
@@ -701,7 +701,7 @@ export default function ReportsAnalytics() {
                     </div>
                     <p className="text-2xl font-bold text-slate-900 dark:text-white mb-1">{keyMetrics.callsForService.total.toLocaleString()}</p>
                     <p className="text-sm text-slate-600 dark:text-slate-400 mb-3">Year to Date (Jan 1 - Jan 21, 2026)</p>
-                    <div className="space-y-1.5 border-t border-slate-700/50 pt-3">
+                    <div className="space-y-1.5 border-t border-slate-200 dark:border-slate-700/50 pt-3">
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-600 dark:text-slate-400">Trend vs 2025:</span>
                         <span className={`font-bold flex items-center gap-1 ${getChangeColor(keyMetrics.callsForService.change)}`}>
@@ -739,7 +739,7 @@ export default function ReportsAnalytics() {
                         <div className="h-full bg-green-500" style={{ width: '95%' }} />
                       </div>
                     </div>
-                    <div className="space-y-1.5 border-t border-slate-700/50 pt-3">
+                    <div className="space-y-1.5 border-t border-slate-200 dark:border-slate-700/50 pt-3">
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-600 dark:text-slate-400">P1 (Emergency):</span>
                         <span className="font-medium text-green-600 dark:text-green-400">3.2 min <CheckCircle className="w-3 h-3 inline" /></span>
@@ -774,7 +774,7 @@ export default function ReportsAnalytics() {
                         <div className="h-full bg-purple-500" style={{ width: '97.9%' }} />
                       </div>
                     </div>
-                    <div className="space-y-1.5 border-t border-slate-700/50 pt-3">
+                    <div className="space-y-1.5 border-t border-slate-200 dark:border-slate-700/50 pt-3">
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-600 dark:text-slate-400">Violent crimes:</span>
                         <span className="font-medium text-green-600 dark:text-green-400">82.1% <CheckCircle className="w-3 h-3 inline" /></span>
@@ -802,7 +802,7 @@ export default function ReportsAnalytics() {
                     </div>
                     <p className="text-2xl font-bold text-slate-900 dark:text-white mb-1">{keyMetrics.arrestsYTD.total.toLocaleString()}</p>
                     <p className="text-sm text-slate-600 dark:text-slate-400 mb-3">Jan 1 - Jan 21, 2026</p>
-                    <div className="space-y-1.5 border-t border-slate-700/50 pt-3">
+                    <div className="space-y-1.5 border-t border-slate-200 dark:border-slate-700/50 pt-3">
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-600 dark:text-slate-400">Trend vs 2025:</span>
                         <span className="font-bold text-green-600 dark:text-green-400 flex items-center gap-1">
@@ -839,7 +839,7 @@ export default function ReportsAnalytics() {
                         <div className="h-full bg-blue-500" style={{ width: `${keyMetrics.staffing.percentage}%` }} />
                       </div>
                     </div>
-                    <div className="space-y-1.5 border-t border-slate-700/50 pt-3">
+                    <div className="space-y-1.5 border-t border-slate-200 dark:border-slate-700/50 pt-3">
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-600 dark:text-slate-400">Vacancies:</span>
                         <span className="font-medium text-amber-600 dark:text-amber-400">14 open positions</span>
@@ -874,7 +874,7 @@ export default function ReportsAnalytics() {
                         <div className="h-full bg-green-500" style={{ width: '89%' }} />
                       </div>
                     </div>
-                    <div className="space-y-1.5 border-t border-slate-700/50 pt-3">
+                    <div className="space-y-1.5 border-t border-slate-200 dark:border-slate-700/50 pt-3">
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-600 dark:text-slate-400">YoY change:</span>
                         <span className="font-medium text-green-600 dark:text-green-400 flex items-center gap-1">
@@ -950,7 +950,7 @@ export default function ReportsAnalytics() {
                   </div>
 
                   {/* Seasonal Patterns Summary */}
-                  <div className="mt-4 pt-4 border-t border-slate-700/50">
+                  <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700/50">
                     <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Seasonal Patterns Identified</h4>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
                       <div className="bg-slate-900/40 rounded-lg p-3">
@@ -1046,7 +1046,7 @@ export default function ReportsAnalytics() {
                 <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
                   <div className="overflow-x-auto">
                     <table className="w-full">
-                      <thead className="bg-slate-900/50 border-b border-slate-700/50">
+                      <thead className="bg-slate-900/50 border-b border-slate-200 dark:border-slate-700/50">
                         <tr>
                           <th className="px-4 py-3 text-left text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Category</th>
                           <th className="px-4 py-3 text-left text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">Incidents</th>
@@ -1057,7 +1057,7 @@ export default function ReportsAnalytics() {
                       </thead>
                       <tbody>
                         {crimeStats.map((stat, idx) => (
-                          <tr key={idx} className="border-b border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/30 transition-colors">
+                          <tr key={idx} className="border-b border-slate-200 dark:border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/30 transition-colors">
                             <td className="px-4 py-4">
                               <p className="text-sm font-medium text-slate-900 dark:text-white">{stat.category}</p>
                             </td>

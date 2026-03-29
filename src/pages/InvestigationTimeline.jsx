@@ -699,7 +699,7 @@ export default function InvestigationTimeline() {
                       <span className="text-slate-500">&lt;{caseData.agencyTarget} days (extended)</span>
                     </div>
 
-                    <div className="border-t border-slate-700/50 pt-3 mt-3">
+                    <div className="border-t border-slate-200 dark:border-slate-700/50 pt-3 mt-3">
                       <p className="text-xs text-slate-500 uppercase tracking-wide mb-2">Activity Summary</p>
                       <div className="space-y-1 text-sm">
                         <div className="flex justify-between">
@@ -721,7 +721,7 @@ export default function InvestigationTimeline() {
                       </div>
                     </div>
 
-                    <div className="border-t border-slate-700/50 pt-3 mt-3">
+                    <div className="border-t border-slate-200 dark:border-slate-700/50 pt-3 mt-3">
                       <p className="text-xs text-slate-500 uppercase tracking-wide mb-2">Contact Attempts</p>
                       <div className="space-y-1 text-sm">
                         <div className="flex justify-between">
@@ -757,14 +757,14 @@ export default function InvestigationTimeline() {
                       <p className="text-xs text-slate-500 mb-1">Position</p>
                       <p className="text-sm text-slate-900 dark:text-white">{caseData.position} ({caseData.department})</p>
                     </div>
-                    <div className="border-t border-slate-700/50 pt-3 mt-3">
+                    <div className="border-t border-slate-200 dark:border-slate-700/50 pt-3 mt-3">
                       <p className="text-xs text-slate-500 mb-1">Assigned Investigator</p>
                       <p className="text-sm font-medium text-slate-900 dark:text-white">{caseData.investigator.name}</p>
                       <p className="text-xs text-slate-600 dark:text-slate-400">Badge {caseData.investigator.badge}</p>
                       <p className="text-xs text-slate-500 mt-1">Current Caseload: {caseData.investigator.activeCases} active cases</p>
                       <p className="text-xs text-amber-400 mt-1">{caseData.investigator.email} | {caseData.investigator.phone}</p>
                     </div>
-                    <div className="border-t border-slate-700/50 pt-3 mt-3">
+                    <div className="border-t border-slate-200 dark:border-slate-700/50 pt-3 mt-3">
                       <span className="px-2 py-1 bg-red-500/20 text-red-400 rounded text-xs font-medium">HIGH PRIORITY</span>
                       <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">Conditional offer expires {caseData.conditionalOfferExpires}</p>
                     </div>

@@ -546,7 +546,7 @@ export default function SubjectRecords() {
                     <span className="text-sm text-slate-600 dark:text-slate-400">Criminal History</span>
                     {getStatusBadge('verified')}
                   </div>
-                  <div className="pt-2 border-t border-slate-700/50">
+                  <div className="pt-2 border-t border-slate-200 dark:border-slate-700/50">
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-slate-700 dark:text-slate-300 font-medium">Brady/Giglio Review</span>
                       {getStatusBadge('pending')}
@@ -657,7 +657,7 @@ export default function SubjectRecords() {
 
             {/* Tabs */}
             <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
-              <div className="flex border-b border-slate-700/50 overflow-x-auto">
+              <div className="flex border-b border-slate-200 dark:border-slate-700/50 overflow-x-auto">
                 <button
                   onClick={() => setSelectedTab('personal')}
                   className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedTab === 'personal' ? 'bg-amber-500/10 text-amber-400 border-b-2 border-amber-500' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
@@ -955,14 +955,14 @@ export default function SubjectRecords() {
 
                         {/* Investigator Notes */}
                         {job.notes && (
-                          <div className="mt-4 pt-4 border-t border-slate-700/50">
+                          <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700/50">
                             <p className="text-xs text-slate-500 mb-1">Investigator Notes</p>
                             <p className="text-sm text-slate-600 dark:text-slate-400">{job.notes}</p>
                           </div>
                         )}
 
                         {/* Verification Info */}
-                        <div className="mt-4 pt-3 border-t border-slate-700/50 flex items-center justify-between text-xs text-slate-500">
+                        <div className="mt-4 pt-3 border-t border-slate-200 dark:border-slate-700/50 flex items-center justify-between text-xs text-slate-500">
                           <span>Verification: {job.verificationMethod}</span>
                           <span>Verified {job.verifiedDate} by {job.verifiedBy}</span>
                         </div>
@@ -1052,7 +1052,7 @@ export default function SubjectRecords() {
                         </div>
 
                         {/* Verification Info */}
-                        <div className="mt-4 pt-3 border-t border-slate-700/50 flex items-center justify-between text-xs text-slate-500">
+                        <div className="mt-4 pt-3 border-t border-slate-200 dark:border-slate-700/50 flex items-center justify-between text-xs text-slate-500">
                           <span>Verification: {edu.verificationMethod}</span>
                           <span>Verified {edu.verifiedDate} by {edu.verifiedBy}</span>
                         </div>
@@ -1132,7 +1132,7 @@ export default function SubjectRecords() {
                         )}
 
                         {/* Verification Info */}
-                        <div className="mt-4 pt-3 border-t border-slate-700/50 text-xs text-slate-500">
+                        <div className="mt-4 pt-3 border-t border-slate-200 dark:border-slate-700/50 text-xs text-slate-500">
                           <span>Verification: {cert.verificationMethod} • Verified {cert.verifiedDate}</span>
                         </div>
                       </div>
@@ -1263,7 +1263,7 @@ export default function SubjectRecords() {
 
                         {/* Verification Info */}
                         {ref.interviewedBy && (
-                          <div className="mt-4 pt-3 border-t border-slate-700/50 text-xs text-slate-500">
+                          <div className="mt-4 pt-3 border-t border-slate-200 dark:border-slate-700/50 text-xs text-slate-500">
                             <span>Interviewed by: {ref.interviewedBy}</span>
                           </div>
                         )}

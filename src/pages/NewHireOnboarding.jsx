@@ -423,7 +423,7 @@ export default function NewHireOnboarding() {
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex">
       {/* Sidebar */}
       <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-slate-800/50 backdrop-blur-xl bg-slate-900/30 flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
-        <div className="p-4 border-b border-slate-700/50 flex items-center justify-between">
+        <div className="p-4 border-b border-slate-200 dark:border-slate-700/50 flex items-center justify-between">
           {!sidebarCollapsed && (
             <div className="flex items-center gap-2">
               <Shield className="w-8 h-8 text-amber-500" />
@@ -463,7 +463,7 @@ export default function NewHireOnboarding() {
           })}
         </nav>
 
-        <div className="border-t border-slate-700/50">
+        <div className="border-t border-slate-200 dark:border-slate-700/50">
           {!sidebarCollapsed && (
             <div className="px-4 py-3">
               <p className="text-xs text-slate-500 text-center">Gwinnett County Sheriff's Office</p>
@@ -527,7 +527,7 @@ export default function NewHireOnboarding() {
       )}
 
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="border-b border-slate-800/50 backdrop-blur-xl bg-slate-900/30">
+        <header className="border-b border-slate-200 dark:border-slate-800/50 backdrop-blur-xl bg-slate-900/30">
           <div className="px-4 lg:px-6 py-4 flex items-center justify-between gap-4">
             <div className="flex items-center gap-4 flex-1 min-w-0">
               <button
@@ -569,12 +569,12 @@ export default function NewHireOnboarding() {
 
                 {notificationsOpen && (
                   <div className="absolute right-0 top-full mt-2 w-96 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-2xl z-50">
-                    <div className="p-4 border-b border-slate-700/50">
+                    <div className="p-4 border-b border-slate-200 dark:border-slate-700/50">
                       <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Onboarding Notifications</h3>
                     </div>
                     <div className="max-h-96 overflow-y-auto">
                       {notifications.map(notification => (
-                        <div key={notification.id} className={`p-4 border-b border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
+                        <div key={notification.id} className={`p-4 border-b border-slate-200 dark:border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
                           <div className="flex items-start gap-3">
                             <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-amber-400' : 'bg-blue-400'}`}></div>
                             <div className="flex-1 min-w-0">
@@ -711,7 +711,7 @@ export default function NewHireOnboarding() {
 
             {/* Filters */}
             <div className="mb-6 flex flex-wrap gap-4 items-center justify-between">
-              <div className="flex gap-2 border-b border-slate-700/50 overflow-x-auto">
+              <div className="flex gap-2 border-b border-slate-200 dark:border-slate-700/50 overflow-x-auto">
                 {[
                   { id: 'all', label: 'All New Hires', count: statusCounts.all },
                   { id: 'active', label: 'Active', count: statusCounts.active },
@@ -764,7 +764,7 @@ export default function NewHireOnboarding() {
                     className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden"
                   >
                     {/* Header */}
-                    <div className="p-5 border-b border-slate-700/30">
+                    <div className="p-5 border-b border-slate-200 dark:border-slate-700/30">
                       <div className="flex items-start justify-between gap-4 flex-wrap">
                         <div className="flex items-start gap-4 flex-1 min-w-0">
                           <div className={`w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 ${
@@ -847,7 +847,7 @@ export default function NewHireOnboarding() {
 
                     {/* Hire Classification */}
                     {hire.hireClassification && (
-                      <div className="px-5 py-3 bg-slate-900/30 border-b border-slate-700/30">
+                      <div className="px-5 py-3 bg-slate-900/30 border-b border-slate-200 dark:border-slate-700/30">
                         <div className="flex flex-wrap gap-4 text-xs">
                           <div>
                             <span className="text-slate-500">Classification:</span>
@@ -875,7 +875,7 @@ export default function NewHireOnboarding() {
 
                     {/* FTO Program Status (for sworn personnel) */}
                     {hire.ftoProgram && hire.ftoProgram.enrolled && (
-                      <div className="px-5 py-4 bg-gradient-to-r from-amber-500/5 to-transparent border-b border-slate-700/30">
+                      <div className="px-5 py-4 bg-gradient-to-r from-amber-500/5 to-transparent border-b border-slate-200 dark:border-slate-700/30">
                         <div className="flex items-center gap-2 mb-3">
                           <GraduationCap className="w-4 h-4 text-amber-400" />
                           <h4 className="text-sm font-semibold text-amber-400">Field Training Officer (FTO) Program</h4>
@@ -933,7 +933,7 @@ export default function NewHireOnboarding() {
                     )}
 
                     {/* Completion Summary */}
-                    <div className="px-5 py-4 border-b border-slate-700/30">
+                    <div className="px-5 py-4 border-b border-slate-200 dark:border-slate-700/30">
                       <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
                         {[
                           { key: 'preEmployment', label: 'Pre-Employment', icon: FileCheck },
@@ -996,7 +996,7 @@ export default function NewHireOnboarding() {
                       };
 
                       return (
-                        <div key={sectionKey} className="px-5 py-4 bg-slate-900/30 border-b border-slate-700/30">
+                        <div key={sectionKey} className="px-5 py-4 bg-slate-900/30 border-b border-slate-200 dark:border-slate-700/30">
                           <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">{sectionLabels[sectionKey]}</h4>
                           <div className="space-y-2">
                             {tasks.map(task => (
@@ -1330,7 +1330,7 @@ export default function NewHireOnboarding() {
               </div>
             </div>
 
-            <div className="flex gap-3 pt-4 border-t border-slate-700/50">
+            <div className="flex gap-3 pt-4 border-t border-slate-200 dark:border-slate-700/50">
               <button className="flex-1 px-4 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-xl font-medium transition-all">
                 Print Full Checklist
               </button>

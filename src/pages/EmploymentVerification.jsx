@@ -624,7 +624,7 @@ export default function EmploymentVerification() {
             <div className="grid grid-cols-5 gap-4">
               <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-slate-800 rounded-lg">
+                  <div className="p-2 bg-slate-100 dark:bg-slate-800 rounded-lg">
                     <Briefcase className="w-5 h-5 text-slate-600 dark:text-slate-400" />
                   </div>
                   <div>
@@ -668,7 +668,7 @@ export default function EmploymentVerification() {
               </div>
               <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-slate-800 rounded-lg">
+                  <div className="p-2 bg-slate-100 dark:bg-slate-800 rounded-lg">
                     <Calendar className="w-5 h-5 text-slate-600 dark:text-slate-400" />
                   </div>
                   <div>
@@ -686,7 +686,7 @@ export default function EmploymentVerification() {
                 Employment Timeline
               </h3>
               <div className="relative">
-                <div className="h-8 bg-slate-800 rounded-lg overflow-hidden flex">
+                <div className="h-8 bg-slate-200 dark:bg-slate-800 rounded-lg overflow-hidden flex">
                   {employmentRecords.slice().reverse().map((record, index) => {
                     const startYear = new Date(record.startDate).getFullYear();
                     const endYear = record.endDate === 'Present' ? 2024 : new Date(record.endDate).getFullYear();
@@ -797,7 +797,7 @@ export default function EmploymentVerification() {
                             <div className={`p-3 rounded-xl ${
                               record.isSwornLE
                                 ? 'bg-amber-500/10'
-                                : 'bg-slate-800'
+                                : 'bg-slate-200 dark:bg-slate-800'
                             }`}>
                               {record.isSwornLE ? (
                                 <Shield className="w-6 h-6 text-amber-400" />
@@ -840,7 +840,7 @@ export default function EmploymentVerification() {
 
                       {/* Expanded Content */}
                       {expandedEmployer === record.id && (
-                        <div className="border-t border-slate-700/50 p-4 space-y-4">
+                        <div className="border-t border-slate-200 dark:border-slate-700/50 p-4 space-y-4">
                           {/* Verification Details */}
                           <div className="grid grid-cols-2 gap-4">
                             <div className="bg-slate-900/40 rounded-lg p-3">
@@ -1121,7 +1121,7 @@ export default function EmploymentVerification() {
                     )}
                   </div>
 
-                  <div className="mt-4 pt-4 border-t border-slate-700/50">
+                  <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700/50">
                     <div className="bg-amber-500/10 rounded-lg p-3">
                       <h4 className="text-amber-400 text-xs font-medium mb-1">LATERAL TRANSFER POLICY</h4>
                       <p className="text-slate-600 dark:text-slate-400 text-xs">
@@ -1165,7 +1165,7 @@ export default function EmploymentVerification() {
                     </div>
                   </div>
 
-                  <div className="mt-4 pt-4 border-t border-slate-700/50">
+                  <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700/50">
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-slate-600 dark:text-slate-400 text-sm">Overall Status</span>
                     </div>

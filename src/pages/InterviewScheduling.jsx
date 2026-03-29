@@ -490,7 +490,7 @@ export default function InterviewScheduling() {
                     <span className="text-slate-600 dark:text-slate-400">Avg per week:</span>
                     <span className="text-slate-900 dark:text-white font-medium">{investigatorInfo.avgInterviewsPerWeek}</span>
                   </div>
-                  <div className="pt-2 border-t border-slate-700/50">
+                  <div className="pt-2 border-t border-slate-200 dark:border-slate-700/50">
                     <div className="flex items-center gap-2 text-sm">
                       <CheckCircle2 className="w-4 h-4 text-green-400" />
                       <span className="text-green-400">Within normal range</span>
@@ -499,7 +499,7 @@ export default function InterviewScheduling() {
                 </div>
 
                 {/* Recently Completed */}
-                <div className="mt-4 pt-4 border-t border-slate-700/50">
+                <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700/50">
                   <h5 className="text-xs font-medium text-slate-600 dark:text-slate-400 uppercase mb-2">Recently Completed</h5>
                   <div className="space-y-2">
                     <div className="flex items-center gap-2 text-sm">
@@ -617,7 +617,7 @@ export default function InterviewScheduling() {
 
             {/* View Tabs */}
             <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden mb-6">
-              <div className="flex border-b border-slate-700/50 overflow-x-auto">
+              <div className="flex border-b border-slate-200 dark:border-slate-700/50 overflow-x-auto">
                 <button
                   onClick={() => setSelectedView('upcoming')}
                   className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedView === 'upcoming' ? 'bg-amber-500/10 text-amber-400 border-b-2 border-amber-500' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
@@ -808,7 +808,7 @@ export default function InterviewScheduling() {
                     )}
 
                     {/* Action Buttons */}
-                    <div className="flex items-center justify-between pt-4 border-t border-slate-700/30">
+                    <div className="flex items-center justify-between pt-4 border-t border-slate-200 dark:border-slate-700/30">
                       <div className="flex items-center gap-4 text-xs text-slate-500">
                         {interview.contactEmail && (
                           <span className="flex items-center gap-1">
@@ -1058,7 +1058,7 @@ export default function InterviewScheduling() {
                     </div>
 
                     {/* Action Buttons */}
-                    <div className="flex items-center justify-end pt-4 border-t border-slate-700/30 gap-2">
+                    <div className="flex items-center justify-end pt-4 border-t border-slate-200 dark:border-slate-700/30 gap-2">
                       <button className="px-3 py-2 bg-slate-700/50 hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-xl text-xs font-medium transition-colors flex items-center gap-1">
                         <FileText className="w-3.5 h-3.5" />
                         View Complete Notes

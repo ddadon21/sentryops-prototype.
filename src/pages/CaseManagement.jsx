@@ -481,7 +481,7 @@ export default function CaseManagement() {
                       <span>{caseDetails.investigator.phone}</span>
                     </div>
                   </div>
-                  <div className="mt-4 pt-4 border-t border-slate-700/50">
+                  <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700/50">
                     <div className="grid grid-cols-2 gap-3 text-center">
                       <div>
                         <p className="text-lg font-semibold text-slate-900 dark:text-white">{caseDetails.investigator.activeCases}</p>
@@ -493,7 +493,7 @@ export default function CaseManagement() {
                       </div>
                     </div>
                   </div>
-                  <div className="mt-4 pt-4 border-t border-slate-700/50">
+                  <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700/50">
                     <p className="text-xs text-slate-500 mb-1">Supervisor</p>
                     <p className="text-sm text-slate-900 dark:text-white">{caseDetails.supervisor.name} <span className="text-slate-500">{caseDetails.supervisor.badge}</span></p>
                   </div>
@@ -503,7 +503,7 @@ export default function CaseManagement() {
 
             {/* Tabs */}
             <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
-              <div className="flex border-b border-slate-700/50 overflow-x-auto">
+              <div className="flex border-b border-slate-200 dark:border-slate-700/50 overflow-x-auto">
                 <button
                   onClick={() => setSelectedTab('overview')}
                   className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedTab === 'overview' ? 'bg-amber-500/10 text-amber-400 border-b-2 border-amber-500' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
@@ -593,7 +593,7 @@ export default function CaseManagement() {
                         </div>
 
                         {/* Key Findings */}
-                        <div className="border-t border-slate-700/50 pt-4">
+                        <div className="border-t border-slate-200 dark:border-slate-700/50 pt-4">
                           <p className="text-xs text-slate-500 uppercase tracking-wide mb-2">Key Findings</p>
                           <ul className="space-y-2 text-sm">
                             <li className="flex items-start gap-2">
@@ -613,7 +613,7 @@ export default function CaseManagement() {
 
                         {/* Documented Concerns */}
                         {caseDetails.blockers && (
-                          <div className="border-t border-slate-700/50 pt-4 mt-4">
+                          <div className="border-t border-slate-200 dark:border-slate-700/50 pt-4 mt-4">
                             <p className="text-xs text-slate-500 uppercase tracking-wide mb-2">Documented Concerns</p>
                             <div className="flex items-start gap-2 text-sm">
                               <AlertTriangle className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />

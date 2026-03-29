@@ -417,7 +417,7 @@ export default function CustodyOperations() {
 
               {showStatusDetail && (
                 <div className="absolute right-0 top-full mt-1.5 z-50 min-w-[280px] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/60 rounded-xl shadow-xl overflow-hidden">
-                  <div className="px-4 py-2.5 border-b border-slate-700/40">
+                  <div className="px-4 py-2.5 border-b border-slate-200 dark:border-slate-700/40">
                     <p className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Why System is {systemStatus}</p>
                   </div>
                   <ul className="p-3 space-y-1.5">
@@ -593,8 +593,8 @@ export default function CustodyOperations() {
                                 : 'bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40'
                             }`}>{issue.confidence} confidence</span>
                           </div>
-                          <p className="text-[11px] text-slate-200 leading-snug mb-1.5">{issue.recommendation}</p>
-                          <p className="text-[10px] text-slate-500 leading-snug border-t border-slate-700/40 pt-1.5">
+                          <p className="text-[11px] text-slate-700 dark:text-slate-200 leading-snug mb-1.5">{issue.recommendation}</p>
+                          <p className="text-[10px] text-slate-500 leading-snug border-t border-slate-200 dark:border-slate-700/40 pt-1.5">
                             Expected: {issue.outcome}
                           </p>
                         </div>
@@ -634,13 +634,13 @@ export default function CustodyOperations() {
                         <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-2">Impact Preview — {activePreview!.action}</p>
                         <ul className="space-y-1 mb-3">
                           {preview.map((line, i) => (
-                            <li key={i} className="flex items-start gap-2 text-[11px] text-slate-200">
+                            <li key={i} className="flex items-start gap-2 text-[11px] text-slate-700 dark:text-slate-200">
                               <span className="text-emerald-600 flex-shrink-0 mt-0.5">→</span>
                               {line}
                             </li>
                           ))}
                         </ul>
-                        <div className="flex items-center gap-2 pt-2 border-t border-slate-700/40">
+                        <div className="flex items-center gap-2 pt-2 border-t border-slate-200 dark:border-slate-700/40">
                           <button className="text-[11px] px-3 py-1.5 bg-slate-700/60 border border-slate-600/60 text-slate-900 dark:text-white rounded-lg hover:bg-slate-700 transition-colors font-medium">
                             Confirm — {activePreview!.action}
                           </button>
@@ -726,7 +726,7 @@ export default function CustodyOperations() {
 
         {/* ── Section 2: Housing Unit Management ──────────── */}
         <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
-          <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-700/40">
+          <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 dark:border-slate-700/40">
             <div className="flex items-center gap-2">
               <MapPin className="w-4 h-4 text-slate-600 dark:text-slate-400" />
               <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Housing Unit Management</span>
@@ -893,7 +893,7 @@ export default function CustodyOperations() {
                 </div>
 
                 {/* Command uplink */}
-                <div className="mt-3 pt-3 border-t border-slate-700/30 flex items-center gap-1.5">
+                <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-700/30 flex items-center gap-1.5">
                   <ArrowRight className="w-3 h-3 text-slate-600" />
                   <span className="text-[10px] text-slate-600">
                     {pod.status === 'Over Capacity' ? 'Impacts Command Risk Level — capacity violation flagged upward' : 'Pod status feeds Command Center housing overview'}
@@ -909,7 +909,7 @@ export default function CustodyOperations() {
 
           {/* Inmate Movement Control */}
           <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
-            <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-700/40">
+            <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 dark:border-slate-700/40">
               <div className="flex items-center gap-2">
                 <ArrowLeftRight className="w-4 h-4 text-slate-600 dark:text-slate-400" />
                 <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Inmate Movement Control</span>
@@ -937,7 +937,7 @@ export default function CustodyOperations() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between gap-2 mb-0.5">
-                        <p className="text-[12px] font-medium text-slate-200">{mov.inmateName} <span className="text-slate-500 font-normal">{mov.inmateId}</span></p>
+                        <p className="text-[12px] font-medium text-slate-700 dark:text-slate-200">{mov.inmateName} <span className="text-slate-500 font-normal">{mov.inmateId}</span></p>
                         <span className={`text-[10px] px-1.5 py-0.5 rounded flex-shrink-0 ${getMovementColors(mov.status)}`}>{mov.status}</span>
                       </div>
                       <p className="text-[11px] text-slate-600 dark:text-slate-400">{mov.type} · {mov.from} → {mov.to}</p>
@@ -964,7 +964,7 @@ export default function CustodyOperations() {
               })}
             </div>
 
-            <div className="px-5 py-2.5 border-t border-slate-700/30">
+            <div className="px-5 py-2.5 border-t border-slate-200 dark:border-slate-700/30">
               <p className="text-[10px] text-slate-600 flex items-center gap-1">
                 <ArrowRight className="w-3 h-3" /> Active movements tracked in Command Center transport log
               </p>
@@ -973,7 +973,7 @@ export default function CustodyOperations() {
 
           {/* Incident & Discipline Tracking */}
           <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
-            <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-700/40">
+            <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 dark:border-slate-700/40">
               <div className="flex items-center gap-2">
                 <AlertOctagon className="w-4 h-4 text-slate-600 dark:text-slate-400" />
                 <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Incident & Discipline</span>
@@ -1006,7 +1006,7 @@ export default function CustodyOperations() {
                       <div className="flex-1 min-w-0">
                         <div className="flex items-start justify-between gap-2 mb-0.5">
                           <div className="flex items-center gap-2 flex-wrap">
-                            <p className="text-[12px] font-medium text-slate-200">{inc.type}</p>
+                            <p className="text-[12px] font-medium text-slate-700 dark:text-slate-200">{inc.type}</p>
                             <span className="text-[10px] text-slate-500">{inc.pod}</span>
                             {inc.status !== 'Resolved' && (
                               <span className={`text-[9px] px-1.5 py-0.5 rounded font-semibold uppercase tracking-wide ${
@@ -1056,7 +1056,7 @@ export default function CustodyOperations() {
                               </div>
                               <div className="flex-1 bg-slate-900/50 border border-slate-700/40 rounded-lg px-3 py-2">
                                 <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1">Recommended Action</p>
-                                <p className="text-[11px] text-slate-200 leading-snug">{escalation.action}</p>
+                                <p className="text-[11px] text-slate-700 dark:text-slate-200 leading-snug">{escalation.action}</p>
                               </div>
                             </div>
                           );
@@ -1127,7 +1127,7 @@ export default function CustodyOperations() {
 
         {/* ── Section 4: Officer Assignment Board ──────────── */}
         <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
-          <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-700/40">
+          <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 dark:border-slate-700/40">
             <div className="flex items-center gap-2">
               <Users className="w-4 h-4 text-slate-600 dark:text-slate-400" />
               <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Officer Assignment Board</span>
@@ -1149,7 +1149,7 @@ export default function CustodyOperations() {
           </div>
 
           {/* Table header */}
-          <div className="grid grid-cols-12 px-5 py-2 border-b border-slate-700/10 text-[10px] text-slate-500 uppercase tracking-wide">
+          <div className="grid grid-cols-12 px-5 py-2 border-b border-slate-200 dark:border-slate-700/10 text-[10px] text-slate-500 uppercase tracking-wide">
             <span className="col-span-3">Officer</span>
             <span className="col-span-3">Assignment</span>
             <span className="col-span-2">Risk Signals</span>
@@ -1170,7 +1170,7 @@ export default function CustodyOperations() {
               return (
                 <div key={officer.badge} className={`grid grid-cols-12 items-center px-5 py-2.5 hover:bg-slate-700/10 transition-colors ${isHighHours ? 'bg-amber-500/[0.03]' : ''}`}>
                   <div className="col-span-3">
-                    <p className="text-[12px] font-medium text-slate-200">{officer.name}</p>
+                    <p className="text-[12px] font-medium text-slate-700 dark:text-slate-200">{officer.name}</p>
                     <p className="text-[10px] text-slate-500">#{officer.badge} · {officer.rank}</p>
                   </div>
                   <div className="col-span-3">
@@ -1254,7 +1254,7 @@ export default function CustodyOperations() {
             </div>
           </div>
 
-          <div className="px-5 py-3 border-t border-slate-700/30 flex items-center justify-between">
+          <div className="px-5 py-3 border-t border-slate-200 dark:border-slate-700/30 flex items-center justify-between">
             <p className="text-[10px] text-slate-600">
               Officers at 8h+ highlighted · ACA minimum: 1 officer per 64 inmates
             </p>

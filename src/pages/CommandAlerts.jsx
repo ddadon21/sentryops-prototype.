@@ -454,7 +454,7 @@ export default function CommandAlerts() {
 
                 {/* ── Expanded Detail ───────────────────── */}
                 {isExpanded && (
-                  <div className="px-3 pb-2.5 border-t border-slate-700/8 pt-2.5 ml-[22px]">
+                  <div className="px-3 pb-2.5 border-t border-slate-200 dark:border-slate-700/8 pt-2.5 ml-[22px]">
                     <p className="text-[11px] text-slate-600 dark:text-slate-400 mb-2 leading-relaxed max-w-3xl">{alert.description}</p>
 
                     {/* Metadata */}
@@ -514,7 +514,7 @@ export default function CommandAlerts() {
 
                     {/* Expanded actions: Assign + Resolve */}
                     {!isResolved && (
-                      <div className="flex items-center gap-1.5 pt-1.5 border-t border-slate-700/8">
+                      <div className="flex items-center gap-1.5 pt-1.5 border-t border-slate-200 dark:border-slate-700/8">
                         {!isAcknowledged && (
                           <button
                             onClick={() => acknowledgeAlert(alert.id)}

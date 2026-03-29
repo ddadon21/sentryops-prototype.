@@ -433,7 +433,7 @@ export default function HiringPipeline() {
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex">
       {/* Sidebar */}
       <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-slate-800/50 backdrop-blur-xl bg-slate-900/30 flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
-        <div className="p-4 border-b border-slate-700/50 flex items-center justify-between">
+        <div className="p-4 border-b border-slate-200 dark:border-slate-700/50 flex items-center justify-between">
           {!sidebarCollapsed && (
             <div className="flex items-center gap-2">
               <Shield className="w-8 h-8 text-amber-500" />
@@ -473,7 +473,7 @@ export default function HiringPipeline() {
           })}
         </nav>
 
-        <div className="border-t border-slate-700/50">
+        <div className="border-t border-slate-200 dark:border-slate-700/50">
           {!sidebarCollapsed && (
             <div className="px-4 py-3">
               <p className="text-xs text-slate-500 text-center">Gwinnett County Sheriff's Office</p>
@@ -537,7 +537,7 @@ export default function HiringPipeline() {
       )}
 
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="border-b border-slate-800/50 backdrop-blur-xl bg-slate-900/30">
+        <header className="border-b border-slate-200 dark:border-slate-800/50 backdrop-blur-xl bg-slate-900/30">
           <div className="px-4 lg:px-6 py-4 flex items-center justify-between gap-4">
             <div className="flex items-center gap-4 flex-1 min-w-0">
               <button
@@ -578,12 +578,12 @@ export default function HiringPipeline() {
 
                 {notificationsOpen && (
                   <div className="absolute right-0 top-full mt-2 w-96 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-2xl z-50">
-                    <div className="p-4 border-b border-slate-700/50">
+                    <div className="p-4 border-b border-slate-200 dark:border-slate-700/50">
                       <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Notifications</h3>
                     </div>
                     <div className="max-h-96 overflow-y-auto">
                       {notifications.map(notification => (
-                        <div key={notification.id} className={`p-4 border-b border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
+                        <div key={notification.id} className={`p-4 border-b border-slate-200 dark:border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
                           <div className="flex items-start gap-3">
                             <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-amber-400' : 'bg-blue-400'}`}></div>
                             <div className="flex-1 min-w-0">
@@ -722,7 +722,7 @@ export default function HiringPipeline() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 pt-3 border-t border-slate-700/50">
+              <div className="flex items-center gap-2 pt-3 border-t border-slate-200 dark:border-slate-700/50">
                 <span className="text-xs text-slate-500">Filter by Position:</span>
                 <button
                   onClick={() => setSelectedPosition('all')}
@@ -771,7 +771,7 @@ export default function HiringPipeline() {
               </div>
 
               {expandedBottlenecks && (
-                <div className="border-t border-slate-700/50 p-5 space-y-4">
+                <div className="border-t border-slate-200 dark:border-slate-700/50 p-5 space-y-4">
                   {bottlenecks.map(bottleneck => {
                     const severityColor = getSeverityColor(bottleneck.severity);
                     return (
@@ -842,7 +842,7 @@ export default function HiringPipeline() {
               </div>
 
               {expandedMetrics && (
-                <div className="border-t border-slate-700/50 p-5">
+                <div className="border-t border-slate-200 dark:border-slate-700/50 p-5">
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     {/* Time-to-Hire */}
                     <div>
@@ -989,7 +989,7 @@ export default function HiringPipeline() {
                     </div>
 
                     {isExpanded && (
-                      <div className="border-t border-slate-700/50 p-5 bg-slate-900/30">
+                      <div className="border-t border-slate-200 dark:border-slate-700/50 p-5 bg-slate-900/30">
                         <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">{stage.description}</p>
 
                         {/* Stage-specific content */}
@@ -1049,7 +1049,7 @@ export default function HiringPipeline() {
                                     <p className="text-slate-900 dark:text-white font-medium">{interview.location}</p>
                                   </div>
                                 </div>
-                                <div className="mt-3 pt-3 border-t border-slate-700/50">
+                                <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-700/50">
                                   <p className="text-xs text-slate-500 mb-1">Interview Panel:</p>
                                   <p className="text-xs text-slate-600 dark:text-slate-400">{interview.panel.join(' • ')}</p>
                                   <p className="text-xs text-slate-500 mt-2">Format: {interview.format}</p>
@@ -1093,7 +1093,7 @@ export default function HiringPipeline() {
                                       <span className="text-slate-600 dark:text-slate-400">Maximum (Complex):</span>
                                       <span className="text-slate-900 dark:text-white font-medium">{stage.investigatorCapacity.maxDuration}+ days</span>
                                     </div>
-                                    <div className="flex justify-between text-sm pt-2 border-t border-slate-700/50">
+                                    <div className="flex justify-between text-sm pt-2 border-t border-slate-200 dark:border-slate-700/50">
                                       <span className="text-slate-600 dark:text-slate-400">Monthly Throughput:</span>
                                       <span className="text-amber-400 font-medium">4-6 investigations</span>
                                     </div>
@@ -1166,7 +1166,7 @@ export default function HiringPipeline() {
                                     </div>
                                   </div>
                                   {offer.notes && (
-                                    <p className="text-xs text-slate-500 mt-3 pt-3 border-t border-slate-700/50">
+                                    <p className="text-xs text-slate-500 mt-3 pt-3 border-t border-slate-200 dark:border-slate-700/50">
                                       Note: {offer.notes}
                                     </p>
                                   )}
@@ -1249,7 +1249,7 @@ export default function HiringPipeline() {
                                   </div>
 
                                   {isCandidateExpanded && (
-                                    <div className="border-t border-slate-700/50 p-4 bg-slate-900/50">
+                                    <div className="border-t border-slate-200 dark:border-slate-700/50 p-4 bg-slate-900/50">
                                       <div className="grid grid-cols-2 gap-3 mb-4">
                                         <div className="bg-slate-800/60 rounded-lg p-3">
                                           <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Next Action</p>
@@ -1321,7 +1321,7 @@ export default function HiringPipeline() {
 
       {chatOpen && (
         <div className="fixed bottom-24 right-6 w-full max-w-96 h-[500px] bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-2xl flex flex-col z-40 mx-4 sm:mx-0">
-          <div className="p-4 border-b border-slate-700/50">
+          <div className="p-4 border-b border-slate-200 dark:border-slate-700/50">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
                 <MessageCircle className="w-5 h-5 text-slate-900 dark:text-white" />
@@ -1339,12 +1339,12 @@ export default function HiringPipeline() {
               </div>
               <div className="flex-1">
                 <div className="bg-slate-800/60 p-3 rounded-xl">
-                  <p className="text-sm text-slate-200">I can help you analyze pipeline bottlenecks, review candidate status, check investigator workload, or schedule interview panels. What information do you need?</p>
+                  <p className="text-sm text-slate-700 dark:text-slate-200">I can help you analyze pipeline bottlenecks, review candidate status, check investigator workload, or schedule interview panels. What information do you need?</p>
                 </div>
               </div>
             </div>
           </div>
-          <div className="p-4 border-t border-slate-700/50">
+          <div className="p-4 border-t border-slate-200 dark:border-slate-700/50">
             <div className="flex items-center gap-2">
               <input type="text" placeholder="Ask about pipeline status..." className="flex-1 px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500/50" />
               <button className="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center">

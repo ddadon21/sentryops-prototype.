@@ -302,7 +302,7 @@ export default function DetentionCommandCenter() {
             </div>
 
             {/* Readiness Status Bar */}
-            <div className="mt-4 pt-3 border-t border-slate-700/50">
+            <div className="mt-4 pt-3 border-t border-slate-200 dark:border-slate-700/50">
               <p className="text-[10px] text-slate-500 uppercase tracking-wide mb-2">System Readiness</p>
               <div className="grid grid-cols-2 gap-1.5">
                 {[
@@ -352,7 +352,7 @@ export default function DetentionCommandCenter() {
             {!aiExpanded && (
               <p className="text-[11px] text-slate-500">2 critical actions · 1 warning · Click expand to review</p>
             )}
-            <div className="mt-3 pt-2.5 border-t border-slate-700/40 flex items-center justify-between">
+            <div className="mt-3 pt-2.5 border-t border-slate-200 dark:border-slate-700/40 flex items-center justify-between">
               <span className="text-[10px] text-slate-600">AI-assisted · 4 sources · 3m ago</span>
               <button className="text-[11px] text-slate-600 dark:text-slate-400 hover:text-slate-700 dark:text-slate-300 transition-colors flex items-center gap-1">
                 Full intelligence brief <ArrowRight className="w-3 h-3" />
@@ -392,7 +392,7 @@ export default function DetentionCommandCenter() {
                 );
               })}
             </div>
-            <div className="mt-3 pt-2.5 border-t border-slate-700/50 flex justify-between text-[10px] text-slate-500">
+            <div className="mt-3 pt-2.5 border-t border-slate-200 dark:border-slate-700/50 flex justify-between text-[10px] text-slate-500">
               <span>{housingPods.filter(p => p.status === 'Over Capacity').length} over · {housingPods.filter(p => p.status === 'Near Capacity').length} near capacity</span>
               <span>{housingPods.filter(p => p.status === 'Normal').length} normal</span>
             </div>
@@ -438,7 +438,7 @@ export default function DetentionCommandCenter() {
             </div>
             <div className="space-y-2">
               {courtRuns.map((run, i) => (
-                <div key={i} className="flex items-start gap-3 py-2 border-b border-slate-700/25 last:border-0">
+                <div key={i} className="flex items-start gap-3 py-2 border-b border-slate-200 dark:border-slate-700/25 last:border-0">
                   <div className="w-12 text-right flex-shrink-0">
                     <p className="text-[11px] font-bold text-slate-700 dark:text-slate-300">{run.time}</p>
                   </div>
@@ -453,7 +453,7 @@ export default function DetentionCommandCenter() {
                 </div>
               ))}
             </div>
-            <div className="mt-2 pt-2 border-t border-slate-700/50">
+            <div className="mt-2 pt-2 border-t border-slate-200 dark:border-slate-700/50">
               <p className="text-[10px] text-amber-600 dark:text-amber-400 flex items-center gap-1">
                 <AlertTriangle className="w-3 h-3" />
                 31 scheduled tomorrow — request 5th transport van
@@ -500,7 +500,7 @@ export default function DetentionCommandCenter() {
                 <p className="text-[11px] text-amber-600 dark:text-amber-400 font-medium">+4 today</p>
               </div>
             </div>
-            <div className="mt-3 pt-2.5 border-t border-slate-700/50 grid grid-cols-3 gap-2 text-center">
+            <div className="mt-3 pt-2.5 border-t border-slate-200 dark:border-slate-700/50 grid grid-cols-3 gap-2 text-center">
               <div>
                 <p className="text-[10px] text-slate-500">Avg Stay</p>
                 <p className="text-[12px] font-semibold text-slate-900 dark:text-white">23.4d</p>
@@ -532,7 +532,7 @@ export default function DetentionCommandCenter() {
                 <div key={item.label} className="flex items-start justify-between gap-2">
                   <div className="flex-1">
                     <div className="flex items-center justify-between mb-0.5">
-                      <p className="text-[11px] font-medium text-slate-200">{item.label}</p>
+                      <p className="text-[11px] font-medium text-slate-700 dark:text-slate-200">{item.label}</p>
                       <span className={`text-[10px] font-semibold ${item.pct && item.pct >= 90 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500'}`}>{item.value}</span>
                     </div>
                     {item.pct !== null && (
@@ -544,7 +544,7 @@ export default function DetentionCommandCenter() {
                   </div>
                 </div>
               ))}
-              <div className="pt-2 border-t border-slate-700/50">
+              <div className="pt-2 border-t border-slate-200 dark:border-slate-700/50">
                 <p className="text-[10px] text-slate-500">Medical staff: 6/6 · RN Martinez on duty · Dr. Anderson on-call</p>
               </div>
             </div>
@@ -566,7 +566,7 @@ export default function DetentionCommandCenter() {
                 </div>
               ))}
             </div>
-            <div className="mt-3 pt-2.5 border-t border-slate-700/50">
+            <div className="mt-3 pt-2.5 border-t border-slate-200 dark:border-slate-700/50">
               <button
                 onClick={() => navigate('/jail/dashboard')}
                 className="w-full flex items-center justify-center gap-2 text-[11px] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors py-1"

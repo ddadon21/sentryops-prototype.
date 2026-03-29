@@ -424,7 +424,7 @@ export default function HRReports() {
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex">
       {/* Sidebar */}
       <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-slate-800/50 backdrop-blur-xl bg-slate-900/30 flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
-        <div className="p-4 border-b border-slate-700/50 flex items-center justify-between">
+        <div className="p-4 border-b border-slate-200 dark:border-slate-700/50 flex items-center justify-between">
           {!sidebarCollapsed && (
             <div className="flex items-center gap-2">
               <Shield className="w-8 h-8 text-amber-500" />
@@ -461,7 +461,7 @@ export default function HRReports() {
           })}
         </nav>
 
-        <div className="border-t border-slate-700/50">
+        <div className="border-t border-slate-200 dark:border-slate-700/50">
           {!sidebarCollapsed && (
             <div className="px-4 py-3">
               <p className="text-xs text-slate-500 text-center">Gwinnett County Sheriff's Office</p>
@@ -600,7 +600,7 @@ export default function HRReports() {
       {/* Main Content */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Header */}
-        <header className="border-b border-slate-800/50 backdrop-blur-xl bg-slate-900/30">
+        <header className="border-b border-slate-200 dark:border-slate-800/50 backdrop-blur-xl bg-slate-900/30">
           <div className="px-4 lg:px-6 py-4 flex items-center justify-between gap-4">
             <div className="flex items-center gap-4 flex-1 min-w-0">
               <button onClick={() => setSidebarOpen(!sidebarOpen)} className="lg:hidden p-2 hover:bg-slate-800/50 rounded-lg">
@@ -634,12 +634,12 @@ export default function HRReports() {
 
                 {notificationsOpen && (
                   <div className="absolute right-0 top-full mt-2 w-96 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-2xl z-50">
-                    <div className="p-4 border-b border-slate-700/50">
+                    <div className="p-4 border-b border-slate-200 dark:border-slate-700/50">
                       <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Notifications</h3>
                     </div>
                     <div className="max-h-96 overflow-y-auto">
                       {notifications.map(notification => (
-                        <div key={notification.id} className={`p-4 border-b border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
+                        <div key={notification.id} className={`p-4 border-b border-slate-200 dark:border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
                           <div className="flex items-start gap-3">
                             <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-amber-400' : 'bg-blue-400'}`}></div>
                             <div className="flex-1 min-w-0">
@@ -651,7 +651,7 @@ export default function HRReports() {
                         </div>
                       ))}
                     </div>
-                    <div className="p-3 border-t border-slate-700/50">
+                    <div className="p-3 border-t border-slate-200 dark:border-slate-700/50">
                       <button className="w-full text-center text-sm text-amber-400 hover:text-amber-300 font-medium">View All</button>
                     </div>
                   </div>
@@ -723,7 +723,7 @@ export default function HRReports() {
             </div>
 
             {/* Section Navigation */}
-            <div className="mb-6 flex gap-2 border-b border-slate-700/50 overflow-x-auto">
+            <div className="mb-6 flex gap-2 border-b border-slate-200 dark:border-slate-700/50 overflow-x-auto">
               {[
                 { id: 'all', label: 'All Reports' },
                 { id: 'command', label: 'Command Briefing' },
@@ -1033,7 +1033,7 @@ export default function HRReports() {
                         </div>
 
                         {isExpanded && (
-                          <div className="px-5 pb-5 border-t border-slate-700/30 pt-4 space-y-4">
+                          <div className="px-5 pb-5 border-t border-slate-200 dark:border-slate-700/30 pt-4 space-y-4">
                             <div className="bg-slate-900/40 border border-slate-700/30 rounded-xl p-4">
                               <h5 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Report Summary</h5>
                               <div className="space-y-1.5">
@@ -1156,7 +1156,7 @@ export default function HRReports() {
 
         {supportOpen && (
           <div className="absolute bottom-16 right-0 w-80 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-2xl overflow-hidden">
-            <div className="p-4 border-b border-slate-700/50">
+            <div className="p-4 border-b border-slate-200 dark:border-slate-700/50">
               <h3 className="text-sm font-semibold text-slate-900 dark:text-white">HR Reports Support</h3>
               <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">GCSO Human Resources Division</p>
             </div>

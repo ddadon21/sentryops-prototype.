@@ -531,7 +531,7 @@ export default function FinancialBackground() {
             </div>
 
             {/* Subject Summaries */}
-            <div className="mt-5 pt-5 border-t border-slate-700/50">
+            <div className="mt-5 pt-5 border-t border-slate-200 dark:border-slate-700/50">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                 {/* Excellent */}
                 <div className="bg-green-500/5 border border-green-500/20 rounded-lg p-3">
@@ -579,7 +579,7 @@ export default function FinancialBackground() {
             </div>
 
             {/* Investigator Assessment */}
-            <div className="mt-4 pt-4 border-t border-slate-700/50">
+            <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700/50">
               <h4 className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Investigator Assessment</h4>
               <p className="text-sm text-slate-600 dark:text-slate-400">
                 {excellentCount} subject approved (excellent financial health), {acceptableCount} subject approved (meets standards), {reviewCount} subject conditional pending discussion (high debt and medical collections). All subjects meet minimum 650 credit score. Wilson requires applicant interview to discuss collections and debt management plan.
@@ -713,7 +713,7 @@ export default function FinancialBackground() {
 
                   {/* Expanded Content */}
                   {isExpanded && (
-                    <div className="border-t border-slate-700/50 p-5">
+                    <div className="border-t border-slate-200 dark:border-slate-700/50 p-5">
                       {/* Credit Report Summary */}
                       <div className="mb-6">
                         <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
@@ -1007,7 +1007,7 @@ export default function FinancialBackground() {
                         <p className="text-xs text-slate-600 dark:text-slate-400 mb-3">
                           This report contains consumer credit information obtained with applicant consent (signed release on file) and used solely for employment screening purposes per FCRA 15 USC 1681.
                         </p>
-                        <div className="border-t border-slate-700/50 pt-3">
+                        <div className="border-t border-slate-200 dark:border-slate-700/50 pt-3">
                           <p className="text-xs text-slate-500 mb-2">Access Log:</p>
                           <div className="space-y-1">
                             {report.fcraAccessLog.map((log, idx) => (
@@ -1023,7 +1023,7 @@ export default function FinancialBackground() {
                       </div>
 
                       {/* Action Buttons */}
-                      <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-slate-700/50">
+                      <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-slate-200 dark:border-slate-700/50">
                         <button className="flex items-center gap-2 px-4 py-2 bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 rounded-xl text-sm font-medium transition-colors border border-purple-500/20">
                           <FileText className="w-4 h-4" />View Full Credit Report
                         </button>

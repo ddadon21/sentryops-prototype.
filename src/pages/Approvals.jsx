@@ -266,7 +266,7 @@ export default function Approvals() {
     }
   ]);
 
-  const [approvalHistory] = useState([
+  const [approvalHistory, setApprovalHistory] = useState([
     {
       id: 'H001',
       type: 'budget',
@@ -361,9 +361,28 @@ export default function Approvals() {
     setApprovalsList(approvalsList.filter(a => a.id !== selectedApproval.id));
 
     const actionText = approvalAction === 'approve' ? 'approved' : 'denied';
+
+    const newHistoryEntry = {
+      id: `H${Date.now()}`,
+      type: selectedApproval.type,
+      title: selectedApproval.title,
+      submittedBy: selectedApproval.submittedBy,
+      details: selectedApproval.details,
+      division: selectedApproval.division,
+      amount: selectedApproval.amount || null,
+      decision: approvalAction === 'approve' ? 'approved' : 'denied',
+      decidedBy: 'Sheriff Thompson',
+      decidedDate: new Date().toISOString().split('T')[0],
+      decisionNotes: actionComment.trim() || (approvalAction === 'approve' ? 'Approved by command authority.' : 'Denied by command authority.'),
+      submittedDate: selectedApproval.submittedDate || new Date().toISOString().split('T')[0],
+    };
+    setApprovalHistory(prev => [newHistoryEntry, ...prev]);
+
     showToast(`${selectedApproval.title} ${actionText} successfully`, 'success');
 
     closeApprovalModal();
+    setActiveTab('decision-log');
+    setLogFilter('all');
   };
 
   const showToast = (message, type = 'success') => {
@@ -387,6 +406,22 @@ export default function Approvals() {
 
   const bulkApprove = () => {
     if (selectedItems.length === 0) return;
+    const items = approvalsList.filter(a => selectedItems.includes(a.id));
+    const newEntries = items.map(a => ({
+      id: `H${Date.now()}-${a.id}`,
+      type: a.type,
+      title: a.title,
+      submittedBy: a.submittedBy,
+      details: a.details,
+      division: a.division,
+      amount: a.amount || null,
+      decision: 'approved',
+      decidedBy: 'Sheriff Thompson',
+      decidedDate: new Date().toISOString().split('T')[0],
+      decisionNotes: 'Bulk approved by command authority.',
+      submittedDate: a.submittedDate || new Date().toISOString().split('T')[0],
+    }));
+    setApprovalHistory(prev => [...newEntries, ...prev]);
     setApprovalsList(approvalsList.filter(a => !selectedItems.includes(a.id)));
     showToast(`${selectedItems.length} items approved successfully`, 'success');
     setSelectedItems([]);
@@ -394,6 +429,22 @@ export default function Approvals() {
 
   const bulkDeny = () => {
     if (selectedItems.length === 0) return;
+    const items = approvalsList.filter(a => selectedItems.includes(a.id));
+    const newEntries = items.map(a => ({
+      id: `H${Date.now()}-${a.id}`,
+      type: a.type,
+      title: a.title,
+      submittedBy: a.submittedBy,
+      details: a.details,
+      division: a.division,
+      amount: a.amount || null,
+      decision: 'denied',
+      decidedBy: 'Sheriff Thompson',
+      decidedDate: new Date().toISOString().split('T')[0],
+      decisionNotes: 'Bulk denied by command authority.',
+      submittedDate: a.submittedDate || new Date().toISOString().split('T')[0],
+    }));
+    setApprovalHistory(prev => [...newEntries, ...prev]);
     setApprovalsList(approvalsList.filter(a => !selectedItems.includes(a.id)));
     showToast(`${selectedItems.length} items denied`, 'success');
     setSelectedItems([]);
@@ -539,7 +590,7 @@ export default function Approvals() {
             </div>
 
             {/* ── Tabs ────────────────────────────────── */}
-            <div className="flex gap-1.5 mb-4 border-b border-slate-800/50 pb-px">
+            <div className="flex gap-1.5 mb-4 border-b border-slate-200 dark:border-slate-800/50 pb-px">
               <button
                 onClick={() => setActiveTab('pending')}
                 className={`px-2.5 py-1.5 text-[11px] font-medium transition-all relative flex items-center gap-1.5 ${
@@ -997,10 +1048,10 @@ export default function Approvals() {
                 </div>
 
                 {/* Table */}
-                <div className="border border-slate-700/30 rounded overflow-hidden">
+                <div className="border border-slate-200 dark:border-slate-700/30 rounded overflow-hidden">
                   <table className="w-full">
                     <thead>
-                      <tr className="border-b border-slate-700/40">
+                      <tr className="border-b border-slate-200 dark:border-slate-700/40">
                         <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Type</th>
                         <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Title</th>
                         <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Division</th>
@@ -1191,7 +1242,7 @@ export default function Approvals() {
                 </div>
                 <div className="bg-slate-50 dark:bg-slate-900/50 rounded-lg p-3 border border-slate-200 dark:border-transparent">
                   <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Decision Notes</p>
-                  <p className="text-sm text-slate-700 dark:text-slate-200">{historyDetailModal.decisionNotes}</p>
+                  <p className="text-sm text-slate-700 dark:text-slate-700 dark:text-slate-200">{historyDetailModal.decisionNotes}</p>
                 </div>
               </div>
             </div>

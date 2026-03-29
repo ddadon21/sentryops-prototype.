@@ -526,7 +526,7 @@ const CADDispatch = () => {
               </button>
               {showPressureDetail && (
                 <div className="absolute right-0 top-full mt-1.5 z-50 min-w-[280px] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/60 rounded-xl shadow-xl overflow-hidden">
-                  <div className="px-4 py-2.5 border-b border-slate-700/40">
+                  <div className="px-4 py-2.5 border-b border-slate-200 dark:border-slate-700/40">
                     <p className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Why Pressure is {operationalPressure}</p>
                   </div>
                   <ul className="p-3 space-y-1.5">
@@ -582,7 +582,7 @@ const CADDispatch = () => {
                     </div>
                     <div className="bg-slate-900/50 border border-slate-700/40 rounded-lg px-3 py-2">
                       <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-0.5">Recommended Action</p>
-                      <p className="text-[11px] text-slate-200 leading-snug">{item.action}</p>
+                      <p className="text-[11px] text-slate-700 dark:text-slate-200 leading-snug">{item.action}</p>
                     </div>
                   </div>
                   <div className="flex-shrink-0">
@@ -677,7 +677,7 @@ const CADDispatch = () => {
 
         {/* ── Active Calls for Service ──────────────────────── */}
         <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
-          <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-700/40">
+          <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 dark:border-slate-700/40">
             <div className="flex items-center gap-2">
               <Radio className="w-4 h-4 text-slate-600 dark:text-slate-400" />
               <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Active Calls for Service</span>
@@ -804,7 +804,7 @@ const CADDispatch = () => {
                       <div className="flex flex-col gap-1.5 flex-shrink-0 w-[160px]">
                         <div className="bg-slate-900/60 border border-slate-700/50 rounded-lg px-2.5 py-2">
                           <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1">Action</p>
-                          <p className="text-[11px] text-slate-200 leading-snug">
+                          <p className="text-[11px] text-slate-700 dark:text-slate-200 leading-snug">
                             {call.priority === 'P1' && call.type.includes('Domestic') ? 'Stage additional unit — await scene clear before entry' :
                              call.priority === 'P1' ? 'Supervisor en route — monitor radio' :
                              call.type.includes('Accident') ? 'Request tow + clear lanes when EMS done' :
@@ -861,7 +861,7 @@ const CADDispatch = () => {
                           <p className="text-[11px] text-slate-700 dark:text-slate-300 leading-relaxed">{call.notes}</p>
                         </div>
                       )}
-                      <div className="flex items-center gap-2 pt-2 border-t border-slate-700/40">
+                      <div className="flex items-center gap-2 pt-2 border-t border-slate-200 dark:border-slate-700/40">
                         <button className="text-[11px] px-3 py-1.5 bg-blue-500/15 border border-blue-500/25 text-blue-400 rounded-lg hover:bg-blue-500/25 transition-colors font-medium">
                           Assign Units
                         </button>
@@ -920,7 +920,7 @@ const CADDispatch = () => {
           {/* Calls Holding — left column */}
           {holdingActive.length > 0 && (
             <div className="bg-slate-800/30 border border-amber-500/20 rounded-xl overflow-hidden">
-              <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-700/40">
+              <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 dark:border-slate-700/40">
                 <div className="flex items-center gap-2">
                   <Timer className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                   <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Calls Holding</span>
@@ -979,7 +979,7 @@ const CADDispatch = () => {
 
           {/* Unit Status — right columns */}
           <div className={`bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden ${holdingActive.length > 0 ? 'lg:col-span-2' : 'lg:col-span-3'}`}>
-            <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-700/40">
+            <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 dark:border-slate-700/40">
               <div className="flex items-center gap-2">
                 <Car className="w-4 h-4 text-slate-600 dark:text-slate-400" />
                 <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Unit Status</span>

@@ -305,7 +305,7 @@ export default function BISettings() {
             </div>
 
             {/* Settings Navigation Tabs */}
-            <div className="mb-6 flex gap-2 border-b border-slate-700/50 overflow-x-auto">
+            <div className="mb-6 flex gap-2 border-b border-slate-200 dark:border-slate-700/50 overflow-x-auto">
               {settingsTabs.map(tab => {
                 const Icon = tab.icon;
                 return (
@@ -845,7 +845,7 @@ export default function BISettings() {
                                 <p className="text-sm text-slate-900 dark:text-white font-medium">
                                   {integration.monthlyRequests.toLocaleString()} / {integration.requestLimit.toLocaleString()}
                                 </p>
-                                <div className="w-24 h-1.5 bg-slate-700 rounded-full mt-1">
+                                <div className="w-24 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full mt-1">
                                   <div
                                     className="h-full bg-purple-500 rounded-full"
                                     style={{ width: `${(integration.monthlyRequests / integration.requestLimit) * 100}%` }}

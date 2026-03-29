@@ -605,7 +605,7 @@ export default function PersonnelOverview() {
                         {!isCollapsed && (
                           <>
                             {/* Column Headers */}
-                            <div className="grid grid-cols-[1fr_80px_100px_90px_1fr_1fr_90px] gap-1 px-3 py-1.5 bg-slate-900/30 border-b border-slate-700/10 text-[9px] font-semibold text-slate-500 uppercase tracking-wider">
+                            <div className="grid grid-cols-[1fr_80px_100px_90px_1fr_1fr_90px] gap-1 px-3 py-1.5 bg-slate-900/30 border-b border-slate-200 dark:border-slate-700/10 text-[9px] font-semibold text-slate-500 uppercase tracking-wider">
                               <span>Personnel</span>
                               <span>Division</span>
                               <span>Deployability</span>
@@ -624,7 +624,7 @@ export default function PersonnelOverview() {
                               return (
                                 <div
                                   key={person.id}
-                                  className={`grid grid-cols-[1fr_80px_100px_90px_1fr_1fr_90px] gap-1 px-3 py-3.5 items-start border-b border-slate-800/15 hover:bg-slate-50 dark:hover:bg-slate-800/15 transition-colors ${
+                                  className={`grid grid-cols-[1fr_80px_100px_90px_1fr_1fr_90px] gap-1 px-3 py-3.5 items-start border-b border-slate-200 dark:border-slate-800/15 hover:bg-slate-50 dark:hover:bg-slate-800/15 transition-colors ${
                                     opStatus.color === 'red' ? 'bg-red-500/[0.02]' :
                                     opStatus.color === 'amber' ? 'bg-amber-500/[0.01]' : ''
                                   }`}
@@ -773,7 +773,7 @@ export default function PersonnelOverview() {
                       </div>
                     ))}
                   </div>
-                  <div className="mt-2.5 pt-2 border-t border-slate-700/30 flex items-center justify-between text-[10px]">
+                  <div className="mt-2.5 pt-2 border-t border-slate-200 dark:border-slate-700/30 flex items-center justify-between text-[10px]">
                     <span className="text-slate-500">Total on duty:</span>
                     <span className="text-slate-900 dark:text-white font-bold">127/170 (75%)</span>
                   </div>
@@ -835,7 +835,7 @@ export default function PersonnelOverview() {
             onClick={() => setQuickPeekOpen(false)}
           />
           <div className="relative w-full max-w-[480px] bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-700/50 shadow-2xl overflow-y-auto">
-            <div className="sticky top-0 bg-slate-900/95 backdrop-blur-xl border-b border-slate-700/50 p-6 z-10">
+            <div className="sticky top-0 bg-slate-900/95 backdrop-blur-xl border-b border-slate-200 dark:border-slate-700/50 p-6 z-10">
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
@@ -931,7 +931,7 @@ export default function PersonnelOverview() {
               </div>
 
               {/* Quick Actions */}
-              <div className="pt-4 border-t border-slate-700/50 space-y-3">
+              <div className="pt-4 border-t border-slate-200 dark:border-slate-700/50 space-y-3">
                 <button className="w-full flex items-center gap-3 px-4 py-3 bg-slate-100 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-800/60 border border-slate-700/50 hover:border-slate-600/50 rounded-xl text-slate-900 dark:text-white transition-all">
                   <Mail className="w-5 h-5 text-slate-600 dark:text-slate-400" />
                   <span className="text-sm font-medium">Send Message</span>
@@ -958,7 +958,7 @@ export default function PersonnelOverview() {
           />
           <div className="relative w-full max-w-5xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto">
             {/* Header */}
-            <div className="sticky top-0 bg-slate-900/95 backdrop-blur-xl border-b border-slate-700/50 p-6 z-10">
+            <div className="sticky top-0 bg-slate-900/95 backdrop-blur-xl border-b border-slate-200 dark:border-slate-700/50 p-6 z-10">
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-4">
                   <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">

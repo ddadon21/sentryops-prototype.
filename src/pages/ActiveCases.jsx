@@ -514,7 +514,7 @@ export default function ActiveCases() {
                 </div>
               </div>
 
-              <div className="mt-4 pt-4 border-t border-slate-700/30 flex items-center justify-between flex-wrap gap-3">
+              <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700/30 flex items-center justify-between flex-wrap gap-3">
                 <p className="text-sm text-slate-600 dark:text-slate-400">Showing: <span className="text-slate-900 dark:text-white font-medium">{filteredCases.length} of {cases.length}</span> cases</p>
                 <div className="flex items-center gap-2">
                   <button className="flex items-center gap-2 px-4 py-2 bg-slate-700/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium hover:bg-slate-700/60 transition-all">
@@ -740,7 +740,7 @@ export default function ActiveCases() {
                       )}
 
                       {/* Action Buttons */}
-                      <div className="flex items-center gap-2 pt-4 border-t border-slate-700/30">
+                      <div className="flex items-center gap-2 pt-4 border-t border-slate-200 dark:border-slate-700/30">
                         <button className="flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-sm font-medium transition-all">
                           <Eye className="w-4 h-4" />
                           View Full Case File

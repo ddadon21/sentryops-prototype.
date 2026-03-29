@@ -576,7 +576,7 @@ const JailDashboard = () => {
               </div>
             </div>
 
-            <div className="pt-3 border-t border-slate-700/50">
+            <div className="pt-3 border-t border-slate-200 dark:border-slate-700/50">
               <div className="text-xs text-slate-600 dark:text-slate-400 mb-1">Today's Activity (0000-1838 hrs):</div>
               <div className="text-xs text-slate-700 dark:text-slate-300 mb-1">Bookings: 18 (7 felony, 9 misdemeanor, 2 violations)</div>
               <div className="text-xs text-slate-700 dark:text-slate-300 mb-1">Releases: 14 (8 bond, 4 time served, 2 transfers)</div>
@@ -587,7 +587,7 @@ const JailDashboard = () => {
               </div>
             </div>
 
-            <div className="pt-2 border-t border-slate-700/50 mt-2 text-xs space-y-1">
+            <div className="pt-2 border-t border-slate-200 dark:border-slate-700/50 mt-2 text-xs space-y-1">
               <div className="flex items-center gap-1 text-amber-600 dark:text-amber-400">
                 <AlertTriangle className="w-3 h-3" />
                 <span>Approaching 95% threshold (876 inmates)</span>
@@ -636,13 +636,13 @@ const JailDashboard = () => {
                   <div>└─ Court Ordered: 0</div>
                 </div>
               </div>
-              <div className="flex justify-between items-center text-sm pt-2 border-t border-slate-700/50">
+              <div className="flex justify-between items-center text-sm pt-2 border-t border-slate-200 dark:border-slate-700/50">
                 <span className="text-slate-600 dark:text-slate-400">Net Change:</span>
                 <span className="text-slate-700 dark:text-slate-300 font-bold">+{facilityMetrics.netChange} (842 current)</span>
               </div>
             </div>
 
-            <div className="mt-3 pt-3 border-t border-slate-700/50">
+            <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-700/50">
               <div className="flex items-center gap-2">
                 <ArrowRight className="w-3 h-3 text-slate-600 dark:text-slate-400" />
                 <span className="text-xs text-slate-700 dark:text-slate-300">Trend: Stable population</span>
@@ -671,7 +671,7 @@ const JailDashboard = () => {
               </div>
             </div>
 
-            <div className="mt-3 pt-3 border-t border-slate-700/50">
+            <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-700/50">
               <div className="text-xs text-amber-600 dark:text-amber-400 font-medium mb-2">Tomorrow's Schedule: 31 transports</div>
               <div className="text-xs text-slate-500 space-y-0.5">
                 <div>├─ Superior Court: 17 (arraignments) - Depart 0630</div>
@@ -704,13 +704,13 @@ const JailDashboard = () => {
                 <TrendingUp className="w-4 h-4" />
                 <span>+1.2 days vs last month (22.2 days)</span>
               </div>
-              <div className="pt-2 border-t border-slate-700/50 text-xs space-y-1">
+              <div className="pt-2 border-t border-slate-200 dark:border-slate-700/50 text-xs space-y-1">
                 <div className="text-slate-600 dark:text-slate-400">Current Breakdown:</div>
                 <div className="text-slate-500 ml-2">├─ Median: {facilityMetrics.medianStay} days</div>
                 <div className="text-slate-500 ml-2">├─ Shortest: &lt;1 day (bond posted same day)</div>
                 <div className="text-slate-500 ml-2">└─ Longest: {facilityMetrics.longestStay} days (pre-trial murder)</div>
               </div>
-              <div className="pt-2 border-t border-slate-700/50 text-xs space-y-1">
+              <div className="pt-2 border-t border-slate-200 dark:border-slate-700/50 text-xs space-y-1">
                 <div className="text-slate-600 dark:text-slate-400">By Charge Type:</div>
                 <div className="text-slate-500 ml-2">├─ Misdemeanor: Avg 8.4 days</div>
                 <div className="text-slate-500 ml-2">├─ Felony (bondable): Avg 28.6 days</div>
@@ -718,7 +718,7 @@ const JailDashboard = () => {
               </div>
             </div>
 
-            <div className="mt-2 pt-2 border-t border-slate-700/50 text-xs space-y-1">
+            <div className="mt-2 pt-2 border-t border-slate-200 dark:border-slate-700/50 text-xs space-y-1">
               <div className="flex items-center gap-1">
                 <Circle className="w-2 h-2 fill-green-400 text-green-600 dark:text-green-400" />
                 <span className="text-green-600 dark:text-green-400">Performance: Below 25-day target</span>
@@ -758,7 +758,7 @@ const JailDashboard = () => {
             ))}
           </div>
 
-          <div className="pt-4 border-t border-slate-700 space-y-4">
+          <div className="pt-4 border-t border-slate-200 dark:border-slate-700 space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <div className="text-sm mb-2">
@@ -1155,7 +1155,7 @@ const JailDashboard = () => {
                     </div>
                   </div>
                   {unit.notes && (
-                    <div className="mt-2 pt-2 border-t border-slate-700 text-sm flex items-center gap-2">
+                    <div className="mt-2 pt-2 border-t border-slate-200 dark:border-slate-700 text-sm flex items-center gap-2">
                       <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0" />
                       <span className="text-amber-600 dark:text-amber-400">{unit.notes}</span>
                     </div>
@@ -1333,7 +1333,7 @@ const JailDashboard = () => {
               </div>
 
               {/* Recent Classification Changes */}
-              <div className="pt-4 border-t border-slate-700">
+              <div className="pt-4 border-t border-slate-200 dark:border-slate-700">
                 <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-2">Recent Changes Today:</h3>
                 <div className="space-y-2">
                   {classificationChanges.map((change, idx) => (
@@ -1585,7 +1585,7 @@ const JailDashboard = () => {
                   )}
 
                   {/* Bond Status */}
-                  <div className="flex items-center justify-between pt-3 border-t border-slate-700">
+                  <div className="flex items-center justify-between pt-3 border-t border-slate-200 dark:border-slate-700">
                     <div className="text-sm">
                       <span className="text-slate-600 dark:text-slate-400">Bond:</span>{' '}
                       <span className={booking.bond === 'No Bond' ? 'text-red-600 dark:text-red-400 font-semibold' : 'text-emerald-600 dark:text-emerald-400 font-semibold'}>
@@ -1675,7 +1675,7 @@ const JailDashboard = () => {
                   )}
 
                   {/* Status and Follow-up */}
-                  <div className="flex items-center justify-between pt-3 border-t border-slate-700">
+                  <div className="flex items-center justify-between pt-3 border-t border-slate-200 dark:border-slate-700">
                     <span className={`px-2 py-1 rounded text-xs font-medium ${
                       incident.status === 'Resolved' ? 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400' :
                       incident.status === 'Under Review' ? 'bg-amber-500/20 text-amber-600 dark:text-amber-400' :
@@ -1749,7 +1749,7 @@ const JailDashboard = () => {
                   </div>
 
                   {/* Transport Details */}
-                  <div className="space-y-1 text-xs pt-2 border-t border-slate-700/50">
+                  <div className="space-y-1 text-xs pt-2 border-t border-slate-200 dark:border-slate-700/50">
                     <div className="flex items-center justify-between">
                       <span className="text-slate-600 dark:text-slate-400">Deputy:</span>
                       <span className="text-slate-900 dark:text-white">{court.deputy}</span>
@@ -1817,7 +1817,7 @@ const JailDashboard = () => {
                 <div className="text-sm text-slate-600 dark:text-slate-400 mb-2">{staffCoverage.aShift.posts}</div>
 
                 {/* Staff Details */}
-                <div className="text-xs space-y-1 pt-2 border-t border-slate-700/50">
+                <div className="text-xs space-y-1 pt-2 border-t border-slate-200 dark:border-slate-700/50">
                   <div className="flex items-center justify-between">
                     <span className="text-slate-600 dark:text-slate-400">Supervisor:</span>
                     <span className="text-slate-900 dark:text-white">{staffCoverage.aShift.supervisor}</span>
@@ -1842,7 +1842,7 @@ const JailDashboard = () => {
                 </div>
 
                 {/* Issue Details */}
-                <div className="text-xs space-y-1 pt-2 border-t border-slate-700/50 mb-3">
+                <div className="text-xs space-y-1 pt-2 border-t border-slate-200 dark:border-slate-700/50 mb-3">
                   <div className="flex items-center justify-between">
                     <span className="text-slate-600 dark:text-slate-400">Supervisor:</span>
                     <span className="text-slate-900 dark:text-white">{staffCoverage.bShift.supervisor}</span>
@@ -1872,7 +1872,7 @@ const JailDashboard = () => {
                   </div>
                 </div>
                 <div className="text-sm text-slate-600 dark:text-slate-400">{staffCoverage.cShift.posts}</div>
-                <div className="text-xs text-slate-600 dark:text-slate-400 pt-2 border-t border-slate-700/50 mt-2">
+                <div className="text-xs text-slate-600 dark:text-slate-400 pt-2 border-t border-slate-200 dark:border-slate-700/50 mt-2">
                   Supervisor: {staffCoverage.cShift.supervisor}
                 </div>
               </div>
@@ -2200,7 +2200,7 @@ const JailDashboard = () => {
 
                   {/* Staff Assignment */}
                   {service.staff && (
-                    <div className="pt-2 border-t border-slate-700/50 text-xs text-slate-500">
+                    <div className="pt-2 border-t border-slate-200 dark:border-slate-700/50 text-xs text-slate-500">
                       Staff: {service.staff}
                     </div>
                   )}

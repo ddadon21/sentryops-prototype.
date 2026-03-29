@@ -390,7 +390,7 @@ export default function DailyCommandBrief() {
             No narrative. Decision-focused.
             ================================================================ */}
         <div ref={decisionsSectionRef} className="mb-5 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl">
-          <div className="flex items-center justify-between px-5 py-3 border-b border-slate-700/15">
+          <div className="flex items-center justify-between px-5 py-3 border-b border-slate-200 dark:border-slate-700/15">
             <div className="flex items-center gap-2.5">
               <Zap className="w-4 h-4 text-red-600 dark:text-red-400" />
               <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Command Decisions — Today</h3>
@@ -453,7 +453,7 @@ export default function DailyCommandBrief() {
 
                   {/* Expanded: Timeline only (no paragraph) */}
                   {isExpanded && (
-                    <div className="px-3 pb-3 ml-3 border-t border-slate-700/15 pt-3">
+                    <div className="px-3 pb-3 ml-3 border-t border-slate-200 dark:border-slate-700/15 pt-3">
                       <div className="flex items-start gap-6">
                         <div className="flex-1">
                           <h4 className="text-[10px] font-semibold text-slate-600 uppercase tracking-widest mb-2">Event Timeline</h4>
@@ -488,7 +488,7 @@ export default function DailyCommandBrief() {
             Countdowns, readiness %, owner, risk color
             ================================================================ */}
         <div className="mb-5 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl">
-          <div className="flex items-center justify-between px-5 py-3 border-b border-slate-700/15">
+          <div className="flex items-center justify-between px-5 py-3 border-b border-slate-200 dark:border-slate-700/15">
             <div className="flex items-center gap-2.5">
               <Shield className="w-4 h-4 text-slate-600 dark:text-slate-400" />
               <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Strategic Exposure — 7 to 14 Days</h3>
@@ -562,7 +562,7 @@ export default function DailyCommandBrief() {
             Visually subordinate — items that worsen if untouched
             ================================================================ */}
         <div className="mb-5 bg-slate-50 dark:bg-slate-800/15 border border-slate-200 dark:border-slate-700/20 rounded-lg">
-          <div className="flex items-center justify-between px-4 py-2.5 border-b border-slate-700/10">
+          <div className="flex items-center justify-between px-4 py-2.5 border-b border-slate-200 dark:border-slate-700/10">
             <div className="flex items-center gap-2">
               <AlertTriangle className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400/70" />
               <h3 className="text-[12px] font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wide">Escalating Risk — Next 72 Hours</h3>
@@ -580,7 +580,7 @@ export default function DailyCommandBrief() {
                 <div className="px-3 py-2">
                   <div className="flex items-center gap-2 mb-1">
                     <div className={`w-0.5 h-3.5 rounded-full flex-shrink-0 ${risk.severity === 'critical' ? 'bg-red-500' : 'bg-amber-500/70'}`}></div>
-                    <p className="text-[13px] font-medium text-slate-900 dark:text-slate-200 flex-1">{risk.title}</p>
+                    <p className="text-[13px] font-medium text-slate-900 dark:text-slate-700 dark:text-slate-200 flex-1">{risk.title}</p>
                     <span className={`px-1.5 py-0.5 border rounded text-[10px] font-semibold ${
                       risk.severity === 'critical' ? 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' : 'bg-amber-500/10 border-amber-500/15 text-amber-600 dark:text-amber-400/80'
                     }`}>
@@ -641,7 +641,7 @@ export default function DailyCommandBrief() {
                   <span className="text-[11px] text-slate-500">#{onDutyData.watchCommander.badge} · Radio: {onDutyData.watchCommander.radio}</span>
                 </div>
               </div>
-              <div className="border-t border-slate-700/20 pt-2.5">
+              <div className="border-t border-slate-200 dark:border-slate-700/20 pt-2.5">
                 <span className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider">Patrol Supervisors</span>
                 <div className="mt-1 space-y-1">
                   {onDutyData.patrolSupervisors.map((sup, idx) => (
@@ -652,14 +652,14 @@ export default function DailyCommandBrief() {
                   ))}
                 </div>
               </div>
-              <div className="border-t border-slate-700/20 pt-2.5">
+              <div className="border-t border-slate-200 dark:border-slate-700/20 pt-2.5">
                 <span className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider">Detention Commander</span>
                 <div className="mt-1 flex items-center gap-2">
                   <button onClick={() => setContactModal(onDutyData.detentionCommander)} className="text-sm font-medium text-slate-900 dark:text-white hover:text-slate-700 dark:text-slate-300 transition-colors">{onDutyData.detentionCommander.name}</button>
                   <span className="text-[11px] text-slate-500">#{onDutyData.detentionCommander.badge} · {onDutyData.detentionCommander.radio}</span>
                 </div>
               </div>
-              <div className="border-t border-slate-700/20 pt-2.5">
+              <div className="border-t border-slate-200 dark:border-slate-700/20 pt-2.5">
                 <span className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider">On-Call Command</span>
                 <div className="mt-1 flex items-center gap-2">
                   <button onClick={() => setContactModal(onDutyData.onCallCommand)} className="text-sm font-medium text-slate-900 dark:text-white hover:text-slate-700 dark:text-slate-300 transition-colors">{onDutyData.onCallCommand.name}</button>

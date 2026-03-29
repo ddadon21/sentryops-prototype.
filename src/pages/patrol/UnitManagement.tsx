@@ -394,7 +394,7 @@ const UnitManagement = () => {
                 </div>
                 <div className="text-xs text-slate-600 dark:text-slate-400">Badge: {unit.badge}</div>
                 {unit.partner && (
-                  <div className="mt-2 pt-2 border-t border-slate-700">
+                  <div className="mt-2 pt-2 border-t border-slate-200 dark:border-slate-700">
                     <div className="text-sm text-slate-900 dark:text-white font-medium">{unit.partner}</div>
                     <div className="text-xs text-slate-600 dark:text-slate-400">Badge: {unit.partnerBadge}</div>
                   </div>
@@ -434,7 +434,7 @@ const UnitManagement = () => {
               </div>
 
               {/* Equipment */}
-              <div className="mt-4 pt-4 border-t border-slate-700">
+              <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
                 <div className="text-xs text-slate-600 dark:text-slate-400 mb-2">Equipment:</div>
                 <div className="flex flex-wrap gap-1">
                   {unit.equipment.map((item, idx) => (

@@ -272,7 +272,7 @@ export default function CommandWarRoom() {
 
           {/* Staffing Readiness by Division */}
           <div className="lg:col-span-3 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl overflow-hidden">
-            <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-700/20">
+            <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 dark:border-slate-700/20">
               <div className="flex items-center gap-2">
                 <Users className="w-4 h-4 text-slate-600 dark:text-slate-400" />
                 <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Staffing Readiness by Division</span>
@@ -286,7 +286,7 @@ export default function CommandWarRoom() {
             </div>
 
             {/* Table header */}
-            <div className="grid grid-cols-12 px-5 py-2 border-b border-slate-700/10 text-[10px] text-slate-500 uppercase tracking-wide">
+            <div className="grid grid-cols-12 px-5 py-2 border-b border-slate-200 dark:border-slate-700/10 text-[10px] text-slate-500 uppercase tracking-wide">
               <span className="col-span-4">Division</span>
               <span className="col-span-2 text-center">Auth / Filled</span>
               <span className="col-span-2 text-center">On-Duty</span>
@@ -303,7 +303,7 @@ export default function CommandWarRoom() {
                 return (
                   <div key={div.name} className="grid grid-cols-12 items-center px-5 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-700/10 transition-colors">
                     <div className="col-span-4">
-                      <p className="text-[12px] font-medium text-slate-900 dark:text-slate-200 leading-tight">{div.name}</p>
+                      <p className="text-[12px] font-medium text-slate-900 dark:text-slate-700 dark:text-slate-200 leading-tight">{div.name}</p>
                       <p className="text-[10px] text-slate-500">{div.bureau}{div.actingSupervisor && <span className="ml-1 text-amber-600 dark:text-amber-400">⚡ Acting</span>}</p>
                     </div>
                     <div className="col-span-2 text-center">
@@ -339,7 +339,7 @@ export default function CommandWarRoom() {
 
           {/* Patrol Beat Coverage */}
           <div className="lg:col-span-2 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl overflow-hidden">
-            <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-700/20">
+            <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 dark:border-slate-700/20">
               <div className="flex items-center gap-2">
                 <Radio className="w-4 h-4 text-slate-600 dark:text-slate-400" />
                 <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Patrol Beat Coverage</span>
@@ -399,7 +399,7 @@ export default function CommandWarRoom() {
 
           {/* Certification Risk Matrix */}
           <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl overflow-hidden">
-            <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-700/20">
+            <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 dark:border-slate-700/20">
               <div className="flex items-center gap-2">
                 <Award className="w-4 h-4 text-slate-600 dark:text-slate-400" />
                 <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Certification Risk</span>
@@ -416,7 +416,7 @@ export default function CommandWarRoom() {
             </div>
 
             {/* Legend */}
-            <div className="flex items-center gap-4 px-5 py-2 border-b border-slate-700/10">
+            <div className="flex items-center gap-4 px-5 py-2 border-b border-slate-200 dark:border-slate-700/10">
               <div className="flex items-center gap-1.5 text-[10px] text-slate-500">
                 <div className="w-2 h-2 rounded-full bg-red-500" /> Critical (&lt;7 days)
               </div>
@@ -434,7 +434,7 @@ export default function CommandWarRoom() {
                 return (
                   <div key={cert.badge} className={`flex items-center gap-3 px-5 py-2.5 ${colors.row} hover:bg-slate-50 dark:hover:bg-slate-700/10 transition-colors`}>
                     <div className="flex-1 min-w-0">
-                      <p className="text-[12px] font-medium text-slate-900 dark:text-slate-200">{cert.deputy}</p>
+                      <p className="text-[12px] font-medium text-slate-900 dark:text-slate-700 dark:text-slate-200">{cert.deputy}</p>
                       <p className="text-[10px] text-slate-500">{cert.cert} · Badge #{cert.badge}</p>
                     </div>
                     <div className="text-right flex-shrink-0">
@@ -452,7 +452,7 @@ export default function CommandWarRoom() {
 
           {/* Active Deployments */}
           <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl overflow-hidden">
-            <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-700/20">
+            <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 dark:border-slate-700/20">
               <div className="flex items-center gap-2">
                 <Target className="w-4 h-4 text-slate-600 dark:text-slate-400" />
                 <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Active Deployments</span>
@@ -475,7 +475,7 @@ export default function CommandWarRoom() {
                     <span className="text-[10px] font-bold text-slate-700 dark:text-slate-300">{dep.personnel}</span>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-[12px] font-medium text-slate-900 dark:text-slate-200 leading-tight">{dep.name}</p>
+                    <p className="text-[12px] font-medium text-slate-900 dark:text-slate-700 dark:text-slate-200 leading-tight">{dep.name}</p>
                     <p className="text-[10px] text-slate-500">{dep.lead} · {dep.location} · since {dep.since}</p>
                   </div>
                   <div className="flex flex-col items-end gap-1 flex-shrink-0">
@@ -495,7 +495,7 @@ export default function CommandWarRoom() {
 
           {/* Command Alert Feed */}
           <div className="lg:col-span-3 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl overflow-hidden">
-            <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-700/20">
+            <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 dark:border-slate-700/20">
               <div className="flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4 text-slate-600 dark:text-slate-400" />
                 <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Command Alert Feed</span>
@@ -520,7 +520,7 @@ export default function CommandWarRoom() {
                     <Icon className={`w-4 h-4 mt-0.5 flex-shrink-0 ${colors.icon}`} />
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between gap-2 mb-0.5">
-                        <p className="text-[12px] font-medium text-slate-900 dark:text-slate-200">{alert.title}</p>
+                        <p className="text-[12px] font-medium text-slate-900 dark:text-slate-700 dark:text-slate-200">{alert.title}</p>
                         <div className="flex items-center gap-1.5 flex-shrink-0">
                           <span className="text-[10px] text-slate-500">{alert.time}</span>
                         </div>
@@ -544,7 +544,7 @@ export default function CommandWarRoom() {
 
             {/* AI Command Intelligence */}
             <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl overflow-hidden flex-1">
-              <div className="flex items-center gap-2 px-5 py-3.5 border-b border-slate-700/20">
+              <div className="flex items-center gap-2 px-5 py-3.5 border-b border-slate-200 dark:border-slate-700/20">
                 <Sparkles className="w-4 h-4 text-slate-600 dark:text-slate-400" />
                 <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Command Intelligence</span>
               </div>
@@ -582,7 +582,7 @@ export default function CommandWarRoom() {
 
             {/* Quick Command Actions */}
             <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl overflow-hidden">
-              <div className="px-5 py-3.5 border-b border-slate-700/20">
+              <div className="px-5 py-3.5 border-b border-slate-200 dark:border-slate-700/20">
                 <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Quick Actions</span>
               </div>
               <div className="p-3 space-y-1.5">

@@ -513,7 +513,7 @@ export default function RiskCompliance() {
                     <span className="font-mono text-slate-500">+{b.weighted}</span>
                   </div>
                 ))}
-                <div className="flex items-center gap-1 text-[9px] text-slate-500 leading-tight pt-0.5 border-t border-slate-700/40 mt-0.5">
+                <div className="flex items-center gap-1 text-[9px] text-slate-500 leading-tight pt-0.5 border-t border-slate-200 dark:border-slate-700/40 mt-0.5">
                   <span className="font-mono w-[28px]">Σ</span>
                   <span className="flex-1 font-semibold">Composite OPI</span>
                   <span className="font-mono font-bold text-slate-900 dark:text-white">={opiScore}</span>
@@ -836,7 +836,7 @@ export default function RiskCompliance() {
             <div className="border border-slate-700/25 rounded-xl overflow-hidden">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-slate-700/40">
+                  <tr className="border-b border-slate-200 dark:border-slate-700/40">
                     <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Date</th>
                     <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Agency</th>
                     <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Scope</th>
@@ -952,7 +952,7 @@ export default function RiskCompliance() {
                 <p className="text-[9px] text-slate-600 mt-0.5">Driven by equipment EOL + ACA readiness gap + 2 expiring certs</p>
               </div>
 
-              <div className="mt-2 pt-2 border-t border-slate-700/30 flex items-center gap-3 text-[10px] text-slate-500">
+              <div className="mt-2 pt-2 border-t border-slate-200 dark:border-slate-700/30 flex items-center gap-3 text-[10px] text-slate-500">
                 <span>Total events: <span className="text-white font-semibold">24</span> (↓14% vs H1)</span>
                 <span className="text-slate-700">&middot;</span>
                 <span>Avg resolution: <span className="text-white font-semibold">8.3d</span> (target: &lt;10d)</span>
@@ -1192,7 +1192,7 @@ export default function RiskCompliance() {
 
                 {/* Decision Audit Log */}
                 {actionLog.length > 0 && (
-                  <div className="mt-3 pt-3 border-t border-slate-700/40">
+                  <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-700/40">
                     <div className="flex items-center gap-2 mb-2">
                       <History className="w-3 h-3 text-slate-500" />
                       <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Decision Log</span>
@@ -1230,7 +1230,7 @@ export default function RiskCompliance() {
             <div className="border border-slate-700/25 rounded-xl overflow-hidden">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-slate-700/40">
+                  <tr className="border-b border-slate-200 dark:border-slate-700/40">
                     <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Standard</th>
                     <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Status</th>
                     <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Exposure</th>
@@ -1241,7 +1241,7 @@ export default function RiskCompliance() {
                 </thead>
                 <tbody>
                   {complianceStandards.map((std) => (
-                    <tr key={std.id} className="border-b border-slate-800/10 hover:bg-slate-50 dark:hover:bg-slate-800/15 transition-colors">
+                    <tr key={std.id} className="border-b border-slate-200 dark:border-slate-800/10 hover:bg-slate-50 dark:hover:bg-slate-800/15 transition-colors">
                       <td className="px-3 py-2">
                         <span className="text-[11px] font-semibold text-white">{std.name}</span>
                       </td>
@@ -1305,7 +1305,7 @@ export default function RiskCompliance() {
           <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden">
 
             {/* Modal Header */}
-            <div className="px-5 py-4 border-b border-slate-700/50 bg-slate-800/30">
+            <div className="px-5 py-4 border-b border-slate-200 dark:border-slate-700/50 bg-slate-800/30">
               <div className="flex items-start justify-between">
                 <div>
                   <div className="flex items-center gap-2 mb-1">
@@ -1374,7 +1374,7 @@ export default function RiskCompliance() {
                 </div>
 
                 {/* Decision Buttons */}
-                <div className="px-5 py-4 border-t border-slate-700/50 bg-slate-800/35">
+                <div className="px-5 py-4 border-t border-slate-200 dark:border-slate-700/50 bg-slate-800/35">
                   <p className="text-[9px] text-slate-600 mb-3 flex items-center gap-1.5">
                     <UserCheck className="w-3 h-3" />
                     Authorizing Official: <span className="text-white font-semibold">Sheriff K. Conway</span> — decision is final and logged
@@ -1456,7 +1456,7 @@ export default function RiskCompliance() {
                     <span className="text-white">{approvalDecision.entry.complianceAtDecision}%</span>
                   </div>
                   {approvalDecision.entry.note && (
-                    <div className="pt-2 border-t border-slate-700/50">
+                    <div className="pt-2 border-t border-slate-200 dark:border-slate-700/50">
                       <span className="text-slate-500">Rationale:</span>
                       <p className="text-slate-700 dark:text-slate-300 mt-0.5">{approvalDecision.entry.note}</p>
                     </div>

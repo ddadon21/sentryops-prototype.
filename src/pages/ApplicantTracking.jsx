@@ -87,7 +87,7 @@ export default function ApplicantTracking() {
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex">
       {/* Sidebar */}
       <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-slate-800/50 backdrop-blur-xl bg-slate-900/30 flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
-        <div className="p-4 border-b border-slate-700/50 flex items-center justify-between">
+        <div className="p-4 border-b border-slate-200 dark:border-slate-700/50 flex items-center justify-between">
           {!sidebarCollapsed && (
             <div className="flex items-center gap-2">
               <Shield className="w-8 h-8 text-amber-500" />
@@ -127,7 +127,7 @@ export default function ApplicantTracking() {
           })}
         </nav>
 
-        <div className="border-t border-slate-700/50">
+        <div className="border-t border-slate-200 dark:border-slate-700/50">
           {!sidebarCollapsed && (
             <div className="px-4 py-3">
               <p className="text-xs text-slate-500 text-center">Gwinnett County Sheriff's Office</p>
@@ -192,7 +192,7 @@ export default function ApplicantTracking() {
 
       <div className="flex-1 flex flex-col min-w-0">
         {/* Header */}
-        <header className="border-b border-slate-800/50 backdrop-blur-xl bg-slate-900/30">
+        <header className="border-b border-slate-200 dark:border-slate-800/50 backdrop-blur-xl bg-slate-900/30">
           <div className="px-4 lg:px-6 py-4">
             <div className="flex items-center justify-between gap-4 mb-4">
               <div className="flex items-center gap-4 flex-1 min-w-0">
@@ -219,12 +219,12 @@ export default function ApplicantTracking() {
 
                   {notificationsOpen && (
                     <div className="absolute right-0 top-full mt-2 w-96 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-2xl z-50">
-                      <div className="p-4 border-b border-slate-700/50">
+                      <div className="p-4 border-b border-slate-200 dark:border-slate-700/50">
                         <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Notifications</h3>
                       </div>
                       <div className="max-h-96 overflow-y-auto">
                         {notifications.map(notification => (
-                          <div key={notification.id} className={`p-4 border-b border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
+                          <div key={notification.id} className={`p-4 border-b border-slate-200 dark:border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
                             <div className="flex items-start gap-3">
                               <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-amber-400' : 'bg-blue-400'}`}></div>
                               <div className="flex-1 min-w-0">
@@ -319,12 +319,12 @@ export default function ApplicantTracking() {
           <div className="max-w-7xl mx-auto">
 
             {/* Section Title */}
-            <div className="border-b border-slate-700/50 pb-4 mb-6">
+            <div className="border-b border-slate-200 dark:border-slate-700/50 pb-4 mb-6">
               <h2 className="text-lg font-bold text-slate-900 dark:text-white tracking-wide">APPLICANT PIPELINE - GWINNETT COUNTY SHERIFF'S OFFICE</h2>
             </div>
 
             {/* Status Tabs */}
-            <div className="mb-6 flex gap-2 border-b border-slate-700/50 overflow-x-auto">
+            <div className="mb-6 flex gap-2 border-b border-slate-200 dark:border-slate-700/50 overflow-x-auto">
               {[
                 { id: 'all', label: 'All Applicants', count: statusCounts.all },
                 { id: 'new', label: 'New', count: statusCounts.new },
@@ -416,7 +416,7 @@ export default function ApplicantTracking() {
                 </button>
 
                 {expandedApplicant === 'marcus' && (
-                  <div className="px-5 pb-5 space-y-5 border-t border-slate-700/50">
+                  <div className="px-5 pb-5 space-y-5 border-t border-slate-200 dark:border-slate-700/50">
                     {/* Contact Info */}
                     <div className="pt-5 grid grid-cols-2 md:grid-cols-4 gap-4">
                       <div className="flex items-center gap-2 text-sm">
@@ -548,7 +548,7 @@ export default function ApplicantTracking() {
                     </div>
 
                     {/* Actions */}
-                    <div className="flex flex-wrap gap-3 pt-4 border-t border-slate-700/50">
+                    <div className="flex flex-wrap gap-3 pt-4 border-t border-slate-200 dark:border-slate-700/50">
                       <button className="flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-medium transition-all">
                         <Eye className="w-4 h-4" />
                         View Full Application
@@ -599,7 +599,7 @@ export default function ApplicantTracking() {
                 </button>
 
                 {expandedApplicant === 'sarah' && (
-                  <div className="px-5 pb-5 space-y-5 border-t border-slate-700/50">
+                  <div className="px-5 pb-5 space-y-5 border-t border-slate-200 dark:border-slate-700/50">
                     {/* Contact Info */}
                     <div className="pt-5 grid grid-cols-2 md:grid-cols-4 gap-4">
                       <div className="flex items-center gap-2 text-sm">
@@ -710,7 +710,7 @@ export default function ApplicantTracking() {
                     </div>
 
                     {/* Actions */}
-                    <div className="flex flex-wrap gap-3 pt-4 border-t border-slate-700/50">
+                    <div className="flex flex-wrap gap-3 pt-4 border-t border-slate-200 dark:border-slate-700/50">
                       <button className="flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-medium transition-all">
                         <Eye className="w-4 h-4" />
                         View Full Application
@@ -756,7 +756,7 @@ export default function ApplicantTracking() {
                 </button>
 
                 {expandedApplicant === 'robert' && (
-                  <div className="px-5 pb-5 space-y-5 border-t border-slate-700/50">
+                  <div className="px-5 pb-5 space-y-5 border-t border-slate-200 dark:border-slate-700/50">
                     {/* Hiring Process Completed */}
                     <div className="pt-5">
                       <h4 className="text-sm font-bold text-amber-400 uppercase tracking-wide mb-3">Hiring Process - COMPLETED</h4>
@@ -856,7 +856,7 @@ export default function ApplicantTracking() {
                     </div>
 
                     {/* Actions */}
-                    <div className="flex flex-wrap gap-3 pt-4 border-t border-slate-700/50">
+                    <div className="flex flex-wrap gap-3 pt-4 border-t border-slate-200 dark:border-slate-700/50">
                       <button className="flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-medium transition-all">
                         <Eye className="w-4 h-4" />
                         View Full Hiring File
@@ -906,7 +906,7 @@ export default function ApplicantTracking() {
                 </button>
 
                 {expandedApplicant === 'david' && (
-                  <div className="px-5 pb-5 space-y-5 border-t border-slate-700/50">
+                  <div className="px-5 pb-5 space-y-5 border-t border-slate-200 dark:border-slate-700/50">
                     {/* Contact & Qualifications */}
                     <div className="pt-5 grid grid-cols-2 md:grid-cols-4 gap-4">
                       <div className="flex items-center gap-2 text-sm">
@@ -1010,7 +1010,7 @@ export default function ApplicantTracking() {
                     </div>
 
                     {/* Actions */}
-                    <div className="flex flex-wrap gap-3 pt-4 border-t border-slate-700/50">
+                    <div className="flex flex-wrap gap-3 pt-4 border-t border-slate-200 dark:border-slate-700/50">
                       <button className="flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-medium transition-all">
                         <Eye className="w-4 h-4" />
                         View Investigation File
@@ -1056,7 +1056,7 @@ export default function ApplicantTracking() {
                 </button>
 
                 {expandedApplicant === 'lisa' && (
-                  <div className="px-5 pb-5 space-y-5 border-t border-slate-700/50">
+                  <div className="px-5 pb-5 space-y-5 border-t border-slate-200 dark:border-slate-700/50">
                     <div className="pt-5">
                       <div className="bg-slate-900/40 rounded-lg p-4 border border-slate-700/30 space-y-3">
                         <div>
@@ -1091,7 +1091,7 @@ export default function ApplicantTracking() {
                       </div>
                     </div>
 
-                    <div className="flex flex-wrap gap-3 pt-4 border-t border-slate-700/50">
+                    <div className="flex flex-wrap gap-3 pt-4 border-t border-slate-200 dark:border-slate-700/50">
                       <button className="flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-sm font-medium transition-all">
                         <AlertCircle className="w-4 h-4" />
                         Priority Review
@@ -1137,7 +1137,7 @@ export default function ApplicantTracking() {
                 </button>
 
                 {expandedApplicant === 'michael' && (
-                  <div className="px-5 pb-5 space-y-4 border-t border-slate-700/50">
+                  <div className="px-5 pb-5 space-y-4 border-t border-slate-200 dark:border-slate-700/50">
                     <div className="pt-5">
                       <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
                         <p className="text-sm font-bold text-red-400 mb-2">DISQUALIFICATION REASON:</p>
@@ -1158,7 +1158,7 @@ export default function ApplicantTracking() {
         </main>
 
         {/* Footer */}
-        <footer className="border-t border-slate-800/50 px-6 py-3 bg-slate-900/30">
+        <footer className="border-t border-slate-200 dark:border-slate-800/50 px-6 py-3 bg-slate-900/30">
           <div className="flex flex-wrap items-center justify-between gap-4 text-xs text-slate-500">
             <span>System: GCSO-HRIS v4.2 | Last Updated: {formattedTime} EST</span>
             <span>Gwinnett County Sheriff's Office • Human Resources Division</span>
@@ -1176,7 +1176,7 @@ export default function ApplicantTracking() {
 
       {chatOpen && (
         <div className="fixed bottom-24 right-6 w-full max-w-96 h-[500px] bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-2xl flex flex-col z-40 mx-4 sm:mx-0">
-          <div className="p-4 border-b border-slate-700/50">
+          <div className="p-4 border-b border-slate-200 dark:border-slate-700/50">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
                 <MessageSquare className="w-5 h-5 text-slate-900 dark:text-white" />
@@ -1194,12 +1194,12 @@ export default function ApplicantTracking() {
               </div>
               <div className="flex-1">
                 <div className="bg-slate-800/60 p-3 rounded-xl">
-                  <p className="text-sm text-slate-200">Hi! I can help you track applicant status, schedule interviews, check background investigation progress, and prepare offer letters. What do you need help with?</p>
+                  <p className="text-sm text-slate-700 dark:text-slate-200">Hi! I can help you track applicant status, schedule interviews, check background investigation progress, and prepare offer letters. What do you need help with?</p>
                 </div>
               </div>
             </div>
           </div>
-          <div className="p-4 border-t border-slate-700/50">
+          <div className="p-4 border-t border-slate-200 dark:border-slate-700/50">
             <div className="flex items-center gap-2">
               <input type="text" placeholder="Ask about applicants..." className="flex-1 px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500/50" />
               <button className="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center">

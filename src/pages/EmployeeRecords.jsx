@@ -417,7 +417,7 @@ export default function EmployeeRecords() {
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex">
       {/* Sidebar */}
       <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-slate-800/50 backdrop-blur-xl bg-slate-900/30 flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
-        <div className="p-4 border-b border-slate-700/50 flex items-center justify-between">
+        <div className="p-4 border-b border-slate-200 dark:border-slate-700/50 flex items-center justify-between">
           {!sidebarCollapsed && (
             <div className="flex items-center gap-2">
               <Shield className="w-8 h-8 text-amber-500" />
@@ -457,7 +457,7 @@ export default function EmployeeRecords() {
           })}
         </nav>
 
-        <div className="border-t border-slate-700/50">
+        <div className="border-t border-slate-200 dark:border-slate-700/50">
           {!sidebarCollapsed && (
             <div className="px-4 py-3">
               <p className="text-xs text-slate-500 text-center">Gwinnett County Sheriff's Office</p>
@@ -504,7 +504,7 @@ export default function EmployeeRecords() {
       )}
 
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="border-b border-slate-800/50 backdrop-blur-xl bg-slate-900/30">
+        <header className="border-b border-slate-200 dark:border-slate-800/50 backdrop-blur-xl bg-slate-900/30">
           <div className="px-4 lg:px-6 py-4 flex items-center justify-between gap-4">
             <div className="flex items-center gap-4 flex-1 min-w-0">
               <button onClick={() => setSidebarOpen(!sidebarOpen)} className="lg:hidden p-2 hover:bg-slate-800/50 rounded-lg">
@@ -537,12 +537,12 @@ export default function EmployeeRecords() {
                 </button>
                 {notificationsOpen && (
                   <div className="absolute right-0 top-full mt-2 w-96 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-2xl z-50">
-                    <div className="p-4 border-b border-slate-700/50">
+                    <div className="p-4 border-b border-slate-200 dark:border-slate-700/50">
                       <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Personnel Notifications</h3>
                     </div>
                     <div className="max-h-96 overflow-y-auto">
                       {notifications.map(notification => (
-                        <div key={notification.id} className={`p-4 border-b border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
+                        <div key={notification.id} className={`p-4 border-b border-slate-200 dark:border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
                           <div className="flex items-start gap-3">
                             <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-red-400' : 'bg-blue-400'}`}></div>
                             <div className="flex-1 min-w-0">
@@ -995,7 +995,7 @@ export default function EmployeeRecords() {
               {/* Employee List View */}
               {viewMode === 'list' && (
                 <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
-                  <div className="grid grid-cols-[1fr_120px_140px_120px_100px_80px] gap-2 px-5 py-3 bg-slate-800/60 border-b border-slate-700/50 text-[10px] font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">
+                  <div className="grid grid-cols-[1fr_120px_140px_120px_100px_80px] gap-2 px-5 py-3 bg-slate-800/60 border-b border-slate-200 dark:border-slate-700/50 text-[10px] font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">
                     <span>Employee</span>
                     <span>Badge</span>
                     <span>Department</span>
@@ -1006,7 +1006,7 @@ export default function EmployeeRecords() {
                   {filteredEmployees.map(employee => {
                     const statusConfig = getStatusConfig(employee.status);
                     return (
-                      <div key={employee.id} className={`grid grid-cols-[1fr_120px_140px_120px_100px_80px] gap-2 px-5 py-3 items-center border-b border-slate-700/30 hover:bg-slate-800/60 transition-colors ${
+                      <div key={employee.id} className={`grid grid-cols-[1fr_120px_140px_120px_100px_80px] gap-2 px-5 py-3 items-center border-b border-slate-200 dark:border-slate-700/30 hover:bg-slate-800/60 transition-colors ${
                         employee.certAlert === 'expired' ? 'bg-red-500/5' : employee.certAlert === 'expiring' ? 'bg-amber-500/5' : ''
                       }`}>
                         <div className="flex items-center gap-3 min-w-0">
@@ -1339,7 +1339,7 @@ export default function EmployeeRecords() {
                 </div>
               </div>
 
-              <div className="flex gap-3 pt-4 border-t border-slate-700/50">
+              <div className="flex gap-3 pt-4 border-t border-slate-200 dark:border-slate-700/50">
                 <button className="flex-1 px-4 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-xl font-medium transition-all text-sm">Print Personnel File</button>
                 <button onClick={() => navigate(createPageUrl('PerformanceReviews'))} className="flex-1 px-4 py-3 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-400 rounded-xl font-medium transition-all text-sm">View Performance</button>
                 <button onClick={() => navigate(createPageUrl('TrainingCertifications'))} className="flex-1 px-4 py-3 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-900 dark:text-white rounded-xl font-medium transition-all text-sm">Training History</button>
@@ -1361,7 +1361,7 @@ export default function EmployeeRecords() {
 
         {supportOpen && (
           <div className="absolute bottom-16 right-0 w-80 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-2xl overflow-hidden">
-            <div className="p-4 border-b border-slate-700/50">
+            <div className="p-4 border-b border-slate-200 dark:border-slate-700/50">
               <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Personnel Records Support</h3>
               <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">GCSO Human Resources Division</p>
             </div>

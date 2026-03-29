@@ -722,7 +722,7 @@ export default function EvidenceTracking() {
                 </div>
                 <p className="text-sm font-medium text-slate-900 dark:text-white mb-1">Total Items in Evidence</p>
                 <p className="text-xs text-slate-500">Case BI-2024-145 (Martinez)</p>
-                <div className="mt-3 pt-3 border-t border-slate-700/30 space-y-1">
+                <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-700/30 space-y-1">
                   <p className="text-xs text-slate-600 dark:text-slate-400">Documentation: 3 items</p>
                   <p className="text-xs text-slate-600 dark:text-slate-400">Reports: 2 items</p>
                   <p className="text-xs text-slate-600 dark:text-slate-400">Recordings: 1 item</p>
@@ -736,7 +736,7 @@ export default function EvidenceTracking() {
                 </div>
                 <p className="text-sm font-medium text-slate-900 dark:text-white mb-1">Verified & Secured</p>
                 <p className="text-xs text-slate-500">Complete chain of custody</p>
-                <div className="mt-3 pt-3 border-t border-slate-700/30 space-y-1">
+                <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-700/30 space-y-1">
                   <p className="text-xs text-green-400/80">Criminal History Report</p>
                   <p className="text-xs text-green-400/80">Employment Verification</p>
                   <p className="text-xs text-green-400/80">Application Package</p>
@@ -751,7 +751,7 @@ export default function EvidenceTracking() {
                 </div>
                 <p className="text-sm font-medium text-slate-900 dark:text-white mb-1">Pending Review</p>
                 <p className="text-xs text-slate-500">Awaiting supervisor review</p>
-                <div className="mt-3 pt-3 border-t border-slate-700/30 space-y-1.5">
+                <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-700/30 space-y-1.5">
                   <div>
                     <p className="text-xs text-amber-400/80">Reference Letters (Nov 4, 2024)</p>
                     <p className="text-xs text-slate-500 ml-2">Awaiting: review for completeness</p>
@@ -770,7 +770,7 @@ export default function EvidenceTracking() {
                 </div>
                 <p className="text-sm font-medium text-slate-900 dark:text-white mb-1">Archived</p>
                 <p className="text-xs text-slate-500">Completed/closed cases</p>
-                <div className="mt-3 pt-3 border-t border-slate-700/30 space-y-1">
+                <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-700/30 space-y-1">
                   <p className="text-xs text-slate-600 dark:text-slate-400">Interview Recording (Nov 5, 2024)</p>
                   <p className="text-xs text-slate-500 mt-1">Retention: 7 years from case closure</p>
                 </div>
@@ -936,7 +936,7 @@ export default function EvidenceTracking() {
                   ))}
                 </div>
               </div>
-              <div className="flex items-center justify-between mt-3 pt-3 border-t border-slate-700/30">
+              <div className="flex items-center justify-between mt-3 pt-3 border-t border-slate-200 dark:border-slate-700/30">
                 <p className="text-sm text-slate-500">Showing {filteredEvidence.length} items (filtered by case BI-2024-145)</p>
                 <div className="flex items-center gap-2 text-xs text-slate-500">
                   <span>Sort by:</span>
@@ -1220,7 +1220,7 @@ export default function EvidenceTracking() {
                       )}
 
                       {/* Action Buttons */}
-                      <div className="flex items-center justify-between pt-4 border-t border-slate-700/30 mt-4">
+                      <div className="flex items-center justify-between pt-4 border-t border-slate-200 dark:border-slate-700/30 mt-4">
                         <div className="text-sm text-slate-600 dark:text-slate-400">
                           Subject: <span className="text-slate-900 dark:text-white font-medium">{item.subject}</span>
                         </div>

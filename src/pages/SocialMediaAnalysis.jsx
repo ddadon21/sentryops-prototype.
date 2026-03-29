@@ -541,7 +541,7 @@ export default function SocialMediaAnalysis() {
             </div>
 
             {/* Subject Summaries */}
-            <div className="mt-5 pt-5 border-t border-slate-700/50">
+            <div className="mt-5 pt-5 border-t border-slate-200 dark:border-slate-700/50">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                 {/* Clear */}
                 <div className="bg-green-500/5 border border-green-500/20 rounded-lg p-3">
@@ -590,7 +590,7 @@ export default function SocialMediaAnalysis() {
             </div>
 
             {/* Important Notes */}
-            <div className="mt-4 pt-4 border-t border-slate-700/50">
+            <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700/50">
               <h4 className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Important Notes on Social Media Review</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs text-slate-600 dark:text-slate-400">
                 <div className="bg-slate-900/40 rounded-lg p-3">
@@ -710,7 +710,7 @@ export default function SocialMediaAnalysis() {
 
                   {/* Expanded Content */}
                   {isExpanded && (
-                    <div className="border-t border-slate-700/50 p-5">
+                    <div className="border-t border-slate-200 dark:border-slate-700/50 p-5">
                       {/* Review Summary */}
                       <div className="mb-6">
                         <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
@@ -978,7 +978,7 @@ export default function SocialMediaAnalysis() {
                               )}
                             </div>
                             {report.nextActions && (
-                              <div className="mt-4 pt-4 border-t border-slate-700/50">
+                              <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700/50">
                                 <p className="text-xs text-slate-500 mb-2">Next Actions:</p>
                                 <ul className="space-y-1">
                                   {report.nextActions.map((action, idx) => (
@@ -1041,7 +1041,7 @@ export default function SocialMediaAnalysis() {
                       )}
 
                       {/* Action Buttons */}
-                      <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-slate-700/50">
+                      <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-slate-200 dark:border-slate-700/50">
                         <button className="flex items-center gap-2 px-4 py-2 bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 rounded-xl text-sm font-medium transition-colors border border-purple-500/20">
                           <Eye className="w-4 h-4" />View Detailed Analysis
                         </button>

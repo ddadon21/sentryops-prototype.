@@ -797,7 +797,7 @@ export default function SettingsPage() {
                       { key: 'complianceAlerts', title: 'Sync Delays', desc: 'Alert when integration sync exceeds expected response window' },
                       { key: 'budgetAlerts', title: 'Critical System Events', desc: 'Service outages, certificate expiry, and threshold breaches' },
                     ].map((item, idx, arr) => (
-                      <div key={item.key} className={`flex items-center justify-between py-3 ${idx < arr.length - 1 ? 'border-b border-slate-700/20' : ''}`}>
+                      <div key={item.key} className={`flex items-center justify-between py-3 ${idx < arr.length - 1 ? 'border-b border-slate-200 dark:border-slate-700/20' : ''}`}>
                         <div className="flex-1">
                           <h4 className="text-sm font-medium text-slate-900 dark:text-white">{item.title}</h4>
                           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">{item.desc}</p>
@@ -893,7 +893,7 @@ export default function SettingsPage() {
                     </div>
                     <p className="text-xs text-slate-500 mb-6">Multi-factor authentication, session management, and access controls.</p>
                     <div className="space-y-4">
-                      <div className="flex items-center justify-between py-3 border-b border-slate-700/30">
+                      <div className="flex items-center justify-between py-3 border-b border-slate-200 dark:border-slate-700/30">
                         <div className="flex-1">
                           <h4 className="text-sm font-medium text-slate-900 dark:text-white">Two-Factor Authentication</h4>
                           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Require 2FA for account access</p>
@@ -922,7 +922,7 @@ export default function SettingsPage() {
                           <option value="480">8 hours</option>
                         </select>
                       </div>
-                      <div className="flex items-center justify-between py-3 border-b border-slate-700/30">
+                      <div className="flex items-center justify-between py-3 border-b border-slate-200 dark:border-slate-700/30">
                         <div className="flex-1">
                           <h4 className="text-sm font-medium text-slate-900 dark:text-white">Login Notifications</h4>
                           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Notify on new device login</p>
@@ -948,7 +948,7 @@ export default function SettingsPage() {
                           <option value="never">Never</option>
                         </select>
                       </div>
-                      <div className="flex items-center justify-between py-3 border-b border-slate-700/30">
+                      <div className="flex items-center justify-between py-3 border-b border-slate-200 dark:border-slate-700/30">
                         <div className="flex-1">
                           <h4 className="text-sm font-medium text-slate-900 dark:text-white">IP Whitelist</h4>
                           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Restrict access to approved IPs</p>
@@ -960,7 +960,7 @@ export default function SettingsPage() {
                           <div className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform ${securitySettings.ipWhitelist ? 'translate-x-6' : 'translate-x-0'}`}></div>
                         </button>
                       </div>
-                      <div className="flex items-center justify-between py-3 border-b border-slate-700/30">
+                      <div className="flex items-center justify-between py-3 border-b border-slate-200 dark:border-slate-700/30">
                         <div className="flex-1">
                           <h4 className="text-sm font-medium text-slate-900 dark:text-white">Audit Logging</h4>
                           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Track all user actions</p>
@@ -1114,7 +1114,7 @@ export default function SettingsPage() {
                         </div>
 
                         {isExpanded && (
-                          <div className="px-6 pb-6 border-t border-slate-700/30">
+                          <div className="px-6 pb-6 border-t border-slate-200 dark:border-slate-700/30">
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
                               <div className="space-y-4">
                                 <div>
@@ -1211,7 +1211,7 @@ export default function SettingsPage() {
 
                             {/* Integration-specific metrics */}
                             {(integration.storage || integration.devicesActive || integration.currentInmates || integration.callsToday || integration.ordersToday || integration.employees || integration.expiringSoon || integration.pendingAcknowledgments || integration.policyUpdates || integration.pendingApprovals || integration.vehiclesInService || integration.monthlySpend || integration.activeUsers || integration.unitsOnline || integration.contacts || integration.readsToday || integration.deploymentsMonth) && (
-                              <div className="mt-6 pt-6 border-t border-slate-700/30">
+                              <div className="mt-6 pt-6 border-t border-slate-200 dark:border-slate-700/30">
                                 <p className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-3">Live Metrics</p>
                                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                                   {integration.storage && (
@@ -1654,7 +1654,7 @@ export default function SettingsPage() {
                         { label: 'Last Update', value: 'December 8, 2025' },
                         { label: 'Uptime', value: '47 days, 12 hours' },
                       ].map((v, i) => (
-                        <div key={i} className="flex justify-between items-center py-2 border-b border-slate-700/20">
+                        <div key={i} className="flex justify-between items-center py-2 border-b border-slate-200 dark:border-slate-700/20">
                           <span className="text-xs text-slate-500 dark:text-slate-400">{v.label}</span>
                           <span className="text-xs font-medium text-slate-900 dark:text-white">{v.value}</span>
                         </div>

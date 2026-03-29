@@ -469,7 +469,7 @@ export default function CriminalHistoryReview() {
                       </div>
 
                       {expandedCheck === check.id && (
-                        <div className="border-t border-slate-700/50 p-4 space-y-4">
+                        <div className="border-t border-slate-200 dark:border-slate-700/50 p-4 space-y-4">
                           <div className="bg-slate-900/40 rounded-lg p-3">
                             <h4 className="text-slate-600 dark:text-slate-400 text-xs font-medium mb-2">BACKGROUND CHECK SUMMARY</h4>
                             <div className="grid grid-cols-2 gap-2 text-sm">
@@ -488,16 +488,16 @@ export default function CriminalHistoryReview() {
                               CRIMINAL HISTORY RESULTS
                             </h4>
                             <div className="space-y-3">
-                              <div className="flex items-center justify-between py-2 border-b border-slate-800"><div><p className="text-slate-900 dark:text-white text-sm">GCIC (Georgia Crime Information Center)</p><p className="text-slate-500 text-xs">{check.gcic.details || 'State criminal records'}</p></div>{getStatusBadge(check.gcic.status)}</div>
-                              <div className="flex items-center justify-between py-2 border-b border-slate-800"><div><p className="text-slate-900 dark:text-white text-sm">FBI NCIC (National Crime Information Center)</p><p className="text-slate-500 text-xs">{check.fbiNcic.details || 'Federal/nationwide records'}</p></div>{getStatusBadge(check.fbiNcic.status)}</div>
+                              <div className="flex items-center justify-between py-2 border-b border-slate-200 dark:border-slate-800"><div><p className="text-slate-900 dark:text-white text-sm">GCIC (Georgia Crime Information Center)</p><p className="text-slate-500 text-xs">{check.gcic.details || 'State criminal records'}</p></div>{getStatusBadge(check.gcic.status)}</div>
+                              <div className="flex items-center justify-between py-2 border-b border-slate-200 dark:border-slate-800"><div><p className="text-slate-900 dark:text-white text-sm">FBI NCIC (National Crime Information Center)</p><p className="text-slate-500 text-xs">{check.fbiNcic.details || 'Federal/nationwide records'}</p></div>{getStatusBadge(check.fbiNcic.status)}</div>
                               {check.countyChecks && check.countyChecks.length > 0 && (
-                                <div className="py-2 border-b border-slate-800">
+                                <div className="py-2 border-b border-slate-200 dark:border-slate-800">
                                   <p className="text-slate-900 dark:text-white text-sm mb-2">County Court Checks</p>
                                   {check.countyChecks.map((county, idx) => <div key={idx} className="flex items-center justify-between ml-4 py-1"><span className="text-slate-600 dark:text-slate-400 text-xs">{county.county}</span>{getStatusBadge(county.status)}</div>)}
                                 </div>
                               )}
-                              <div className="flex items-center justify-between py-2 border-b border-slate-800"><div><p className="text-slate-900 dark:text-white text-sm">Federal Court (PACER)</p><p className="text-slate-500 text-xs">{check.federalCourt.district || 'Federal criminal records'}</p></div>{getStatusBadge(check.federalCourt.status)}</div>
-                              {check.sexOffenderRegistry && <div className="flex items-center justify-between py-2 border-b border-slate-800"><div><p className="text-slate-900 dark:text-white text-sm">Sex Offender Registries</p><p className="text-slate-500 text-xs">National and state registries</p></div>{getStatusBadge(check.sexOffenderRegistry.national)}</div>}
+                              <div className="flex items-center justify-between py-2 border-b border-slate-200 dark:border-slate-800"><div><p className="text-slate-900 dark:text-white text-sm">Federal Court (PACER)</p><p className="text-slate-500 text-xs">{check.federalCourt.district || 'Federal criminal records'}</p></div>{getStatusBadge(check.federalCourt.status)}</div>
+                              {check.sexOffenderRegistry && <div className="flex items-center justify-between py-2 border-b border-slate-200 dark:border-slate-800"><div><p className="text-slate-900 dark:text-white text-sm">Sex Offender Registries</p><p className="text-slate-500 text-xs">National and state registries</p></div>{getStatusBadge(check.sexOffenderRegistry.national)}</div>}
                               <div className="grid grid-cols-3 gap-4 pt-2">
                                 <div><p className="text-slate-500 text-xs">Warrants</p><p className={`text-sm ${check.warrants === 'None' ? 'text-green-400' : check.warrants === 'Pending' ? 'text-blue-400' : 'text-red-400'}`}>{check.warrants}</p></div>
                                 <div><p className="text-slate-500 text-xs">Arrests</p><p className={`text-sm ${check.arrests === 'None' ? 'text-green-400' : check.arrests === 'Pending' ? 'text-blue-400' : 'text-amber-400'}`}>{Array.isArray(check.arrests) ? `${check.arrests.length} found` : check.arrests}</p></div>
@@ -529,7 +529,7 @@ export default function CriminalHistoryReview() {
                             <div className="bg-slate-900/40 rounded-lg p-3">
                               <h4 className="text-slate-600 dark:text-slate-400 text-xs font-medium mb-2 flex items-center gap-2"><Car className="w-4 h-4" />TRAFFIC HISTORY (Last 7 Years)</h4>
                               <div className="space-y-1">{check.traffic.violations.map((violation, idx) => <div key={idx} className="flex items-center justify-between text-sm"><span className="text-slate-600 dark:text-slate-400">{violation.type}</span><span className="text-slate-500">{violation.date}</span><span className="text-slate-600 dark:text-slate-400">{violation.details}</span></div>)}</div>
-                              <div className="mt-2 pt-2 border-t border-slate-800 grid grid-cols-2 gap-2 text-xs">
+                              <div className="mt-2 pt-2 border-t border-slate-200 dark:border-slate-800 grid grid-cols-2 gap-2 text-xs">
                                 <div><span className="text-slate-500">DUI History:</span><span className={`ml-2 ${check.traffic.dui === 'None' ? 'text-green-400' : 'text-red-400'}`}>{check.traffic.dui}</span></div>
                                 <div><span className="text-slate-500">License Suspensions:</span><span className={`ml-2 ${check.traffic.suspensions === 'None' ? 'text-green-400' : 'text-red-400'}`}>{check.traffic.suspensions}</span></div>
                               </div>
@@ -551,7 +551,7 @@ export default function CriminalHistoryReview() {
                                 <div className="flex items-center justify-between"><span className="text-slate-600 dark:text-slate-400">Moral Turpitude:</span>{getStatusBadge(check.postAssessment.moralTurpitude.status)}</div>
                                 <div className="flex items-center justify-between"><span className="text-slate-600 dark:text-slate-400">Traffic Violations:</span>{getStatusBadge(check.postAssessment.trafficViolations.status)}</div>
                               </div>
-                              {check.postAssessment.policyQuestion && <div className="mt-3 pt-3 border-t border-slate-700/50"><p className="text-amber-400 text-xs font-medium mb-1">POLICY QUESTION FOR SUPERVISOR:</p><p className="text-slate-600 dark:text-slate-400 text-xs">{check.postAssessment.policyQuestion}</p></div>}
+                              {check.postAssessment.policyQuestion && <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-700/50"><p className="text-amber-400 text-xs font-medium mb-1">POLICY QUESTION FOR SUPERVISOR:</p><p className="text-slate-600 dark:text-slate-400 text-xs">{check.postAssessment.policyQuestion}</p></div>}
                             </div>
                           )}
 
@@ -626,7 +626,7 @@ export default function CriminalHistoryReview() {
                     <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-green-400" /><span className="text-slate-600 dark:text-slate-400">Authorized personnel only</span></div>
                     <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-green-400" /><span className="text-slate-600 dark:text-slate-400">Audit trail maintained</span></div>
                   </div>
-                  <div className="mt-4 pt-4 border-t border-slate-700/50"><button className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg text-sm hover:bg-slate-600 transition-colors"><History className="w-4 h-4" />View CJIS Audit Log</button></div>
+                  <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700/50"><button className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg text-sm hover:bg-slate-600 transition-colors"><History className="w-4 h-4" />View CJIS Audit Log</button></div>
                 </div>
 
                 <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">

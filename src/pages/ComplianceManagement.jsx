@@ -539,7 +539,7 @@ export default function ComplianceManagement() {
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex">
       {/* Sidebar */}
       <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-slate-800/50 backdrop-blur-xl bg-slate-900/30 flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
-        <div className="p-4 border-b border-slate-700/50 flex items-center justify-between">
+        <div className="p-4 border-b border-slate-200 dark:border-slate-700/50 flex items-center justify-between">
           {!sidebarCollapsed && (
             <div className="flex items-center gap-2">
               <Shield className="w-8 h-8 text-amber-500" />
@@ -579,7 +579,7 @@ export default function ComplianceManagement() {
           })}
         </nav>
 
-        <div className="border-t border-slate-700/50">
+        <div className="border-t border-slate-200 dark:border-slate-700/50">
           {!sidebarCollapsed && (
             <div className="px-4 py-3">
               <p className="text-xs text-slate-500 text-center">Gwinnett County Sheriff's Office</p>
@@ -643,7 +643,7 @@ export default function ComplianceManagement() {
       )}
 
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="border-b border-slate-800/50 backdrop-blur-xl bg-slate-900/30">
+        <header className="border-b border-slate-200 dark:border-slate-800/50 backdrop-blur-xl bg-slate-900/30">
           <div className="px-4 lg:px-6 py-4 flex items-center justify-between gap-4">
             <div className="flex items-center gap-4 flex-1 min-w-0">
               <button
@@ -684,12 +684,12 @@ export default function ComplianceManagement() {
 
                 {notificationsOpen && (
                   <div className="absolute right-0 top-full mt-2 w-96 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-2xl z-50">
-                    <div className="p-4 border-b border-slate-700/50">
+                    <div className="p-4 border-b border-slate-200 dark:border-slate-700/50">
                       <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Compliance Alerts</h3>
                     </div>
                     <div className="max-h-96 overflow-y-auto">
                       {notifications.map(notification => (
-                        <div key={notification.id} className={`p-4 border-b border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-red-500/5' : ''}`}>
+                        <div key={notification.id} className={`p-4 border-b border-slate-200 dark:border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-red-500/5' : ''}`}>
                           <div className="flex items-start gap-3">
                             <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-red-400' : 'bg-blue-400'}`}></div>
                             <div className="flex-1 min-w-0">
@@ -916,7 +916,7 @@ export default function ComplianceManagement() {
                                       <p className="text-slate-900 dark:text-white">{person.supervisor}</p>
                                     </div>
                                   </div>
-                                  <div className="mt-3 pt-3 border-t border-slate-700/50">
+                                  <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-700/50">
                                     <p className="text-xs text-slate-500">Required Training</p>
                                     <p className="text-sm text-slate-900 dark:text-white">{person.requiredTraining}</p>
                                     <p className={`text-xs mt-1 ${person.trainingScheduled ? 'text-green-400' : 'text-red-400'}`}>
@@ -1110,7 +1110,7 @@ export default function ComplianceManagement() {
                     </div>
 
                     {isExpanded && (
-                      <div className="border-t border-slate-700/50 p-5 bg-slate-900/30">
+                      <div className="border-t border-slate-200 dark:border-slate-700/50 p-5 bg-slate-900/30">
                         {/* Regulatory Authority */}
                         <div className="mb-4 p-3 bg-slate-800/60 rounded-lg">
                           <p className="text-xs text-slate-500 mb-2">Regulatory Authority</p>
@@ -1282,7 +1282,7 @@ export default function ComplianceManagement() {
 
       {chatOpen && (
         <div className="fixed bottom-24 right-6 w-full max-w-96 h-[500px] bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-2xl flex flex-col z-40 mx-4 sm:mx-0">
-          <div className="p-4 border-b border-slate-700/50">
+          <div className="p-4 border-b border-slate-200 dark:border-slate-700/50">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
                 <MessageCircle className="w-5 h-5 text-slate-900 dark:text-white" />
@@ -1300,12 +1300,12 @@ export default function ComplianceManagement() {
               </div>
               <div className="flex-1">
                 <div className="bg-slate-800/60 p-3 rounded-xl">
-                  <p className="text-sm text-slate-200">I can help you track compliance deadlines, interpret regulatory requirements, document corrective actions, and prepare audit reports. What do you need assistance with?</p>
+                  <p className="text-sm text-slate-700 dark:text-slate-200">I can help you track compliance deadlines, interpret regulatory requirements, document corrective actions, and prepare audit reports. What do you need assistance with?</p>
                 </div>
               </div>
             </div>
           </div>
-          <div className="p-4 border-t border-slate-700/50">
+          <div className="p-4 border-t border-slate-200 dark:border-slate-700/50">
             <div className="flex items-center gap-2">
               <input type="text" placeholder="Ask about compliance requirements..." className="flex-1 px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500/50" />
               <button className="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center">

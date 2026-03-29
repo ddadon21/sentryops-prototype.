@@ -253,7 +253,7 @@ export default function HRSettings() {
           })}
         </nav>
 
-        <div className="border-t border-slate-700/50">
+        <div className="border-t border-slate-200 dark:border-slate-700/50">
           {!sidebarCollapsed && (
             <div className="px-4 py-3">
               <p className="text-xs text-slate-500 text-center">Gwinnett County Sheriff's Office</p>
@@ -317,7 +317,7 @@ export default function HRSettings() {
       )}
 
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="border-b border-slate-800/50 backdrop-blur-xl bg-slate-900/30">
+        <header className="border-b border-slate-200 dark:border-slate-800/50 backdrop-blur-xl bg-slate-900/30">
           <div className="px-4 lg:px-6 py-4 flex items-center justify-between gap-4">
             <div className="flex items-center gap-4 flex-1 min-w-0">
               <button
@@ -349,7 +349,7 @@ export default function HRSettings() {
 
                 {notificationsOpen && (
                   <div className="absolute right-0 top-full mt-2 w-96 bg-white dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-2xl z-50">
-                    <div className="p-4 border-b border-slate-700/50">
+                    <div className="p-4 border-b border-slate-200 dark:border-slate-700/50">
                       <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Notifications</h3>
                     </div>
                     <div className="max-h-96 overflow-y-auto">
@@ -366,7 +366,7 @@ export default function HRSettings() {
                         </div>
                       ))}
                     </div>
-                    <div className="p-3 border-t border-slate-700/50">
+                    <div className="p-3 border-t border-slate-200 dark:border-slate-700/50">
                       <button className="w-full text-center text-sm text-amber-600 dark:text-amber-400 hover:text-amber-300 font-medium">View All</button>
                     </div>
                   </div>
@@ -392,7 +392,7 @@ export default function HRSettings() {
 
                 {profileMenuOpen && (
                   <div className="absolute right-0 top-full mt-2 w-56 bg-white dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-2xl z-50 py-2">
-                    <div className="px-4 py-3 border-b border-slate-700/50">
+                    <div className="px-4 py-3 border-b border-slate-200 dark:border-slate-700/50">
                       <p className="text-sm font-medium text-slate-900 dark:text-white">{profileSettings.fullName}</p>
                       <p className="text-xs text-slate-600 dark:text-slate-400">{profileSettings.email}</p>
                     </div>
@@ -409,7 +409,7 @@ export default function HRSettings() {
                         Settings
                       </button>
                     </div>
-                    <div className="border-t border-slate-700/50 py-1">
+                    <div className="border-t border-slate-200 dark:border-slate-700/50 py-1">
                       <button
                         onClick={() => setLogoutConfirmOpen(true)}
                         className="w-full flex items-center gap-3 px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-slate-800/50 transition-colors"
@@ -466,7 +466,7 @@ export default function HRSettings() {
             </div>
 
             {/* Settings Navigation Tabs */}
-            <div className="mb-6 flex gap-2 border-b border-slate-700/50 overflow-x-auto">
+            <div className="mb-6 flex gap-2 border-b border-slate-200 dark:border-slate-700/50 overflow-x-auto">
               {settingsTabs.map(tab => {
                 const Icon = tab.icon;
                 return (
@@ -1006,7 +1006,7 @@ export default function HRSettings() {
                                 <p className="text-sm text-slate-900 dark:text-white font-medium">
                                   {integration.monthlyRequests.toLocaleString()} / {integration.requestLimit.toLocaleString()}
                                 </p>
-                                <div className="w-24 h-1.5 bg-slate-700 rounded-full mt-1">
+                                <div className="w-24 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full mt-1">
                                   <div
                                     className="h-full bg-amber-500 rounded-full"
                                     style={{ width: `${(integration.monthlyRequests / integration.requestLimit) * 100}%` }}
@@ -1039,7 +1039,7 @@ export default function HRSettings() {
 
       {chatOpen && (
         <div className="fixed bottom-24 right-6 w-full max-w-96 h-[500px] bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-2xl flex flex-col z-40 mx-4 sm:mx-0">
-          <div className="p-4 border-b border-slate-700/50">
+          <div className="p-4 border-b border-slate-200 dark:border-slate-700/50">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
                 <Sparkles className="w-5 h-5 text-slate-900 dark:text-white" />
@@ -1057,12 +1057,12 @@ export default function HRSettings() {
               </div>
               <div className="flex-1">
                 <div className="bg-slate-800/60 p-3 rounded-xl">
-                  <p className="text-sm text-slate-200">Hi! I can help you configure your HR settings, manage integrations, set up notifications, and troubleshoot connectivity issues. What do you need help with?</p>
+                  <p className="text-sm text-slate-700 dark:text-slate-200">Hi! I can help you configure your HR settings, manage integrations, set up notifications, and troubleshoot connectivity issues. What do you need help with?</p>
                 </div>
               </div>
             </div>
           </div>
-          <div className="p-4 border-t border-slate-700/50">
+          <div className="p-4 border-t border-slate-200 dark:border-slate-700/50">
             <div className="flex items-center gap-2">
               <input type="text" placeholder="Ask about settings..." className="flex-1 px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500/50" />
               <button className="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center">

@@ -511,7 +511,7 @@ export default function BackgroundsDashboard() {
                   );
                 })}
               </div>
-              <div className="mt-4 pt-3 border-t border-slate-700/20 grid grid-cols-2 gap-3 text-xs">
+              <div className="mt-4 pt-3 border-t border-slate-200 dark:border-slate-700/20 grid grid-cols-2 gap-3 text-xs">
                 <div>
                   <span className="text-slate-500">Avg Pipeline Time:</span>
                   <span className="text-slate-700 dark:text-slate-300 ml-2 font-medium">14.5 days</span>
@@ -583,7 +583,7 @@ export default function BackgroundsDashboard() {
                     <div className="text-[11px] text-slate-500">{caseItem.daysOpen} days open</div>
                   </div>
                   <div className="flex-shrink-0 text-right w-56">
-                    <span className="text-[13px] font-medium text-slate-200">{caseItem.nextAction}</span>
+                    <span className="text-[13px] font-medium text-slate-700 dark:text-slate-200">{caseItem.nextAction}</span>
                     <div className="text-[11px] text-slate-500">{caseItem.investigator}</div>
                   </div>
                 </div>
@@ -663,9 +663,9 @@ export default function BackgroundsDashboard() {
 
       {chatOpen && (
         <div className="fixed bottom-24 right-6 w-full max-w-96 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-2xl flex flex-col z-40 mx-4 sm:mx-0">
-          <div className="p-4 border-b border-slate-700/50">
+          <div className="p-4 border-b border-slate-200 dark:border-slate-700/50">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-slate-700 rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 bg-slate-200 dark:bg-slate-700 rounded-lg flex items-center justify-center">
                 <Shield className="w-5 h-5 text-slate-700 dark:text-slate-300" />
               </div>
               <div>

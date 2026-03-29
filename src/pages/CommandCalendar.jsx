@@ -768,7 +768,7 @@ export default function CommandCalendar() {
               </div>
 
               {/* Legend */}
-              <div className="flex items-center gap-4 mt-4 pt-3 border-t border-slate-700/20 flex-wrap">
+              <div className="flex items-center gap-4 mt-4 pt-3 border-t border-slate-200 dark:border-slate-700/20 flex-wrap">
                 {[
                   { color: 'bg-red-500', label: 'Compliance' },
                   { color: 'bg-amber-500', label: 'Staffing' },
@@ -920,7 +920,7 @@ export default function CommandCalendar() {
                 {timelineHours.map(hour => {
                   const hourNum = parseInt(hour.split(':')[0]);
                   return (
-                    <div key={hour} className="grid gap-px border-t border-slate-700/10" style={{ gridTemplateColumns: '60px repeat(7, 1fr)' }}>
+                    <div key={hour} className="grid gap-px border-t border-slate-200 dark:border-slate-700/10" style={{ gridTemplateColumns: '60px repeat(7, 1fr)' }}>
                       <div className="py-2 pr-2 text-right">
                         <span className="text-[11px] font-mono text-slate-600">{hour}</span>
                       </div>
@@ -1028,19 +1028,19 @@ export default function CommandCalendar() {
                     <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Assigned Lead</span>
                     <p className="text-sm text-slate-900 dark:text-white mt-1">{selectedEvent.assignedTo}</p>
                   </div>
-                  <div className="border-t border-slate-700/20 pt-3">
+                  <div className="border-t border-slate-200 dark:border-slate-700/20 pt-3">
                     <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Date & Time</span>
                     <p className="text-sm text-slate-900 dark:text-white mt-1">December {selectedEvent.day}, 2024 · {selectedEvent.time}</p>
                   </div>
                   {selectedEvent.staffingImpact && (
-                    <div className="border-t border-slate-700/20 pt-3">
+                    <div className="border-t border-slate-200 dark:border-slate-700/20 pt-3">
                       <span className="text-[11px] font-semibold text-amber-600 dark:text-amber-400/80 uppercase tracking-wider">Staffing Impact</span>
                       <p className="text-sm text-amber-600 dark:text-amber-400 mt-1">
                         {selectedEvent.deputiesAffected ? `${selectedEvent.deputiesAffected} deputies removed from field duty` : 'Staffing coverage affected'}
                       </p>
                     </div>
                   )}
-                  <div className="border-t border-slate-700/20 pt-3">
+                  <div className="border-t border-slate-200 dark:border-slate-700/20 pt-3">
                     <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Linked Module</span>
                     <button
                       onClick={() => { setSelectedEvent(null); navigate(selectedEvent.linkedModule); }}
@@ -1050,13 +1050,13 @@ export default function CommandCalendar() {
                       <ExternalLink className="w-3 h-3" />
                     </button>
                   </div>
-                  <div className="border-t border-slate-700/20 pt-3">
+                  <div className="border-t border-slate-200 dark:border-slate-700/20 pt-3">
                     <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Notes</span>
                     <p className="text-[13px] text-slate-700 dark:text-slate-300 leading-relaxed mt-1">{selectedEvent.notes}</p>
                   </div>
                 </div>
 
-                <div className="flex gap-2 pt-3 border-t border-slate-700/20">
+                <div className="flex gap-2 pt-3 border-t border-slate-200 dark:border-slate-700/20">
                   <button
                     onClick={() => { setSelectedEvent(null); navigate(selectedEvent.linkedModule); }}
                     className="flex-1 px-3 py-2 text-xs font-medium text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/10 rounded-lg transition-colors"

@@ -715,7 +715,7 @@ export default function CaseClosure() {
                   </button>
                 </div>
 
-                <div className="border-t border-slate-700/50 pt-4 mb-4">
+                <div className="border-t border-slate-200 dark:border-slate-700/50 pt-4 mb-4">
                   <p className="text-xs text-slate-600 dark:text-slate-400 mb-3">CASE MANAGEMENT ACTIONS:</p>
                   <div className="space-y-2">
                     <button className="w-full px-3 py-2 bg-slate-700/30 hover:bg-slate-700/50 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors flex items-center gap-2">
@@ -741,7 +741,7 @@ export default function CaseClosure() {
                   </div>
                 </div>
 
-                <div className="border-t border-slate-700/50 pt-4">
+                <div className="border-t border-slate-200 dark:border-slate-700/50 pt-4">
                   <p className="text-xs text-slate-600 dark:text-slate-400 mb-3">CASE STATISTICS:</p>
                   <div className="space-y-2 text-xs">
                     <div className="flex justify-between">
@@ -808,7 +808,7 @@ export default function CaseClosure() {
                     </button>
 
                     {isExpanded && (
-                      <div className="px-4 pb-4 border-t border-slate-800/50">
+                      <div className="px-4 pb-4 border-t border-slate-200 dark:border-slate-800/50">
                         <div className="pt-3 space-y-2">
                           {section.details.map((detail, idx) => (
                             <div key={idx} className="text-sm">
@@ -823,7 +823,7 @@ export default function CaseClosure() {
                             </div>
                           ))}
                         </div>
-                        <div className="flex flex-wrap gap-2 mt-3 pt-3 border-t border-slate-800/50">
+                        <div className="flex flex-wrap gap-2 mt-3 pt-3 border-t border-slate-200 dark:border-slate-800/50">
                           {section.actions.map((action, idx) => (
                             <button key={idx} className="px-2 py-1 bg-slate-700/30 hover:bg-slate-700/50 text-slate-600 dark:text-slate-400 hover:text-slate-700 dark:text-slate-300 rounded text-xs transition-colors">
                               {action}

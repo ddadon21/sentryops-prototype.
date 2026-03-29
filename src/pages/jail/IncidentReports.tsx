@@ -357,7 +357,7 @@ const IncidentReports = () => {
                   </div>
                   <button
                     onClick={() => setExpandedIncident(expandedIncident === incident.id ? null : incident.id)}
-                    className="p-2 hover:bg-slate-700 rounded-lg transition-colors"
+                    className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors"
                   >
                     {expandedIncident === incident.id ? (
                       <ChevronUp className="w-5 h-5 text-slate-600 dark:text-slate-400" />
@@ -416,7 +416,7 @@ const IncidentReports = () => {
 
               {/* Expanded Details */}
               {expandedIncident === incident.id && (
-                <div className="border-t border-slate-700 p-6 bg-slate-900/30">
+                <div className="border-t border-slate-200 dark:border-slate-700 p-6 bg-slate-900/30">
                   <div className="grid grid-cols-2 gap-6">
                     <div>
                       <h4 className="text-slate-900 dark:text-white font-semibold mb-3">Full Description</h4>
@@ -443,7 +443,7 @@ const IncidentReports = () => {
                     </div>
                   </div>
 
-                  <div className="flex justify-end gap-3 mt-6 pt-6 border-t border-slate-700">
+                  <div className="flex justify-end gap-3 mt-6 pt-6 border-t border-slate-200 dark:border-slate-700">
                     <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
                       View Full Report
                     </button>

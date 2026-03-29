@@ -887,9 +887,9 @@ export default function BIReports() {
 
                     {/* Expanded Content */}
                     {isExpanded && (
-                      <div className="border-t border-slate-700/50 p-4">
+                      <div className="border-t border-slate-200 dark:border-slate-700/50 p-4">
                         {/* Investigation Summary */}
-                        <div className="mb-6 pb-6 border-b border-slate-700/30">
+                        <div className="mb-6 pb-6 border-b border-slate-200 dark:border-slate-700/30">
                           <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3 uppercase tracking-wide">Background Investigation Summary</h4>
                           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
                             <div className="flex items-center gap-2">
@@ -952,7 +952,7 @@ export default function BIReports() {
                         </div>
 
                         {/* Background Check Results */}
-                        <div className="mb-6 pb-6 border-b border-slate-700/30">
+                        <div className="mb-6 pb-6 border-b border-slate-200 dark:border-slate-700/30">
                           <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-4 uppercase tracking-wide flex items-center gap-2">
                             <FileText className="w-4 h-4 text-purple-400" />
                             Background Check Results
@@ -972,7 +972,7 @@ export default function BIReports() {
 
                         {/* Timeline (for in-progress) */}
                         {report.timeline && (
-                          <div className="mb-6 pb-6 border-b border-slate-700/30">
+                          <div className="mb-6 pb-6 border-b border-slate-200 dark:border-slate-700/30">
                             <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-4 uppercase tracking-wide flex items-center gap-2">
                               <Calendar className="w-4 h-4 text-purple-400" />
                               Investigation Timeline
@@ -990,7 +990,7 @@ export default function BIReports() {
 
                         {/* Next Actions (for in-progress) */}
                         {report.nextActions && (
-                          <div className="mb-6 pb-6 border-b border-slate-700/30">
+                          <div className="mb-6 pb-6 border-b border-slate-200 dark:border-slate-700/30">
                             <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-4 uppercase tracking-wide">Next Actions</h4>
                             <ul className="space-y-2">
                               {report.nextActions.map((action, idx) => (
@@ -1005,7 +1005,7 @@ export default function BIReports() {
 
                         {/* Investigator Notes (for in-progress) */}
                         {report.investigatorNotes && (
-                          <div className="mb-6 pb-6 border-b border-slate-700/30">
+                          <div className="mb-6 pb-6 border-b border-slate-200 dark:border-slate-700/30">
                             <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3 uppercase tracking-wide">Investigator Notes</h4>
                             <p className="text-sm text-slate-700 dark:text-slate-300">{report.investigatorNotes}</p>
                             {report.preliminaryAssessment && (
@@ -1157,7 +1157,7 @@ export default function BIReports() {
                         )}
 
                         {/* Action Buttons */}
-                        <div className="flex flex-wrap gap-3 pt-4 border-t border-slate-700/30">
+                        <div className="flex flex-wrap gap-3 pt-4 border-t border-slate-200 dark:border-slate-700/30">
                           <button className="px-4 py-2 bg-slate-700/50 hover:bg-slate-700/70 border border-slate-600/50 rounded-lg text-slate-900 dark:text-white text-sm font-medium transition-colors flex items-center gap-2">
                             <Eye className="w-4 h-4" />
                             View Complete Investigation File

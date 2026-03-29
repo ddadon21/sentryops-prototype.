@@ -430,7 +430,7 @@ export default function BudgetResources() {
                   <span className="text-xs font-medium text-blue-400">TOTAL BUDGET</span>
                 </div>
                 <p className="text-2xl font-bold text-slate-900 dark:text-white mb-2">${(fiscalYear.totalBudget / 1000000).toFixed(1)}M</p>
-                <div className="space-y-1.5 border-t border-slate-700/50 pt-3">
+                <div className="space-y-1.5 border-t border-slate-200 dark:border-slate-700/50 pt-3">
                   <div className="flex justify-between text-xs">
                     <span className="text-slate-600 dark:text-slate-400">Fiscal Year:</span>
                     <span className="font-medium text-slate-900 dark:text-white">{fiscalYear.year}</span>
@@ -464,7 +464,7 @@ export default function BudgetResources() {
                     <div className={`h-full ${fiscalYear.percentSpent >= 90 ? 'bg-red-500' : fiscalYear.percentSpent >= 80 ? 'bg-amber-500' : 'bg-green-500'}`} style={{ width: `${fiscalYear.percentSpent}%` }} />
                   </div>
                 </div>
-                <div className="space-y-1.5 border-t border-slate-700/50 pt-3">
+                <div className="space-y-1.5 border-t border-slate-200 dark:border-slate-700/50 pt-3">
                   <div className="flex justify-between text-xs">
                     <span className="text-slate-600 dark:text-slate-400">This month:</span>
                     <span className="font-medium text-slate-900 dark:text-white">$3.98M</span>
@@ -496,7 +496,7 @@ export default function BudgetResources() {
                     <div className="h-full bg-purple-500" style={{ width: `${fiscalYear.percentCommitted}%` }} />
                   </div>
                 </div>
-                <div className="space-y-1.5 border-t border-slate-700/50 pt-3">
+                <div className="space-y-1.5 border-t border-slate-200 dark:border-slate-700/50 pt-3">
                   <div className="flex justify-between text-xs">
                     <span className="text-slate-600 dark:text-slate-400">Pending POs:</span>
                     <span className="font-medium text-slate-900 dark:text-white">23 orders</span>
@@ -526,7 +526,7 @@ export default function BudgetResources() {
                     <div className="h-full bg-green-500" style={{ width: `${(fiscalYear.available / fiscalYear.totalBudget) * 100}%` }} />
                   </div>
                 </div>
-                <div className="space-y-1.5 border-t border-slate-700/50 pt-3">
+                <div className="space-y-1.5 border-t border-slate-200 dark:border-slate-700/50 pt-3">
                   <div className="flex justify-between text-xs">
                     <span className="text-slate-600 dark:text-slate-400">Days remaining:</span>
                     <span className="font-medium text-slate-900 dark:text-white">61 days</span>
@@ -540,7 +540,7 @@ export default function BudgetResources() {
             </div>
 
             {/* Tabs */}
-            <div className="mb-6 flex gap-2 border-b border-slate-700/50">
+            <div className="mb-6 flex gap-2 border-b border-slate-200 dark:border-slate-700/50">
               {[
                 { id: 'overview', label: 'Overview', icon: PieChart },
                 { id: 'divisions', label: 'By Division', icon: BarChart3 },
@@ -901,7 +901,7 @@ export default function BudgetResources() {
                       </div>
 
                       {isExpanded && (
-                        <div className="border-t border-slate-700/50 p-5 bg-slate-900/30">
+                        <div className="border-t border-slate-200 dark:border-slate-700/50 p-5 bg-slate-900/30">
                           <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Budget Categories</h4>
                           <div className="space-y-3">
                             {division.categories.map((cat, idx) => (
@@ -1000,7 +1000,7 @@ export default function BudgetResources() {
                       <div className="w-full h-2 bg-slate-700/50 rounded-full overflow-hidden">
                         <div className="h-full bg-red-500" style={{ width: '92%' }} />
                       </div>
-                      <div className="mt-3 pt-3 border-t border-slate-700/30">
+                      <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-700/30">
                         <p className="text-xs font-bold text-amber-600 dark:text-amber-400 mb-2">Overtime Analysis:</p>
                         <div className="space-y-1 text-xs text-slate-700 dark:text-slate-300">
                           <div className="flex justify-between">
@@ -1508,7 +1508,7 @@ export default function BudgetResources() {
       {/* AI Chat Panel */}
       {chatOpen && (
         <div className="fixed bottom-24 right-6 w-full max-w-96 h-[500px] bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-2xl flex flex-col z-40 mx-4 sm:mx-0">
-          <div className="p-4 border-b border-slate-700/50">
+          <div className="p-4 border-b border-slate-200 dark:border-slate-700/50">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
                 <Sparkles className="w-5 h-5 text-slate-900 dark:text-white" />
@@ -1526,12 +1526,12 @@ export default function BudgetResources() {
               </div>
               <div className="flex-1">
                 <div className="bg-slate-800/60 p-3 rounded-xl">
-                  <p className="text-sm text-slate-200">Hi! I can help you analyze budget trends, forecast spending, identify cost savings, compare divisions, and answer questions about fiscal management. What would you like to know?</p>
+                  <p className="text-sm text-slate-700 dark:text-slate-200">Hi! I can help you analyze budget trends, forecast spending, identify cost savings, compare divisions, and answer questions about fiscal management. What would you like to know?</p>
                 </div>
               </div>
             </div>
           </div>
-          <div className="p-4 border-t border-slate-700/50">
+          <div className="p-4 border-t border-slate-200 dark:border-slate-700/50">
             <div className="flex items-center gap-2">
               <input type="text" placeholder="Ask about budget..." className="flex-1 px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500/50" />
               <button className="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center">
