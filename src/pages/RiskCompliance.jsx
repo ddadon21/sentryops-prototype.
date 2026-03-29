@@ -516,7 +516,7 @@ export default function RiskCompliance() {
                 <div className="flex items-center gap-1 text-[9px] text-slate-500 leading-tight pt-0.5 border-t border-slate-200 dark:border-slate-700/40 mt-0.5">
                   <span className="font-mono w-[28px]">Σ</span>
                   <span className="flex-1 font-semibold">Composite OPI</span>
-                  <span className="font-mono font-bold text-slate-900 dark:text-white">={opiScore}</span>
+                  <span className="font-mono font-bold text-slate-900 dark:text-slate-900 dark:text-white">={opiScore}</span>
                 </div>
               </div>
             </div>
@@ -528,7 +528,7 @@ export default function RiskCompliance() {
                 <span className="text-[10px] font-medium text-slate-500 uppercase tracking-wider">Open Risks</span>
               </div>
               <div className="flex items-baseline gap-2">
-                <span className="text-xl font-bold text-slate-900 dark:text-white">{openRisks.length}</span>
+                <span className="text-xl font-bold text-slate-900 dark:text-slate-900 dark:text-white">{openRisks.length}</span>
                 <div className="flex items-center gap-1.5 text-[10px]">
                   <span className="text-red-600 dark:text-red-400 font-semibold">{criticalCount} critical</span>
                   <span className="text-slate-700">&middot;</span>
@@ -550,7 +550,7 @@ export default function RiskCompliance() {
                 <span className="text-[10px] font-medium text-slate-500 uppercase tracking-wider">Next Audit</span>
               </div>
               <div className="flex items-baseline gap-2">
-                <span className="text-[13px] font-bold text-slate-900 dark:text-white">{nextAudit.agency}</span>
+                <span className="text-[13px] font-bold text-slate-900 dark:text-slate-900 dark:text-white">{nextAudit.agency}</span>
                 <span className="text-[10px] text-slate-500">{nextAudit.date}</span>
               </div>
               <div className="flex items-center gap-1.5 text-[10px] mt-0.5">
@@ -618,7 +618,7 @@ export default function RiskCompliance() {
           <div className="mb-4">
             <div className="flex items-center gap-2 mb-2 px-1">
               <AlertTriangle className="w-3.5 h-3.5 text-red-600 dark:text-red-400" />
-              <span className="text-[12px] font-bold text-slate-900 dark:text-white">Open Risk Items</span>
+              <span className="text-[12px] font-bold text-slate-900 dark:text-slate-900 dark:text-white">Open Risk Items</span>
               <span className="px-1.5 py-px bg-red-500/10 border border-red-500/20 rounded text-[10px] font-bold text-red-600 dark:text-red-400">
                 {openRisks.length}
               </span>
@@ -689,7 +689,7 @@ export default function RiskCompliance() {
                       </span>
 
                       {/* Title */}
-                      <span className="text-[13px] font-bold flex-1 min-w-0 truncate text-white">
+                      <span className="text-[13px] font-bold flex-1 min-w-0 truncate text-slate-900 dark:text-white">
                         {risk.title}
                       </span>
 
@@ -747,9 +747,9 @@ export default function RiskCompliance() {
 
                         {/* Key details row */}
                         <div className="flex items-center gap-3 text-[10px] text-slate-700 dark:text-slate-400 flex-wrap">
-                          <span>Owner: <span className="text-white font-medium">{risk.owner}</span></span>
+                          <span>Owner: <span className="text-slate-900 dark:text-white font-medium">{risk.owner}</span></span>
                           <span className="text-slate-700">&middot;</span>
-                          <span>Due: <span className="text-white font-medium">{risk.due}</span></span>
+                          <span>Due: <span className="text-slate-900 dark:text-white font-medium">{risk.due}</span></span>
                         </div>
 
                         {/* Status */}
@@ -801,7 +801,7 @@ export default function RiskCompliance() {
                             >
                               <Link2 className="w-3 h-3 flex-shrink-0" />
                               <span className="font-semibold">Linked Approval:</span>
-                              <span className="text-white">{risk.linkedApproval.title}</span>
+                              <span className="text-slate-900 dark:text-white">{risk.linkedApproval.title}</span>
                               <span className="font-mono">${risk.linkedApproval.amount.toLocaleString()}</span>
                               <span className="text-slate-700">&mdash;</span>
                               <span className={`font-bold uppercase ${
@@ -831,7 +831,7 @@ export default function RiskCompliance() {
           <div className="mb-4">
             <div className="flex items-center gap-2 mb-2 px-1">
               <Calendar className="w-3.5 h-3.5 text-slate-700 dark:text-slate-400" />
-              <span className="text-[12px] font-bold text-white">Upcoming Audits</span>
+              <span className="text-[12px] font-bold text-slate-900 dark:text-slate-900 dark:text-white">Upcoming Audits</span>
             </div>
             <div className="border border-slate-200 dark:border-slate-700/25 rounded-xl overflow-hidden">
               <table className="w-full">
@@ -860,12 +860,12 @@ export default function RiskCompliance() {
                       }`}>
                         <td className="px-3 py-2.5">
                           <div className="flex items-center gap-1.5">
-                            <span className="text-[11px] font-semibold text-white">{audit.date}</span>
+                            <span className="text-[11px] font-semibold text-slate-900 dark:text-white">{audit.date}</span>
                             <span className="text-[10px] text-slate-700 font-mono">{audit.daysOut}d</span>
                           </div>
                         </td>
                         <td className="px-3 py-2.5">
-                          <span className="text-[11px] font-semibold text-white">{audit.agency}</span>
+                          <span className="text-[11px] font-semibold text-slate-900 dark:text-slate-900 dark:text-white">{audit.agency}</span>
                         </td>
                         <td className="px-3 py-2.5">
                           <span className="text-[11px] text-slate-700 dark:text-slate-400">{audit.scope}</span>
@@ -915,7 +915,7 @@ export default function RiskCompliance() {
             <div className="bg-slate-50 dark:bg-slate-800/35 border border-slate-200 dark:border-slate-700/25 rounded-xl p-3">
               <div className="flex items-center gap-2 mb-2.5">
                 <TrendingUp className="w-3.5 h-3.5 text-slate-700 dark:text-slate-400" />
-                <span className="text-[12px] font-bold text-white">Risk Trends</span>
+                <span className="text-[12px] font-bold text-slate-900 dark:text-white">Risk Trends</span>
                 <span className="text-[10px] text-slate-700 ml-1">6-month analysis</span>
               </div>
 
@@ -938,7 +938,7 @@ export default function RiskCompliance() {
                           {insight.direction === 'up' ? '↑' : insight.direction === 'down' ? '↓' : '→'} {insight.change}
                         </span>
                       </div>
-                      <p className="text-[11px] font-semibold text-white">{insight.value}</p>
+                      <p className="text-[11px] font-semibold text-slate-900 dark:text-white">{insight.value}</p>
                       <p className="text-[10px] text-slate-500">{insight.detail}</p>
                     </div>
                   </div>
@@ -953,9 +953,9 @@ export default function RiskCompliance() {
               </div>
 
               <div className="mt-2 pt-2 border-t border-slate-200 dark:border-slate-200 dark:border-slate-700/30 flex items-center gap-3 text-[10px] text-slate-500">
-                <span>Total events: <span className="text-white font-semibold">24</span> (↓14% vs H1)</span>
+                <span>Total events: <span className="text-slate-900 dark:text-white font-semibold">24</span> (↓14% vs H1)</span>
                 <span className="text-slate-700">&middot;</span>
-                <span>Avg resolution: <span className="text-white font-semibold">8.3d</span> (target: &lt;10d)</span>
+                <span>Avg resolution: <span className="text-slate-900 dark:text-white font-semibold">8.3d</span> (target: &lt;10d)</span>
               </div>
             </div>
 
@@ -963,7 +963,7 @@ export default function RiskCompliance() {
             <div className="bg-slate-50 dark:bg-slate-800/35 border border-slate-200 dark:border-slate-700/25 rounded-xl p-3">
               <div className="flex items-center gap-2 mb-2.5">
                 <FileText className="w-3.5 h-3.5 text-slate-700 dark:text-slate-400" />
-                <span className="text-[12px] font-bold text-white">Policy Compliance</span>
+                <span className="text-[12px] font-bold text-slate-900 dark:text-white">Policy Compliance</span>
               </div>
 
               <div className="space-y-2">
@@ -975,7 +975,7 @@ export default function RiskCompliance() {
                     }`}>
                       <div className="flex items-center justify-between mb-1">
                         <div className="flex items-center gap-2">
-                          <span className="text-[11px] font-semibold text-white">{policy.name}</span>
+                          <span className="text-[11px] font-semibold text-slate-900 dark:text-white">{policy.name}</span>
                           {breached && (
                             <span className="px-1 py-px rounded text-[9px] font-bold border bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400">
                               BELOW {policy.threshold}%
@@ -1025,7 +1025,7 @@ export default function RiskCompliance() {
             <div className="px-3 py-2.5 bg-red-500/[0.03] border-b border-red-500/10">
               <div className="flex items-center gap-2">
                 <Zap className="w-3.5 h-3.5 text-red-600 dark:text-red-400" />
-                <span className="text-[12px] font-bold text-white">30-Day Cascade Projection</span>
+                <span className="text-[12px] font-bold text-slate-900 dark:text-white">30-Day Cascade Projection</span>
                 <span className="px-1.5 py-px bg-red-500/10 border border-red-500/20 rounded text-[9px] font-bold text-red-600 dark:text-red-400 uppercase">If Unresolved</span>
               </div>
               <p className="text-[10px] text-slate-500 mt-0.5 ml-[22px]">Projected system state if POST, Training, and Equipment issues remain unresolved through Jan 8, 2025</p>
@@ -1098,7 +1098,7 @@ export default function RiskCompliance() {
 
             {/* Cross-System Ripple */}
             <div className="px-3 py-2.5 bg-white dark:bg-slate-900/40 border-t border-red-500/10">
-              <p className="text-[10px] font-bold text-white mb-1.5">Cross-System Ripple</p>
+              <p className="text-[10px] font-bold text-slate-900 dark:text-white mb-1.5">Cross-System Ripple</p>
               <div className="grid grid-cols-2 lg:grid-cols-5 gap-2">
                 {[
                   { system: 'Command Alerts', action: '3 critical alerts auto-generated', color: 'red' },
@@ -1150,7 +1150,7 @@ export default function RiskCompliance() {
                               <span className={`px-1.5 py-px rounded text-[9px] font-bold border ${
                                 action.severity === 'critical' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' : 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400'
                               }`}>{action.severity.toUpperCase()}</span>
-                              <span className="text-[11px] font-semibold text-white truncate">{action.title}</span>
+                              <span className="text-[11px] font-semibold text-slate-900 dark:text-white truncate">{action.title}</span>
                               <span className="text-[10px] font-mono text-slate-700 dark:text-slate-400">${action.amount.toLocaleString()}</span>
                             </div>
                             <div className="flex items-center gap-2 text-[10px] text-slate-500">
@@ -1205,7 +1205,7 @@ export default function RiskCompliance() {
                           <div key={entry.id} className="flex items-center gap-2 text-[10px] px-2 py-1.5 rounded bg-slate-50 dark:bg-slate-900/30">
                             <cfg.icon className={`w-3 h-3 flex-shrink-0 ${cfg.text}`} />
                             <span className={`font-bold ${cfg.text} w-[72px]`}>{cfg.label}</span>
-                            <span className="text-white font-medium flex-1 truncate">{entry.approvalTitle}</span>
+                            <span className="text-slate-900 dark:text-white font-medium flex-1 truncate">{entry.approvalTitle}</span>
                             <span className="text-slate-500 font-mono">${entry.amount.toLocaleString()}</span>
                             <span className="text-slate-700">{entry.actor}</span>
                             <span className="text-slate-700 font-mono text-[9px]">{entry.displayTime}</span>
@@ -1224,7 +1224,7 @@ export default function RiskCompliance() {
           <div className="mt-4">
             <div className="flex items-center gap-2 mb-2 px-1">
               <Shield className="w-3.5 h-3.5 text-slate-700 dark:text-slate-400" />
-              <span className="text-[12px] font-bold text-white">Regulatory Standards</span>
+              <span className="text-[12px] font-bold text-slate-900 dark:text-white">Regulatory Standards</span>
               <span className="text-[10px] text-slate-700">Reference</span>
             </div>
             <div className="border border-slate-200 dark:border-slate-700/25 rounded-xl overflow-hidden">
@@ -1243,7 +1243,7 @@ export default function RiskCompliance() {
                   {complianceStandards.map((std) => (
                     <tr key={std.id} className="border-b border-slate-200 dark:border-slate-800/10 hover:bg-slate-50 dark:hover:bg-slate-50 dark:hover:bg-slate-800/15 transition-colors">
                       <td className="px-3 py-2">
-                        <span className="text-[11px] font-semibold text-white">{std.name}</span>
+                        <span className="text-[11px] font-semibold text-slate-900 dark:text-white">{std.name}</span>
                       </td>
                       <td className="px-3 py-2">
                         <span className={`inline-flex items-center gap-1 px-1.5 py-px rounded text-[10px] font-bold border ${
@@ -1310,7 +1310,7 @@ export default function RiskCompliance() {
                 <div>
                   <div className="flex items-center gap-2 mb-1">
                     <Lock className="w-4 h-4 text-amber-600 dark:text-amber-400" />
-                    <h3 className="text-sm font-bold text-white">Authorization Required</h3>
+                    <h3 className="text-sm font-bold text-slate-900 dark:text-white">Authorization Required</h3>
                   </div>
                   <p className="text-[10px] text-slate-500">Decision will be logged with timestamp, actor, and OPI context</p>
                 </div>
@@ -1329,12 +1329,12 @@ export default function RiskCompliance() {
                       <span className={`px-1.5 py-px rounded text-[9px] font-bold border ${
                         approvalModal.severity === 'critical' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' : 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400'
                       }`}>{approvalModal.severity.toUpperCase()}</span>
-                      <span className="text-sm font-semibold text-slate-900 dark:text-white">{approvalModal.title}</span>
+                      <span className="text-sm font-semibold text-slate-900 dark:text-slate-900 dark:text-white">{approvalModal.title}</span>
                     </div>
                     <div className="grid grid-cols-2 gap-2 text-[10px]">
-                      <div><span className="text-slate-500">Amount:</span> <span className="text-white font-bold font-mono">${approvalModal.amount.toLocaleString()}</span></div>
-                      <div><span className="text-slate-500">Linked Risk:</span> <span className="text-white">{approvalModal.riskTitle}</span></div>
-                      <div><span className="text-slate-500">Owner:</span> <span className="text-white">{approvalModal.owner}</span></div>
+                      <div><span className="text-slate-500">Amount:</span> <span className="text-slate-900 dark:text-white font-bold font-mono">${approvalModal.amount.toLocaleString()}</span></div>
+                      <div><span className="text-slate-500">Linked Risk:</span> <span className="text-slate-900 dark:text-white">{approvalModal.riskTitle}</span></div>
+                      <div><span className="text-slate-500">Owner:</span> <span className="text-slate-900 dark:text-white">{approvalModal.owner}</span></div>
                       <div><span className="text-slate-500">Days Remaining:</span> <span className={`font-bold ${approvalModal.daysLeft <= 7 ? 'text-red-600 dark:text-red-400' : 'text-amber-600 dark:text-amber-400'}`}>{approvalModal.daysLeft}d</span></div>
                       <div><span className="text-slate-500">Cascade Chains:</span> <span className="text-red-600 dark:text-red-400 font-bold">{approvalModal.cascadeCount} consequences</span></div>
                       {approvalModal.auditImpact && <div><span className="text-slate-500">Audit Impact:</span> <span className="text-amber-600 dark:text-amber-400">{approvalModal.auditImpact}</span></div>}
@@ -1367,7 +1367,7 @@ export default function RiskCompliance() {
                       value={approvalNote}
                       onChange={(e) => setApprovalNote(e.target.value)}
                       placeholder="Enter justification for this decision..."
-                      className="w-full px-3 py-2.5 bg-slate-100 dark:bg-slate-800/30 border border-slate-700/50 rounded-lg text-white text-xs placeholder-slate-600 focus:outline-none focus:border-amber-500/50 resize-none"
+                      className="w-full px-3 py-2.5 bg-slate-100 dark:bg-slate-800/30 border border-slate-700/50 rounded-lg text-slate-900 dark:text-white text-xs placeholder-slate-600 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 resize-none"
                       rows={3}
                     />
                   </div>
@@ -1377,7 +1377,7 @@ export default function RiskCompliance() {
                 <div className="px-5 py-4 border-t border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-800/35">
                   <p className="text-[9px] text-slate-700 mb-3 flex items-center gap-1.5">
                     <UserCheck className="w-3 h-3" />
-                    Authorizing Official: <span className="text-white font-semibold">Sheriff K. Conway</span> — decision is final and logged
+                    Authorizing Official: <span className="text-slate-900 dark:text-white font-semibold">Sheriff K. Conway</span> — decision is final and logged
                   </p>
                   <div className="grid grid-cols-4 gap-2">
                     <button
@@ -1437,15 +1437,15 @@ export default function RiskCompliance() {
                 <div className="bg-slate-100 dark:bg-slate-800/30 rounded-lg p-3 border border-slate-700/50 space-y-2 text-[10px]">
                   <div className="flex justify-between">
                     <span className="text-slate-500">Decision ID</span>
-                    <span className="text-white font-mono">{approvalDecision.entry.id}</span>
+                    <span className="text-slate-900 dark:text-white font-mono">{approvalDecision.entry.id}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-slate-500">Timestamp</span>
-                    <span className="text-white font-mono">{approvalDecision.entry.displayTime}</span>
+                    <span className="text-slate-900 dark:text-white font-mono">{approvalDecision.entry.displayTime}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-slate-500">Authorized By</span>
-                    <span className="text-white">{approvalDecision.entry.actor} ({approvalDecision.entry.role})</span>
+                    <span className="text-slate-900 dark:text-white">{approvalDecision.entry.actor} ({approvalDecision.entry.role})</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-slate-500">OPI at Decision</span>
@@ -1453,7 +1453,7 @@ export default function RiskCompliance() {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-slate-500">Compliance at Decision</span>
-                    <span className="text-white">{approvalDecision.entry.complianceAtDecision}%</span>
+                    <span className="text-slate-900 dark:text-white">{approvalDecision.entry.complianceAtDecision}%</span>
                   </div>
                   {approvalDecision.entry.note && (
                     <div className="pt-2 border-t border-slate-200 dark:border-slate-700/50">
@@ -1472,7 +1472,7 @@ export default function RiskCompliance() {
 
                 <button
                   onClick={closeApprovalModal}
-                  className="mt-4 w-full px-4 py-2.5 bg-slate-100 dark:bg-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-white rounded-xl text-sm font-medium transition-all"
+                  className="mt-4 w-full px-4 py-2.5 bg-slate-100 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-800/60 border border-slate-300 dark:border-slate-700/50 text-slate-700 dark:text-white rounded-xl text-sm font-medium transition-all"
                 >
                   Close
                 </button>

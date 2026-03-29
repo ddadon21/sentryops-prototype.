@@ -21,6 +21,7 @@ import ReportsAnalytics from './pages/ReportsAnalytics';
 import CommandAlerts from './pages/CommandAlerts';
 import CommandCalendar from './pages/CommandCalendar';
 import Settings from './pages/Settings';
+import UserProfile from './pages/UserProfile';
 
 // Command War Room
 import CommandWarRoom from './pages/CommandWarRoom';
@@ -96,6 +97,7 @@ function App() {
         <Route path="/command/alerts" element={<CommandAlerts />} />
         <Route path="/command/calendar" element={<CommandCalendar />} />
         <Route path="/command/settings" element={<Settings />} />
+        <Route path="/command/profile" element={<UserProfile />} />
 
         {/* Command War Room */}
         <Route path="/command/warroom" element={<CommandWarRoom />} />
