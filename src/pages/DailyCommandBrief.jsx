@@ -278,10 +278,10 @@ export default function DailyCommandBrief() {
 
   const getStatusBadge = (status) => {
     switch (status) {
-      case 'pending': return { text: 'Pending', classes: 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' };
-      case 'in_progress': return { text: 'In Progress', classes: 'bg-emerald-100 border-emerald-200 text-emerald-700 dark:bg-emerald-500/10 dark:border-emerald-500/20 dark:text-emerald-400' };
-      case 'escalated': return { text: 'Escalated', classes: 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' };
-      case 'overdue': return { text: 'Overdue', classes: 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' };
+      case 'pending': return { text: 'Pending', classes: 'bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' };
+      case 'in_progress': return { text: 'In Progress', classes: 'bg-emerald-50 border-emerald-200 text-emerald-700 dark:bg-emerald-500/10 dark:border-emerald-500/20 dark:text-emerald-400' };
+      case 'escalated': return { text: 'Escalated', classes: 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' };
+      case 'overdue': return { text: 'Overdue', classes: 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' };
       default: return { text: status, classes: 'bg-slate-500/10 border-slate-500/20 text-slate-400' };
     }
   };
@@ -512,9 +512,9 @@ export default function DailyCommandBrief() {
                         <span className="text-[10px] text-slate-500">Impact:</span>
                         {item.impactTypes.map(type => (
                           <span key={type} className={`px-1 py-0 border rounded text-[9px] font-semibold ${
-                            type === 'Compliance' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
+                            type === 'Compliance' ? 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
                             type === 'Political' ? 'bg-purple-500/10 border-purple-500/20 text-purple-400' :
-                            type === 'Budget' ? 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
+                            type === 'Budget' ? 'bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
                             'bg-slate-500/10 border-slate-500/20 text-slate-400'
                           }`}>{type}</span>
                         ))}
@@ -582,7 +582,7 @@ export default function DailyCommandBrief() {
                     <div className={`w-0.5 h-3.5 rounded-full flex-shrink-0 ${risk.severity === 'critical' ? 'bg-red-500' : 'bg-amber-500/70'}`}></div>
                     <p className="text-[13px] font-medium text-slate-200 flex-1">{risk.title}</p>
                     <span className={`px-1.5 py-0.5 border rounded text-[10px] font-semibold ${
-                      risk.severity === 'critical' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' : 'bg-amber-500/10 border-amber-500/15 text-amber-600 dark:text-amber-400/80'
+                      risk.severity === 'critical' ? 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' : 'bg-amber-500/10 border-amber-500/15 text-amber-600 dark:text-amber-400/80'
                     }`}>
                       {risk.hoursUntil}h
                     </span>
@@ -608,7 +608,7 @@ export default function DailyCommandBrief() {
         {/* Two Column Layout — Compressed highlights + On Duty */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-5">
           {/* Operational Highlights — liability/staffing/compliance ONLY */}
-          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-4">
+          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4">
             <div className="flex items-center justify-between mb-3">
               <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Operational Highlights</h3>
               <span className="text-[11px] text-slate-500">Liability · Staffing · Compliance only</span>
@@ -631,7 +631,7 @@ export default function DailyCommandBrief() {
           </div>
 
           {/* On Duty Today */}
-          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-4">
+          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4">
             <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide mb-3">On Duty Today</h3>
             <div className="space-y-3">
               <div>
@@ -671,7 +671,7 @@ export default function DailyCommandBrief() {
         </div>
 
         {/* Scheduled Events — Compact */}
-        <div className="mb-5 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-4">
+        <div className="mb-5 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4">
           <div className="flex items-center justify-between mb-3">
             <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Today's Schedule</h3>
             <button onClick={() => navigate('/command/calendar')} className="text-xs text-amber-600 dark:text-amber-400/80 hover:text-amber-300">View Full Calendar →</button>

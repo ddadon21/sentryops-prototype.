@@ -209,8 +209,8 @@ export default function CommandAlerts() {
   // ============================================================
   const getSeverityConfig = (severity) => {
     const configs = {
-      critical: { strip: 'bg-red-500', pill: 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400', label: 'Critical' },
-      high: { strip: 'bg-amber-500', pill: 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400', label: 'High' },
+      critical: { strip: 'bg-red-500', pill: 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400', label: 'Critical' },
+      high: { strip: 'bg-amber-500', pill: 'bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400', label: 'High' },
       medium: { strip: 'bg-amber-500/60', pill: 'bg-amber-500/8 border-amber-500/15 text-amber-600 dark:text-amber-400/80', label: 'Medium' },
       low: { strip: 'bg-slate-400', pill: 'bg-slate-500/10 border-slate-500/20 text-slate-400', label: 'Low' },
       info: { strip: 'bg-slate-500', pill: 'bg-slate-500/10 border-slate-500/20 text-slate-500', label: 'Info' }
@@ -220,11 +220,11 @@ export default function CommandAlerts() {
 
   const getStatusConfig = (status, escalation) => {
     if (escalation === 'overdue') return { pill: 'bg-red-500/15 border-red-500/25 text-red-600 dark:text-red-400', label: 'Overdue' };
-    if (escalation === 'escalating') return { pill: 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400', label: 'Escalating' };
+    if (escalation === 'escalating') return { pill: 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400', label: 'Escalating' };
     const configs = {
-      new: { pill: 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400', label: 'New' },
+      new: { pill: 'bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400', label: 'New' },
       acknowledged: { pill: 'bg-slate-500/10 border-slate-500/20 text-slate-400', label: 'Acknowledged' },
-      resolved: { pill: 'bg-emerald-100 border-emerald-200 text-emerald-700 dark:bg-emerald-500/10 dark:border-emerald-500/20 dark:text-emerald-400', label: 'Resolved' }
+      resolved: { pill: 'bg-emerald-50 border-emerald-200 text-emerald-700 dark:bg-emerald-500/10 dark:border-emerald-500/20 dark:text-emerald-400', label: 'Resolved' }
     };
     return configs[status] || configs.acknowledged;
   };

@@ -808,7 +808,7 @@ export default function ComplianceManagement() {
                 <p className="text-xs text-green-400 mt-1">EEO, FMLA, ADA, FLSA, WC, I-9</p>
               </div>
 
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
                 <div className="flex items-center justify-between mb-3">
                   <div className="w-10 h-10 bg-purple-500/20 rounded-xl flex items-center justify-center">
                     <Calendar className="w-5 h-5 text-purple-400" />

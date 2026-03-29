@@ -658,7 +658,7 @@ export default function CustodyOperations() {
         )}
 
         {/* ── Section 1: Shift Operations Overview ─────────── */}
-        <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5">
+        <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
           <div className="flex flex-col lg:flex-row items-start lg:items-center gap-5">
 
             {/* Shift identity */}

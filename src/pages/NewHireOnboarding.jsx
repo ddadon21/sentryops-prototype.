@@ -664,7 +664,7 @@ export default function NewHireOnboarding() {
 
             {/* Summary Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
                 <div className="flex items-center justify-between mb-3">
                   <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center">
                     <UserPlus className="w-5 h-5 text-blue-400" />
@@ -675,7 +675,7 @@ export default function NewHireOnboarding() {
                 <p className="text-xs text-slate-500 mt-1">In onboarding process</p>
               </div>
 
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
                 <div className="flex items-center justify-between mb-3">
                   <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center">
                     <CheckCircle className="w-5 h-5 text-green-400" />
@@ -686,7 +686,7 @@ export default function NewHireOnboarding() {
                 <p className="text-xs text-slate-500 mt-1">This month (FTO complete)</p>
               </div>
 
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
                 <div className="flex items-center justify-between mb-3">
                   <div className="w-10 h-10 bg-amber-500/20 rounded-xl flex items-center justify-center">
                     <GraduationCap className="w-5 h-5 text-amber-400" />
@@ -697,7 +697,7 @@ export default function NewHireOnboarding() {
                 <p className="text-xs text-slate-500 mt-1">Sworn personnel training</p>
               </div>
 
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
                 <div className="flex items-center justify-between mb-3">
                   <div className="w-10 h-10 bg-red-500/20 rounded-xl flex items-center justify-center">
                     <AlertTriangle className="w-5 h-5 text-red-400" />

@@ -622,7 +622,7 @@ export default function EmploymentVerification() {
 
             {/* Statistics Grid */}
             <div className="grid grid-cols-5 gap-4">
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-slate-800 rounded-lg">
                     <Briefcase className="w-5 h-5 text-slate-600 dark:text-slate-400" />
@@ -633,7 +633,7 @@ export default function EmploymentVerification() {
                   </div>
                 </div>
               </div>
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-green-500/10 rounded-lg">
                     <CheckCircle2 className="w-5 h-5 text-green-400" />
@@ -644,7 +644,7 @@ export default function EmploymentVerification() {
                   </div>
                 </div>
               </div>
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-amber-500/10 rounded-lg">
                     <Shield className="w-5 h-5 text-amber-400" />
@@ -655,7 +655,7 @@ export default function EmploymentVerification() {
                   </div>
                 </div>
               </div>
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-blue-500/10 rounded-lg">
                     <BadgeCheck className="w-5 h-5 text-blue-400" />
@@ -666,7 +666,7 @@ export default function EmploymentVerification() {
                   </div>
                 </div>
               </div>
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-slate-800 rounded-lg">
                     <Calendar className="w-5 h-5 text-slate-600 dark:text-slate-400" />
@@ -680,7 +680,7 @@ export default function EmploymentVerification() {
             </div>
 
             {/* Employment Timeline Visualization */}
-            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-6">
+            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-6">
               <h3 className="text-white font-medium mb-4 flex items-center gap-2">
                 <History className="w-5 h-5 text-amber-400" />
                 Employment Timeline
@@ -1092,7 +1092,7 @@ export default function EmploymentVerification() {
               {/* Sidebar */}
               <div className="space-y-4">
                 {/* Internal Affairs Requirement Panel */}
-                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
+                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
                   <h3 className="text-white font-medium mb-4 flex items-center gap-2">
                     <Shield className="w-5 h-5 text-amber-400" />
                     Internal Affairs Requirements
@@ -1134,7 +1134,7 @@ export default function EmploymentVerification() {
                 </div>
 
                 {/* Verification Summary */}
-                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
+                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
                   <h3 className="text-white font-medium mb-4 flex items-center gap-2">
                     <FileCheck className="w-5 h-5 text-amber-400" />
                     Verification Summary
@@ -1180,7 +1180,7 @@ export default function EmploymentVerification() {
                 </div>
 
                 {/* Support & Resources */}
-                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
+                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
                   <h3 className="text-white font-medium mb-4 flex items-center gap-2">
                     <HelpCircle className="w-5 h-5 text-amber-400" />
                     Support & Resources
@@ -1226,7 +1226,7 @@ export default function EmploymentVerification() {
                 </div>
 
                 {/* Audit Trail */}
-                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
+                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
                   <h3 className="text-white font-medium mb-4 flex items-center gap-2">
                     <History className="w-5 h-5 text-amber-400" />
                     Recent Activity

@@ -253,7 +253,7 @@ export default function CaseManagement() {
             </div>
 
             {/* Investigation Status Summary (replaced AI Insights) */}
-            <div className="mb-6 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5">
+            <div className="mb-6 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
               <div className="flex items-center justify-between mb-4">
                 <h4 className="text-base font-semibold text-slate-900 dark:text-white">Investigation Status Summary</h4>
                 <span className="text-xs text-slate-500">Last updated: {caseDetails.activityHistory[0]?.date}</span>
@@ -298,7 +298,7 @@ export default function CaseManagement() {
 
             {/* Case Details and Investigation Stages */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-              <div className="lg:col-span-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-6">
+              <div className="lg:col-span-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-6">
                 {/* Case Information */}
                 <div className="flex items-start justify-between mb-6">
                   <div>
@@ -408,7 +408,7 @@ export default function CaseManagement() {
               {/* Sidebar */}
               <div className="space-y-6">
                 {/* Quick Actions - Grouped */}
-                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-6">
+                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-6">
                   <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-4">Quick Actions</h4>
 
                   {/* Documentation Actions */}
@@ -462,7 +462,7 @@ export default function CaseManagement() {
                 </div>
 
                 {/* Assigned Investigator */}
-                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-6">
+                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-6">
                   <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-4">Assigned Investigator</h4>
                   <div className="flex items-center gap-3 mb-4">
                     <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center font-bold text-white">MB</div>

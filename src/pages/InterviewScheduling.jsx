@@ -409,7 +409,7 @@ export default function InterviewScheduling() {
             {/* Scheduling Overview */}
             <div className="mb-6 grid grid-cols-1 lg:grid-cols-3 gap-4">
               {/* This Week's Schedule */}
-              <div className="lg:col-span-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5">
+              <div className="lg:col-span-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
                 <div className="flex items-start gap-4">
                   <div className="w-10 h-10 bg-amber-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
                     <Calendar className="w-6 h-6 text-amber-400" />
@@ -468,7 +468,7 @@ export default function InterviewScheduling() {
               </div>
 
               {/* Investigator Workload */}
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
                 <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                   <Users className="w-4 h-4 text-amber-400" />
                   Investigator Workload
@@ -518,7 +518,7 @@ export default function InterviewScheduling() {
             {/* Status Summary Cards */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
               {/* Upcoming Interviews */}
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
                 <div className="flex items-center justify-between mb-3">
                   <Calendar className="w-8 h-8 text-blue-400" />
                   <span className="text-2xl font-bold text-slate-900 dark:text-white">{upcomingInterviews.length}</span>
@@ -538,7 +538,7 @@ export default function InterviewScheduling() {
               </div>
 
               {/* Today's Interviews */}
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
                 <div className="flex items-center justify-between mb-3">
                   <Clock className="w-8 h-8 text-green-400" />
                   <span className="text-2xl font-bold text-slate-900 dark:text-white">1</span>
@@ -568,7 +568,7 @@ export default function InterviewScheduling() {
               </div>
 
               {/* Completed This Month */}
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
                 <div className="flex items-center justify-between mb-3">
                   <CheckCircle className="w-8 h-8 text-green-400" />
                   <span className="text-2xl font-bold text-slate-900 dark:text-white">{completedInterviews.length}</span>
@@ -589,7 +589,7 @@ export default function InterviewScheduling() {
             </div>
 
             {/* Quick Actions */}
-            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4 mb-6">
+            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4 mb-6">
               <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Quick Actions</h4>
               <div className="flex flex-wrap gap-3">
                 <button className="flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-sm font-medium transition-colors">
@@ -854,7 +854,7 @@ export default function InterviewScheduling() {
                 </div>
 
                 {pendingConfirmation.length === 0 ? (
-                  <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-8 text-center">
+                  <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-8 text-center">
                     <CheckCircle2 className="w-12 h-12 text-green-400 mx-auto mb-3" />
                     <p className="text-slate-700 dark:text-slate-300 font-medium">All interviews confirmed!</p>
                     <p className="text-sm text-slate-500 mt-1">No pending confirmations at this time.</p>
@@ -925,7 +925,7 @@ export default function InterviewScheduling() {
                 </div>
 
                 {completedInterviews.map((interview) => (
-                  <div key={interview.id} className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5">
+                  <div key={interview.id} className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
                     {/* Header */}
                     <div className="flex items-start justify-between mb-4">
                       <div>

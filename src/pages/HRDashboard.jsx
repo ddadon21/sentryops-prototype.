@@ -551,7 +551,7 @@ export default function HRDashboard() {
             <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white mb-2">Human Resources Operations Center</h2>
             <p className="text-slate-600 dark:text-slate-400 mb-4">Gwinnett County Sheriff's Office • {currentDate} • {currentTime} EST</p>
 
-            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4 mb-4">
+            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4 mb-4">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
                 <div>
                   <p className="text-xs text-slate-500 mb-1">HR Director</p>
@@ -1084,7 +1084,7 @@ export default function HRDashboard() {
           {/* Personnel Operations & Compliance Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
             {/* Personnel Operations Summary */}
-            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-6">
+            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-6">
               <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">PERSONNEL OPERATIONS SUMMARY</h3>
 
               <div className="space-y-4">
@@ -1160,7 +1160,7 @@ export default function HRDashboard() {
             </div>
 
             {/* Compliance Monitoring */}
-            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-6">
+            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-6">
               <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">COMPLIANCE MONITORING - LEGAL REQUIREMENTS</h3>
 
               <div className="space-y-4">
@@ -1238,7 +1238,7 @@ export default function HRDashboard() {
           </div>
 
           {/* Key HR Metrics */}
-          <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-6 mb-6">
+          <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-6 mb-6">
             <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">KEY HR METRICS (Informational - Last 30 Days)</h3>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

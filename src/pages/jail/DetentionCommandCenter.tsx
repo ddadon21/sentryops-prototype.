@@ -208,7 +208,7 @@ export default function DetentionCommandCenter() {
           </div>
 
           {/* Net Population Change */}
-          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
+          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
             <div className="flex items-center gap-1.5 mb-2">
               <Activity className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
               <span className="text-[10px] text-slate-500 font-medium uppercase tracking-wide">Population</span>
@@ -255,7 +255,7 @@ export default function DetentionCommandCenter() {
           </div>
 
           {/* Court Transports */}
-          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
+          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
             <div className="flex items-center gap-1.5 mb-2">
               <Truck className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
               <span className="text-[10px] text-slate-500 font-medium uppercase tracking-wide">Transports</span>
@@ -270,7 +270,7 @@ export default function DetentionCommandCenter() {
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-5">
 
           {/* Active Alerts */}
-          <div className="lg:col-span-2 bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
+          <div className="lg:col-span-2 bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <AlertOctagon className="w-4 h-4 text-red-600 dark:text-red-400" />
@@ -321,7 +321,7 @@ export default function DetentionCommandCenter() {
           </div>
 
           {/* AI Command Intelligence */}
-          <div className="lg:col-span-3 bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
+          <div className="lg:col-span-3 bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <div className="w-7 h-7 bg-slate-700/30 rounded-lg flex items-center justify-center">
@@ -365,7 +365,7 @@ export default function DetentionCommandCenter() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
 
           {/* Housing Unit Map */}
-          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
+          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <Shield className="w-4 h-4 text-slate-600 dark:text-slate-400" />
@@ -399,7 +399,7 @@ export default function DetentionCommandCenter() {
           </div>
 
           {/* Staff Coverage */}
-          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
+          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
             <div className="flex items-center gap-2 mb-3">
               <Users className="w-4 h-4 text-slate-600 dark:text-slate-400" />
               <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Staff Coverage</h3>
@@ -431,7 +431,7 @@ export default function DetentionCommandCenter() {
           </div>
 
           {/* Court Transport Schedule */}
-          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
+          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
             <div className="flex items-center gap-2 mb-3">
               <Truck className="w-4 h-4 text-slate-600 dark:text-slate-400" />
               <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Court Transport Schedule</h3>
@@ -466,7 +466,7 @@ export default function DetentionCommandCenter() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
 
           {/* Population Trend */}
-          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
+          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <TrendingUp className="w-4 h-4 text-slate-600 dark:text-slate-400" />
@@ -517,7 +517,7 @@ export default function DetentionCommandCenter() {
           </div>
 
           {/* Medical Monitoring */}
-          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
+          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
             <div className="flex items-center gap-2 mb-3">
               <Heart className="w-4 h-4 text-pink-400" />
               <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Medical Monitoring</h3>
@@ -551,7 +551,7 @@ export default function DetentionCommandCenter() {
           </div>
 
           {/* Critical Tasks */}
-          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
+          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
             <div className="flex items-center gap-2 mb-3">
               <Zap className="w-4 h-4 text-amber-600 dark:text-amber-400" />
               <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Command Actions</h3>

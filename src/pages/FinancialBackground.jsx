@@ -456,7 +456,7 @@ export default function FinancialBackground() {
           </div>
 
           {/* Financial Responsibility Assessment Summary */}
-          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5 mb-6">
+          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5 mb-6">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center">
                 <ClipboardList className="w-5 h-5 text-blue-400" />

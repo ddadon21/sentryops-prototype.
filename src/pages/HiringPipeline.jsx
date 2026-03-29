@@ -662,7 +662,7 @@ export default function HiringPipeline() {
             </div>
 
             {/* Pipeline Overview */}
-            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5 mb-6">
+            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5 mb-6">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Active Applicants by Position</h3>
                 <div className="flex items-center gap-2">

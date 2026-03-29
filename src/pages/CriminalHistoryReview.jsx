@@ -394,25 +394,25 @@ export default function CriminalHistoryReview() {
 
             {/* Statistics Grid */}
             <div className="grid grid-cols-4 gap-4">
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-slate-800 rounded-lg"><Shield className="w-5 h-5 text-slate-600 dark:text-slate-400" /></div>
                   <div><p className="text-2xl font-semibold text-white">{stats.total}</p><p className="text-slate-500 text-sm">Total Checks</p></div>
                 </div>
               </div>
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-green-500/10 rounded-lg"><CheckCircle2 className="w-5 h-5 text-green-400" /></div>
                   <div><p className="text-2xl font-semibold text-white">{stats.clear}</p><p className="text-slate-500 text-sm">Clear - No Disqualifiers</p></div>
                 </div>
               </div>
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-amber-500/10 rounded-lg"><AlertTriangle className="w-5 h-5 text-amber-400" /></div>
                   <div><p className="text-2xl font-semibold text-white">{stats.review}</p><p className="text-slate-500 text-sm">Review Required</p></div>
                 </div>
               </div>
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-blue-500/10 rounded-lg"><Clock className="w-5 h-5 text-blue-400" /></div>
                   <div><p className="text-2xl font-semibold text-white">{stats.inProgress}</p><p className="text-slate-500 text-sm">In Progress</p></div>
@@ -421,7 +421,7 @@ export default function CriminalHistoryReview() {
             </div>
 
             {/* Standard Protocol */}
-            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
+            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
               <h3 className="text-white font-medium mb-3 flex items-center gap-2"><ClipboardList className="w-5 h-5 text-amber-400" />Standard Background Check Protocol</h3>
               <div className="grid grid-cols-4 gap-4 text-sm">
                 <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-green-400" /><span className="text-slate-600 dark:text-slate-400">GCIC (Georgia Crime Information)</span></div>
@@ -600,7 +600,7 @@ export default function CriminalHistoryReview() {
 
               {/* Sidebar */}
               <div className="space-y-4">
-                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
+                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
                   <h3 className="text-white font-medium mb-4 flex items-center gap-2"><Shield className="w-5 h-5 text-amber-400" />Check Status Summary</h3>
                   <div className="space-y-3">
                     <div className="bg-green-500/5 border border-green-500/20 rounded-lg p-3">
@@ -618,7 +618,7 @@ export default function CriminalHistoryReview() {
                   </div>
                 </div>
 
-                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
+                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
                   <h3 className="text-white font-medium mb-4 flex items-center gap-2"><Lock className="w-5 h-5 text-red-400" />CJIS Compliance</h3>
                   <div className="space-y-3 text-sm">
                     <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-green-400" /><span className="text-slate-600 dark:text-slate-400">Access logging enabled</span></div>
@@ -629,7 +629,7 @@ export default function CriminalHistoryReview() {
                   <div className="mt-4 pt-4 border-t border-slate-700/50"><button className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg text-sm hover:bg-slate-600 transition-colors"><History className="w-4 h-4" />View CJIS Audit Log</button></div>
                 </div>
 
-                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
+                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
                   <h3 className="text-white font-medium mb-4 flex items-center gap-2"><HelpCircle className="w-5 h-5 text-amber-400" />Support & Resources</h3>
                   <div className="space-y-2">
                     <a href="#" className="flex items-center gap-3 p-3 bg-slate-900/40 rounded-lg hover:bg-slate-800/60 transition-colors"><BookOpen className="w-4 h-4 text-slate-600 dark:text-slate-400" /><div><p className="text-white text-sm">POST Disqualifier Guide</p><p className="text-slate-500 text-xs">Georgia POST standards</p></div><ExternalLink className="w-4 h-4 text-slate-500 ml-auto" /></a>
@@ -639,7 +639,7 @@ export default function CriminalHistoryReview() {
                   </div>
                 </div>
 
-                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
+                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
                   <h3 className="text-white font-medium mb-4 flex items-center gap-2"><History className="w-5 h-5 text-amber-400" />Recent Activity</h3>
                   <div className="space-y-3">
                     {[{ action: 'Check initiated', subject: 'Maria Rodriguez', date: '2024-11-01', by: 'Agent Brooks' }, { action: 'Flagged for review', subject: 'James Wilson', date: '2024-10-22', by: 'Agent Brooks' }, { action: 'Check completed - Clear', subject: 'Sarah Chen', date: '2024-10-20', by: 'Inv. Davis' }, { action: 'Check completed - Clear', subject: 'Robert Martinez', date: '2024-10-18', by: 'Agent Brooks' }].map((activity, index) => (

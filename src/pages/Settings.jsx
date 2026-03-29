@@ -663,7 +663,7 @@ export default function SettingsPage() {
               {/* Profile Settings */}
               {activeSection === 'profile' && (
                 <>
-                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-6 shadow-md dark:shadow-none">
+                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                     <div className="flex items-center justify-between mb-1">
                       <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Profile Information</h3>
                       <span className="text-[10px] text-slate-500">Last updated: Dec 11, 2025 09:14 AM</span>
@@ -758,7 +758,7 @@ export default function SettingsPage() {
                   </div>
 
                   {/* Profile Photo */}
-                  <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-6 shadow-md dark:shadow-none">
+                  <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                     <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Profile Photo</h3>
                     <div className="flex items-center gap-6">
                       <div className="w-24 h-24 bg-gradient-to-br from-amber-500 to-amber-600 rounded-full flex items-center justify-center">
@@ -783,7 +783,7 @@ export default function SettingsPage() {
 
               {/* Notifications Settings */}
               {activeSection === 'notifications' && (
-                <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-6 shadow-md dark:shadow-none">
+                <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                   <div className="flex items-center justify-between mb-1">
                     <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Operational Alert Preferences</h3>
                     <span className="text-[10px] text-slate-500">Last updated: Dec 11, 2025 09:14 AM</span>
@@ -816,7 +816,7 @@ export default function SettingsPage() {
 
               {/* Display Settings */}
               {activeSection === 'display' && (
-                <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-6 shadow-md dark:shadow-none">
+                <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                   <div className="flex items-center justify-between mb-1">
                     <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Display Preferences</h3>
                     <span className="text-[10px] text-slate-500">Last updated: Dec 10, 2025 02:30 PM</span>
@@ -886,7 +886,7 @@ export default function SettingsPage() {
               {/* Security Settings */}
               {activeSection === 'security' && (
                 <div className="space-y-6">
-                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-6 shadow-md dark:shadow-none">
+                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                     <div className="flex items-center justify-between mb-1">
                       <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Authentication & Access</h3>
                       <span className="text-[10px] text-slate-500">Last updated: Dec 9, 2025 11:42 AM</span>
@@ -993,7 +993,7 @@ export default function SettingsPage() {
                     </div>
                   </div>
 
-                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-6 shadow-md dark:shadow-none">
+                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                     <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-6">Active Sessions</h3>
                     <div className="space-y-3">
                       <div className="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/30 rounded-xl">
@@ -1025,7 +1025,7 @@ export default function SettingsPage() {
                     </div>
                   </div>
 
-                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-6 shadow-md dark:shadow-none">
+                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                     <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-4">Change Password</h3>
                     <div className="space-y-4">
                       <div>
@@ -1072,7 +1072,7 @@ export default function SettingsPage() {
                     const Icon = getIntegrationIcon(integration.type);
                     const isExpanded = expandedIntegration === key;
                     return (
-                      <div key={key} className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl overflow-hidden shadow-md dark:shadow-none">
+                      <div key={key} className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl overflow-hidden shadow-sm dark:shadow-none">
                         <div
                           onClick={() => setExpandedIntegration(isExpanded ? null : key)}
                           className="p-6 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/20 transition-colors"
@@ -1365,7 +1365,7 @@ export default function SettingsPage() {
               {/* Backup & Retention */}
               {activeSection === 'data' && (
                 <div className="space-y-6">
-                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-6 shadow-md dark:shadow-none">
+                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                     <div className="flex items-center justify-between mb-1">
                       <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Data Export</h3>
                       <span className="text-[10px] text-slate-500">Last updated: Dec 11, 2025 02:00 AM</span>
@@ -1443,7 +1443,7 @@ export default function SettingsPage() {
                     </div>
                   </div>
 
-                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-6 shadow-md dark:shadow-none">
+                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                     <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-6">Backup & Restore</h3>
                     <div className="space-y-4">
                       <div className="p-4 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/30 rounded-xl">
@@ -1480,7 +1480,7 @@ export default function SettingsPage() {
                     </div>
                   </div>
 
-                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-6 shadow-md dark:shadow-none">
+                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                     <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-6">Data Retention</h3>
                     <div className="space-y-4">
                       <div>
@@ -1536,7 +1536,7 @@ export default function SettingsPage() {
                   </div>
 
                   {/* API Management */}
-                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-6 shadow-md dark:shadow-none">
+                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                     <div className="flex items-center justify-between mb-1">
                       <h3 className="text-sm font-semibold text-slate-900 dark:text-white">API Management</h3>
                       <span className="text-[10px] text-slate-500">Last updated: Dec 11, 2025 08:22 AM</span>
@@ -1592,7 +1592,7 @@ export default function SettingsPage() {
                         { icon: Clock, color: 'text-amber-400', label: 'Avg Response', value: '187ms', sub: '-23ms vs last month', subColor: 'text-green-400' },
                         { icon: Zap, color: 'text-purple-400', label: 'Peak RPS', value: '1,247', sub: 'requests/second', subColor: 'text-slate-500 dark:text-slate-400' },
                       ].map((s, i) => (
-                        <div key={i} className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-4 shadow-md dark:shadow-none">
+                        <div key={i} className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4 shadow-sm dark:shadow-none">
                           <div className="flex items-center gap-2 mb-2">
                             <s.icon className={`w-4 h-4 ${s.color}`} />
                             <p className="text-[10px] font-medium text-slate-500 dark:text-slate-400">{s.label}</p>
@@ -1617,7 +1617,7 @@ export default function SettingsPage() {
                   </div>
 
                   {/* System Health */}
-                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-6 shadow-md dark:shadow-none">
+                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                     <div className="flex items-center justify-between mb-1">
                       <h3 className="text-sm font-semibold text-slate-900 dark:text-white">System Health</h3>
                       <span className="text-[10px] text-slate-500">Last updated: Dec 11, 2025 09:15 AM</span>
@@ -1630,7 +1630,7 @@ export default function SettingsPage() {
                         { icon: Database, color: 'amber', label: 'Storage Used', value: '42%', pct: 42 },
                         { icon: Activity, color: 'purple', label: 'Active Connections', value: '234' },
                       ].map((m, i) => (
-                        <div key={i} className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-4 shadow-md dark:shadow-none">
+                        <div key={i} className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4 shadow-sm dark:shadow-none">
                           <div className="flex items-center gap-2 mb-2">
                             <m.icon className={`w-4 h-4 text-${m.color}-400`} />
                             <p className="text-[10px] font-medium text-slate-500 dark:text-slate-400">{m.label}</p>
@@ -1663,7 +1663,7 @@ export default function SettingsPage() {
                   </div>
 
                   {/* DevOps / Infrastructure Controls */}
-                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-6 shadow-md dark:shadow-none">
+                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                     <div className="flex items-center justify-between mb-1">
                       <h3 className="text-sm font-semibold text-slate-900 dark:text-white">DevOps / Infrastructure Controls</h3>
                       <span className="text-[10px] text-slate-500">Last action: Dec 10, 2025 02:00 AM</span>
@@ -1695,7 +1695,7 @@ export default function SettingsPage() {
 
               {/* Audit & Compliance */}
               {activeSection === 'audit' && (
-                <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-6 shadow-md dark:shadow-none">
+                <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                   <div className="flex items-center justify-between mb-6">
                     <div>
                       <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Audit & Compliance Trail</h3>
@@ -1827,7 +1827,7 @@ export default function SettingsPage() {
             </div>
 
             {/* Save Changes Button */}
-            <div className="mt-8 flex items-center justify-between p-5 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none">
+            <div className="mt-8 flex items-center justify-between p-5 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none">
               <div>
                 <p className="text-sm font-medium text-slate-900 dark:text-white">Unsaved Changes</p>
                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Save your changes to apply the new settings</p>

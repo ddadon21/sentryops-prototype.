@@ -894,7 +894,7 @@ export default function ReportsAnalytics() {
                 </div>
 
                 {/* Enhanced Monthly Trends */}
-                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-6">
+                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-6">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-2">
                       <TrendingUp className="w-5 h-5 text-blue-400" />
@@ -982,7 +982,7 @@ export default function ReportsAnalytics() {
             {/* OPERATIONS TAB */}
             {activeTab === 'operations' && (
               <div className="space-y-6">
-                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-6">
+                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-6">
                   <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Division Performance</h3>
                   <div className="space-y-4">
                     {divisionPerformance.map((division, idx) => (
@@ -1128,7 +1128,7 @@ export default function ReportsAnalytics() {
                   {filteredReports.map(report => {
                     const Icon = report.icon;
                     return (
-                      <div key={report.id} className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5 hover:border-slate-600/50 transition-all group">
+                      <div key={report.id} className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5 hover:border-slate-600/50 transition-all group">
                         <div className="flex items-start gap-4">
                           <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-blue-500/30 transition-colors">
                             <Icon className="w-6 h-6 text-blue-400" />

@@ -416,7 +416,7 @@ export default function PersonnelOverview() {
                 {/* ── Workforce Status Row (4 cards) ──────────── */}
                 <div className="grid grid-cols-4 gap-3 mb-4">
                   {/* Workforce Health */}
-                  <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-3">
+                  <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-3">
                     <div className="flex items-center gap-2 mb-1.5">
                       <Gauge className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
                       <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Workforce Health</span>
@@ -656,9 +656,9 @@ export default function PersonnelOverview() {
                                   {/* Deployability */}
                                   <div className="pt-0.5">
                                     <div className={`inline-flex items-center gap-1 px-2 py-0.5 rounded border text-[9px] font-bold w-fit ${
-                                      opStatus.color === 'red' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
-                                      opStatus.color === 'amber' ? 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
-                                      'bg-green-100 border-green-200 text-green-700 dark:bg-green-500/10 dark:border-green-500/20 dark:text-green-400'
+                                      opStatus.color === 'red' ? 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
+                                      opStatus.color === 'amber' ? 'bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
+                                      'bg-green-50 border-green-200 text-green-700 dark:bg-green-500/10 dark:border-green-500/20 dark:text-green-400'
                                     }`}>
                                       <OpIcon className="w-3 h-3" />
                                       {opStatus.label}
@@ -990,7 +990,7 @@ export default function PersonnelOverview() {
                 {/* Left Column - Main Info */}
                 <div className="lg:col-span-2 space-y-6">
                   {/* Status & Quick Info */}
-                  <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5">
+                  <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
                     <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4">Status & Information</h3>
                     <div className="grid grid-cols-2 gap-4">
                       <div>
@@ -1030,7 +1030,7 @@ export default function PersonnelOverview() {
                   </div>
 
                   {/* Activity Stats */}
-                  <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5">
+                  <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
                     <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                       <Activity className="w-5 h-5 text-slate-600 dark:text-slate-400" />
                       Activity Statistics (Last 30 Days)
@@ -1062,7 +1062,7 @@ export default function PersonnelOverview() {
                   </div>
 
                   {/* Certifications & Training */}
-                  <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5">
+                  <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
                     <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                       <Award className="w-5 h-5 text-slate-600 dark:text-slate-400" />
                       Certifications & Training History
@@ -1105,7 +1105,7 @@ export default function PersonnelOverview() {
                   </div>
 
                   {/* Performance Reviews */}
-                  <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5">
+                  <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
                     <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                       <Star className="w-5 h-5 text-slate-600 dark:text-slate-400" />
                       Performance Reviews
@@ -1140,7 +1140,7 @@ export default function PersonnelOverview() {
                 {/* Right Column - Contact & Equipment */}
                 <div className="space-y-6">
                   {/* Contact Information */}
-                  <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5">
+                  <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
                     <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4">Contact</h3>
                     <div className="space-y-3">
                       <div>
@@ -1161,7 +1161,7 @@ export default function PersonnelOverview() {
                   </div>
 
                   {/* Equipment Assignments */}
-                  <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5">
+                  <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
                     <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                       <Shield className="w-5 h-5 text-slate-600 dark:text-slate-400" />
                       Equipment
@@ -1191,7 +1191,7 @@ export default function PersonnelOverview() {
                   </div>
 
                   {/* Action Buttons */}
-                  <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5">
+                  <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
                     <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4">Actions</h3>
                     <div className="space-y-2">
                       <button className="w-full flex items-center gap-3 px-4 py-2.5 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-sm font-medium transition-colors">

@@ -507,7 +507,7 @@ export default function TimeOffManagement() {
 
             {/* Summary Stat Cards */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
                 <div className="flex items-center gap-3 mb-2">
                   <div className="w-8 h-8 bg-amber-500/20 rounded-lg flex items-center justify-center">
                     <Clock className="w-4 h-4 text-amber-400" />
@@ -527,7 +527,7 @@ export default function TimeOffManagement() {
                 <p className="text-2xl font-bold text-red-400">1</p>
                 <p className="text-[10px] text-red-400 font-medium">CRITICAL - Federal deadline</p>
               </div>
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
                 <div className="flex items-center gap-3 mb-2">
                   <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">
                     <Calendar className="w-4 h-4 text-blue-400" />
@@ -537,7 +537,7 @@ export default function TimeOffManagement() {
                 <p className="text-2xl font-bold text-slate-900 dark:text-white">0</p>
                 <p className="text-[10px] text-slate-500">Next 7 days</p>
               </div>
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
                 <div className="flex items-center gap-3 mb-2">
                   <div className="w-8 h-8 bg-red-500/20 rounded-lg flex items-center justify-center">
                     <XCircle className="w-4 h-4 text-red-400" />
@@ -1552,7 +1552,7 @@ export default function TimeOffManagement() {
             </div>
 
             {/* Active FMLA Case */}
-            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4 mb-4">
+            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4 mb-4">
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-10 h-10 bg-red-500/20 rounded-full flex items-center justify-center">
                   <span className="text-red-400 text-sm font-bold">AG</span>
@@ -1572,7 +1572,7 @@ export default function TimeOffManagement() {
             </div>
 
             {/* Compliance Checklist */}
-            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
+            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
               <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">FMLA Compliance Checklist - Garcia</h4>
               <div className="space-y-2">
                 {[

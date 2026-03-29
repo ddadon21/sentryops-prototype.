@@ -324,7 +324,7 @@ export default function CaseClosure() {
             <p className="text-slate-600 dark:text-slate-400 mb-1">Final investigation review and case disposition for hiring decision</p>
             <p className="text-sm text-slate-500 mb-4">Current date: {currentDate}</p>
 
-            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4 mb-4">
+            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4 mb-4">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
                 <div>
                   <p className="text-xs text-slate-500 mb-1">BI Supervisor</p>
@@ -378,7 +378,7 @@ export default function CaseClosure() {
           </div>
 
           {/* Case Disposition Summary */}
-          <div className="mb-6 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-6">
+          <div className="mb-6 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-6">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 bg-purple-500/20 rounded-xl flex items-center justify-center">
                 <ClipboardCheck className="w-6 h-6 text-purple-400" />
@@ -517,7 +517,7 @@ export default function CaseClosure() {
           {/* Main Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
             {/* Case Overview */}
-            <div className="lg:col-span-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-6">
+            <div className="lg:col-span-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-6">
               <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-1">CASE OVERVIEW - {caseData.subject.toUpperCase()}</h3>
               <p className="text-sm text-purple-400 mb-4">Case ID: {caseData.caseId}</p>
 
@@ -680,7 +680,7 @@ export default function CaseClosure() {
 
             {/* Sidebar - Case Disposition Actions */}
             <div className="space-y-6">
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-6">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-6">
                 <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-4">CASE DISPOSITION ACTIONS</h4>
 
                 <p className="text-xs text-slate-600 dark:text-slate-400 mb-3">PRIMARY ACTIONS (Select Final Disposition):</p>
@@ -775,7 +775,7 @@ export default function CaseClosure() {
           </div>
 
           {/* Investigation Sections Checklist */}
-          <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-6 mb-6">
+          <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-6 mb-6">
             <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">INVESTIGATION SECTIONS - COMPLETION STATUS</h3>
 
             <div className="space-y-3">
@@ -891,7 +891,7 @@ export default function CaseClosure() {
           </div>
 
           {/* Investigator Assessment & Key Findings */}
-          <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-6 mb-6">
+          <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-6 mb-6">
             <div className="flex items-center justify-between mb-4">
               <div>
                 <h3 className="text-lg font-semibold text-slate-900 dark:text-white">INVESTIGATOR ASSESSMENT & KEY FINDINGS</h3>
@@ -1136,7 +1136,7 @@ export default function CaseClosure() {
           </div>
 
           {/* Final Disposition Form */}
-          <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-6">
+          <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-6">
             <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">FINAL CASE DISPOSITION</h3>
             <p className="text-sm text-slate-600 dark:text-slate-400 mb-6">To be completed by Hiring Authority</p>
 

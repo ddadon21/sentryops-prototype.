@@ -431,7 +431,7 @@ export default function InvestigationTimeline() {
             </div>
 
             {/* Case Progress Summary (replaced Timeline Analysis) */}
-            <div className="mb-6 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5">
+            <div className="mb-6 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
               <div className="flex items-center justify-between mb-4">
                 <h4 className="text-base font-semibold text-slate-900 dark:text-white">Case Progress Summary</h4>
                 <div className="flex items-center gap-2">
@@ -521,7 +521,7 @@ export default function InvestigationTimeline() {
             </div>
 
             {/* Investigation Stages (Sequential) */}
-            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-6 mb-6">
+            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-6 mb-6">
               <div className="flex items-center justify-between mb-4">
                 <div>
                   <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Investigation Stages (Sequential)</h3>
@@ -630,7 +630,7 @@ export default function InvestigationTimeline() {
                           {event.type === 'document' && <Upload className="w-4 h-4 text-blue-400" />}
                         </div>
 
-                        <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-5 hover:border-amber-500/30 transition-colors">
+                        <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5 hover:border-amber-500/30 transition-colors">
                           <div className="flex items-start justify-between mb-3">
                             <div>
                               <h4 className="text-sm font-semibold text-slate-900 dark:text-white">{event.title}</h4>
@@ -683,7 +683,7 @@ export default function InvestigationTimeline() {
               {/* Stats Sidebar */}
               <div className="space-y-6">
                 {/* Case Statistics */}
-                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-6">
+                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-6">
                   <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-4">Case Statistics</h4>
                   <div className="space-y-3">
                     <div className="flex justify-between text-sm">
@@ -742,7 +742,7 @@ export default function InvestigationTimeline() {
                 </div>
 
                 {/* Case Information */}
-                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-6">
+                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-6">
                   <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-4">Case Information</h4>
                   <div className="space-y-3">
                     <div>
@@ -772,7 +772,7 @@ export default function InvestigationTimeline() {
                 </div>
 
                 {/* Upcoming Deadlines */}
-                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-6">
+                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-6">
                   <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-4">Upcoming Deadlines</h4>
                   <div className="space-y-3">
                     {/* Urgent */}

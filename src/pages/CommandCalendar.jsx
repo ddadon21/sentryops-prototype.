@@ -418,21 +418,21 @@ export default function CommandCalendar() {
 
   const getStatusBadge = (status) => {
     switch (status) {
-      case 'pending': return { text: 'Pending', classes: 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' };
-      case 'in_progress': return { text: 'In Progress', classes: 'bg-emerald-100 border-emerald-200 text-emerald-700 dark:bg-emerald-500/10 dark:border-emerald-500/20 dark:text-emerald-400' };
+      case 'pending': return { text: 'Pending', classes: 'bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' };
+      case 'in_progress': return { text: 'In Progress', classes: 'bg-emerald-50 border-emerald-200 text-emerald-700 dark:bg-emerald-500/10 dark:border-emerald-500/20 dark:text-emerald-400' };
       case 'completed': return { text: 'Completed', classes: 'bg-slate-500/10 border-slate-500/20 text-slate-400' };
-      case 'overdue': return { text: 'Overdue', classes: 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' };
+      case 'overdue': return { text: 'Overdue', classes: 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' };
       default: return { text: status, classes: 'bg-slate-500/10 border-slate-500/20 text-slate-400' };
     }
   };
 
   const getRiskTypeBadge = (category) => {
     switch (category) {
-      case 'compliance': return { text: 'Compliance', classes: 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' };
-      case 'staffing': return { text: 'Staffing', classes: 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' };
+      case 'compliance': return { text: 'Compliance', classes: 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' };
+      case 'staffing': return { text: 'Staffing', classes: 'bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' };
       case 'operational': return { text: 'Operational', classes: 'bg-slate-500/10 border-slate-500/20 text-slate-300' };
-      case 'training': return { text: 'Training', classes: 'bg-emerald-100 border-emerald-200 text-emerald-700 dark:bg-emerald-500/10 dark:border-emerald-500/20 dark:text-emerald-400' };
-      case 'maintenance': return { text: 'Maintenance', classes: 'bg-emerald-100 border-emerald-200 text-emerald-700 dark:bg-emerald-500/10 dark:border-emerald-500/20 dark:text-emerald-400' };
+      case 'training': return { text: 'Training', classes: 'bg-emerald-50 border-emerald-200 text-emerald-700 dark:bg-emerald-500/10 dark:border-emerald-500/20 dark:text-emerald-400' };
+      case 'maintenance': return { text: 'Maintenance', classes: 'bg-emerald-50 border-emerald-200 text-emerald-700 dark:bg-emerald-500/10 dark:border-emerald-500/20 dark:text-emerald-400' };
       default: return { text: category, classes: 'bg-slate-500/10 border-slate-500/20 text-slate-400' };
     }
   };
@@ -632,8 +632,8 @@ export default function CommandCalendar() {
                     </span>
                     <span className="text-[13px] text-white font-medium">{conflict.title}</span>
                     <span className={`px-1.5 py-0.5 border rounded text-[10px] font-semibold ${
-                      conflict.severity === 'critical' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
-                      conflict.severity === 'high' ? 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
+                      conflict.severity === 'critical' ? 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
+                      conflict.severity === 'high' ? 'bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
                       'bg-slate-500/10 border-slate-500/20 text-slate-400'
                     }`}>{conflict.severity === 'high' ? 'High' : conflict.severity === 'critical' ? 'Critical' : 'Moderate'}</span>
                   </div>
@@ -675,7 +675,7 @@ export default function CommandCalendar() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-6">
 
             {/* Calendar Grid */}
-            <div className="lg:col-span-2 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-5">
+            <div className="lg:col-span-2 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
               {/* Month Navigation */}
               <div className="flex items-center justify-between mb-5">
                 <button onClick={prevMonth} className="p-1.5 hover:bg-slate-700/30 rounded-lg transition-colors">
@@ -817,7 +817,7 @@ export default function CommandCalendar() {
             {/* ================================================================
                 HIGH PRIORITY UPCOMING — Upgraded with risk type, escalation, readiness
                 ================================================================ */}
-            <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-5">
+            <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
               <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide mb-4">High Priority Upcoming</h3>
 
               <div className="space-y-2">
@@ -845,8 +845,8 @@ export default function CommandCalendar() {
                             {riskBadge.text}
                           </span>
                           <span className={`px-1.5 py-0.5 border rounded text-[10px] font-semibold ${
-                            event.severity === 'critical' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
-                            event.severity === 'high' ? 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
+                            event.severity === 'critical' ? 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
+                            event.severity === 'high' ? 'bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
                             'bg-slate-500/10 border-slate-500/20 text-slate-400'
                           }`}>
                             {countdown}
@@ -879,7 +879,7 @@ export default function CommandCalendar() {
           </div>
         ) : (
           /* ===== TIMELINE VIEW ===== */
-          <div className="mb-6 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-5">
+          <div className="mb-6 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
             <div className="flex items-center justify-between mb-5">
               <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Next 7 Days — Hour by Hour</h3>
               <span className="text-xs text-slate-500">Dec {timelineDays[0]?.day} – Dec {timelineDays[timelineDays.length - 1]?.day}, {currentYear}</span>
@@ -999,8 +999,8 @@ export default function CommandCalendar() {
                       {getRiskTypeBadge(selectedEvent.category).text}
                     </span>
                     <span className={`px-1.5 py-0.5 border rounded text-[11px] font-medium ${
-                      selectedEvent.severity === 'critical' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
-                      selectedEvent.severity === 'high' ? 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
+                      selectedEvent.severity === 'critical' ? 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
+                      selectedEvent.severity === 'high' ? 'bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
                       'bg-slate-500/10 border-slate-500/20 text-slate-400'
                     }`}>
                       {selectedEvent.severity.toUpperCase()}
@@ -1014,7 +1014,7 @@ export default function CommandCalendar() {
 
               <div className="space-y-5">
                 {selectedEvent.status !== 'completed' && (
-                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-4">
+                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4">
                     <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Countdown</span>
                     <div className="mt-2 flex items-baseline gap-2">
                       <p className="text-2xl font-semibold text-white">{getCountdown(selectedEvent.day)}</p>

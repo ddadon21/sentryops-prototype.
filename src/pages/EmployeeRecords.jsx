@@ -631,7 +631,7 @@ export default function EmployeeRecords() {
 
             {/* Personnel Summary Cards */}
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-6">
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-md dark:shadow-none p-4">
+              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
                 <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Total Personnel</p>
                 <p className="text-xl font-bold text-slate-900 dark:text-white">{personnelStats.total}</p>
                 <p className="text-[10px] text-slate-500">{personnelStats.sworn} sworn / {personnelStats.civilian} civilian</p>

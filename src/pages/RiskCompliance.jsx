@@ -500,9 +500,9 @@ export default function RiskCompliance() {
                 <span className={`text-xl font-bold ${opiColor}`}>{opiScore}</span>
                 <span className="text-[10px] text-slate-600">/ 100</span>
                 <span className={`px-1.5 py-px rounded text-[9px] font-bold uppercase border ${
-                  opiScore >= 75 ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
-                  opiScore >= 50 ? 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
-                  'bg-green-100 border-green-200 text-green-700 dark:bg-green-500/10 dark:border-green-500/20 dark:text-green-400'
+                  opiScore >= 75 ? 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
+                  opiScore >= 50 ? 'bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
+                  'bg-green-50 border-green-200 text-green-700 dark:bg-green-500/10 dark:border-green-500/20 dark:text-green-400'
                 }`}>{opiLevel}</span>
               </div>
               <div className="mt-1 space-y-px">
@@ -667,8 +667,8 @@ export default function RiskCompliance() {
 
                       {/* Severity pill */}
                       <span className={`px-1.5 py-px border rounded text-[10px] font-bold flex-shrink-0 uppercase leading-tight ${
-                        risk.severity === 'critical' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
-                        risk.severity === 'medium' ? 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
+                        risk.severity === 'critical' ? 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
+                        risk.severity === 'medium' ? 'bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
                         'bg-slate-400/10 border-slate-400/20 text-slate-400'
                       }`}>
                         {risk.severity}
@@ -700,7 +700,7 @@ export default function RiskCompliance() {
 
                       {/* Due date */}
                       <span className={`px-1.5 py-px border rounded text-[10px] font-bold flex-shrink-0 ${
-                        risk.dueUrgency === 'critical' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
+                        risk.dueUrgency === 'critical' ? 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
                         risk.dueUrgency === 'soon' ? 'bg-amber-500/8 border-amber-500/15 text-amber-600 dark:text-amber-400' :
                         'bg-slate-700/30 border-slate-700/40 text-slate-400'
                       }`}>
@@ -881,8 +881,8 @@ export default function RiskCompliance() {
                             {readinessWarning && (
                               <span className={`px-1 py-px rounded text-[9px] font-bold border ${
                                 readinessWarning === 'AT RISK'
-                                  ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400'
-                                  : 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400'
+                                  ? 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400'
+                                  : 'bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400'
                               }`}>
                                 {readinessWarning}
                               </span>
@@ -977,7 +977,7 @@ export default function RiskCompliance() {
                         <div className="flex items-center gap-2">
                           <span className="text-[11px] font-semibold text-white">{policy.name}</span>
                           {breached && (
-                            <span className="px-1 py-px rounded text-[9px] font-bold border bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400">
+                            <span className="px-1 py-px rounded text-[9px] font-bold border bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400">
                               BELOW {policy.threshold}%
                             </span>
                           )}
@@ -1148,7 +1148,7 @@ export default function RiskCompliance() {
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-0.5">
                               <span className={`px-1.5 py-px rounded text-[9px] font-bold border ${
-                                action.severity === 'critical' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' : 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400'
+                                action.severity === 'critical' ? 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' : 'bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400'
                               }`}>{action.severity.toUpperCase()}</span>
                               <span className="text-[11px] font-semibold text-white truncate">{action.title}</span>
                               <span className="text-[10px] font-mono text-slate-600 dark:text-slate-400">${action.amount.toLocaleString()}</span>
@@ -1248,10 +1248,10 @@ export default function RiskCompliance() {
                       <td className="px-3 py-2">
                         <span className={`inline-flex items-center gap-1 px-1.5 py-px rounded text-[10px] font-bold border ${
                           std.status === 'compliant'
-                            ? 'bg-green-100 border-green-200 text-green-700 dark:bg-green-500/10 dark:border-green-500/20 dark:text-green-400'
+                            ? 'bg-green-50 border-green-200 text-green-700 dark:bg-green-500/10 dark:border-green-500/20 dark:text-green-400'
                             : std.status === 'warning'
-                            ? 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400'
-                            : 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400'
+                            ? 'bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400'
+                            : 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400'
                         }`}>
                           {std.status === 'compliant' ? <CheckCircle className="w-2.5 h-2.5" /> : <AlertTriangle className="w-2.5 h-2.5" />}
                           {std.statusLabel || (std.status === 'compliant' ? 'Compliant' : std.status === 'warning' ? 'At Risk' : 'Non-Compliant')}
@@ -1259,8 +1259,8 @@ export default function RiskCompliance() {
                       </td>
                       <td className="px-3 py-2">
                         <span className={`px-1.5 py-px rounded text-[9px] font-bold uppercase border ${
-                          std.exposure === 'high' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
-                          std.exposure === 'moderate' ? 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
+                          std.exposure === 'high' ? 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
+                          std.exposure === 'moderate' ? 'bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
                           'bg-slate-700/30 border-slate-700/40 text-slate-500'
                         }`}>{std.exposure}</span>
                       </td>
@@ -1327,7 +1327,7 @@ export default function RiskCompliance() {
                   <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
                     <div className="flex items-center gap-2 mb-2">
                       <span className={`px-1.5 py-px rounded text-[9px] font-bold border ${
-                        approvalModal.severity === 'critical' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' : 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400'
+                        approvalModal.severity === 'critical' ? 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' : 'bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400'
                       }`}>{approvalModal.severity.toUpperCase()}</span>
                       <span className="text-sm font-semibold text-slate-900 dark:text-white">{approvalModal.title}</span>
                     </div>

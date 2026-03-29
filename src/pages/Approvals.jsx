@@ -726,13 +726,13 @@ export default function Approvals() {
                               {/* Type pill */}
                               <span className={`px-1.5 py-px border rounded text-[10px] font-semibold flex-shrink-0 leading-tight ${
                                 approval.type === 'leave' ? 'bg-slate-700/40 border-slate-600/50 text-slate-300' :
-                                approval.type === 'budget' ? 'bg-green-100 border-green-200 text-green-700 dark:bg-green-500/10 dark:border-green-500/20 dark:text-green-400' :
+                                approval.type === 'budget' ? 'bg-green-50 border-green-200 text-green-700 dark:bg-green-500/10 dark:border-green-500/20 dark:text-green-400' :
                                 approval.type === 'hiring' ? 'bg-slate-700/40 border-slate-600/50 text-slate-300' :
-                                approval.type === 'overtime' ? 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
-                                approval.type === 'emergency' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
+                                approval.type === 'overtime' ? 'bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
+                                approval.type === 'emergency' ? 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
                                 approval.type === 'policy' ? 'bg-slate-400/10 border-slate-400/20 text-slate-400' :
                                 approval.type === 'mutual-aid' ? 'bg-cyan-500/10 border-cyan-500/20 text-cyan-400' :
-                                'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400'
+                                'bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400'
                               }`}>
                                 {approval.type === 'mutual-aid' ? 'Mutual Aid' :
                                  approval.type === 'overtime' ? 'OT' :
@@ -765,7 +765,7 @@ export default function Approvals() {
                               {deadlineLabel && (
                                 <span className={`px-1.5 py-px border rounded text-[10px] font-bold flex-shrink-0 ${
                                   urgencyState === 'overdue' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/15 dark:border-red-500/25 dark:text-red-400' :
-                                  urgencyState === 'critical' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
+                                  urgencyState === 'critical' ? 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
                                   'bg-amber-500/8 border-amber-500/15 text-amber-600 dark:text-amber-400'
                                 }`}>
                                   {deadlineLabel}
@@ -1034,8 +1034,8 @@ export default function Approvals() {
                           <td className="px-3 py-2.5">
                             <span className={`inline-flex items-center gap-1 px-1.5 py-px rounded text-[10px] font-bold border ${
                               item.decision === 'approved'
-                                ? 'bg-green-100 border-green-200 text-green-700 dark:bg-green-500/10 dark:border-green-500/20 dark:text-green-400'
-                                : 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400'
+                                ? 'bg-green-50 border-green-200 text-green-700 dark:bg-green-500/10 dark:border-green-500/20 dark:text-green-400'
+                                : 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400'
                             }`}>
                               {item.decision === 'approved' ? <CheckCircle className="w-2.5 h-2.5" /> : <XCircle className="w-2.5 h-2.5" />}
                               {item.decision === 'approved' ? 'Approved' : 'Denied'}

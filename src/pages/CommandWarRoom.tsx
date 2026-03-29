@@ -252,7 +252,7 @@ export default function CommandWarRoom() {
             const Icon = kpi.icon;
             return (
               <div key={kpi.label}
-                className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-md dark:shadow-none p-4"
+                className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4"
               >
                 <div className="flex items-center justify-between mb-3">
                   <Icon className="w-4 h-4 text-slate-600 dark:text-slate-400" />
