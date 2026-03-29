@@ -177,8 +177,8 @@ export default function CommandDashboard() {
   };
 
   const getTierBadge = (tier) => {
-    if (tier === 'critical') return { text: 'CRITICAL', classes: 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' };
-    if (tier === 'action') return { text: 'ACTION', classes: 'bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' };
+    if (tier === 'critical') return { text: 'CRITICAL', classes: 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' };
+    if (tier === 'action') return { text: 'ACTION', classes: 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' };
     return null;
   };
 
@@ -243,13 +243,13 @@ export default function CommandDashboard() {
           <div className="flex items-center gap-2 flex-shrink-0">
             <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/40 rounded-lg shadow-sm dark:shadow-none">
               <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
-              <span className="text-xs font-medium text-slate-600 dark:text-slate-400">All Systems Operational</span>
+              <span className="text-xs font-medium text-slate-700 dark:text-slate-400">All Systems Operational</span>
             </div>
           </div>
         </div>
 
         {/* Executive Snapshot Row */}
-        <div className="mb-8 bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
+        <div className="mb-8 bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
           <h2 className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-4">Executive Snapshot</h2>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {/* Personnel */}
@@ -308,9 +308,9 @@ export default function CommandDashboard() {
             <p className="text-2xl font-semibold text-slate-900 dark:text-white mb-1">94%</p>
             <div className="flex items-center gap-2 text-[11px] text-slate-500 dark:text-slate-400 mb-1">
               <span>Policies 94%</span>
-              <span className="text-slate-600">·</span>
+              <span className="text-slate-700">·</span>
               <span>Training 91%</span>
-              <span className="text-slate-600">·</span>
+              <span className="text-slate-700">·</span>
               <span>Audit 100%</span>
             </div>
             <p className="text-[11px] text-amber-600 dark:text-amber-400">USMS inspection in 2 days</p>
@@ -343,15 +343,15 @@ export default function CommandDashboard() {
         <div className="mb-8 bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 border-l-4 border-l-blue-500 dark:border-l-blue-500/50 rounded-xl shadow-sm dark:shadow-none">
           <button
             onClick={() => setAiBriefExpanded(!aiBriefExpanded)}
-            className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-slate-50 dark:hover:bg-slate-800/10 transition-colors rounded-xl"
+            className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-slate-50 dark:hover:bg-slate-50 dark:hover:bg-slate-800/10 transition-colors rounded-xl"
           >
             <div className="flex items-center gap-3">
               <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Executive Intelligence Summary</h3>
-              <span className="px-1.5 py-0.5 bg-slate-100 dark:bg-slate-700/30 text-[11px] text-slate-600 dark:text-slate-500 rounded">3 Insights</span>
+              <span className="px-1.5 py-0.5 bg-slate-100 dark:bg-slate-700/30 text-[11px] text-slate-700 dark:text-slate-500 rounded">3 Insights</span>
             </div>
             <div className="flex items-center gap-3">
-              <span className="hidden sm:inline text-[10px] text-slate-600">AI-assisted synthesis · 4 sources · 3m ago</span>
-              {aiBriefExpanded ? <ChevronUp className="w-4 h-4 text-slate-600" /> : <ChevronDown className="w-4 h-4 text-slate-600" />}
+              <span className="hidden sm:inline text-[10px] text-slate-700">AI-assisted synthesis · 4 sources · 3m ago</span>
+              {aiBriefExpanded ? <ChevronUp className="w-4 h-4 text-slate-700" /> : <ChevronDown className="w-4 h-4 text-slate-700" />}
             </div>
           </button>
 
@@ -399,7 +399,7 @@ export default function CommandDashboard() {
                 </div>
               </div>
 
-              <div className="pt-2 text-[10px] text-slate-600">
+              <div className="pt-2 text-[10px] text-slate-700">
                 Confidence: 92% · Model last trained on agency data 12h ago
               </div>
             </div>
@@ -407,7 +407,7 @@ export default function CommandDashboard() {
         </div>
 
         {/* Pending Approvals — Top 3 only */}
-        <div className="mb-8 bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
+        <div className="mb-8 bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
         <h2 className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-4">Pending Approvals</h2>
         <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none">
           <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100 dark:border-slate-700/40">
@@ -425,7 +425,7 @@ export default function CommandDashboard() {
               return (
                 <div
                   key={item.id}
-                  className={`rounded-lg border border-slate-200 dark:border-slate-700/40 hover:bg-slate-50 dark:hover:bg-slate-100 dark:hover:bg-slate-800/35 transition-colors ${item.tier === 'critical' ? 'border-l-4 border-l-red-500' : item.tier === 'action' ? 'border-l-4 border-l-amber-500' : 'border-l-4 border-l-slate-300 dark:border-l-slate-600'}`}
+                  className={`rounded-lg border border-slate-200 dark:border-slate-700/40 hover:bg-slate-50 dark:hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/35 transition-colors ${item.tier === 'critical' ? 'border-l-4 border-l-red-500' : item.tier === 'action' ? 'border-l-4 border-l-amber-500' : 'border-l-4 border-l-slate-300 dark:border-l-slate-600'}`}
                 >
                   <div className="flex items-center gap-4 p-3">
 
@@ -437,17 +437,17 @@ export default function CommandDashboard() {
                       </div>
                       <div className="flex items-center gap-2 text-[11px]">
                         <span className="text-slate-500 dark:text-slate-400">{item.division}</span>
-                        <span className="text-slate-600">·</span>
+                        <span className="text-slate-700">·</span>
                         <span className="text-slate-500 dark:text-slate-400">{item.name}</span>
                         {item.financial && (
                           <>
-                            <span className="text-slate-600">·</span>
+                            <span className="text-slate-700">·</span>
                             <span className="text-slate-500 dark:text-slate-400">{item.financial}</span>
                           </>
                         )}
                         {item.impact && (
                           <>
-                            <span className="text-slate-600">·</span>
+                            <span className="text-slate-700">·</span>
                             <span className={item.tier === 'critical' ? 'text-red-600 dark:text-red-400' : item.tier === 'action' ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500 dark:text-slate-400'}>{item.impact}</span>
                           </>
                         )}
@@ -463,18 +463,18 @@ export default function CommandDashboard() {
                       </button>
                       <button
                         onClick={(e) => openApprovalModal(item, 'deny', e)}
-                        className="px-3 py-1.5 text-xs font-medium text-slate-700 dark:text-slate-400 border border-slate-300 dark:border-slate-700/50 hover:bg-slate-100 dark:hover:bg-slate-700/20 rounded-lg transition-colors"
+                        className="px-3 py-1.5 text-xs font-medium text-slate-700 dark:text-slate-400 border border-slate-300 dark:border-slate-700/50 hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-700/20 rounded-lg transition-colors"
                       >
                         Escalate
                       </button>
                     </div>
                   </div>
                   <div className="flex items-center gap-2 px-3 pb-2 ml-[10px] text-[10px] text-slate-500">
-                    <Shield className="w-3 h-3 text-slate-600" />
+                    <Shield className="w-3 h-3 text-slate-700" />
                     <span>Logged to audit trail</span>
                     {item.impact && (
                       <>
-                        <span className="text-slate-600">·</span>
+                        <span className="text-slate-700">·</span>
                         <span>Impact: {item.impact}</span>
                       </>
                     )}
@@ -487,12 +487,12 @@ export default function CommandDashboard() {
         </div>
 
         {/* Federal Compliance & Audits — MOVED UP above Divisions/Staffing */}
-        <div className="mb-8 bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
+        <div className="mb-8 bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
         <h2 className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-4">Federal Compliance & Audits</h2>
         <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
           <div className="flex items-center gap-2 mb-5">
             <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">USMS Inspection</span>
-            <span className="px-1.5 py-0.5 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-700 dark:text-red-400 text-[10px] font-semibold rounded">Dec 12–14</span>
+            <span className="px-1.5 py-0.5 bg-red-100 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-700 dark:text-red-400 text-[10px] font-semibold rounded">Dec 12–14</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -531,7 +531,7 @@ export default function CommandDashboard() {
                   </div>
                 </div>
               </div>
-              <div className="mt-4 pt-3 border-t border-slate-200 dark:border-slate-700/40 text-[11px] text-slate-600 dark:text-slate-400">
+              <div className="mt-4 pt-3 border-t border-slate-200 dark:border-slate-700/40 text-[11px] text-slate-700 dark:text-slate-400">
                 <p>3 policies pending review · 8 deputies need recertification</p>
                 <p className="text-slate-500 mt-1">POC: Major Anderson (Detention)</p>
               </div>
@@ -550,11 +550,11 @@ export default function CommandDashboard() {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-500 dark:text-slate-400">Expires</span>
-                  <span className="text-slate-600 dark:text-slate-300">August 2025</span>
+                  <span className="text-slate-700 dark:text-slate-300">August 2025</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-500 dark:text-slate-400">Next Review</span>
-                  <span className="text-slate-600 dark:text-slate-300">184 days</span>
+                  <span className="text-slate-700 dark:text-slate-300">184 days</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-500 dark:text-slate-400">Risk Level</span>
@@ -570,7 +570,7 @@ export default function CommandDashboard() {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-500 dark:text-slate-400">Assigned To</span>
-                  <span className="text-slate-600 dark:text-slate-300">Facilities Director Chen</span>
+                  <span className="text-slate-700 dark:text-slate-300">Facilities Director Chen</span>
                 </div>
               </div>
             </div>
@@ -579,7 +579,7 @@ export default function CommandDashboard() {
         </div>
 
         {/* Division Status — neutral text, colored dot only, hover drill */}
-        <div className="mb-8 bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
+        <div className="mb-8 bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
           <h2 className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-4">Division Status</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
             {divisions.map((div, idx) => (
@@ -614,7 +614,7 @@ export default function CommandDashboard() {
         </div>
 
         {/* Staffing Levels — threshold markers */}
-        <div className="mb-8 bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
+        <div className="mb-8 bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
         <h2 className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-4">Staffing Levels</h2>
         <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
           <div className="flex items-center justify-between mb-5">
@@ -708,7 +708,7 @@ export default function CommandDashboard() {
             <div className="flex gap-3">
               <button
                 onClick={closeApprovalModal}
-                className="flex-1 px-4 py-2.5 bg-slate-100 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-800/60 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white text-sm font-medium transition-colors"
+                className="flex-1 px-4 py-2.5 bg-slate-100 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white text-sm font-medium transition-colors"
               >
                 Cancel
               </button>

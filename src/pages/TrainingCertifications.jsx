@@ -381,7 +381,7 @@ export default function TrainingCertifications() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex">
       {/* Sidebar */}
-      <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-slate-800/50 backdrop-blur-xl bg-slate-900/30 flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
+      <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-slate-800/50 backdrop-blur-xl bg-slate-50 dark:bg-slate-900/30 flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
         <div className="p-4 border-b border-slate-200 dark:border-slate-700/50 flex items-center justify-between">
           {!sidebarCollapsed && (
             <div className="flex items-center gap-2">
@@ -394,9 +394,9 @@ export default function TrainingCertifications() {
           )}
           <button
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-            className="p-2 hover:bg-slate-800/50 rounded-lg transition-colors hidden lg:block"
+            className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors hidden lg:block"
           >
-            {sidebarCollapsed ? <ChevronRight className="w-5 h-5 text-slate-600 dark:text-slate-400" /> : <ChevronLeft className="w-5 h-5 text-slate-600 dark:text-slate-400" />}
+            {sidebarCollapsed ? <ChevronRight className="w-5 h-5 text-slate-700 dark:text-slate-400" /> : <ChevronLeft className="w-5 h-5 text-slate-700 dark:text-slate-400" />}
           </button>
         </div>
 
@@ -409,7 +409,7 @@ export default function TrainingCertifications() {
                 key={item.id}
                 onClick={() => handleNavigation(item)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white'
+                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-700 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white'
                 } ${sidebarCollapsed ? 'justify-center' : ''}`}
                 title={sidebarCollapsed ? item.label : ''}
               >
@@ -432,7 +432,7 @@ export default function TrainingCertifications() {
           <div className="p-4">
             <button
               onClick={() => setLogoutConfirmOpen(true)}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-slate-600 dark:text-slate-400 hover:bg-slate-800/40 hover:text-slate-700 dark:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-slate-700 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/40 hover:text-slate-700 dark:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
               title={sidebarCollapsed ? 'Sign Out' : ''}
             >
               <LogOut className="w-5 h-5 flex-shrink-0" />
@@ -459,24 +459,24 @@ export default function TrainingCertifications() {
           />
           <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl p-6 max-w-sm w-full shadow-2xl">
             <div className="flex items-center gap-4 mb-4">
-              <div className="w-12 h-12 bg-slate-800/60 rounded-xl flex items-center justify-center">
-                <LogOut className="w-6 h-6 text-slate-600 dark:text-slate-400" />
+              <div className="w-12 h-12 bg-white dark:bg-slate-800/60 rounded-xl flex items-center justify-center">
+                <LogOut className="w-6 h-6 text-slate-700 dark:text-slate-400" />
               </div>
               <div>
                 <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Sign Out</h3>
-                <p className="text-sm text-slate-600 dark:text-slate-400">Are you sure you want to sign out?</p>
+                <p className="text-sm text-slate-700 dark:text-slate-400">Are you sure you want to sign out?</p>
               </div>
             </div>
             <div className="flex gap-3 mt-6">
               <button
                 onClick={() => setLogoutConfirmOpen(false)}
-                className="flex-1 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all"
+                className="flex-1 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all"
               >
                 Cancel
               </button>
               <button
                 onClick={handleLogout}
-                className="flex-1 px-4 py-2.5 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all"
+                className="flex-1 px-4 py-2.5 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all"
               >
                 Sign Out
               </button>
@@ -486,23 +486,23 @@ export default function TrainingCertifications() {
       )}
 
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="border-b border-slate-200 dark:border-slate-800/50 backdrop-blur-xl bg-slate-900/30">
+        <header className="border-b border-slate-200 dark:border-slate-800/50 backdrop-blur-xl bg-slate-50 dark:bg-slate-900/30">
           <div className="px-4 lg:px-6 py-4 flex items-center justify-between gap-4">
             <div className="flex items-center gap-4 flex-1 min-w-0">
               <button
                 onClick={() => setSidebarOpen(!sidebarOpen)}
-                className="lg:hidden p-2 hover:bg-slate-800/50 rounded-lg"
+                className="lg:hidden p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg"
               >
-                <Menu className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+                <Menu className="w-5 h-5 text-slate-700 dark:text-slate-400" />
               </button>
               <div className="flex items-center gap-2 text-sm">
                 <button
                   onClick={() => navigate(createPageUrl('HRDashboard'))}
-                  className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
+                  className="text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
                 >
                   HR Dashboard
                 </button>
-                <ChevronRight className="w-4 h-4 text-slate-600" />
+                <ChevronRight className="w-4 h-4 text-slate-700" />
                 <span className="text-slate-900 dark:text-white">Training & Certifications</span>
               </div>
             </div>
@@ -512,12 +512,12 @@ export default function TrainingCertifications() {
                 <span className="hidden sm:inline">Upload Certificate</span>
               </button>
 
-              <button className="hidden md:flex items-center gap-2 px-3 py-2 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl text-sm transition-all">
+              <button className="hidden md:flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl text-sm transition-all">
                 <Calendar className="w-4 h-4" />
                 <span>Schedule Training</span>
               </button>
 
-              <button className="hidden lg:flex items-center gap-2 px-3 py-2 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl text-sm transition-all">
+              <button className="hidden lg:flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl text-sm transition-all">
                 <Download className="w-4 h-4" />
                 <span>Export Report</span>
               </button>
@@ -525,25 +525,25 @@ export default function TrainingCertifications() {
               <div className="relative">
                 <button
                   onClick={() => setNotificationsOpen(!notificationsOpen)}
-                  className="p-2 hover:bg-slate-800/50 rounded-lg relative"
+                  className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg relative"
                 >
-                  <Bell className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+                  <Bell className="w-5 h-5 text-slate-700 dark:text-slate-400" />
                   <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                 </button>
 
                 {notificationsOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-96 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-2xl z-50">
+                  <div className="absolute right-0 top-full mt-2 w-96 bg-white dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-2xl z-50">
                     <div className="p-4 border-b border-slate-200 dark:border-slate-700/50">
                       <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Training Notifications</h3>
                     </div>
                     <div className="max-h-96 overflow-y-auto">
                       {notifications.map(notification => (
-                        <div key={notification.id} className={`p-4 border-b border-slate-200 dark:border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
+                        <div key={notification.id} className={`p-4 border-b border-slate-200 dark:border-slate-200 dark:border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
                           <div className="flex items-start gap-3">
                             <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-red-400' : 'bg-blue-400'}`}></div>
                             <div className="flex-1 min-w-0">
                               <p className="text-sm font-medium text-slate-900 dark:text-white mb-1">{notification.title}</p>
-                              <p className="text-xs text-slate-600 dark:text-slate-400 mb-2">{notification.message}</p>
+                              <p className="text-xs text-slate-700 dark:text-slate-400 mb-2">{notification.message}</p>
                               <p className="text-xs text-slate-500">{notification.time}</p>
                             </div>
                           </div>
@@ -554,7 +554,7 @@ export default function TrainingCertifications() {
                 )}
               </div>
 
-              <div className="h-8 w-px bg-slate-700/50"></div>
+              <div className="h-8 w-px bg-white dark:bg-slate-700/50"></div>
 
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
@@ -562,7 +562,7 @@ export default function TrainingCertifications() {
                 </div>
                 <div className="hidden sm:block">
                   <p className="text-sm font-medium text-slate-900 dark:text-white">HR Manager</p>
-                  <p className="text-xs text-slate-600 dark:text-slate-400">Human Resources</p>
+                  <p className="text-xs text-slate-700 dark:text-slate-400">Human Resources</p>
                 </div>
               </div>
             </div>
@@ -574,20 +574,20 @@ export default function TrainingCertifications() {
             {/* GCSO Header */}
             <div className="mb-6">
               <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white mb-2">Training & Certifications Management</h2>
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-slate-600 dark:text-slate-400">
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-slate-700 dark:text-slate-400">
                 <span>Gwinnett County Sheriff's Office</span>
-                <span className="text-slate-600">•</span>
+                <span className="text-slate-700">•</span>
                 <span>Lawrenceville, Georgia</span>
-                <span className="text-slate-600">•</span>
+                <span className="text-slate-700">•</span>
                 <span>Sunday, February 08, 2026 • 1:53 PM EST</span>
               </div>
               <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-500 mt-1">
                 <span>Sheriff: Keybo Taylor</span>
-                <span className="text-slate-600">|</span>
+                <span className="text-slate-700">|</span>
                 <span>Training Coordinator: Sgt. R. Martinez (Training Division)</span>
-                <span className="text-slate-600">|</span>
+                <span className="text-slate-700">|</span>
                 <span>Total Active Personnel: 178 (164 sworn, 14 civilian)</span>
-                <span className="text-slate-600">|</span>
+                <span className="text-slate-700">|</span>
                 <span>System: GCSO-HRIS v4.2</span>
               </div>
             </div>
@@ -599,7 +599,7 @@ export default function TrainingCertifications() {
                   <AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <div className="flex-1">
                     <p className="text-sm font-medium text-red-400 mb-1">15 Firearms Qualifications Overdue (8 days past deadline)</p>
-                    <p className="text-xs text-slate-600 dark:text-slate-400">Annual qualification deadline January 31, 2026 - Grace period expired February 05 - Range day scheduled February 12, 2026</p>
+                    <p className="text-xs text-slate-700 dark:text-slate-400">Annual qualification deadline January 31, 2026 - Grace period expired February 05 - Range day scheduled February 12, 2026</p>
                   </div>
                   <span className="px-2 py-1 bg-red-500/20 border border-red-500/40 text-red-400 rounded-lg text-xs font-bold whitespace-nowrap">CRITICAL</span>
                 </div>
@@ -610,7 +610,7 @@ export default function TrainingCertifications() {
                   <AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <div className="flex-1">
                     <p className="text-sm font-medium text-red-400 mb-1">2 POST Certifications Expired (Deputies Rodriguez, Thompson)</p>
-                    <p className="text-xs text-slate-600 dark:text-slate-400">Both removed from sworn duties - Renewal training scheduled February 10-14, 2026 at GPSTC-Columbus</p>
+                    <p className="text-xs text-slate-700 dark:text-slate-400">Both removed from sworn duties - Renewal training scheduled February 10-14, 2026 at GPSTC-Columbus</p>
                   </div>
                   <span className="px-2 py-1 bg-red-500/20 border border-red-500/40 text-red-400 rounded-lg text-xs font-bold whitespace-nowrap">CRITICAL</span>
                 </div>
@@ -621,7 +621,7 @@ export default function TrainingCertifications() {
                   <Clock className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
                   <div className="flex-1">
                     <p className="text-sm font-medium text-amber-400 mb-1">23 Certifications Expire Within 60 Days - Schedule Renewals Immediately</p>
-                    <p className="text-xs text-slate-600 dark:text-slate-400">POST (8), TASER (5), CPR/First Aid (10) - Review individual expiration dates below</p>
+                    <p className="text-xs text-slate-700 dark:text-slate-400">POST (8), TASER (5), CPR/First Aid (10) - Review individual expiration dates below</p>
                   </div>
                 </div>
               </div>
@@ -631,7 +631,7 @@ export default function TrainingCertifications() {
                   <Clock className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
                   <div className="flex-1">
                     <p className="text-sm font-medium text-amber-400 mb-1">34 Defensive Tactics Recertifications Due Q1 2026</p>
-                    <p className="text-xs text-slate-600 dark:text-slate-400">Due by March 31, 2026 - 3 training sessions scheduled (Feb 18, Mar 3, Mar 17) - Range time required</p>
+                    <p className="text-xs text-slate-700 dark:text-slate-400">Due by March 31, 2026 - 3 training sessions scheduled (Feb 18, Mar 3, Mar 17) - Range time required</p>
                   </div>
                 </div>
               </div>
@@ -640,15 +640,15 @@ export default function TrainingCertifications() {
             {/* Mandatory Training Compliance Summary Cards */}
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-6">
               {Object.entries(mandatoryCompliance).map(([key, item]) => (
-                <div key={key} className={`bg-slate-800/40 border rounded-xl p-4 ${
+                <div key={key} className={`bg-white dark:bg-slate-800/40 border rounded-xl p-4 ${
                   item.status === 'critical' ? 'border-red-500/30' : item.status === 'warning' ? 'border-amber-500/30' : 'border-green-500/30'
                 }`}>
-                  <p className="text-xs text-slate-600 dark:text-slate-400 mb-1 truncate">{item.label}</p>
+                  <p className="text-xs text-slate-700 dark:text-slate-400 mb-1 truncate">{item.label}</p>
                   <p className={`text-xl font-bold mb-1 ${
                     item.status === 'critical' ? 'text-red-400' : item.status === 'warning' ? 'text-amber-400' : 'text-green-400'
                   }`}>{item.pct}</p>
                   <p className="text-xs text-slate-500">{item.compliant}/{item.total}</p>
-                  <div className="mt-2 w-full h-1.5 bg-slate-700/50 rounded-full overflow-hidden">
+                  <div className="mt-2 w-full h-1.5 bg-white dark:bg-slate-700/50 rounded-full overflow-hidden">
                     <div
                       className={`h-full rounded-full ${
                         item.status === 'critical' ? 'bg-red-500' : item.status === 'warning' ? 'bg-amber-500' : 'bg-green-500'
@@ -673,21 +673,21 @@ export default function TrainingCertifications() {
               </div>
 
               {/* Expired POST Certifications */}
-              <div className="mb-4 bg-slate-800/40 border border-red-500/30 rounded-xl overflow-hidden">
+              <div className="mb-4 bg-white dark:bg-slate-800/40 border border-red-500/30 rounded-xl overflow-hidden">
                 <button
                   onClick={() => toggleViolation('post')}
-                  className="w-full px-5 py-4 flex items-center justify-between hover:bg-slate-800/60 transition-colors"
+                  className="w-full px-5 py-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors"
                 >
                   <div className="flex items-center gap-3">
                     <Shield className="w-5 h-5 text-red-400" />
                     <div className="text-left">
                       <h4 className="text-sm font-semibold text-red-400">Expired POST Certifications - {criticalViolations.expiredPost.count} Deputies</h4>
-                      <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">Both removed from sworn duties, renewals in progress</p>
+                      <p className="text-xs text-slate-700 dark:text-slate-400 mt-0.5">Both removed from sworn duties, renewals in progress</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="px-2 py-1 bg-red-500/20 border border-red-500/40 rounded text-xs text-red-400 font-bold">EXPIRED</span>
-                    {expandedViolation.post ? <ChevronUp className="w-4 h-4 text-slate-600 dark:text-slate-400" /> : <ChevronDown className="w-4 h-4 text-slate-600 dark:text-slate-400" />}
+                    {expandedViolation.post ? <ChevronUp className="w-4 h-4 text-slate-700 dark:text-slate-400" /> : <ChevronDown className="w-4 h-4 text-slate-700 dark:text-slate-400" />}
                   </div>
                 </button>
 
@@ -698,8 +698,8 @@ export default function TrainingCertifications() {
                         <div key={idx} className="bg-red-500/5 border border-red-500/20 rounded-lg p-4">
                           <div className="flex items-start justify-between gap-4 flex-wrap">
                             <div>
-                              <p className="text-sm font-medium text-slate-900 dark:text-white">{deputy.name} <span className="text-slate-600 dark:text-slate-400">({deputy.badge})</span></p>
-                              <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">{deputy.certLevel} - Expired {deputy.expiredDate} ({deputy.daysExpired} days)</p>
+                              <p className="text-sm font-medium text-slate-900 dark:text-white">{deputy.name} <span className="text-slate-700 dark:text-slate-400">({deputy.badge})</span></p>
+                              <p className="text-xs text-slate-700 dark:text-slate-400 mt-1">{deputy.certLevel} - Expired {deputy.expiredDate} ({deputy.daysExpired} days)</p>
                             </div>
                             <span className="px-2 py-1 bg-red-500/20 text-red-400 rounded text-xs font-medium">{deputy.status}</span>
                           </div>
@@ -725,21 +725,21 @@ export default function TrainingCertifications() {
               </div>
 
               {/* Overdue Firearms Qualifications */}
-              <div className="mb-4 bg-slate-800/40 border border-red-500/30 rounded-xl overflow-hidden">
+              <div className="mb-4 bg-white dark:bg-slate-800/40 border border-red-500/30 rounded-xl overflow-hidden">
                 <button
                   onClick={() => toggleViolation('firearms')}
-                  className="w-full px-5 py-4 flex items-center justify-between hover:bg-slate-800/60 transition-colors"
+                  className="w-full px-5 py-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors"
                 >
                   <div className="flex items-center gap-3">
                     <Crosshair className="w-5 h-5 text-red-400" />
                     <div className="text-left">
                       <h4 className="text-sm font-semibold text-red-400">Overdue Firearms Qualifications - {criticalViolations.overdueFirearms.count} Officers ({criticalViolations.overdueFirearms.daysOverdue} Days Overdue)</h4>
-                      <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">GCSO Policy 4.12 | Deadline: {criticalViolations.overdueFirearms.deadline} | Grace expired {criticalViolations.overdueFirearms.graceExpired}</p>
+                      <p className="text-xs text-slate-700 dark:text-slate-400 mt-0.5">GCSO Policy 4.12 | Deadline: {criticalViolations.overdueFirearms.deadline} | Grace expired {criticalViolations.overdueFirearms.graceExpired}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="px-2 py-1 bg-red-500/20 border border-red-500/40 rounded text-xs text-red-400 font-bold">OVERDUE</span>
-                    {expandedViolation.firearms ? <ChevronUp className="w-4 h-4 text-slate-600 dark:text-slate-400" /> : <ChevronDown className="w-4 h-4 text-slate-600 dark:text-slate-400" />}
+                    {expandedViolation.firearms ? <ChevronUp className="w-4 h-4 text-slate-700 dark:text-slate-400" /> : <ChevronDown className="w-4 h-4 text-slate-700 dark:text-slate-400" />}
                   </div>
                 </button>
 
@@ -752,7 +752,7 @@ export default function TrainingCertifications() {
                           <h5 className="text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2">{div.name} ({div.count}):</h5>
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                             {div.officers.map((officer, oidx) => (
-                              <div key={oidx} className="bg-slate-900/40 border border-slate-700/30 rounded-lg px-3 py-2 flex items-center justify-between">
+                              <div key={oidx} className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/30 rounded-lg px-3 py-2 flex items-center justify-between">
                                 <div>
                                   <p className="text-xs font-medium text-slate-900 dark:text-white">{officer.name} <span className="text-slate-500">{officer.badge}</span></p>
                                 </div>
@@ -765,9 +765,9 @@ export default function TrainingCertifications() {
                     </div>
 
                     {/* Firearms Qualification Requirements */}
-                    <div className="mt-4 bg-slate-900/40 border border-slate-700/30 rounded-lg p-4">
+                    <div className="mt-4 bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/30 rounded-lg p-4">
                       <h5 className="text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2">Firearms Qualification Requirements (GCSO Policy 4.12):</h5>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-slate-600 dark:text-slate-400">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-slate-700 dark:text-slate-400">
                         <div><span className="text-slate-500">Course of Fire:</span> Georgia POST Firearms Qualification Course</div>
                         <div><span className="text-slate-500">Minimum Score:</span> 80% (240/300 points)</div>
                         <div><span className="text-slate-500">Weapons:</span> Primary duty weapon (Glock 17 Gen5, 9mm) + any secondary</div>
@@ -783,7 +783,7 @@ export default function TrainingCertifications() {
                       </h5>
                       <div className="space-y-2">
                         {criticalViolations.overdueFirearms.correctiveActions.map((action, idx) => (
-                          <div key={idx} className="flex items-start gap-3 px-3 py-2 rounded-lg bg-slate-900/30">
+                          <div key={idx} className="flex items-start gap-3 px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-900/30">
                             {action.completed ? (
                               <CheckCircle2 className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
                             ) : (
@@ -803,23 +803,23 @@ export default function TrainingCertifications() {
                       </div>
                     </div>
 
-                    <div className="mt-4 p-3 bg-slate-900/40 border border-slate-700/30 rounded-lg">
-                      <div className="flex flex-wrap gap-x-6 gap-y-1 text-xs text-slate-600 dark:text-slate-400">
+                    <div className="mt-4 p-3 bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/30 rounded-lg">
+                      <div className="flex flex-wrap gap-x-6 gap-y-1 text-xs text-slate-700 dark:text-slate-400">
                         <div><span className="text-slate-500">Responsible:</span> Training Division (Sgt. Martinez), Division Commanders</div>
                         <div><span className="text-slate-500">Deadline:</span> All qualifications complete by February 19, 2026</div>
                       </div>
                     </div>
 
                     <div className="mt-4 flex flex-wrap gap-2">
-                      <button className="px-3 py-2 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-all flex items-center gap-2">
+                      <button className="px-3 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-all flex items-center gap-2">
                         <Calendar className="w-3.5 h-3.5" />
                         View Range Schedule
                       </button>
-                      <button className="px-3 py-2 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-all flex items-center gap-2">
+                      <button className="px-3 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-all flex items-center gap-2">
                         <Printer className="w-3.5 h-3.5" />
                         Print Attendance Roster
                       </button>
-                      <button className="px-3 py-2 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-all flex items-center gap-2">
+                      <button className="px-3 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-all flex items-center gap-2">
                         <FileText className="w-3.5 h-3.5" />
                         View Firearms Policy 4.12
                       </button>
@@ -829,21 +829,21 @@ export default function TrainingCertifications() {
               </div>
 
               {/* Expired TASER Certifications */}
-              <div className="mb-4 bg-slate-800/40 border border-red-500/30 rounded-xl overflow-hidden">
+              <div className="mb-4 bg-white dark:bg-slate-800/40 border border-red-500/30 rounded-xl overflow-hidden">
                 <button
                   onClick={() => toggleViolation('taser')}
-                  className="w-full px-5 py-4 flex items-center justify-between hover:bg-slate-800/60 transition-colors"
+                  className="w-full px-5 py-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors"
                 >
                   <div className="flex items-center gap-3">
                     <Zap className="w-5 h-5 text-red-400" />
                     <div className="text-left">
                       <h4 className="text-sm font-semibold text-red-400">Expired TASER Certifications - {criticalViolations.expiredTaser.count} Deputies</h4>
-                      <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">GCSO Policy 4.15 | Deputies cannot carry TASER without current certification</p>
+                      <p className="text-xs text-slate-700 dark:text-slate-400 mt-0.5">GCSO Policy 4.15 | Deputies cannot carry TASER without current certification</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="px-2 py-1 bg-red-500/20 border border-red-500/40 rounded text-xs text-red-400 font-bold">EXPIRED</span>
-                    {expandedViolation.taser ? <ChevronUp className="w-4 h-4 text-slate-600 dark:text-slate-400" /> : <ChevronDown className="w-4 h-4 text-slate-600 dark:text-slate-400" />}
+                    {expandedViolation.taser ? <ChevronUp className="w-4 h-4 text-slate-700 dark:text-slate-400" /> : <ChevronDown className="w-4 h-4 text-slate-700 dark:text-slate-400" />}
                   </div>
                 </button>
 
@@ -854,12 +854,12 @@ export default function TrainingCertifications() {
                         <div key={idx} className="bg-red-500/5 border border-red-500/20 rounded-lg p-4">
                           <div className="flex items-start justify-between gap-4 flex-wrap mb-2">
                             <div>
-                              <p className="text-sm font-medium text-slate-900 dark:text-white">{deputy.name} <span className="text-slate-600 dark:text-slate-400">({deputy.badge})</span></p>
-                              <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">{deputy.division}</p>
+                              <p className="text-sm font-medium text-slate-900 dark:text-white">{deputy.name} <span className="text-slate-700 dark:text-slate-400">({deputy.badge})</span></p>
+                              <p className="text-xs text-slate-700 dark:text-slate-400 mt-0.5">{deputy.division}</p>
                             </div>
                             <span className="px-2 py-1 bg-red-500/20 text-red-400 rounded text-xs font-medium">{deputy.daysOverdue} DAYS OVERDUE</span>
                           </div>
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-slate-600 dark:text-slate-400 mt-2">
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-slate-700 dark:text-slate-400 mt-2">
                             <div><span className="text-slate-500">Last Certification:</span> {deputy.lastCert}</div>
                             <div><span className="text-slate-500">Expiration Date:</span> {deputy.expiredDate}</div>
                           </div>
@@ -879,7 +879,7 @@ export default function TrainingCertifications() {
                     {/* Recertification Training Details */}
                     <div className="mt-4 bg-amber-500/5 border border-amber-500/20 rounded-lg p-4">
                       <h5 className="text-xs font-semibold text-amber-400 mb-3">Recertification Training Scheduled:</h5>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-slate-600 dark:text-slate-400">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-slate-700 dark:text-slate-400">
                         <div><span className="text-slate-500">Date:</span> {criticalViolations.expiredTaser.recertTraining.date}</div>
                         <div><span className="text-slate-500">Location:</span> {criticalViolations.expiredTaser.recertTraining.location}</div>
                         <div><span className="text-slate-500">Instructor:</span> {criticalViolations.expiredTaser.recertTraining.instructor}</div>
@@ -889,17 +889,17 @@ export default function TrainingCertifications() {
                       </div>
                     </div>
 
-                    <div className="mt-4 p-3 bg-slate-900/40 border border-slate-700/30 rounded-lg text-xs text-slate-600 dark:text-slate-400">
+                    <div className="mt-4 p-3 bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/30 rounded-lg text-xs text-slate-700 dark:text-slate-400">
                       <p className="font-medium text-slate-700 dark:text-slate-300 mb-1">Supervisor Accountability:</p>
                       <p>Supervisors responsible for ensuring deputies track certification expiration dates and schedule renewals. Deputy personnel files should include certification tracker with upcoming expiration dates flagged 60-90 days in advance.</p>
                     </div>
 
                     <div className="mt-4 flex flex-wrap gap-2">
-                      <button className="px-3 py-2 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-all flex items-center gap-2">
+                      <button className="px-3 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-all flex items-center gap-2">
                         <FileText className="w-3.5 h-3.5" />
                         View TASER Policy 4.15
                       </button>
-                      <button className="px-3 py-2 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-all flex items-center gap-2">
+                      <button className="px-3 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-all flex items-center gap-2">
                         <Calendar className="w-3.5 h-3.5" />
                         Schedule Recertification
                       </button>
@@ -937,7 +937,7 @@ export default function TrainingCertifications() {
                     className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
                       activeCategory === filter.id
                         ? 'bg-amber-500 text-white'
-                        : 'bg-slate-800/40 border border-slate-700/50 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-slate-800/60'
+                        : 'bg-white dark:bg-slate-800/40 border border-slate-700/50 text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60'
                     }`}
                   >
                     {filter.label}
@@ -954,10 +954,10 @@ export default function TrainingCertifications() {
                     const isExpanded = expandedCategory[category.id];
 
                     return (
-                      <div key={category.id} className={`bg-slate-800/40 border ${category.borderColor} rounded-xl overflow-hidden`}>
+                      <div key={category.id} className={`bg-white dark:bg-slate-800/40 border ${category.borderColor} rounded-xl overflow-hidden`}>
                         <button
                           onClick={() => toggleCategory(category.id)}
-                          className="w-full px-5 py-4 flex items-center justify-between hover:bg-slate-800/60 transition-colors"
+                          className="w-full px-5 py-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors"
                         >
                           <div className="flex items-center gap-3">
                             <div className={`w-10 h-10 ${category.bgColor} rounded-xl flex items-center justify-center`}>
@@ -977,15 +977,15 @@ export default function TrainingCertifications() {
                               }`}>{category.stats.certifiedPct}</p>
                               <p className="text-[10px] text-slate-500">{category.stats.certified}/{category.totalPersonnel} compliant</p>
                             </div>
-                            {isExpanded ? <ChevronUp className="w-4 h-4 text-slate-600 dark:text-slate-400" /> : <ChevronDown className="w-4 h-4 text-slate-600 dark:text-slate-400" />}
+                            {isExpanded ? <ChevronUp className="w-4 h-4 text-slate-700 dark:text-slate-400" /> : <ChevronDown className="w-4 h-4 text-slate-700 dark:text-slate-400" />}
                           </div>
                         </button>
 
                         {isExpanded && (
-                          <div className="px-5 pb-5 border-t border-slate-200 dark:border-slate-700/30">
+                          <div className="px-5 pb-5 border-t border-slate-200 dark:border-slate-200 dark:border-slate-700/30">
                             {/* Authority & Requirement */}
-                            <div className="mt-4 p-3 bg-slate-900/40 border border-slate-700/30 rounded-lg">
-                              <p className="text-[10px] text-slate-500 mb-1">Regulatory Authority: <span className="text-slate-600 dark:text-slate-400">{category.authority}</span></p>
+                            <div className="mt-4 p-3 bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/30 rounded-lg">
+                              <p className="text-[10px] text-slate-500 mb-1">Regulatory Authority: <span className="text-slate-700 dark:text-slate-400">{category.authority}</span></p>
                               <p className="text-xs text-slate-700 dark:text-slate-300 mt-1">{category.requirement}</p>
                             </div>
 
@@ -1003,7 +1003,7 @@ export default function TrainingCertifications() {
                                   {category.stats.breakdown && (
                                     <div className="space-y-1 ml-6">
                                       {category.stats.breakdown.map((level, idx) => (
-                                        <p key={idx} className="text-[10px] text-slate-600 dark:text-slate-400">{level.level}: {level.count} ({level.pct})</p>
+                                        <p key={idx} className="text-[10px] text-slate-700 dark:text-slate-400">{level.level}: {level.count} ({level.pct})</p>
                                       ))}
                                     </div>
                                   )}
@@ -1011,18 +1011,18 @@ export default function TrainingCertifications() {
                                   {/* Firearms-specific stats */}
                                   {category.stats.qualDates && (
                                     <div className="ml-6 space-y-1">
-                                      <p className="text-[10px] text-slate-600 dark:text-slate-400">Qualified: {category.stats.qualDates}</p>
-                                      <p className="text-[10px] text-slate-600 dark:text-slate-400">Average score: {category.stats.avgScore}</p>
-                                      <p className="text-[10px] text-slate-600 dark:text-slate-400">Pass rate: {category.stats.passRate}</p>
+                                      <p className="text-[10px] text-slate-700 dark:text-slate-400">Qualified: {category.stats.qualDates}</p>
+                                      <p className="text-[10px] text-slate-700 dark:text-slate-400">Average score: {category.stats.avgScore}</p>
+                                      <p className="text-[10px] text-slate-700 dark:text-slate-400">Pass rate: {category.stats.passRate}</p>
                                     </div>
                                   )}
 
                                   {/* DT-specific stats */}
                                   {category.stats.dueThisQuarter && (
                                     <div className="ml-6 space-y-1">
-                                      <p className="text-[10px] text-slate-600 dark:text-slate-400">Due this quarter: {category.stats.dueThisQuarter} deputies ({category.stats.dueNote})</p>
-                                      <p className="text-[10px] text-slate-600 dark:text-slate-400">Sessions needed: {category.stats.sessionsNeeded}</p>
-                                      <p className="text-[10px] text-slate-600 dark:text-slate-400">Instructor: {category.stats.instructor}</p>
+                                      <p className="text-[10px] text-slate-700 dark:text-slate-400">Due this quarter: {category.stats.dueThisQuarter} deputies ({category.stats.dueNote})</p>
+                                      <p className="text-[10px] text-slate-700 dark:text-slate-400">Sessions needed: {category.stats.sessionsNeeded}</p>
+                                      <p className="text-[10px] text-slate-700 dark:text-slate-400">Instructor: {category.stats.instructor}</p>
                                     </div>
                                   )}
 
@@ -1047,25 +1047,25 @@ export default function TrainingCertifications() {
                                         <div className="space-y-1 ml-6">
                                           {category.stats.expiredDeputies.map((dep, idx) => (
                                             <div key={idx} className="flex items-center gap-2">
-                                              <p className="text-[10px] text-slate-600 dark:text-slate-400">{dep.name} ({dep.level}) - Expired {dep.expired}</p>
+                                              <p className="text-[10px] text-slate-700 dark:text-slate-400">{dep.name} ({dep.level}) - Expired {dep.expired}</p>
                                               {dep.renewalScheduled && <span className="px-1 py-0.5 bg-green-500/20 text-green-400 rounded text-[10px]">Renewal Scheduled</span>}
                                             </div>
                                           ))}
                                         </div>
                                       )}
                                       {category.stats.overdueNote && (
-                                        <p className="text-[10px] text-slate-600 dark:text-slate-400 ml-6">{category.stats.overdueNote}</p>
+                                        <p className="text-[10px] text-slate-700 dark:text-slate-400 ml-6">{category.stats.overdueNote}</p>
                                       )}
                                       {category.stats.expiredNote && (
-                                        <p className="text-[10px] text-slate-600 dark:text-slate-400 ml-6">{category.stats.expiredNote}</p>
+                                        <p className="text-[10px] text-slate-700 dark:text-slate-400 ml-6">{category.stats.expiredNote}</p>
                                       )}
                                     </div>
                                   )}
 
                                   {/* Not Required */}
                                   {category.stats.notRequired > 0 && (
-                                    <div className="bg-slate-700/20 border border-slate-600/30 rounded-lg p-3 mb-3">
-                                      <p className="text-xs text-slate-600 dark:text-slate-400">{category.stats.notRequired} {category.stats.notRequiredNote}</p>
+                                    <div className="bg-slate-100 dark:bg-slate-700/20 border border-slate-600/30 rounded-lg p-3 mb-3">
+                                      <p className="text-xs text-slate-700 dark:text-slate-400">{category.stats.notRequired} {category.stats.notRequiredNote}</p>
                                     </div>
                                   )}
                                 </div>
@@ -1085,7 +1085,7 @@ export default function TrainingCertifications() {
                                     {category.upcoming.within30.deputies && (
                                       <div className="space-y-2">
                                         {category.upcoming.within30.deputies.map((dep, idx) => (
-                                          <div key={idx} className="text-[10px] text-slate-600 dark:text-slate-400">
+                                          <div key={idx} className="text-[10px] text-slate-700 dark:text-slate-400">
                                             <p className="text-slate-700 dark:text-slate-300">{dep.name} <span className="text-slate-500">{dep.badge}</span></p>
                                             <p>{dep.level} expires {dep.expires} ({dep.daysLeft} days)</p>
                                             {dep.renewalScheduled ? (
@@ -1098,7 +1098,7 @@ export default function TrainingCertifications() {
                                       </div>
                                     )}
                                     {category.upcoming.within30.note && (
-                                      <p className="text-[10px] text-slate-600 dark:text-slate-400">{category.upcoming.within30.note}</p>
+                                      <p className="text-[10px] text-slate-700 dark:text-slate-400">{category.upcoming.within30.note}</p>
                                     )}
                                   </div>
                                   <div className="bg-blue-500/5 border border-blue-500/20 rounded-lg p-3">
@@ -1109,12 +1109,12 @@ export default function TrainingCertifications() {
                                     <button className="mt-2 text-[10px] text-blue-400 hover:text-blue-300 underline">View Full List</button>
                                   </div>
                                   {category.upcoming.within90 && (
-                                    <div className="bg-slate-700/20 border border-slate-600/30 rounded-lg p-3">
+                                    <div className="bg-slate-100 dark:bg-slate-700/20 border border-slate-600/30 rounded-lg p-3">
                                       <div className="flex items-center gap-2">
-                                        <Clock className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
-                                        <span className="text-xs font-medium text-slate-600 dark:text-slate-400">61-90 days: {category.upcoming.within90.count}</span>
+                                        <Clock className="w-3.5 h-3.5 text-slate-700 dark:text-slate-400" />
+                                        <span className="text-xs font-medium text-slate-700 dark:text-slate-400">61-90 days: {category.upcoming.within90.count}</span>
                                       </div>
-                                      <button className="mt-2 text-[10px] text-slate-600 dark:text-slate-400 hover:text-slate-700 dark:text-slate-300 underline">View Full List</button>
+                                      <button className="mt-2 text-[10px] text-slate-700 dark:text-slate-400 hover:text-slate-700 dark:text-slate-300 underline">View Full List</button>
                                     </div>
                                   )}
                                 </div>
@@ -1127,7 +1127,7 @@ export default function TrainingCertifications() {
                                 <h5 className="text-xs font-semibold text-slate-700 dark:text-slate-300 mb-3">Qualification Breakdown by Weapon:</h5>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                                   {category.weaponBreakdown.map((weapon, idx) => (
-                                    <div key={idx} className="bg-slate-900/40 border border-slate-700/30 rounded-lg px-3 py-2">
+                                    <div key={idx} className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/30 rounded-lg px-3 py-2">
                                       <p className="text-xs text-slate-700 dark:text-slate-300">{weapon.weapon}</p>
                                       <div className="flex items-center gap-2 mt-1">
                                         <span className="text-xs text-green-400 font-medium">{weapon.qualified} qualified</span>
@@ -1145,7 +1145,7 @@ export default function TrainingCertifications() {
                                 <h5 className="text-xs font-semibold text-slate-700 dark:text-slate-300 mb-3">Specialized Firearms Qualifications:</h5>
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
                                   {category.specializedQuals.map((spec, idx) => (
-                                    <div key={idx} className="bg-slate-900/40 border border-slate-700/30 rounded-lg px-3 py-2">
+                                    <div key={idx} className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/30 rounded-lg px-3 py-2">
                                       <p className="text-xs text-slate-700 dark:text-slate-300">{spec.type}</p>
                                       <p className="text-xs text-green-400 mt-1">{spec.count} certified - {spec.status}</p>
                                     </div>
@@ -1160,11 +1160,11 @@ export default function TrainingCertifications() {
                                 <h5 className="text-xs font-semibold text-slate-700 dark:text-slate-300 mb-3">Upcoming Range Days (2026 Schedule):</h5>
                                 <div className="space-y-2">
                                   {category.rangeDays.map((day, idx) => (
-                                    <div key={idx} className="flex items-center justify-between bg-slate-900/40 border border-slate-700/30 rounded-lg px-3 py-2">
+                                    <div key={idx} className="flex items-center justify-between bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/30 rounded-lg px-3 py-2">
                                       <div className="flex items-center gap-3">
                                         <Calendar className="w-3.5 h-3.5 text-slate-500" />
                                         <span className="text-xs text-slate-900 dark:text-white font-medium">{day.date}</span>
-                                        <span className="text-xs text-slate-600 dark:text-slate-400">{day.purpose}</span>
+                                        <span className="text-xs text-slate-700 dark:text-slate-400">{day.purpose}</span>
                                       </div>
                                       <span className={`px-2 py-0.5 rounded text-[10px] font-medium ${
                                         day.status === 'scheduled' ? 'bg-green-500/20 text-green-400' :
@@ -1183,15 +1183,15 @@ export default function TrainingCertifications() {
                                 <h5 className="text-xs font-semibold text-slate-700 dark:text-slate-300 mb-3">Scheduled Training Sessions:</h5>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                                   {category.scheduledSessions.map((session, idx) => (
-                                    <div key={idx} className="bg-slate-900/40 border border-slate-700/30 rounded-lg px-3 py-2">
+                                    <div key={idx} className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/30 rounded-lg px-3 py-2">
                                       <div className="flex items-center justify-between">
                                         <p className="text-xs text-slate-900 dark:text-white font-medium">{session.date}</p>
                                         <span className={`px-2 py-0.5 rounded text-[10px] font-medium ${
                                           session.status === 'Open' ? 'bg-green-500/20 text-green-400' : 'bg-amber-500/20 text-amber-400'
                                         }`}>{session.status}</span>
                                       </div>
-                                      <p className="text-[10px] text-slate-600 dark:text-slate-400 mt-1">Enrolled: {session.enrolled}/{session.slots} slots</p>
-                                      <div className="mt-1 w-full h-1 bg-slate-700/50 rounded-full overflow-hidden">
+                                      <p className="text-[10px] text-slate-700 dark:text-slate-400 mt-1">Enrolled: {session.enrolled}/{session.slots} slots</p>
+                                      <div className="mt-1 w-full h-1 bg-white dark:bg-slate-700/50 rounded-full overflow-hidden">
                                         <div className="h-full bg-blue-500 rounded-full" style={{ width: `${(session.enrolled / session.slots) * 100}%` }} />
                                       </div>
                                     </div>
@@ -1206,11 +1206,11 @@ export default function TrainingCertifications() {
                                 <Eye className="w-3.5 h-3.5" />
                                 View All Certifications
                               </button>
-                              <button className="px-3 py-2 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-all flex items-center gap-2">
+                              <button className="px-3 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-all flex items-center gap-2">
                                 <Calendar className="w-3.5 h-3.5" />
                                 Expiration Calendar
                               </button>
-                              <button className="px-3 py-2 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-all flex items-center gap-2">
+                              <button className="px-3 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-all flex items-center gap-2">
                                 <Download className="w-3.5 h-3.5" />
                                 Generate Report
                               </button>
@@ -1236,38 +1236,38 @@ export default function TrainingCertifications() {
         </button>
 
         {supportOpen && (
-          <div className="absolute bottom-16 right-0 w-80 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-2xl overflow-hidden">
+          <div className="absolute bottom-16 right-0 w-80 bg-white dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200 dark:border-slate-700/50 rounded-2xl shadow-2xl overflow-hidden">
             <div className="p-4 border-b border-slate-200 dark:border-slate-700/50">
               <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Training Resources & Support</h3>
-              <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">GCSO Training Division</p>
+              <p className="text-xs text-slate-700 dark:text-slate-400 mt-1">GCSO Training Division</p>
             </div>
             <div className="p-4 space-y-3">
-              <div className="p-3 bg-slate-800/40 rounded-lg hover:bg-slate-800/60 cursor-pointer transition-colors">
+              <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-slate-900 dark:text-white">Training Coordinator</p>
-                <p className="text-xs text-slate-600 dark:text-slate-400">Sgt. R. Martinez (Training Division)</p>
+                <p className="text-xs text-slate-700 dark:text-slate-400">Sgt. R. Martinez (Training Division)</p>
                 <p className="text-xs text-amber-400 mt-1">Ext. 4521</p>
               </div>
-              <div className="p-3 bg-slate-800/40 rounded-lg hover:bg-slate-800/60 cursor-pointer transition-colors">
+              <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-slate-900 dark:text-white">Firearms Instructor</p>
-                <p className="text-xs text-slate-600 dark:text-slate-400">Sgt. R. Martinez (Lead), Deputy K. Chen (Asst.)</p>
+                <p className="text-xs text-slate-700 dark:text-slate-400">Sgt. R. Martinez (Lead), Deputy K. Chen (Asst.)</p>
                 <p className="text-xs text-amber-400 mt-1">Range: Ext. 4530</p>
               </div>
-              <div className="p-3 bg-slate-800/40 rounded-lg hover:bg-slate-800/60 cursor-pointer transition-colors">
+              <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-slate-900 dark:text-white">DT Instructor</p>
-                <p className="text-xs text-slate-600 dark:text-slate-400">Deputy M. Johnson</p>
+                <p className="text-xs text-slate-700 dark:text-slate-400">Deputy M. Johnson</p>
                 <p className="text-xs text-amber-400 mt-1">Ext. 4525</p>
               </div>
-              <div className="p-3 bg-slate-800/40 rounded-lg hover:bg-slate-800/60 cursor-pointer transition-colors">
+              <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-slate-900 dark:text-white">GA POST Portal</p>
-                <p className="text-xs text-slate-600 dark:text-slate-400">Georgia POST Council - Certification Renewal</p>
+                <p className="text-xs text-slate-700 dark:text-slate-400">Georgia POST Council - Certification Renewal</p>
               </div>
-              <div className="p-3 bg-slate-800/40 rounded-lg hover:bg-slate-800/60 cursor-pointer transition-colors">
+              <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-slate-900 dark:text-white">GCSO Policies</p>
-                <p className="text-xs text-slate-600 dark:text-slate-400">Policy 4.12 (Firearms), 4.15 (TASER), 3.14 (DT)</p>
+                <p className="text-xs text-slate-700 dark:text-slate-400">Policy 4.12 (Firearms), 4.15 (TASER), 3.14 (DT)</p>
               </div>
-              <div className="p-3 bg-slate-800/40 rounded-lg hover:bg-slate-800/60 cursor-pointer transition-colors">
+              <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-slate-900 dark:text-white">CJIS Security Policy</p>
-                <p className="text-xs text-slate-600 dark:text-slate-400">FBI CJIS Security Policy v5.9.3</p>
+                <p className="text-xs text-slate-700 dark:text-slate-400">FBI CJIS Security Policy v5.9.3</p>
               </div>
             </div>
           </div>

@@ -32,7 +32,7 @@ export default function MetricCard({ title, value, valueSuffix, statusDot = 'neu
           <span className={type.cardTitle}>{title}</span>
         </div>
         {onClick && (
-          <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-slate-400 transition-all" />
+          <ChevronRight className="w-4 h-4 text-slate-700 group-hover:text-slate-400 transition-all" />
         )}
       </div>
       <p className={type.cardValue + ' mb-3'}>

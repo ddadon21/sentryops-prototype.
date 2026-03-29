@@ -278,10 +278,10 @@ export default function DailyCommandBrief() {
 
   const getStatusBadge = (status) => {
     switch (status) {
-      case 'pending': return { text: 'Pending', classes: 'bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' };
-      case 'in_progress': return { text: 'In Progress', classes: 'bg-emerald-50 border-emerald-200 text-emerald-700 dark:bg-emerald-500/10 dark:border-emerald-500/20 dark:text-emerald-400' };
-      case 'escalated': return { text: 'Escalated', classes: 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' };
-      case 'overdue': return { text: 'Overdue', classes: 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' };
+      case 'pending': return { text: 'Pending', classes: 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' };
+      case 'in_progress': return { text: 'In Progress', classes: 'bg-emerald-100 border-emerald-200 text-emerald-700 dark:bg-emerald-500/10 dark:border-emerald-500/20 dark:text-emerald-400' };
+      case 'escalated': return { text: 'Escalated', classes: 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' };
+      case 'overdue': return { text: 'Overdue', classes: 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' };
       default: return { text: status, classes: 'bg-slate-500/10 border-slate-500/20 text-slate-500' };
     }
   };
@@ -314,13 +314,13 @@ export default function DailyCommandBrief() {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <button onClick={() => window.print()} className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-all">
+            <button onClick={() => window.print()} className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-50 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all">
               <Printer className="w-4 h-4" />Print
             </button>
-            <button className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-all">
+            <button className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-50 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all">
               <Download className="w-4 h-4" />PDF
             </button>
-            <button onClick={handleRefresh} disabled={isRefreshing} className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-all disabled:opacity-50">
+            <button onClick={handleRefresh} disabled={isRefreshing} className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-50 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all disabled:opacity-50">
               <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin' : ''}`} />Refresh
             </button>
           </div>
@@ -337,7 +337,7 @@ export default function DailyCommandBrief() {
               {commandDecisions.length} decisions required before 12:00 EST
             </p>
             {/* Line 2: Exposure categories — lighter weight */}
-            <p className="text-[11px] text-slate-600 dark:text-slate-400 mb-2">
+            <p className="text-[11px] text-slate-700 dark:text-slate-400 mb-2">
               Exposure: <span className="text-red-600 dark:text-red-400 font-medium">Compliance</span> + <span className="text-amber-600 dark:text-amber-400 font-medium">Staffing</span>
             </p>
             <div className="flex items-center justify-between">
@@ -351,18 +351,18 @@ export default function DailyCommandBrief() {
               </div>
               <div className="flex items-center gap-4 text-[11px]">
                 <span className="text-slate-500"><span className="text-slate-900 dark:text-white font-semibold">{pressureFactors.criticalIssues}</span> critical</span>
-                <span className="text-slate-600">|</span>
+                <span className="text-slate-700">|</span>
                 <span className="text-slate-500"><span className="text-slate-900 dark:text-white font-semibold">{pressureFactors.complianceDeadlinesUnder72h}</span> compliance &lt;72h</span>
-                <span className="text-slate-600">|</span>
+                <span className="text-slate-700">|</span>
                 <span className={pressureFactors.staffingBelowThreshold ? 'text-red-600 dark:text-red-400 text-[11px] font-semibold' : 'text-emerald-600 dark:text-emerald-400 text-[11px]'}>{pressureFactors.staffingBelowThreshold ? 'Staffing deficit' : 'Staffing OK'}</span>
-                <span className="text-slate-600">|</span>
+                <span className="text-slate-700">|</span>
                 <span className="text-slate-500"><span className="text-slate-900 dark:text-white font-semibold">{pressureFactors.overdueItems}</span> overdue</span>
               </div>
             </div>
             {/* Line 3: Driver — small, diagnostic */}
             <p className="mt-1.5 text-[10px] text-slate-500">Driver: <span className={`font-semibold ${pressure.text}`}>Federal inspection (48h)</span> · HVAC open deficiency · B-Shift at 75%</p>
           </div>
-          <div className="h-1 bg-slate-800/40">
+          <div className="h-1 bg-white dark:bg-slate-800/40">
             <div className={`h-full ${pressure.dot} transition-all duration-1000`} style={{ width: pressure.barWidth }}></div>
           </div>
         </div>
@@ -375,7 +375,7 @@ export default function DailyCommandBrief() {
             <span className="text-[13px] text-slate-700 dark:text-slate-300">
               {commandDecisions.map((item, i) => (
                 <span key={item.id}>
-                  {i > 0 && <span className="text-slate-600"> · </span>}
+                  {i > 0 && <span className="text-slate-700"> · </span>}
                   <span className="text-slate-900 dark:text-white font-medium">{item.title.split('—')[0].trim()}</span>
                   <span className="text-slate-500"> ({item.deadlineHours}h)</span>
                 </span>
@@ -389,7 +389,7 @@ export default function DailyCommandBrief() {
             "What decisions must I make today?"
             No narrative. Decision-focused.
             ================================================================ */}
-        <div ref={decisionsSectionRef} className="mb-5 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl">
+        <div ref={decisionsSectionRef} className="mb-5 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl">
           <div className="flex items-center justify-between px-5 py-3 border-b border-slate-200 dark:border-slate-700/15">
             <div className="flex items-center gap-2.5">
               <Zap className="w-4 h-4 text-red-600 dark:text-red-400" />
@@ -408,11 +408,11 @@ export default function DailyCommandBrief() {
                   className={`rounded-lg border transition-colors ${
                     item.severity === 'critical'
                       ? 'border-red-500/20 bg-red-500/[0.03]'
-                      : 'border-slate-700/20'
+                      : 'border-slate-200 dark:border-slate-700/20'
                   }`}
                 >
                   <div
-                    className="p-3 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/20 transition-colors"
+                    className="p-3 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-50 dark:hover:bg-slate-800/20 transition-colors"
                     onClick={() => setExpandedItem(isExpanded ? null : item.id)}
                   >
                     {/* Row 1: Title + Status badges */}
@@ -420,26 +420,26 @@ export default function DailyCommandBrief() {
                       <div className={`w-1 self-stretch rounded-full flex-shrink-0 ${getSeverityStripColor(item.severity)}`}></div>
                       <p className="text-sm font-semibold text-slate-900 dark:text-white flex-1">{item.title}</p>
                       <span className={`px-1.5 py-0.5 border rounded text-[11px] font-medium ${statusBadge.classes}`}>{statusBadge.text}</span>
-                      {isExpanded ? <ChevronUp className="w-4 h-4 text-slate-600" /> : <ChevronDown className="w-4 h-4 text-slate-600" />}
+                      {isExpanded ? <ChevronUp className="w-4 h-4 text-slate-700" /> : <ChevronDown className="w-4 h-4 text-slate-700" />}
                     </div>
 
                     {/* Row 2: Decision metadata — structured, not narrative */}
                     <div className="ml-3 grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-1.5 text-[11px]">
                       <div>
-                        <span className="text-slate-600 uppercase tracking-wider text-[10px]">Deadline</span>
+                        <span className="text-slate-700 uppercase tracking-wider text-[10px]">Deadline</span>
                         <p className={`font-semibold mt-0.5 ${item.severity === 'critical' ? 'text-red-600 dark:text-red-400' : 'text-amber-600 dark:text-amber-400'}`}>{item.deadline}</p>
                       </div>
                       <div>
-                        <span className="text-slate-600 uppercase tracking-wider text-[10px]">Exposure</span>
+                        <span className="text-slate-700 uppercase tracking-wider text-[10px]">Exposure</span>
                         <p className={`font-semibold mt-0.5 ${item.exposureColor}`}>{item.exposureType}</p>
                       </div>
                       <div className="col-span-2 lg:col-span-1">
-                        <span className="text-slate-600 uppercase tracking-wider text-[10px]">Required Action</span>
+                        <span className="text-slate-700 uppercase tracking-wider text-[10px]">Required Action</span>
                         <p className="text-slate-900 dark:text-white font-medium mt-0.5">{item.requiredAction}</p>
                       </div>
                       <div>
-                        <span className="text-slate-600 uppercase tracking-wider text-[10px]">Escalation</span>
-                        <p className="text-slate-600 dark:text-slate-400 mt-0.5">{item.escalation}</p>
+                        <span className="text-slate-700 uppercase tracking-wider text-[10px]">Escalation</span>
+                        <p className="text-slate-700 dark:text-slate-400 mt-0.5">{item.escalation}</p>
                       </div>
                     </div>
 
@@ -456,7 +456,7 @@ export default function DailyCommandBrief() {
                     <div className="px-3 pb-3 ml-3 border-t border-slate-200 dark:border-slate-700/15 pt-3">
                       <div className="flex items-start gap-6">
                         <div className="flex-1">
-                          <h4 className="text-[10px] font-semibold text-slate-600 uppercase tracking-widest mb-2">Event Timeline</h4>
+                          <h4 className="text-[10px] font-semibold text-slate-700 uppercase tracking-widest mb-2">Event Timeline</h4>
                           <div className="space-y-1">
                             {item.timeline.map((entry, idx) => (
                               <div key={idx} className="flex items-start gap-3 text-[12px]">
@@ -469,7 +469,7 @@ export default function DailyCommandBrief() {
                         <div className="flex gap-2">
                           <button
                             onClick={(e) => { e.stopPropagation(); setContactModal(item.owner); }}
-                            className="px-3 py-1.5 text-xs font-medium text-slate-600 dark:text-slate-400 border border-slate-700/30 hover:bg-slate-700/20 rounded-lg transition-colors"
+                            className="px-3 py-1.5 text-xs font-medium text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/30 hover:bg-slate-100 dark:hover:bg-slate-700/20 rounded-lg transition-colors"
                           >
                             Contact Owner
                           </button>
@@ -487,10 +487,10 @@ export default function DailyCommandBrief() {
             SECTION B — STRATEGIC EXPOSURE (7–14 DAYS)
             Countdowns, readiness %, owner, risk color
             ================================================================ */}
-        <div className="mb-5 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl">
+        <div className="mb-5 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl">
           <div className="flex items-center justify-between px-5 py-3 border-b border-slate-200 dark:border-slate-700/15">
             <div className="flex items-center gap-2.5">
-              <Shield className="w-4 h-4 text-slate-600 dark:text-slate-400" />
+              <Shield className="w-4 h-4 text-slate-700 dark:text-slate-400" />
               <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Strategic Exposure — 7 to 14 Days</h3>
             </div>
             <span className="text-[11px] text-slate-500">Audit, certification & inspection readiness</span>
@@ -512,9 +512,9 @@ export default function DailyCommandBrief() {
                         <span className="text-[10px] text-slate-500">Impact:</span>
                         {item.impactTypes.map(type => (
                           <span key={type} className={`px-1 py-0 border rounded text-[9px] font-semibold ${
-                            type === 'Compliance' ? 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
+                            type === 'Compliance' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
                             type === 'Political' ? 'bg-purple-500/10 border-purple-500/20 text-purple-400' :
-                            type === 'Budget' ? 'bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
+                            type === 'Budget' ? 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
                             'bg-slate-500/10 border-slate-500/20 text-slate-500'
                           }`}>{type}</span>
                         ))}
@@ -532,7 +532,7 @@ export default function DailyCommandBrief() {
                       <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Readiness</span>
                       <span className={`text-[12px] font-bold ${item.readiness >= 80 ? 'text-emerald-600 dark:text-emerald-400' : item.readiness >= 60 ? 'text-amber-600 dark:text-amber-400' : 'text-red-600 dark:text-red-400'}`}>{item.readiness}%</span>
                     </div>
-                    <div className="w-full h-1.5 bg-slate-700/30 rounded-full overflow-hidden">
+                    <div className="w-full h-1.5 bg-slate-100 dark:bg-slate-700/30 rounded-full overflow-hidden">
                       <div
                         className={`h-full rounded-full transition-all ${item.readiness >= 80 ? 'bg-emerald-500' : item.readiness >= 60 ? 'bg-amber-500' : 'bg-red-500'}`}
                         style={{ width: `${item.readiness}%` }}
@@ -561,7 +561,7 @@ export default function DailyCommandBrief() {
             SECTION C — ESCALATING RISK (72 HOURS)
             Visually subordinate — items that worsen if untouched
             ================================================================ */}
-        <div className="mb-5 bg-slate-50 dark:bg-slate-800/15 border border-slate-200 dark:border-slate-700/20 rounded-lg">
+        <div className="mb-5 bg-slate-50 dark:bg-slate-800/15 border border-slate-200 dark:border-slate-200 dark:border-slate-700/20 rounded-lg">
           <div className="flex items-center justify-between px-4 py-2.5 border-b border-slate-200 dark:border-slate-700/10">
             <div className="flex items-center gap-2">
               <AlertTriangle className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400/70" />
@@ -575,14 +575,14 @@ export default function DailyCommandBrief() {
               <button
                 key={risk.id}
                 onClick={() => navigate(risk.linkedModule)}
-                className="w-full rounded border border-slate-700/15 hover:bg-slate-50 dark:hover:bg-slate-800/15 transition-colors text-left"
+                className="w-full rounded border border-slate-700/15 hover:bg-slate-50 dark:hover:bg-slate-50 dark:hover:bg-slate-800/15 transition-colors text-left"
               >
                 <div className="px-3 py-2">
                   <div className="flex items-center gap-2 mb-1">
                     <div className={`w-0.5 h-3.5 rounded-full flex-shrink-0 ${risk.severity === 'critical' ? 'bg-red-500' : 'bg-amber-500/70'}`}></div>
                     <p className="text-[13px] font-medium text-slate-900 dark:text-slate-700 dark:text-slate-200 flex-1">{risk.title}</p>
                     <span className={`px-1.5 py-0.5 border rounded text-[10px] font-semibold ${
-                      risk.severity === 'critical' ? 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' : 'bg-amber-500/10 border-amber-500/15 text-amber-600 dark:text-amber-400/80'
+                      risk.severity === 'critical' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' : 'bg-amber-500/10 border-amber-500/15 text-amber-600 dark:text-amber-400/80'
                     }`}>
                       {risk.hoursUntil}h
                     </span>
@@ -608,7 +608,7 @@ export default function DailyCommandBrief() {
         {/* Two Column Layout — Compressed highlights + On Duty */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-5">
           {/* Operational Highlights — liability/staffing/compliance ONLY */}
-          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4">
+          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4">
             <div className="flex items-center justify-between mb-3">
               <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Operational Highlights</h3>
               <span className="text-[11px] text-slate-500">Liability · Staffing · Compliance only</span>
@@ -631,18 +631,18 @@ export default function DailyCommandBrief() {
           </div>
 
           {/* On Duty Today */}
-          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4">
+          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4">
             <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide mb-3">On Duty Today</h3>
             <div className="space-y-3">
               <div>
-                <span className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider">Watch Commander</span>
+                <span className="text-[10px] font-semibold text-slate-700 uppercase tracking-wider">Watch Commander</span>
                 <div className="mt-1 flex items-center gap-2">
                   <button onClick={() => setContactModal(onDutyData.watchCommander)} className="text-sm font-medium text-slate-900 dark:text-white hover:text-slate-700 dark:text-slate-300 transition-colors">{onDutyData.watchCommander.name}</button>
                   <span className="text-[11px] text-slate-500">#{onDutyData.watchCommander.badge} · Radio: {onDutyData.watchCommander.radio}</span>
                 </div>
               </div>
-              <div className="border-t border-slate-200 dark:border-slate-700/20 pt-2.5">
-                <span className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider">Patrol Supervisors</span>
+              <div className="border-t border-slate-200 dark:border-slate-200 dark:border-slate-700/20 pt-2.5">
+                <span className="text-[10px] font-semibold text-slate-700 uppercase tracking-wider">Patrol Supervisors</span>
                 <div className="mt-1 space-y-1">
                   {onDutyData.patrolSupervisors.map((sup, idx) => (
                     <div key={idx} className="flex items-center gap-2">
@@ -652,15 +652,15 @@ export default function DailyCommandBrief() {
                   ))}
                 </div>
               </div>
-              <div className="border-t border-slate-200 dark:border-slate-700/20 pt-2.5">
-                <span className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider">Detention Commander</span>
+              <div className="border-t border-slate-200 dark:border-slate-200 dark:border-slate-700/20 pt-2.5">
+                <span className="text-[10px] font-semibold text-slate-700 uppercase tracking-wider">Detention Commander</span>
                 <div className="mt-1 flex items-center gap-2">
                   <button onClick={() => setContactModal(onDutyData.detentionCommander)} className="text-sm font-medium text-slate-900 dark:text-white hover:text-slate-700 dark:text-slate-300 transition-colors">{onDutyData.detentionCommander.name}</button>
                   <span className="text-[11px] text-slate-500">#{onDutyData.detentionCommander.badge} · {onDutyData.detentionCommander.radio}</span>
                 </div>
               </div>
-              <div className="border-t border-slate-200 dark:border-slate-700/20 pt-2.5">
-                <span className="text-[10px] font-semibold text-slate-600 uppercase tracking-wider">On-Call Command</span>
+              <div className="border-t border-slate-200 dark:border-slate-200 dark:border-slate-700/20 pt-2.5">
+                <span className="text-[10px] font-semibold text-slate-700 uppercase tracking-wider">On-Call Command</span>
                 <div className="mt-1 flex items-center gap-2">
                   <button onClick={() => setContactModal(onDutyData.onCallCommand)} className="text-sm font-medium text-slate-900 dark:text-white hover:text-slate-700 dark:text-slate-300 transition-colors">{onDutyData.onCallCommand.name}</button>
                   <span className="text-[11px] text-slate-500">Cell: {onDutyData.onCallCommand.phone}</span>
@@ -671,7 +671,7 @@ export default function DailyCommandBrief() {
         </div>
 
         {/* Scheduled Events — Compact */}
-        <div className="mb-5 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4">
+        <div className="mb-5 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4">
           <div className="flex items-center justify-between mb-3">
             <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Today's Schedule</h3>
             <button onClick={() => navigate('/command/calendar')} className="text-xs text-amber-600 dark:text-amber-400/80 hover:text-amber-300">View Full Calendar →</button>
@@ -681,7 +681,7 @@ export default function DailyCommandBrief() {
               <div
                 key={event.id}
                 className={`flex items-center gap-4 px-4 py-2 rounded ${
-                  event.hoursUntil <= 2 ? 'bg-amber-500/5 border-l-[3px] border-l-amber-500/30' : 'bg-white dark:bg-slate-900/20 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-all'
+                  event.hoursUntil <= 2 ? 'bg-amber-500/5 border-l-[3px] border-l-amber-500/30' : 'bg-white dark:bg-slate-900/20 hover:bg-slate-50 dark:hover:bg-slate-100 dark:hover:bg-slate-800/30 transition-all'
                 }`}
               >
                 <div className="flex flex-col items-start w-14 flex-shrink-0">
@@ -694,9 +694,9 @@ export default function DailyCommandBrief() {
                     <span className="text-[13px] font-medium text-slate-900 dark:text-white">{event.title}</span>
                   </div>
                   <div className="flex items-center gap-2 mt-0.5 text-[11px]">
-                    <span className="text-slate-600 dark:text-slate-400">{event.location}</span>
-                    <span className="text-slate-600">·</span>
-                    <span className="text-slate-600 dark:text-slate-400">{event.lead}</span>
+                    <span className="text-slate-700 dark:text-slate-400">{event.location}</span>
+                    <span className="text-slate-700">·</span>
+                    <span className="text-slate-700 dark:text-slate-400">{event.lead}</span>
                   </div>
                 </div>
               </div>
@@ -705,10 +705,10 @@ export default function DailyCommandBrief() {
         </div>
 
         {/* Data Freshness Footer */}
-        <div className="mb-4 px-5 py-3 bg-slate-50 dark:bg-slate-800/10 border border-slate-200 dark:border-slate-800/30 rounded-lg">
+        <div className="mb-4 px-5 py-3 bg-slate-50 dark:bg-slate-800/10 border border-slate-200 dark:border-slate-200 dark:border-slate-800/30 rounded-lg">
           <div className="flex items-center gap-2">
-            <Shield className="w-3.5 h-3.5 text-slate-600" />
-            <span className="text-xs text-slate-600">Snapshot brief auto-generated at {briefGeneratedAt} EST daily. Data reflects state at generation time. Use Refresh for live updates.</span>
+            <Shield className="w-3.5 h-3.5 text-slate-700" />
+            <span className="text-xs text-slate-700">Snapshot brief auto-generated at {briefGeneratedAt} EST daily. Data reflects state at generation time. Use Refresh for live updates.</span>
           </div>
         </div>
 
@@ -723,9 +723,9 @@ export default function DailyCommandBrief() {
             <div className="flex items-start gap-3 mb-5">
               <div className="flex-1">
                 <h3 className="text-base font-semibold text-slate-900 dark:text-white mb-0.5">Contact: {contactModal.name}</h3>
-                {contactModal.title && <p className="text-xs text-slate-600 dark:text-slate-400">{contactModal.title}</p>}
+                {contactModal.title && <p className="text-xs text-slate-700 dark:text-slate-400">{contactModal.title}</p>}
               </div>
-              <button onClick={() => setContactModal(null)} className="text-slate-600 dark:text-slate-400 hover:text-white transition-colors">
+              <button onClick={() => setContactModal(null)} className="text-slate-700 dark:text-slate-400 hover:text-white transition-colors">
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -749,7 +749,7 @@ export default function DailyCommandBrief() {
             <div className="flex gap-3 mt-6">
               <button className="flex-1 px-4 py-2.5 text-xs font-medium text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/10 rounded-xl transition-colors">Call Cell</button>
               {contactModal.radio && (
-                <button className="flex-1 px-4 py-2.5 text-xs font-medium text-slate-600 dark:text-slate-400 border border-slate-700/30 hover:bg-slate-700/20 rounded-xl transition-colors">Radio Contact</button>
+                <button className="flex-1 px-4 py-2.5 text-xs font-medium text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/30 hover:bg-slate-100 dark:hover:bg-slate-700/20 rounded-xl transition-colors">Radio Contact</button>
               )}
             </div>
           </div>

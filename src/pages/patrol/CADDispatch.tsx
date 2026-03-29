@@ -494,9 +494,9 @@ const CADDispatch = () => {
           <div>
             <h1 className="text-xl font-bold text-slate-900 dark:text-white mb-1">Field Operations</h1>
             <p className="text-[11px] text-slate-500">
-              CAD/Dispatch Console · A-Shift · 06:00–14:00 · Supervisor: <span className="text-slate-600 dark:text-slate-400">Sgt. Mitchell</span>
+              CAD/Dispatch Console · A-Shift · 06:00–14:00 · Supervisor: <span className="text-slate-700 dark:text-slate-400">Sgt. Mitchell</span>
               <span className="mx-2 text-slate-700">·</span>
-              <span className="text-slate-600 dark:text-slate-400">{patrolUnits.length} units on duty</span>
+              <span className="text-slate-700 dark:text-slate-400">{patrolUnits.length} units on duty</span>
               <span className="mx-2 text-slate-700">·</span>
               <span className={availablePct <= 25 ? 'text-red-600 dark:text-red-400' : availablePct < 50 ? 'text-amber-600 dark:text-amber-400' : 'text-emerald-600 dark:text-emerald-400'}>
                 {stats.unitsAvailable} available ({availablePct}%)
@@ -546,7 +546,7 @@ const CADDispatch = () => {
             <button className="flex items-center gap-1.5 px-3 py-1.5 bg-red-500/10 border border-red-500/25 text-red-600 dark:text-red-400 rounded-lg text-[12px] font-medium hover:bg-red-500/15 transition-colors">
               <PhoneCall className="w-3.5 h-3.5" /> New Call
             </button>
-            <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-lg text-[12px] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-slate-700/30 transition-all">
+            <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-lg text-[12px] text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700/30 transition-all">
               <Megaphone className="w-3.5 h-3.5" /> Broadcast
             </button>
             <div className="flex items-center gap-1.5 text-[11px] text-slate-500 bg-slate-100 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-lg px-3 py-1.5">
@@ -580,7 +580,7 @@ const CADDispatch = () => {
                       }`}>{item.urgency === 'critical' ? 'Critical' : 'High Priority'}</span>
                       <p className="text-[13px] font-semibold text-slate-900 dark:text-white">{item.label}</p>
                     </div>
-                    <div className="bg-slate-900/50 border border-slate-700/40 rounded-lg px-3 py-2">
+                    <div className="bg-white dark:bg-slate-900/50 border border-slate-700/40 rounded-lg px-3 py-2">
                       <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-0.5">Recommended Action</p>
                       <p className="text-[11px] text-slate-700 dark:text-slate-200 leading-snug">{item.action}</p>
                     </div>
@@ -589,7 +589,7 @@ const CADDispatch = () => {
                     <button className={`text-[11px] px-3 py-1.5 rounded-lg font-medium transition-colors whitespace-nowrap ${
                       item.urgency === 'critical'
                         ? 'bg-red-500/15 border border-red-500/25 text-red-600 dark:text-red-400 hover:bg-red-500/25'
-                        : 'bg-slate-700/50 border border-slate-600/50 text-slate-700 dark:text-slate-300 hover:bg-slate-700/70'
+                        : 'bg-white dark:bg-slate-700/50 border border-slate-600/50 text-slate-700 dark:text-slate-300 hover:bg-slate-700/70'
                     }`}>{item.urgency === 'critical' ? 'Execute Now' : 'Acknowledge'}</button>
                   </div>
                 </div>
@@ -601,16 +601,16 @@ const CADDispatch = () => {
         {/* ── Command Attention Needed ─────────────────────── */}
         <div className="grid grid-cols-3 gap-3">
           {/* P1 Emergencies */}
-          <div className={`rounded-xl border px-4 py-3 ${p1Active > 0 ? 'bg-red-500/5 border-red-500/25' : 'bg-slate-800/20 border-slate-700/30'}`}>
+          <div className={`rounded-xl border px-4 py-3 ${p1Active > 0 ? 'bg-red-500/5 border-red-500/25' : 'bg-slate-100 dark:bg-slate-800/20 border-slate-200 dark:border-slate-700/30'}`}>
             <div className="flex items-center gap-1.5 mb-2">
-              <Siren className={`w-3.5 h-3.5 ${p1Active > 0 ? 'text-red-600 dark:text-red-400' : 'text-slate-600'}`} />
+              <Siren className={`w-3.5 h-3.5 ${p1Active > 0 ? 'text-red-600 dark:text-red-400' : 'text-slate-700'}`} />
               <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">P1 Emergencies</p>
               {p1Active > 0 && (
                 <span className="text-[9px] px-1.5 py-0.5 bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/20 rounded-full font-bold ml-auto">{p1Active} active</span>
               )}
             </div>
             {p1Active === 0 ? (
-              <p className="text-[11px] text-slate-600">No active P1 emergencies</p>
+              <p className="text-[11px] text-slate-700">No active P1 emergencies</p>
             ) : (
               <ul className="space-y-0.5">
                 {activeCalls.filter(c => c.priority === 'P1').map(c => (
@@ -623,9 +623,9 @@ const CADDispatch = () => {
           </div>
 
           {/* Coverage Status */}
-          <div className={`rounded-xl border px-4 py-3 ${availablePct <= 30 ? 'bg-red-500/5 border-red-500/25' : availablePct < 50 ? 'bg-amber-500/5 border-amber-500/20' : 'bg-slate-800/20 border-slate-700/30'}`}>
+          <div className={`rounded-xl border px-4 py-3 ${availablePct <= 30 ? 'bg-red-500/5 border-red-500/25' : availablePct < 50 ? 'bg-amber-500/5 border-amber-500/20' : 'bg-slate-100 dark:bg-slate-800/20 border-slate-200 dark:border-slate-700/30'}`}>
             <div className="flex items-center gap-1.5 mb-2">
-              <Users className={`w-3.5 h-3.5 ${availablePct <= 30 ? 'text-red-600 dark:text-red-400' : availablePct < 50 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-600'}`} />
+              <Users className={`w-3.5 h-3.5 ${availablePct <= 30 ? 'text-red-600 dark:text-red-400' : availablePct < 50 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-700'}`} />
               <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Unit Coverage</p>
               <span className={`text-[9px] px-1.5 py-0.5 rounded-full font-bold ml-auto border ${
                 availablePct <= 30 ? 'bg-red-500/15 text-red-600 dark:text-red-400 border-red-500/20' :
@@ -635,11 +635,11 @@ const CADDispatch = () => {
             </div>
             <ul className="space-y-0.5">
               <li className="text-[11px] text-slate-700 dark:text-slate-300 flex items-start gap-1.5">
-                <span className={`flex-shrink-0 mt-0.5 ${availablePct <= 30 ? 'text-red-500' : 'text-slate-600'}`}>—</span>
+                <span className={`flex-shrink-0 mt-0.5 ${availablePct <= 30 ? 'text-red-500' : 'text-slate-700'}`}>—</span>
                 {stats.unitsAvailable}/{activeUnitCount} available — P2 response est. {availablePct <= 25 ? '12–15 min' : '8–10 min'}
               </li>
               <li className="text-[11px] text-slate-700 dark:text-slate-300 flex items-start gap-1.5">
-                <span className="text-slate-600 flex-shrink-0 mt-0.5">—</span>
+                <span className="text-slate-700 flex-shrink-0 mt-0.5">—</span>
                 {stats.unitsDeployed} deployed · {stats.unitsOutOfService} OOS
               </li>
               {stats.unitsOutOfService > 0 && (
@@ -652,16 +652,16 @@ const CADDispatch = () => {
           </div>
 
           {/* Calls Holding */}
-          <div className={`rounded-xl border px-4 py-3 ${holdingCalls.length > 0 ? 'bg-amber-500/5 border-amber-500/20' : 'bg-slate-800/20 border-slate-700/30'}`}>
+          <div className={`rounded-xl border px-4 py-3 ${holdingCalls.length > 0 ? 'bg-amber-500/5 border-amber-500/20' : 'bg-slate-100 dark:bg-slate-800/20 border-slate-200 dark:border-slate-700/30'}`}>
             <div className="flex items-center gap-1.5 mb-2">
-              <Timer className={`w-3.5 h-3.5 ${holdingCalls.length > 0 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-600'}`} />
+              <Timer className={`w-3.5 h-3.5 ${holdingCalls.length > 0 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-700'}`} />
               <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Calls Holding</p>
               {holdingCalls.length > 0 && (
                 <span className="text-[9px] px-1.5 py-0.5 bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/20 rounded-full font-bold ml-auto">{holdingCalls.length}</span>
               )}
             </div>
             {holdingCalls.length === 0 ? (
-              <p className="text-[11px] text-slate-600">No calls awaiting assignment</p>
+              <p className="text-[11px] text-slate-700">No calls awaiting assignment</p>
             ) : (
               <ul className="space-y-0.5">
                 {holdingCalls.map((c, i) => (
@@ -679,9 +679,9 @@ const CADDispatch = () => {
         <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
           <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 dark:border-slate-700/40">
             <div className="flex items-center gap-2">
-              <Radio className="w-4 h-4 text-slate-600 dark:text-slate-400" />
+              <Radio className="w-4 h-4 text-slate-700 dark:text-slate-400" />
               <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Active Calls for Service</span>
-              <span className="text-[10px] px-2 py-0.5 bg-slate-700/40 text-slate-600 dark:text-slate-400 rounded-full">
+              <span className="text-[10px] px-2 py-0.5 bg-slate-50 dark:bg-slate-700/40 text-slate-700 dark:text-slate-400 rounded-full">
                 {sortedActiveCalls.filter(c => c.priority === 'P1').length} P1
                 · {sortedActiveCalls.filter(c => c.priority === 'P2').length} P2
                 · {sortedActiveCalls.filter(c => c.priority === 'P3').length} P3
@@ -746,17 +746,17 @@ const CADDispatch = () => {
 
                       {/* Location + call number */}
                       <div className="flex items-center gap-3 mb-2">
-                        <p className="text-[11px] text-slate-600 dark:text-slate-400 flex items-center gap-1">
+                        <p className="text-[11px] text-slate-700 dark:text-slate-400 flex items-center gap-1">
                           <MapPin className="w-3 h-3 flex-shrink-0" />{call.location}
                         </p>
-                        {call.zone && <span className="text-[10px] text-slate-600">· {call.zone}</span>}
-                        <span className="text-[10px] text-slate-600">#{call.callNumber}</span>
+                        {call.zone && <span className="text-[10px] text-slate-700">· {call.zone}</span>}
+                        <span className="text-[10px] text-slate-700">#{call.callNumber}</span>
                       </div>
 
                       {/* Risk layer for P1/P2 */}
                       {(call.priority === 'P1' || call.priority === 'P2') && (
                         <div className={`rounded-lg px-3 py-2 mb-2.5 ${
-                          call.priority === 'P1' ? 'bg-red-950/40 border border-red-500/15' : 'bg-slate-900/50 border border-slate-700/40'
+                          call.priority === 'P1' ? 'bg-red-950/40 border border-red-500/15' : 'bg-white dark:bg-slate-900/50 border border-slate-700/40'
                         }`}>
                           <div className="grid grid-cols-2 gap-x-4">
                             {risk.delayRisk && (
@@ -771,9 +771,9 @@ const CADDispatch = () => {
                                 <span className={`text-[9px] px-1.5 py-0.5 rounded font-bold uppercase ${
                                   risk.escalation === 'High'   ? 'bg-red-500/20 text-red-600 dark:text-red-400 border border-red-500/30' :
                                   risk.escalation === 'Medium' ? 'bg-amber-500/20 text-amber-600 dark:text-amber-400 border border-amber-500/30' :
-                                  'bg-slate-700/40 text-slate-600 dark:text-slate-400 border border-slate-700/50'
+                                  'bg-slate-50 dark:bg-slate-700/40 text-slate-700 dark:text-slate-400 border border-slate-700/50'
                                 }`}>{risk.escalation}</span>
-                                <p className="text-[10px] text-slate-600 dark:text-slate-400 leading-snug">{risk.escalationText}</p>
+                                <p className="text-[10px] text-slate-700 dark:text-slate-400 leading-snug">{risk.escalationText}</p>
                               </div>
                             </div>
                           </div>
@@ -802,7 +802,7 @@ const CADDispatch = () => {
                     {/* Recommended actions column */}
                     {(call.priority === 'P1' || call.priority === 'P2') && (
                       <div className="flex flex-col gap-1.5 flex-shrink-0 w-[160px]">
-                        <div className="bg-slate-900/60 border border-slate-700/50 rounded-lg px-2.5 py-2">
+                        <div className="bg-white dark:bg-slate-900/60 border border-slate-700/50 rounded-lg px-2.5 py-2">
                           <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1">Action</p>
                           <p className="text-[11px] text-slate-700 dark:text-slate-200 leading-snug">
                             {call.priority === 'P1' && call.type.includes('Domestic') ? 'Stage additional unit — await scene clear before entry' :
@@ -818,7 +818,7 @@ const CADDispatch = () => {
                             Request Backup
                           </button>
                         )}
-                        <button className="text-[11px] px-2.5 py-1.5 bg-slate-700/50 border border-slate-600/50 text-slate-700 dark:text-slate-300 hover:bg-slate-700/70 rounded-lg transition-colors">
+                        <button className="text-[11px] px-2.5 py-1.5 bg-white dark:bg-slate-700/50 border border-slate-600/50 text-slate-700 dark:text-slate-300 hover:bg-slate-700/70 rounded-lg transition-colors">
                           Update Status
                         </button>
                       </div>
@@ -827,7 +827,7 @@ const CADDispatch = () => {
 
                   {/* Expanded detail */}
                   {isExpanded && (
-                    <div className="mx-5 mb-4 bg-slate-900/60 border border-slate-700/50 rounded-lg p-4">
+                    <div className="mx-5 mb-4 bg-white dark:bg-slate-900/60 border border-slate-700/50 rounded-lg p-4">
                       <div className="grid grid-cols-2 gap-4 mb-3">
                         <div>
                           <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1">Call Information</p>
@@ -843,9 +843,9 @@ const CADDispatch = () => {
                           <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1">Assigned Units</p>
                           <div className="space-y-1.5">
                             {unitDetails.map((u, i) => (
-                              <div key={i} className="flex items-center justify-between text-[11px] bg-slate-800/50 rounded px-2 py-1">
+                              <div key={i} className="flex items-center justify-between text-[11px] bg-white dark:bg-slate-800/50 rounded px-2 py-1">
                                 <span className="text-blue-400 font-medium">{u!.callSign}</span>
-                                <span className="text-slate-600 dark:text-slate-400">{u!.officer}</span>
+                                <span className="text-slate-700 dark:text-slate-400">{u!.officer}</span>
                                 <span className={`text-[9px] px-1.5 py-0.5 rounded ${getStatusColor(u!.status)}`}>{u!.status}</span>
                               </div>
                             ))}
@@ -856,7 +856,7 @@ const CADDispatch = () => {
                         </div>
                       </div>
                       {call.notes && (
-                        <div className="bg-slate-800/40 border border-slate-700/40 rounded-lg px-3 py-2 mb-3">
+                        <div className="bg-white dark:bg-slate-800/40 border border-slate-700/40 rounded-lg px-3 py-2 mb-3">
                           <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1">Notes</p>
                           <p className="text-[11px] text-slate-700 dark:text-slate-300 leading-relaxed">{call.notes}</p>
                         </div>
@@ -865,7 +865,7 @@ const CADDispatch = () => {
                         <button className="text-[11px] px-3 py-1.5 bg-blue-500/15 border border-blue-500/25 text-blue-400 rounded-lg hover:bg-blue-500/25 transition-colors font-medium">
                           Assign Units
                         </button>
-                        <button className="text-[11px] px-3 py-1.5 bg-slate-700/60 border border-slate-600/60 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-700 transition-colors font-medium">
+                        <button className="text-[11px] px-3 py-1.5 bg-white dark:bg-slate-700/60 border border-slate-600/60 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-700 transition-colors font-medium">
                           Update Status
                         </button>
                         <button className="text-[11px] px-3 py-1.5 bg-emerald-500/15 border border-emerald-500/25 text-emerald-600 dark:text-emerald-400 rounded-lg hover:bg-emerald-500/25 transition-colors font-medium">
@@ -919,7 +919,7 @@ const CADDispatch = () => {
 
           {/* Calls Holding — left column */}
           {holdingActive.length > 0 && (
-            <div className="bg-slate-800/30 border border-amber-500/20 rounded-xl overflow-hidden">
+            <div className="bg-slate-100 dark:bg-slate-800/30 border border-amber-500/20 rounded-xl overflow-hidden">
               <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 dark:border-slate-700/40">
                 <div className="flex items-center gap-2">
                   <Timer className="w-4 h-4 text-amber-600 dark:text-amber-400" />
@@ -940,10 +940,10 @@ const CADDispatch = () => {
                           <p className="text-[12px] font-semibold text-slate-900 dark:text-white">{call.type}</p>
                           <span className={`text-[12px] font-bold ${call.elapsed.includes('hr') ? 'text-red-600 dark:text-red-400' : 'text-amber-600 dark:text-amber-400'}`}>{call.elapsed}</span>
                         </div>
-                        <p className="text-[11px] text-slate-600 dark:text-slate-400 flex items-center gap-1 mb-2">
+                        <p className="text-[11px] text-slate-700 dark:text-slate-400 flex items-center gap-1 mb-2">
                           <MapPin className="w-3 h-3" />{call.location}
                         </p>
-                        <div className="bg-slate-900/50 border border-slate-700/40 rounded-lg px-3 py-2">
+                        <div className="bg-white dark:bg-slate-900/50 border border-slate-700/40 rounded-lg px-3 py-2">
                           <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1">Risk if Not Handled</p>
                           <p className="text-[11px] text-amber-200 leading-snug">
                             {idx === 0 ? 'Fire lane blocked — liability if emergency access needed' : 'Property unclaimed — chain-of-custody risk beyond 2 hrs'}
@@ -951,13 +951,13 @@ const CADDispatch = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="bg-slate-900/50 border border-emerald-500/15 rounded-lg px-3 py-2.5">
+                    <div className="bg-white dark:bg-slate-900/50 border border-emerald-500/15 rounded-lg px-3 py-2.5">
                       <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1.5">Recommended Assignment</p>
                       <div className="flex items-start justify-between gap-3">
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 mb-0.5">
                             <span className="text-[12px] font-bold text-emerald-600 dark:text-emerald-400">{idx === 0 ? 'A-234' : 'A-238'}</span>
-                            <span className="text-[10px] text-slate-600 dark:text-slate-400">ETA {idx === 0 ? '6' : '8'} min</span>
+                            <span className="text-[10px] text-slate-700 dark:text-slate-400">ETA {idx === 0 ? '6' : '8'} min</span>
                           </div>
                           <p className="text-[10px] text-slate-500 leading-snug">
                             {idx === 0 ? 'Nearest to Zone 7 · 0 active calls · last cleared 14:05' : 'Zone 1 · 0 active calls · closest available'}
@@ -981,9 +981,9 @@ const CADDispatch = () => {
           <div className={`bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden ${holdingActive.length > 0 ? 'lg:col-span-2' : 'lg:col-span-3'}`}>
             <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 dark:border-slate-700/40">
               <div className="flex items-center gap-2">
-                <Car className="w-4 h-4 text-slate-600 dark:text-slate-400" />
+                <Car className="w-4 h-4 text-slate-700 dark:text-slate-400" />
                 <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Unit Status</span>
-                <span className="text-[10px] px-2 py-0.5 bg-slate-700/40 text-slate-600 dark:text-slate-400 rounded-full">
+                <span className="text-[10px] px-2 py-0.5 bg-slate-50 dark:bg-slate-700/40 text-slate-700 dark:text-slate-400 rounded-full">
                   {stats.unitsAvailable} available · {stats.unitsDeployed} deployed · {stats.unitsOutOfService} OOS
                 </span>
               </div>
@@ -993,7 +993,7 @@ const CADDispatch = () => {
                 <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-purple-400 inline-block" />On Scene</span>
               </div>
             </div>
-            <div className={`grid gap-px bg-slate-700/20 ${holdingActive.length > 0 ? 'grid-cols-2 md:grid-cols-3' : 'grid-cols-2 md:grid-cols-4 lg:grid-cols-5'}`}>
+            <div className={`grid gap-px bg-slate-100 dark:bg-slate-700/20 ${holdingActive.length > 0 ? 'grid-cols-2 md:grid-cols-3' : 'grid-cols-2 md:grid-cols-4 lg:grid-cols-5'}`}>
               {patrolUnits.map(unit => {
                 const assignedCall = unit.currentCall ? activeCalls.find(c => c.callNumber === unit.currentCall) : null;
                 const isReassign = isReassignCandidate(unit);
@@ -1005,7 +1005,7 @@ const CADDispatch = () => {
                       unit.status === 'En Route'       ? 'bg-amber-500/5' :
                       unit.status === 'On Scene'       ? 'bg-purple-500/5' :
                       unit.status === 'Dispatched'     ? 'bg-blue-500/5' :
-                      'bg-slate-900/20'
+                      'bg-slate-100 dark:bg-slate-900/20'
                     }`}
                   >
                     <div className="flex items-center justify-between mb-1.5">
@@ -1023,7 +1023,7 @@ const CADDispatch = () => {
                         {unit.status === 'Out of Service' ? 'OOS' : unit.status === 'En Route' ? 'En Route' : unit.status}
                       </span>
                     </div>
-                    <p className="text-[10px] text-slate-600 dark:text-slate-400 truncate mb-1" title={unit.officer}>{unit.officer}</p>
+                    <p className="text-[10px] text-slate-700 dark:text-slate-400 truncate mb-1" title={unit.officer}>{unit.officer}</p>
                     {unit.currentCall && (
                       <div className="flex items-center gap-1.5 mb-1">
                         <span className="text-[10px] text-slate-500">Call:</span>
@@ -1050,7 +1050,7 @@ const CADDispatch = () => {
                         <button className="flex-1 text-[10px] px-2 py-1 bg-blue-500/15 border border-blue-500/20 text-blue-400 rounded font-medium hover:bg-blue-500/25 transition-colors flex items-center justify-center gap-1">
                           <Send className="w-2.5 h-2.5" /> Assign
                         </button>
-                        <button className="text-[10px] px-2 py-1 bg-slate-700/40 border border-slate-600/40 text-slate-600 dark:text-slate-400 rounded hover:bg-slate-700/60 transition-colors">
+                        <button className="text-[10px] px-2 py-1 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/40 text-slate-700 dark:text-slate-400 rounded hover:bg-slate-700/60 transition-colors">
                           <Phone className="w-2.5 h-2.5" />
                         </button>
                       </div>

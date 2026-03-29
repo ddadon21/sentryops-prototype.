@@ -408,7 +408,7 @@ export default function FinancialBackground() {
             <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-4">
               <div>
                 <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white mb-2">Financial Background</h2>
-                <p className="text-slate-600 dark:text-slate-400 mb-2">Credit history and financial responsibility assessment for law enforcement positions</p>
+                <p className="text-slate-700 dark:text-slate-400 mb-2">Credit history and financial responsibility assessment for law enforcement positions</p>
                 <div className="flex flex-wrap items-center gap-4 text-sm text-slate-500">
                   <span className="flex items-center gap-1.5">
                     <Calendar className="w-4 h-4" />
@@ -424,13 +424,13 @@ export default function FinancialBackground() {
                 <button className="flex items-center gap-2 px-4 py-2 bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 rounded-xl text-sm font-medium transition-colors border border-purple-500/20">
                   <Plus className="w-4 h-4" />Request Credit Report
                 </button>
-                <button className="flex items-center gap-2 px-3 py-2 bg-slate-800/40 hover:bg-slate-800/60 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium transition-colors border border-slate-700/50">
+                <button className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium transition-colors border border-slate-700/50">
                   <FileText className="w-4 h-4" />FCRA Log
                 </button>
-                <button className="flex items-center gap-2 px-3 py-2 bg-slate-800/40 hover:bg-slate-800/60 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium transition-colors border border-slate-700/50">
+                <button className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium transition-colors border border-slate-700/50">
                   <Download className="w-4 h-4" />Export
                 </button>
-                <button className="flex items-center gap-2 px-3 py-2 bg-slate-800/40 hover:bg-slate-800/60 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium transition-colors border border-slate-700/50">
+                <button className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium transition-colors border border-slate-700/50">
                   <Printer className="w-4 h-4" />Print
                 </button>
               </div>
@@ -449,9 +449,9 @@ export default function FinancialBackground() {
 
             {/* Quick Stats */}
             <div className="flex flex-wrap items-center gap-4 text-sm">
-              <span className="text-slate-600 dark:text-slate-400">Total credit reports reviewed: <span className="text-slate-900 dark:text-white font-medium">{financialReports.length} subjects</span></span>
+              <span className="text-slate-700 dark:text-slate-400">Total credit reports reviewed: <span className="text-slate-900 dark:text-white font-medium">{financialReports.length} subjects</span></span>
               <span className="text-slate-500">|</span>
-              <span className="text-slate-600 dark:text-slate-400">Minimum credit score requirement: <span className="text-slate-900 dark:text-white font-medium">650</span> (agency policy)</span>
+              <span className="text-slate-700 dark:text-slate-400">Minimum credit score requirement: <span className="text-slate-900 dark:text-white font-medium">650</span> (agency policy)</span>
             </div>
           </div>
 
@@ -478,22 +478,22 @@ export default function FinancialBackground() {
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-400" />
-                    <span className="text-slate-600 dark:text-slate-400">Approved (excellent):</span>
+                    <span className="text-slate-700 dark:text-slate-400">Approved (excellent):</span>
                     <span className="text-green-400 font-medium">{excellentCount}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4 text-blue-400" />
-                    <span className="text-slate-600 dark:text-slate-400">Approved (meets standards):</span>
+                    <span className="text-slate-700 dark:text-slate-400">Approved (meets standards):</span>
                     <span className="text-blue-400 font-medium">{acceptableCount}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <AlertCircle className="w-4 h-4 text-amber-400" />
-                    <span className="text-slate-600 dark:text-slate-400">Conditional (pending discussion):</span>
+                    <span className="text-slate-700 dark:text-slate-400">Conditional (pending discussion):</span>
                     <span className="text-amber-400 font-medium">{reviewCount}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Ban className="w-4 h-4 text-red-400" />
-                    <span className="text-slate-600 dark:text-slate-400">Disqualified:</span>
+                    <span className="text-slate-700 dark:text-slate-400">Disqualified:</span>
                     <span className="text-red-400 font-medium">0</span>
                   </div>
                 </div>
@@ -501,7 +501,7 @@ export default function FinancialBackground() {
 
               <div>
                 <h4 className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">Financial Responsibility Standards (Agency Policy)</h4>
-                <div className="space-y-1.5 text-xs text-slate-600 dark:text-slate-400">
+                <div className="space-y-1.5 text-xs text-slate-700 dark:text-slate-400">
                   <div className="flex items-center gap-2">
                     <CheckCircle className="w-3.5 h-3.5 text-green-500" />
                     <span>Minimum credit score: 650 (POST recommendation)</span>
@@ -581,7 +581,7 @@ export default function FinancialBackground() {
             {/* Investigator Assessment */}
             <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700/50">
               <h4 className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Investigator Assessment</h4>
-              <p className="text-sm text-slate-600 dark:text-slate-400">
+              <p className="text-sm text-slate-700 dark:text-slate-400">
                 {excellentCount} subject approved (excellent financial health), {acceptableCount} subject approved (meets standards), {reviewCount} subject conditional pending discussion (high debt and medical collections). All subjects meet minimum 650 credit score. Wilson requires applicant interview to discuss collections and debt management plan.
               </p>
             </div>
@@ -591,13 +591,13 @@ export default function FinancialBackground() {
           <div className="flex flex-wrap gap-2 mb-4">
             <button
               onClick={() => setActiveTab('all')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'all' ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30' : 'bg-slate-800/40 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-slate-700/50'}`}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'all' ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30' : 'bg-white dark:bg-slate-800/40 text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-slate-700/50'}`}
             >
               All Reports ({financialReports.length})
             </button>
             <button
               onClick={() => setActiveTab('excellent')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'excellent' ? 'bg-green-500/20 text-green-400 border border-green-500/30' : 'bg-slate-800/40 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-slate-700/50'}`}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'excellent' ? 'bg-green-500/20 text-green-400 border border-green-500/30' : 'bg-white dark:bg-slate-800/40 text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-slate-700/50'}`}
             >
               <span className="flex items-center gap-2">
                 <CreditCard className="w-4 h-4" />
@@ -606,7 +606,7 @@ export default function FinancialBackground() {
             </button>
             <button
               onClick={() => setActiveTab('acceptable')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'acceptable' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' : 'bg-slate-800/40 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-slate-700/50'}`}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'acceptable' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' : 'bg-white dark:bg-slate-800/40 text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-slate-700/50'}`}
             >
               <span className="flex items-center gap-2">
                 <PiggyBank className="w-4 h-4" />
@@ -615,7 +615,7 @@ export default function FinancialBackground() {
             </button>
             <button
               onClick={() => setActiveTab('review')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'review' ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' : 'bg-slate-800/40 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-slate-700/50'}`}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'review' ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' : 'bg-white dark:bg-slate-800/40 text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-slate-700/50'}`}
             >
               <span className="flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4" />
@@ -631,13 +631,13 @@ export default function FinancialBackground() {
               const statusColor = getStatusColor(report.statusCategory);
 
               return (
-                <div key={report.id} className={`bg-slate-800/40 border rounded-xl overflow-hidden ${
+                <div key={report.id} className={`bg-white dark:bg-slate-800/40 border rounded-xl overflow-hidden ${
                   report.statusCategory === 'excellent' ? 'border-green-500/30' :
                   report.statusCategory === 'acceptable' ? 'border-blue-500/30' : 'border-amber-500/30'
                 }`}>
                   {/* Card Header */}
                   <div
-                    className="p-5 cursor-pointer hover:bg-slate-800/60 transition-colors"
+                    className="p-5 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors"
                     onClick={() => setExpandedReport(isExpanded ? null : report.id)}
                   >
                     <div className="flex items-start justify-between">
@@ -674,35 +674,35 @@ export default function FinancialBackground() {
                             {report.creditScore.exceedsBy > 0 ? `+${report.creditScore.exceedsBy} above minimum` : 'Meets minimum'}
                           </p>
                         </div>
-                        {isExpanded ? <ChevronUp className="w-5 h-5 text-slate-600 dark:text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-600 dark:text-slate-400" />}
+                        {isExpanded ? <ChevronUp className="w-5 h-5 text-slate-700 dark:text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-700 dark:text-slate-400" />}
                       </div>
                     </div>
 
                     {/* Quick Stats Row */}
                     <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mt-4">
-                      <div className="bg-slate-900/40 rounded-lg p-3">
+                      <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
                         <p className="text-xs text-slate-500 mb-1">Total Debt</p>
                         <p className="text-sm font-medium text-slate-900 dark:text-white">{formatCurrency(report.debt.total)}</p>
                       </div>
-                      <div className="bg-slate-900/40 rounded-lg p-3">
+                      <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
                         <p className="text-xs text-slate-500 mb-1">Monthly Income</p>
                         <p className="text-sm font-medium text-slate-900 dark:text-white">{formatCurrency(report.debt.monthlyIncome)}</p>
                       </div>
-                      <div className="bg-slate-900/40 rounded-lg p-3">
+                      <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
                         <p className="text-xs text-slate-500 mb-1">Debt-to-Income</p>
                         <p className={`text-sm font-medium ${report.debt.debtToIncomeConcern ? 'text-amber-400' : 'text-green-400'}`}>
                           {report.debt.debtToIncome}%
                           {report.debt.debtToIncomeConcern && <AlertTriangle className="w-3 h-3 inline ml-1" />}
                         </p>
                       </div>
-                      <div className="bg-slate-900/40 rounded-lg p-3">
+                      <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
                         <p className="text-xs text-slate-500 mb-1">Credit Utilization</p>
                         <p className={`text-sm font-medium ${report.debt.creditUtilizationConcern ? 'text-amber-400' : 'text-green-400'}`}>
                           {report.debt.creditUtilization}%
                           {report.debt.creditUtilizationConcern && <AlertTriangle className="w-3 h-3 inline ml-1" />}
                         </p>
                       </div>
-                      <div className="bg-slate-900/40 rounded-lg p-3">
+                      <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
                         <p className="text-xs text-slate-500 mb-1">On-Time Payments</p>
                         <p className={`text-sm font-medium ${report.paymentHistory.onTimePercent >= 95 ? 'text-green-400' : report.paymentHistory.onTimePercent >= 85 ? 'text-amber-400' : 'text-red-400'}`}>
                           {report.paymentHistory.onTimePercent}%
@@ -743,7 +743,7 @@ export default function FinancialBackground() {
                       </div>
 
                       {/* Credit Score Assessment */}
-                      <div className="mb-6 bg-slate-900/40 rounded-xl p-4">
+                      <div className="mb-6 bg-white dark:bg-slate-900/40 rounded-xl p-4">
                         <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Credit Score Assessment</h4>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div>
@@ -757,7 +757,7 @@ export default function FinancialBackground() {
                             <div className="space-y-1 text-sm">
                               <div className="flex items-center gap-2">
                                 <CheckCircle className="w-4 h-4 text-green-500" />
-                                <span className="text-slate-600 dark:text-slate-400">Agency minimum: 650</span>
+                                <span className="text-slate-700 dark:text-slate-400">Agency minimum: 650</span>
                                 <span className="text-green-400">(exceeds by {report.creditScore.exceedsBy} points)</span>
                               </div>
                               <div className="text-xs text-slate-500 ml-6">
@@ -766,7 +766,7 @@ export default function FinancialBackground() {
                             </div>
                           </div>
                           <div>
-                            <p className="text-sm text-slate-600 dark:text-slate-400">
+                            <p className="text-sm text-slate-700 dark:text-slate-400">
                               <span className="text-slate-700 dark:text-slate-300 font-medium">Assessment:</span> {report.creditScore.concernNote || `Credit score ${report.creditScore.range.toLowerCase()}, demonstrates responsible financial management.`}
                             </p>
                           </div>
@@ -780,12 +780,12 @@ export default function FinancialBackground() {
                           Debt Analysis
                         </h4>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <div className="bg-slate-900/40 rounded-xl p-4">
+                          <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4">
                             <p className="text-sm text-slate-500 mb-3">Total Debt: <span className="text-slate-900 dark:text-white font-semibold">{formatCurrency(report.debt.total)}</span></p>
                             <div className="space-y-2">
                               {report.debt.breakdown.map((item, idx) => (
                                 <div key={idx} className="flex items-center justify-between text-sm">
-                                  <span className="flex items-center gap-2 text-slate-600 dark:text-slate-400">
+                                  <span className="flex items-center gap-2 text-slate-700 dark:text-slate-400">
                                     {item.type === 'Mortgage' && <Home className="w-4 h-4" />}
                                     {item.type === 'Auto Loan' && <Car className="w-4 h-4" />}
                                     {item.type === 'Credit Cards' && <CreditCard className="w-4 h-4" />}
@@ -802,15 +802,15 @@ export default function FinancialBackground() {
                             </div>
                           </div>
                           <div className="space-y-3">
-                            <div className="bg-slate-900/40 rounded-lg p-3">
+                            <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
                               <div className="flex justify-between items-center">
-                                <span className="text-sm text-slate-600 dark:text-slate-400">Monthly Income (verified)</span>
+                                <span className="text-sm text-slate-700 dark:text-slate-400">Monthly Income (verified)</span>
                                 <span className="text-sm font-medium text-slate-900 dark:text-white">{formatCurrency(report.debt.monthlyIncome)}</span>
                               </div>
                             </div>
-                            <div className="bg-slate-900/40 rounded-lg p-3">
+                            <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
                               <div className="flex justify-between items-center">
-                                <span className="text-sm text-slate-600 dark:text-slate-400">Debt-to-Income Ratio</span>
+                                <span className="text-sm text-slate-700 dark:text-slate-400">Debt-to-Income Ratio</span>
                                 <span className={`text-sm font-medium ${report.debt.debtToIncome > 50 ? 'text-amber-400' : 'text-green-400'}`}>
                                   {report.debt.debtToIncome}%
                                   {report.debt.debtToIncome <= 50 ? ' (PASS)' : ' (CONCERN)'}
@@ -818,9 +818,9 @@ export default function FinancialBackground() {
                               </div>
                               <p className="text-xs text-slate-500 mt-1">Agency standard: &lt;50% preferred</p>
                             </div>
-                            <div className="bg-slate-900/40 rounded-lg p-3">
+                            <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
                               <div className="flex justify-between items-center">
-                                <span className="text-sm text-slate-600 dark:text-slate-400">Credit Utilization</span>
+                                <span className="text-sm text-slate-700 dark:text-slate-400">Credit Utilization</span>
                                 <span className={`text-sm font-medium ${report.debt.creditUtilization > 30 ? (report.debt.creditUtilization > 50 ? 'text-amber-400' : 'text-yellow-400') : 'text-green-400'}`}>
                                   {report.debt.creditUtilization}%
                                 </span>
@@ -837,9 +837,9 @@ export default function FinancialBackground() {
                           <History className="w-4 h-4 text-purple-400" />
                           Payment History
                         </h4>
-                        <div className="bg-slate-900/40 rounded-xl p-4">
+                        <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4">
                           <div className="flex items-center justify-between mb-3">
-                            <span className="text-sm text-slate-600 dark:text-slate-400">On-time payments:</span>
+                            <span className="text-sm text-slate-700 dark:text-slate-400">On-time payments:</span>
                             <span className={`text-sm font-medium ${report.paymentHistory.onTimePercent === 100 ? 'text-green-400' : report.paymentHistory.onTimePercent >= 90 ? 'text-blue-400' : 'text-amber-400'}`}>
                               {report.paymentHistory.onTimePercent}% {report.paymentHistory.onTimePercent === 100 ? '(perfect)' : ''}
                             </span>
@@ -849,13 +849,13 @@ export default function FinancialBackground() {
                               <p className="text-sm text-slate-500 mb-2">Late payments (30+ days): {report.paymentHistory.latePayments.length}</p>
                               <div className="space-y-2">
                                 {report.paymentHistory.latePayments.map((late, idx) => (
-                                  <div key={idx} className="text-xs bg-slate-800/60 rounded-lg p-2">
+                                  <div key={idx} className="text-xs bg-white dark:bg-slate-800/60 rounded-lg p-2">
                                     <div className="flex items-center justify-between mb-1">
                                       <span className="text-amber-400">{late.type}: {late.daysLate} days late</span>
                                       <span className="text-slate-500">{late.date}</span>
                                     </div>
-                                    <p className="text-slate-600 dark:text-slate-400">Context: {late.context}</p>
-                                    {late.resolution && <p className="text-slate-600 dark:text-slate-400">Resolution: {late.resolution}</p>}
+                                    <p className="text-slate-700 dark:text-slate-400">Context: {late.context}</p>
+                                    {late.resolution && <p className="text-slate-700 dark:text-slate-400">Resolution: {late.resolution}</p>}
                                   </div>
                                 ))}
                               </div>
@@ -877,7 +877,7 @@ export default function FinancialBackground() {
                         </h4>
                         <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
                           {Object.entries(report.negativeItems).map(([key, value]) => (
-                            <div key={key} className={`rounded-lg p-3 ${value.count > 0 ? 'bg-amber-500/10 border border-amber-500/30' : 'bg-slate-900/40'}`}>
+                            <div key={key} className={`rounded-lg p-3 ${value.count > 0 ? 'bg-amber-500/10 border border-amber-500/30' : 'bg-white dark:bg-slate-900/40'}`}>
                               <p className="text-xs text-slate-500 capitalize mb-1">{key}</p>
                               <p className={`text-sm font-medium ${value.count > 0 ? 'text-amber-400' : 'text-green-400'}`}>
                                 {value.status}
@@ -954,14 +954,14 @@ export default function FinancialBackground() {
                           </ul>
                           {report.context && (
                             <div className="mt-3 pt-3 border-t border-amber-500/20">
-                              <p className="text-sm text-slate-700 dark:text-slate-300"><span className="text-slate-600 dark:text-slate-400 font-medium">Context:</span> {report.context}</p>
+                              <p className="text-sm text-slate-700 dark:text-slate-300"><span className="text-slate-700 dark:text-slate-400 font-medium">Context:</span> {report.context}</p>
                             </div>
                           )}
                         </div>
                       )}
 
                       {/* Investigator Assessment */}
-                      <div className="mb-6 bg-slate-900/40 rounded-xl p-4">
+                      <div className="mb-6 bg-white dark:bg-slate-900/40 rounded-xl p-4">
                         <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-2">Investigator Assessment</h4>
                         <p className="text-sm text-slate-700 dark:text-slate-300 mb-4">{report.investigatorAssessment}</p>
 
@@ -999,19 +999,19 @@ export default function FinancialBackground() {
                       )}
 
                       {/* FCRA Compliance & Access Log */}
-                      <div className="bg-slate-900/60 rounded-xl p-4">
+                      <div className="bg-white dark:bg-slate-900/60 rounded-xl p-4">
                         <div className="flex items-center gap-2 mb-3">
                           <Lock className="w-4 h-4 text-purple-400" />
                           <h4 className="text-sm font-semibold text-slate-900 dark:text-white">FCRA Compliance</h4>
                         </div>
-                        <p className="text-xs text-slate-600 dark:text-slate-400 mb-3">
+                        <p className="text-xs text-slate-700 dark:text-slate-400 mb-3">
                           This report contains consumer credit information obtained with applicant consent (signed release on file) and used solely for employment screening purposes per FCRA 15 USC 1681.
                         </p>
                         <div className="border-t border-slate-200 dark:border-slate-700/50 pt-3">
                           <p className="text-xs text-slate-500 mb-2">Access Log:</p>
                           <div className="space-y-1">
                             {report.fcraAccessLog.map((log, idx) => (
-                              <div key={idx} className="text-xs flex items-center gap-2 text-slate-600 dark:text-slate-400">
+                              <div key={idx} className="text-xs flex items-center gap-2 text-slate-700 dark:text-slate-400">
                                 <span className="text-slate-500">{log.date}</span>
                                 <span>-</span>
                                 <span>{log.action}</span>
@@ -1027,7 +1027,7 @@ export default function FinancialBackground() {
                         <button className="flex items-center gap-2 px-4 py-2 bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 rounded-xl text-sm font-medium transition-colors border border-purple-500/20">
                           <FileText className="w-4 h-4" />View Full Credit Report
                         </button>
-                        <button className="flex items-center gap-2 px-4 py-2 bg-slate-800/40 hover:bg-slate-800/60 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium transition-colors border border-slate-700/50">
+                        <button className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium transition-colors border border-slate-700/50">
                           <FileCheck className="w-4 h-4" />View Consent Form
                         </button>
                         {report.statusCategory === 'review' && (
@@ -1040,7 +1040,7 @@ export default function FinancialBackground() {
                             </button>
                           </>
                         )}
-                        <button className="flex items-center gap-2 px-4 py-2 bg-slate-800/40 hover:bg-slate-800/60 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium transition-colors border border-slate-700/50">
+                        <button className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium transition-colors border border-slate-700/50">
                           <Printer className="w-4 h-4" />Print Summary
                         </button>
                       </div>

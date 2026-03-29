@@ -298,8 +298,8 @@ const ActiveCasesDashboard = () => {
 
   const getPriorityBadge = (priority: string) => {
     switch (priority) {
-      case 'Critical': return 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400';
-      case 'High': return 'bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400';
+      case 'Critical': return 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400';
+      case 'High': return 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400';
       case 'Medium': return 'bg-slate-500/10 border-slate-500/20 text-slate-500 dark:text-slate-400';
       case 'Low': return 'bg-blue-500/10 border-blue-500/20 text-blue-400';
       default: return 'bg-slate-500/10 border-slate-500/20 text-slate-500 dark:text-slate-400';
@@ -326,7 +326,7 @@ const ActiveCasesDashboard = () => {
 
         {/* Command Priority Strip */}
         <div className="bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/40 rounded-xl overflow-hidden">
-          <div className="flex items-center gap-3 px-5 py-3 border-b border-slate-200 dark:border-slate-700/30">
+          <div className="flex items-center gap-3 px-5 py-3 border-b border-slate-200 dark:border-slate-200 dark:border-slate-700/30">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
@@ -343,7 +343,7 @@ const ActiveCasesDashboard = () => {
               </div>
               <div className="flex items-center gap-1.5 flex-shrink-0">
                 <button className="px-2.5 py-1 bg-red-100 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-700 dark:text-red-400 rounded text-[11px] font-medium hover:bg-red-200 dark:hover:bg-red-500/20 transition-all">Escalate</button>
-                <button className="px-2.5 py-1 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-600 dark:text-slate-400 rounded text-[11px] font-medium hover:bg-slate-200 dark:hover:bg-slate-700/40 transition-all">View</button>
+                <button className="px-2.5 py-1 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-400 rounded text-[11px] font-medium hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-700/40 transition-all">View</button>
               </div>
             </div>
             {/* Row 2 */}
@@ -355,7 +355,7 @@ const ActiveCasesDashboard = () => {
               </div>
               <div className="flex items-center gap-1.5 flex-shrink-0">
                 <button className="px-2.5 py-1 bg-red-100 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-700 dark:text-red-400 rounded text-[11px] font-medium hover:bg-red-200 dark:hover:bg-red-500/20 transition-all">Approve</button>
-                <button className="px-2.5 py-1 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-600 dark:text-slate-400 rounded text-[11px] font-medium hover:bg-slate-200 dark:hover:bg-slate-700/40 transition-all">View</button>
+                <button className="px-2.5 py-1 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-400 rounded text-[11px] font-medium hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-700/40 transition-all">View</button>
               </div>
             </div>
             {/* Row 3 */}
@@ -367,7 +367,7 @@ const ActiveCasesDashboard = () => {
               </div>
               <div className="flex items-center gap-1.5 flex-shrink-0">
                 <button className="px-2.5 py-1 bg-amber-100 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 text-amber-700 dark:text-amber-400 rounded text-[11px] font-medium hover:bg-amber-200 dark:hover:bg-amber-500/20 transition-all">Escalate</button>
-                <button className="px-2.5 py-1 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-600 dark:text-slate-400 rounded text-[11px] font-medium hover:bg-slate-200 dark:hover:bg-slate-700/40 transition-all">View</button>
+                <button className="px-2.5 py-1 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-400 rounded text-[11px] font-medium hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-700/40 transition-all">View</button>
               </div>
             </div>
             {/* Row 4 */}
@@ -379,7 +379,7 @@ const ActiveCasesDashboard = () => {
               </div>
               <div className="flex items-center gap-1.5 flex-shrink-0">
                 <button className="px-2.5 py-1 bg-amber-100 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 text-amber-700 dark:text-amber-400 rounded text-[11px] font-medium hover:bg-amber-200 dark:hover:bg-amber-500/20 transition-all">Approve</button>
-                <button className="px-2.5 py-1 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-600 dark:text-slate-400 rounded text-[11px] font-medium hover:bg-slate-200 dark:hover:bg-slate-700/40 transition-all">View</button>
+                <button className="px-2.5 py-1 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-400 rounded text-[11px] font-medium hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-700/40 transition-all">View</button>
               </div>
             </div>
             {/* Row 5 */}
@@ -391,7 +391,7 @@ const ActiveCasesDashboard = () => {
               </div>
               <div className="flex items-center gap-1.5 flex-shrink-0">
                 <button className="px-2.5 py-1 bg-amber-100 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 text-amber-700 dark:text-amber-400 rounded text-[11px] font-medium hover:bg-amber-200 dark:hover:bg-amber-500/20 transition-all">Reassign</button>
-                <button className="px-2.5 py-1 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-600 dark:text-slate-400 rounded text-[11px] font-medium hover:bg-slate-200 dark:hover:bg-slate-700/40 transition-all">View</button>
+                <button className="px-2.5 py-1 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-400 rounded text-[11px] font-medium hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-700/40 transition-all">View</button>
               </div>
             </div>
           </div>
@@ -399,7 +399,7 @@ const ActiveCasesDashboard = () => {
 
         {/* Executive Snapshot Row — matches Command metric cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
-          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 text-left hover:border-slate-600/40 transition-colors">
+          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 text-left hover:border-slate-600/40 transition-colors">
             <div className="flex items-center justify-between mb-3">
               <span className="text-xs text-slate-500 font-medium">Active Cases</span>
               <Circle className="w-2 h-2 fill-slate-400 text-slate-500 dark:text-slate-400" />
@@ -409,7 +409,7 @@ const ActiveCasesDashboard = () => {
             <p className="text-[11px] text-emerald-700 dark:text-emerald-400">-2 from last month</p>
           </div>
 
-          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 text-left hover:border-slate-600/40 transition-colors">
+          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 text-left hover:border-slate-600/40 transition-colors">
             <div className="flex items-center justify-between mb-3">
               <span className="text-xs text-slate-500 font-medium">Critical Cases</span>
               <span className="relative flex h-2.5 w-2.5">
@@ -422,7 +422,7 @@ const ActiveCasesDashboard = () => {
             <p className="text-[11px] text-red-700 dark:text-red-400">All require command action today</p>
           </div>
 
-          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 text-left">
+          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 text-left">
             <div className="flex items-center justify-between mb-3">
               <span className="text-xs text-slate-500 font-medium">Clearance Rate (YTD)</span>
               <Circle className="w-2 h-2 fill-emerald-500 text-emerald-500" />
@@ -430,13 +430,13 @@ const ActiveCasesDashboard = () => {
             <p className="text-3xl font-bold text-slate-900 dark:text-white mb-1">75%</p>
             <div className="flex items-center gap-2 text-[11px] text-slate-500 dark:text-slate-400 mb-1">
               <span>65 of 87 cases</span>
-              <span className="text-slate-600">·</span>
+              <span className="text-slate-700">·</span>
               <span>+3% vs 2023</span>
             </div>
             <p className="text-[11px] text-emerald-700 dark:text-emerald-400">Meeting 75% target</p>
           </div>
 
-          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 text-left hover:border-slate-600/40 transition-colors">
+          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 text-left hover:border-slate-600/40 transition-colors">
             <div className="flex items-center justify-between mb-3">
               <span className="text-xs text-slate-500 font-medium">Multi-Agency Ops</span>
               <Circle className="w-2 h-2 fill-blue-500 text-blue-500" />
@@ -448,29 +448,29 @@ const ActiveCasesDashboard = () => {
         </div>
 
         {/* Intelligence Summary — collapsible, matches Command pattern */}
-        <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none border-l-2 border-l-slate-600/40">
+        <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none border-l-2 border-l-slate-600/40">
           <button
             onClick={() => setInsightsExpanded(!insightsExpanded)}
-            className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-slate-50 dark:hover:bg-slate-800/10 transition-colors rounded-xl"
+            className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-slate-50 dark:hover:bg-slate-50 dark:hover:bg-slate-800/10 transition-colors rounded-xl"
           >
             <div className="flex items-center gap-3">
-              <h3 className="text-sm font-medium text-slate-600 dark:text-slate-300">Criminal Investigations Intelligence</h3>
+              <h3 className="text-sm font-medium text-slate-700 dark:text-slate-300">Criminal Investigations Intelligence</h3>
               <span className="px-1.5 py-0.5 bg-slate-200 dark:bg-slate-700/30 text-[11px] text-slate-500 rounded">3 Alerts</span>
             </div>
             <div className="flex items-center gap-3">
-              <span className="hidden sm:inline text-[10px] text-slate-600">AI-assisted synthesis · Updated 7:28 PM</span>
-              {insightsExpanded ? <ChevronUp className="w-4 h-4 text-slate-600" /> : <ChevronDown className="w-4 h-4 text-slate-600" />}
+              <span className="hidden sm:inline text-[10px] text-slate-700">AI-assisted synthesis · Updated 7:28 PM</span>
+              {insightsExpanded ? <ChevronUp className="w-4 h-4 text-slate-700" /> : <ChevronDown className="w-4 h-4 text-slate-700" />}
             </div>
           </button>
 
           {insightsExpanded && (
-            <div className="px-5 pb-5 space-y-4 border-t border-slate-200 dark:border-slate-700/20 pt-4">
+            <div className="px-5 pb-5 space-y-4 border-t border-slate-200 dark:border-slate-200 dark:border-slate-700/20 pt-4">
               {/* Critical */}
               <div className="flex items-start gap-3">
                 <div className="w-1.5 h-1.5 rounded-full bg-red-500 mt-1.5 flex-shrink-0"></div>
                 <div className="space-y-1">
                   <p className="text-sm font-medium text-red-700 dark:text-red-400">Homicide #2024-0847 — Ballistics OVERDUE</p>
-                  <ul className="space-y-0.5 text-[13px] text-slate-600 dark:text-slate-300">
+                  <ul className="space-y-0.5 text-[13px] text-slate-700 dark:text-slate-300">
                     <li>GBI Lab results due today — not received</li>
                     <li>Must charge within 72 hrs (tomorrow 1400)</li>
                     <li>Lead: Det. Rodriguez | Badge #I-5234</li>
@@ -484,7 +484,7 @@ const ActiveCasesDashboard = () => {
                 <div className="w-1.5 h-1.5 rounded-full bg-red-500 mt-1.5 flex-shrink-0"></div>
                 <div className="space-y-1">
                   <p className="text-sm font-medium text-red-700 dark:text-red-400">DEA Task Force — Approval Required by EOD</p>
-                  <ul className="space-y-0.5 text-[13px] text-slate-600 dark:text-slate-300">
+                  <ul className="space-y-0.5 text-[13px] text-slate-700 dark:text-slate-300">
                     <li>30-day surveillance extension expires today</li>
                     <li>Sheriff approval required for continuation</li>
                     <li>Cost: $12K (DEA funded)</li>
@@ -498,7 +498,7 @@ const ActiveCasesDashboard = () => {
                 <div className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 flex-shrink-0"></div>
                 <div className="space-y-1">
                   <p className="text-sm font-medium text-amber-700 dark:text-amber-400">Armed Robberies +15% — Trend Alert</p>
-                  <ul className="space-y-0.5 text-[13px] text-slate-600 dark:text-slate-300">
+                  <ul className="space-y-0.5 text-[13px] text-slate-700 dark:text-slate-300">
                     <li>Dec 2024: 23 incidents (vs 20 Nov)</li>
                     <li>Pharmacy series (3 incidents) — same MO confirmed</li>
                     <li>Recommendation: Robbery task force formation</li>
@@ -507,7 +507,7 @@ const ActiveCasesDashboard = () => {
                 </div>
               </div>
 
-              <div className="pt-2 text-[10px] text-slate-600">
+              <div className="pt-2 text-[10px] text-slate-700">
                 Analysis based on {stats.total} active cases · 75% clearance rate YTD
               </div>
             </div>
@@ -516,7 +516,7 @@ const ActiveCasesDashboard = () => {
 
         {/* Case Type Breakdown — matches Command division cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 bg-red-700/60 rounded-full"></div>
@@ -527,16 +527,16 @@ const ActiveCasesDashboard = () => {
             <div className="space-y-1.5">
               <div className="flex items-center justify-between text-xs">
                 <span className="text-slate-500">Clearance YTD</span>
-                <span className="text-slate-600 dark:text-slate-300">100% (8/8)</span>
+                <span className="text-slate-700 dark:text-slate-300">100% (8/8)</span>
               </div>
               <div className="flex items-center justify-between text-xs">
                 <span className="text-slate-500">Priority</span>
-                <span className="text-slate-600 dark:text-slate-300">1 critical, 1 medium</span>
+                <span className="text-slate-700 dark:text-slate-300">1 critical, 1 medium</span>
               </div>
             </div>
           </div>
 
-          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 bg-amber-600/50 rounded-full"></div>
@@ -547,16 +547,16 @@ const ActiveCasesDashboard = () => {
             <div className="space-y-1.5">
               <div className="flex items-center justify-between text-xs">
                 <span className="text-slate-500">Clearance YTD</span>
-                <span className="text-slate-600 dark:text-slate-300">68% (17/25)</span>
+                <span className="text-slate-700 dark:text-slate-300">68% (17/25)</span>
               </div>
               <div className="flex items-center justify-between text-xs">
                 <span className="text-slate-500">Priority</span>
-                <span className="text-slate-600 dark:text-slate-300">1 critical series, 1 high</span>
+                <span className="text-slate-700 dark:text-slate-300">1 critical series, 1 high</span>
               </div>
             </div>
           </div>
 
-          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 bg-slate-500/50 rounded-full"></div>
@@ -567,16 +567,16 @@ const ActiveCasesDashboard = () => {
             <div className="space-y-1.5">
               <div className="flex items-center justify-between text-xs">
                 <span className="text-slate-500">Clearance YTD</span>
-                <span className="text-slate-600 dark:text-slate-300">89% (8/9)</span>
+                <span className="text-slate-700 dark:text-slate-300">89% (8/9)</span>
               </div>
               <div className="flex items-center justify-between text-xs">
                 <span className="text-slate-500">Active Ops</span>
-                <span className="text-slate-600 dark:text-slate-300">1 DEA task force, 1 warrant</span>
+                <span className="text-slate-700 dark:text-slate-300">1 DEA task force, 1 warrant</span>
               </div>
             </div>
           </div>
 
-          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 bg-slate-500/50 rounded-full"></div>
@@ -587,18 +587,18 @@ const ActiveCasesDashboard = () => {
             <div className="space-y-1.5">
               <div className="flex items-center justify-between text-xs">
                 <span className="text-slate-500">Sexual Assault</span>
-                <span className="text-slate-600 dark:text-slate-300">1 (critical)</span>
+                <span className="text-slate-700 dark:text-slate-300">1 (critical)</span>
               </div>
               <div className="flex items-center justify-between text-xs">
                 <span className="text-slate-500">Fraud / Assault / Burglary</span>
-                <span className="text-slate-600 dark:text-slate-300">3</span>
+                <span className="text-slate-700 dark:text-slate-300">3</span>
               </div>
             </div>
           </div>
         </div>
 
         {/* Clearance Rate Detail — matches Command compliance section */}
-        <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+        <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
           <div className="flex items-center justify-between mb-5">
             <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Clearance Rates by Type</h3>
             <span className="text-[11px] text-slate-500">YTD 2024 — National avg: 62%</span>
@@ -611,14 +611,14 @@ const ActiveCasesDashboard = () => {
               { type: 'Robbery', cleared: 17, total: 25, percentage: 68, status: 'below-target', confidence: 78, recommendation: 'Form robbery task force. Pharmacy series is highest-leverage case to clear.', immediate: 'Task force authorized, Patel + 2 detectives assigned.', downstream: '4th pharmacy incident deterred. Arrest within 14 days.', outcome: 'Rate rises to ~72%. Closes 7-point gap to target.', action: 'Form Task Force' },
               { type: 'Burglary', cleared: 13, total: 21, percentage: 62, status: 'below-target', confidence: 74, recommendation: 'Assign Det. Wilson (available) to electronics store case #2024-1712.', immediate: 'Wilson assigned. Rodriguez workload reduced.', downstream: 'Electronics case closes within 3 weeks via pawn monitoring.', outcome: 'Rate rises to ~67%. Two moves from annual target.', action: 'Auto Assign' }
             ].map((cat, idx) => (
-              <div key={idx} className={`rounded-lg p-3.5 ${cat.status === 'below-target' ? 'bg-amber-500/5 border border-amber-500/10' : 'bg-slate-50 dark:bg-slate-800/20 border border-slate-200 dark:border-slate-700/20'}`}>
+              <div key={idx} className={`rounded-lg p-3.5 ${cat.status === 'below-target' ? 'bg-amber-500/5 border border-amber-500/10' : 'bg-slate-50 dark:bg-slate-800/20 border border-slate-200 dark:border-slate-200 dark:border-slate-700/20'}`}>
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2.5">
-                    <span className="text-sm text-slate-600 dark:text-slate-300 font-medium">{cat.type}</span>
+                    <span className="text-sm text-slate-700 dark:text-slate-300 font-medium">{cat.type}</span>
                     <span className={`px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase ${cat.status === 'on-track' ? 'bg-emerald-100 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400' : 'bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400'}`}>
                       {cat.status === 'on-track' ? 'On Track' : 'Below Target'}
                     </span>
-                    <span className="text-[10px] text-slate-600">{cat.confidence}% confidence</span>
+                    <span className="text-[10px] text-slate-700">{cat.confidence}% confidence</span>
                   </div>
                   <div className="flex items-center gap-2.5">
                     <span className="text-xs text-slate-500 dark:text-slate-400">{cat.cleared}/{cat.total}</span>
@@ -649,7 +649,7 @@ const ActiveCasesDashboard = () => {
                   </div>
                 </div>
                 {cat.action && (
-                  <button className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-[11px] font-semibold transition-all ${cat.status === 'below-target' ? 'bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-400 hover:bg-amber-500/20' : 'bg-slate-100 dark:bg-slate-700/30 border border-slate-300 dark:border-slate-600/30 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700/50'}`}>
+                  <button className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-[11px] font-semibold transition-all ${cat.status === 'below-target' ? 'bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-400 hover:bg-amber-500/20' : 'bg-slate-100 dark:bg-slate-700/30 border border-slate-300 dark:border-slate-600/30 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-700/50'}`}>
                     <Zap className="w-3 h-3" /> {cat.action}
                   </button>
                 )}
@@ -666,7 +666,7 @@ const ActiveCasesDashboard = () => {
 
         {/* Connected Cases & Patterns — collapsible */}
         {showConnections && (
-          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
             <div className="flex items-center justify-between mb-5">
               <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Connected Cases & Patterns</h3>
               <button onClick={() => setShowConnections(false)} className="text-slate-500 hover:text-slate-500 dark:text-slate-400">
@@ -679,7 +679,7 @@ const ActiveCasesDashboard = () => {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3">
                     <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Pharmacy Robbery Series</span>
-                    <span className="text-[11px] text-slate-600">#2024-1489</span>
+                    <span className="text-[11px] text-slate-700">#2024-1489</span>
                     <span className="px-1.5 py-0.5 border rounded text-[11px] font-medium bg-amber-100 dark:bg-amber-500/10 border-amber-200 dark:border-amber-500/20 text-amber-700 dark:text-amber-400">SERIES</span>
                   </div>
                   <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">3 incidents, same MO — targeting opioid medications</p>
@@ -691,7 +691,7 @@ const ActiveCasesDashboard = () => {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3">
                     <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Gang-Related Shootings</span>
-                    <span className="text-[11px] text-slate-600">#2024-0847 + linked</span>
+                    <span className="text-[11px] text-slate-700">#2024-0847 + linked</span>
                     <span className="px-1.5 py-0.5 border rounded text-[11px] font-medium bg-red-100 dark:bg-red-500/10 border-red-200 dark:border-red-500/20 text-red-700 dark:text-red-400">CRITICAL</span>
                   </div>
                   <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Territory dispute — retaliation risk HIGH</p>
@@ -703,7 +703,7 @@ const ActiveCasesDashboard = () => {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3">
                     <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Identity Theft Ring</span>
-                    <span className="text-[11px] text-slate-600">#2024-1823</span>
+                    <span className="text-[11px] text-slate-700">#2024-1823</span>
                     <span className="px-1.5 py-0.5 border rounded text-[11px] font-medium bg-blue-500/10 border-blue-500/20 text-blue-400">MULTI-AGENCY</span>
                   </div>
                   <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">47 victims, $380K — FBI coordination, federal charges pending</p>
@@ -716,7 +716,7 @@ const ActiveCasesDashboard = () => {
 
         {/* Case Analytics — collapsible */}
         {showAnalytics && (
-          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
             <div className="flex items-center justify-between mb-5">
               <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Case Analytics</h3>
               <button onClick={() => setShowAnalytics(false)} className="text-slate-500 hover:text-slate-500 dark:text-slate-400">
@@ -725,34 +725,34 @@ const ActiveCasesDashboard = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              <div className="border border-slate-700/20 rounded-lg p-5">
+              <div className="border border-slate-200 dark:border-slate-700/20 rounded-lg p-5">
                 <span className="text-sm font-medium text-slate-900 dark:text-white">Avg Time to Clearance</span>
                 <div className="space-y-2 mt-3 text-xs">
-                  <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Homicide</span><span className="text-slate-600 dark:text-slate-300">45 days</span></div>
-                  <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Robbery</span><span className="text-slate-600 dark:text-slate-300">22 days</span></div>
-                  <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Narcotics</span><span className="text-slate-600 dark:text-slate-300">38 days</span></div>
-                  <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Sexual Assault</span><span className="text-slate-600 dark:text-slate-300">67 days</span></div>
-                  <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Fraud</span><span className="text-slate-600 dark:text-slate-300">52 days</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Homicide</span><span className="text-slate-700 dark:text-slate-300">45 days</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Robbery</span><span className="text-slate-700 dark:text-slate-300">22 days</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Narcotics</span><span className="text-slate-700 dark:text-slate-300">38 days</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Sexual Assault</span><span className="text-slate-700 dark:text-slate-300">67 days</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Fraud</span><span className="text-slate-700 dark:text-slate-300">52 days</span></div>
                 </div>
               </div>
 
-              <div className="border border-slate-700/20 rounded-lg p-5">
+              <div className="border border-slate-200 dark:border-slate-700/20 rounded-lg p-5">
                 <span className="text-sm font-medium text-slate-900 dark:text-white">Evidence Processing</span>
                 <div className="space-y-2 mt-3 text-xs">
                   <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Pending lab results</span><span className="text-amber-700 dark:text-amber-400">6 cases</span></div>
                   <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Avg lab turnaround</span><span className="text-red-700 dark:text-red-400">18 days (target: 14)</span></div>
                   <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Ballistics backlog</span><span className="text-amber-700 dark:text-amber-400">2 cases</span></div>
                   <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">DNA backlog</span><span className="text-emerald-700 dark:text-emerald-400">0 cases</span></div>
-                  <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Fingerprint match</span><span className="text-slate-600 dark:text-slate-300">42%</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Fingerprint match</span><span className="text-slate-700 dark:text-slate-300">42%</span></div>
                 </div>
               </div>
 
-              <div className="border border-slate-700/20 rounded-lg p-5">
+              <div className="border border-slate-200 dark:border-slate-700/20 rounded-lg p-5">
                 <span className="text-sm font-medium text-slate-900 dark:text-white">Comparisons</span>
                 <div className="space-y-2 mt-3 text-xs">
                   <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Our clearance</span><span className="text-emerald-700 dark:text-emerald-400">75%</span></div>
-                  <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">National avg</span><span className="text-slate-600 dark:text-slate-300">62% (+13%)</span></div>
-                  <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Georgia avg</span><span className="text-slate-600 dark:text-slate-300">68% (+7%)</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">National avg</span><span className="text-slate-700 dark:text-slate-300">62% (+13%)</span></div>
+                  <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Georgia avg</span><span className="text-slate-700 dark:text-slate-300">68% (+7%)</span></div>
                   <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Cases vs Nov</span><span className="text-emerald-700 dark:text-emerald-400">-2 (improving)</span></div>
                 </div>
               </div>
@@ -761,20 +761,20 @@ const ActiveCasesDashboard = () => {
         )}
 
         {/* Detective Workload — collapsible, matches Command pattern */}
-        <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none">
+        <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none">
           <button
             onClick={() => setShowWorkload(!showWorkload)}
-            className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-slate-50 dark:hover:bg-slate-800/10 transition-colors rounded-xl"
+            className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-slate-50 dark:hover:bg-slate-50 dark:hover:bg-slate-800/10 transition-colors rounded-xl"
           >
             <div className="flex items-center gap-3">
-              <h3 className="text-sm font-medium text-slate-600 dark:text-slate-300">Detective Workload</h3>
+              <h3 className="text-sm font-medium text-slate-700 dark:text-slate-300">Detective Workload</h3>
               <span className="px-1.5 py-0.5 bg-slate-200 dark:bg-slate-700/30 text-[11px] text-slate-500 rounded">3 Detectives</span>
             </div>
-            {showWorkload ? <ChevronUp className="w-4 h-4 text-slate-600" /> : <ChevronDown className="w-4 h-4 text-slate-600" />}
+            {showWorkload ? <ChevronUp className="w-4 h-4 text-slate-700" /> : <ChevronDown className="w-4 h-4 text-slate-700" />}
           </button>
 
           {showWorkload && (
-            <div className="px-5 pb-5 space-y-3 border-t border-slate-200 dark:border-slate-700/20 pt-4">
+            <div className="px-5 pb-5 space-y-3 border-t border-slate-200 dark:border-slate-200 dark:border-slate-700/20 pt-4">
               {/* Recommended Reassignment Banner */}
               <div className="flex items-center justify-between px-4 py-3 bg-amber-500/5 border border-amber-500/15 rounded-lg">
                 <div className="flex items-start gap-2.5">
@@ -794,7 +794,7 @@ const ActiveCasesDashboard = () => {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3">
                     <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Det. Rodriguez, Maria</span>
-                    <span className="text-[11px] text-slate-600">I-5234</span>
+                    <span className="text-[11px] text-slate-700">I-5234</span>
                     <span className="px-1.5 py-0.5 border rounded text-[11px] font-medium bg-red-100 dark:bg-red-500/10 border-red-200 dark:border-red-500/20 text-red-700 dark:text-red-400">AT CAPACITY</span>
                   </div>
                   <div className="text-xs text-slate-500 dark:text-slate-400 mt-1">3 cases — Homicide (Critical) · Robbery (High) · Burglary (Medium)</div>
@@ -810,7 +810,7 @@ const ActiveCasesDashboard = () => {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3">
                     <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Det. Anderson / Lt. Anderson</span>
-                    <span className="text-[11px] text-slate-600">I-4892 / I-3456</span>
+                    <span className="text-[11px] text-slate-700">I-4892 / I-3456</span>
                     <span className="px-1.5 py-0.5 border rounded text-[11px] font-medium bg-amber-100 dark:bg-amber-500/10 border-amber-200 dark:border-amber-500/20 text-amber-700 dark:text-amber-400">MODERATE</span>
                   </div>
                   <div className="text-xs text-slate-500 dark:text-slate-400 mt-1">2 cases — Cold Case Homicide · DEA Task Force (Critical)</div>
@@ -826,7 +826,7 @@ const ActiveCasesDashboard = () => {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3">
                     <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Det. Wilson, Amanda</span>
-                    <span className="text-[11px] text-slate-600">I-4521</span>
+                    <span className="text-[11px] text-slate-700">I-4521</span>
                     <span className="px-1.5 py-0.5 border rounded text-[11px] font-medium bg-emerald-500/10 border-emerald-500/20 text-emerald-700 dark:text-emerald-400">AVAILABLE</span>
                   </div>
                   <div className="text-xs text-slate-500 dark:text-slate-400 mt-1">1 case — Armed Robbery (High) · 4 days open</div>
@@ -841,11 +841,11 @@ const ActiveCasesDashboard = () => {
         </div>
 
         {/* AI Insight Panel */}
-        <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+        <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
           <div className="flex items-center gap-2 mb-4">
             <Activity className="w-4 h-4 text-slate-500 dark:text-slate-400" />
             <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">AI Insight Summary</h3>
-            <span className="ml-auto text-[10px] text-slate-600">Synthesized · Updated 7:28 PM</span>
+            <span className="ml-auto text-[10px] text-slate-700">Synthesized · Updated 7:28 PM</span>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div className="flex items-start gap-2.5 p-3 bg-red-500/5 border border-red-500/10 rounded-lg">
@@ -856,7 +856,7 @@ const ActiveCasesDashboard = () => {
                   <span className="text-[10px] font-bold text-red-700 dark:text-red-700 dark:text-red-400/70">97% confidence</span>
                 </div>
                 <p className="text-[11px] text-slate-500 dark:text-slate-400 mb-1">Homicide charge window closes in 14 hrs. DEA surveillance expires EOD. Meth warrant hearing Dec 06. 3 deadlines converging — command action required today.</p>
-                <p className="text-[10px] text-slate-600">Based on: case file deadlines, court scheduling data, lab SLA records</p>
+                <p className="text-[10px] text-slate-700">Based on: case file deadlines, court scheduling data, lab SLA records</p>
               </div>
             </div>
             <div className="flex items-start gap-2.5 p-3 bg-amber-500/5 border border-amber-500/10 rounded-lg">
@@ -867,29 +867,29 @@ const ActiveCasesDashboard = () => {
                   <span className="text-[10px] font-bold text-amber-700 dark:text-amber-400/70">88% confidence</span>
                 </div>
                 <p className="text-[11px] text-slate-500 dark:text-slate-400 mb-1">Armed robberies +15% MoM. Pharmacy series (3 incidents) indicates organized ring. Gang shooting retaliation risk elevated. Burglary rate declining.</p>
-                <p className="text-[10px] text-slate-600">Based on: 90-day incident reports, MO pattern matching, patrol CAD data</p>
+                <p className="text-[10px] text-slate-700">Based on: 90-day incident reports, MO pattern matching, patrol CAD data</p>
               </div>
             </div>
-            <div className="flex items-start gap-2.5 p-3 bg-slate-50 dark:bg-slate-700/20 border border-slate-200 dark:border-slate-700/20 rounded-lg">
+            <div className="flex items-start gap-2.5 p-3 bg-slate-50 dark:bg-slate-700/20 border border-slate-200 dark:border-slate-200 dark:border-slate-700/20 rounded-lg">
               <Users className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 mt-0.5 flex-shrink-0" />
               <div className="flex-1">
                 <div className="flex items-center justify-between mb-0.5">
-                  <p className="text-[11px] font-semibold text-slate-600 dark:text-slate-300">Workload Risk</p>
+                  <p className="text-[11px] font-semibold text-slate-700 dark:text-slate-300">Workload Risk</p>
                   <span className="text-[10px] font-bold text-slate-500">92% confidence</span>
                 </div>
                 <p className="text-[11px] text-slate-500 dark:text-slate-400 mb-1">Det. Rodriguez at capacity with 1 critical homicide. Det. Wilson has available bandwidth. One reassignment resolves imbalance and improves burglary clearance.</p>
-                <p className="text-[10px] text-slate-600">Based on: active case loads, clearance history, detective availability status</p>
+                <p className="text-[10px] text-slate-700">Based on: active case loads, clearance history, detective availability status</p>
               </div>
             </div>
-            <div className="flex items-start gap-2.5 p-3 bg-slate-50 dark:bg-slate-700/20 border border-slate-200 dark:border-slate-700/20 rounded-lg">
+            <div className="flex items-start gap-2.5 p-3 bg-slate-50 dark:bg-slate-700/20 border border-slate-200 dark:border-slate-200 dark:border-slate-700/20 rounded-lg">
               <TrendingDown className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 mt-0.5 flex-shrink-0" />
               <div className="flex-1">
                 <div className="flex items-center justify-between mb-0.5">
-                  <p className="text-[11px] font-semibold text-slate-600 dark:text-slate-300">Clearance Outlook</p>
+                  <p className="text-[11px] font-semibold text-slate-700 dark:text-slate-300">Clearance Outlook</p>
                   <span className="text-[10px] font-bold text-slate-500">81% confidence</span>
                 </div>
                 <p className="text-[11px] text-slate-500 dark:text-slate-400 mb-1">Overall 75% meets target. Robbery (68%) and Burglary (62%) below. Task force + Wilson reassignment are the two highest-leverage moves to close year at target.</p>
-                <p className="text-[10px] text-slate-600">Based on: YTD clearance trajectory, case complexity scores, historical close rates</p>
+                <p className="text-[10px] text-slate-700">Based on: YTD clearance trajectory, case complexity scores, historical close rates</p>
               </div>
             </div>
           </div>
@@ -913,11 +913,11 @@ const ActiveCasesDashboard = () => {
             <p className="text-[12px] text-slate-500 dark:text-slate-400 mb-4">Two actions. ~5 minutes total. Resolves both URGENT items before EOD. Deferral risks: task force collapse + suspect release on homicide.</p>
 
             {/* Impact Chain */}
-            <div className="mb-4 bg-slate-100 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/20 rounded-lg p-3.5 space-y-2">
+            <div className="mb-4 bg-slate-100 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-200 dark:border-slate-700/20 rounded-lg p-3.5 space-y-2">
               <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest mb-1">Impact Chain</p>
               <div className="flex items-start gap-2">
                 <span className="text-[10px] font-bold text-amber-700 dark:text-amber-400 uppercase w-24 flex-shrink-0 mt-0.5">Immediate</span>
-                <p className="text-[11px] text-slate-600 dark:text-slate-300">DEA surveillance continues. Lab escalation filed. Both URGENT items cleared from command queue.</p>
+                <p className="text-[11px] text-slate-700 dark:text-slate-300">DEA surveillance continues. Lab escalation filed. Both URGENT items cleared from command queue.</p>
               </div>
               <div className="flex items-start gap-2">
                 <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase w-24 flex-shrink-0 mt-0.5">Downstream</span>
@@ -933,7 +933,7 @@ const ActiveCasesDashboard = () => {
               <button className="flex items-center gap-2 px-4 py-2.5 bg-amber-500 dark:bg-amber-500/15 border border-amber-500 dark:border-amber-500/30 text-white dark:text-amber-300 rounded-lg text-[13px] font-bold hover:bg-amber-600 dark:hover:bg-amber-500/25 transition-all">
                 <CheckCircle className="w-4 h-4" /> Approve DEA Extension
               </button>
-              <button className="flex items-center gap-2 px-4 py-2.5 bg-slate-100 dark:bg-slate-800/50 border border-slate-300 dark:border-slate-700/50 text-slate-600 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-200 dark:hover:bg-slate-700/50 transition-all">
+              <button className="flex items-center gap-2 px-4 py-2.5 bg-slate-100 dark:bg-slate-800/50 border border-slate-300 dark:border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-all">
                 <ArrowUpRight className="w-4 h-4" /> Escalate Lab Request
               </button>
             </div>
@@ -942,37 +942,37 @@ const ActiveCasesDashboard = () => {
 
         {/* Quick Actions */}
         <div className="flex items-center gap-3 flex-wrap">
-          <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-600 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-200 dark:hover:bg-slate-800/60 transition-all">
+          <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all">
             <Plus className="w-4 h-4" /> New Case
           </button>
-          <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-600 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-200 dark:hover:bg-slate-800/60 transition-all">
+          <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all">
             <Database className="w-4 h-4" /> Search NCIC
           </button>
-          <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-600 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-200 dark:hover:bg-slate-800/60 transition-all">
+          <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all">
             <Users className="w-4 h-4" /> Task Force
           </button>
-          <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-600 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-200 dark:hover:bg-slate-800/60 transition-all">
+          <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all">
             <FileWarning className="w-4 h-4" /> Warrant
           </button>
-          <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-600 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-200 dark:hover:bg-slate-800/60 transition-all">
+          <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all">
             <Microscope className="w-4 h-4" /> Lab Request
           </button>
           <button
             onClick={() => setShowAnalytics(!showAnalytics)}
-            className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-600 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-200 dark:hover:bg-slate-800/60 transition-all"
+            className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all"
           >
             <BarChart3 className="w-4 h-4" /> Analytics
           </button>
           <button
             onClick={() => setShowConnections(!showConnections)}
-            className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-600 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-200 dark:hover:bg-slate-800/60 transition-all"
+            className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all"
           >
             <Link2 className="w-4 h-4" /> Case Connections
           </button>
         </div>
 
         {/* Filters — unified styling */}
-        <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+        <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
           <div className="flex items-center gap-4 mb-4">
             <div className="flex-1 relative">
               <Search className="w-4 h-4 text-slate-500 absolute left-4 top-1/2 -translate-y-1/2" />
@@ -1020,7 +1020,7 @@ const ActiveCasesDashboard = () => {
           {filteredCases.map((c) => (
             <div
               key={c.id}
-              className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none hover:border-slate-600/40 transition-colors cursor-pointer"
+              className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none hover:border-slate-600/40 transition-colors cursor-pointer"
               onClick={() => setSelectedCase(c)}
             >
               <div className="flex items-center gap-4 p-5">
@@ -1045,15 +1045,15 @@ const ActiveCasesDashboard = () => {
                   )}
                   <div className="flex items-center gap-2 text-[11px] flex-wrap">
                     <span className="text-slate-500 dark:text-slate-400">{c.type}</span>
-                    <span className="text-slate-600">·</span>
+                    <span className="text-slate-700">·</span>
                     <span className="text-slate-500 dark:text-slate-400">#{c.caseNumber}</span>
-                    <span className="text-slate-600">·</span>
+                    <span className="text-slate-700">·</span>
                     <span className="text-slate-500 dark:text-slate-400">{c.leadDetective}</span>
-                    <span className="text-slate-600">·</span>
+                    <span className="text-slate-700">·</span>
                     <span className="text-slate-500 dark:text-slate-400">{c.evidence} evidence / {c.witnesses} witnesses</span>
                     {c.nextAction && (
                       <>
-                        <span className="text-slate-600">·</span>
+                        <span className="text-slate-700">·</span>
                         <span className={c.priority === 'Critical' ? 'text-red-700 dark:text-red-400' : 'text-amber-700 dark:text-amber-400'}>{c.nextAction}</span>
                       </>
                     )}
@@ -1062,20 +1062,20 @@ const ActiveCasesDashboard = () => {
 
                 <div className="flex items-center gap-3 flex-shrink-0">
                   <div className="text-right mr-1">
-                    <span className={`text-sm font-semibold ${c.daysOpen > 60 ? 'text-red-700 dark:text-red-400' : c.daysOpen > 30 ? 'text-amber-700 dark:text-amber-400' : 'text-slate-600 dark:text-slate-300'}`}>
+                    <span className={`text-sm font-semibold ${c.daysOpen > 60 ? 'text-red-700 dark:text-red-400' : c.daysOpen > 30 ? 'text-amber-700 dark:text-amber-400' : 'text-slate-700 dark:text-slate-300'}`}>
                       {c.daysOpen}d
                     </span>
                     <div className="text-[11px] text-slate-500">open</div>
                   </div>
                   <button
                     onClick={(e) => { e.stopPropagation(); setSelectedCase(c); }}
-                    className="flex items-center gap-1 px-2.5 py-1.5 bg-slate-100 dark:bg-slate-700/30 border border-slate-300 dark:border-slate-600/30 text-slate-600 dark:text-slate-300 rounded text-[11px] font-medium hover:bg-slate-200 dark:hover:bg-slate-700/50 transition-all"
+                    className="flex items-center gap-1 px-2.5 py-1.5 bg-slate-100 dark:bg-slate-700/30 border border-slate-300 dark:border-slate-600/30 text-slate-700 dark:text-slate-300 rounded text-[11px] font-medium hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-all"
                   >
                     <Eye className="w-3 h-3" /> Open
                   </button>
                   <button
                     onClick={(e) => e.stopPropagation()}
-                    className="flex items-center gap-1 px-2.5 py-1.5 bg-slate-50 dark:bg-slate-700/20 border border-slate-200 dark:border-slate-600/20 text-slate-500 dark:text-slate-400 rounded text-[11px] font-medium hover:bg-slate-100 dark:hover:bg-slate-700/40 transition-all"
+                    className="flex items-center gap-1 px-2.5 py-1.5 bg-slate-50 dark:bg-slate-700/20 border border-slate-200 dark:border-slate-600/20 text-slate-500 dark:text-slate-400 rounded text-[11px] font-medium hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-700/40 transition-all"
                   >
                     <UserCheck className="w-3 h-3" /> Reassign
                   </button>
@@ -1125,7 +1125,7 @@ const ActiveCasesDashboard = () => {
               </div>
 
               {/* Lead Detective */}
-              <div className="mb-5 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+              <div className="mb-5 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
                 <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide mb-3">Lead Detective</h3>
                 <div className="flex items-center justify-between">
                   <div>
@@ -1133,10 +1133,10 @@ const ActiveCasesDashboard = () => {
                     <div className="text-[11px] text-slate-500">Badge: {selectedCase.badge}</div>
                   </div>
                   <div className="flex gap-2">
-                    <button className="flex items-center gap-2 px-3 py-1.5 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-600 dark:text-slate-300 rounded-lg text-xs hover:bg-slate-200 dark:hover:bg-slate-800/60 transition-all">
+                    <button className="flex items-center gap-2 px-3 py-1.5 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-300 rounded-lg text-xs hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all">
                       <Phone className="w-3 h-3" /> Call
                     </button>
-                    <button className="flex items-center gap-2 px-3 py-1.5 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-600 dark:text-slate-300 rounded-lg text-xs hover:bg-slate-200 dark:hover:bg-slate-800/60 transition-all">
+                    <button className="flex items-center gap-2 px-3 py-1.5 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-300 rounded-lg text-xs hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all">
                       <Mail className="w-3 h-3" /> Email
                     </button>
                   </div>
@@ -1145,26 +1145,26 @@ const ActiveCasesDashboard = () => {
 
               {/* Status & Evidence */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
-                <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+                <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
                   <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide mb-3">Status</h3>
                   <div className="space-y-2 text-xs">
-                    <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Current</span><span className="text-slate-600 dark:text-slate-300">{selectedCase.status}</span></div>
-                    <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Opened</span><span className="text-slate-600 dark:text-slate-300">{selectedCase.openedDate}</span></div>
-                    <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Last Update</span><span className="text-slate-600 dark:text-slate-300">2 hours ago</span></div>
+                    <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Current</span><span className="text-slate-700 dark:text-slate-300">{selectedCase.status}</span></div>
+                    <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Opened</span><span className="text-slate-700 dark:text-slate-300">{selectedCase.openedDate}</span></div>
+                    <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Last Update</span><span className="text-slate-700 dark:text-slate-300">2 hours ago</span></div>
                   </div>
                 </div>
-                <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+                <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
                   <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide mb-3">Evidence & Witnesses</h3>
                   <div className="space-y-2 text-xs">
-                    <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Evidence</span><span className="text-slate-600 dark:text-slate-300">{selectedCase.evidence} collected</span></div>
-                    <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Witnesses</span><span className="text-slate-600 dark:text-slate-300">{selectedCase.witnesses} interviewed</span></div>
-                    <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Suspects</span><span className="text-slate-600 dark:text-slate-300">{selectedCase.suspects} identified</span></div>
+                    <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Evidence</span><span className="text-slate-700 dark:text-slate-300">{selectedCase.evidence} collected</span></div>
+                    <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Witnesses</span><span className="text-slate-700 dark:text-slate-300">{selectedCase.witnesses} interviewed</span></div>
+                    <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Suspects</span><span className="text-slate-700 dark:text-slate-300">{selectedCase.suspects} identified</span></div>
                   </div>
                 </div>
               </div>
 
               {/* Timeline */}
-              <div className="mb-5 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+              <div className="mb-5 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
                 <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide mb-4">Case Timeline</h3>
                 <div className="space-y-3">
                   <div className="flex gap-3">
@@ -1216,11 +1216,11 @@ const ActiveCasesDashboard = () => {
               </div>
 
               {/* Team */}
-              <div className="mb-5 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+              <div className="mb-5 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
                 <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide mb-3">Assigned Team</h3>
                 <div className="flex flex-wrap gap-2">
                   {selectedCase.assignedTo.map((person, idx) => (
-                    <span key={idx} className="px-3 py-1.5 bg-slate-100 dark:bg-slate-700/30 text-slate-600 dark:text-slate-300 rounded-lg text-[13px]">
+                    <span key={idx} className="px-3 py-1.5 bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-300 rounded-lg text-[13px]">
                       {person}
                     </span>
                   ))}
@@ -1228,26 +1228,26 @@ const ActiveCasesDashboard = () => {
               </div>
 
               {/* Notes */}
-              <div className="mb-5 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+              <div className="mb-5 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
                 <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide mb-3">Case Summary</h3>
-                <p className="text-[13px] text-slate-600 dark:text-slate-300">{selectedCase.notes}</p>
+                <p className="text-[13px] text-slate-700 dark:text-slate-300">{selectedCase.notes}</p>
               </div>
 
               {/* Actions */}
               <div className="flex flex-wrap gap-2">
-                <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-600 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-200 dark:hover:bg-slate-800/60 transition-all">
+                <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all">
                   <FileText className="w-4 h-4" /> Update Status
                 </button>
-                <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-600 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-200 dark:hover:bg-slate-800/60 transition-all">
+                <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all">
                   <Scale className="w-4 h-4" /> Request Warrant
                 </button>
-                <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-600 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-200 dark:hover:bg-slate-800/60 transition-all">
+                <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all">
                   <FlaskConical className="w-4 h-4" /> Lab Request
                 </button>
-                <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-600 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-200 dark:hover:bg-slate-800/60 transition-all">
+                <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all">
                   <Link2 className="w-4 h-4" /> Link Cases
                 </button>
-                <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-600 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-200 dark:hover:bg-slate-800/60 transition-all">
+                <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all">
                   <Activity className="w-4 h-4" /> Case Notes
                 </button>
               </div>

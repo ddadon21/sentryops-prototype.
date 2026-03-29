@@ -580,7 +580,7 @@ export default function Approvals() {
                     </span>
                   )}
                   {activeTab === 'decision-log' && (
-                    <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-100 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-lg text-[11px] text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:text-white transition-colors">
+                    <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-100 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-lg text-[11px] text-slate-700 dark:text-slate-400 hover:bg-slate-200 dark:hover:text-white transition-colors">
                       <Download className="w-3 h-3" />
                       Export
                     </button>
@@ -598,7 +598,7 @@ export default function Approvals() {
                 }`}
               >
                 Pending
-                <span className={`px-1 py-px rounded text-[10px] ${activeTab === 'pending' ? 'bg-amber-500/15 text-amber-600 dark:text-amber-400' : 'bg-slate-200 dark:bg-slate-800/50 text-slate-600 dark:text-slate-500'}`}>
+                <span className={`px-1 py-px rounded text-[10px] ${activeTab === 'pending' ? 'bg-amber-500/15 text-amber-600 dark:text-amber-400' : 'bg-slate-200 dark:bg-slate-800/50 text-slate-700 dark:text-slate-500'}`}>
                   {approvalsList.length}
                 </span>
                 {activeTab === 'pending' && <div className="absolute bottom-0 left-0 right-0 h-px bg-amber-500"></div>}
@@ -619,18 +619,18 @@ export default function Approvals() {
               <div className="mb-4">
                 <button
                   onClick={() => setAiSummaryExpanded(!aiSummaryExpanded)}
-                  className="w-full flex items-center gap-2 px-3 py-2 bg-slate-50 dark:bg-slate-800/35 border border-slate-200 dark:border-slate-700/30 rounded hover:bg-slate-100 dark:hover:bg-slate-800/30 transition-colors"
+                  className="w-full flex items-center gap-2 px-3 py-2 bg-slate-50 dark:bg-slate-800/35 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/30 transition-colors"
                 >
                   <Sparkles className="w-3 h-3 text-slate-500" />
-                  <span className="text-[11px] text-slate-600 dark:text-slate-400 flex-1 text-left">
+                  <span className="text-[11px] text-slate-700 dark:text-slate-400 flex-1 text-left">
                     <span className="text-slate-500 font-medium">AI Summary:</span>{' '}
                     <span className="text-red-600 dark:text-red-400">{urgentCount} items need decision within 24h</span>
-                    <span className="text-slate-600 mx-1">·</span>
+                    <span className="text-slate-700 mx-1">·</span>
                     <span className="text-green-600 dark:text-green-400">All recs high confidence</span>
-                    <span className="text-slate-600 mx-1">·</span>
-                    <span className="text-slate-600 dark:text-slate-400">No projected deficit risk</span>
+                    <span className="text-slate-700 mx-1">·</span>
+                    <span className="text-slate-700 dark:text-slate-400">No projected deficit risk</span>
                   </span>
-                  {aiSummaryExpanded ? <ChevronUp className="w-3 h-3 text-slate-600" /> : <ChevronDown className="w-3 h-3 text-slate-600" />}
+                  {aiSummaryExpanded ? <ChevronUp className="w-3 h-3 text-slate-700" /> : <ChevronDown className="w-3 h-3 text-slate-700" />}
                 </button>
 
                 {aiSummaryExpanded && (
@@ -640,7 +640,7 @@ export default function Approvals() {
                     <p className="text-[10px] text-red-600 dark:text-red-400">• Detention HVAC emergency ($18.5K) — H2-Pod at 84°F. Contractor on standby. Must authorize by 1200.</p>
                     <p className="text-[10px] text-amber-600 dark:text-amber-400">• Federal Deputy hire (Jane Doe) — offer expires in 3 days. Competing offer from Fulton County.</p>
                     <p className="text-[10px] text-green-600 dark:text-green-400">• Body camera upgrade ($125K) — 88% confidence. DOJ grant pending ($37.5K offset).</p>
-                    <p className="text-[10px] text-slate-600 dark:text-slate-400">• Total pending: ${pendingAmount.toLocaleString()} / $550K remaining FY24. No constraints.</p>
+                    <p className="text-[10px] text-slate-700 dark:text-slate-400">• Total pending: ${pendingAmount.toLocaleString()} / $550K remaining FY24. No constraints.</p>
                   </div>
                 )}
               </div>
@@ -670,7 +670,7 @@ export default function Approvals() {
                     }`}
                   >
                     {opt.label}
-                    <span className={`ml-1 ${filterType === opt.id ? 'text-slate-500' : 'text-slate-600'}`}>{opt.count}</span>
+                    <span className={`ml-1 ${filterType === opt.id ? 'text-slate-500' : 'text-slate-700'}`}>{opt.count}</span>
                   </button>
                 ))}
 
@@ -678,7 +678,7 @@ export default function Approvals() {
 
                 {/* Sort toggle */}
                 <div className="flex items-center gap-1">
-                  <span className="text-[10px] text-slate-600 mr-1">Sort:</span>
+                  <span className="text-[10px] text-slate-700 mr-1">Sort:</span>
                   {[
                     { id: 'urgency', label: 'Urgency' },
                     { id: 'amount', label: 'Amount' },
@@ -690,7 +690,7 @@ export default function Approvals() {
                       className={`px-2 py-0.5 rounded text-[10px] font-medium transition-all ${
                         sortBy === s.id
                           ? 'bg-slate-200 dark:bg-slate-700/50 text-slate-900 dark:text-white'
-                          : 'text-slate-600 hover:text-slate-900 dark:hover:text-slate-400'
+                          : 'text-slate-700 hover:text-slate-900 dark:hover:text-slate-400'
                       }`}
                     >
                       {s.label}
@@ -704,8 +704,8 @@ export default function Approvals() {
               <>
                 {/* Bulk Actions Toolbar */}
                 {selectedItems.length > 0 && (
-                  <div className="mb-3 flex items-center gap-2 px-3 py-2 bg-slate-50 dark:bg-slate-800/35 border border-slate-200 dark:border-slate-700/30 rounded">
-                    <CheckSquare className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
+                  <div className="mb-3 flex items-center gap-2 px-3 py-2 bg-slate-50 dark:bg-slate-800/35 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded">
+                    <CheckSquare className="w-3.5 h-3.5 text-slate-700 dark:text-slate-400" />
                     <span className="text-[11px] font-semibold text-slate-900 dark:text-white">
                       {selectedItems.length} selected
                     </span>
@@ -731,7 +731,7 @@ export default function Approvals() {
                         className="flex items-center gap-1.5 text-[11px] text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors"
                       >
                         {selectedItems.length === filteredApprovals.length ? (
-                          <CheckSquare className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
+                          <CheckSquare className="w-3.5 h-3.5 text-slate-700 dark:text-slate-400" />
                         ) : (
                           <Square className="w-3.5 h-3.5" />
                         )}
@@ -752,7 +752,7 @@ export default function Approvals() {
                             key={approval.id}
                             className={`rounded border transition-colors ${
                               isSelected ? 'border-slate-600/40 bg-slate-700/[0.1]' :
-                              'border-slate-200 dark:border-slate-700/30 bg-white dark:bg-slate-800/15 hover:bg-slate-50 dark:hover:bg-slate-800/30'
+                              'border-slate-200 dark:border-slate-200 dark:border-slate-700/30 bg-white dark:bg-slate-800/15 hover:bg-slate-50 dark:hover:bg-slate-100 dark:hover:bg-slate-800/30'
                             }`}
                           >
                             {/* ── Compact Row ──────────────────────── */}
@@ -762,28 +762,28 @@ export default function Approvals() {
                                 urgencyState === 'overdue' ? 'bg-red-500' :
                                 urgencyState === 'critical' ? 'bg-amber-500' :
                                 urgencyState === 'soon' ? 'bg-amber-500/60' :
-                                'bg-slate-700/30'
+                                'bg-slate-100 dark:bg-slate-700/30'
                               }`}></div>
 
                               {/* Checkbox */}
                               <button onClick={() => toggleSelectItem(approval.id)} className="flex-shrink-0">
                                 {isSelected ? (
-                                  <CheckSquare className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
+                                  <CheckSquare className="w-3.5 h-3.5 text-slate-700 dark:text-slate-400" />
                                 ) : (
-                                  <Square className="w-3.5 h-3.5 text-slate-600 hover:text-slate-600 dark:text-slate-400 transition-colors" />
+                                  <Square className="w-3.5 h-3.5 text-slate-700 hover:text-slate-600 dark:text-slate-400 transition-colors" />
                                 )}
                               </button>
 
                               {/* Type pill */}
                               <span className={`px-1.5 py-px border rounded text-[10px] font-semibold flex-shrink-0 leading-tight ${
-                                approval.type === 'leave' ? 'bg-slate-700/40 border-slate-600/50 text-slate-500' :
-                                approval.type === 'budget' ? 'bg-green-50 border-green-200 text-green-700 dark:bg-green-500/10 dark:border-green-500/20 dark:text-green-400' :
-                                approval.type === 'hiring' ? 'bg-slate-700/40 border-slate-600/50 text-slate-500' :
-                                approval.type === 'overtime' ? 'bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
-                                approval.type === 'emergency' ? 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
+                                approval.type === 'leave' ? 'bg-slate-50 dark:bg-slate-700/40 border-slate-600/50 text-slate-500' :
+                                approval.type === 'budget' ? 'bg-green-100 border-green-200 text-green-700 dark:bg-green-500/10 dark:border-green-500/20 dark:text-green-400' :
+                                approval.type === 'hiring' ? 'bg-slate-50 dark:bg-slate-700/40 border-slate-600/50 text-slate-500' :
+                                approval.type === 'overtime' ? 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
+                                approval.type === 'emergency' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
                                 approval.type === 'policy' ? 'bg-slate-400/10 border-slate-400/20 text-slate-500' :
                                 approval.type === 'mutual-aid' ? 'bg-cyan-500/10 border-cyan-500/20 text-cyan-400' :
-                                'bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400'
+                                'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400'
                               }`}>
                                 {approval.type === 'mutual-aid' ? 'Mutual Aid' :
                                  approval.type === 'overtime' ? 'OT' :
@@ -808,7 +808,7 @@ export default function Approvals() {
                               </span>
 
                               {/* Pending time */}
-                              <span className="text-[10px] text-slate-600 flex-shrink-0 font-mono">
+                              <span className="text-[10px] text-slate-700 flex-shrink-0 font-mono">
                                 {getPendingTime(approval.daysAgo)}
                               </span>
 
@@ -816,7 +816,7 @@ export default function Approvals() {
                               {deadlineLabel && (
                                 <span className={`px-1.5 py-px border rounded text-[10px] font-bold flex-shrink-0 ${
                                   urgencyState === 'overdue' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/15 dark:border-red-500/25 dark:text-red-400' :
-                                  urgencyState === 'critical' ? 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
+                                  urgencyState === 'critical' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
                                   'bg-amber-500/8 border-amber-500/15 text-amber-600 dark:text-amber-400'
                                 }`}>
                                   {deadlineLabel}
@@ -858,7 +858,7 @@ export default function Approvals() {
                                 </button>
                                 <button
                                   onClick={() => toggleExpandCard(approval.id)}
-                                  className="p-1 rounded hover:bg-slate-700/30 transition-colors"
+                                  className="p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-700/30 transition-colors"
                                   title={isExpanded ? 'Collapse' : 'Expand'}
                                 >
                                   {isExpanded ? <ChevronUp className="w-3.5 h-3.5 text-slate-500" /> : <ChevronDown className="w-3.5 h-3.5 text-slate-500" />}
@@ -870,7 +870,7 @@ export default function Approvals() {
                             {isExpanded && (
                               <div className="px-3.5 pb-3 pt-1 ml-[26px] space-y-2.5">
                                 {/* Key context row */}
-                                <div className="flex items-center gap-3 text-[10px] text-slate-600 dark:text-slate-400 flex-wrap">
+                                <div className="flex items-center gap-3 text-[10px] text-slate-700 dark:text-slate-400 flex-wrap">
                                   <span className="flex items-center gap-1">
                                     <Building2 className="w-3 h-3" />
                                     {approval.division}
@@ -908,7 +908,7 @@ export default function Approvals() {
                                 </div>
 
                                 {/* Justification */}
-                                <div className="bg-slate-50 dark:bg-slate-900/30 rounded p-2.5 border border-slate-200 dark:border-slate-700/30">
+                                <div className="bg-slate-50 dark:bg-slate-900/30 rounded p-2.5 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30">
                                   <p className="text-[10px] text-slate-500 font-semibold mb-1">Justification</p>
                                   <p className="text-[11px] text-slate-700 dark:text-slate-300 leading-relaxed">{approval.justification}</p>
                                 </div>
@@ -917,17 +917,17 @@ export default function Approvals() {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                                   <div className="bg-green-500/[0.03] border border-green-500/10 rounded p-2.5">
                                     <p className="text-[10px] font-bold text-green-600 dark:text-green-400 mb-1">IF APPROVED</p>
-                                    <p className="text-[10px] text-slate-600 dark:text-slate-400 leading-relaxed">{approval.impact.approved}</p>
+                                    <p className="text-[10px] text-slate-700 dark:text-slate-400 leading-relaxed">{approval.impact.approved}</p>
                                   </div>
                                   <div className="bg-red-500/[0.03] border border-red-500/10 rounded p-2.5">
                                     <p className="text-[10px] font-bold text-red-600 dark:text-red-400 mb-1">IF DENIED</p>
-                                    <p className="text-[10px] text-slate-600 dark:text-slate-400 leading-relaxed">{approval.impact.denied}</p>
+                                    <p className="text-[10px] text-slate-700 dark:text-slate-400 leading-relaxed">{approval.impact.denied}</p>
                                   </div>
                                 </div>
 
                                 {/* Budget impact (inline if exists) */}
                                 {approval.budgetImpact && (
-                                  <div className="flex items-center gap-4 text-[10px] text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-900/20 rounded px-2.5 py-2 border border-slate-200 dark:border-slate-700/10">
+                                  <div className="flex items-center gap-4 text-[10px] text-slate-700 dark:text-slate-400 bg-slate-50 dark:bg-slate-900/20 rounded px-2.5 py-2 border border-slate-200 dark:border-slate-700/10">
                                     <span className="text-slate-500 font-semibold">Budget:</span>
                                     <span>{approval.budgetImpact.category}</span>
                                     {approval.budgetImpact.allocated && <span>Allocated ${approval.budgetImpact.allocated.toLocaleString()}</span>}
@@ -944,7 +944,7 @@ export default function Approvals() {
 
                                 {/* AI Analysis (expanded, still subdued) */}
                                 {approval.aiRecommendation && (
-                                  <div className="flex items-start gap-2 text-[10px] text-slate-600 dark:text-slate-400">
+                                  <div className="flex items-start gap-2 text-[10px] text-slate-700 dark:text-slate-400">
                                     <Sparkles className="w-3 h-3 text-slate-500 mt-0.5 flex-shrink-0" />
                                     <div>
                                       <span className="text-slate-500 font-semibold">AI Analysis:</span>{' '}
@@ -962,11 +962,11 @@ export default function Approvals() {
                                 {/* Documents */}
                                 {approval.documents && approval.documents.length > 0 && (
                                   <div className="flex items-center gap-2 flex-wrap">
-                                    <FileCheck className="w-3 h-3 text-slate-600" />
+                                    <FileCheck className="w-3 h-3 text-slate-700" />
                                     {approval.documents.map((doc, idx) => (
                                       <button
                                         key={idx}
-                                        className="flex items-center gap-1 px-1.5 py-0.5 bg-slate-100 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-700/30 border border-slate-200 dark:border-slate-700/30 rounded text-[10px] text-slate-700 dark:text-slate-300 transition-colors"
+                                        className="flex items-center gap-1 px-1.5 py-0.5 bg-slate-100 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-700/30 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded text-[10px] text-slate-700 dark:text-slate-300 transition-colors"
                                       >
                                         <FileText className="w-2.5 h-2.5" />
                                         {doc}
@@ -979,7 +979,7 @@ export default function Approvals() {
                                 <div className="flex items-center gap-2 pt-1">
                                   <button
                                     onClick={() => openRequestInfoModal(approval)}
-                                    className="px-2 py-1 text-[10px] font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-700/20 rounded transition-colors flex items-center gap-1"
+                                    className="px-2 py-1 text-[10px] font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/20 rounded transition-colors flex items-center gap-1"
                                   >
                                     <Info className="w-3 h-3" />
                                     Request Info
@@ -1033,12 +1033,12 @@ export default function Approvals() {
                       }`}
                     >
                       {opt.label}
-                      <span className={`ml-1 ${logFilter === opt.id ? 'text-slate-500' : 'text-slate-600'}`}>{opt.count}</span>
+                      <span className={`ml-1 ${logFilter === opt.id ? 'text-slate-500' : 'text-slate-700'}`}>{opt.count}</span>
                     </button>
                   ))}
                   <div className="flex-1" />
                   <div className="flex-1 relative max-w-[240px]">
-                    <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-600" />
+                    <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-700" />
                     <input
                       type="text"
                       placeholder="Search log..."
@@ -1048,7 +1048,7 @@ export default function Approvals() {
                 </div>
 
                 {/* Table */}
-                <div className="border border-slate-200 dark:border-slate-700/30 rounded overflow-hidden">
+                <div className="border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded overflow-hidden">
                   <table className="w-full">
                     <thead>
                       <tr className="border-b border-slate-200 dark:border-slate-700/40">
@@ -1064,36 +1064,36 @@ export default function Approvals() {
                     </thead>
                     <tbody>
                       {filteredHistory.map((item) => (
-                        <tr key={item.id} className="border-b border-slate-100 dark:border-slate-800/10 hover:bg-slate-50 dark:hover:bg-slate-800/15 transition-colors">
+                        <tr key={item.id} className="border-b border-slate-100 dark:border-slate-800/10 hover:bg-slate-50 dark:hover:bg-slate-50 dark:hover:bg-slate-800/15 transition-colors">
                           <td className="px-3 py-2.5">
-                            <span className="text-[11px] text-slate-600 dark:text-slate-400 capitalize">{item.type}</span>
+                            <span className="text-[11px] text-slate-700 dark:text-slate-400 capitalize">{item.type}</span>
                           </td>
                           <td className="px-3 py-2.5">
                             <p className="text-[11px] font-semibold text-slate-900 dark:text-white">{item.title}</p>
                             <p className="text-[10px] text-slate-500">{item.submittedBy} · {item.details}</p>
                           </td>
                           <td className="px-3 py-2.5">
-                            <span className="text-[11px] text-slate-600 dark:text-slate-400">{item.division}</span>
+                            <span className="text-[11px] text-slate-700 dark:text-slate-400">{item.division}</span>
                           </td>
                           <td className="px-3 py-2.5">
                             {item.amount ? (
                               <span className="text-[11px] font-mono text-green-600 dark:text-green-400">${item.amount.toLocaleString()}</span>
                             ) : (
-                              <span className="text-[11px] text-slate-600">—</span>
+                              <span className="text-[11px] text-slate-700">—</span>
                             )}
                           </td>
                           <td className="px-3 py-2.5">
                             <span className={`inline-flex items-center gap-1 px-1.5 py-px rounded text-[10px] font-bold border ${
                               item.decision === 'approved'
-                                ? 'bg-green-50 border-green-200 text-green-700 dark:bg-green-500/10 dark:border-green-500/20 dark:text-green-400'
-                                : 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400'
+                                ? 'bg-green-100 border-green-200 text-green-700 dark:bg-green-500/10 dark:border-green-500/20 dark:text-green-400'
+                                : 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400'
                             }`}>
                               {item.decision === 'approved' ? <CheckCircle className="w-2.5 h-2.5" /> : <XCircle className="w-2.5 h-2.5" />}
                               {item.decision === 'approved' ? 'Approved' : 'Denied'}
                             </span>
                           </td>
                           <td className="px-3 py-2.5">
-                            <span className="text-[11px] text-slate-600 dark:text-slate-400">{item.decidedBy}</span>
+                            <span className="text-[11px] text-slate-700 dark:text-slate-400">{item.decidedBy}</span>
                           </td>
                           <td className="px-3 py-2.5">
                             <span className="text-[10px] text-slate-500 font-mono">{new Date(item.decidedDate).toLocaleDateString()}</span>
@@ -1101,7 +1101,7 @@ export default function Approvals() {
                           <td className="px-3 py-2.5 text-right">
                             <button
                               onClick={() => setHistoryDetailModal(item)}
-                              className="text-[10px] text-slate-600 dark:text-slate-400 hover:text-slate-700 dark:text-slate-300 transition-colors"
+                              className="text-[10px] text-slate-700 dark:text-slate-400 hover:text-slate-700 dark:text-slate-300 transition-colors"
                             >
                               View
                             </button>
@@ -1138,7 +1138,7 @@ export default function Approvals() {
                 <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1">
                   {approvalAction === 'approve' ? 'Approve' : 'Deny'} {selectedApproval.title}?
                 </h3>
-                <p className="text-sm text-slate-600 dark:text-slate-400">
+                <p className="text-sm text-slate-700 dark:text-slate-400">
                   {selectedApproval.submittedBy} • {selectedApproval.details}
                 </p>
               </div>
@@ -1160,7 +1160,7 @@ export default function Approvals() {
             <div className="flex gap-3">
               <button
                 onClick={closeApprovalModal}
-                className="flex-1 px-4 py-3 bg-white dark:bg-slate-800/30 hover:bg-slate-50 dark:hover:bg-slate-800/60 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-700 dark:text-white font-medium transition-all"
+                className="flex-1 px-4 py-3 bg-white dark:bg-slate-800/30 hover:bg-slate-50 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-700 dark:text-white font-medium transition-all"
               >
                 Cancel
               </button>
@@ -1189,34 +1189,34 @@ export default function Approvals() {
             <div className="flex items-start justify-between mb-6">
               <div>
                 <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1">{historyDetailModal.title}</h3>
-                <p className="text-sm text-slate-600 dark:text-slate-400">{historyDetailModal.details}</p>
+                <p className="text-sm text-slate-700 dark:text-slate-400">{historyDetailModal.details}</p>
               </div>
               <button
                 onClick={() => setHistoryDetailModal(null)}
-                className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors"
+                className="p-2 hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors"
               >
-                <X className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+                <X className="w-5 h-5 text-slate-700 dark:text-slate-400" />
               </button>
             </div>
 
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="bg-slate-50 dark:bg-slate-800/30 rounded-xl p-4 border border-slate-200 dark:border-slate-700/50">
-                  <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Submitted By</p>
+                  <p className="text-xs text-slate-700 dark:text-slate-400 mb-1">Submitted By</p>
                   <p className="text-sm font-medium text-slate-900 dark:text-white">{historyDetailModal.submittedBy}</p>
                 </div>
                 <div className="bg-slate-50 dark:bg-slate-800/30 rounded-xl p-4 border border-slate-200 dark:border-slate-700/50">
-                  <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Division</p>
+                  <p className="text-xs text-slate-700 dark:text-slate-400 mb-1">Division</p>
                   <p className="text-sm font-medium text-slate-900 dark:text-white">{historyDetailModal.division}</p>
                 </div>
                 {historyDetailModal.amount && (
                   <div className="bg-slate-50 dark:bg-slate-800/30 rounded-xl p-4 border border-slate-200 dark:border-slate-700/50">
-                    <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Amount</p>
+                    <p className="text-xs text-slate-700 dark:text-slate-400 mb-1">Amount</p>
                     <p className="text-sm font-medium text-green-600 dark:text-green-400">${historyDetailModal.amount.toLocaleString()}</p>
                   </div>
                 )}
                 <div className="bg-slate-50 dark:bg-slate-800/30 rounded-xl p-4 border border-slate-200 dark:border-slate-700/50">
-                  <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Submitted Date</p>
+                  <p className="text-xs text-slate-700 dark:text-slate-400 mb-1">Submitted Date</p>
                   <p className="text-sm font-medium text-slate-900 dark:text-white">{new Date(historyDetailModal.submittedDate).toLocaleDateString()}</p>
                 </div>
               </div>
@@ -1241,7 +1241,7 @@ export default function Approvals() {
                   </div>
                 </div>
                 <div className="bg-slate-50 dark:bg-slate-900/50 rounded-lg p-3 border border-slate-200 dark:border-transparent">
-                  <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Decision Notes</p>
+                  <p className="text-xs text-slate-700 dark:text-slate-400 mb-1">Decision Notes</p>
                   <p className="text-sm text-slate-700 dark:text-slate-700 dark:text-slate-200">{historyDetailModal.decisionNotes}</p>
                 </div>
               </div>
@@ -1259,19 +1259,19 @@ export default function Approvals() {
           <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl p-6 max-w-lg w-full shadow-2xl">
             <div className="flex items-start gap-4 mb-6">
               <div className="w-12 h-12 bg-slate-100 dark:bg-slate-700/60 rounded-xl flex items-center justify-center flex-shrink-0">
-                <Info className="w-6 h-6 text-slate-600 dark:text-slate-400" />
+                <Info className="w-6 h-6 text-slate-700 dark:text-slate-400" />
               </div>
               <div className="flex-1">
                 <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1">Request More Information</h3>
-                <p className="text-sm text-slate-600 dark:text-slate-400">
+                <p className="text-sm text-slate-700 dark:text-slate-400">
                   {requestInfoModal.submittedBy} • {requestInfoModal.title}
                 </p>
               </div>
               <button
                 onClick={closeRequestInfoModal}
-                className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors"
+                className="p-2 hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors"
               >
-                <X className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+                <X className="w-5 h-5 text-slate-700 dark:text-slate-400" />
               </button>
             </div>
 
@@ -1294,7 +1294,7 @@ export default function Approvals() {
             <div className="flex gap-3">
               <button
                 onClick={closeRequestInfoModal}
-                className="flex-1 px-4 py-3 bg-white dark:bg-slate-800/30 hover:bg-slate-50 dark:hover:bg-slate-800/60 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-700 dark:text-white font-medium transition-all"
+                className="flex-1 px-4 py-3 bg-white dark:bg-slate-800/30 hover:bg-slate-50 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-700 dark:text-white font-medium transition-all"
               >
                 Cancel
               </button>

@@ -13,13 +13,13 @@ const getRefStatusBadge = (status) => {
     case 'Pending Callback':
       return <span className="px-2.5 py-1 bg-amber-500/10 text-amber-400 rounded-lg text-xs font-medium flex items-center gap-1.5"><Clock className="w-3 h-3" />Pending Callback</span>;
     case 'Not Yet Contacted':
-      return <span className="px-2.5 py-1 bg-slate-500/10 text-slate-600 dark:text-slate-400 rounded-lg text-xs font-medium flex items-center gap-1.5"><AlertCircle className="w-3 h-3" />Not Yet Contacted</span>;
+      return <span className="px-2.5 py-1 bg-slate-500/10 text-slate-700 dark:text-slate-400 rounded-lg text-xs font-medium flex items-center gap-1.5"><AlertCircle className="w-3 h-3" />Not Yet Contacted</span>;
     case 'Scheduled':
       return <span className="px-2.5 py-1 bg-blue-500/10 text-blue-400 rounded-lg text-xs font-medium flex items-center gap-1.5"><Calendar className="w-3 h-3" />Scheduled</span>;
     case 'Required':
       return <span className="px-2.5 py-1 bg-red-500/10 text-red-400 rounded-lg text-xs font-medium flex items-center gap-1.5"><AlertTriangle className="w-3 h-3" />Required</span>;
     default:
-      return <span className="px-2.5 py-1 bg-slate-500/10 text-slate-600 dark:text-slate-400 rounded-lg text-xs font-medium">{status}</span>;
+      return <span className="px-2.5 py-1 bg-slate-500/10 text-slate-700 dark:text-slate-400 rounded-lg text-xs font-medium">{status}</span>;
   }
 };
 
@@ -51,7 +51,7 @@ const getRefTypeBadge = (type) => {
     case 'Personal':
       return <span className="px-2.5 py-1 bg-amber-500/10 text-amber-400 rounded-lg text-xs font-medium flex items-center gap-1"><Users className="w-3 h-3" />Personal</span>;
     default:
-      return <span className="px-2.5 py-1 bg-slate-500/10 text-slate-600 dark:text-slate-400 rounded-lg text-xs font-medium">{type}</span>;
+      return <span className="px-2.5 py-1 bg-slate-500/10 text-slate-700 dark:text-slate-400 rounded-lg text-xs font-medium">{type}</span>;
   }
 };
 
@@ -338,10 +338,10 @@ export default function ReferenceChecks() {
             {/* Page Header */}
             <div className="mb-6">
               <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white mb-2">Reference Checks</h2>
-              <p className="text-slate-600 dark:text-slate-400 mb-3">Professional and personal reference verification for background investigations</p>
+              <p className="text-slate-700 dark:text-slate-400 mb-3">Professional and personal reference verification for background investigations</p>
               <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-slate-500">
                 <span className="flex items-center gap-1.5">
-                  <Calendar className="w-4 h-4 text-slate-600 dark:text-slate-400" />
+                  <Calendar className="w-4 h-4 text-slate-700 dark:text-slate-400" />
                   {currentDateTime.date} at {currentDateTime.time}
                 </span>
                 <span className="flex items-center gap-1.5">
@@ -351,7 +351,7 @@ export default function ReferenceChecks() {
               </div>
               <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-slate-500 mt-1">
                 <span className="flex items-center gap-1.5">
-                  <Users className="w-4 h-4 text-slate-600 dark:text-slate-400" />
+                  <Users className="w-4 h-4 text-slate-700 dark:text-slate-400" />
                   Total references tracked: {references.length} references across active cases
                 </span>
                 <span className="flex items-center gap-1.5">
@@ -366,19 +366,19 @@ export default function ReferenceChecks() {
               <button className="flex items-center gap-2 px-4 py-2.5 bg-amber-500 hover:bg-amber-600 text-white rounded-xl font-medium transition-colors text-sm">
                 <Plus className="w-4 h-4" />Add Reference
               </button>
-              <button className="flex items-center gap-2 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl font-medium transition-colors text-sm">
+              <button className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl font-medium transition-colors text-sm">
                 <Calendar className="w-4 h-4" />Schedule Interview
               </button>
-              <button className="flex items-center gap-2 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl font-medium transition-colors text-sm">
+              <button className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl font-medium transition-colors text-sm">
                 <Users className="w-4 h-4" />View All References
               </button>
-              <button className="flex items-center gap-2 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl font-medium transition-colors text-sm">
+              <button className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl font-medium transition-colors text-sm">
                 <Download className="w-4 h-4" />Export Reference Report
               </button>
-              <button className="flex items-center gap-2 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl font-medium transition-colors text-sm">
+              <button className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl font-medium transition-colors text-sm">
                 <Phone className="w-4 h-4" />Contact Pending
               </button>
-              <button className="flex items-center gap-2 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl font-medium transition-colors text-sm">
+              <button className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl font-medium transition-colors text-sm">
                 <Printer className="w-4 h-4" />Print Reference Log
               </button>
             </div>
@@ -398,50 +398,50 @@ export default function ReferenceChecks() {
               </div>
 
               {/* Overall Status */}
-              <div className="bg-slate-900/40 rounded-lg p-4 mb-4">
+              <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 mb-4">
                 <h5 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Overall Status</h5>
                 <div className="space-y-1.5 text-sm">
-                  <div className="text-slate-600 dark:text-slate-400">Total references required: <span className="text-slate-900 dark:text-white font-medium">5</span> <span className="text-slate-500">(per policy: 3 personal, 2 employment)</span></div>
-                  <div className="text-slate-600 dark:text-slate-400">References completed: <span className="text-green-400 font-medium">2</span> <span className="text-slate-500">(40% complete)</span></div>
-                  <div className="text-slate-600 dark:text-slate-400">References pending: <span className="text-amber-400 font-medium">2</span> <span className="text-slate-500">(1 awaiting callback, 1 not yet identified)</span></div>
-                  <div className="text-slate-600 dark:text-slate-400">References not yet contacted: <span className="text-slate-900 dark:text-white">0</span></div>
+                  <div className="text-slate-700 dark:text-slate-400">Total references required: <span className="text-slate-900 dark:text-white font-medium">5</span> <span className="text-slate-500">(per policy: 3 personal, 2 employment)</span></div>
+                  <div className="text-slate-700 dark:text-slate-400">References completed: <span className="text-green-400 font-medium">2</span> <span className="text-slate-500">(40% complete)</span></div>
+                  <div className="text-slate-700 dark:text-slate-400">References pending: <span className="text-amber-400 font-medium">2</span> <span className="text-slate-500">(1 awaiting callback, 1 not yet identified)</span></div>
+                  <div className="text-slate-700 dark:text-slate-400">References not yet contacted: <span className="text-slate-900 dark:text-white">0</span></div>
                 </div>
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
                 {/* Completed Summary */}
-                <div className="bg-slate-900/40 rounded-lg p-4">
+                <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4">
                   <h5 className="text-sm font-semibold text-green-400 mb-3 flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4" />Completed References (2)
                   </h5>
                   <div className="space-y-3 text-sm">
                     <div>
                       <p className="text-slate-900 dark:text-white font-medium">Sgt. John Davis (Current Supervisor)</p>
-                      <p className="text-slate-600 dark:text-slate-400">Interview: Jan 23, 2026 — Employment reference</p>
+                      <p className="text-slate-700 dark:text-slate-400">Interview: Jan 23, 2026 — Employment reference</p>
                       <p className="text-green-400">Outcome: POSITIVE — Strongly recommends for hire</p>
                     </div>
                     <div>
                       <p className="text-slate-900 dark:text-white font-medium">Capt. Sarah Williams (Former Supervisor)</p>
-                      <p className="text-slate-600 dark:text-slate-400">Interview: Jan 23, 2026 — Employment reference</p>
+                      <p className="text-slate-700 dark:text-slate-400">Interview: Jan 23, 2026 — Employment reference</p>
                       <p className="text-green-400">Outcome: POSITIVE — Recommends for hire</p>
                     </div>
                   </div>
                 </div>
 
                 {/* Pending Summary */}
-                <div className="bg-slate-900/40 rounded-lg p-4">
+                <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4">
                   <h5 className="text-sm font-semibold text-amber-400 mb-3 flex items-center gap-2">
                     <Clock className="w-4 h-4" />Pending References (2)
                   </h5>
                   <div className="space-y-3 text-sm">
                     <div>
                       <p className="text-slate-900 dark:text-white font-medium">Officer Michael Brown (Colleague/FTO)</p>
-                      <p className="text-slate-600 dark:text-slate-400">Status: Awaiting callback (1 contact attempt Jan 23)</p>
+                      <p className="text-slate-700 dark:text-slate-400">Status: Awaiting callback (1 contact attempt Jan 23)</p>
                       <p className="text-amber-400/80">Next action: Follow up Jan 27 if no response</p>
                     </div>
                     <div>
                       <p className="text-slate-900 dark:text-white font-medium">Additional personal reference (to be added)</p>
-                      <p className="text-slate-600 dark:text-slate-400">Status: Not yet scheduled</p>
+                      <p className="text-slate-700 dark:text-slate-400">Status: Not yet scheduled</p>
                       <p className="text-amber-400/80">Next action: Contact applicant for additional references</p>
                     </div>
                   </div>
@@ -449,7 +449,7 @@ export default function ReferenceChecks() {
               </div>
 
               {/* Outcomes */}
-              <div className="bg-slate-900/40 rounded-lg p-4 mb-4">
+              <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 mb-4">
                 <h5 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Reference Check Outcomes</h5>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
                   <div className="flex items-center gap-2 text-green-400">
@@ -476,22 +476,22 @@ export default function ReferenceChecks() {
                 <h5 className="text-sm font-semibold text-amber-400 mb-2 flex items-center gap-2">
                   <AlertTriangle className="w-4 h-4" />Assessment Method Note
                 </h5>
-                <p className="text-sm text-slate-600 dark:text-slate-400">
+                <p className="text-sm text-slate-700 dark:text-slate-400">
                   References are evaluated <span className="text-slate-900 dark:text-white font-medium">qualitatively</span>, not with numerical ratings or scores. Each reference is assessed individually for: would recommend (Yes/No), performance quality (Excellent/Good/Fair/Poor), disciplinary issues (Yes/No with details), specific concerns (documented), and Brady/Giglio credibility concerns (Yes/No). There is no "overall score" or "average rating."
                 </p>
               </div>
 
               {/* Investigator Assessment */}
-              <div className="bg-slate-900/40 rounded-lg p-4">
+              <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4">
                 <h5 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Investigator Assessment</h5>
-                <p className="text-sm text-slate-600 dark:text-slate-400">
+                <p className="text-sm text-slate-700 dark:text-slate-400">
                   Two strong supervisor references completed (current and former). Both strongly positive with no concerns identified. Pending colleague reference (not critical — already have 2 supervisory refs). Need at least 1 additional personal reference to meet minimum requirements. Recommend contacting applicant for 1–2 additional personal references (non-LE contacts).
                 </p>
               </div>
 
               <div className="flex flex-wrap items-center gap-3 mt-4">
-                <button className="px-3 py-1.5 bg-slate-800/60 hover:bg-slate-800/80 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">View Completed References</button>
-                <button className="px-3 py-1.5 bg-slate-800/60 hover:bg-slate-800/80 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">Contact Pending References</button>
+                <button className="px-3 py-1.5 bg-white dark:bg-slate-800/60 hover:bg-slate-800/80 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">View Completed References</button>
+                <button className="px-3 py-1.5 bg-white dark:bg-slate-800/60 hover:bg-slate-800/80 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">Contact Pending References</button>
                 <button className="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 rounded-lg text-xs font-medium transition-colors">Request Additional References from Applicant</button>
               </div>
             </div>
@@ -505,10 +505,10 @@ export default function ReferenceChecks() {
                 </div>
                 <p className="text-sm font-medium text-slate-900 dark:text-white mb-1">Total References</p>
                 <p className="text-xs text-slate-500">Case BI-2024-145 (Martinez)</p>
-                <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-700/30 space-y-1">
-                  <p className="text-xs text-slate-600 dark:text-slate-400">Employment: 2 (current + former supervisor)</p>
-                  <p className="text-xs text-slate-600 dark:text-slate-400">Professional LE: 1 (colleague/FTO)</p>
-                  <p className="text-xs text-slate-600 dark:text-slate-400">Personal: 1 (need 2–3 per policy)</p>
+                <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-200 dark:border-slate-700/30 space-y-1">
+                  <p className="text-xs text-slate-700 dark:text-slate-400">Employment: 2 (current + former supervisor)</p>
+                  <p className="text-xs text-slate-700 dark:text-slate-400">Professional LE: 1 (colleague/FTO)</p>
+                  <p className="text-xs text-slate-700 dark:text-slate-400">Personal: 1 (need 2–3 per policy)</p>
                 </div>
               </div>
 
@@ -519,21 +519,21 @@ export default function ReferenceChecks() {
                 </div>
                 <p className="text-sm font-medium text-slate-900 dark:text-white mb-1">Completed</p>
                 <p className="text-xs text-slate-500">Interview notes documented</p>
-                <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-700/30 space-y-1">
+                <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-200 dark:border-slate-700/30 space-y-1">
                   <p className="text-xs text-green-400/80">Sgt. Davis — Strongly Positive</p>
                   <p className="text-xs text-green-400/80">Capt. Williams — Positive</p>
                   <p className="text-xs text-slate-500 mt-1">Both recommend for hire</p>
                 </div>
               </div>
 
-              <div className="bg-slate-800/40 border border-amber-500/30 rounded-xl p-5">
+              <div className="bg-white dark:bg-slate-800/40 border border-amber-500/30 rounded-xl p-5">
                 <div className="flex items-center justify-between mb-3">
                   <Clock className="w-8 h-8 text-amber-400" />
                   <span className="text-2xl font-bold text-slate-900 dark:text-white">{pendingRefs.length}</span>
                 </div>
                 <p className="text-sm font-medium text-slate-900 dark:text-white mb-1">Pending</p>
                 <p className="text-xs text-slate-500">Awaiting contact/callback</p>
-                <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-700/30 space-y-1.5">
+                <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-200 dark:border-slate-700/30 space-y-1.5">
                   <div>
                     <p className="text-xs text-amber-400/80">Officer Brown — Awaiting callback</p>
                     <p className="text-xs text-slate-500 ml-2">1 contact attempt (Jan 23)</p>
@@ -552,7 +552,7 @@ export default function ReferenceChecks() {
                 </div>
                 <p className="text-sm font-medium text-slate-900 dark:text-white mb-1">Assessment Summary</p>
                 <p className="text-xs text-slate-500">Evaluated individually, not scored</p>
-                <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-700/30 space-y-1">
+                <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-200 dark:border-slate-700/30 space-y-1">
                   <p className="text-xs text-green-400/80">Would recommend: 2/2 YES</p>
                   <p className="text-xs text-green-400/80">Concerns identified: 0</p>
                   <p className="text-xs text-green-400/80">Brady/Giglio concerns: 0</p>
@@ -566,57 +566,57 @@ export default function ReferenceChecks() {
                 <Settings className="w-4 h-4 text-amber-400" />Reference Check Actions
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                <button className="flex items-start gap-3 p-3 bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                <button className="flex items-start gap-3 p-3 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                   <Plus className="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-sm font-medium text-slate-900 dark:text-white">Add Reference</p>
                     <p className="text-xs text-slate-500 mt-0.5">Add new personal or professional reference</p>
                   </div>
                 </button>
-                <button className="flex items-start gap-3 p-3 bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                <button className="flex items-start gap-3 p-3 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                   <Phone className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-sm font-medium text-slate-900 dark:text-white">Contact Pending</p>
                     <p className="text-xs text-slate-500 mt-0.5">Call/email pending references</p>
                   </div>
                 </button>
-                <button className="flex items-start gap-3 p-3 bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                <button className="flex items-start gap-3 p-3 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                   <Calendar className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-sm font-medium text-slate-900 dark:text-white">Schedule Interview</p>
                     <p className="text-xs text-slate-500 mt-0.5">Schedule phone/in-person reference check</p>
                   </div>
                 </button>
-                <button className="flex items-start gap-3 p-3 bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                <button className="flex items-start gap-3 p-3 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                   <ClipboardList className="w-5 h-5 text-cyan-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-sm font-medium text-slate-900 dark:text-white">Interview Guide</p>
                     <p className="text-xs text-slate-500 mt-0.5">Standard reference check questions</p>
                   </div>
                 </button>
-                <button className="flex items-start gap-3 p-3 bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                <button className="flex items-start gap-3 p-3 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                   <Mail className="w-5 h-5 text-purple-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-sm font-medium text-slate-900 dark:text-white">Send Request Form</p>
                     <p className="text-xs text-slate-500 mt-0.5">Email reference request to contact</p>
                   </div>
                 </button>
-                <button className="flex items-start gap-3 p-3 bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
-                  <Download className="w-5 h-5 text-slate-600 dark:text-slate-400 mt-0.5 flex-shrink-0" />
+                <button className="flex items-start gap-3 p-3 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                  <Download className="w-5 h-5 text-slate-700 dark:text-slate-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-sm font-medium text-slate-900 dark:text-white">Generate Report</p>
                     <p className="text-xs text-slate-500 mt-0.5">Export reference check summary</p>
                   </div>
                 </button>
-                <button className="flex items-start gap-3 p-3 bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                <button className="flex items-start gap-3 p-3 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                   <FileText className="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-sm font-medium text-slate-900 dark:text-white">Add Interview Notes</p>
                     <p className="text-xs text-slate-500 mt-0.5">Document post-interview findings</p>
                   </div>
                 </button>
-                <button className="flex items-start gap-3 p-3 bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
-                  <Search className="w-5 h-5 text-slate-600 dark:text-slate-400 mt-0.5 flex-shrink-0" />
+                <button className="flex items-start gap-3 p-3 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                  <Search className="w-5 h-5 text-slate-700 dark:text-slate-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-sm font-medium text-slate-900 dark:text-white">Search References</p>
                     <p className="text-xs text-slate-500 mt-0.5">By name, relationship, case, or date</p>
@@ -626,7 +626,7 @@ export default function ReferenceChecks() {
             </div>
 
             {/* Tabs */}
-            <div className="flex items-center gap-1 mb-6 bg-slate-800/30 rounded-xl p-1 overflow-x-auto">
+            <div className="flex items-center gap-1 mb-6 bg-slate-100 dark:bg-slate-800/30 rounded-xl p-1 overflow-x-auto">
               {[
                 { id: 'pending', label: 'Pending', count: pendingRefs.length },
                 { id: 'completed', label: 'Completed', count: completedRefs.length },
@@ -639,12 +639,12 @@ export default function ReferenceChecks() {
                   className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all whitespace-nowrap ${
                     selectedView === tab.id
                       ? 'bg-amber-500 text-white shadow-lg'
-                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-slate-800/50'
+                      : 'text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800/50'
                   }`}
                 >
                   {tab.label}
                   <span className={`px-1.5 py-0.5 rounded text-xs ${
-                    selectedView === tab.id ? 'bg-white/20 text-slate-900 dark:text-white' : 'bg-slate-700/50 text-slate-500'
+                    selectedView === tab.id ? 'bg-white/20 text-slate-900 dark:text-white' : 'bg-white dark:bg-slate-700/50 text-slate-500'
                   }`}>{tab.count}</span>
                 </button>
               ))}
@@ -659,7 +659,7 @@ export default function ReferenceChecks() {
                 const isRequired = ref.status === 'Required';
 
                 return (
-                  <div key={ref.id} className={`bg-slate-800/40 border rounded-xl overflow-hidden transition-all ${
+                  <div key={ref.id} className={`bg-white dark:bg-slate-800/40 border rounded-xl overflow-hidden transition-all ${
                     isRequired ? 'border-red-500/30' : isPending ? 'border-amber-500/30' : 'border-slate-700/50 hover:border-amber-500/30'
                   }`}>
                     <div className="p-5">
@@ -672,7 +672,7 @@ export default function ReferenceChecks() {
                           </div>
                           <p className="text-sm text-amber-400 mb-1">{ref.relationship}</p>
                           {ref.organization && (
-                            <p className="text-sm text-slate-600 dark:text-slate-400 mb-1">{ref.rankPosition ? `${ref.rankPosition} — ` : ''}{ref.organization}</p>
+                            <p className="text-sm text-slate-700 dark:text-slate-400 mb-1">{ref.rankPosition ? `${ref.rankPosition} — ` : ''}{ref.organization}</p>
                           )}
                           <p className="text-sm text-slate-500">Reference for: {ref.subject} (Case {ref.caseId}) — {ref.positionApplied}</p>
                         </div>
@@ -684,14 +684,14 @@ export default function ReferenceChecks() {
 
                       {/* Contact Info (if available) */}
                       {ref.phone && (
-                        <div className="bg-slate-900/40 rounded-lg p-3 mb-4">
-                          <h4 className="text-xs font-semibold text-slate-600 dark:text-slate-400 mb-2 uppercase tracking-wider">Contact Information</h4>
+                        <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3 mb-4">
+                          <h4 className="text-xs font-semibold text-slate-700 dark:text-slate-400 mb-2 uppercase tracking-wider">Contact Information</h4>
                           <div className="flex flex-wrap gap-4 text-sm">
                             {ref.referenceName !== 'Additional Personal Reference' && (
                               <>
-                                <span className="flex items-center gap-1.5 text-slate-700 dark:text-slate-300"><Phone className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />{ref.phone}</span>
-                                <span className="flex items-center gap-1.5 text-slate-700 dark:text-slate-300"><Mail className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />{ref.email}</span>
-                                {ref.badge && <span className="flex items-center gap-1.5 text-slate-700 dark:text-slate-300"><Shield className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />Badge #{ref.badge}</span>}
+                                <span className="flex items-center gap-1.5 text-slate-700 dark:text-slate-300"><Phone className="w-3.5 h-3.5 text-slate-700 dark:text-slate-400" />{ref.phone}</span>
+                                <span className="flex items-center gap-1.5 text-slate-700 dark:text-slate-300"><Mail className="w-3.5 h-3.5 text-slate-700 dark:text-slate-400" />{ref.email}</span>
+                                {ref.badge && <span className="flex items-center gap-1.5 text-slate-700 dark:text-slate-300"><Shield className="w-3.5 h-3.5 text-slate-700 dark:text-slate-400" />Badge #{ref.badge}</span>}
                               </>
                             )}
                           </div>
@@ -700,8 +700,8 @@ export default function ReferenceChecks() {
 
                       {/* Relationship Details */}
                       {ref.relationshipDetail && (
-                        <div className="bg-slate-900/40 rounded-lg p-3 mb-4">
-                          <h4 className="text-xs font-semibold text-slate-600 dark:text-slate-400 mb-2 uppercase tracking-wider">Relationship to Applicant</h4>
+                        <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3 mb-4">
+                          <h4 className="text-xs font-semibold text-slate-700 dark:text-slate-400 mb-2 uppercase tracking-wider">Relationship to Applicant</h4>
                           <div className="text-sm space-y-1">
                             <p className="text-slate-700 dark:text-slate-300">{ref.relationshipDetail}</p>
                             {ref.yearsKnown && <p className="text-slate-500">Known applicant: <span className="text-slate-700 dark:text-slate-300">{ref.yearsKnown}</span></p>}
@@ -714,8 +714,8 @@ export default function ReferenceChecks() {
                       {isCompleted && ref.interview && (
                         <>
                           {/* Interview Details */}
-                          <div className="bg-slate-900/40 rounded-lg p-3 mb-4">
-                            <h4 className="text-xs font-semibold text-slate-600 dark:text-slate-400 mb-2 uppercase tracking-wider">Interview Details</h4>
+                          <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3 mb-4">
+                            <h4 className="text-xs font-semibold text-slate-700 dark:text-slate-400 mb-2 uppercase tracking-wider">Interview Details</h4>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
                               <div className="text-slate-500">Date: <span className="text-slate-700 dark:text-slate-300">{ref.interview.date}</span></div>
                               <div className="text-slate-500">Time: <span className="text-slate-700 dark:text-slate-300">{ref.interview.time}</span></div>
@@ -730,22 +730,22 @@ export default function ReferenceChecks() {
                             <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3 border-b border-green-500/20 pb-2">Reference Interview Outcome</h4>
 
                             <div className="mb-4">
-                              <p className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">Overall Recommendation</p>
+                              <p className="text-xs font-semibold text-slate-700 dark:text-slate-400 uppercase tracking-wider mb-1">Overall Recommendation</p>
                               <p className="text-sm text-green-400 font-medium flex items-center gap-1.5">
                                 <CheckCircle2 className="w-4 h-4" />Would recommend for hire: {ref.wouldRecommend}
                               </p>
-                              {ref.recommendQuote && <p className="text-sm text-slate-600 dark:text-slate-400 mt-1 italic">"{ref.recommendQuote}"</p>}
+                              {ref.recommendQuote && <p className="text-sm text-slate-700 dark:text-slate-400 mt-1 italic">"{ref.recommendQuote}"</p>}
                             </div>
 
                             {/* Performance */}
                             {ref.performance && (
                               <div className="mb-4">
-                                <p className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">Performance Assessment</p>
+                                <p className="text-xs font-semibold text-slate-700 dark:text-slate-400 uppercase tracking-wider mb-2">Performance Assessment</p>
                                 <div className="space-y-1 text-sm">
-                                  {ref.performance.overall && <p className="text-slate-600 dark:text-slate-400">Overall: <span className="text-slate-700 dark:text-slate-300">{ref.performance.overall}</span></p>}
-                                  {ref.performance.workQuality && <p className="text-slate-600 dark:text-slate-400">Work quality: <span className="text-slate-700 dark:text-slate-300">{ref.performance.workQuality}</span></p>}
-                                  {ref.performance.reliability && <p className="text-slate-600 dark:text-slate-400">Reliability: <span className="text-slate-700 dark:text-slate-300">{ref.performance.reliability}</span></p>}
-                                  {ref.performance.professionalism && <p className="text-slate-600 dark:text-slate-400">Professionalism: <span className="text-slate-700 dark:text-slate-300">{ref.performance.professionalism}</span></p>}
+                                  {ref.performance.overall && <p className="text-slate-700 dark:text-slate-400">Overall: <span className="text-slate-700 dark:text-slate-300">{ref.performance.overall}</span></p>}
+                                  {ref.performance.workQuality && <p className="text-slate-700 dark:text-slate-400">Work quality: <span className="text-slate-700 dark:text-slate-300">{ref.performance.workQuality}</span></p>}
+                                  {ref.performance.reliability && <p className="text-slate-700 dark:text-slate-400">Reliability: <span className="text-slate-700 dark:text-slate-300">{ref.performance.reliability}</span></p>}
+                                  {ref.performance.professionalism && <p className="text-slate-700 dark:text-slate-400">Professionalism: <span className="text-slate-700 dark:text-slate-300">{ref.performance.professionalism}</span></p>}
                                 </div>
                               </div>
                             )}
@@ -753,7 +753,7 @@ export default function ReferenceChecks() {
                             {/* Strengths */}
                             {ref.strengths && (
                               <div className="mb-4">
-                                <p className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">Strengths Identified</p>
+                                <p className="text-xs font-semibold text-slate-700 dark:text-slate-400 uppercase tracking-wider mb-2">Strengths Identified</p>
                                 <ol className="space-y-1">
                                   {ref.strengths.map((s, i) => (
                                     <li key={i} className="text-sm text-slate-700 dark:text-slate-300 flex items-start gap-2">
@@ -767,7 +767,7 @@ export default function ReferenceChecks() {
                             {/* Areas for Improvement */}
                             {ref.areasForImprovement && ref.areasForImprovement.length > 0 && (
                               <div className="mb-4">
-                                <p className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">Areas for Improvement</p>
+                                <p className="text-xs font-semibold text-slate-700 dark:text-slate-400 uppercase tracking-wider mb-2">Areas for Improvement</p>
                                 {ref.areasForImprovement.map((a, i) => (
                                   <div key={i} className="text-sm mb-1">
                                     <p className="text-slate-700 dark:text-slate-300">{i + 1}. {a.item}</p>
@@ -779,7 +779,7 @@ export default function ReferenceChecks() {
 
                             {/* Concerns */}
                             <div className="mb-4">
-                              <p className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1">Concerns / Red Flags</p>
+                              <p className="text-xs font-semibold text-slate-700 dark:text-slate-400 uppercase tracking-wider mb-1">Concerns / Red Flags</p>
                               <p className="text-sm text-green-400">{ref.concerns}</p>
                               {ref.concernsQuote && <p className="text-xs text-slate-500 mt-0.5">"{ref.concernsQuote}"</p>}
                             </div>
@@ -797,41 +797,41 @@ export default function ReferenceChecks() {
                           {isExpanded && (
                             <div className="space-y-4">
                               {/* Disciplinary */}
-                              <div className="bg-slate-900/40 rounded-lg p-3">
-                                <h4 className="text-xs font-semibold text-slate-600 dark:text-slate-400 mb-2 uppercase tracking-wider">Disciplinary History (Per Reference)</h4>
+                              <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
+                                <h4 className="text-xs font-semibold text-slate-700 dark:text-slate-400 mb-2 uppercase tracking-wider">Disciplinary History (Per Reference)</h4>
                                 <div className="space-y-1 text-sm">
-                                  <p className="text-slate-600 dark:text-slate-400">Sustained complaints: <span className="text-slate-700 dark:text-slate-300">{ref.disciplinary.sustainedComplaints}</span></p>
+                                  <p className="text-slate-700 dark:text-slate-400">Sustained complaints: <span className="text-slate-700 dark:text-slate-300">{ref.disciplinary.sustainedComplaints}</span></p>
                                   {ref.disciplinary.unsustainedComplaints !== undefined && (
-                                    <p className="text-slate-600 dark:text-slate-400">Unsustained complaints: <span className="text-slate-700 dark:text-slate-300">{ref.disciplinary.unsustainedComplaints}</span></p>
+                                    <p className="text-slate-700 dark:text-slate-400">Unsustained complaints: <span className="text-slate-700 dark:text-slate-300">{ref.disciplinary.unsustainedComplaints}</span></p>
                                   )}
                                   {ref.disciplinary.useOfForce !== undefined && (
-                                    <p className="text-slate-600 dark:text-slate-400">Use of force: <span className="text-slate-700 dark:text-slate-300">{ref.disciplinary.useOfForce}</span></p>
+                                    <p className="text-slate-700 dark:text-slate-400">Use of force: <span className="text-slate-700 dark:text-slate-300">{ref.disciplinary.useOfForce}</span></p>
                                   )}
-                                  <p className="text-slate-600 dark:text-slate-400">Disciplinary actions: <span className="text-slate-700 dark:text-slate-300">{ref.disciplinary.disciplinaryActions}</span></p>
+                                  <p className="text-slate-700 dark:text-slate-400">Disciplinary actions: <span className="text-slate-700 dark:text-slate-300">{ref.disciplinary.disciplinaryActions}</span></p>
                                   {ref.disciplinary.note && <p className="text-slate-500 italic text-xs mt-1">{ref.disciplinary.note}</p>}
                                 </div>
                               </div>
 
                               {/* Reason for Leaving / Rehire */}
-                              <div className="bg-slate-900/40 rounded-lg p-3">
-                                <h4 className="text-xs font-semibold text-slate-600 dark:text-slate-400 mb-2 uppercase tracking-wider">Reason for Leaving & Rehire Eligibility</h4>
+                              <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
+                                <h4 className="text-xs font-semibold text-slate-700 dark:text-slate-400 mb-2 uppercase tracking-wider">Reason for Leaving & Rehire Eligibility</h4>
                                 <div className="space-y-1.5 text-sm">
-                                  <p className="text-slate-600 dark:text-slate-400">Reason for leaving: <span className="text-slate-700 dark:text-slate-300">{ref.reasonForLeaving}</span></p>
-                                  <p className="text-slate-600 dark:text-slate-400">Eligible for rehire: <span className="text-green-400 font-medium">{ref.eligibleForRehire}</span></p>
+                                  <p className="text-slate-700 dark:text-slate-400">Reason for leaving: <span className="text-slate-700 dark:text-slate-300">{ref.reasonForLeaving}</span></p>
+                                  <p className="text-slate-700 dark:text-slate-400">Eligible for rehire: <span className="text-green-400 font-medium">{ref.eligibleForRehire}</span></p>
                                   {ref.rehireQuote && <p className="text-slate-500 italic text-xs">"{ref.rehireQuote}"</p>}
                                 </div>
                               </div>
 
                               {/* Brady/Giglio */}
-                              <div className="bg-slate-900/40 rounded-lg p-3">
-                                <h4 className="text-xs font-semibold text-slate-600 dark:text-slate-400 mb-2 uppercase tracking-wider">Brady/Giglio Concerns</h4>
+                              <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
+                                <h4 className="text-xs font-semibold text-slate-700 dark:text-slate-400 mb-2 uppercase tracking-wider">Brady/Giglio Concerns</h4>
                                 <p className="text-sm text-green-400 font-medium">{ref.bradyGiglio}</p>
                                 <p className="text-xs text-slate-500 mt-0.5">{ref.bradyGiglioDetail}</p>
                               </div>
 
                               {/* Investigator Assessment */}
-                              <div className="bg-slate-900/40 rounded-lg p-3">
-                                <h4 className="text-xs font-semibold text-slate-600 dark:text-slate-400 mb-2 uppercase tracking-wider">Investigator Assessment</h4>
+                              <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
+                                <h4 className="text-xs font-semibold text-slate-700 dark:text-slate-400 mb-2 uppercase tracking-wider">Investigator Assessment</h4>
                                 <p className="text-sm text-slate-700 dark:text-slate-300">{ref.investigatorAssessment}</p>
                               </div>
                             </div>
@@ -844,14 +844,14 @@ export default function ReferenceChecks() {
                         <>
                           {/* Contact Attempts */}
                           {ref.contactAttempts && ref.contactAttempts.length > 0 && (
-                            <div className="bg-slate-900/40 rounded-lg p-3 mb-4">
-                              <h4 className="text-xs font-semibold text-slate-600 dark:text-slate-400 mb-2 uppercase tracking-wider">Contact Attempts</h4>
+                            <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3 mb-4">
+                              <h4 className="text-xs font-semibold text-slate-700 dark:text-slate-400 mb-2 uppercase tracking-wider">Contact Attempts</h4>
                               <div className="space-y-3">
                                 {ref.contactAttempts.map((attempt, i) => (
                                   <div key={i} className="text-sm">
                                     <p className="text-slate-900 dark:text-white font-medium mb-0.5">Attempt #{attempt.attemptNumber}: {attempt.date}</p>
-                                    <p className="text-slate-600 dark:text-slate-400 ml-4">Method: {attempt.method}</p>
-                                    <p className="text-slate-600 dark:text-slate-400 ml-4">Outcome: {attempt.outcome}</p>
+                                    <p className="text-slate-700 dark:text-slate-400 ml-4">Method: {attempt.method}</p>
+                                    <p className="text-slate-700 dark:text-slate-400 ml-4">Outcome: {attempt.outcome}</p>
                                     <p className="text-slate-500 ml-4 text-xs">Message: {attempt.message}</p>
                                   </div>
                                 ))}
@@ -865,31 +865,31 @@ export default function ReferenceChecks() {
                             <div className="bg-amber-500/5 border border-amber-500/20 rounded-lg p-3 mb-4">
                               <h4 className="text-xs font-semibold text-amber-400 mb-2 uppercase tracking-wider">Next Actions</h4>
                               <div className="space-y-1 text-sm">
-                                <p className="text-slate-600 dark:text-slate-400">Follow-up date: <span className="text-slate-900 dark:text-white">{ref.nextActions.followUpDate}</span></p>
-                                <p className="text-slate-600 dark:text-slate-400">Action: <span className="text-slate-700 dark:text-slate-300">{ref.nextActions.action}</span></p>
-                                <p className="text-slate-600 dark:text-slate-400">Escalation: <span className="text-slate-700 dark:text-slate-300">{ref.nextActions.escalation}</span></p>
-                                <p className="text-slate-600 dark:text-slate-400">Priority: <span className="text-amber-400">{ref.nextActions.priority}</span></p>
+                                <p className="text-slate-700 dark:text-slate-400">Follow-up date: <span className="text-slate-900 dark:text-white">{ref.nextActions.followUpDate}</span></p>
+                                <p className="text-slate-700 dark:text-slate-400">Action: <span className="text-slate-700 dark:text-slate-300">{ref.nextActions.action}</span></p>
+                                <p className="text-slate-700 dark:text-slate-400">Escalation: <span className="text-slate-700 dark:text-slate-300">{ref.nextActions.escalation}</span></p>
+                                <p className="text-slate-700 dark:text-slate-400">Priority: <span className="text-amber-400">{ref.nextActions.priority}</span></p>
                               </div>
                             </div>
                           )}
 
                           {/* Planned Interview */}
                           {ref.plannedInterview && (
-                            <div className="bg-slate-900/40 rounded-lg p-3 mb-4">
-                              <h4 className="text-xs font-semibold text-slate-600 dark:text-slate-400 mb-2 uppercase tracking-wider">Interview Details (When Scheduled)</h4>
+                            <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3 mb-4">
+                              <h4 className="text-xs font-semibold text-slate-700 dark:text-slate-400 mb-2 uppercase tracking-wider">Interview Details (When Scheduled)</h4>
                               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-                                <p className="text-slate-600 dark:text-slate-400">Duration: <span className="text-slate-700 dark:text-slate-300">{ref.plannedInterview.estimatedDuration}</span></p>
-                                <p className="text-slate-600 dark:text-slate-400">Type: <span className="text-slate-700 dark:text-slate-300">{ref.plannedInterview.type}</span></p>
-                                <p className="text-slate-600 dark:text-slate-400">Assigned to: <span className="text-slate-700 dark:text-slate-300">{ref.plannedInterview.assignedTo}</span></p>
-                                <p className="text-slate-600 dark:text-slate-400">Topics: <span className="text-slate-700 dark:text-slate-300">{ref.plannedInterview.topics}</span></p>
+                                <p className="text-slate-700 dark:text-slate-400">Duration: <span className="text-slate-700 dark:text-slate-300">{ref.plannedInterview.estimatedDuration}</span></p>
+                                <p className="text-slate-700 dark:text-slate-400">Type: <span className="text-slate-700 dark:text-slate-300">{ref.plannedInterview.type}</span></p>
+                                <p className="text-slate-700 dark:text-slate-400">Assigned to: <span className="text-slate-700 dark:text-slate-300">{ref.plannedInterview.assignedTo}</span></p>
+                                <p className="text-slate-700 dark:text-slate-400">Topics: <span className="text-slate-700 dark:text-slate-300">{ref.plannedInterview.topics}</span></p>
                               </div>
                             </div>
                           )}
 
                           {/* Investigator Notes */}
                           {ref.investigatorNotes && (
-                            <div className="bg-slate-900/40 rounded-lg p-3 mb-4">
-                              <h4 className="text-xs font-semibold text-slate-600 dark:text-slate-400 mb-2 uppercase tracking-wider">Investigator Notes</h4>
+                            <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3 mb-4">
+                              <h4 className="text-xs font-semibold text-slate-700 dark:text-slate-400 mb-2 uppercase tracking-wider">Investigator Notes</h4>
                               <p className="text-sm text-slate-700 dark:text-slate-300 italic">"{ref.investigatorNotes}"</p>
                             </div>
                           )}
@@ -906,10 +906,10 @@ export default function ReferenceChecks() {
                                 <AlertTriangle className="w-3.5 h-3.5" />Required — Not Yet Provided
                               </h4>
                               <div className="space-y-1 text-sm">
-                                <p className="text-slate-600 dark:text-slate-400">Agency policy requires: <span className="text-slate-900 dark:text-white">{ref.policyRequirement.totalRequired}</span></p>
-                                <p className="text-slate-600 dark:text-slate-400 ml-4">Employment references: <span className="text-green-400">{ref.policyRequirement.employmentRequired}</span></p>
-                                <p className="text-slate-600 dark:text-slate-400 ml-4">Personal references: <span className="text-red-400">{ref.policyRequirement.personalRequired}</span></p>
-                                <p className="text-slate-600 dark:text-slate-400">Criteria: <span className="text-slate-700 dark:text-slate-300">{ref.policyRequirement.criteria}</span></p>
+                                <p className="text-slate-700 dark:text-slate-400">Agency policy requires: <span className="text-slate-900 dark:text-white">{ref.policyRequirement.totalRequired}</span></p>
+                                <p className="text-slate-700 dark:text-slate-400 ml-4">Employment references: <span className="text-green-400">{ref.policyRequirement.employmentRequired}</span></p>
+                                <p className="text-slate-700 dark:text-slate-400 ml-4">Personal references: <span className="text-red-400">{ref.policyRequirement.personalRequired}</span></p>
+                                <p className="text-slate-700 dark:text-slate-400">Criteria: <span className="text-slate-700 dark:text-slate-300">{ref.policyRequirement.criteria}</span></p>
                               </div>
                             </div>
                           )}
@@ -919,18 +919,18 @@ export default function ReferenceChecks() {
                             <div className="bg-amber-500/5 border border-amber-500/20 rounded-lg p-3 mb-4">
                               <h4 className="text-xs font-semibold text-amber-400 mb-2 uppercase tracking-wider">Action Required</h4>
                               <div className="space-y-1.5 text-sm">
-                                <p className="text-slate-600 dark:text-slate-400">Action: <span className="text-slate-900 dark:text-white">{ref.actionRequired.action}</span></p>
-                                <p className="text-slate-600 dark:text-slate-400">Required info: <span className="text-slate-700 dark:text-slate-300">{ref.actionRequired.requiredInfo}</span></p>
-                                <p className="text-slate-600 dark:text-slate-400">Target date: <span className="text-amber-400">{ref.actionRequired.targetDate}</span></p>
-                                <p className="text-slate-600 dark:text-slate-400">Examples: <span className="text-slate-700 dark:text-slate-300">{ref.actionRequired.examples}</span></p>
+                                <p className="text-slate-700 dark:text-slate-400">Action: <span className="text-slate-900 dark:text-white">{ref.actionRequired.action}</span></p>
+                                <p className="text-slate-700 dark:text-slate-400">Required info: <span className="text-slate-700 dark:text-slate-300">{ref.actionRequired.requiredInfo}</span></p>
+                                <p className="text-slate-700 dark:text-slate-400">Target date: <span className="text-amber-400">{ref.actionRequired.targetDate}</span></p>
+                                <p className="text-slate-700 dark:text-slate-400">Examples: <span className="text-slate-700 dark:text-slate-300">{ref.actionRequired.examples}</span></p>
                               </div>
                             </div>
                           )}
 
                           {/* Investigator Notes */}
                           {ref.investigatorNotes && (
-                            <div className="bg-slate-900/40 rounded-lg p-3 mb-4">
-                              <h4 className="text-xs font-semibold text-slate-600 dark:text-slate-400 mb-2 uppercase tracking-wider">Investigator Notes</h4>
+                            <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3 mb-4">
+                              <h4 className="text-xs font-semibold text-slate-700 dark:text-slate-400 mb-2 uppercase tracking-wider">Investigator Notes</h4>
                               <p className="text-sm text-slate-700 dark:text-slate-300 italic">"{ref.investigatorNotes}"</p>
                             </div>
                           )}
@@ -939,13 +939,13 @@ export default function ReferenceChecks() {
 
                       {/* Contact Log Tab Content */}
                       {selectedView === 'contactlog' && ref.contactAttempts && (
-                        <div className="bg-slate-900/40 rounded-lg p-3 mb-4">
-                          <h4 className="text-xs font-semibold text-slate-600 dark:text-slate-400 mb-2 uppercase tracking-wider">Contact Log for {ref.referenceName}</h4>
+                        <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3 mb-4">
+                          <h4 className="text-xs font-semibold text-slate-700 dark:text-slate-400 mb-2 uppercase tracking-wider">Contact Log for {ref.referenceName}</h4>
                           {ref.contactAttempts.map((attempt, i) => (
                             <div key={i} className="text-sm border-l-2 border-amber-500/30 pl-3 mb-2">
                               <p className="text-slate-900 dark:text-white font-medium">Attempt #{attempt.attemptNumber} — {attempt.date}</p>
-                              <p className="text-slate-600 dark:text-slate-400">Method: {attempt.method}</p>
-                              <p className="text-slate-600 dark:text-slate-400">Outcome: {attempt.outcome}</p>
+                              <p className="text-slate-700 dark:text-slate-400">Method: {attempt.method}</p>
+                              <p className="text-slate-700 dark:text-slate-400">Outcome: {attempt.outcome}</p>
                               <p className="text-slate-500 text-xs">Message: {attempt.message}</p>
                             </div>
                           ))}
@@ -953,16 +953,16 @@ export default function ReferenceChecks() {
                       )}
 
                       {/* Action Buttons */}
-                      <div className="flex items-center justify-between pt-4 border-t border-slate-200 dark:border-slate-700/30 mt-2">
-                        <div className="text-sm text-slate-600 dark:text-slate-400">
+                      <div className="flex items-center justify-between pt-4 border-t border-slate-200 dark:border-slate-200 dark:border-slate-700/30 mt-2">
+                        <div className="text-sm text-slate-700 dark:text-slate-400">
                           Case: <span className="text-slate-900 dark:text-white font-medium">{ref.caseId}</span> — {ref.subject}
                         </div>
                         <div className="flex items-center gap-2 flex-wrap">
                           {isCompleted && (
                             <>
                               <button className="px-3 py-1.5 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 rounded-lg text-xs font-medium transition-colors">View Interview Notes</button>
-                              <button className="px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">Print Report</button>
-                              <button className="px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">View Case File</button>
+                              <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">Print Report</button>
+                              <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">View Case File</button>
                             </>
                           )}
                           {isPending && (
@@ -970,15 +970,15 @@ export default function ReferenceChecks() {
                               <button className="px-3 py-1.5 bg-green-500/10 hover:bg-green-500/20 text-green-400 rounded-lg text-xs font-medium transition-colors flex items-center gap-1"><Phone className="w-3 h-3" />Call Now</button>
                               <button className="px-3 py-1.5 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 rounded-lg text-xs font-medium transition-colors flex items-center gap-1"><Mail className="w-3 h-3" />Send Email</button>
                               <button className="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 rounded-lg text-xs font-medium transition-colors">Schedule Interview</button>
-                              <button className="px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">Log Contact Attempt</button>
+                              <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">Log Contact Attempt</button>
                             </>
                           )}
                           {isRequired && (
                             <>
                               <button className="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 rounded-lg text-xs font-medium transition-colors flex items-center gap-1"><Mail className="w-3 h-3" />Email Applicant</button>
                               <button className="px-3 py-1.5 bg-green-500/10 hover:bg-green-500/20 text-green-400 rounded-lg text-xs font-medium transition-colors flex items-center gap-1"><Phone className="w-3 h-3" />Call Applicant</button>
-                              <button className="px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">Reference Request Form</button>
-                              <button className="px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">View Policy</button>
+                              <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">Reference Request Form</button>
+                              <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">View Policy</button>
                             </>
                           )}
                         </div>
@@ -991,12 +991,12 @@ export default function ReferenceChecks() {
 
             {/* Footer Actions */}
             <div className="flex items-center justify-between mt-6">
-              <button className="px-4 py-2 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium transition-colors">Load More References</button>
+              <button className="px-4 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium transition-colors">Load More References</button>
               <div className="flex items-center gap-3">
-                <button className="px-4 py-2 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium transition-colors flex items-center gap-2">
+                <button className="px-4 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium transition-colors flex items-center gap-2">
                   <Download className="w-4 h-4" />Export All References
                 </button>
-                <button className="px-4 py-2 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium transition-colors flex items-center gap-2">
+                <button className="px-4 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium transition-colors flex items-center gap-2">
                   <FileText className="w-4 h-4" />View Summary Report
                 </button>
               </div>
@@ -1013,19 +1013,19 @@ export default function ReferenceChecks() {
                 <div>
                   <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Quick Actions</h4>
                   <div className="space-y-2">
-                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                       <Plus className="w-4 h-4 text-amber-400" />
                       <span className="text-sm text-slate-700 dark:text-slate-300">Add New Reference</span>
                     </button>
-                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                       <Phone className="w-4 h-4 text-green-400" />
                       <span className="text-sm text-slate-700 dark:text-slate-300">Contact Pending References</span>
                     </button>
-                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                       <Download className="w-4 h-4 text-blue-400" />
                       <span className="text-sm text-slate-700 dark:text-slate-300">Export Reference Report</span>
                     </button>
-                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                       <ClipboardList className="w-4 h-4 text-cyan-400" />
                       <span className="text-sm text-slate-700 dark:text-slate-300">View Interview Guide</span>
                     </button>
@@ -1036,19 +1036,19 @@ export default function ReferenceChecks() {
                 <div>
                   <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Documentation</h4>
                   <div className="space-y-2">
-                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                       <BookOpen className="w-4 h-4 text-amber-400" />
                       <span className="text-sm text-slate-700 dark:text-slate-300">Reference Check Procedures</span>
                     </button>
-                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                       <BookOpen className="w-4 h-4 text-amber-400" />
                       <span className="text-sm text-slate-700 dark:text-slate-300">Standard Interview Questions</span>
                     </button>
-                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                       <BookOpen className="w-4 h-4 text-amber-400" />
                       <span className="text-sm text-slate-700 dark:text-slate-300">Brady/Giglio Assessment Guide</span>
                     </button>
-                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                       <ExternalLink className="w-4 h-4 text-amber-400" />
                       <span className="text-sm text-slate-700 dark:text-slate-300">POST Reference Requirements</span>
                     </button>
@@ -1059,29 +1059,29 @@ export default function ReferenceChecks() {
                 <div>
                   <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Contact & Support</h4>
                   <div className="space-y-2">
-                    <div className="flex items-center gap-2 px-3 py-2 bg-slate-900/40 rounded-lg">
-                      <Phone className="w-4 h-4 text-slate-600 dark:text-slate-400" />
+                    <div className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 rounded-lg">
+                      <Phone className="w-4 h-4 text-slate-700 dark:text-slate-400" />
                       <div>
                         <p className="text-sm text-slate-700 dark:text-slate-300">BI Unit</p>
                         <p className="text-xs text-slate-500">Ext. 4520</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2 px-3 py-2 bg-slate-900/40 rounded-lg">
-                      <Mail className="w-4 h-4 text-slate-600 dark:text-slate-400" />
+                    <div className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 rounded-lg">
+                      <Mail className="w-4 h-4 text-slate-700 dark:text-slate-400" />
                       <div>
                         <p className="text-sm text-slate-700 dark:text-slate-300">BI Support</p>
                         <p className="text-xs text-slate-500">bi.support@gcso.gov</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2 px-3 py-2 bg-slate-900/40 rounded-lg">
-                      <Phone className="w-4 h-4 text-slate-600 dark:text-slate-400" />
+                    <div className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 rounded-lg">
+                      <Phone className="w-4 h-4 text-slate-700 dark:text-slate-400" />
                       <div>
                         <p className="text-sm text-slate-700 dark:text-slate-300">Legal / Brady-Giglio</p>
                         <p className="text-xs text-slate-500">Ext. 4550 (legal counsel)</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2 px-3 py-2 bg-slate-900/40 rounded-lg">
-                      <Phone className="w-4 h-4 text-slate-600 dark:text-slate-400" />
+                    <div className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 rounded-lg">
+                      <Phone className="w-4 h-4 text-slate-700 dark:text-slate-400" />
                       <div>
                         <p className="text-sm text-slate-700 dark:text-slate-300">POST Compliance</p>
                         <p className="text-xs text-slate-500">Ext. 4560</p>

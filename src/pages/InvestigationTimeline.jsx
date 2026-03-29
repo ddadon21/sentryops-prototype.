@@ -50,7 +50,7 @@ export default function InvestigationTimeline() {
       case 'in_progress': return <Clock className="w-5 h-5 text-amber-400 animate-pulse" />;
       case 'partial': return <PauseCircle className="w-5 h-5 text-blue-400" />;
       case 'blocked': return <AlertTriangle className="w-5 h-5 text-red-400" />;
-      default: return <Circle className="w-5 h-5 text-slate-600" />;
+      default: return <Circle className="w-5 h-5 text-slate-700" />;
     }
   };
 
@@ -386,8 +386,8 @@ export default function InvestigationTimeline() {
                     </span>
                   </div>
                   <p className="text-lg text-slate-900 dark:text-white mb-1">{caseData.subject} - {caseData.position}</p>
-                  <p className="text-slate-600 dark:text-slate-400 text-sm">Chronological record of all investigation activities and milestones</p>
-                  <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-2 text-sm text-slate-600 dark:text-slate-400">
+                  <p className="text-slate-700 dark:text-slate-400 text-sm">Chronological record of all investigation activities and milestones</p>
+                  <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-2 text-sm text-slate-700 dark:text-slate-400">
                     <span>Case opened: {caseData.caseOpened}</span>
                     <span className="hidden sm:inline">|</span>
                     <span>Days in process: <span className={caseData.daysOpen > caseData.agencyTarget ? 'text-amber-400' : 'text-slate-900 dark:text-white'}>{caseData.daysOpen} days</span></span>
@@ -406,7 +406,7 @@ export default function InvestigationTimeline() {
                     <div className="relative">
                       <button
                         onClick={() => setFilterOpen(!filterOpen)}
-                        className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-800/60 transition-colors"
+                        className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors"
                       >
                         <Filter className="w-4 h-4" />
                         <span className="text-sm">All Activities</span>
@@ -425,7 +425,7 @@ export default function InvestigationTimeline() {
                   </div>
                 </div>
               </div>
-              <div className="mt-3 text-sm text-slate-600 dark:text-slate-400">
+              <div className="mt-3 text-sm text-slate-700 dark:text-slate-400">
                 Viewing: Complete timeline ({timelineEvents.length} events)
               </div>
             </div>
@@ -435,7 +435,7 @@ export default function InvestigationTimeline() {
               <div className="flex items-center justify-between mb-4">
                 <h4 className="text-base font-semibold text-slate-900 dark:text-white">Case Progress Summary</h4>
                 <div className="flex items-center gap-2">
-                  <button className="px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">
+                  <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">
                     View Detailed Status
                   </button>
                   <button className="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
@@ -447,14 +447,14 @@ export default function InvestigationTimeline() {
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                 {/* Investigation Status */}
-                <div className="bg-slate-900/40 rounded-lg p-4">
+                <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4">
                   <p className="text-xs text-slate-500 uppercase tracking-wide mb-2">Investigation Status</p>
                   <div className="flex items-center gap-2 mb-1">
                     <Clock className="w-5 h-5 text-amber-400 animate-pulse" />
                     <span className="text-lg font-semibold text-slate-900 dark:text-white">{caseData.currentStage}</span>
                     <span className="text-xs text-amber-400">(In Progress)</span>
                   </div>
-                  <p className="text-xs text-slate-600 dark:text-slate-400">Days in Process: {caseData.daysOpen} days</p>
+                  <p className="text-xs text-slate-700 dark:text-slate-400">Days in Process: {caseData.daysOpen} days</p>
                   <p className="text-xs text-slate-500">(Agency target: &lt;{caseData.agencyTarget} days - extended)</p>
                   {caseData.extendedTimelineReason && (
                     <p className="text-xs text-amber-400 mt-1">Reason: {caseData.extendedTimelineReason}</p>
@@ -462,7 +462,7 @@ export default function InvestigationTimeline() {
                 </div>
 
                 {/* Stage Completion */}
-                <div className="bg-slate-900/40 rounded-lg p-4">
+                <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4">
                   <p className="text-xs text-slate-500 uppercase tracking-wide mb-2">Stage Completion</p>
                   <div className="space-y-1">
                     <div className="flex items-center justify-between text-sm">
@@ -480,7 +480,7 @@ export default function InvestigationTimeline() {
                       <span className="text-slate-900 dark:text-white font-medium">{investigationStages.filter(s => s.status === 'in_progress').length}</span>
                     </div>
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-slate-600 dark:text-slate-400 flex items-center gap-1">
+                      <span className="text-slate-700 dark:text-slate-400 flex items-center gap-1">
                         <Circle className="w-3.5 h-3.5" />
                         Pending Stages
                       </span>
@@ -490,15 +490,15 @@ export default function InvestigationTimeline() {
                 </div>
 
                 {/* Timeline & Deadlines */}
-                <div className="bg-slate-900/40 rounded-lg p-4">
+                <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4">
                   <p className="text-xs text-slate-500 uppercase tracking-wide mb-2">Timeline & Deadlines</p>
                   <div className="space-y-1">
                     <div className="flex justify-between text-sm">
-                      <span className="text-slate-600 dark:text-slate-400">Target Completion</span>
+                      <span className="text-slate-700 dark:text-slate-400">Target Completion</span>
                       <span className="text-slate-900 dark:text-white font-medium">{caseData.targetCompletion}</span>
                     </div>
                     <div className="flex justify-between text-sm">
-                      <span className="text-slate-600 dark:text-slate-400">Offer Expires</span>
+                      <span className="text-slate-700 dark:text-slate-400">Offer Expires</span>
                       <span className="text-red-400 font-medium">{caseData.conditionalOfferExpires}</span>
                     </div>
                     <p className="text-xs text-amber-400 mt-1">{caseData.daysRemaining} days remaining</p>
@@ -513,8 +513,8 @@ export default function InvestigationTimeline() {
                   <AlertTriangle className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-sm font-medium text-amber-400">Current Bottleneck: Reference Checks</p>
-                    <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">Issue: 2 references not returning calls (documented 2-3 contact attempts each)</p>
-                    <p className="text-xs text-slate-600 dark:text-slate-400">Action Plan: Continue daily contact attempts, escalate to supervisor-to-supervisor contact if no response by Jan 25</p>
+                    <p className="text-xs text-slate-700 dark:text-slate-400 mt-1">Issue: 2 references not returning calls (documented 2-3 contact attempts each)</p>
+                    <p className="text-xs text-slate-700 dark:text-slate-400">Action Plan: Continue daily contact attempts, escalate to supervisor-to-supervisor contact if no response by Jan 25</p>
                   </div>
                 </div>
               </div>
@@ -531,7 +531,7 @@ export default function InvestigationTimeline() {
 
               <div className="relative">
                 {/* Vertical timeline line */}
-                <div className="absolute left-6 top-4 bottom-4 w-0.5 bg-slate-700/50"></div>
+                <div className="absolute left-6 top-4 bottom-4 w-0.5 bg-white dark:bg-slate-700/50"></div>
 
                 <div className="space-y-4">
                   {investigationStages.map((stage, idx) => (
@@ -544,7 +544,7 @@ export default function InvestigationTimeline() {
                       <div className={`absolute left-3 w-7 h-7 rounded-full flex items-center justify-center z-10 ${
                         stage.status === 'completed' ? 'bg-green-500/20 border border-green-500/50' :
                         stage.status === 'in_progress' ? 'bg-amber-500/20 border border-amber-500/50' :
-                        'bg-slate-700/50 border border-slate-600/50'
+                        'bg-white dark:bg-slate-700/50 border border-slate-600/50'
                       }`}>
                         {getStageIcon(stage.status)}
                       </div>
@@ -552,7 +552,7 @@ export default function InvestigationTimeline() {
                       <div className={`rounded-lg p-4 ${
                         stage.status === 'completed' ? 'bg-green-500/5 border border-green-500/20' :
                         stage.status === 'in_progress' ? 'bg-amber-500/5 border border-amber-500/20' :
-                        'bg-slate-900/40 border border-slate-700/30'
+                        'bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/30'
                       }`}>
                         <div className="flex items-start justify-between mb-2">
                           <div>
@@ -562,12 +562,12 @@ export default function InvestigationTimeline() {
                           <span className={`px-2 py-1 rounded text-xs font-medium whitespace-nowrap ${
                             stage.status === 'completed' ? 'bg-green-500/20 text-green-400' :
                             stage.status === 'in_progress' ? 'bg-amber-500/20 text-amber-400' :
-                            'bg-slate-700/50 text-slate-500'
+                            'bg-white dark:bg-slate-700/50 text-slate-500'
                           }`}>
                             {stage.outcome}
                           </span>
                         </div>
-                        <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">By: {stage.completedBy}</p>
+                        <p className="text-xs text-slate-700 dark:text-slate-400 mb-1">By: {stage.completedBy}</p>
                         <p className="text-sm text-slate-700 dark:text-slate-300">{stage.detail}</p>
                         {stage.targetCompletion && (
                           <p className="text-xs text-amber-400 mt-2">Target Completion: {stage.targetCompletion}</p>
@@ -576,8 +576,8 @@ export default function InvestigationTimeline() {
                           <div className="mt-2 space-y-1">
                             <p className="text-xs text-slate-500">Pending:</p>
                             {stage.pendingItems.map((item, i) => (
-                              <p key={i} className="text-xs text-slate-600 dark:text-slate-400 flex items-start gap-1 ml-2">
-                                <span className="text-slate-600">•</span> {item}
+                              <p key={i} className="text-xs text-slate-700 dark:text-slate-400 flex items-start gap-1 ml-2">
+                                <span className="text-slate-700">•</span> {item}
                               </p>
                             ))}
                           </div>
@@ -600,7 +600,7 @@ export default function InvestigationTimeline() {
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Chronological Activity Log</h3>
                   <div className="flex items-center gap-2">
-                    <button className="px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
+                    <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
                       <Download className="w-3 h-3" />
                       Export Timeline
                     </button>
@@ -610,7 +610,7 @@ export default function InvestigationTimeline() {
 
                 <div className="relative">
                   {/* Timeline line */}
-                  <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-slate-700/50"></div>
+                  <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-white dark:bg-slate-700/50"></div>
 
                   <div className="space-y-4">
                     {timelineEvents.map((event, idx) => (
@@ -645,10 +645,10 @@ export default function InvestigationTimeline() {
                           <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">{event.description}</p>
 
                           {event.details && event.details.length > 0 && (
-                            <div className="bg-slate-900/40 rounded-lg p-3 mb-3">
+                            <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3 mb-3">
                               <div className="space-y-1">
                                 {event.details.map((detail, i) => (
-                                  <p key={i} className="text-xs text-slate-600 dark:text-slate-400">{detail}</p>
+                                  <p key={i} className="text-xs text-slate-700 dark:text-slate-400">{detail}</p>
                                 ))}
                               </div>
                             </div>
@@ -663,7 +663,7 @@ export default function InvestigationTimeline() {
                               <span key={i} className={`px-2 py-1 rounded text-xs ${
                                 tag.includes('Complete') || tag.includes('Clear') || tag.includes('Positive') ? 'bg-green-500/10 text-green-400' :
                                 tag.includes('Pending') || tag.includes('Contact') ? 'bg-amber-500/10 text-amber-400' :
-                                'bg-slate-700/50 text-slate-500'
+                                'bg-white dark:bg-slate-700/50 text-slate-500'
                               }`}>
                                 {tag}
                               </span>
@@ -687,15 +687,15 @@ export default function InvestigationTimeline() {
                   <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-4">Case Statistics</h4>
                   <div className="space-y-3">
                     <div className="flex justify-between text-sm">
-                      <span className="text-slate-600 dark:text-slate-400">Investigation Opened</span>
+                      <span className="text-slate-700 dark:text-slate-400">Investigation Opened</span>
                       <span className="text-slate-900 dark:text-white">{caseData.caseOpened}</span>
                     </div>
                     <div className="flex justify-between text-sm">
-                      <span className="text-slate-600 dark:text-slate-400">Days in Process</span>
+                      <span className="text-slate-700 dark:text-slate-400">Days in Process</span>
                       <span className={caseData.daysOpen > caseData.agencyTarget ? 'text-amber-400' : 'text-slate-900 dark:text-white'}>{caseData.daysOpen} days</span>
                     </div>
                     <div className="flex justify-between text-sm">
-                      <span className="text-slate-600 dark:text-slate-400">Agency Target</span>
+                      <span className="text-slate-700 dark:text-slate-400">Agency Target</span>
                       <span className="text-slate-500">&lt;{caseData.agencyTarget} days (extended)</span>
                     </div>
 
@@ -703,19 +703,19 @@ export default function InvestigationTimeline() {
                       <p className="text-xs text-slate-500 uppercase tracking-wide mb-2">Activity Summary</p>
                       <div className="space-y-1 text-sm">
                         <div className="flex justify-between">
-                          <span className="text-slate-600 dark:text-slate-400">Total Events Logged</span>
+                          <span className="text-slate-700 dark:text-slate-400">Total Events Logged</span>
                           <span className="text-slate-900 dark:text-white font-medium">{timelineEvents.length}</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-slate-600 dark:text-slate-400 pl-2">├─ Stage completions</span>
+                          <span className="text-slate-700 dark:text-slate-400 pl-2">├─ Stage completions</span>
                           <span className="text-green-400">{timelineEvents.filter(e => e.type === 'stage_complete' || e.type === 'stage_progress').length}</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-slate-600 dark:text-slate-400 pl-2">├─ Contact attempts</span>
+                          <span className="text-slate-700 dark:text-slate-400 pl-2">├─ Contact attempts</span>
                           <span className="text-amber-400">{timelineEvents.filter(e => e.type === 'contact_attempt').length}</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-slate-600 dark:text-slate-400 pl-2">└─ System actions</span>
+                          <span className="text-slate-700 dark:text-slate-400 pl-2">└─ System actions</span>
                           <span className="text-slate-700 dark:text-slate-300">{timelineEvents.filter(e => e.type === 'case_opened').length}</span>
                         </div>
                       </div>
@@ -725,15 +725,15 @@ export default function InvestigationTimeline() {
                       <p className="text-xs text-slate-500 uppercase tracking-wide mb-2">Contact Attempts</p>
                       <div className="space-y-1 text-sm">
                         <div className="flex justify-between">
-                          <span className="text-slate-600 dark:text-slate-400">Total Attempts</span>
+                          <span className="text-slate-700 dark:text-slate-400">Total Attempts</span>
                           <span className="text-slate-900 dark:text-white">4</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-slate-600 dark:text-slate-400">Completed Contacts</span>
+                          <span className="text-slate-700 dark:text-slate-400">Completed Contacts</span>
                           <span className="text-green-400">2</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-slate-600 dark:text-slate-400">Pending Callbacks</span>
+                          <span className="text-slate-700 dark:text-slate-400">Pending Callbacks</span>
                           <span className="text-amber-400">2</span>
                         </div>
                       </div>
@@ -760,13 +760,13 @@ export default function InvestigationTimeline() {
                     <div className="border-t border-slate-200 dark:border-slate-700/50 pt-3 mt-3">
                       <p className="text-xs text-slate-500 mb-1">Assigned Investigator</p>
                       <p className="text-sm font-medium text-slate-900 dark:text-white">{caseData.investigator.name}</p>
-                      <p className="text-xs text-slate-600 dark:text-slate-400">Badge {caseData.investigator.badge}</p>
+                      <p className="text-xs text-slate-700 dark:text-slate-400">Badge {caseData.investigator.badge}</p>
                       <p className="text-xs text-slate-500 mt-1">Current Caseload: {caseData.investigator.activeCases} active cases</p>
                       <p className="text-xs text-amber-400 mt-1">{caseData.investigator.email} | {caseData.investigator.phone}</p>
                     </div>
                     <div className="border-t border-slate-200 dark:border-slate-700/50 pt-3 mt-3">
                       <span className="px-2 py-1 bg-red-500/20 text-red-400 rounded text-xs font-medium">HIGH PRIORITY</span>
-                      <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">Conditional offer expires {caseData.conditionalOfferExpires}</p>
+                      <p className="text-xs text-slate-700 dark:text-slate-400 mt-1">Conditional offer expires {caseData.conditionalOfferExpires}</p>
                     </div>
                   </div>
                 </div>
@@ -783,7 +783,7 @@ export default function InvestigationTimeline() {
                           <span className="text-sm text-slate-900 dark:text-white">Conditional Offer Expires</span>
                           <span className="text-xs text-red-400 font-medium">7 days</span>
                         </div>
-                        <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">Action: Must complete investigation by Jan 27</p>
+                        <p className="text-xs text-slate-700 dark:text-slate-400 mt-1">Action: Must complete investigation by Jan 27</p>
                       </div>
                     </div>
 
@@ -796,21 +796,21 @@ export default function InvestigationTimeline() {
                             <span className="text-sm text-slate-900 dark:text-white">Reference Checks</span>
                             <span className="text-xs text-amber-400 font-medium">2 days</span>
                           </div>
-                          <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">Target: Jan 25 - Complete 2 pending callbacks</p>
+                          <p className="text-xs text-slate-700 dark:text-slate-400 mt-1">Target: Jan 25 - Complete 2 pending callbacks</p>
                         </div>
-                        <div className="p-3 bg-slate-700/30 rounded-lg">
+                        <div className="p-3 bg-slate-100 dark:bg-slate-700/30 rounded-lg">
                           <div className="flex items-center justify-between">
                             <span className="text-sm text-slate-900 dark:text-white">Employment Verification</span>
-                            <span className="text-xs text-slate-600 dark:text-slate-400 font-medium">3 days</span>
+                            <span className="text-xs text-slate-700 dark:text-slate-400 font-medium">3 days</span>
                           </div>
-                          <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">Target start: Jan 26 - After references</p>
+                          <p className="text-xs text-slate-700 dark:text-slate-400 mt-1">Target start: Jan 26 - After references</p>
                         </div>
-                        <div className="p-3 bg-slate-700/30 rounded-lg">
+                        <div className="p-3 bg-slate-100 dark:bg-slate-700/30 rounded-lg">
                           <div className="flex items-center justify-between">
                             <span className="text-sm text-slate-900 dark:text-white">Financial Review</span>
-                            <span className="text-xs text-slate-600 dark:text-slate-400 font-medium">5 days</span>
+                            <span className="text-xs text-slate-700 dark:text-slate-400 font-medium">5 days</span>
                           </div>
-                          <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">Target: Jan 28 - Pull credit report</p>
+                          <p className="text-xs text-slate-700 dark:text-slate-400 mt-1">Target: Jan 28 - Pull credit report</p>
                         </div>
                       </div>
                     </div>

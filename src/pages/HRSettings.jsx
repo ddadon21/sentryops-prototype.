@@ -225,9 +225,9 @@ export default function HRSettings() {
           )}
           <button
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-            className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors hidden lg:block"
+            className="p-2 hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors hidden lg:block"
           >
-            {sidebarCollapsed ? <ChevronRight className="w-5 h-5 text-slate-600 dark:text-slate-400" /> : <ChevronLeft className="w-5 h-5 text-slate-600 dark:text-slate-400" />}
+            {sidebarCollapsed ? <ChevronRight className="w-5 h-5 text-slate-700 dark:text-slate-400" /> : <ChevronLeft className="w-5 h-5 text-slate-700 dark:text-slate-400" />}
           </button>
         </div>
 
@@ -240,7 +240,7 @@ export default function HRSettings() {
                 key={item.id}
                 onClick={() => handleNavigation(item)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                  isActive ? 'bg-amber-500 text-slate-900 dark:text-white shadow-lg shadow-amber-500/20' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-slate-900 dark:hover:text-white'
+                  isActive ? 'bg-amber-500 text-slate-900 dark:text-white shadow-lg shadow-amber-500/20' : 'text-slate-700 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-100 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-slate-900 dark:hover:text-white'
                 } ${sidebarCollapsed ? 'justify-center' : ''}`}
                 title={sidebarCollapsed ? item.label : ''}
               >
@@ -263,7 +263,7 @@ export default function HRSettings() {
           <div className="p-4">
             <button
               onClick={() => setLogoutConfirmOpen(true)}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/40 hover:text-slate-800 dark:hover:text-slate-700 dark:text-slate-300 dark:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-slate-700 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/40 hover:text-slate-800 dark:hover:text-slate-700 dark:text-slate-300 dark:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
               title={sidebarCollapsed ? 'Sign Out' : ''}
             >
               <LogOut className="w-5 h-5 flex-shrink-0" />
@@ -291,23 +291,23 @@ export default function HRSettings() {
           <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl p-6 max-w-sm w-full shadow-2xl">
             <div className="flex items-center gap-4 mb-4">
               <div className="w-12 h-12 bg-slate-100 dark:bg-slate-800/60 rounded-xl flex items-center justify-center">
-                <LogOut className="w-6 h-6 text-slate-600 dark:text-slate-400" />
+                <LogOut className="w-6 h-6 text-slate-700 dark:text-slate-400" />
               </div>
               <div>
                 <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Sign Out</h3>
-                <p className="text-sm text-slate-600 dark:text-slate-400">Are you sure you want to sign out?</p>
+                <p className="text-sm text-slate-700 dark:text-slate-400">Are you sure you want to sign out?</p>
               </div>
             </div>
             <div className="flex gap-3 mt-6">
               <button
                 onClick={() => setLogoutConfirmOpen(false)}
-                className="flex-1 px-4 py-2.5 bg-slate-100 dark:bg-slate-800/40 hover:bg-slate-200 dark:hover:bg-slate-800/60 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all"
+                className="flex-1 px-4 py-2.5 bg-slate-100 dark:bg-slate-800/40 hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all"
               >
                 Cancel
               </button>
               <button
                 onClick={handleLogout}
-                className="flex-1 px-4 py-2.5 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all"
+                className="flex-1 px-4 py-2.5 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all"
               >
                 Sign Out
               </button>
@@ -317,23 +317,23 @@ export default function HRSettings() {
       )}
 
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="border-b border-slate-200 dark:border-slate-800/50 backdrop-blur-xl bg-slate-900/30">
+        <header className="border-b border-slate-200 dark:border-slate-800/50 backdrop-blur-xl bg-slate-50 dark:bg-slate-900/30">
           <div className="px-4 lg:px-6 py-4 flex items-center justify-between gap-4">
             <div className="flex items-center gap-4 flex-1 min-w-0">
               <button
                 onClick={() => setSidebarOpen(!sidebarOpen)}
-                className="lg:hidden p-2 hover:bg-slate-800/50 rounded-lg"
+                className="lg:hidden p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg"
               >
-                <Menu className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+                <Menu className="w-5 h-5 text-slate-700 dark:text-slate-400" />
               </button>
               <div className="flex items-center gap-2 text-sm">
                 <button
                   onClick={() => navigate(createPageUrl('HRDashboard'))}
-                  className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
+                  className="text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
                 >
                   HR Dashboard
                 </button>
-                <ChevronRight className="w-4 h-4 text-slate-600" />
+                <ChevronRight className="w-4 h-4 text-slate-700" />
                 <span className="text-slate-900 dark:text-white">Settings</span>
               </div>
             </div>
@@ -341,9 +341,9 @@ export default function HRSettings() {
               <div className="relative">
                 <button
                   onClick={() => setNotificationsOpen(!notificationsOpen)}
-                  className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg relative"
+                  className="p-2 hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg relative"
                 >
-                  <Bell className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+                  <Bell className="w-5 h-5 text-slate-700 dark:text-slate-400" />
                   <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                 </button>
 
@@ -354,12 +354,12 @@ export default function HRSettings() {
                     </div>
                     <div className="max-h-96 overflow-y-auto">
                       {notifications.map(notification => (
-                        <div key={notification.id} className={`p-4 border-b border-slate-100 dark:border-slate-800/30 hover:bg-slate-50 dark:hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
+                        <div key={notification.id} className={`p-4 border-b border-slate-100 dark:border-slate-200 dark:border-slate-800/30 hover:bg-slate-50 dark:hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
                           <div className="flex items-start gap-3">
                             <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-amber-400' : 'bg-blue-400'}`}></div>
                             <div className="flex-1 min-w-0">
                               <p className="text-sm font-medium text-slate-900 dark:text-white mb-1">{notification.title}</p>
-                              <p className="text-xs text-slate-600 dark:text-slate-400 mb-2">{notification.message}</p>
+                              <p className="text-xs text-slate-700 dark:text-slate-400 mb-2">{notification.message}</p>
                               <p className="text-xs text-slate-500">{notification.time}</p>
                             </div>
                           </div>
@@ -373,7 +373,7 @@ export default function HRSettings() {
                 )}
               </div>
 
-              <div className="h-8 w-px bg-slate-700/50"></div>
+              <div className="h-8 w-px bg-white dark:bg-slate-700/50"></div>
 
               <div className="relative profile-menu-container">
                 <button
@@ -385,25 +385,25 @@ export default function HRSettings() {
                   </div>
                   <div className="hidden sm:block text-left">
                     <p className="text-sm font-medium text-slate-900 dark:text-white">{profileSettings.fullName}</p>
-                    <p className="text-xs text-slate-600 dark:text-slate-400">{profileSettings.department}</p>
+                    <p className="text-xs text-slate-700 dark:text-slate-400">{profileSettings.department}</p>
                   </div>
-                  <ChevronDown className={`w-4 h-4 text-slate-600 dark:text-slate-400 hidden sm:block transition-transform ${profileMenuOpen ? 'rotate-180' : ''}`} />
+                  <ChevronDown className={`w-4 h-4 text-slate-700 dark:text-slate-400 hidden sm:block transition-transform ${profileMenuOpen ? 'rotate-180' : ''}`} />
                 </button>
 
                 {profileMenuOpen && (
                   <div className="absolute right-0 top-full mt-2 w-56 bg-white dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-2xl z-50 py-2">
                     <div className="px-4 py-3 border-b border-slate-200 dark:border-slate-700/50">
                       <p className="text-sm font-medium text-slate-900 dark:text-white">{profileSettings.fullName}</p>
-                      <p className="text-xs text-slate-600 dark:text-slate-400">{profileSettings.email}</p>
+                      <p className="text-xs text-slate-700 dark:text-slate-400">{profileSettings.email}</p>
                     </div>
                     <div className="py-1">
-                      <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-800/50 transition-colors">
+                      <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors">
                         <User className="w-4 h-4" />
                         View Profile
                       </button>
                       <button
                         onClick={() => setActiveSection('profile')}
-                        className="w-full flex items-center gap-3 px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-800/50 transition-colors"
+                        className="w-full flex items-center gap-3 px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors"
                       >
                         <Settings className="w-4 h-4" />
                         Settings
@@ -412,7 +412,7 @@ export default function HRSettings() {
                     <div className="border-t border-slate-200 dark:border-slate-700/50 py-1">
                       <button
                         onClick={() => setLogoutConfirmOpen(true)}
-                        className="w-full flex items-center gap-3 px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-slate-800/50 transition-colors"
+                        className="w-full flex items-center gap-3 px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors"
                       >
                         <LogOut className="w-4 h-4" />
                         Sign Out
@@ -429,7 +429,7 @@ export default function HRSettings() {
           <div className="max-w-6xl mx-auto">
             <div className="mb-6">
               <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white mb-2">HR Settings</h2>
-              <p className="text-slate-600 dark:text-slate-400">Manage your account, notifications, and HR system integrations</p>
+              <p className="text-slate-700 dark:text-slate-400">Manage your account, notifications, and HR system integrations</p>
             </div>
 
             {/* Save Success Banner */}
@@ -474,7 +474,7 @@ export default function HRSettings() {
                     key={tab.id}
                     onClick={() => setActiveSection(tab.id)}
                     className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all relative whitespace-nowrap ${
-                      activeSection === tab.id ? 'text-amber-600 dark:text-amber-400' : 'text-slate-600 dark:text-slate-400 hover:text-slate-300'
+                      activeSection === tab.id ? 'text-amber-600 dark:text-amber-400' : 'text-slate-700 dark:text-slate-400 hover:text-slate-300'
                     }`}
                   >
                     <Icon className="w-4 h-4" />
@@ -511,7 +511,7 @@ export default function HRSettings() {
                     </div>
                     <div>
                       <h4 className="text-xl font-semibold text-slate-900 dark:text-white">{profileSettings.fullName}</h4>
-                      <p className="text-slate-600 dark:text-slate-400">{profileSettings.position}</p>
+                      <p className="text-slate-700 dark:text-slate-400">{profileSettings.position}</p>
                       <p className="text-sm text-slate-500">{profileSettings.department}</p>
                     </div>
                   </div>
@@ -541,7 +541,7 @@ export default function HRSettings() {
                         type="text"
                         value={profileSettings.employeeId}
                         disabled
-                        className="w-full px-4 py-2.5 bg-slate-800/20 border border-slate-700/50 rounded-xl text-slate-600 dark:text-slate-400 cursor-not-allowed"
+                        className="w-full px-4 py-2.5 bg-slate-100 dark:bg-slate-800/20 border border-slate-700/50 rounded-xl text-slate-700 dark:text-slate-400 cursor-not-allowed"
                       />
                     </div>
                     <div>
@@ -559,7 +559,7 @@ export default function HRSettings() {
                         type="text"
                         value={profileSettings.department}
                         disabled
-                        className="w-full px-4 py-2.5 bg-slate-800/20 border border-slate-700/50 rounded-xl text-slate-600 dark:text-slate-400 cursor-not-allowed"
+                        className="w-full px-4 py-2.5 bg-slate-100 dark:bg-slate-800/20 border border-slate-700/50 rounded-xl text-slate-700 dark:text-slate-400 cursor-not-allowed"
                       />
                     </div>
                     <div>
@@ -568,7 +568,7 @@ export default function HRSettings() {
                         type="text"
                         value={profileSettings.position}
                         disabled
-                        className="w-full px-4 py-2.5 bg-slate-800/20 border border-slate-700/50 rounded-xl text-slate-600 dark:text-slate-400 cursor-not-allowed"
+                        className="w-full px-4 py-2.5 bg-slate-100 dark:bg-slate-800/20 border border-slate-700/50 rounded-xl text-slate-700 dark:text-slate-400 cursor-not-allowed"
                       />
                     </div>
                     <div>
@@ -577,7 +577,7 @@ export default function HRSettings() {
                         type="text"
                         value={new Date(profileSettings.hireDate).toLocaleDateString()}
                         disabled
-                        className="w-full px-4 py-2.5 bg-slate-800/20 border border-slate-700/50 rounded-xl text-slate-600 dark:text-slate-400 cursor-not-allowed"
+                        className="w-full px-4 py-2.5 bg-slate-100 dark:bg-slate-800/20 border border-slate-700/50 rounded-xl text-slate-700 dark:text-slate-400 cursor-not-allowed"
                       />
                     </div>
                     <div>
@@ -621,12 +621,12 @@ export default function HRSettings() {
                           return (
                             <div key={item.key} className="flex items-center justify-between p-4 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl">
                               <div className="flex items-center gap-4">
-                                <div className="w-10 h-10 bg-slate-700/50 rounded-xl flex items-center justify-center">
-                                  <Icon className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+                                <div className="w-10 h-10 bg-white dark:bg-slate-700/50 rounded-xl flex items-center justify-center">
+                                  <Icon className="w-5 h-5 text-slate-700 dark:text-slate-400" />
                                 </div>
                                 <div>
                                   <p className="text-slate-900 dark:text-white font-medium">{item.label}</p>
-                                  <p className="text-sm text-slate-600 dark:text-slate-400">{item.desc}</p>
+                                  <p className="text-sm text-slate-700 dark:text-slate-400">{item.desc}</p>
                                 </div>
                               </div>
                               <button
@@ -657,7 +657,7 @@ export default function HRSettings() {
                           <div key={item.key} className="flex items-center justify-between p-4 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl">
                             <div>
                               <p className="text-slate-900 dark:text-white font-medium">{item.label}</p>
-                              <p className="text-xs text-slate-600 dark:text-slate-400">{item.desc}</p>
+                              <p className="text-xs text-slate-700 dark:text-slate-400">{item.desc}</p>
                             </div>
                             <button
                               onClick={() => setNotificationSettings({...notificationSettings, [item.key]: !notificationSettings[item.key]})}
@@ -695,7 +695,7 @@ export default function HRSettings() {
                         <button
                           onClick={() => setDisplaySettings({...displaySettings, theme: 'dark'})}
                           className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl border transition-all ${
-                            displaySettings.theme === 'dark' ? 'bg-amber-500/20 border-amber-500/50 text-amber-600 dark:text-amber-400' : 'bg-slate-800/40 border-slate-700/50 text-slate-500'
+                            displaySettings.theme === 'dark' ? 'bg-amber-500/20 border-amber-500/50 text-amber-600 dark:text-amber-400' : 'bg-white dark:bg-slate-800/40 border-slate-700/50 text-slate-500'
                           }`}
                         >
                           <Moon className="w-5 h-5" />
@@ -704,7 +704,7 @@ export default function HRSettings() {
                         <button
                           onClick={() => setDisplaySettings({...displaySettings, theme: 'light'})}
                           className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl border transition-all ${
-                            displaySettings.theme === 'light' ? 'bg-amber-500/20 border-amber-500/50 text-amber-600 dark:text-amber-400' : 'bg-slate-800/40 border-slate-700/50 text-slate-500'
+                            displaySettings.theme === 'light' ? 'bg-amber-500/20 border-amber-500/50 text-amber-600 dark:text-amber-400' : 'bg-white dark:bg-slate-800/40 border-slate-700/50 text-slate-500'
                           }`}
                         >
                           <Sun className="w-5 h-5" />
@@ -768,7 +768,7 @@ export default function HRSettings() {
                     <div className="flex items-center justify-between p-4 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl">
                       <div>
                         <p className="text-slate-900 dark:text-white font-medium">Animations</p>
-                        <p className="text-sm text-slate-600 dark:text-slate-400">Enable UI animations</p>
+                        <p className="text-sm text-slate-700 dark:text-slate-400">Enable UI animations</p>
                       </div>
                       <button
                         onClick={() => setDisplaySettings({...displaySettings, animations: !displaySettings.animations})}
@@ -805,7 +805,7 @@ export default function HRSettings() {
                           </div>
                           <div>
                             <p className="text-slate-900 dark:text-white font-medium">Two-Factor Authentication</p>
-                            <p className="text-sm text-slate-600 dark:text-slate-400">Add an extra layer of security</p>
+                            <p className="text-sm text-slate-700 dark:text-slate-400">Add an extra layer of security</p>
                           </div>
                         </div>
                         <div className="flex items-center gap-3">
@@ -823,12 +823,12 @@ export default function HRSettings() {
 
                       <div className="flex items-center justify-between p-4 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl">
                         <div className="flex items-center gap-4">
-                          <div className="w-10 h-10 bg-slate-700/50 rounded-xl flex items-center justify-center">
-                            <Clock className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+                          <div className="w-10 h-10 bg-white dark:bg-slate-700/50 rounded-xl flex items-center justify-center">
+                            <Clock className="w-5 h-5 text-slate-700 dark:text-slate-400" />
                           </div>
                           <div>
                             <p className="text-slate-900 dark:text-white font-medium">Session Timeout</p>
-                            <p className="text-sm text-slate-600 dark:text-slate-400">Auto-logout after inactivity</p>
+                            <p className="text-sm text-slate-700 dark:text-slate-400">Auto-logout after inactivity</p>
                           </div>
                         </div>
                         <select
@@ -845,12 +845,12 @@ export default function HRSettings() {
 
                       <div className="flex items-center justify-between p-4 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl">
                         <div className="flex items-center gap-4">
-                          <div className="w-10 h-10 bg-slate-700/50 rounded-xl flex items-center justify-center">
-                            <Bell className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+                          <div className="w-10 h-10 bg-white dark:bg-slate-700/50 rounded-xl flex items-center justify-center">
+                            <Bell className="w-5 h-5 text-slate-700 dark:text-slate-400" />
                           </div>
                           <div>
                             <p className="text-slate-900 dark:text-white font-medium">Login Notifications</p>
-                            <p className="text-sm text-slate-600 dark:text-slate-400">Get alerted for new sign-ins</p>
+                            <p className="text-sm text-slate-700 dark:text-slate-400">Get alerted for new sign-ins</p>
                           </div>
                         </div>
                         <button
@@ -863,12 +863,12 @@ export default function HRSettings() {
 
                       <div className="flex items-center justify-between p-4 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl">
                         <div className="flex items-center gap-4">
-                          <div className="w-10 h-10 bg-slate-700/50 rounded-xl flex items-center justify-center">
-                            <Activity className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+                          <div className="w-10 h-10 bg-white dark:bg-slate-700/50 rounded-xl flex items-center justify-center">
+                            <Activity className="w-5 h-5 text-slate-700 dark:text-slate-400" />
                           </div>
                           <div>
                             <p className="text-slate-900 dark:text-white font-medium">Audit Logging</p>
-                            <p className="text-sm text-slate-600 dark:text-slate-400">Track all account activity</p>
+                            <p className="text-sm text-slate-700 dark:text-slate-400">Track all account activity</p>
                           </div>
                         </div>
                         <button
@@ -926,9 +926,9 @@ export default function HRSettings() {
                     <div className="flex items-center justify-between mb-6">
                       <div>
                         <h3 className="text-lg font-semibold text-slate-900 dark:text-white">HR System Integrations</h3>
-                        <p className="text-sm text-slate-600 dark:text-slate-400">Connected systems and data sources</p>
+                        <p className="text-sm text-slate-700 dark:text-slate-400">Connected systems and data sources</p>
                       </div>
-                      <button className="flex items-center gap-2 px-4 py-2 bg-slate-700/50 hover:bg-slate-700/70 border border-slate-600/50 rounded-xl text-slate-700 dark:text-slate-300 transition-all">
+                      <button className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 border border-slate-600/50 rounded-xl text-slate-700 dark:text-slate-300 transition-all">
                         <RefreshCw className="w-4 h-4" />
                         Sync All
                       </button>
@@ -940,7 +940,7 @@ export default function HRSettings() {
                           <div className="flex items-start justify-between">
                             <div className="flex items-start gap-4">
                               <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                                integration.status === 'connected' ? 'bg-green-500/20' : 'bg-slate-700/50'
+                                integration.status === 'connected' ? 'bg-green-500/20' : 'bg-white dark:bg-slate-700/50'
                               }`}>
                                 <Database className={`w-6 h-6 ${
                                   integration.status === 'connected' ? 'text-green-600 dark:text-green-400' : 'text-slate-500'
@@ -955,10 +955,10 @@ export default function HRSettings() {
                                     {integration.status === 'connected' ? 'Connected' : 'Disconnected'}
                                   </span>
                                 </div>
-                                <p className="text-sm text-slate-600 dark:text-slate-400 mb-2">{integration.vendor} • {integration.type}</p>
+                                <p className="text-sm text-slate-700 dark:text-slate-400 mb-2">{integration.vendor} • {integration.type}</p>
                                 <p className="text-xs text-slate-500">{integration.description}</p>
 
-                                <div className="flex items-center gap-4 mt-3 text-xs text-slate-600 dark:text-slate-400">
+                                <div className="flex items-center gap-4 mt-3 text-xs text-slate-700 dark:text-slate-400">
                                   <span className="flex items-center gap-1">
                                     <Clock className="w-3 h-3" />
                                     Last sync: {integration.lastSync}
@@ -975,7 +975,7 @@ export default function HRSettings() {
 
                                 <div className="flex flex-wrap gap-2 mt-3">
                                   {integration.dataTypes.map((type, idx) => (
-                                    <span key={idx} className="px-2 py-1 bg-slate-700/50 rounded text-xs text-slate-700 dark:text-slate-300">
+                                    <span key={idx} className="px-2 py-1 bg-white dark:bg-slate-700/50 rounded text-xs text-slate-700 dark:text-slate-300">
                                       {type}
                                     </span>
                                   ))}
@@ -983,17 +983,17 @@ export default function HRSettings() {
 
                                 <div className="mt-4 flex items-center gap-2">
                                   <span className="text-xs text-slate-500">API Key:</span>
-                                  <code className="px-2 py-1 bg-slate-900/50 rounded text-xs text-slate-600 dark:text-slate-400 font-mono">
+                                  <code className="px-2 py-1 bg-white dark:bg-slate-900/50 rounded text-xs text-slate-700 dark:text-slate-400 font-mono">
                                     {showApiKey[key] ? integration.apiKey : '••••••••••••••••'}
                                   </code>
                                   <button
                                     onClick={() => toggleApiKeyVisibility(key)}
-                                    className="p-1 hover:bg-slate-700/50 rounded transition-colors"
+                                    className="p-1 hover:bg-slate-100 dark:hover:bg-slate-700/50 rounded transition-colors"
                                   >
                                     {showApiKey[key] ? (
-                                      <EyeOff className="w-3 h-3 text-slate-600 dark:text-slate-400" />
+                                      <EyeOff className="w-3 h-3 text-slate-700 dark:text-slate-400" />
                                     ) : (
-                                      <Eye className="w-3 h-3 text-slate-600 dark:text-slate-400" />
+                                      <Eye className="w-3 h-3 text-slate-700 dark:text-slate-400" />
                                     )}
                                   </button>
                                 </div>
@@ -1002,7 +1002,7 @@ export default function HRSettings() {
 
                             <div className="flex items-center gap-2">
                               <div className="text-right mr-4">
-                                <p className="text-xs text-slate-600 dark:text-slate-400">Monthly Requests</p>
+                                <p className="text-xs text-slate-700 dark:text-slate-400">Monthly Requests</p>
                                 <p className="text-sm text-slate-900 dark:text-white font-medium">
                                   {integration.monthlyRequests.toLocaleString()} / {integration.requestLimit.toLocaleString()}
                                 </p>
@@ -1013,8 +1013,8 @@ export default function HRSettings() {
                                   ></div>
                                 </div>
                               </div>
-                              <button className="p-2 hover:bg-slate-700/50 rounded-lg transition-colors">
-                                <Settings className="w-4 h-4 text-slate-600 dark:text-slate-400" />
+                              <button className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700/50 rounded-lg transition-colors">
+                                <Settings className="w-4 h-4 text-slate-700 dark:text-slate-400" />
                               </button>
                             </div>
                           </div>
@@ -1038,7 +1038,7 @@ export default function HRSettings() {
       </button>
 
       {chatOpen && (
-        <div className="fixed bottom-24 right-6 w-full max-w-96 h-[500px] bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-2xl flex flex-col z-40 mx-4 sm:mx-0">
+        <div className="fixed bottom-24 right-6 w-full max-w-96 h-[500px] bg-white dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200 dark:border-slate-700/50 rounded-2xl shadow-2xl flex flex-col z-40 mx-4 sm:mx-0">
           <div className="p-4 border-b border-slate-200 dark:border-slate-700/50">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
@@ -1056,7 +1056,7 @@ export default function HRSettings() {
                 <Sparkles className="w-4 h-4 text-slate-900 dark:text-white" />
               </div>
               <div className="flex-1">
-                <div className="bg-slate-800/60 p-3 rounded-xl">
+                <div className="bg-white dark:bg-slate-800/60 p-3 rounded-xl">
                   <p className="text-sm text-slate-700 dark:text-slate-200">Hi! I can help you configure your HR settings, manage integrations, set up notifications, and troubleshoot connectivity issues. What do you need help with?</p>
                 </div>
               </div>

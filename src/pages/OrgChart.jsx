@@ -1138,13 +1138,13 @@ export default function OrgChart() {
                 </p>
                 {bm && (
                   <div className="flex items-center justify-center gap-3 text-[10px] flex-wrap">
-                    <span className="text-slate-600 dark:text-slate-400">{bm.personnel} personnel</span>
-                    <span className="text-slate-600">·</span>
+                    <span className="text-slate-700 dark:text-slate-400">{bm.personnel} personnel</span>
+                    <span className="text-slate-700">·</span>
                     <span className={pct >= 95 ? 'text-emerald-400' : pct >= 80 ? 'text-amber-400' : 'text-red-400'}>
                       {pct}% staffed
                     </span>
-                    {bm.vacancies > 0 && <><span className="text-slate-600">·</span><span className="text-red-400">{bm.vacancies} vacant</span></>}
-                    {bm.certRisk > 0 && <><span className="text-slate-600">·</span><span className="text-amber-400/80">{bm.certRisk} cert risk</span></>}
+                    {bm.vacancies > 0 && <><span className="text-slate-700">·</span><span className="text-red-400">{bm.vacancies} vacant</span></>}
+                    {bm.certRisk > 0 && <><span className="text-slate-700">·</span><span className="text-amber-400/80">{bm.certRisk} cert risk</span></>}
                   </div>
                 )}
                 {bm && (
@@ -1179,8 +1179,8 @@ export default function OrgChart() {
                         {node.divisionStrength.current}/{node.divisionStrength.authorized}
                       </span>
                     )}
-                    {dm?.vacancies > 0 && <><span className="text-slate-600">·</span><span className="text-red-400">{dm.vacancies} vacant</span></>}
-                    {dm?.certRisk > 0 && <><span className="text-slate-600">·</span><span className="text-amber-400/80">{dm.certRisk} cert risk</span></>}
+                    {dm?.vacancies > 0 && <><span className="text-slate-700">·</span><span className="text-red-400">{dm.vacancies} vacant</span></>}
+                    {dm?.certRisk > 0 && <><span className="text-slate-700">·</span><span className="text-amber-400/80">{dm.certRisk} cert risk</span></>}
                   </div>
                 )}
                 {dm?.alert && (
@@ -1197,7 +1197,7 @@ export default function OrgChart() {
         {/* Section Label */}
         {showSectionLabel && !isCollapsed && (
           <div className="mb-2">
-            <div className="px-4 py-1 bg-slate-700/40 backdrop-blur-xl border border-slate-600/50 rounded-lg shadow">
+            <div className="px-4 py-1 bg-slate-50 dark:bg-slate-700/40 backdrop-blur-xl border border-slate-600/50 rounded-lg shadow">
               <p className="text-[10px] font-medium text-slate-700 dark:text-slate-300 tracking-wide text-center whitespace-nowrap">
                 {sectionLabelText}
               </p>
@@ -1210,7 +1210,7 @@ export default function OrgChart() {
           <div
             className={`org-node relative ${
               node.isVacant
-                ? 'bg-slate-800/35 backdrop-blur-xl border-2 border-dashed border-red-500/40'
+                ? 'bg-slate-50 dark:bg-slate-800/35 backdrop-blur-xl border-2 border-dashed border-red-500/40'
                 : node.actingFlag
                   ? 'bg-gradient-to-br from-amber-900/35 to-slate-800/40 backdrop-blur-xl border-2 border-amber-500/60 shadow-amber-500/20'
                   : viewMode === 'operational'
@@ -1287,7 +1287,7 @@ export default function OrgChart() {
                       <div className={`text-amber-400 ${size === 'lg' ? 'text-[10px]' : 'text-[9px]'}`}>
                         {node.daysVacant} days vacant
                       </div>
-                      <div className={`text-slate-600 dark:text-slate-400 ${size === 'lg' ? 'text-[10px]' : 'text-[9px]'}`}>
+                      <div className={`text-slate-700 dark:text-slate-400 ${size === 'lg' ? 'text-[10px]' : 'text-[9px]'}`}>
                         {node.candidatesInPipeline} candidate{node.candidatesInPipeline !== 1 ? 's' : ''}
                       </div>
                     </>
@@ -1304,7 +1304,7 @@ export default function OrgChart() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <h4 className={`font-bold text-slate-900 dark:text-white truncate ${size === 'lg' ? 'text-xs' : 'text-[11px]'}`}>{node.name}</h4>
-                      <p className={`text-slate-600 dark:text-slate-400 truncate ${size === 'lg' ? 'text-[10px]' : 'text-[9px]'}`}>{node.rank}</p>
+                      <p className={`text-slate-700 dark:text-slate-400 truncate ${size === 'lg' ? 'text-[10px]' : 'text-[9px]'}`}>{node.rank}</p>
                     </div>
                   </div>
                   {size !== 'xs' && (
@@ -1317,14 +1317,14 @@ export default function OrgChart() {
                             <Star key={i} className={`w-2 h-2 ${
                               i < Math.floor(node.performance)
                                 ? 'text-amber-400 fill-amber-400'
-                                : 'text-slate-600'
+                                : 'text-slate-700'
                             }`} />
                           ))}
-                          <span className="text-[8px] text-slate-600 dark:text-slate-400 ml-0.5">{node.performance.toFixed(1)}</span>
+                          <span className="text-[8px] text-slate-700 dark:text-slate-400 ml-0.5">{node.performance.toFixed(1)}</span>
                         </div>
                       )}
                       {node.reports > 0 && (
-                        <div className={`flex items-center gap-1 text-slate-600 dark:text-slate-400 ${size === 'lg' ? 'text-[10px]' : 'text-[9px]'}`}>
+                        <div className={`flex items-center gap-1 text-slate-700 dark:text-slate-400 ${size === 'lg' ? 'text-[10px]' : 'text-[9px]'}`}>
                           <Users className="w-2.5 h-2.5" />
                           <span>{node.reports}</span>
                         </div>
@@ -1344,7 +1344,7 @@ export default function OrgChart() {
                             : node.retirementMonths < 24
                               ? 'bg-amber-500/20 border-amber-500/30 text-amber-300'
                               : node.retirementMonths <= 60
-                                ? 'bg-slate-700/40 border-slate-600/50 text-slate-500'
+                                ? 'bg-slate-50 dark:bg-slate-700/40 border-slate-600/50 text-slate-500'
                                 : 'bg-emerald-500/10 border-emerald-500/15 text-emerald-400/70'
                         }`}>
                           <Clock className="w-2.5 h-2.5 flex-shrink-0" />
@@ -1360,7 +1360,7 @@ export default function OrgChart() {
                       )}
                       {/* Promotion candidates */}
                       {node.promotionCandidates && node.promotionCandidates.length > 0 && size === 'lg' && (
-                        <div className="flex items-center gap-1 mt-0.5 text-[9px] text-slate-600 dark:text-slate-400">
+                        <div className="flex items-center gap-1 mt-0.5 text-[9px] text-slate-700 dark:text-slate-400">
                           <ArrowRight className="w-2 h-2 text-slate-500" />
                           <span className="truncate">{node.promotionCandidates[0]}</span>
                         </div>
@@ -1382,21 +1382,21 @@ export default function OrgChart() {
               </div>
             )}
 
-            <div className="absolute left-full ml-2 top-0 w-64 bg-slate-900/95 border border-slate-700/50 rounded-lg p-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 shadow-2xl pointer-events-none">
+            <div className="absolute left-full ml-2 top-0 w-64 bg-white dark:bg-slate-900/95 border border-slate-200 dark:border-slate-700/50 rounded-lg p-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 shadow-2xl pointer-events-none">
               <div className="space-y-2 text-xs">
                 <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
-                  <Mail className="w-3 h-3 text-slate-600 dark:text-slate-400" />
+                  <Mail className="w-3 h-3 text-slate-700 dark:text-slate-400" />
                   <span className="truncate">{node.email}</span>
                 </div>
                 {node.phone && (
                   <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
-                    <Phone className="w-3 h-3 text-slate-600 dark:text-slate-400" />
+                    <Phone className="w-3 h-3 text-slate-700 dark:text-slate-400" />
                     <span>{node.phone}</span>
                   </div>
                 )}
                 {node.yearsOfService && (
                   <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
-                    <Award className="w-3 h-3 text-slate-600 dark:text-slate-400" />
+                    <Award className="w-3 h-3 text-slate-700 dark:text-slate-400" />
                     <span>{node.yearsOfService} years</span>
                   </div>
                 )}
@@ -1491,15 +1491,15 @@ export default function OrgChart() {
 
               {!isFullscreen && (
                 <div className="flex items-center gap-2">
-                  <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-100 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded text-[11px] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors" title="Export org chart">
+                  <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-100 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded text-[11px] text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors" title="Export org chart">
                     <Download className="w-3 h-3" />
                     <span className="hidden sm:inline">Export</span>
                   </button>
-                  <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-100 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded text-[11px] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors">
+                  <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-100 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded text-[11px] text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors">
                     <Printer className="w-3 h-3" />
                     <span className="hidden sm:inline">Print</span>
                   </button>
-                  <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-100 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded text-[11px] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors">
+                  <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-100 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded text-[11px] text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors">
                     <Share2 className="w-3 h-3" />
                     <span className="hidden sm:inline">Share</span>
                   </button>
@@ -1522,7 +1522,7 @@ export default function OrgChart() {
                           ? 'bg-red-500/10 text-red-400 border-red-500/20 hover:bg-red-500/20'
                           : alert.type === 'warning'
                             ? 'bg-amber-500/10 text-amber-400 border-amber-500/20 hover:bg-amber-500/20'
-                            : 'bg-slate-700/25 text-slate-600 dark:text-slate-400 border-slate-700/50 hover:bg-slate-700/40'
+                            : 'bg-slate-100 dark:bg-slate-700/25 text-slate-700 dark:text-slate-400 border-slate-700/50 hover:bg-slate-100 dark:hover:bg-slate-700/40'
                       }`}
                     >
                       {alert.type === 'critical' ? '⬤' : alert.type === 'warning' ? '⚠' : '●'} {alert.short}
@@ -1531,7 +1531,7 @@ export default function OrgChart() {
                 </div>
                 <button
                   onClick={() => setInsightsExpanded(!insightsExpanded)}
-                  className="shrink-0 flex items-center gap-1 text-[10px] text-slate-600 hover:text-slate-600 dark:text-slate-400 transition-colors pt-0.5"
+                  className="shrink-0 flex items-center gap-1 text-[10px] text-slate-700 hover:text-slate-600 dark:text-slate-400 transition-colors pt-0.5"
                 >
                   <span className="hidden sm:inline">Details</span>
                   {insightsExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
@@ -1549,7 +1549,7 @@ export default function OrgChart() {
                         ? 'bg-red-500/8 border-red-500/20 hover:bg-red-500/15'
                         : alert.type === 'warning'
                           ? 'bg-amber-500/8 border-amber-500/15 hover:bg-amber-500/15'
-                          : 'bg-slate-800/30 border-slate-700/50 hover:bg-slate-800/50'
+                          : 'bg-slate-100 dark:bg-slate-800/30 border-slate-700/50 hover:bg-slate-100 dark:hover:bg-slate-800/50'
                     }`}
                   >
                     <span className={`text-[9px] font-bold uppercase tracking-wider pt-0.5 shrink-0 w-12 ${
@@ -1560,14 +1560,14 @@ export default function OrgChart() {
                     }`}>{alert.full}</span>
                     {alert.nodeId && (
                       <ArrowRight className={`w-3.5 h-3.5 shrink-0 mt-0.5 ml-auto ${
-                        alert.type === 'critical' ? 'text-red-500' : alert.type === 'warning' ? 'text-amber-500' : 'text-slate-600'
+                        alert.type === 'critical' ? 'text-red-500' : alert.type === 'warning' ? 'text-amber-500' : 'text-slate-700'
                       }`} />
                     )}
                   </button>
                 ))}
                 <div className="flex items-center justify-between pt-1 border-t border-slate-200 dark:border-slate-700/40">
-                  <span className="text-[10px] text-slate-600">Staffing: 95.5% · 8 open positions · Retention 93.8%</span>
-                  <span className="text-[10px] text-slate-600">AI-assisted · 3m ago</span>
+                  <span className="text-[10px] text-slate-700">Staffing: 95.5% · 8 open positions · Retention 93.8%</span>
+                  <span className="text-[10px] text-slate-700">AI-assisted · 3m ago</span>
                 </div>
               </div>
               )}
@@ -1587,7 +1587,7 @@ export default function OrgChart() {
                 {searchQuery && (
                   <button
                     onClick={() => { setSearchQuery(''); setHighlightedNode(null); }}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
                   >
                     <X className="w-4 h-4" />
                   </button>
@@ -1596,7 +1596,7 @@ export default function OrgChart() {
 
               <div className="flex gap-2">
                 <div className="relative">
-                  <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
+                  <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-700 dark:text-slate-400" />
                   <select value={filterDivision} onChange={(e) => setFilterDivision(e.target.value)} className="pl-8 pr-3 py-2 bg-slate-100 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded text-[11px] text-slate-900 dark:text-white focus:outline-none focus:border-slate-500/50 cursor-pointer">
                     <option value="all">All Divisions (170)</option>
                     <option value="Patrol">Patrol Division (65)</option>
@@ -1609,7 +1609,7 @@ export default function OrgChart() {
                 </div>
 
                 <div className="relative">
-                  <Users className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
+                  <Users className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-700 dark:text-slate-400" />
                   <select value={filterRank} onChange={(e) => setFilterRank(e.target.value)} className="pl-8 pr-3 py-2 bg-slate-100 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded text-[11px] text-slate-900 dark:text-white focus:outline-none focus:border-slate-500/50 cursor-pointer">
                     <option value="all">All Ranks (170)</option>
                     <option value="Sheriff">Sheriff (1)</option>
@@ -1630,20 +1630,20 @@ export default function OrgChart() {
                     onClick={() => setViewMode('hierarchy')}
                     className={`flex items-center gap-1.5 px-2.5 py-2 text-[11px] font-medium transition-all ${
                       viewMode === 'hierarchy'
-                        ? 'bg-slate-700/60 text-slate-900 dark:text-white'
-                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-300'
+                        ? 'bg-white dark:bg-slate-700/60 text-slate-900 dark:text-white'
+                        : 'text-slate-700 dark:text-slate-400 hover:text-slate-300'
                     }`}
                   >
                     <Layers className="w-3.5 h-3.5" />
                     <span className="hidden sm:inline">Hierarchy</span>
                   </button>
-                  <div className="w-px h-4 bg-slate-700/50" />
+                  <div className="w-px h-4 bg-white dark:bg-slate-700/50" />
                   <button
                     onClick={() => setViewMode('operational')}
                     className={`flex items-center gap-1.5 px-2.5 py-2 text-[11px] font-medium transition-all ${
                       viewMode === 'operational'
                         ? 'bg-amber-500/20 text-amber-400'
-                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-300'
+                        : 'text-slate-700 dark:text-slate-400 hover:text-slate-300'
                     }`}
                   >
                     <Activity className="w-3.5 h-3.5" />
@@ -1655,7 +1655,7 @@ export default function OrgChart() {
 
             <div
               ref={chartContainerRef}
-              className="flex-1 min-h-[500px] lg:min-h-[650px] bg-slate-800/35 border border-slate-700/50 rounded-xl relative touch-none"
+              className="flex-1 min-h-[500px] lg:min-h-[650px] bg-slate-50 dark:bg-slate-800/35 border border-slate-700/50 rounded-xl relative touch-none"
               style={{
                 cursor: isPanning ? 'grabbing' : 'grab',
                 overflow: 'hidden'
@@ -1668,34 +1668,34 @@ export default function OrgChart() {
               {/* Controls - Always visible (including in fullscreen) */}
               <div className="absolute top-4 left-4 z-50 flex flex-col gap-2">
                 {/* Zoom Controls */}
-                <div className="flex items-center gap-2 bg-slate-900/90 border border-slate-700/50 rounded-xl px-3 py-2 shadow-lg">
-                  <button onClick={() => setZoomLevel(Math.max(25, zoomLevel - 10))} className="p-1 hover:bg-slate-700/50 rounded transition-colors" title="Zoom out (-)">
+                <div className="flex items-center gap-2 bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-700/50 rounded-xl px-3 py-2 shadow-lg">
+                  <button onClick={() => setZoomLevel(Math.max(25, zoomLevel - 10))} className="p-1 hover:bg-slate-100 dark:hover:bg-slate-700/50 rounded transition-colors" title="Zoom out (-)">
                     <ZoomOut className="w-4 h-4 text-slate-700 dark:text-slate-300" />
                   </button>
                   <span className="text-sm text-slate-900 dark:text-white font-medium w-14 text-center">{zoomLevel}%</span>
-                  <button onClick={() => setZoomLevel(Math.min(200, zoomLevel + 10))} className="p-1 hover:bg-slate-700/50 rounded transition-colors" title="Zoom in (+)">
+                  <button onClick={() => setZoomLevel(Math.min(200, zoomLevel + 10))} className="p-1 hover:bg-slate-100 dark:hover:bg-slate-700/50 rounded transition-colors" title="Zoom in (+)">
                     <ZoomIn className="w-4 h-4 text-slate-700 dark:text-slate-300" />
                   </button>
                 </div>
 
                 {/* Action Buttons */}
-                <button onClick={fitToScreen} className="flex items-center justify-center gap-2 px-4 py-2 bg-slate-900/90 border border-slate-700/50 rounded-xl text-slate-700 dark:text-slate-300 hover:border-slate-600/50 hover:bg-slate-800/90 transition-all shadow-lg" title="Fit to Screen">
+                <button onClick={fitToScreen} className="flex items-center justify-center gap-2 px-4 py-2 bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-700 dark:text-slate-300 hover:border-slate-600/50 hover:bg-slate-800/90 transition-all shadow-lg" title="Fit to Screen">
                   <Maximize className="w-4 h-4" />
                   <span className="text-sm">Fit to Screen</span>
                 </button>
 
-                <button onClick={() => setCollapsedNodes(new Set())} className="flex items-center justify-center gap-2 px-4 py-2 bg-slate-900/90 border border-slate-700/50 rounded-xl text-slate-700 dark:text-slate-300 hover:border-slate-600/50 hover:bg-slate-800/90 transition-all shadow-lg" title="Expand all nodes">
+                <button onClick={() => setCollapsedNodes(new Set())} className="flex items-center justify-center gap-2 px-4 py-2 bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-700 dark:text-slate-300 hover:border-slate-600/50 hover:bg-slate-800/90 transition-all shadow-lg" title="Expand all nodes">
                   <Expand className="w-4 h-4" />
                   <span className="text-sm">Expand All</span>
                 </button>
 
-                <button onClick={toggleFullscreen} className="flex items-center justify-center gap-2 px-4 py-2 bg-slate-900/90 border border-slate-700/50 rounded-xl text-slate-700 dark:text-slate-300 hover:border-slate-600/50 hover:bg-slate-800/90 transition-all shadow-lg" title={isFullscreen ? "Exit Full View (Esc)" : "Enter Full View"}>
+                <button onClick={toggleFullscreen} className="flex items-center justify-center gap-2 px-4 py-2 bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-700 dark:text-slate-300 hover:border-slate-600/50 hover:bg-slate-800/90 transition-all shadow-lg" title={isFullscreen ? "Exit Full View (Esc)" : "Enter Full View"}>
                   {isFullscreen ? <ArrowLeft className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
                   <span className="text-sm">{isFullscreen ? 'Exit Full View' : 'Full View'}</span>
                 </button>
 
                 {/* Keyboard Shortcuts Info */}
-                <div className="bg-slate-900/90 border border-slate-700/50 rounded-xl px-3 py-2 shadow-lg text-[9px] text-slate-600 dark:text-slate-400 hidden lg:block">
+                <div className="bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-700/50 rounded-xl px-3 py-2 shadow-lg text-[9px] text-slate-700 dark:text-slate-400 hidden lg:block">
                   <p className="text-[10px] text-slate-700 dark:text-slate-300 font-medium mb-1">Keyboard:</p>
                   <p>+/− : Zoom in/out</p>
                   <p>Space + drag : Pan</p>
@@ -1705,14 +1705,14 @@ export default function OrgChart() {
               </div>
 
               {/* MiniMap */}
-              <div className="absolute bottom-4 right-4 w-56 bg-slate-900/90 border border-slate-700/50 rounded-lg overflow-hidden z-40 hidden lg:block">
+              <div className="absolute bottom-4 right-4 w-56 bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-700/50 rounded-lg overflow-hidden z-40 hidden lg:block">
                 <div className="p-2 border-b border-slate-200 dark:border-slate-700/50 flex items-center justify-between">
                   <span className="text-[10px] font-semibold text-slate-700 dark:text-slate-300">MiniMap</span>
-                  <button className="text-slate-600 dark:text-slate-400 hover:text-slate-700 dark:text-slate-300">
+                  <button className="text-slate-700 dark:text-slate-400 hover:text-slate-700 dark:text-slate-300">
                     <Minimize2 className="w-3 h-3" />
                   </button>
                 </div>
-                <div className="h-20 bg-slate-800/50 flex items-center justify-center border-b border-slate-200 dark:border-slate-700/50">
+                <div className="h-20 bg-white dark:bg-slate-800/50 flex items-center justify-center border-b border-slate-200 dark:border-slate-700/50">
                   <div className="text-xs text-slate-500 flex flex-col items-center">
                     <MapPin className="w-4 h-4 mb-1" />
                     <p className="text-[9px]">Org Preview</p>
@@ -1721,19 +1721,19 @@ export default function OrgChart() {
                 </div>
                 <div className="p-2 space-y-1.5">
                   <div className="flex items-center justify-between text-[9px]">
-                    <span className="text-slate-600 dark:text-slate-400">Current View:</span>
+                    <span className="text-slate-700 dark:text-slate-400">Current View:</span>
                     <span className="text-slate-700 dark:text-slate-300">Command Level</span>
                   </div>
                   <div className="flex items-center justify-between text-[9px]">
-                    <span className="text-slate-600 dark:text-slate-400">Visible:</span>
+                    <span className="text-slate-700 dark:text-slate-400">Visible:</span>
                     <span className="text-slate-700 dark:text-slate-300">47 of 170 personnel</span>
                   </div>
                   <div className="flex items-center justify-between text-[9px]">
-                    <span className="text-slate-600 dark:text-slate-400">Zoom:</span>
+                    <span className="text-slate-700 dark:text-slate-400">Zoom:</span>
                     <span className="text-slate-700 dark:text-slate-300">{zoomLevel}%</span>
                   </div>
                   <div className="pt-1.5 border-t border-slate-200 dark:border-slate-700/50 space-y-1">
-                    <button onClick={() => { setPanOffset({ x: 0, y: 0 }); setZoomLevel(100); }} className="w-full px-2 py-1 bg-slate-700/40 hover:bg-slate-700/60 text-[9px] text-slate-700 dark:text-slate-300 rounded transition-colors text-left">
+                    <button onClick={() => { setPanOffset({ x: 0, y: 0 }); setZoomLevel(100); }} className="w-full px-2 py-1 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 text-[9px] text-slate-700 dark:text-slate-300 rounded transition-colors text-left">
                       Center on Sheriff
                     </button>
                     <button className="w-full px-2 py-1 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/30 text-[9px] text-amber-400 rounded transition-colors text-left">
@@ -1759,47 +1759,47 @@ export default function OrgChart() {
               {/* Readiness */}
               <div className="flex items-center gap-1.5">
                 <div className="w-2 h-2 rounded-full bg-emerald-400"></div>
-                <span className="text-slate-600 dark:text-slate-400">Fully staffed</span>
+                <span className="text-slate-700 dark:text-slate-400">Fully staffed</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <div className="w-2 h-2 rounded-full bg-amber-400"></div>
-                <span className="text-slate-600 dark:text-slate-400">At risk / acting</span>
+                <span className="text-slate-700 dark:text-slate-400">At risk / acting</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <div className="w-2 h-2 rounded-full bg-red-400"></div>
-                <span className="text-slate-600 dark:text-slate-400">Leadership vacancy</span>
+                <span className="text-slate-700 dark:text-slate-400">Leadership vacancy</span>
               </div>
               <div className="text-slate-700">·</div>
               {/* Heatmap */}
               <div className="flex items-center gap-1.5">
                 <div className="w-3 h-3 bg-emerald-900/40 border border-l-2 border-emerald-500 rounded"></div>
-                <span className="text-slate-600 dark:text-slate-400">95%+ staffed</span>
+                <span className="text-slate-700 dark:text-slate-400">95%+ staffed</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <div className="w-3 h-3 bg-amber-900/30 border border-l-2 border-amber-500 rounded"></div>
-                <span className="text-slate-600 dark:text-slate-400">80–94%</span>
+                <span className="text-slate-700 dark:text-slate-400">80–94%</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <div className="w-3 h-3 bg-red-900/30 border border-l-2 border-red-500 rounded"></div>
-                <span className="text-slate-600 dark:text-slate-400">&lt;80%</span>
+                <span className="text-slate-700 dark:text-slate-400">&lt;80%</span>
               </div>
               <div className="text-slate-700">·</div>
               {/* Special */}
               <div className="flex items-center gap-1.5">
                 <div className="w-3 h-3 border-2 border-dashed border-red-500/40 rounded"></div>
-                <span className="text-slate-600 dark:text-slate-400">Vacant</span>
+                <span className="text-slate-700 dark:text-slate-400">Vacant</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <div className="px-1 py-0.5 bg-amber-600 rounded text-[7px] font-bold text-white">ACT</div>
-                <span className="text-slate-600 dark:text-slate-400">Acting supervisor</span>
+                <span className="text-slate-700 dark:text-slate-400">Acting supervisor</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <AlertTriangle className="w-3 h-3 text-amber-400" />
-                <span className="text-slate-600 dark:text-slate-400">Span of control alert</span>
+                <span className="text-slate-700 dark:text-slate-400">Span of control alert</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <Clock className="w-3 h-3 text-slate-600 dark:text-slate-400" />
-                <span className="text-slate-600 dark:text-slate-400">Retirement signal</span>
+                <Clock className="w-3 h-3 text-slate-700 dark:text-slate-400" />
+                <span className="text-slate-700 dark:text-slate-400">Retirement signal</span>
               </div>
               <div className="text-slate-700">·</div>
               <div className="flex items-center gap-1.5">
@@ -1825,14 +1825,14 @@ export default function OrgChart() {
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold text-slate-900 dark:text-white">{selectedNode.name}</h3>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">{selectedNode.title}</p>
+                    <p className="text-sm text-slate-700 dark:text-slate-400">{selectedNode.title}</p>
                   </div>
                 </div>
                 <button
                   onClick={() => setDrawerOpen(false)}
-                  className="p-2 hover:bg-slate-800/50 rounded-lg transition-colors"
+                  className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors"
                 >
-                  <X className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+                  <X className="w-5 h-5 text-slate-700 dark:text-slate-400" />
                 </button>
               </div>
 
@@ -1841,11 +1841,11 @@ export default function OrgChart() {
                   <Users className="w-3 h-3" />
                   Profile
                 </button>
-                <button className="px-3 py-2 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors flex items-center justify-center gap-1">
+                <button className="px-3 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors flex items-center justify-center gap-1">
                   <Mail className="w-3 h-3" />
                   Message
                 </button>
-                <button className="px-3 py-2 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors flex items-center justify-center gap-1">
+                <button className="px-3 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors flex items-center justify-center gap-1">
                   <UserPlus className="w-3 h-3" />
                   Reassign
                 </button>
@@ -1854,19 +1854,19 @@ export default function OrgChart() {
 
             <div className="p-6 space-y-6">
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
-                  <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Badge</p>
+                <div className="bg-slate-100 dark:bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
+                  <p className="text-xs text-slate-700 dark:text-slate-400 mb-1">Badge</p>
                   <p className="text-sm font-medium text-slate-900 dark:text-white font-mono">{selectedNode.badge}</p>
                 </div>
                 {selectedNode.yearsOfService && (
-                  <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
-                    <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Tenure</p>
+                  <div className="bg-slate-100 dark:bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
+                    <p className="text-xs text-slate-700 dark:text-slate-400 mb-1">Tenure</p>
                     <p className="text-sm font-medium text-slate-900 dark:text-white">{selectedNode.yearsOfService} years</p>
                   </div>
                 )}
                 {selectedNode.division && (
-                  <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50 col-span-2">
-                    <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Division</p>
+                  <div className="bg-slate-100 dark:bg-slate-800/30 rounded-xl p-4 border border-slate-700/50 col-span-2">
+                    <p className="text-xs text-slate-700 dark:text-slate-400 mb-1">Division</p>
                     <p className="text-sm font-medium text-slate-900 dark:text-white">{selectedNode.division}</p>
                   </div>
                 )}
@@ -1877,11 +1877,11 @@ export default function OrgChart() {
                   <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Contact Information</h4>
                   <div className="space-y-2">
                     <div className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
-                      <Mail className="w-4 h-4 text-slate-600 dark:text-slate-400" />
+                      <Mail className="w-4 h-4 text-slate-700 dark:text-slate-400" />
                       <span>{selectedNode.email}</span>
                     </div>
                     <div className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
-                      <Phone className="w-4 h-4 text-slate-600 dark:text-slate-400" />
+                      <Phone className="w-4 h-4 text-slate-700 dark:text-slate-400" />
                       <span>{selectedNode.phone}</span>
                     </div>
                   </div>
@@ -1891,12 +1891,12 @@ export default function OrgChart() {
               {selectedNode.divisionStrength && (
                 <div>
                   <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Staffing Overview</h4>
-                  <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50 space-y-3">
+                  <div className="bg-slate-100 dark:bg-slate-800/30 rounded-xl p-4 border border-slate-700/50 space-y-3">
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-slate-700 dark:text-slate-300">Assigned Strength</span>
                       <span className="text-lg font-bold text-slate-900 dark:text-white">{selectedNode.divisionStrength.current} / {selectedNode.divisionStrength.authorized}</span>
                     </div>
-                    <div className="w-full h-2 bg-slate-700/50 rounded-full overflow-hidden">
+                    <div className="w-full h-2 bg-white dark:bg-slate-700/50 rounded-full overflow-hidden">
                       <div
                         className={`h-full rounded-full ${
                           getStaffingColor(selectedNode.divisionStrength) === 'red' ? 'bg-red-500' :
@@ -1905,24 +1905,24 @@ export default function OrgChart() {
                         style={{ width: `${Math.min((selectedNode.divisionStrength.current / selectedNode.divisionStrength.authorized) * 100, 100)}%` }}
                       />
                     </div>
-                    <p className="text-xs text-slate-600 dark:text-slate-400">
+                    <p className="text-xs text-slate-700 dark:text-slate-400">
                       {Math.round((selectedNode.divisionStrength.current / selectedNode.divisionStrength.authorized) * 100)}% of authorized strength
                     </p>
                     {/* Enriched metrics from divisionMetrics */}
                     {divisionMetrics[selectedNode.id] && (
                       <div className="pt-2 border-t border-slate-200 dark:border-slate-700/50 grid grid-cols-3 gap-3">
                         <div className="text-center">
-                          <p className="text-[11px] text-slate-600 dark:text-slate-400 mb-0.5">Deployable</p>
+                          <p className="text-[11px] text-slate-700 dark:text-slate-400 mb-0.5">Deployable</p>
                           <p className="text-base font-bold text-slate-900 dark:text-white">{divisionMetrics[selectedNode.id].deployable}</p>
                         </div>
                         <div className="text-center">
-                          <p className="text-[11px] text-slate-600 dark:text-slate-400 mb-0.5">Vacancies</p>
+                          <p className="text-[11px] text-slate-700 dark:text-slate-400 mb-0.5">Vacancies</p>
                           <p className={`text-base font-bold ${divisionMetrics[selectedNode.id].vacancies > 0 ? 'text-red-400' : 'text-slate-900 dark:text-white'}`}>
                             {divisionMetrics[selectedNode.id].vacancies}
                           </p>
                         </div>
                         <div className="text-center">
-                          <p className="text-[11px] text-slate-600 dark:text-slate-400 mb-0.5">Cert Risk</p>
+                          <p className="text-[11px] text-slate-700 dark:text-slate-400 mb-0.5">Cert Risk</p>
                           <p className={`text-base font-bold ${divisionMetrics[selectedNode.id].certRisk > 2 ? 'text-amber-400' : 'text-slate-500'}`}>
                             {divisionMetrics[selectedNode.id].certRisk}
                           </p>
@@ -1941,7 +1941,7 @@ export default function OrgChart() {
                     {/* Recommended action */}
                     {divisionMetrics[selectedNode.id]?.action && (
                       <div className="flex items-start gap-2 text-xs">
-                        <ArrowRight className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400 mt-0.5 flex-shrink-0" />
+                        <ArrowRight className="w-3.5 h-3.5 text-slate-700 dark:text-slate-400 mt-0.5 flex-shrink-0" />
                         <span className="text-emerald-300 font-medium">{divisionMetrics[selectedNode.id].action}</span>
                       </div>
                     )}
@@ -1951,10 +1951,10 @@ export default function OrgChart() {
 
               <div>
                 <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Team Information</h4>
-                <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
+                <div className="bg-slate-100 dark:bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <Users className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+                      <Users className="w-5 h-5 text-slate-700 dark:text-slate-400" />
                       <span className="text-sm text-slate-700 dark:text-slate-300">Direct Reports</span>
                     </div>
                     <span className="text-lg font-bold text-slate-900 dark:text-white">{selectedNode.reports}</span>
@@ -1966,20 +1966,20 @@ export default function OrgChart() {
               {selectedNode.performance && (
                 <div>
                   <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Performance Rating</h4>
-                  <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
+                  <div className="bg-slate-100 dark:bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center gap-2">
                         {[...Array(5)].map((_, i) => (
                           <Star key={i} className={`w-5 h-5 ${
                             i < Math.floor(selectedNode.performance)
                               ? 'text-amber-400 fill-amber-400'
-                              : 'text-slate-600'
+                              : 'text-slate-700'
                           }`} />
                         ))}
                       </div>
                       <span className="text-2xl font-bold text-slate-900 dark:text-white">{selectedNode.performance.toFixed(1)}</span>
                     </div>
-                    <p className="text-xs text-slate-600 dark:text-slate-400">Excellent performance rating</p>
+                    <p className="text-xs text-slate-700 dark:text-slate-400">Excellent performance rating</p>
                   </div>
                 </div>
               )}
@@ -1988,11 +1988,11 @@ export default function OrgChart() {
               {(selectedNode.retirementMonths !== undefined || selectedNode.promotionCandidates) && (
                 <div>
                   <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Leadership Pipeline</h4>
-                  <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50 space-y-3">
+                  <div className="bg-slate-100 dark:bg-slate-800/30 rounded-xl p-4 border border-slate-700/50 space-y-3">
                     {selectedNode.retirementMonths !== undefined && (
                       <div className="flex items-start gap-3">
                         <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
-                          selectedNode.retirementMonths === 0 ? 'bg-amber-500/20 border border-amber-500/20' : 'bg-slate-700/40 border border-slate-600/50'
+                          selectedNode.retirementMonths === 0 ? 'bg-amber-500/20 border border-amber-500/20' : 'bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50'
                         }`}>
                           <Clock className={`w-4 h-4 ${selectedNode.retirementMonths === 0 ? 'text-amber-400' : 'text-slate-500'}`} />
                         </div>
@@ -2004,20 +2004,20 @@ export default function OrgChart() {
                             }
                           </p>
                           {selectedNode.retirementEligible && (
-                            <p className="text-xs text-slate-600 dark:text-slate-400">Eligible since: {selectedNode.retirementEligible}</p>
+                            <p className="text-xs text-slate-700 dark:text-slate-400">Eligible since: {selectedNode.retirementEligible}</p>
                           )}
                         </div>
                       </div>
                     )}
                     {selectedNode.promotionCandidates && selectedNode.promotionCandidates.length > 0 && (
                       <div>
-                        <p className="text-xs text-slate-600 dark:text-slate-400 mb-2">Promotion Candidates</p>
+                        <p className="text-xs text-slate-700 dark:text-slate-400 mb-2">Promotion Candidates</p>
                         <div className="space-y-1.5">
                           {selectedNode.promotionCandidates.map((candidate, idx) => (
                             <div key={idx} className="flex items-center gap-2 text-sm">
                               <ArrowRight className="w-3 h-3 text-emerald-500" />
                               <span className="text-slate-900 dark:text-white">{candidate}</span>
-                              {idx === 0 && <span className="text-[10px] px-1.5 py-0.5 bg-slate-700/40 text-slate-700 dark:text-slate-300 rounded border border-slate-600/50">Primary</span>}
+                              {idx === 0 && <span className="text-[10px] px-1.5 py-0.5 bg-slate-50 dark:bg-slate-700/40 text-slate-700 dark:text-slate-300 rounded border border-slate-600/50">Primary</span>}
                             </div>
                           ))}
                         </div>
@@ -2039,20 +2039,20 @@ export default function OrgChart() {
               {selectedNode.succession && !selectedNode.promotionCandidates && (
                 <div>
                   <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Succession Planning</h4>
-                  <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50 space-y-3">
+                  <div className="bg-slate-100 dark:bg-slate-800/30 rounded-xl p-4 border border-slate-700/50 space-y-3">
                     <div className="flex items-center gap-2">
                       <CheckCircle className="w-4 h-4 text-green-400" />
                       <span className="text-sm text-green-400 font-medium">Succession Plan Ready</span>
                     </div>
                     {selectedNode.succession.successor && (
                       <div>
-                        <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Identified Successor</p>
+                        <p className="text-xs text-slate-700 dark:text-slate-400 mb-1">Identified Successor</p>
                         <p className="text-sm text-slate-900 dark:text-white font-medium">{selectedNode.succession.successor}</p>
                       </div>
                     )}
                     {selectedNode.succession.successors && (
                       <div>
-                        <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Identified Successors</p>
+                        <p className="text-xs text-slate-700 dark:text-slate-400 mb-1">Identified Successors</p>
                         <div className="space-y-1">
                           {selectedNode.succession.successors.map((successor, idx) => (
                             <p key={idx} className="text-sm text-slate-900 dark:text-white">• {successor}</p>
@@ -2062,7 +2062,7 @@ export default function OrgChart() {
                     )}
                     {selectedNode.retirementEligible && (
                       <div>
-                        <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Retirement Eligibility</p>
+                        <p className="text-xs text-slate-700 dark:text-slate-400 mb-1">Retirement Eligibility</p>
                         <p className="text-sm text-slate-900 dark:text-white">{selectedNode.retirementEligible}</p>
                       </div>
                     )}
@@ -2109,16 +2109,16 @@ export default function OrgChart() {
                       ? 'bg-red-500/10 border-red-500/30'
                       : vacancyImpactData[selectedNode.id].riskLevel === 'high'
                         ? 'bg-amber-500/10 border-amber-500/30'
-                        : 'bg-slate-800/30 border-slate-700/50'
+                        : 'bg-slate-100 dark:bg-slate-800/30 border-slate-700/50'
                   }`}>
                     <div className="flex items-center justify-between">
-                      <p className="text-xs text-slate-600 dark:text-slate-400">If this position becomes vacant:</p>
+                      <p className="text-xs text-slate-700 dark:text-slate-400">If this position becomes vacant:</p>
                       <span className={`text-[10px] font-bold px-2 py-0.5 rounded border ${
                         vacancyImpactData[selectedNode.id].riskLevel === 'critical'
                           ? 'bg-red-500/20 text-red-400 border-red-500/30'
                           : vacancyImpactData[selectedNode.id].riskLevel === 'high'
                             ? 'bg-amber-500/20 text-amber-400 border-amber-500/30'
-                            : 'bg-slate-700/40 text-slate-600 dark:text-slate-400 border-slate-600/30'
+                            : 'bg-slate-50 dark:bg-slate-700/40 text-slate-700 dark:text-slate-400 border-slate-600/30'
                       }`}>
                         {vacancyImpactData[selectedNode.id].riskLevel.toUpperCase()} RISK
                       </span>
@@ -2132,7 +2132,7 @@ export default function OrgChart() {
                       ))}
                     </div>
                     <div className="pt-2 border-t border-slate-200 dark:border-slate-700/50">
-                      <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Suggested action:</p>
+                      <p className="text-xs text-slate-700 dark:text-slate-400 mb-1">Suggested action:</p>
                       <p className="text-sm text-slate-700 dark:text-slate-300 font-medium">
                         → {vacancyImpactData[selectedNode.id].suggestedAction}
                       </p>
@@ -2145,42 +2145,42 @@ export default function OrgChart() {
               {selectedNode.reports > 0 && !selectedNode.isVacant && (
                 <div>
                   <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Team Performance</h4>
-                  <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
+                  <div className="bg-slate-100 dark:bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Team Size</p>
+                        <p className="text-xs text-slate-700 dark:text-slate-400 mb-1">Team Size</p>
                         <p className="text-lg font-bold text-slate-900 dark:text-white">{selectedNode.reports}</p>
                         <p className="text-[10px] text-slate-500">Direct reports</p>
                       </div>
                       <div>
-                        <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Avg Rating</p>
+                        <p className="text-xs text-slate-700 dark:text-slate-400 mb-1">Avg Rating</p>
                         <p className="text-lg font-bold text-slate-900 dark:text-white">4.5</p>
                         <div className="flex items-center gap-0.5">
                           {[...Array(5)].map((_, i) => (
                             <Star key={i} className={`w-2.5 h-2.5 ${
-                              i < 4 ? 'text-amber-400 fill-amber-400' : 'text-slate-600'
+                              i < 4 ? 'text-amber-400 fill-amber-400' : 'text-slate-700'
                             }`} />
                           ))}
                         </div>
                       </div>
                       <div>
-                        <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">On Duty</p>
+                        <p className="text-xs text-slate-700 dark:text-slate-400 mb-1">On Duty</p>
                         <p className="text-lg font-bold text-green-400">{Math.floor(selectedNode.reports * 0.8)}</p>
                         <p className="text-[10px] text-slate-500">Currently active</p>
                       </div>
                       <div>
-                        <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Cert Compliance</p>
+                        <p className="text-xs text-slate-700 dark:text-slate-400 mb-1">Cert Compliance</p>
                         <p className="text-lg font-bold text-green-400">92%</p>
                         <p className="text-[10px] text-slate-500">All current</p>
                       </div>
                     </div>
                     <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700/50 grid grid-cols-2 gap-4">
                       <div>
-                        <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Commendations</p>
+                        <p className="text-xs text-slate-700 dark:text-slate-400 mb-1">Commendations</p>
                         <p className="text-sm font-bold text-slate-900 dark:text-white">8 this month</p>
                       </div>
                       <div>
-                        <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Disciplinary</p>
+                        <p className="text-xs text-slate-700 dark:text-slate-400 mb-1">Disciplinary</p>
                         <p className="text-sm font-bold text-green-400">0</p>
                       </div>
                     </div>
@@ -2226,7 +2226,7 @@ export default function OrgChart() {
       </button>
 
       {chatOpen && (
-        <div className="fixed bottom-24 right-6 w-96 h-[500px] bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-2xl flex flex-col z-40">
+        <div className="fixed bottom-24 right-6 w-96 h-[500px] bg-white dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-2xl flex flex-col z-40">
           <div className="p-4 border-b border-slate-200 dark:border-slate-700/50 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
@@ -2234,13 +2234,13 @@ export default function OrgChart() {
               </div>
               <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Org Chart AI Assistant</h3>
             </div>
-            <button onClick={() => setChatOpen(false)} className="p-1 hover:bg-slate-800/50 rounded-lg transition-colors">
-              <X className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+            <button onClick={() => setChatOpen(false)} className="p-1 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors">
+              <X className="w-5 h-5 text-slate-700 dark:text-slate-400" />
             </button>
           </div>
 
           <div className="flex-1 overflow-y-auto p-4">
-            <div className="bg-slate-800/30 rounded-lg p-3 mb-3">
+            <div className="bg-slate-100 dark:bg-slate-800/30 rounded-lg p-3 mb-3">
               <p className="text-sm text-slate-700 dark:text-slate-300">Hello! I can help you navigate the org chart, find personnel, analyze department structure, and answer questions about reporting relationships. What would you like to know?</p>
             </div>
           </div>

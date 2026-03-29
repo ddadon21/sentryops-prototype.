@@ -189,8 +189,8 @@ export default function DashboardLayout({
                   onClick={() => handleNavigation(item)}
                   className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all ${
                     isActive
-                      ? 'bg-amber-50 dark:bg-slate-700/40 text-slate-900 dark:text-white border-l-4 border-l-amber-500 font-semibold'
-                      : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/30 hover:text-slate-900 dark:hover:text-slate-300'
+                      ? 'bg-amber-100 dark:bg-slate-700/40 text-slate-900 dark:text-white border-l-4 border-l-amber-500 font-semibold'
+                      : 'text-slate-700 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/30 hover:text-slate-900 dark:hover:text-slate-300'
                   } ${sidebarCollapsed ? 'justify-center' : ''}`}
                   title={sidebarCollapsed ? item.label : ''}
                 >
@@ -220,7 +220,7 @@ export default function DashboardLayout({
                           key={sub.id}
                           onClick={() => handleSubmenuNavigation(sub.route)}
                           className={`w-full flex items-center gap-3 px-4 py-2 rounded-lg transition-all text-[13px] ${
-                            isSubActive ? 'bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400' : 'text-slate-600 dark:text-slate-500 hover:bg-slate-200 dark:hover:bg-slate-800/30 hover:text-slate-900 dark:hover:text-slate-300'
+                            isSubActive ? 'bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400' : 'text-slate-700 dark:text-slate-500 hover:bg-slate-200 dark:hover:bg-slate-800/30 hover:text-slate-900 dark:hover:text-slate-300'
                           }`}
                         >
                           <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
@@ -245,7 +245,7 @@ export default function DashboardLayout({
           <div className="p-4">
             <button
               onClick={() => setLogoutConfirmOpen(true)}
-              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800/30 hover:text-slate-900 dark:hover:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
+              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all text-slate-700 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800/30 hover:text-slate-900 dark:hover:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
               title={sidebarCollapsed ? 'Sign Out' : ''}
             >
               <LogOut className="w-[18px] h-[18px] flex-shrink-0" />
@@ -408,7 +408,7 @@ export default function DashboardLayout({
                     <div className="py-1">
                       <button
                         onClick={() => setProfileMenuOpen(false)}
-                        className="w-full flex items-center gap-3 px-4 py-2 text-[13px] text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
+                        className="w-full flex items-center gap-3 px-4 py-2 text-[13px] text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
                       >
                         <User className="w-4 h-4" />
                         View Profile
@@ -418,7 +418,7 @@ export default function DashboardLayout({
                           setProfileMenuOpen(false);
                           navigate(settingsRoute);
                         }}
-                        className="w-full flex items-center gap-3 px-4 py-2 text-[13px] text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
+                        className="w-full flex items-center gap-3 px-4 py-2 text-[13px] text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
                       >
                         <Settings className="w-4 h-4" />
                         Settings

@@ -109,7 +109,7 @@ const criticalTasks = [
 const getPodColor = (pod: HousingPod) => {
   if (pod.status === 'Over Capacity') return { bg: 'bg-red-500/15 border-red-500/40', text: 'text-red-300', bar: 'bg-red-500' };
   if (pod.status === 'Near Capacity') return { bg: 'bg-amber-500/10 border-amber-500/30', text: 'text-amber-300', bar: 'bg-amber-500' };
-  return { bg: 'bg-slate-800/35 border-slate-700/25', text: 'text-slate-500', bar: 'bg-slate-600/50' };
+  return { bg: 'bg-slate-50 dark:bg-slate-800/35 border-slate-200 dark:border-slate-700/25', text: 'text-slate-500', bar: 'bg-slate-600/50' };
 };
 
 const getPct = (pod: HousingPod) => Math.round((pod.current / pod.capacity) * 100);
@@ -118,7 +118,7 @@ const getShiftColors = (shift: ShiftStatus) => {
   const pct = (shift.present / shift.scheduled) * 100;
   if (pct < 93) return { text: 'text-red-600 dark:text-red-400',   bg: 'bg-red-500/10 border-red-500/20',     dot: 'bg-red-400' };
   if (pct < 100) return { text: 'text-amber-600 dark:text-amber-400', bg: 'bg-amber-500/10 border-amber-500/20', dot: 'bg-amber-400' };
-  return { text: 'text-slate-500', bg: 'bg-slate-800/35 border-slate-700/40', dot: 'bg-slate-500' };
+  return { text: 'text-slate-500', bg: 'bg-slate-50 dark:bg-slate-800/35 border-slate-700/40', dot: 'bg-slate-500' };
 };
 
 const getRunStatus = (status: CourtRun['status']) => {
@@ -133,7 +133,7 @@ const getRunStatus = (status: CourtRun['status']) => {
 const getUrgencyColors = (u: string) => {
   if (u === 'critical') return 'border-l-2 border-red-500 bg-red-500/8 text-red-300';
   if (u === 'high') return 'border-l-2 border-amber-500 bg-amber-500/8 text-amber-300';
-  return 'border-l-2 border-slate-600/50 bg-slate-800/30 text-slate-500';
+  return 'border-l-2 border-slate-600/50 bg-slate-100 dark:bg-slate-800/30 text-slate-500';
 };
 
 // ── Component ─────────────────────────────────────────────────
@@ -195,14 +195,14 @@ export default function DetentionCommandCenter() {
         {/* ── Row 1: Command Snapshot KPIs ───────────────── */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
           {/* Facility Capacity */}
-          <div className={`bg-slate-800/30 border rounded-xl p-4 ${capacityPct >= 95 ? 'border-red-500/30' : capacityPct >= 85 ? 'border-amber-500/30' : 'border-slate-700/50'}`}>
+          <div className={`bg-slate-100 dark:bg-slate-800/30 border rounded-xl p-4 ${capacityPct >= 95 ? 'border-red-500/30' : capacityPct >= 85 ? 'border-amber-500/30' : 'border-slate-700/50'}`}>
             <div className="flex items-center gap-1.5 mb-2">
-              <Building2 className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
+              <Building2 className="w-3.5 h-3.5 text-slate-700 dark:text-slate-400" />
               <span className="text-[10px] text-slate-500 font-medium uppercase tracking-wide">Capacity</span>
             </div>
             <p className="text-xl font-bold text-slate-900 dark:text-white">{facilityMetrics.currentPopulation}<span className="text-sm text-slate-500">/{facilityMetrics.totalCapacity}</span></p>
             <p className={`text-[11px] font-semibold mt-0.5 ${capacityPct >= 95 ? 'text-red-600 dark:text-red-400' : capacityPct >= 85 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500'}`}>{capacityPct}% full</p>
-            <div className="w-full h-1 bg-slate-700/50 rounded-full mt-1.5 overflow-hidden">
+            <div className="w-full h-1 bg-white dark:bg-slate-700/50 rounded-full mt-1.5 overflow-hidden">
               <div className={`h-full rounded-full ${capacityPct >= 95 ? 'bg-red-500' : capacityPct >= 85 ? 'bg-amber-500' : 'bg-slate-500/60'}`} style={{ width: `${Math.min(capacityPct, 100)}%` }} />
             </div>
           </div>
@@ -210,11 +210,11 @@ export default function DetentionCommandCenter() {
           {/* Net Population Change */}
           <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
             <div className="flex items-center gap-1.5 mb-2">
-              <Activity className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
+              <Activity className="w-3.5 h-3.5 text-slate-700 dark:text-slate-400" />
               <span className="text-[10px] text-slate-500 font-medium uppercase tracking-wide">Population</span>
             </div>
-            <p className="text-xl font-bold text-slate-900 dark:text-white">{facilityMetrics.bookingsToday}<span className="text-[11px] text-slate-600 dark:text-slate-400 ml-1">in</span></p>
-            <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-0.5">{facilityMetrics.releasesToday} releases</p>
+            <p className="text-xl font-bold text-slate-900 dark:text-white">{facilityMetrics.bookingsToday}<span className="text-[11px] text-slate-700 dark:text-slate-400 ml-1">in</span></p>
+            <p className="text-[11px] text-slate-700 dark:text-slate-400 mt-0.5">{facilityMetrics.releasesToday} releases</p>
             <p className={`text-[11px] font-semibold mt-0.5 flex items-center gap-0.5 ${facilityMetrics.netChange > 0 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500'}`}>
               {facilityMetrics.netChange > 0 ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
               Net {facilityMetrics.netChange > 0 ? '+' : ''}{facilityMetrics.netChange} today
@@ -222,9 +222,9 @@ export default function DetentionCommandCenter() {
           </div>
 
           {/* Staff Coverage */}
-          <div className={`bg-slate-800/30 border rounded-xl p-4 ${staffReadiness === 'Critical' ? 'border-red-500/30' : staffReadiness === 'Warning' ? 'border-amber-500/30' : 'border-slate-700/50'}`}>
+          <div className={`bg-slate-100 dark:bg-slate-800/30 border rounded-xl p-4 ${staffReadiness === 'Critical' ? 'border-red-500/30' : staffReadiness === 'Warning' ? 'border-amber-500/30' : 'border-slate-700/50'}`}>
             <div className="flex items-center gap-1.5 mb-2">
-              <Users className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
+              <Users className="w-3.5 h-3.5 text-slate-700 dark:text-slate-400" />
               <span className="text-[10px] text-slate-500 font-medium uppercase tracking-wide">Staff</span>
             </div>
             <p className="text-xl font-bold text-slate-900 dark:text-white">{totalPresent}<span className="text-sm text-slate-500">/{totalStaff}</span></p>
@@ -233,7 +233,7 @@ export default function DetentionCommandCenter() {
           </div>
 
           {/* Active Alerts */}
-          <div className={`bg-slate-800/30 border rounded-xl p-4 ${criticalCount > 0 ? 'border-red-500/30' : warningCount > 0 ? 'border-amber-500/30' : 'border-slate-700/50'}`}>
+          <div className={`bg-slate-100 dark:bg-slate-800/30 border rounded-xl p-4 ${criticalCount > 0 ? 'border-red-500/30' : warningCount > 0 ? 'border-amber-500/30' : 'border-slate-700/50'}`}>
             <div className="flex items-center gap-1.5 mb-2">
               <AlertTriangle className="w-3.5 h-3.5 text-red-600 dark:text-red-400" />
               <span className="text-[10px] text-slate-500 font-medium uppercase tracking-wide">Alerts</span>
@@ -244,9 +244,9 @@ export default function DetentionCommandCenter() {
           </div>
 
           {/* Medical Unit */}
-          <div className={`bg-slate-800/30 border rounded-xl p-4 ${medicalReadiness === 'Warning' ? 'border-amber-500/30' : 'border-slate-700/50'}`}>
+          <div className={`bg-slate-100 dark:bg-slate-800/30 border rounded-xl p-4 ${medicalReadiness === 'Warning' ? 'border-amber-500/30' : 'border-slate-700/50'}`}>
             <div className="flex items-center gap-1.5 mb-2">
-              <Hospital className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
+              <Hospital className="w-3.5 h-3.5 text-slate-700 dark:text-slate-400" />
               <span className="text-[10px] text-slate-500 font-medium uppercase tracking-wide">Medical</span>
             </div>
             <p className="text-xl font-bold text-slate-900 dark:text-white">E-Pod</p>
@@ -257,11 +257,11 @@ export default function DetentionCommandCenter() {
           {/* Court Transports */}
           <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
             <div className="flex items-center gap-1.5 mb-2">
-              <Truck className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
+              <Truck className="w-3.5 h-3.5 text-slate-700 dark:text-slate-400" />
               <span className="text-[10px] text-slate-500 font-medium uppercase tracking-wide">Transports</span>
             </div>
             <p className="text-xl font-bold text-slate-900 dark:text-white">{facilityMetrics.courtTransports}</p>
-            <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-0.5">5 runs today</p>
+            <p className="text-[11px] text-slate-700 dark:text-slate-400 mt-0.5">5 runs today</p>
             <p className="text-[10px] text-amber-600 dark:text-amber-400 mt-0.5">31 tomorrow ⚠</p>
           </div>
         </div>
@@ -294,7 +294,7 @@ export default function DetentionCommandCenter() {
                 }`}>
                   <AlertTriangle className={`w-3.5 h-3.5 flex-shrink-0 mt-0.5 ${alert.type === 'critical' ? 'text-red-600 dark:text-red-400' : 'text-amber-600 dark:text-amber-400'}`} />
                   <span className={alert.type === 'critical' ? 'text-red-200' : 'text-amber-200'}>{alert.msg}</span>
-                  <button onClick={() => dismiss(alert.id)} className="ml-auto flex-shrink-0 text-slate-600 hover:text-slate-600 dark:text-slate-400 transition-colors">
+                  <button onClick={() => dismiss(alert.id)} className="ml-auto flex-shrink-0 text-slate-700 hover:text-slate-600 dark:text-slate-400 transition-colors">
                     <X className="w-3 h-3" />
                   </button>
                 </div>
@@ -324,8 +324,8 @@ export default function DetentionCommandCenter() {
           <div className="lg:col-span-3 bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
-                <div className="w-7 h-7 bg-slate-700/30 rounded-lg flex items-center justify-center">
-                  <Sparkles className="w-4 h-4 text-slate-600 dark:text-slate-400" />
+                <div className="w-7 h-7 bg-slate-100 dark:bg-slate-700/30 rounded-lg flex items-center justify-center">
+                  <Sparkles className="w-4 h-4 text-slate-700 dark:text-slate-400" />
                 </div>
                 <h3 className="text-sm font-semibold text-slate-900 dark:text-white">AI Command Intelligence</h3>
               </div>
@@ -353,8 +353,8 @@ export default function DetentionCommandCenter() {
               <p className="text-[11px] text-slate-500">2 critical actions · 1 warning · Click expand to review</p>
             )}
             <div className="mt-3 pt-2.5 border-t border-slate-200 dark:border-slate-700/40 flex items-center justify-between">
-              <span className="text-[10px] text-slate-600">AI-assisted · 4 sources · 3m ago</span>
-              <button className="text-[11px] text-slate-600 dark:text-slate-400 hover:text-slate-700 dark:text-slate-300 transition-colors flex items-center gap-1">
+              <span className="text-[10px] text-slate-700">AI-assisted · 4 sources · 3m ago</span>
+              <button className="text-[11px] text-slate-700 dark:text-slate-400 hover:text-slate-700 dark:text-slate-300 transition-colors flex items-center gap-1">
                 Full intelligence brief <ArrowRight className="w-3 h-3" />
               </button>
             </div>
@@ -368,7 +368,7 @@ export default function DetentionCommandCenter() {
           <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
-                <Shield className="w-4 h-4 text-slate-600 dark:text-slate-400" />
+                <Shield className="w-4 h-4 text-slate-700 dark:text-slate-400" />
                 <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Housing Unit Status</h3>
               </div>
               <div className="flex items-center gap-2 text-[9px] text-slate-500">
@@ -385,7 +385,7 @@ export default function DetentionCommandCenter() {
                   <div key={pod.id} className={`rounded-lg border p-1.5 cursor-default ${colors.bg}`} title={`${pod.name} — ${pod.type}\n${pod.current}/${pod.capacity} (${pct}%)\n${pod.notes || ''}`}>
                     <p className="text-[9px] font-bold text-slate-900 dark:text-white truncate">{pod.id}</p>
                     <p className={`text-[10px] font-semibold ${colors.text}`}>{pct}%</p>
-                    <div className="w-full h-0.5 bg-slate-700/50 rounded-full mt-1 overflow-hidden">
+                    <div className="w-full h-0.5 bg-white dark:bg-slate-700/50 rounded-full mt-1 overflow-hidden">
                       <div className={`h-full rounded-full ${colors.bar}`} style={{ width: `${Math.min(pct, 100)}%` }} />
                     </div>
                   </div>
@@ -401,7 +401,7 @@ export default function DetentionCommandCenter() {
           {/* Staff Coverage */}
           <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
             <div className="flex items-center gap-2 mb-3">
-              <Users className="w-4 h-4 text-slate-600 dark:text-slate-400" />
+              <Users className="w-4 h-4 text-slate-700 dark:text-slate-400" />
               <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Staff Coverage</h3>
             </div>
             <div className="space-y-2.5">
@@ -417,7 +417,7 @@ export default function DetentionCommandCenter() {
                       </div>
                       <span className={`text-[11px] font-bold ${colors.text}`}>{shift.present}/{shift.scheduled}</span>
                     </div>
-                    <div className="w-full h-1 bg-slate-700/50 rounded-full overflow-hidden mb-1.5">
+                    <div className="w-full h-1 bg-white dark:bg-slate-700/50 rounded-full overflow-hidden mb-1.5">
                       <div className={`h-full rounded-full ${pct < 93 ? 'bg-red-500' : pct < 100 ? 'bg-amber-500' : 'bg-emerald-500'}`} style={{ width: `${pct}%` }} />
                     </div>
                     <div className="flex items-center justify-between text-[10px]">
@@ -433,12 +433,12 @@ export default function DetentionCommandCenter() {
           {/* Court Transport Schedule */}
           <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
             <div className="flex items-center gap-2 mb-3">
-              <Truck className="w-4 h-4 text-slate-600 dark:text-slate-400" />
+              <Truck className="w-4 h-4 text-slate-700 dark:text-slate-400" />
               <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Court Transport Schedule</h3>
             </div>
             <div className="space-y-2">
               {courtRuns.map((run, i) => (
-                <div key={i} className="flex items-start gap-3 py-2 border-b border-slate-200 dark:border-slate-700/25 last:border-0">
+                <div key={i} className="flex items-start gap-3 py-2 border-b border-slate-200 dark:border-slate-200 dark:border-slate-700/25 last:border-0">
                   <div className="w-12 text-right flex-shrink-0">
                     <p className="text-[11px] font-bold text-slate-700 dark:text-slate-300">{run.time}</p>
                   </div>
@@ -448,7 +448,7 @@ export default function DetentionCommandCenter() {
                   </div>
                   <div className="flex-shrink-0 text-right">
                     <span className={`text-[10px] font-semibold ${getRunStatus(run.status)}`}>{run.status}</span>
-                    {run.etaReturn && <p className="text-[9px] text-slate-600">↩ {run.etaReturn}</p>}
+                    {run.etaReturn && <p className="text-[9px] text-slate-700">↩ {run.etaReturn}</p>}
                   </div>
                 </div>
               ))}
@@ -469,7 +469,7 @@ export default function DetentionCommandCenter() {
           <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
-                <TrendingUp className="w-4 h-4 text-slate-600 dark:text-slate-400" />
+                <TrendingUp className="w-4 h-4 text-slate-700 dark:text-slate-400" />
                 <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Population Trend</h3>
               </div>
               <span className="text-[10px] text-slate-500">7-day</span>
@@ -490,13 +490,13 @@ export default function DetentionCommandCenter() {
                   })}
                 </div>
                 <div className="flex justify-between mt-1">
-                  <span className="text-[9px] text-slate-600">D-7</span>
-                  <span className="text-[9px] text-slate-600">Now</span>
+                  <span className="text-[9px] text-slate-700">D-7</span>
+                  <span className="text-[9px] text-slate-700">Now</span>
                 </div>
               </div>
               <div className="text-right">
                 <p className="text-2xl font-bold text-slate-900 dark:text-white">{facilityMetrics.currentPopulation}</p>
-                <p className="text-[10px] text-slate-600 dark:text-slate-400">{facilityMetrics.sevenDayAverage} avg</p>
+                <p className="text-[10px] text-slate-700 dark:text-slate-400">{facilityMetrics.sevenDayAverage} avg</p>
                 <p className="text-[11px] text-amber-600 dark:text-amber-400 font-medium">+4 today</p>
               </div>
             </div>
@@ -536,11 +536,11 @@ export default function DetentionCommandCenter() {
                       <span className={`text-[10px] font-semibold ${item.pct && item.pct >= 90 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500'}`}>{item.value}</span>
                     </div>
                     {item.pct !== null && (
-                      <div className="w-full h-1 bg-slate-700/50 rounded-full overflow-hidden mb-0.5">
+                      <div className="w-full h-1 bg-white dark:bg-slate-700/50 rounded-full overflow-hidden mb-0.5">
                         <div className={`h-full rounded-full ${item.pct >= 95 ? 'bg-red-500' : item.pct >= 85 ? 'bg-amber-500' : 'bg-emerald-500'}`} style={{ width: `${item.pct}%` }} />
                       </div>
                     )}
-                    <p className="text-[10px] text-slate-600">{item.note}</p>
+                    <p className="text-[10px] text-slate-700">{item.note}</p>
                   </div>
                 </div>
               ))}
@@ -569,7 +569,7 @@ export default function DetentionCommandCenter() {
             <div className="mt-3 pt-2.5 border-t border-slate-200 dark:border-slate-700/50">
               <button
                 onClick={() => navigate('/jail/dashboard')}
-                className="w-full flex items-center justify-center gap-2 text-[11px] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors py-1"
+                className="w-full flex items-center justify-center gap-2 text-[11px] text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors py-1"
               >
                 <span>View Custody Operations</span>
                 <ArrowRight className="w-3.5 h-3.5" />

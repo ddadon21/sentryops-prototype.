@@ -423,7 +423,7 @@ export default function HRReports() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex">
       {/* Sidebar */}
-      <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-slate-800/50 backdrop-blur-xl bg-slate-900/30 flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
+      <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-slate-800/50 backdrop-blur-xl bg-slate-50 dark:bg-slate-900/30 flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
         <div className="p-4 border-b border-slate-200 dark:border-slate-700/50 flex items-center justify-between">
           {!sidebarCollapsed && (
             <div className="flex items-center gap-2">
@@ -434,8 +434,8 @@ export default function HRReports() {
           {sidebarCollapsed && (
             <Shield className="w-8 h-8 text-amber-500 mx-auto" />
           )}
-          <button onClick={() => setSidebarCollapsed(!sidebarCollapsed)} className="p-2 hover:bg-slate-800/50 rounded-lg transition-colors hidden lg:block">
-            {sidebarCollapsed ? <ChevronRight className="w-5 h-5 text-slate-600 dark:text-slate-400" /> : <ChevronLeft className="w-5 h-5 text-slate-600 dark:text-slate-400" />}
+          <button onClick={() => setSidebarCollapsed(!sidebarCollapsed)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors hidden lg:block">
+            {sidebarCollapsed ? <ChevronRight className="w-5 h-5 text-slate-700 dark:text-slate-400" /> : <ChevronLeft className="w-5 h-5 text-slate-700 dark:text-slate-400" />}
           </button>
         </div>
 
@@ -448,7 +448,7 @@ export default function HRReports() {
                 key={item.id}
                 onClick={() => handleNavigation(item)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white'
+                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-700 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white'
                 } ${sidebarCollapsed ? 'justify-center' : ''}`}
                 title={sidebarCollapsed ? item.label : ''}
               >
@@ -470,7 +470,7 @@ export default function HRReports() {
           <div className="p-4">
             <button
               onClick={() => setLogoutConfirmOpen(true)}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-slate-600 dark:text-slate-400 hover:bg-slate-800/40 hover:text-slate-700 dark:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-slate-700 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/40 hover:text-slate-700 dark:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
               title={sidebarCollapsed ? 'Sign Out' : ''}
             >
               <LogOut className="w-5 h-5 flex-shrink-0" />
@@ -492,17 +492,17 @@ export default function HRReports() {
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setLogoutConfirmOpen(false)} />
           <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl p-6 max-w-sm w-full shadow-2xl">
             <div className="flex items-center gap-4 mb-4">
-              <div className="w-12 h-12 bg-slate-800/60 rounded-xl flex items-center justify-center">
-                <LogOut className="w-6 h-6 text-slate-600 dark:text-slate-400" />
+              <div className="w-12 h-12 bg-white dark:bg-slate-800/60 rounded-xl flex items-center justify-center">
+                <LogOut className="w-6 h-6 text-slate-700 dark:text-slate-400" />
               </div>
               <div>
                 <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Sign Out</h3>
-                <p className="text-sm text-slate-600 dark:text-slate-400">Are you sure you want to sign out?</p>
+                <p className="text-sm text-slate-700 dark:text-slate-400">Are you sure you want to sign out?</p>
               </div>
             </div>
             <div className="flex gap-3 mt-6">
-              <button onClick={() => setLogoutConfirmOpen(false)} className="flex-1 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all">Cancel</button>
-              <button onClick={handleLogout} className="flex-1 px-4 py-2.5 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all">Sign Out</button>
+              <button onClick={() => setLogoutConfirmOpen(false)} className="flex-1 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all">Cancel</button>
+              <button onClick={handleLogout} className="flex-1 px-4 py-2.5 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all">Sign Out</button>
             </div>
           </div>
         </div>
@@ -516,10 +516,10 @@ export default function HRReports() {
             <div className="flex items-start justify-between mb-6">
               <div>
                 <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1">{selectedReport.name}</h3>
-                <p className="text-sm text-slate-600 dark:text-slate-400">{selectedReport.type} Report • {selectedReport.period}</p>
+                <p className="text-sm text-slate-700 dark:text-slate-400">{selectedReport.type} Report • {selectedReport.period}</p>
               </div>
-              <button onClick={() => setSelectedReport(null)} className="p-2 hover:bg-slate-800/50 rounded-lg transition-colors">
-                <X className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+              <button onClick={() => setSelectedReport(null)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors">
+                <X className="w-5 h-5 text-slate-700 dark:text-slate-400" />
               </button>
             </div>
 
@@ -546,7 +546,7 @@ export default function HRReports() {
               <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Report Summary</h4>
               <div className="space-y-2">
                 {selectedReport.summary.map((item, idx) => (
-                  <div key={idx} className="flex items-start gap-2 p-2 bg-slate-800/30 rounded-lg">
+                  <div key={idx} className="flex items-start gap-2 p-2 bg-slate-100 dark:bg-slate-800/30 rounded-lg">
                     <CheckCircle className="w-3.5 h-3.5 text-green-400 mt-0.5 flex-shrink-0" />
                     <p className="text-sm text-slate-700 dark:text-slate-300">{item}</p>
                   </div>
@@ -586,10 +586,10 @@ export default function HRReports() {
               <button className="flex-1 px-4 py-2.5 bg-amber-500 hover:bg-amber-400 rounded-xl text-white font-medium transition-all flex items-center justify-center gap-2 text-sm">
                 <Eye className="w-4 h-4" /> View Full Report
               </button>
-              <button className="flex-1 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all flex items-center justify-center gap-2 text-sm">
+              <button className="flex-1 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all flex items-center justify-center gap-2 text-sm">
                 <Download className="w-4 h-4" /> Download PDF
               </button>
-              <button className="px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all flex items-center justify-center gap-2 text-sm">
+              <button className="px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all flex items-center justify-center gap-2 text-sm">
                 <Printer className="w-4 h-4" /> Print
               </button>
             </div>
@@ -600,15 +600,15 @@ export default function HRReports() {
       {/* Main Content */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Header */}
-        <header className="border-b border-slate-200 dark:border-slate-800/50 backdrop-blur-xl bg-slate-900/30">
+        <header className="border-b border-slate-200 dark:border-slate-800/50 backdrop-blur-xl bg-slate-50 dark:bg-slate-900/30">
           <div className="px-4 lg:px-6 py-4 flex items-center justify-between gap-4">
             <div className="flex items-center gap-4 flex-1 min-w-0">
-              <button onClick={() => setSidebarOpen(!sidebarOpen)} className="lg:hidden p-2 hover:bg-slate-800/50 rounded-lg">
-                <Menu className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+              <button onClick={() => setSidebarOpen(!sidebarOpen)} className="lg:hidden p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg">
+                <Menu className="w-5 h-5 text-slate-700 dark:text-slate-400" />
               </button>
               <div className="flex items-center gap-2 text-sm">
-                <button onClick={() => navigate(createPageUrl('HRDashboard'))} className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors">HR Dashboard</button>
-                <ChevronRight className="w-4 h-4 text-slate-600" />
+                <button onClick={() => navigate(createPageUrl('HRDashboard'))} className="text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors">HR Dashboard</button>
+                <ChevronRight className="w-4 h-4 text-slate-700" />
                 <span className="text-slate-900 dark:text-white">HR Reports</span>
               </div>
             </div>
@@ -617,34 +617,34 @@ export default function HRReports() {
                 <FileBarChart className="w-4 h-4" />
                 <span className="hidden sm:inline">New Report</span>
               </button>
-              <button className="hidden md:flex items-center gap-2 px-3 py-2 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-700 dark:text-slate-300 font-medium transition-all text-sm">
+              <button className="hidden md:flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-700 dark:text-slate-300 font-medium transition-all text-sm">
                 <BarChart3 className="w-4 h-4" />
                 <span>Report Builder</span>
               </button>
-              <button className="hidden lg:flex items-center gap-2 px-3 py-2 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-700 dark:text-slate-300 font-medium transition-all text-sm">
+              <button className="hidden lg:flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-700 dark:text-slate-300 font-medium transition-all text-sm">
                 <Calendar className="w-4 h-4" />
                 <span>Scheduled</span>
               </button>
 
               <div className="relative">
-                <button onClick={() => setNotificationsOpen(!notificationsOpen)} className="p-2 hover:bg-slate-800/50 rounded-lg relative">
-                  <Bell className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+                <button onClick={() => setNotificationsOpen(!notificationsOpen)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg relative">
+                  <Bell className="w-5 h-5 text-slate-700 dark:text-slate-400" />
                   <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                 </button>
 
                 {notificationsOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-96 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-2xl z-50">
+                  <div className="absolute right-0 top-full mt-2 w-96 bg-white dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-2xl z-50">
                     <div className="p-4 border-b border-slate-200 dark:border-slate-700/50">
                       <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Notifications</h3>
                     </div>
                     <div className="max-h-96 overflow-y-auto">
                       {notifications.map(notification => (
-                        <div key={notification.id} className={`p-4 border-b border-slate-200 dark:border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
+                        <div key={notification.id} className={`p-4 border-b border-slate-200 dark:border-slate-200 dark:border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
                           <div className="flex items-start gap-3">
                             <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-amber-400' : 'bg-blue-400'}`}></div>
                             <div className="flex-1 min-w-0">
                               <p className="text-sm font-medium text-slate-900 dark:text-white mb-1">{notification.title}</p>
-                              <p className="text-xs text-slate-600 dark:text-slate-400 mb-2">{notification.message}</p>
+                              <p className="text-xs text-slate-700 dark:text-slate-400 mb-2">{notification.message}</p>
                               <p className="text-xs text-slate-500">{notification.time}</p>
                             </div>
                           </div>
@@ -658,7 +658,7 @@ export default function HRReports() {
                 )}
               </div>
 
-              <div className="h-8 w-px bg-slate-700/50"></div>
+              <div className="h-8 w-px bg-white dark:bg-slate-700/50"></div>
 
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
@@ -666,7 +666,7 @@ export default function HRReports() {
                 </div>
                 <div className="hidden sm:block">
                   <p className="text-sm font-medium text-slate-900 dark:text-white">HR Director</p>
-                  <p className="text-xs text-slate-600 dark:text-slate-400">Human Resources</p>
+                  <p className="text-xs text-slate-700 dark:text-slate-400">Human Resources</p>
                 </div>
               </div>
             </div>
@@ -680,13 +680,13 @@ export default function HRReports() {
             {/* Page Title */}
             <div className="mb-6">
               <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white mb-1">HR Reports & Personnel Analytics</h2>
-              <p className="text-slate-600 dark:text-slate-400 text-sm">Gwinnett County Sheriff's Office • Lawrenceville, Georgia</p>
+              <p className="text-slate-700 dark:text-slate-400 text-sm">Gwinnett County Sheriff's Office • Lawrenceville, Georgia</p>
               <p className="text-slate-500 text-xs mt-1">Saturday, February 27, 2026 • 4:13 PM EST</p>
             </div>
 
             {/* Info Bar */}
             <div className="mb-6 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-slate-600 dark:text-slate-400">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-slate-700 dark:text-slate-400">
                 <div className="flex items-center gap-2">
                   <Users className="w-3.5 h-3.5 text-slate-500" />
                   <span>HR Director: <span className="text-slate-700 dark:text-slate-300">Personnel Admin</span> | Sheriff: <span className="text-slate-700 dark:text-slate-300">Keybo Taylor</span> | Report Admin: <span className="text-slate-700 dark:text-slate-300">HR Specialist J. Martinez</span></span>
@@ -734,7 +734,7 @@ export default function HRReports() {
                   key={tab.id}
                   onClick={() => setActiveSection(tab.id)}
                   className={`px-4 py-3 text-sm font-medium transition-all relative whitespace-nowrap ${
-                    activeSection === tab.id ? 'text-amber-400' : 'text-slate-600 dark:text-slate-400 hover:text-slate-300'
+                    activeSection === tab.id ? 'text-amber-400' : 'text-slate-700 dark:text-slate-400 hover:text-slate-300'
                   }`}
                 >
                   {tab.label}
@@ -754,7 +754,7 @@ export default function HRReports() {
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Sheriff's Command Briefing Reports</h3>
-                    <p className="text-xs text-slate-600 dark:text-slate-400">Reports for Sheriff Keybo Taylor and command staff decision-making</p>
+                    <p className="text-xs text-slate-700 dark:text-slate-400">Reports for Sheriff Keybo Taylor and command staff decision-making</p>
                   </div>
                 </div>
 
@@ -768,7 +768,7 @@ export default function HRReports() {
                       <div key={report.id} className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
                         <button
                           onClick={() => toggleReport(report.id)}
-                          className="w-full flex items-start gap-4 p-5 hover:bg-slate-800/50 transition-colors text-left"
+                          className="w-full flex items-start gap-4 p-5 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors text-left"
                         >
                           <div className={`w-12 h-12 ${colors.bg} rounded-xl flex items-center justify-center flex-shrink-0`}>
                             <Icon className={`w-6 h-6 ${colors.icon}`} />
@@ -780,35 +780,35 @@ export default function HRReports() {
                                 <span className="px-2 py-0.5 bg-red-500/20 border border-red-500/30 rounded-full text-xs text-red-400 font-medium">DUE SOON</span>
                               )}
                             </div>
-                            <p className="text-sm text-slate-600 dark:text-slate-400 mb-2">{report.description}</p>
+                            <p className="text-sm text-slate-700 dark:text-slate-400 mb-2">{report.description}</p>
                             <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-500">
                               <span>Frequency: <span className="text-slate-700 dark:text-slate-300">{report.frequency}</span></span>
                               <span>Next Due: <span className={report.nextDueUrgent ? 'text-red-400 font-medium' : 'text-slate-500'}>{report.nextDue}</span></span>
                             </div>
                           </div>
-                          {isExpanded ? <ChevronUp className="w-5 h-5 text-slate-600 dark:text-slate-400 mt-1" /> : <ChevronDown className="w-5 h-5 text-slate-600 dark:text-slate-400 mt-1" />}
+                          {isExpanded ? <ChevronUp className="w-5 h-5 text-slate-700 dark:text-slate-400 mt-1" /> : <ChevronDown className="w-5 h-5 text-slate-700 dark:text-slate-400 mt-1" />}
                         </button>
 
                         {isExpanded && (
                           <div className="px-5 pb-5 space-y-4">
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                              <div className="bg-slate-900/40 border border-slate-700/30 rounded-xl p-3">
+                              <div className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/30 rounded-xl p-3">
                                 <p className="text-xs text-slate-500 mb-1">Recipients</p>
                                 <p className="text-sm text-slate-700 dark:text-slate-300">{report.recipients}</p>
                               </div>
-                              <div className="bg-slate-900/40 border border-slate-700/30 rounded-xl p-3">
+                              <div className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/30 rounded-xl p-3">
                                 <p className="text-xs text-slate-500 mb-1">Last Generated</p>
                                 <p className="text-sm text-slate-700 dark:text-slate-300">{report.lastGenerated}</p>
                               </div>
                             </div>
 
-                            <div className="bg-slate-900/40 border border-slate-700/30 rounded-xl p-4">
+                            <div className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/30 rounded-xl p-4">
                               <h5 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Report Includes:</h5>
                               <div className="space-y-1.5">
                                 {report.includes.map((item, idx) => (
                                   <div key={idx} className="flex items-start gap-2">
                                     <CheckCircle className="w-3.5 h-3.5 text-green-400 mt-0.5 flex-shrink-0" />
-                                    <span className="text-xs text-slate-600 dark:text-slate-400">{item}</span>
+                                    <span className="text-xs text-slate-700 dark:text-slate-400">{item}</span>
                                   </div>
                                 ))}
                               </div>
@@ -821,7 +821,7 @@ export default function HRReports() {
                                   className={`px-4 py-2 rounded-xl font-medium transition-all text-sm flex items-center gap-2 ${
                                     idx === 0
                                       ? 'bg-amber-500 hover:bg-amber-400 text-white'
-                                      : 'bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-900 dark:text-white'
+                                      : 'bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-900 dark:text-white'
                                   }`}
                                 >
                                   {idx === 0 ? <FileBarChart className="w-4 h-4" /> : idx === 1 ? <Eye className="w-4 h-4" /> : <ExternalLink className="w-3.5 h-3.5" />}
@@ -847,7 +847,7 @@ export default function HRReports() {
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Regulatory Compliance & Audit Reports</h3>
-                    <p className="text-xs text-slate-600 dark:text-slate-400">Reports required by federal/state law or regulatory agencies</p>
+                    <p className="text-xs text-slate-700 dark:text-slate-400">Reports required by federal/state law or regulatory agencies</p>
                   </div>
                 </div>
 
@@ -858,10 +858,10 @@ export default function HRReports() {
                     const isExpanded = expandedReports[report.id];
 
                     return (
-                      <div key={report.id} className={`bg-slate-800/40 border ${report.nextDueUrgent ? 'border-amber-500/30' : 'border-slate-700/50'} rounded-xl overflow-hidden`}>
+                      <div key={report.id} className={`bg-white dark:bg-slate-800/40 border ${report.nextDueUrgent ? 'border-amber-500/30' : 'border-slate-700/50'} rounded-xl overflow-hidden`}>
                         <button
                           onClick={() => toggleReport(report.id)}
-                          className="w-full flex items-start gap-4 p-5 hover:bg-slate-800/50 transition-colors text-left"
+                          className="w-full flex items-start gap-4 p-5 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors text-left"
                         >
                           <div className={`w-12 h-12 ${colors.bg} rounded-xl flex items-center justify-center flex-shrink-0`}>
                             <Icon className={`w-6 h-6 ${colors.icon}`} />
@@ -873,27 +873,27 @@ export default function HRReports() {
                                 <span className="px-2 py-0.5 bg-amber-500/20 border border-amber-500/30 rounded-full text-xs text-amber-400 font-medium">OVERDUE</span>
                               )}
                             </div>
-                            <p className="text-sm text-slate-600 dark:text-slate-400 mb-2">{report.description}</p>
+                            <p className="text-sm text-slate-700 dark:text-slate-400 mb-2">{report.description}</p>
                             <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-500">
                               <span>Authority: <span className="text-slate-700 dark:text-slate-300">{report.regulatory}</span></span>
                               <span>Frequency: <span className="text-slate-700 dark:text-slate-300">{report.frequency}</span></span>
                             </div>
                           </div>
-                          {isExpanded ? <ChevronUp className="w-5 h-5 text-slate-600 dark:text-slate-400 mt-1" /> : <ChevronDown className="w-5 h-5 text-slate-600 dark:text-slate-400 mt-1" />}
+                          {isExpanded ? <ChevronUp className="w-5 h-5 text-slate-700 dark:text-slate-400 mt-1" /> : <ChevronDown className="w-5 h-5 text-slate-700 dark:text-slate-400 mt-1" />}
                         </button>
 
                         {isExpanded && (
                           <div className="px-5 pb-5 space-y-4">
                             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                              <div className="bg-slate-900/40 border border-slate-700/30 rounded-xl p-3">
+                              <div className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/30 rounded-xl p-3">
                                 <p className="text-xs text-slate-500 mb-1">Recipients</p>
                                 <p className="text-sm text-slate-700 dark:text-slate-300">{report.recipients}</p>
                               </div>
-                              <div className="bg-slate-900/40 border border-slate-700/30 rounded-xl p-3">
+                              <div className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/30 rounded-xl p-3">
                                 <p className="text-xs text-slate-500 mb-1">Last Generated</p>
                                 <p className="text-sm text-slate-700 dark:text-slate-300">{report.lastGenerated}</p>
                               </div>
-                              <div className={`bg-slate-900/40 border ${report.nextDueUrgent ? 'border-amber-500/30' : 'border-slate-700/30'} rounded-xl p-3`}>
+                              <div className={`bg-white dark:bg-slate-900/40 border ${report.nextDueUrgent ? 'border-amber-500/30' : 'border-slate-200 dark:border-slate-700/30'} rounded-xl p-3`}>
                                 <p className="text-xs text-slate-500 mb-1">Next Due</p>
                                 <p className={`text-sm font-medium ${report.nextDueUrgent ? 'text-amber-400' : 'text-slate-500'}`}>{report.nextDue}</p>
                               </div>
@@ -902,17 +902,17 @@ export default function HRReports() {
                             {report.dataStatus && (
                               <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-3">
                                 <p className="text-xs text-blue-400 font-medium">Data Collection Status: {report.dataStatus}</p>
-                                {report.filingDeadline && <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">Filing Deadline: {report.filingDeadline}</p>}
+                                {report.filingDeadline && <p className="text-xs text-slate-700 dark:text-slate-400 mt-1">Filing Deadline: {report.filingDeadline}</p>}
                               </div>
                             )}
 
-                            <div className="bg-slate-900/40 border border-slate-700/30 rounded-xl p-4">
+                            <div className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/30 rounded-xl p-4">
                               <h5 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Report Includes:</h5>
                               <div className="space-y-1.5">
                                 {report.includes.map((item, idx) => (
                                   <div key={idx} className="flex items-start gap-2">
                                     <CheckCircle className="w-3.5 h-3.5 text-green-400 mt-0.5 flex-shrink-0" />
-                                    <span className="text-xs text-slate-600 dark:text-slate-400">{item}</span>
+                                    <span className="text-xs text-slate-700 dark:text-slate-400">{item}</span>
                                   </div>
                                 ))}
                               </div>
@@ -925,7 +925,7 @@ export default function HRReports() {
                                   className={`px-4 py-2 rounded-xl font-medium transition-all text-sm flex items-center gap-2 ${
                                     idx === 0
                                       ? 'bg-amber-500 hover:bg-amber-400 text-white'
-                                      : 'bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-900 dark:text-white'
+                                      : 'bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-900 dark:text-white'
                                   }`}
                                 >
                                   {idx === 0 ? <FileBarChart className="w-4 h-4" /> : <ExternalLink className="w-3.5 h-3.5" />}
@@ -947,15 +947,15 @@ export default function HRReports() {
               <div className="mb-8">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-slate-700/50 rounded-lg flex items-center justify-center">
-                      <FileText className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+                    <div className="w-8 h-8 bg-white dark:bg-slate-700/50 rounded-lg flex items-center justify-center">
+                      <FileText className="w-5 h-5 text-slate-700 dark:text-slate-400" />
                     </div>
                     <div>
                       <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Recently Generated Reports</h3>
-                      <p className="text-xs text-slate-600 dark:text-slate-400">Completed reports available for download and review</p>
+                      <p className="text-xs text-slate-700 dark:text-slate-400">Completed reports available for download and review</p>
                     </div>
                   </div>
-                  <button className="flex items-center gap-2 px-3 py-1.5 bg-slate-800/40 border border-slate-700/50 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-800/60 transition-all text-sm">
+                  <button className="flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-slate-800/40 border border-slate-700/50 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all text-sm">
                     <Download className="w-4 h-4" />
                     Export All
                   </button>
@@ -1005,7 +1005,7 @@ export default function HRReports() {
                                   <h4 className="text-base font-semibold text-slate-900 dark:text-white">{report.name}</h4>
                                   <span className={`px-2 py-0.5 ${typeColors.bg} border ${typeColors.border} rounded-full text-xs ${typeColors.text} font-medium`}>{report.type}</span>
                                 </div>
-                                <p className="text-xs text-slate-600 dark:text-slate-400 mb-2">Generated: {report.generated} • By: {report.generatedBy}</p>
+                                <p className="text-xs text-slate-700 dark:text-slate-400 mb-2">Generated: {report.generated} • By: {report.generatedBy}</p>
                                 <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-500">
                                   <span>Period: <span className="text-slate-700 dark:text-slate-300">{report.period}</span></span>
                                   <span>{report.fileSize} • {report.pages} pages</span>
@@ -1019,28 +1019,28 @@ export default function HRReports() {
                               >
                                 View
                               </button>
-                              <button className="p-1.5 hover:bg-slate-700/50 rounded-lg transition-colors">
-                                <Download className="w-4 h-4 text-slate-600 dark:text-slate-400" />
+                              <button className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-700/50 rounded-lg transition-colors">
+                                <Download className="w-4 h-4 text-slate-700 dark:text-slate-400" />
                               </button>
                               <button
                                 onClick={() => toggleRecent(report.id)}
-                                className="p-1.5 hover:bg-slate-700/50 rounded-lg transition-colors"
+                                className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-700/50 rounded-lg transition-colors"
                               >
-                                {isExpanded ? <ChevronUp className="w-4 h-4 text-slate-600 dark:text-slate-400" /> : <ChevronDown className="w-4 h-4 text-slate-600 dark:text-slate-400" />}
+                                {isExpanded ? <ChevronUp className="w-4 h-4 text-slate-700 dark:text-slate-400" /> : <ChevronDown className="w-4 h-4 text-slate-700 dark:text-slate-400" />}
                               </button>
                             </div>
                           </div>
                         </div>
 
                         {isExpanded && (
-                          <div className="px-5 pb-5 border-t border-slate-200 dark:border-slate-700/30 pt-4 space-y-4">
-                            <div className="bg-slate-900/40 border border-slate-700/30 rounded-xl p-4">
+                          <div className="px-5 pb-5 border-t border-slate-200 dark:border-slate-200 dark:border-slate-700/30 pt-4 space-y-4">
+                            <div className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/30 rounded-xl p-4">
                               <h5 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Report Summary</h5>
                               <div className="space-y-1.5">
                                 {report.summary.map((item, idx) => (
                                   <div key={idx} className="flex items-start gap-2">
                                     <CheckCircle className="w-3.5 h-3.5 text-green-400 mt-0.5 flex-shrink-0" />
-                                    <span className="text-xs text-slate-600 dark:text-slate-400">{item}</span>
+                                    <span className="text-xs text-slate-700 dark:text-slate-400">{item}</span>
                                   </div>
                                 ))}
                               </div>
@@ -1081,13 +1081,13 @@ export default function HRReports() {
                               >
                                 <Eye className="w-4 h-4" /> View Full Report
                               </button>
-                              <button className="px-4 py-2 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-900 dark:text-white rounded-xl font-medium transition-all text-sm flex items-center gap-2">
+                              <button className="px-4 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-900 dark:text-white rounded-xl font-medium transition-all text-sm flex items-center gap-2">
                                 <Download className="w-4 h-4" /> Download PDF
                               </button>
-                              <button className="px-4 py-2 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-900 dark:text-white rounded-xl font-medium transition-all text-sm flex items-center gap-2">
+                              <button className="px-4 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-900 dark:text-white rounded-xl font-medium transition-all text-sm flex items-center gap-2">
                                 <Printer className="w-4 h-4" /> Print
                               </button>
-                              <button className="px-4 py-2 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl font-medium transition-all text-sm flex items-center gap-2">
+                              <button className="px-4 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl font-medium transition-all text-sm flex items-center gap-2">
                                 <ExternalLink className="w-4 h-4" /> Share with Sheriff
                               </button>
                             </div>
@@ -1099,9 +1099,9 @@ export default function HRReports() {
 
                   {filteredRecent.length === 0 && (
                     <div className="text-center py-12">
-                      <Search className="w-12 h-12 text-slate-600 mx-auto mb-4" />
+                      <Search className="w-12 h-12 text-slate-700 mx-auto mb-4" />
                       <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">No Reports Found</h3>
-                      <p className="text-slate-600 dark:text-slate-400 text-sm">Try adjusting your search or filter criteria.</p>
+                      <p className="text-slate-700 dark:text-slate-400 text-sm">Try adjusting your search or filter criteria.</p>
                     </div>
                   )}
                 </div>
@@ -1111,28 +1111,28 @@ export default function HRReports() {
             {/* Report Compliance Reference */}
             <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
               <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
-                <Shield className="w-4 h-4 text-slate-600 dark:text-slate-400" /> GCSO Report Compliance & Retention Requirements
+                <Shield className="w-4 h-4 text-slate-700 dark:text-slate-400" /> GCSO Report Compliance & Retention Requirements
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-3">
-                <div className="bg-slate-900/40 border border-slate-700/30 rounded-lg p-3">
+                <div className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/30 rounded-lg p-3">
                   <p className="text-xs text-slate-500 mb-1">Personnel Records</p>
                   <p className="text-sm text-slate-900 dark:text-white font-medium">75 years</p>
-                  <p className="text-xs text-slate-600 dark:text-slate-400">GA Records Retention</p>
+                  <p className="text-xs text-slate-700 dark:text-slate-400">GA Records Retention</p>
                 </div>
-                <div className="bg-slate-900/40 border border-slate-700/30 rounded-lg p-3">
+                <div className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/30 rounded-lg p-3">
                   <p className="text-xs text-slate-500 mb-1">POST Certifications</p>
                   <p className="text-sm text-slate-900 dark:text-white font-medium">Permanent</p>
-                  <p className="text-xs text-slate-600 dark:text-slate-400">O.C.G.A. § 35-8-1</p>
+                  <p className="text-xs text-slate-700 dark:text-slate-400">O.C.G.A. § 35-8-1</p>
                 </div>
-                <div className="bg-slate-900/40 border border-slate-700/30 rounded-lg p-3">
+                <div className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/30 rounded-lg p-3">
                   <p className="text-xs text-slate-500 mb-1">EEO-1 Reports</p>
                   <p className="text-sm text-slate-900 dark:text-white font-medium">3 years</p>
-                  <p className="text-xs text-slate-600 dark:text-slate-400">Title VII, EEOC</p>
+                  <p className="text-xs text-slate-700 dark:text-slate-400">Title VII, EEOC</p>
                 </div>
-                <div className="bg-slate-900/40 border border-slate-700/30 rounded-lg p-3">
+                <div className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/30 rounded-lg p-3">
                   <p className="text-xs text-slate-500 mb-1">FMLA Records</p>
                   <p className="text-sm text-slate-900 dark:text-white font-medium">3 years</p>
-                  <p className="text-xs text-slate-600 dark:text-slate-400">29 CFR Part 825</p>
+                  <p className="text-xs text-slate-700 dark:text-slate-400">29 CFR Part 825</p>
                 </div>
               </div>
               <div className="text-xs text-slate-500 space-y-1">
@@ -1155,34 +1155,34 @@ export default function HRReports() {
         </button>
 
         {supportOpen && (
-          <div className="absolute bottom-16 right-0 w-80 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-2xl overflow-hidden">
+          <div className="absolute bottom-16 right-0 w-80 bg-white dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200 dark:border-slate-700/50 rounded-2xl shadow-2xl overflow-hidden">
             <div className="p-4 border-b border-slate-200 dark:border-slate-700/50">
               <h3 className="text-sm font-semibold text-slate-900 dark:text-white">HR Reports Support</h3>
-              <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">GCSO Human Resources Division</p>
+              <p className="text-xs text-slate-700 dark:text-slate-400 mt-1">GCSO Human Resources Division</p>
             </div>
             <div className="p-4 space-y-3">
-              <div className="p-3 bg-slate-800/40 rounded-lg hover:bg-slate-800/60 cursor-pointer transition-colors">
+              <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-slate-900 dark:text-white">HR Director</p>
-                <p className="text-xs text-slate-600 dark:text-slate-400">Report authorization, confidential data access</p>
+                <p className="text-xs text-slate-700 dark:text-slate-400">Report authorization, confidential data access</p>
                 <p className="text-xs text-amber-400 mt-1">Ext. 4500</p>
               </div>
-              <div className="p-3 bg-slate-800/40 rounded-lg hover:bg-slate-800/60 cursor-pointer transition-colors">
+              <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-slate-900 dark:text-white">Report Administrator</p>
-                <p className="text-xs text-slate-600 dark:text-slate-400">HR Specialist J. Martinez — report generation, data queries</p>
+                <p className="text-xs text-slate-700 dark:text-slate-400">HR Specialist J. Martinez — report generation, data queries</p>
                 <p className="text-xs text-amber-400 mt-1">Ext. 4505</p>
               </div>
-              <div className="p-3 bg-slate-800/40 rounded-lg hover:bg-slate-800/60 cursor-pointer transition-colors">
+              <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-slate-900 dark:text-white">Training Division</p>
-                <p className="text-xs text-slate-600 dark:text-slate-400">POST compliance data, certification reports</p>
+                <p className="text-xs text-slate-700 dark:text-slate-400">POST compliance data, certification reports</p>
                 <p className="text-xs text-amber-400 mt-1">Ext. 4521</p>
               </div>
-              <div className="p-3 bg-slate-800/40 rounded-lg hover:bg-slate-800/60 cursor-pointer transition-colors">
+              <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-slate-900 dark:text-white">County Budget Office</p>
-                <p className="text-xs text-slate-600 dark:text-slate-400">Staffing reports, budget justification data</p>
+                <p className="text-xs text-slate-700 dark:text-slate-400">Staffing reports, budget justification data</p>
               </div>
-              <div className="p-3 bg-slate-800/40 rounded-lg hover:bg-slate-800/60 cursor-pointer transition-colors">
+              <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-slate-900 dark:text-white">Open Records Requests</p>
-                <p className="text-xs text-slate-600 dark:text-slate-400">GA Open Records Act (O.C.G.A. § 50-18-70)</p>
+                <p className="text-xs text-slate-700 dark:text-slate-400">GA Open Records Act (O.C.G.A. § 50-18-70)</p>
               </div>
             </div>
           </div>

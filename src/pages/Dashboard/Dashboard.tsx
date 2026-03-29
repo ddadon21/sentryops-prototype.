@@ -80,19 +80,19 @@ const Dashboard = () => {
           {/* Quick Actions */}
           <Card title="Quick Actions">
             <div className="grid grid-cols-2 gap-4">
-              <button className="p-4 bg-blue-50 hover:bg-blue-100 rounded-lg text-left transition-colors">
+              <button className="p-4 bg-blue-100 hover:bg-blue-100 rounded-lg text-left transition-colors">
                 <h4 className="font-semibold text-blue-900">Create Project</h4>
                 <p className="text-sm text-blue-700 mt-1">Start a new project</p>
               </button>
-              <button className="p-4 bg-green-50 hover:bg-green-100 rounded-lg text-left transition-colors">
+              <button className="p-4 bg-green-100 hover:bg-green-100 rounded-lg text-left transition-colors">
                 <h4 className="font-semibold text-green-900">Add User</h4>
                 <p className="text-sm text-green-700 mt-1">Invite team members</p>
               </button>
-              <button className="p-4 bg-purple-50 hover:bg-purple-100 rounded-lg text-left transition-colors">
+              <button className="p-4 bg-purple-100 hover:bg-purple-100 rounded-lg text-left transition-colors">
                 <h4 className="font-semibold text-purple-900">View Reports</h4>
                 <p className="text-sm text-purple-700 mt-1">Analytics & insights</p>
               </button>
-              <button className="p-4 bg-orange-50 hover:bg-orange-100 rounded-lg text-left transition-colors">
+              <button className="p-4 bg-orange-100 hover:bg-orange-100 rounded-lg text-left transition-colors">
                 <h4 className="font-semibold text-orange-900">Settings</h4>
                 <p className="text-sm text-orange-700 mt-1">Configure options</p>
               </button>

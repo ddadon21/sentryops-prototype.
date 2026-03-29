@@ -639,7 +639,7 @@ export default function SettingsPage() {
                 return (
                   <React.Fragment key={tab.id}>
                     {showDivider && (
-                      <div className="self-center mx-1 w-px h-5 bg-slate-700/60" />
+                      <div className="self-center mx-1 w-px h-5 bg-white dark:bg-slate-700/60" />
                     )}
                     <button
                       onClick={() => setActiveSection(tab.id)}
@@ -663,7 +663,7 @@ export default function SettingsPage() {
               {/* Profile Settings */}
               {activeSection === 'profile' && (
                 <>
-                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
+                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                     <div className="flex items-center justify-between mb-1">
                       <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Profile Information</h3>
                       <span className="text-[10px] text-slate-500">Last updated: Dec 11, 2025 09:14 AM</span>
@@ -783,7 +783,7 @@ export default function SettingsPage() {
 
               {/* Notifications Settings */}
               {activeSection === 'notifications' && (
-                <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
+                <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                   <div className="flex items-center justify-between mb-1">
                     <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Operational Alert Preferences</h3>
                     <span className="text-[10px] text-slate-500">Last updated: Dec 11, 2025 09:14 AM</span>
@@ -797,7 +797,7 @@ export default function SettingsPage() {
                       { key: 'complianceAlerts', title: 'Sync Delays', desc: 'Alert when integration sync exceeds expected response window' },
                       { key: 'budgetAlerts', title: 'Critical System Events', desc: 'Service outages, certificate expiry, and threshold breaches' },
                     ].map((item, idx, arr) => (
-                      <div key={item.key} className={`flex items-center justify-between py-3 ${idx < arr.length - 1 ? 'border-b border-slate-200 dark:border-slate-700/20' : ''}`}>
+                      <div key={item.key} className={`flex items-center justify-between py-3 ${idx < arr.length - 1 ? 'border-b border-slate-200 dark:border-slate-200 dark:border-slate-700/20' : ''}`}>
                         <div className="flex-1">
                           <h4 className="text-sm font-medium text-slate-900 dark:text-white">{item.title}</h4>
                           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">{item.desc}</p>
@@ -816,7 +816,7 @@ export default function SettingsPage() {
 
               {/* Display Settings */}
               {activeSection === 'display' && (
-                <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
+                <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                   <div className="flex items-center justify-between mb-1">
                     <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Display Preferences</h3>
                     <span className="text-[10px] text-slate-500">Last updated: Dec 10, 2025 02:30 PM</span>
@@ -834,9 +834,9 @@ export default function SettingsPage() {
                           <button
                             key={t.value}
                             onClick={() => setTheme(t.value)}
-                            className={`p-4 rounded-xl border-2 transition-all ${activeTheme === t.value ? 'border-amber-500 bg-amber-50 dark:bg-slate-800/60' : 'border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-800/20 hover:bg-slate-50 dark:hover:bg-slate-800/40'}`}
+                            className={`p-4 rounded-xl border-2 transition-all ${activeTheme === t.value ? 'border-amber-500 bg-amber-100 dark:bg-slate-800/60' : 'border-slate-200 dark:border-slate-700/50 bg-white dark:bg-slate-800/20 hover:bg-slate-50 dark:hover:bg-slate-100 dark:hover:bg-slate-800/40'}`}
                           >
-                            <t.Icon className="w-6 h-6 text-slate-600 dark:text-slate-300 mb-2" />
+                            <t.Icon className="w-6 h-6 text-slate-700 dark:text-slate-300 mb-2" />
                             <p className="text-sm font-medium text-slate-800 dark:text-white">{t.label}</p>
                           </button>
                         ))}
@@ -886,14 +886,14 @@ export default function SettingsPage() {
               {/* Security Settings */}
               {activeSection === 'security' && (
                 <div className="space-y-6">
-                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
+                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                     <div className="flex items-center justify-between mb-1">
                       <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Authentication & Access</h3>
                       <span className="text-[10px] text-slate-500">Last updated: Dec 9, 2025 11:42 AM</span>
                     </div>
                     <p className="text-xs text-slate-500 mb-6">Multi-factor authentication, session management, and access controls.</p>
                     <div className="space-y-4">
-                      <div className="flex items-center justify-between py-3 border-b border-slate-200 dark:border-slate-700/30">
+                      <div className="flex items-center justify-between py-3 border-b border-slate-200 dark:border-slate-200 dark:border-slate-700/30">
                         <div className="flex-1">
                           <h4 className="text-sm font-medium text-slate-900 dark:text-white">Two-Factor Authentication</h4>
                           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Require 2FA for account access</p>
@@ -922,7 +922,7 @@ export default function SettingsPage() {
                           <option value="480">8 hours</option>
                         </select>
                       </div>
-                      <div className="flex items-center justify-between py-3 border-b border-slate-200 dark:border-slate-700/30">
+                      <div className="flex items-center justify-between py-3 border-b border-slate-200 dark:border-slate-200 dark:border-slate-700/30">
                         <div className="flex-1">
                           <h4 className="text-sm font-medium text-slate-900 dark:text-white">Login Notifications</h4>
                           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Notify on new device login</p>
@@ -948,7 +948,7 @@ export default function SettingsPage() {
                           <option value="never">Never</option>
                         </select>
                       </div>
-                      <div className="flex items-center justify-between py-3 border-b border-slate-200 dark:border-slate-700/30">
+                      <div className="flex items-center justify-between py-3 border-b border-slate-200 dark:border-slate-200 dark:border-slate-700/30">
                         <div className="flex-1">
                           <h4 className="text-sm font-medium text-slate-900 dark:text-white">IP Whitelist</h4>
                           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Restrict access to approved IPs</p>
@@ -960,7 +960,7 @@ export default function SettingsPage() {
                           <div className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform ${securitySettings.ipWhitelist ? 'translate-x-6' : 'translate-x-0'}`}></div>
                         </button>
                       </div>
-                      <div className="flex items-center justify-between py-3 border-b border-slate-200 dark:border-slate-700/30">
+                      <div className="flex items-center justify-between py-3 border-b border-slate-200 dark:border-slate-200 dark:border-slate-700/30">
                         <div className="flex-1">
                           <h4 className="text-sm font-medium text-slate-900 dark:text-white">Audit Logging</h4>
                           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Track all user actions</p>
@@ -993,10 +993,10 @@ export default function SettingsPage() {
                     </div>
                   </div>
 
-                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
+                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                     <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-6">Active Sessions</h3>
                     <div className="space-y-3">
-                      <div className="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/30 rounded-xl">
+                      <div className="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl">
                         <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center">
                           <Monitor className="w-5 h-5 text-green-400" />
                         </div>
@@ -1009,7 +1009,7 @@ export default function SettingsPage() {
                           <span className="text-xs font-medium text-green-400">Active</span>
                         </div>
                       </div>
-                      <div className="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/30 rounded-xl">
+                      <div className="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl">
                         <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center">
                           <Smartphone className="w-5 h-5 text-blue-400" />
                         </div>
@@ -1025,7 +1025,7 @@ export default function SettingsPage() {
                     </div>
                   </div>
 
-                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
+                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                     <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-4">Change Password</h3>
                     <div className="space-y-4">
                       <div>
@@ -1072,10 +1072,10 @@ export default function SettingsPage() {
                     const Icon = getIntegrationIcon(integration.type);
                     const isExpanded = expandedIntegration === key;
                     return (
-                      <div key={key} className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl overflow-hidden shadow-sm dark:shadow-none">
+                      <div key={key} className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl overflow-hidden shadow-sm dark:shadow-none">
                         <div
                           onClick={() => setExpandedIntegration(isExpanded ? null : key)}
-                          className="p-6 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/20 transition-colors"
+                          className="p-6 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-50 dark:hover:bg-slate-800/20 transition-colors"
                         >
                           <div className="flex items-center gap-4">
                             <div className={`w-12 h-12 ${getStatusBg(integration.status)} border ${getStatusBorder(integration.status)} rounded-xl flex items-center justify-center`}>
@@ -1107,14 +1107,14 @@ export default function SettingsPage() {
                                 </span>
                               </div>
                             </div>
-                            <button className="p-2 hover:bg-slate-200 dark:hover:bg-slate-700/40 rounded-lg transition-colors">
+                            <button className="p-2 hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-700/40 rounded-lg transition-colors">
                               {isExpanded ? <ChevronUp className="w-5 h-5 text-slate-500 dark:text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-500 dark:text-slate-400" />}
                             </button>
                           </div>
                         </div>
 
                         {isExpanded && (
-                          <div className="px-6 pb-6 border-t border-slate-200 dark:border-slate-700/30">
+                          <div className="px-6 pb-6 border-t border-slate-200 dark:border-slate-200 dark:border-slate-700/30">
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
                               <div className="space-y-4">
                                 <div>
@@ -1127,7 +1127,7 @@ export default function SettingsPage() {
                                     <code className="flex-1 text-xs text-blue-400 bg-slate-100 dark:bg-slate-900/50 px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700/50 overflow-x-auto">{integration.endpoint}</code>
                                     <button
                                       onClick={() => handleCopyApiKey(integration.endpoint)}
-                                      className="p-2 hover:bg-slate-200 dark:hover:bg-slate-700/40 rounded-lg transition-colors"
+                                      className="p-2 hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-700/40 rounded-lg transition-colors"
                                       title="Copy endpoint"
                                     >
                                       <Copy className="w-4 h-4 text-slate-500 dark:text-slate-400" />
@@ -1146,14 +1146,14 @@ export default function SettingsPage() {
                                     </code>
                                     <button
                                       onClick={() => setShowApiKey({...showApiKey, [key]: !showApiKey[key]})}
-                                      className="p-2 hover:bg-slate-200 dark:hover:bg-slate-700/40 rounded-lg transition-colors"
+                                      className="p-2 hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-700/40 rounded-lg transition-colors"
                                       title={showApiKey[key] ? 'Hide' : 'Show'}
                                     >
                                       {showApiKey[key] ? <EyeOff className="w-4 h-4 text-slate-500 dark:text-slate-400" /> : <Eye className="w-4 h-4 text-slate-500 dark:text-slate-400" />}
                                     </button>
                                     <button
                                       onClick={() => handleCopyApiKey(integration.apiKey)}
-                                      className="p-2 hover:bg-slate-200 dark:hover:bg-slate-700/40 rounded-lg transition-colors"
+                                      className="p-2 hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-700/40 rounded-lg transition-colors"
                                       title="Copy API key"
                                     >
                                       <Copy className="w-4 h-4 text-slate-500 dark:text-slate-400" />
@@ -1211,7 +1211,7 @@ export default function SettingsPage() {
 
                             {/* Integration-specific metrics */}
                             {(integration.storage || integration.devicesActive || integration.currentInmates || integration.callsToday || integration.ordersToday || integration.employees || integration.expiringSoon || integration.pendingAcknowledgments || integration.policyUpdates || integration.pendingApprovals || integration.vehiclesInService || integration.monthlySpend || integration.activeUsers || integration.unitsOnline || integration.contacts || integration.readsToday || integration.deploymentsMonth) && (
-                              <div className="mt-6 pt-6 border-t border-slate-200 dark:border-slate-700/30">
+                              <div className="mt-6 pt-6 border-t border-slate-200 dark:border-slate-200 dark:border-slate-700/30">
                                 <p className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-3">Live Metrics</p>
                                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                                   {integration.storage && (
@@ -1365,14 +1365,14 @@ export default function SettingsPage() {
               {/* Backup & Retention */}
               {activeSection === 'data' && (
                 <div className="space-y-6">
-                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
+                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                     <div className="flex items-center justify-between mb-1">
                       <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Data Export</h3>
                       <span className="text-[10px] text-slate-500">Last updated: Dec 11, 2025 02:00 AM</span>
                     </div>
                     <p className="text-xs text-slate-500 mb-6">Export personnel records, reports, integration logs, and audit trails.</p>
                     <div className="space-y-4">
-                      <div className="p-4 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/30 rounded-xl">
+                      <div className="p-4 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl">
                         <div className="flex items-center justify-between mb-3">
                           <div className="flex items-center gap-3">
                             <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center">
@@ -1389,7 +1389,7 @@ export default function SettingsPage() {
                           </button>
                         </div>
                       </div>
-                      <div className="p-4 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/30 rounded-xl">
+                      <div className="p-4 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl">
                         <div className="flex items-center justify-between mb-3">
                           <div className="flex items-center gap-3">
                             <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center">
@@ -1406,7 +1406,7 @@ export default function SettingsPage() {
                           </button>
                         </div>
                       </div>
-                      <div className="p-4 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/30 rounded-xl">
+                      <div className="p-4 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl">
                         <div className="flex items-center justify-between mb-3">
                           <div className="flex items-center gap-3">
                             <div className="w-10 h-10 bg-purple-500/20 rounded-xl flex items-center justify-center">
@@ -1423,7 +1423,7 @@ export default function SettingsPage() {
                           </button>
                         </div>
                       </div>
-                      <div className="p-4 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/30 rounded-xl">
+                      <div className="p-4 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl">
                         <div className="flex items-center justify-between mb-3">
                           <div className="flex items-center gap-3">
                             <div className="w-10 h-10 bg-amber-500/20 rounded-xl flex items-center justify-center">
@@ -1443,10 +1443,10 @@ export default function SettingsPage() {
                     </div>
                   </div>
 
-                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
+                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                     <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-6">Backup & Restore</h3>
                     <div className="space-y-4">
-                      <div className="p-4 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/30 rounded-xl">
+                      <div className="p-4 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl">
                         <div className="flex items-center justify-between mb-3">
                           <div>
                             <h4 className="text-sm font-medium text-slate-900 dark:text-white mb-1">Last Backup</h4>
@@ -1480,7 +1480,7 @@ export default function SettingsPage() {
                     </div>
                   </div>
 
-                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
+                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                     <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-6">Data Retention</h3>
                     <div className="space-y-4">
                       <div>
@@ -1536,7 +1536,7 @@ export default function SettingsPage() {
                   </div>
 
                   {/* API Management */}
-                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
+                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                     <div className="flex items-center justify-between mb-1">
                       <h3 className="text-sm font-semibold text-slate-900 dark:text-white">API Management</h3>
                       <span className="text-[10px] text-slate-500">Last updated: Dec 11, 2025 08:22 AM</span>
@@ -1551,8 +1551,8 @@ export default function SettingsPage() {
                     </div>
                     <div className="space-y-3 mb-6">
                       {apiKeys.map(apiKey => (
-                        <div key={apiKey.id} className="flex items-center gap-4 p-4 border border-slate-700/20 rounded-lg">
-                          <div className={`w-10 h-10 ${apiKey.status === 'active' ? 'bg-green-500/20' : 'bg-slate-700/40'} rounded-xl flex items-center justify-center`}>
+                        <div key={apiKey.id} className="flex items-center gap-4 p-4 border border-slate-200 dark:border-slate-700/20 rounded-lg">
+                          <div className={`w-10 h-10 ${apiKey.status === 'active' ? 'bg-green-500/20' : 'bg-slate-50 dark:bg-slate-700/40'} rounded-xl flex items-center justify-center`}>
                             <Key className={`w-5 h-5 ${apiKey.status === 'active' ? 'text-green-400' : 'text-slate-500'}`} />
                           </div>
                           <div className="flex-1 min-w-0">
@@ -1561,10 +1561,10 @@ export default function SettingsPage() {
                               <code className="text-xs text-amber-600 dark:text-amber-400 bg-slate-100 dark:bg-slate-900/50 px-2 py-1 rounded border border-slate-300 dark:border-slate-700/50">
                                 {showApiKey[`api_${apiKey.id}`] ? apiKey.key : '\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022'}
                               </code>
-                              <button onClick={() => setShowApiKey({...showApiKey, [`api_${apiKey.id}`]: !showApiKey[`api_${apiKey.id}`]})} className="p-1 hover:bg-slate-200 dark:hover:bg-slate-700/40 rounded transition-colors">
+                              <button onClick={() => setShowApiKey({...showApiKey, [`api_${apiKey.id}`]: !showApiKey[`api_${apiKey.id}`]})} className="p-1 hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-700/40 rounded transition-colors">
                                 {showApiKey[`api_${apiKey.id}`] ? <EyeOff className="w-3 h-3 text-slate-500 dark:text-slate-400" /> : <Eye className="w-3 h-3 text-slate-500 dark:text-slate-400" />}
                               </button>
-                              <button onClick={() => handleCopyApiKey(apiKey.key)} className="p-1 hover:bg-slate-200 dark:hover:bg-slate-700/40 rounded transition-colors">
+                              <button onClick={() => handleCopyApiKey(apiKey.key)} className="p-1 hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-700/40 rounded transition-colors">
                                 <Copy className="w-3 h-3 text-slate-500 dark:text-slate-400" />
                               </button>
                             </div>
@@ -1575,10 +1575,10 @@ export default function SettingsPage() {
                             </div>
                           </div>
                           <div className="flex items-center gap-2">
-                            <div className={`px-3 py-1.5 ${apiKey.status === 'active' ? 'bg-green-500/20 border-green-500/30' : 'bg-slate-700/40 border-slate-600/50'} border rounded-lg`}>
+                            <div className={`px-3 py-1.5 ${apiKey.status === 'active' ? 'bg-green-500/20 border-green-500/30' : 'bg-slate-50 dark:bg-slate-700/40 border-slate-600/50'} border rounded-lg`}>
                               <span className={`text-xs font-medium ${apiKey.status === 'active' ? 'text-green-400' : 'text-slate-500 dark:text-slate-400'}`}>{apiKey.status === 'active' ? 'Active' : 'Inactive'}</span>
                             </div>
-                            <button className="p-2 hover:bg-slate-200 dark:hover:bg-slate-700/40 rounded-lg transition-colors"><Edit3 className="w-4 h-4 text-slate-500 dark:text-slate-400" /></button>
+                            <button className="p-2 hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-700/40 rounded-lg transition-colors"><Edit3 className="w-4 h-4 text-slate-500 dark:text-slate-400" /></button>
                             <button className="p-2 hover:bg-red-500/20 rounded-lg transition-colors"><Trash2 className="w-4 h-4 text-red-400" /></button>
                           </div>
                         </div>
@@ -1592,7 +1592,7 @@ export default function SettingsPage() {
                         { icon: Clock, color: 'text-amber-400', label: 'Avg Response', value: '187ms', sub: '-23ms vs last month', subColor: 'text-green-400' },
                         { icon: Zap, color: 'text-purple-400', label: 'Peak RPS', value: '1,247', sub: 'requests/second', subColor: 'text-slate-500 dark:text-slate-400' },
                       ].map((s, i) => (
-                        <div key={i} className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4 shadow-sm dark:shadow-none">
+                        <div key={i} className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4 shadow-sm dark:shadow-none">
                           <div className="flex items-center gap-2 mb-2">
                             <s.icon className={`w-4 h-4 ${s.color}`} />
                             <p className="text-[10px] font-medium text-slate-500 dark:text-slate-400">{s.label}</p>
@@ -1617,7 +1617,7 @@ export default function SettingsPage() {
                   </div>
 
                   {/* System Health */}
-                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
+                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                     <div className="flex items-center justify-between mb-1">
                       <h3 className="text-sm font-semibold text-slate-900 dark:text-white">System Health</h3>
                       <span className="text-[10px] text-slate-500">Last updated: Dec 11, 2025 09:15 AM</span>
@@ -1630,7 +1630,7 @@ export default function SettingsPage() {
                         { icon: Database, color: 'amber', label: 'Storage Used', value: '42%', pct: 42 },
                         { icon: Activity, color: 'purple', label: 'Active Connections', value: '234' },
                       ].map((m, i) => (
-                        <div key={i} className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4 shadow-sm dark:shadow-none">
+                        <div key={i} className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4 shadow-sm dark:shadow-none">
                           <div className="flex items-center gap-2 mb-2">
                             <m.icon className={`w-4 h-4 text-${m.color}-400`} />
                             <p className="text-[10px] font-medium text-slate-500 dark:text-slate-400">{m.label}</p>
@@ -1654,7 +1654,7 @@ export default function SettingsPage() {
                         { label: 'Last Update', value: 'December 8, 2025' },
                         { label: 'Uptime', value: '47 days, 12 hours' },
                       ].map((v, i) => (
-                        <div key={i} className="flex justify-between items-center py-2 border-b border-slate-200 dark:border-slate-700/20">
+                        <div key={i} className="flex justify-between items-center py-2 border-b border-slate-200 dark:border-slate-200 dark:border-slate-700/20">
                           <span className="text-xs text-slate-500 dark:text-slate-400">{v.label}</span>
                           <span className="text-xs font-medium text-slate-900 dark:text-white">{v.value}</span>
                         </div>
@@ -1663,7 +1663,7 @@ export default function SettingsPage() {
                   </div>
 
                   {/* DevOps / Infrastructure Controls */}
-                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
+                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                     <div className="flex items-center justify-between mb-1">
                       <h3 className="text-sm font-semibold text-slate-900 dark:text-white">DevOps / Infrastructure Controls</h3>
                       <span className="text-[10px] text-slate-500">Last action: Dec 10, 2025 02:00 AM</span>
@@ -1675,7 +1675,7 @@ export default function SettingsPage() {
                         { icon: Database, color: 'amber', title: 'Optimize Database', desc: 'Run database optimization and vacuum tasks' },
                         { icon: Download, color: 'green', title: 'Check for Updates', desc: 'Check for system and dependency updates' },
                       ].map((action, i) => (
-                        <button key={i} className="w-full flex items-center justify-between p-4 border border-slate-200 dark:border-slate-700/20 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-100 dark:hover:bg-slate-800/30 transition-all">
+                        <button key={i} className="w-full flex items-center justify-between p-4 border border-slate-200 dark:border-slate-200 dark:border-slate-700/20 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/30 transition-all">
                           <div className="flex items-center gap-3">
                             <div className={`w-10 h-10 bg-${action.color}-500/20 rounded-xl flex items-center justify-center`}>
                               <action.icon className={`w-5 h-5 text-${action.color}-400`} />
@@ -1695,7 +1695,7 @@ export default function SettingsPage() {
 
               {/* Audit & Compliance */}
               {activeSection === 'audit' && (
-                <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
+                <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                   <div className="flex items-center justify-between mb-6">
                     <div>
                       <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Audit & Compliance Trail</h3>
@@ -1708,7 +1708,7 @@ export default function SettingsPage() {
                   </div>
 
                   <div className="space-y-3">
-                    <div className="flex items-start gap-4 p-4 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/30 rounded-xl">
+                    <div className="flex items-start gap-4 p-4 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl">
                       <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
                         <CheckCircle2 className="w-5 h-5 text-green-400" />
                       </div>
@@ -1726,7 +1726,7 @@ export default function SettingsPage() {
                       </div>
                     </div>
 
-                    <div className="flex items-start gap-4 p-4 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/30 rounded-xl">
+                    <div className="flex items-start gap-4 p-4 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl">
                       <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
                         <Lock className="w-5 h-5 text-blue-400" />
                       </div>
@@ -1744,7 +1744,7 @@ export default function SettingsPage() {
                       </div>
                     </div>
 
-                    <div className="flex items-start gap-4 p-4 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/30 rounded-xl">
+                    <div className="flex items-start gap-4 p-4 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl">
                       <div className="w-10 h-10 bg-purple-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
                         <RefreshCw className="w-5 h-5 text-purple-400" />
                       </div>
@@ -1762,7 +1762,7 @@ export default function SettingsPage() {
                       </div>
                     </div>
 
-                    <div className="flex items-start gap-4 p-4 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/30 rounded-xl">
+                    <div className="flex items-start gap-4 p-4 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl">
                       <div className="w-10 h-10 bg-amber-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
                         <Key className="w-5 h-5 text-amber-400" />
                       </div>
@@ -1780,7 +1780,7 @@ export default function SettingsPage() {
                       </div>
                     </div>
 
-                    <div className="flex items-start gap-4 p-4 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/30 rounded-xl">
+                    <div className="flex items-start gap-4 p-4 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl">
                       <div className="w-10 h-10 bg-red-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
                         <AlertTriangle className="w-5 h-5 text-red-400" />
                       </div>
@@ -1798,7 +1798,7 @@ export default function SettingsPage() {
                       </div>
                     </div>
 
-                    <div className="flex items-start gap-4 p-4 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/30 rounded-xl">
+                    <div className="flex items-start gap-4 p-4 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl">
                       <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
                         <Database className="w-5 h-5 text-green-400" />
                       </div>
@@ -1827,7 +1827,7 @@ export default function SettingsPage() {
             </div>
 
             {/* Save Changes Button */}
-            <div className="mt-8 flex items-center justify-between p-5 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none">
+            <div className="mt-8 flex items-center justify-between p-5 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none">
               <div>
                 <p className="text-sm font-medium text-slate-900 dark:text-white">Unsaved Changes</p>
                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Save your changes to apply the new settings</p>

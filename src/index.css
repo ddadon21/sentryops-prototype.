@@ -20,11 +20,133 @@
   }
 }
 
+/* ─────────────────────────────────────────────────────────────
+   SYSTEM-LEVEL LIGHT MODE — Tables
+   Applies globally so every table in the app is consistent
+   without per-component class changes.
+   ───────────────────────────────────────────────────────────── */
+html:not(.dark) table thead th,
+html:not(.dark) table thead td {
+  background-color: rgb(248 250 252);   /* slate-50  */
+  color: rgb(51 65 85);                 /* slate-700 */
+  font-weight: 600;
+  border-bottom: 1px solid rgb(226 232 240); /* slate-200 */
+}
+
+html:not(.dark) table tbody tr {
+  background-color: #fff;
+  border-bottom: 1px solid rgb(241 245 249); /* slate-100 */
+}
+
+html:not(.dark) table tbody tr:hover {
+  background-color: rgb(248 250 252);   /* slate-50 */
+}
+
+html:not(.dark) table tbody td {
+  color: rgb(15 23 42);                 /* slate-900 */
+}
+
+html:not(.dark) table tbody tr td.muted,
+html:not(.dark) table tbody td span.muted {
+  color: rgb(100 116 139);              /* slate-500 */
+}
+
+/* ─────────────────────────────────────────────────────────────
+   SYSTEM-LEVEL — Form inputs & textareas
+   ───────────────────────────────────────────────────────────── */
+html:not(.dark) input:not([type="range"]),
+html:not(.dark) textarea,
+html:not(.dark) select {
+  background-color: #fff;
+  color: rgb(15 23 42);                 /* slate-900 */
+  border-color: rgb(203 213 225);       /* slate-300 */
+}
+
+html:not(.dark) input::placeholder,
+html:not(.dark) textarea::placeholder {
+  color: rgb(148 163 184);              /* slate-400 */
+}
+
+html:not(.dark) input:focus,
+html:not(.dark) textarea:focus,
+html:not(.dark) select:focus {
+  border-color: rgb(147 197 253);       /* blue-300 */
+  outline: none;
+  box-shadow: 0 0 0 3px rgb(219 234 254 / 0.5); /* blue-100/50 */
+}
+
+/* ─────────────────────────────────────────────────────────────
+   SYSTEM-LEVEL — Scrollbars (custom thin style)
+   ───────────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+html:not(.dark) ::-webkit-scrollbar-thumb {
+  background: rgb(203 213 225);         /* slate-300 */
+  border-radius: 9999px;
+}
+html:not(.dark) ::-webkit-scrollbar-thumb:hover {
+  background: rgb(148 163 184);         /* slate-400 */
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: rgb(51 65 85);            /* slate-700 */
+  border-radius: 9999px;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgb(71 85 105);           /* slate-600 */
+}
+
+/* ─────────────────────────────────────────────────────────────
+   SYSTEM-LEVEL — Text selection
+   ───────────────────────────────────────────────────────────── */
+html:not(.dark) ::selection {
+  background-color: rgb(219 234 254);   /* blue-100 */
+  color: rgb(15 23 42);                 /* slate-900 */
+}
+.dark ::selection {
+  background-color: rgb(59 130 246 / 0.3);
+  color: #fff;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   SYSTEM-LEVEL — Button transitions & active states
+   ───────────────────────────────────────────────────────────── */
+button {
+  transition: all 0.15s ease;
+}
+button:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   SYSTEM-LEVEL — Card hover elevation
+   All .hover\:shadow-md cards get consistent lift
+   ───────────────────────────────────────────────────────────── */
+html:not(.dark) [class*="rounded-xl"][class*="shadow-sm"] {
+  transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   ANIMATIONS
+   ───────────────────────────────────────────────────────────── */
 @keyframes pulse-warning {
   0%, 100% { background-color: rgba(239, 68, 68, 0.03); }
-  50% { background-color: rgba(239, 68, 68, 0.08); }
+  50%       { background-color: rgba(239, 68, 68, 0.08); }
 }
 
 .audit-pulse {
   animation: pulse-warning 2.5s ease-in-out infinite;
+}
+
+@keyframes slide-in-right {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+
+.toast-enter {
+  animation: slide-in-right 0.25s ease;
 }

@@ -432,7 +432,7 @@ export default function HiringPipeline() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex">
       {/* Sidebar */}
-      <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-slate-800/50 backdrop-blur-xl bg-slate-900/30 flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
+      <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-slate-800/50 backdrop-blur-xl bg-slate-50 dark:bg-slate-900/30 flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
         <div className="p-4 border-b border-slate-200 dark:border-slate-700/50 flex items-center justify-between">
           {!sidebarCollapsed && (
             <div className="flex items-center gap-2">
@@ -445,9 +445,9 @@ export default function HiringPipeline() {
           )}
           <button
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-            className="p-2 hover:bg-slate-800/50 rounded-lg transition-colors hidden lg:block"
+            className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors hidden lg:block"
           >
-            {sidebarCollapsed ? <ChevronRight className="w-5 h-5 text-slate-600 dark:text-slate-400" /> : <ChevronLeft className="w-5 h-5 text-slate-600 dark:text-slate-400" />}
+            {sidebarCollapsed ? <ChevronRight className="w-5 h-5 text-slate-700 dark:text-slate-400" /> : <ChevronLeft className="w-5 h-5 text-slate-700 dark:text-slate-400" />}
           </button>
         </div>
 
@@ -460,7 +460,7 @@ export default function HiringPipeline() {
                 key={item.id}
                 onClick={() => handleNavigation(item)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white'
+                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-700 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white'
                 } ${sidebarCollapsed ? 'justify-center' : ''}`}
                 title={sidebarCollapsed ? item.label : ''}
               >
@@ -483,7 +483,7 @@ export default function HiringPipeline() {
           <div className="p-4">
             <button
               onClick={() => setLogoutConfirmOpen(true)}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-slate-600 dark:text-slate-400 hover:bg-slate-800/40 hover:text-slate-700 dark:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-slate-700 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/40 hover:text-slate-700 dark:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
               title={sidebarCollapsed ? 'Sign Out' : ''}
             >
               <LogOut className="w-5 h-5 flex-shrink-0" />
@@ -510,24 +510,24 @@ export default function HiringPipeline() {
           />
           <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl p-6 max-w-sm w-full shadow-2xl">
             <div className="flex items-center gap-4 mb-4">
-              <div className="w-12 h-12 bg-slate-800/60 rounded-xl flex items-center justify-center">
-                <LogOut className="w-6 h-6 text-slate-600 dark:text-slate-400" />
+              <div className="w-12 h-12 bg-white dark:bg-slate-800/60 rounded-xl flex items-center justify-center">
+                <LogOut className="w-6 h-6 text-slate-700 dark:text-slate-400" />
               </div>
               <div>
                 <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Sign Out</h3>
-                <p className="text-sm text-slate-600 dark:text-slate-400">Are you sure you want to sign out?</p>
+                <p className="text-sm text-slate-700 dark:text-slate-400">Are you sure you want to sign out?</p>
               </div>
             </div>
             <div className="flex gap-3 mt-6">
               <button
                 onClick={() => setLogoutConfirmOpen(false)}
-                className="flex-1 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all"
+                className="flex-1 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all"
               >
                 Cancel
               </button>
               <button
                 onClick={handleLogout}
-                className="flex-1 px-4 py-2.5 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all"
+                className="flex-1 px-4 py-2.5 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all"
               >
                 Sign Out
               </button>
@@ -537,32 +537,32 @@ export default function HiringPipeline() {
       )}
 
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="border-b border-slate-200 dark:border-slate-800/50 backdrop-blur-xl bg-slate-900/30">
+        <header className="border-b border-slate-200 dark:border-slate-800/50 backdrop-blur-xl bg-slate-50 dark:bg-slate-900/30">
           <div className="px-4 lg:px-6 py-4 flex items-center justify-between gap-4">
             <div className="flex items-center gap-4 flex-1 min-w-0">
               <button
                 onClick={() => setSidebarOpen(!sidebarOpen)}
-                className="lg:hidden p-2 hover:bg-slate-800/50 rounded-lg"
+                className="lg:hidden p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg"
               >
-                <Menu className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+                <Menu className="w-5 h-5 text-slate-700 dark:text-slate-400" />
               </button>
               <div className="flex items-center gap-2 text-sm">
                 <button
                   onClick={() => navigate(createPageUrl('HRDashboard'))}
-                  className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
+                  className="text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
                 >
                   HR Dashboard
                 </button>
-                <ChevronRight className="w-4 h-4 text-slate-600" />
+                <ChevronRight className="w-4 h-4 text-slate-700" />
                 <span className="text-slate-900 dark:text-white">Recruitment Pipeline</span>
               </div>
             </div>
             <div className="flex items-center gap-2 lg:gap-3">
-              <button className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-800/60 transition-all text-sm">
+              <button className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all text-sm">
                 <Download className="w-4 h-4" />
                 <span className="hidden sm:inline">Export Report</span>
               </button>
-              <button className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-800/60 transition-all text-sm">
+              <button className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all text-sm">
                 <Calendar className="w-4 h-4" />
                 <span className="hidden sm:inline">Schedule Panels</span>
               </button>
@@ -570,25 +570,25 @@ export default function HiringPipeline() {
               <div className="relative">
                 <button
                   onClick={() => setNotificationsOpen(!notificationsOpen)}
-                  className="p-2 hover:bg-slate-800/50 rounded-lg relative"
+                  className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg relative"
                 >
-                  <Bell className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+                  <Bell className="w-5 h-5 text-slate-700 dark:text-slate-400" />
                   <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                 </button>
 
                 {notificationsOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-96 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-2xl z-50">
+                  <div className="absolute right-0 top-full mt-2 w-96 bg-white dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-2xl z-50">
                     <div className="p-4 border-b border-slate-200 dark:border-slate-700/50">
                       <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Notifications</h3>
                     </div>
                     <div className="max-h-96 overflow-y-auto">
                       {notifications.map(notification => (
-                        <div key={notification.id} className={`p-4 border-b border-slate-200 dark:border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
+                        <div key={notification.id} className={`p-4 border-b border-slate-200 dark:border-slate-200 dark:border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
                           <div className="flex items-start gap-3">
                             <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-amber-400' : 'bg-blue-400'}`}></div>
                             <div className="flex-1 min-w-0">
                               <p className="text-sm font-medium text-slate-900 dark:text-white mb-1">{notification.title}</p>
-                              <p className="text-xs text-slate-600 dark:text-slate-400 mb-2">{notification.message}</p>
+                              <p className="text-xs text-slate-700 dark:text-slate-400 mb-2">{notification.message}</p>
                               <p className="text-xs text-slate-500">{notification.time}</p>
                             </div>
                           </div>
@@ -599,7 +599,7 @@ export default function HiringPipeline() {
                 )}
               </div>
 
-              <div className="h-8 w-px bg-slate-700/50"></div>
+              <div className="h-8 w-px bg-white dark:bg-slate-700/50"></div>
 
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
@@ -607,7 +607,7 @@ export default function HiringPipeline() {
                 </div>
                 <div className="hidden sm:block">
                   <p className="text-sm font-medium text-slate-900 dark:text-white">HR Director</p>
-                  <p className="text-xs text-slate-600 dark:text-slate-400">Human Resources</p>
+                  <p className="text-xs text-slate-700 dark:text-slate-400">Human Resources</p>
                 </div>
               </div>
             </div>
@@ -619,7 +619,7 @@ export default function HiringPipeline() {
             {/* GCSO Header */}
             <div className="mb-6">
               <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white mb-1">Recruitment Pipeline Analysis</h2>
-              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-slate-600 dark:text-slate-400 mb-3">
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-slate-700 dark:text-slate-400 mb-3">
                 <span className="flex items-center gap-1">
                   <MapPin className="w-4 h-4" />
                   Gwinnett County Sheriff's Office • Lawrenceville, Georgia
@@ -634,7 +634,7 @@ export default function HiringPipeline() {
                 <span className="hidden sm:inline">|</span>
                 <span>Positions: {totalVacancies} vacancies (8 Deputy, 2 Background Inv, 1 Detention, 1 Admin)</span>
               </div>
-              <div className="text-xs text-slate-600 mt-1">
+              <div className="text-xs text-slate-700 mt-1">
                 System: GCSO-HRIS v4.2 | Last Updated: 18:14:22 PM EST
               </div>
             </div>
@@ -666,14 +666,14 @@ export default function HiringPipeline() {
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Active Applicants by Position</h3>
                 <div className="flex items-center gap-2">
-                  <span className="text-xs text-slate-600 dark:text-slate-400">Applicants-to-Vacancy Ratio:</span>
+                  <span className="text-xs text-slate-700 dark:text-slate-400">Applicants-to-Vacancy Ratio:</span>
                   <span className="text-sm font-bold text-amber-400">6.4:1</span>
                   <span className="text-xs text-slate-500">(Ideal: 8-10:1)</span>
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
-                <div className={`p-4 rounded-xl border transition-all cursor-pointer ${selectedPosition === 'deputySheriff' ? 'bg-blue-500/20 border-blue-500/50' : 'bg-slate-900/50 border-slate-700/50 hover:border-slate-600/50'}`}
+                <div className={`p-4 rounded-xl border transition-all cursor-pointer ${selectedPosition === 'deputySheriff' ? 'bg-blue-500/20 border-blue-500/50' : 'bg-white dark:bg-slate-900/50 border-slate-700/50 hover:border-slate-600/50'}`}
                   onClick={() => setSelectedPosition(selectedPosition === 'deputySheriff' ? 'all' : 'deputySheriff')}>
                   <div className="flex items-center justify-between mb-2">
                     <Shield className="w-5 h-5 text-blue-400" />
@@ -682,10 +682,10 @@ export default function HiringPipeline() {
                     </span>
                   </div>
                   <p className="text-xl font-bold text-slate-900 dark:text-white">{positionBreakdown.deputySheriff.applicants}</p>
-                  <p className="text-xs text-slate-600 dark:text-slate-400">Deputy Sheriff → {positionBreakdown.deputySheriff.vacancies} vacancies</p>
+                  <p className="text-xs text-slate-700 dark:text-slate-400">Deputy Sheriff → {positionBreakdown.deputySheriff.vacancies} vacancies</p>
                 </div>
 
-                <div className={`p-4 rounded-xl border transition-all cursor-pointer ${selectedPosition === 'backgroundInvestigator' ? 'bg-purple-500/20 border-purple-500/50' : 'bg-slate-900/50 border-slate-700/50 hover:border-slate-600/50'}`}
+                <div className={`p-4 rounded-xl border transition-all cursor-pointer ${selectedPosition === 'backgroundInvestigator' ? 'bg-purple-500/20 border-purple-500/50' : 'bg-white dark:bg-slate-900/50 border-slate-700/50 hover:border-slate-600/50'}`}
                   onClick={() => setSelectedPosition(selectedPosition === 'backgroundInvestigator' ? 'all' : 'backgroundInvestigator')}>
                   <div className="flex items-center justify-between mb-2">
                     <Search className="w-5 h-5 text-purple-400" />
@@ -694,10 +694,10 @@ export default function HiringPipeline() {
                     </span>
                   </div>
                   <p className="text-xl font-bold text-slate-900 dark:text-white">{positionBreakdown.backgroundInvestigator.applicants}</p>
-                  <p className="text-xs text-slate-600 dark:text-slate-400">Background Inv → {positionBreakdown.backgroundInvestigator.vacancies} vacancies</p>
+                  <p className="text-xs text-slate-700 dark:text-slate-400">Background Inv → {positionBreakdown.backgroundInvestigator.vacancies} vacancies</p>
                 </div>
 
-                <div className={`p-4 rounded-xl border transition-all cursor-pointer ${selectedPosition === 'detentionOfficer' ? 'bg-amber-500/20 border-amber-500/50' : 'bg-slate-900/50 border-slate-700/50 hover:border-slate-600/50'}`}
+                <div className={`p-4 rounded-xl border transition-all cursor-pointer ${selectedPosition === 'detentionOfficer' ? 'bg-amber-500/20 border-amber-500/50' : 'bg-white dark:bg-slate-900/50 border-slate-700/50 hover:border-slate-600/50'}`}
                   onClick={() => setSelectedPosition(selectedPosition === 'detentionOfficer' ? 'all' : 'detentionOfficer')}>
                   <div className="flex items-center justify-between mb-2">
                     <Users className="w-5 h-5 text-amber-400" />
@@ -706,10 +706,10 @@ export default function HiringPipeline() {
                     </span>
                   </div>
                   <p className="text-xl font-bold text-slate-900 dark:text-white">{positionBreakdown.detentionOfficer.applicants}</p>
-                  <p className="text-xs text-slate-600 dark:text-slate-400">Detention Officer → {positionBreakdown.detentionOfficer.vacancies} vacancy</p>
+                  <p className="text-xs text-slate-700 dark:text-slate-400">Detention Officer → {positionBreakdown.detentionOfficer.vacancies} vacancy</p>
                 </div>
 
-                <div className={`p-4 rounded-xl border transition-all cursor-pointer ${selectedPosition === 'adminAssistant' ? 'bg-cyan-500/20 border-cyan-500/50' : 'bg-slate-900/50 border-slate-700/50 hover:border-slate-600/50'}`}
+                <div className={`p-4 rounded-xl border transition-all cursor-pointer ${selectedPosition === 'adminAssistant' ? 'bg-cyan-500/20 border-cyan-500/50' : 'bg-white dark:bg-slate-900/50 border-slate-700/50 hover:border-slate-600/50'}`}
                   onClick={() => setSelectedPosition(selectedPosition === 'adminAssistant' ? 'all' : 'adminAssistant')}>
                   <div className="flex items-center justify-between mb-2">
                     <FileText className="w-5 h-5 text-cyan-400" />
@@ -718,7 +718,7 @@ export default function HiringPipeline() {
                     </span>
                   </div>
                   <p className="text-xl font-bold text-slate-900 dark:text-white">{positionBreakdown.adminAssistant.applicants}</p>
-                  <p className="text-xs text-slate-600 dark:text-slate-400">Admin Assistant → {positionBreakdown.adminAssistant.vacancies} vacancy</p>
+                  <p className="text-xs text-slate-700 dark:text-slate-400">Admin Assistant → {positionBreakdown.adminAssistant.vacancies} vacancy</p>
                 </div>
               </div>
 
@@ -726,19 +726,19 @@ export default function HiringPipeline() {
                 <span className="text-xs text-slate-500">Filter by Position:</span>
                 <button
                   onClick={() => setSelectedPosition('all')}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${selectedPosition === 'all' ? 'bg-amber-500 text-white' : 'bg-slate-800/60 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${selectedPosition === 'all' ? 'bg-amber-500 text-white' : 'bg-white dark:bg-slate-800/60 text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
                 >
                   All Positions
                 </button>
                 <button
                   onClick={() => setSelectedPosition('deputySheriff')}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${selectedPosition === 'deputySheriff' ? 'bg-blue-500 text-white' : 'bg-slate-800/60 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${selectedPosition === 'deputySheriff' ? 'bg-blue-500 text-white' : 'bg-white dark:bg-slate-800/60 text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
                 >
                   Deputy: {positionBreakdown.deputySheriff.applicants}
                 </button>
                 <button
                   onClick={() => setSelectedPosition('backgroundInvestigator')}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${selectedPosition === 'backgroundInvestigator' ? 'bg-purple-500 text-white' : 'bg-slate-800/60 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${selectedPosition === 'backgroundInvestigator' ? 'bg-purple-500 text-white' : 'bg-white dark:bg-slate-800/60 text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
                 >
                   Background Inv: {positionBreakdown.backgroundInvestigator.applicants}
                 </button>
@@ -748,7 +748,7 @@ export default function HiringPipeline() {
             {/* Bottleneck Analysis */}
             <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl mb-6 overflow-hidden">
               <div
-                className="p-5 cursor-pointer hover:bg-slate-800/50 transition-all"
+                className="p-5 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-all"
                 onClick={() => setExpandedBottlenecks(!expandedBottlenecks)}
               >
                 <div className="flex items-center justify-between">
@@ -758,14 +758,14 @@ export default function HiringPipeline() {
                     </div>
                     <div>
                       <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Pipeline Bottleneck Analysis</h3>
-                      <p className="text-sm text-slate-600 dark:text-slate-400">Capacity constraints and resolution status</p>
+                      <p className="text-sm text-slate-700 dark:text-slate-400">Capacity constraints and resolution status</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="px-3 py-1 bg-red-500/20 text-red-400 rounded-full text-xs font-bold">1 Critical</span>
                     <span className="px-3 py-1 bg-amber-500/20 text-amber-400 rounded-full text-xs font-bold">1 Medium</span>
                     <span className="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-xs font-bold">1 Resolved</span>
-                    {expandedBottlenecks ? <ChevronUp className="w-5 h-5 text-slate-600 dark:text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-600 dark:text-slate-400" />}
+                    {expandedBottlenecks ? <ChevronUp className="w-5 h-5 text-slate-700 dark:text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-700 dark:text-slate-400" />}
                   </div>
                 </div>
               </div>
@@ -795,8 +795,8 @@ export default function HiringPipeline() {
                             <p className="text-xs text-slate-500 mb-2">Details:</p>
                             <ul className="space-y-1">
                               {bottleneck.details.map((detail, idx) => (
-                                <li key={idx} className="text-xs text-slate-600 dark:text-slate-400 flex items-start gap-2">
-                                  <span className="text-slate-600">•</span>
+                                <li key={idx} className="text-xs text-slate-700 dark:text-slate-400 flex items-start gap-2">
+                                  <span className="text-slate-700">•</span>
                                   {detail}
                                 </li>
                               ))}
@@ -804,8 +804,8 @@ export default function HiringPipeline() {
                           </div>
                           <div>
                             <p className="text-xs text-slate-500 mb-2">Impact & Solution:</p>
-                            <p className="text-xs text-slate-600 dark:text-slate-400 mb-2"><span className="text-slate-500">Impact:</span> {bottleneck.impact}</p>
-                            <p className="text-xs text-slate-600 dark:text-slate-400"><span className="text-slate-500">Solution:</span> {bottleneck.solution}</p>
+                            <p className="text-xs text-slate-700 dark:text-slate-400 mb-2"><span className="text-slate-500">Impact:</span> {bottleneck.impact}</p>
+                            <p className="text-xs text-slate-700 dark:text-slate-400"><span className="text-slate-500">Solution:</span> {bottleneck.solution}</p>
                             {bottleneck.solutionImpact && (
                               <p className="text-xs text-green-400 mt-1"><span className="text-slate-500">Expected Result:</span> {bottleneck.solutionImpact}</p>
                             )}
@@ -824,7 +824,7 @@ export default function HiringPipeline() {
             {/* Time-to-Hire & Conversion Metrics */}
             <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl mb-6 overflow-hidden">
               <div
-                className="p-5 cursor-pointer hover:bg-slate-800/50 transition-all"
+                className="p-5 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-all"
                 onClick={() => setExpandedMetrics(!expandedMetrics)}
               >
                 <div className="flex items-center justify-between">
@@ -834,10 +834,10 @@ export default function HiringPipeline() {
                     </div>
                     <div>
                       <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Recruitment Metrics & Analysis</h3>
-                      <p className="text-sm text-slate-600 dark:text-slate-400">Time-to-hire by position, conversion rates, historical data</p>
+                      <p className="text-sm text-slate-700 dark:text-slate-400">Time-to-hire by position, conversion rates, historical data</p>
                     </div>
                   </div>
-                  {expandedMetrics ? <ChevronUp className="w-5 h-5 text-slate-600 dark:text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-600 dark:text-slate-400" />}
+                  {expandedMetrics ? <ChevronUp className="w-5 h-5 text-slate-700 dark:text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-700 dark:text-slate-400" />}
                 </div>
               </div>
 
@@ -848,41 +848,41 @@ export default function HiringPipeline() {
                     <div>
                       <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-4">Time-to-Hire by Position Type</h4>
                       <div className="space-y-3">
-                        <div className="p-3 bg-slate-900/50 rounded-lg">
+                        <div className="p-3 bg-white dark:bg-slate-900/50 rounded-lg">
                           <div className="flex items-center justify-between mb-2">
                             <span className="text-sm font-medium text-slate-900 dark:text-white">Deputy Sheriff (POST Certified)</span>
                             <span className="text-lg font-bold text-blue-400">{timeToHireMetrics.deputySheriff.avgDays} days</span>
                           </div>
-                          <div className="w-full bg-slate-700/50 rounded-full h-2">
+                          <div className="w-full bg-white dark:bg-slate-700/50 rounded-full h-2">
                             <div className="bg-blue-500 h-2 rounded-full" style={{ width: `${(timeToHireMetrics.deputySheriff.avgDays / 165) * 100}%` }}></div>
                           </div>
                         </div>
-                        <div className="p-3 bg-slate-900/50 rounded-lg">
+                        <div className="p-3 bg-white dark:bg-slate-900/50 rounded-lg">
                           <div className="flex items-center justify-between mb-2">
                             <span className="text-sm font-medium text-slate-900 dark:text-white">Deputy Sheriff (Academy Required)</span>
                             <span className="text-lg font-bold text-purple-400">{timeToHireMetrics.deputyAcademy.avgDays}+ days</span>
                           </div>
-                          <div className="w-full bg-slate-700/50 rounded-full h-2">
+                          <div className="w-full bg-white dark:bg-slate-700/50 rounded-full h-2">
                             <div className="bg-purple-500 h-2 rounded-full" style={{ width: '100%' }}></div>
                           </div>
                           <p className="text-xs text-slate-500 mt-1">{timeToHireMetrics.deputyAcademy.note}</p>
                         </div>
-                        <div className="p-3 bg-slate-900/50 rounded-lg">
+                        <div className="p-3 bg-white dark:bg-slate-900/50 rounded-lg">
                           <div className="flex items-center justify-between mb-2">
                             <span className="text-sm font-medium text-slate-900 dark:text-white">Background Investigator (Internal)</span>
                             <span className="text-lg font-bold text-amber-400">{timeToHireMetrics.backgroundInvestigator.avgDays} days</span>
                           </div>
-                          <div className="w-full bg-slate-700/50 rounded-full h-2">
+                          <div className="w-full bg-white dark:bg-slate-700/50 rounded-full h-2">
                             <div className="bg-amber-500 h-2 rounded-full" style={{ width: `${(timeToHireMetrics.backgroundInvestigator.avgDays / 165) * 100}%` }}></div>
                           </div>
                           <p className="text-xs text-slate-500 mt-1">{timeToHireMetrics.backgroundInvestigator.note}</p>
                         </div>
-                        <div className="p-3 bg-slate-900/50 rounded-lg">
+                        <div className="p-3 bg-white dark:bg-slate-900/50 rounded-lg">
                           <div className="flex items-center justify-between mb-2">
                             <span className="text-sm font-medium text-slate-900 dark:text-white">Administrative Assistant (Civilian)</span>
                             <span className="text-lg font-bold text-green-400">{timeToHireMetrics.adminAssistant.avgDays} days</span>
                           </div>
-                          <div className="w-full bg-slate-700/50 rounded-full h-2">
+                          <div className="w-full bg-white dark:bg-slate-700/50 rounded-full h-2">
                             <div className="bg-green-500 h-2 rounded-full" style={{ width: `${(timeToHireMetrics.adminAssistant.avgDays / 165) * 100}%` }}></div>
                           </div>
                           <p className="text-xs text-slate-500 mt-1">{timeToHireMetrics.adminAssistant.note}</p>
@@ -894,28 +894,28 @@ export default function HiringPipeline() {
                     <div>
                       <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-4">Pipeline Conversion Rates (Historical)</h4>
                       <div className="space-y-3">
-                        <div className="flex items-center justify-between p-2 bg-slate-900/50 rounded-lg">
-                          <span className="text-xs text-slate-600 dark:text-slate-400">Application → Screening</span>
+                        <div className="flex items-center justify-between p-2 bg-white dark:bg-slate-900/50 rounded-lg">
+                          <span className="text-xs text-slate-700 dark:text-slate-400">Application → Screening</span>
                           <span className="text-sm font-bold text-slate-900 dark:text-white">{conversionRates.applicationToScreening}%</span>
                         </div>
-                        <div className="flex items-center justify-between p-2 bg-slate-900/50 rounded-lg">
-                          <span className="text-xs text-slate-600 dark:text-slate-400">Screening → Physical Test</span>
+                        <div className="flex items-center justify-between p-2 bg-white dark:bg-slate-900/50 rounded-lg">
+                          <span className="text-xs text-slate-700 dark:text-slate-400">Screening → Physical Test</span>
                           <span className="text-sm font-bold text-slate-900 dark:text-white">{conversionRates.screeningToPhysicalTest}%</span>
                         </div>
-                        <div className="flex items-center justify-between p-2 bg-slate-900/50 rounded-lg">
-                          <span className="text-xs text-slate-600 dark:text-slate-400">Physical Test → Interview</span>
+                        <div className="flex items-center justify-between p-2 bg-white dark:bg-slate-900/50 rounded-lg">
+                          <span className="text-xs text-slate-700 dark:text-slate-400">Physical Test → Interview</span>
                           <span className="text-sm font-bold text-slate-900 dark:text-white">{conversionRates.physicalTestToInterview}%</span>
                         </div>
-                        <div className="flex items-center justify-between p-2 bg-slate-900/50 rounded-lg">
-                          <span className="text-xs text-slate-600 dark:text-slate-400">Interview → Background</span>
+                        <div className="flex items-center justify-between p-2 bg-white dark:bg-slate-900/50 rounded-lg">
+                          <span className="text-xs text-slate-700 dark:text-slate-400">Interview → Background</span>
                           <span className="text-sm font-bold text-slate-900 dark:text-white">{conversionRates.interviewToBackground}%</span>
                         </div>
-                        <div className="flex items-center justify-between p-2 bg-slate-900/50 rounded-lg">
-                          <span className="text-xs text-slate-600 dark:text-slate-400">Background → Cleared</span>
+                        <div className="flex items-center justify-between p-2 bg-white dark:bg-slate-900/50 rounded-lg">
+                          <span className="text-xs text-slate-700 dark:text-slate-400">Background → Cleared</span>
                           <span className="text-sm font-bold text-amber-400">{conversionRates.backgroundToCleared}%</span>
                         </div>
-                        <div className="flex items-center justify-between p-2 bg-slate-900/50 rounded-lg">
-                          <span className="text-xs text-slate-600 dark:text-slate-400">Offer → Accepted</span>
+                        <div className="flex items-center justify-between p-2 bg-white dark:bg-slate-900/50 rounded-lg">
+                          <span className="text-xs text-slate-700 dark:text-slate-400">Offer → Accepted</span>
                           <span className="text-sm font-bold text-slate-900 dark:text-white">{conversionRates.offerToAccepted}%</span>
                         </div>
                         <div className="flex items-center justify-between p-3 bg-indigo-500/10 border border-indigo-500/30 rounded-lg">
@@ -940,9 +940,9 @@ export default function HiringPipeline() {
                 const isExpanded = selectedStage === stage.id;
 
                 return (
-                  <div key={stage.id} className={`bg-slate-800/40 border rounded-xl overflow-hidden ${stage.isCriticalBottleneck ? 'border-red-500/30' : 'border-slate-700/50'}`}>
+                  <div key={stage.id} className={`bg-white dark:bg-slate-800/40 border rounded-xl overflow-hidden ${stage.isCriticalBottleneck ? 'border-red-500/30' : 'border-slate-700/50'}`}>
                     <div
-                      className="p-5 cursor-pointer hover:bg-slate-800/50 transition-all"
+                      className="p-5 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-all"
                       onClick={() => setSelectedStage(isExpanded ? null : stage.id)}
                     >
                       <div className="flex items-center justify-between">
@@ -962,7 +962,7 @@ export default function HiringPipeline() {
                                 </span>
                               )}
                             </div>
-                            <div className="flex items-center gap-4 text-xs text-slate-600 dark:text-slate-400">
+                            <div className="flex items-center gap-4 text-xs text-slate-700 dark:text-slate-400">
                               <span>Stage {stageIdx + 1} of {pipelineStages.length}</span>
                               <span>•</span>
                               <span>{stage.percentOfPipeline}% of pipeline</span>
@@ -977,20 +977,20 @@ export default function HiringPipeline() {
                         </div>
                         <div className="flex items-center gap-3">
                           {stageIdx < pipelineStages.length - 1 && (
-                            <ArrowRight className="w-5 h-5 text-slate-600" />
+                            <ArrowRight className="w-5 h-5 text-slate-700" />
                           )}
                           {isExpanded ? (
-                            <ChevronUp className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+                            <ChevronUp className="w-5 h-5 text-slate-700 dark:text-slate-400" />
                           ) : (
-                            <ChevronDown className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+                            <ChevronDown className="w-5 h-5 text-slate-700 dark:text-slate-400" />
                           )}
                         </div>
                       </div>
                     </div>
 
                     {isExpanded && (
-                      <div className="border-t border-slate-200 dark:border-slate-700/50 p-5 bg-slate-900/30">
-                        <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">{stage.description}</p>
+                      <div className="border-t border-slate-200 dark:border-slate-700/50 p-5 bg-slate-50 dark:bg-slate-900/30">
+                        <p className="text-sm text-slate-700 dark:text-slate-400 mb-4">{stage.description}</p>
 
                         {/* Stage-specific content */}
                         {stage.id === 'screening' && stage.physicalTestSchedule && (
@@ -1024,7 +1024,7 @@ export default function HiringPipeline() {
                         {stage.id === 'interview' && stage.scheduledInterviews && (
                           <div className="space-y-3 mb-4">
                             {stage.scheduledInterviews.map((interview, idx) => (
-                              <div key={idx} className="p-4 bg-slate-800/60 rounded-xl">
+                              <div key={idx} className="p-4 bg-white dark:bg-slate-800/60 rounded-xl">
                                 <div className="flex items-center justify-between mb-3">
                                   <h4 className="font-semibold text-slate-900 dark:text-white">{interview.position} - Oral Board</h4>
                                   <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${interview.materialsReady ? 'bg-green-500/20 text-green-400' : 'bg-amber-500/20 text-amber-400'}`}>
@@ -1051,7 +1051,7 @@ export default function HiringPipeline() {
                                 </div>
                                 <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-700/50">
                                   <p className="text-xs text-slate-500 mb-1">Interview Panel:</p>
-                                  <p className="text-xs text-slate-600 dark:text-slate-400">{interview.panel.join(' • ')}</p>
+                                  <p className="text-xs text-slate-700 dark:text-slate-400">{interview.panel.join(' • ')}</p>
                                   <p className="text-xs text-slate-500 mt-2">Format: {interview.format}</p>
                                 </div>
                               </div>
@@ -1067,7 +1067,7 @@ export default function HiringPipeline() {
                                 <div>
                                   <p className="text-xs text-slate-500 mb-2">Current Investigators:</p>
                                   {stage.investigatorCapacity.investigators.map((inv, idx) => (
-                                    <div key={idx} className="flex items-center justify-between p-2 bg-slate-900/50 rounded-lg mb-2">
+                                    <div key={idx} className="flex items-center justify-between p-2 bg-white dark:bg-slate-900/50 rounded-lg mb-2">
                                       <div>
                                         <p className="text-sm font-medium text-slate-900 dark:text-white">{inv.name}</p>
                                         <p className="text-xs text-slate-500">{inv.title}</p>
@@ -1082,19 +1082,19 @@ export default function HiringPipeline() {
                                   <p className="text-xs text-slate-500 mb-2">Investigation Timeline:</p>
                                   <div className="space-y-2">
                                     <div className="flex justify-between text-sm">
-                                      <span className="text-slate-600 dark:text-slate-400">Average Duration:</span>
+                                      <span className="text-slate-700 dark:text-slate-400">Average Duration:</span>
                                       <span className="text-slate-900 dark:text-white font-medium">{stage.investigatorCapacity.avgDuration} days</span>
                                     </div>
                                     <div className="flex justify-between text-sm">
-                                      <span className="text-slate-600 dark:text-slate-400">Minimum (Lateral):</span>
+                                      <span className="text-slate-700 dark:text-slate-400">Minimum (Lateral):</span>
                                       <span className="text-slate-900 dark:text-white font-medium">{stage.investigatorCapacity.minDuration} days</span>
                                     </div>
                                     <div className="flex justify-between text-sm">
-                                      <span className="text-slate-600 dark:text-slate-400">Maximum (Complex):</span>
+                                      <span className="text-slate-700 dark:text-slate-400">Maximum (Complex):</span>
                                       <span className="text-slate-900 dark:text-white font-medium">{stage.investigatorCapacity.maxDuration}+ days</span>
                                     </div>
                                     <div className="flex justify-between text-sm pt-2 border-t border-slate-200 dark:border-slate-700/50">
-                                      <span className="text-slate-600 dark:text-slate-400">Monthly Throughput:</span>
+                                      <span className="text-slate-700 dark:text-slate-400">Monthly Throughput:</span>
                                       <span className="text-amber-400 font-medium">4-6 investigations</span>
                                     </div>
                                   </div>
@@ -1102,11 +1102,11 @@ export default function HiringPipeline() {
                               </div>
                             </div>
 
-                            <div className="p-4 bg-slate-800/60 rounded-xl">
+                            <div className="p-4 bg-white dark:bg-slate-800/60 rounded-xl">
                               <h4 className="font-semibold text-slate-900 dark:text-white mb-3">Active Investigations</h4>
                               <div className="space-y-2">
                                 {stage.activeInvestigations.map((inv, idx) => (
-                                  <div key={idx} className="flex items-center justify-between p-3 bg-slate-900/50 rounded-lg">
+                                  <div key={idx} className="flex items-center justify-between p-3 bg-white dark:bg-slate-900/50 rounded-lg">
                                     <div className="flex items-center gap-3">
                                       <div className="w-8 h-8 bg-indigo-500/20 rounded-full flex items-center justify-center">
                                         <Users className="w-4 h-4 text-indigo-400" />
@@ -1118,7 +1118,7 @@ export default function HiringPipeline() {
                                     </div>
                                     <div className="text-right">
                                       <p className="text-sm font-bold text-slate-900 dark:text-white">{inv.daysInProgress} days</p>
-                                      <p className="text-xs text-slate-600 dark:text-slate-400">{inv.status}</p>
+                                      <p className="text-xs text-slate-700 dark:text-slate-400">{inv.status}</p>
                                     </div>
                                   </div>
                                 ))}
@@ -1131,7 +1131,7 @@ export default function HiringPipeline() {
                           <div className="mb-4">
                             <div className="space-y-3 mb-4">
                               {stage.offersPending.map((offer, idx) => (
-                                <div key={idx} className={`p-4 rounded-xl border ${offer.urgent ? 'bg-red-500/10 border-red-500/30' : 'bg-slate-800/60 border-slate-700/50'}`}>
+                                <div key={idx} className={`p-4 rounded-xl border ${offer.urgent ? 'bg-red-500/10 border-red-500/30' : 'bg-white dark:bg-slate-800/60 border-slate-700/50'}`}>
                                   <div className="flex items-center justify-between mb-3">
                                     <div className="flex items-center gap-3">
                                       <h4 className="font-semibold text-slate-900 dark:text-white">{offer.name}</h4>
@@ -1177,22 +1177,22 @@ export default function HiringPipeline() {
                             <div className="p-4 bg-amber-500/10 border border-amber-500/20 rounded-xl">
                               <h4 className="font-semibold text-amber-400 mb-3">Salary Competitiveness Issue</h4>
                               <div className="grid grid-cols-3 gap-4 text-sm">
-                                <div className="text-center p-3 bg-slate-900/50 rounded-lg">
+                                <div className="text-center p-3 bg-white dark:bg-slate-900/50 rounded-lg">
                                   <p className="text-xs text-slate-500 mb-1">GCSO Deputy I</p>
                                   <p className="text-lg font-bold text-slate-900 dark:text-white">${stage.salaryCompetitiveness.gcsoDeputy.toLocaleString()}</p>
                                 </div>
-                                <div className="text-center p-3 bg-slate-900/50 rounded-lg">
+                                <div className="text-center p-3 bg-white dark:bg-slate-900/50 rounded-lg">
                                   <p className="text-xs text-slate-500 mb-1">Gwinnett County PD</p>
                                   <p className="text-lg font-bold text-red-400">${stage.salaryCompetitiveness.gwinnettPD.toLocaleString()}</p>
                                   <p className="text-xs text-red-400">{stage.salaryCompetitiveness.gwinnettPDDiff}</p>
                                 </div>
-                                <div className="text-center p-3 bg-slate-900/50 rounded-lg">
+                                <div className="text-center p-3 bg-white dark:bg-slate-900/50 rounded-lg">
                                   <p className="text-xs text-slate-500 mb-1">Fulton County SO</p>
                                   <p className="text-lg font-bold text-amber-400">${stage.salaryCompetitiveness.fultonSO.toLocaleString()}</p>
                                   <p className="text-xs text-amber-400">{stage.salaryCompetitiveness.fultonSODiff}</p>
                                 </div>
                               </div>
-                              <p className="text-xs text-slate-600 dark:text-slate-400 mt-3">
+                              <p className="text-xs text-slate-700 dark:text-slate-400 mt-3">
                                 Risk: Losing qualified candidates to higher-paying agencies during offer stage
                               </p>
                             </div>
@@ -1206,9 +1206,9 @@ export default function HiringPipeline() {
                             {stage.candidates.map(candidate => {
                               const isCandidateExpanded = expandedCandidate === candidate.id;
                               return (
-                                <div key={candidate.id} className="bg-slate-800/40 rounded-xl overflow-hidden">
+                                <div key={candidate.id} className="bg-white dark:bg-slate-800/40 rounded-xl overflow-hidden">
                                   <div
-                                    className="p-4 cursor-pointer hover:bg-slate-800/60 transition-all"
+                                    className="p-4 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all"
                                     onClick={() => setExpandedCandidate(isCandidateExpanded ? null : candidate.id)}
                                   >
                                     <div className="flex items-center justify-between">
@@ -1223,7 +1223,7 @@ export default function HiringPipeline() {
                                               candidate.status === 'Interview Complete' ? 'bg-green-500/20 text-green-400' :
                                               candidate.status === 'Accepted' ? 'bg-green-500/20 text-green-400' :
                                               candidate.urgent ? 'bg-red-500/20 text-red-400' :
-                                              'bg-slate-700/50 text-slate-500'
+                                              'bg-white dark:bg-slate-700/50 text-slate-500'
                                             }`}>
                                               {candidate.status}
                                             </span>
@@ -1234,10 +1234,10 @@ export default function HiringPipeline() {
                                               <span className="text-xs text-green-400">{candidate.rank}</span>
                                             )}
                                           </div>
-                                          <p className="text-xs text-slate-600 dark:text-slate-400">{candidate.position}</p>
+                                          <p className="text-xs text-slate-700 dark:text-slate-400">{candidate.position}</p>
                                         </div>
                                       </div>
-                                      <div className="flex items-center gap-4 text-xs text-slate-600 dark:text-slate-400">
+                                      <div className="flex items-center gap-4 text-xs text-slate-700 dark:text-slate-400">
                                         <span>{candidate.daysInStage} days in stage</span>
                                         {isCandidateExpanded ? (
                                           <ChevronUp className="w-4 h-4" />
@@ -1249,34 +1249,34 @@ export default function HiringPipeline() {
                                   </div>
 
                                   {isCandidateExpanded && (
-                                    <div className="border-t border-slate-200 dark:border-slate-700/50 p-4 bg-slate-900/50">
+                                    <div className="border-t border-slate-200 dark:border-slate-700/50 p-4 bg-white dark:bg-slate-900/50">
                                       <div className="grid grid-cols-2 gap-3 mb-4">
-                                        <div className="bg-slate-800/60 rounded-lg p-3">
-                                          <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Next Action</p>
+                                        <div className="bg-white dark:bg-slate-800/60 rounded-lg p-3">
+                                          <p className="text-xs text-slate-700 dark:text-slate-400 mb-1">Next Action</p>
                                           <p className="text-sm font-medium text-slate-900 dark:text-white">{candidate.nextAction}</p>
                                         </div>
-                                        <div className="bg-slate-800/60 rounded-lg p-3">
-                                          <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Action Date</p>
+                                        <div className="bg-white dark:bg-slate-800/60 rounded-lg p-3">
+                                          <p className="text-xs text-slate-700 dark:text-slate-400 mb-1">Action Date</p>
                                           <p className="text-sm font-medium text-slate-900 dark:text-white">{new Date(candidate.actionDate).toLocaleDateString()}</p>
                                         </div>
                                       </div>
                                       {candidate.qualifications && (
-                                        <div className="bg-slate-800/60 rounded-lg p-3 mb-4">
-                                          <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Qualifications</p>
+                                        <div className="bg-white dark:bg-slate-800/60 rounded-lg p-3 mb-4">
+                                          <p className="text-xs text-slate-700 dark:text-slate-400 mb-1">Qualifications</p>
                                           <p className="text-sm text-slate-900 dark:text-white">{candidate.qualifications}</p>
                                         </div>
                                       )}
                                       {candidate.investigator && (
-                                        <div className="bg-slate-800/60 rounded-lg p-3 mb-4">
-                                          <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Assigned Investigator</p>
+                                        <div className="bg-white dark:bg-slate-800/60 rounded-lg p-3 mb-4">
+                                          <p className="text-xs text-slate-700 dark:text-slate-400 mb-1">Assigned Investigator</p>
                                           <p className="text-sm text-slate-900 dark:text-white">{candidate.investigator}</p>
                                           {candidate.completedItems && (
                                             <div className="mt-2">
                                               <div className="flex justify-between text-xs mb-1">
                                                 <span className="text-slate-500">Investigation Progress</span>
-                                                <span className="text-slate-600 dark:text-slate-400">{candidate.completedItems}/{candidate.totalItems} items</span>
+                                                <span className="text-slate-700 dark:text-slate-400">{candidate.completedItems}/{candidate.totalItems} items</span>
                                               </div>
-                                              <div className="w-full bg-slate-700/50 rounded-full h-2">
+                                              <div className="w-full bg-white dark:bg-slate-700/50 rounded-full h-2">
                                                 <div className="bg-indigo-500 h-2 rounded-full" style={{ width: `${(candidate.completedItems / candidate.totalItems) * 100}%` }}></div>
                                               </div>
                                             </div>
@@ -1290,7 +1290,7 @@ export default function HiringPipeline() {
                                         <button className="flex-1 px-3 py-2 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 text-blue-400 rounded-lg text-xs font-medium transition-all">
                                           View Full Profile
                                         </button>
-                                        <button className="px-3 py-2 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-all">
+                                        <button className="px-3 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-all">
                                           Add Note
                                         </button>
                                       </div>
@@ -1320,7 +1320,7 @@ export default function HiringPipeline() {
       </button>
 
       {chatOpen && (
-        <div className="fixed bottom-24 right-6 w-full max-w-96 h-[500px] bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-2xl flex flex-col z-40 mx-4 sm:mx-0">
+        <div className="fixed bottom-24 right-6 w-full max-w-96 h-[500px] bg-white dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200 dark:border-slate-700/50 rounded-2xl shadow-2xl flex flex-col z-40 mx-4 sm:mx-0">
           <div className="p-4 border-b border-slate-200 dark:border-slate-700/50">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
@@ -1338,7 +1338,7 @@ export default function HiringPipeline() {
                 <MessageCircle className="w-4 h-4 text-slate-900 dark:text-white" />
               </div>
               <div className="flex-1">
-                <div className="bg-slate-800/60 p-3 rounded-xl">
+                <div className="bg-white dark:bg-slate-800/60 p-3 rounded-xl">
                   <p className="text-sm text-slate-700 dark:text-slate-200">I can help you analyze pipeline bottlenecks, review candidate status, check investigator workload, or schedule interview panels. What information do you need?</p>
                 </div>
               </div>

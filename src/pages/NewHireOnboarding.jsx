@@ -422,7 +422,7 @@ export default function NewHireOnboarding() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex">
       {/* Sidebar */}
-      <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-slate-800/50 backdrop-blur-xl bg-slate-900/30 flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
+      <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-slate-800/50 backdrop-blur-xl bg-slate-50 dark:bg-slate-900/30 flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
         <div className="p-4 border-b border-slate-200 dark:border-slate-700/50 flex items-center justify-between">
           {!sidebarCollapsed && (
             <div className="flex items-center gap-2">
@@ -435,9 +435,9 @@ export default function NewHireOnboarding() {
           )}
           <button
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-            className="p-2 hover:bg-slate-800/50 rounded-lg transition-colors hidden lg:block"
+            className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors hidden lg:block"
           >
-            {sidebarCollapsed ? <ChevronRight className="w-5 h-5 text-slate-600 dark:text-slate-400" /> : <ChevronLeft className="w-5 h-5 text-slate-600 dark:text-slate-400" />}
+            {sidebarCollapsed ? <ChevronRight className="w-5 h-5 text-slate-700 dark:text-slate-400" /> : <ChevronLeft className="w-5 h-5 text-slate-700 dark:text-slate-400" />}
           </button>
         </div>
 
@@ -450,7 +450,7 @@ export default function NewHireOnboarding() {
                 key={item.id}
                 onClick={() => handleNavigation(item)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white'
+                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-700 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white'
                 } ${sidebarCollapsed ? 'justify-center' : ''}`}
                 title={sidebarCollapsed ? item.label : ''}
               >
@@ -473,7 +473,7 @@ export default function NewHireOnboarding() {
           <div className="p-4">
             <button
               onClick={() => setLogoutConfirmOpen(true)}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-slate-600 dark:text-slate-400 hover:bg-slate-800/40 hover:text-slate-700 dark:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-slate-700 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/40 hover:text-slate-700 dark:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
               title={sidebarCollapsed ? 'Sign Out' : ''}
             >
               <LogOut className="w-5 h-5 flex-shrink-0" />
@@ -500,24 +500,24 @@ export default function NewHireOnboarding() {
           />
           <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl p-6 max-w-sm w-full shadow-2xl">
             <div className="flex items-center gap-4 mb-4">
-              <div className="w-12 h-12 bg-slate-800/60 rounded-xl flex items-center justify-center">
-                <LogOut className="w-6 h-6 text-slate-600 dark:text-slate-400" />
+              <div className="w-12 h-12 bg-white dark:bg-slate-800/60 rounded-xl flex items-center justify-center">
+                <LogOut className="w-6 h-6 text-slate-700 dark:text-slate-400" />
               </div>
               <div>
                 <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Sign Out</h3>
-                <p className="text-sm text-slate-600 dark:text-slate-400">Are you sure you want to sign out?</p>
+                <p className="text-sm text-slate-700 dark:text-slate-400">Are you sure you want to sign out?</p>
               </div>
             </div>
             <div className="flex gap-3 mt-6">
               <button
                 onClick={() => setLogoutConfirmOpen(false)}
-                className="flex-1 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all"
+                className="flex-1 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all"
               >
                 Cancel
               </button>
               <button
                 onClick={handleLogout}
-                className="flex-1 px-4 py-2.5 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all"
+                className="flex-1 px-4 py-2.5 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all"
               >
                 Sign Out
               </button>
@@ -527,23 +527,23 @@ export default function NewHireOnboarding() {
       )}
 
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="border-b border-slate-200 dark:border-slate-800/50 backdrop-blur-xl bg-slate-900/30">
+        <header className="border-b border-slate-200 dark:border-slate-800/50 backdrop-blur-xl bg-slate-50 dark:bg-slate-900/30">
           <div className="px-4 lg:px-6 py-4 flex items-center justify-between gap-4">
             <div className="flex items-center gap-4 flex-1 min-w-0">
               <button
                 onClick={() => setSidebarOpen(!sidebarOpen)}
-                className="lg:hidden p-2 hover:bg-slate-800/50 rounded-lg"
+                className="lg:hidden p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg"
               >
-                <Menu className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+                <Menu className="w-5 h-5 text-slate-700 dark:text-slate-400" />
               </button>
               <div className="flex items-center gap-2 text-sm">
                 <button
                   onClick={() => navigate(createPageUrl('HRDashboard'))}
-                  className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
+                  className="text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
                 >
                   HR Dashboard
                 </button>
-                <ChevronRight className="w-4 h-4 text-slate-600" />
+                <ChevronRight className="w-4 h-4 text-slate-700" />
                 <span className="text-slate-900 dark:text-white">New Hire Onboarding</span>
               </div>
             </div>
@@ -553,7 +553,7 @@ export default function NewHireOnboarding() {
                 <span className="hidden sm:inline">Add New Hire</span>
               </button>
 
-              <button className="hidden md:flex items-center gap-2 px-3 py-2 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl text-sm transition-all">
+              <button className="hidden md:flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl text-sm transition-all">
                 <Clipboard className="w-4 h-4" />
                 <span>Templates</span>
               </button>
@@ -561,25 +561,25 @@ export default function NewHireOnboarding() {
               <div className="relative">
                 <button
                   onClick={() => setNotificationsOpen(!notificationsOpen)}
-                  className="p-2 hover:bg-slate-800/50 rounded-lg relative"
+                  className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg relative"
                 >
-                  <Bell className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+                  <Bell className="w-5 h-5 text-slate-700 dark:text-slate-400" />
                   <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                 </button>
 
                 {notificationsOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-96 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-2xl z-50">
+                  <div className="absolute right-0 top-full mt-2 w-96 bg-white dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-2xl z-50">
                     <div className="p-4 border-b border-slate-200 dark:border-slate-700/50">
                       <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Onboarding Notifications</h3>
                     </div>
                     <div className="max-h-96 overflow-y-auto">
                       {notifications.map(notification => (
-                        <div key={notification.id} className={`p-4 border-b border-slate-200 dark:border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
+                        <div key={notification.id} className={`p-4 border-b border-slate-200 dark:border-slate-200 dark:border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
                           <div className="flex items-start gap-3">
                             <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-amber-400' : 'bg-blue-400'}`}></div>
                             <div className="flex-1 min-w-0">
                               <p className="text-sm font-medium text-slate-900 dark:text-white mb-1">{notification.title}</p>
-                              <p className="text-xs text-slate-600 dark:text-slate-400 mb-2">{notification.message}</p>
+                              <p className="text-xs text-slate-700 dark:text-slate-400 mb-2">{notification.message}</p>
                               <p className="text-xs text-slate-500">{notification.time}</p>
                             </div>
                           </div>
@@ -590,7 +590,7 @@ export default function NewHireOnboarding() {
                 )}
               </div>
 
-              <div className="h-8 w-px bg-slate-700/50"></div>
+              <div className="h-8 w-px bg-white dark:bg-slate-700/50"></div>
 
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
@@ -598,7 +598,7 @@ export default function NewHireOnboarding() {
                 </div>
                 <div className="hidden sm:block">
                   <p className="text-sm font-medium text-slate-900 dark:text-white">HR Director</p>
-                  <p className="text-xs text-slate-600 dark:text-slate-400">Human Resources</p>
+                  <p className="text-xs text-slate-700 dark:text-slate-400">Human Resources</p>
                 </div>
               </div>
             </div>
@@ -610,18 +610,18 @@ export default function NewHireOnboarding() {
             {/* GCSO Header */}
             <div className="mb-6">
               <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white mb-2">New Hire Onboarding & Personnel Activation</h2>
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-slate-600 dark:text-slate-400">
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-slate-700 dark:text-slate-400">
                 <span>Gwinnett County Sheriff's Office</span>
-                <span className="text-slate-600">•</span>
+                <span className="text-slate-700">•</span>
                 <span>Lawrenceville, Georgia</span>
-                <span className="text-slate-600">•</span>
+                <span className="text-slate-700">•</span>
                 <span>Thursday, February 06, 2026 • 1:21 PM EST</span>
               </div>
               <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-500 mt-1">
                 <span>Sheriff: Keybo Taylor</span>
-                <span className="text-slate-600">|</span>
+                <span className="text-slate-700">|</span>
                 <span>Training Division: Sgt. R. Martinez</span>
-                <span className="text-slate-600">|</span>
+                <span className="text-slate-700">|</span>
                 <span>System: GCSO-HRIS v4.2</span>
               </div>
             </div>
@@ -633,7 +633,7 @@ export default function NewHireOnboarding() {
                   <AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <div className="flex-1">
                     <p className="text-sm font-medium text-red-400 mb-1">Emily Johnson (Records Investigator): Onboarding NOT STARTED</p>
-                    <p className="text-xs text-slate-600 dark:text-slate-400">Start date 02/10/2025 (4 days) - HR Director must send reminder and confirm new hire is prepared with required documents</p>
+                    <p className="text-xs text-slate-700 dark:text-slate-400">Start date 02/10/2025 (4 days) - HR Director must send reminder and confirm new hire is prepared with required documents</p>
                   </div>
                   <button className="px-3 py-1.5 bg-red-500/20 hover:bg-red-500/30 border border-red-500/40 text-red-400 rounded-lg text-xs font-medium transition-all">
                     Send Reminder
@@ -646,7 +646,7 @@ export default function NewHireOnboarding() {
                   <Clock className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
                   <div className="flex-1">
                     <p className="text-sm font-medium text-amber-400 mb-1">Christopher Lee (Deputy): FTO Week 8 Evaluation Due Tomorrow (02/07/2026)</p>
-                    <p className="text-xs text-slate-600 dark:text-slate-400">FTO Deputy M. Rodriguez must complete and submit Week 8 evaluation to Sgt. Martinez</p>
+                    <p className="text-xs text-slate-700 dark:text-slate-400">FTO Deputy M. Rodriguez must complete and submit Week 8 evaluation to Sgt. Martinez</p>
                   </div>
                 </div>
               </div>
@@ -656,7 +656,7 @@ export default function NewHireOnboarding() {
                   <Clock className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
                   <div className="flex-1">
                     <p className="text-sm font-medium text-amber-400 mb-1">Nicole Brown (Detention): 4 Pending Tasks with Approaching Deadlines</p>
-                    <p className="text-xs text-slate-600 dark:text-slate-400">Uniform issue (02/07), Radio training (02/08), CPR/First Aid (02/10), CJIS Training (02/12)</p>
+                    <p className="text-xs text-slate-700 dark:text-slate-400">Uniform issue (02/07), Radio training (02/08), CPR/First Aid (02/10), CJIS Training (02/12)</p>
                   </div>
                 </div>
               </div>
@@ -671,7 +671,7 @@ export default function NewHireOnboarding() {
                   </div>
                 </div>
                 <p className="text-2xl font-bold text-slate-900 dark:text-white mb-1">{statusCounts.active}</p>
-                <p className="text-sm text-slate-600 dark:text-slate-400">Active New Hires</p>
+                <p className="text-sm text-slate-700 dark:text-slate-400">Active New Hires</p>
                 <p className="text-xs text-slate-500 mt-1">In onboarding process</p>
               </div>
 
@@ -682,7 +682,7 @@ export default function NewHireOnboarding() {
                   </div>
                 </div>
                 <p className="text-2xl font-bold text-slate-900 dark:text-white mb-1">{statusCounts.completed}</p>
-                <p className="text-sm text-slate-600 dark:text-slate-400">Personnel Activated</p>
+                <p className="text-sm text-slate-700 dark:text-slate-400">Personnel Activated</p>
                 <p className="text-xs text-slate-500 mt-1">This month (FTO complete)</p>
               </div>
 
@@ -693,7 +693,7 @@ export default function NewHireOnboarding() {
                   </div>
                 </div>
                 <p className="text-2xl font-bold text-slate-900 dark:text-white mb-1">2</p>
-                <p className="text-sm text-slate-600 dark:text-slate-400">In FTO Program</p>
+                <p className="text-sm text-slate-700 dark:text-slate-400">In FTO Program</p>
                 <p className="text-xs text-slate-500 mt-1">Sworn personnel training</p>
               </div>
 
@@ -704,7 +704,7 @@ export default function NewHireOnboarding() {
                   </div>
                 </div>
                 <p className="text-2xl font-bold text-slate-900 dark:text-white mb-1">{statusCounts['not-started']}</p>
-                <p className="text-sm text-slate-600 dark:text-slate-400">Not Started</p>
+                <p className="text-sm text-slate-700 dark:text-slate-400">Not Started</p>
                 <p className="text-xs text-slate-500 mt-1">Requires immediate action</p>
               </div>
             </div>
@@ -723,12 +723,12 @@ export default function NewHireOnboarding() {
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
                     className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all relative whitespace-nowrap ${
-                      activeTab === tab.id ? 'text-amber-400' : 'text-slate-600 dark:text-slate-400 hover:text-slate-300'
+                      activeTab === tab.id ? 'text-amber-400' : 'text-slate-700 dark:text-slate-400 hover:text-slate-300'
                     }`}
                   >
                     {tab.label}
                     <span className={`px-2 py-0.5 rounded-full text-xs ${
-                      activeTab === tab.id ? 'bg-amber-500/20 text-amber-400' : 'bg-slate-700/50 text-slate-500'
+                      activeTab === tab.id ? 'bg-amber-500/20 text-amber-400' : 'bg-white dark:bg-slate-700/50 text-slate-500'
                     }`}>{tab.count}</span>
                     {activeTab === tab.id && (
                       <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500"></div>
@@ -742,7 +742,7 @@ export default function NewHireOnboarding() {
                 <select
                   value={filterPositionType}
                   onChange={(e) => setFilterPositionType(e.target.value)}
-                  className="px-3 py-1.5 bg-slate-800/40 border border-slate-700/50 rounded-lg text-sm text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/50"
+                  className="px-3 py-1.5 bg-white dark:bg-slate-800/40 border border-slate-700/50 rounded-lg text-sm text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/50"
                 >
                   <option value="all">All Positions ({positionCounts.all})</option>
                   <option value="sworn">Sworn Personnel ({positionCounts.sworn})</option>
@@ -764,7 +764,7 @@ export default function NewHireOnboarding() {
                     className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden"
                   >
                     {/* Header */}
-                    <div className="p-5 border-b border-slate-200 dark:border-slate-700/30">
+                    <div className="p-5 border-b border-slate-200 dark:border-slate-200 dark:border-slate-700/30">
                       <div className="flex items-start justify-between gap-4 flex-wrap">
                         <div className="flex items-start gap-4 flex-1 min-w-0">
                           <div className={`w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 ${
@@ -797,7 +797,7 @@ export default function NewHireOnboarding() {
 
                             <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">{hire.position} • {hire.department}</p>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 text-xs text-slate-600 dark:text-slate-400">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 text-xs text-slate-700 dark:text-slate-400">
                               <div className="flex items-center gap-2">
                                 <Mail className="w-3 h-3" />
                                 <span className="truncate">{hire.email}</span>
@@ -828,10 +828,10 @@ export default function NewHireOnboarding() {
 
                         <div className="flex flex-col items-end gap-2">
                           <div className="text-right">
-                            <p className="text-sm text-slate-600 dark:text-slate-400">Critical Path Progress</p>
+                            <p className="text-sm text-slate-700 dark:text-slate-400">Critical Path Progress</p>
                             <p className="text-2xl font-bold text-slate-900 dark:text-white">{overallProgress}%</p>
                           </div>
-                          <div className="w-32 h-2 bg-slate-700/50 rounded-full overflow-hidden">
+                          <div className="w-32 h-2 bg-white dark:bg-slate-700/50 rounded-full overflow-hidden">
                             <div
                               className={`h-full transition-all ${
                                 overallProgress === 100 ? 'bg-green-500' :
@@ -847,7 +847,7 @@ export default function NewHireOnboarding() {
 
                     {/* Hire Classification */}
                     {hire.hireClassification && (
-                      <div className="px-5 py-3 bg-slate-900/30 border-b border-slate-200 dark:border-slate-700/30">
+                      <div className="px-5 py-3 bg-slate-50 dark:bg-slate-900/30 border-b border-slate-200 dark:border-slate-200 dark:border-slate-700/30">
                         <div className="flex flex-wrap gap-4 text-xs">
                           <div>
                             <span className="text-slate-500">Classification:</span>
@@ -875,7 +875,7 @@ export default function NewHireOnboarding() {
 
                     {/* FTO Program Status (for sworn personnel) */}
                     {hire.ftoProgram && hire.ftoProgram.enrolled && (
-                      <div className="px-5 py-4 bg-gradient-to-r from-amber-500/5 to-transparent border-b border-slate-200 dark:border-slate-700/30">
+                      <div className="px-5 py-4 bg-gradient-to-r from-amber-500/5 to-transparent border-b border-slate-200 dark:border-slate-200 dark:border-slate-700/30">
                         <div className="flex items-center gap-2 mb-3">
                           <GraduationCap className="w-4 h-4 text-amber-400" />
                           <h4 className="text-sm font-semibold text-amber-400">Field Training Officer (FTO) Program</h4>
@@ -914,7 +914,7 @@ export default function NewHireOnboarding() {
                                 className={`flex-1 p-2 rounded-lg text-center ${
                                   phase.status === 'completed' ? 'bg-green-500/20 border border-green-500/30' :
                                   phase.status === 'in-progress' ? 'bg-blue-500/20 border border-blue-500/30' :
-                                  'bg-slate-700/30 border border-slate-600/30'
+                                  'bg-slate-100 dark:bg-slate-700/30 border border-slate-600/30'
                                 }`}
                               >
                                 <p className={`text-xs font-medium ${
@@ -933,7 +933,7 @@ export default function NewHireOnboarding() {
                     )}
 
                     {/* Completion Summary */}
-                    <div className="px-5 py-4 border-b border-slate-200 dark:border-slate-700/30">
+                    <div className="px-5 py-4 border-b border-slate-200 dark:border-slate-200 dark:border-slate-700/30">
                       <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
                         {[
                           { key: 'preEmployment', label: 'Pre-Employment', icon: FileCheck },
@@ -956,7 +956,7 @@ export default function NewHireOnboarding() {
                                   ? 'bg-green-500/10 border-green-500/30 hover:bg-green-500/20'
                                   : data.completed > 0
                                     ? 'bg-blue-500/10 border-blue-500/30 hover:bg-blue-500/20'
-                                    : 'bg-slate-700/30 border-slate-600/30 hover:bg-slate-700/50'
+                                    : 'bg-slate-100 dark:bg-slate-700/30 border-slate-600/30 hover:bg-slate-100 dark:hover:bg-slate-700/50'
                               }`}
                             >
                               <div className="flex items-center justify-between mb-1">
@@ -996,7 +996,7 @@ export default function NewHireOnboarding() {
                       };
 
                       return (
-                        <div key={sectionKey} className="px-5 py-4 bg-slate-900/30 border-b border-slate-200 dark:border-slate-700/30">
+                        <div key={sectionKey} className="px-5 py-4 bg-slate-50 dark:bg-slate-900/30 border-b border-slate-200 dark:border-slate-200 dark:border-slate-700/30">
                           <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">{sectionLabels[sectionKey]}</h4>
                           <div className="space-y-2">
                             {tasks.map(task => (
@@ -1007,7 +1007,7 @@ export default function NewHireOnboarding() {
                                     ? 'bg-green-500/5 border-green-500/20'
                                     : task.status === 'overdue'
                                       ? 'bg-red-500/5 border-red-500/20'
-                                      : 'bg-slate-800/30 border-slate-700/30'
+                                      : 'bg-slate-100 dark:bg-slate-800/30 border-slate-200 dark:border-slate-700/30'
                                 }`}
                               >
                                 <div className="flex items-start gap-3">
@@ -1031,7 +1031,7 @@ export default function NewHireOnboarding() {
                                       )}
                                     </div>
                                     {task.details && (
-                                      <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">{task.details}</p>
+                                      <p className="text-xs text-slate-700 dark:text-slate-400 mt-1">{task.details}</p>
                                     )}
                                     {task.result && (
                                       <p className="text-xs text-green-400/80 mt-1">{task.result}</p>
@@ -1065,7 +1065,7 @@ export default function NewHireOnboarding() {
                               className={`p-3 rounded-lg border ${
                                 action.status === 'overdue' ? 'bg-red-500/10 border-red-500/30' :
                                 action.status === 'due-tomorrow' ? 'bg-amber-500/10 border-amber-500/30' :
-                                'bg-slate-800/30 border-slate-700/30'
+                                'bg-slate-100 dark:bg-slate-800/30 border-slate-200 dark:border-slate-700/30'
                               }`}
                             >
                               <p className={`text-sm font-medium ${
@@ -1125,12 +1125,12 @@ export default function NewHireOnboarding() {
                           View FTO Evaluations
                         </button>
                       )}
-                      <button className="px-4 py-2 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium transition-all flex items-center gap-2">
+                      <button className="px-4 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium transition-all flex items-center gap-2">
                         <Download className="w-4 h-4" />
                         Export Checklist
                       </button>
                       {hire.status !== 'completed' && (
-                        <button className="px-4 py-2 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium transition-all flex items-center gap-2">
+                        <button className="px-4 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium transition-all flex items-center gap-2">
                           <Mail className="w-4 h-4" />
                           Send Reminder
                         </button>
@@ -1155,21 +1155,21 @@ export default function NewHireOnboarding() {
             <div className="flex items-start justify-between mb-6">
               <div>
                 <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">{selectedNewHire.name}</h3>
-                <p className="text-sm text-slate-600 dark:text-slate-400">{selectedNewHire.position} • {selectedNewHire.department}</p>
+                <p className="text-sm text-slate-700 dark:text-slate-400">{selectedNewHire.position} • {selectedNewHire.department}</p>
                 {selectedNewHire.hireAuthority && (
                   <p className="text-xs text-slate-500 mt-1">{selectedNewHire.hireAuthority}</p>
                 )}
               </div>
               <button
                 onClick={() => setSelectedNewHire(null)}
-                className="p-2 hover:bg-slate-800/50 rounded-lg transition-colors"
+                className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors"
               >
-                <X className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+                <X className="w-5 h-5 text-slate-700 dark:text-slate-400" />
               </button>
             </div>
 
             {/* Personnel Details */}
-            <div className="grid grid-cols-2 gap-4 mb-6 p-4 bg-slate-800/30 rounded-xl">
+            <div className="grid grid-cols-2 gap-4 mb-6 p-4 bg-slate-100 dark:bg-slate-800/30 rounded-xl">
               <div>
                 <p className="text-xs text-slate-500 mb-1">Email</p>
                 <p className="text-sm text-slate-700 dark:text-slate-300">{selectedNewHire.email}</p>
@@ -1202,7 +1202,7 @@ export default function NewHireOnboarding() {
 
             {/* Classification */}
             {selectedNewHire.hireClassification && (
-              <div className="mb-6 p-4 bg-slate-800/30 rounded-xl">
+              <div className="mb-6 p-4 bg-slate-100 dark:bg-slate-800/30 rounded-xl">
                 <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Hire Classification</h4>
                 <div className="grid grid-cols-2 gap-3 text-xs">
                   <div>
@@ -1266,7 +1266,7 @@ export default function NewHireOnboarding() {
                         className={`p-3 rounded-lg ${
                           phase.status === 'completed' ? 'bg-green-500/10' :
                           phase.status === 'in-progress' ? 'bg-blue-500/10' :
-                          'bg-slate-800/30'
+                          'bg-slate-100 dark:bg-slate-800/30'
                         }`}
                       >
                         <div className="flex items-center justify-between">
@@ -1283,12 +1283,12 @@ export default function NewHireOnboarding() {
                           <span className={`px-2 py-1 rounded text-xs font-medium ${
                             phase.status === 'completed' ? 'bg-green-500/20 text-green-400' :
                             phase.status === 'in-progress' ? 'bg-blue-500/20 text-blue-400' :
-                            'bg-slate-700/50 text-slate-500'
+                            'bg-white dark:bg-slate-700/50 text-slate-500'
                           }`}>
                             {phase.status.toUpperCase().replace('-', ' ')}
                           </span>
                         </div>
-                        <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">{phase.rating}</p>
+                        <p className="text-xs text-slate-700 dark:text-slate-400 mt-1">{phase.rating}</p>
                       </div>
                     ))}
                   </div>
@@ -1315,10 +1315,10 @@ export default function NewHireOnboarding() {
                     <div
                       key={key}
                       className={`p-3 rounded-lg text-center ${
-                        isComplete ? 'bg-green-500/20' : value.completed > 0 ? 'bg-blue-500/20' : 'bg-slate-700/30'
+                        isComplete ? 'bg-green-500/20' : value.completed > 0 ? 'bg-blue-500/20' : 'bg-slate-100 dark:bg-slate-700/30'
                       }`}
                     >
-                      <p className="text-xs text-slate-600 dark:text-slate-400">{labels[key]}</p>
+                      <p className="text-xs text-slate-700 dark:text-slate-400">{labels[key]}</p>
                       <p className={`text-lg font-bold ${
                         isComplete ? 'text-green-400' : value.completed > 0 ? 'text-blue-400' : 'text-slate-500'
                       }`}>
@@ -1334,12 +1334,12 @@ export default function NewHireOnboarding() {
               <button className="flex-1 px-4 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-xl font-medium transition-all">
                 Print Full Checklist
               </button>
-              <button className="flex-1 px-4 py-3 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-900 dark:text-white rounded-xl font-medium transition-all">
+              <button className="flex-1 px-4 py-3 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-900 dark:text-white rounded-xl font-medium transition-all">
                 View Personnel File
               </button>
               <button
                 onClick={() => setSelectedNewHire(null)}
-                className="px-4 py-3 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl font-medium transition-all"
+                className="px-4 py-3 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl font-medium transition-all"
               >
                 Close
               </button>

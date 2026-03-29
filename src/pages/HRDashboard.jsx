@@ -368,9 +368,9 @@ export default function HRDashboard() {
           )}
           <button
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-            className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors hidden lg:block"
+            className="p-2 hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors hidden lg:block"
           >
-            {sidebarCollapsed ? <ChevronRight className="w-5 h-5 text-slate-600 dark:text-slate-400" /> : <ChevronLeft className="w-5 h-5 text-slate-600 dark:text-slate-400" />}
+            {sidebarCollapsed ? <ChevronRight className="w-5 h-5 text-slate-700 dark:text-slate-400" /> : <ChevronLeft className="w-5 h-5 text-slate-700 dark:text-slate-400" />}
           </button>
         </div>
 
@@ -383,7 +383,7 @@ export default function HRDashboard() {
                 key={item.id}
                 onClick={() => handleNavigation(item)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                  isActive ? 'bg-amber-500 text-slate-900 dark:text-white shadow-lg shadow-amber-500/20' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-slate-900 dark:hover:text-white'
+                  isActive ? 'bg-amber-500 text-slate-900 dark:text-white shadow-lg shadow-amber-500/20' : 'text-slate-700 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-100 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-slate-900 dark:hover:text-white'
                 } ${sidebarCollapsed ? 'justify-center' : ''}`}
                 title={sidebarCollapsed ? item.label : ''}
               >
@@ -406,7 +406,7 @@ export default function HRDashboard() {
           <div className="p-4">
             <button
               onClick={() => setLogoutConfirmOpen(true)}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/40 hover:text-slate-800 dark:hover:text-slate-700 dark:text-slate-300 dark:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-slate-700 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/40 hover:text-slate-800 dark:hover:text-slate-700 dark:text-slate-300 dark:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
               title={sidebarCollapsed ? 'Sign Out' : ''}
             >
               <LogOut className="w-5 h-5 flex-shrink-0" />
@@ -432,15 +432,15 @@ export default function HRDashboard() {
           <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl p-6 max-w-sm w-full shadow-2xl">
             <div className="flex items-center gap-4 mb-4">
               <div className="w-12 h-12 bg-slate-100 dark:bg-slate-800/60 rounded-xl flex items-center justify-center">
-                <LogOut className="w-6 h-6 text-slate-600 dark:text-slate-400" />
+                <LogOut className="w-6 h-6 text-slate-700 dark:text-slate-400" />
               </div>
               <div>
                 <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Sign Out</h3>
-                <p className="text-sm text-slate-600 dark:text-slate-400">Are you sure you want to sign out?</p>
+                <p className="text-sm text-slate-700 dark:text-slate-400">Are you sure you want to sign out?</p>
               </div>
             </div>
             <div className="flex gap-3 mt-6">
-              <button onClick={() => setLogoutConfirmOpen(false)} className="flex-1 px-4 py-2.5 bg-slate-100 dark:bg-slate-800/40 hover:bg-slate-200 dark:hover:bg-slate-800/60 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all">
+              <button onClick={() => setLogoutConfirmOpen(false)} className="flex-1 px-4 py-2.5 bg-slate-100 dark:bg-slate-800/40 hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all">
                 Cancel
               </button>
               <button onClick={handleLogout} className="flex-1 px-4 py-2.5 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/50 rounded-xl text-amber-600 dark:text-amber-400 font-medium transition-all">
@@ -454,11 +454,11 @@ export default function HRDashboard() {
       {/* Main Content */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Header */}
-        <header className="border-b border-slate-200 dark:border-slate-800/50 backdrop-blur-xl bg-slate-900/30">
+        <header className="border-b border-slate-200 dark:border-slate-800/50 backdrop-blur-xl bg-slate-50 dark:bg-slate-900/30">
           <div className="px-4 lg:px-6 py-4 flex items-center justify-between gap-4">
             <div className="flex items-center gap-4 flex-1 min-w-0">
-              <button onClick={() => setSidebarOpen(!sidebarOpen)} className="lg:hidden p-2 hover:bg-slate-800/50 rounded-lg">
-                <Menu className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+              <button onClick={() => setSidebarOpen(!sidebarOpen)} className="lg:hidden p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg">
+                <Menu className="w-5 h-5 text-slate-700 dark:text-slate-400" />
               </button>
               <div className="flex-1 max-w-xl relative hidden sm:block">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
@@ -467,8 +467,8 @@ export default function HRDashboard() {
             </div>
             <div className="flex items-center gap-2 lg:gap-3">
               <div className="relative notifications-container">
-                <button onClick={() => setNotificationsOpen(!notificationsOpen)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg relative">
-                  <Bell className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+                <button onClick={() => setNotificationsOpen(!notificationsOpen)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg relative">
+                  <Bell className="w-5 h-5 text-slate-700 dark:text-slate-400" />
                   <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                 </button>
 
@@ -482,12 +482,12 @@ export default function HRDashboard() {
                     </div>
                     <div className="max-h-96 overflow-y-auto">
                       {notifications.map(notification => (
-                        <div key={notification.id} className={`p-4 border-b border-slate-100 dark:border-slate-800/30 hover:bg-slate-50 dark:hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-red-500/5' : ''}`}>
+                        <div key={notification.id} className={`p-4 border-b border-slate-100 dark:border-slate-200 dark:border-slate-800/30 hover:bg-slate-50 dark:hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-red-500/5' : ''}`}>
                           <div className="flex items-start gap-3">
                             <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-red-400' : 'bg-blue-400'}`}></div>
                             <div className="flex-1 min-w-0">
                               <p className="text-sm font-medium text-slate-900 dark:text-white mb-1">{notification.title}</p>
-                              <p className="text-xs text-slate-600 dark:text-slate-400 mb-2">{notification.message}</p>
+                              <p className="text-xs text-slate-700 dark:text-slate-400 mb-2">{notification.message}</p>
                               <p className="text-xs text-slate-500">{notification.time}</p>
                             </div>
                           </div>
@@ -501,7 +501,7 @@ export default function HRDashboard() {
                 )}
               </div>
 
-              <div className="h-8 w-px bg-slate-700/50"></div>
+              <div className="h-8 w-px bg-white dark:bg-slate-700/50"></div>
 
               <div className="relative profile-menu-container">
                 <button onClick={() => setProfileMenuOpen(!profileMenuOpen)} className="flex items-center gap-3 p-1.5 pr-3 hover:bg-white dark:bg-slate-800/50 rounded-xl transition-colors">
@@ -510,29 +510,29 @@ export default function HRDashboard() {
                   </div>
                   <div className="hidden sm:block text-left">
                     <p className="text-sm font-medium text-slate-900 dark:text-white">HR Director</p>
-                    <p className="text-xs text-slate-600 dark:text-slate-400">Human Resources</p>
+                    <p className="text-xs text-slate-700 dark:text-slate-400">Human Resources</p>
                   </div>
-                  <ChevronDown className={`w-4 h-4 text-slate-600 dark:text-slate-400 hidden sm:block transition-transform ${profileMenuOpen ? 'rotate-180' : ''}`} />
+                  <ChevronDown className={`w-4 h-4 text-slate-700 dark:text-slate-400 hidden sm:block transition-transform ${profileMenuOpen ? 'rotate-180' : ''}`} />
                 </button>
 
                 {profileMenuOpen && (
                   <div className="absolute right-0 top-full mt-2 w-56 bg-white dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-2xl z-50 py-2">
                     <div className="px-4 py-3 border-b border-slate-200 dark:border-slate-700/50">
                       <p className="text-sm font-medium text-slate-900 dark:text-white">HR Director</p>
-                      <p className="text-xs text-slate-600 dark:text-slate-400">hr.director@gcso.gov</p>
+                      <p className="text-xs text-slate-700 dark:text-slate-400">hr.director@gcso.gov</p>
                     </div>
                     <div className="py-1">
-                      <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-800/50 transition-colors">
+                      <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors">
                         <User className="w-4 h-4" />
                         View Profile
                       </button>
-                      <button onClick={() => navigate(createPageUrl('HRSettings'))} className="w-full flex items-center gap-3 px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-800/50 transition-colors">
+                      <button onClick={() => navigate(createPageUrl('HRSettings'))} className="w-full flex items-center gap-3 px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors">
                         <Settings className="w-4 h-4" />
                         Settings
                       </button>
                     </div>
                     <div className="border-t border-slate-200 dark:border-slate-700/50 py-1">
-                      <button onClick={() => setLogoutConfirmOpen(true)} className="w-full flex items-center gap-3 px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-slate-800/50 transition-colors">
+                      <button onClick={() => setLogoutConfirmOpen(true)} className="w-full flex items-center gap-3 px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors">
                         <LogOut className="w-4 h-4" />
                         Sign Out
                       </button>
@@ -549,7 +549,7 @@ export default function HRDashboard() {
           {/* Page Header */}
           <div className="mb-6">
             <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white mb-2">Human Resources Operations Center</h2>
-            <p className="text-slate-600 dark:text-slate-400 mb-4">Gwinnett County Sheriff's Office • {currentDate} • {currentTime} EST</p>
+            <p className="text-slate-700 dark:text-slate-400 mb-4">Gwinnett County Sheriff's Office • {currentDate} • {currentTime} EST</p>
 
             <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4 mb-4">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
@@ -626,7 +626,7 @@ export default function HRDashboard() {
             <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl mb-4 overflow-hidden">
               <button
                 onClick={() => toggleSection('certifications')}
-                className="w-full p-4 flex items-center justify-between hover:bg-slate-800/60 transition-colors"
+                className="w-full p-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-red-500/20 rounded-xl flex items-center justify-center">
@@ -634,10 +634,10 @@ export default function HRDashboard() {
                   </div>
                   <div className="text-left">
                     <h4 className="text-base font-semibold text-red-600 dark:text-red-400">CERTIFICATION COMPLIANCE - POST REQUIREMENTS</h4>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">3 POST Certifications Expiring Within 30 Days</p>
+                    <p className="text-sm text-slate-700 dark:text-slate-400">3 POST Certifications Expiring Within 30 Days</p>
                   </div>
                 </div>
-                {expandedSections.certifications ? <ChevronUp className="w-5 h-5 text-slate-600 dark:text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-600 dark:text-slate-400" />}
+                {expandedSections.certifications ? <ChevronUp className="w-5 h-5 text-slate-700 dark:text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-700 dark:text-slate-400" />}
               </button>
 
               {expandedSections.certifications && (
@@ -646,12 +646,12 @@ export default function HRDashboard() {
                     <div key={cert.id} className={`p-4 rounded-xl ${
                       cert.status === 'critical' ? 'bg-red-500/10 border border-red-500/30' :
                       cert.status === 'attention' ? 'bg-amber-500/10 border border-amber-500/30' :
-                      'bg-slate-900/40 border border-slate-700/50'
+                      'bg-white dark:bg-slate-900/40 border border-slate-700/50'
                     }`}>
                       <div className="flex items-start justify-between mb-3">
                         <div>
                           <h5 className="text-sm font-semibold text-slate-900 dark:text-white">{cert.name} ({cert.badge}) - {cert.certType}</h5>
-                          <p className="text-xs text-slate-600 dark:text-slate-400">Supervisor: {cert.supervisor}</p>
+                          <p className="text-xs text-slate-700 dark:text-slate-400">Supervisor: {cert.supervisor}</p>
                         </div>
                         <span className={`px-2 py-1 rounded text-xs font-medium ${
                           cert.status === 'critical' ? 'bg-red-500/20 text-red-600 dark:text-red-400' :
@@ -664,40 +664,40 @@ export default function HRDashboard() {
                       <div className="space-y-2 text-sm">
                         <div className="flex items-start gap-2">
                           <span className="text-slate-500">•</span>
-                          <span className="text-slate-600 dark:text-slate-400">Current Cert Expires:</span>
+                          <span className="text-slate-700 dark:text-slate-400">Current Cert Expires:</span>
                           <span className="text-slate-900 dark:text-white">{cert.expires}</span>
                         </div>
                         <div className="flex items-start gap-2">
                           <span className="text-slate-500">•</span>
-                          <span className="text-slate-600 dark:text-slate-400">Status:</span>
+                          <span className="text-slate-700 dark:text-slate-400">Status:</span>
                           <span className={cert.status === 'critical' ? 'text-red-600 dark:text-red-400 font-medium' : 'text-slate-900 dark:text-white'}>{cert.trainingStatus}</span>
                         </div>
                         <div className="flex items-start gap-2">
                           <span className="text-slate-500">•</span>
-                          <span className="text-slate-600 dark:text-slate-400">Renewal Application:</span>
+                          <span className="text-slate-700 dark:text-slate-400">Renewal Application:</span>
                           <span className={cert.renewalApp === 'NOT SUBMITTED' ? 'text-red-600 dark:text-red-400 font-medium' : 'text-slate-900 dark:text-white'}>{cert.renewalApp}</span>
                         </div>
                         <div className="flex items-start gap-2">
                           <span className="text-slate-500">•</span>
-                          <span className="text-slate-600 dark:text-slate-400">Action Required:</span>
+                          <span className="text-slate-700 dark:text-slate-400">Action Required:</span>
                           <span className={cert.status === 'critical' ? 'text-red-600 dark:text-red-400 font-medium' : 'text-amber-600 dark:text-amber-400'}>{cert.actionRequired}</span>
                         </div>
                         {cert.coveragePlan && (
                           <div className="flex items-start gap-2">
                             <span className="text-slate-500">•</span>
-                            <span className="text-slate-600 dark:text-slate-400">Coverage Plan:</span>
+                            <span className="text-slate-700 dark:text-slate-400">Coverage Plan:</span>
                             <span className="text-slate-900 dark:text-white">{cert.coveragePlan}</span>
                           </div>
                         )}
                       </div>
                       <div className="flex flex-wrap gap-2 mt-3 pt-3 border-t border-slate-200 dark:border-slate-700/50">
-                        <button className="px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">
+                        <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">
                           View Full Certification Record
                         </button>
-                        <button className="px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">
+                        <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">
                           Contact Deputy
                         </button>
-                        <button className="px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
+                        <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
                           <ExternalLink className="w-3 h-3" />
                           POST Portal
                         </button>
@@ -717,7 +717,7 @@ export default function HRDashboard() {
             <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl mb-4 overflow-hidden">
               <button
                 onClick={() => toggleSection('onboarding')}
-                className="w-full p-4 flex items-center justify-between hover:bg-slate-800/60 transition-colors"
+                className="w-full p-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-red-500/20 rounded-xl flex items-center justify-center">
@@ -725,10 +725,10 @@ export default function HRDashboard() {
                   </div>
                   <div className="text-left">
                     <h4 className="text-base font-semibold text-red-600 dark:text-red-400">NEW HIRE ONBOARDING - LEGAL COMPLIANCE DEADLINES</h4>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">3 New Hires - Documentation Due This Week</p>
+                    <p className="text-sm text-slate-700 dark:text-slate-400">3 New Hires - Documentation Due This Week</p>
                   </div>
                 </div>
-                {expandedSections.onboarding ? <ChevronUp className="w-5 h-5 text-slate-600 dark:text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-600 dark:text-slate-400" />}
+                {expandedSections.onboarding ? <ChevronUp className="w-5 h-5 text-slate-700 dark:text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-700 dark:text-slate-400" />}
               </button>
 
               {expandedSections.onboarding && (
@@ -738,32 +738,32 @@ export default function HRDashboard() {
                       <div className="flex items-start justify-between mb-3">
                         <div>
                           <h5 className="text-sm font-semibold text-slate-900 dark:text-white">{hire.name}</h5>
-                          <p className="text-xs text-slate-600 dark:text-slate-400">{hire.position}</p>
+                          <p className="text-xs text-slate-700 dark:text-slate-400">{hire.position}</p>
                         </div>
                         <div className="text-right">
                           <p className="text-sm text-amber-600 dark:text-amber-400 font-medium">Start Date: {hire.startDate}</p>
-                          <p className="text-xs text-slate-600 dark:text-slate-400">{hire.daysUntilStart} days until start</p>
+                          <p className="text-xs text-slate-700 dark:text-slate-400">{hire.daysUntilStart} days until start</p>
                         </div>
                       </div>
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 text-sm">
                         <div>
-                          <span className="text-slate-600 dark:text-slate-400">Hiring Authority:</span>
+                          <span className="text-slate-700 dark:text-slate-400">Hiring Authority:</span>
                           <span className="text-slate-900 dark:text-white ml-2">{hire.hiringAuthority}</span>
                         </div>
                         <div>
-                          <span className="text-slate-600 dark:text-slate-400">Background:</span>
+                          <span className="text-slate-700 dark:text-slate-400">Background:</span>
                           <span className="text-slate-900 dark:text-white ml-2">Completed {hire.backgroundComplete}</span>
                         </div>
                         {hire.postCert && (
                           <div className="md:col-span-2">
-                            <span className="text-slate-600 dark:text-slate-400">POST Certification:</span>
+                            <span className="text-slate-700 dark:text-slate-400">POST Certification:</span>
                             <span className="text-green-600 dark:text-green-400 ml-2">{hire.postCert}</span>
                           </div>
                         )}
                         {hire.gcicAccess && (
                           <div className="md:col-span-2">
-                            <span className="text-slate-600 dark:text-slate-400">GCIC/NCIC Access:</span>
+                            <span className="text-slate-700 dark:text-slate-400">GCIC/NCIC Access:</span>
                             <span className="text-green-600 dark:text-green-400 ml-2">{hire.gcicAccess}</span>
                           </div>
                         )}
@@ -777,7 +777,7 @@ export default function HRDashboard() {
                               <span className="text-slate-500">□</span>
                               <div className="flex-1">
                                 <span className="text-slate-900 dark:text-white">{doc.doc}</span>
-                                <span className="text-slate-600 dark:text-slate-400 ml-2">- DUE: {doc.due}</span>
+                                <span className="text-slate-700 dark:text-slate-400 ml-2">- DUE: {doc.due}</span>
                                 <p className="text-xs text-slate-500">Status: {doc.status}</p>
                                 <p className="text-xs text-amber-600 dark:text-amber-400">Action: {doc.action}</p>
                               </div>
@@ -790,7 +790,7 @@ export default function HRDashboard() {
                         <p className="text-xs font-semibold text-green-600 dark:text-green-400 mb-2">COMPLETED ITEMS:</p>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
                           {hire.completedItems.map((item, idx) => (
-                            <div key={idx} className="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400">
+                            <div key={idx} className="flex items-center gap-2 text-xs text-slate-700 dark:text-slate-400">
                               <CheckCircle className="w-3 h-3 text-green-600 dark:text-green-400" />
                               <span>{item}</span>
                             </div>
@@ -803,13 +803,13 @@ export default function HRDashboard() {
                           <Mail className="w-3 h-3" />
                           Send Document Reminder Email
                         </button>
-                        <button className="px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">
+                        <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">
                           View Full Onboarding Checklist
                         </button>
-                        <button className="px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">
+                        <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">
                           Contact New Hire
                         </button>
-                        <button className="px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
+                        <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
                           <Printer className="w-3 h-3" />
                           Print I-9 Form
                         </button>
@@ -824,7 +824,7 @@ export default function HRDashboard() {
             <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl mb-4 overflow-hidden">
               <button
                 onClick={() => toggleSection('fmla')}
-                className="w-full p-4 flex items-center justify-between hover:bg-slate-800/60 transition-colors"
+                className="w-full p-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-red-500/20 rounded-xl flex items-center justify-center">
@@ -832,22 +832,22 @@ export default function HRDashboard() {
                   </div>
                   <div className="text-left">
                     <h4 className="text-base font-semibold text-red-600 dark:text-red-400">FMLA LEAVE REQUESTS - FEDERAL LAW COMPLIANCE (48-HOUR RESPONSE)</h4>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">3 FMLA Leave Requests Pending HR Review & Approval</p>
+                    <p className="text-sm text-slate-700 dark:text-slate-400">3 FMLA Leave Requests Pending HR Review & Approval</p>
                   </div>
                 </div>
-                {expandedSections.fmla ? <ChevronUp className="w-5 h-5 text-slate-600 dark:text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-600 dark:text-slate-400" />}
+                {expandedSections.fmla ? <ChevronUp className="w-5 h-5 text-slate-700 dark:text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-700 dark:text-slate-400" />}
               </button>
 
               {expandedSections.fmla && (
                 <div className="p-4 border-t border-slate-200 dark:border-slate-700/50 space-y-4">
                   {fmlaRequests.map((request) => (
                     <div key={request.id} className={`p-4 rounded-xl ${
-                      request.status === 'overdue' ? 'bg-red-500/10 border border-red-500/30' : 'bg-slate-900/40 border border-slate-700/50'
+                      request.status === 'overdue' ? 'bg-red-500/10 border border-red-500/30' : 'bg-white dark:bg-slate-900/40 border border-slate-700/50'
                     }`}>
                       <div className="flex items-start justify-between mb-3">
                         <div>
                           <h5 className="text-sm font-semibold text-slate-900 dark:text-white">{request.name} ({request.badge}) - FMLA {request.leaveType} Request</h5>
-                          <p className="text-xs text-slate-600 dark:text-slate-400">{request.position}</p>
+                          <p className="text-xs text-slate-700 dark:text-slate-400">{request.position}</p>
                         </div>
                         {request.status === 'overdue' ? (
                           <span className="px-2 py-1 bg-red-500/20 text-red-600 dark:text-red-400 rounded text-xs font-medium">
@@ -862,41 +862,41 @@ export default function HRDashboard() {
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4 text-sm">
                         <div>
-                          <span className="text-slate-600 dark:text-slate-400">Request Received:</span>
+                          <span className="text-slate-700 dark:text-slate-400">Request Received:</span>
                           <span className="text-slate-900 dark:text-white ml-2">{request.requestReceived}</span>
                         </div>
                         <div>
-                          <span className="text-slate-600 dark:text-slate-400">Federal Deadline:</span>
+                          <span className="text-slate-700 dark:text-slate-400">Federal Deadline:</span>
                           <span className={`ml-2 ${request.status === 'overdue' ? 'text-red-600 dark:text-red-400 font-medium' : 'text-amber-600 dark:text-amber-400'}`}>
                             {request.federalDeadline}
                           </span>
                         </div>
                         <div>
-                          <span className="text-slate-600 dark:text-slate-400">Reason:</span>
+                          <span className="text-slate-700 dark:text-slate-400">Reason:</span>
                           <span className="text-slate-900 dark:text-white ml-2">{request.reason}</span>
                         </div>
                         <div>
-                          <span className="text-slate-600 dark:text-slate-400">Requested Leave:</span>
+                          <span className="text-slate-700 dark:text-slate-400">Requested Leave:</span>
                           <span className="text-slate-900 dark:text-white ml-2">{request.requestedLeave}</span>
                         </div>
                       </div>
 
-                      <div className="mb-4 p-3 bg-slate-800/40 rounded-lg">
+                      <div className="mb-4 p-3 bg-white dark:bg-slate-800/40 rounded-lg">
                         <p className="text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2">FMLA ELIGIBILITY:</p>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-xs">
                           <div className="flex items-center gap-2">
                             <CheckCircle className="w-3 h-3 text-green-600 dark:text-green-400" />
-                            <span className="text-slate-600 dark:text-slate-400">Employed 12+ months:</span>
+                            <span className="text-slate-700 dark:text-slate-400">Employed 12+ months:</span>
                             <span className="text-slate-900 dark:text-white">{request.eligibility.employed12Months.detail}</span>
                           </div>
                           <div className="flex items-center gap-2">
                             <CheckCircle className="w-3 h-3 text-green-600 dark:text-green-400" />
-                            <span className="text-slate-600 dark:text-slate-400">Worked 1,250 hours:</span>
+                            <span className="text-slate-700 dark:text-slate-400">Worked 1,250 hours:</span>
                             <span className="text-slate-900 dark:text-white">{request.eligibility.worked1250Hours.detail}</span>
                           </div>
                           <div className="flex items-center gap-2">
                             <CheckCircle className="w-3 h-3 text-green-600 dark:text-green-400" />
-                            <span className="text-slate-600 dark:text-slate-400">Worksite 50+ employees:</span>
+                            <span className="text-slate-700 dark:text-slate-400">Worksite 50+ employees:</span>
                             <span className="text-slate-900 dark:text-white">{request.eligibility.worksite50Employees.detail}</span>
                           </div>
                         </div>
@@ -905,17 +905,17 @@ export default function HRDashboard() {
                       <div className="space-y-2 text-sm mb-4">
                         <div className="flex items-start gap-2">
                           <span className="text-slate-500">•</span>
-                          <span className="text-slate-600 dark:text-slate-400">FMLA Balance:</span>
+                          <span className="text-slate-700 dark:text-slate-400">FMLA Balance:</span>
                           <span className="text-slate-900 dark:text-white">{request.fmlaBalance}</span>
                         </div>
                         <div className="flex items-start gap-2">
                           <span className="text-slate-500">•</span>
-                          <span className="text-slate-600 dark:text-slate-400">Medical Certification:</span>
+                          <span className="text-slate-700 dark:text-slate-400">Medical Certification:</span>
                           <span className="text-slate-900 dark:text-white">{request.medicalCert}</span>
                         </div>
                         <div className="flex items-start gap-2">
                           <span className="text-slate-500">•</span>
-                          <span className="text-slate-600 dark:text-slate-400">Coverage Plan:</span>
+                          <span className="text-slate-700 dark:text-slate-400">Coverage Plan:</span>
                           <span className="text-slate-900 dark:text-white">{request.coveragePlan}</span>
                         </div>
                       </div>
@@ -936,13 +936,13 @@ export default function HRDashboard() {
                         <button className={`px-3 py-1.5 ${request.status === 'overdue' ? 'bg-red-500 hover:bg-red-600 text-white' : 'bg-green-500/20 hover:bg-green-500/30 text-green-600 dark:text-green-400'} rounded-lg text-xs font-medium transition-colors`}>
                           {request.status === 'overdue' ? '⚠️ APPROVE FMLA LEAVE' : 'APPROVE FMLA LEAVE'}
                         </button>
-                        <button className="px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">
+                        <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">
                           Generate FMLA Forms
                         </button>
-                        <button className="px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">
+                        <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">
                           View Medical Cert
                         </button>
-                        <button className="px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">
+                        <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">
                           Email Employee
                         </button>
                       </div>
@@ -956,7 +956,7 @@ export default function HRDashboard() {
             <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl mb-4 overflow-hidden">
               <button
                 onClick={() => toggleSection('disciplinary')}
-                className="w-full p-4 flex items-center justify-between hover:bg-slate-800/60 transition-colors"
+                className="w-full p-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-red-500/20 rounded-xl flex items-center justify-center">
@@ -964,10 +964,10 @@ export default function HRDashboard() {
                   </div>
                   <div className="text-left">
                     <h4 className="text-base font-semibold text-red-600 dark:text-red-400">DISCIPLINARY HEARINGS - DUE PROCESS REQUIREMENTS</h4>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">2 Disciplinary Hearings Scheduled This Week</p>
+                    <p className="text-sm text-slate-700 dark:text-slate-400">2 Disciplinary Hearings Scheduled This Week</p>
                   </div>
                 </div>
-                {expandedSections.disciplinary ? <ChevronUp className="w-5 h-5 text-slate-600 dark:text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-600 dark:text-slate-400" />}
+                {expandedSections.disciplinary ? <ChevronUp className="w-5 h-5 text-slate-700 dark:text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-700 dark:text-slate-400" />}
               </button>
 
               {expandedSections.disciplinary && (
@@ -977,39 +977,39 @@ export default function HRDashboard() {
                       <div className="flex items-start justify-between mb-3">
                         <div>
                           <h5 className="text-sm font-semibold text-slate-900 dark:text-white">{hearing.employee} ({hearing.badge}) - {hearing.type}</h5>
-                          <p className="text-xs text-slate-600 dark:text-slate-400">Hearing Officer: {hearing.hearingOfficer}</p>
+                          <p className="text-xs text-slate-700 dark:text-slate-400">Hearing Officer: {hearing.hearingOfficer}</p>
                         </div>
                         <div className="text-right">
                           <p className="text-sm text-amber-600 dark:text-amber-400 font-medium">{hearing.hearingDate} • {hearing.hearingTime}</p>
-                          <p className="text-xs text-slate-600 dark:text-slate-400">{hearing.location}</p>
+                          <p className="text-xs text-slate-700 dark:text-slate-400">{hearing.location}</p>
                         </div>
                       </div>
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4 text-sm">
                         <div>
-                          <span className="text-slate-600 dark:text-slate-400">Alleged Violation:</span>
+                          <span className="text-slate-700 dark:text-slate-400">Alleged Violation:</span>
                           <span className="text-slate-900 dark:text-white ml-2">{hearing.violation}</span>
                         </div>
                         {hearing.proposedDiscipline && (
                           <div>
-                            <span className="text-slate-600 dark:text-slate-400">Proposed Discipline:</span>
+                            <span className="text-slate-700 dark:text-slate-400">Proposed Discipline:</span>
                             <span className="text-slate-900 dark:text-white ml-2">{hearing.proposedDiscipline}</span>
                           </div>
                         )}
                         {hearing.originalDiscipline && (
                           <div>
-                            <span className="text-slate-600 dark:text-slate-400">Original Discipline:</span>
+                            <span className="text-slate-700 dark:text-slate-400">Original Discipline:</span>
                             <span className="text-slate-900 dark:text-white ml-2">{hearing.originalDiscipline}</span>
                           </div>
                         )}
                         {hearing.priorDiscipline && (
                           <div>
-                            <span className="text-slate-600 dark:text-slate-400">Prior Discipline:</span>
+                            <span className="text-slate-700 dark:text-slate-400">Prior Discipline:</span>
                             <span className="text-slate-900 dark:text-white ml-2">{hearing.priorDiscipline}</span>
                           </div>
                         )}
                         <div>
-                          <span className="text-slate-600 dark:text-slate-400">Union Rep:</span>
+                          <span className="text-slate-700 dark:text-slate-400">Union Rep:</span>
                           <span className="text-slate-900 dark:text-white ml-2">{hearing.unionRep}</span>
                         </div>
                       </div>
@@ -1041,7 +1041,7 @@ export default function HRDashboard() {
                             {hearing.appealDocs.map((doc, idx) => (
                               <div key={idx} className="flex items-start gap-2 text-xs">
                                 <span className="text-slate-500">•</span>
-                                <span className="text-slate-600 dark:text-slate-400">{doc.item}:</span>
+                                <span className="text-slate-700 dark:text-slate-400">{doc.item}:</span>
                                 <span className={doc.status.includes('PENDING') ? 'text-amber-600 dark:text-amber-400' : 'text-slate-900 dark:text-white'}>{doc.status}</span>
                               </div>
                             ))}
@@ -1050,9 +1050,9 @@ export default function HRDashboard() {
                       )}
 
                       {hearing.possibleOutcomes && (
-                        <div className="mb-4 p-3 bg-slate-800/40 rounded-lg">
+                        <div className="mb-4 p-3 bg-white dark:bg-slate-800/40 rounded-lg">
                           <p className="text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2">POSSIBLE OUTCOMES:</p>
-                          <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1">
+                          <ul className="text-xs text-slate-700 dark:text-slate-400 space-y-1">
                             {hearing.possibleOutcomes.map((outcome, idx) => (
                               <li key={idx}>• {outcome}</li>
                             ))}
@@ -1061,16 +1061,16 @@ export default function HRDashboard() {
                       )}
 
                       <div className="flex flex-wrap gap-2">
-                        <button className="px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">
+                        <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">
                           View Investigation Report
                         </button>
-                        <button className="px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">
+                        <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">
                           View Policy
                         </button>
-                        <button className="px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">
+                        <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">
                           Hearing Preparation
                         </button>
-                        <button className="px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">
+                        <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">
                           Contact Employee
                         </button>
                       </div>
@@ -1088,14 +1088,14 @@ export default function HRDashboard() {
               <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">PERSONNEL OPERATIONS SUMMARY</h3>
 
               <div className="space-y-4">
-                <div className="bg-slate-900/40 rounded-xl p-4">
+                <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4">
                   <h4 className="text-sm font-semibold text-amber-600 dark:text-amber-400 mb-3">AUTHORIZED POSITIONS & CURRENT STAFFING</h4>
-                  <p className="text-2xl font-bold text-slate-900 dark:text-white mb-2">178 <span className="text-sm font-normal text-slate-600 dark:text-slate-400">Total Authorized</span></p>
+                  <p className="text-2xl font-bold text-slate-900 dark:text-white mb-2">178 <span className="text-sm font-normal text-slate-700 dark:text-slate-400">Total Authorized</span></p>
 
                   <div className="space-y-3 text-sm">
                     <div>
                       <p className="text-slate-700 dark:text-slate-300 font-medium">SWORN PERSONNEL (Law Enforcement)</p>
-                      <div className="ml-4 space-y-1 text-xs text-slate-600 dark:text-slate-400">
+                      <div className="ml-4 space-y-1 text-xs text-slate-700 dark:text-slate-400">
                         <p>• Authorized: 164 positions</p>
                         <p>• Filled: 152 positions (92.7% staffing level)</p>
                         <p>• Vacant: 12 positions (Patrol: 8, CID: 2, Court: 1, Training: 1)</p>
@@ -1106,7 +1106,7 @@ export default function HRDashboard() {
 
                     <div>
                       <p className="text-slate-700 dark:text-slate-300 font-medium">CIVILIAN PERSONNEL (Non-Sworn)</p>
-                      <div className="ml-4 space-y-1 text-xs text-slate-600 dark:text-slate-400">
+                      <div className="ml-4 space-y-1 text-xs text-slate-700 dark:text-slate-400">
                         <p>• Authorized: 14 positions</p>
                         <p>• Filled: 12 positions (85.7% staffing level)</p>
                         <p>• Vacant: 2 positions (Dispatch: 1, Records: 1)</p>
@@ -1116,32 +1116,32 @@ export default function HRDashboard() {
                   </div>
                 </div>
 
-                <div className="bg-slate-900/40 rounded-xl p-4">
+                <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4">
                   <h4 className="text-sm font-semibold text-amber-600 dark:text-amber-400 mb-3">RECRUITMENT STATUS</h4>
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
-                      <span className="text-slate-600 dark:text-slate-400">Deputy Sheriff I/II (8 vacancies)</span>
+                      <span className="text-slate-700 dark:text-slate-400">Deputy Sheriff I/II (8 vacancies)</span>
                       <span className="text-slate-900 dark:text-white">47 applicants</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-slate-600 dark:text-slate-400">Detective - CID (2 vacancies)</span>
+                      <span className="text-slate-700 dark:text-slate-400">Detective - CID (2 vacancies)</span>
                       <span className="text-slate-900 dark:text-white">12 applicants</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-slate-600 dark:text-slate-400">911 Dispatcher (1 vacancy)</span>
+                      <span className="text-slate-700 dark:text-slate-400">911 Dispatcher (1 vacancy)</span>
                       <span className="text-slate-900 dark:text-white">18 applicants</span>
                     </div>
                     <div className="pt-2 border-t border-slate-200 dark:border-slate-700/50">
                       <div className="flex justify-between">
-                        <span className="text-slate-600 dark:text-slate-400">Background checks in progress</span>
+                        <span className="text-slate-700 dark:text-slate-400">Background checks in progress</span>
                         <span className="text-amber-600 dark:text-amber-400 font-medium">12</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-slate-600 dark:text-slate-400">Conditional offers extended</span>
+                        <span className="text-slate-700 dark:text-slate-400">Conditional offers extended</span>
                         <span className="text-green-600 dark:text-green-400 font-medium">4</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-slate-600 dark:text-slate-400">Next oral board</span>
+                        <span className="text-slate-700 dark:text-slate-400">Next oral board</span>
                         <span className="text-slate-900 dark:text-white">Feb 06, 2026</span>
                       </div>
                     </div>
@@ -1149,10 +1149,10 @@ export default function HRDashboard() {
                 </div>
 
                 <div className="flex flex-wrap gap-2">
-                  <button onClick={() => navigate(createPageUrl('EmployeeRecords'))} className="px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">
+                  <button onClick={() => navigate(createPageUrl('EmployeeRecords'))} className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">
                     View Detailed Org Chart
                   </button>
-                  <button onClick={() => navigate(createPageUrl('JobPostings'))} className="px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">
+                  <button onClick={() => navigate(createPageUrl('JobPostings'))} className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">
                     Recruitment Status
                   </button>
                 </div>
@@ -1164,25 +1164,25 @@ export default function HRDashboard() {
               <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">COMPLIANCE MONITORING - LEGAL REQUIREMENTS</h3>
 
               <div className="space-y-4">
-                <div className="bg-slate-900/40 rounded-xl p-4">
+                <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4">
                   <h4 className="text-sm font-semibold text-green-600 dark:text-green-400 mb-3">POST CERTIFICATION STATUS (Sworn Personnel)</h4>
-                  <p className="text-xs text-slate-600 dark:text-slate-400 mb-2">Georgia POST Certification Compliance: 100% REQUIRED</p>
+                  <p className="text-xs text-slate-700 dark:text-slate-400 mb-2">Georgia POST Certification Compliance: 100% REQUIRED</p>
 
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between items-center">
-                      <span className="text-slate-600 dark:text-slate-400">Current Status</span>
+                      <span className="text-slate-700 dark:text-slate-400">Current Status</span>
                       <span className="text-green-600 dark:text-green-400 font-bold">152/152 Current (100%)</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-slate-600 dark:text-slate-400">Basic POST</span>
+                      <span className="text-slate-700 dark:text-slate-400">Basic POST</span>
                       <span className="text-slate-900 dark:text-white">98 deputies</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-slate-600 dark:text-slate-400">Intermediate POST</span>
+                      <span className="text-slate-700 dark:text-slate-400">Intermediate POST</span>
                       <span className="text-slate-900 dark:text-white">42 deputies</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-slate-600 dark:text-slate-400">Advanced POST</span>
+                      <span className="text-slate-700 dark:text-slate-400">Advanced POST</span>
                       <span className="text-slate-900 dark:text-white">12 deputies</span>
                     </div>
                     <div className="pt-2 border-t border-slate-200 dark:border-slate-700/50">
@@ -1191,11 +1191,11 @@ export default function HRDashboard() {
                         <span className="text-amber-600 dark:text-amber-400 font-medium">3 deputies</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-slate-600 dark:text-slate-400">Expiring 31-60 days</span>
+                        <span className="text-slate-700 dark:text-slate-400">Expiring 31-60 days</span>
                         <span className="text-slate-900 dark:text-white">8 deputies</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-slate-600 dark:text-slate-400">Expiring 61-90 days</span>
+                        <span className="text-slate-700 dark:text-slate-400">Expiring 61-90 days</span>
                         <span className="text-slate-900 dark:text-white">12 deputies</span>
                       </div>
                     </div>
@@ -1206,11 +1206,11 @@ export default function HRDashboard() {
                   <h4 className="text-sm font-semibold text-amber-600 dark:text-amber-400 mb-3">ANNUAL PERFORMANCE EVALUATIONS</h4>
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
-                      <span className="text-slate-600 dark:text-slate-400">2025 Evaluations Required</span>
+                      <span className="text-slate-700 dark:text-slate-400">2025 Evaluations Required</span>
                       <span className="text-slate-900 dark:text-white">178</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-slate-600 dark:text-slate-400">Completed</span>
+                      <span className="text-slate-700 dark:text-slate-400">Completed</span>
                       <span className="text-green-600 dark:text-green-400">155 (87.1%)</span>
                     </div>
                     <div className="flex justify-between">
@@ -1226,10 +1226,10 @@ export default function HRDashboard() {
                 </div>
 
                 <div className="flex flex-wrap gap-2">
-                  <button onClick={() => navigate(createPageUrl('TrainingCertifications'))} className="px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">
+                  <button onClick={() => navigate(createPageUrl('TrainingCertifications'))} className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">
                     View All POST Certifications
                   </button>
-                  <button onClick={() => navigate(createPageUrl('PerformanceReviews'))} className="px-3 py-1.5 bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">
+                  <button onClick={() => navigate(createPageUrl('PerformanceReviews'))} className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">
                     View Overdue Evaluations
                   </button>
                 </div>
@@ -1242,133 +1242,133 @@ export default function HRDashboard() {
             <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">KEY HR METRICS (Informational - Last 30 Days)</h3>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-slate-900/40 rounded-xl p-4">
+              <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4">
                 <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">STAFFING LEVELS</h4>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-slate-600 dark:text-slate-400">Total Authorized</span>
+                    <span className="text-slate-700 dark:text-slate-400">Total Authorized</span>
                     <span className="text-slate-900 dark:text-white font-medium">178</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-600 dark:text-slate-400">Filled Positions</span>
+                    <span className="text-slate-700 dark:text-slate-400">Filled Positions</span>
                     <span className="text-slate-900 dark:text-white font-medium">164</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-600 dark:text-slate-400">Vacant Positions</span>
+                    <span className="text-slate-700 dark:text-slate-400">Vacant Positions</span>
                     <span className="text-amber-600 dark:text-amber-400 font-medium">14 (12 sworn, 2 civilian)</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-600 dark:text-slate-400">Staffing Level</span>
+                    <span className="text-slate-700 dark:text-slate-400">Staffing Level</span>
                     <span className="text-slate-900 dark:text-white font-medium">92.1%</span>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-slate-900/40 rounded-xl p-4">
+              <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4">
                 <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">RECRUITMENT</h4>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-slate-600 dark:text-slate-400">Active Applicants</span>
+                    <span className="text-slate-700 dark:text-slate-400">Active Applicants</span>
                     <span className="text-slate-900 dark:text-white font-medium">47 (Deputy I/II)</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-600 dark:text-slate-400">Background Checks</span>
+                    <span className="text-slate-700 dark:text-slate-400">Background Checks</span>
                     <span className="text-slate-900 dark:text-white font-medium">12 in progress</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-600 dark:text-slate-400">Avg BI Duration</span>
+                    <span className="text-slate-700 dark:text-slate-400">Avg BI Duration</span>
                     <span className="text-slate-900 dark:text-white font-medium">67 days</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-600 dark:text-slate-400">Conditional Offers</span>
+                    <span className="text-slate-700 dark:text-slate-400">Conditional Offers</span>
                     <span className="text-green-600 dark:text-green-400 font-medium">3 pending start</span>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-slate-900/40 rounded-xl p-4">
+              <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4">
                 <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">RETENTION</h4>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-slate-600 dark:text-slate-400">Turnover Rate</span>
+                    <span className="text-slate-700 dark:text-slate-400">Turnover Rate</span>
                     <span className="text-green-600 dark:text-green-400 font-medium">2.3% (12-month)</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-600 dark:text-slate-400">Separations (12 mo)</span>
+                    <span className="text-slate-700 dark:text-slate-400">Separations (12 mo)</span>
                     <span className="text-slate-900 dark:text-white font-medium">4 (2 retire, 1 resign, 1 term)</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-600 dark:text-slate-400">Avg Tenure (Sworn)</span>
+                    <span className="text-slate-700 dark:text-slate-400">Avg Tenure (Sworn)</span>
                     <span className="text-slate-900 dark:text-white font-medium">9.1 years</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-600 dark:text-slate-400">Avg Tenure (Civilian)</span>
+                    <span className="text-slate-700 dark:text-slate-400">Avg Tenure (Civilian)</span>
                     <span className="text-slate-900 dark:text-white font-medium">5.2 years</span>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-slate-900/40 rounded-xl p-4">
+              <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4">
                 <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">LEAVE MANAGEMENT</h4>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-slate-600 dark:text-slate-400">FMLA Requests Pending</span>
+                    <span className="text-slate-700 dark:text-slate-400">FMLA Requests Pending</span>
                     <span className="text-amber-600 dark:text-amber-400 font-medium">3 (48-hr deadline)</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-600 dark:text-slate-400">Employees on Leave</span>
+                    <span className="text-slate-700 dark:text-slate-400">Employees on Leave</span>
                     <span className="text-slate-900 dark:text-white font-medium">4 (3 FMLA, 1 Military)</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-600 dark:text-slate-400">Sick Leave (30 days)</span>
+                    <span className="text-slate-700 dark:text-slate-400">Sick Leave (30 days)</span>
                     <span className="text-slate-900 dark:text-white font-medium">67 hours</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-600 dark:text-slate-400">Vacation (30 days)</span>
+                    <span className="text-slate-700 dark:text-slate-400">Vacation (30 days)</span>
                     <span className="text-slate-900 dark:text-white font-medium">142 hours</span>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-slate-900/40 rounded-xl p-4">
+              <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4">
                 <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">TRAINING COMPLIANCE</h4>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-slate-600 dark:text-slate-400">POST Certifications</span>
+                    <span className="text-slate-700 dark:text-slate-400">POST Certifications</span>
                     <span className="text-green-600 dark:text-green-400 font-medium">152/152 (100%)</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-600 dark:text-slate-400">Expiring &lt;30 days</span>
+                    <span className="text-slate-700 dark:text-slate-400">Expiring &lt;30 days</span>
                     <span className="text-amber-600 dark:text-amber-400 font-medium">3 deputies</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-600 dark:text-slate-400">Deputies in FTO</span>
+                    <span className="text-slate-700 dark:text-slate-400">Deputies in FTO</span>
                     <span className="text-slate-900 dark:text-white font-medium">3 (8-12 weeks)</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-600 dark:text-slate-400">Use of Force Recert Due</span>
+                    <span className="text-slate-700 dark:text-slate-400">Use of Force Recert Due</span>
                     <span className="text-slate-900 dark:text-white font-medium">23 (March 2026)</span>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-slate-900/40 rounded-xl p-4">
+              <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4">
                 <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">WORKERS' COMP</h4>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-slate-600 dark:text-slate-400">Active Claims</span>
+                    <span className="text-slate-700 dark:text-slate-400">Active Claims</span>
                     <span className="text-slate-900 dark:text-white font-medium">8</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-600 dark:text-slate-400">New Claims (30 days)</span>
+                    <span className="text-slate-700 dark:text-slate-400">New Claims (30 days)</span>
                     <span className="text-slate-900 dark:text-white font-medium">2</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-600 dark:text-slate-400">Total Paid (YTD)</span>
+                    <span className="text-slate-700 dark:text-slate-400">Total Paid (YTD)</span>
                     <span className="text-slate-900 dark:text-white font-medium">$12,450</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-600 dark:text-slate-400">Light Duty</span>
+                    <span className="text-slate-700 dark:text-slate-400">Light Duty</span>
                     <span className="text-slate-900 dark:text-white font-medium">2 employees</span>
                   </div>
                 </div>
@@ -1380,7 +1380,7 @@ export default function HRDashboard() {
                 <Download className="w-4 h-4" />
                 Export Metrics Report
               </button>
-              <button onClick={() => navigate(createPageUrl('HRReports'))} className="px-4 py-2 bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium transition-colors">
+              <button onClick={() => navigate(createPageUrl('HRReports'))} className="px-4 py-2 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium transition-colors">
                 View Detailed Analytics
               </button>
             </div>
@@ -1398,7 +1398,7 @@ export default function HRDashboard() {
 
       {/* Chat Panel */}
       {chatOpen && (
-        <div className="fixed bottom-24 right-6 w-full max-w-96 h-[500px] bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-2xl flex flex-col z-40 mx-4 sm:mx-0">
+        <div className="fixed bottom-24 right-6 w-full max-w-96 h-[500px] bg-white dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200 dark:border-slate-700/50 rounded-2xl shadow-2xl flex flex-col z-40 mx-4 sm:mx-0">
           <div className="p-4 border-b border-slate-200 dark:border-slate-700/50">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center">
@@ -1416,7 +1416,7 @@ export default function HRDashboard() {
                 <Sparkles className="w-4 h-4 text-slate-900 dark:text-white" />
               </div>
               <div className="flex-1">
-                <div className="bg-slate-800/60 p-3 rounded-xl">
+                <div className="bg-white dark:bg-slate-800/60 p-3 rounded-xl">
                   <p className="text-sm text-slate-700 dark:text-slate-200">
                     Welcome to the HR Operations Center. I can help you with:
                   </p>
