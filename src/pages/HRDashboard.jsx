@@ -383,7 +383,7 @@ export default function HRDashboard() {
                 key={item.id}
                 onClick={() => handleNavigation(item)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                  isActive ? 'bg-amber-500 text-slate-900 dark:text-white shadow-lg shadow-amber-500/20' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white'
+                  isActive ? 'bg-amber-500 text-slate-900 dark:text-white shadow-lg shadow-amber-500/20' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-slate-900 dark:hover:text-white'
                 } ${sidebarCollapsed ? 'justify-center' : ''}`}
                 title={sidebarCollapsed ? item.label : ''}
               >
@@ -462,7 +462,7 @@ export default function HRDashboard() {
               </button>
               <div className="flex-1 max-w-xl relative hidden sm:block">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-                <input type="text" placeholder="Search employees, applicants, positions..." className="w-full pl-12 pr-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50" />
+                <input type="text" placeholder="Search employees, applicants, positions..." className="w-full pl-12 pr-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50" />
               </div>
             </div>
             <div className="flex items-center gap-2 lg:gap-3">
@@ -482,7 +482,7 @@ export default function HRDashboard() {
                     </div>
                     <div className="max-h-96 overflow-y-auto">
                       {notifications.map(notification => (
-                        <div key={notification.id} className={`p-4 border-b border-slate-100 dark:border-slate-800/30 hover:bg-slate-50 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-red-500/5' : ''}`}>
+                        <div key={notification.id} className={`p-4 border-b border-slate-100 dark:border-slate-800/30 hover:bg-slate-50 dark:hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-red-500/5' : ''}`}>
                           <div className="flex items-start gap-3">
                             <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-red-400' : 'bg-blue-400'}`}></div>
                             <div className="flex-1 min-w-0">
@@ -670,12 +670,12 @@ export default function HRDashboard() {
                         <div className="flex items-start gap-2">
                           <span className="text-slate-500">•</span>
                           <span className="text-slate-600 dark:text-slate-400">Status:</span>
-                          <span className={cert.status === 'critical' ? 'text-red-600 dark:text-red-400 font-medium' : 'text-white'}>{cert.trainingStatus}</span>
+                          <span className={cert.status === 'critical' ? 'text-red-600 dark:text-red-400 font-medium' : 'text-slate-900 dark:text-white'}>{cert.trainingStatus}</span>
                         </div>
                         <div className="flex items-start gap-2">
                           <span className="text-slate-500">•</span>
                           <span className="text-slate-600 dark:text-slate-400">Renewal Application:</span>
-                          <span className={cert.renewalApp === 'NOT SUBMITTED' ? 'text-red-600 dark:text-red-400 font-medium' : 'text-white'}>{cert.renewalApp}</span>
+                          <span className={cert.renewalApp === 'NOT SUBMITTED' ? 'text-red-600 dark:text-red-400 font-medium' : 'text-slate-900 dark:text-white'}>{cert.renewalApp}</span>
                         </div>
                         <div className="flex items-start gap-2">
                           <span className="text-slate-500">•</span>
@@ -1025,7 +1025,7 @@ export default function HRDashboard() {
                                 ) : (
                                   <span className="w-3 h-3 border border-amber-400 rounded-sm"></span>
                                 )}
-                                <span className={doc.status === 'complete' ? 'text-slate-400' : 'text-amber-600 dark:text-amber-400'}>
+                                <span className={doc.status === 'complete' ? 'text-slate-500' : 'text-amber-600 dark:text-amber-400'}>
                                   {doc.item}: {doc.date}
                                 </span>
                               </div>
@@ -1042,7 +1042,7 @@ export default function HRDashboard() {
                               <div key={idx} className="flex items-start gap-2 text-xs">
                                 <span className="text-slate-500">•</span>
                                 <span className="text-slate-600 dark:text-slate-400">{doc.item}:</span>
-                                <span className={doc.status.includes('PENDING') ? 'text-amber-600 dark:text-amber-400' : 'text-white'}>{doc.status}</span>
+                                <span className={doc.status.includes('PENDING') ? 'text-amber-600 dark:text-amber-400' : 'text-slate-900 dark:text-white'}>{doc.status}</span>
                               </div>
                             ))}
                           </div>
@@ -1436,7 +1436,7 @@ export default function HRDashboard() {
           </div>
           <div className="p-4 border-t border-slate-700/50">
             <div className="flex items-center gap-2">
-              <input type="text" placeholder="Ask about HR compliance..." className="flex-1 px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50" />
+              <input type="text" placeholder="Ask about HR compliance..." className="flex-1 px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50" />
               <button className="w-10 h-10 bg-amber-500 rounded-xl flex items-center justify-center">
                 <Send className="w-5 h-5 text-slate-900 dark:text-white" />
               </button>

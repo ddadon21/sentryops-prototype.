@@ -443,7 +443,7 @@ export default function RiskCompliance() {
       approved: { bg: 'bg-green-500/10', border: 'border-green-500/20', text: 'text-green-600 dark:text-green-400', label: 'APPROVED', icon: CheckCircle },
       denied: { bg: 'bg-red-500/10', border: 'border-red-500/20', text: 'text-red-600 dark:text-red-400', label: 'DENIED', icon: X },
       escalated: { bg: 'bg-amber-500/10', border: 'border-amber-500/20', text: 'text-amber-600 dark:text-amber-400', label: 'ESCALATED', icon: ArrowRight },
-      deferred: { bg: 'bg-slate-700/20', border: 'border-slate-600/20', text: 'text-slate-400', label: 'DEFERRED', icon: Clock },
+      deferred: { bg: 'bg-slate-700/20', border: 'border-slate-600/20', text: 'text-slate-500', label: 'DEFERRED', icon: Clock },
     };
     return configs[decision] || configs.deferred;
   };
@@ -641,7 +641,7 @@ export default function RiskCompliance() {
                         : 'bg-transparent border-slate-700/40 text-slate-500 hover:text-slate-300'
                     }`}
                   >
-                    {opt.label} <span className={riskFilter === opt.id ? 'text-slate-400' : 'text-slate-600'}>{opt.count}</span>
+                    {opt.label} <span className={riskFilter === opt.id ? 'text-slate-500' : 'text-slate-600'}>{opt.count}</span>
                   </button>
                 ))}
               </div>
@@ -669,7 +669,7 @@ export default function RiskCompliance() {
                       <span className={`px-1.5 py-px border rounded text-[10px] font-bold flex-shrink-0 uppercase leading-tight ${
                         risk.severity === 'critical' ? 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
                         risk.severity === 'medium' ? 'bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
-                        'bg-slate-400/10 border-slate-400/20 text-slate-400'
+                        'bg-slate-400/10 border-slate-400/20 text-slate-500'
                       }`}>
                         {risk.severity}
                       </span>
@@ -680,7 +680,7 @@ export default function RiskCompliance() {
                           <span key={i} className={`px-1 py-px rounded text-[9px] font-semibold border ${
                             tag.includes('Liability') || tag.includes('Safety') ? 'bg-red-500/8 border-red-500/15 text-red-600 dark:text-red-400/90' :
                             tag.includes('Compliance') || tag.includes('Integrity') ? 'bg-amber-500/8 border-amber-500/15 text-amber-600 dark:text-amber-400/90' :
-                            'bg-slate-700/30 border-slate-700/40 text-slate-400'
+                            'bg-slate-700/30 border-slate-700/40 text-slate-500'
                           }`}>{tag}</span>
                         ))}
                         {risk.impactTags.length > 2 && (
@@ -702,7 +702,7 @@ export default function RiskCompliance() {
                       <span className={`px-1.5 py-px border rounded text-[10px] font-bold flex-shrink-0 ${
                         risk.dueUrgency === 'critical' ? 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
                         risk.dueUrgency === 'soon' ? 'bg-amber-500/8 border-amber-500/15 text-amber-600 dark:text-amber-400' :
-                        'bg-slate-700/30 border-slate-700/40 text-slate-400'
+                        'bg-slate-700/30 border-slate-700/40 text-slate-500'
                       }`}>
                         {risk.daysLeft}d left
                       </span>
@@ -712,7 +712,7 @@ export default function RiskCompliance() {
                         <span className={`hidden md:inline-flex items-center gap-1 px-1.5 py-px rounded text-[10px] font-semibold flex-shrink-0 ${
                           risk.linkedApproval.status === 'approved' ? 'text-green-600 dark:text-green-400/80' :
                           risk.linkedApproval.status === 'pending' ? 'text-amber-600 dark:text-amber-400/80' :
-                          'text-slate-400'
+                          'text-slate-500'
                         }`}>
                           <Link2 className="w-2.5 h-2.5" />
                           {risk.linkedApproval.status === 'pending' ? 'Approval pending' : 'Approved'}
@@ -739,7 +739,7 @@ export default function RiskCompliance() {
                               <span key={i} className={`px-1.5 py-px rounded text-[9px] font-semibold border ${
                                 tag.includes('Liability') || tag.includes('Safety') ? 'bg-red-500/8 border-red-500/15 text-red-600 dark:text-red-400' :
                                 tag.includes('Compliance') || tag.includes('Integrity') || tag.includes('Accreditation') ? 'bg-amber-500/8 border-amber-500/15 text-amber-600 dark:text-amber-400' :
-                                'bg-slate-700/30 border-slate-700/40 text-slate-400'
+                                'bg-slate-700/30 border-slate-700/40 text-slate-500'
                               }`}>{tag}</span>
                             ))}
                           </div>
@@ -933,7 +933,7 @@ export default function RiskCompliance() {
                         <span className={`text-[10px] font-bold ${
                           insight.direction === 'up' ? 'text-red-600 dark:text-red-400' :
                           insight.direction === 'down' ? 'text-green-600 dark:text-green-400' :
-                          'text-slate-400'
+                          'text-slate-500'
                         }`}>
                           {insight.direction === 'up' ? '↑' : insight.direction === 'down' ? '↓' : '→'} {insight.change}
                         </span>

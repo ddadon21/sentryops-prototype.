@@ -627,7 +627,7 @@ export default function BIReports() {
       'In Progress': 'bg-blue-500/20 border-blue-500/30 text-blue-400',
       'Review Required': 'bg-red-500/20 border-red-500/30 text-red-400'
     };
-    return colors[status] || 'bg-slate-500/20 border-slate-500/30 text-slate-400';
+    return colors[status] || 'bg-slate-500/20 border-slate-500/30 text-slate-500';
   };
 
   const getCheckStatusIcon = (status) => {
@@ -708,7 +708,7 @@ export default function BIReports() {
           {check.details && check.details.length > 0 && (
             <div className="ml-6 space-y-1 mt-2">
               {check.details.map((detail, idx) => (
-                <p key={idx} className={`text-xs ${detail.startsWith('⚠️') || detail.includes('⚠️') ? 'text-amber-400' : 'text-slate-400'}`}>
+                <p key={idx} className={`text-xs ${detail.startsWith('⚠️') || detail.includes('⚠️') ? 'text-amber-400' : 'text-slate-500'}`}>
                   {detail.startsWith('   ') ? detail : `├─ ${detail}`}
                 </p>
               ))}
@@ -743,15 +743,15 @@ export default function BIReports() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                 <div>
                   <p className="text-slate-600 dark:text-slate-400">Sworn LE (New Hire)</p>
-                  <p className="text-white font-medium">{processingStandards.swornNewHire}</p>
+                  <p className="text-slate-900 dark:text-white font-medium">{processingStandards.swornNewHire}</p>
                 </div>
                 <div>
                   <p className="text-slate-600 dark:text-slate-400">Sworn LE (Lateral Transfer)</p>
-                  <p className="text-white font-medium">{processingStandards.swornLateral}</p>
+                  <p className="text-slate-900 dark:text-white font-medium">{processingStandards.swornLateral}</p>
                 </div>
                 <div>
                   <p className="text-slate-600 dark:text-slate-400">Non-Sworn Civilian</p>
-                  <p className="text-white font-medium">{processingStandards.nonSwornCivilian}</p>
+                  <p className="text-slate-900 dark:text-white font-medium">{processingStandards.nonSwornCivilian}</p>
                 </div>
               </div>
             </div>
@@ -817,7 +817,7 @@ export default function BIReports() {
                       className={`px-4 py-3 text-sm font-medium transition-all capitalize ${
                         selectedFilter === filter
                           ? 'bg-purple-500/10 text-purple-400 border-b-2 border-purple-500'
-                          : 'text-slate-600 dark:text-slate-400 hover:text-white'
+                          : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white'
                       }`}
                     >
                       {filter.replace(/-/g, ' ')}
@@ -895,42 +895,42 @@ export default function BIReports() {
                             <div className="flex items-center gap-2">
                               <Calendar className="w-4 h-4 text-slate-500" />
                               <span className="text-slate-600 dark:text-slate-400">Investigation dates:</span>
-                              <span className="text-white">{report.investigationDates}</span>
+                              <span className="text-slate-900 dark:text-white">{report.investigationDates}</span>
                             </div>
                             <div className="flex items-center gap-2">
                               <Clock className="w-4 h-4 text-slate-500" />
                               <span className="text-slate-600 dark:text-slate-400">Duration:</span>
-                              <span className="text-white">{report.duration}</span>
+                              <span className="text-slate-900 dark:text-white">{report.duration}</span>
                             </div>
                             <div className="flex items-center gap-2">
                               <User className="w-4 h-4 text-slate-500" />
                               <span className="text-slate-600 dark:text-slate-400">Investigator:</span>
-                              <span className="text-white">{report.investigator}</span>
+                              <span className="text-slate-900 dark:text-white">{report.investigator}</span>
                             </div>
                             <div className="flex items-center gap-2">
                               <Users className="w-4 h-4 text-slate-500" />
                               <span className="text-slate-600 dark:text-slate-400">Supervisor:</span>
-                              <span className="text-white">{report.supervisor}</span>
+                              <span className="text-slate-900 dark:text-white">{report.supervisor}</span>
                             </div>
                             {report.approvalDate && (
                               <div className="flex items-center gap-2">
                                 <FileCheck className="w-4 h-4 text-slate-500" />
                                 <span className="text-slate-600 dark:text-slate-400">Approval:</span>
-                                <span className="text-white">{report.approvalDate}</span>
+                                <span className="text-slate-900 dark:text-white">{report.approvalDate}</span>
                               </div>
                             )}
                             {report.hireDate && (
                               <div className="flex items-center gap-2">
                                 <Briefcase className="w-4 h-4 text-slate-500" />
                                 <span className="text-slate-600 dark:text-slate-400">Hire date:</span>
-                                <span className="text-white">{report.hireDate}</span>
+                                <span className="text-slate-900 dark:text-white">{report.hireDate}</span>
                               </div>
                             )}
                             {report.expectedCompletion && (
                               <div className="flex items-center gap-2">
                                 <Clock className="w-4 h-4 text-slate-500" />
                                 <span className="text-slate-600 dark:text-slate-400">Expected completion:</span>
-                                <span className="text-white">{report.expectedCompletion}</span>
+                                <span className="text-slate-900 dark:text-white">{report.expectedCompletion}</span>
                               </div>
                             )}
                           </div>
@@ -1084,7 +1084,7 @@ export default function BIReports() {
                                 <h5 className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase mb-2">Suitability for Position</h5>
                                 <ul className="space-y-1">
                                   {report.assessment.suitability.map((item, idx) => (
-                                    <li key={idx} className={`text-sm flex items-start gap-2 ${item.includes('⚠️') ? 'text-amber-400' : 'text-slate-300'}`}>
+                                    <li key={idx} className={`text-sm flex items-start gap-2 ${item.includes('⚠️') ? 'text-amber-400' : 'text-slate-500'}`}>
                                       {item.includes('⚠️') ? '' : <CheckCircle className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />}
                                       {item}
                                     </li>
@@ -1158,15 +1158,15 @@ export default function BIReports() {
 
                         {/* Action Buttons */}
                         <div className="flex flex-wrap gap-3 pt-4 border-t border-slate-700/30">
-                          <button className="px-4 py-2 bg-slate-700/50 hover:bg-slate-700/70 border border-slate-600/50 rounded-lg text-white text-sm font-medium transition-colors flex items-center gap-2">
+                          <button className="px-4 py-2 bg-slate-700/50 hover:bg-slate-700/70 border border-slate-600/50 rounded-lg text-slate-900 dark:text-white text-sm font-medium transition-colors flex items-center gap-2">
                             <Eye className="w-4 h-4" />
                             View Complete Investigation File
                           </button>
-                          <button className="px-4 py-2 bg-slate-700/50 hover:bg-slate-700/70 border border-slate-600/50 rounded-lg text-white text-sm font-medium transition-colors flex items-center gap-2">
+                          <button className="px-4 py-2 bg-slate-700/50 hover:bg-slate-700/70 border border-slate-600/50 rounded-lg text-slate-900 dark:text-white text-sm font-medium transition-colors flex items-center gap-2">
                             <Download className="w-4 h-4" />
                             Download Full Report
                           </button>
-                          <button className="px-4 py-2 bg-slate-700/50 hover:bg-slate-700/70 border border-slate-600/50 rounded-lg text-white text-sm font-medium transition-colors flex items-center gap-2">
+                          <button className="px-4 py-2 bg-slate-700/50 hover:bg-slate-700/70 border border-slate-600/50 rounded-lg text-slate-900 dark:text-white text-sm font-medium transition-colors flex items-center gap-2">
                             <Printer className="w-4 h-4" />
                             Print Report
                           </button>

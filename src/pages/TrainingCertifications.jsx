@@ -409,7 +409,7 @@ export default function TrainingCertifications() {
                 key={item.id}
                 onClick={() => handleNavigation(item)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-800/50 hover:text-white'
+                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white'
                 } ${sidebarCollapsed ? 'justify-center' : ''}`}
                 title={sidebarCollapsed ? item.label : ''}
               >
@@ -470,13 +470,13 @@ export default function TrainingCertifications() {
             <div className="flex gap-3 mt-6">
               <button
                 onClick={() => setLogoutConfirmOpen(false)}
-                className="flex-1 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-white font-medium transition-all"
+                className="flex-1 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all"
               >
                 Cancel
               </button>
               <button
                 onClick={handleLogout}
-                className="flex-1 px-4 py-2.5 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-white font-medium transition-all"
+                className="flex-1 px-4 py-2.5 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all"
               >
                 Sign Out
               </button>
@@ -498,12 +498,12 @@ export default function TrainingCertifications() {
               <div className="flex items-center gap-2 text-sm">
                 <button
                   onClick={() => navigate(createPageUrl('HRDashboard'))}
-                  className="text-slate-600 dark:text-slate-400 hover:text-white transition-colors"
+                  className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
                 >
                   HR Dashboard
                 </button>
                 <ChevronRight className="w-4 h-4 text-slate-600" />
-                <span className="text-white">Training & Certifications</span>
+                <span className="text-slate-900 dark:text-white">Training & Certifications</span>
               </div>
             </div>
             <div className="flex items-center gap-2 lg:gap-3">
@@ -538,7 +538,7 @@ export default function TrainingCertifications() {
                     </div>
                     <div className="max-h-96 overflow-y-auto">
                       {notifications.map(notification => (
-                        <div key={notification.id} className={`p-4 border-b border-slate-800/30 hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
+                        <div key={notification.id} className={`p-4 border-b border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
                           <div className="flex items-start gap-3">
                             <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-red-400' : 'bg-blue-400'}`}></div>
                             <div className="flex-1 min-w-0">
@@ -558,7 +558,7 @@ export default function TrainingCertifications() {
 
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
-                  <span className="text-white text-sm font-bold">HR</span>
+                  <span className="text-slate-900 dark:text-white text-sm font-bold">HR</span>
                 </div>
                 <div className="hidden sm:block">
                   <p className="text-sm font-medium text-slate-900 dark:text-white">HR Manager</p>
@@ -754,7 +754,7 @@ export default function TrainingCertifications() {
                             {div.officers.map((officer, oidx) => (
                               <div key={oidx} className="bg-slate-900/40 border border-slate-700/30 rounded-lg px-3 py-2 flex items-center justify-between">
                                 <div>
-                                  <p className="text-xs font-medium text-white">{officer.name} <span className="text-slate-500">{officer.badge}</span></p>
+                                  <p className="text-xs font-medium text-slate-900 dark:text-white">{officer.name} <span className="text-slate-500">{officer.badge}</span></p>
                                 </div>
                                 <p className="text-[10px] text-slate-500">Last qual: {officer.lastQual}</p>
                               </div>
@@ -790,7 +790,7 @@ export default function TrainingCertifications() {
                               <Circle className="w-4 h-4 text-slate-500 mt-0.5 flex-shrink-0" />
                             )}
                             <div className="flex-1">
-                              <p className={`text-xs font-medium ${action.completed ? 'text-green-400' : 'text-white'}`}>
+                              <p className={`text-xs font-medium ${action.completed ? 'text-green-400' : 'text-slate-900 dark:text-white'}`}>
                                 {action.action}
                               </p>
                               {action.details && (
@@ -937,7 +937,7 @@ export default function TrainingCertifications() {
                     className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
                       activeCategory === filter.id
                         ? 'bg-amber-500 text-white'
-                        : 'bg-slate-800/40 border border-slate-700/50 text-slate-600 dark:text-slate-400 hover:text-white hover:bg-slate-800/60'
+                        : 'bg-slate-800/40 border border-slate-700/50 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-slate-800/60'
                     }`}
                   >
                     {filter.label}
@@ -1163,7 +1163,7 @@ export default function TrainingCertifications() {
                                     <div key={idx} className="flex items-center justify-between bg-slate-900/40 border border-slate-700/30 rounded-lg px-3 py-2">
                                       <div className="flex items-center gap-3">
                                         <Calendar className="w-3.5 h-3.5 text-slate-500" />
-                                        <span className="text-xs text-white font-medium">{day.date}</span>
+                                        <span className="text-xs text-slate-900 dark:text-white font-medium">{day.date}</span>
                                         <span className="text-xs text-slate-600 dark:text-slate-400">{day.purpose}</span>
                                       </div>
                                       <span className={`px-2 py-0.5 rounded text-[10px] font-medium ${
@@ -1185,7 +1185,7 @@ export default function TrainingCertifications() {
                                   {category.scheduledSessions.map((session, idx) => (
                                     <div key={idx} className="bg-slate-900/40 border border-slate-700/30 rounded-lg px-3 py-2">
                                       <div className="flex items-center justify-between">
-                                        <p className="text-xs text-white font-medium">{session.date}</p>
+                                        <p className="text-xs text-slate-900 dark:text-white font-medium">{session.date}</p>
                                         <span className={`px-2 py-0.5 rounded text-[10px] font-medium ${
                                           session.status === 'Open' ? 'bg-green-500/20 text-green-400' : 'bg-amber-500/20 text-amber-400'
                                         }`}>{session.status}</span>
@@ -1232,7 +1232,7 @@ export default function TrainingCertifications() {
           onClick={() => setSupportOpen(!supportOpen)}
           className="w-14 h-14 bg-gradient-to-br from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110"
         >
-          {supportOpen ? <X className="w-6 h-6 text-white" /> : <HelpCircle className="w-6 h-6 text-white" />}
+          {supportOpen ? <X className="w-6 h-6 text-slate-900 dark:text-white" /> : <HelpCircle className="w-6 h-6 text-slate-900 dark:text-white" />}
         </button>
 
         {supportOpen && (

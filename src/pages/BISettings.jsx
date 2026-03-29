@@ -342,10 +342,10 @@ export default function BISettings() {
                   <div className="flex items-center gap-6 mb-8">
                     <div className="relative">
                       <div className="w-24 h-24 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center">
-                        <span className="text-white text-2xl font-bold">MB</span>
+                        <span className="text-slate-900 dark:text-white text-2xl font-bold">MB</span>
                       </div>
                       <button className="absolute bottom-0 right-0 w-8 h-8 bg-purple-500 hover:bg-purple-400 rounded-full flex items-center justify-center transition-colors">
-                        <Camera className="w-4 h-4 text-white" />
+                        <Camera className="w-4 h-4 text-slate-900 dark:text-white" />
                       </button>
                     </div>
                     <div>
@@ -362,7 +362,7 @@ export default function BISettings() {
                         type="text"
                         value={profileSettings.fullName}
                         onChange={(e) => setProfileSettings({...profileSettings, fullName: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-purple-500/50 transition-colors"
+                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-purple-500/50 transition-colors"
                       />
                     </div>
                     <div>
@@ -371,7 +371,7 @@ export default function BISettings() {
                         type="email"
                         value={profileSettings.email}
                         onChange={(e) => setProfileSettings({...profileSettings, email: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-purple-500/50 transition-colors"
+                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-purple-500/50 transition-colors"
                       />
                     </div>
                     <div>
@@ -389,7 +389,7 @@ export default function BISettings() {
                         type="tel"
                         value={profileSettings.phone}
                         onChange={(e) => setProfileSettings({...profileSettings, phone: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-purple-500/50 transition-colors"
+                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-purple-500/50 transition-colors"
                       />
                     </div>
                     <div>
@@ -425,7 +425,7 @@ export default function BISettings() {
                         type="text"
                         value={profileSettings.certifications}
                         onChange={(e) => setProfileSettings({...profileSettings, certifications: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-purple-500/50 transition-colors"
+                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-purple-500/50 transition-colors"
                       />
                     </div>
                   </div>
@@ -464,7 +464,7 @@ export default function BISettings() {
                                   <Icon className="w-5 h-5 text-slate-600 dark:text-slate-400" />
                                 </div>
                                 <div>
-                                  <p className="text-white font-medium">{item.label}</p>
+                                  <p className="text-slate-900 dark:text-white font-medium">{item.label}</p>
                                   <p className="text-sm text-slate-600 dark:text-slate-400">{item.desc}</p>
                                 </div>
                               </div>
@@ -495,7 +495,7 @@ export default function BISettings() {
                         ].map(item => (
                           <div key={item.key} className="flex items-center justify-between p-4 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl">
                             <div>
-                              <p className="text-white font-medium">{item.label}</p>
+                              <p className="text-slate-900 dark:text-white font-medium">{item.label}</p>
                               <p className="text-xs text-slate-600 dark:text-slate-400">{item.desc}</p>
                             </div>
                             <button
@@ -534,7 +534,7 @@ export default function BISettings() {
                         <button
                           onClick={() => setDisplaySettings({...displaySettings, theme: 'dark'})}
                           className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl border transition-all ${
-                            displaySettings.theme === 'dark' ? 'bg-purple-500/20 border-purple-500/50 text-purple-400' : 'bg-slate-800/40 border-slate-700/50 text-slate-400'
+                            displaySettings.theme === 'dark' ? 'bg-purple-500/20 border-purple-500/50 text-purple-400' : 'bg-slate-800/40 border-slate-700/50 text-slate-500'
                           }`}
                         >
                           <Moon className="w-5 h-5" />
@@ -543,7 +543,7 @@ export default function BISettings() {
                         <button
                           onClick={() => setDisplaySettings({...displaySettings, theme: 'light'})}
                           className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl border transition-all ${
-                            displaySettings.theme === 'light' ? 'bg-purple-500/20 border-purple-500/50 text-purple-400' : 'bg-slate-800/40 border-slate-700/50 text-slate-400'
+                            displaySettings.theme === 'light' ? 'bg-purple-500/20 border-purple-500/50 text-purple-400' : 'bg-slate-800/40 border-slate-700/50 text-slate-500'
                           }`}
                         >
                           <Sun className="w-5 h-5" />
@@ -557,7 +557,7 @@ export default function BISettings() {
                       <select
                         value={displaySettings.dateFormat}
                         onChange={(e) => setDisplaySettings({...displaySettings, dateFormat: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white focus:outline-none focus:border-purple-500/50"
+                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-purple-500/50"
                       >
                         <option value="MM/DD/YYYY">MM/DD/YYYY</option>
                         <option value="DD/MM/YYYY">DD/MM/YYYY</option>
@@ -570,7 +570,7 @@ export default function BISettings() {
                       <select
                         value={displaySettings.timeFormat}
                         onChange={(e) => setDisplaySettings({...displaySettings, timeFormat: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white focus:outline-none focus:border-purple-500/50"
+                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-purple-500/50"
                       >
                         <option value="12h">12-hour</option>
                         <option value="24h">24-hour</option>
@@ -582,7 +582,7 @@ export default function BISettings() {
                       <select
                         value={displaySettings.timezone}
                         onChange={(e) => setDisplaySettings({...displaySettings, timezone: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white focus:outline-none focus:border-purple-500/50"
+                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-purple-500/50"
                       >
                         <option value="America/New_York">Eastern Time (ET)</option>
                         <option value="America/Chicago">Central Time (CT)</option>
@@ -596,7 +596,7 @@ export default function BISettings() {
                       <select
                         value={displaySettings.density}
                         onChange={(e) => setDisplaySettings({...displaySettings, density: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white focus:outline-none focus:border-purple-500/50"
+                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-purple-500/50"
                       >
                         <option value="compact">Compact</option>
                         <option value="comfortable">Comfortable</option>
@@ -606,7 +606,7 @@ export default function BISettings() {
 
                     <div className="flex items-center justify-between p-4 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl">
                       <div>
-                        <p className="text-white font-medium">Animations</p>
+                        <p className="text-slate-900 dark:text-white font-medium">Animations</p>
                         <p className="text-sm text-slate-600 dark:text-slate-400">Enable UI animations</p>
                       </div>
                       <button
@@ -643,7 +643,7 @@ export default function BISettings() {
                             <Lock className="w-5 h-5 text-green-400" />
                           </div>
                           <div>
-                            <p className="text-white font-medium">Two-Factor Authentication</p>
+                            <p className="text-slate-900 dark:text-white font-medium">Two-Factor Authentication</p>
                             <p className="text-sm text-slate-600 dark:text-slate-400">Add an extra layer of security</p>
                           </div>
                         </div>
@@ -666,14 +666,14 @@ export default function BISettings() {
                             <Clock className="w-5 h-5 text-slate-600 dark:text-slate-400" />
                           </div>
                           <div>
-                            <p className="text-white font-medium">Session Timeout</p>
+                            <p className="text-slate-900 dark:text-white font-medium">Session Timeout</p>
                             <p className="text-sm text-slate-600 dark:text-slate-400">Auto-logout after inactivity</p>
                           </div>
                         </div>
                         <select
                           value={securitySettings.sessionTimeout}
                           onChange={(e) => setSecuritySettings({...securitySettings, sessionTimeout: e.target.value})}
-                          className="px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white focus:outline-none focus:border-purple-500/50"
+                          className="px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-purple-500/50"
                         >
                           <option value="15">15 minutes</option>
                           <option value="30">30 minutes</option>
@@ -688,7 +688,7 @@ export default function BISettings() {
                             <Bell className="w-5 h-5 text-slate-600 dark:text-slate-400" />
                           </div>
                           <div>
-                            <p className="text-white font-medium">Login Notifications</p>
+                            <p className="text-slate-900 dark:text-white font-medium">Login Notifications</p>
                             <p className="text-sm text-slate-600 dark:text-slate-400">Get alerted for new sign-ins</p>
                           </div>
                         </div>
@@ -706,7 +706,7 @@ export default function BISettings() {
                             <Activity className="w-5 h-5 text-slate-600 dark:text-slate-400" />
                           </div>
                           <div>
-                            <p className="text-white font-medium">Audit Logging</p>
+                            <p className="text-slate-900 dark:text-white font-medium">Audit Logging</p>
                             <p className="text-sm text-slate-600 dark:text-slate-400">Track all account activity</p>
                           </div>
                         </div>
@@ -728,7 +728,7 @@ export default function BISettings() {
                         <input
                           type="password"
                           placeholder="••••••••"
-                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-purple-500/50"
+                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-purple-500/50"
                         />
                       </div>
                       <div>
@@ -736,7 +736,7 @@ export default function BISettings() {
                         <input
                           type="password"
                           placeholder="••••••••"
-                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-purple-500/50"
+                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-purple-500/50"
                         />
                       </div>
                       <div>
@@ -744,7 +744,7 @@ export default function BISettings() {
                         <input
                           type="password"
                           placeholder="••••••••"
-                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-purple-500/50"
+                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-purple-500/50"
                         />
                       </div>
                     </div>
@@ -782,14 +782,14 @@ export default function BISettings() {
                                 integration.status === 'connected' ? 'bg-green-500/20' : 'bg-slate-700/50'
                               }`}>
                                 <Database className={`w-6 h-6 ${
-                                  integration.status === 'connected' ? 'text-green-400' : 'text-slate-400'
+                                  integration.status === 'connected' ? 'text-green-400' : 'text-slate-500'
                                 }`} />
                               </div>
                               <div>
                                 <div className="flex items-center gap-3 mb-1">
-                                  <h4 className="text-white font-semibold">{integration.name}</h4>
+                                  <h4 className="text-slate-900 dark:text-white font-semibold">{integration.name}</h4>
                                   <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${
-                                    integration.status === 'connected' ? 'bg-green-500/20 text-green-400' : 'bg-slate-600/50 text-slate-400'
+                                    integration.status === 'connected' ? 'bg-green-500/20 text-green-400' : 'bg-slate-600/50 text-slate-500'
                                   }`}>
                                     {integration.status === 'connected' ? 'Connected' : 'Disconnected'}
                                   </span>
@@ -842,7 +842,7 @@ export default function BISettings() {
                             <div className="flex items-center gap-2">
                               <div className="text-right mr-4">
                                 <p className="text-xs text-slate-600 dark:text-slate-400">Monthly Requests</p>
-                                <p className="text-sm text-white font-medium">
+                                <p className="text-sm text-slate-900 dark:text-white font-medium">
                                   {integration.monthlyRequests.toLocaleString()} / {integration.requestLimit.toLocaleString()}
                                 </p>
                                 <div className="w-24 h-1.5 bg-slate-700 rounded-full mt-1">

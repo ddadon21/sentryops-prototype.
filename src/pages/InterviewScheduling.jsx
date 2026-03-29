@@ -425,7 +425,7 @@ export default function InterviewScheduling() {
                         <div className="space-y-1 text-sm">
                           <div className="flex items-center justify-between text-slate-600 dark:text-slate-400">
                             <span>Total scheduled:</span>
-                            <span className="text-white font-medium">{upcomingInterviews.length} interviews</span>
+                            <span className="text-slate-900 dark:text-white font-medium">{upcomingInterviews.length} interviews</span>
                           </div>
                           <div className="flex items-center justify-between text-slate-600 dark:text-slate-400">
                             <span>Today (Jan 27):</span>
@@ -433,11 +433,11 @@ export default function InterviewScheduling() {
                           </div>
                           <div className="flex items-center justify-between text-slate-600 dark:text-slate-400">
                             <span>Tomorrow (Jan 28):</span>
-                            <span className="text-white">1 interview</span>
+                            <span className="text-slate-900 dark:text-white">1 interview</span>
                           </div>
                           <div className="flex items-center justify-between text-slate-600 dark:text-slate-400">
                             <span>Remaining (Jan 29-30):</span>
-                            <span className="text-white">2 interviews</span>
+                            <span className="text-slate-900 dark:text-white">2 interviews</span>
                           </div>
                         </div>
                       </div>
@@ -476,19 +476,19 @@ export default function InterviewScheduling() {
                 <div className="space-y-3">
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-slate-600 dark:text-slate-400">Active cases:</span>
-                    <span className="text-white font-medium">{investigatorInfo.activeCases}</span>
+                    <span className="text-slate-900 dark:text-white font-medium">{investigatorInfo.activeCases}</span>
                   </div>
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-slate-600 dark:text-slate-400">Interviews this week:</span>
-                    <span className="text-white font-medium">{investigatorInfo.interviewsThisWeek}</span>
+                    <span className="text-slate-900 dark:text-white font-medium">{investigatorInfo.interviewsThisWeek}</span>
                   </div>
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-slate-600 dark:text-slate-400">Pending scheduling:</span>
-                    <span className="text-white font-medium">{investigatorInfo.pendingScheduling}</span>
+                    <span className="text-slate-900 dark:text-white font-medium">{investigatorInfo.pendingScheduling}</span>
                   </div>
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-slate-600 dark:text-slate-400">Avg per week:</span>
-                    <span className="text-white font-medium">{investigatorInfo.avgInterviewsPerWeek}</span>
+                    <span className="text-slate-900 dark:text-white font-medium">{investigatorInfo.avgInterviewsPerWeek}</span>
                   </div>
                   <div className="pt-2 border-t border-slate-700/50">
                     <div className="flex items-center gap-2 text-sm">
@@ -620,25 +620,25 @@ export default function InterviewScheduling() {
               <div className="flex border-b border-slate-700/50 overflow-x-auto">
                 <button
                   onClick={() => setSelectedView('upcoming')}
-                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedView === 'upcoming' ? 'bg-amber-500/10 text-amber-400 border-b-2 border-amber-500' : 'text-slate-600 dark:text-slate-400 hover:text-white'}`}
+                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedView === 'upcoming' ? 'bg-amber-500/10 text-amber-400 border-b-2 border-amber-500' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
                 >
                   Upcoming ({upcomingInterviews.length})
                 </button>
                 <button
                   onClick={() => setSelectedView('pending')}
-                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedView === 'pending' ? 'bg-amber-500/10 text-amber-400 border-b-2 border-amber-500' : 'text-slate-600 dark:text-slate-400 hover:text-white'}`}
+                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedView === 'pending' ? 'bg-amber-500/10 text-amber-400 border-b-2 border-amber-500' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
                 >
                   Pending Confirmation ({pendingConfirmation.length})
                 </button>
                 <button
                   onClick={() => setSelectedView('completed')}
-                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedView === 'completed' ? 'bg-amber-500/10 text-amber-400 border-b-2 border-amber-500' : 'text-slate-600 dark:text-slate-400 hover:text-white'}`}
+                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedView === 'completed' ? 'bg-amber-500/10 text-amber-400 border-b-2 border-amber-500' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
                 >
                   Completed ({completedInterviews.length})
                 </button>
                 <button
                   onClick={() => setSelectedView('all')}
-                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedView === 'all' ? 'bg-amber-500/10 text-amber-400 border-b-2 border-amber-500' : 'text-slate-600 dark:text-slate-400 hover:text-white'}`}
+                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedView === 'all' ? 'bg-amber-500/10 text-amber-400 border-b-2 border-amber-500' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
                 >
                   All Interviews ({upcomingInterviews.length + completedInterviews.length})
                 </button>
@@ -688,7 +688,7 @@ export default function InterviewScheduling() {
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4 p-3 bg-slate-900/40 rounded-lg">
                       <div>
                         <p className="text-xs text-slate-500 mb-1">Date</p>
-                        <p className="text-sm text-white flex items-center gap-1">
+                        <p className="text-sm text-slate-900 dark:text-white flex items-center gap-1">
                           <Calendar className="w-3.5 h-3.5 text-slate-500" />
                           {interview.dateShort}
                         </p>
@@ -696,7 +696,7 @@ export default function InterviewScheduling() {
                       </div>
                       <div>
                         <p className="text-xs text-slate-500 mb-1">Time</p>
-                        <p className="text-sm text-white flex items-center gap-1">
+                        <p className="text-sm text-slate-900 dark:text-white flex items-center gap-1">
                           <Clock className="w-3.5 h-3.5 text-slate-500" />
                           {interview.time}
                         </p>
@@ -704,7 +704,7 @@ export default function InterviewScheduling() {
                       </div>
                       <div>
                         <p className="text-xs text-slate-500 mb-1">Location</p>
-                        <p className="text-sm text-white flex items-center gap-1">
+                        <p className="text-sm text-slate-900 dark:text-white flex items-center gap-1">
                           {getInterviewTypeIcon(interview.method)}
                           {interview.location}
                         </p>
@@ -717,7 +717,7 @@ export default function InterviewScheduling() {
                       </div>
                       <div>
                         <p className="text-xs text-slate-500 mb-1">Investigator</p>
-                        <p className="text-sm text-white">{interview.investigator}</p>
+                        <p className="text-sm text-slate-900 dark:text-white">{interview.investigator}</p>
                         <p className="text-xs text-slate-500">Badge #{interview.investigatorBadge}</p>
                       </div>
                     </div>
@@ -1049,7 +1049,7 @@ export default function InterviewScheduling() {
                                 ) : (
                                   <Circle className="w-3.5 h-3.5 text-slate-500" />
                                 )}
-                                <span className={action.completed ? 'text-slate-400' : 'text-slate-300'}>{action.action}</span>
+                                <span className={action.completed ? 'text-slate-500' : 'text-slate-500'}>{action.action}</span>
                               </li>
                             ))}
                           </ul>
@@ -1104,8 +1104,8 @@ export default function InterviewScheduling() {
                     </thead>
                     <tbody className="divide-y divide-slate-700/30">
                       {[...upcomingInterviews, ...completedInterviews].map((interview) => (
-                        <tr key={interview.id} className="hover:bg-slate-800/30">
-                          <td className="p-4 text-sm text-white">{interview.subject}</td>
+                        <tr key={interview.id} className="hover:bg-slate-100 dark:hover:bg-slate-800/30">
+                          <td className="p-4 text-sm text-slate-900 dark:text-white">{interview.subject}</td>
                           <td className="p-4 text-sm text-amber-400">{interview.caseId}</td>
                           <td className="p-4 text-sm text-slate-600 dark:text-slate-400">{interview.type}</td>
                           <td className="p-4 text-sm text-slate-600 dark:text-slate-400">

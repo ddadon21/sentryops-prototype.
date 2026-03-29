@@ -356,7 +356,7 @@ const JailDashboard = () => {
       case 'Normal': return 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400';
       case 'Near Capacity': return 'bg-amber-500/20 text-amber-600 dark:text-amber-400';
       case 'Over Capacity': return 'bg-red-500/20 text-red-600 dark:text-red-400';
-      default: return 'bg-slate-500/20 text-slate-400';
+      default: return 'bg-slate-500/20 text-slate-500';
     }
   };
 
@@ -433,7 +433,7 @@ const JailDashboard = () => {
                   <h4 className="text-base font-semibold text-slate-900 dark:text-white">AI Insights - Detention Operations</h4>
                   <button
                     onClick={() => setAiInsightsVisible(false)}
-                    className="text-slate-600 dark:text-slate-400 hover:text-white transition-colors"
+                    className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
                   >
                     <X className="w-4 h-4" />
                   </button>
@@ -449,7 +449,7 @@ const JailDashboard = () => {
                       <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3">
                         <div className="flex items-start gap-2 mb-2">
                           <Circle className="w-3 h-3 fill-red-400 text-red-600 dark:text-red-400 mt-1 flex-shrink-0" />
-                          <p className="text-white font-medium">H2-Pod over capacity (36/32 beds - 112%)</p>
+                          <p className="text-slate-900 dark:text-white font-medium">H2-Pod over capacity (36/32 beds - 112%)</p>
                         </div>
                         <p className="text-slate-700 dark:text-slate-300 text-xs ml-5 mb-2">Federal housing pod exceeds ACA maximum capacity. 4 inmates on emergency mattresses (Booking #2024-18472, #2024-18483, #2024-18491, #2024-18502).</p>
                         <p className="text-amber-600 dark:text-amber-400 text-xs ml-5"><strong>Action Required:</strong> Transfer 2 minimum-security federal detainees to E-Pod medical observation beds (currently 44/48 - space available) OR coordinate with U.S. Marshals for early bond review hearing. Federal audit Dec 12-14 - capacity violation must be resolved.</p>
@@ -457,7 +457,7 @@ const JailDashboard = () => {
                       <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3">
                         <div className="flex items-start gap-2 mb-2">
                           <Circle className="w-3 h-3 fill-red-400 text-red-600 dark:text-red-400 mt-1 flex-shrink-0" />
-                          <p className="text-white font-medium">B-Shift understaffed (13/14 officers - 93%)</p>
+                          <p className="text-slate-900 dark:text-white font-medium">B-Shift understaffed (13/14 officers - 93%)</p>
                         </div>
                         <p className="text-slate-700 dark:text-slate-300 text-xs ml-5 mb-2">1 officer call-out (Officer Martinez - family emergency). Current staffing below ACA minimum for 842 inmates (requires 14 officers minimum for pod coverage).</p>
                         <p className="text-amber-600 dark:text-amber-400 text-xs ml-5"><strong>Action Required:</strong> Authorize 8-hour OT for off-duty officer OR reassign Officer Johnson from A-Shift overlap (1400-1430 hrs) to cover full B-Shift. All pods must maintain 1:60 officer-to-inmate ratio per policy.</p>
@@ -475,7 +475,7 @@ const JailDashboard = () => {
                       <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
                         <div className="flex items-start gap-2 mb-2">
                           <Circle className="w-3 h-3 fill-amber-400 text-amber-600 dark:text-amber-400 mt-1 flex-shrink-0" />
-                          <p className="text-white font-medium">E-Pod medical housing at 92% (44/48 beds)</p>
+                          <p className="text-slate-900 dark:text-white font-medium">E-Pod medical housing at 92% (44/48 beds)</p>
                         </div>
                         <p className="text-slate-700 dark:text-slate-300 text-xs ml-5 mb-2">Medical observation housing approaching capacity. Current occupants: 18 general medical holds, 12 psychiatric observation, 8 infirmary, 6 substance withdrawal monitoring.</p>
                         <p className="text-slate-700 dark:text-slate-300 text-xs ml-5"><strong>Recommendation:</strong> Coordinate with Gwinnett Medical Center for 3 pending discharge evaluations (inmates cleared for general population but awaiting psych clearance). Review daily with Medical Director Chen.</p>
@@ -483,7 +483,7 @@ const JailDashboard = () => {
                       <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
                         <div className="flex items-start gap-2 mb-2">
                           <Circle className="w-3 h-3 fill-amber-400 text-amber-600 dark:text-amber-400 mt-1 flex-shrink-0" />
-                          <p className="text-white font-medium">31 court transports scheduled tomorrow (Dec 13)</p>
+                          <p className="text-slate-900 dark:text-white font-medium">31 court transports scheduled tomorrow (Dec 13)</p>
                         </div>
                         <p className="text-slate-700 dark:text-slate-300 text-xs ml-5 mb-2">Superior Court: 17 inmates (arraignments), State Court: 9 inmates (hearings), Probation violations: 5 inmates.</p>
                         <p className="text-slate-700 dark:text-slate-300 text-xs ml-5"><strong>Verification needed:</strong> 4 vans available (need 5 for volume), 6 deputies assigned (adequate). Request 1 additional van from Fleet or stagger departure times: Group 1 depart 0630, Group 2 depart 0800.</p>
@@ -491,7 +491,7 @@ const JailDashboard = () => {
                       <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
                         <div className="flex items-start gap-2 mb-2">
                           <Circle className="w-3 h-3 fill-amber-400 text-amber-600 dark:text-amber-400 mt-1 flex-shrink-0" />
-                          <p className="text-white font-medium">Average length of stay trending up (23.4 days, +1.2 days vs last month)</p>
+                          <p className="text-slate-900 dark:text-white font-medium">Average length of stay trending up (23.4 days, +1.2 days vs last month)</p>
                         </div>
                         <p className="text-slate-700 dark:text-slate-300 text-xs ml-5 mb-2">Contributing factors: Court backlog (COVID delays clearing), Public Defender caseload (3-week wait for appointed counsel), Bail amounts unchanged (inflation not adjusted).</p>
                         <p className="text-slate-700 dark:text-slate-300 text-xs ml-5"><strong>Recommendation:</strong> Coordinate with Court Administrator for expedited hearing slots. Review bond schedule with judges for misdemeanor cases. Consider early release program expansion for low-risk offenders.</p>
@@ -509,21 +509,21 @@ const JailDashboard = () => {
                       <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3">
                         <div className="flex items-start gap-2 mb-2">
                           <Check className="w-4 h-4 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
-                          <p className="text-white font-medium">All facility services operational - No critical incidents in last 24 hours</p>
+                          <p className="text-slate-900 dark:text-white font-medium">All facility services operational - No critical incidents in last 24 hours</p>
                         </div>
                         <p className="text-slate-700 dark:text-slate-300 text-xs ml-6">All housing pods staffed and secure. No medical emergencies requiring hospitalization. No use-of-force incidents. No escapes or escape attempts. Last critical incident: Dec 9 (inmate altercation, resolved).</p>
                       </div>
                       <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3">
                         <div className="flex items-start gap-2 mb-2">
                           <Check className="w-4 h-4 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
-                          <p className="text-white font-medium">Population stable (842 inmates, +4 net today) - Within normal operating parameters</p>
+                          <p className="text-slate-900 dark:text-white font-medium">Population stable (842 inmates, +4 net today) - Within normal operating parameters</p>
                         </div>
                         <p className="text-slate-700 dark:text-slate-300 text-xs ml-6">18 bookings today (7 felony, 9 misdemeanor, 2 probation violations), 14 releases (8 bond posted, 4 time served, 2 transferred to state custody). 7-day trend: Stable population hovering 838-846. Forecast: 840-850 range next 7 days (manageable).</p>
                       </div>
                       <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3">
                         <div className="flex items-start gap-2 mb-2">
                           <Check className="w-4 h-4 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
-                          <p className="text-white font-medium">All critical systems operational</p>
+                          <p className="text-slate-900 dark:text-white font-medium">All critical systems operational</p>
                         </div>
                         <p className="text-slate-700 dark:text-slate-300 text-xs ml-6">CAD (Computer Aided Dispatch) - Online, RMS (Records Management System) - Online, SmartJAIL (inmate management) - Online, Commissary system - Online, Video visitation - Online, Medical records (eClinicalWorks) - Online. Last system outage: Nov 28 (scheduled maintenance, 2-hour window).</p>
                       </div>
@@ -558,7 +558,7 @@ const JailDashboard = () => {
             <div className="space-y-2 text-sm mb-3">
               <div className="flex justify-between">
                 <span className="text-slate-600 dark:text-slate-400">Male Inmates:</span>
-                <span className="text-white font-semibold">{facilityMetrics.maleInmates} (82.9%)</span>
+                <span className="text-slate-900 dark:text-white font-semibold">{facilityMetrics.maleInmates} (82.9%)</span>
               </div>
               <div className="text-xs text-slate-500 ml-4 space-y-0.5">
                 <div>├─ General Population: 612</div>
@@ -568,7 +568,7 @@ const JailDashboard = () => {
               </div>
               <div className="flex justify-between">
                 <span className="text-slate-600 dark:text-slate-400">Female Inmates:</span>
-                <span className="text-white font-semibold">{facilityMetrics.femaleInmates} (17.1%)</span>
+                <span className="text-slate-900 dark:text-white font-semibold">{facilityMetrics.femaleInmates} (17.1%)</span>
               </div>
               <div className="text-xs text-slate-500 ml-4 space-y-0.5">
                 <div>├─ General Population: 128</div>
@@ -606,7 +606,7 @@ const JailDashboard = () => {
               </div>
               <div className="flex items-center gap-1">
                 <TrendingUp className="w-5 h-5 text-slate-600 dark:text-slate-400" />
-                <span className="text-white font-semibold text-2xl">+{facilityMetrics.netChange}</span>
+                <span className="text-slate-900 dark:text-white font-semibold text-2xl">+{facilityMetrics.netChange}</span>
               </div>
             </div>
             <h3 className="text-slate-600 dark:text-slate-400 text-sm mb-1">Today's Activity</h3>
@@ -616,7 +616,7 @@ const JailDashboard = () => {
               <div>
                 <div className="flex justify-between items-center text-sm mb-1">
                   <span className="text-slate-700 dark:text-slate-300">Bookings:</span>
-                  <span className="text-white font-bold">{facilityMetrics.bookingsToday} total</span>
+                  <span className="text-slate-900 dark:text-white font-bold">{facilityMetrics.bookingsToday} total</span>
                 </div>
                 <div className="text-xs text-slate-500 ml-2 space-y-0.5">
                   <div>├─ Felony: 7 (assault: 2, theft: 2, drugs: 2, burglary: 1)</div>
@@ -627,7 +627,7 @@ const JailDashboard = () => {
               <div>
                 <div className="flex justify-between items-center text-sm mb-1">
                   <span className="text-slate-700 dark:text-slate-300">Releases:</span>
-                  <span className="text-white font-bold">{facilityMetrics.releasesToday} total</span>
+                  <span className="text-slate-900 dark:text-white font-bold">{facilityMetrics.releasesToday} total</span>
                 </div>
                 <div className="text-xs text-slate-500 ml-2 space-y-0.5">
                   <div>├─ Bond Posted: 8</div>
@@ -697,7 +697,7 @@ const JailDashboard = () => {
               <div className="text-3xl font-bold text-slate-900 dark:text-white">{facilityMetrics.averageLength}</div>
             </div>
             <h3 className="text-slate-600 dark:text-slate-400 text-sm mb-1">Average Length of Stay</h3>
-            <p className="text-lg text-white mb-2">Days</p>
+            <p className="text-lg text-slate-900 dark:text-white mb-2">Days</p>
 
             <div className="space-y-2 text-sm">
               <div className="flex items-center gap-1 text-amber-600 dark:text-amber-400">
@@ -763,7 +763,7 @@ const JailDashboard = () => {
               <div>
                 <div className="text-sm mb-2">
                   <span className="text-slate-600 dark:text-slate-400">7-Day Average:</span>{' '}
-                  <span className="text-white font-bold">{facilityMetrics.sevenDayAverage} inmates (91.6% of capacity)</span>
+                  <span className="text-slate-900 dark:text-white font-bold">{facilityMetrics.sevenDayAverage} inmates (91.6% of capacity)</span>
                 </div>
                 <div className="text-sm">
                   <span className="text-slate-600 dark:text-slate-400">Trend Analysis:</span>{' '}
@@ -826,7 +826,7 @@ const JailDashboard = () => {
                         <div className="flex items-start gap-2 flex-1">
                           <Circle className="w-3 h-3 fill-red-500 text-red-500 mt-1 flex-shrink-0" />
                           <div>
-                            <p className="text-sm text-white font-semibold">H2-Pod Over Capacity (36/32 beds - 112%)</p>
+                            <p className="text-sm text-slate-900 dark:text-white font-semibold">H2-Pod Over Capacity (36/32 beds - 112%)</p>
                             <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">Federal housing pod - ICE detainee overflow</p>
                           </div>
                         </div>
@@ -875,7 +875,7 @@ const JailDashboard = () => {
                         <div className="flex items-start gap-2 flex-1">
                           <Circle className="w-3 h-3 fill-amber-500 text-amber-500 mt-1 flex-shrink-0" />
                           <div>
-                            <p className="text-sm text-white font-semibold">E-Pod: Medical Housing at 92% (44/48 beds)</p>
+                            <p className="text-sm text-slate-900 dark:text-white font-semibold">E-Pod: Medical Housing at 92% (44/48 beds)</p>
                             <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">Medical observation pod approaching capacity</p>
                           </div>
                         </div>
@@ -923,7 +923,7 @@ const JailDashboard = () => {
                         <div className="flex items-start gap-2 flex-1">
                           <Circle className="w-3 h-3 fill-amber-500 text-amber-500 mt-1 flex-shrink-0" />
                           <div>
-                            <p className="text-sm text-white font-semibold">B-Shift: 1 position unfilled - Coverage adjusted</p>
+                            <p className="text-sm text-slate-900 dark:text-white font-semibold">B-Shift: 1 position unfilled - Coverage adjusted</p>
                             <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">Officer Martinez called out (family emergency - approved leave)</p>
                           </div>
                         </div>
@@ -1161,7 +1161,7 @@ const JailDashboard = () => {
                     </div>
                   )}
                   <div className="mt-2">
-                    <div className="w-full bg-slate-700 rounded-full h-2">
+                    <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2">
                       <div
                         className={`h-2 rounded-full transition-all ${
                           (unit.current / unit.capacity) * 100 >= 95 ? 'bg-red-500' :
@@ -1196,7 +1196,7 @@ const JailDashboard = () => {
                       <Circle className="w-2 h-2 fill-green-400" />
                       Minimum Security
                     </span>
-                    <span className="text-white font-semibold">117 (13.9%)</span>
+                    <span className="text-slate-900 dark:text-white font-semibold">117 (13.9%)</span>
                   </div>
                   <div className="text-xs text-slate-600 dark:text-slate-400 mt-1">
                     Criteria: Non-violent offenders, no escape risk, good behavior
@@ -1212,7 +1212,7 @@ const JailDashboard = () => {
                       <Circle className="w-2 h-2 fill-yellow-400" />
                       Medium Security
                     </span>
-                    <span className="text-white font-semibold">419 (49.8%)</span>
+                    <span className="text-slate-900 dark:text-white font-semibold">419 (49.8%)</span>
                   </div>
                   <div className="text-xs text-slate-600 dark:text-slate-400 mt-1">
                     Criteria: Standard inmates, moderate risk, most common classification
@@ -1228,7 +1228,7 @@ const JailDashboard = () => {
                       <Circle className="w-2 h-2 fill-orange-400" />
                       Maximum Security
                     </span>
-                    <span className="text-white font-semibold">148 (17.6%)</span>
+                    <span className="text-slate-900 dark:text-white font-semibold">148 (17.6%)</span>
                   </div>
                   <div className="text-xs text-slate-600 dark:text-slate-400 mt-1">
                     Criteria: Violent offenders, gang members, escape risks
@@ -1244,7 +1244,7 @@ const JailDashboard = () => {
                       <Circle className="w-2 h-2 fill-red-400" />
                       Administrative Segregation
                     </span>
-                    <span className="text-white font-semibold">28 (3.3%)</span>
+                    <span className="text-slate-900 dark:text-white font-semibold">28 (3.3%)</span>
                   </div>
                   <div className="text-xs text-slate-600 dark:text-slate-400 mt-1">
                     Purpose: Separated from general population for safety/security
@@ -1263,7 +1263,7 @@ const JailDashboard = () => {
                       <Shield className="w-3 h-3" />
                       Protective Custody (General)
                     </span>
-                    <span className="text-white font-semibold">41 (4.9%)</span>
+                    <span className="text-slate-900 dark:text-white font-semibold">41 (4.9%)</span>
                   </div>
                   <div className="text-xs text-slate-600 dark:text-slate-400 mt-1">
                     Reason: Safety concerns (not disciplinary)
@@ -1283,7 +1283,7 @@ const JailDashboard = () => {
                       <Hospital className="w-3 h-3" />
                       Medical Housing
                     </span>
-                    <span className="text-white font-semibold">44 (5.2%)</span>
+                    <span className="text-slate-900 dark:text-white font-semibold">44 (5.2%)</span>
                   </div>
                   <div className="text-xs text-slate-600 dark:text-slate-400 mt-1">
                     E-Pod medical observation unit
@@ -1303,7 +1303,7 @@ const JailDashboard = () => {
                       <Activity className="w-3 h-3" />
                       Mental Health Housing
                     </span>
-                    <span className="text-white font-semibold">38 (4.5%)</span>
+                    <span className="text-slate-900 dark:text-white font-semibold">38 (4.5%)</span>
                   </div>
                   <div className="text-xs text-slate-600 dark:text-slate-400 mt-1">
                     Specialized mental health treatment
@@ -1322,7 +1322,7 @@ const JailDashboard = () => {
                       <Clock className="w-3 h-3" />
                       Awaiting Classification
                     </span>
-                    <span className="text-white font-semibold">7 (0.8%)</span>
+                    <span className="text-slate-900 dark:text-white font-semibold">7 (0.8%)</span>
                   </div>
                   <div className="text-xs text-slate-600 dark:text-slate-400 mt-1">
                     New bookings within last 24 hours
@@ -1347,7 +1347,7 @@ const JailDashboard = () => {
                   ))}
                 </div>
                 <div className="flex gap-2 mt-3">
-                  <button className="flex-1 px-3 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg transition-colors text-xs font-medium">
+                  <button className="flex-1 px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-xs font-medium">
                     View Classification Manual
                   </button>
                   <button className="flex-1 px-3 py-2 bg-slate-700/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg transition-colors text-xs font-medium hover:bg-slate-700/60">
@@ -1367,7 +1367,7 @@ const JailDashboard = () => {
                 {/* Critical Medication */}
                 <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-white font-medium text-sm flex items-center gap-2">
+                    <span className="text-slate-900 dark:text-white font-medium text-sm flex items-center gap-2">
                       <Heart className="w-4 h-4 text-red-600 dark:text-red-400" />
                       Critical Medication
                     </span>
@@ -1396,7 +1396,7 @@ const JailDashboard = () => {
                 {/* Medical Holds */}
                 <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-4">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-white font-medium text-sm flex items-center gap-2">
+                    <span className="text-slate-900 dark:text-white font-medium text-sm flex items-center gap-2">
                       <Stethoscope className="w-4 h-4 text-orange-400" />
                       Medical Holds
                     </span>
@@ -1428,7 +1428,7 @@ const JailDashboard = () => {
                 {/* Suicide Watch */}
                 <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-white font-medium text-sm flex items-center gap-2">
+                    <span className="text-slate-900 dark:text-white font-medium text-sm flex items-center gap-2">
                       <AlertOctagon className="w-4 h-4 text-red-600 dark:text-red-400" />
                       Suicide Watch
                     </span>
@@ -1437,22 +1437,22 @@ const JailDashboard = () => {
                   <p className="text-xs text-slate-700 dark:text-slate-300 mb-2">4 inmates on active suicide prevention protocol (24/7)</p>
                   <div className="text-xs space-y-2 mb-2">
                     <div className="p-2 bg-slate-900/50 rounded">
-                      <div className="text-white">1. Anderson, Michael (#18423)</div>
+                      <div className="text-slate-900 dark:text-white">1. Anderson, Michael (#18423)</div>
                       <div className="text-slate-600 dark:text-slate-400">E-Pod Cell 12 | Since Dec 11, 2200 hrs (20 hours)</div>
                       <div className="text-slate-500">Reason: Suicidal ideation at booking | Status: Stable</div>
                     </div>
                     <div className="p-2 bg-slate-900/50 rounded">
-                      <div className="text-white">2. Martinez, David (#17956)</div>
+                      <div className="text-slate-900 dark:text-white">2. Martinez, David (#17956)</div>
                       <div className="text-slate-600 dark:text-slate-400">E-Pod Cell 14 | Since Dec 9 (3 days, 4 hours)</div>
                       <div className="text-slate-500">Reason: Previous attempt | Status: Improving</div>
                     </div>
                     <div className="p-2 bg-slate-900/50 rounded">
-                      <div className="text-white">3. Johnson, Sarah (#18501)</div>
+                      <div className="text-slate-900 dark:text-white">3. Johnson, Sarah (#18501)</div>
                       <div className="text-slate-600 dark:text-slate-400">E-Pod Cell 16 | Since Dec 11, 0800 hrs (34 hours)</div>
                       <div className="text-slate-500">Reason: Intent expressed | Status: No longer expressing</div>
                     </div>
                     <div className="p-2 bg-slate-900/50 rounded">
-                      <div className="text-white">4. Chen, Robert (#18145)</div>
+                      <div className="text-slate-900 dark:text-white">4. Chen, Robert (#18145)</div>
                       <div className="text-slate-600 dark:text-slate-400">E-Pod Cell 18 | Since Dec 10 (2 days, 2 hours)</div>
                       <div className="text-slate-500">Reason: Hearing voices | Status: Responding to meds</div>
                     </div>
@@ -1475,8 +1475,8 @@ const JailDashboard = () => {
                 {/* Infectious Disease */}
                 <div className="bg-slate-900/50 border border-slate-700 rounded-lg p-4">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-white font-medium text-sm">Infectious Disease</span>
-                    <span className="font-bold text-lg text-white">3</span>
+                    <span className="text-slate-900 dark:text-white font-medium text-sm">Infectious Disease</span>
+                    <span className="font-bold text-lg text-slate-900 dark:text-white">3</span>
                   </div>
                   <p className="text-xs text-slate-600 dark:text-slate-400 mb-2">Isolation protocols in effect</p>
                   <div className="text-xs text-slate-500">COVID-19: 1 (Day 3), TB exposure: 2 (testing pending)</div>
@@ -1489,8 +1489,8 @@ const JailDashboard = () => {
                 {/* Wheelchair/ADA */}
                 <div className="bg-slate-900/50 border border-slate-700 rounded-lg p-4">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-white font-medium text-sm">Wheelchair/ADA</span>
-                    <span className="font-bold text-lg text-white">11</span>
+                    <span className="text-slate-900 dark:text-white font-medium text-sm">Wheelchair/ADA</span>
+                    <span className="font-bold text-lg text-slate-900 dark:text-white">11</span>
                   </div>
                   <p className="text-xs text-slate-600 dark:text-slate-400 mb-2">Special housing accommodations</p>
                   <div className="text-xs text-slate-500">2 pending ADA requests under review</div>
@@ -1502,7 +1502,7 @@ const JailDashboard = () => {
               </div>
               <button
                 onClick={() => navigate('/jail/medical')}
-                className="mt-4 w-full px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg transition-colors text-sm font-medium"
+                className="mt-4 w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-sm font-medium"
               >
                 View Medical Dashboard
               </button>
@@ -1531,12 +1531,12 @@ const JailDashboard = () => {
                 <div key={booking.id} className="bg-slate-900/50 border border-slate-700 rounded-lg p-4 hover:border-slate-600 transition-colors">
                   <div className="flex items-start justify-between mb-3">
                     <div>
-                      <div className="text-white font-semibold">{booking.name}</div>
+                      <div className="text-slate-900 dark:text-white font-semibold">{booking.name}</div>
                       <div className="text-sm text-slate-600 dark:text-slate-400">{booking.id} • Inmate #{booking.inmateId}</div>
                     </div>
                     <div className="text-right">
                       <div className="text-sm text-slate-600 dark:text-slate-400">Booked</div>
-                      <div className="text-white font-medium">{booking.time}</div>
+                      <div className="text-slate-900 dark:text-white font-medium">{booking.time}</div>
                       <div className="text-xs text-slate-500">{booking.bookingTime}</div>
                     </div>
                   </div>
@@ -1639,11 +1639,11 @@ const JailDashboard = () => {
                       <div className={`px-2 py-1 rounded text-xs font-bold ${
                         incident.severity === 'High' ? 'bg-red-500/20 text-red-600 dark:text-red-400' :
                         incident.severity === 'Medium' ? 'bg-amber-500/20 text-amber-600 dark:text-amber-400' :
-                        'bg-slate-700/40 text-slate-300'
+                        'bg-slate-700/40 text-slate-500'
                       }`}>
                         {incident.severity.toUpperCase()}
                       </div>
-                      <div className="text-white font-semibold text-sm">{incident.type}</div>
+                      <div className="text-slate-900 dark:text-white font-semibold text-sm">{incident.type}</div>
                     </div>
                     <div className="text-xs text-slate-600 dark:text-slate-400">{incident.time}</div>
                   </div>
@@ -1679,8 +1679,8 @@ const JailDashboard = () => {
                     <span className={`px-2 py-1 rounded text-xs font-medium ${
                       incident.status === 'Resolved' ? 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400' :
                       incident.status === 'Under Review' ? 'bg-amber-500/20 text-amber-600 dark:text-amber-400' :
-                      incident.status === 'Transported' ? 'bg-slate-700/40 text-slate-300' :
-                      'bg-slate-700/40 text-slate-300'
+                      incident.status === 'Transported' ? 'bg-slate-700/40 text-slate-500' :
+                      'bg-slate-700/40 text-slate-500'
                     }`}>
                       {incident.status}
                     </span>
@@ -1726,12 +1726,12 @@ const JailDashboard = () => {
               {courtSchedule.map((court, idx) => (
                 <div key={idx} className="bg-slate-900/50 border border-slate-700 rounded-lg p-4">
                   <div className="flex items-center justify-between mb-3">
-                    <div className="text-white font-semibold">{court.court}</div>
+                    <div className="text-slate-900 dark:text-white font-semibold">{court.court}</div>
                     <span className={`px-2 py-1 rounded text-xs font-medium ${
                       court.status === 'Completed' ? 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400' :
-                      court.status === 'En Route' ? 'bg-slate-700/40 text-slate-300' :
+                      court.status === 'En Route' ? 'bg-slate-700/40 text-slate-500' :
                       court.status === 'Staging' ? 'bg-amber-500/20 text-amber-600 dark:text-amber-400' :
-                      'bg-slate-500/20 text-slate-400'
+                      'bg-slate-500/20 text-slate-500'
                     }`}>
                       {court.status}
                     </span>
@@ -1740,11 +1740,11 @@ const JailDashboard = () => {
                   <div className="grid grid-cols-2 gap-2 text-sm mb-2">
                     <div>
                       <span className="text-slate-600 dark:text-slate-400">Time:</span>{' '}
-                      <span className="text-white font-medium">{court.time}</span>
+                      <span className="text-slate-900 dark:text-white font-medium">{court.time}</span>
                     </div>
                     <div>
                       <span className="text-slate-600 dark:text-slate-400">Inmates:</span>{' '}
-                      <span className="text-white font-medium">{court.inmates}</span>
+                      <span className="text-slate-900 dark:text-white font-medium">{court.inmates}</span>
                     </div>
                   </div>
 
@@ -1752,12 +1752,12 @@ const JailDashboard = () => {
                   <div className="space-y-1 text-xs pt-2 border-t border-slate-700/50">
                     <div className="flex items-center justify-between">
                       <span className="text-slate-600 dark:text-slate-400">Deputy:</span>
-                      <span className="text-white">{court.deputy}</span>
+                      <span className="text-slate-900 dark:text-white">{court.deputy}</span>
                     </div>
                     {court.vehicle && (
                       <div className="flex items-center justify-between">
                         <span className="text-slate-600 dark:text-slate-400">Vehicle:</span>
-                        <span className="text-white">{court.vehicle}</span>
+                        <span className="text-slate-900 dark:text-white">{court.vehicle}</span>
                       </div>
                     )}
                     {court.departed && (
@@ -1808,10 +1808,10 @@ const JailDashboard = () => {
               {/* A-Shift */}
               <div className="bg-slate-900/50 border border-slate-700 rounded-lg p-4">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-white font-semibold">A-Shift (06:00-14:00)</span>
+                  <span className="text-slate-900 dark:text-white font-semibold">A-Shift (06:00-14:00)</span>
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                    <span className="text-white font-bold">{staffCoverage.aShift.present}/{staffCoverage.aShift.scheduled}</span>
+                    <span className="text-slate-900 dark:text-white font-bold">{staffCoverage.aShift.present}/{staffCoverage.aShift.scheduled}</span>
                   </div>
                 </div>
                 <div className="text-sm text-slate-600 dark:text-slate-400 mb-2">{staffCoverage.aShift.posts}</div>
@@ -1820,7 +1820,7 @@ const JailDashboard = () => {
                 <div className="text-xs space-y-1 pt-2 border-t border-slate-700/50">
                   <div className="flex items-center justify-between">
                     <span className="text-slate-600 dark:text-slate-400">Supervisor:</span>
-                    <span className="text-white">{staffCoverage.aShift.supervisor}</span>
+                    <span className="text-slate-900 dark:text-white">{staffCoverage.aShift.supervisor}</span>
                   </div>
                   <div className="text-slate-600 dark:text-slate-400">Officers: {staffCoverage.aShift.officers.join(', ')}</div>
                   <div className="text-slate-500 text-xs mt-2">{staffCoverage.aShift.assignments}</div>
@@ -1830,7 +1830,7 @@ const JailDashboard = () => {
               {/* B-Shift with Issue */}
               <div className="bg-slate-900/50 border border-amber-500/20 rounded-lg p-4">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-white font-semibold">B-Shift (14:00-22:00)</span>
+                  <span className="text-slate-900 dark:text-white font-semibold">B-Shift (14:00-22:00)</span>
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 bg-amber-500 rounded-full"></div>
                     <span className="text-amber-600 dark:text-amber-400 font-bold">{staffCoverage.bShift.present}/{staffCoverage.bShift.scheduled}</span>
@@ -1845,7 +1845,7 @@ const JailDashboard = () => {
                 <div className="text-xs space-y-1 pt-2 border-t border-slate-700/50 mb-3">
                   <div className="flex items-center justify-between">
                     <span className="text-slate-600 dark:text-slate-400">Supervisor:</span>
-                    <span className="text-white">{staffCoverage.bShift.supervisor}</span>
+                    <span className="text-slate-900 dark:text-white">{staffCoverage.bShift.supervisor}</span>
                   </div>
                   <div className="text-red-600 dark:text-red-400">{staffCoverage.bShift.issue}</div>
                   <div className="text-slate-700 dark:text-slate-300">{staffCoverage.bShift.coverage}</div>
@@ -1865,10 +1865,10 @@ const JailDashboard = () => {
               {/* C-Shift */}
               <div className="bg-slate-900/50 border border-slate-700 rounded-lg p-4">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-white font-semibold">C-Shift (22:00-06:00)</span>
+                  <span className="text-slate-900 dark:text-white font-semibold">C-Shift (22:00-06:00)</span>
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                    <span className="text-white font-bold">{staffCoverage.cShift.present}/{staffCoverage.cShift.scheduled}</span>
+                    <span className="text-slate-900 dark:text-white font-bold">{staffCoverage.cShift.present}/{staffCoverage.cShift.scheduled}</span>
                   </div>
                 </div>
                 <div className="text-sm text-slate-600 dark:text-slate-400">{staffCoverage.cShift.posts}</div>
@@ -1883,7 +1883,7 @@ const JailDashboard = () => {
                   <div className="text-sm text-slate-600 dark:text-slate-400 mb-2">Medical Staff</div>
                   <div className="flex items-center gap-2 mb-2">
                     <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                    <div className="text-white font-bold">{staffCoverage.medical.present}/{staffCoverage.medical.scheduled}</div>
+                    <div className="text-slate-900 dark:text-white font-bold">{staffCoverage.medical.present}/{staffCoverage.medical.scheduled}</div>
                   </div>
                   <div className="text-xs text-slate-600 dark:text-slate-400">{staffCoverage.medical.posts}</div>
                   <div className="text-xs text-slate-500 mt-2">
@@ -1895,7 +1895,7 @@ const JailDashboard = () => {
                   <div className="text-sm text-slate-600 dark:text-slate-400 mb-2">Kitchen Staff</div>
                   <div className="flex items-center gap-2 mb-2">
                     <div className="w-2 h-2 bg-amber-500 rounded-full"></div>
-                    <div className="text-white font-bold">{staffCoverage.kitchen.present}/{staffCoverage.kitchen.scheduled}</div>
+                    <div className="text-slate-900 dark:text-white font-bold">{staffCoverage.kitchen.present}/{staffCoverage.kitchen.scheduled}</div>
                   </div>
                   <div className="flex items-center gap-1 text-xs text-amber-600 dark:text-amber-400">
                     <AlertTriangle className="w-3 h-3" />
@@ -1925,15 +1925,15 @@ const JailDashboard = () => {
                 <div className="text-xs text-slate-600 dark:text-slate-400 space-y-1">
                   <div className="flex justify-between">
                     <span>├─ GED classes:</span>
-                    <span className="text-white">47 inmates enrolled (3 graduated this month)</span>
+                    <span className="text-slate-900 dark:text-white">47 inmates enrolled (3 graduated this month)</span>
                   </div>
                   <div className="flex justify-between">
                     <span>├─ Literacy program:</span>
-                    <span className="text-white">23 inmates</span>
+                    <span className="text-slate-900 dark:text-white">23 inmates</span>
                   </div>
                   <div className="flex justify-between">
                     <span>└─ Computer skills:</span>
-                    <span className="text-white">18 inmates</span>
+                    <span className="text-slate-900 dark:text-white">18 inmates</span>
                   </div>
                 </div>
               </div>
@@ -1944,19 +1944,19 @@ const JailDashboard = () => {
                 <div className="text-xs text-slate-600 dark:text-slate-400 space-y-1">
                   <div className="flex justify-between">
                     <span>├─ Kitchen crew:</span>
-                    <span className="text-white">12 inmates (meal preparation)</span>
+                    <span className="text-slate-900 dark:text-white">12 inmates (meal preparation)</span>
                   </div>
                   <div className="flex justify-between">
                     <span>├─ Laundry detail:</span>
-                    <span className="text-white">8 inmates</span>
+                    <span className="text-slate-900 dark:text-white">8 inmates</span>
                   </div>
                   <div className="flex justify-between">
                     <span>├─ Maintenance:</span>
-                    <span className="text-white">6 inmates (facility upkeep)</span>
+                    <span className="text-slate-900 dark:text-white">6 inmates (facility upkeep)</span>
                   </div>
                   <div className="flex justify-between">
                     <span>└─ Work release (outside):</span>
-                    <span className="text-white">18 inmates (12 full-time, 6 part-time)</span>
+                    <span className="text-slate-900 dark:text-white">18 inmates (12 full-time, 6 part-time)</span>
                   </div>
                 </div>
               </div>
@@ -1967,15 +1967,15 @@ const JailDashboard = () => {
                 <div className="text-xs text-slate-600 dark:text-slate-400 space-y-1">
                   <div className="flex justify-between">
                     <span>├─ Substance abuse:</span>
-                    <span className="text-white">34 inmates (AA/NA 3x weekly)</span>
+                    <span className="text-slate-900 dark:text-white">34 inmates (AA/NA 3x weekly)</span>
                   </div>
                   <div className="flex justify-between">
                     <span>├─ Anger management:</span>
-                    <span className="text-white">21 inmates (court-ordered)</span>
+                    <span className="text-slate-900 dark:text-white">21 inmates (court-ordered)</span>
                   </div>
                   <div className="flex justify-between">
                     <span>└─ Life skills:</span>
-                    <span className="text-white">28 inmates (re-entry preparation)</span>
+                    <span className="text-slate-900 dark:text-white">28 inmates (re-entry preparation)</span>
                   </div>
                 </div>
               </div>
@@ -1986,15 +1986,15 @@ const JailDashboard = () => {
                 <div className="text-xs text-slate-600 dark:text-slate-400 space-y-1">
                   <div className="flex justify-between">
                     <span>├─ Christian services:</span>
-                    <span className="text-white">Sundays 1000 hrs (avg 45 attendees)</span>
+                    <span className="text-slate-900 dark:text-white">Sundays 1000 hrs (avg 45 attendees)</span>
                   </div>
                   <div className="flex justify-between">
                     <span>├─ Islamic services:</span>
-                    <span className="text-white">Fridays 1300 hrs (avg 12 attendees)</span>
+                    <span className="text-slate-900 dark:text-white">Fridays 1300 hrs (avg 12 attendees)</span>
                   </div>
                   <div className="flex justify-between">
                     <span>└─ Other faiths:</span>
-                    <span className="text-white">By request</span>
+                    <span className="text-slate-900 dark:text-white">By request</span>
                   </div>
                 </div>
               </div>
@@ -2018,11 +2018,11 @@ const JailDashboard = () => {
                 <div className="text-xs text-slate-500 space-y-0.5">
                   <div className="flex justify-between">
                     <span>├─ Male facility:</span>
-                    <span className="text-white">18 visits</span>
+                    <span className="text-slate-900 dark:text-white">18 visits</span>
                   </div>
                   <div className="flex justify-between">
                     <span>└─ Female facility:</span>
-                    <span className="text-white">5 visits</span>
+                    <span className="text-slate-900 dark:text-white">5 visits</span>
                   </div>
                 </div>
               </div>
@@ -2037,7 +2037,7 @@ const JailDashboard = () => {
                 <div className="text-xs text-slate-500 space-y-0.5">
                   <div className="flex justify-between">
                     <span>├─ Scheduled:</span>
-                    <span className="text-white">52</span>
+                    <span className="text-slate-900 dark:text-white">52</span>
                   </div>
                   <div className="flex justify-between">
                     <span>├─ Completed:</span>
@@ -2075,11 +2075,11 @@ const JailDashboard = () => {
                 <div className="text-xs text-slate-600 dark:text-slate-400 space-y-1">
                   <div className="flex justify-between">
                     <span>Weekly Average:</span>
-                    <span className="text-white font-medium">284 total visits (all types)</span>
+                    <span className="text-slate-900 dark:text-white font-medium">284 total visits (all types)</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Most visited inmate:</span>
-                    <span className="text-white">Rodriguez (#17123) - 12 visits this week</span>
+                    <span className="text-slate-900 dark:text-white">Rodriguez (#17123) - 12 visits this week</span>
                   </div>
                 </div>
               </div>
@@ -2104,7 +2104,7 @@ const JailDashboard = () => {
                     {service.service === 'Mail Processing' && <Mail className="w-4 h-4 text-amber-600 dark:text-amber-400" />}
                     {service.service === 'Laundry Services' && <Activity className="w-4 h-4 text-cyan-400" />}
                     {service.service === 'Food Service' && <Utensils className="w-4 h-4 text-orange-400" />}
-                    <span className="text-white font-semibold text-sm">{service.service}</span>
+                    <span className="text-slate-900 dark:text-white font-semibold text-sm">{service.service}</span>
                   </div>
                   <span className={`px-2 py-1 rounded text-xs font-medium ${
                     service.status === 'Operational' ? 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400' :
@@ -2119,11 +2119,11 @@ const JailDashboard = () => {
                     <>
                       <div className="flex justify-between">
                         <span>Sessions Today:</span>
-                        <span className="text-white font-semibold">{service.sessionsToday}</span>
+                        <span className="text-slate-900 dark:text-white font-semibold">{service.sessionsToday}</span>
                       </div>
                       <div className="flex justify-between">
                         <span>Stations:</span>
-                        <span className="text-white">{service.stationsInUse}/{service.stationsTotal}</span>
+                        <span className="text-slate-900 dark:text-white">{service.stationsInUse}/{service.stationsTotal}</span>
                       </div>
                       <div className="text-xs text-slate-600 dark:text-slate-400">Wait time: {service.waitTime}</div>
                     </>
@@ -2133,7 +2133,7 @@ const JailDashboard = () => {
                     <>
                       <div className="flex justify-between">
                         <span>Orders Today:</span>
-                        <span className="text-white font-semibold">{service.ordersToday}</span>
+                        <span className="text-slate-900 dark:text-white font-semibold">{service.ordersToday}</span>
                       </div>
                       <div className="flex justify-between">
                         <span>In Queue:</span>
@@ -2147,7 +2147,7 @@ const JailDashboard = () => {
                     <>
                       <div className="flex justify-between">
                         <span>Calls Today:</span>
-                        <span className="text-white font-semibold">{service.callsToday}</span>
+                        <span className="text-slate-900 dark:text-white font-semibold">{service.callsToday}</span>
                       </div>
                       {service.issues && service.issues !== '0 stations need repair' && (
                         <div className="flex items-center gap-1 text-xs text-amber-600 dark:text-amber-400">
@@ -2162,11 +2162,11 @@ const JailDashboard = () => {
                     <>
                       <div className="flex justify-between">
                         <span>Incoming:</span>
-                        <span className="text-white">{service.incomingToday}</span>
+                        <span className="text-slate-900 dark:text-white">{service.incomingToday}</span>
                       </div>
                       <div className="flex justify-between">
                         <span>Outgoing:</span>
-                        <span className="text-white">{service.outgoingToday}</span>
+                        <span className="text-slate-900 dark:text-white">{service.outgoingToday}</span>
                       </div>
                       {service.flaggedItems && service.flaggedItems > 0 && (
                         <div className="flex items-center gap-1 text-xs text-red-600 dark:text-red-400">
@@ -2181,7 +2181,7 @@ const JailDashboard = () => {
                     <>
                       <div className="flex justify-between">
                         <span>Loads:</span>
-                        <span className="text-white">{service.loadsCompleted}/{service.loadsTotal}</span>
+                        <span className="text-slate-900 dark:text-white">{service.loadsCompleted}/{service.loadsTotal}</span>
                       </div>
                       <div className="text-xs text-slate-600 dark:text-slate-400">Next load: {service.nextLoad}</div>
                     </>
@@ -2191,7 +2191,7 @@ const JailDashboard = () => {
                     <>
                       <div className="flex justify-between">
                         <span>Next Meal:</span>
-                        <span className="text-white font-semibold">{service.nextMeal}</span>
+                        <span className="text-slate-900 dark:text-white font-semibold">{service.nextMeal}</span>
                       </div>
                       <div className="text-xs">{service.menu}</div>
                       <div className="text-xs text-slate-600 dark:text-slate-400">Special diets: {service.specialDiets}</div>
@@ -2226,7 +2226,7 @@ const JailDashboard = () => {
               </div>
               <button
                 onClick={() => setSelectedPod(null)}
-                className="text-slate-600 dark:text-slate-400 hover:text-white transition-colors"
+                className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
               >
                 <X className="w-6 h-6" />
               </button>
@@ -2260,7 +2260,7 @@ const JailDashboard = () => {
               <div className="grid grid-cols-2 gap-3 text-sm">
                 <div>
                   <span className="text-slate-600 dark:text-slate-400">Officers:</span>{' '}
-                  <span className="text-white font-semibold">4/4</span>
+                  <span className="text-slate-900 dark:text-white font-semibold">4/4</span>
                 </div>
                 <div className="text-slate-700 dark:text-slate-300">Officer Williams, Martinez, Chen, Rodriguez</div>
               </div>
@@ -2272,7 +2272,7 @@ const JailDashboard = () => {
               <div className="space-y-2 text-sm">
                 <div className="flex items-center justify-between">
                   <span className="text-slate-600 dark:text-slate-400">Last booking:</span>
-                  <span className="text-white">2 hours ago</span>
+                  <span className="text-slate-900 dark:text-white">2 hours ago</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-slate-600 dark:text-slate-400">Last incident:</span>
@@ -2299,13 +2299,13 @@ const JailDashboard = () => {
 
             {/* Actions */}
             <div className="flex gap-3">
-              <button className="flex-1 px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg font-medium transition-colors">
+              <button className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors">
                 View Full Roster
               </button>
-              <button className="flex-1 px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg font-medium transition-colors">
+              <button className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors">
                 Reassign Inmates
               </button>
-              <button className="flex-1 px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg font-medium transition-colors">
+              <button className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors">
                 Incident Log
               </button>
             </div>

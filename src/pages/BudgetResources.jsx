@@ -240,7 +240,7 @@ export default function BudgetResources() {
                 <select
                   value={timeRange}
                   onChange={(e) => setTimeRange(e.target.value)}
-                  className="px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white text-sm focus:outline-none focus:border-amber-500/50"
+                  className="px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white text-sm focus:outline-none focus:border-amber-500/50"
                 >
                   <option value="ytd">Year to Date</option>
                   <option value="q4">Q4 2024</option>
@@ -433,15 +433,15 @@ export default function BudgetResources() {
                 <div className="space-y-1.5 border-t border-slate-700/50 pt-3">
                   <div className="flex justify-between text-xs">
                     <span className="text-slate-600 dark:text-slate-400">Fiscal Year:</span>
-                    <span className="font-medium text-white">{fiscalYear.year}</span>
+                    <span className="font-medium text-slate-900 dark:text-white">{fiscalYear.year}</span>
                   </div>
                   <div className="flex justify-between text-xs">
                     <span className="text-slate-600 dark:text-slate-400">Monthly Avg:</span>
-                    <span className="font-medium text-white">$4.04M</span>
+                    <span className="font-medium text-slate-900 dark:text-white">$4.04M</span>
                   </div>
                   <div className="flex justify-between text-xs">
                     <span className="text-slate-600 dark:text-slate-400">Daily Rate:</span>
-                    <span className="font-medium text-white">$133K</span>
+                    <span className="font-medium text-slate-900 dark:text-white">$133K</span>
                   </div>
                 </div>
               </div>
@@ -467,7 +467,7 @@ export default function BudgetResources() {
                 <div className="space-y-1.5 border-t border-slate-700/50 pt-3">
                   <div className="flex justify-between text-xs">
                     <span className="text-slate-600 dark:text-slate-400">This month:</span>
-                    <span className="font-medium text-white">$3.98M</span>
+                    <span className="font-medium text-slate-900 dark:text-white">$3.98M</span>
                   </div>
                   <div className="flex justify-between text-xs">
                     <span className="text-slate-600 dark:text-slate-400">vs Last month:</span>
@@ -499,11 +499,11 @@ export default function BudgetResources() {
                 <div className="space-y-1.5 border-t border-slate-700/50 pt-3">
                   <div className="flex justify-between text-xs">
                     <span className="text-slate-600 dark:text-slate-400">Pending POs:</span>
-                    <span className="font-medium text-white">23 orders</span>
+                    <span className="font-medium text-slate-900 dark:text-white">23 orders</span>
                   </div>
                   <div className="flex justify-between text-xs">
                     <span className="text-slate-600 dark:text-slate-400">Largest:</span>
-                    <span className="font-medium text-white">$420K (Fleet)</span>
+                    <span className="font-medium text-slate-900 dark:text-white">$420K (Fleet)</span>
                   </div>
                 </div>
               </div>
@@ -529,7 +529,7 @@ export default function BudgetResources() {
                 <div className="space-y-1.5 border-t border-slate-700/50 pt-3">
                   <div className="flex justify-between text-xs">
                     <span className="text-slate-600 dark:text-slate-400">Days remaining:</span>
-                    <span className="font-medium text-white">61 days</span>
+                    <span className="font-medium text-slate-900 dark:text-white">61 days</span>
                   </div>
                   <div className="flex justify-between text-xs">
                     <span className="text-slate-600 dark:text-slate-400">Per day budget:</span>
@@ -578,7 +578,7 @@ export default function BudgetResources() {
                     <div>
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">TOTAL EXPENDITURES:</span>
-                        <span className="text-sm font-bold text-white">${(fiscalYear.spent / 1000000).toFixed(2)}M / ${(fiscalYear.totalBudget / 1000000).toFixed(1)}M ({fiscalYear.percentSpent}%)</span>
+                        <span className="text-sm font-bold text-slate-900 dark:text-white">${(fiscalYear.spent / 1000000).toFixed(2)}M / ${(fiscalYear.totalBudget / 1000000).toFixed(1)}M ({fiscalYear.percentSpent}%)</span>
                       </div>
                       <div className="w-full h-3 bg-slate-700/50 rounded-full overflow-hidden">
                         <div className={`h-full transition-all ${
@@ -619,11 +619,11 @@ export default function BudgetResources() {
                       <div className="grid grid-cols-2 gap-3 text-xs">
                         <div>
                           <span className="text-slate-600 dark:text-slate-400">• New total committed: </span>
-                          <span className="font-bold text-white">$4.0M (8.2%)</span>
+                          <span className="font-bold text-slate-900 dark:text-white">$4.0M (8.2%)</span>
                         </div>
                         <div>
                           <span className="text-slate-600 dark:text-slate-400">• New available: </span>
-                          <span className="font-bold text-white">$3.33M (6.9%)</span>
+                          <span className="font-bold text-slate-900 dark:text-white">$3.33M (6.9%)</span>
                         </div>
                       </div>
                     </div>
@@ -637,11 +637,11 @@ export default function BudgetResources() {
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
                         <div>
                           <p className="text-slate-600 dark:text-slate-400 mb-0.5">Daily average:</p>
-                          <p className="font-bold text-white">$140K</p>
+                          <p className="font-bold text-slate-900 dark:text-white">$140K</p>
                         </div>
                         <div>
                           <p className="text-slate-600 dark:text-slate-400 mb-0.5">Monthly average:</p>
-                          <p className="font-bold text-white">$4.1M</p>
+                          <p className="font-bold text-slate-900 dark:text-white">$4.1M</p>
                         </div>
                         <div>
                           <p className="text-slate-600 dark:text-slate-400 mb-0.5">Days remaining in FY:</p>
@@ -685,11 +685,11 @@ export default function BudgetResources() {
                       <div className="grid grid-cols-3 gap-3 text-xs">
                         <div>
                           <p className="text-slate-600 dark:text-slate-400 mb-1">Same period last year:</p>
-                          <p className="font-bold text-white">$39.8M (82%)</p>
+                          <p className="font-bold text-slate-900 dark:text-white">$39.8M (82%)</p>
                         </div>
                         <div>
                           <p className="text-slate-600 dark:text-slate-400 mb-1">Current year:</p>
-                          <p className="font-bold text-white">$41.2M (85%)</p>
+                          <p className="font-bold text-slate-900 dark:text-white">$41.2M (85%)</p>
                         </div>
                         <div>
                           <p className="text-slate-600 dark:text-slate-400 mb-1">YoY increase:</p>
@@ -975,7 +975,7 @@ export default function BudgetResources() {
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-sm font-semibold text-slate-900 dark:text-white">• Salaries:</span>
                         <div className="text-right">
-                          <p className="text-sm font-bold text-white">$28.2M</p>
+                          <p className="text-sm font-bold text-slate-900 dark:text-white">$28.2M</p>
                           <p className="text-xs text-green-600 dark:text-green-400">87% spent</p>
                         </div>
                       </div>
@@ -993,7 +993,7 @@ export default function BudgetResources() {
                           </span>
                         </div>
                         <div className="text-right">
-                          <p className="text-sm font-bold text-white">$3.2M</p>
+                          <p className="text-sm font-bold text-slate-900 dark:text-white">$3.2M</p>
                           <p className="text-xs text-red-600 dark:text-red-400">92% spent</p>
                         </div>
                       </div>
@@ -1005,11 +1005,11 @@ export default function BudgetResources() {
                         <div className="space-y-1 text-xs text-slate-700 dark:text-slate-300">
                           <div className="flex justify-between">
                             <span>• YTD:</span>
-                            <span className="font-medium text-white">$3.2M</span>
+                            <span className="font-medium text-slate-900 dark:text-white">$3.2M</span>
                           </div>
                           <div className="flex justify-between">
                             <span>• Budget:</span>
-                            <span className="font-medium text-white">$3.5M</span>
+                            <span className="font-medium text-slate-900 dark:text-white">$3.5M</span>
                           </div>
                           <div className="flex justify-between">
                             <span>• Projected year-end:</span>
@@ -1035,7 +1035,7 @@ export default function BudgetResources() {
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-sm font-semibold text-slate-900 dark:text-white">• Benefits:</span>
                         <div className="text-right">
-                          <p className="text-sm font-bold text-white">$7.1M</p>
+                          <p className="text-sm font-bold text-slate-900 dark:text-white">$7.1M</p>
                           <p className="text-xs text-green-600 dark:text-green-400">83% spent</p>
                         </div>
                       </div>
@@ -1169,15 +1169,15 @@ export default function BudgetResources() {
                     </div>
                     <p className="text-xs text-slate-600 dark:text-slate-400 mb-3">Based on current spending patterns</p>
                     <div className="text-sm text-slate-700 dark:text-slate-300 space-y-1 mb-4">
-                      <p>• Actual spending (Jan-Oct): <span className="font-bold text-white">$41.2M</span></p>
-                      <p>• Budgeted spending: <span className="font-bold text-white">$40.4M target</span></p>
+                      <p>• Actual spending (Jan-Oct): <span className="font-bold text-slate-900 dark:text-white">$41.2M</span></p>
+                      <p>• Budgeted spending: <span className="font-bold text-slate-900 dark:text-white">$40.4M target</span></p>
                       <p>• Forecasted spending (Nov-Dec): <span className="font-bold text-red-600 dark:text-red-400">$8.5M (projected)</span></p>
                     </div>
                   </div>
 
                   {/* Three Scenarios */}
                   <div className="space-y-4 mb-6">
-                    <h4 className="text-sm font-bold text-white">SCENARIOS:</h4>
+                    <h4 className="text-sm font-bold text-slate-900 dark:text-white">SCENARIOS:</h4>
 
                     {/* Scenario 1 - Current Pace */}
                     <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-5">
@@ -1188,15 +1188,15 @@ export default function BudgetResources() {
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs mb-3">
                         <div>
                           <p className="text-slate-600 dark:text-slate-400 mb-1">Nov spending:</p>
-                          <p className="font-bold text-white">$4.3M</p>
+                          <p className="font-bold text-slate-900 dark:text-white">$4.3M</p>
                         </div>
                         <div>
                           <p className="text-slate-600 dark:text-slate-400 mb-1">Dec spending:</p>
-                          <p className="font-bold text-white">$4.2M</p>
+                          <p className="font-bold text-slate-900 dark:text-white">$4.2M</p>
                         </div>
                         <div>
                           <p className="text-slate-600 dark:text-slate-400 mb-1">Year-end total:</p>
-                          <p className="font-bold text-white">$49.7M</p>
+                          <p className="font-bold text-slate-900 dark:text-white">$49.7M</p>
                         </div>
                         <div>
                           <p className="text-slate-600 dark:text-slate-400 mb-1">vs Budget:</p>
@@ -1214,15 +1214,15 @@ export default function BudgetResources() {
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs mb-3">
                         <div>
                           <p className="text-slate-600 dark:text-slate-400 mb-1">Nov spending:</p>
-                          <p className="font-bold text-white">$3.7M</p>
+                          <p className="font-bold text-slate-900 dark:text-white">$3.7M</p>
                         </div>
                         <div>
                           <p className="text-slate-600 dark:text-slate-400 mb-1">Dec spending:</p>
-                          <p className="font-bold text-white">$3.6M</p>
+                          <p className="font-bold text-slate-900 dark:text-white">$3.6M</p>
                         </div>
                         <div>
                           <p className="text-slate-600 dark:text-slate-400 mb-1">Year-end total:</p>
-                          <p className="font-bold text-white">$48.5M</p>
+                          <p className="font-bold text-slate-900 dark:text-white">$48.5M</p>
                         </div>
                         <div>
                           <p className="text-slate-600 dark:text-slate-400 mb-1">vs Budget:</p>
@@ -1240,15 +1240,15 @@ export default function BudgetResources() {
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs mb-3">
                         <div>
                           <p className="text-slate-600 dark:text-slate-400 mb-1">Nov spending:</p>
-                          <p className="font-bold text-white">$3.2M</p>
+                          <p className="font-bold text-slate-900 dark:text-white">$3.2M</p>
                         </div>
                         <div>
                           <p className="text-slate-600 dark:text-slate-400 mb-1">Dec spending:</p>
-                          <p className="font-bold text-white">$3.1M</p>
+                          <p className="font-bold text-slate-900 dark:text-white">$3.1M</p>
                         </div>
                         <div>
                           <p className="text-slate-600 dark:text-slate-400 mb-1">Year-end total:</p>
-                          <p className="font-bold text-white">$47.5M</p>
+                          <p className="font-bold text-slate-900 dark:text-white">$47.5M</p>
                         </div>
                         <div>
                           <p className="text-slate-600 dark:text-slate-400 mb-1">vs Budget:</p>
@@ -1292,7 +1292,7 @@ export default function BudgetResources() {
                     </div>
                     <div className="space-y-3 text-sm">
                       <div className="bg-slate-900/50 rounded-lg p-3 border border-slate-700/30">
-                        <p className="text-slate-700 dark:text-slate-300 mb-2">• <span className="font-bold text-white">Training Division</span> surplus: <span className="font-bold text-green-600 dark:text-green-400">$600K</span></p>
+                        <p className="text-slate-700 dark:text-slate-300 mb-2">• <span className="font-bold text-slate-900 dark:text-white">Training Division</span> surplus: <span className="font-bold text-green-600 dark:text-green-400">$600K</span></p>
                         <div className="pl-4 space-y-1 text-xs text-slate-600 dark:text-slate-400">
                           <p>→ Move $300K to Patrol (cover OT)</p>
                           <p>→ Move $200K to Administration (HVAC emergency)</p>
@@ -1300,7 +1300,7 @@ export default function BudgetResources() {
                         </div>
                       </div>
                       <div className="bg-slate-900/50 rounded-lg p-3 border border-slate-700/30">
-                        <p className="text-slate-700 dark:text-slate-300 mb-2">• <span className="font-bold text-white">Investigations</span> under budget: <span className="font-bold text-green-600 dark:text-green-400">$200K</span></p>
+                        <p className="text-slate-700 dark:text-slate-300 mb-2">• <span className="font-bold text-slate-900 dark:text-white">Investigations</span> under budget: <span className="font-bold text-green-600 dark:text-green-400">$200K</span></p>
                         <div className="pl-4 space-y-1 text-xs text-slate-600 dark:text-slate-400">
                           <p>→ Move $150K to Support Services (IT needs)</p>
                           <p>→ Keep $50K buffer</p>
@@ -1343,7 +1343,7 @@ export default function BudgetResources() {
               <div>
                 <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-1">{monthDetailModal.month} 2024 Detailed Breakdown</h3>
                 <p className="text-sm text-slate-600 dark:text-slate-400">
-                  Total Spent: <span className="font-bold text-white">${(monthDetailModal.spent / 1000000).toFixed(2)}M</span> ({((monthDetailModal.spent / monthDetailModal.budget) * 100).toFixed(0)}% of monthly target)
+                  Total Spent: <span className="font-bold text-slate-900 dark:text-white">${(monthDetailModal.spent / 1000000).toFixed(2)}M</span> ({((monthDetailModal.spent / monthDetailModal.budget) * 100).toFixed(0)}% of monthly target)
                 </p>
               </div>
               <button
@@ -1363,25 +1363,25 @@ export default function BudgetResources() {
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
                       <Users className="w-5 h-5 text-blue-400" />
-                      <span className="font-semibold text-white">Personnel:</span>
+                      <span className="font-semibold text-slate-900 dark:text-white">Personnel:</span>
                     </div>
                     <span className="text-lg font-bold text-blue-400">${(monthDetailModal.personnel / 1000000).toFixed(2)}M (78%)</span>
                   </div>
                   <div className="space-y-2 text-sm text-slate-700 dark:text-slate-300 pl-7">
                     <div className="flex justify-between">
                       <span>• Salaries:</span>
-                      <span className="font-medium text-white">${((monthDetailModal.personnel * 0.875) / 1000000).toFixed(2)}M</span>
+                      <span className="font-medium text-slate-900 dark:text-white">${((monthDetailModal.personnel * 0.875) / 1000000).toFixed(2)}M</span>
                     </div>
                     <div className="flex justify-between">
                       <span>• Overtime:</span>
-                      <span className={`font-medium ${monthDetailModal.variance?.overtime ? 'text-amber-600 dark:text-amber-400' : 'text-white'}`}>
+                      <span className={`font-medium ${monthDetailModal.variance?.overtime ? 'text-amber-600 dark:text-amber-400' : 'text-slate-900 dark:text-white'}`}>
                         ${((monthDetailModal.personnel * 0.10) / 1000000).toFixed(2)}M
                         {monthDetailModal.variance?.overtime && <span className="text-xs ml-1 inline-flex items-center gap-0.5">(↑ 25% vs prior month <AlertTriangle className="w-3 h-3" />)</span>}
                       </span>
                     </div>
                     <div className="flex justify-between">
                       <span>• Benefits:</span>
-                      <span className="font-medium text-white">${((monthDetailModal.personnel * 0.025) / 1000000).toFixed(2)}M</span>
+                      <span className="font-medium text-slate-900 dark:text-white">${((monthDetailModal.personnel * 0.025) / 1000000).toFixed(2)}M</span>
                     </div>
                   </div>
                 </div>
@@ -1391,26 +1391,26 @@ export default function BudgetResources() {
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
                       <Wrench className="w-5 h-5 text-green-600 dark:text-green-400" />
-                      <span className="font-semibold text-white">Operations:</span>
+                      <span className="font-semibold text-slate-900 dark:text-white">Operations:</span>
                     </div>
                     <span className="text-lg font-bold text-green-600 dark:text-green-400">${(monthDetailModal.operations / 1000000).toFixed(2)}M (16%)</span>
                   </div>
                   <div className="space-y-2 text-sm text-slate-700 dark:text-slate-300 pl-7">
                     <div className="flex justify-between">
                       <span>• Vehicle fuel:</span>
-                      <span className="font-medium text-white">${((monthDetailModal.operations * 0.35) / 1000000).toFixed(2)}M</span>
+                      <span className="font-medium text-slate-900 dark:text-white">${((monthDetailModal.operations * 0.35) / 1000000).toFixed(2)}M</span>
                     </div>
                     <div className="flex justify-between">
                       <span>• Equipment maintenance:</span>
-                      <span className="font-medium text-white">${((monthDetailModal.operations * 0.23) / 1000000).toFixed(2)}M</span>
+                      <span className="font-medium text-slate-900 dark:text-white">${((monthDetailModal.operations * 0.23) / 1000000).toFixed(2)}M</span>
                     </div>
                     <div className="flex justify-between">
                       <span>• Utilities:</span>
-                      <span className="font-medium text-white">${((monthDetailModal.operations * 0.18) / 1000000).toFixed(2)}M</span>
+                      <span className="font-medium text-slate-900 dark:text-white">${((monthDetailModal.operations * 0.18) / 1000000).toFixed(2)}M</span>
                     </div>
                     <div className="flex justify-between">
                       <span>• Supplies:</span>
-                      <span className="font-medium text-white">${((monthDetailModal.operations * 0.24) / 1000000).toFixed(2)}M</span>
+                      <span className="font-medium text-slate-900 dark:text-white">${((monthDetailModal.operations * 0.24) / 1000000).toFixed(2)}M</span>
                     </div>
                   </div>
                 </div>
@@ -1420,22 +1420,22 @@ export default function BudgetResources() {
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
                       <Target className="w-5 h-5 text-purple-400" />
-                      <span className="font-semibold text-white">Training:</span>
+                      <span className="font-semibold text-slate-900 dark:text-white">Training:</span>
                     </div>
                     <span className="text-lg font-bold text-purple-400">${(monthDetailModal.training / 1000000).toFixed(2)}M (4%)</span>
                   </div>
                   <div className="space-y-2 text-sm text-slate-700 dark:text-slate-300 pl-7">
                     <div className="flex justify-between">
                       <span>• Firearms recertification:</span>
-                      <span className="font-medium text-white">${((monthDetailModal.training * 0.30) / 1000000).toFixed(2)}M</span>
+                      <span className="font-medium text-slate-900 dark:text-white">${((monthDetailModal.training * 0.30) / 1000000).toFixed(2)}M</span>
                     </div>
                     <div className="flex justify-between">
                       <span>• Tactical training:</span>
-                      <span className="font-medium text-white">${((monthDetailModal.training * 0.43) / 1000000).toFixed(2)}M</span>
+                      <span className="font-medium text-slate-900 dark:text-white">${((monthDetailModal.training * 0.43) / 1000000).toFixed(2)}M</span>
                     </div>
                     <div className="flex justify-between">
                       <span>• CPR/First Aid:</span>
-                      <span className="font-medium text-white">${((monthDetailModal.training * 0.27) / 1000000).toFixed(2)}M</span>
+                      <span className="font-medium text-slate-900 dark:text-white">${((monthDetailModal.training * 0.27) / 1000000).toFixed(2)}M</span>
                     </div>
                   </div>
                 </div>
@@ -1445,18 +1445,18 @@ export default function BudgetResources() {
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
                       <Package className="w-5 h-5 text-amber-600 dark:text-amber-400" />
-                      <span className="font-semibold text-white">Equipment/Capital:</span>
+                      <span className="font-semibold text-slate-900 dark:text-white">Equipment/Capital:</span>
                     </div>
                     <span className="text-lg font-bold text-amber-600 dark:text-amber-400">${(monthDetailModal.equipment / 1000000).toFixed(2)}M (2%)</span>
                   </div>
                   <div className="space-y-2 text-sm text-slate-700 dark:text-slate-300 pl-7">
                     <div className="flex justify-between">
                       <span>• Body camera repairs:</span>
-                      <span className="font-medium text-white">${((monthDetailModal.equipment * 0.60) / 1000000).toFixed(2)}M</span>
+                      <span className="font-medium text-slate-900 dark:text-white">${((monthDetailModal.equipment * 0.60) / 1000000).toFixed(2)}M</span>
                     </div>
                     <div className="flex justify-between">
                       <span>• Computer upgrades:</span>
-                      <span className="font-medium text-white">${((monthDetailModal.equipment * 0.40) / 1000000).toFixed(2)}M</span>
+                      <span className="font-medium text-slate-900 dark:text-white">${((monthDetailModal.equipment * 0.40) / 1000000).toFixed(2)}M</span>
                     </div>
                   </div>
                 </div>
@@ -1502,7 +1502,7 @@ export default function BudgetResources() {
         onClick={() => setChatOpen(!chatOpen)}
         className="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-400 hover:to-blue-500 rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 z-40"
       >
-        {chatOpen ? <X className="w-6 h-6 text-white" /> : <MessageCircle className="w-6 h-6 text-white" />}
+        {chatOpen ? <X className="w-6 h-6 text-slate-900 dark:text-white" /> : <MessageCircle className="w-6 h-6 text-slate-900 dark:text-white" />}
       </button>
 
       {/* AI Chat Panel */}
@@ -1511,7 +1511,7 @@ export default function BudgetResources() {
           <div className="p-4 border-b border-slate-700/50">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-white" />
+                <Sparkles className="w-5 h-5 text-slate-900 dark:text-white" />
               </div>
               <div>
                 <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Budget AI Assistant</h3>
@@ -1522,7 +1522,7 @@ export default function BudgetResources() {
           <div className="flex-1 p-4 overflow-y-auto">
             <div className="flex gap-3">
               <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Sparkles className="w-4 h-4 text-white" />
+                <Sparkles className="w-4 h-4 text-slate-900 dark:text-white" />
               </div>
               <div className="flex-1">
                 <div className="bg-slate-800/60 p-3 rounded-xl">
@@ -1533,9 +1533,9 @@ export default function BudgetResources() {
           </div>
           <div className="p-4 border-t border-slate-700/50">
             <div className="flex items-center gap-2">
-              <input type="text" placeholder="Ask about budget..." className="flex-1 px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-blue-500/50" />
+              <input type="text" placeholder="Ask about budget..." className="flex-1 px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500/50" />
               <button className="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center">
-                <Send className="w-5 h-5 text-white" />
+                <Send className="w-5 h-5 text-slate-900 dark:text-white" />
               </button>
             </div>
           </div>

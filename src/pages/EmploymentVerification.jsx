@@ -549,7 +549,7 @@ export default function EmploymentVerification() {
             {/* Page Header */}
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-2xl font-semibold text-white">Employment Verification</h1>
+                <h1 className="text-2xl font-semibold text-slate-900 dark:text-white">Employment Verification</h1>
                 <p className="text-slate-600 dark:text-slate-400 mt-1">Marcus Thompson — Case #2024-0892</p>
               </div>
               <div className="flex items-center gap-3">
@@ -628,7 +628,7 @@ export default function EmploymentVerification() {
                     <Briefcase className="w-5 h-5 text-slate-600 dark:text-slate-400" />
                   </div>
                   <div>
-                    <p className="text-2xl font-semibold text-white">{stats.total}</p>
+                    <p className="text-2xl font-semibold text-slate-900 dark:text-white">{stats.total}</p>
                     <p className="text-slate-500 text-sm">Total Employers</p>
                   </div>
                 </div>
@@ -639,7 +639,7 @@ export default function EmploymentVerification() {
                     <CheckCircle2 className="w-5 h-5 text-green-400" />
                   </div>
                   <div>
-                    <p className="text-2xl font-semibold text-white">{stats.verified}</p>
+                    <p className="text-2xl font-semibold text-slate-900 dark:text-white">{stats.verified}</p>
                     <p className="text-slate-500 text-sm">Verified</p>
                   </div>
                 </div>
@@ -650,7 +650,7 @@ export default function EmploymentVerification() {
                     <Shield className="w-5 h-5 text-amber-400" />
                   </div>
                   <div>
-                    <p className="text-2xl font-semibold text-white">{stats.swornLE}</p>
+                    <p className="text-2xl font-semibold text-slate-900 dark:text-white">{stats.swornLE}</p>
                     <p className="text-slate-500 text-sm">Sworn LE Positions</p>
                   </div>
                 </div>
@@ -661,7 +661,7 @@ export default function EmploymentVerification() {
                     <BadgeCheck className="w-5 h-5 text-blue-400" />
                   </div>
                   <div>
-                    <p className="text-2xl font-semibold text-white">{stats.lateralTransfer}</p>
+                    <p className="text-2xl font-semibold text-slate-900 dark:text-white">{stats.lateralTransfer}</p>
                     <p className="text-slate-500 text-sm">Lateral Transfer</p>
                   </div>
                 </div>
@@ -672,7 +672,7 @@ export default function EmploymentVerification() {
                     <Calendar className="w-5 h-5 text-slate-600 dark:text-slate-400" />
                   </div>
                   <div>
-                    <p className="text-2xl font-semibold text-white">{stats.yearsDocumented}</p>
+                    <p className="text-2xl font-semibold text-slate-900 dark:text-white">{stats.yearsDocumented}</p>
                     <p className="text-slate-500 text-sm">Years Documented</p>
                   </div>
                 </div>
@@ -681,7 +681,7 @@ export default function EmploymentVerification() {
 
             {/* Employment Timeline Visualization */}
             <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-6">
-              <h3 className="text-white font-medium mb-4 flex items-center gap-2">
+              <h3 className="text-slate-900 dark:text-white font-medium mb-4 flex items-center gap-2">
                 <History className="w-5 h-5 text-amber-400" />
                 Employment Timeline
               </h3>
@@ -771,7 +771,7 @@ export default function EmploymentVerification() {
                       placeholder="Search employers..."
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
-                      className="pl-10 pr-4 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
+                      className="pl-10 pr-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white text-sm placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
                     />
                   </div>
                 </div>
@@ -807,7 +807,7 @@ export default function EmploymentVerification() {
                             </div>
                             <div>
                               <div className="flex items-center gap-2">
-                                <h3 className="text-white font-medium">{record.employer}</h3>
+                                <h3 className="text-slate-900 dark:text-white font-medium">{record.employer}</h3>
                                 {record.isCurrent && (
                                   <span className="px-2 py-0.5 bg-green-500/10 text-green-400 rounded text-xs">Current</span>
                                 )}
@@ -845,7 +845,7 @@ export default function EmploymentVerification() {
                           <div className="grid grid-cols-2 gap-4">
                             <div className="bg-slate-900/40 rounded-lg p-3">
                               <h4 className="text-slate-600 dark:text-slate-400 text-xs font-medium mb-2">VERIFICATION METHOD</h4>
-                              <p className="text-white text-sm">{record.verificationMethod}</p>
+                              <p className="text-slate-900 dark:text-white text-sm">{record.verificationMethod}</p>
                               {record.verificationDate && (
                                 <p className="text-slate-500 text-xs mt-1">
                                   Verified {formatDate(record.verificationDate)} by {record.verifiedBy}
@@ -876,7 +876,7 @@ export default function EmploymentVerification() {
                               <h4 className="text-slate-600 dark:text-slate-400 text-xs font-medium mb-2">HR CONTACT</h4>
                               <div className="flex items-center justify-between">
                                 <div>
-                                  <p className="text-white text-sm">{record.hrContact.name}</p>
+                                  <p className="text-slate-900 dark:text-white text-sm">{record.hrContact.name}</p>
                                   <p className="text-slate-500 text-xs">{record.hrContact.title}</p>
                                 </div>
                                 <div className="flex items-center gap-3 text-sm">
@@ -906,7 +906,7 @@ export default function EmploymentVerification() {
                               <h4 className="text-slate-600 dark:text-slate-400 text-xs font-medium mb-2">SUPERVISOR CONTACT</h4>
                               <div className="flex items-center justify-between">
                                 <div>
-                                  <p className="text-white text-sm">{record.supervisorContact.name}</p>
+                                  <p className="text-slate-900 dark:text-white text-sm">{record.supervisorContact.name}</p>
                                   <p className="text-slate-500 text-xs">{record.supervisorContact.title}</p>
                                 </div>
                                 <div className="flex items-center gap-3 text-sm">
@@ -974,7 +974,7 @@ export default function EmploymentVerification() {
                                     record.performance.rating === 'Exceeds Standards'
                                       ? 'text-green-400'
                                       : record.performance.rating === 'Meets Standards'
-                                        ? 'text-slate-300'
+                                        ? 'text-slate-500'
                                         : 'text-slate-500'
                                   }`}>
                                     {record.performance.rating}
@@ -1031,13 +1031,13 @@ export default function EmploymentVerification() {
                           <div className="grid grid-cols-3 gap-4">
                             <div className="bg-slate-900/40 rounded-lg p-3">
                               <h4 className="text-slate-600 dark:text-slate-400 text-xs font-medium mb-1">STARTING SALARY</h4>
-                              <p className="text-white text-sm">{record.salary.starting}</p>
+                              <p className="text-slate-900 dark:text-white text-sm">{record.salary.starting}</p>
                             </div>
                             <div className="bg-slate-900/40 rounded-lg p-3">
                               <h4 className="text-slate-600 dark:text-slate-400 text-xs font-medium mb-1">
                                 {record.isCurrent ? 'CURRENT SALARY' : 'ENDING SALARY'}
                               </h4>
-                              <p className="text-white text-sm">{record.salary.current || record.salary.ending}</p>
+                              <p className="text-slate-900 dark:text-white text-sm">{record.salary.current || record.salary.ending}</p>
                             </div>
                             <div className="bg-slate-900/40 rounded-lg p-3">
                               <h4 className="text-slate-600 dark:text-slate-400 text-xs font-medium mb-1">REHIRE ELIGIBLE</h4>
@@ -1046,7 +1046,7 @@ export default function EmploymentVerification() {
                                   ? 'text-green-400'
                                   : record.eligibleForRehire === 'No'
                                     ? 'text-red-400'
-                                    : 'text-slate-400'
+                                    : 'text-slate-500'
                               }`}>
                                 {record.eligibleForRehire}
                               </p>
@@ -1056,7 +1056,7 @@ export default function EmploymentVerification() {
                           {/* Reason for Leaving */}
                           <div className="bg-slate-900/40 rounded-lg p-3">
                             <h4 className="text-slate-600 dark:text-slate-400 text-xs font-medium mb-1">REASON FOR LEAVING</h4>
-                            <p className="text-white text-sm">{record.reasonForLeaving}</p>
+                            <p className="text-slate-900 dark:text-white text-sm">{record.reasonForLeaving}</p>
                           </div>
 
                           {/* Verification Timeline */}
@@ -1093,7 +1093,7 @@ export default function EmploymentVerification() {
               <div className="space-y-4">
                 {/* Internal Affairs Requirement Panel */}
                 <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
-                  <h3 className="text-white font-medium mb-4 flex items-center gap-2">
+                  <h3 className="text-slate-900 dark:text-white font-medium mb-4 flex items-center gap-2">
                     <Shield className="w-5 h-5 text-amber-400" />
                     Internal Affairs Requirements
                   </h3>
@@ -1102,7 +1102,7 @@ export default function EmploymentVerification() {
                     {employmentRecords.filter(r => r.internalAffairs.required).map(record => (
                       <div key={record.id} className="bg-slate-900/40 rounded-lg p-3">
                         <div className="flex items-center justify-between mb-2">
-                          <span className="text-white text-sm font-medium">
+                          <span className="text-slate-900 dark:text-white text-sm font-medium">
                             {record.employer.length > 25 ? record.employer.substring(0, 25) + '...' : record.employer}
                           </span>
                           {getIAStatusBadge(record.internalAffairs.status)}
@@ -1135,7 +1135,7 @@ export default function EmploymentVerification() {
 
                 {/* Verification Summary */}
                 <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
-                  <h3 className="text-white font-medium mb-4 flex items-center gap-2">
+                  <h3 className="text-slate-900 dark:text-white font-medium mb-4 flex items-center gap-2">
                     <FileCheck className="w-5 h-5 text-amber-400" />
                     Verification Summary
                   </h3>
@@ -1143,7 +1143,7 @@ export default function EmploymentVerification() {
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
                       <span className="text-slate-600 dark:text-slate-400 text-sm">Employers Verified</span>
-                      <span className="text-white font-medium">{stats.verified} / {stats.total}</span>
+                      <span className="text-slate-900 dark:text-white font-medium">{stats.verified} / {stats.total}</span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-slate-600 dark:text-slate-400 text-sm">POST Requirement</span>
@@ -1181,7 +1181,7 @@ export default function EmploymentVerification() {
 
                 {/* Support & Resources */}
                 <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
-                  <h3 className="text-white font-medium mb-4 flex items-center gap-2">
+                  <h3 className="text-slate-900 dark:text-white font-medium mb-4 flex items-center gap-2">
                     <HelpCircle className="w-5 h-5 text-amber-400" />
                     Support & Resources
                   </h3>
@@ -1190,7 +1190,7 @@ export default function EmploymentVerification() {
                     <a href="#" className="flex items-center gap-3 p-3 bg-slate-900/40 rounded-lg hover:bg-slate-800/60 transition-colors">
                       <BookOpen className="w-4 h-4 text-slate-600 dark:text-slate-400" />
                       <div>
-                        <p className="text-white text-sm">POST Regulations Guide</p>
+                        <p className="text-slate-900 dark:text-white text-sm">POST Regulations Guide</p>
                         <p className="text-slate-500 text-xs">Employment verification requirements</p>
                       </div>
                       <ExternalLink className="w-4 h-4 text-slate-500 ml-auto" />
@@ -1199,7 +1199,7 @@ export default function EmploymentVerification() {
                     <a href="#" className="flex items-center gap-3 p-3 bg-slate-900/40 rounded-lg hover:bg-slate-800/60 transition-colors">
                       <FileText className="w-4 h-4 text-slate-600 dark:text-slate-400" />
                       <div>
-                        <p className="text-white text-sm">IA Request Templates</p>
+                        <p className="text-slate-900 dark:text-white text-sm">IA Request Templates</p>
                         <p className="text-slate-500 text-xs">Standard clearance request forms</p>
                       </div>
                       <ExternalLink className="w-4 h-4 text-slate-500 ml-auto" />
@@ -1208,7 +1208,7 @@ export default function EmploymentVerification() {
                     <a href="#" className="flex items-center gap-3 p-3 bg-slate-900/40 rounded-lg hover:bg-slate-800/60 transition-colors">
                       <PhoneCall className="w-4 h-4 text-slate-600 dark:text-slate-400" />
                       <div>
-                        <p className="text-white text-sm">Verification Hotline</p>
+                        <p className="text-slate-900 dark:text-white text-sm">Verification Hotline</p>
                         <p className="text-slate-500 text-xs">Background Unit support</p>
                       </div>
                       <ExternalLink className="w-4 h-4 text-slate-500 ml-auto" />
@@ -1217,7 +1217,7 @@ export default function EmploymentVerification() {
                     <a href="#" className="flex items-center gap-3 p-3 bg-slate-900/40 rounded-lg hover:bg-slate-800/60 transition-colors">
                       <Scale className="w-4 h-4 text-slate-600 dark:text-slate-400" />
                       <div>
-                        <p className="text-white text-sm">Lateral Transfer Policy</p>
+                        <p className="text-slate-900 dark:text-white text-sm">Lateral Transfer Policy</p>
                         <p className="text-slate-500 text-xs">Agency transfer procedures</p>
                       </div>
                       <ExternalLink className="w-4 h-4 text-slate-500 ml-auto" />
@@ -1227,7 +1227,7 @@ export default function EmploymentVerification() {
 
                 {/* Audit Trail */}
                 <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
-                  <h3 className="text-white font-medium mb-4 flex items-center gap-2">
+                  <h3 className="text-slate-900 dark:text-white font-medium mb-4 flex items-center gap-2">
                     <History className="w-5 h-5 text-amber-400" />
                     Recent Activity
                   </h3>

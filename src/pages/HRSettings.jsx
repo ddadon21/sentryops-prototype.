@@ -240,7 +240,7 @@ export default function HRSettings() {
                 key={item.id}
                 onClick={() => handleNavigation(item)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                  isActive ? 'bg-amber-500 text-slate-900 dark:text-white shadow-lg shadow-amber-500/20' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white'
+                  isActive ? 'bg-amber-500 text-slate-900 dark:text-white shadow-lg shadow-amber-500/20' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-slate-900 dark:hover:text-white'
                 } ${sidebarCollapsed ? 'justify-center' : ''}`}
                 title={sidebarCollapsed ? item.label : ''}
               >
@@ -354,7 +354,7 @@ export default function HRSettings() {
                     </div>
                     <div className="max-h-96 overflow-y-auto">
                       {notifications.map(notification => (
-                        <div key={notification.id} className={`p-4 border-b border-slate-100 dark:border-slate-800/30 hover:bg-slate-50 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
+                        <div key={notification.id} className={`p-4 border-b border-slate-100 dark:border-slate-800/30 hover:bg-slate-50 dark:hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
                           <div className="flex items-start gap-3">
                             <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-amber-400' : 'bg-blue-400'}`}></div>
                             <div className="flex-1 min-w-0">
@@ -523,7 +523,7 @@ export default function HRSettings() {
                         type="text"
                         value={profileSettings.fullName}
                         onChange={(e) => setProfileSettings({...profileSettings, fullName: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
+                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
                       />
                     </div>
                     <div>
@@ -532,7 +532,7 @@ export default function HRSettings() {
                         type="email"
                         value={profileSettings.email}
                         onChange={(e) => setProfileSettings({...profileSettings, email: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
+                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
                       />
                     </div>
                     <div>
@@ -550,7 +550,7 @@ export default function HRSettings() {
                         type="tel"
                         value={profileSettings.phone}
                         onChange={(e) => setProfileSettings({...profileSettings, phone: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
+                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
                       />
                     </div>
                     <div>
@@ -586,7 +586,7 @@ export default function HRSettings() {
                         type="text"
                         value={profileSettings.certifications}
                         onChange={(e) => setProfileSettings({...profileSettings, certifications: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
+                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
                       />
                     </div>
                   </div>
@@ -695,7 +695,7 @@ export default function HRSettings() {
                         <button
                           onClick={() => setDisplaySettings({...displaySettings, theme: 'dark'})}
                           className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl border transition-all ${
-                            displaySettings.theme === 'dark' ? 'bg-amber-500/20 border-amber-500/50 text-amber-600 dark:text-amber-400' : 'bg-slate-800/40 border-slate-700/50 text-slate-400'
+                            displaySettings.theme === 'dark' ? 'bg-amber-500/20 border-amber-500/50 text-amber-600 dark:text-amber-400' : 'bg-slate-800/40 border-slate-700/50 text-slate-500'
                           }`}
                         >
                           <Moon className="w-5 h-5" />
@@ -704,7 +704,7 @@ export default function HRSettings() {
                         <button
                           onClick={() => setDisplaySettings({...displaySettings, theme: 'light'})}
                           className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl border transition-all ${
-                            displaySettings.theme === 'light' ? 'bg-amber-500/20 border-amber-500/50 text-amber-600 dark:text-amber-400' : 'bg-slate-800/40 border-slate-700/50 text-slate-400'
+                            displaySettings.theme === 'light' ? 'bg-amber-500/20 border-amber-500/50 text-amber-600 dark:text-amber-400' : 'bg-slate-800/40 border-slate-700/50 text-slate-500'
                           }`}
                         >
                           <Sun className="w-5 h-5" />
@@ -718,7 +718,7 @@ export default function HRSettings() {
                       <select
                         value={displaySettings.dateFormat}
                         onChange={(e) => setDisplaySettings({...displaySettings, dateFormat: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/50"
+                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/50"
                       >
                         <option value="MM/DD/YYYY">MM/DD/YYYY</option>
                         <option value="DD/MM/YYYY">DD/MM/YYYY</option>
@@ -731,7 +731,7 @@ export default function HRSettings() {
                       <select
                         value={displaySettings.timeFormat}
                         onChange={(e) => setDisplaySettings({...displaySettings, timeFormat: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/50"
+                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/50"
                       >
                         <option value="12h">12-hour</option>
                         <option value="24h">24-hour</option>
@@ -743,7 +743,7 @@ export default function HRSettings() {
                       <select
                         value={displaySettings.timezone}
                         onChange={(e) => setDisplaySettings({...displaySettings, timezone: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/50"
+                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/50"
                       >
                         <option value="America/New_York">Eastern Time (ET)</option>
                         <option value="America/Chicago">Central Time (CT)</option>
@@ -757,7 +757,7 @@ export default function HRSettings() {
                       <select
                         value={displaySettings.density}
                         onChange={(e) => setDisplaySettings({...displaySettings, density: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/50"
+                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/50"
                       >
                         <option value="compact">Compact</option>
                         <option value="comfortable">Comfortable</option>
@@ -834,7 +834,7 @@ export default function HRSettings() {
                         <select
                           value={securitySettings.sessionTimeout}
                           onChange={(e) => setSecuritySettings({...securitySettings, sessionTimeout: e.target.value})}
-                          className="px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/50"
+                          className="px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/50"
                         >
                           <option value="15">15 minutes</option>
                           <option value="30">30 minutes</option>
@@ -889,7 +889,7 @@ export default function HRSettings() {
                         <input
                           type="password"
                           placeholder="••••••••"
-                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
+                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
                         />
                       </div>
                       <div>
@@ -897,7 +897,7 @@ export default function HRSettings() {
                         <input
                           type="password"
                           placeholder="••••••••"
-                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
+                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
                         />
                       </div>
                       <div>
@@ -905,7 +905,7 @@ export default function HRSettings() {
                         <input
                           type="password"
                           placeholder="••••••••"
-                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
+                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
                         />
                       </div>
                     </div>
@@ -943,14 +943,14 @@ export default function HRSettings() {
                                 integration.status === 'connected' ? 'bg-green-500/20' : 'bg-slate-700/50'
                               }`}>
                                 <Database className={`w-6 h-6 ${
-                                  integration.status === 'connected' ? 'text-green-600 dark:text-green-400' : 'text-slate-400'
+                                  integration.status === 'connected' ? 'text-green-600 dark:text-green-400' : 'text-slate-500'
                                 }`} />
                               </div>
                               <div>
                                 <div className="flex items-center gap-3 mb-1">
                                   <h4 className="text-slate-900 dark:text-white font-semibold">{integration.name}</h4>
                                   <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${
-                                    integration.status === 'connected' ? 'bg-green-500/20 text-green-600 dark:text-green-400' : 'bg-slate-600/50 text-slate-400'
+                                    integration.status === 'connected' ? 'bg-green-500/20 text-green-600 dark:text-green-400' : 'bg-slate-600/50 text-slate-500'
                                   }`}>
                                     {integration.status === 'connected' ? 'Connected' : 'Disconnected'}
                                   </span>
@@ -1064,7 +1064,7 @@ export default function HRSettings() {
           </div>
           <div className="p-4 border-t border-slate-700/50">
             <div className="flex items-center gap-2">
-              <input type="text" placeholder="Ask about settings..." className="flex-1 px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none focus:border-blue-500/50" />
+              <input type="text" placeholder="Ask about settings..." className="flex-1 px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500/50" />
               <button className="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center">
                 <Send className="w-5 h-5 text-slate-900 dark:text-white" />
               </button>

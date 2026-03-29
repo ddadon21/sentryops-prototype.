@@ -329,7 +329,7 @@ export default function PersonnelOverview() {
   const getStatusColor = (status) => {
     const colors = {
       'on-duty': 'bg-green-500/20 border-green-500/30 text-green-600 dark:text-green-400',
-      'off-duty': 'bg-slate-500/20 border-slate-500/30 text-slate-400',
+      'off-duty': 'bg-slate-500/20 border-slate-500/30 text-slate-500',
       'on-leave': 'bg-amber-500/20 border-amber-500/30 text-amber-600 dark:text-amber-400'
     };
     return colors[status] || colors['off-duty'];
@@ -405,7 +405,7 @@ export default function PersonnelOverview() {
                       <p className="text-[11px] text-slate-500">Operational workforce management + deployment readiness</p>
                     </div>
                     <div className="flex items-center gap-2">
-                      <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/30 border border-slate-700/50 rounded-lg text-[11px] text-slate-600 dark:text-slate-400 hover:text-white transition-colors">
+                      <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-100 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-lg text-[11px] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors">
                         <Download className="w-3 h-3" />
                         Staffing Report
                       </button>
@@ -473,7 +473,7 @@ export default function PersonnelOverview() {
                 <div className="mb-4">
                   <button
                     onClick={() => setAiInsightsVisible(!aiInsightsVisible)}
-                    className="w-full flex items-center gap-2 px-3 py-2 bg-slate-50 dark:bg-slate-800/35 border border-slate-200 dark:border-slate-700/30 rounded hover:bg-slate-800/30 transition-colors"
+                    className="w-full flex items-center gap-2 px-3 py-2 bg-slate-50 dark:bg-slate-800/35 border border-slate-200 dark:border-slate-700/30 rounded hover:bg-slate-100 dark:hover:bg-slate-800/30 transition-colors"
                   >
                     <Sparkles className="w-3 h-3 text-slate-500" />
                     <span className="text-[11px] text-slate-700 dark:text-slate-300 flex-1 text-left">
@@ -499,16 +499,16 @@ export default function PersonnelOverview() {
                     <button className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-slate-900 font-semibold rounded text-[11px] transition-colors">
                       <Plus className="w-3 h-3" />Add Personnel
                     </button>
-                    <button onClick={() => navigate(createPageUrl('TrainingCertifications'))} className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800/30 hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded text-[11px] font-medium transition-colors">
+                    <button onClick={() => navigate(createPageUrl('TrainingCertifications'))} className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded text-[11px] font-medium transition-colors">
                       <Calendar className="w-3 h-3" />Schedule Training
                     </button>
-                    <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800/30 hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded text-[11px] font-medium transition-colors">
+                    <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded text-[11px] font-medium transition-colors">
                       <FileText className="w-3 h-3" />Certification Report
                     </button>
-                    <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800/30 hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded text-[11px] font-medium transition-colors">
+                    <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded text-[11px] font-medium transition-colors">
                       <BarChart3 className="w-3 h-3" />Workforce Analytics
                     </button>
-                    <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800/30 hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded text-[11px] font-medium transition-colors">
+                    <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded text-[11px] font-medium transition-colors">
                       <Download className="w-3 h-3" />Import Roster
                     </button>
                   </div>
@@ -521,16 +521,16 @@ export default function PersonnelOverview() {
                     <input
                       type="text"
                       placeholder="Search name, badge, division, rank..."
-                      className="w-full pl-9 pr-3 py-2 bg-slate-800/30 border border-slate-700/50 rounded text-[11px] text-white placeholder-slate-600 focus:outline-none focus:border-amber-500/40 transition-all"
+                      className="w-full pl-9 pr-3 py-2 bg-slate-100 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded text-[11px] text-slate-900 dark:text-white placeholder-slate-600 focus:outline-none focus:border-amber-500/40 transition-all"
                     />
                   </div>
                   <button
                     onClick={() => setFiltersOpen(!filtersOpen)}
-                    className="flex items-center gap-1.5 px-3 py-2 bg-slate-800/30 border border-slate-700/50 rounded text-[11px] text-slate-600 dark:text-slate-400 hover:text-white transition-colors"
+                    className="flex items-center gap-1.5 px-3 py-2 bg-slate-100 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded text-[11px] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
                   >
                     <Filter className="w-3 h-3" />Filters
                   </button>
-                  <button className="flex items-center gap-1.5 px-3 py-2 bg-slate-800/30 border border-slate-700/50 rounded text-[11px] text-slate-600 dark:text-slate-400 hover:text-white transition-colors">
+                  <button className="flex items-center gap-1.5 px-3 py-2 bg-slate-100 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded text-[11px] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors">
                     <Download className="w-3 h-3" />Export
                   </button>
                 </div>
@@ -542,7 +542,7 @@ export default function PersonnelOverview() {
                       <button className="text-[10px] text-amber-600 dark:text-amber-400 hover:text-amber-300">Clear</button>
                     </div>
                     <div className="grid grid-cols-4 gap-3">
-                      <select className="px-2.5 py-1.5 bg-slate-900/40 border border-slate-700/50 rounded text-[11px] text-white focus:outline-none focus:border-amber-500/40">
+                      <select className="px-2.5 py-1.5 bg-slate-900/40 border border-slate-700/50 rounded text-[11px] text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/40">
                         <option>All Divisions</option>
                         <option>Patrol</option>
                         <option>Investigations</option>
@@ -550,20 +550,20 @@ export default function PersonnelOverview() {
                         <option>Dispatch</option>
                         <option>School Resource</option>
                       </select>
-                      <select className="px-2.5 py-1.5 bg-slate-900/40 border border-slate-700/50 rounded text-[11px] text-white focus:outline-none focus:border-amber-500/40">
+                      <select className="px-2.5 py-1.5 bg-slate-900/40 border border-slate-700/50 rounded text-[11px] text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/40">
                         <option>All Ranks</option>
                         <option>Deputy Sheriff</option>
                         <option>Senior Deputy</option>
                         <option>Sergeant</option>
                         <option>Lieutenant</option>
                       </select>
-                      <select className="px-2.5 py-1.5 bg-slate-900/40 border border-slate-700/50 rounded text-[11px] text-white focus:outline-none focus:border-amber-500/40">
+                      <select className="px-2.5 py-1.5 bg-slate-900/40 border border-slate-700/50 rounded text-[11px] text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/40">
                         <option>All Status</option>
                         <option>On Duty</option>
                         <option>Off Duty</option>
                         <option>On Leave</option>
                       </select>
-                      <select className="px-2.5 py-1.5 bg-slate-900/40 border border-slate-700/50 rounded text-[11px] text-white focus:outline-none focus:border-amber-500/40">
+                      <select className="px-2.5 py-1.5 bg-slate-900/40 border border-slate-700/50 rounded text-[11px] text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/40">
                         <option>All Certs</option>
                         <option>Current</option>
                         <option>Expiring</option>
@@ -637,12 +637,12 @@ export default function PersonnelOverview() {
                                     <div className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 text-[11px] font-bold ${
                                       opStatus.color === 'red' ? 'bg-red-500/15 text-red-600 dark:text-red-400' :
                                       opStatus.color === 'amber' ? 'bg-amber-500/15 text-amber-600 dark:text-amber-400' :
-                                      'bg-slate-700/40 text-slate-300'
+                                      'bg-slate-700/40 text-slate-500'
                                     }`}>
                                       {person.photo}
                                     </div>
                                     <div className="min-w-0">
-                                      <p className="text-[11px] font-semibold text-white group-hover:text-amber-600 dark:text-amber-400 transition-colors truncate">{person.name}</p>
+                                      <p className="text-[11px] font-semibold text-slate-900 dark:text-white group-hover:text-amber-600 dark:text-amber-400 transition-colors truncate">{person.name}</p>
                                       <p className="text-[10px] text-slate-500">{person.rank} &middot; <span className="font-mono">{person.badge}</span></p>
                                     </div>
                                   </div>
@@ -747,7 +747,7 @@ export default function PersonnelOverview() {
                 <div className="bg-slate-800/15 border border-slate-700/30 rounded p-3">
                   <div className="flex items-center gap-2 mb-2.5">
                     <Shield className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
-                    <span className="text-[11px] font-bold text-white">Operational Coverage</span>
+                    <span className="text-[11px] font-bold text-slate-900 dark:text-white">Operational Coverage</span>
                   </div>
                   <div className="space-y-2">
                     {[
@@ -761,7 +761,7 @@ export default function PersonnelOverview() {
                           <span className="text-slate-600 dark:text-slate-400">{d.division}</span>
                           <span className="text-slate-700 dark:text-slate-300 font-mono">{d.current}/{d.required}</span>
                         </div>
-                        <div className="w-full h-1 bg-slate-800 rounded-full overflow-hidden">
+                        <div className="w-full h-1 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
                           <div
                             className={`h-full rounded-full ${
                               d.current / d.required >= 0.95 ? 'bg-green-500' :
@@ -775,7 +775,7 @@ export default function PersonnelOverview() {
                   </div>
                   <div className="mt-2.5 pt-2 border-t border-slate-700/30 flex items-center justify-between text-[10px]">
                     <span className="text-slate-500">Total on duty:</span>
-                    <span className="text-white font-bold">127/170 (75%)</span>
+                    <span className="text-slate-900 dark:text-white font-bold">127/170 (75%)</span>
                   </div>
                   <div className="flex items-center justify-between text-[10px] mt-0.5">
                     <span className="text-slate-500">On leave:</span>
@@ -791,7 +791,7 @@ export default function PersonnelOverview() {
                 <div className="bg-slate-800/15 border border-amber-500/15 rounded p-3">
                   <div className="flex items-center gap-2 mb-2">
                     <AlertTriangle className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
-                    <span className="text-[11px] font-bold text-white">Certification Risk</span>
+                    <span className="text-[11px] font-bold text-slate-900 dark:text-white">Certification Risk</span>
                   </div>
                   <div className="flex items-baseline gap-1.5 mb-2">
                     <span className="text-2xl font-bold text-amber-600 dark:text-amber-400">23</span>
@@ -839,7 +839,7 @@ export default function PersonnelOverview() {
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
-                    <span className="text-white font-medium">{peekData.photo}</span>
+                    <span className="text-slate-900 dark:text-white font-medium">{peekData.photo}</span>
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold text-slate-900 dark:text-white">{peekData.name}</h3>
@@ -921,7 +921,7 @@ export default function PersonnelOverview() {
                           <AlertCircle className="w-4 h-4 text-red-600 dark:text-red-400" />
                         )}
                         <div>
-                          <p className="text-sm text-white">{cert.name}</p>
+                          <p className="text-sm text-slate-900 dark:text-white">{cert.name}</p>
                           <p className="text-xs text-slate-600 dark:text-slate-400">Expires: {cert.expires}</p>
                         </div>
                       </div>
@@ -932,11 +932,11 @@ export default function PersonnelOverview() {
 
               {/* Quick Actions */}
               <div className="pt-4 border-t border-slate-700/50 space-y-3">
-                <button className="w-full flex items-center gap-3 px-4 py-3 bg-slate-800/30 hover:bg-slate-800/60 border border-slate-700/50 hover:border-slate-600/50 rounded-xl text-white transition-all">
+                <button className="w-full flex items-center gap-3 px-4 py-3 bg-slate-100 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-800/60 border border-slate-700/50 hover:border-slate-600/50 rounded-xl text-slate-900 dark:text-white transition-all">
                   <Mail className="w-5 h-5 text-slate-600 dark:text-slate-400" />
                   <span className="text-sm font-medium">Send Message</span>
                 </button>
-                <button className="w-full flex items-center gap-3 px-4 py-3 bg-slate-800/30 hover:bg-slate-800/60 border border-slate-700/50 hover:border-slate-600/50 rounded-xl text-white transition-all">
+                <button className="w-full flex items-center gap-3 px-4 py-3 bg-slate-100 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-800/60 border border-slate-700/50 hover:border-slate-600/50 rounded-xl text-slate-900 dark:text-white transition-all">
                   <Calendar className="w-5 h-5 text-amber-600 dark:text-amber-400" />
                   <span className="text-sm font-medium">View Schedule</span>
                 </button>
@@ -962,7 +962,7 @@ export default function PersonnelOverview() {
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-4">
                   <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
-                    <span className="text-white text-xl font-bold">{fullProfileData.photo}</span>
+                    <span className="text-slate-900 dark:text-white text-xl font-bold">{fullProfileData.photo}</span>
                   </div>
                   <div>
                     <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-1">{fullProfileData.name}</h2>
@@ -1019,8 +1019,8 @@ export default function PersonnelOverview() {
                       <div>
                         <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Performance Rating</p>
                         <div className="flex items-center gap-2">
-                          <Star className={`w-5 h-5 ${fullProfileData.performance >= 4.5 ? 'text-amber-600 dark:text-amber-400' : fullProfileData.performance >= 4.0 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-400'}`} />
-                          <span className={`text-lg font-bold ${fullProfileData.performance >= 4.5 ? 'text-amber-600 dark:text-amber-400' : fullProfileData.performance >= 4.0 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-300'}`}>
+                          <Star className={`w-5 h-5 ${fullProfileData.performance >= 4.5 ? 'text-amber-600 dark:text-amber-400' : fullProfileData.performance >= 4.0 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500'}`} />
+                          <span className={`text-lg font-bold ${fullProfileData.performance >= 4.5 ? 'text-amber-600 dark:text-amber-400' : fullProfileData.performance >= 4.0 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500'}`}>
                             {fullProfileData.performance.toFixed(1)}
                           </span>
                           <span className="text-xs text-slate-600 dark:text-slate-400">/5.0</span>
@@ -1145,14 +1145,14 @@ export default function PersonnelOverview() {
                     <div className="space-y-3">
                       <div>
                         <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Email</p>
-                        <a href={`mailto:${fullProfileData.email}`} className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 hover:text-white transition-colors">
+                        <a href={`mailto:${fullProfileData.email}`} className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white transition-colors">
                           <Mail className="w-4 h-4" />
                           <span>{fullProfileData.email}</span>
                         </a>
                       </div>
                       <div>
                         <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Phone</p>
-                        <a href={`tel:${fullProfileData.phone}`} className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 hover:text-white transition-colors">
+                        <a href={`tel:${fullProfileData.phone}`} className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white transition-colors">
                           <Phone className="w-4 h-4" />
                           <span>{fullProfileData.phone}</span>
                         </a>
@@ -1198,19 +1198,19 @@ export default function PersonnelOverview() {
                         <UserCircle className="w-4 h-4" />
                         <span>Edit Profile</span>
                       </button>
-                      <button className="w-full flex items-center gap-3 px-4 py-2.5 bg-slate-700 hover:bg-slate-600 text-white rounded-lg text-sm font-medium transition-colors">
+                      <button className="w-full flex items-center gap-3 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors">
                         <Calendar className="w-4 h-4" />
                         <span>Schedule Training</span>
                       </button>
-                      <button className="w-full flex items-center gap-3 px-4 py-2.5 bg-slate-700 hover:bg-slate-600 text-white rounded-lg text-sm font-medium transition-colors">
+                      <button className="w-full flex items-center gap-3 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors">
                         <Briefcase className="w-4 h-4" />
                         <span>Assign to Case</span>
                       </button>
-                      <button className="w-full flex items-center gap-3 px-4 py-2.5 bg-slate-700 hover:bg-slate-600 text-white rounded-lg text-sm font-medium transition-colors">
+                      <button className="w-full flex items-center gap-3 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors">
                         <Mail className="w-4 h-4" />
                         <span>Send Message</span>
                       </button>
-                      <button className="w-full flex items-center gap-3 px-4 py-2.5 bg-slate-700 hover:bg-slate-600 text-white rounded-lg text-sm font-medium transition-colors">
+                      <button className="w-full flex items-center gap-3 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors">
                         <Download className="w-4 h-4" />
                         <span>Download Full Record</span>
                       </button>

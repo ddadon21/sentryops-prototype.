@@ -316,7 +316,7 @@ const UnitManagement = () => {
 
         {/* Stats */}
         <div className="grid grid-cols-4 gap-4 mb-6">
-          <div className="bg-slate-800 border border-slate-700 rounded-lg p-4">
+          <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4">
             <div className="text-sm text-slate-600 dark:text-slate-400 mb-1">Total Units ({selectedShift === 'all' ? 'All Shifts' : selectedShift})</div>
             <div className="text-2xl font-bold text-slate-900 dark:text-white">{stats.total}</div>
           </div>
@@ -328,14 +328,14 @@ const UnitManagement = () => {
             <div className="text-sm text-slate-600 dark:text-slate-400 mb-1">Deployed</div>
             <div className="text-2xl font-bold text-amber-400">{stats.deployed}</div>
           </div>
-          <div className="bg-slate-800 border border-slate-700 rounded-lg p-4">
+          <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4">
             <div className="text-sm text-slate-600 dark:text-slate-400 mb-1">Out of Service</div>
             <div className="text-2xl font-bold text-slate-600 dark:text-slate-400">{stats.outOfService}</div>
           </div>
         </div>
 
         {/* Filters */}
-        <div className="bg-slate-800 border border-slate-700 rounded-lg p-4 mb-6">
+        <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4 mb-6">
           <div className="flex items-center gap-4">
             <div className="flex-1 relative">
               <Search className="w-5 h-5 text-slate-600 dark:text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
@@ -344,7 +344,7 @@ const UnitManagement = () => {
                 placeholder="Search by call sign, officer, or zone..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
+                className="w-full pl-10 pr-4 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500"
               />
             </div>
             <div className="flex items-center gap-2">
@@ -373,7 +373,7 @@ const UnitManagement = () => {
           {filteredUnits.map((unit) => (
             <div
               key={unit.id}
-              className="bg-slate-800 border border-slate-700 rounded-lg p-5 hover:border-slate-600 transition-colors"
+              className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-5 hover:border-slate-600 transition-colors"
             >
               {/* Header */}
               <div className="flex items-center justify-between mb-4">
@@ -390,12 +390,12 @@ const UnitManagement = () => {
               <div className="bg-slate-900/50 border border-slate-700 rounded-lg p-3 mb-4">
                 <div className="flex items-center gap-2 mb-2">
                   <Users className="w-4 h-4 text-blue-400" />
-                  <div className="text-sm text-white font-medium">{unit.officer}</div>
+                  <div className="text-sm text-slate-900 dark:text-white font-medium">{unit.officer}</div>
                 </div>
                 <div className="text-xs text-slate-600 dark:text-slate-400">Badge: {unit.badge}</div>
                 {unit.partner && (
                   <div className="mt-2 pt-2 border-t border-slate-700">
-                    <div className="text-sm text-white font-medium">{unit.partner}</div>
+                    <div className="text-sm text-slate-900 dark:text-white font-medium">{unit.partner}</div>
                     <div className="text-xs text-slate-600 dark:text-slate-400">Badge: {unit.partnerBadge}</div>
                   </div>
                 )}
@@ -406,12 +406,12 @@ const UnitManagement = () => {
                 <div className="flex items-center gap-2">
                   <MapPin className="w-4 h-4 text-purple-400" />
                   <span className="text-slate-600 dark:text-slate-400">Zone:</span>
-                  <span className="text-white font-medium">{unit.zone}</span>
+                  <span className="text-slate-900 dark:text-white font-medium">{unit.zone}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Navigation className="w-4 h-4 text-emerald-400" />
                   <span className="text-slate-600 dark:text-slate-400">Location:</span>
-                  <span className="text-white text-xs">{unit.location}</span>
+                  <span className="text-slate-900 dark:text-white text-xs">{unit.location}</span>
                 </div>
                 {unit.currentCall && (
                   <div className="flex items-center gap-2">
@@ -425,7 +425,7 @@ const UnitManagement = () => {
               <div className="grid grid-cols-2 gap-3 text-xs">
                 <div className="bg-slate-900/50 border border-slate-700 rounded p-2">
                   <div className="text-slate-600 dark:text-slate-400 mb-1">Mileage</div>
-                  <div className="text-white font-bold">{unit.mileage.toLocaleString()}</div>
+                  <div className="text-slate-900 dark:text-white font-bold">{unit.mileage.toLocaleString()}</div>
                 </div>
                 <div className="bg-slate-900/50 border border-slate-700 rounded p-2">
                   <div className="text-slate-600 dark:text-slate-400 mb-1">Fuel</div>

@@ -377,7 +377,7 @@ export default function EmployeeRecords() {
       'active': { bg: 'bg-green-500/20', text: 'text-green-400', border: 'border-green-500/30', label: 'ACTIVE' },
       'on-leave': { bg: 'bg-amber-500/20', text: 'text-amber-400', border: 'border-amber-500/30', label: 'ON LEAVE' },
       'suspended': { bg: 'bg-red-500/20', text: 'text-red-400', border: 'border-red-500/30', label: 'SUSPENDED' },
-      'separated': { bg: 'bg-slate-500/20', text: 'text-slate-400', border: 'border-slate-500/30', label: 'SEPARATED' }
+      'separated': { bg: 'bg-slate-500/20', text: 'text-slate-500', border: 'border-slate-500/30', label: 'SEPARATED' }
     };
     return configs[status] || configs.active;
   };
@@ -444,7 +444,7 @@ export default function EmployeeRecords() {
                 key={item.id}
                 onClick={() => handleNavigation(item)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-800/50 hover:text-white'
+                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white'
                 } ${sidebarCollapsed ? 'justify-center' : ''}`}
                 title={sidebarCollapsed ? item.label : ''}
               >
@@ -496,8 +496,8 @@ export default function EmployeeRecords() {
               </div>
             </div>
             <div className="flex gap-3 mt-6">
-              <button onClick={() => setLogoutConfirmOpen(false)} className="flex-1 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-white font-medium transition-all">Cancel</button>
-              <button onClick={handleLogout} className="flex-1 px-4 py-2.5 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-white font-medium transition-all">Sign Out</button>
+              <button onClick={() => setLogoutConfirmOpen(false)} className="flex-1 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all">Cancel</button>
+              <button onClick={handleLogout} className="flex-1 px-4 py-2.5 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all">Sign Out</button>
             </div>
           </div>
         </div>
@@ -511,9 +511,9 @@ export default function EmployeeRecords() {
                 <Menu className="w-5 h-5 text-slate-600 dark:text-slate-400" />
               </button>
               <div className="flex items-center gap-2 text-sm">
-                <button onClick={() => navigate(createPageUrl('HRDashboard'))} className="text-slate-600 dark:text-slate-400 hover:text-white transition-colors">HR Dashboard</button>
+                <button onClick={() => navigate(createPageUrl('HRDashboard'))} className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors">HR Dashboard</button>
                 <ChevronRight className="w-4 h-4 text-slate-600" />
-                <span className="text-white">Employee Records</span>
+                <span className="text-slate-900 dark:text-white">Employee Records</span>
               </div>
             </div>
             <div className="flex items-center gap-2 lg:gap-3">
@@ -542,7 +542,7 @@ export default function EmployeeRecords() {
                     </div>
                     <div className="max-h-96 overflow-y-auto">
                       {notifications.map(notification => (
-                        <div key={notification.id} className={`p-4 border-b border-slate-800/30 hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
+                        <div key={notification.id} className={`p-4 border-b border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
                           <div className="flex items-start gap-3">
                             <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-red-400' : 'bg-blue-400'}`}></div>
                             <div className="flex-1 min-w-0">
@@ -561,7 +561,7 @@ export default function EmployeeRecords() {
               <div className="h-8 w-px bg-slate-700/50"></div>
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
-                  <span className="text-white text-sm font-bold">HR</span>
+                  <span className="text-slate-900 dark:text-white text-sm font-bold">HR</span>
                 </div>
                 <div className="hidden sm:block">
                   <p className="text-sm font-medium text-slate-900 dark:text-white">HR Director</p>
@@ -743,7 +743,7 @@ export default function EmployeeRecords() {
                           <div key={idx} className="flex items-start gap-3 px-3 py-2 rounded-lg bg-slate-900/30">
                             {action.completed ? <CheckCircle2 className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" /> : <Circle className="w-4 h-4 text-slate-500 mt-0.5 flex-shrink-0" />}
                             <div className="flex-1">
-                              <p className={`text-xs font-medium ${action.completed ? 'text-green-400' : 'text-white'}`}>{action.action}</p>
+                              <p className={`text-xs font-medium ${action.completed ? 'text-green-400' : 'text-slate-900 dark:text-white'}`}>{action.action}</p>
                               {action.details && <p className="text-[10px] text-slate-500 mt-1">{action.details}</p>}
                             </div>
                             <span className="text-[10px] text-slate-500">{action.date}</span>
@@ -847,7 +847,7 @@ export default function EmployeeRecords() {
                         ].map((item, idx) => (
                           <div key={idx} className="flex items-start gap-3 px-3 py-2 rounded-lg bg-slate-900/30">
                             <Circle className="w-4 h-4 text-slate-500 mt-0.5 flex-shrink-0" />
-                            <p className="text-xs text-white">{item.action}</p>
+                            <p className="text-xs text-slate-900 dark:text-white">{item.action}</p>
                           </div>
                         ))}
                       </div>
@@ -878,7 +878,7 @@ export default function EmployeeRecords() {
                       <Sparkles className="w-5 h-5 text-violet-400" />
                     </div>
                     <div>
-                      <h3 className="text-sm font-bold text-white">AI Workforce Insights</h3>
+                      <h3 className="text-sm font-bold text-slate-900 dark:text-white">AI Workforce Insights</h3>
                       <p className="text-[10px] text-slate-600 dark:text-slate-400">Real-time personnel analytics • Updated {new Date().toLocaleDateString()}</p>
                     </div>
                   </div>
@@ -944,14 +944,14 @@ export default function EmployeeRecords() {
                 <div className="flex items-center gap-1 bg-slate-800/40 border border-slate-700/50 rounded-lg p-1">
                   <button
                     onClick={() => setViewMode('card')}
-                    className={`p-2 rounded-md transition-all ${viewMode === 'card' ? 'bg-amber-500/20 text-amber-400' : 'text-slate-600 dark:text-slate-400 hover:text-white'}`}
+                    className={`p-2 rounded-md transition-all ${viewMode === 'card' ? 'bg-amber-500/20 text-amber-400' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
                     title="Card View"
                   >
                     <LayoutGrid className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => setViewMode('list')}
-                    className={`p-2 rounded-md transition-all ${viewMode === 'list' ? 'bg-amber-500/20 text-amber-400' : 'text-slate-600 dark:text-slate-400 hover:text-white'}`}
+                    className={`p-2 rounded-md transition-all ${viewMode === 'list' ? 'bg-amber-500/20 text-amber-400' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
                     title="List View"
                   >
                     <List className="w-4 h-4" />
@@ -968,23 +968,23 @@ export default function EmployeeRecords() {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search by name, badge, position, department..."
-                    className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white text-sm placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
+                    className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white text-sm placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
                   />
                 </div>
-                <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} className="px-3 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer">
+                <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} className="px-3 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer">
                   <option value="all">All Status</option>
                   <option value="active">Active</option>
                   <option value="on-leave">On Leave</option>
                   <option value="suspended">Suspended</option>
                 </select>
-                <select value={filterDepartment} onChange={(e) => setFilterDepartment(e.target.value)} className="px-3 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer">
+                <select value={filterDepartment} onChange={(e) => setFilterDepartment(e.target.value)} className="px-3 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer">
                   <option value="all">All Divisions</option>
                   <option value="Patrol">Patrol Division</option>
                   <option value="Administrative">Administrative</option>
                   <option value="Human Resources">Human Resources</option>
                   <option value="Detention">Detention Center</option>
                 </select>
-                <select value={filterCertStatus} onChange={(e) => setFilterCertStatus(e.target.value)} className="px-3 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer">
+                <select value={filterCertStatus} onChange={(e) => setFilterCertStatus(e.target.value)} className="px-3 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer">
                   <option value="all">All Cert Status</option>
                   <option value="compliant">Compliant</option>
                   <option value="expiring">Expiring</option>
@@ -1288,7 +1288,7 @@ export default function EmployeeRecords() {
                     return (
                       <div key={idx} className={`p-3 rounded-lg border ${certConfig.border} ${cert.status === 'expired' ? 'bg-red-500/5' : cert.status === 'expiring' ? 'bg-amber-500/5' : 'bg-slate-800/30'}`}>
                         <div className="flex items-center justify-between mb-1">
-                          <p className="text-xs font-medium text-white">{cert.name}</p>
+                          <p className="text-xs font-medium text-slate-900 dark:text-white">{cert.name}</p>
                           <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${certConfig.bg} ${certConfig.text}`}>{certConfig.label}</span>
                         </div>
                         <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-[10px] text-slate-600 dark:text-slate-400">
@@ -1342,7 +1342,7 @@ export default function EmployeeRecords() {
               <div className="flex gap-3 pt-4 border-t border-slate-700/50">
                 <button className="flex-1 px-4 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-xl font-medium transition-all text-sm">Print Personnel File</button>
                 <button onClick={() => navigate(createPageUrl('PerformanceReviews'))} className="flex-1 px-4 py-3 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-400 rounded-xl font-medium transition-all text-sm">View Performance</button>
-                <button onClick={() => navigate(createPageUrl('TrainingCertifications'))} className="flex-1 px-4 py-3 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-white rounded-xl font-medium transition-all text-sm">Training History</button>
+                <button onClick={() => navigate(createPageUrl('TrainingCertifications'))} className="flex-1 px-4 py-3 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-900 dark:text-white rounded-xl font-medium transition-all text-sm">Training History</button>
                 <button onClick={() => setSelectedEmployee(null)} className="px-4 py-3 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl font-medium transition-all text-sm">Close</button>
               </div>
             </div>
@@ -1356,7 +1356,7 @@ export default function EmployeeRecords() {
           onClick={() => setSupportOpen(!supportOpen)}
           className="w-14 h-14 bg-gradient-to-br from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110"
         >
-          {supportOpen ? <X className="w-6 h-6 text-white" /> : <HelpCircle className="w-6 h-6 text-white" />}
+          {supportOpen ? <X className="w-6 h-6 text-slate-900 dark:text-white" /> : <HelpCircle className="w-6 h-6 text-slate-900 dark:text-white" />}
         </button>
 
         {supportOpen && (

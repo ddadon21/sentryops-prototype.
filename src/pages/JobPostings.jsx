@@ -109,7 +109,7 @@ export default function JobPostings() {
                 key={item.id}
                 onClick={() => handleNavigation(item)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-800/50 hover:text-white'
+                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white'
                 } ${sidebarCollapsed ? 'justify-center' : ''}`}
                 title={sidebarCollapsed ? item.label : ''}
               >
@@ -170,13 +170,13 @@ export default function JobPostings() {
             <div className="flex gap-3 mt-6">
               <button
                 onClick={() => setLogoutConfirmOpen(false)}
-                className="flex-1 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-white font-medium transition-all"
+                className="flex-1 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all"
               >
                 Cancel
               </button>
               <button
                 onClick={handleLogout}
-                className="flex-1 px-4 py-2.5 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-white font-medium transition-all"
+                className="flex-1 px-4 py-2.5 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all"
               >
                 Sign Out
               </button>
@@ -219,7 +219,7 @@ export default function JobPostings() {
                       </div>
                       <div className="max-h-96 overflow-y-auto">
                         {notifications.map(notification => (
-                          <div key={notification.id} className={`p-4 border-b border-slate-800/30 hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
+                          <div key={notification.id} className={`p-4 border-b border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
                             <div className="flex items-start gap-3">
                               <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-amber-400' : 'bg-blue-400'}`}></div>
                               <div className="flex-1 min-w-0">
@@ -239,7 +239,7 @@ export default function JobPostings() {
 
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
-                    <span className="text-white text-sm font-bold">HR</span>
+                    <span className="text-slate-900 dark:text-white text-sm font-bold">HR</span>
                   </div>
                   <div className="hidden sm:block">
                     <p className="text-sm font-medium text-slate-900 dark:text-white">HR Director</p>
@@ -253,9 +253,9 @@ export default function JobPostings() {
             <div className="flex flex-wrap items-center gap-4 text-xs text-slate-600 dark:text-slate-400 mb-4">
               <span>{formattedDate} • {formattedTime} EST</span>
               <span className="text-slate-600">|</span>
-              <span>Active Postings: <span className="text-white font-medium">4 positions</span> (12 vacancies)</span>
+              <span>Active Postings: <span className="text-slate-900 dark:text-white font-medium">4 positions</span> (12 vacancies)</span>
               <span className="text-slate-600">|</span>
-              <span>Total Applicants: <span className="text-white font-medium">47</span> (active pipeline)</span>
+              <span>Total Applicants: <span className="text-slate-900 dark:text-white font-medium">47</span> (active pipeline)</span>
               <span className="text-slate-600">|</span>
               <span>Sheriff: <span className="text-amber-400 font-medium">Keybo Taylor</span></span>
             </div>
@@ -333,7 +333,7 @@ export default function JobPostings() {
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="text-right hidden md:block">
-                    <p className="text-sm text-white font-medium">23 Applicants • 8 Vacancies</p>
+                    <p className="text-sm text-slate-900 dark:text-white font-medium">23 Applicants • 8 Vacancies</p>
                     <p className="text-xs text-slate-600 dark:text-slate-400">156 views • 111 days open</p>
                   </div>
                   {expandedPostings.deputy ? <ChevronUp className="w-5 h-5 text-slate-600 dark:text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-600 dark:text-slate-400" />}
@@ -348,7 +348,7 @@ export default function JobPostings() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                       <div className="bg-slate-900/40 rounded-lg p-4 border border-slate-700/30">
                         <p className="text-xs text-slate-500 mb-1">Positions Available</p>
-                        <p className="text-sm text-white font-medium">8 vacancies (Patrol Division - all shifts)</p>
+                        <p className="text-sm text-slate-900 dark:text-white font-medium">8 vacancies (Patrol Division - all shifts)</p>
                         <div className="mt-2 text-xs text-slate-600 dark:text-slate-400 space-y-1">
                           <p>• A-Shift (Day): 3 vacancies - 06:00-18:00</p>
                           <p>• B-Shift (Evening): 2 vacancies - 14:00-02:00</p>
@@ -357,18 +357,18 @@ export default function JobPostings() {
                       </div>
                       <div className="bg-slate-900/40 rounded-lg p-4 border border-slate-700/30">
                         <p className="text-xs text-slate-500 mb-1">Posting Timeline</p>
-                        <p className="text-sm text-white font-medium">Posted: October 14, 2024 (111 days)</p>
+                        <p className="text-sm text-slate-900 dark:text-white font-medium">Posted: October 14, 2024 (111 days)</p>
                         <p className="text-xs text-green-400 mt-1">CONTINUOUS RECRUITMENT (open until filled)</p>
                       </div>
                       <div className="bg-slate-900/40 rounded-lg p-4 border border-slate-700/30">
                         <p className="text-xs text-slate-500 mb-1">Work Location</p>
-                        <p className="text-sm text-white font-medium">Gwinnett County, GA</p>
+                        <p className="text-sm text-slate-900 dark:text-white font-medium">Gwinnett County, GA</p>
                         <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">HQ: 2900 Commons Dr, Lawrenceville</p>
                         <p className="text-xs text-slate-600 dark:text-slate-400">Patrol zones: Countywide</p>
                       </div>
                       <div className="bg-slate-900/40 rounded-lg p-4 border border-slate-700/30">
                         <p className="text-xs text-slate-500 mb-1">Salary Range</p>
-                        <p className="text-sm text-white font-medium">$48,000 - $63,000 annually</p>
+                        <p className="text-sm text-slate-900 dark:text-white font-medium">$48,000 - $63,000 annually</p>
                         <div className="mt-2 text-xs text-slate-600 dark:text-slate-400 space-y-1">
                           <p>• Step 1 (Entry): $48,000 base</p>
                           <p>• Step 5 (3 years): $55,200</p>
@@ -377,13 +377,13 @@ export default function JobPostings() {
                       </div>
                       <div className="bg-slate-900/40 rounded-lg p-4 border border-slate-700/30">
                         <p className="text-xs text-slate-500 mb-1">Shift Differential</p>
-                        <p className="text-sm text-white font-medium">+5% for B-Shift and C-Shift</p>
+                        <p className="text-sm text-slate-900 dark:text-white font-medium">+5% for B-Shift and C-Shift</p>
                         <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">B-Shift: $50,400-66,150</p>
                         <p className="text-xs text-slate-600 dark:text-slate-400">C-Shift: $50,400-66,150</p>
                       </div>
                       <div className="bg-slate-900/40 rounded-lg p-4 border border-slate-700/30">
                         <p className="text-xs text-slate-500 mb-1">Classification</p>
-                        <p className="text-sm text-white font-medium">SWORN LAW ENFORCEMENT DEPUTY</p>
+                        <p className="text-sm text-slate-900 dark:text-white font-medium">SWORN LAW ENFORCEMENT DEPUTY</p>
                         <div className="flex items-center gap-2 mt-2">
                           <Car className="w-4 h-4 text-blue-400" />
                           <span className="text-xs text-blue-400">Take-home vehicle after FTO</span>
@@ -399,27 +399,27 @@ export default function JobPostings() {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
                         <div className="flex items-start gap-2">
                           <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
-                          <span className="text-slate-700 dark:text-slate-300"><span className="text-white font-medium">Age:</span> 21+ years (Georgia POST requirement)</span>
+                          <span className="text-slate-700 dark:text-slate-300"><span className="text-slate-900 dark:text-white font-medium">Age:</span> 21+ years (Georgia POST requirement)</span>
                         </div>
                         <div className="flex items-start gap-2">
                           <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
-                          <span className="text-slate-700 dark:text-slate-300"><span className="text-white font-medium">Education:</span> High school diploma or GED</span>
+                          <span className="text-slate-700 dark:text-slate-300"><span className="text-slate-900 dark:text-white font-medium">Education:</span> High school diploma or GED</span>
                         </div>
                         <div className="flex items-start gap-2">
                           <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
-                          <span className="text-slate-700 dark:text-slate-300"><span className="text-white font-medium">Certification:</span> Georgia POST Basic Law Enforcement OR academy eligible</span>
+                          <span className="text-slate-700 dark:text-slate-300"><span className="text-slate-900 dark:text-white font-medium">Certification:</span> Georgia POST Basic Law Enforcement OR academy eligible</span>
                         </div>
                         <div className="flex items-start gap-2">
                           <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
-                          <span className="text-slate-700 dark:text-slate-300"><span className="text-white font-medium">Driver's License:</span> Valid GA license, clean record</span>
+                          <span className="text-slate-700 dark:text-slate-300"><span className="text-slate-900 dark:text-white font-medium">Driver's License:</span> Valid GA license, clean record</span>
                         </div>
                         <div className="flex items-start gap-2">
                           <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
-                          <span className="text-slate-700 dark:text-slate-300"><span className="text-white font-medium">Background:</span> Must pass POST-compliant investigation</span>
+                          <span className="text-slate-700 dark:text-slate-300"><span className="text-slate-900 dark:text-white font-medium">Background:</span> Must pass POST-compliant investigation</span>
                         </div>
                         <div className="flex items-start gap-2">
                           <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
-                          <span className="text-slate-700 dark:text-slate-300"><span className="text-white font-medium">Physical:</span> GCSO fitness test (1.5-mi run, push-ups, sit-ups)</span>
+                          <span className="text-slate-700 dark:text-slate-300"><span className="text-slate-900 dark:text-white font-medium">Physical:</span> GCSO fitness test (1.5-mi run, push-ups, sit-ups)</span>
                         </div>
                       </div>
                     </div>
@@ -431,22 +431,22 @@ export default function JobPostings() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
                       <div className="bg-slate-900/40 rounded-lg p-3 border border-slate-700/30">
                         <Heart className="w-5 h-5 text-red-400 mb-2" />
-                        <p className="text-xs text-white font-medium">Health Insurance</p>
+                        <p className="text-xs text-slate-900 dark:text-white font-medium">Health Insurance</p>
                         <p className="text-xs text-slate-600 dark:text-slate-400">County-provided (employee + family)</p>
                       </div>
                       <div className="bg-slate-900/40 rounded-lg p-3 border border-slate-700/30">
                         <DollarSign className="w-5 h-5 text-green-400 mb-2" />
-                        <p className="text-xs text-white font-medium">Retirement</p>
+                        <p className="text-xs text-slate-900 dark:text-white font-medium">Retirement</p>
                         <p className="text-xs text-slate-600 dark:text-slate-400">Georgia Sheriff's Retirement (GSRS)</p>
                       </div>
                       <div className="bg-slate-900/40 rounded-lg p-3 border border-slate-700/30">
                         <Calendar className="w-5 h-5 text-blue-400 mb-2" />
-                        <p className="text-xs text-white font-medium">Paid Leave</p>
+                        <p className="text-xs text-slate-900 dark:text-white font-medium">Paid Leave</p>
                         <p className="text-xs text-slate-600 dark:text-slate-400">15 vacation + 12 sick days</p>
                       </div>
                       <div className="bg-slate-900/40 rounded-lg p-3 border border-slate-700/30">
                         <GraduationCap className="w-5 h-5 text-purple-400 mb-2" />
-                        <p className="text-xs text-white font-medium">Education Incentive</p>
+                        <p className="text-xs text-slate-900 dark:text-white font-medium">Education Incentive</p>
                         <p className="text-xs text-slate-600 dark:text-slate-400">Up to $5,000/year tuition</p>
                       </div>
                     </div>
@@ -490,35 +490,35 @@ export default function JobPostings() {
                         <div className="w-32 text-xs text-slate-600 dark:text-slate-400">Applications</div>
                         <div className="flex-1 bg-slate-700/50 rounded-full h-6 relative overflow-hidden">
                           <div className="absolute inset-y-0 left-0 bg-blue-500 rounded-full" style={{width: '100%'}}></div>
-                          <span className="absolute inset-0 flex items-center justify-center text-xs font-medium text-white">23 received</span>
+                          <span className="absolute inset-0 flex items-center justify-center text-xs font-medium text-slate-900 dark:text-white">23 received</span>
                         </div>
                       </div>
                       <div className="flex items-center gap-4">
                         <div className="w-32 text-xs text-slate-600 dark:text-slate-400">Initial Screening</div>
                         <div className="flex-1 bg-slate-700/50 rounded-full h-6 relative overflow-hidden">
                           <div className="absolute inset-y-0 left-0 bg-green-500 rounded-full" style={{width: '74%'}}></div>
-                          <span className="absolute inset-0 flex items-center justify-center text-xs font-medium text-white">17 passed • 6 disqualified</span>
+                          <span className="absolute inset-0 flex items-center justify-center text-xs font-medium text-slate-900 dark:text-white">17 passed • 6 disqualified</span>
                         </div>
                       </div>
                       <div className="flex items-center gap-4">
                         <div className="w-32 text-xs text-slate-600 dark:text-slate-400">Oral Board</div>
                         <div className="flex-1 bg-slate-700/50 rounded-full h-6 relative overflow-hidden">
                           <div className="absolute inset-y-0 left-0 bg-amber-500 rounded-full" style={{width: '53%'}}></div>
-                          <span className="absolute inset-0 flex items-center justify-center text-xs font-medium text-white">9 completed • 8 scheduled (Feb 06)</span>
+                          <span className="absolute inset-0 flex items-center justify-center text-xs font-medium text-slate-900 dark:text-white">9 completed • 8 scheduled (Feb 06)</span>
                         </div>
                       </div>
                       <div className="flex items-center gap-4">
                         <div className="w-32 text-xs text-slate-600 dark:text-slate-400">Background</div>
                         <div className="flex-1 bg-slate-700/50 rounded-full h-6 relative overflow-hidden">
                           <div className="absolute inset-y-0 left-0 bg-purple-500 rounded-full" style={{width: '39%'}}></div>
-                          <span className="absolute inset-0 flex items-center justify-center text-xs font-medium text-white">5 in progress • 4 cleared • 2 disqualified</span>
+                          <span className="absolute inset-0 flex items-center justify-center text-xs font-medium text-slate-900 dark:text-white">5 in progress • 4 cleared • 2 disqualified</span>
                         </div>
                       </div>
                       <div className="flex items-center gap-4">
                         <div className="w-32 text-xs text-slate-600 dark:text-slate-400">Final Offers</div>
                         <div className="flex-1 bg-slate-700/50 rounded-full h-6 relative overflow-hidden">
                           <div className="absolute inset-y-0 left-0 bg-green-400 rounded-full" style={{width: '13%'}}></div>
-                          <span className="absolute inset-0 flex items-center justify-center text-xs font-medium text-white">3 extended • 2 accepted • 1 pending</span>
+                          <span className="absolute inset-0 flex items-center justify-center text-xs font-medium text-slate-900 dark:text-white">3 extended • 2 accepted • 1 pending</span>
                         </div>
                       </div>
                     </div>
@@ -536,7 +536,7 @@ export default function JobPostings() {
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                       <div className="bg-slate-900/40 rounded-lg p-3 border border-slate-700/30">
-                        <p className="text-xs font-medium text-white">Gwinnett County Police Dept</p>
+                        <p className="text-xs font-medium text-slate-900 dark:text-white">Gwinnett County Police Dept</p>
                         <p className="text-sm text-red-400 font-bold">$54,120 starting</p>
                         <div className="flex items-center gap-1 text-xs text-red-400 mt-1">
                           <ArrowUpRight className="w-3 h-3" />
@@ -544,7 +544,7 @@ export default function JobPostings() {
                         </div>
                       </div>
                       <div className="bg-slate-900/40 rounded-lg p-3 border border-slate-700/30">
-                        <p className="text-xs font-medium text-white">Atlanta Police Dept</p>
+                        <p className="text-xs font-medium text-slate-900 dark:text-white">Atlanta Police Dept</p>
                         <p className="text-sm text-red-400 font-bold">$58,000 starting</p>
                         <div className="flex items-center gap-1 text-xs text-red-400 mt-1">
                           <ArrowUpRight className="w-3 h-3" />
@@ -552,7 +552,7 @@ export default function JobPostings() {
                         </div>
                       </div>
                       <div className="bg-slate-900/40 rounded-lg p-3 border border-slate-700/30">
-                        <p className="text-xs font-medium text-white">Fulton County Sheriff</p>
+                        <p className="text-xs font-medium text-slate-900 dark:text-white">Fulton County Sheriff</p>
                         <p className="text-sm text-amber-400 font-bold">$52,500 starting</p>
                         <div className="flex items-center gap-1 text-xs text-amber-400 mt-1">
                           <ArrowUpRight className="w-3 h-3" />
@@ -560,7 +560,7 @@ export default function JobPostings() {
                         </div>
                       </div>
                       <div className="bg-slate-900/40 rounded-lg p-3 border border-slate-700/30">
-                        <p className="text-xs font-medium text-white">Cobb County Sheriff</p>
+                        <p className="text-xs font-medium text-slate-900 dark:text-white">Cobb County Sheriff</p>
                         <p className="text-sm text-amber-400 font-bold">$49,800 starting</p>
                         <div className="flex items-center gap-1 text-xs text-amber-400 mt-1">
                           <ArrowUpRight className="w-3 h-3" />
@@ -568,7 +568,7 @@ export default function JobPostings() {
                         </div>
                       </div>
                       <div className="bg-slate-900/40 rounded-lg p-3 border border-slate-700/30">
-                        <p className="text-xs font-medium text-white">DeKalb County Sheriff</p>
+                        <p className="text-xs font-medium text-slate-900 dark:text-white">DeKalb County Sheriff</p>
                         <p className="text-sm text-green-400 font-bold">$46,200 starting</p>
                         <div className="flex items-center gap-1 text-xs text-green-400 mt-1">
                           <ArrowDownRight className="w-3 h-3" />
@@ -611,15 +611,15 @@ export default function JobPostings() {
                       <Users className="w-4 h-4" />
                       View All Applications
                     </button>
-                    <button className="flex items-center gap-2 px-4 py-2 bg-slate-700/60 hover:bg-slate-700/80 text-white rounded-lg text-sm transition-all">
+                    <button className="flex items-center gap-2 px-4 py-2 bg-slate-700/60 hover:bg-slate-700/80 text-slate-900 dark:text-white rounded-lg text-sm transition-all">
                       <Edit className="w-4 h-4" />
                       Edit Posting
                     </button>
-                    <button className="flex items-center gap-2 px-4 py-2 bg-slate-700/60 hover:bg-slate-700/80 text-white rounded-lg text-sm transition-all">
+                    <button className="flex items-center gap-2 px-4 py-2 bg-slate-700/60 hover:bg-slate-700/80 text-slate-900 dark:text-white rounded-lg text-sm transition-all">
                       <Calendar className="w-4 h-4" />
                       Schedule Oral Boards
                     </button>
-                    <button className="flex items-center gap-2 px-4 py-2 bg-slate-700/60 hover:bg-slate-700/80 text-white rounded-lg text-sm transition-all">
+                    <button className="flex items-center gap-2 px-4 py-2 bg-slate-700/60 hover:bg-slate-700/80 text-slate-900 dark:text-white rounded-lg text-sm transition-all">
                       <Scale className="w-4 h-4" />
                       Competitive Salary Analysis
                     </button>
@@ -649,7 +649,7 @@ export default function JobPostings() {
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="text-right hidden md:block">
-                    <p className="text-sm text-white font-medium">12 Applicants • 2 Vacancies</p>
+                    <p className="text-sm text-slate-900 dark:text-white font-medium">12 Applicants • 2 Vacancies</p>
                     <p className="text-xs text-slate-600 dark:text-slate-400">89 views • 110 days open</p>
                   </div>
                   {expandedPostings.investigator ? <ChevronUp className="w-5 h-5 text-slate-600 dark:text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-600 dark:text-slate-400" />}
@@ -663,17 +663,17 @@ export default function JobPostings() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                       <div className="bg-slate-900/40 rounded-lg p-4 border border-slate-700/30">
                         <p className="text-xs text-slate-500 mb-1">Positions Available</p>
-                        <p className="text-sm text-white font-medium">2 vacancies</p>
+                        <p className="text-sm text-slate-900 dark:text-white font-medium">2 vacancies</p>
                         <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">Internal Affairs Division / HR Dept</p>
                       </div>
                       <div className="bg-slate-900/40 rounded-lg p-4 border border-slate-700/30">
                         <p className="text-xs text-slate-500 mb-1">Posting Timeline</p>
-                        <p className="text-sm text-white font-medium">Posted: October 15, 2024 (110 days)</p>
+                        <p className="text-sm text-slate-900 dark:text-white font-medium">Posted: October 15, 2024 (110 days)</p>
                         <p className="text-xs text-amber-400 mt-1">EXTENDED TO: February 28, 2026</p>
                       </div>
                       <div className="bg-slate-900/40 rounded-lg p-4 border border-slate-700/30">
                         <p className="text-xs text-slate-500 mb-1">Salary Range</p>
-                        <p className="text-sm text-white font-medium">$55,000 - $68,000 annually</p>
+                        <p className="text-sm text-slate-900 dark:text-white font-medium">$55,000 - $68,000 annually</p>
                         <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">Mon-Fri, 08:00-17:00</p>
                       </div>
                     </div>
@@ -686,19 +686,19 @@ export default function JobPostings() {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
                         <div className="flex items-start gap-2">
                           <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
-                          <span className="text-slate-700 dark:text-slate-300"><span className="text-white font-medium">POST Cert:</span> Georgia POST Basic Law Enforcement - REQUIRED</span>
+                          <span className="text-slate-700 dark:text-slate-300"><span className="text-slate-900 dark:text-white font-medium">POST Cert:</span> Georgia POST Basic Law Enforcement - REQUIRED</span>
                         </div>
                         <div className="flex items-start gap-2">
                           <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
-                          <span className="text-slate-700 dark:text-slate-300"><span className="text-white font-medium">Experience:</span> 3+ years sworn law enforcement</span>
+                          <span className="text-slate-700 dark:text-slate-300"><span className="text-slate-900 dark:text-white font-medium">Experience:</span> 3+ years sworn law enforcement</span>
                         </div>
                         <div className="flex items-start gap-2">
                           <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
-                          <span className="text-slate-700 dark:text-slate-300"><span className="text-white font-medium">Skills:</span> Report writing, interview techniques, records research</span>
+                          <span className="text-slate-700 dark:text-slate-300"><span className="text-slate-900 dark:text-white font-medium">Skills:</span> Report writing, interview techniques, records research</span>
                         </div>
                         <div className="flex items-start gap-2">
                           <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
-                          <span className="text-slate-700 dark:text-slate-300"><span className="text-white font-medium">Clearances:</span> GCIC/NCIC access, CJIS security</span>
+                          <span className="text-slate-700 dark:text-slate-300"><span className="text-slate-900 dark:text-white font-medium">Clearances:</span> GCIC/NCIC access, CJIS security</span>
                         </div>
                       </div>
                     </div>
@@ -740,10 +740,10 @@ export default function JobPostings() {
                       <span className="text-sm font-bold text-blue-400">Command Interview Panel Scheduled</span>
                     </div>
                     <div className="text-sm text-slate-700 dark:text-slate-300 space-y-1">
-                      <p><span className="text-white font-medium">Date:</span> February 11, 2026 • 10:00 AM - 15:00 PM</p>
-                      <p><span className="text-white font-medium">Location:</span> GCSO Headquarters, Sheriff's Conference Room</p>
-                      <p><span className="text-white font-medium">Panel:</span> Major R. Davis (IA Commander), HR Director, Lt. K. Hayes (Sr. Background Investigator)</p>
-                      <p><span className="text-white font-medium">Candidates:</span> 9 applicants (all qualified)</p>
+                      <p><span className="text-slate-900 dark:text-white font-medium">Date:</span> February 11, 2026 • 10:00 AM - 15:00 PM</p>
+                      <p><span className="text-slate-900 dark:text-white font-medium">Location:</span> GCSO Headquarters, Sheriff's Conference Room</p>
+                      <p><span className="text-slate-900 dark:text-white font-medium">Panel:</span> Major R. Davis (IA Commander), HR Director, Lt. K. Hayes (Sr. Background Investigator)</p>
+                      <p><span className="text-slate-900 dark:text-white font-medium">Candidates:</span> 9 applicants (all qualified)</p>
                     </div>
                   </div>
 
@@ -753,11 +753,11 @@ export default function JobPostings() {
                       <Users className="w-4 h-4" />
                       View All Applications
                     </button>
-                    <button className="flex items-center gap-2 px-4 py-2 bg-slate-700/60 hover:bg-slate-700/80 text-white rounded-lg text-sm transition-all">
+                    <button className="flex items-center gap-2 px-4 py-2 bg-slate-700/60 hover:bg-slate-700/80 text-slate-900 dark:text-white rounded-lg text-sm transition-all">
                       <FileText className="w-4 h-4" />
                       Interview Materials
                     </button>
-                    <button className="flex items-center gap-2 px-4 py-2 bg-slate-700/60 hover:bg-slate-700/80 text-white rounded-lg text-sm transition-all">
+                    <button className="flex items-center gap-2 px-4 py-2 bg-slate-700/60 hover:bg-slate-700/80 text-slate-900 dark:text-white rounded-lg text-sm transition-all">
                       <Mail className="w-4 h-4" />
                       Direct Recruitment Outreach
                     </button>
@@ -786,7 +786,7 @@ export default function JobPostings() {
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="text-right hidden md:block">
-                    <p className="text-sm text-white font-medium">8 Applicants • 1 Vacancy</p>
+                    <p className="text-sm text-slate-900 dark:text-white font-medium">8 Applicants • 1 Vacancy</p>
                     <p className="text-xs text-slate-600 dark:text-slate-400">67 views • 98 days open</p>
                   </div>
                   {expandedPostings.detention ? <ChevronUp className="w-5 h-5 text-slate-600 dark:text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-600 dark:text-slate-400" />}
@@ -800,17 +800,17 @@ export default function JobPostings() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                       <div className="bg-slate-900/40 rounded-lg p-4 border border-slate-700/30">
                         <p className="text-xs text-slate-500 mb-1">Positions Available</p>
-                        <p className="text-sm text-white font-medium">1 vacancy</p>
+                        <p className="text-sm text-slate-900 dark:text-white font-medium">1 vacancy</p>
                         <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">Gwinnett County Detention Center</p>
                       </div>
                       <div className="bg-slate-900/40 rounded-lg p-4 border border-slate-700/30">
                         <p className="text-xs text-slate-500 mb-1">Posting Timeline</p>
-                        <p className="text-sm text-white font-medium">Posted: October 27, 2024 (98 days)</p>
+                        <p className="text-sm text-slate-900 dark:text-white font-medium">Posted: October 27, 2024 (98 days)</p>
                         <p className="text-xs text-amber-400 mt-1">EXTENDED TO: March 31, 2026</p>
                       </div>
                       <div className="bg-slate-900/40 rounded-lg p-4 border border-slate-700/30">
                         <p className="text-xs text-slate-500 mb-1">Salary Range</p>
-                        <p className="text-sm text-white font-medium">$42,000 - $52,000 annually</p>
+                        <p className="text-sm text-slate-900 dark:text-white font-medium">$42,000 - $52,000 annually</p>
                         <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">12-hr rotating shifts (Days/Nights)</p>
                       </div>
                     </div>
@@ -835,7 +835,7 @@ export default function JobPostings() {
                     <h4 className="text-sm font-bold text-amber-400 uppercase tracking-wide mb-4">Competitive Position</h4>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                       <div className="bg-slate-900/40 rounded-lg p-3 border border-slate-700/30">
-                        <p className="text-xs font-medium text-white">Fulton County Sheriff</p>
+                        <p className="text-xs font-medium text-slate-900 dark:text-white">Fulton County Sheriff</p>
                         <p className="text-sm text-red-400 font-bold">$45,000 + $3K bonus</p>
                         <div className="flex items-center gap-1 text-xs text-red-400 mt-1">
                           <ArrowUpRight className="w-3 h-3" />
@@ -843,7 +843,7 @@ export default function JobPostings() {
                         </div>
                       </div>
                       <div className="bg-slate-900/40 rounded-lg p-3 border border-slate-700/30">
-                        <p className="text-xs font-medium text-white">Cobb County Sheriff</p>
+                        <p className="text-xs font-medium text-slate-900 dark:text-white">Cobb County Sheriff</p>
                         <p className="text-sm text-amber-400 font-bold">$43,500 starting</p>
                         <div className="flex items-center gap-1 text-xs text-amber-400 mt-1">
                           <ArrowUpRight className="w-3 h-3" />
@@ -851,7 +851,7 @@ export default function JobPostings() {
                         </div>
                       </div>
                       <div className="bg-slate-900/40 rounded-lg p-3 border border-slate-700/30">
-                        <p className="text-xs font-medium text-white">DeKalb County Sheriff</p>
+                        <p className="text-xs font-medium text-slate-900 dark:text-white">DeKalb County Sheriff</p>
                         <p className="text-sm text-green-400 font-bold">$40,000 starting</p>
                         <div className="flex items-center gap-1 text-xs text-green-400 mt-1">
                           <ArrowDownRight className="w-3 h-3" />
@@ -890,7 +890,7 @@ export default function JobPostings() {
                       <Edit className="w-4 h-4" />
                       Close & Repost with Incentives
                     </button>
-                    <button className="flex items-center gap-2 px-4 py-2 bg-slate-700/60 hover:bg-slate-700/80 text-white rounded-lg text-sm transition-all">
+                    <button className="flex items-center gap-2 px-4 py-2 bg-slate-700/60 hover:bg-slate-700/80 text-slate-900 dark:text-white rounded-lg text-sm transition-all">
                       <Scale className="w-4 h-4" />
                       Sheriff Compensation Review
                     </button>
@@ -920,7 +920,7 @@ export default function JobPostings() {
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="text-right hidden md:block">
-                    <p className="text-sm text-white font-medium">4 Applicants • 1 Vacancy</p>
+                    <p className="text-sm text-slate-900 dark:text-white font-medium">4 Applicants • 1 Vacancy</p>
                     <p className="text-xs text-red-400 font-medium">Closes Feb 11 (9 days)</p>
                   </div>
                   {expandedPostings.admin ? <ChevronUp className="w-5 h-5 text-slate-600 dark:text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-600 dark:text-slate-400" />}
@@ -934,17 +934,17 @@ export default function JobPostings() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                       <div className="bg-slate-900/40 rounded-lg p-4 border border-slate-700/30">
                         <p className="text-xs text-slate-500 mb-1">Positions Available</p>
-                        <p className="text-sm text-white font-medium">1 vacancy</p>
+                        <p className="text-sm text-slate-900 dark:text-white font-medium">1 vacancy</p>
                         <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">Classification: CIVILIAN</p>
                       </div>
                       <div className="bg-slate-900/40 rounded-lg p-4 border border-slate-700/30">
                         <p className="text-xs text-slate-500 mb-1">Posting Timeline</p>
-                        <p className="text-sm text-white font-medium">Posted: October 31, 2024 (94 days)</p>
+                        <p className="text-sm text-slate-900 dark:text-white font-medium">Posted: October 31, 2024 (94 days)</p>
                         <p className="text-xs text-red-400 font-bold mt-1">CLOSES: February 11, 2026 (9 DAYS)</p>
                       </div>
                       <div className="bg-slate-900/40 rounded-lg p-4 border border-slate-700/30">
                         <p className="text-xs text-slate-500 mb-1">Salary Range</p>
-                        <p className="text-sm text-white font-medium">$38,000 - $45,000 annually</p>
+                        <p className="text-sm text-slate-900 dark:text-white font-medium">$38,000 - $45,000 annually</p>
                         <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">Mon-Fri, 08:00-17:00</p>
                       </div>
                     </div>
@@ -969,10 +969,10 @@ export default function JobPostings() {
                     <h4 className="text-sm font-bold text-amber-400 uppercase tracking-wide mb-4">Root Cause Analysis</h4>
                     <div className="bg-slate-900/40 rounded-lg p-4 border border-slate-700/30">
                       <div className="space-y-3 text-sm text-slate-700 dark:text-slate-300">
-                        <p><span className="text-white font-medium">Salary not competitive:</span> GCSO pays $38K-45K, but other Gwinnett County departments pay $42K-50K (+10% more)</p>
-                        <p><span className="text-white font-medium">Private sector gap:</span> Gwinnett County businesses pay $42K-52K (10-16% more than GCSO)</p>
-                        <p><span className="text-white font-medium">Experience requirement:</span> 2+ years may be too high for $38K starting salary</p>
-                        <p><span className="text-white font-medium">Low visibility:</span> Only 45 views - not using civilian job boards effectively</p>
+                        <p><span className="text-slate-900 dark:text-white font-medium">Salary not competitive:</span> GCSO pays $38K-45K, but other Gwinnett County departments pay $42K-50K (+10% more)</p>
+                        <p><span className="text-slate-900 dark:text-white font-medium">Private sector gap:</span> Gwinnett County businesses pay $42K-52K (10-16% more than GCSO)</p>
+                        <p><span className="text-slate-900 dark:text-white font-medium">Experience requirement:</span> 2+ years may be too high for $38K starting salary</p>
+                        <p><span className="text-slate-900 dark:text-white font-medium">Low visibility:</span> Only 45 views - not using civilian job boards effectively</p>
                       </div>
                     </div>
                   </div>
@@ -982,22 +982,22 @@ export default function JobPostings() {
                     <h4 className="text-sm font-bold text-amber-400 uppercase tracking-wide mb-4">Salary Comparison</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       <div className="bg-slate-900/40 rounded-lg p-3 border border-slate-700/30">
-                        <p className="text-xs font-medium text-white">Gwinnett County Government (other depts)</p>
+                        <p className="text-xs font-medium text-slate-900 dark:text-white">Gwinnett County Government (other depts)</p>
                         <p className="text-sm text-red-400 font-bold">$42,000 - $50,000</p>
                         <p className="text-xs text-red-400">GCSO pays 9.5-11.1% LESS</p>
                       </div>
                       <div className="bg-slate-900/40 rounded-lg p-3 border border-slate-700/30">
-                        <p className="text-xs font-medium text-white">Gwinnett County Public Schools</p>
+                        <p className="text-xs font-medium text-slate-900 dark:text-white">Gwinnett County Public Schools</p>
                         <p className="text-sm text-amber-400 font-bold">$40,000 - $48,000</p>
                         <p className="text-xs text-amber-400">GCSO pays 5-6.7% less</p>
                       </div>
                       <div className="bg-slate-900/40 rounded-lg p-3 border border-slate-700/30">
-                        <p className="text-xs font-medium text-white">Private Sector (Gwinnett area)</p>
+                        <p className="text-xs font-medium text-slate-900 dark:text-white">Private Sector (Gwinnett area)</p>
                         <p className="text-sm text-red-400 font-bold">$42,000 - $52,000</p>
                         <p className="text-xs text-red-400">GCSO pays 10.5-15.6% less</p>
                       </div>
                       <div className="bg-slate-900/40 rounded-lg p-3 border border-slate-700/30">
-                        <p className="text-xs font-medium text-white">Other Sheriff's Offices</p>
+                        <p className="text-xs font-medium text-slate-900 dark:text-white">Other Sheriff's Offices</p>
                         <p className="text-sm text-green-400 font-bold">$37,000 - $48,000</p>
                         <p className="text-xs text-green-400">GCSO competitive with peers</p>
                       </div>
@@ -1010,23 +1010,23 @@ export default function JobPostings() {
                     <div className="space-y-2">
                       <div className="flex items-start gap-3 p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
                         <span className="w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0">1</span>
-                        <span className="text-sm text-slate-700 dark:text-slate-300"><span className="font-bold text-white">EXTEND POSTING</span> to March 31, 2026 (need more time)</span>
+                        <span className="text-sm text-slate-700 dark:text-slate-300"><span className="font-bold text-slate-900 dark:text-white">EXTEND POSTING</span> to March 31, 2026 (need more time)</span>
                       </div>
                       <div className="flex items-start gap-3 p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
                         <span className="w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0">2</span>
-                        <span className="text-sm text-slate-700 dark:text-slate-300"><span className="font-bold text-white">INCREASE SALARY</span> to $42,000-50,000 (match county departments)</span>
+                        <span className="text-sm text-slate-700 dark:text-slate-300"><span className="font-bold text-slate-900 dark:text-white">INCREASE SALARY</span> to $42,000-50,000 (match county departments)</span>
                       </div>
                       <div className="flex items-start gap-3 p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
                         <span className="w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0">3</span>
-                        <span className="text-sm text-slate-700 dark:text-slate-300"><span className="font-bold text-white">REDUCE EXPERIENCE</span> requirement to 1-2 years (from 2+)</span>
+                        <span className="text-sm text-slate-700 dark:text-slate-300"><span className="font-bold text-slate-900 dark:text-white">REDUCE EXPERIENCE</span> requirement to 1-2 years (from 2+)</span>
                       </div>
                       <div className="flex items-start gap-3 p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg">
                         <span className="w-6 h-6 bg-amber-500 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0">4</span>
-                        <span className="text-sm text-slate-700 dark:text-slate-300"><span className="font-bold text-white">EXPAND MARKETING:</span> Indeed.com, LinkedIn, Gwinnett County Jobs, local colleges</span>
+                        <span className="text-sm text-slate-700 dark:text-slate-300"><span className="font-bold text-slate-900 dark:text-white">EXPAND MARKETING:</span> Indeed.com, LinkedIn, Gwinnett County Jobs, local colleges</span>
                       </div>
                       <div className="flex items-start gap-3 p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg">
                         <span className="w-6 h-6 bg-amber-500 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0">5</span>
-                        <span className="text-sm text-slate-700 dark:text-slate-300"><span className="font-bold text-white">REQUEST BUDGET APPROVAL</span> from Sheriff Taylor for salary increase</span>
+                        <span className="text-sm text-slate-700 dark:text-slate-300"><span className="font-bold text-slate-900 dark:text-white">REQUEST BUDGET APPROVAL</span> from Sheriff Taylor for salary increase</span>
                       </div>
                     </div>
                   </div>
@@ -1048,11 +1048,11 @@ export default function JobPostings() {
                       <DollarSign className="w-4 h-4" />
                       REVISE SALARY RANGE
                     </button>
-                    <button className="flex items-center gap-2 px-4 py-2 bg-slate-700/60 hover:bg-slate-700/80 text-white rounded-lg text-sm transition-all">
+                    <button className="flex items-center gap-2 px-4 py-2 bg-slate-700/60 hover:bg-slate-700/80 text-slate-900 dark:text-white rounded-lg text-sm transition-all">
                       <FileText className="w-4 h-4" />
                       Sheriff Budget Request
                     </button>
-                    <button className="flex items-center gap-2 px-4 py-2 bg-slate-700/60 hover:bg-slate-700/80 text-white rounded-lg text-sm transition-all">
+                    <button className="flex items-center gap-2 px-4 py-2 bg-slate-700/60 hover:bg-slate-700/80 text-slate-900 dark:text-white rounded-lg text-sm transition-all">
                       <Users className="w-4 h-4" />
                       View 4 Applications
                     </button>
@@ -1078,7 +1078,7 @@ export default function JobPostings() {
         onClick={() => setChatOpen(!chatOpen)}
         className="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-400 hover:to-blue-500 rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 z-40"
       >
-        {chatOpen ? <X className="w-6 h-6 text-white" /> : <MessageCircle className="w-6 h-6 text-white" />}
+        {chatOpen ? <X className="w-6 h-6 text-slate-900 dark:text-white" /> : <MessageCircle className="w-6 h-6 text-slate-900 dark:text-white" />}
       </button>
 
       {chatOpen && (
@@ -1086,7 +1086,7 @@ export default function JobPostings() {
           <div className="p-4 border-b border-slate-700/50">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-white" />
+                <Sparkles className="w-5 h-5 text-slate-900 dark:text-white" />
               </div>
               <div>
                 <h3 className="text-sm font-semibold text-slate-900 dark:text-white">GCSO Recruitment AI</h3>
@@ -1097,7 +1097,7 @@ export default function JobPostings() {
           <div className="flex-1 p-4 overflow-y-auto">
             <div className="flex gap-3">
               <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Sparkles className="w-4 h-4 text-white" />
+                <Sparkles className="w-4 h-4 text-slate-900 dark:text-white" />
               </div>
               <div className="flex-1">
                 <div className="bg-slate-800/60 p-3 rounded-xl">
@@ -1108,9 +1108,9 @@ export default function JobPostings() {
           </div>
           <div className="p-4 border-t border-slate-700/50">
             <div className="flex items-center gap-2">
-              <input type="text" placeholder="Ask about GCSO recruitment..." className="flex-1 px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-blue-500/50" />
+              <input type="text" placeholder="Ask about GCSO recruitment..." className="flex-1 px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500/50" />
               <button className="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center">
-                <Send className="w-5 h-5 text-white" />
+                <Send className="w-5 h-5 text-slate-900 dark:text-white" />
               </button>
             </div>
           </div>

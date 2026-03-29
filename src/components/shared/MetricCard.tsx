@@ -53,7 +53,7 @@ export function MetricRow({ label, value }: { label: string; value: string | num
   return (
     <div className="flex items-center justify-between text-xs">
       <span className="text-slate-500">{label}</span>
-      <span className="text-slate-300">{value}</span>
+      <span className="text-slate-500">{value}</span>
     </div>
   );
 }

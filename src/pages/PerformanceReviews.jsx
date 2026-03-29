@@ -378,7 +378,7 @@ export default function PerformanceReviews() {
                 key={item.id}
                 onClick={() => handleNavigation(item)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-800/50 hover:text-white'
+                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white'
                 } ${sidebarCollapsed ? 'justify-center' : ''}`}
                 title={sidebarCollapsed ? item.label : ''}
               >
@@ -431,8 +431,8 @@ export default function PerformanceReviews() {
               </div>
             </div>
             <div className="flex gap-3 mt-6">
-              <button onClick={() => setLogoutConfirmOpen(false)} className="flex-1 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-white font-medium transition-all">Cancel</button>
-              <button onClick={handleLogout} className="flex-1 px-4 py-2.5 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-white font-medium transition-all">Sign Out</button>
+              <button onClick={() => setLogoutConfirmOpen(false)} className="flex-1 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all">Cancel</button>
+              <button onClick={handleLogout} className="flex-1 px-4 py-2.5 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all">Sign Out</button>
             </div>
           </div>
         </div>
@@ -446,7 +446,7 @@ export default function PerformanceReviews() {
             <div className="flex items-start justify-between mb-6">
               <div className="flex items-center gap-4">
                 <div className={`w-14 h-14 rounded-full flex items-center justify-center ${selectedReview.status === 'overdue' ? 'bg-gradient-to-br from-red-500 to-red-600' : selectedReview.status === 'completed' ? 'bg-gradient-to-br from-green-500 to-green-600' : 'bg-gradient-to-br from-blue-500 to-blue-600'}`}>
-                  <span className="text-white text-lg font-bold">{selectedReview.employee.split(' ').map(n => n[0]).join('')}</span>
+                  <span className="text-slate-900 dark:text-white text-lg font-bold">{selectedReview.employee.split(' ').map(n => n[0]).join('')}</span>
                 </div>
                 <div>
                   <h3 className="text-xl font-bold text-slate-900 dark:text-white">{selectedReview.employee}</h3>
@@ -475,33 +475,33 @@ export default function PerformanceReviews() {
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
               <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
                 <p className="text-xs text-slate-500 mb-1">Review Period</p>
-                <p className="text-white font-medium text-sm">{selectedReview.reviewPeriod}</p>
+                <p className="text-slate-900 dark:text-white font-medium text-sm">{selectedReview.reviewPeriod}</p>
                 <p className="text-xs text-slate-600 dark:text-slate-400">{selectedReview.periodDates}</p>
               </div>
               <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
                 <p className="text-xs text-slate-500 mb-1">Reviewing Supervisor</p>
-                <p className="text-white font-medium text-sm">{selectedReview.supervisor}</p>
+                <p className="text-slate-900 dark:text-white font-medium text-sm">{selectedReview.supervisor}</p>
                 <p className="text-xs text-slate-600 dark:text-slate-400">{selectedReview.supervisorTitle}</p>
               </div>
               <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
                 <p className="text-xs text-slate-500 mb-1">Agency Deadline</p>
-                <p className="text-white font-medium text-sm">{selectedReview.deadline}</p>
+                <p className="text-slate-900 dark:text-white font-medium text-sm">{selectedReview.deadline}</p>
                 {selectedReview.daysOverdue > 0 && selectedReview.status !== 'completed' && (
                   <p className="text-xs text-red-400 font-medium">{selectedReview.daysOverdue} days overdue</p>
                 )}
               </div>
               <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
                 <p className="text-xs text-slate-500 mb-1">Years of Service</p>
-                <p className="text-white font-medium text-sm">{selectedReview.yearsOfService}</p>
+                <p className="text-slate-900 dark:text-white font-medium text-sm">{selectedReview.yearsOfService}</p>
                 <p className="text-xs text-slate-600 dark:text-slate-400">Hired {selectedReview.hireDate}</p>
               </div>
               <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
                 <p className="text-xs text-slate-500 mb-1">Assignment</p>
-                <p className="text-white font-medium text-sm">{selectedReview.shift}</p>
+                <p className="text-slate-900 dark:text-white font-medium text-sm">{selectedReview.shift}</p>
               </div>
               <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
                 <p className="text-xs text-slate-500 mb-1">Review Type</p>
-                <p className="text-white font-medium text-sm">{selectedReview.reviewType}</p>
+                <p className="text-slate-900 dark:text-white font-medium text-sm">{selectedReview.reviewType}</p>
               </div>
             </div>
 
@@ -519,7 +519,7 @@ export default function PerformanceReviews() {
                   <div key={idx} className="flex items-start gap-3 p-3 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/30 rounded-lg">
                     <div className="mt-0.5">{getStepIcon(step.data.status)}</div>
                     <div className="flex-1">
-                      <p className="text-sm text-white font-medium">Step {idx + 1}: {step.label}</p>
+                      <p className="text-sm text-slate-900 dark:text-white font-medium">Step {idx + 1}: {step.label}</p>
                       {step.data.date && <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">Completed: {step.data.date}</p>}
                       {step.data.note && <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">{step.data.note}</p>}
                       {step.data.daysOverdue > 0 && (
@@ -564,10 +564,10 @@ export default function PerformanceReviews() {
             <div className="flex flex-wrap gap-3">
               {selectedReview.status === 'completed' && (
                 <>
-                  <button className="flex-1 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-white font-medium transition-all flex items-center justify-center gap-2 text-sm">
+                  <button className="flex-1 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all flex items-center justify-center gap-2 text-sm">
                     <Download className="w-4 h-4" /> Download PDF
                   </button>
-                  <button className="flex-1 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-white font-medium transition-all flex items-center justify-center gap-2 text-sm">
+                  <button className="flex-1 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all flex items-center justify-center gap-2 text-sm">
                     <Printer className="w-4 h-4" /> Print
                   </button>
                 </>
@@ -577,7 +577,7 @@ export default function PerformanceReviews() {
                   <button className="flex-1 px-4 py-2.5 bg-amber-500 hover:bg-amber-400 rounded-xl text-white font-medium transition-all flex items-center justify-center gap-2 text-sm">
                     <Bell className="w-4 h-4" /> Remind Supervisor
                   </button>
-                  <button className="flex-1 px-4 py-2.5 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-white font-medium transition-all flex items-center justify-center gap-2 text-sm">
+                  <button className="flex-1 px-4 py-2.5 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all flex items-center justify-center gap-2 text-sm">
                     <Clock className="w-4 h-4" /> Set Deadline
                   </button>
                 </>
@@ -608,9 +608,9 @@ export default function PerformanceReviews() {
                 <Menu className="w-5 h-5 text-slate-600 dark:text-slate-400" />
               </button>
               <div className="flex items-center gap-2 text-sm">
-                <button onClick={() => navigate(createPageUrl('HRDashboard'))} className="text-slate-600 dark:text-slate-400 hover:text-white transition-colors">HR Dashboard</button>
+                <button onClick={() => navigate(createPageUrl('HRDashboard'))} className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors">HR Dashboard</button>
                 <ChevronRight className="w-4 h-4 text-slate-600" />
-                <span className="text-white">Performance Reviews</span>
+                <span className="text-slate-900 dark:text-white">Performance Reviews</span>
               </div>
             </div>
             <div className="flex items-center gap-2 lg:gap-3">
@@ -640,7 +640,7 @@ export default function PerformanceReviews() {
                     </div>
                     <div className="max-h-96 overflow-y-auto">
                       {notifications.map(notification => (
-                        <div key={notification.id} className={`p-4 border-b border-slate-800/30 hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
+                        <div key={notification.id} className={`p-4 border-b border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
                           <div className="flex items-start gap-3">
                             <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-amber-400' : 'bg-blue-400'}`}></div>
                             <div className="flex-1 min-w-0">
@@ -663,7 +663,7 @@ export default function PerformanceReviews() {
 
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
-                  <span className="text-white text-sm font-bold">HR</span>
+                  <span className="text-slate-900 dark:text-white text-sm font-bold">HR</span>
                 </div>
                 <div className="hidden sm:block">
                   <p className="text-sm font-medium text-slate-900 dark:text-white">HR Director</p>
@@ -748,12 +748,12 @@ export default function PerformanceReviews() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                       <div className="bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
                         <p className="text-xs text-slate-500 mb-1">Review Period</p>
-                        <p className="text-white font-medium">{overdueReview.reviewPeriod}</p>
+                        <p className="text-slate-900 dark:text-white font-medium">{overdueReview.reviewPeriod}</p>
                         <p className="text-xs text-slate-600 dark:text-slate-400">{overdueReview.periodDates}</p>
                       </div>
                       <div className="bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
                         <p className="text-xs text-slate-500 mb-1">Evaluation Deadline</p>
-                        <p className="text-white font-medium">{overdueReview.deadline}</p>
+                        <p className="text-slate-900 dark:text-white font-medium">{overdueReview.deadline}</p>
                         <p className="text-xs text-slate-600 dark:text-slate-400">GCSO Policy - 30 days after review period end</p>
                       </div>
                       <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-4">
@@ -768,7 +768,7 @@ export default function PerformanceReviews() {
                       <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
                         <Users className="w-4 h-4 text-slate-600 dark:text-slate-400" /> Assigned Supervisor
                       </h4>
-                      <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">Reviewing Supervisor: <span className="text-white font-medium">{overdueReview.supervisor}</span> ({overdueReview.supervisorTitle})</p>
+                      <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">Reviewing Supervisor: <span className="text-slate-900 dark:text-white font-medium">{overdueReview.supervisor}</span> ({overdueReview.supervisorTitle})</p>
                       <div className="space-y-2">
                         <p className="text-xs text-slate-500 font-medium mb-2">ESCALATION TIMELINE:</p>
                         {overdueReview.escalationHistory.map((item, idx) => (
@@ -777,7 +777,7 @@ export default function PerformanceReviews() {
                               {item.icon === 'current' ? <AlertCircle className="w-3.5 h-3.5 text-red-400" /> : <CheckCircle className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />}
                             </div>
                             <div>
-                              <p className={`text-sm ${item.icon === 'current' ? 'text-red-400 font-medium' : 'text-slate-300'}`}>{item.action}</p>
+                              <p className={`text-sm ${item.icon === 'current' ? 'text-red-400 font-medium' : 'text-slate-500'}`}>{item.action}</p>
                               <p className="text-xs text-slate-500">{item.date} ({item.days} days overdue)</p>
                             </div>
                           </div>
@@ -847,10 +847,10 @@ export default function PerformanceReviews() {
                       <button className="px-4 py-2.5 bg-amber-500 hover:bg-amber-400 rounded-xl text-white font-medium transition-all text-sm flex items-center gap-2">
                         <Calendar className="w-4 h-4" /> Schedule HR/Wilson Meeting
                       </button>
-                      <button className="px-4 py-2.5 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-white rounded-xl font-medium transition-all text-sm flex items-center gap-2">
+                      <button className="px-4 py-2.5 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-900 dark:text-white rounded-xl font-medium transition-all text-sm flex items-center gap-2">
                         <FileText className="w-4 h-4" /> Document Supervisor Counseling
                       </button>
-                      <button className="px-4 py-2.5 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-white rounded-xl font-medium transition-all text-sm flex items-center gap-2">
+                      <button className="px-4 py-2.5 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-900 dark:text-white rounded-xl font-medium transition-all text-sm flex items-center gap-2">
                         <Clock className="w-4 h-4" /> Set 7-Day Deadline
                       </button>
                       <button
@@ -910,7 +910,7 @@ export default function PerformanceReviews() {
                   placeholder="Search by name, badge, or department..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-amber-500/50 text-sm"
+                  className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 text-sm"
                 />
               </div>
               <select
@@ -942,7 +942,7 @@ export default function PerformanceReviews() {
                 >
                   {tab.label}
                   <span className={`px-2 py-0.5 rounded-full text-xs ${
-                    activeTab === tab.id ? 'bg-amber-500/20 text-amber-400' : 'bg-slate-700/50 text-slate-400'
+                    activeTab === tab.id ? 'bg-amber-500/20 text-amber-400' : 'bg-slate-700/50 text-slate-500'
                   }`}>{tab.count}</span>
                   {activeTab === tab.id && (
                     <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500"></div>
@@ -964,7 +964,7 @@ export default function PerformanceReviews() {
                       <div className="flex items-start justify-between gap-4">
                         <div className="flex items-start gap-4 flex-1">
                           <div className={`w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 ${review.status === 'completed' ? 'bg-gradient-to-br from-green-500 to-green-600' : 'bg-gradient-to-br from-blue-500 to-blue-600'}`}>
-                            <span className="text-white font-bold">{review.employee.split(' ').map(n => n[0]).join('')}</span>
+                            <span className="text-slate-900 dark:text-white font-bold">{review.employee.split(' ').map(n => n[0]).join('')}</span>
                           </div>
 
                           <div className="flex-1 min-w-0">
@@ -1215,20 +1215,20 @@ export default function PerformanceReviews() {
                               <button className="px-4 py-2 bg-amber-500 hover:bg-amber-400 rounded-xl text-white font-medium transition-all text-sm flex items-center gap-2">
                                 <Bell className="w-4 h-4" /> Remind Supervisor
                               </button>
-                              <button className="px-4 py-2 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-white rounded-xl font-medium transition-all text-sm flex items-center gap-2">
+                              <button className="px-4 py-2 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-900 dark:text-white rounded-xl font-medium transition-all text-sm flex items-center gap-2">
                                 <Clock className="w-4 h-4" /> Set Deadline
                               </button>
-                              <button className="px-4 py-2 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-white rounded-xl font-medium transition-all text-sm flex items-center gap-2">
+                              <button className="px-4 py-2 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-900 dark:text-white rounded-xl font-medium transition-all text-sm flex items-center gap-2">
                                 <Eye className="w-4 h-4" /> View Self-Assessment
                               </button>
                             </>
                           )}
                           {review.status === 'completed' && (
                             <>
-                              <button className="px-4 py-2 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-white rounded-xl font-medium transition-all text-sm flex items-center gap-2">
+                              <button className="px-4 py-2 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-900 dark:text-white rounded-xl font-medium transition-all text-sm flex items-center gap-2">
                                 <Download className="w-4 h-4" /> Download PDF
                               </button>
-                              <button className="px-4 py-2 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-white rounded-xl font-medium transition-all text-sm flex items-center gap-2">
+                              <button className="px-4 py-2 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-900 dark:text-white rounded-xl font-medium transition-all text-sm flex items-center gap-2">
                                 <Printer className="w-4 h-4" /> Print
                               </button>
                             </>
@@ -1285,7 +1285,7 @@ export default function PerformanceReviews() {
           onClick={() => setSupportOpen(!supportOpen)}
           className="w-14 h-14 bg-gradient-to-br from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110"
         >
-          {supportOpen ? <X className="w-6 h-6 text-white" /> : <HelpCircle className="w-6 h-6 text-white" />}
+          {supportOpen ? <X className="w-6 h-6 text-slate-900 dark:text-white" /> : <HelpCircle className="w-6 h-6 text-slate-900 dark:text-white" />}
         </button>
 
         {supportOpen && (

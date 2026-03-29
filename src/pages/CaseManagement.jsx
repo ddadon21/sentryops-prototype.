@@ -284,7 +284,7 @@ export default function CaseManagement() {
                   <div className="space-y-1">
                     <div className="flex justify-between text-sm">
                       <span className="text-slate-600 dark:text-slate-400">Days Open</span>
-                      <span className="text-white font-medium">{caseDetails.daysOpen} days</span>
+                      <span className="text-slate-900 dark:text-white font-medium">{caseDetails.daysOpen} days</span>
                     </div>
                     <div className="flex justify-between text-sm">
                       <span className="text-slate-600 dark:text-slate-400">Offer Expires</span>
@@ -306,15 +306,15 @@ export default function CaseManagement() {
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                       <div>
                         <p className="text-xs text-slate-500 mb-1">Application Date</p>
-                        <p className="text-sm text-white font-medium">{caseDetails.applicationDate}</p>
+                        <p className="text-sm text-slate-900 dark:text-white font-medium">{caseDetails.applicationDate}</p>
                       </div>
                       <div>
                         <p className="text-xs text-slate-500 mb-1">Case Opened</p>
-                        <p className="text-sm text-white font-medium">{caseDetails.dateOpened}</p>
+                        <p className="text-sm text-slate-900 dark:text-white font-medium">{caseDetails.dateOpened}</p>
                       </div>
                       <div>
                         <p className="text-xs text-slate-500 mb-1">Conditional Offer</p>
-                        <p className="text-sm text-white font-medium">{caseDetails.conditionalOfferDate}</p>
+                        <p className="text-sm text-slate-900 dark:text-white font-medium">{caseDetails.conditionalOfferDate}</p>
                       </div>
                       <div>
                         <p className="text-xs text-slate-500 mb-1">Offer Expires</p>
@@ -390,7 +390,7 @@ export default function CaseManagement() {
                             stage.status === 'in_progress' ? 'bg-amber-500/20 text-amber-400' :
                             stage.status === 'partial' ? 'bg-blue-500/20 text-blue-400' :
                             stage.status === 'blocked' ? 'bg-red-500/20 text-red-400' :
-                            'bg-slate-700/50 text-slate-400'
+                            'bg-slate-700/50 text-slate-500'
                           }`}>
                             {stage.status === 'completed' ? 'COMPLETED' :
                              stage.status === 'in_progress' ? 'IN PROGRESS' :
@@ -465,7 +465,7 @@ export default function CaseManagement() {
                 <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-6">
                   <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-4">Assigned Investigator</h4>
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center font-bold text-white">MB</div>
+                    <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center font-bold text-slate-900 dark:text-white">MB</div>
                     <div>
                       <p className="text-sm font-medium text-slate-900 dark:text-white">{caseDetails.investigator.name}</p>
                       <p className="text-xs text-slate-600 dark:text-slate-400">Badge {caseDetails.investigator.badge}</p>
@@ -495,7 +495,7 @@ export default function CaseManagement() {
                   </div>
                   <div className="mt-4 pt-4 border-t border-slate-700/50">
                     <p className="text-xs text-slate-500 mb-1">Supervisor</p>
-                    <p className="text-sm text-white">{caseDetails.supervisor.name} <span className="text-slate-500">{caseDetails.supervisor.badge}</span></p>
+                    <p className="text-sm text-slate-900 dark:text-white">{caseDetails.supervisor.name} <span className="text-slate-500">{caseDetails.supervisor.badge}</span></p>
                   </div>
                 </div>
               </div>
@@ -506,25 +506,25 @@ export default function CaseManagement() {
               <div className="flex border-b border-slate-700/50 overflow-x-auto">
                 <button
                   onClick={() => setSelectedTab('overview')}
-                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedTab === 'overview' ? 'bg-amber-500/10 text-amber-400 border-b-2 border-amber-500' : 'text-slate-600 dark:text-slate-400 hover:text-white'}`}
+                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedTab === 'overview' ? 'bg-amber-500/10 text-amber-400 border-b-2 border-amber-500' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
                 >
                   Overview
                 </button>
                 <button
                   onClick={() => setSelectedTab('documents')}
-                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedTab === 'documents' ? 'bg-amber-500/10 text-amber-400 border-b-2 border-amber-500' : 'text-slate-600 dark:text-slate-400 hover:text-white'}`}
+                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedTab === 'documents' ? 'bg-amber-500/10 text-amber-400 border-b-2 border-amber-500' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
                 >
                   Documents ({caseDetails.documents.length})
                 </button>
                 <button
                   onClick={() => setSelectedTab('notes')}
-                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedTab === 'notes' ? 'bg-amber-500/10 text-amber-400 border-b-2 border-amber-500' : 'text-slate-600 dark:text-slate-400 hover:text-white'}`}
+                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedTab === 'notes' ? 'bg-amber-500/10 text-amber-400 border-b-2 border-amber-500' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
                 >
                   Investigator Notes ({caseDetails.notes.length})
                 </button>
                 <button
                   onClick={() => setSelectedTab('history')}
-                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedTab === 'history' ? 'bg-amber-500/10 text-amber-400 border-b-2 border-amber-500' : 'text-slate-600 dark:text-slate-400 hover:text-white'}`}
+                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedTab === 'history' ? 'bg-amber-500/10 text-amber-400 border-b-2 border-amber-500' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
                 >
                   Activity History ({caseDetails.activityHistory.length})
                 </button>
@@ -543,19 +543,19 @@ export default function CaseManagement() {
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-slate-900/40 rounded-lg p-4">
                         <div>
                           <p className="text-xs text-slate-500 mb-1">Full Name</p>
-                          <p className="text-sm text-white">{caseDetails.subject}</p>
+                          <p className="text-sm text-slate-900 dark:text-white">{caseDetails.subject}</p>
                         </div>
                         <div>
                           <p className="text-xs text-slate-500 mb-1">Position Applied</p>
-                          <p className="text-sm text-white">{caseDetails.position}</p>
+                          <p className="text-sm text-slate-900 dark:text-white">{caseDetails.position}</p>
                         </div>
                         <div>
                           <p className="text-xs text-slate-500 mb-1">Department</p>
-                          <p className="text-sm text-white">{caseDetails.department}</p>
+                          <p className="text-sm text-slate-900 dark:text-white">{caseDetails.department}</p>
                         </div>
                         <div>
                           <p className="text-xs text-slate-500 mb-1">Application Date</p>
-                          <p className="text-sm text-white">{caseDetails.applicationDate}</p>
+                          <p className="text-sm text-slate-900 dark:text-white">{caseDetails.applicationDate}</p>
                         </div>
                       </div>
                     </div>
@@ -634,11 +634,11 @@ export default function CaseManagement() {
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                           <div>
                             <p className="text-xs text-slate-500 mb-1">Case Opened</p>
-                            <p className="text-sm text-white">{caseDetails.dateOpened}</p>
+                            <p className="text-sm text-slate-900 dark:text-white">{caseDetails.dateOpened}</p>
                           </div>
                           <div>
                             <p className="text-xs text-slate-500 mb-1">Days Open</p>
-                            <p className="text-sm text-white">{caseDetails.daysOpen} days</p>
+                            <p className="text-sm text-slate-900 dark:text-white">{caseDetails.daysOpen} days</p>
                           </div>
                           <div>
                             <p className="text-xs text-slate-500 mb-1">Conditional Offer Expires</p>

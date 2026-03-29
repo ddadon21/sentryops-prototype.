@@ -395,9 +395,9 @@ const CADDispatch = () => {
       case 'Dispatched': return 'bg-blue-500/20 text-blue-400';
       case 'En Route': return 'bg-amber-500/20 text-amber-600 dark:text-amber-400';
       case 'On Scene': return 'bg-purple-500/20 text-purple-400';
-      case 'Out of Service': return 'bg-slate-500/20 text-slate-400';
+      case 'Out of Service': return 'bg-slate-500/20 text-slate-500';
       case 'Holding': return 'bg-red-500/20 text-red-600 dark:text-red-400';
-      default: return 'bg-slate-500/20 text-slate-400';
+      default: return 'bg-slate-500/20 text-slate-500';
     }
   };
 
@@ -525,7 +525,7 @@ const CADDispatch = () => {
                 <ChevronDown className={`w-3 h-3 transition-transform ${showPressureDetail ? 'rotate-180' : ''}`} />
               </button>
               {showPressureDetail && (
-                <div className="absolute right-0 top-full mt-1.5 z-50 min-w-[280px] bg-slate-900 border border-slate-700/60 rounded-xl shadow-xl overflow-hidden">
+                <div className="absolute right-0 top-full mt-1.5 z-50 min-w-[280px] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/60 rounded-xl shadow-xl overflow-hidden">
                   <div className="px-4 py-2.5 border-b border-slate-700/40">
                     <p className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Why Pressure is {operationalPressure}</p>
                   </div>
@@ -535,7 +535,7 @@ const CADDispatch = () => {
                       return (
                         <li key={i} className="flex items-start gap-2 text-[11px]">
                           <span className={`mt-0.5 flex-shrink-0 font-bold ${isIssue ? 'text-amber-500' : 'text-emerald-600'}`}>{isIssue ? '—' : '✓'}</span>
-                          <span className={isIssue ? 'text-slate-300' : 'text-slate-500'}>{factor.replace(/^✓ /, '')}</span>
+                          <span className={isIssue ? 'text-slate-500' : 'text-slate-500'}>{factor.replace(/^✓ /, '')}</span>
                         </li>
                       );
                     })}
@@ -546,10 +546,10 @@ const CADDispatch = () => {
             <button className="flex items-center gap-1.5 px-3 py-1.5 bg-red-500/10 border border-red-500/25 text-red-600 dark:text-red-400 rounded-lg text-[12px] font-medium hover:bg-red-500/15 transition-colors">
               <PhoneCall className="w-3.5 h-3.5" /> New Call
             </button>
-            <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800/30 border border-slate-700/50 rounded-lg text-[12px] text-slate-600 dark:text-slate-400 hover:text-white hover:bg-slate-700/30 transition-all">
+            <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-lg text-[12px] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-slate-700/30 transition-all">
               <Megaphone className="w-3.5 h-3.5" /> Broadcast
             </button>
-            <div className="flex items-center gap-1.5 text-[11px] text-slate-500 bg-slate-800/30 border border-slate-700/50 rounded-lg px-3 py-1.5">
+            <div className="flex items-center gap-1.5 text-[11px] text-slate-500 bg-slate-100 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-lg px-3 py-1.5">
               <Circle className="w-1.5 h-1.5 fill-emerald-500 text-emerald-500" /> Live
             </div>
           </div>
@@ -727,8 +727,8 @@ const CADDispatch = () => {
                           }`}>{call.priority}</span>
                           <p className={`text-[13px] font-semibold truncate ${
                             call.priority === 'P1' ? 'text-red-100' :
-                            call.priority === 'P2' ? 'text-white' :
-                            'text-slate-400'
+                            call.priority === 'P2' ? 'text-slate-900 dark:text-white' :
+                            'text-slate-500'
                           }`}>{call.type}</p>
                           {call.backupRequested && (
                             <span className="text-[9px] px-1.5 py-0.5 bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/20 rounded font-bold flex-shrink-0">BACKUP</span>
@@ -738,7 +738,7 @@ const CADDispatch = () => {
                           <span className={`text-[13px] font-bold ${
                             call.elapsed.includes('hr') ? 'text-red-600 dark:text-red-400' :
                             call.elapsed.includes('min') && parseInt(call.elapsed) > 20 ? 'text-amber-600 dark:text-amber-400' :
-                            'text-slate-300'
+                            'text-slate-500'
                           }`}>{call.elapsed}</span>
                           <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${getStatusColor(call.status)}`}>{call.status}</span>
                         </div>
@@ -937,7 +937,7 @@ const CADDispatch = () => {
                       <div className="w-1 self-stretch rounded-full bg-amber-400 flex-shrink-0" />
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-0.5">
-                          <p className="text-[12px] font-semibold text-white">{call.type}</p>
+                          <p className="text-[12px] font-semibold text-slate-900 dark:text-white">{call.type}</p>
                           <span className={`text-[12px] font-bold ${call.elapsed.includes('hr') ? 'text-red-600 dark:text-red-400' : 'text-amber-600 dark:text-amber-400'}`}>{call.elapsed}</span>
                         </div>
                         <p className="text-[11px] text-slate-600 dark:text-slate-400 flex items-center gap-1 mb-2">
@@ -1015,9 +1015,9 @@ const CADDispatch = () => {
                           unit.status === 'En Route'   ? 'bg-amber-500/20 text-amber-600 dark:text-amber-400' :
                           unit.status === 'On Scene'   ? 'bg-purple-500/20 text-purple-400' :
                           unit.status === 'Dispatched' ? 'bg-blue-500/20 text-blue-400' :
-                          'bg-slate-700 text-slate-400'
+                          'bg-slate-200 dark:bg-slate-700 text-slate-500'
                         }`}>{unit.callSign.split('-')[1]}</div>
-                        <span className="text-[12px] font-bold text-white">{unit.callSign}</span>
+                        <span className="text-[12px] font-bold text-slate-900 dark:text-white">{unit.callSign}</span>
                       </div>
                       <span className={`text-[9px] px-1.5 py-0.5 rounded font-semibold ${getStatusColor(unit.status)}`}>
                         {unit.status === 'Out of Service' ? 'OOS' : unit.status === 'En Route' ? 'En Route' : unit.status}

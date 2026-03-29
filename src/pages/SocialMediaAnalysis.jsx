@@ -463,9 +463,9 @@ export default function SocialMediaAnalysis() {
 
             {/* Quick Stats */}
             <div className="flex flex-wrap items-center gap-4 text-sm">
-              <span className="text-slate-600 dark:text-slate-400">Total profiles analyzed: <span className="text-white font-medium">{socialMediaReports.length} subjects</span></span>
+              <span className="text-slate-600 dark:text-slate-400">Total profiles analyzed: <span className="text-slate-900 dark:text-white font-medium">{socialMediaReports.length} subjects</span></span>
               <span className="text-slate-500">|</span>
-              <span className="text-slate-600 dark:text-slate-400">Platforms reviewed: <span className="text-white font-medium">Facebook, LinkedIn, Twitter/X, Instagram</span></span>
+              <span className="text-slate-600 dark:text-slate-400">Platforms reviewed: <span className="text-slate-900 dark:text-white font-medium">Facebook, LinkedIn, Twitter/X, Instagram</span></span>
             </div>
           </div>
 
@@ -488,7 +488,7 @@ export default function SocialMediaAnalysis() {
                 <div className="space-y-2 text-sm">
                   <div className="flex items-center gap-2">
                     <span className="text-slate-500">Total subjects reviewed:</span>
-                    <span className="text-white font-medium">{socialMediaReports.length} (across multiple cases)</span>
+                    <span className="text-slate-900 dark:text-white font-medium">{socialMediaReports.length} (across multiple cases)</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-400" />
@@ -609,13 +609,13 @@ export default function SocialMediaAnalysis() {
           <div className="flex flex-wrap gap-2 mb-4">
             <button
               onClick={() => setActiveTab('all')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'all' ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30' : 'bg-slate-800/40 text-slate-600 dark:text-slate-400 hover:text-white border border-slate-700/50'}`}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'all' ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30' : 'bg-slate-800/40 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-slate-700/50'}`}
             >
               All Profiles ({socialMediaReports.length})
             </button>
             <button
               onClick={() => setActiveTab('clear')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'clear' ? 'bg-green-500/20 text-green-400 border border-green-500/30' : 'bg-slate-800/40 text-slate-600 dark:text-slate-400 hover:text-white border border-slate-700/50'}`}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'clear' ? 'bg-green-500/20 text-green-400 border border-green-500/30' : 'bg-slate-800/40 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-slate-700/50'}`}
             >
               <span className="flex items-center gap-2">
                 <CheckCircle className="w-4 h-4" />
@@ -624,7 +624,7 @@ export default function SocialMediaAnalysis() {
             </button>
             <button
               onClick={() => setActiveTab('review')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'review' ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' : 'bg-slate-800/40 text-slate-600 dark:text-slate-400 hover:text-white border border-slate-700/50'}`}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'review' ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' : 'bg-slate-800/40 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-slate-700/50'}`}
             >
               <span className="flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4" />
@@ -633,7 +633,7 @@ export default function SocialMediaAnalysis() {
             </button>
             <button
               onClick={() => setActiveTab('progress')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'progress' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' : 'bg-slate-800/40 text-slate-600 dark:text-slate-400 hover:text-white border border-slate-700/50'}`}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'progress' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' : 'bg-slate-800/40 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-slate-700/50'}`}
             >
               <span className="flex items-center gap-2">
                 <Clock className="w-4 h-4" />
@@ -804,7 +804,7 @@ export default function SocialMediaAnalysis() {
                           <div className={`rounded-xl p-4 ${report.politicalContent.isProtected ? 'bg-blue-500/10 border border-blue-500/30' : 'bg-slate-900/40'}`}>
                             <div className="flex items-center justify-between mb-2">
                               <span className="text-sm text-slate-700 dark:text-slate-300">Political posts found:</span>
-                              <span className="text-sm text-white font-medium">{report.politicalContent.posts} of {report.politicalContent.totalPosts} posts</span>
+                              <span className="text-sm text-slate-900 dark:text-white font-medium">{report.politicalContent.posts} of {report.politicalContent.totalPosts} posts</span>
                             </div>
                             <p className="text-sm text-slate-600 dark:text-slate-400 mb-2">{report.politicalContent.description}</p>
                             <div className="bg-blue-500/10 rounded-lg p-3 mt-2">

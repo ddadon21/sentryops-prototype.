@@ -1169,7 +1169,7 @@ export default function OrgChart() {
               <div className={`px-4 py-2 rounded-lg border shadow-md min-w-[180px] ${
                 isOp ? `${rc.zoneBg} ${rc.zoneBorder}` : 'bg-gradient-to-r from-blue-500/15 to-blue-600/15 border-blue-500/35'
               }`}>
-                <p className={`text-[10px] font-bold tracking-wide text-center whitespace-nowrap ${isOp ? rc.text : 'text-slate-400'}`}>
+                <p className={`text-[10px] font-bold tracking-wide text-center whitespace-nowrap ${isOp ? rc.text : 'text-slate-500'}`}>
                   {divisionLabelText}
                 </p>
                 {(node.divisionStrength || dm) && (
@@ -1300,10 +1300,10 @@ export default function OrgChart() {
                     <div className={`bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center shadow-md flex-shrink-0 ${
                       size === 'lg' ? 'w-10 h-10' : size === 'md' ? 'w-8 h-8' : 'w-7 h-7'
                     }`}>
-                      <span className={`text-white font-bold ${size === 'lg' ? 'text-sm' : 'text-xs'}`}>{node.photo}</span>
+                      <span className={`text-slate-900 dark:text-white font-bold ${size === 'lg' ? 'text-sm' : 'text-xs'}`}>{node.photo}</span>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h4 className={`font-bold text-white truncate ${size === 'lg' ? 'text-xs' : 'text-[11px]'}`}>{node.name}</h4>
+                      <h4 className={`font-bold text-slate-900 dark:text-white truncate ${size === 'lg' ? 'text-xs' : 'text-[11px]'}`}>{node.name}</h4>
                       <p className={`text-slate-600 dark:text-slate-400 truncate ${size === 'lg' ? 'text-[10px]' : 'text-[9px]'}`}>{node.rank}</p>
                     </div>
                   </div>
@@ -1344,7 +1344,7 @@ export default function OrgChart() {
                             : node.retirementMonths < 24
                               ? 'bg-amber-500/20 border-amber-500/30 text-amber-300'
                               : node.retirementMonths <= 60
-                                ? 'bg-slate-700/40 border-slate-600/50 text-slate-300'
+                                ? 'bg-slate-700/40 border-slate-600/50 text-slate-500'
                                 : 'bg-emerald-500/10 border-emerald-500/15 text-emerald-400/70'
                         }`}>
                           <Clock className="w-2.5 h-2.5 flex-shrink-0" />
@@ -1402,7 +1402,7 @@ export default function OrgChart() {
                 )}
                 <div className={`inline-flex items-center gap-1 px-2 py-1 rounded text-[10px] font-medium ${
                   node.status === 'On Duty' ? 'bg-green-500/20 text-green-400' :
-                  'bg-slate-500/20 text-slate-400'
+                  'bg-slate-500/20 text-slate-500'
                 }`}>
                   <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
                   {node.status}
@@ -1414,21 +1414,21 @@ export default function OrgChart() {
           {hasChildren && (
             <button
               onClick={(e) => toggleCollapse(node.id, e)}
-              className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-slate-700 hover:bg-slate-600 rounded-full flex items-center justify-center shadow-lg transition-all z-10"
+              className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-slate-600 dark:bg-slate-700 hover:bg-slate-500 dark:hover:bg-slate-600 rounded-full flex items-center justify-center shadow-lg transition-all z-10"
             >
-              {isCollapsed ? <ChevronDown className="w-3 h-3 text-white" /> : <ChevronUp className="w-3 h-3 text-white" />}
+              {isCollapsed ? <ChevronDown className="w-3 h-3 text-slate-900 dark:text-white" /> : <ChevronUp className="w-3 h-3 text-slate-900 dark:text-white" />}
             </button>
           )}
         </div>
 
         {hasChildren && !isCollapsed && (
           <>
-            <div className="w-0.5 h-12 bg-slate-700"></div>
+            <div className="w-0.5 h-12 bg-slate-300 dark:bg-slate-700"></div>
 
             <div className="relative">
               {children.length > 1 && (
                 <>
-                  <div className="absolute left-0 right-0 h-0.5 bg-slate-700" style={{
+                  <div className="absolute left-0 right-0 h-0.5 bg-slate-300 dark:bg-slate-700" style={{
                     top: '-12px',
                     left: `calc(${100 / children.length / 2}%)`,
                     right: `calc(${100 / children.length / 2}%)`
@@ -1436,7 +1436,7 @@ export default function OrgChart() {
                   {children.map((_, idx) => (
                     <div
                       key={idx}
-                      className="absolute w-0.5 h-12 bg-slate-700"
+                      className="absolute w-0.5 h-12 bg-slate-300 dark:bg-slate-700"
                       style={{
                         left: `calc(${(idx + 0.5) * (100 / children.length)}%)`,
                         top: '-12px'
@@ -1491,15 +1491,15 @@ export default function OrgChart() {
 
               {!isFullscreen && (
                 <div className="flex items-center gap-2">
-                  <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/30 border border-slate-700/50 rounded text-[11px] text-slate-600 dark:text-slate-400 hover:text-white transition-colors" title="Export org chart">
+                  <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-100 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded text-[11px] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors" title="Export org chart">
                     <Download className="w-3 h-3" />
                     <span className="hidden sm:inline">Export</span>
                   </button>
-                  <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/30 border border-slate-700/50 rounded text-[11px] text-slate-600 dark:text-slate-400 hover:text-white transition-colors">
+                  <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-100 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded text-[11px] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors">
                     <Printer className="w-3 h-3" />
                     <span className="hidden sm:inline">Print</span>
                   </button>
-                  <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/30 border border-slate-700/50 rounded text-[11px] text-slate-600 dark:text-slate-400 hover:text-white transition-colors">
+                  <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-100 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded text-[11px] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors">
                     <Share2 className="w-3 h-3" />
                     <span className="hidden sm:inline">Share</span>
                   </button>
@@ -1556,7 +1556,7 @@ export default function OrgChart() {
                       alert.type === 'critical' ? 'text-red-400' : alert.type === 'warning' ? 'text-amber-400' : 'text-slate-500'
                     }`}>{alert.type}</span>
                     <span className={`text-[11px] leading-snug ${
-                      alert.type === 'critical' ? 'text-red-200' : alert.type === 'warning' ? 'text-amber-200' : 'text-slate-300'
+                      alert.type === 'critical' ? 'text-red-200' : alert.type === 'warning' ? 'text-amber-200' : 'text-slate-500'
                     }`}>{alert.full}</span>
                     {alert.nodeId && (
                       <ArrowRight className={`w-3.5 h-3.5 shrink-0 mt-0.5 ml-auto ${
@@ -1582,12 +1582,12 @@ export default function OrgChart() {
                   value={searchQuery}
                   onChange={(e) => handleSearch(e.target.value)}
                   placeholder="Search by name, badge #, rank, or division..."
-                  className="w-full pl-9 pr-4 py-2 bg-slate-800/30 border border-slate-700/50 rounded text-sm text-white placeholder-slate-500 focus:outline-none focus:border-slate-500/50 transition-all"
+                  className="w-full pl-9 pr-4 py-2 bg-slate-100 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-slate-500/50 transition-all"
                 />
                 {searchQuery && (
                   <button
                     onClick={() => { setSearchQuery(''); setHighlightedNode(null); }}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-400 hover:text-white transition-colors"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
                   >
                     <X className="w-4 h-4" />
                   </button>
@@ -1597,7 +1597,7 @@ export default function OrgChart() {
               <div className="flex gap-2">
                 <div className="relative">
                   <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
-                  <select value={filterDivision} onChange={(e) => setFilterDivision(e.target.value)} className="pl-8 pr-3 py-2 bg-slate-800/30 border border-slate-700/50 rounded text-[11px] text-white focus:outline-none focus:border-slate-500/50 cursor-pointer">
+                  <select value={filterDivision} onChange={(e) => setFilterDivision(e.target.value)} className="pl-8 pr-3 py-2 bg-slate-100 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded text-[11px] text-slate-900 dark:text-white focus:outline-none focus:border-slate-500/50 cursor-pointer">
                     <option value="all">All Divisions (170)</option>
                     <option value="Patrol">Patrol Division (65)</option>
                     <option value="Detention">Detention Division (48)</option>
@@ -1610,7 +1610,7 @@ export default function OrgChart() {
 
                 <div className="relative">
                   <Users className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
-                  <select value={filterRank} onChange={(e) => setFilterRank(e.target.value)} className="pl-8 pr-3 py-2 bg-slate-800/30 border border-slate-700/50 rounded text-[11px] text-white focus:outline-none focus:border-slate-500/50 cursor-pointer">
+                  <select value={filterRank} onChange={(e) => setFilterRank(e.target.value)} className="pl-8 pr-3 py-2 bg-slate-100 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded text-[11px] text-slate-900 dark:text-white focus:outline-none focus:border-slate-500/50 cursor-pointer">
                     <option value="all">All Ranks (170)</option>
                     <option value="Sheriff">Sheriff (1)</option>
                     <option value="Chief Deputy">Chief Deputy (1)</option>
@@ -1625,12 +1625,12 @@ export default function OrgChart() {
                 </div>
 
                 {/* Command Layer Toggle */}
-                <div className="flex items-center bg-slate-800/30 border border-slate-700/50 rounded overflow-hidden" title="Switch between hierarchy view and operational risk map">
+                <div className="flex items-center bg-slate-100 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded overflow-hidden" title="Switch between hierarchy view and operational risk map">
                   <button
                     onClick={() => setViewMode('hierarchy')}
                     className={`flex items-center gap-1.5 px-2.5 py-2 text-[11px] font-medium transition-all ${
                       viewMode === 'hierarchy'
-                        ? 'bg-slate-700/60 text-white'
+                        ? 'bg-slate-700/60 text-slate-900 dark:text-white'
                         : 'text-slate-600 dark:text-slate-400 hover:text-slate-300'
                     }`}
                   >
@@ -1672,7 +1672,7 @@ export default function OrgChart() {
                   <button onClick={() => setZoomLevel(Math.max(25, zoomLevel - 10))} className="p-1 hover:bg-slate-700/50 rounded transition-colors" title="Zoom out (-)">
                     <ZoomOut className="w-4 h-4 text-slate-700 dark:text-slate-300" />
                   </button>
-                  <span className="text-sm text-white font-medium w-14 text-center">{zoomLevel}%</span>
+                  <span className="text-sm text-slate-900 dark:text-white font-medium w-14 text-center">{zoomLevel}%</span>
                   <button onClick={() => setZoomLevel(Math.min(200, zoomLevel + 10))} className="p-1 hover:bg-slate-700/50 rounded transition-colors" title="Zoom in (+)">
                     <ZoomIn className="w-4 h-4 text-slate-700 dark:text-slate-300" />
                   </button>
@@ -1821,7 +1821,7 @@ export default function OrgChart() {
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
-                    <span className="text-white font-medium">{selectedNode.photo}</span>
+                    <span className="text-slate-900 dark:text-white font-medium">{selectedNode.photo}</span>
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold text-slate-900 dark:text-white">{selectedNode.name}</h3>
@@ -1917,13 +1917,13 @@ export default function OrgChart() {
                         </div>
                         <div className="text-center">
                           <p className="text-[11px] text-slate-600 dark:text-slate-400 mb-0.5">Vacancies</p>
-                          <p className={`text-base font-bold ${divisionMetrics[selectedNode.id].vacancies > 0 ? 'text-red-400' : 'text-white'}`}>
+                          <p className={`text-base font-bold ${divisionMetrics[selectedNode.id].vacancies > 0 ? 'text-red-400' : 'text-slate-900 dark:text-white'}`}>
                             {divisionMetrics[selectedNode.id].vacancies}
                           </p>
                         </div>
                         <div className="text-center">
                           <p className="text-[11px] text-slate-600 dark:text-slate-400 mb-0.5">Cert Risk</p>
-                          <p className={`text-base font-bold ${divisionMetrics[selectedNode.id].certRisk > 2 ? 'text-amber-400' : 'text-slate-300'}`}>
+                          <p className={`text-base font-bold ${divisionMetrics[selectedNode.id].certRisk > 2 ? 'text-amber-400' : 'text-slate-500'}`}>
                             {divisionMetrics[selectedNode.id].certRisk}
                           </p>
                         </div>
@@ -1994,10 +1994,10 @@ export default function OrgChart() {
                         <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
                           selectedNode.retirementMonths === 0 ? 'bg-amber-500/20 border border-amber-500/20' : 'bg-slate-700/40 border border-slate-600/50'
                         }`}>
-                          <Clock className={`w-4 h-4 ${selectedNode.retirementMonths === 0 ? 'text-amber-400' : 'text-slate-400'}`} />
+                          <Clock className={`w-4 h-4 ${selectedNode.retirementMonths === 0 ? 'text-amber-400' : 'text-slate-500'}`} />
                         </div>
                         <div>
-                          <p className={`text-sm font-medium ${selectedNode.retirementMonths === 0 ? 'text-amber-400' : 'text-slate-400'}`}>
+                          <p className={`text-sm font-medium ${selectedNode.retirementMonths === 0 ? 'text-amber-400' : 'text-slate-500'}`}>
                             {selectedNode.retirementMonths === 0
                               ? 'Retirement eligible now'
                               : `Retirement eligible in ${selectedNode.retirementMonths} months`
@@ -2016,7 +2016,7 @@ export default function OrgChart() {
                           {selectedNode.promotionCandidates.map((candidate, idx) => (
                             <div key={idx} className="flex items-center gap-2 text-sm">
                               <ArrowRight className="w-3 h-3 text-emerald-500" />
-                              <span className="text-white">{candidate}</span>
+                              <span className="text-slate-900 dark:text-white">{candidate}</span>
                               {idx === 0 && <span className="text-[10px] px-1.5 py-0.5 bg-slate-700/40 text-slate-700 dark:text-slate-300 rounded border border-slate-600/50">Primary</span>}
                             </div>
                           ))}
@@ -2047,7 +2047,7 @@ export default function OrgChart() {
                     {selectedNode.succession.successor && (
                       <div>
                         <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Identified Successor</p>
-                        <p className="text-sm text-white font-medium">{selectedNode.succession.successor}</p>
+                        <p className="text-sm text-slate-900 dark:text-white font-medium">{selectedNode.succession.successor}</p>
                       </div>
                     )}
                     {selectedNode.succession.successors && (
@@ -2055,7 +2055,7 @@ export default function OrgChart() {
                         <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Identified Successors</p>
                         <div className="space-y-1">
                           {selectedNode.succession.successors.map((successor, idx) => (
-                            <p key={idx} className="text-sm text-white">• {successor}</p>
+                            <p key={idx} className="text-sm text-slate-900 dark:text-white">• {successor}</p>
                           ))}
                         </div>
                       </div>
@@ -2063,7 +2063,7 @@ export default function OrgChart() {
                     {selectedNode.retirementEligible && (
                       <div>
                         <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Retirement Eligibility</p>
-                        <p className="text-sm text-white">{selectedNode.retirementEligible}</p>
+                        <p className="text-sm text-slate-900 dark:text-white">{selectedNode.retirementEligible}</p>
                       </div>
                     )}
                   </div>
@@ -2177,7 +2177,7 @@ export default function OrgChart() {
                     <div className="mt-4 pt-4 border-t border-slate-700/50 grid grid-cols-2 gap-4">
                       <div>
                         <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Commendations</p>
-                        <p className="text-sm font-bold text-white">8 this month</p>
+                        <p className="text-sm font-bold text-slate-900 dark:text-white">8 this month</p>
                       </div>
                       <div>
                         <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Disciplinary</p>
@@ -2206,7 +2206,7 @@ export default function OrgChart() {
                         <span className="text-sm text-slate-700 dark:text-slate-300">Expected Fill Date</span>
                         <span className="text-sm font-medium text-slate-900 dark:text-white">{selectedNode.expectedFill}</span>
                       </div>
-                      <button className="w-full mt-2 px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg text-sm font-medium transition-colors">
+                      <button className="w-full mt-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors">
                         View Applicants
                       </button>
                     </div>
@@ -2222,7 +2222,7 @@ export default function OrgChart() {
         onClick={() => setChatOpen(!chatOpen)}
         className="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-400 hover:to-blue-500 rounded-full flex items-center justify-center shadow-2xl shadow-blue-500/20 transition-all z-40 group"
       >
-        <MessageCircle className="w-6 h-6 text-white group-hover:scale-110 transition-transform" />
+        <MessageCircle className="w-6 h-6 text-slate-900 dark:text-white group-hover:scale-110 transition-transform" />
       </button>
 
       {chatOpen && (
@@ -2230,7 +2230,7 @@ export default function OrgChart() {
           <div className="p-4 border-b border-slate-700/50 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
-                <Sparkles className="w-4 h-4 text-white" />
+                <Sparkles className="w-4 h-4 text-slate-900 dark:text-white" />
               </div>
               <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Org Chart AI Assistant</h3>
             </div>
@@ -2250,10 +2250,10 @@ export default function OrgChart() {
               <input
                 type="text"
                 placeholder="Ask about the org structure..."
-                className="flex-1 px-4 py-2 bg-slate-800/30 border border-slate-700/50 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-blue-500/50"
+                className="flex-1 px-4 py-2 bg-slate-100 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-lg text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500/50"
               />
               <button className="p-2 bg-slate-700 hover:bg-slate-600 rounded-lg transition-colors">
-                <Send className="w-5 h-5 text-white" />
+                <Send className="w-5 h-5 text-slate-900 dark:text-white" />
               </button>
             </div>
           </div>

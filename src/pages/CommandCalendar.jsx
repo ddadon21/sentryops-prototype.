@@ -420,9 +420,9 @@ export default function CommandCalendar() {
     switch (status) {
       case 'pending': return { text: 'Pending', classes: 'bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' };
       case 'in_progress': return { text: 'In Progress', classes: 'bg-emerald-50 border-emerald-200 text-emerald-700 dark:bg-emerald-500/10 dark:border-emerald-500/20 dark:text-emerald-400' };
-      case 'completed': return { text: 'Completed', classes: 'bg-slate-500/10 border-slate-500/20 text-slate-400' };
+      case 'completed': return { text: 'Completed', classes: 'bg-slate-500/10 border-slate-500/20 text-slate-500' };
       case 'overdue': return { text: 'Overdue', classes: 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' };
-      default: return { text: status, classes: 'bg-slate-500/10 border-slate-500/20 text-slate-400' };
+      default: return { text: status, classes: 'bg-slate-500/10 border-slate-500/20 text-slate-500' };
     }
   };
 
@@ -430,10 +430,10 @@ export default function CommandCalendar() {
     switch (category) {
       case 'compliance': return { text: 'Compliance', classes: 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' };
       case 'staffing': return { text: 'Staffing', classes: 'bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' };
-      case 'operational': return { text: 'Operational', classes: 'bg-slate-500/10 border-slate-500/20 text-slate-300' };
+      case 'operational': return { text: 'Operational', classes: 'bg-slate-500/10 border-slate-500/20 text-slate-500' };
       case 'training': return { text: 'Training', classes: 'bg-emerald-50 border-emerald-200 text-emerald-700 dark:bg-emerald-500/10 dark:border-emerald-500/20 dark:text-emerald-400' };
       case 'maintenance': return { text: 'Maintenance', classes: 'bg-emerald-50 border-emerald-200 text-emerald-700 dark:bg-emerald-500/10 dark:border-emerald-500/20 dark:text-emerald-400' };
-      default: return { text: category, classes: 'bg-slate-500/10 border-slate-500/20 text-slate-400' };
+      default: return { text: category, classes: 'bg-slate-500/10 border-slate-500/20 text-slate-500' };
     }
   };
 
@@ -624,17 +624,17 @@ export default function CommandCalendar() {
                     : 'bg-slate-800/25 border-slate-700/30'
                 }`}
               >
-                <Zap className={`w-4 h-4 mt-0.5 flex-shrink-0 ${conflict.severity === 'high' ? 'text-amber-600 dark:text-amber-400' : 'text-slate-400'}`} />
+                <Zap className={`w-4 h-4 mt-0.5 flex-shrink-0 ${conflict.severity === 'high' ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500'}`} />
                 <div className="flex-1">
                   <div className="flex items-center gap-2">
-                    <span className={`text-[13px] font-semibold ${conflict.severity === 'high' ? 'text-amber-600 dark:text-amber-400' : 'text-slate-300'}`}>
+                    <span className={`text-[13px] font-semibold ${conflict.severity === 'high' ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500'}`}>
                       Conflict Detected:
                     </span>
                     <span className="text-[13px] text-white font-medium">{conflict.title}</span>
                     <span className={`px-1.5 py-0.5 border rounded text-[10px] font-semibold ${
                       conflict.severity === 'critical' ? 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
                       conflict.severity === 'high' ? 'bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
-                      'bg-slate-500/10 border-slate-500/20 text-slate-400'
+                      'bg-slate-500/10 border-slate-500/20 text-slate-500'
                     }`}>{conflict.severity === 'high' ? 'High' : conflict.severity === 'critical' ? 'Critical' : 'Moderate'}</span>
                   </div>
                   <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-0.5">{conflict.detail}</p>
@@ -847,7 +847,7 @@ export default function CommandCalendar() {
                           <span className={`px-1.5 py-0.5 border rounded text-[10px] font-semibold ${
                             event.severity === 'critical' ? 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
                             event.severity === 'high' ? 'bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
-                            'bg-slate-500/10 border-slate-500/20 text-slate-400'
+                            'bg-slate-500/10 border-slate-500/20 text-slate-500'
                           }`}>
                             {countdown}
                           </span>
@@ -1001,7 +1001,7 @@ export default function CommandCalendar() {
                     <span className={`px-1.5 py-0.5 border rounded text-[11px] font-medium ${
                       selectedEvent.severity === 'critical' ? 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
                       selectedEvent.severity === 'high' ? 'bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
-                      'bg-slate-500/10 border-slate-500/20 text-slate-400'
+                      'bg-slate-500/10 border-slate-500/20 text-slate-500'
                     }`}>
                       {selectedEvent.severity.toUpperCase()}
                     </span>

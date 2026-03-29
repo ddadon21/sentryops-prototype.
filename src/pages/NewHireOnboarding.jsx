@@ -450,7 +450,7 @@ export default function NewHireOnboarding() {
                 key={item.id}
                 onClick={() => handleNavigation(item)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-800/50 hover:text-white'
+                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white'
                 } ${sidebarCollapsed ? 'justify-center' : ''}`}
                 title={sidebarCollapsed ? item.label : ''}
               >
@@ -511,13 +511,13 @@ export default function NewHireOnboarding() {
             <div className="flex gap-3 mt-6">
               <button
                 onClick={() => setLogoutConfirmOpen(false)}
-                className="flex-1 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-white font-medium transition-all"
+                className="flex-1 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all"
               >
                 Cancel
               </button>
               <button
                 onClick={handleLogout}
-                className="flex-1 px-4 py-2.5 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-white font-medium transition-all"
+                className="flex-1 px-4 py-2.5 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all"
               >
                 Sign Out
               </button>
@@ -539,12 +539,12 @@ export default function NewHireOnboarding() {
               <div className="flex items-center gap-2 text-sm">
                 <button
                   onClick={() => navigate(createPageUrl('HRDashboard'))}
-                  className="text-slate-600 dark:text-slate-400 hover:text-white transition-colors"
+                  className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
                 >
                   HR Dashboard
                 </button>
                 <ChevronRight className="w-4 h-4 text-slate-600" />
-                <span className="text-white">New Hire Onboarding</span>
+                <span className="text-slate-900 dark:text-white">New Hire Onboarding</span>
               </div>
             </div>
             <div className="flex items-center gap-2 lg:gap-3">
@@ -574,7 +574,7 @@ export default function NewHireOnboarding() {
                     </div>
                     <div className="max-h-96 overflow-y-auto">
                       {notifications.map(notification => (
-                        <div key={notification.id} className={`p-4 border-b border-slate-800/30 hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
+                        <div key={notification.id} className={`p-4 border-b border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
                           <div className="flex items-start gap-3">
                             <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-amber-400' : 'bg-blue-400'}`}></div>
                             <div className="flex-1 min-w-0">
@@ -594,7 +594,7 @@ export default function NewHireOnboarding() {
 
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
-                  <span className="text-white text-sm font-bold">HR</span>
+                  <span className="text-slate-900 dark:text-white text-sm font-bold">HR</span>
                 </div>
                 <div className="hidden sm:block">
                   <p className="text-sm font-medium text-slate-900 dark:text-white">HR Director</p>
@@ -728,7 +728,7 @@ export default function NewHireOnboarding() {
                   >
                     {tab.label}
                     <span className={`px-2 py-0.5 rounded-full text-xs ${
-                      activeTab === tab.id ? 'bg-amber-500/20 text-amber-400' : 'bg-slate-700/50 text-slate-400'
+                      activeTab === tab.id ? 'bg-amber-500/20 text-amber-400' : 'bg-slate-700/50 text-slate-500'
                     }`}>{tab.count}</span>
                     {activeTab === tab.id && (
                       <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500"></div>
@@ -742,7 +742,7 @@ export default function NewHireOnboarding() {
                 <select
                   value={filterPositionType}
                   onChange={(e) => setFilterPositionType(e.target.value)}
-                  className="px-3 py-1.5 bg-slate-800/40 border border-slate-700/50 rounded-lg text-sm text-white focus:outline-none focus:border-amber-500/50"
+                  className="px-3 py-1.5 bg-slate-800/40 border border-slate-700/50 rounded-lg text-sm text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/50"
                 >
                   <option value="all">All Positions ({positionCounts.all})</option>
                   <option value="sworn">Sworn Personnel ({positionCounts.sworn})</option>
@@ -1015,7 +1015,7 @@ export default function NewHireOnboarding() {
                                   <div className="flex-1 min-w-0">
                                     <div className="flex items-center gap-2 flex-wrap">
                                       <p className={`text-sm font-medium ${
-                                        task.status === 'completed' ? 'text-green-400' : 'text-white'
+                                        task.status === 'completed' ? 'text-green-400' : 'text-slate-900 dark:text-white'
                                       }`}>
                                         {task.name}
                                       </p>
@@ -1071,7 +1071,7 @@ export default function NewHireOnboarding() {
                               <p className={`text-sm font-medium ${
                                 action.status === 'overdue' ? 'text-red-400' :
                                 action.status === 'due-tomorrow' ? 'text-amber-400' :
-                                'text-slate-300'
+                                'text-slate-500'
                               }`}>
                                 {action.action}
                               </p>
@@ -1274,7 +1274,7 @@ export default function NewHireOnboarding() {
                             <p className={`text-sm font-medium ${
                               phase.status === 'completed' ? 'text-green-400' :
                               phase.status === 'in-progress' ? 'text-blue-400' :
-                              'text-slate-400'
+                              'text-slate-500'
                             }`}>
                               Phase {phase.phase}: {phase.name}
                             </p>
@@ -1283,7 +1283,7 @@ export default function NewHireOnboarding() {
                           <span className={`px-2 py-1 rounded text-xs font-medium ${
                             phase.status === 'completed' ? 'bg-green-500/20 text-green-400' :
                             phase.status === 'in-progress' ? 'bg-blue-500/20 text-blue-400' :
-                            'bg-slate-700/50 text-slate-400'
+                            'bg-slate-700/50 text-slate-500'
                           }`}>
                             {phase.status.toUpperCase().replace('-', ' ')}
                           </span>
@@ -1334,7 +1334,7 @@ export default function NewHireOnboarding() {
               <button className="flex-1 px-4 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-xl font-medium transition-all">
                 Print Full Checklist
               </button>
-              <button className="flex-1 px-4 py-3 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-white rounded-xl font-medium transition-all">
+              <button className="flex-1 px-4 py-3 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-900 dark:text-white rounded-xl font-medium transition-all">
                 View Personnel File
               </button>
               <button

@@ -425,7 +425,7 @@ export default function CommandDashboard() {
               return (
                 <div
                   key={item.id}
-                  className={`rounded-lg border border-slate-200 dark:border-slate-700/40 hover:bg-slate-50 dark:hover:bg-slate-800/35 transition-colors ${item.tier === 'critical' ? 'border-l-4 border-l-red-500' : item.tier === 'action' ? 'border-l-4 border-l-amber-500' : 'border-l-4 border-l-slate-300 dark:border-l-slate-600'}`}
+                  className={`rounded-lg border border-slate-200 dark:border-slate-700/40 hover:bg-slate-50 dark:hover:bg-slate-100 dark:hover:bg-slate-800/35 transition-colors ${item.tier === 'critical' ? 'border-l-4 border-l-red-500' : item.tier === 'action' ? 'border-l-4 border-l-amber-500' : 'border-l-4 border-l-slate-300 dark:border-l-slate-600'}`}
                 >
                   <div className="flex items-center gap-4 p-3">
 

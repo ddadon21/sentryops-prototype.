@@ -239,7 +239,7 @@ export default function DashboardLayout({
         <div className="border-t border-slate-200 dark:border-slate-700/50">
           {!sidebarCollapsed && (
             <div className="px-4 py-3">
-              <p className="text-xs text-slate-400 dark:text-slate-500 text-center">{orgLabel}</p>
+              <p className="text-xs text-slate-500 dark:text-slate-500 text-center">{orgLabel}</p>
             </div>
           )}
           <div className="p-4">
@@ -285,13 +285,13 @@ export default function DashboardLayout({
             <div className="flex gap-3 mt-6">
               <button
                 onClick={() => setLogoutConfirmOpen(false)}
-                className="flex-1 px-4 py-2.5 bg-slate-100 dark:bg-slate-800/40 hover:bg-slate-200 dark:hover:bg-slate-800/60 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all"
+                className="flex-1 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-50 dark:hover:bg-slate-800/60 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-700 dark:text-white font-medium transition-all"
               >
                 Cancel
               </button>
               <button
                 onClick={handleLogout}
-                className="flex-1 px-4 py-2.5 bg-slate-200 dark:bg-slate-700/40 hover:bg-slate-300 dark:hover:bg-slate-700/60 border border-slate-300 dark:border-slate-600/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all"
+                className="flex-1 px-4 py-2.5 bg-red-600 hover:bg-red-700 dark:bg-red-600/80 dark:hover:bg-red-600 rounded-xl text-white font-medium transition-all shadow-sm"
               >
                 Sign Out
               </button>
@@ -303,7 +303,7 @@ export default function DashboardLayout({
       {/* ── Main Content Area ──────────────────────────── */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Header */}
-        <header className="border-b border-slate-200 dark:border-slate-800/50 backdrop-blur-xl bg-white dark:bg-slate-900/30 sticky top-0 z-30 shadow-sm dark:shadow-none">
+        <header className="border-b border-slate-200 dark:border-slate-800/50 backdrop-blur-md bg-white/80 dark:bg-slate-900/60 sticky top-0 z-30 shadow-sm dark:shadow-none">
           <div className="px-4 lg:px-6 py-4 flex items-center justify-between gap-4">
             {/* Left: mobile menu + search */}
             <div className="flex items-center gap-4 flex-1 min-w-0">
@@ -314,7 +314,7 @@ export default function DashboardLayout({
                 <Menu className="w-5 h-5 text-slate-500 dark:text-slate-400" />
               </button>
               <div className="flex-1 max-w-xl relative hidden sm:block">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 dark:text-slate-500" />
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 dark:text-slate-500" />
                 <input
                   type="text"
                   placeholder="Search..."
@@ -326,10 +326,10 @@ export default function DashboardLayout({
             {/* Right: sync, notifications, profile */}
             <div className="flex items-center gap-2 lg:gap-3">
               {/* Sync indicator */}
-              <div className="hidden lg:flex items-center gap-1.5 text-[11px] text-slate-400 dark:text-slate-500">
+              <div className="hidden lg:flex items-center gap-1.5 text-[11px] text-slate-500 dark:text-slate-500">
                 <Circle className="w-1.5 h-1.5 fill-emerald-500 text-emerald-500" />
                 <span>Sync Healthy</span>
-                <span className="text-slate-300 dark:text-slate-600">· 2m ago</span>
+                <span className="text-slate-500 dark:text-slate-600">· 2m ago</span>
               </div>
               <div className="h-6 w-px bg-slate-200 dark:bg-slate-700/30 hidden lg:block"></div>
 
@@ -350,7 +350,7 @@ export default function DashboardLayout({
                     <div className="p-4 border-b border-slate-200 dark:border-slate-700/50">
                       <div className="flex items-center justify-between">
                         <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white">Notifications</h3>
-                        <span className="text-xs text-slate-400 dark:text-slate-500">{notifications.filter(n => !n.read).length} unread</span>
+                        <span className="text-xs text-slate-500 dark:text-slate-500">{notifications.filter(n => !n.read).length} unread</span>
                       </div>
                     </div>
                     <div className="max-h-96 overflow-y-auto">
@@ -366,7 +366,7 @@ export default function DashboardLayout({
                             <div className="flex-1 min-w-0">
                               <p className="text-[13px] font-medium text-slate-900 dark:text-white mb-1">{notification.title}</p>
                               <p className="text-xs text-slate-500 dark:text-slate-400 mb-2">{notification.message}</p>
-                              <p className="text-xs text-slate-400 dark:text-slate-500">{notification.time}</p>
+                              <p className="text-xs text-slate-500 dark:text-slate-500">{notification.time}</p>
                             </div>
                           </div>
                         </div>
@@ -394,16 +394,16 @@ export default function DashboardLayout({
                   </div>
                   <div className="hidden sm:block text-left">
                     <p className="text-[13px] font-medium text-slate-900 dark:text-white">{profile.name}</p>
-                    <p className="text-[11px] text-slate-400 dark:text-slate-500">{profile.role}</p>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-500">{profile.role}</p>
                   </div>
-                  <ChevronDown className={`w-4 h-4 text-slate-400 dark:text-slate-400 hidden sm:block transition-transform ${profileMenuOpen ? 'rotate-180' : ''}`} />
+                  <ChevronDown className={`w-4 h-4 text-slate-500 dark:text-slate-400 hidden sm:block transition-transform ${profileMenuOpen ? 'rotate-180' : ''}`} />
                 </button>
 
                 {profileMenuOpen && (
                   <div className="profile-dropdown absolute right-0 top-full mt-2 w-56 bg-white dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-2xl z-50 py-2">
                     <div className="px-4 py-3 border-b border-slate-100 dark:border-slate-700/50">
                       <p className="text-[13px] font-medium text-slate-900 dark:text-white">{profile.name}</p>
-                      <p className="text-xs text-slate-400 dark:text-slate-500">{profile.email}</p>
+                      <p className="text-xs text-slate-500 dark:text-slate-500">{profile.email}</p>
                     </div>
                     <div className="py-1">
                       <button

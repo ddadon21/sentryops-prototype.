@@ -566,7 +566,7 @@ export default function ComplianceManagement() {
                 key={item.id}
                 onClick={() => handleNavigation(item)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-800/50 hover:text-white'
+                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white'
                 } ${sidebarCollapsed ? 'justify-center' : ''}`}
                 title={sidebarCollapsed ? item.label : ''}
               >
@@ -627,13 +627,13 @@ export default function ComplianceManagement() {
             <div className="flex gap-3 mt-6">
               <button
                 onClick={() => setLogoutConfirmOpen(false)}
-                className="flex-1 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-white font-medium transition-all"
+                className="flex-1 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all"
               >
                 Cancel
               </button>
               <button
                 onClick={handleLogout}
-                className="flex-1 px-4 py-2.5 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-white font-medium transition-all"
+                className="flex-1 px-4 py-2.5 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all"
               >
                 Sign Out
               </button>
@@ -655,12 +655,12 @@ export default function ComplianceManagement() {
               <div className="flex items-center gap-2 text-sm">
                 <button
                   onClick={() => navigate(createPageUrl('HRDashboard'))}
-                  className="text-slate-600 dark:text-slate-400 hover:text-white transition-colors"
+                  className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
                 >
                   HR Dashboard
                 </button>
                 <ChevronRight className="w-4 h-4 text-slate-600" />
-                <span className="text-white">HR Compliance</span>
+                <span className="text-slate-900 dark:text-white">HR Compliance</span>
               </div>
             </div>
             <div className="flex items-center gap-2 lg:gap-3">
@@ -689,7 +689,7 @@ export default function ComplianceManagement() {
                     </div>
                     <div className="max-h-96 overflow-y-auto">
                       {notifications.map(notification => (
-                        <div key={notification.id} className={`p-4 border-b border-slate-800/30 hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-red-500/5' : ''}`}>
+                        <div key={notification.id} className={`p-4 border-b border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-red-500/5' : ''}`}>
                           <div className="flex items-start gap-3">
                             <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-red-400' : 'bg-blue-400'}`}></div>
                             <div className="flex-1 min-w-0">
@@ -709,7 +709,7 @@ export default function ComplianceManagement() {
 
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
-                  <span className="text-white text-sm font-bold">HR</span>
+                  <span className="text-slate-900 dark:text-white text-sm font-bold">HR</span>
                 </div>
                 <div className="hidden sm:block">
                   <p className="text-sm font-medium text-slate-900 dark:text-white">HR Director</p>
@@ -870,7 +870,7 @@ export default function ComplianceManagement() {
                         {/* Regulatory Info */}
                         <div className="mb-4 p-3 bg-slate-800/60 rounded-lg">
                           <p className="text-xs text-slate-500 mb-1">Regulatory Authority</p>
-                          <p className="text-sm text-white font-medium">{violation.regulatoryAuthority}</p>
+                          <p className="text-sm text-slate-900 dark:text-white font-medium">{violation.regulatoryAuthority}</p>
                           <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">Legal Reference: {violation.legalReference}</p>
                         </div>
 
@@ -901,7 +901,7 @@ export default function ComplianceManagement() {
                                   <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
                                     <div>
                                       <p className="text-slate-500">Certification</p>
-                                      <p className="text-white">{person.certType}</p>
+                                      <p className="text-slate-900 dark:text-white">{person.certType}</p>
                                     </div>
                                     <div>
                                       <p className="text-slate-500">Expiration Date</p>
@@ -913,12 +913,12 @@ export default function ComplianceManagement() {
                                     </div>
                                     <div>
                                       <p className="text-slate-500">Supervisor</p>
-                                      <p className="text-white">{person.supervisor}</p>
+                                      <p className="text-slate-900 dark:text-white">{person.supervisor}</p>
                                     </div>
                                   </div>
                                   <div className="mt-3 pt-3 border-t border-slate-700/50">
                                     <p className="text-xs text-slate-500">Required Training</p>
-                                    <p className="text-sm text-white">{person.requiredTraining}</p>
+                                    <p className="text-sm text-slate-900 dark:text-white">{person.requiredTraining}</p>
                                     <p className={`text-xs mt-1 ${person.trainingScheduled ? 'text-green-400' : 'text-red-400'}`}>
                                       Training Scheduled: {person.trainingScheduled ? 'Yes' : 'NO - URGENT'}
                                     </p>
@@ -1005,7 +1005,7 @@ export default function ComplianceManagement() {
                                   )}
                                 </div>
                                 <div className="flex-1">
-                                  <p className={`text-sm ${action.status === 'completed' ? 'text-green-300' : 'text-white'}`}>
+                                  <p className={`text-sm ${action.status === 'completed' ? 'text-green-300' : 'text-slate-900 dark:text-white'}`}>
                                     {action.action}
                                   </p>
                                   <div className="flex items-center gap-3 mt-1 text-xs text-slate-500">
@@ -1023,7 +1023,7 @@ export default function ComplianceManagement() {
                         <div className="flex items-center justify-between p-3 bg-slate-800/60 rounded-lg">
                           <div>
                             <p className="text-xs text-slate-500">Responsible</p>
-                            <p className="text-sm text-white">{violation.responsible.join(', ')}</p>
+                            <p className="text-sm text-slate-900 dark:text-white">{violation.responsible.join(', ')}</p>
                           </div>
                           <div className="text-right">
                             <p className="text-xs text-slate-500">Deadline</p>
@@ -1116,7 +1116,7 @@ export default function ComplianceManagement() {
                           <p className="text-xs text-slate-500 mb-2">Regulatory Authority</p>
                           <div className="space-y-1">
                             {area.regulatoryAuthority.map((auth, idx) => (
-                              <p key={idx} className="text-sm text-white">• {auth}</p>
+                              <p key={idx} className="text-sm text-slate-900 dark:text-white">• {auth}</p>
                             ))}
                           </div>
                         </div>
@@ -1126,11 +1126,11 @@ export default function ComplianceManagement() {
                           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                             <div>
                               <p className="text-xs text-slate-500">Last Audit Date</p>
-                              <p className="text-white">{area.lastAudit.date}</p>
+                              <p className="text-slate-900 dark:text-white">{area.lastAudit.date}</p>
                             </div>
                             <div>
                               <p className="text-xs text-slate-500">Auditor</p>
-                              <p className="text-white">{area.lastAudit.auditor}</p>
+                              <p className="text-slate-900 dark:text-white">{area.lastAudit.auditor}</p>
                             </div>
                             <div>
                               <p className="text-xs text-slate-500">Result</p>
@@ -1159,7 +1159,7 @@ export default function ComplianceManagement() {
                                 )}
 
                                 {req.deadline && (
-                                  <p className="text-xs text-slate-500">Deadline: <span className="text-white">{req.deadline}</span></p>
+                                  <p className="text-xs text-slate-500">Deadline: <span className="text-slate-900 dark:text-white">{req.deadline}</span></p>
                                 )}
 
                                 {req.progress && (
@@ -1182,7 +1182,7 @@ export default function ComplianceManagement() {
                                   <div className="mt-3 space-y-2">
                                     {req.activeCases.map((caseItem, caseIdx) => (
                                       <div key={caseIdx} className="flex items-center justify-between p-2 bg-slate-900/50 rounded-lg text-xs">
-                                        <span className="text-white">{caseItem.name}</span>
+                                        <span className="text-slate-900 dark:text-white">{caseItem.name}</span>
                                         <span className="text-slate-600 dark:text-slate-400">{caseItem.type}</span>
                                         <span className="text-slate-600 dark:text-slate-400">{caseItem.reason}</span>
                                       </div>
@@ -1197,7 +1197,7 @@ export default function ComplianceManagement() {
                                       {req.demographics.raceEthnicity.map((item, i) => (
                                         <div key={i} className="flex justify-between text-xs py-1">
                                           <span className="text-slate-600 dark:text-slate-400">{item.category}</span>
-                                          <span className="text-white">{item.count} ({item.percent}%)</span>
+                                          <span className="text-slate-900 dark:text-white">{item.count} ({item.percent}%)</span>
                                         </div>
                                       ))}
                                     </div>
@@ -1206,7 +1206,7 @@ export default function ComplianceManagement() {
                                       {req.demographics.gender.map((item, i) => (
                                         <div key={i} className="flex justify-between text-xs py-1">
                                           <span className="text-slate-600 dark:text-slate-400">{item.category}</span>
-                                          <span className="text-white">{item.count} ({item.percent}%)</span>
+                                          <span className="text-slate-900 dark:text-white">{item.count} ({item.percent}%)</span>
                                         </div>
                                       ))}
                                     </div>
@@ -1235,7 +1235,7 @@ export default function ComplianceManagement() {
                                     {req.breakdown.map((item, i) => (
                                       <div key={i} className="flex justify-between text-xs">
                                         <span className="text-slate-600 dark:text-slate-400">{item.level}</span>
-                                        <span className="text-white">{item.count} ({item.percent}%)</span>
+                                        <span className="text-slate-900 dark:text-white">{item.count} ({item.percent}%)</span>
                                       </div>
                                     ))}
                                   </div>
@@ -1277,7 +1277,7 @@ export default function ComplianceManagement() {
         onClick={() => setChatOpen(!chatOpen)}
         className="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-400 hover:to-blue-500 rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 z-40"
       >
-        {chatOpen ? <X className="w-6 h-6 text-white" /> : <MessageCircle className="w-6 h-6 text-white" />}
+        {chatOpen ? <X className="w-6 h-6 text-slate-900 dark:text-white" /> : <MessageCircle className="w-6 h-6 text-slate-900 dark:text-white" />}
       </button>
 
       {chatOpen && (
@@ -1285,7 +1285,7 @@ export default function ComplianceManagement() {
           <div className="p-4 border-b border-slate-700/50">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
-                <MessageCircle className="w-5 h-5 text-white" />
+                <MessageCircle className="w-5 h-5 text-slate-900 dark:text-white" />
               </div>
               <div>
                 <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Compliance Assistant</h3>
@@ -1296,7 +1296,7 @@ export default function ComplianceManagement() {
           <div className="flex-1 p-4 overflow-y-auto">
             <div className="flex gap-3">
               <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                <MessageCircle className="w-4 h-4 text-white" />
+                <MessageCircle className="w-4 h-4 text-slate-900 dark:text-white" />
               </div>
               <div className="flex-1">
                 <div className="bg-slate-800/60 p-3 rounded-xl">
@@ -1307,9 +1307,9 @@ export default function ComplianceManagement() {
           </div>
           <div className="p-4 border-t border-slate-700/50">
             <div className="flex items-center gap-2">
-              <input type="text" placeholder="Ask about compliance requirements..." className="flex-1 px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-blue-500/50" />
+              <input type="text" placeholder="Ask about compliance requirements..." className="flex-1 px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500/50" />
               <button className="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center">
-                <Send className="w-5 h-5 text-white" />
+                <Send className="w-5 h-5 text-slate-900 dark:text-white" />
               </button>
             </div>
           </div>

@@ -109,7 +109,7 @@ const criticalTasks = [
 const getPodColor = (pod: HousingPod) => {
   if (pod.status === 'Over Capacity') return { bg: 'bg-red-500/15 border-red-500/40', text: 'text-red-300', bar: 'bg-red-500' };
   if (pod.status === 'Near Capacity') return { bg: 'bg-amber-500/10 border-amber-500/30', text: 'text-amber-300', bar: 'bg-amber-500' };
-  return { bg: 'bg-slate-800/35 border-slate-700/25', text: 'text-slate-400', bar: 'bg-slate-600/50' };
+  return { bg: 'bg-slate-800/35 border-slate-700/25', text: 'text-slate-500', bar: 'bg-slate-600/50' };
 };
 
 const getPct = (pod: HousingPod) => Math.round((pod.current / pod.capacity) * 100);
@@ -118,13 +118,13 @@ const getShiftColors = (shift: ShiftStatus) => {
   const pct = (shift.present / shift.scheduled) * 100;
   if (pct < 93) return { text: 'text-red-600 dark:text-red-400',   bg: 'bg-red-500/10 border-red-500/20',     dot: 'bg-red-400' };
   if (pct < 100) return { text: 'text-amber-600 dark:text-amber-400', bg: 'bg-amber-500/10 border-amber-500/20', dot: 'bg-amber-400' };
-  return { text: 'text-slate-300', bg: 'bg-slate-800/35 border-slate-700/40', dot: 'bg-slate-500' };
+  return { text: 'text-slate-500', bg: 'bg-slate-800/35 border-slate-700/40', dot: 'bg-slate-500' };
 };
 
 const getRunStatus = (status: CourtRun['status']) => {
   switch (status) {
-    case 'Completed': return 'text-slate-400';
-    case 'En Route':  return 'text-slate-300';
+    case 'Completed': return 'text-slate-500';
+    case 'En Route':  return 'text-slate-500';
     case 'Staging':   return 'text-amber-600 dark:text-amber-400';
     default:          return 'text-slate-500';
   }
@@ -133,7 +133,7 @@ const getRunStatus = (status: CourtRun['status']) => {
 const getUrgencyColors = (u: string) => {
   if (u === 'critical') return 'border-l-2 border-red-500 bg-red-500/8 text-red-300';
   if (u === 'high') return 'border-l-2 border-amber-500 bg-amber-500/8 text-amber-300';
-  return 'border-l-2 border-slate-600/50 bg-slate-800/30 text-slate-300';
+  return 'border-l-2 border-slate-600/50 bg-slate-800/30 text-slate-500';
 };
 
 // ── Component ─────────────────────────────────────────────────
@@ -201,7 +201,7 @@ export default function DetentionCommandCenter() {
               <span className="text-[10px] text-slate-500 font-medium uppercase tracking-wide">Capacity</span>
             </div>
             <p className="text-xl font-bold text-slate-900 dark:text-white">{facilityMetrics.currentPopulation}<span className="text-sm text-slate-500">/{facilityMetrics.totalCapacity}</span></p>
-            <p className={`text-[11px] font-semibold mt-0.5 ${capacityPct >= 95 ? 'text-red-600 dark:text-red-400' : capacityPct >= 85 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-300'}`}>{capacityPct}% full</p>
+            <p className={`text-[11px] font-semibold mt-0.5 ${capacityPct >= 95 ? 'text-red-600 dark:text-red-400' : capacityPct >= 85 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500'}`}>{capacityPct}% full</p>
             <div className="w-full h-1 bg-slate-700/50 rounded-full mt-1.5 overflow-hidden">
               <div className={`h-full rounded-full ${capacityPct >= 95 ? 'bg-red-500' : capacityPct >= 85 ? 'bg-amber-500' : 'bg-slate-500/60'}`} style={{ width: `${Math.min(capacityPct, 100)}%` }} />
             </div>
@@ -215,7 +215,7 @@ export default function DetentionCommandCenter() {
             </div>
             <p className="text-xl font-bold text-slate-900 dark:text-white">{facilityMetrics.bookingsToday}<span className="text-[11px] text-slate-600 dark:text-slate-400 ml-1">in</span></p>
             <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-0.5">{facilityMetrics.releasesToday} releases</p>
-            <p className={`text-[11px] font-semibold mt-0.5 flex items-center gap-0.5 ${facilityMetrics.netChange > 0 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-400'}`}>
+            <p className={`text-[11px] font-semibold mt-0.5 flex items-center gap-0.5 ${facilityMetrics.netChange > 0 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500'}`}>
               {facilityMetrics.netChange > 0 ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
               Net {facilityMetrics.netChange > 0 ? '+' : ''}{facilityMetrics.netChange} today
             </p>
@@ -228,7 +228,7 @@ export default function DetentionCommandCenter() {
               <span className="text-[10px] text-slate-500 font-medium uppercase tracking-wide">Staff</span>
             </div>
             <p className="text-xl font-bold text-slate-900 dark:text-white">{totalPresent}<span className="text-sm text-slate-500">/{totalStaff}</span></p>
-            <p className={`text-[11px] font-semibold mt-0.5 ${staffReadiness === 'Critical' ? 'text-red-600 dark:text-red-400' : staffReadiness === 'Warning' ? 'text-amber-600 dark:text-amber-400' : 'text-slate-300'}`}>{staffPct}% coverage</p>
+            <p className={`text-[11px] font-semibold mt-0.5 ${staffReadiness === 'Critical' ? 'text-red-600 dark:text-red-400' : staffReadiness === 'Warning' ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500'}`}>{staffPct}% coverage</p>
             <p className="text-[10px] text-slate-500 mt-0.5">B-Shift gap</p>
           </div>
 
@@ -383,7 +383,7 @@ export default function DetentionCommandCenter() {
                 const pct = getPct(pod);
                 return (
                   <div key={pod.id} className={`rounded-lg border p-1.5 cursor-default ${colors.bg}`} title={`${pod.name} — ${pod.type}\n${pod.current}/${pod.capacity} (${pct}%)\n${pod.notes || ''}`}>
-                    <p className="text-[9px] font-bold text-white truncate">{pod.id}</p>
+                    <p className="text-[9px] font-bold text-slate-900 dark:text-white truncate">{pod.id}</p>
                     <p className={`text-[10px] font-semibold ${colors.text}`}>{pct}%</p>
                     <div className="w-full h-0.5 bg-slate-700/50 rounded-full mt-1 overflow-hidden">
                       <div className={`h-full rounded-full ${colors.bar}`} style={{ width: `${Math.min(pct, 100)}%` }} />
@@ -413,7 +413,7 @@ export default function DetentionCommandCenter() {
                     <div className="flex items-center justify-between mb-1.5">
                       <div className="flex items-center gap-2">
                         <div className={`w-1.5 h-1.5 rounded-full ${colors.dot}`} />
-                        <span className="text-[12px] font-semibold text-white">{shift.label}</span>
+                        <span className="text-[12px] font-semibold text-slate-900 dark:text-white">{shift.label}</span>
                       </div>
                       <span className={`text-[11px] font-bold ${colors.text}`}>{shift.present}/{shift.scheduled}</span>
                     </div>
@@ -443,7 +443,7 @@ export default function DetentionCommandCenter() {
                     <p className="text-[11px] font-bold text-slate-700 dark:text-slate-300">{run.time}</p>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-[12px] font-medium text-white truncate">{run.court}</p>
+                    <p className="text-[12px] font-medium text-slate-900 dark:text-white truncate">{run.court}</p>
                     <p className="text-[10px] text-slate-500">{run.inmates} inmates · {run.deputy}</p>
                   </div>
                   <div className="flex-shrink-0 text-right">
@@ -503,11 +503,11 @@ export default function DetentionCommandCenter() {
             <div className="mt-3 pt-2.5 border-t border-slate-700/50 grid grid-cols-3 gap-2 text-center">
               <div>
                 <p className="text-[10px] text-slate-500">Avg Stay</p>
-                <p className="text-[12px] font-semibold text-white">23.4d</p>
+                <p className="text-[12px] font-semibold text-slate-900 dark:text-white">23.4d</p>
               </div>
               <div>
                 <p className="text-[10px] text-slate-500">Longest</p>
-                <p className="text-[12px] font-semibold text-white">847d</p>
+                <p className="text-[12px] font-semibold text-slate-900 dark:text-white">847d</p>
               </div>
               <div>
                 <p className="text-[10px] text-slate-500">7-Day Fore.</p>
@@ -533,7 +533,7 @@ export default function DetentionCommandCenter() {
                   <div className="flex-1">
                     <div className="flex items-center justify-between mb-0.5">
                       <p className="text-[11px] font-medium text-slate-200">{item.label}</p>
-                      <span className={`text-[10px] font-semibold ${item.pct && item.pct >= 90 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-400'}`}>{item.value}</span>
+                      <span className={`text-[10px] font-semibold ${item.pct && item.pct >= 90 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500'}`}>{item.value}</span>
                     </div>
                     {item.pct !== null && (
                       <div className="w-full h-1 bg-slate-700/50 rounded-full overflow-hidden mb-0.5">
@@ -569,7 +569,7 @@ export default function DetentionCommandCenter() {
             <div className="mt-3 pt-2.5 border-t border-slate-700/50">
               <button
                 onClick={() => navigate('/jail/dashboard')}
-                className="w-full flex items-center justify-center gap-2 text-[11px] text-slate-600 dark:text-slate-400 hover:text-white transition-colors py-1"
+                className="w-full flex items-center justify-center gap-2 text-[11px] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors py-1"
               >
                 <span>View Custody Operations</span>
                 <ArrowRight className="w-3.5 h-3.5" />

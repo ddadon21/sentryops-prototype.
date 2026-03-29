@@ -164,15 +164,15 @@ const BookingProcessing = () => {
         <div className="mb-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="px-4 py-2 bg-slate-800 border border-slate-700 rounded-lg">
+              <div className="px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg">
                 <div className="text-xs text-slate-600 dark:text-slate-400">In Process</div>
                 <div className="text-xl font-bold text-amber-400">{inProgressBookings.length}</div>
               </div>
-              <div className="px-4 py-2 bg-slate-800 border border-slate-700 rounded-lg">
+              <div className="px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg">
                 <div className="text-xs text-slate-600 dark:text-slate-400">Pending Intake</div>
                 <div className="text-xl font-bold text-slate-900 dark:text-white">{pendingBookings.length}</div>
               </div>
-              <div className="px-4 py-2 bg-slate-800 border border-slate-700 rounded-lg">
+              <div className="px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg">
                 <div className="text-xs text-slate-600 dark:text-slate-400">Today Total</div>
                 <div className="text-xl font-bold text-slate-900 dark:text-white">18</div>
               </div>
@@ -218,7 +218,7 @@ const BookingProcessing = () => {
         {activeTab === 'in-progress' && (
           <div className="space-y-6">
             {inProgressBookings.map((booking) => (
-              <div key={booking.id} className="bg-slate-800 border border-slate-700 rounded-lg p-6">
+              <div key={booking.id} className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-6">
                 {/* Header */}
                 <div className="flex items-start justify-between mb-6">
                   <div>
@@ -241,11 +241,11 @@ const BookingProcessing = () => {
                       </div>
                       <div>
                         <span className="text-slate-600 dark:text-slate-400">Inmate ID:</span>{' '}
-                        <span className="text-white font-semibold">{booking.inmateId}</span>
+                        <span className="text-slate-900 dark:text-white font-semibold">{booking.inmateId}</span>
                       </div>
                       <div>
                         <span className="text-slate-600 dark:text-slate-400">Arrest Time:</span>{' '}
-                        <span className="text-white">{booking.arrestTime}</span>
+                        <span className="text-slate-900 dark:text-white">{booking.arrestTime}</span>
                       </div>
                       <div>
                         <span className="text-slate-600 dark:text-slate-400">Current Step:</span>{' '}
@@ -263,19 +263,19 @@ const BookingProcessing = () => {
 
                 {/* Arrest Information */}
                 <div className="bg-slate-900/50 border border-slate-700 rounded-lg p-4 mb-6">
-                  <h3 className="text-white font-semibold mb-3">Arrest Information</h3>
+                  <h3 className="text-slate-900 dark:text-white font-semibold mb-3">Arrest Information</h3>
                   <div className="grid grid-cols-2 gap-4 text-sm">
                     <div>
                       <div className="text-slate-600 dark:text-slate-400 mb-1">Arresting Officer</div>
-                      <div className="text-white">{booking.arrestingOfficer}</div>
+                      <div className="text-slate-900 dark:text-white">{booking.arrestingOfficer}</div>
                     </div>
                     <div>
                       <div className="text-slate-600 dark:text-slate-400 mb-1">Arresting Agency</div>
-                      <div className="text-white">{booking.arrestingAgency}</div>
+                      <div className="text-slate-900 dark:text-white">{booking.arrestingAgency}</div>
                     </div>
                     <div>
                       <div className="text-slate-600 dark:text-slate-400 mb-1">Transport Officer</div>
-                      <div className="text-white">{booking.transportOfficer}</div>
+                      <div className="text-slate-900 dark:text-white">{booking.transportOfficer}</div>
                     </div>
                     <div>
                       <div className="text-slate-600 dark:text-slate-400 mb-1">Charges</div>
@@ -290,7 +290,7 @@ const BookingProcessing = () => {
 
                 {/* Processing Steps Timeline */}
                 <div className="mb-4">
-                  <h3 className="text-white font-semibold mb-4">Processing Timeline</h3>
+                  <h3 className="text-slate-900 dark:text-white font-semibold mb-4">Processing Timeline</h3>
                   <div className="space-y-3">
                     {booking.steps.map((step, idx) => (
                       <div key={step.id} className="relative">
@@ -333,7 +333,7 @@ const BookingProcessing = () => {
 
                 {/* Actions */}
                 <div className="flex justify-end gap-3 pt-4 border-t border-slate-700">
-                  <button className="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg transition-colors">
+                  <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
                     View Details
                   </button>
                   <button className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-slate-900 font-medium rounded-lg transition-colors">
@@ -349,7 +349,7 @@ const BookingProcessing = () => {
         {activeTab === 'pending' && (
           <div className="space-y-4">
             {pendingBookings.map((booking) => (
-              <div key={booking.id} className="bg-slate-800 border border-slate-700 rounded-lg p-6">
+              <div key={booking.id} className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-6">
                 <div className="flex items-start justify-between">
                   <div>
                     <div className="flex items-center gap-3 mb-3">
@@ -365,15 +365,15 @@ const BookingProcessing = () => {
                       </div>
                       <div>
                         <span className="text-slate-600 dark:text-slate-400">Transport Officer:</span>{' '}
-                        <span className="text-white">{booking.transportOfficer}</span>
+                        <span className="text-slate-900 dark:text-white">{booking.transportOfficer}</span>
                       </div>
                       <div>
                         <span className="text-slate-600 dark:text-slate-400">Arresting Officer:</span>{' '}
-                        <span className="text-white">{booking.arrestingOfficer}</span>
+                        <span className="text-slate-900 dark:text-white">{booking.arrestingOfficer}</span>
                       </div>
                       <div>
                         <span className="text-slate-600 dark:text-slate-400">Agency:</span>{' '}
-                        <span className="text-white">{booking.arrestingAgency}</span>
+                        <span className="text-slate-900 dark:text-white">{booking.arrestingAgency}</span>
                       </div>
                     </div>
                     <div className="mt-3">
@@ -387,7 +387,7 @@ const BookingProcessing = () => {
                       </div>
                     </div>
                   </div>
-                  <button className="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg transition-colors">
+                  <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
                     Prepare Intake
                   </button>
                 </div>
@@ -400,7 +400,7 @@ const BookingProcessing = () => {
         {activeTab === 'completed' && (
           <div className="space-y-4">
             {completedBookings.map((booking) => (
-              <div key={booking.id} className="bg-slate-800 border border-slate-700 rounded-lg p-6">
+              <div key={booking.id} className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-6">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-4">
                     <div className="p-3 bg-slate-700/60 rounded-lg">
@@ -415,11 +415,11 @@ const BookingProcessing = () => {
                         </div>
                         <div>
                           <span className="text-slate-600 dark:text-slate-400">Inmate ID:</span>{' '}
-                          <span className="text-white font-semibold">{booking.inmateId}</span>
+                          <span className="text-slate-900 dark:text-white font-semibold">{booking.inmateId}</span>
                         </div>
                         <div>
                           <span className="text-slate-600 dark:text-slate-400">Completed:</span>{' '}
-                          <span className="text-white">{booking.completedTime}</span>
+                          <span className="text-slate-900 dark:text-white">{booking.completedTime}</span>
                         </div>
                         <div>
                           <span className="text-slate-600 dark:text-slate-400">Total Time:</span>{' '}
@@ -427,11 +427,11 @@ const BookingProcessing = () => {
                         </div>
                         <div>
                           <span className="text-slate-600 dark:text-slate-400">Housing:</span>{' '}
-                          <span className="text-white">{booking.housing}</span>
+                          <span className="text-slate-900 dark:text-white">{booking.housing}</span>
                         </div>
                         <div>
                           <span className="text-slate-600 dark:text-slate-400">Classification:</span>{' '}
-                          <span className="text-white">{booking.classification}</span>
+                          <span className="text-slate-900 dark:text-white">{booking.classification}</span>
                         </div>
                         <div className="col-span-2">
                           <span className="text-slate-600 dark:text-slate-400">Bond:</span>{' '}
@@ -444,7 +444,7 @@ const BookingProcessing = () => {
                   </div>
                   <button
                     onClick={() => navigate('/jail/inmates')}
-                    className="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg transition-colors"
+                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
                   >
                     View in Roster
                   </button>

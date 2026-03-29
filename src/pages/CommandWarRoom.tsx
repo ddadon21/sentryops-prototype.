@@ -140,15 +140,15 @@ function getDivisionColors(status: DivisionReadiness['status']) {
 }
 
 function getBeatColors(status: PatrolBeat['status']) {
-  if (status === 'Uncovered') return { bg: 'bg-red-500/15 border-red-500/35', text: 'text-red-300', dot: 'bg-red-500' };
-  if (status === 'Thin')      return { bg: 'bg-amber-500/12 border-amber-500/30', text: 'text-amber-300', dot: 'bg-amber-400' };
-  return { bg: 'bg-slate-800/30 border-slate-700/30', text: 'text-slate-300', dot: 'bg-slate-500' };
+  if (status === 'Uncovered') return { bg: 'bg-red-500/15 border-red-500/35', text: 'text-red-700 dark:text-red-300', dot: 'bg-red-500' };
+  if (status === 'Thin')      return { bg: 'bg-amber-500/12 border-amber-500/30', text: 'text-amber-700 dark:text-amber-300', dot: 'bg-amber-400' };
+  return { bg: 'bg-slate-50 dark:bg-slate-800/30 border-slate-200 dark:border-slate-700/30', text: 'text-slate-500', dot: 'bg-slate-500' };
 }
 
 function getCertColors(severity: CertAlert['severity']) {
   if (severity === 'critical') return { row: 'border-l-2 border-l-red-500/70',   badge: 'bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/20',    days: 'text-red-600 dark:text-red-400 font-bold' };
   if (severity === 'warning')  return { row: 'border-l-2 border-l-amber-500/60', badge: 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/20', days: 'text-amber-600 dark:text-amber-400 font-semibold' };
-  return { row: '', badge: 'bg-slate-700/30 text-slate-600 dark:text-slate-400 border border-slate-700/20', days: 'text-slate-400' };
+  return { row: '', badge: 'bg-slate-700/30 text-slate-600 dark:text-slate-400 border border-slate-700/20', days: 'text-slate-500' };
 }
 
 function getDeploymentStatusColors(status: Deployment['status']) {
@@ -177,7 +177,7 @@ export default function CommandWarRoom() {
       value: `${commandSnapshot.filled}/${commandSnapshot.authorizedStrength}`,
       sub: `${filledPct}% filled · ${commandSnapshot.openVacancies} vacancies`,
       icon: Users,
-      color: 'text-white',
+      color: 'text-slate-900 dark:text-white',
       trend: null,
     },
     {
@@ -185,7 +185,7 @@ export default function CommandWarRoom() {
       value: `${commandSnapshot.onDuty}`,
       sub: `${onDutyPct}% of filled positions`,
       icon: Activity,
-      color: 'text-white',
+      color: 'text-slate-900 dark:text-white',
       trend: null,
     },
     {
@@ -209,7 +209,7 @@ export default function CommandWarRoom() {
       value: `${commandSnapshot.activeDeployments}`,
       sub: `${commandSnapshot.mutualAidOut} mutual aid out`,
       icon: Target,
-      color: 'text-white',
+      color: 'text-slate-900 dark:text-white',
       trend: null,
     },
     {
@@ -235,11 +235,11 @@ export default function CommandWarRoom() {
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1.5 text-[11px] text-slate-500 bg-slate-800/30 border border-slate-700/30 rounded-lg px-3 py-1.5">
+            <div className="flex items-center gap-1.5 text-[11px] text-slate-500 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/30 rounded-lg px-3 py-1.5">
               <Circle className="w-1.5 h-1.5 fill-emerald-500 text-emerald-500" />
               Live Feed
             </div>
-            <button className="flex items-center gap-2 px-3 py-1.5 bg-slate-800/30 border border-slate-700/30 rounded-lg text-[12px] text-slate-600 dark:text-slate-400 hover:text-white hover:bg-slate-700/30 transition-all">
+            <button className="flex items-center gap-2 px-3 py-1.5 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/30 rounded-lg text-[12px] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-700/30 transition-all">
               <RefreshCw className="w-3.5 h-3.5" />
               Refresh
             </button>
@@ -301,9 +301,9 @@ export default function CommandWarRoom() {
                 const colors = getDivisionColors(div.status);
                 const onDutyPct = Math.round((div.onDuty / div.filled) * 100);
                 return (
-                  <div key={div.name} className="grid grid-cols-12 items-center px-5 py-2.5 hover:bg-slate-700/10 transition-colors">
+                  <div key={div.name} className="grid grid-cols-12 items-center px-5 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-700/10 transition-colors">
                     <div className="col-span-4">
-                      <p className="text-[12px] font-medium text-slate-200 leading-tight">{div.name}</p>
+                      <p className="text-[12px] font-medium text-slate-900 dark:text-slate-200 leading-tight">{div.name}</p>
                       <p className="text-[10px] text-slate-500">{div.bureau}{div.actingSupervisor && <span className="ml-1 text-amber-600 dark:text-amber-400">⚡ Acting</span>}</p>
                     </div>
                     <div className="col-span-2 text-center">
@@ -321,7 +321,7 @@ export default function CommandWarRoom() {
                       </div>
                     </div>
                     <div className="col-span-1 text-center">
-                      <span className={`text-[12px] ${div.vacancies > 4 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-400'}`}>{div.vacancies}</span>
+                      <span className={`text-[12px] ${div.vacancies > 4 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500'}`}>{div.vacancies}</span>
                     </div>
                     <div className="col-span-1 text-center">
                       <span className={`text-[12px] ${div.certRisk > 3 ? 'text-red-600 dark:text-red-400' : div.certRisk > 1 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500'}`}>
@@ -432,9 +432,9 @@ export default function CommandWarRoom() {
               {certAlerts.map((cert) => {
                 const colors = getCertColors(cert.severity);
                 return (
-                  <div key={cert.badge} className={`flex items-center gap-3 px-5 py-2.5 ${colors.row} hover:bg-slate-700/10 transition-colors`}>
+                  <div key={cert.badge} className={`flex items-center gap-3 px-5 py-2.5 ${colors.row} hover:bg-slate-50 dark:hover:bg-slate-700/10 transition-colors`}>
                     <div className="flex-1 min-w-0">
-                      <p className="text-[12px] font-medium text-slate-200">{cert.deputy}</p>
+                      <p className="text-[12px] font-medium text-slate-900 dark:text-slate-200">{cert.deputy}</p>
                       <p className="text-[10px] text-slate-500">{cert.cert} · Badge #{cert.badge}</p>
                     </div>
                     <div className="text-right flex-shrink-0">
@@ -470,12 +470,12 @@ export default function CommandWarRoom() {
 
             <div className="divide-y divide-slate-700/10 max-h-72 overflow-y-auto">
               {deployments.map((dep) => (
-                <div key={dep.name} className="flex items-start gap-3 px-5 py-2.5 hover:bg-slate-700/10 transition-colors">
-                  <div className="w-7 h-7 bg-slate-700/40 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                <div key={dep.name} className="flex items-start gap-3 px-5 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-700/10 transition-colors">
+                  <div className="w-7 h-7 bg-slate-100 dark:bg-slate-700/40 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
                     <span className="text-[10px] font-bold text-slate-700 dark:text-slate-300">{dep.personnel}</span>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-[12px] font-medium text-slate-200 leading-tight">{dep.name}</p>
+                    <p className="text-[12px] font-medium text-slate-900 dark:text-slate-200 leading-tight">{dep.name}</p>
                     <p className="text-[10px] text-slate-500">{dep.lead} · {dep.location} · since {dep.since}</p>
                   </div>
                   <div className="flex flex-col items-end gap-1 flex-shrink-0">
@@ -516,11 +516,11 @@ export default function CommandWarRoom() {
                 const colors = getAlertColors(alert.severity);
                 const Icon = alert.severity === 'critical' ? AlertOctagon : alert.severity === 'warning' ? AlertTriangle : Zap;
                 return (
-                  <div key={alert.id} className={`flex items-start gap-3 px-5 py-3 border-l-2 ${colors.border} hover:bg-slate-700/10 transition-colors cursor-pointer`}>
+                  <div key={alert.id} className={`flex items-start gap-3 px-5 py-3 border-l-2 ${colors.border} hover:bg-slate-50 dark:hover:bg-slate-700/10 transition-colors cursor-pointer`}>
                     <Icon className={`w-4 h-4 mt-0.5 flex-shrink-0 ${colors.icon}`} />
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between gap-2 mb-0.5">
-                        <p className="text-[12px] font-medium text-slate-200">{alert.title}</p>
+                        <p className="text-[12px] font-medium text-slate-900 dark:text-slate-200">{alert.title}</p>
                         <div className="flex items-center gap-1.5 flex-shrink-0">
                           <span className="text-[10px] text-slate-500">{alert.time}</span>
                         </div>
@@ -552,28 +552,28 @@ export default function CommandWarRoom() {
                 <div className="flex gap-3">
                   <AlertOctagon className="w-4 h-4 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5" />
                   <p className="text-[12px] text-slate-700 dark:text-slate-300 leading-relaxed">
-                    <span className="text-white font-medium">Immediate: </span>
+                    <span className="text-slate-900 dark:text-white font-medium">Immediate: </span>
                     Beat 7 West has zero coverage. Divert Alpha-12 from Beat 1 (currently overloaded) to restore patrol presence.
                   </p>
                 </div>
                 <div className="flex gap-3">
                   <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
                   <p className="text-[12px] text-slate-700 dark:text-slate-300 leading-relaxed">
-                    <span className="text-white font-medium">Today: </span>
+                    <span className="text-slate-900 dark:text-white font-medium">Today: </span>
                     Sgt. Rivera's firearms cert expires in 4 days. Restricted duty status applies automatically on day 0 unless renewed. Contact Training at 0800.
                   </p>
                 </div>
                 <div className="flex gap-3">
                   <Shield className="w-4 h-4 text-slate-600 dark:text-slate-400 flex-shrink-0 mt-0.5" />
                   <p className="text-[12px] text-slate-700 dark:text-slate-300 leading-relaxed">
-                    <span className="text-white font-medium">This Week: </span>
+                    <span className="text-slate-900 dark:text-white font-medium">This Week: </span>
                     Bravo Division is operating with 2 acting supervisors and 6 unfilled vacancies. Recommend priority recruiting review.
                   </p>
                 </div>
                 <div className="flex gap-3">
                   <TrendingUp className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
                   <p className="text-[12px] text-slate-700 dark:text-slate-300 leading-relaxed">
-                    <span className="text-white font-medium">Positive: </span>
+                    <span className="text-slate-900 dark:text-white font-medium">Positive: </span>
                     Warrant sweep staged for 08:00. All 12 deputies confirmed. SAC Lt. Grant reports go/no-go ready.
                   </p>
                 </div>
@@ -598,8 +598,8 @@ export default function CommandWarRoom() {
                     onClick={() => navigate(action.route)}
                     className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-[12px] font-medium transition-all ${
                       action.urgent
-                        ? 'bg-amber-500/10 border border-amber-500/20 text-amber-300 hover:bg-amber-500/15'
-                        : 'bg-slate-700/20 border border-slate-700/20 text-slate-700 dark:text-slate-300 hover:bg-slate-700/30'
+                        ? 'bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-300 hover:bg-amber-500/15'
+                        : 'bg-slate-50 dark:bg-slate-700/20 border border-slate-200 dark:border-slate-700/20 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/30'
                     }`}
                   >
                     {action.label}

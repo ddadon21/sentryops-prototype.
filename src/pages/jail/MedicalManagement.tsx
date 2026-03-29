@@ -265,7 +265,7 @@ const MedicalManagement = () => {
         <div className="mb-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <button className="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg transition-colors">
+              <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
                 Medical Log
               </button>
               <button className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white font-medium rounded-lg transition-colors">
@@ -277,28 +277,28 @@ const MedicalManagement = () => {
 
         {/* Medical Stats */}
         <div className="grid grid-cols-4 gap-4 mb-6">
-          <div className="bg-slate-800 border border-slate-700 rounded-lg p-4">
+          <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4">
             <div className="flex items-center justify-between mb-2">
               <div className="text-sm text-slate-600 dark:text-slate-400">Total Under Medical Care</div>
               <Hospital className="w-5 h-5 text-slate-600 dark:text-slate-400" />
             </div>
             <div className="text-2xl font-bold text-slate-900 dark:text-white">{medicalStats.totalUnderCare}</div>
           </div>
-          <div className="bg-slate-800 border border-slate-700 rounded-lg p-4">
+          <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4">
             <div className="flex items-center justify-between mb-2">
               <div className="text-sm text-slate-600 dark:text-slate-400">Critical Cases</div>
               <AlertTriangle className="w-5 h-5 text-red-400" />
             </div>
             <div className="text-2xl font-bold text-red-400">{medicalStats.critical}</div>
           </div>
-          <div className="bg-slate-800 border border-slate-700 rounded-lg p-4">
+          <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4">
             <div className="flex items-center justify-between mb-2">
               <div className="text-sm text-slate-600 dark:text-slate-400">Active Medications</div>
               <Pill className="w-5 h-5 text-slate-600 dark:text-slate-400" />
             </div>
             <div className="text-2xl font-bold text-slate-900 dark:text-white">{medicalStats.activeMedications}</div>
           </div>
-          <div className="bg-slate-800 border border-slate-700 rounded-lg p-4">
+          <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4">
             <div className="flex items-center justify-between mb-2">
               <div className="text-sm text-slate-600 dark:text-slate-400">Sick Call Pending</div>
               <FileText className="w-5 h-5 text-amber-400" />
@@ -315,17 +315,17 @@ const MedicalManagement = () => {
               <h4 className="text-red-400 font-semibold mb-2">Active Medical Alerts</h4>
               <div className="grid grid-cols-3 gap-4 text-sm">
                 <div>
-                  <span className="text-white font-medium">Hospital Guards:</span>{' '}
+                  <span className="text-slate-900 dark:text-white font-medium">Hospital Guards:</span>{' '}
                   <span className="text-red-400">{medicalStats.hospitalGuards} active</span>
                   <div className="text-slate-600 dark:text-slate-400 text-xs mt-1">Anderson, R. - Gwinnett Medical</div>
                 </div>
                 <div>
-                  <span className="text-white font-medium">Suicide Watch:</span>{' '}
+                  <span className="text-slate-900 dark:text-white font-medium">Suicide Watch:</span>{' '}
                   <span className="text-red-400">{medicalStats.suicideWatch} inmates</span>
                   <div className="text-slate-600 dark:text-slate-400 text-xs mt-1">24/7 one-on-one observation</div>
                 </div>
                 <div>
-                  <span className="text-white font-medium">Isolation Cells:</span>{' '}
+                  <span className="text-slate-900 dark:text-white font-medium">Isolation Cells:</span>{' '}
                   <span className="text-red-400">{medicalStats.isolationCells} occupied</span>
                   <div className="text-slate-600 dark:text-slate-400 text-xs mt-1">Infectious disease protocol</div>
                 </div>
@@ -398,11 +398,11 @@ const MedicalManagement = () => {
                       </div>
                       <div>
                         <span className="text-slate-600 dark:text-slate-400">Housing:</span>{' '}
-                        <span className="text-white font-semibold">{record.housing}</span>
+                        <span className="text-slate-900 dark:text-white font-semibold">{record.housing}</span>
                       </div>
                       <div>
                         <span className="text-slate-600 dark:text-slate-400">Age:</span>{' '}
-                        <span className="text-white">{record.age} ({record.dob})</span>
+                        <span className="text-slate-900 dark:text-white">{record.age} ({record.dob})</span>
                       </div>
                     </div>
                   </div>
@@ -415,14 +415,14 @@ const MedicalManagement = () => {
                 <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4 mb-4">
                   <div className="flex items-center gap-2 mb-2">
                     <AlertTriangle className="w-5 h-5 text-red-400" />
-                    <h4 className="text-white font-semibold">{record.condition}</h4>
+                    <h4 className="text-slate-900 dark:text-white font-semibold">{record.condition}</h4>
                   </div>
                   <p className="text-slate-700 dark:text-slate-300 text-sm">{record.notes}</p>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <h4 className="text-white font-semibold mb-2 flex items-center gap-2">
+                    <h4 className="text-slate-900 dark:text-white font-semibold mb-2 flex items-center gap-2">
                       <Pill className="w-4 h-4 text-slate-600 dark:text-slate-400" />
                       Current Medications
                     </h4>
@@ -440,7 +440,7 @@ const MedicalManagement = () => {
                     )}
                   </div>
                   <div>
-                    <h4 className="text-white font-semibold mb-2 flex items-center gap-2">
+                    <h4 className="text-slate-900 dark:text-white font-semibold mb-2 flex items-center gap-2">
                       <User className="w-4 h-4 text-slate-600 dark:text-slate-400" />
                       Medical Provider
                     </h4>
@@ -456,7 +456,7 @@ const MedicalManagement = () => {
         {/* Medication Schedule */}
         {selectedTab === 'medications' && (
           <div className="space-y-4">
-            <div className="bg-slate-800 border border-slate-700 rounded-lg p-6">
+            <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-6">
               <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4">Today's Medication Rounds</h3>
               <div className="space-y-3">
                 {medicationSchedule.map((round, idx) => (
@@ -467,20 +467,20 @@ const MedicalManagement = () => {
                         <span className={`px-3 py-1 rounded text-sm font-medium ${
                           round.status === 'Completed' ? 'bg-emerald-500/20 text-emerald-400' :
                           round.status === 'In Progress' ? 'bg-amber-500/20 text-amber-400' :
-                          'bg-slate-500/20 text-slate-400'
+                          'bg-slate-500/20 text-slate-500'
                         }`}>
                           {round.status}
                         </span>
                       </div>
                       <div className="text-right">
                         <div className="text-sm text-slate-600 dark:text-slate-400">Nurse</div>
-                        <div className="text-white font-medium">{round.nurse}</div>
+                        <div className="text-slate-900 dark:text-white font-medium">{round.nurse}</div>
                       </div>
                     </div>
                     <div className="grid grid-cols-3 gap-4 text-sm">
                       <div>
                         <span className="text-slate-600 dark:text-slate-400">Total Inmates:</span>{' '}
-                        <span className="text-white font-semibold">{round.inmates}</span>
+                        <span className="text-slate-900 dark:text-white font-semibold">{round.inmates}</span>
                       </div>
                       <div>
                         <span className="text-slate-600 dark:text-slate-400">Administered:</span>{' '}
@@ -495,7 +495,7 @@ const MedicalManagement = () => {
                     </div>
                     {round.status === 'In Progress' && (
                       <div className="mt-3">
-                        <div className="w-full bg-slate-700 rounded-full h-2">
+                        <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2">
                           <div
                             className="bg-amber-500 h-2 rounded-full transition-all"
                             style={{ width: `${(round.administered / round.inmates) * 100}%` }}
@@ -514,7 +514,7 @@ const MedicalManagement = () => {
         {selectedTab === 'sick-call' && (
           <div className="space-y-4">
             {sickCallRequests.map((request, idx) => (
-              <div key={idx} className="bg-slate-800 border border-slate-700 rounded-lg p-6">
+              <div key={idx} className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-6">
                 <div className="flex items-start justify-between mb-3">
                   <div>
                     <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-1">{request.name}</h3>
@@ -530,7 +530,7 @@ const MedicalManagement = () => {
                 </div>
                 <div className="bg-slate-900/50 border border-slate-700 rounded-lg p-4 mb-3">
                   <div className="text-sm text-slate-600 dark:text-slate-400 mb-1">Complaint:</div>
-                  <div className="text-white">{request.complaint}</div>
+                  <div className="text-slate-900 dark:text-white">{request.complaint}</div>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className={`px-3 py-1 rounded text-sm font-medium ${
@@ -541,10 +541,10 @@ const MedicalManagement = () => {
                     {request.status}
                   </span>
                   <div className="flex gap-2">
-                    <button className="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg transition-colors text-sm">
+                    <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-sm">
                       Approve
                     </button>
-                    <button className="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg transition-colors text-sm">
+                    <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-sm">
                       Defer
                     </button>
                   </div>
@@ -558,7 +558,7 @@ const MedicalManagement = () => {
         {selectedTab === 'all' && (
           <div className="space-y-4">
             {chronicCases.map((record, idx) => (
-              <div key={idx} className="bg-slate-800 border border-slate-700 rounded-lg p-6">
+              <div key={idx} className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-6">
                 <div className="flex items-start justify-between mb-3">
                   <div>
                     <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-1">{record.name}</h3>
@@ -569,7 +569,7 @@ const MedicalManagement = () => {
                   </div>
                   <span className={`px-3 py-1 rounded text-sm font-medium ${
                     record.status === 'Stable' ? 'bg-emerald-500/20 text-emerald-400' :
-                    record.status === 'Improving' ? 'bg-slate-700/40 text-slate-300' :
+                    record.status === 'Improving' ? 'bg-slate-700/40 text-slate-500' :
                     'bg-amber-500/20 text-amber-400'
                   }`}>
                     {record.status}
@@ -586,7 +586,7 @@ const MedicalManagement = () => {
                 <div className="flex items-center justify-between text-sm">
                   <div>
                     <span className="text-slate-600 dark:text-slate-400">Next Check:</span>{' '}
-                    <span className="text-white font-medium">{record.nextCheck}</span>
+                    <span className="text-slate-900 dark:text-white font-medium">{record.nextCheck}</span>
                   </div>
                   <div>
                     <span className="text-slate-600 dark:text-slate-400">Last Reading:</span>{' '}

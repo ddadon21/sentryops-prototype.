@@ -371,7 +371,7 @@ export default function ReportsAnalytics() {
   const getChangeColor = (change) => {
     if (change > 0) return 'text-green-600 dark:text-green-400';
     if (change < 0) return 'text-red-600 dark:text-red-400';
-    return 'text-slate-400';
+    return 'text-slate-500';
   };
 
   const getChangeIcon = (change) => {
@@ -440,7 +440,7 @@ export default function ReportsAnalytics() {
                 <select
                   value={timeRange}
                   onChange={(e) => setTimeRange(e.target.value)}
-                  className="px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white text-sm focus:outline-none focus:border-amber-500/50"
+                  className="px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white text-sm focus:outline-none focus:border-amber-500/50"
                 >
                   <option value="ytd">Year to Date</option>
                   <option value="last30">Last 30 Days</option>
@@ -559,15 +559,15 @@ export default function ReportsAnalytics() {
                         <div className="space-y-2 text-xs text-slate-700 dark:text-slate-300">
                           <div className="flex justify-between">
                             <span>Patrol response:</span>
-                            <span className="font-bold text-white">7.8 min <span className="text-green-600 dark:text-green-400">(↓0.6)</span></span>
+                            <span className="font-bold text-slate-900 dark:text-white">7.8 min <span className="text-green-600 dark:text-green-400">(↓0.6)</span></span>
                           </div>
                           <div className="flex justify-between">
                             <span>Case closure:</span>
-                            <span className="font-bold text-white">82.3% <span className="text-green-600 dark:text-green-400">(↑4.1%)</span></span>
+                            <span className="font-bold text-slate-900 dark:text-white">82.3% <span className="text-green-600 dark:text-green-400">(↑4.1%)</span></span>
                           </div>
                           <div className="flex justify-between">
                             <span>Training complete:</span>
-                            <span className="font-bold text-white">94% <span className="text-green-600 dark:text-green-400">(↑8%)</span></span>
+                            <span className="font-bold text-slate-900 dark:text-white">94% <span className="text-green-600 dark:text-green-400">(↑8%)</span></span>
                           </div>
                         </div>
                       </div>
@@ -603,7 +603,7 @@ export default function ReportsAnalytics() {
                         <div className="space-y-2 text-xs text-slate-700 dark:text-slate-300">
                           <div className="flex justify-between">
                             <span>YTD spending:</span>
-                            <span className="font-bold text-white">85% of budget</span>
+                            <span className="font-bold text-slate-900 dark:text-white">85% of budget</span>
                           </div>
                           <div className="flex justify-between">
                             <span>Year-end proj:</span>
@@ -711,11 +711,11 @@ export default function ReportsAnalytics() {
                       </div>
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-600 dark:text-slate-400">Avg per day:</span>
-                        <span className="font-medium text-white">6,936 calls</span>
+                        <span className="font-medium text-slate-900 dark:text-white">6,936 calls</span>
                       </div>
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-600 dark:text-slate-400">Peak hours:</span>
-                        <span className="font-medium text-white">1400-1800 hrs</span>
+                        <span className="font-medium text-slate-900 dark:text-white">1400-1800 hrs</span>
                       </div>
                     </div>
                   </div>
@@ -811,7 +811,7 @@ export default function ReportsAnalytics() {
                       </div>
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-600 dark:text-slate-400">Felony:</span>
-                        <span className="font-medium text-white">3,487 (28%)</span>
+                        <span className="font-medium text-slate-900 dark:text-white">3,487 (28%)</span>
                       </div>
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-600 dark:text-slate-400">Prosecution rate:</span>
@@ -846,7 +846,7 @@ export default function ReportsAnalytics() {
                       </div>
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-600 dark:text-slate-400">Pipeline:</span>
-                        <span className="font-medium text-white">12 candidates</span>
+                        <span className="font-medium text-slate-900 dark:text-white">12 candidates</span>
                       </div>
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-600 dark:text-slate-400">Vacancy OT cost:</span>
@@ -883,7 +883,7 @@ export default function ReportsAnalytics() {
                       </div>
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-600 dark:text-slate-400">Shift coverage:</span>
-                        <span className="font-medium text-white">54% of OT</span>
+                        <span className="font-medium text-slate-900 dark:text-white">54% of OT</span>
                       </div>
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-600 dark:text-slate-400">vs National avg:</span>
@@ -922,7 +922,7 @@ export default function ReportsAnalytics() {
                               <div className="flex items-center gap-2">
                                 <Phone className="w-3 h-3 text-slate-600 dark:text-slate-400" />
                                 <span className="text-slate-600 dark:text-slate-400">Calls:</span>
-                                <span className="font-bold text-white">{month.calls.toLocaleString()}</span>
+                                <span className="font-bold text-slate-900 dark:text-white">{month.calls.toLocaleString()}</span>
                                 {prevMonth && (
                                   <span className={`font-medium ${parseFloat(callsChange) >= 0 ? 'text-amber-600 dark:text-amber-400' : 'text-green-600 dark:text-green-400'}`}>
                                     ({parseFloat(callsChange) >= 0 ? '+' : ''}{callsChange}%)
@@ -955,22 +955,22 @@ export default function ReportsAnalytics() {
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
                       <div className="bg-slate-900/40 rounded-lg p-3">
                         <p className="text-slate-600 dark:text-slate-400 mb-1">Summer Peak (Jun-Aug)</p>
-                        <p className="font-bold text-white">14,782 calls/mo</p>
+                        <p className="font-bold text-slate-900 dark:text-white">14,782 calls/mo</p>
                         <p className="text-amber-600 dark:text-amber-400">+18% vs winter</p>
                       </div>
                       <div className="bg-slate-900/40 rounded-lg p-3">
                         <p className="text-slate-600 dark:text-slate-400 mb-1">Winter Low (Nov-Feb)</p>
-                        <p className="font-bold text-white">12,404 calls/mo</p>
+                        <p className="font-bold text-slate-900 dark:text-white">12,404 calls/mo</p>
                         <p className="text-green-600 dark:text-green-400">Lowest volume</p>
                       </div>
                       <div className="bg-slate-900/40 rounded-lg p-3">
                         <p className="text-slate-600 dark:text-slate-400 mb-1">YoY Total 2025</p>
-                        <p className="font-bold text-white">157,423 calls</p>
+                        <p className="font-bold text-slate-900 dark:text-white">157,423 calls</p>
                         <p className="text-green-600 dark:text-green-400">+5.0% vs 2024</p>
                       </div>
                       <div className="bg-slate-900/40 rounded-lg p-3">
                         <p className="text-slate-600 dark:text-slate-400 mb-1">Best Clearance</p>
-                        <p className="font-bold text-white">July - 69.5%</p>
+                        <p className="font-bold text-slate-900 dark:text-white">July - 69.5%</p>
                         <p className="text-green-600 dark:text-green-400">Peak performance</p>
                       </div>
                     </div>
@@ -1057,7 +1057,7 @@ export default function ReportsAnalytics() {
                       </thead>
                       <tbody>
                         {crimeStats.map((stat, idx) => (
-                          <tr key={idx} className="border-b border-slate-800/30 hover:bg-slate-800/30 transition-colors">
+                          <tr key={idx} className="border-b border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/30 transition-colors">
                             <td className="px-4 py-4">
                               <p className="text-sm font-medium text-slate-900 dark:text-white">{stat.category}</p>
                             </td>
@@ -1105,13 +1105,13 @@ export default function ReportsAnalytics() {
                     <input
                       type="text"
                       placeholder="Search reports..."
-                      className="w-full pl-12 pr-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
+                      className="w-full pl-12 pr-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
                     />
                   </div>
                   <select
                     value={filterCategory}
                     onChange={(e) => setFilterCategory(e.target.value)}
-                    className="px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer"
+                    className="px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer"
                   >
                     <option value="all">All Categories</option>
                     <option value="Executive">Executive</option>
@@ -1168,11 +1168,11 @@ export default function ReportsAnalytics() {
                                 <Eye className="w-3 h-3" />
                                 View Details
                               </button>
-                              <button className="flex items-center gap-2 px-3 py-1.5 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-white rounded-lg text-xs font-medium transition-all">
+                              <button className="flex items-center gap-2 px-3 py-1.5 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-900 dark:text-white rounded-lg text-xs font-medium transition-all">
                                 <Download className="w-3 h-3" />
                                 Download
                               </button>
-                              <button className="flex items-center gap-2 px-3 py-1.5 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-white rounded-lg text-xs font-medium transition-all">
+                              <button className="flex items-center gap-2 px-3 py-1.5 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-900 dark:text-white rounded-lg text-xs font-medium transition-all">
                                 <RefreshCw className="w-3 h-3" />
                                 Generate
                               </button>

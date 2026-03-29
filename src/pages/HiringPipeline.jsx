@@ -425,7 +425,7 @@ export default function HiringPipeline() {
       case 'critical': return { bg: 'bg-red-500/20', text: 'text-red-400', border: 'border-red-500/30' };
       case 'medium': return { bg: 'bg-amber-500/20', text: 'text-amber-400', border: 'border-amber-500/30' };
       case 'low': return { bg: 'bg-blue-500/20', text: 'text-blue-400', border: 'border-blue-500/30' };
-      default: return { bg: 'bg-slate-500/20', text: 'text-slate-400', border: 'border-slate-500/30' };
+      default: return { bg: 'bg-slate-500/20', text: 'text-slate-500', border: 'border-slate-500/30' };
     }
   };
 
@@ -460,7 +460,7 @@ export default function HiringPipeline() {
                 key={item.id}
                 onClick={() => handleNavigation(item)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-800/50 hover:text-white'
+                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white'
                 } ${sidebarCollapsed ? 'justify-center' : ''}`}
                 title={sidebarCollapsed ? item.label : ''}
               >
@@ -521,13 +521,13 @@ export default function HiringPipeline() {
             <div className="flex gap-3 mt-6">
               <button
                 onClick={() => setLogoutConfirmOpen(false)}
-                className="flex-1 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-white font-medium transition-all"
+                className="flex-1 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all"
               >
                 Cancel
               </button>
               <button
                 onClick={handleLogout}
-                className="flex-1 px-4 py-2.5 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-white font-medium transition-all"
+                className="flex-1 px-4 py-2.5 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all"
               >
                 Sign Out
               </button>
@@ -549,12 +549,12 @@ export default function HiringPipeline() {
               <div className="flex items-center gap-2 text-sm">
                 <button
                   onClick={() => navigate(createPageUrl('HRDashboard'))}
-                  className="text-slate-600 dark:text-slate-400 hover:text-white transition-colors"
+                  className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
                 >
                   HR Dashboard
                 </button>
                 <ChevronRight className="w-4 h-4 text-slate-600" />
-                <span className="text-white">Recruitment Pipeline</span>
+                <span className="text-slate-900 dark:text-white">Recruitment Pipeline</span>
               </div>
             </div>
             <div className="flex items-center gap-2 lg:gap-3">
@@ -583,7 +583,7 @@ export default function HiringPipeline() {
                     </div>
                     <div className="max-h-96 overflow-y-auto">
                       {notifications.map(notification => (
-                        <div key={notification.id} className={`p-4 border-b border-slate-800/30 hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
+                        <div key={notification.id} className={`p-4 border-b border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
                           <div className="flex items-start gap-3">
                             <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-amber-400' : 'bg-blue-400'}`}></div>
                             <div className="flex-1 min-w-0">
@@ -603,7 +603,7 @@ export default function HiringPipeline() {
 
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
-                  <span className="text-white text-sm font-bold">HR</span>
+                  <span className="text-slate-900 dark:text-white text-sm font-bold">HR</span>
                 </div>
                 <div className="hidden sm:block">
                   <p className="text-sm font-medium text-slate-900 dark:text-white">HR Director</p>
@@ -726,19 +726,19 @@ export default function HiringPipeline() {
                 <span className="text-xs text-slate-500">Filter by Position:</span>
                 <button
                   onClick={() => setSelectedPosition('all')}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${selectedPosition === 'all' ? 'bg-amber-500 text-white' : 'bg-slate-800/60 text-slate-600 dark:text-slate-400 hover:text-white'}`}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${selectedPosition === 'all' ? 'bg-amber-500 text-white' : 'bg-slate-800/60 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
                 >
                   All Positions
                 </button>
                 <button
                   onClick={() => setSelectedPosition('deputySheriff')}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${selectedPosition === 'deputySheriff' ? 'bg-blue-500 text-white' : 'bg-slate-800/60 text-slate-600 dark:text-slate-400 hover:text-white'}`}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${selectedPosition === 'deputySheriff' ? 'bg-blue-500 text-white' : 'bg-slate-800/60 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
                 >
                   Deputy: {positionBreakdown.deputySheriff.applicants}
                 </button>
                 <button
                   onClick={() => setSelectedPosition('backgroundInvestigator')}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${selectedPosition === 'backgroundInvestigator' ? 'bg-purple-500 text-white' : 'bg-slate-800/60 text-slate-600 dark:text-slate-400 hover:text-white'}`}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${selectedPosition === 'backgroundInvestigator' ? 'bg-purple-500 text-white' : 'bg-slate-800/60 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
                 >
                   Background Inv: {positionBreakdown.backgroundInvestigator.applicants}
                 </button>
@@ -781,7 +781,7 @@ export default function HiringPipeline() {
                             <span className={`px-2.5 py-1 rounded-full text-xs font-bold uppercase ${severityColor.bg} ${severityColor.text}`}>
                               {bottleneck.severity}
                             </span>
-                            <h4 className="font-semibold text-white">{bottleneck.title}</h4>
+                            <h4 className="font-semibold text-slate-900 dark:text-white">{bottleneck.title}</h4>
                           </div>
                           {bottleneck.status && (
                             <span className="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-xs font-medium">
@@ -896,19 +896,19 @@ export default function HiringPipeline() {
                       <div className="space-y-3">
                         <div className="flex items-center justify-between p-2 bg-slate-900/50 rounded-lg">
                           <span className="text-xs text-slate-600 dark:text-slate-400">Application → Screening</span>
-                          <span className="text-sm font-bold text-white">{conversionRates.applicationToScreening}%</span>
+                          <span className="text-sm font-bold text-slate-900 dark:text-white">{conversionRates.applicationToScreening}%</span>
                         </div>
                         <div className="flex items-center justify-between p-2 bg-slate-900/50 rounded-lg">
                           <span className="text-xs text-slate-600 dark:text-slate-400">Screening → Physical Test</span>
-                          <span className="text-sm font-bold text-white">{conversionRates.screeningToPhysicalTest}%</span>
+                          <span className="text-sm font-bold text-slate-900 dark:text-white">{conversionRates.screeningToPhysicalTest}%</span>
                         </div>
                         <div className="flex items-center justify-between p-2 bg-slate-900/50 rounded-lg">
                           <span className="text-xs text-slate-600 dark:text-slate-400">Physical Test → Interview</span>
-                          <span className="text-sm font-bold text-white">{conversionRates.physicalTestToInterview}%</span>
+                          <span className="text-sm font-bold text-slate-900 dark:text-white">{conversionRates.physicalTestToInterview}%</span>
                         </div>
                         <div className="flex items-center justify-between p-2 bg-slate-900/50 rounded-lg">
                           <span className="text-xs text-slate-600 dark:text-slate-400">Interview → Background</span>
-                          <span className="text-sm font-bold text-white">{conversionRates.interviewToBackground}%</span>
+                          <span className="text-sm font-bold text-slate-900 dark:text-white">{conversionRates.interviewToBackground}%</span>
                         </div>
                         <div className="flex items-center justify-between p-2 bg-slate-900/50 rounded-lg">
                           <span className="text-xs text-slate-600 dark:text-slate-400">Background → Cleared</span>
@@ -916,7 +916,7 @@ export default function HiringPipeline() {
                         </div>
                         <div className="flex items-center justify-between p-2 bg-slate-900/50 rounded-lg">
                           <span className="text-xs text-slate-600 dark:text-slate-400">Offer → Accepted</span>
-                          <span className="text-sm font-bold text-white">{conversionRates.offerToAccepted}%</span>
+                          <span className="text-sm font-bold text-slate-900 dark:text-white">{conversionRates.offerToAccepted}%</span>
                         </div>
                         <div className="flex items-center justify-between p-3 bg-indigo-500/10 border border-indigo-500/30 rounded-lg">
                           <span className="text-sm text-indigo-300 font-medium">Overall: Application → Hire</span>
@@ -1002,19 +1002,19 @@ export default function HiringPipeline() {
                             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
                               <div>
                                 <p className="text-xs text-slate-500">Date</p>
-                                <p className="text-white font-medium">{stage.physicalTestSchedule.date}</p>
+                                <p className="text-slate-900 dark:text-white font-medium">{stage.physicalTestSchedule.date}</p>
                               </div>
                               <div>
                                 <p className="text-xs text-slate-500">Time</p>
-                                <p className="text-white font-medium">{stage.physicalTestSchedule.time}</p>
+                                <p className="text-slate-900 dark:text-white font-medium">{stage.physicalTestSchedule.time}</p>
                               </div>
                               <div>
                                 <p className="text-xs text-slate-500">Candidates</p>
-                                <p className="text-white font-medium">{stage.physicalTestSchedule.candidatesScheduled} / {stage.physicalTestSchedule.maxCapacity} capacity</p>
+                                <p className="text-slate-900 dark:text-white font-medium">{stage.physicalTestSchedule.candidatesScheduled} / {stage.physicalTestSchedule.maxCapacity} capacity</p>
                               </div>
                               <div>
                                 <p className="text-xs text-slate-500">Location</p>
-                                <p className="text-white font-medium">{stage.physicalTestSchedule.location}</p>
+                                <p className="text-slate-900 dark:text-white font-medium">{stage.physicalTestSchedule.location}</p>
                               </div>
                             </div>
                             <p className="text-xs text-slate-500 mt-2">Test: {stage.physicalTestSchedule.test}</p>
@@ -1026,7 +1026,7 @@ export default function HiringPipeline() {
                             {stage.scheduledInterviews.map((interview, idx) => (
                               <div key={idx} className="p-4 bg-slate-800/60 rounded-xl">
                                 <div className="flex items-center justify-between mb-3">
-                                  <h4 className="font-semibold text-white">{interview.position} - Oral Board</h4>
+                                  <h4 className="font-semibold text-slate-900 dark:text-white">{interview.position} - Oral Board</h4>
                                   <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${interview.materialsReady ? 'bg-green-500/20 text-green-400' : 'bg-amber-500/20 text-amber-400'}`}>
                                     {interview.materialsReady ? 'Materials Ready' : 'Pending PT Completion'}
                                   </span>
@@ -1034,19 +1034,19 @@ export default function HiringPipeline() {
                                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
                                   <div>
                                     <p className="text-xs text-slate-500">Date</p>
-                                    <p className="text-white font-medium">{interview.date}</p>
+                                    <p className="text-slate-900 dark:text-white font-medium">{interview.date}</p>
                                   </div>
                                   <div>
                                     <p className="text-xs text-slate-500">Time</p>
-                                    <p className="text-white font-medium">{interview.time}</p>
+                                    <p className="text-slate-900 dark:text-white font-medium">{interview.time}</p>
                                   </div>
                                   <div>
                                     <p className="text-xs text-slate-500">Candidates</p>
-                                    <p className="text-white font-medium">{interview.candidates} scheduled</p>
+                                    <p className="text-slate-900 dark:text-white font-medium">{interview.candidates} scheduled</p>
                                   </div>
                                   <div>
                                     <p className="text-xs text-slate-500">Location</p>
-                                    <p className="text-white font-medium">{interview.location}</p>
+                                    <p className="text-slate-900 dark:text-white font-medium">{interview.location}</p>
                                   </div>
                                 </div>
                                 <div className="mt-3 pt-3 border-t border-slate-700/50">
@@ -1083,15 +1083,15 @@ export default function HiringPipeline() {
                                   <div className="space-y-2">
                                     <div className="flex justify-between text-sm">
                                       <span className="text-slate-600 dark:text-slate-400">Average Duration:</span>
-                                      <span className="text-white font-medium">{stage.investigatorCapacity.avgDuration} days</span>
+                                      <span className="text-slate-900 dark:text-white font-medium">{stage.investigatorCapacity.avgDuration} days</span>
                                     </div>
                                     <div className="flex justify-between text-sm">
                                       <span className="text-slate-600 dark:text-slate-400">Minimum (Lateral):</span>
-                                      <span className="text-white font-medium">{stage.investigatorCapacity.minDuration} days</span>
+                                      <span className="text-slate-900 dark:text-white font-medium">{stage.investigatorCapacity.minDuration} days</span>
                                     </div>
                                     <div className="flex justify-between text-sm">
                                       <span className="text-slate-600 dark:text-slate-400">Maximum (Complex):</span>
-                                      <span className="text-white font-medium">{stage.investigatorCapacity.maxDuration}+ days</span>
+                                      <span className="text-slate-900 dark:text-white font-medium">{stage.investigatorCapacity.maxDuration}+ days</span>
                                     </div>
                                     <div className="flex justify-between text-sm pt-2 border-t border-slate-700/50">
                                       <span className="text-slate-600 dark:text-slate-400">Monthly Throughput:</span>
@@ -1103,7 +1103,7 @@ export default function HiringPipeline() {
                             </div>
 
                             <div className="p-4 bg-slate-800/60 rounded-xl">
-                              <h4 className="font-semibold text-white mb-3">Active Investigations</h4>
+                              <h4 className="font-semibold text-slate-900 dark:text-white mb-3">Active Investigations</h4>
                               <div className="space-y-2">
                                 {stage.activeInvestigations.map((inv, idx) => (
                                   <div key={idx} className="flex items-center justify-between p-3 bg-slate-900/50 rounded-lg">
@@ -1117,7 +1117,7 @@ export default function HiringPipeline() {
                                       </div>
                                     </div>
                                     <div className="text-right">
-                                      <p className="text-sm font-bold text-white">{inv.daysInProgress} days</p>
+                                      <p className="text-sm font-bold text-slate-900 dark:text-white">{inv.daysInProgress} days</p>
                                       <p className="text-xs text-slate-600 dark:text-slate-400">{inv.status}</p>
                                     </div>
                                   </div>
@@ -1134,7 +1134,7 @@ export default function HiringPipeline() {
                                 <div key={idx} className={`p-4 rounded-xl border ${offer.urgent ? 'bg-red-500/10 border-red-500/30' : 'bg-slate-800/60 border-slate-700/50'}`}>
                                   <div className="flex items-center justify-between mb-3">
                                     <div className="flex items-center gap-3">
-                                      <h4 className="font-semibold text-white">{offer.name}</h4>
+                                      <h4 className="font-semibold text-slate-900 dark:text-white">{offer.name}</h4>
                                       <span className="text-xs text-slate-500">{offer.refNumber}</span>
                                     </div>
                                     <span className={`px-3 py-1 rounded-full text-xs font-medium ${
@@ -1147,19 +1147,19 @@ export default function HiringPipeline() {
                                   <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
                                     <div>
                                       <p className="text-xs text-slate-500">Position</p>
-                                      <p className="text-white">{offer.position}</p>
+                                      <p className="text-slate-900 dark:text-white">{offer.position}</p>
                                     </div>
                                     <div>
                                       <p className="text-xs text-slate-500">Salary</p>
-                                      <p className="text-white">{offer.salary}</p>
+                                      <p className="text-slate-900 dark:text-white">{offer.salary}</p>
                                     </div>
                                     <div>
                                       <p className="text-xs text-slate-500">Offer Date</p>
-                                      <p className="text-white">{offer.offerDate}</p>
+                                      <p className="text-slate-900 dark:text-white">{offer.offerDate}</p>
                                     </div>
                                     <div>
                                       <p className="text-xs text-slate-500">{offer.startDate ? 'Start Date' : 'Response Deadline'}</p>
-                                      <p className={`${offer.urgent ? 'text-red-400 font-bold' : 'text-white'}`}>
+                                      <p className={`${offer.urgent ? 'text-red-400 font-bold' : 'text-slate-900 dark:text-white'}`}>
                                         {offer.startDate || offer.startDateOffered}
                                         {offer.daysRemaining === 0 && !offer.startDate && ' (TODAY)'}
                                       </p>
@@ -1223,7 +1223,7 @@ export default function HiringPipeline() {
                                               candidate.status === 'Interview Complete' ? 'bg-green-500/20 text-green-400' :
                                               candidate.status === 'Accepted' ? 'bg-green-500/20 text-green-400' :
                                               candidate.urgent ? 'bg-red-500/20 text-red-400' :
-                                              'bg-slate-700/50 text-slate-300'
+                                              'bg-slate-700/50 text-slate-500'
                                             }`}>
                                               {candidate.status}
                                             </span>
@@ -1263,13 +1263,13 @@ export default function HiringPipeline() {
                                       {candidate.qualifications && (
                                         <div className="bg-slate-800/60 rounded-lg p-3 mb-4">
                                           <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Qualifications</p>
-                                          <p className="text-sm text-white">{candidate.qualifications}</p>
+                                          <p className="text-sm text-slate-900 dark:text-white">{candidate.qualifications}</p>
                                         </div>
                                       )}
                                       {candidate.investigator && (
                                         <div className="bg-slate-800/60 rounded-lg p-3 mb-4">
                                           <p className="text-xs text-slate-600 dark:text-slate-400 mb-1">Assigned Investigator</p>
-                                          <p className="text-sm text-white">{candidate.investigator}</p>
+                                          <p className="text-sm text-slate-900 dark:text-white">{candidate.investigator}</p>
                                           {candidate.completedItems && (
                                             <div className="mt-2">
                                               <div className="flex justify-between text-xs mb-1">
@@ -1316,7 +1316,7 @@ export default function HiringPipeline() {
         onClick={() => setChatOpen(!chatOpen)}
         className="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-400 hover:to-blue-500 rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 z-40"
       >
-        {chatOpen ? <X className="w-6 h-6 text-white" /> : <MessageCircle className="w-6 h-6 text-white" />}
+        {chatOpen ? <X className="w-6 h-6 text-slate-900 dark:text-white" /> : <MessageCircle className="w-6 h-6 text-slate-900 dark:text-white" />}
       </button>
 
       {chatOpen && (
@@ -1324,7 +1324,7 @@ export default function HiringPipeline() {
           <div className="p-4 border-b border-slate-700/50">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
-                <MessageCircle className="w-5 h-5 text-white" />
+                <MessageCircle className="w-5 h-5 text-slate-900 dark:text-white" />
               </div>
               <div>
                 <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Pipeline Assistant</h3>
@@ -1335,7 +1335,7 @@ export default function HiringPipeline() {
           <div className="flex-1 p-4 overflow-y-auto">
             <div className="flex gap-3">
               <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                <MessageCircle className="w-4 h-4 text-white" />
+                <MessageCircle className="w-4 h-4 text-slate-900 dark:text-white" />
               </div>
               <div className="flex-1">
                 <div className="bg-slate-800/60 p-3 rounded-xl">
@@ -1346,9 +1346,9 @@ export default function HiringPipeline() {
           </div>
           <div className="p-4 border-t border-slate-700/50">
             <div className="flex items-center gap-2">
-              <input type="text" placeholder="Ask about pipeline status..." className="flex-1 px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-blue-500/50" />
+              <input type="text" placeholder="Ask about pipeline status..." className="flex-1 px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500/50" />
               <button className="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center">
-                <Send className="w-5 h-5 text-white" />
+                <Send className="w-5 h-5 text-slate-900 dark:text-white" />
               </button>
             </div>
           </div>

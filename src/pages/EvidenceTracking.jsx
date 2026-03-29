@@ -586,15 +586,15 @@ export default function EvidenceTracking() {
                   <div className="space-y-2 text-sm">
                     <div className="flex items-center justify-between">
                       <span className="text-green-400 flex items-center gap-1.5"><CheckCircle2 className="w-3 h-3" />Verified (chain complete)</span>
-                      <span className="text-white font-medium">3 items</span>
+                      <span className="text-slate-900 dark:text-white font-medium">3 items</span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-amber-400 flex items-center gap-1.5"><Clock className="w-3 h-3" />Pending Review</span>
-                      <span className="text-white font-medium">2 items</span>
+                      <span className="text-slate-900 dark:text-white font-medium">2 items</span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-slate-600 dark:text-slate-400 flex items-center gap-1.5"><Archive className="w-3 h-3" />Archived</span>
-                      <span className="text-white font-medium">1 item</span>
+                      <span className="text-slate-900 dark:text-white font-medium">1 item</span>
                     </div>
                   </div>
                 </div>
@@ -607,15 +607,15 @@ export default function EvidenceTracking() {
                   <div className="space-y-2 text-sm">
                     <div className="flex items-center justify-between">
                       <span className="text-slate-700 dark:text-slate-300">Documentation</span>
-                      <span className="text-white font-medium">3 items</span>
+                      <span className="text-slate-900 dark:text-white font-medium">3 items</span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-slate-700 dark:text-slate-300">Background Check Results</span>
-                      <span className="text-white font-medium">2 items</span>
+                      <span className="text-slate-900 dark:text-white font-medium">2 items</span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-slate-700 dark:text-slate-300">Interview Recordings</span>
-                      <span className="text-white font-medium">1 item</span>
+                      <span className="text-slate-900 dark:text-white font-medium">1 item</span>
                     </div>
                   </div>
                 </div>
@@ -628,7 +628,7 @@ export default function EvidenceTracking() {
                   <div className="space-y-2 text-sm">
                     <div className="flex items-center justify-between">
                       <span className="text-slate-700 dark:text-slate-300">BI-2024-145 (Martinez)</span>
-                      <span className="text-white font-medium">6 items</span>
+                      <span className="text-slate-900 dark:text-white font-medium">6 items</span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-slate-500">Other cases</span>
@@ -671,10 +671,10 @@ export default function EvidenceTracking() {
                   </h5>
                   <div className="space-y-2 text-sm">
                     <div className="text-slate-700 dark:text-slate-300">
-                      <span className="text-white font-medium">Reference Letters</span> (EVD-2024-003) — Uploaded Nov 4, awaiting review
+                      <span className="text-slate-900 dark:text-white font-medium">Reference Letters</span> (EVD-2024-003) — Uploaded Nov 4, awaiting review
                     </div>
                     <div className="text-slate-700 dark:text-slate-300">
-                      <span className="text-white font-medium">Financial Report</span> (EVD-2024-006) — Uploaded Nov 1, awaiting review
+                      <span className="text-slate-900 dark:text-white font-medium">Financial Report</span> (EVD-2024-006) — Uploaded Nov 1, awaiting review
                     </div>
                   </div>
                 </div>
@@ -887,12 +887,12 @@ export default function EvidenceTracking() {
                   className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all whitespace-nowrap ${
                     activeTab === tab.id
                       ? 'bg-amber-500 text-white shadow-lg'
-                      : 'text-slate-600 dark:text-slate-400 hover:text-white hover:bg-slate-800/50'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-slate-800/50'
                   }`}
                 >
                   {tab.label}
                   <span className={`px-1.5 py-0.5 rounded text-xs ${
-                    activeTab === tab.id ? 'bg-white/20 text-white' : 'bg-slate-700/50 text-slate-500'
+                    activeTab === tab.id ? 'bg-white/20 text-slate-900 dark:text-white' : 'bg-slate-700/50 text-slate-500'
                   }`}>{tab.count}</span>
                 </button>
               ))}
@@ -1222,7 +1222,7 @@ export default function EvidenceTracking() {
                       {/* Action Buttons */}
                       <div className="flex items-center justify-between pt-4 border-t border-slate-700/30 mt-4">
                         <div className="text-sm text-slate-600 dark:text-slate-400">
-                          Subject: <span className="text-white font-medium">{item.subject}</span>
+                          Subject: <span className="text-slate-900 dark:text-white font-medium">{item.subject}</span>
                         </div>
                         <div className="flex items-center gap-2 flex-wrap">
                           {item.accessLevel === 'Confidential' ? (

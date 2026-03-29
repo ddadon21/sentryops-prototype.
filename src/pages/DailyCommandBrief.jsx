@@ -282,7 +282,7 @@ export default function DailyCommandBrief() {
       case 'in_progress': return { text: 'In Progress', classes: 'bg-emerald-50 border-emerald-200 text-emerald-700 dark:bg-emerald-500/10 dark:border-emerald-500/20 dark:text-emerald-400' };
       case 'escalated': return { text: 'Escalated', classes: 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' };
       case 'overdue': return { text: 'Overdue', classes: 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' };
-      default: return { text: status, classes: 'bg-slate-500/10 border-slate-500/20 text-slate-400' };
+      default: return { text: status, classes: 'bg-slate-500/10 border-slate-500/20 text-slate-500' };
     }
   };
 
@@ -290,9 +290,9 @@ export default function DailyCommandBrief() {
     switch (category) {
       case 'compliance': return 'text-amber-600 dark:text-amber-400';
       case 'operational': return 'text-amber-600 dark:text-amber-400';
-      case 'external': return 'text-slate-400';
-      case 'internal': return 'text-slate-400';
-      default: return 'text-slate-400';
+      case 'external': return 'text-slate-500';
+      case 'internal': return 'text-slate-500';
+      default: return 'text-slate-500';
     }
   };
 
@@ -515,7 +515,7 @@ export default function DailyCommandBrief() {
                             type === 'Compliance' ? 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
                             type === 'Political' ? 'bg-purple-500/10 border-purple-500/20 text-purple-400' :
                             type === 'Budget' ? 'bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
-                            'bg-slate-500/10 border-slate-500/20 text-slate-400'
+                            'bg-slate-500/10 border-slate-500/20 text-slate-500'
                           }`}>{type}</span>
                         ))}
                       </div>

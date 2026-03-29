@@ -352,7 +352,7 @@ export default function ActiveCases() {
                       <h4 className="text-base font-semibold text-slate-900 dark:text-white">CASELOAD SUMMARY</h4>
                       <button
                         onClick={() => setCaseloadSummaryVisible(false)}
-                        className="text-slate-600 dark:text-slate-400 hover:text-white transition-colors"
+                        className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
                       >
                         <X className="w-4 h-4" />
                       </button>
@@ -454,7 +454,7 @@ export default function ActiveCases() {
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       placeholder="Search cases..."
-                      className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
+                      className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
                     />
                   </div>
                 </div>
@@ -462,7 +462,7 @@ export default function ActiveCases() {
                   <select
                     value={filterStatus}
                     onChange={(e) => setFilterStatus(e.target.value)}
-                    className="w-full px-4 py-2.5 bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white focus:outline-none focus:border-amber-500/50 text-sm"
+                    className="w-full px-4 py-2.5 bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/50 text-sm"
                   >
                     <option value="all">All Status</option>
                     <option value="initial">Initial Review</option>
@@ -478,7 +478,7 @@ export default function ActiveCases() {
                   <select
                     value={filterPriority}
                     onChange={(e) => setFilterPriority(e.target.value)}
-                    className="w-full px-4 py-2.5 bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white focus:outline-none focus:border-amber-500/50 text-sm"
+                    className="w-full px-4 py-2.5 bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/50 text-sm"
                   >
                     <option value="all">All Priority</option>
                     <option value="high">High (deadline within 14 days)</option>
@@ -490,7 +490,7 @@ export default function ActiveCases() {
                   <select
                     value={filterInvestigator}
                     onChange={(e) => setFilterInvestigator(e.target.value)}
-                    className="w-full px-4 py-2.5 bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white focus:outline-none focus:border-amber-500/50 text-sm"
+                    className="w-full px-4 py-2.5 bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/50 text-sm"
                   >
                     <option value="all">All Investigators</option>
                     <option value="Brooks">Agent Brooks</option>
@@ -503,7 +503,7 @@ export default function ActiveCases() {
                   <select
                     value={filterPosition}
                     onChange={(e) => setFilterPosition(e.target.value)}
-                    className="w-full px-4 py-2.5 bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white focus:outline-none focus:border-amber-500/50 text-sm"
+                    className="w-full px-4 py-2.5 bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/50 text-sm"
                   >
                     <option value="all">All Positions</option>
                     <option value="Deputy Sheriff">Deputy Sheriff</option>
@@ -515,7 +515,7 @@ export default function ActiveCases() {
               </div>
 
               <div className="mt-4 pt-4 border-t border-slate-700/30 flex items-center justify-between flex-wrap gap-3">
-                <p className="text-sm text-slate-600 dark:text-slate-400">Showing: <span className="text-white font-medium">{filteredCases.length} of {cases.length}</span> cases</p>
+                <p className="text-sm text-slate-600 dark:text-slate-400">Showing: <span className="text-slate-900 dark:text-white font-medium">{filteredCases.length} of {cases.length}</span> cases</p>
                 <div className="flex items-center gap-2">
                   <button className="flex items-center gap-2 px-4 py-2 bg-slate-700/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium hover:bg-slate-700/60 transition-all">
                     <Download className="w-4 h-4" />

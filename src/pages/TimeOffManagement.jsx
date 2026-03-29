@@ -336,7 +336,7 @@ export default function TimeOffManagement() {
                 key={item.id}
                 onClick={() => handleNavigation(item)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-800/50 hover:text-white'
+                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white'
                 } ${sidebarCollapsed ? 'justify-center' : ''}`}
                 title={sidebarCollapsed ? item.label : ''}
               >
@@ -389,8 +389,8 @@ export default function TimeOffManagement() {
               </div>
             </div>
             <div className="flex gap-3 mt-6">
-              <button onClick={() => setLogoutConfirmOpen(false)} className="flex-1 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-white font-medium transition-all">Cancel</button>
-              <button onClick={handleLogout} className="flex-1 px-4 py-2.5 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-white font-medium transition-all">Sign Out</button>
+              <button onClick={() => setLogoutConfirmOpen(false)} className="flex-1 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all">Cancel</button>
+              <button onClick={handleLogout} className="flex-1 px-4 py-2.5 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all">Sign Out</button>
             </div>
           </div>
         </div>
@@ -406,9 +406,9 @@ export default function TimeOffManagement() {
                 <Menu className="w-5 h-5 text-slate-600 dark:text-slate-400" />
               </button>
               <div className="flex items-center gap-2 text-sm">
-                <button onClick={() => navigate(createPageUrl('HRDashboard'))} className="text-slate-600 dark:text-slate-400 hover:text-white transition-colors">HR Dashboard</button>
+                <button onClick={() => navigate(createPageUrl('HRDashboard'))} className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors">HR Dashboard</button>
                 <ChevronRight className="w-4 h-4 text-slate-600" />
-                <span className="text-white">Time Off Management</span>
+                <span className="text-slate-900 dark:text-white">Time Off Management</span>
               </div>
             </div>
             <div className="flex items-center gap-2 lg:gap-3">
@@ -437,7 +437,7 @@ export default function TimeOffManagement() {
                     </div>
                     <div className="max-h-96 overflow-y-auto">
                       {notifications.map(notification => (
-                        <div key={notification.id} className={`p-4 border-b border-slate-800/30 hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
+                        <div key={notification.id} className={`p-4 border-b border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
                           <div className="flex items-start gap-3">
                             <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-red-400' : 'bg-blue-400'}`}></div>
                             <div className="flex-1 min-w-0">
@@ -456,7 +456,7 @@ export default function TimeOffManagement() {
               <div className="h-8 w-px bg-slate-700/50"></div>
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
-                  <span className="text-white text-sm font-bold">HR</span>
+                  <span className="text-slate-900 dark:text-white text-sm font-bold">HR</span>
                 </div>
                 <div className="hidden sm:block">
                   <p className="text-sm font-medium text-slate-900 dark:text-white">HR Director</p>
@@ -643,7 +643,7 @@ export default function TimeOffManagement() {
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
                         <div>
                           <span className="text-slate-500">Request Received:</span>
-                          <p className="text-white font-medium mt-0.5">10/31/2024, 10:15 AM</p>
+                          <p className="text-slate-900 dark:text-white font-medium mt-0.5">10/31/2024, 10:15 AM</p>
                         </div>
                         <div>
                           <span className="text-slate-500">Federal Deadline (WH-382):</span>
@@ -837,7 +837,7 @@ export default function TimeOffManagement() {
                           <div key={idx} className="flex items-start gap-3 px-3 py-2 rounded-lg bg-slate-900/30">
                             <Square className="w-4 h-4 text-slate-500 mt-0.5 flex-shrink-0" />
                             <div className="flex-1">
-                              <p className="text-xs text-white">{item.action}</p>
+                              <p className="text-xs text-slate-900 dark:text-white">{item.action}</p>
                               <p className="text-[10px] text-slate-500 mt-0.5">{item.responsible} &bull; {item.deadline}</p>
                             </div>
                           </div>
@@ -888,19 +888,19 @@ export default function TimeOffManagement() {
                 <div className="flex gap-2">
                   <button
                     onClick={() => setRequestFilter('all')}
-                    className={`px-3 py-2 rounded-lg text-xs font-medium transition-all ${requestFilter === 'all' ? 'bg-blue-500/20 border border-blue-500/30 text-blue-400' : 'bg-slate-800/40 border border-slate-700/50 text-slate-600 dark:text-slate-400 hover:text-white'}`}
+                    className={`px-3 py-2 rounded-lg text-xs font-medium transition-all ${requestFilter === 'all' ? 'bg-blue-500/20 border border-blue-500/30 text-blue-400' : 'bg-slate-800/40 border border-slate-700/50 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
                   >
                     All Requests
                   </button>
                   <button
                     onClick={() => setRequestFilter('approve')}
-                    className={`px-3 py-2 rounded-lg text-xs font-medium transition-all ${requestFilter === 'approve' ? 'bg-green-500/20 border border-green-500/30 text-green-400' : 'bg-slate-800/40 border border-slate-700/50 text-slate-600 dark:text-slate-400 hover:text-white'}`}
+                    className={`px-3 py-2 rounded-lg text-xs font-medium transition-all ${requestFilter === 'approve' ? 'bg-green-500/20 border border-green-500/30 text-green-400' : 'bg-slate-800/40 border border-slate-700/50 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
                   >
                     Ready to Approve
                   </button>
                   <button
                     onClick={() => setRequestFilter('review')}
-                    className={`px-3 py-2 rounded-lg text-xs font-medium transition-all ${requestFilter === 'review' ? 'bg-amber-500/20 border border-amber-500/30 text-amber-400' : 'bg-slate-800/40 border border-slate-700/50 text-slate-600 dark:text-slate-400 hover:text-white'}`}
+                    className={`px-3 py-2 rounded-lg text-xs font-medium transition-all ${requestFilter === 'review' ? 'bg-amber-500/20 border border-amber-500/30 text-amber-400' : 'bg-slate-800/40 border border-slate-700/50 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
                   >
                     Needs Review
                   </button>
@@ -912,10 +912,10 @@ export default function TimeOffManagement() {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search by name, badge, leave type, shift..."
-                    className="w-full pl-10 pr-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white text-sm placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
+                    className="w-full pl-10 pr-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white text-sm placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
                   />
                 </div>
-                <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer">
+                <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer">
                   <option value="date">Sort by Date</option>
                   <option value="name">Sort by Name</option>
                   <option value="type">Sort by Type</option>
@@ -1007,7 +1007,7 @@ export default function TimeOffManagement() {
                           <h5 className={`text-xs font-semibold mb-3 ${
                             request.shiftCoverage.buffer < 0 ? 'text-red-400' :
                             request.shiftCoverage.buffer === 0 ? 'text-amber-400' :
-                            'text-slate-300'
+                            'text-slate-500'
                           }`}>
                             Shift Coverage Analysis - {request.shift} ({request.shiftHours})
                           </h5>
@@ -1271,12 +1271,12 @@ export default function TimeOffManagement() {
                 value={approveComment}
                 onChange={(e) => setApproveComment(e.target.value)}
                 placeholder="Add any notes for the supervisor..."
-                className="w-full px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white text-sm placeholder-slate-500 focus:outline-none focus:border-green-500/50 resize-none h-20"
+                className="w-full px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white text-sm placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-green-500/50 resize-none h-20"
               />
             </div>
             <p className="text-[10px] text-slate-500 mb-4">Leave approval will be forwarded to supervisor ({showApproveModal.supervisor.name}) for final review and confirmation.</p>
             <div className="flex gap-3">
-              <button onClick={() => { setShowApproveModal(null); setApproveComment(''); }} className="flex-1 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-white font-medium transition-all text-sm">Cancel</button>
+              <button onClick={() => { setShowApproveModal(null); setApproveComment(''); }} className="flex-1 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all text-sm">Cancel</button>
               <button onClick={() => handleApprove(showApproveModal)} className="flex-1 px-4 py-2.5 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 rounded-xl text-green-400 font-medium transition-all text-sm">Approve Request</button>
             </div>
           </div>
@@ -1309,7 +1309,7 @@ export default function TimeOffManagement() {
               <select
                 value={denyReason}
                 onChange={(e) => setDenyReason(e.target.value)}
-                className="w-full px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white text-sm focus:outline-none focus:border-red-500/50 cursor-pointer mb-3"
+                className="w-full px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white text-sm focus:outline-none focus:border-red-500/50 cursor-pointer mb-3"
               >
                 <option value="">Select a reason...</option>
                 <option value="staffing">Insufficient Staffing Coverage</option>
@@ -1324,11 +1324,11 @@ export default function TimeOffManagement() {
                 value={denyComment}
                 onChange={(e) => setDenyComment(e.target.value)}
                 placeholder="Provide details for the denial..."
-                className="w-full px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white text-sm placeholder-slate-500 focus:outline-none focus:border-red-500/50 resize-none h-20"
+                className="w-full px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white text-sm placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-red-500/50 resize-none h-20"
               />
             </div>
             <div className="flex gap-3">
-              <button onClick={() => { setShowDenyModal(null); setDenyReason(''); setDenyComment(''); }} className="flex-1 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-white font-medium transition-all text-sm">Cancel</button>
+              <button onClick={() => { setShowDenyModal(null); setDenyReason(''); setDenyComment(''); }} className="flex-1 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all text-sm">Cancel</button>
               <button
                 onClick={() => handleDeny(showDenyModal)}
                 disabled={!denyReason}
@@ -1363,11 +1363,11 @@ export default function TimeOffManagement() {
                 value={requestInfoText}
                 onChange={(e) => setRequestInfoText(e.target.value)}
                 placeholder="Describe the additional information needed from the employee..."
-                className="w-full px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white text-sm placeholder-slate-500 focus:outline-none focus:border-blue-500/50 resize-none h-24"
+                className="w-full px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white text-sm placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500/50 resize-none h-24"
               />
             </div>
             <div className="flex gap-3">
-              <button onClick={() => { setShowRequestInfoModal(null); setRequestInfoText(''); }} className="flex-1 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-white font-medium transition-all text-sm">Cancel</button>
+              <button onClick={() => { setShowRequestInfoModal(null); setRequestInfoText(''); }} className="flex-1 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all text-sm">Cancel</button>
               <button
                 onClick={() => handleRequestInfo(showRequestInfoModal)}
                 disabled={!requestInfoText.trim()}
@@ -1509,7 +1509,7 @@ export default function TimeOffManagement() {
             </div>
 
             <div className="mt-6 flex gap-3">
-              <button onClick={() => setShowCoverageModal(false)} className="flex-1 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-white font-medium transition-all text-sm">Close</button>
+              <button onClick={() => setShowCoverageModal(false)} className="flex-1 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all text-sm">Close</button>
               <button className="flex-1 px-4 py-2.5 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 rounded-xl text-blue-400 font-medium transition-all text-sm flex items-center justify-center gap-2">
                 <Printer className="w-4 h-4" />Print Coverage Report
               </button>
@@ -1591,7 +1591,7 @@ export default function TimeOffManagement() {
                     ) : (
                       <Circle className={`w-4 h-4 mt-0.5 flex-shrink-0 ${item.urgent ? 'text-red-400' : 'text-slate-500'}`} />
                     )}
-                    <span className={`text-xs ${item.done ? 'text-green-400' : item.urgent ? 'text-red-400 font-medium' : 'text-white'}`}>{item.text}</span>
+                    <span className={`text-xs ${item.done ? 'text-green-400' : item.urgent ? 'text-red-400 font-medium' : 'text-slate-900 dark:text-white'}`}>{item.text}</span>
                     {item.urgent && <span className="px-1.5 py-0.5 bg-red-500/20 border border-red-500/30 rounded text-[9px] text-red-400 font-bold ml-auto">DUE NOV 07</span>}
                   </div>
                 ))}
@@ -1599,7 +1599,7 @@ export default function TimeOffManagement() {
             </div>
 
             <div className="mt-6 flex gap-3">
-              <button onClick={() => setShowFMLADashboard(false)} className="flex-1 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-white font-medium transition-all text-sm">Close</button>
+              <button onClick={() => setShowFMLADashboard(false)} className="flex-1 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all text-sm">Close</button>
               <button className="flex-1 px-4 py-2.5 bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 rounded-xl text-red-400 font-medium transition-all text-sm flex items-center justify-center gap-2">
                 <ClipboardList className="w-4 h-4" />Complete WH-382
               </button>
@@ -1640,7 +1640,7 @@ export default function TimeOffManagement() {
           onClick={() => setSupportOpen(!supportOpen)}
           className="w-14 h-14 bg-gradient-to-br from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110"
         >
-          {supportOpen ? <X className="w-6 h-6 text-white" /> : <HelpCircle className="w-6 h-6 text-white" />}
+          {supportOpen ? <X className="w-6 h-6 text-slate-900 dark:text-white" /> : <HelpCircle className="w-6 h-6 text-slate-900 dark:text-white" />}
         </button>
 
         {supportOpen && (

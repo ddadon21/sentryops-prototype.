@@ -449,9 +449,9 @@ export default function FinancialBackground() {
 
             {/* Quick Stats */}
             <div className="flex flex-wrap items-center gap-4 text-sm">
-              <span className="text-slate-600 dark:text-slate-400">Total credit reports reviewed: <span className="text-white font-medium">{financialReports.length} subjects</span></span>
+              <span className="text-slate-600 dark:text-slate-400">Total credit reports reviewed: <span className="text-slate-900 dark:text-white font-medium">{financialReports.length} subjects</span></span>
               <span className="text-slate-500">|</span>
-              <span className="text-slate-600 dark:text-slate-400">Minimum credit score requirement: <span className="text-white font-medium">650</span> (agency policy)</span>
+              <span className="text-slate-600 dark:text-slate-400">Minimum credit score requirement: <span className="text-slate-900 dark:text-white font-medium">650</span> (agency policy)</span>
             </div>
           </div>
 
@@ -474,7 +474,7 @@ export default function FinancialBackground() {
                 <div className="space-y-2 text-sm">
                   <div className="flex items-center gap-2">
                     <span className="text-slate-500">Total subjects assessed:</span>
-                    <span className="text-white font-medium">{financialReports.length} (across multiple cases)</span>
+                    <span className="text-slate-900 dark:text-white font-medium">{financialReports.length} (across multiple cases)</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-400" />
@@ -591,13 +591,13 @@ export default function FinancialBackground() {
           <div className="flex flex-wrap gap-2 mb-4">
             <button
               onClick={() => setActiveTab('all')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'all' ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30' : 'bg-slate-800/40 text-slate-600 dark:text-slate-400 hover:text-white border border-slate-700/50'}`}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'all' ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30' : 'bg-slate-800/40 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-slate-700/50'}`}
             >
               All Reports ({financialReports.length})
             </button>
             <button
               onClick={() => setActiveTab('excellent')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'excellent' ? 'bg-green-500/20 text-green-400 border border-green-500/30' : 'bg-slate-800/40 text-slate-600 dark:text-slate-400 hover:text-white border border-slate-700/50'}`}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'excellent' ? 'bg-green-500/20 text-green-400 border border-green-500/30' : 'bg-slate-800/40 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-slate-700/50'}`}
             >
               <span className="flex items-center gap-2">
                 <CreditCard className="w-4 h-4" />
@@ -606,7 +606,7 @@ export default function FinancialBackground() {
             </button>
             <button
               onClick={() => setActiveTab('acceptable')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'acceptable' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' : 'bg-slate-800/40 text-slate-600 dark:text-slate-400 hover:text-white border border-slate-700/50'}`}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'acceptable' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' : 'bg-slate-800/40 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-slate-700/50'}`}
             >
               <span className="flex items-center gap-2">
                 <PiggyBank className="w-4 h-4" />
@@ -615,7 +615,7 @@ export default function FinancialBackground() {
             </button>
             <button
               onClick={() => setActiveTab('review')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'review' ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' : 'bg-slate-800/40 text-slate-600 dark:text-slate-400 hover:text-white border border-slate-700/50'}`}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'review' ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' : 'bg-slate-800/40 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-slate-700/50'}`}
             >
               <span className="flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4" />
@@ -748,7 +748,7 @@ export default function FinancialBackground() {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div>
                             <div className="flex items-baseline gap-3 mb-2">
-                              <span className="text-4xl font-bold text-white">{report.creditScore.score}</span>
+                              <span className="text-4xl font-bold text-slate-900 dark:text-white">{report.creditScore.score}</span>
                               <span className={`text-sm font-medium ${
                                 report.creditScore.range === 'Excellent' ? 'text-green-400' :
                                 report.creditScore.range === 'Good' ? 'text-blue-400' : 'text-amber-400'
@@ -781,7 +781,7 @@ export default function FinancialBackground() {
                         </h4>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div className="bg-slate-900/40 rounded-xl p-4">
-                            <p className="text-sm text-slate-500 mb-3">Total Debt: <span className="text-white font-semibold">{formatCurrency(report.debt.total)}</span></p>
+                            <p className="text-sm text-slate-500 mb-3">Total Debt: <span className="text-slate-900 dark:text-white font-semibold">{formatCurrency(report.debt.total)}</span></p>
                             <div className="space-y-2">
                               {report.debt.breakdown.map((item, idx) => (
                                 <div key={idx} className="flex items-center justify-between text-sm">
@@ -793,7 +793,7 @@ export default function FinancialBackground() {
                                     {item.type === 'Medical Debt' && <Building2 className="w-4 h-4" />}
                                     {item.type}
                                   </span>
-                                  <span className={`font-medium ${item.concern ? 'text-amber-400' : 'text-white'}`}>
+                                  <span className={`font-medium ${item.concern ? 'text-amber-400' : 'text-slate-900 dark:text-white'}`}>
                                     {formatCurrency(item.amount)}
                                     {item.concern && <AlertTriangle className="w-3 h-3 inline ml-1" />}
                                   </span>

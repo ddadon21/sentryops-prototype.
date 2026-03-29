@@ -328,19 +328,19 @@ export default function CaseClosure() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
                 <div>
                   <p className="text-xs text-slate-500 mb-1">BI Supervisor</p>
-                  <p className="text-sm text-white font-medium">Background Investigations Unit</p>
+                  <p className="text-sm text-slate-900 dark:text-white font-medium">Background Investigations Unit</p>
                 </div>
                 <div>
                   <p className="text-xs text-slate-500 mb-1">Position</p>
-                  <p className="text-sm text-white font-medium">{caseData.position}</p>
+                  <p className="text-sm text-slate-900 dark:text-white font-medium">{caseData.position}</p>
                 </div>
                 <div>
                   <p className="text-xs text-slate-500 mb-1">Assignment</p>
-                  <p className="text-sm text-white font-medium">{caseData.assignment}</p>
+                  <p className="text-sm text-slate-900 dark:text-white font-medium">{caseData.assignment}</p>
                 </div>
                 <div>
                   <p className="text-xs text-slate-500 mb-1">Investigation Duration</p>
-                  <p className="text-sm text-white font-medium">{caseData.investigationStarted} - {caseData.investigationCompleted} ({caseData.duration} days)</p>
+                  <p className="text-sm text-slate-900 dark:text-white font-medium">{caseData.investigationStarted} - {caseData.investigationCompleted} ({caseData.duration} days)</p>
                 </div>
               </div>
               <div className="flex items-center gap-2 mb-4">
@@ -397,47 +397,47 @@ export default function CaseClosure() {
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
                     <span className="text-slate-600 dark:text-slate-400">Applicant:</span>
-                    <span className="text-white">{caseData.subject}</span>
+                    <span className="text-slate-900 dark:text-white">{caseData.subject}</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
                     <span className="text-slate-600 dark:text-slate-400">Case ID:</span>
-                    <span className="text-white">{caseData.caseId}</span>
+                    <span className="text-slate-900 dark:text-white">{caseData.caseId}</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
                     <span className="text-slate-600 dark:text-slate-400">Position:</span>
-                    <span className="text-white">{caseData.position}</span>
+                    <span className="text-slate-900 dark:text-white">{caseData.position}</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
                     <span className="text-slate-600 dark:text-slate-400">Assignment:</span>
-                    <span className="text-white">{caseData.assignment}</span>
+                    <span className="text-slate-900 dark:text-white">{caseData.assignment}</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
                     <span className="text-slate-600 dark:text-slate-400">Application date:</span>
-                    <span className="text-white">{caseData.applicationDate}</span>
+                    <span className="text-slate-900 dark:text-white">{caseData.applicationDate}</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
                     <span className="text-slate-600 dark:text-slate-400">Investigation dates:</span>
-                    <span className="text-white">{caseData.investigationStarted} - {caseData.investigationCompleted}</span>
+                    <span className="text-slate-900 dark:text-white">{caseData.investigationStarted} - {caseData.investigationCompleted}</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
                     <span className="text-slate-600 dark:text-slate-400">Investigation duration:</span>
-                    <span className="text-white">{caseData.duration} days (acceptable for lateral transfer)</span>
+                    <span className="text-slate-900 dark:text-white">{caseData.duration} days (acceptable for lateral transfer)</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
                     <span className="text-slate-600 dark:text-slate-400">Assigned investigator:</span>
-                    <span className="text-white">{caseData.investigator} (Badge #{caseData.investigatorBadge})</span>
+                    <span className="text-slate-900 dark:text-white">{caseData.investigator} (Badge #{caseData.investigatorBadge})</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">└─</span>
                     <span className="text-slate-600 dark:text-slate-400">Supervisor reviewer:</span>
-                    <span className="text-white">{caseData.supervisorReviewer}</span>
+                    <span className="text-slate-900 dark:text-white">{caseData.supervisorReviewer}</span>
                   </div>
                 </div>
               </div>
@@ -528,27 +528,27 @@ export default function CaseClosure() {
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
                     <span className="text-slate-600 dark:text-slate-400">Full name:</span>
-                    <span className="text-white">{caseData.subject}</span>
+                    <span className="text-slate-900 dark:text-white">{caseData.subject}</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
                     <span className="text-slate-600 dark:text-slate-400">Position applied:</span>
-                    <span className="text-white">{caseData.position}</span>
+                    <span className="text-slate-900 dark:text-white">{caseData.position}</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
                     <span className="text-slate-600 dark:text-slate-400">Assignment:</span>
-                    <span className="text-white">{caseData.assignment}</span>
+                    <span className="text-slate-900 dark:text-white">{caseData.assignment}</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
                     <span className="text-slate-600 dark:text-slate-400">Application type:</span>
-                    <span className="text-white">{caseData.applicationType}</span>
+                    <span className="text-slate-900 dark:text-white">{caseData.applicationType}</span>
                   </div>
                   <div className="flex items-start gap-2 md:col-span-2">
                     <span className="text-slate-500">└─</span>
                     <span className="text-slate-600 dark:text-slate-400">Current agency:</span>
-                    <span className="text-white">{caseData.currentAgency}</span>
+                    <span className="text-slate-900 dark:text-white">{caseData.currentAgency}</span>
                   </div>
                 </div>
               </div>
@@ -560,27 +560,27 @@ export default function CaseClosure() {
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
                     <span className="text-slate-600 dark:text-slate-400">Application received:</span>
-                    <span className="text-white">{caseData.applicationDate}</span>
+                    <span className="text-slate-900 dark:text-white">{caseData.applicationDate}</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
                     <span className="text-slate-600 dark:text-slate-400">Investigation initiated:</span>
-                    <span className="text-white">{caseData.investigationStarted}</span>
+                    <span className="text-slate-900 dark:text-white">{caseData.investigationStarted}</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
                     <span className="text-slate-600 dark:text-slate-400">Investigation completed:</span>
-                    <span className="text-white">{caseData.investigationCompleted}</span>
+                    <span className="text-slate-900 dark:text-white">{caseData.investigationCompleted}</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
                     <span className="text-slate-600 dark:text-slate-400">Total duration:</span>
-                    <span className="text-white">{caseData.duration} days (acceptable for lateral transfer)</span>
+                    <span className="text-slate-900 dark:text-white">{caseData.duration} days (acceptable for lateral transfer)</span>
                   </div>
                   <div className="flex items-start gap-2 md:col-span-2">
                     <span className="text-slate-500">└─</span>
                     <span className="text-slate-600 dark:text-slate-400">Standard timeframe:</span>
-                    <span className="text-white">{caseData.standardTimeframe}</span>
+                    <span className="text-slate-900 dark:text-white">{caseData.standardTimeframe}</span>
                   </div>
                 </div>
               </div>
@@ -592,12 +592,12 @@ export default function CaseClosure() {
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
                     <span className="text-slate-600 dark:text-slate-400">Primary investigator:</span>
-                    <span className="text-white">{caseData.investigator} (Badge #{caseData.investigatorBadge})</span>
+                    <span className="text-slate-900 dark:text-white">{caseData.investigator} (Badge #{caseData.investigatorBadge})</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
                     <span className="text-slate-600 dark:text-slate-400">Supervisor reviewer:</span>
-                    <span className="text-white">{caseData.supervisorReviewer}</span>
+                    <span className="text-slate-900 dark:text-white">{caseData.supervisorReviewer}</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">└─</span>
@@ -617,22 +617,22 @@ export default function CaseClosure() {
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
                     <span className="text-slate-600 dark:text-slate-400">All required checks:</span>
-                    <span className="text-white">Complete (8 of 8)</span>
+                    <span className="text-slate-900 dark:text-white">Complete (8 of 8)</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
                     <span className="text-slate-600 dark:text-slate-400">All documentation:</span>
-                    <span className="text-white">Collected and archived (6 items)</span>
+                    <span className="text-slate-900 dark:text-white">Collected and archived (6 items)</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
                     <span className="text-slate-600 dark:text-slate-400">Investigator assessment:</span>
-                    <span className="text-white">Complete</span>
+                    <span className="text-slate-900 dark:text-white">Complete</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">├─</span>
                     <span className="text-slate-600 dark:text-slate-400">Supervisor review:</span>
-                    <span className="text-white">Complete</span>
+                    <span className="text-slate-900 dark:text-white">Complete</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">└─</span>
@@ -746,27 +746,27 @@ export default function CaseClosure() {
                   <div className="space-y-2 text-xs">
                     <div className="flex justify-between">
                       <span className="text-slate-500">Documents collected:</span>
-                      <span className="text-white">{caseStatistics.documentsCollected.value}</span>
+                      <span className="text-slate-900 dark:text-white">{caseStatistics.documentsCollected.value}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-slate-500">References contacted:</span>
-                      <span className="text-white">{caseStatistics.referencesContacted.value}</span>
+                      <span className="text-slate-900 dark:text-white">{caseStatistics.referencesContacted.value}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-slate-500">Interviews conducted:</span>
-                      <span className="text-white">{caseStatistics.interviewsConducted.value}</span>
+                      <span className="text-slate-900 dark:text-white">{caseStatistics.interviewsConducted.value}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-slate-500">Background checks:</span>
-                      <span className="text-white">{caseStatistics.backgroundChecks.value}</span>
+                      <span className="text-slate-900 dark:text-white">{caseStatistics.backgroundChecks.value}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-slate-500">Investigation days:</span>
-                      <span className="text-white">{caseStatistics.investigationDays.value}</span>
+                      <span className="text-slate-900 dark:text-white">{caseStatistics.investigationDays.value}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-slate-500">Investigator hours:</span>
-                      <span className="text-white">{caseStatistics.investigatorHours.value} (est.)</span>
+                      <span className="text-slate-900 dark:text-white">{caseStatistics.investigatorHours.value} (est.)</span>
                     </div>
                   </div>
                 </div>
@@ -786,7 +786,7 @@ export default function CaseClosure() {
                   <div key={section.id} className="bg-slate-900/40 rounded-xl overflow-hidden">
                     <button
                       onClick={() => toggleSection(section.id)}
-                      className="w-full p-4 flex items-center justify-between hover:bg-slate-800/30 transition-colors"
+                      className="w-full p-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-slate-800/30 transition-colors"
                     >
                       <div className="flex items-center gap-3">
                         <CheckCircle className="w-5 h-5 text-green-400" />
@@ -815,7 +815,7 @@ export default function CaseClosure() {
                               <div className="flex items-start gap-2">
                                 <span className="text-slate-500">{idx === section.details.length - 1 ? '└─' : '├─'}</span>
                                 <span className="text-slate-600 dark:text-slate-400">{detail.label}:</span>
-                                <span className="text-white">{detail.value}</span>
+                                <span className="text-slate-900 dark:text-white">{detail.value}</span>
                               </div>
                               {detail.subValue && (
                                 <div className="ml-8 text-xs text-slate-500">{detail.subValue}</div>
@@ -916,7 +916,7 @@ export default function CaseClosure() {
               <h4 className="text-sm font-semibold text-green-400 mb-3 border-b border-green-500/20 pb-2">STRENGTHS IDENTIFIED</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <p className="text-xs font-medium text-white mb-2">1. CLEAN CRIMINAL RECORD:</p>
+                  <p className="text-xs font-medium text-slate-900 dark:text-white mb-2">1. CLEAN CRIMINAL RECORD:</p>
                   <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1 ml-3">
                     <li>└─ No criminal convictions, arrests, or warrants</li>
                     <li>└─ GCIC and FBI NCIC checks: Clear</li>
@@ -924,7 +924,7 @@ export default function CaseClosure() {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-xs font-medium text-white mb-2">2. PROVEN LAW ENFORCEMENT EXPERIENCE:</p>
+                  <p className="text-xs font-medium text-slate-900 dark:text-white mb-2">2. PROVEN LAW ENFORCEMENT EXPERIENCE:</p>
                   <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1 ml-3">
                     <li>└─ 7 years sworn law enforcement (Metro Atlanta PD)</li>
                     <li>└─ Current position: Patrol Officer (Zone 3)</li>
@@ -933,7 +933,7 @@ export default function CaseClosure() {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-xs font-medium text-white mb-2">3. EXCELLENT SUPERVISORY REFERENCES:</p>
+                  <p className="text-xs font-medium text-slate-900 dark:text-white mb-2">3. EXCELLENT SUPERVISORY REFERENCES:</p>
                   <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1 ml-3">
                     <li>└─ Current supervisor: Strongly recommends ("top 25%")</li>
                     <li>└─ Former supervisor: Recommends for hire</li>
@@ -941,7 +941,7 @@ export default function CaseClosure() {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-xs font-medium text-white mb-2">4. STABLE EMPLOYMENT HISTORY:</p>
+                  <p className="text-xs font-medium text-slate-900 dark:text-white mb-2">4. STABLE EMPLOYMENT HISTORY:</p>
                   <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1 ml-3">
                     <li>└─ Continuous employment since 2012 (12+ years)</li>
                     <li>└─ Career progression: Security → Supervisor → Sworn LE</li>
@@ -949,7 +949,7 @@ export default function CaseClosure() {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-xs font-medium text-white mb-2">5. RESPONSIBLE FINANCIAL MANAGEMENT:</p>
+                  <p className="text-xs font-medium text-slate-900 dark:text-white mb-2">5. RESPONSIBLE FINANCIAL MANAGEMENT:</p>
                   <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1 ml-3">
                     <li>└─ Credit score 742 (Good, above 650 minimum)</li>
                     <li>└─ Debt-to-income 34% (manageable, under 50%)</li>
@@ -957,7 +957,7 @@ export default function CaseClosure() {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-xs font-medium text-white mb-2">6. PROFESSIONAL ONLINE PRESENCE:</p>
+                  <p className="text-xs font-medium text-slate-900 dark:text-white mb-2">6. PROFESSIONAL ONLINE PRESENCE:</p>
                   <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1 ml-3">
                     <li>└─ 142 public posts reviewed (last 5 years)</li>
                     <li>└─ Content: LE-related, community engagement</li>
@@ -972,7 +972,7 @@ export default function CaseClosure() {
               <h4 className="text-sm font-semibold text-amber-400 mb-3 border-b border-amber-500/20 pb-2">MINOR CONCERNS (NON-DISQUALIFYING)</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <p className="text-xs font-medium text-white mb-2">1. TRAFFIC VIOLATIONS:</p>
+                  <p className="text-xs font-medium text-slate-900 dark:text-white mb-2">1. TRAFFIC VIOLATIONS:</p>
                   <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1 ml-3">
                     <li>└─ 2 minor speeding tickets (2019: 15 mph over, 2021: 12 over)</li>
                     <li>└─ Both paid/closed, no license suspensions</li>
@@ -981,7 +981,7 @@ export default function CaseClosure() {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-xs font-medium text-white mb-2">2. CREDIT - SINGLE LATE PAYMENT:</p>
+                  <p className="text-xs font-medium text-slate-900 dark:text-white mb-2">2. CREDIT - SINGLE LATE PAYMENT:</p>
                   <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1 ml-3">
                     <li>└─ 1 late payment (April 2020, credit card, 30 days)</li>
                     <li>└─ Context: During COVID-19 pandemic period</li>
@@ -997,7 +997,7 @@ export default function CaseClosure() {
               <h4 className="text-sm font-semibold text-blue-400 mb-3 border-b border-blue-500/20 pb-2">MITIGATING FACTORS & CONTEXT</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <p className="text-xs font-medium text-white mb-2">TRAFFIC VIOLATIONS:</p>
+                  <p className="text-xs font-medium text-slate-900 dark:text-white mb-2">TRAFFIC VIOLATIONS:</p>
                   <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1">
                     <li>• Minor violations: 15 mph and 12 mph over (not excessive)</li>
                     <li>• Infrequent: 2 tickets over 7 years (not pattern)</li>
@@ -1006,7 +1006,7 @@ export default function CaseClosure() {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-xs font-medium text-white mb-2">LATE PAYMENT:</p>
+                  <p className="text-xs font-medium text-slate-900 dark:text-white mb-2">LATE PAYMENT:</p>
                   <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1">
                     <li>• Single occurrence: Only 1 late payment in entire credit history</li>
                     <li>• Pandemic timing: April 2020 (COVID-19 economic impact)</li>
@@ -1015,7 +1015,7 @@ export default function CaseClosure() {
                   </ul>
                 </div>
                 <div className="md:col-span-2">
-                  <p className="text-xs font-medium text-white mb-2">CURRENT SUPERVISOR ENDORSEMENT:</p>
+                  <p className="text-xs font-medium text-slate-900 dark:text-white mb-2">CURRENT SUPERVISOR ENDORSEMENT:</p>
                   <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1">
                     <li>• Strong recommendation: Sgt. Davis "strongly recommends"</li>
                     <li>• Performance rating: "Above average - top 25% of officers"</li>
@@ -1095,7 +1095,7 @@ export default function CaseClosure() {
                 <span className="px-3 py-1 bg-green-500/20 text-green-400 rounded-lg text-sm font-bold">RECOMMENDATION: APPROVE FOR HIRE</span>
               </div>
               <div className="mb-3">
-                <p className="text-xs font-medium text-white mb-2">RATIONALE:</p>
+                <p className="text-xs font-medium text-slate-900 dark:text-white mb-2">RATIONALE:</p>
                 <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
                   Applicant meets all POST standards and agency policy requirements for deputy sheriff position. No disqualifying factors identified.
                   Proven law enforcement experience (7 years sworn). Excellent supervisory references from current and former supervisors at
@@ -1231,7 +1231,7 @@ export default function CaseClosure() {
                       type="text"
                       value={rejectDetails}
                       onChange={(e) => setRejectDetails(e.target.value)}
-                      className="w-full px-3 py-2 bg-slate-800/40 border border-slate-700/50 rounded-lg text-white text-sm placeholder-slate-500 focus:outline-none focus:border-red-500/50"
+                      className="w-full px-3 py-2 bg-slate-800/40 border border-slate-700/50 rounded-lg text-slate-900 dark:text-white text-sm placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-red-500/50"
                       placeholder="Enter specific concern..."
                     />
                   </div>
@@ -1247,7 +1247,7 @@ export default function CaseClosure() {
                 value={dispositionRationale}
                 onChange={(e) => setDispositionRationale(e.target.value)}
                 rows={4}
-                className="w-full px-4 py-3 bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-white text-sm placeholder-slate-500 focus:outline-none focus:border-purple-500/50 resize-none"
+                className="w-full px-4 py-3 bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white text-sm placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-purple-500/50 resize-none"
                 placeholder="Enter detailed rationale for this disposition decision..."
               />
             </div>
@@ -1260,7 +1260,7 @@ export default function CaseClosure() {
                   <label className="text-xs text-slate-600 dark:text-slate-400 mb-1 block">Name:</label>
                   <input
                     type="text"
-                    className="w-full px-3 py-2 bg-slate-800/40 border border-slate-700/50 rounded-lg text-white text-sm placeholder-slate-500 focus:outline-none focus:border-purple-500/50"
+                    className="w-full px-3 py-2 bg-slate-800/40 border border-slate-700/50 rounded-lg text-slate-900 dark:text-white text-sm placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-purple-500/50"
                     placeholder="Enter name..."
                   />
                 </div>
@@ -1268,7 +1268,7 @@ export default function CaseClosure() {
                   <label className="text-xs text-slate-600 dark:text-slate-400 mb-1 block">Title:</label>
                   <input
                     type="text"
-                    className="w-full px-3 py-2 bg-slate-800/40 border border-slate-700/50 rounded-lg text-white text-sm placeholder-slate-500 focus:outline-none focus:border-purple-500/50"
+                    className="w-full px-3 py-2 bg-slate-800/40 border border-slate-700/50 rounded-lg text-slate-900 dark:text-white text-sm placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-purple-500/50"
                     placeholder="Enter title..."
                   />
                 </div>
@@ -1276,14 +1276,14 @@ export default function CaseClosure() {
                   <label className="text-xs text-slate-600 dark:text-slate-400 mb-1 block">Date:</label>
                   <input
                     type="date"
-                    className="w-full px-3 py-2 bg-slate-800/40 border border-slate-700/50 rounded-lg text-white text-sm focus:outline-none focus:border-purple-500/50"
+                    className="w-full px-3 py-2 bg-slate-800/40 border border-slate-700/50 rounded-lg text-slate-900 dark:text-white text-sm focus:outline-none focus:border-purple-500/50"
                   />
                 </div>
                 <div>
                   <label className="text-xs text-slate-600 dark:text-slate-400 mb-1 block">Digital Signature:</label>
                   <input
                     type="text"
-                    className="w-full px-3 py-2 bg-slate-800/40 border border-slate-700/50 rounded-lg text-white text-sm placeholder-slate-500 focus:outline-none focus:border-purple-500/50"
+                    className="w-full px-3 py-2 bg-slate-800/40 border border-slate-700/50 rounded-lg text-slate-900 dark:text-white text-sm placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-purple-500/50"
                     placeholder="Type name to sign..."
                   />
                 </div>

@@ -401,10 +401,10 @@ export default function ReferenceChecks() {
               <div className="bg-slate-900/40 rounded-lg p-4 mb-4">
                 <h5 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Overall Status</h5>
                 <div className="space-y-1.5 text-sm">
-                  <div className="text-slate-600 dark:text-slate-400">Total references required: <span className="text-white font-medium">5</span> <span className="text-slate-500">(per policy: 3 personal, 2 employment)</span></div>
+                  <div className="text-slate-600 dark:text-slate-400">Total references required: <span className="text-slate-900 dark:text-white font-medium">5</span> <span className="text-slate-500">(per policy: 3 personal, 2 employment)</span></div>
                   <div className="text-slate-600 dark:text-slate-400">References completed: <span className="text-green-400 font-medium">2</span> <span className="text-slate-500">(40% complete)</span></div>
                   <div className="text-slate-600 dark:text-slate-400">References pending: <span className="text-amber-400 font-medium">2</span> <span className="text-slate-500">(1 awaiting callback, 1 not yet identified)</span></div>
-                  <div className="text-slate-600 dark:text-slate-400">References not yet contacted: <span className="text-white">0</span></div>
+                  <div className="text-slate-600 dark:text-slate-400">References not yet contacted: <span className="text-slate-900 dark:text-white">0</span></div>
                 </div>
               </div>
 
@@ -416,12 +416,12 @@ export default function ReferenceChecks() {
                   </h5>
                   <div className="space-y-3 text-sm">
                     <div>
-                      <p className="text-white font-medium">Sgt. John Davis (Current Supervisor)</p>
+                      <p className="text-slate-900 dark:text-white font-medium">Sgt. John Davis (Current Supervisor)</p>
                       <p className="text-slate-600 dark:text-slate-400">Interview: Jan 23, 2026 — Employment reference</p>
                       <p className="text-green-400">Outcome: POSITIVE — Strongly recommends for hire</p>
                     </div>
                     <div>
-                      <p className="text-white font-medium">Capt. Sarah Williams (Former Supervisor)</p>
+                      <p className="text-slate-900 dark:text-white font-medium">Capt. Sarah Williams (Former Supervisor)</p>
                       <p className="text-slate-600 dark:text-slate-400">Interview: Jan 23, 2026 — Employment reference</p>
                       <p className="text-green-400">Outcome: POSITIVE — Recommends for hire</p>
                     </div>
@@ -435,12 +435,12 @@ export default function ReferenceChecks() {
                   </h5>
                   <div className="space-y-3 text-sm">
                     <div>
-                      <p className="text-white font-medium">Officer Michael Brown (Colleague/FTO)</p>
+                      <p className="text-slate-900 dark:text-white font-medium">Officer Michael Brown (Colleague/FTO)</p>
                       <p className="text-slate-600 dark:text-slate-400">Status: Awaiting callback (1 contact attempt Jan 23)</p>
                       <p className="text-amber-400/80">Next action: Follow up Jan 27 if no response</p>
                     </div>
                     <div>
-                      <p className="text-white font-medium">Additional personal reference (to be added)</p>
+                      <p className="text-slate-900 dark:text-white font-medium">Additional personal reference (to be added)</p>
                       <p className="text-slate-600 dark:text-slate-400">Status: Not yet scheduled</p>
                       <p className="text-amber-400/80">Next action: Contact applicant for additional references</p>
                     </div>
@@ -477,7 +477,7 @@ export default function ReferenceChecks() {
                   <AlertTriangle className="w-4 h-4" />Assessment Method Note
                 </h5>
                 <p className="text-sm text-slate-600 dark:text-slate-400">
-                  References are evaluated <span className="text-white font-medium">qualitatively</span>, not with numerical ratings or scores. Each reference is assessed individually for: would recommend (Yes/No), performance quality (Excellent/Good/Fair/Poor), disciplinary issues (Yes/No with details), specific concerns (documented), and Brady/Giglio credibility concerns (Yes/No). There is no "overall score" or "average rating."
+                  References are evaluated <span className="text-slate-900 dark:text-white font-medium">qualitatively</span>, not with numerical ratings or scores. Each reference is assessed individually for: would recommend (Yes/No), performance quality (Excellent/Good/Fair/Poor), disciplinary issues (Yes/No with details), specific concerns (documented), and Brady/Giglio credibility concerns (Yes/No). There is no "overall score" or "average rating."
                 </p>
               </div>
 
@@ -639,12 +639,12 @@ export default function ReferenceChecks() {
                   className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all whitespace-nowrap ${
                     selectedView === tab.id
                       ? 'bg-amber-500 text-white shadow-lg'
-                      : 'text-slate-600 dark:text-slate-400 hover:text-white hover:bg-slate-800/50'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-slate-800/50'
                   }`}
                 >
                   {tab.label}
                   <span className={`px-1.5 py-0.5 rounded text-xs ${
-                    selectedView === tab.id ? 'bg-white/20 text-white' : 'bg-slate-700/50 text-slate-500'
+                    selectedView === tab.id ? 'bg-white/20 text-slate-900 dark:text-white' : 'bg-slate-700/50 text-slate-500'
                   }`}>{tab.count}</span>
                 </button>
               ))}
@@ -849,7 +849,7 @@ export default function ReferenceChecks() {
                               <div className="space-y-3">
                                 {ref.contactAttempts.map((attempt, i) => (
                                   <div key={i} className="text-sm">
-                                    <p className="text-white font-medium mb-0.5">Attempt #{attempt.attemptNumber}: {attempt.date}</p>
+                                    <p className="text-slate-900 dark:text-white font-medium mb-0.5">Attempt #{attempt.attemptNumber}: {attempt.date}</p>
                                     <p className="text-slate-600 dark:text-slate-400 ml-4">Method: {attempt.method}</p>
                                     <p className="text-slate-600 dark:text-slate-400 ml-4">Outcome: {attempt.outcome}</p>
                                     <p className="text-slate-500 ml-4 text-xs">Message: {attempt.message}</p>
@@ -865,7 +865,7 @@ export default function ReferenceChecks() {
                             <div className="bg-amber-500/5 border border-amber-500/20 rounded-lg p-3 mb-4">
                               <h4 className="text-xs font-semibold text-amber-400 mb-2 uppercase tracking-wider">Next Actions</h4>
                               <div className="space-y-1 text-sm">
-                                <p className="text-slate-600 dark:text-slate-400">Follow-up date: <span className="text-white">{ref.nextActions.followUpDate}</span></p>
+                                <p className="text-slate-600 dark:text-slate-400">Follow-up date: <span className="text-slate-900 dark:text-white">{ref.nextActions.followUpDate}</span></p>
                                 <p className="text-slate-600 dark:text-slate-400">Action: <span className="text-slate-700 dark:text-slate-300">{ref.nextActions.action}</span></p>
                                 <p className="text-slate-600 dark:text-slate-400">Escalation: <span className="text-slate-700 dark:text-slate-300">{ref.nextActions.escalation}</span></p>
                                 <p className="text-slate-600 dark:text-slate-400">Priority: <span className="text-amber-400">{ref.nextActions.priority}</span></p>
@@ -906,7 +906,7 @@ export default function ReferenceChecks() {
                                 <AlertTriangle className="w-3.5 h-3.5" />Required — Not Yet Provided
                               </h4>
                               <div className="space-y-1 text-sm">
-                                <p className="text-slate-600 dark:text-slate-400">Agency policy requires: <span className="text-white">{ref.policyRequirement.totalRequired}</span></p>
+                                <p className="text-slate-600 dark:text-slate-400">Agency policy requires: <span className="text-slate-900 dark:text-white">{ref.policyRequirement.totalRequired}</span></p>
                                 <p className="text-slate-600 dark:text-slate-400 ml-4">Employment references: <span className="text-green-400">{ref.policyRequirement.employmentRequired}</span></p>
                                 <p className="text-slate-600 dark:text-slate-400 ml-4">Personal references: <span className="text-red-400">{ref.policyRequirement.personalRequired}</span></p>
                                 <p className="text-slate-600 dark:text-slate-400">Criteria: <span className="text-slate-700 dark:text-slate-300">{ref.policyRequirement.criteria}</span></p>
@@ -919,7 +919,7 @@ export default function ReferenceChecks() {
                             <div className="bg-amber-500/5 border border-amber-500/20 rounded-lg p-3 mb-4">
                               <h4 className="text-xs font-semibold text-amber-400 mb-2 uppercase tracking-wider">Action Required</h4>
                               <div className="space-y-1.5 text-sm">
-                                <p className="text-slate-600 dark:text-slate-400">Action: <span className="text-white">{ref.actionRequired.action}</span></p>
+                                <p className="text-slate-600 dark:text-slate-400">Action: <span className="text-slate-900 dark:text-white">{ref.actionRequired.action}</span></p>
                                 <p className="text-slate-600 dark:text-slate-400">Required info: <span className="text-slate-700 dark:text-slate-300">{ref.actionRequired.requiredInfo}</span></p>
                                 <p className="text-slate-600 dark:text-slate-400">Target date: <span className="text-amber-400">{ref.actionRequired.targetDate}</span></p>
                                 <p className="text-slate-600 dark:text-slate-400">Examples: <span className="text-slate-700 dark:text-slate-300">{ref.actionRequired.examples}</span></p>
@@ -943,7 +943,7 @@ export default function ReferenceChecks() {
                           <h4 className="text-xs font-semibold text-slate-600 dark:text-slate-400 mb-2 uppercase tracking-wider">Contact Log for {ref.referenceName}</h4>
                           {ref.contactAttempts.map((attempt, i) => (
                             <div key={i} className="text-sm border-l-2 border-amber-500/30 pl-3 mb-2">
-                              <p className="text-white font-medium">Attempt #{attempt.attemptNumber} — {attempt.date}</p>
+                              <p className="text-slate-900 dark:text-white font-medium">Attempt #{attempt.attemptNumber} — {attempt.date}</p>
                               <p className="text-slate-600 dark:text-slate-400">Method: {attempt.method}</p>
                               <p className="text-slate-600 dark:text-slate-400">Outcome: {attempt.outcome}</p>
                               <p className="text-slate-500 text-xs">Message: {attempt.message}</p>
@@ -955,7 +955,7 @@ export default function ReferenceChecks() {
                       {/* Action Buttons */}
                       <div className="flex items-center justify-between pt-4 border-t border-slate-700/30 mt-2">
                         <div className="text-sm text-slate-600 dark:text-slate-400">
-                          Case: <span className="text-white font-medium">{ref.caseId}</span> — {ref.subject}
+                          Case: <span className="text-slate-900 dark:text-white font-medium">{ref.caseId}</span> — {ref.subject}
                         </div>
                         <div className="flex items-center gap-2 flex-wrap">
                           {isCompleted && (

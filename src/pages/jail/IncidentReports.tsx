@@ -242,8 +242,8 @@ const IncidentReports = () => {
       case 'Resolved': return 'bg-emerald-500/20 text-emerald-400';
       case 'Under Review': return 'bg-amber-500/20 text-amber-400';
       case 'Investigating': return 'bg-amber-500/20 text-amber-400';
-      case 'Pending': return 'bg-slate-500/20 text-slate-400';
-      default: return 'bg-slate-500/20 text-slate-400';
+      case 'Pending': return 'bg-slate-500/20 text-slate-500';
+      default: return 'bg-slate-500/20 text-slate-500';
     }
   };
 
@@ -267,26 +267,26 @@ const IncidentReports = () => {
 
         {/* Stats */}
         <div className="grid grid-cols-4 gap-4 mb-6">
-          <div className="bg-slate-800 border border-slate-700 rounded-lg p-4">
+          <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4">
             <div className="text-sm text-slate-600 dark:text-slate-400 mb-1">Total Incidents (7 Days)</div>
             <div className="text-2xl font-bold text-slate-900 dark:text-white">{stats.total}</div>
           </div>
-          <div className="bg-slate-800 border border-slate-700 rounded-lg p-4">
+          <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4">
             <div className="text-sm text-slate-600 dark:text-slate-400 mb-1">Critical</div>
             <div className="text-2xl font-bold text-red-400">{stats.critical}</div>
           </div>
-          <div className="bg-slate-800 border border-slate-700 rounded-lg p-4">
+          <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4">
             <div className="text-sm text-slate-600 dark:text-slate-400 mb-1">Use of Force</div>
             <div className="text-2xl font-bold text-orange-400">{stats.useOfForce}</div>
           </div>
-          <div className="bg-slate-800 border border-slate-700 rounded-lg p-4">
+          <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4">
             <div className="text-sm text-slate-600 dark:text-slate-400 mb-1">Under Review</div>
             <div className="text-2xl font-bold text-amber-400">{stats.underReview}</div>
           </div>
         </div>
 
         {/* Search and Filters */}
-        <div className="bg-slate-800 border border-slate-700 rounded-lg p-4 mb-6">
+        <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4 mb-6">
           <div className="flex items-center gap-4">
             <div className="flex-1 relative">
               <Search className="w-5 h-5 text-slate-600 dark:text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
@@ -295,7 +295,7 @@ const IncidentReports = () => {
                 placeholder="Search incidents..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
+                className="w-full pl-10 pr-4 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500"
               />
             </div>
             <div className="flex items-center gap-2">
@@ -303,7 +303,7 @@ const IncidentReports = () => {
               <select
                 value={selectedFilter}
                 onChange={(e) => setSelectedFilter(e.target.value)}
-                className="px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white focus:outline-none focus:border-amber-500"
+                className="px-4 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
               >
                 <option value="all">All Incidents</option>
                 <option value="critical">Critical Only</option>
@@ -318,7 +318,7 @@ const IncidentReports = () => {
         {/* Incidents List */}
         <div className="space-y-4">
           {filteredIncidents.map((incident) => (
-            <div key={incident.id} className="bg-slate-800 border border-slate-700 rounded-lg overflow-hidden">
+            <div key={incident.id} className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden">
               <div className="p-6">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex-1">
@@ -371,15 +371,15 @@ const IncidentReports = () => {
                 <div className="grid grid-cols-4 gap-4 mb-4">
                   <div className="bg-slate-900/50 border border-slate-700 rounded p-3">
                     <div className="text-xs text-slate-600 dark:text-slate-400 mb-1">Inmates Involved</div>
-                    <div className="text-white font-semibold">{incident.inmatesInvolved.length}</div>
+                    <div className="text-slate-900 dark:text-white font-semibold">{incident.inmatesInvolved.length}</div>
                   </div>
                   <div className="bg-slate-900/50 border border-slate-700 rounded p-3">
                     <div className="text-xs text-slate-600 dark:text-slate-400 mb-1">Staff Involved</div>
-                    <div className="text-white font-semibold">{incident.staffInvolved.length}</div>
+                    <div className="text-slate-900 dark:text-white font-semibold">{incident.staffInvolved.length}</div>
                   </div>
                   <div className="bg-slate-900/50 border border-slate-700 rounded p-3">
                     <div className="text-xs text-slate-600 dark:text-slate-400 mb-1">Witness Statements</div>
-                    <div className="text-white font-semibold">{incident.witnessStatements}</div>
+                    <div className="text-slate-900 dark:text-white font-semibold">{incident.witnessStatements}</div>
                   </div>
                   <div className="bg-slate-900/50 border border-slate-700 rounded p-3">
                     <div className="text-xs text-slate-600 dark:text-slate-400 mb-1">Evidence</div>
@@ -419,17 +419,17 @@ const IncidentReports = () => {
                 <div className="border-t border-slate-700 p-6 bg-slate-900/30">
                   <div className="grid grid-cols-2 gap-6">
                     <div>
-                      <h4 className="text-white font-semibold mb-3">Full Description</h4>
+                      <h4 className="text-slate-900 dark:text-white font-semibold mb-3">Full Description</h4>
                       <p className="text-slate-700 dark:text-slate-300 text-sm mb-4">{incident.description}</p>
 
-                      <h4 className="text-white font-semibold mb-3">Inmates Involved</h4>
+                      <h4 className="text-slate-900 dark:text-white font-semibold mb-3">Inmates Involved</h4>
                       <div className="space-y-1 mb-4">
                         {incident.inmatesInvolved.map((inmate, idx) => (
                           <div key={idx} className="text-sm text-amber-400">• {inmate}</div>
                         ))}
                       </div>
 
-                      <h4 className="text-white font-semibold mb-3">Staff Involved</h4>
+                      <h4 className="text-slate-900 dark:text-white font-semibold mb-3">Staff Involved</h4>
                       <div className="space-y-1">
                         {incident.staffInvolved.map((staff, idx) => (
                           <div key={idx} className="text-sm text-slate-700 dark:text-slate-300">• {staff}</div>
@@ -438,16 +438,16 @@ const IncidentReports = () => {
                     </div>
 
                     <div>
-                      <h4 className="text-white font-semibold mb-3">Action Taken</h4>
+                      <h4 className="text-slate-900 dark:text-white font-semibold mb-3">Action Taken</h4>
                       <p className="text-slate-700 dark:text-slate-300 text-sm">{incident.actionTaken}</p>
                     </div>
                   </div>
 
                   <div className="flex justify-end gap-3 mt-6 pt-6 border-t border-slate-700">
-                    <button className="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg transition-colors">
+                    <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
                       View Full Report
                     </button>
-                    <button className="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg transition-colors">
+                    <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
                       View Video Evidence
                     </button>
                     {incident.status === 'Under Review' && (

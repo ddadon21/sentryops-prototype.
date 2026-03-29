@@ -157,23 +157,23 @@ export default function BackgroundsDashboard() {
             <div className="flex items-center gap-2.5">
               <div className="w-1.5 h-1.5 bg-red-500 rounded-full"></div>
               <span className="text-[13px] font-semibold text-slate-700 dark:text-slate-300">Cases Awaiting Sign-Off:</span>
-              <span className="text-[13px] font-bold text-white">{metrics.awaitingSupervisorSignOff}</span>
+              <span className="text-[13px] font-bold text-slate-900 dark:text-white">{metrics.awaitingSupervisorSignOff}</span>
             </div>
             <div className="h-4 w-px bg-slate-600/40"></div>
             <div className="flex items-center gap-2.5">
               <span className="text-[13px] font-semibold text-slate-700 dark:text-slate-300">Avg Wait:</span>
-              <span className="text-[13px] font-bold text-white">{metrics.avgSupervisorWait} days</span>
+              <span className="text-[13px] font-bold text-slate-900 dark:text-white">{metrics.avgSupervisorWait} days</span>
             </div>
             <div className="h-4 w-px bg-slate-600/40"></div>
             <div className="flex items-center gap-2.5">
               <div className="w-1.5 h-1.5 bg-red-500 rounded-full"></div>
               <span className="text-[13px] font-semibold text-slate-700 dark:text-slate-300">SLA Breach:</span>
-              <span className="text-[13px] font-bold text-white">{metrics.slaBreachCases}</span>
+              <span className="text-[13px] font-bold text-slate-900 dark:text-white">{metrics.slaBreachCases}</span>
             </div>
             <div className="h-4 w-px bg-slate-600/40"></div>
             <div className="flex items-center gap-2.5">
               <span className="text-[13px] font-semibold text-slate-700 dark:text-slate-300">Avg Case Age:</span>
-              <span className="text-[13px] font-bold text-white">{metrics.avgCaseAge} days</span>
+              <span className="text-[13px] font-bold text-slate-900 dark:text-white">{metrics.avgCaseAge} days</span>
             </div>
           </div>
 
@@ -244,15 +244,15 @@ export default function BackgroundsDashboard() {
               <div className="space-y-1.5 text-[13px]">
                 <div className="flex items-start gap-3 pl-4">
                   <span className="text-slate-600 flex-shrink-0">•</span>
-                  <p className="text-slate-600 dark:text-slate-400"><span className="text-white font-medium">3 overdue items</span> — Reference checks pending for Thompson, Davis, Williams</p>
+                  <p className="text-slate-600 dark:text-slate-400"><span className="text-slate-900 dark:text-white font-medium">3 overdue items</span> — Reference checks pending for Thompson, Davis, Williams</p>
                 </div>
                 <div className="flex items-start gap-3 pl-4">
                   <span className="text-slate-600 flex-shrink-0">•</span>
-                  <p className="text-slate-600 dark:text-slate-400"><span className="text-white font-medium">5 cases with documented concerns</span> — Awaiting supervisor adjudication</p>
+                  <p className="text-slate-600 dark:text-slate-400"><span className="text-slate-900 dark:text-white font-medium">5 cases with documented concerns</span> — Awaiting supervisor adjudication</p>
                 </div>
                 <div className="flex items-start gap-3 pl-4">
                   <span className="text-slate-600 flex-shrink-0">•</span>
-                  <p className="text-slate-600 dark:text-slate-400"><span className="text-white font-medium">2 compliance deadlines</span> — POST certification expires in 48 hours</p>
+                  <p className="text-slate-600 dark:text-slate-400"><span className="text-slate-900 dark:text-white font-medium">2 compliance deadlines</span> — POST certification expires in 48 hours</p>
                 </div>
               </div>
             </div>
@@ -265,15 +265,15 @@ export default function BackgroundsDashboard() {
               <div className="space-y-1.5 text-[13px]">
                 <div className="flex items-start gap-3 pl-4">
                   <span className="text-slate-600 flex-shrink-0">•</span>
-                  <p className="text-slate-600 dark:text-slate-400"><span className="text-white font-medium">47 active investigations</span> — 12 initial review, 15 reference checks, 8 verifications, 7 history review, 5 final review</p>
+                  <p className="text-slate-600 dark:text-slate-400"><span className="text-slate-900 dark:text-white font-medium">47 active investigations</span> — 12 initial review, 15 reference checks, 8 verifications, 7 history review, 5 final review</p>
                 </div>
                 <div className="flex items-start gap-3 pl-4">
                   <span className="text-slate-600 flex-shrink-0">•</span>
-                  <p className="text-slate-600 dark:text-slate-400"><span className="text-white font-medium">15 reference checks pending</span> — 8 interviews scheduled today</p>
+                  <p className="text-slate-600 dark:text-slate-400"><span className="text-slate-900 dark:text-white font-medium">15 reference checks pending</span> — 8 interviews scheduled today</p>
                 </div>
                 <div className="flex items-start gap-3 pl-4">
                   <span className="text-slate-600 flex-shrink-0">•</span>
-                  <p className="text-slate-600 dark:text-slate-400"><span className="text-white font-medium">12 awaiting supervisor review</span> — Average wait: 1.2 days</p>
+                  <p className="text-slate-600 dark:text-slate-400"><span className="text-slate-900 dark:text-white font-medium">12 awaiting supervisor review</span> — Average wait: 1.2 days</p>
                 </div>
               </div>
             </div>
@@ -286,15 +286,15 @@ export default function BackgroundsDashboard() {
               <div className="space-y-1.5 text-[13px]">
                 <div className="flex items-start gap-3 pl-4">
                   <span className="text-slate-600 flex-shrink-0">•</span>
-                  <p className="text-slate-600 dark:text-slate-400"><span className="text-white font-medium">28 investigations finalized</span> — 22 cleared for hire, 6 not recommended</p>
+                  <p className="text-slate-600 dark:text-slate-400"><span className="text-slate-900 dark:text-white font-medium">28 investigations finalized</span> — 22 cleared for hire, 6 not recommended</p>
                 </div>
                 <div className="flex items-start gap-3 pl-4">
                   <span className="text-slate-600 flex-shrink-0">•</span>
-                  <p className="text-slate-600 dark:text-slate-400"><span className="text-white font-medium">14.5 day average turnaround</span> — 3.5 days ahead of 18-day SLA target</p>
+                  <p className="text-slate-600 dark:text-slate-400"><span className="text-slate-900 dark:text-white font-medium">14.5 day average turnaround</span> — 3.5 days ahead of 18-day SLA target</p>
                 </div>
                 <div className="flex items-start gap-3 pl-4">
                   <span className="text-slate-600 flex-shrink-0">•</span>
-                  <p className="text-slate-600 dark:text-slate-400"><span className="text-white font-medium">On track for monthly target</span> — 28 of 35 projected (80%)</p>
+                  <p className="text-slate-600 dark:text-slate-400"><span className="text-slate-900 dark:text-white font-medium">On track for monthly target</span> — 28 of 35 projected (80%)</p>
                 </div>
               </div>
             </div>
@@ -306,7 +306,7 @@ export default function BackgroundsDashboard() {
               <div className="flex items-center gap-3">
                 <div className="w-1.5 h-1.5 bg-amber-500 rounded-full flex-shrink-0"></div>
                 <div>
-                  <p className="text-[13px] text-white"><span className="text-slate-600 dark:text-slate-400">Compliance Notice:</span> {metrics.slaBreachCases} case(s) have exceeded the 18-day SLA target.</p>
+                  <p className="text-[13px] text-slate-900 dark:text-white"><span className="text-slate-600 dark:text-slate-400">Compliance Notice:</span> {metrics.slaBreachCases} case(s) have exceeded the 18-day SLA target.</p>
                   <p className="text-[11px] text-slate-500 mt-0.5">POST certification and hiring timelines may be affected.</p>
                 </div>
               </div>
@@ -326,7 +326,7 @@ export default function BackgroundsDashboard() {
                 </div>
                 <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-slate-600 dark:text-slate-400 transition-all" />
               </div>
-              <p className="text-2xl font-semibold text-white mb-3">{metrics.activeCases}</p>
+              <p className="text-2xl font-semibold text-slate-900 dark:text-white mb-3">{metrics.activeCases}</p>
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between text-xs">
                   <span className="text-slate-500">Initial Review</span>
@@ -354,7 +354,7 @@ export default function BackgroundsDashboard() {
                 </div>
                 <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-slate-600 dark:text-slate-400 transition-all" />
               </div>
-              <p className="text-2xl font-semibold text-white mb-3">{metrics.casesWithConcerns}</p>
+              <p className="text-2xl font-semibold text-slate-900 dark:text-white mb-3">{metrics.casesWithConcerns}</p>
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between text-xs">
                   <span className="text-slate-500">Criminal History</span>
@@ -382,7 +382,7 @@ export default function BackgroundsDashboard() {
                 </div>
                 <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-slate-600 dark:text-slate-400 transition-all" />
               </div>
-              <p className="text-2xl font-semibold text-white mb-3">{metrics.completedThisMonth}</p>
+              <p className="text-2xl font-semibold text-slate-900 dark:text-white mb-3">{metrics.completedThisMonth}</p>
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between text-xs">
                   <span className="text-slate-500">Cleared for Hire</span>
@@ -410,7 +410,7 @@ export default function BackgroundsDashboard() {
                 </div>
                 <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-slate-600 dark:text-slate-400 transition-all" />
               </div>
-              <p className="text-2xl font-semibold text-white mb-3">{metrics.avgCompletionDays}<span className="text-base text-slate-500 ml-1">days</span></p>
+              <p className="text-2xl font-semibold text-slate-900 dark:text-white mb-3">{metrics.avgCompletionDays}<span className="text-base text-slate-500 ml-1">days</span></p>
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between text-xs">
                   <span className="text-slate-500">SLA Target</span>
@@ -534,7 +534,7 @@ export default function BackgroundsDashboard() {
                   const statusDot = activity.type === 'flag' ? 'bg-red-500' :
                     activity.type === 'complete' ? 'bg-emerald-500' : 'bg-slate-600';
                   return (
-                    <div key={activity.id} className="flex items-start gap-3 px-4 py-2.5 bg-slate-900/20 rounded hover:bg-slate-800/30 transition-all cursor-pointer">
+                    <div key={activity.id} className="flex items-start gap-3 px-4 py-2.5 bg-slate-900/20 rounded hover:bg-slate-100 dark:hover:bg-slate-800/30 transition-all cursor-pointer">
                       <div className={`w-1.5 h-1.5 rounded-full mt-[7px] flex-shrink-0 ${statusDot}`}></div>
                       <div className="flex-1 min-w-0">
                         <p className="text-[13px] text-slate-700 dark:text-slate-300 leading-snug">{activity.message}</p>
@@ -566,7 +566,7 @@ export default function BackgroundsDashboard() {
             </div>
             <div className="space-y-1">
               {priorityCases.map(caseItem => (
-                <div key={caseItem.id} className="flex items-center gap-4 px-4 py-3 bg-slate-900/20 rounded hover:bg-slate-800/30 transition-all cursor-pointer">
+                <div key={caseItem.id} className="flex items-center gap-4 px-4 py-3 bg-slate-900/20 rounded hover:bg-slate-100 dark:hover:bg-slate-800/30 transition-all cursor-pointer">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-4">
                       <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${
@@ -656,9 +656,9 @@ export default function BackgroundsDashboard() {
       {/* Quick Help Button */}
       <button
         onClick={() => setChatOpen(!chatOpen)}
-        className="fixed bottom-6 right-6 w-14 h-14 bg-slate-700 hover:bg-slate-600 rounded-full shadow-lg flex items-center justify-center transition-all z-40"
+        className="fixed bottom-6 right-6 w-14 h-14 bg-slate-600 dark:bg-slate-700 hover:bg-slate-500 dark:hover:bg-slate-600 rounded-full shadow-lg flex items-center justify-center transition-all z-40"
       >
-        {chatOpen ? <X className="w-6 h-6 text-white" /> : <MessageCircle className="w-6 h-6 text-slate-700 dark:text-slate-300" />}
+        {chatOpen ? <X className="w-6 h-6 text-slate-900 dark:text-white" /> : <MessageCircle className="w-6 h-6 text-slate-700 dark:text-slate-300" />}
       </button>
 
       {chatOpen && (
@@ -678,28 +678,28 @@ export default function BackgroundsDashboard() {
             <button className="w-full flex items-center gap-3 p-3 bg-slate-800/30 hover:bg-slate-800/50 rounded-lg transition-all text-left">
               <FileText className="w-5 h-5 text-slate-600 dark:text-slate-400" />
               <div>
-                <p className="text-[13px] text-white font-medium">Investigation Guidelines</p>
+                <p className="text-[13px] text-slate-900 dark:text-white font-medium">Investigation Guidelines</p>
                 <p className="text-xs text-slate-500">POST standards & procedures</p>
               </div>
             </button>
             <button className="w-full flex items-center gap-3 p-3 bg-slate-800/30 hover:bg-slate-800/50 rounded-lg transition-all text-left">
               <ClipboardCheck className="w-5 h-5 text-slate-600 dark:text-slate-400" />
               <div>
-                <p className="text-[13px] text-white font-medium">Adjudication Checklist</p>
+                <p className="text-[13px] text-slate-900 dark:text-white font-medium">Adjudication Checklist</p>
                 <p className="text-xs text-slate-500">Review requirements</p>
               </div>
             </button>
             <button className="w-full flex items-center gap-3 p-3 bg-slate-800/30 hover:bg-slate-800/50 rounded-lg transition-all text-left">
               <Phone className="w-5 h-5 text-slate-600 dark:text-slate-400" />
               <div>
-                <p className="text-[13px] text-white font-medium">Contact IT Support</p>
+                <p className="text-[13px] text-slate-900 dark:text-white font-medium">Contact IT Support</p>
                 <p className="text-xs text-slate-500">Technical assistance</p>
               </div>
             </button>
             <button className="w-full flex items-center gap-3 p-3 bg-slate-800/30 hover:bg-slate-800/50 rounded-lg transition-all text-left">
               <Scale className="w-5 h-5 text-slate-600 dark:text-slate-400" />
               <div>
-                <p className="text-[13px] text-white font-medium">Legal Reference</p>
+                <p className="text-[13px] text-slate-900 dark:text-white font-medium">Legal Reference</p>
                 <p className="text-xs text-slate-500">Compliance documentation</p>
               </div>
             </button>

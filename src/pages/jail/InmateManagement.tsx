@@ -515,9 +515,9 @@ const InmateManagement = () => {
       case 'Minimum Security':
         return 'text-emerald-400';
       case 'Protective Custody':
-        return 'text-slate-400';
+        return 'text-slate-500';
       default:
-        return 'text-slate-400';
+        return 'text-slate-500';
     }
   };
 
@@ -534,7 +534,7 @@ const InmateManagement = () => {
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <button className="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg transition-colors flex items-center gap-2 text-sm">
+              <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors flex items-center gap-2 text-sm">
                 <Download className="w-4 h-4" />
                 Export Roster
               </button>
@@ -550,30 +550,30 @@ const InmateManagement = () => {
 
         {/* Stats Bar */}
         <div className="grid grid-cols-5 gap-4 mb-6">
-          <div className="bg-slate-800 border border-slate-700 rounded-lg p-4">
+          <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4">
             <div className="text-sm text-slate-600 dark:text-slate-400 mb-1">Total Inmates</div>
             <div className="text-2xl font-bold text-slate-900 dark:text-white">{stats.total}</div>
           </div>
-          <div className="bg-slate-800 border border-slate-700 rounded-lg p-4">
+          <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4">
             <div className="text-sm text-slate-600 dark:text-slate-400 mb-1">Male</div>
             <div className="text-2xl font-bold text-slate-900 dark:text-white">{stats.male}</div>
           </div>
-          <div className="bg-slate-800 border border-slate-700 rounded-lg p-4">
+          <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4">
             <div className="text-sm text-slate-600 dark:text-slate-400 mb-1">Female</div>
             <div className="text-2xl font-bold text-slate-900 dark:text-white">{stats.female}</div>
           </div>
-          <div className="bg-slate-800 border border-slate-700 rounded-lg p-4">
+          <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4">
             <div className="text-sm text-slate-600 dark:text-slate-400 mb-1">No Bond</div>
             <div className="text-2xl font-bold text-red-400">{stats.noBond}</div>
           </div>
-          <div className="bg-slate-800 border border-slate-700 rounded-lg p-4">
+          <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4">
             <div className="text-sm text-slate-600 dark:text-slate-400 mb-1">Medical</div>
             <div className="text-2xl font-bold text-amber-400">{stats.medical}</div>
           </div>
         </div>
 
         {/* Search and Filters */}
-        <div className="bg-slate-800 border border-slate-700 rounded-lg p-4 mb-6">
+        <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4 mb-6">
           <div className="flex items-center gap-4">
             <div className="flex-1 relative">
               <Search className="w-5 h-5 text-slate-600 dark:text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
@@ -582,7 +582,7 @@ const InmateManagement = () => {
                 placeholder="Search by name, inmate ID, or booking number..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
+                className="w-full pl-10 pr-4 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500"
               />
             </div>
             <div className="flex items-center gap-2">
@@ -590,7 +590,7 @@ const InmateManagement = () => {
               <select
                 value={selectedFilter}
                 onChange={(e) => setSelectedFilter(e.target.value)}
-                className="px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white focus:outline-none focus:border-amber-500"
+                className="px-4 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white focus:outline-none focus:border-amber-500"
               >
                 <option value="all">All Inmates</option>
                 <option value="max-security">Maximum Security</option>
@@ -604,10 +604,10 @@ const InmateManagement = () => {
         </div>
 
         {/* Inmate Roster Table */}
-        <div className="bg-slate-800 border border-slate-700 rounded-lg overflow-hidden">
+        <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-slate-900 border-b border-slate-700">
+              <thead className="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700">
                 <tr>
                   <th className="px-4 py-3 text-left text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase">Inmate ID</th>
                   <th className="px-4 py-3 text-left text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase">Name</th>
@@ -628,22 +628,22 @@ const InmateManagement = () => {
                       <div className="text-xs text-slate-500">{inmate.bookingNumber}</div>
                     </td>
                     <td className="px-4 py-4">
-                      <div className="text-white font-semibold">
+                      <div className="text-slate-900 dark:text-white font-semibold">
                         {inmate.lastName}, {inmate.firstName} {inmate.middleName[0]}.
                         {inmate.suffix && ` ${inmate.suffix}`}
                       </div>
                       <div className="text-xs text-slate-600 dark:text-slate-400">{inmate.race} {inmate.gender}</div>
                     </td>
                     <td className="px-4 py-4 text-sm">
-                      <div className="text-white">{inmate.dob}</div>
+                      <div className="text-slate-900 dark:text-white">{inmate.dob}</div>
                       <div className="text-xs text-slate-600 dark:text-slate-400">Age: {inmate.age}</div>
                     </td>
                     <td className="px-4 py-4 text-sm">
-                      <div className="text-white">{inmate.bookingDate}</div>
+                      <div className="text-slate-900 dark:text-white">{inmate.bookingDate}</div>
                       <div className="text-xs text-slate-600 dark:text-slate-400">{inmate.bookingTime}</div>
                     </td>
                     <td className="px-4 py-4 text-sm">
-                      <div className="text-white">{inmate.charges[0].description}</div>
+                      <div className="text-slate-900 dark:text-white">{inmate.charges[0].description}</div>
                       {inmate.charges.length > 1 && (
                         <div className="text-xs text-amber-400">+{inmate.charges.length - 1} more</div>
                       )}
@@ -662,7 +662,7 @@ const InmateManagement = () => {
                       </div>
                     </td>
                     <td className="px-4 py-4 text-sm">
-                      <div className="text-white font-medium">{inmate.housing}</div>
+                      <div className="text-slate-900 dark:text-white font-medium">{inmate.housing}</div>
                       <div className="text-xs text-slate-600 dark:text-slate-400">Cell {inmate.cell}</div>
                     </td>
                     <td className="px-4 py-4">
@@ -687,8 +687,8 @@ const InmateManagement = () => {
         {/* Detail Modal */}
         {showDetailModal && selectedInmate && (
           <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
-            <div className="bg-slate-800 border border-slate-700 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-              <div className="sticky top-0 bg-slate-800 border-b border-slate-700 p-6 flex items-center justify-between">
+            <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+              <div className="sticky top-0 bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 p-6 flex items-center justify-between">
                 <div>
                   <h2 className="text-2xl font-bold text-slate-900 dark:text-white">
                     {selectedInmate.lastName}, {selectedInmate.firstName} {selectedInmate.middleName}
@@ -697,7 +697,7 @@ const InmateManagement = () => {
                 </div>
                 <button
                   onClick={() => setShowDetailModal(false)}
-                  className="text-slate-600 dark:text-slate-400 hover:text-white"
+                  className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:text-white"
                 >
                   ✕
                 </button>
@@ -713,11 +713,11 @@ const InmateManagement = () => {
                   <div className="grid grid-cols-2 gap-4 bg-slate-900/50 border border-slate-700 rounded-lg p-4">
                     <div>
                       <div className="text-sm text-slate-600 dark:text-slate-400">Date of Birth</div>
-                      <div className="text-white font-medium">{selectedInmate.dob} (Age: {selectedInmate.age})</div>
+                      <div className="text-slate-900 dark:text-white font-medium">{selectedInmate.dob} (Age: {selectedInmate.age})</div>
                     </div>
                     <div>
                       <div className="text-sm text-slate-600 dark:text-slate-400">Race / Gender</div>
-                      <div className="text-white font-medium">{selectedInmate.race} / {selectedInmate.gender}</div>
+                      <div className="text-slate-900 dark:text-white font-medium">{selectedInmate.race} / {selectedInmate.gender}</div>
                     </div>
                   </div>
                 </div>
@@ -735,11 +735,11 @@ const InmateManagement = () => {
                     </div>
                     <div>
                       <div className="text-sm text-slate-600 dark:text-slate-400">Booking Date/Time</div>
-                      <div className="text-white font-medium">{selectedInmate.bookingDate} {selectedInmate.bookingTime}</div>
+                      <div className="text-slate-900 dark:text-white font-medium">{selectedInmate.bookingDate} {selectedInmate.bookingTime}</div>
                     </div>
                     <div>
                       <div className="text-sm text-slate-600 dark:text-slate-400">Arresting Agency</div>
-                      <div className="text-white font-medium">{selectedInmate.arrestingAgency}</div>
+                      <div className="text-slate-900 dark:text-white font-medium">{selectedInmate.arrestingAgency}</div>
                     </div>
                     <div>
                       <div className="text-sm text-slate-600 dark:text-slate-400">Status</div>
@@ -759,12 +759,12 @@ const InmateManagement = () => {
                       <div key={idx} className="bg-slate-900/50 border border-slate-700 rounded-lg p-4">
                         <div className="flex items-start justify-between mb-2">
                           <div className="flex-1">
-                            <div className="text-white font-semibold mb-1">{charge.description}</div>
+                            <div className="text-slate-900 dark:text-white font-semibold mb-1">{charge.description}</div>
                             <div className="text-sm text-slate-600 dark:text-slate-400">Statute: {charge.statute}</div>
                           </div>
                           <span className={`px-3 py-1 rounded text-sm font-medium ${
                             charge.degree === 'Felony' ? 'bg-red-500/20 text-red-400' :
-                            charge.degree === 'Federal' ? 'bg-slate-700/40 text-slate-300' :
+                            charge.degree === 'Federal' ? 'bg-slate-700/40 text-slate-500' :
                             'bg-amber-500/20 text-amber-400'
                           }`}>
                             {charge.degree}
@@ -780,7 +780,7 @@ const InmateManagement = () => {
                           {charge.bondAmount && charge.bondAmount > 0 && (
                             <div>
                               <span className="text-slate-600 dark:text-slate-400">Amount:</span>{' '}
-                              <span className="text-white font-semibold">${charge.bondAmount.toLocaleString()}</span>
+                              <span className="text-slate-900 dark:text-white font-semibold">${charge.bondAmount.toLocaleString()}</span>
                             </div>
                           )}
                         </div>
@@ -804,7 +804,7 @@ const InmateManagement = () => {
                     </div>
                     <div>
                       <div className="text-sm text-slate-600 dark:text-slate-400">Housing Assignment</div>
-                      <div className="text-white font-medium text-lg">{selectedInmate.housing} - Cell {selectedInmate.cell}</div>
+                      <div className="text-slate-900 dark:text-white font-medium text-lg">{selectedInmate.housing} - Cell {selectedInmate.cell}</div>
                     </div>
                   </div>
                 </div>
@@ -819,11 +819,11 @@ const InmateManagement = () => {
                     <div className="grid grid-cols-2 gap-4 bg-slate-900/50 border border-slate-700 rounded-lg p-4">
                       <div>
                         <div className="text-sm text-slate-600 dark:text-slate-400">Next Court Date</div>
-                        <div className="text-white font-medium">{selectedInmate.nextCourtDate}</div>
+                        <div className="text-slate-900 dark:text-white font-medium">{selectedInmate.nextCourtDate}</div>
                       </div>
                       <div>
                         <div className="text-sm text-slate-600 dark:text-slate-400">Court Type</div>
-                        <div className="text-white font-medium">{selectedInmate.courtType}</div>
+                        <div className="text-slate-900 dark:text-white font-medium">{selectedInmate.courtType}</div>
                       </div>
                     </div>
                   </div>

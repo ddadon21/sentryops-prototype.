@@ -212,7 +212,7 @@ export default function CommandAlerts() {
       critical: { strip: 'bg-red-500', pill: 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400', label: 'Critical' },
       high: { strip: 'bg-amber-500', pill: 'bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400', label: 'High' },
       medium: { strip: 'bg-amber-500/60', pill: 'bg-amber-500/8 border-amber-500/15 text-amber-600 dark:text-amber-400/80', label: 'Medium' },
-      low: { strip: 'bg-slate-400', pill: 'bg-slate-500/10 border-slate-500/20 text-slate-400', label: 'Low' },
+      low: { strip: 'bg-slate-400', pill: 'bg-slate-500/10 border-slate-500/20 text-slate-500', label: 'Low' },
       info: { strip: 'bg-slate-500', pill: 'bg-slate-500/10 border-slate-500/20 text-slate-500', label: 'Info' }
     };
     return configs[severity] || configs.info;
@@ -223,7 +223,7 @@ export default function CommandAlerts() {
     if (escalation === 'escalating') return { pill: 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400', label: 'Escalating' };
     const configs = {
       new: { pill: 'bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400', label: 'New' },
-      acknowledged: { pill: 'bg-slate-500/10 border-slate-500/20 text-slate-400', label: 'Acknowledged' },
+      acknowledged: { pill: 'bg-slate-500/10 border-slate-500/20 text-slate-500', label: 'Acknowledged' },
       resolved: { pill: 'bg-emerald-50 border-emerald-200 text-emerald-700 dark:bg-emerald-500/10 dark:border-emerald-500/20 dark:text-emerald-400', label: 'Resolved' }
     };
     return configs[status] || configs.acknowledged;
@@ -344,7 +344,7 @@ export default function CommandAlerts() {
               }`}
             >
               {opt.label}
-              <span className={`ml-1 ${filterSeverity === opt.id ? 'text-slate-400' : 'text-slate-600'}`}>{opt.count}</span>
+              <span className={`ml-1 ${filterSeverity === opt.id ? 'text-slate-500' : 'text-slate-600'}`}>{opt.count}</span>
             </button>
           ))}
         </div>
@@ -492,7 +492,7 @@ export default function CommandAlerts() {
                     {/* Resolution */}
                     {isResolved && alert.resolution && (
                       <div className="mb-2 bg-slate-700/20 border border-slate-700/50 rounded px-2.5 py-1.5">
-                        <span className="text-[9px] font-semibold text-slate-400/70 uppercase tracking-wider">Resolution</span>
+                        <span className="text-[9px] font-semibold text-slate-500/70 uppercase tracking-wider">Resolution</span>
                         <p className="text-[10px] text-slate-600 dark:text-slate-400 mt-0.5">{alert.resolution}</p>
                         <div className="mt-0.5 text-[9px] text-slate-500">
                           {alert.resolvedBy} · {alert.resolvedAt && new Date(alert.resolvedAt).toLocaleString()}

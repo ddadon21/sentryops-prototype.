@@ -679,7 +679,7 @@ export default function SettingsPage() {
                           type="text"
                           value={profileSettings.fullName}
                           onChange={(e) => setProfileSettings({...profileSettings, fullName: e.target.value})}
-                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
+                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
                         />
                       </div>
                       <div>
@@ -688,7 +688,7 @@ export default function SettingsPage() {
                           type="email"
                           value={profileSettings.email}
                           onChange={(e) => setProfileSettings({...profileSettings, email: e.target.value})}
-                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
+                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
                         />
                       </div>
                       <div>
@@ -697,7 +697,7 @@ export default function SettingsPage() {
                           type="text"
                           value={profileSettings.badge}
                           onChange={(e) => setProfileSettings({...profileSettings, badge: e.target.value})}
-                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
+                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
                         />
                       </div>
                       <div>
@@ -706,7 +706,7 @@ export default function SettingsPage() {
                           type="tel"
                           value={profileSettings.phone}
                           onChange={(e) => setProfileSettings({...profileSettings, phone: e.target.value})}
-                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
+                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
                         />
                       </div>
                       <div>
@@ -762,7 +762,7 @@ export default function SettingsPage() {
                     <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Profile Photo</h3>
                     <div className="flex items-center gap-6">
                       <div className="w-24 h-24 bg-gradient-to-br from-amber-500 to-amber-600 rounded-full flex items-center justify-center">
-                        <span className="text-white text-3xl font-bold">ST</span>
+                        <span className="text-slate-900 dark:text-white text-3xl font-bold">ST</span>
                       </div>
                       <div className="flex-1">
                         <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">Update your profile photo. Recommended size: 400x400px</p>
@@ -847,7 +847,7 @@ export default function SettingsPage() {
                       <select
                         value={displaySettings.timezone}
                         onChange={(e) => setDisplaySettings({...displaySettings, timezone: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/50 transition-colors"
+                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/50 transition-colors"
                       >
                         <option value="America/New_York">Eastern Time (ET)</option>
                         <option value="America/Chicago">Central Time (CT)</option>
@@ -860,7 +860,7 @@ export default function SettingsPage() {
                       <select
                         value={displaySettings.dateFormat}
                         onChange={(e) => setDisplaySettings({...displaySettings, dateFormat: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/50 transition-colors"
+                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/50 transition-colors"
                       >
                         <option value="MM/DD/YYYY">MM/DD/YYYY (12/11/2025)</option>
                         <option value="DD/MM/YYYY">DD/MM/YYYY (11/12/2025)</option>
@@ -872,7 +872,7 @@ export default function SettingsPage() {
                       <select
                         value={displaySettings.density}
                         onChange={(e) => setDisplaySettings({...displaySettings, density: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/50 transition-colors"
+                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/50 transition-colors"
                       >
                         <option value="compact">Compact</option>
                         <option value="comfortable">Comfortable</option>
@@ -913,7 +913,7 @@ export default function SettingsPage() {
                         <select
                           value={securitySettings.sessionTimeout}
                           onChange={(e) => setSecuritySettings({...securitySettings, sessionTimeout: e.target.value})}
-                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/50 transition-colors"
+                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/50 transition-colors"
                         >
                           <option value="15">15 minutes</option>
                           <option value="30">30 minutes</option>
@@ -939,7 +939,7 @@ export default function SettingsPage() {
                         <select
                           value={securitySettings.passwordExpiry}
                           onChange={(e) => setSecuritySettings({...securitySettings, passwordExpiry: e.target.value})}
-                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/50 transition-colors"
+                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/50 transition-colors"
                         >
                           <option value="30">30 days</option>
                           <option value="60">60 days</option>
@@ -1032,7 +1032,7 @@ export default function SettingsPage() {
                         <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Current Password</label>
                         <input
                           type="password"
-                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
+                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
                           placeholder="Enter current password"
                         />
                       </div>
@@ -1040,7 +1040,7 @@ export default function SettingsPage() {
                         <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">New Password</label>
                         <input
                           type="password"
-                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
+                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
                           placeholder="Enter new password"
                         />
                       </div>
@@ -1048,7 +1048,7 @@ export default function SettingsPage() {
                         <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Confirm New Password</label>
                         <input
                           type="password"
-                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
+                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
                           placeholder="Confirm new password"
                         />
                       </div>
@@ -1119,7 +1119,7 @@ export default function SettingsPage() {
                               <div className="space-y-4">
                                 <div>
                                   <p className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-2">Vendor</p>
-                                  <p className="text-sm text-white">{integration.vendor}</p>
+                                  <p className="text-sm text-slate-900 dark:text-white">{integration.vendor}</p>
                                 </div>
                                 <div>
                                   <p className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-2">API Endpoint</p>
@@ -1136,7 +1136,7 @@ export default function SettingsPage() {
                                 </div>
                                 <div>
                                   <p className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-2">Authentication Method</p>
-                                  <p className="text-sm text-white">{integration.authMethod}</p>
+                                  <p className="text-sm text-slate-900 dark:text-white">{integration.authMethod}</p>
                                 </div>
                                 <div>
                                   <p className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-2">API Key</p>
@@ -1165,7 +1165,7 @@ export default function SettingsPage() {
                               <div className="space-y-4">
                                 <div>
                                   <p className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-2">Sync Frequency</p>
-                                  <p className="text-sm text-white">{integration.syncFrequency}</p>
+                                  <p className="text-sm text-slate-900 dark:text-white">{integration.syncFrequency}</p>
                                 </div>
                                 <div>
                                   <p className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-2">Data Types</p>
@@ -1180,7 +1180,7 @@ export default function SettingsPage() {
                                 <div className="grid grid-cols-2 gap-4">
                                   <div>
                                     <p className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-2">Monthly Requests</p>
-                                    <p className="text-sm text-white">{integration.monthlyRequests.toLocaleString()} / {integration.requestLimit.toLocaleString()}</p>
+                                    <p className="text-sm text-slate-900 dark:text-white">{integration.monthlyRequests.toLocaleString()} / {integration.requestLimit.toLocaleString()}</p>
                                     <div className="mt-2 h-2 bg-slate-200 dark:bg-slate-700/40 rounded-full overflow-hidden">
                                       <div
                                         className="h-full bg-gradient-to-r from-blue-500 to-cyan-500"
@@ -1190,7 +1190,7 @@ export default function SettingsPage() {
                                   </div>
                                   <div>
                                     <p className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-2">24h Errors</p>
-                                    <p className="text-sm text-white">{integration.errors24h} errors</p>
+                                    <p className="text-sm text-slate-900 dark:text-white">{integration.errors24h} errors</p>
                                   </div>
                                 </div>
                                 {integration.webhooks && integration.webhooks.length > 0 && (
@@ -1486,7 +1486,7 @@ export default function SettingsPage() {
                       <div>
                         <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Audit Log Retention</label>
                         <select
-                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/50 transition-colors"
+                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/50 transition-colors"
                         >
                           <option value="90">90 days</option>
                           <option value="180">180 days</option>
@@ -1498,7 +1498,7 @@ export default function SettingsPage() {
                       <div>
                         <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Integration Logs Retention</label>
                         <select
-                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/50 transition-colors"
+                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/50 transition-colors"
                         >
                           <option value="30">30 days (Recommended)</option>
                           <option value="60">60 days</option>
@@ -1509,7 +1509,7 @@ export default function SettingsPage() {
                       <div>
                         <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Personnel Records Retention</label>
                         <select
-                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/50 transition-colors"
+                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/50 transition-colors"
                         >
                           <option value="1825">5 years</option>
                           <option value="3650">10 years (Recommended)</option>
@@ -1606,7 +1606,7 @@ export default function SettingsPage() {
                     <select
                       value={securitySettings.apiRateLimit}
                       onChange={(e) => setSecuritySettings({...securitySettings, apiRateLimit: e.target.value})}
-                      className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/50 transition-colors"
+                      className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/50 transition-colors"
                     >
                       <option value="100">100 requests/hour (Basic)</option>
                       <option value="500">500 requests/hour (Standard)</option>
@@ -1656,7 +1656,7 @@ export default function SettingsPage() {
                       ].map((v, i) => (
                         <div key={i} className="flex justify-between items-center py-2 border-b border-slate-700/20">
                           <span className="text-xs text-slate-500 dark:text-slate-400">{v.label}</span>
-                          <span className="text-xs font-medium text-white">{v.value}</span>
+                          <span className="text-xs font-medium text-slate-900 dark:text-white">{v.value}</span>
                         </div>
                       ))}
                     </div>
@@ -1675,7 +1675,7 @@ export default function SettingsPage() {
                         { icon: Database, color: 'amber', title: 'Optimize Database', desc: 'Run database optimization and vacuum tasks' },
                         { icon: Download, color: 'green', title: 'Check for Updates', desc: 'Check for system and dependency updates' },
                       ].map((action, i) => (
-                        <button key={i} className="w-full flex items-center justify-between p-4 border border-slate-200 dark:border-slate-700/20 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-all">
+                        <button key={i} className="w-full flex items-center justify-between p-4 border border-slate-200 dark:border-slate-700/20 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-100 dark:hover:bg-slate-800/30 transition-all">
                           <div className="flex items-center gap-3">
                             <div className={`w-10 h-10 bg-${action.color}-500/20 rounded-xl flex items-center justify-center`}>
                               <action.icon className={`w-5 h-5 text-${action.color}-400`} />
@@ -1838,7 +1838,7 @@ export default function SettingsPage() {
                 </button>
                 <button
                   onClick={handleSaveSettings}
-                  className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 rounded-xl text-white text-sm font-medium shadow-lg shadow-amber-500/20 transition-all"
+                  className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 rounded-xl text-slate-900 dark:text-white text-sm font-medium shadow-lg shadow-amber-500/20 transition-all"
                 >
                   <Save className="w-4 h-4" />
                   Save Changes
