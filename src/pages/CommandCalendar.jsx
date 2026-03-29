@@ -574,7 +574,7 @@ export default function CommandCalendar() {
               className={`flex items-center gap-2 px-3 py-2 border rounded-lg text-[13px] font-medium transition-all ${
                 showStaffingOverlay
                   ? 'bg-amber-500/10 border-amber-500/30 text-amber-600 dark:text-amber-400'
-                  : 'bg-slate-800/40 border-slate-700/40 text-slate-600 dark:text-slate-400 hover:text-slate-300'
+                  : 'bg-white dark:bg-slate-800/40 border-slate-300 dark:border-slate-700/40 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-300'
               }`}
             >
               <Users className="w-4 h-4" />
@@ -586,22 +586,22 @@ export default function CommandCalendar() {
               className={`flex items-center gap-2 px-3 py-2 border rounded-lg text-[13px] font-medium transition-all ${
                 showRiskOverlay
                   ? 'bg-red-500/10 border-red-500/30 text-red-600 dark:text-red-400'
-                  : 'bg-slate-800/40 border-slate-700/40 text-slate-600 dark:text-slate-400 hover:text-slate-300'
+                  : 'bg-white dark:bg-slate-800/40 border-slate-300 dark:border-slate-700/40 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-300'
               }`}
             >
               <Eye className="w-4 h-4" />
               Risk Overlay
             </button>
-            <div className="flex bg-slate-800/40 border border-slate-700/40 rounded-lg overflow-hidden">
+            <div className="flex bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 rounded-lg overflow-hidden">
               <button
                 onClick={() => setViewMode('month')}
-                className={`px-3 py-2 text-[13px] font-medium transition-all ${viewMode === 'month' ? 'bg-slate-700/50 text-white' : 'text-slate-600 dark:text-slate-400 hover:text-slate-300'}`}
+                className={`px-3 py-2 text-[13px] font-medium transition-all ${viewMode === 'month' ? 'bg-slate-200 dark:bg-slate-700/50 text-slate-900 dark:text-white' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-300'}`}
               >
                 Month
               </button>
               <button
                 onClick={() => setViewMode('timeline')}
-                className={`px-3 py-2 text-[13px] font-medium transition-all ${viewMode === 'timeline' ? 'bg-slate-700/50 text-white' : 'text-slate-600 dark:text-slate-400 hover:text-slate-300'}`}
+                className={`px-3 py-2 text-[13px] font-medium transition-all ${viewMode === 'timeline' ? 'bg-slate-200 dark:bg-slate-700/50 text-slate-900 dark:text-white' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-300'}`}
               >
                 Timeline
               </button>
@@ -621,7 +621,7 @@ export default function CommandCalendar() {
                 className={`px-5 py-3 rounded-xl border flex items-start gap-3 ${
                   conflict.severity === 'high'
                     ? 'bg-amber-500/[0.05] border-amber-500/20'
-                    : 'bg-slate-800/25 border-slate-700/30'
+                    : 'bg-slate-50 dark:bg-slate-800/25 border-slate-200 dark:border-slate-700/30'
                 }`}
               >
                 <Zap className={`w-4 h-4 mt-0.5 flex-shrink-0 ${conflict.severity === 'high' ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500'}`} />
@@ -630,7 +630,7 @@ export default function CommandCalendar() {
                     <span className={`text-[13px] font-semibold ${conflict.severity === 'high' ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500'}`}>
                       Conflict Detected:
                     </span>
-                    <span className="text-[13px] text-white font-medium">{conflict.title}</span>
+                    <span className="text-[13px] text-slate-900 dark:text-white font-medium">{conflict.title}</span>
                     <span className={`px-1.5 py-0.5 border rounded text-[10px] font-semibold ${
                       conflict.severity === 'critical' ? 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
                       conflict.severity === 'high' ? 'bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
@@ -649,7 +649,7 @@ export default function CommandCalendar() {
             OPERATIONAL PRESSURE FORECAST — Next 7 Days
             Predictive, not reactive
             ================================================================ */}
-        <div className="mb-4 px-4 py-2 bg-slate-800/15 border border-slate-700/15 rounded-lg">
+        <div className="mb-4 px-4 py-2 bg-slate-50 dark:bg-slate-800/15 border border-slate-200 dark:border-slate-700/15 rounded-lg">
           <div className="flex items-center gap-3">
             <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider flex-shrink-0">7-Day Pressure</span>
             <div className="h-3 w-px bg-slate-700/25"></div>
@@ -699,7 +699,7 @@ export default function CommandCalendar() {
               {/* Calendar Grid */}
               <div className="grid grid-cols-7 gap-px">
                 {calendarDays.map((day, idx) => {
-                  if (day === null) return <div key={`empty-${idx}`} className="min-h-[85px] bg-slate-900/10 rounded"></div>;
+                  if (day === null) return <div key={`empty-${idx}`} className="min-h-[85px] bg-slate-100 dark:bg-slate-900/10 rounded"></div>;
                   const dayEvents = getEventsForDay(day);
                   const isToday = isCurrentMonth && day === today.getDate();
                   const density = getRiskDensity(day);
@@ -707,7 +707,7 @@ export default function CommandCalendar() {
                   const staffingBelow80 = hasStaffingImpact && staffingImpactDays[day].below80;
 
                   // Background: always-on heat glow by risk density, overlays intensify
-                  let bgClass = 'bg-slate-900/20';
+                  let bgClass = 'bg-white dark:bg-slate-900/20';
                   if (isToday) {
                     bgClass = 'ring-2 ring-amber-500/40 bg-amber-500/[0.07] shadow-[0_0_12px_rgba(245,158,11,0.08)]';
                   } else if (staffingBelow80) {
@@ -725,7 +725,7 @@ export default function CommandCalendar() {
                   return (
                     <div
                       key={day}
-                      className={`min-h-[85px] p-1.5 rounded transition-colors hover:bg-slate-800/30 ${bgClass}`}
+                      className={`min-h-[85px] p-1.5 rounded transition-colors hover:bg-slate-100 dark:hover:bg-slate-800/30 ${bgClass}`}
                     >
                       {/* Day number + density dots */}
                       <div className="flex items-center justify-between">
@@ -833,7 +833,7 @@ export default function CommandCalendar() {
                         event.severity === 'critical' ? 'border-l-red-500/60' :
                         event.severity === 'high' ? 'border-l-amber-500/50' :
                         'border-l-slate-500/30'
-                      } hover:bg-slate-800/20 transition-colors text-left`}
+                      } hover:bg-slate-50 dark:hover:bg-slate-800/20 transition-colors text-left`}
                     >
                       <div className="p-3">
                         {/* Title */}
@@ -903,7 +903,7 @@ export default function CommandCalendar() {
                         <span className={`text-[11px] font-semibold uppercase tracking-wider ${d.isToday ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500'}`}>
                           {d.dayName}
                         </span>
-                        <span className={`block text-[13px] font-semibold ${d.isToday ? 'text-amber-300' : 'text-white'}`}>
+                        <span className={`block text-[13px] font-semibold ${d.isToday ? 'text-amber-600 dark:text-amber-300' : 'text-slate-900 dark:text-white'}`}>
                           {d.day}
                         </span>
                         <div className="flex items-center justify-center gap-1 mt-0.5">
@@ -960,7 +960,7 @@ export default function CommandCalendar() {
         )}
 
         {/* Data Confidence Strip */}
-        <div className="mb-4 px-5 py-3 bg-slate-800/10 border border-slate-800/30 rounded-lg">
+        <div className="mb-4 px-5 py-3 bg-slate-50 dark:bg-slate-800/10 border border-slate-200 dark:border-slate-800/30 rounded-lg">
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
               <Shield className="w-3.5 h-3.5 text-slate-600" />
@@ -1017,7 +1017,7 @@ export default function CommandCalendar() {
                   <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4">
                     <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Countdown</span>
                     <div className="mt-2 flex items-baseline gap-2">
-                      <p className="text-2xl font-semibold text-white">{getCountdown(selectedEvent.day)}</p>
+                      <p className="text-2xl font-semibold text-slate-900 dark:text-white">{getCountdown(selectedEvent.day)}</p>
                       <span className="text-xs text-slate-600 dark:text-slate-400">until deadline</span>
                     </div>
                   </div>
@@ -1026,11 +1026,11 @@ export default function CommandCalendar() {
                 <div className="space-y-3">
                   <div>
                     <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Assigned Lead</span>
-                    <p className="text-sm text-white mt-1">{selectedEvent.assignedTo}</p>
+                    <p className="text-sm text-slate-900 dark:text-white mt-1">{selectedEvent.assignedTo}</p>
                   </div>
                   <div className="border-t border-slate-700/20 pt-3">
                     <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Date & Time</span>
-                    <p className="text-sm text-white mt-1">December {selectedEvent.day}, 2024 · {selectedEvent.time}</p>
+                    <p className="text-sm text-slate-900 dark:text-white mt-1">December {selectedEvent.day}, 2024 · {selectedEvent.time}</p>
                   </div>
                   {selectedEvent.staffingImpact && (
                     <div className="border-t border-slate-700/20 pt-3">

@@ -478,7 +478,7 @@ export default function RiskCompliance() {
                 <span className={`px-2.5 py-1 bg-green-500/8 border border-green-500/15 rounded text-[10px] font-semibold ${overallCompliance >= 90 ? 'text-green-600 dark:text-green-400' : 'text-amber-600 dark:text-amber-400'}`}>
                   {overallCompliance}% Compliant
                 </span>
-                <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/30 border border-slate-700/50 rounded-lg text-[11px] text-slate-600 dark:text-slate-400 hover:text-white transition-colors">
+                <button className="flex items-center gap-1.5 px-2.5 py-1 bg-white dark:bg-slate-800/30 border border-slate-300 dark:border-slate-700/50 rounded-lg text-[11px] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 transition-colors">
                   <Download className="w-3 h-3" />
                   Compliance Report
                 </button>
@@ -489,8 +489,8 @@ export default function RiskCompliance() {
           {/* ── Top Summary — 4 Cards ────────────────────── */}
           <div className="grid grid-cols-4 gap-3 mb-4">
             {/* Operational Pressure Index */}
-            <div className={`bg-slate-800/35 border rounded-xl px-3 py-2.5 ${
-              opiScore >= 75 ? 'border-red-500/20' : opiScore >= 50 ? 'border-amber-500/20' : 'border-slate-700/30'
+            <div className={`bg-white dark:bg-slate-800/35 border rounded-xl px-3 py-2.5 ${
+              opiScore >= 75 ? 'border-red-500/20' : opiScore >= 50 ? 'border-amber-500/20' : 'border-slate-200 dark:border-slate-700/30'
             }`}>
               <div className="flex items-center gap-2 mb-1.5">
                 <Gauge className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
@@ -516,13 +516,13 @@ export default function RiskCompliance() {
                 <div className="flex items-center gap-1 text-[9px] text-slate-500 leading-tight pt-0.5 border-t border-slate-700/40 mt-0.5">
                   <span className="font-mono w-[28px]">Σ</span>
                   <span className="flex-1 font-semibold">Composite OPI</span>
-                  <span className="font-mono font-bold text-white">={opiScore}</span>
+                  <span className="font-mono font-bold text-slate-900 dark:text-white">={opiScore}</span>
                 </div>
               </div>
             </div>
 
             {/* Open Risk Items */}
-            <div className="bg-slate-800/35 border border-slate-700/25 rounded-xl px-3 py-2.5">
+            <div className="bg-white dark:bg-slate-800/35 border border-slate-200 dark:border-slate-700/25 rounded-xl px-3 py-2.5">
               <div className="flex items-center gap-2 mb-1.5">
                 <AlertTriangle className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
                 <span className="text-[10px] font-medium text-slate-500 uppercase tracking-wider">Open Risks</span>
@@ -544,13 +544,13 @@ export default function RiskCompliance() {
             </div>
 
             {/* Next Audit */}
-            <div className="bg-slate-800/35 border border-slate-700/25 rounded-xl px-3 py-2.5">
+            <div className="bg-white dark:bg-slate-800/35 border border-slate-200 dark:border-slate-700/25 rounded-xl px-3 py-2.5">
               <div className="flex items-center gap-2 mb-1.5">
                 <Calendar className="w-3.5 h-3.5 text-slate-600 dark:text-slate-400" />
                 <span className="text-[10px] font-medium text-slate-500 uppercase tracking-wider">Next Audit</span>
               </div>
               <div className="flex items-baseline gap-2">
-                <span className="text-[13px] font-bold text-white">{nextAudit.agency}</span>
+                <span className="text-[13px] font-bold text-slate-900 dark:text-white">{nextAudit.agency}</span>
                 <span className="text-[10px] text-slate-500">{nextAudit.date}</span>
               </div>
               <div className="flex items-center gap-1.5 text-[10px] mt-0.5">
@@ -569,7 +569,7 @@ export default function RiskCompliance() {
             </div>
 
             {/* Compliance Rate */}
-            <div className="bg-slate-800/35 border border-slate-700/25 rounded-xl px-3 py-2.5">
+            <div className="bg-white dark:bg-slate-800/35 border border-slate-200 dark:border-slate-700/25 rounded-xl px-3 py-2.5">
               <div className="flex items-center gap-2 mb-1.5">
                 <Shield className="w-3.5 h-3.5 text-green-600 dark:text-green-400" />
                 <span className="text-[10px] font-medium text-slate-500 uppercase tracking-wider">Compliance Rate</span>
@@ -618,7 +618,7 @@ export default function RiskCompliance() {
           <div className="mb-4">
             <div className="flex items-center gap-2 mb-2 px-1">
               <AlertTriangle className="w-3.5 h-3.5 text-red-600 dark:text-red-400" />
-              <span className="text-[12px] font-bold text-white">Open Risk Items</span>
+              <span className="text-[12px] font-bold text-slate-900 dark:text-white">Open Risk Items</span>
               <span className="px-1.5 py-px bg-red-500/10 border border-red-500/20 rounded text-[10px] font-bold text-red-600 dark:text-red-400">
                 {openRisks.length}
               </span>
@@ -637,8 +637,8 @@ export default function RiskCompliance() {
                     onClick={() => setRiskFilter(opt.id)}
                     className={`px-2 py-0.5 rounded text-[10px] font-medium border transition-all ${
                       riskFilter === opt.id
-                        ? 'bg-slate-700/50 border-slate-600/50 text-white'
-                        : 'bg-transparent border-slate-700/40 text-slate-500 hover:text-slate-300'
+                        ? 'bg-slate-200 dark:bg-slate-700/50 border-slate-300 dark:border-slate-600/50 text-slate-900 dark:text-white'
+                        : 'bg-transparent border-slate-300 dark:border-slate-700/40 text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
                     }`}
                   >
                     {opt.label} <span className={riskFilter === opt.id ? 'text-slate-500' : 'text-slate-600'}>{opt.count}</span>
@@ -654,7 +654,7 @@ export default function RiskCompliance() {
                 return (
                   <div
                     key={risk.id}
-                    className="rounded border border-slate-700/30 bg-slate-800/15 hover:bg-slate-800/30 transition-colors"
+                    className="rounded border border-slate-200 dark:border-slate-700/30 bg-white dark:bg-slate-800/15 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors"
                   >
                     {/* Compact Row */}
                     <div className="flex items-center gap-2.5 px-3.5 py-[9px]">

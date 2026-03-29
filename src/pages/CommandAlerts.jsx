@@ -545,7 +545,7 @@ export default function CommandAlerts() {
         </div>
 
         {/* ── Data Confidence Strip ──────────────────────── */}
-        <div className="mt-4 px-4 py-2 bg-slate-800/[0.06] border border-slate-800/20 rounded">
+        <div className="mt-4 px-4 py-2 bg-slate-50 dark:bg-slate-800/[0.06] border border-slate-200 dark:border-slate-800/20 rounded">
           <div className="flex items-center gap-4 flex-wrap">
             <div className="flex items-center gap-1.5">
               <Shield className="w-3 h-3 text-slate-600" />
@@ -572,7 +572,7 @@ export default function CommandAlerts() {
         <>
           <div className="fixed inset-0 bg-black/40 z-40" onClick={() => { setAssignModalOpen(false); setAlertToAction(null); setAssignPersonnel(''); }} />
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div className="bg-slate-900 border border-slate-700/50 rounded-xl p-5 max-w-sm w-full shadow-2xl">
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5 max-w-sm w-full shadow-2xl">
               <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-1">Assign Alert</h3>
               <p className="text-[11px] text-slate-600 dark:text-slate-400 mb-3">{alertToAction.title}</p>
               <input
@@ -580,18 +580,18 @@ export default function CommandAlerts() {
                 value={assignPersonnel}
                 onChange={(e) => setAssignPersonnel(e.target.value)}
                 placeholder="Personnel name..."
-                className="w-full px-3 py-2 bg-slate-800/30 border border-slate-700/40 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:border-slate-600 mb-3"
+                className="w-full px-3 py-2 bg-white dark:bg-slate-800/30 border border-slate-300 dark:border-slate-700/40 rounded-lg text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500/50 mb-3"
               />
               <div className="flex gap-2">
                 <button
                   onClick={() => { setAssignModalOpen(false); setAlertToAction(null); setAssignPersonnel(''); }}
-                  className="flex-1 px-3 py-1.5 text-xs font-medium text-slate-600 dark:text-slate-400 border border-slate-700/50 hover:bg-slate-700/20 rounded-lg transition-colors"
+                  className="flex-1 px-3 py-1.5 text-xs font-medium text-slate-700 border border-slate-300 hover:bg-slate-50 rounded-lg transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={() => handleAssign(alertToAction.id)}
-                  className="flex-1 px-3 py-1.5 text-xs font-medium text-white bg-slate-700/50 hover:bg-slate-700/70 rounded-lg transition-colors"
+                  className="flex-1 px-3 py-1.5 text-xs font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
                 >
                   Assign
                 </button>
@@ -606,7 +606,7 @@ export default function CommandAlerts() {
         <>
           <div className="fixed inset-0 bg-black/40 z-40" onClick={() => { setResolveModalOpen(false); setAlertToAction(null); setResolveNotes(''); }} />
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div className="bg-slate-900 border border-slate-700/50 rounded-xl p-5 max-w-sm w-full shadow-2xl">
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5 max-w-sm w-full shadow-2xl">
               <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-1">Resolve Alert</h3>
               <p className="text-[11px] text-slate-600 dark:text-slate-400 mb-3">{alertToAction.title}</p>
               <textarea
@@ -614,18 +614,18 @@ export default function CommandAlerts() {
                 onChange={(e) => setResolveNotes(e.target.value)}
                 placeholder="Resolution notes..."
                 rows={3}
-                className="w-full px-3 py-2 bg-slate-800/30 border border-slate-700/40 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:border-slate-600 mb-3 resize-none"
+                className="w-full px-3 py-2 bg-white dark:bg-slate-800/30 border border-slate-300 dark:border-slate-700/40 rounded-lg text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500/50 mb-3 resize-none"
               />
               <div className="flex gap-2">
                 <button
                   onClick={() => { setResolveModalOpen(false); setAlertToAction(null); setResolveNotes(''); }}
-                  className="flex-1 px-3 py-1.5 text-xs font-medium text-slate-600 dark:text-slate-400 border border-slate-700/50 hover:bg-slate-700/20 rounded-lg transition-colors"
+                  className="flex-1 px-3 py-1.5 text-xs font-medium text-slate-700 border border-slate-300 hover:bg-slate-50 rounded-lg transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={() => handleResolve(alertToAction.id)}
-                  className="flex-1 px-3 py-1.5 text-xs font-medium text-slate-700 dark:text-slate-300 border border-slate-600/40 hover:bg-slate-700/30 rounded-lg transition-colors"
+                  className="flex-1 px-3 py-1.5 text-xs font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
                 >
                   Resolve
                 </button>

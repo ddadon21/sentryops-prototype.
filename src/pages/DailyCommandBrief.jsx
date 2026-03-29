@@ -314,13 +314,13 @@ export default function DailyCommandBrief() {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <button onClick={() => window.print()} className="flex items-center gap-2 px-4 py-2 bg-slate-800/40 border border-slate-700/40 text-slate-700 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-800/60 transition-all">
+            <button onClick={() => window.print()} className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-all">
               <Printer className="w-4 h-4" />Print
             </button>
-            <button className="flex items-center gap-2 px-4 py-2 bg-slate-800/40 border border-slate-700/40 text-slate-700 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-800/60 transition-all">
+            <button className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-all">
               <Download className="w-4 h-4" />PDF
             </button>
-            <button onClick={handleRefresh} disabled={isRefreshing} className="flex items-center gap-2 px-4 py-2 bg-slate-800/40 border border-slate-700/40 text-slate-700 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-800/60 transition-all disabled:opacity-50">
+            <button onClick={handleRefresh} disabled={isRefreshing} className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-all disabled:opacity-50">
               <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin' : ''}`} />Refresh
             </button>
           </div>
@@ -333,7 +333,7 @@ export default function DailyCommandBrief() {
         <div className={`mb-5 ${pressure.bg} border ${pressure.border} rounded-xl overflow-hidden`}>
           <div className="px-5 py-3.5">
             {/* Line 1: Decision count — the headline */}
-            <p className="text-[13px] text-white font-semibold mb-1">
+            <p className="text-[13px] text-slate-900 dark:text-white font-semibold mb-1">
               {commandDecisions.length} decisions required before 12:00 EST
             </p>
             {/* Line 2: Exposure categories — lighter weight */}
@@ -350,13 +350,13 @@ export default function DailyCommandBrief() {
                 </div>
               </div>
               <div className="flex items-center gap-4 text-[11px]">
-                <span className="text-slate-500"><span className="text-white font-semibold">{pressureFactors.criticalIssues}</span> critical</span>
+                <span className="text-slate-500"><span className="text-slate-900 dark:text-white font-semibold">{pressureFactors.criticalIssues}</span> critical</span>
                 <span className="text-slate-600">|</span>
-                <span className="text-slate-500"><span className="text-white font-semibold">{pressureFactors.complianceDeadlinesUnder72h}</span> compliance &lt;72h</span>
+                <span className="text-slate-500"><span className="text-slate-900 dark:text-white font-semibold">{pressureFactors.complianceDeadlinesUnder72h}</span> compliance &lt;72h</span>
                 <span className="text-slate-600">|</span>
                 <span className={pressureFactors.staffingBelowThreshold ? 'text-red-600 dark:text-red-400 text-[11px] font-semibold' : 'text-emerald-600 dark:text-emerald-400 text-[11px]'}>{pressureFactors.staffingBelowThreshold ? 'Staffing deficit' : 'Staffing OK'}</span>
                 <span className="text-slate-600">|</span>
-                <span className="text-slate-500"><span className="text-white font-semibold">{pressureFactors.overdueItems}</span> overdue</span>
+                <span className="text-slate-500"><span className="text-slate-900 dark:text-white font-semibold">{pressureFactors.overdueItems}</span> overdue</span>
               </div>
             </div>
             {/* Line 3: Driver — small, diagnostic */}
@@ -376,7 +376,7 @@ export default function DailyCommandBrief() {
               {commandDecisions.map((item, i) => (
                 <span key={item.id}>
                   {i > 0 && <span className="text-slate-600"> · </span>}
-                  <span className="text-white font-medium">{item.title.split('—')[0].trim()}</span>
+                  <span className="text-slate-900 dark:text-white font-medium">{item.title.split('—')[0].trim()}</span>
                   <span className="text-slate-500"> ({item.deadlineHours}h)</span>
                 </span>
               ))}
@@ -412,7 +412,7 @@ export default function DailyCommandBrief() {
                   }`}
                 >
                   <div
-                    className="p-3 cursor-pointer hover:bg-slate-800/20 transition-colors"
+                    className="p-3 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/20 transition-colors"
                     onClick={() => setExpandedItem(isExpanded ? null : item.id)}
                   >
                     {/* Row 1: Title + Status badges */}
@@ -435,7 +435,7 @@ export default function DailyCommandBrief() {
                       </div>
                       <div className="col-span-2 lg:col-span-1">
                         <span className="text-slate-600 uppercase tracking-wider text-[10px]">Required Action</span>
-                        <p className="text-white font-medium mt-0.5">{item.requiredAction}</p>
+                        <p className="text-slate-900 dark:text-white font-medium mt-0.5">{item.requiredAction}</p>
                       </div>
                       <div>
                         <span className="text-slate-600 uppercase tracking-wider text-[10px]">Escalation</span>
@@ -561,7 +561,7 @@ export default function DailyCommandBrief() {
             SECTION C — ESCALATING RISK (72 HOURS)
             Visually subordinate — items that worsen if untouched
             ================================================================ */}
-        <div className="mb-5 bg-slate-800/15 border border-slate-700/20 rounded-lg">
+        <div className="mb-5 bg-slate-50 dark:bg-slate-800/15 border border-slate-200 dark:border-slate-700/20 rounded-lg">
           <div className="flex items-center justify-between px-4 py-2.5 border-b border-slate-700/10">
             <div className="flex items-center gap-2">
               <AlertTriangle className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400/70" />
@@ -580,7 +580,7 @@ export default function DailyCommandBrief() {
                 <div className="px-3 py-2">
                   <div className="flex items-center gap-2 mb-1">
                     <div className={`w-0.5 h-3.5 rounded-full flex-shrink-0 ${risk.severity === 'critical' ? 'bg-red-500' : 'bg-amber-500/70'}`}></div>
-                    <p className="text-[13px] font-medium text-slate-200 flex-1">{risk.title}</p>
+                    <p className="text-[13px] font-medium text-slate-900 dark:text-slate-200 flex-1">{risk.title}</p>
                     <span className={`px-1.5 py-0.5 border rounded text-[10px] font-semibold ${
                       risk.severity === 'critical' ? 'bg-red-50 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' : 'bg-amber-500/10 border-amber-500/15 text-amber-600 dark:text-amber-400/80'
                     }`}>
@@ -681,7 +681,7 @@ export default function DailyCommandBrief() {
               <div
                 key={event.id}
                 className={`flex items-center gap-4 px-4 py-2 rounded ${
-                  event.hoursUntil <= 2 ? 'bg-amber-500/5 border-l-[3px] border-l-amber-500/30' : 'bg-slate-900/20 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-all'
+                  event.hoursUntil <= 2 ? 'bg-amber-500/5 border-l-[3px] border-l-amber-500/30' : 'bg-white dark:bg-slate-900/20 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-all'
                 }`}
               >
                 <div className="flex flex-col items-start w-14 flex-shrink-0">
@@ -705,7 +705,7 @@ export default function DailyCommandBrief() {
         </div>
 
         {/* Data Freshness Footer */}
-        <div className="mb-4 px-5 py-3 bg-slate-800/10 border border-slate-800/30 rounded-lg">
+        <div className="mb-4 px-5 py-3 bg-slate-50 dark:bg-slate-800/10 border border-slate-200 dark:border-slate-800/30 rounded-lg">
           <div className="flex items-center gap-2">
             <Shield className="w-3.5 h-3.5 text-slate-600" />
             <span className="text-xs text-slate-600">Snapshot brief auto-generated at {briefGeneratedAt} EST daily. Data reflects state at generation time. Use Refresh for live updates.</span>
