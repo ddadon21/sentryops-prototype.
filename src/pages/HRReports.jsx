@@ -424,18 +424,18 @@ export default function HRReports() {
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex">
       {/* Sidebar */}
       <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-slate-800/50 backdrop-blur-xl bg-slate-50 dark:bg-slate-900/30 flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
-        <div className="p-4 border-b border-slate-200 dark:border-slate-700/50 flex items-center justify-between">
+        <div className="p-4 border-b border-border flex items-center justify-between">
           {!sidebarCollapsed && (
             <div className="flex items-center gap-2">
               <Shield className="w-8 h-8 text-amber-500" />
-              <h1 className="text-xl font-bold text-slate-900 dark:text-white">SentryOps</h1>
+              <h1 className="text-xl font-bold text-primary">SentryOps</h1>
             </div>
           )}
           {sidebarCollapsed && (
             <Shield className="w-8 h-8 text-amber-500 mx-auto" />
           )}
           <button onClick={() => setSidebarCollapsed(!sidebarCollapsed)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors hidden lg:block">
-            {sidebarCollapsed ? <ChevronRight className="w-5 h-5 text-slate-700 dark:text-slate-400" /> : <ChevronLeft className="w-5 h-5 text-slate-700 dark:text-slate-400" />}
+            {sidebarCollapsed ? <ChevronRight className="w-5 h-5 text-secondary" /> : <ChevronLeft className="w-5 h-5 text-secondary" />}
           </button>
         </div>
 
@@ -448,7 +448,7 @@ export default function HRReports() {
                 key={item.id}
                 onClick={() => handleNavigation(item)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-700 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white'
+                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white'
                 } ${sidebarCollapsed ? 'justify-center' : ''}`}
                 title={sidebarCollapsed ? item.label : ''}
               >
@@ -461,7 +461,7 @@ export default function HRReports() {
           })}
         </nav>
 
-        <div className="border-t border-slate-200 dark:border-slate-700/50">
+        <div className="border-t border-border">
           {!sidebarCollapsed && (
             <div className="px-4 py-3">
               <p className="text-xs text-slate-500 text-center">Gwinnett County Sheriff's Office</p>
@@ -470,7 +470,7 @@ export default function HRReports() {
           <div className="p-4">
             <button
               onClick={() => setLogoutConfirmOpen(true)}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-slate-700 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/40 hover:text-slate-700 dark:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/40 hover:text-secondary ${sidebarCollapsed ? 'justify-center' : ''}`}
               title={sidebarCollapsed ? 'Sign Out' : ''}
             >
               <LogOut className="w-5 h-5 flex-shrink-0" />
@@ -490,19 +490,19 @@ export default function HRReports() {
       {logoutConfirmOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setLogoutConfirmOpen(false)} />
-          <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl p-6 max-w-sm w-full shadow-2xl">
+          <div className="relative bg-white dark:bg-slate-900 border border-border rounded-2xl p-6 max-w-sm w-full shadow-2xl">
             <div className="flex items-center gap-4 mb-4">
               <div className="w-12 h-12 bg-white dark:bg-slate-800/60 rounded-xl flex items-center justify-center">
-                <LogOut className="w-6 h-6 text-slate-700 dark:text-slate-400" />
+                <LogOut className="w-6 h-6 text-secondary" />
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Sign Out</h3>
-                <p className="text-sm text-slate-700 dark:text-slate-400">Are you sure you want to sign out?</p>
+                <h3 className="text-lg font-semibold text-primary">Sign Out</h3>
+                <p className="text-sm text-secondary">Are you sure you want to sign out?</p>
               </div>
             </div>
             <div className="flex gap-3 mt-6">
-              <button onClick={() => setLogoutConfirmOpen(false)} className="flex-1 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all">Cancel</button>
-              <button onClick={handleLogout} className="flex-1 px-4 py-2.5 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all">Sign Out</button>
+              <button onClick={() => setLogoutConfirmOpen(false)} className="flex-1 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-primary font-medium transition-all">Cancel</button>
+              <button onClick={handleLogout} className="flex-1 px-4 py-2.5 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-primary font-medium transition-all">Sign Out</button>
             </div>
           </div>
         </div>
@@ -512,43 +512,43 @@ export default function HRReports() {
       {selectedReport && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setSelectedReport(null)} />
-          <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl p-6 max-w-3xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
+          <div className="relative bg-white dark:bg-slate-900 border border-border rounded-2xl p-6 max-w-3xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
             <div className="flex items-start justify-between mb-6">
               <div>
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1">{selectedReport.name}</h3>
-                <p className="text-sm text-slate-700 dark:text-slate-400">{selectedReport.type} Report • {selectedReport.period}</p>
+                <h3 className="text-xl font-bold text-primary mb-1">{selectedReport.name}</h3>
+                <p className="text-sm text-secondary">{selectedReport.type} Report • {selectedReport.period}</p>
               </div>
               <button onClick={() => setSelectedReport(null)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors">
-                <X className="w-5 h-5 text-slate-700 dark:text-slate-400" />
+                <X className="w-5 h-5 text-secondary" />
               </button>
             </div>
 
             <div className="grid grid-cols-2 gap-6 mb-6">
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
+              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
                 <p className="text-xs text-slate-500 mb-1">Generated</p>
-                <p className="text-sm text-slate-900 dark:text-white">{selectedReport.generated}</p>
+                <p className="text-sm text-primary">{selectedReport.generated}</p>
               </div>
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
+              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
                 <p className="text-xs text-slate-500 mb-1">Generated By</p>
-                <p className="text-sm text-slate-900 dark:text-white">{selectedReport.generatedBy}</p>
+                <p className="text-sm text-primary">{selectedReport.generatedBy}</p>
               </div>
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
+              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
                 <p className="text-xs text-slate-500 mb-1">File Size</p>
-                <p className="text-sm text-slate-900 dark:text-white">{selectedReport.fileSize}</p>
+                <p className="text-sm text-primary">{selectedReport.fileSize}</p>
               </div>
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
+              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
                 <p className="text-xs text-slate-500 mb-1">Pages</p>
-                <p className="text-sm text-slate-900 dark:text-white">{selectedReport.pages} pages</p>
+                <p className="text-sm text-primary">{selectedReport.pages} pages</p>
               </div>
             </div>
 
             <div className="mb-6">
-              <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Report Summary</h4>
+              <h4 className="text-sm font-semibold text-primary mb-3">Report Summary</h4>
               <div className="space-y-2">
                 {selectedReport.summary.map((item, idx) => (
                   <div key={idx} className="flex items-start gap-2 p-2 bg-slate-100/80 dark:bg-slate-800/30 rounded-lg">
                     <CheckCircle className="w-3.5 h-3.5 text-green-400 mt-0.5 flex-shrink-0" />
-                    <p className="text-sm text-slate-700 dark:text-slate-300">{item}</p>
+                    <p className="text-sm text-secondary">{item}</p>
                   </div>
                 ))}
               </div>
@@ -556,12 +556,12 @@ export default function HRReports() {
 
             {selectedReport.findings && selectedReport.findings.length > 0 && (
               <div className="mb-6">
-                <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Key Findings</h4>
+                <h4 className="text-sm font-semibold text-primary mb-3">Key Findings</h4>
                 <div className="space-y-2">
                   {selectedReport.findings.map((item, idx) => (
                     <div key={idx} className="flex items-start gap-2 p-2 bg-amber-500/10 border border-amber-500/20 rounded-lg">
                       <AlertTriangle className="w-3.5 h-3.5 text-amber-400 mt-0.5 flex-shrink-0" />
-                      <p className="text-sm text-slate-700 dark:text-slate-300">{item}</p>
+                      <p className="text-sm text-secondary">{item}</p>
                     </div>
                   ))}
                 </div>
@@ -570,12 +570,12 @@ export default function HRReports() {
 
             {selectedReport.recommendations && selectedReport.recommendations.length > 0 && (
               <div className="mb-6">
-                <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Recommendations</h4>
+                <h4 className="text-sm font-semibold text-primary mb-3">Recommendations</h4>
                 <div className="space-y-2">
                   {selectedReport.recommendations.map((item, idx) => (
                     <div key={idx} className="flex items-start gap-2 p-2 bg-blue-500/10 border border-blue-500/20 rounded-lg">
                       <Info className="w-3.5 h-3.5 text-blue-400 mt-0.5 flex-shrink-0" />
-                      <p className="text-sm text-slate-700 dark:text-slate-300">{item}</p>
+                      <p className="text-sm text-secondary">{item}</p>
                     </div>
                   ))}
                 </div>
@@ -586,10 +586,10 @@ export default function HRReports() {
               <button className="flex-1 px-4 py-2.5 bg-amber-500 hover:bg-amber-400 rounded-xl text-white font-medium transition-all flex items-center justify-center gap-2 text-sm">
                 <Eye className="w-4 h-4" /> View Full Report
               </button>
-              <button className="flex-1 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all flex items-center justify-center gap-2 text-sm">
+              <button className="flex-1 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-primary font-medium transition-all flex items-center justify-center gap-2 text-sm">
                 <Download className="w-4 h-4" /> Download PDF
               </button>
-              <button className="px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all flex items-center justify-center gap-2 text-sm">
+              <button className="px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-primary font-medium transition-all flex items-center justify-center gap-2 text-sm">
                 <Printer className="w-4 h-4" /> Print
               </button>
             </div>
@@ -600,16 +600,16 @@ export default function HRReports() {
       {/* Main Content */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Header */}
-        <header className="border-b border-slate-200 dark:border-slate-800/50 backdrop-blur-xl bg-slate-50 dark:bg-slate-900/30">
+        <header className="border-b border-border backdrop-blur-xl bg-slate-50 dark:bg-slate-900/30">
           <div className="px-4 lg:px-6 py-4 flex items-center justify-between gap-4">
             <div className="flex items-center gap-4 flex-1 min-w-0">
               <button onClick={() => setSidebarOpen(!sidebarOpen)} className="lg:hidden p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg">
-                <Menu className="w-5 h-5 text-slate-700 dark:text-slate-400" />
+                <Menu className="w-5 h-5 text-secondary" />
               </button>
               <div className="flex items-center gap-2 text-sm">
-                <button onClick={() => navigate(createPageUrl('HRDashboard'))} className="text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors">HR Dashboard</button>
+                <button onClick={() => navigate(createPageUrl('HRDashboard'))} className="text-secondary hover:text-primary transition-colors">HR Dashboard</button>
                 <ChevronRight className="w-4 h-4 text-slate-700" />
-                <span className="text-slate-900 dark:text-white">HR Reports</span>
+                <span className="text-primary">HR Reports</span>
               </div>
             </div>
             <div className="flex items-center gap-2 lg:gap-3">
@@ -617,41 +617,41 @@ export default function HRReports() {
                 <FileBarChart className="w-4 h-4" />
                 <span className="hidden sm:inline">New Report</span>
               </button>
-              <button className="hidden md:flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-700 dark:text-slate-300 font-medium transition-all text-sm">
+              <button className="hidden md:flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-secondary font-medium transition-all text-sm">
                 <BarChart3 className="w-4 h-4" />
                 <span>Report Builder</span>
               </button>
-              <button className="hidden lg:flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-700 dark:text-slate-300 font-medium transition-all text-sm">
+              <button className="hidden lg:flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-secondary font-medium transition-all text-sm">
                 <Calendar className="w-4 h-4" />
                 <span>Scheduled</span>
               </button>
 
               <div className="relative">
                 <button onClick={() => setNotificationsOpen(!notificationsOpen)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg relative">
-                  <Bell className="w-5 h-5 text-slate-700 dark:text-slate-400" />
+                  <Bell className="w-5 h-5 text-secondary" />
                   <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                 </button>
 
                 {notificationsOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-96 bg-white dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-2xl z-50">
-                    <div className="p-4 border-b border-slate-200 dark:border-slate-700/50">
-                      <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Notifications</h3>
+                  <div className="absolute right-0 top-full mt-2 w-96 bg-surface-raised backdrop-blur-xl border border-border rounded-xl shadow-2xl z-50">
+                    <div className="p-4 border-b border-border">
+                      <h3 className="text-sm font-semibold text-primary">Notifications</h3>
                     </div>
                     <div className="max-h-96 overflow-y-auto">
                       {notifications.map(notification => (
-                        <div key={notification.id} className={`p-4 border-b border-slate-200 dark:border-slate-200 dark:border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
+                        <div key={notification.id} className={`p-4 border-b border-border dark:border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
                           <div className="flex items-start gap-3">
                             <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-amber-400' : 'bg-blue-400'}`}></div>
                             <div className="flex-1 min-w-0">
-                              <p className="text-sm font-medium text-slate-900 dark:text-white mb-1">{notification.title}</p>
-                              <p className="text-xs text-slate-700 dark:text-slate-400 mb-2">{notification.message}</p>
+                              <p className="text-sm font-medium text-primary mb-1">{notification.title}</p>
+                              <p className="text-xs text-secondary mb-2">{notification.message}</p>
                               <p className="text-xs text-slate-500">{notification.time}</p>
                             </div>
                           </div>
                         </div>
                       ))}
                     </div>
-                    <div className="p-3 border-t border-slate-200 dark:border-slate-700/50">
+                    <div className="p-3 border-t border-border">
                       <button className="w-full text-center text-sm text-amber-400 hover:text-amber-300 font-medium">View All</button>
                     </div>
                   </div>
@@ -662,11 +662,11 @@ export default function HRReports() {
 
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
-                  <span className="text-slate-900 dark:text-white text-sm font-bold">HR</span>
+                  <span className="text-primary text-sm font-bold">HR</span>
                 </div>
                 <div className="hidden sm:block">
-                  <p className="text-sm font-medium text-slate-900 dark:text-white">HR Director</p>
-                  <p className="text-xs text-slate-700 dark:text-slate-400">Human Resources</p>
+                  <p className="text-sm font-medium text-primary">HR Director</p>
+                  <p className="text-xs text-secondary">Human Resources</p>
                 </div>
               </div>
             </div>
@@ -679,21 +679,21 @@ export default function HRReports() {
 
             {/* Page Title */}
             <div className="mb-6">
-              <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white mb-1">HR Reports & Personnel Analytics</h2>
-              <p className="text-slate-700 dark:text-slate-400 text-sm">Gwinnett County Sheriff's Office • Lawrenceville, Georgia</p>
+              <h2 className="text-2xl lg:text-3xl font-bold text-primary mb-1">HR Reports & Personnel Analytics</h2>
+              <p className="text-secondary text-sm">Gwinnett County Sheriff's Office • Lawrenceville, Georgia</p>
               <p className="text-slate-500 text-xs mt-1">Saturday, February 27, 2026 • 4:13 PM EST</p>
             </div>
 
             {/* Info Bar */}
-            <div className="mb-6 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-slate-700 dark:text-slate-400">
+            <div className="mb-6 bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-secondary">
                 <div className="flex items-center gap-2">
                   <Users className="w-3.5 h-3.5 text-slate-500" />
-                  <span>HR Director: <span className="text-slate-700 dark:text-slate-300">Personnel Admin</span> | Sheriff: <span className="text-slate-700 dark:text-slate-300">Keybo Taylor</span> | Report Admin: <span className="text-slate-700 dark:text-slate-300">HR Specialist J. Martinez</span></span>
+                  <span>HR Director: <span className="text-secondary">Personnel Admin</span> | Sheriff: <span className="text-secondary">Keybo Taylor</span> | Report Admin: <span className="text-secondary">HR Specialist J. Martinez</span></span>
                 </div>
                 <div className="flex items-center gap-2">
                   <FileText className="w-3.5 h-3.5 text-slate-500" />
-                  <span>Total Personnel: <span className="text-slate-700 dark:text-slate-300">178 (164 sworn, 14 civilian)</span> | Last Report: <span className="text-slate-700 dark:text-slate-300">Q4 Hiring Summary (Dec 3, 2024)</span></span>
+                  <span>Total Personnel: <span className="text-secondary">178 (164 sworn, 14 civilian)</span> | Last Report: <span className="text-secondary">Q4 Hiring Summary (Dec 3, 2024)</span></span>
                 </div>
               </div>
               <div className="mt-2 text-xs text-slate-500 flex items-center gap-2">
@@ -706,24 +706,24 @@ export default function HRReports() {
             <div className="mb-6 space-y-2">
               <div className="flex items-start gap-3 p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg">
                 <AlertTriangle className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                <p className="text-sm text-slate-700 dark:text-slate-300">Hiring velocity: Time-to-fill <span className="text-amber-400 font-medium">127 days</span> (Deputy Sheriff) — background investigation bottleneck identified</p>
+                <p className="text-sm text-secondary">Hiring velocity: Time-to-fill <span className="text-amber-400 font-medium">127 days</span> (Deputy Sheriff) — background investigation bottleneck identified</p>
               </div>
               <div className="flex items-start gap-3 p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg">
                 <AlertTriangle className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                <p className="text-sm text-slate-700 dark:text-slate-300">Training compliance at <span className="text-amber-400 font-medium">98.8%</span> (POST): 2 deputies with expired firearms, 4 certifications expiring next 30 days</p>
+                <p className="text-sm text-secondary">Training compliance at <span className="text-amber-400 font-medium">98.8%</span> (POST): 2 deputies with expired firearms, 4 certifications expiring next 30 days</p>
               </div>
               <div className="flex items-start gap-3 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
                 <Info className="w-4 h-4 text-blue-400 mt-0.5 flex-shrink-0" />
-                <p className="text-sm text-slate-700 dark:text-slate-300">PTO average balance: <span className="text-blue-400 font-medium">72 hours</span> — 8 employees at accrual cap (risk of losing leave)</p>
+                <p className="text-sm text-secondary">PTO average balance: <span className="text-blue-400 font-medium">72 hours</span> — 8 employees at accrual cap (risk of losing leave)</p>
               </div>
               <div className="flex items-start gap-3 p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg">
                 <AlertTriangle className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                <p className="text-sm text-slate-700 dark:text-slate-300">Performance reviews: <span className="text-amber-400 font-medium">89% completion</span> — 3 reviews pending supervisor approval, 1 severely overdue (510+ days)</p>
+                <p className="text-sm text-secondary">Performance reviews: <span className="text-amber-400 font-medium">89% completion</span> — 3 reviews pending supervisor approval, 1 severely overdue (510+ days)</p>
               </div>
             </div>
 
             {/* Section Navigation */}
-            <div className="mb-6 flex gap-2 border-b border-slate-200 dark:border-slate-700/50 overflow-x-auto">
+            <div className="mb-6 flex gap-2 border-b border-border overflow-x-auto">
               {[
                 { id: 'all', label: 'All Reports' },
                 { id: 'command', label: 'Command Briefing' },
@@ -734,7 +734,7 @@ export default function HRReports() {
                   key={tab.id}
                   onClick={() => setActiveSection(tab.id)}
                   className={`px-4 py-3 text-sm font-medium transition-all relative whitespace-nowrap ${
-                    activeSection === tab.id ? 'text-amber-400' : 'text-slate-700 dark:text-slate-400 hover:text-slate-300'
+                    activeSection === tab.id ? 'text-amber-400' : 'text-secondary hover:text-slate-300'
                   }`}
                 >
                   {tab.label}
@@ -753,8 +753,8 @@ export default function HRReports() {
                     <BarChart3 className="w-5 h-5 text-amber-400" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Sheriff's Command Briefing Reports</h3>
-                    <p className="text-xs text-slate-700 dark:text-slate-400">Reports for Sheriff Keybo Taylor and command staff decision-making</p>
+                    <h3 className="text-lg font-semibold text-primary">Sheriff's Command Briefing Reports</h3>
+                    <p className="text-xs text-secondary">Reports for Sheriff Keybo Taylor and command staff decision-making</p>
                   </div>
                 </div>
 
@@ -765,7 +765,7 @@ export default function HRReports() {
                     const isExpanded = expandedReports[report.id];
 
                     return (
-                      <div key={report.id} className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
+                      <div key={report.id} className="bg-white dark:bg-slate-800/40 border border-border rounded-xl overflow-hidden">
                         <button
                           onClick={() => toggleReport(report.id)}
                           className="w-full flex items-start gap-4 p-5 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors text-left"
@@ -775,40 +775,40 @@ export default function HRReports() {
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-3 mb-1 flex-wrap">
-                              <h4 className="text-base font-semibold text-slate-900 dark:text-white">{report.title}</h4>
+                              <h4 className="text-base font-semibold text-primary">{report.title}</h4>
                               {report.nextDueUrgent && (
                                 <span className="px-2 py-0.5 bg-red-500/20 border border-red-500/30 rounded-full text-xs text-red-400 font-medium">DUE SOON</span>
                               )}
                             </div>
-                            <p className="text-sm text-slate-700 dark:text-slate-400 mb-2">{report.description}</p>
+                            <p className="text-sm text-secondary mb-2">{report.description}</p>
                             <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-500">
-                              <span>Frequency: <span className="text-slate-700 dark:text-slate-300">{report.frequency}</span></span>
+                              <span>Frequency: <span className="text-secondary">{report.frequency}</span></span>
                               <span>Next Due: <span className={report.nextDueUrgent ? 'text-red-400 font-medium' : 'text-slate-500'}>{report.nextDue}</span></span>
                             </div>
                           </div>
-                          {isExpanded ? <ChevronUp className="w-5 h-5 text-slate-700 dark:text-slate-400 mt-1" /> : <ChevronDown className="w-5 h-5 text-slate-700 dark:text-slate-400 mt-1" />}
+                          {isExpanded ? <ChevronUp className="w-5 h-5 text-secondary mt-1" /> : <ChevronDown className="w-5 h-5 text-secondary mt-1" />}
                         </button>
 
                         {isExpanded && (
                           <div className="px-5 pb-5 space-y-4">
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                              <div className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/30 rounded-xl p-3">
+                              <div className="bg-white dark:bg-slate-900/40 border border-border rounded-xl p-3">
                                 <p className="text-xs text-slate-500 mb-1">Recipients</p>
-                                <p className="text-sm text-slate-700 dark:text-slate-300">{report.recipients}</p>
+                                <p className="text-sm text-secondary">{report.recipients}</p>
                               </div>
-                              <div className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/30 rounded-xl p-3">
+                              <div className="bg-white dark:bg-slate-900/40 border border-border rounded-xl p-3">
                                 <p className="text-xs text-slate-500 mb-1">Last Generated</p>
-                                <p className="text-sm text-slate-700 dark:text-slate-300">{report.lastGenerated}</p>
+                                <p className="text-sm text-secondary">{report.lastGenerated}</p>
                               </div>
                             </div>
 
-                            <div className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/30 rounded-xl p-4">
-                              <h5 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Report Includes:</h5>
+                            <div className="bg-white dark:bg-slate-900/40 border border-border rounded-xl p-4">
+                              <h5 className="text-sm font-semibold text-primary mb-3">Report Includes:</h5>
                               <div className="space-y-1.5">
                                 {report.includes.map((item, idx) => (
                                   <div key={idx} className="flex items-start gap-2">
                                     <CheckCircle className="w-3.5 h-3.5 text-green-400 mt-0.5 flex-shrink-0" />
-                                    <span className="text-xs text-slate-700 dark:text-slate-400">{item}</span>
+                                    <span className="text-xs text-secondary">{item}</span>
                                   </div>
                                 ))}
                               </div>
@@ -821,7 +821,7 @@ export default function HRReports() {
                                   className={`px-4 py-2 rounded-xl font-medium transition-all text-sm flex items-center gap-2 ${
                                     idx === 0
                                       ? 'bg-amber-500 hover:bg-amber-400 text-white'
-                                      : 'bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-900 dark:text-white'
+                                      : 'bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-primary'
                                   }`}
                                 >
                                   {idx === 0 ? <FileBarChart className="w-4 h-4" /> : idx === 1 ? <Eye className="w-4 h-4" /> : <ExternalLink className="w-3.5 h-3.5" />}
@@ -846,8 +846,8 @@ export default function HRReports() {
                     <ClipboardCheck className="w-5 h-5 text-red-400" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Regulatory Compliance & Audit Reports</h3>
-                    <p className="text-xs text-slate-700 dark:text-slate-400">Reports required by federal/state law or regulatory agencies</p>
+                    <h3 className="text-lg font-semibold text-primary">Regulatory Compliance & Audit Reports</h3>
+                    <p className="text-xs text-secondary">Reports required by federal/state law or regulatory agencies</p>
                   </div>
                 </div>
 
@@ -868,32 +868,32 @@ export default function HRReports() {
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-3 mb-1 flex-wrap">
-                              <h4 className="text-base font-semibold text-slate-900 dark:text-white">{report.title}</h4>
+                              <h4 className="text-base font-semibold text-primary">{report.title}</h4>
                               {report.nextDueUrgent && (
                                 <span className="px-2 py-0.5 bg-amber-500/20 border border-amber-500/30 rounded-full text-xs text-amber-400 font-medium">OVERDUE</span>
                               )}
                             </div>
-                            <p className="text-sm text-slate-700 dark:text-slate-400 mb-2">{report.description}</p>
+                            <p className="text-sm text-secondary mb-2">{report.description}</p>
                             <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-500">
-                              <span>Authority: <span className="text-slate-700 dark:text-slate-300">{report.regulatory}</span></span>
-                              <span>Frequency: <span className="text-slate-700 dark:text-slate-300">{report.frequency}</span></span>
+                              <span>Authority: <span className="text-secondary">{report.regulatory}</span></span>
+                              <span>Frequency: <span className="text-secondary">{report.frequency}</span></span>
                             </div>
                           </div>
-                          {isExpanded ? <ChevronUp className="w-5 h-5 text-slate-700 dark:text-slate-400 mt-1" /> : <ChevronDown className="w-5 h-5 text-slate-700 dark:text-slate-400 mt-1" />}
+                          {isExpanded ? <ChevronUp className="w-5 h-5 text-secondary mt-1" /> : <ChevronDown className="w-5 h-5 text-secondary mt-1" />}
                         </button>
 
                         {isExpanded && (
                           <div className="px-5 pb-5 space-y-4">
                             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                              <div className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/30 rounded-xl p-3">
+                              <div className="bg-white dark:bg-slate-900/40 border border-border rounded-xl p-3">
                                 <p className="text-xs text-slate-500 mb-1">Recipients</p>
-                                <p className="text-sm text-slate-700 dark:text-slate-300">{report.recipients}</p>
+                                <p className="text-sm text-secondary">{report.recipients}</p>
                               </div>
-                              <div className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/30 rounded-xl p-3">
+                              <div className="bg-white dark:bg-slate-900/40 border border-border rounded-xl p-3">
                                 <p className="text-xs text-slate-500 mb-1">Last Generated</p>
-                                <p className="text-sm text-slate-700 dark:text-slate-300">{report.lastGenerated}</p>
+                                <p className="text-sm text-secondary">{report.lastGenerated}</p>
                               </div>
-                              <div className={`bg-white dark:bg-slate-900/40 border ${report.nextDueUrgent ? 'border-amber-500/30' : 'border-slate-200 dark:border-slate-700/30'} rounded-xl p-3`}>
+                              <div className={`bg-white dark:bg-slate-900/40 border ${report.nextDueUrgent ? 'border-amber-500/30' : 'border-border'} rounded-xl p-3`}>
                                 <p className="text-xs text-slate-500 mb-1">Next Due</p>
                                 <p className={`text-sm font-medium ${report.nextDueUrgent ? 'text-amber-400' : 'text-slate-500'}`}>{report.nextDue}</p>
                               </div>
@@ -902,17 +902,17 @@ export default function HRReports() {
                             {report.dataStatus && (
                               <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-3">
                                 <p className="text-xs text-blue-400 font-medium">Data Collection Status: {report.dataStatus}</p>
-                                {report.filingDeadline && <p className="text-xs text-slate-700 dark:text-slate-400 mt-1">Filing Deadline: {report.filingDeadline}</p>}
+                                {report.filingDeadline && <p className="text-xs text-secondary mt-1">Filing Deadline: {report.filingDeadline}</p>}
                               </div>
                             )}
 
-                            <div className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/30 rounded-xl p-4">
-                              <h5 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Report Includes:</h5>
+                            <div className="bg-white dark:bg-slate-900/40 border border-border rounded-xl p-4">
+                              <h5 className="text-sm font-semibold text-primary mb-3">Report Includes:</h5>
                               <div className="space-y-1.5">
                                 {report.includes.map((item, idx) => (
                                   <div key={idx} className="flex items-start gap-2">
                                     <CheckCircle className="w-3.5 h-3.5 text-green-400 mt-0.5 flex-shrink-0" />
-                                    <span className="text-xs text-slate-700 dark:text-slate-400">{item}</span>
+                                    <span className="text-xs text-secondary">{item}</span>
                                   </div>
                                 ))}
                               </div>
@@ -925,7 +925,7 @@ export default function HRReports() {
                                   className={`px-4 py-2 rounded-xl font-medium transition-all text-sm flex items-center gap-2 ${
                                     idx === 0
                                       ? 'bg-amber-500 hover:bg-amber-400 text-white'
-                                      : 'bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-900 dark:text-white'
+                                      : 'bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-primary'
                                   }`}
                                 >
                                   {idx === 0 ? <FileBarChart className="w-4 h-4" /> : <ExternalLink className="w-3.5 h-3.5" />}
@@ -948,14 +948,14 @@ export default function HRReports() {
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 bg-white dark:bg-slate-700/50 rounded-lg flex items-center justify-center">
-                      <FileText className="w-5 h-5 text-slate-700 dark:text-slate-400" />
+                      <FileText className="w-5 h-5 text-secondary" />
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Recently Generated Reports</h3>
-                      <p className="text-xs text-slate-700 dark:text-slate-400">Completed reports available for download and review</p>
+                      <h3 className="text-lg font-semibold text-primary">Recently Generated Reports</h3>
+                      <p className="text-xs text-secondary">Completed reports available for download and review</p>
                     </div>
                   </div>
-                  <button className="flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-slate-800/40 border border-slate-700/50 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all text-sm">
+                  <button className="flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-slate-800/40 border border-slate-700/50 rounded-lg text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all text-sm">
                     <Download className="w-4 h-4" />
                     Export All
                   </button>
@@ -970,13 +970,13 @@ export default function HRReports() {
                       placeholder="Search reports..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 text-sm"
+                      className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 text-sm"
                     />
                   </div>
                   <select
                     value={filterType}
                     onChange={(e) => setFilterType(e.target.value)}
-                    className="px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-700 dark:text-slate-300 focus:outline-none focus:border-amber-500/50 text-sm"
+                    className="px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-secondary focus:outline-none focus:border-amber-500/50 text-sm"
                   >
                     <option value="all">All Types</option>
                     <option value="Hiring">Hiring</option>
@@ -993,7 +993,7 @@ export default function HRReports() {
                     const isExpanded = expandedRecent[report.id];
 
                     return (
-                      <div key={report.id} className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
+                      <div key={report.id} className="bg-white dark:bg-slate-800/40 border border-border rounded-xl overflow-hidden">
                         <div className="p-5">
                           <div className="flex items-start justify-between gap-4">
                             <div className="flex items-start gap-4 flex-1">
@@ -1002,12 +1002,12 @@ export default function HRReports() {
                               </div>
                               <div className="flex-1 min-w-0">
                                 <div className="flex items-center gap-3 mb-1 flex-wrap">
-                                  <h4 className="text-base font-semibold text-slate-900 dark:text-white">{report.name}</h4>
+                                  <h4 className="text-base font-semibold text-primary">{report.name}</h4>
                                   <span className={`px-2 py-0.5 ${typeColors.bg} border ${typeColors.border} rounded-full text-xs ${typeColors.text} font-medium`}>{report.type}</span>
                                 </div>
-                                <p className="text-xs text-slate-700 dark:text-slate-400 mb-2">Generated: {report.generated} • By: {report.generatedBy}</p>
+                                <p className="text-xs text-secondary mb-2">Generated: {report.generated} • By: {report.generatedBy}</p>
                                 <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-500">
-                                  <span>Period: <span className="text-slate-700 dark:text-slate-300">{report.period}</span></span>
+                                  <span>Period: <span className="text-secondary">{report.period}</span></span>
                                   <span>{report.fileSize} • {report.pages} pages</span>
                                 </div>
                               </div>
@@ -1020,27 +1020,27 @@ export default function HRReports() {
                                 View
                               </button>
                               <button className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-700/50 rounded-lg transition-colors">
-                                <Download className="w-4 h-4 text-slate-700 dark:text-slate-400" />
+                                <Download className="w-4 h-4 text-secondary" />
                               </button>
                               <button
                                 onClick={() => toggleRecent(report.id)}
                                 className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-700/50 rounded-lg transition-colors"
                               >
-                                {isExpanded ? <ChevronUp className="w-4 h-4 text-slate-700 dark:text-slate-400" /> : <ChevronDown className="w-4 h-4 text-slate-700 dark:text-slate-400" />}
+                                {isExpanded ? <ChevronUp className="w-4 h-4 text-secondary" /> : <ChevronDown className="w-4 h-4 text-secondary" />}
                               </button>
                             </div>
                           </div>
                         </div>
 
                         {isExpanded && (
-                          <div className="px-5 pb-5 border-t border-slate-200 dark:border-slate-200 dark:border-slate-700/30 pt-4 space-y-4">
-                            <div className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/30 rounded-xl p-4">
-                              <h5 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Report Summary</h5>
+                          <div className="px-5 pb-5 border-t border-border dark:border-slate-700/30 pt-4 space-y-4">
+                            <div className="bg-white dark:bg-slate-900/40 border border-border rounded-xl p-4">
+                              <h5 className="text-sm font-semibold text-primary mb-3">Report Summary</h5>
                               <div className="space-y-1.5">
                                 {report.summary.map((item, idx) => (
                                   <div key={idx} className="flex items-start gap-2">
                                     <CheckCircle className="w-3.5 h-3.5 text-green-400 mt-0.5 flex-shrink-0" />
-                                    <span className="text-xs text-slate-700 dark:text-slate-400">{item}</span>
+                                    <span className="text-xs text-secondary">{item}</span>
                                   </div>
                                 ))}
                               </div>
@@ -1053,7 +1053,7 @@ export default function HRReports() {
                                   {report.findings.map((item, idx) => (
                                     <div key={idx} className="flex items-start gap-2">
                                       <AlertTriangle className="w-3.5 h-3.5 text-amber-400 mt-0.5 flex-shrink-0" />
-                                      <span className="text-xs text-slate-700 dark:text-slate-300">{item}</span>
+                                      <span className="text-xs text-secondary">{item}</span>
                                     </div>
                                   ))}
                                 </div>
@@ -1067,7 +1067,7 @@ export default function HRReports() {
                                   {report.recommendations.map((item, idx) => (
                                     <div key={idx} className="flex items-start gap-2">
                                       <Info className="w-3.5 h-3.5 text-blue-400 mt-0.5 flex-shrink-0" />
-                                      <span className="text-xs text-slate-700 dark:text-slate-300">{item}</span>
+                                      <span className="text-xs text-secondary">{item}</span>
                                     </div>
                                   ))}
                                 </div>
@@ -1081,13 +1081,13 @@ export default function HRReports() {
                               >
                                 <Eye className="w-4 h-4" /> View Full Report
                               </button>
-                              <button className="px-4 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-900 dark:text-white rounded-xl font-medium transition-all text-sm flex items-center gap-2">
+                              <button className="px-4 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-primary rounded-xl font-medium transition-all text-sm flex items-center gap-2">
                                 <Download className="w-4 h-4" /> Download PDF
                               </button>
-                              <button className="px-4 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-900 dark:text-white rounded-xl font-medium transition-all text-sm flex items-center gap-2">
+                              <button className="px-4 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-primary rounded-xl font-medium transition-all text-sm flex items-center gap-2">
                                 <Printer className="w-4 h-4" /> Print
                               </button>
-                              <button className="px-4 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl font-medium transition-all text-sm flex items-center gap-2">
+                              <button className="px-4 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded-xl font-medium transition-all text-sm flex items-center gap-2">
                                 <ExternalLink className="w-4 h-4" /> Share with Sheriff
                               </button>
                             </div>
@@ -1100,8 +1100,8 @@ export default function HRReports() {
                   {filteredRecent.length === 0 && (
                     <div className="text-center py-12">
                       <Search className="w-12 h-12 text-slate-700 mx-auto mb-4" />
-                      <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">No Reports Found</h3>
-                      <p className="text-slate-700 dark:text-slate-400 text-sm">Try adjusting your search or filter criteria.</p>
+                      <h3 className="text-lg font-semibold text-primary mb-2">No Reports Found</h3>
+                      <p className="text-secondary text-sm">Try adjusting your search or filter criteria.</p>
                     </div>
                   )}
                 </div>
@@ -1109,30 +1109,30 @@ export default function HRReports() {
             )}
 
             {/* Report Compliance Reference */}
-            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
-              <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
-                <Shield className="w-4 h-4 text-slate-700 dark:text-slate-400" /> GCSO Report Compliance & Retention Requirements
+            <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
+              <h4 className="text-sm font-semibold text-primary mb-3 flex items-center gap-2">
+                <Shield className="w-4 h-4 text-secondary" /> GCSO Report Compliance & Retention Requirements
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-3">
-                <div className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/30 rounded-lg p-3">
+                <div className="bg-white dark:bg-slate-900/40 border border-border rounded-lg p-3">
                   <p className="text-xs text-slate-500 mb-1">Personnel Records</p>
-                  <p className="text-sm text-slate-900 dark:text-white font-medium">75 years</p>
-                  <p className="text-xs text-slate-700 dark:text-slate-400">GA Records Retention</p>
+                  <p className="text-sm text-primary font-medium">75 years</p>
+                  <p className="text-xs text-secondary">GA Records Retention</p>
                 </div>
-                <div className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/30 rounded-lg p-3">
+                <div className="bg-white dark:bg-slate-900/40 border border-border rounded-lg p-3">
                   <p className="text-xs text-slate-500 mb-1">POST Certifications</p>
-                  <p className="text-sm text-slate-900 dark:text-white font-medium">Permanent</p>
-                  <p className="text-xs text-slate-700 dark:text-slate-400">O.C.G.A. § 35-8-1</p>
+                  <p className="text-sm text-primary font-medium">Permanent</p>
+                  <p className="text-xs text-secondary">O.C.G.A. § 35-8-1</p>
                 </div>
-                <div className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/30 rounded-lg p-3">
+                <div className="bg-white dark:bg-slate-900/40 border border-border rounded-lg p-3">
                   <p className="text-xs text-slate-500 mb-1">EEO-1 Reports</p>
-                  <p className="text-sm text-slate-900 dark:text-white font-medium">3 years</p>
-                  <p className="text-xs text-slate-700 dark:text-slate-400">Title VII, EEOC</p>
+                  <p className="text-sm text-primary font-medium">3 years</p>
+                  <p className="text-xs text-secondary">Title VII, EEOC</p>
                 </div>
-                <div className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/30 rounded-lg p-3">
+                <div className="bg-white dark:bg-slate-900/40 border border-border rounded-lg p-3">
                   <p className="text-xs text-slate-500 mb-1">FMLA Records</p>
-                  <p className="text-sm text-slate-900 dark:text-white font-medium">3 years</p>
-                  <p className="text-xs text-slate-700 dark:text-slate-400">29 CFR Part 825</p>
+                  <p className="text-sm text-primary font-medium">3 years</p>
+                  <p className="text-xs text-secondary">29 CFR Part 825</p>
                 </div>
               </div>
               <div className="text-xs text-slate-500 space-y-1">
@@ -1151,38 +1151,38 @@ export default function HRReports() {
           onClick={() => setSupportOpen(!supportOpen)}
           className="w-14 h-14 bg-gradient-to-br from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110"
         >
-          {supportOpen ? <X className="w-6 h-6 text-slate-900 dark:text-white" /> : <HelpCircle className="w-6 h-6 text-slate-900 dark:text-white" />}
+          {supportOpen ? <X className="w-6 h-6 text-primary" /> : <HelpCircle className="w-6 h-6 text-primary" />}
         </button>
 
         {supportOpen && (
-          <div className="absolute bottom-16 right-0 w-80 bg-white dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200 dark:border-slate-700/50 rounded-2xl shadow-2xl overflow-hidden">
-            <div className="p-4 border-b border-slate-200 dark:border-slate-700/50">
-              <h3 className="text-sm font-semibold text-slate-900 dark:text-white">HR Reports Support</h3>
-              <p className="text-xs text-slate-700 dark:text-slate-400 mt-1">GCSO Human Resources Division</p>
+          <div className="absolute bottom-16 right-0 w-80 bg-surface-raised backdrop-blur-xl border border-border rounded-2xl shadow-2xl overflow-hidden">
+            <div className="p-4 border-b border-border">
+              <h3 className="text-sm font-semibold text-primary">HR Reports Support</h3>
+              <p className="text-xs text-secondary mt-1">GCSO Human Resources Division</p>
             </div>
             <div className="p-4 space-y-3">
               <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
-                <p className="text-sm font-medium text-slate-900 dark:text-white">HR Director</p>
-                <p className="text-xs text-slate-700 dark:text-slate-400">Report authorization, confidential data access</p>
+                <p className="text-sm font-medium text-primary">HR Director</p>
+                <p className="text-xs text-secondary">Report authorization, confidential data access</p>
                 <p className="text-xs text-amber-400 mt-1">Ext. 4500</p>
               </div>
               <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
-                <p className="text-sm font-medium text-slate-900 dark:text-white">Report Administrator</p>
-                <p className="text-xs text-slate-700 dark:text-slate-400">HR Specialist J. Martinez — report generation, data queries</p>
+                <p className="text-sm font-medium text-primary">Report Administrator</p>
+                <p className="text-xs text-secondary">HR Specialist J. Martinez — report generation, data queries</p>
                 <p className="text-xs text-amber-400 mt-1">Ext. 4505</p>
               </div>
               <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
-                <p className="text-sm font-medium text-slate-900 dark:text-white">Training Division</p>
-                <p className="text-xs text-slate-700 dark:text-slate-400">POST compliance data, certification reports</p>
+                <p className="text-sm font-medium text-primary">Training Division</p>
+                <p className="text-xs text-secondary">POST compliance data, certification reports</p>
                 <p className="text-xs text-amber-400 mt-1">Ext. 4521</p>
               </div>
               <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
-                <p className="text-sm font-medium text-slate-900 dark:text-white">County Budget Office</p>
-                <p className="text-xs text-slate-700 dark:text-slate-400">Staffing reports, budget justification data</p>
+                <p className="text-sm font-medium text-primary">County Budget Office</p>
+                <p className="text-xs text-secondary">Staffing reports, budget justification data</p>
               </div>
               <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
-                <p className="text-sm font-medium text-slate-900 dark:text-white">Open Records Requests</p>
-                <p className="text-xs text-slate-700 dark:text-slate-400">GA Open Records Act (O.C.G.A. § 50-18-70)</p>
+                <p className="text-sm font-medium text-primary">Open Records Requests</p>
+                <p className="text-xs text-secondary">GA Open Records Act (O.C.G.A. § 50-18-70)</p>
               </div>
             </div>
           </div>

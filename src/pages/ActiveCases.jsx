@@ -295,7 +295,7 @@ export default function ActiveCases() {
   const getPriorityDisplay = (priority) => {
     switch (priority) {
       case 'high': return { label: 'HIGH PRIORITY', color: 'bg-red-500/20 text-red-400 border-red-500/30' };
-      case 'on_hold': return { label: 'ON HOLD', color: 'bg-slate-500/20 text-slate-700 dark:text-slate-400 border-slate-500/30' };
+      case 'on_hold': return { label: 'ON HOLD', color: 'bg-slate-500/20 text-secondary border-slate-500/30' };
       default: return { label: 'STANDARD', color: 'bg-blue-500/20 text-blue-400 border-blue-500/30' };
     }
   };
@@ -324,13 +324,13 @@ export default function ActiveCases() {
           <div className="max-w-7xl mx-auto">
             <div className="mb-6">
               <div className="flex items-center gap-3 mb-2">
-                <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white">Active Cases</h2>
+                <h2 className="text-2xl lg:text-3xl font-bold text-primary">Active Cases</h2>
                 <span className="px-3 py-1 bg-green-500/20 border border-green-500/30 text-green-400 text-xs font-bold rounded-full flex items-center gap-1.5">
                   <CircleDot className="w-3 h-3" />
                   LIVE
                 </span>
               </div>
-              <div className="flex items-center gap-3 text-slate-700 dark:text-slate-400 flex-wrap">
+              <div className="flex items-center gap-3 text-secondary flex-wrap">
                 <span className="text-sm">Background investigations currently assigned and in progress</span>
                 <span className="text-slate-700">•</span>
                 <span className="text-sm">Updated: {formatTime(currentTime)} EST</span>
@@ -349,10 +349,10 @@ export default function ActiveCases() {
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center justify-between mb-6">
-                      <h4 className="text-base font-semibold text-slate-900 dark:text-white">CASELOAD SUMMARY</h4>
+                      <h4 className="text-base font-semibold text-primary">CASELOAD SUMMARY</h4>
                       <button
                         onClick={() => setCaseloadSummaryVisible(false)}
-                        className="text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
+                        className="text-secondary hover:text-primary transition-colors"
                       >
                         <X className="w-4 h-4" />
                       </button>
@@ -367,19 +367,19 @@ export default function ActiveCases() {
                         </div>
                         <div className="space-y-1.5 text-sm">
                           <div className="flex items-center justify-between">
-                            <span className="text-slate-700 dark:text-slate-400">Assigned to investigators</span>
-                            <span className="text-slate-700 dark:text-slate-300">{summaryStats.totalActive} cases</span>
+                            <span className="text-secondary">Assigned to investigators</span>
+                            <span className="text-secondary">{summaryStats.totalActive} cases</span>
                           </div>
                           <div className="flex items-center justify-between">
-                            <span className="text-slate-700 dark:text-slate-400">Requiring supervisor action</span>
+                            <span className="text-secondary">Requiring supervisor action</span>
                             <span className="text-amber-400">{summaryStats.requireingSupervisor} cases</span>
                           </div>
                           <div className="flex items-center justify-between">
-                            <span className="text-slate-700 dark:text-slate-400">On hold (external response)</span>
-                            <span className="text-slate-700 dark:text-slate-400">{summaryStats.onHold} cases</span>
+                            <span className="text-secondary">On hold (external response)</span>
+                            <span className="text-secondary">{summaryStats.onHold} cases</span>
                           </div>
                           <div className="flex items-center justify-between">
-                            <span className="text-slate-700 dark:text-slate-400">Standard processing</span>
+                            <span className="text-secondary">Standard processing</span>
                             <span className="text-green-400">{summaryStats.standardProcessing} cases</span>
                           </div>
                         </div>
@@ -393,15 +393,15 @@ export default function ActiveCases() {
                         </div>
                         <div className="space-y-1.5 text-sm">
                           <div className="flex items-center justify-between">
-                            <span className="text-slate-700 dark:text-slate-400">Agency target</span>
-                            <span className="text-slate-700 dark:text-slate-300">&lt;18 days</span>
+                            <span className="text-secondary">Agency target</span>
+                            <span className="text-secondary">&lt;18 days</span>
                           </div>
                           <div className="flex items-center justify-between">
-                            <span className="text-slate-700 dark:text-slate-400">Longest case</span>
+                            <span className="text-secondary">Longest case</span>
                             <span className="text-red-400">{summaryStats.longestCase} days (on hold)</span>
                           </div>
                           <div className="flex items-center justify-between">
-                            <span className="text-slate-700 dark:text-slate-400">Shortest case</span>
+                            <span className="text-secondary">Shortest case</span>
                             <span className="text-green-400">{summaryStats.shortestCase} days (new)</span>
                           </div>
                         </div>
@@ -416,8 +416,8 @@ export default function ActiveCases() {
                         <div className="space-y-1.5 text-sm">
                           {investigatorWorkload.map((inv, idx) => (
                             <div key={idx} className="flex items-center justify-between">
-                              <span className="text-slate-700 dark:text-slate-400">{inv.name}</span>
-                              <span className="text-slate-700 dark:text-slate-300">{inv.cases} cases</span>
+                              <span className="text-secondary">{inv.name}</span>
+                              <span className="text-secondary">{inv.cases} cases</span>
                             </div>
                           ))}
                         </div>
@@ -438,23 +438,23 @@ export default function ActiveCases() {
             )}
 
             {/* Search and Filters */}
-            <div className="mb-6 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4 lg:p-6">
+            <div className="mb-6 bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4 lg:p-6">
               <div className="flex items-center gap-2 mb-4">
-                <Filter className="w-5 h-5 text-slate-700 dark:text-slate-400" />
-                <h3 className="text-sm font-semibold text-slate-900 dark:text-white uppercase">Search Active Cases</h3>
+                <Filter className="w-5 h-5 text-secondary" />
+                <h3 className="text-sm font-semibold text-primary uppercase">Search Active Cases</h3>
                 <span className="text-xs text-slate-500 ml-2">Search by: Applicant name, case ID, position, or investigator</span>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">
                 <div className="lg:col-span-2">
                   <div className="relative">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-700 dark:text-slate-400" />
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-secondary" />
                     <input
                       type="text"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       placeholder="Search cases..."
-                      className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
+                      className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-slate-900/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
                     />
                   </div>
                 </div>
@@ -462,7 +462,7 @@ export default function ActiveCases() {
                   <select
                     value={filterStatus}
                     onChange={(e) => setFilterStatus(e.target.value)}
-                    className="w-full px-4 py-2.5 bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/50 text-sm"
+                    className="w-full px-4 py-2.5 bg-white dark:bg-slate-900/40 border border-border rounded-xl text-primary focus:outline-none focus:border-amber-500/50 text-sm"
                   >
                     <option value="all">All Status</option>
                     <option value="initial">Initial Review</option>
@@ -478,7 +478,7 @@ export default function ActiveCases() {
                   <select
                     value={filterPriority}
                     onChange={(e) => setFilterPriority(e.target.value)}
-                    className="w-full px-4 py-2.5 bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/50 text-sm"
+                    className="w-full px-4 py-2.5 bg-white dark:bg-slate-900/40 border border-border rounded-xl text-primary focus:outline-none focus:border-amber-500/50 text-sm"
                   >
                     <option value="all">All Priority</option>
                     <option value="high">High (deadline within 14 days)</option>
@@ -490,7 +490,7 @@ export default function ActiveCases() {
                   <select
                     value={filterInvestigator}
                     onChange={(e) => setFilterInvestigator(e.target.value)}
-                    className="w-full px-4 py-2.5 bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/50 text-sm"
+                    className="w-full px-4 py-2.5 bg-white dark:bg-slate-900/40 border border-border rounded-xl text-primary focus:outline-none focus:border-amber-500/50 text-sm"
                   >
                     <option value="all">All Investigators</option>
                     <option value="Brooks">Agent Brooks</option>
@@ -503,7 +503,7 @@ export default function ActiveCases() {
                   <select
                     value={filterPosition}
                     onChange={(e) => setFilterPosition(e.target.value)}
-                    className="w-full px-4 py-2.5 bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/50 text-sm"
+                    className="w-full px-4 py-2.5 bg-white dark:bg-slate-900/40 border border-border rounded-xl text-primary focus:outline-none focus:border-amber-500/50 text-sm"
                   >
                     <option value="all">All Positions</option>
                     <option value="Deputy Sheriff">Deputy Sheriff</option>
@@ -514,14 +514,14 @@ export default function ActiveCases() {
                 </div>
               </div>
 
-              <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-200 dark:border-slate-700/30 flex items-center justify-between flex-wrap gap-3">
-                <p className="text-sm text-slate-700 dark:text-slate-400">Showing: <span className="text-slate-900 dark:text-white font-medium">{filteredCases.length} of {cases.length}</span> cases</p>
+              <div className="mt-4 pt-4 border-t border-border dark:border-slate-700/30 flex items-center justify-between flex-wrap gap-3">
+                <p className="text-sm text-secondary">Showing: <span className="text-primary font-medium">{filteredCases.length} of {cases.length}</span> cases</p>
                 <div className="flex items-center gap-2">
-                  <button className="flex items-center gap-2 px-4 py-2 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium hover:bg-slate-700/60 transition-all">
+                  <button className="flex items-center gap-2 px-4 py-2 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-700/60 transition-all">
                     <Download className="w-4 h-4" />
                     Export to Excel
                   </button>
-                  <button className="flex items-center gap-2 px-4 py-2 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium hover:bg-slate-700/60 transition-all">
+                  <button className="flex items-center gap-2 px-4 py-2 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-700/60 transition-all">
                     <Printer className="w-4 h-4" />
                     Print Case List
                   </button>
@@ -553,7 +553,7 @@ export default function ActiveCases() {
                     <div className="p-5">
                       <div className="flex items-start justify-between mb-4">
                         <div className="flex items-center gap-3">
-                          <h3 className="text-lg font-semibold text-slate-900 dark:text-white">{case_item.subject}</h3>
+                          <h3 className="text-lg font-semibold text-primary">{case_item.subject}</h3>
                           <span className={`px-2.5 py-1 rounded text-xs font-bold border ${priorityDisplay.color}`}>
                             {priorityDisplay.label}
                           </span>
@@ -565,11 +565,11 @@ export default function ActiveCases() {
                       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
                         <div>
                           <p className="text-xs text-slate-500 mb-1">Position</p>
-                          <p className="text-sm text-slate-700 dark:text-slate-300">{case_item.position}</p>
+                          <p className="text-sm text-secondary">{case_item.position}</p>
                         </div>
                         <div>
                           <p className="text-xs text-slate-500 mb-1">Application Date</p>
-                          <p className="text-sm text-slate-700 dark:text-slate-300">{case_item.applicationDate}</p>
+                          <p className="text-sm text-secondary">{case_item.applicationDate}</p>
                         </div>
                         <div>
                           <p className="text-xs text-slate-500 mb-1">Days in Process</p>
@@ -580,7 +580,7 @@ export default function ActiveCases() {
                         </div>
                         <div>
                           <p className="text-xs text-slate-500 mb-1">Assigned Investigator</p>
-                          <p className="text-sm text-slate-700 dark:text-slate-300">Agent {case_item.investigator}</p>
+                          <p className="text-sm text-secondary">Agent {case_item.investigator}</p>
                         </div>
                       </div>
 
@@ -591,7 +591,7 @@ export default function ActiveCases() {
                             <AlertCircle className="w-4 h-4 text-red-400" />
                             <span className="text-xs font-semibold text-red-400 uppercase">Priority Reason</span>
                           </div>
-                          <p className="text-sm text-slate-700 dark:text-slate-300 mt-1">{case_item.priorityReason}</p>
+                          <p className="text-sm text-secondary mt-1">{case_item.priorityReason}</p>
                         </div>
                       )}
 
@@ -599,15 +599,15 @@ export default function ActiveCases() {
                       <div className="mb-4">
                         <div className="flex items-center gap-2 mb-2">
                           <Clock className="w-4 h-4 text-amber-400" />
-                          <span className="text-sm font-semibold text-slate-900 dark:text-white">CURRENT STATUS:</span>
+                          <span className="text-sm font-semibold text-primary">CURRENT STATUS:</span>
                           <span className="text-sm text-amber-400 font-medium">{case_item.status}</span>
                         </div>
-                        <p className="text-xs text-slate-700 dark:text-slate-400">Last Activity: {case_item.lastActivity} — {case_item.lastUpdate}</p>
+                        <p className="text-xs text-secondary">Last Activity: {case_item.lastActivity} — {case_item.lastUpdate}</p>
                       </div>
 
                       {/* Investigation Stages */}
                       <div className="mb-4">
-                        <p className="text-xs font-semibold text-slate-700 dark:text-slate-400 uppercase mb-3">Investigation Stages</p>
+                        <p className="text-xs font-semibold text-secondary uppercase mb-3">Investigation Stages</p>
                         <div className="grid grid-cols-2 lg:grid-cols-3 gap-2">
                           {case_item.stages.map((stage, idx) => (
                             <div
@@ -617,7 +617,7 @@ export default function ActiveCases() {
                                 stage.status === 'in_progress' ? 'bg-amber-500/10 border-amber-500/20' :
                                 stage.status === 'partial' ? 'bg-blue-500/10 border-blue-500/20' :
                                 stage.status === 'blocked' ? 'bg-red-500/10 border-red-500/20' :
-                                'bg-white dark:bg-slate-800/50 border-slate-200 dark:border-slate-700/30'
+                                'bg-white dark:bg-slate-800/50 border-border'
                               }`}
                             >
                               <div className="flex items-center gap-2 mb-1">
@@ -630,7 +630,7 @@ export default function ActiveCases() {
                                   'text-slate-500'
                                 }`}>{stage.name}</span>
                               </div>
-                              <p className="text-xs text-slate-700 dark:text-slate-400">{stage.detail}</p>
+                              <p className="text-xs text-secondary">{stage.detail}</p>
                               {stage.subDetail && (
                                 <p className="text-xs text-slate-500 mt-0.5">{stage.subDetail}</p>
                               )}
@@ -645,7 +645,7 @@ export default function ActiveCases() {
                           <ChevronRight className="w-4 h-4 text-blue-400" />
                           <span className="text-xs font-semibold text-blue-400 uppercase">Next Action Required</span>
                         </div>
-                        <p className="text-sm text-slate-700 dark:text-slate-300">{case_item.nextAction}</p>
+                        <p className="text-sm text-secondary">{case_item.nextAction}</p>
                       </div>
 
                       {/* Blockers/Hold Reason */}
@@ -655,22 +655,22 @@ export default function ActiveCases() {
                             <AlertTriangle className="w-4 h-4 text-red-400" />
                             <span className="text-xs font-semibold text-red-400 uppercase">Blockers/Delays</span>
                           </div>
-                          <p className="text-sm text-slate-700 dark:text-slate-300">{case_item.blockers}</p>
+                          <p className="text-sm text-secondary">{case_item.blockers}</p>
                         </div>
                       )}
 
                       {case_item.holdReason && (
                         <div className="p-3 bg-slate-100 dark:bg-slate-700/30 border border-slate-600/30 rounded-lg mb-4">
                           <div className="flex items-center gap-2 mb-1">
-                            <Hourglass className="w-4 h-4 text-slate-700 dark:text-slate-400" />
-                            <span className="text-xs font-semibold text-slate-700 dark:text-slate-400 uppercase">Hold Reason</span>
+                            <Hourglass className="w-4 h-4 text-secondary" />
+                            <span className="text-xs font-semibold text-secondary uppercase">Hold Reason</span>
                           </div>
-                          <p className="text-sm text-slate-700 dark:text-slate-300">{case_item.holdReason}</p>
+                          <p className="text-sm text-secondary">{case_item.holdReason}</p>
                           {case_item.contactAttempts && (
                             <div className="mt-2 pt-2 border-t border-slate-600/30">
                               <p className="text-xs text-slate-500 mb-1">Documented Contact Attempts:</p>
                               {case_item.contactAttempts.map((attempt, idx) => (
-                                <p key={idx} className="text-xs text-slate-700 dark:text-slate-400">• {attempt}</p>
+                                <p key={idx} className="text-xs text-secondary">• {attempt}</p>
                               ))}
                             </div>
                           )}
@@ -687,7 +687,7 @@ export default function ActiveCases() {
                           <div className="space-y-2">
                             {case_item.documentedConcerns.map((concern, idx) => (
                               <div key={idx} className="text-sm">
-                                <p className="text-slate-700 dark:text-slate-300"><span className="text-amber-400 font-medium">{concern.type}:</span> {concern.detail}</p>
+                                <p className="text-secondary"><span className="text-amber-400 font-medium">{concern.type}:</span> {concern.detail}</p>
                                 <p className="text-xs text-slate-500 mt-0.5">Mitigation: {concern.mitigation}</p>
                               </div>
                             ))}
@@ -702,7 +702,7 @@ export default function ActiveCases() {
                             <CheckCircle className="w-4 h-4 text-green-400" />
                             <span className="text-xs font-semibold text-green-400 uppercase">Investigator Recommendation</span>
                           </div>
-                          <p className="text-sm text-slate-700 dark:text-slate-300">{case_item.recommendation}</p>
+                          <p className="text-sm text-secondary">{case_item.recommendation}</p>
                         </div>
                       )}
 
@@ -710,10 +710,10 @@ export default function ActiveCases() {
                       {case_item.extendedReason && (
                         <div className="p-3 bg-slate-100 dark:bg-slate-700/30 border border-slate-600/30 rounded-lg mb-4">
                           <div className="flex items-center gap-2 mb-1">
-                            <Clock className="w-4 h-4 text-slate-700 dark:text-slate-400" />
-                            <span className="text-xs font-semibold text-slate-700 dark:text-slate-400 uppercase">Reason for Extended Timeline</span>
+                            <Clock className="w-4 h-4 text-secondary" />
+                            <span className="text-xs font-semibold text-secondary uppercase">Reason for Extended Timeline</span>
                           </div>
-                          <p className="text-sm text-slate-700 dark:text-slate-300">{case_item.extendedReason}</p>
+                          <p className="text-sm text-secondary">{case_item.extendedReason}</p>
                         </div>
                       )}
 
@@ -724,7 +724,7 @@ export default function ActiveCases() {
                             <Briefcase className="w-4 h-4 text-purple-400" />
                             <span className="text-xs font-semibold text-purple-400 uppercase">Lateral Hire Notes</span>
                           </div>
-                          <p className="text-sm text-slate-700 dark:text-slate-300">{case_item.lateralNotes}</p>
+                          <p className="text-sm text-secondary">{case_item.lateralNotes}</p>
                         </div>
                       )}
 
@@ -732,24 +732,24 @@ export default function ActiveCases() {
                       {case_item.notes && (
                         <div className="p-3 bg-slate-100 dark:bg-slate-700/30 border border-slate-600/30 rounded-lg mb-4">
                           <div className="flex items-center gap-2 mb-1">
-                            <FileText className="w-4 h-4 text-slate-700 dark:text-slate-400" />
-                            <span className="text-xs font-semibold text-slate-700 dark:text-slate-400 uppercase">Notes</span>
+                            <FileText className="w-4 h-4 text-secondary" />
+                            <span className="text-xs font-semibold text-secondary uppercase">Notes</span>
                           </div>
-                          <p className="text-sm text-slate-700 dark:text-slate-300">{case_item.notes}</p>
+                          <p className="text-sm text-secondary">{case_item.notes}</p>
                         </div>
                       )}
 
                       {/* Action Buttons */}
-                      <div className="flex items-center gap-2 pt-4 border-t border-slate-200 dark:border-slate-200 dark:border-slate-700/30">
+                      <div className="flex items-center gap-2 pt-4 border-t border-border dark:border-slate-700/30">
                         <button className="flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-sm font-medium transition-all">
                           <Eye className="w-4 h-4" />
                           View Full Case File
                         </button>
-                        <button className="flex items-center gap-2 px-4 py-2 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium hover:bg-slate-700/60 transition-all">
+                        <button className="flex items-center gap-2 px-4 py-2 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-700/60 transition-all">
                           <Phone className="w-4 h-4" />
                           Contact Investigator
                         </button>
-                        <button className="flex items-center gap-2 px-4 py-2 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium hover:bg-slate-700/60 transition-all">
+                        <button className="flex items-center gap-2 px-4 py-2 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-700/60 transition-all">
                           <Clock className="w-4 h-4" />
                           Case Timeline
                         </button>

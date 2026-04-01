@@ -423,11 +423,11 @@ export default function NewHireOnboarding() {
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex">
       {/* Sidebar */}
       <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-slate-800/50 backdrop-blur-xl bg-slate-50 dark:bg-slate-900/30 flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
-        <div className="p-4 border-b border-slate-200 dark:border-slate-700/50 flex items-center justify-between">
+        <div className="p-4 border-b border-border flex items-center justify-between">
           {!sidebarCollapsed && (
             <div className="flex items-center gap-2">
               <Shield className="w-8 h-8 text-amber-500" />
-              <h1 className="text-xl font-bold text-slate-900 dark:text-white">SentryOps</h1>
+              <h1 className="text-xl font-bold text-primary">SentryOps</h1>
             </div>
           )}
           {sidebarCollapsed && (
@@ -437,7 +437,7 @@ export default function NewHireOnboarding() {
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
             className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors hidden lg:block"
           >
-            {sidebarCollapsed ? <ChevronRight className="w-5 h-5 text-slate-700 dark:text-slate-400" /> : <ChevronLeft className="w-5 h-5 text-slate-700 dark:text-slate-400" />}
+            {sidebarCollapsed ? <ChevronRight className="w-5 h-5 text-secondary" /> : <ChevronLeft className="w-5 h-5 text-secondary" />}
           </button>
         </div>
 
@@ -450,7 +450,7 @@ export default function NewHireOnboarding() {
                 key={item.id}
                 onClick={() => handleNavigation(item)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-700 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white'
+                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white'
                 } ${sidebarCollapsed ? 'justify-center' : ''}`}
                 title={sidebarCollapsed ? item.label : ''}
               >
@@ -463,7 +463,7 @@ export default function NewHireOnboarding() {
           })}
         </nav>
 
-        <div className="border-t border-slate-200 dark:border-slate-700/50">
+        <div className="border-t border-border">
           {!sidebarCollapsed && (
             <div className="px-4 py-3">
               <p className="text-xs text-slate-500 text-center">Gwinnett County Sheriff's Office</p>
@@ -473,7 +473,7 @@ export default function NewHireOnboarding() {
           <div className="p-4">
             <button
               onClick={() => setLogoutConfirmOpen(true)}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-slate-700 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/40 hover:text-slate-700 dark:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/40 hover:text-secondary ${sidebarCollapsed ? 'justify-center' : ''}`}
               title={sidebarCollapsed ? 'Sign Out' : ''}
             >
               <LogOut className="w-5 h-5 flex-shrink-0" />
@@ -498,26 +498,26 @@ export default function NewHireOnboarding() {
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={() => setLogoutConfirmOpen(false)}
           />
-          <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl p-6 max-w-sm w-full shadow-2xl">
+          <div className="relative bg-white dark:bg-slate-900 border border-border rounded-2xl p-6 max-w-sm w-full shadow-2xl">
             <div className="flex items-center gap-4 mb-4">
               <div className="w-12 h-12 bg-white dark:bg-slate-800/60 rounded-xl flex items-center justify-center">
-                <LogOut className="w-6 h-6 text-slate-700 dark:text-slate-400" />
+                <LogOut className="w-6 h-6 text-secondary" />
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Sign Out</h3>
-                <p className="text-sm text-slate-700 dark:text-slate-400">Are you sure you want to sign out?</p>
+                <h3 className="text-lg font-semibold text-primary">Sign Out</h3>
+                <p className="text-sm text-secondary">Are you sure you want to sign out?</p>
               </div>
             </div>
             <div className="flex gap-3 mt-6">
               <button
                 onClick={() => setLogoutConfirmOpen(false)}
-                className="flex-1 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all"
+                className="flex-1 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-primary font-medium transition-all"
               >
                 Cancel
               </button>
               <button
                 onClick={handleLogout}
-                className="flex-1 px-4 py-2.5 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all"
+                className="flex-1 px-4 py-2.5 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-primary font-medium transition-all"
               >
                 Sign Out
               </button>
@@ -527,24 +527,24 @@ export default function NewHireOnboarding() {
       )}
 
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="border-b border-slate-200 dark:border-slate-800/50 backdrop-blur-xl bg-slate-50 dark:bg-slate-900/30">
+        <header className="border-b border-border backdrop-blur-xl bg-slate-50 dark:bg-slate-900/30">
           <div className="px-4 lg:px-6 py-4 flex items-center justify-between gap-4">
             <div className="flex items-center gap-4 flex-1 min-w-0">
               <button
                 onClick={() => setSidebarOpen(!sidebarOpen)}
                 className="lg:hidden p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg"
               >
-                <Menu className="w-5 h-5 text-slate-700 dark:text-slate-400" />
+                <Menu className="w-5 h-5 text-secondary" />
               </button>
               <div className="flex items-center gap-2 text-sm">
                 <button
                   onClick={() => navigate(createPageUrl('HRDashboard'))}
-                  className="text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
+                  className="text-secondary hover:text-primary transition-colors"
                 >
                   HR Dashboard
                 </button>
                 <ChevronRight className="w-4 h-4 text-slate-700" />
-                <span className="text-slate-900 dark:text-white">New Hire Onboarding</span>
+                <span className="text-primary">New Hire Onboarding</span>
               </div>
             </div>
             <div className="flex items-center gap-2 lg:gap-3">
@@ -553,7 +553,7 @@ export default function NewHireOnboarding() {
                 <span className="hidden sm:inline">Add New Hire</span>
               </button>
 
-              <button className="hidden md:flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl text-sm transition-all">
+              <button className="hidden md:flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded-xl text-sm transition-all">
                 <Clipboard className="w-4 h-4" />
                 <span>Templates</span>
               </button>
@@ -563,23 +563,23 @@ export default function NewHireOnboarding() {
                   onClick={() => setNotificationsOpen(!notificationsOpen)}
                   className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg relative"
                 >
-                  <Bell className="w-5 h-5 text-slate-700 dark:text-slate-400" />
+                  <Bell className="w-5 h-5 text-secondary" />
                   <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                 </button>
 
                 {notificationsOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-96 bg-white dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-2xl z-50">
-                    <div className="p-4 border-b border-slate-200 dark:border-slate-700/50">
-                      <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Onboarding Notifications</h3>
+                  <div className="absolute right-0 top-full mt-2 w-96 bg-surface-raised backdrop-blur-xl border border-border rounded-xl shadow-2xl z-50">
+                    <div className="p-4 border-b border-border">
+                      <h3 className="text-sm font-semibold text-primary">Onboarding Notifications</h3>
                     </div>
                     <div className="max-h-96 overflow-y-auto">
                       {notifications.map(notification => (
-                        <div key={notification.id} className={`p-4 border-b border-slate-200 dark:border-slate-200 dark:border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
+                        <div key={notification.id} className={`p-4 border-b border-border dark:border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
                           <div className="flex items-start gap-3">
                             <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-amber-400' : 'bg-blue-400'}`}></div>
                             <div className="flex-1 min-w-0">
-                              <p className="text-sm font-medium text-slate-900 dark:text-white mb-1">{notification.title}</p>
-                              <p className="text-xs text-slate-700 dark:text-slate-400 mb-2">{notification.message}</p>
+                              <p className="text-sm font-medium text-primary mb-1">{notification.title}</p>
+                              <p className="text-xs text-secondary mb-2">{notification.message}</p>
                               <p className="text-xs text-slate-500">{notification.time}</p>
                             </div>
                           </div>
@@ -594,11 +594,11 @@ export default function NewHireOnboarding() {
 
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
-                  <span className="text-slate-900 dark:text-white text-sm font-bold">HR</span>
+                  <span className="text-primary text-sm font-bold">HR</span>
                 </div>
                 <div className="hidden sm:block">
-                  <p className="text-sm font-medium text-slate-900 dark:text-white">HR Director</p>
-                  <p className="text-xs text-slate-700 dark:text-slate-400">Human Resources</p>
+                  <p className="text-sm font-medium text-primary">HR Director</p>
+                  <p className="text-xs text-secondary">Human Resources</p>
                 </div>
               </div>
             </div>
@@ -609,8 +609,8 @@ export default function NewHireOnboarding() {
           <div className="max-w-7xl mx-auto">
             {/* GCSO Header */}
             <div className="mb-6">
-              <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white mb-2">New Hire Onboarding & Personnel Activation</h2>
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-slate-700 dark:text-slate-400">
+              <h2 className="text-2xl lg:text-3xl font-bold text-primary mb-2">New Hire Onboarding & Personnel Activation</h2>
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-secondary">
                 <span>Gwinnett County Sheriff's Office</span>
                 <span className="text-slate-700">•</span>
                 <span>Lawrenceville, Georgia</span>
@@ -633,7 +633,7 @@ export default function NewHireOnboarding() {
                   <AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <div className="flex-1">
                     <p className="text-sm font-medium text-red-400 mb-1">Emily Johnson (Records Investigator): Onboarding NOT STARTED</p>
-                    <p className="text-xs text-slate-700 dark:text-slate-400">Start date 02/10/2025 (4 days) - HR Director must send reminder and confirm new hire is prepared with required documents</p>
+                    <p className="text-xs text-secondary">Start date 02/10/2025 (4 days) - HR Director must send reminder and confirm new hire is prepared with required documents</p>
                   </div>
                   <button className="px-3 py-1.5 bg-red-500/20 hover:bg-red-500/30 border border-red-500/40 text-red-400 rounded-lg text-xs font-medium transition-all">
                     Send Reminder
@@ -646,7 +646,7 @@ export default function NewHireOnboarding() {
                   <Clock className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
                   <div className="flex-1">
                     <p className="text-sm font-medium text-amber-400 mb-1">Christopher Lee (Deputy): FTO Week 8 Evaluation Due Tomorrow (02/07/2026)</p>
-                    <p className="text-xs text-slate-700 dark:text-slate-400">FTO Deputy M. Rodriguez must complete and submit Week 8 evaluation to Sgt. Martinez</p>
+                    <p className="text-xs text-secondary">FTO Deputy M. Rodriguez must complete and submit Week 8 evaluation to Sgt. Martinez</p>
                   </div>
                 </div>
               </div>
@@ -656,7 +656,7 @@ export default function NewHireOnboarding() {
                   <Clock className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
                   <div className="flex-1">
                     <p className="text-sm font-medium text-amber-400 mb-1">Nicole Brown (Detention): 4 Pending Tasks with Approaching Deadlines</p>
-                    <p className="text-xs text-slate-700 dark:text-slate-400">Uniform issue (02/07), Radio training (02/08), CPR/First Aid (02/10), CJIS Training (02/12)</p>
+                    <p className="text-xs text-secondary">Uniform issue (02/07), Radio training (02/08), CPR/First Aid (02/10), CJIS Training (02/12)</p>
                   </div>
                 </div>
               </div>
@@ -664,54 +664,54 @@ export default function NewHireOnboarding() {
 
             {/* Summary Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
+              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
                 <div className="flex items-center justify-between mb-3">
                   <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center">
                     <UserPlus className="w-5 h-5 text-blue-400" />
                   </div>
                 </div>
-                <p className="text-2xl font-bold text-slate-900 dark:text-white mb-1">{statusCounts.active}</p>
-                <p className="text-sm text-slate-700 dark:text-slate-400">Active New Hires</p>
+                <p className="text-2xl font-bold text-primary mb-1">{statusCounts.active}</p>
+                <p className="text-sm text-secondary">Active New Hires</p>
                 <p className="text-xs text-slate-500 mt-1">In onboarding process</p>
               </div>
 
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
+              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
                 <div className="flex items-center justify-between mb-3">
                   <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center">
                     <CheckCircle className="w-5 h-5 text-green-400" />
                   </div>
                 </div>
-                <p className="text-2xl font-bold text-slate-900 dark:text-white mb-1">{statusCounts.completed}</p>
-                <p className="text-sm text-slate-700 dark:text-slate-400">Personnel Activated</p>
+                <p className="text-2xl font-bold text-primary mb-1">{statusCounts.completed}</p>
+                <p className="text-sm text-secondary">Personnel Activated</p>
                 <p className="text-xs text-slate-500 mt-1">This month (FTO complete)</p>
               </div>
 
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
+              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
                 <div className="flex items-center justify-between mb-3">
                   <div className="w-10 h-10 bg-amber-500/20 rounded-xl flex items-center justify-center">
                     <GraduationCap className="w-5 h-5 text-amber-400" />
                   </div>
                 </div>
-                <p className="text-2xl font-bold text-slate-900 dark:text-white mb-1">2</p>
-                <p className="text-sm text-slate-700 dark:text-slate-400">In FTO Program</p>
+                <p className="text-2xl font-bold text-primary mb-1">2</p>
+                <p className="text-sm text-secondary">In FTO Program</p>
                 <p className="text-xs text-slate-500 mt-1">Sworn personnel training</p>
               </div>
 
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
+              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
                 <div className="flex items-center justify-between mb-3">
                   <div className="w-10 h-10 bg-red-500/20 rounded-xl flex items-center justify-center">
                     <AlertTriangle className="w-5 h-5 text-red-400" />
                   </div>
                 </div>
-                <p className="text-2xl font-bold text-slate-900 dark:text-white mb-1">{statusCounts['not-started']}</p>
-                <p className="text-sm text-slate-700 dark:text-slate-400">Not Started</p>
+                <p className="text-2xl font-bold text-primary mb-1">{statusCounts['not-started']}</p>
+                <p className="text-sm text-secondary">Not Started</p>
                 <p className="text-xs text-slate-500 mt-1">Requires immediate action</p>
               </div>
             </div>
 
             {/* Filters */}
             <div className="mb-6 flex flex-wrap gap-4 items-center justify-between">
-              <div className="flex gap-2 border-b border-slate-200 dark:border-slate-700/50 overflow-x-auto">
+              <div className="flex gap-2 border-b border-border overflow-x-auto">
                 {[
                   { id: 'all', label: 'All New Hires', count: statusCounts.all },
                   { id: 'active', label: 'Active', count: statusCounts.active },
@@ -723,7 +723,7 @@ export default function NewHireOnboarding() {
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
                     className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all relative whitespace-nowrap ${
-                      activeTab === tab.id ? 'text-amber-400' : 'text-slate-700 dark:text-slate-400 hover:text-slate-300'
+                      activeTab === tab.id ? 'text-amber-400' : 'text-secondary hover:text-slate-300'
                     }`}
                   >
                     {tab.label}
@@ -742,7 +742,7 @@ export default function NewHireOnboarding() {
                 <select
                   value={filterPositionType}
                   onChange={(e) => setFilterPositionType(e.target.value)}
-                  className="px-3 py-1.5 bg-white dark:bg-slate-800/40 border border-slate-700/50 rounded-lg text-sm text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/50"
+                  className="px-3 py-1.5 bg-white dark:bg-slate-800/40 border border-slate-700/50 rounded-lg text-sm text-primary focus:outline-none focus:border-amber-500/50"
                 >
                   <option value="all">All Positions ({positionCounts.all})</option>
                   <option value="sworn">Sworn Personnel ({positionCounts.sworn})</option>
@@ -761,10 +761,10 @@ export default function NewHireOnboarding() {
                 return (
                   <div
                     key={hire.id}
-                    className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden"
+                    className="bg-white dark:bg-slate-800/40 border border-border rounded-xl overflow-hidden"
                   >
                     {/* Header */}
-                    <div className="p-5 border-b border-slate-200 dark:border-slate-200 dark:border-slate-700/30">
+                    <div className="p-5 border-b border-border dark:border-slate-700/30">
                       <div className="flex items-start justify-between gap-4 flex-wrap">
                         <div className="flex items-start gap-4 flex-1 min-w-0">
                           <div className={`w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 ${
@@ -779,7 +779,7 @@ export default function NewHireOnboarding() {
 
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-3 mb-2 flex-wrap">
-                              <h3 className="text-lg font-semibold text-slate-900 dark:text-white">{hire.name}</h3>
+                              <h3 className="text-lg font-semibold text-primary">{hire.name}</h3>
                               <span className={`px-3 py-1 rounded-full text-xs font-bold border ${statusConfig.bg} ${statusConfig.text} ${statusConfig.border}`}>
                                 {statusConfig.label}
                               </span>
@@ -795,9 +795,9 @@ export default function NewHireOnboarding() {
                               )}
                             </div>
 
-                            <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">{hire.position} • {hire.department}</p>
+                            <p className="text-sm text-secondary mb-2">{hire.position} • {hire.department}</p>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 text-xs text-slate-700 dark:text-slate-400">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 text-xs text-secondary">
                               <div className="flex items-center gap-2">
                                 <Mail className="w-3 h-3" />
                                 <span className="truncate">{hire.email}</span>
@@ -828,8 +828,8 @@ export default function NewHireOnboarding() {
 
                         <div className="flex flex-col items-end gap-2">
                           <div className="text-right">
-                            <p className="text-sm text-slate-700 dark:text-slate-400">Critical Path Progress</p>
-                            <p className="text-2xl font-bold text-slate-900 dark:text-white">{overallProgress}%</p>
+                            <p className="text-sm text-secondary">Critical Path Progress</p>
+                            <p className="text-2xl font-bold text-primary">{overallProgress}%</p>
                           </div>
                           <div className="w-32 h-2 bg-white dark:bg-slate-700/50 rounded-full overflow-hidden">
                             <div
@@ -847,16 +847,16 @@ export default function NewHireOnboarding() {
 
                     {/* Hire Classification */}
                     {hire.hireClassification && (
-                      <div className="px-5 py-3 bg-slate-50 dark:bg-slate-900/30 border-b border-slate-200 dark:border-slate-200 dark:border-slate-700/30">
+                      <div className="px-5 py-3 bg-slate-50 dark:bg-slate-900/30 border-b border-border dark:border-slate-700/30">
                         <div className="flex flex-wrap gap-4 text-xs">
                           <div>
                             <span className="text-slate-500">Classification:</span>
-                            <span className="ml-1 text-slate-700 dark:text-slate-300">{hire.hireClassification.type}</span>
+                            <span className="ml-1 text-secondary">{hire.hireClassification.type}</span>
                           </div>
                           {hire.hireClassification.priorAgency && hire.hireClassification.priorAgency !== 'N/A - Corporate background' && hire.hireClassification.priorAgency !== 'None - Academy Graduate' && (
                             <div>
                               <span className="text-slate-500">Prior Agency:</span>
-                              <span className="ml-1 text-slate-700 dark:text-slate-300">{hire.hireClassification.priorAgency}</span>
+                              <span className="ml-1 text-secondary">{hire.hireClassification.priorAgency}</span>
                             </div>
                           )}
                           {hire.hireClassification.postCertified && (
@@ -867,7 +867,7 @@ export default function NewHireOnboarding() {
                           )}
                           <div>
                             <span className="text-slate-500">Salary:</span>
-                            <span className="ml-1 text-slate-700 dark:text-slate-300">{hire.hireClassification.startingSalary}</span>
+                            <span className="ml-1 text-secondary">{hire.hireClassification.startingSalary}</span>
                           </div>
                         </div>
                       </div>
@@ -875,7 +875,7 @@ export default function NewHireOnboarding() {
 
                     {/* FTO Program Status (for sworn personnel) */}
                     {hire.ftoProgram && hire.ftoProgram.enrolled && (
-                      <div className="px-5 py-4 bg-gradient-to-r from-amber-500/5 to-transparent border-b border-slate-200 dark:border-slate-200 dark:border-slate-700/30">
+                      <div className="px-5 py-4 bg-gradient-to-r from-amber-500/5 to-transparent border-b border-border dark:border-slate-700/30">
                         <div className="flex items-center gap-2 mb-3">
                           <GraduationCap className="w-4 h-4 text-amber-400" />
                           <h4 className="text-sm font-semibold text-amber-400">Field Training Officer (FTO) Program</h4>
@@ -894,15 +894,15 @@ export default function NewHireOnboarding() {
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
                           <div>
                             <span className="text-slate-500">FTO:</span>
-                            <span className="ml-1 text-slate-700 dark:text-slate-300">{hire.ftoProgram.fto}</span>
+                            <span className="ml-1 text-secondary">{hire.ftoProgram.fto}</span>
                           </div>
                           <div>
                             <span className="text-slate-500">Current Phase:</span>
-                            <span className="ml-1 text-slate-700 dark:text-slate-300">{hire.ftoProgram.currentPhase}</span>
+                            <span className="ml-1 text-secondary">{hire.ftoProgram.currentPhase}</span>
                           </div>
                           <div>
                             <span className="text-slate-500">{hire.ftoProgram.currentWeek === 'COMPLETED' ? 'Completed:' : 'Anticipated Completion:'}</span>
-                            <span className="ml-1 text-slate-700 dark:text-slate-300">{hire.ftoProgram.completionDate || hire.ftoProgram.anticipatedCompletion}</span>
+                            <span className="ml-1 text-secondary">{hire.ftoProgram.completionDate || hire.ftoProgram.anticipatedCompletion}</span>
                           </div>
                         </div>
 
@@ -933,7 +933,7 @@ export default function NewHireOnboarding() {
                     )}
 
                     {/* Completion Summary */}
-                    <div className="px-5 py-4 border-b border-slate-200 dark:border-slate-200 dark:border-slate-700/30">
+                    <div className="px-5 py-4 border-b border-border dark:border-slate-700/30">
                       <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
                         {[
                           { key: 'preEmployment', label: 'Pre-Employment', icon: FileCheck },
@@ -969,7 +969,7 @@ export default function NewHireOnboarding() {
                                   <ChevronDown className="w-3 h-3 text-slate-500" />
                                 )}
                               </div>
-                              <p className="text-xs font-medium text-slate-700 dark:text-slate-300">{section.label}</p>
+                              <p className="text-xs font-medium text-secondary">{section.label}</p>
                               <p className={`text-sm font-bold ${
                                 isComplete ? 'text-green-400' : data.completed > 0 ? 'text-blue-400' : 'text-slate-500'
                               }`}>
@@ -996,8 +996,8 @@ export default function NewHireOnboarding() {
                       };
 
                       return (
-                        <div key={sectionKey} className="px-5 py-4 bg-slate-50 dark:bg-slate-900/30 border-b border-slate-200 dark:border-slate-200 dark:border-slate-700/30">
-                          <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">{sectionLabels[sectionKey]}</h4>
+                        <div key={sectionKey} className="px-5 py-4 bg-slate-50 dark:bg-slate-900/30 border-b border-border dark:border-slate-700/30">
+                          <h4 className="text-sm font-semibold text-secondary mb-3">{sectionLabels[sectionKey]}</h4>
                           <div className="space-y-2">
                             {tasks.map(task => (
                               <div
@@ -1007,7 +1007,7 @@ export default function NewHireOnboarding() {
                                     ? 'bg-green-500/5 border-green-500/20'
                                     : task.status === 'overdue'
                                       ? 'bg-red-500/5 border-red-500/20'
-                                      : 'bg-slate-100/80 dark:bg-slate-800/30 border-slate-200 dark:border-slate-700/30'
+                                      : 'bg-slate-100/80 dark:bg-slate-800/30 border-border'
                                 }`}
                               >
                                 <div className="flex items-start gap-3">
@@ -1015,7 +1015,7 @@ export default function NewHireOnboarding() {
                                   <div className="flex-1 min-w-0">
                                     <div className="flex items-center gap-2 flex-wrap">
                                       <p className={`text-sm font-medium ${
-                                        task.status === 'completed' ? 'text-green-400' : 'text-slate-900 dark:text-white'
+                                        task.status === 'completed' ? 'text-green-400' : 'text-primary'
                                       }`}>
                                         {task.name}
                                       </p>
@@ -1031,7 +1031,7 @@ export default function NewHireOnboarding() {
                                       )}
                                     </div>
                                     {task.details && (
-                                      <p className="text-xs text-slate-700 dark:text-slate-400 mt-1">{task.details}</p>
+                                      <p className="text-xs text-secondary mt-1">{task.details}</p>
                                     )}
                                     {task.result && (
                                       <p className="text-xs text-green-400/80 mt-1">{task.result}</p>
@@ -1065,7 +1065,7 @@ export default function NewHireOnboarding() {
                               className={`p-3 rounded-lg border ${
                                 action.status === 'overdue' ? 'bg-red-500/10 border-red-500/30' :
                                 action.status === 'due-tomorrow' ? 'bg-amber-500/10 border-amber-500/30' :
-                                'bg-slate-100/80 dark:bg-slate-800/30 border-slate-200 dark:border-slate-700/30'
+                                'bg-slate-100/80 dark:bg-slate-800/30 border-border'
                               }`}
                             >
                               <p className={`text-sm font-medium ${
@@ -1094,16 +1094,16 @@ export default function NewHireOnboarding() {
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
                           <div>
                             <span className="text-slate-500">Activation Date:</span>
-                            <span className="ml-1 text-slate-700 dark:text-slate-300">{hire.activationDate}</span>
+                            <span className="ml-1 text-secondary">{hire.activationDate}</span>
                           </div>
                           <div>
                             <span className="text-slate-500">Current Assignment:</span>
-                            <span className="ml-1 text-slate-700 dark:text-slate-300">{hire.currentAssignment}</span>
+                            <span className="ml-1 text-secondary">{hire.currentAssignment}</span>
                           </div>
                           {hire.takeHomeVehicle && (
                             <div>
                               <span className="text-slate-500">Take-Home Vehicle:</span>
-                              <span className="ml-1 text-slate-700 dark:text-slate-300">{hire.takeHomeVehicle}</span>
+                              <span className="ml-1 text-secondary">{hire.takeHomeVehicle}</span>
                             </div>
                           )}
                         </div>
@@ -1125,12 +1125,12 @@ export default function NewHireOnboarding() {
                           View FTO Evaluations
                         </button>
                       )}
-                      <button className="px-4 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium transition-all flex items-center gap-2">
+                      <button className="px-4 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-sm font-medium transition-all flex items-center gap-2">
                         <Download className="w-4 h-4" />
                         Export Checklist
                       </button>
                       {hire.status !== 'completed' && (
-                        <button className="px-4 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium transition-all flex items-center gap-2">
+                        <button className="px-4 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-sm font-medium transition-all flex items-center gap-2">
                           <Mail className="w-4 h-4" />
                           Send Reminder
                         </button>
@@ -1151,11 +1151,11 @@ export default function NewHireOnboarding() {
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={() => setSelectedNewHire(null)}
           />
-          <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl p-6 max-w-4xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
+          <div className="relative bg-white dark:bg-slate-900 border border-border rounded-2xl p-6 max-w-4xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
             <div className="flex items-start justify-between mb-6">
               <div>
-                <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">{selectedNewHire.name}</h3>
-                <p className="text-sm text-slate-700 dark:text-slate-400">{selectedNewHire.position} • {selectedNewHire.department}</p>
+                <h3 className="text-2xl font-bold text-primary mb-2">{selectedNewHire.name}</h3>
+                <p className="text-sm text-secondary">{selectedNewHire.position} • {selectedNewHire.department}</p>
                 {selectedNewHire.hireAuthority && (
                   <p className="text-xs text-slate-500 mt-1">{selectedNewHire.hireAuthority}</p>
                 )}
@@ -1164,7 +1164,7 @@ export default function NewHireOnboarding() {
                 onClick={() => setSelectedNewHire(null)}
                 className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors"
               >
-                <X className="w-5 h-5 text-slate-700 dark:text-slate-400" />
+                <X className="w-5 h-5 text-secondary" />
               </button>
             </div>
 
@@ -1172,30 +1172,30 @@ export default function NewHireOnboarding() {
             <div className="grid grid-cols-2 gap-6 mb-6 p-4 bg-slate-100/80 dark:bg-slate-800/30 rounded-xl">
               <div>
                 <p className="text-xs text-slate-500 mb-1">Email</p>
-                <p className="text-sm text-slate-700 dark:text-slate-300">{selectedNewHire.email}</p>
+                <p className="text-sm text-secondary">{selectedNewHire.email}</p>
               </div>
               <div>
                 <p className="text-xs text-slate-500 mb-1">Phone</p>
-                <p className="text-sm text-slate-700 dark:text-slate-300">{selectedNewHire.phone}</p>
+                <p className="text-sm text-secondary">{selectedNewHire.phone}</p>
               </div>
               <div>
                 <p className="text-xs text-slate-500 mb-1">Start Date</p>
-                <p className="text-sm text-slate-700 dark:text-slate-300">{selectedNewHire.startDateDisplay}</p>
+                <p className="text-sm text-secondary">{selectedNewHire.startDateDisplay}</p>
               </div>
               <div>
                 <p className="text-xs text-slate-500 mb-1">Position Type</p>
-                <p className="text-sm text-slate-700 dark:text-slate-300 capitalize">{selectedNewHire.positionType}</p>
+                <p className="text-sm text-secondary capitalize">{selectedNewHire.positionType}</p>
               </div>
               {selectedNewHire.shift && (
                 <div>
                   <p className="text-xs text-slate-500 mb-1">Assigned Shift</p>
-                  <p className="text-sm text-slate-700 dark:text-slate-300">{selectedNewHire.shift}</p>
+                  <p className="text-sm text-secondary">{selectedNewHire.shift}</p>
                 </div>
               )}
               {selectedNewHire.unitNumber && (
                 <div>
                   <p className="text-xs text-slate-500 mb-1">Unit Number</p>
-                  <p className="text-sm text-slate-700 dark:text-slate-300">{selectedNewHire.unitNumber}</p>
+                  <p className="text-sm text-secondary">{selectedNewHire.unitNumber}</p>
                 </div>
               )}
             </div>
@@ -1203,16 +1203,16 @@ export default function NewHireOnboarding() {
             {/* Classification */}
             {selectedNewHire.hireClassification && (
               <div className="mb-6 p-4 bg-slate-100/80 dark:bg-slate-800/30 rounded-xl">
-                <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Hire Classification</h4>
+                <h4 className="text-sm font-semibold text-secondary mb-3">Hire Classification</h4>
                 <div className="grid grid-cols-2 gap-3 text-xs">
                   <div>
                     <span className="text-slate-500">Type:</span>
-                    <span className="ml-1 text-slate-700 dark:text-slate-300">{selectedNewHire.hireClassification.type}</span>
+                    <span className="ml-1 text-secondary">{selectedNewHire.hireClassification.type}</span>
                   </div>
                   {selectedNewHire.hireClassification.priorExperience && (
                     <div>
                       <span className="text-slate-500">Prior Experience:</span>
-                      <span className="ml-1 text-slate-700 dark:text-slate-300">{selectedNewHire.hireClassification.priorExperience}</span>
+                      <span className="ml-1 text-secondary">{selectedNewHire.hireClassification.priorExperience}</span>
                     </div>
                   )}
                   {selectedNewHire.hireClassification.postCertified && (
@@ -1223,13 +1223,13 @@ export default function NewHireOnboarding() {
                       </div>
                       <div>
                         <span className="text-slate-500">POST Expiration:</span>
-                        <span className="ml-1 text-slate-700 dark:text-slate-300">{selectedNewHire.hireClassification.postExpiration}</span>
+                        <span className="ml-1 text-secondary">{selectedNewHire.hireClassification.postExpiration}</span>
                       </div>
                     </>
                   )}
                   <div className="col-span-2">
                     <span className="text-slate-500">Starting Salary:</span>
-                    <span className="ml-1 text-slate-700 dark:text-slate-300">{selectedNewHire.hireClassification.startingSalary}</span>
+                    <span className="ml-1 text-secondary">{selectedNewHire.hireClassification.startingSalary}</span>
                   </div>
                 </div>
               </div>
@@ -1242,19 +1242,19 @@ export default function NewHireOnboarding() {
                 <div className="grid grid-cols-2 gap-3 text-xs mb-4">
                   <div>
                     <span className="text-slate-500">FTO:</span>
-                    <span className="ml-1 text-slate-700 dark:text-slate-300">{selectedNewHire.ftoProgram.fto}</span>
+                    <span className="ml-1 text-secondary">{selectedNewHire.ftoProgram.fto}</span>
                   </div>
                   <div>
                     <span className="text-slate-500">Coordinator:</span>
-                    <span className="ml-1 text-slate-700 dark:text-slate-300">{selectedNewHire.ftoProgram.coordinator}</span>
+                    <span className="ml-1 text-secondary">{selectedNewHire.ftoProgram.coordinator}</span>
                   </div>
                   <div>
                     <span className="text-slate-500">Duration:</span>
-                    <span className="ml-1 text-slate-700 dark:text-slate-300">{selectedNewHire.ftoProgram.duration}</span>
+                    <span className="ml-1 text-secondary">{selectedNewHire.ftoProgram.duration}</span>
                   </div>
                   <div>
                     <span className="text-slate-500">Current Week:</span>
-                    <span className="ml-1 text-slate-700 dark:text-slate-300">{selectedNewHire.ftoProgram.currentWeek}</span>
+                    <span className="ml-1 text-secondary">{selectedNewHire.ftoProgram.currentWeek}</span>
                   </div>
                 </div>
 
@@ -1288,7 +1288,7 @@ export default function NewHireOnboarding() {
                             {phase.status.toUpperCase().replace('-', ' ')}
                           </span>
                         </div>
-                        <p className="text-xs text-slate-700 dark:text-slate-400 mt-1">{phase.rating}</p>
+                        <p className="text-xs text-secondary mt-1">{phase.rating}</p>
                       </div>
                     ))}
                   </div>
@@ -1298,7 +1298,7 @@ export default function NewHireOnboarding() {
 
             {/* Quick Progress Summary */}
             <div className="mb-6">
-              <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Onboarding Progress Summary</h4>
+              <h4 className="text-sm font-semibold text-secondary mb-3">Onboarding Progress Summary</h4>
               <div className="grid grid-cols-5 gap-2">
                 {Object.entries(selectedNewHire.completionSummary).map(([key, value]) => {
                   if (value.total === 0) return null;
@@ -1318,7 +1318,7 @@ export default function NewHireOnboarding() {
                         isComplete ? 'bg-green-500/20' : value.completed > 0 ? 'bg-blue-500/20' : 'bg-slate-100 dark:bg-slate-700/30'
                       }`}
                     >
-                      <p className="text-xs text-slate-700 dark:text-slate-400">{labels[key]}</p>
+                      <p className="text-xs text-secondary">{labels[key]}</p>
                       <p className={`text-lg font-bold ${
                         isComplete ? 'text-green-400' : value.completed > 0 ? 'text-blue-400' : 'text-slate-500'
                       }`}>
@@ -1330,16 +1330,16 @@ export default function NewHireOnboarding() {
               </div>
             </div>
 
-            <div className="flex gap-3 pt-4 border-t border-slate-200 dark:border-slate-700/50">
+            <div className="flex gap-3 pt-4 border-t border-border">
               <button className="flex-1 px-4 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-xl font-medium transition-all">
                 Print Full Checklist
               </button>
-              <button className="flex-1 px-4 py-3 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-900 dark:text-white rounded-xl font-medium transition-all">
+              <button className="flex-1 px-4 py-3 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-primary rounded-xl font-medium transition-all">
                 View Personnel File
               </button>
               <button
                 onClick={() => setSelectedNewHire(null)}
-                className="px-4 py-3 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl font-medium transition-all"
+                className="px-4 py-3 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded-xl font-medium transition-all"
               >
                 Close
               </button>

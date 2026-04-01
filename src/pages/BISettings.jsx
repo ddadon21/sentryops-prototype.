@@ -267,8 +267,8 @@ export default function BISettings() {
       <div className="p-5 lg:p-8 space-y-8 min-h-full">
           <div className="max-w-6xl mx-auto">
             <div className="mb-6">
-              <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white mb-2">BI Settings</h2>
-              <p className="text-slate-700 dark:text-slate-400">Manage your account, notifications, and investigation system integrations</p>
+              <h2 className="text-2xl lg:text-3xl font-bold text-primary mb-2">BI Settings</h2>
+              <p className="text-secondary">Manage your account, notifications, and investigation system integrations</p>
             </div>
 
             {/* Save Success Banner */}
@@ -287,8 +287,8 @@ export default function BISettings() {
                     <CheckCircle2 className="w-6 h-6 text-green-400" />
                   </div>
                   <div>
-                    <h4 className="text-base font-semibold text-slate-900 dark:text-white">All Investigation Systems Operational</h4>
-                    <p className="text-sm text-slate-700 dark:text-slate-300">5 integrations active • 99.93% average uptime • Last sync: 5 min ago</p>
+                    <h4 className="text-base font-semibold text-primary">All Investigation Systems Operational</h4>
+                    <p className="text-sm text-secondary">5 integrations active • 99.93% average uptime • Last sync: 5 min ago</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-2 px-4 py-2 bg-green-500/20 border border-green-500/30 rounded-lg">
@@ -305,7 +305,7 @@ export default function BISettings() {
             </div>
 
             {/* Settings Navigation Tabs */}
-            <div className="mb-6 flex gap-2 border-b border-slate-200 dark:border-slate-700/50 overflow-x-auto">
+            <div className="mb-6 flex gap-2 border-b border-border overflow-x-auto">
               {settingsTabs.map(tab => {
                 const Icon = tab.icon;
                 return (
@@ -313,7 +313,7 @@ export default function BISettings() {
                     key={tab.id}
                     onClick={() => setActiveSection(tab.id)}
                     className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all relative whitespace-nowrap ${
-                      activeSection === tab.id ? 'text-purple-400' : 'text-slate-700 dark:text-slate-400 hover:text-slate-300'
+                      activeSection === tab.id ? 'text-purple-400' : 'text-secondary hover:text-slate-300'
                     }`}
                   >
                     <Icon className="w-4 h-4" />
@@ -330,9 +330,9 @@ export default function BISettings() {
             <div className="space-y-6">
               {/* Profile Settings */}
               {activeSection === 'profile' && (
-                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-6">
+                <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
                   <div className="flex items-center justify-between mb-6">
-                    <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Profile Information</h3>
+                    <h3 className="text-lg font-semibold text-primary">Profile Information</h3>
                     <div className="flex items-center gap-2 px-3 py-1.5 bg-green-500/20 border border-green-500/30 rounded-lg">
                       <div className="w-2 h-2 bg-green-400 rounded-full"></div>
                       <span className="text-xs font-medium text-green-400">Verified Account</span>
@@ -342,90 +342,90 @@ export default function BISettings() {
                   <div className="flex items-center gap-6 mb-8">
                     <div className="relative">
                       <div className="w-24 h-24 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center">
-                        <span className="text-slate-900 dark:text-white text-2xl font-bold">MB</span>
+                        <span className="text-primary text-2xl font-bold">MB</span>
                       </div>
                       <button className="absolute bottom-0 right-0 w-8 h-8 bg-purple-500 hover:bg-purple-400 rounded-full flex items-center justify-center transition-colors">
-                        <Camera className="w-4 h-4 text-slate-900 dark:text-white" />
+                        <Camera className="w-4 h-4 text-primary" />
                       </button>
                     </div>
                     <div>
-                      <h4 className="text-xl font-semibold text-slate-900 dark:text-white">{profileSettings.fullName}</h4>
-                      <p className="text-slate-700 dark:text-slate-400">{profileSettings.position}</p>
+                      <h4 className="text-xl font-semibold text-primary">{profileSettings.fullName}</h4>
+                      <p className="text-secondary">{profileSettings.position}</p>
                       <p className="text-sm text-slate-500">{profileSettings.department}</p>
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Full Name</label>
+                      <label className="block text-sm font-medium text-secondary mb-2">Full Name</label>
                       <input
                         type="text"
                         value={profileSettings.fullName}
                         onChange={(e) => setProfileSettings({...profileSettings, fullName: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-purple-500/50 transition-colors"
+                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-purple-500/50 transition-colors"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Email Address</label>
+                      <label className="block text-sm font-medium text-secondary mb-2">Email Address</label>
                       <input
                         type="email"
                         value={profileSettings.email}
                         onChange={(e) => setProfileSettings({...profileSettings, email: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-purple-500/50 transition-colors"
+                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-purple-500/50 transition-colors"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Employee ID</label>
+                      <label className="block text-sm font-medium text-secondary mb-2">Employee ID</label>
                       <input
                         type="text"
                         value={profileSettings.employeeId}
                         disabled
-                        className="w-full px-4 py-2.5 bg-slate-100 dark:bg-slate-800/20 border border-slate-700/50 rounded-xl text-slate-700 dark:text-slate-400 cursor-not-allowed"
+                        className="w-full px-4 py-2.5 bg-slate-100 dark:bg-slate-800/20 border border-slate-700/50 rounded-xl text-secondary cursor-not-allowed"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Phone Number</label>
+                      <label className="block text-sm font-medium text-secondary mb-2">Phone Number</label>
                       <input
                         type="tel"
                         value={profileSettings.phone}
                         onChange={(e) => setProfileSettings({...profileSettings, phone: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-purple-500/50 transition-colors"
+                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-purple-500/50 transition-colors"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Department</label>
+                      <label className="block text-sm font-medium text-secondary mb-2">Department</label>
                       <input
                         type="text"
                         value={profileSettings.department}
                         disabled
-                        className="w-full px-4 py-2.5 bg-slate-100 dark:bg-slate-800/20 border border-slate-700/50 rounded-xl text-slate-700 dark:text-slate-400 cursor-not-allowed"
+                        className="w-full px-4 py-2.5 bg-slate-100 dark:bg-slate-800/20 border border-slate-700/50 rounded-xl text-secondary cursor-not-allowed"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Position</label>
+                      <label className="block text-sm font-medium text-secondary mb-2">Position</label>
                       <input
                         type="text"
                         value={profileSettings.position}
                         disabled
-                        className="w-full px-4 py-2.5 bg-slate-100 dark:bg-slate-800/20 border border-slate-700/50 rounded-xl text-slate-700 dark:text-slate-400 cursor-not-allowed"
+                        className="w-full px-4 py-2.5 bg-slate-100 dark:bg-slate-800/20 border border-slate-700/50 rounded-xl text-secondary cursor-not-allowed"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Hire Date</label>
+                      <label className="block text-sm font-medium text-secondary mb-2">Hire Date</label>
                       <input
                         type="text"
                         value={new Date(profileSettings.hireDate).toLocaleDateString()}
                         disabled
-                        className="w-full px-4 py-2.5 bg-slate-100 dark:bg-slate-800/20 border border-slate-700/50 rounded-xl text-slate-700 dark:text-slate-400 cursor-not-allowed"
+                        className="w-full px-4 py-2.5 bg-slate-100 dark:bg-slate-800/20 border border-slate-700/50 rounded-xl text-secondary cursor-not-allowed"
                       />
                     </div>
                     <div className="md:col-span-2">
-                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Certifications</label>
+                      <label className="block text-sm font-medium text-secondary mb-2">Certifications</label>
                       <input
                         type="text"
                         value={profileSettings.certifications}
                         onChange={(e) => setProfileSettings({...profileSettings, certifications: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-purple-500/50 transition-colors"
+                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-purple-500/50 transition-colors"
                       />
                     </div>
                   </div>
@@ -444,12 +444,12 @@ export default function BISettings() {
 
               {/* Notification Settings */}
               {activeSection === 'notifications' && (
-                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-6">
-                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-6">Notification Preferences</h3>
+                <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
+                  <h3 className="text-lg font-semibold text-primary mb-6">Notification Preferences</h3>
 
                   <div className="space-y-6">
                     <div>
-                      <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-4 uppercase tracking-wide">Delivery Methods</h4>
+                      <h4 className="text-sm font-semibold text-secondary mb-4 uppercase tracking-wide">Delivery Methods</h4>
                       <div className="space-y-6">
                         {[
                           { key: 'emailNotifications', label: 'Email Notifications', desc: 'Receive notifications via email', icon: Mail },
@@ -458,14 +458,14 @@ export default function BISettings() {
                         ].map(item => {
                           const Icon = item.icon;
                           return (
-                            <div key={item.key} className="flex items-center justify-between p-4 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl">
+                            <div key={item.key} className="flex items-center justify-between p-4 bg-white dark:bg-slate-800/40 border border-border rounded-xl">
                               <div className="flex items-center gap-4">
                                 <div className="w-10 h-10 bg-white dark:bg-slate-700/50 rounded-xl flex items-center justify-center">
-                                  <Icon className="w-5 h-5 text-slate-700 dark:text-slate-400" />
+                                  <Icon className="w-5 h-5 text-secondary" />
                                 </div>
                                 <div>
-                                  <p className="text-slate-900 dark:text-white font-medium">{item.label}</p>
-                                  <p className="text-sm text-slate-700 dark:text-slate-400">{item.desc}</p>
+                                  <p className="text-primary font-medium">{item.label}</p>
+                                  <p className="text-sm text-secondary">{item.desc}</p>
                                 </div>
                               </div>
                               <button
@@ -481,7 +481,7 @@ export default function BISettings() {
                     </div>
 
                     <div>
-                      <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-4 uppercase tracking-wide">Investigation Alert Types</h4>
+                      <h4 className="text-sm font-semibold text-secondary mb-4 uppercase tracking-wide">Investigation Alert Types</h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {[
                           { key: 'caseAssignments', label: 'Case Assignments', desc: 'New case notifications' },
@@ -493,10 +493,10 @@ export default function BISettings() {
                           { key: 'financialAlerts', label: 'Financial Alerts', desc: 'Credit check notifications' },
                           { key: 'supervisorReviewRequired', label: 'Supervisor Review', desc: 'Cases needing approval' }
                         ].map(item => (
-                          <div key={item.key} className="flex items-center justify-between p-4 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl">
+                          <div key={item.key} className="flex items-center justify-between p-4 bg-white dark:bg-slate-800/40 border border-border rounded-xl">
                             <div>
-                              <p className="text-slate-900 dark:text-white font-medium">{item.label}</p>
-                              <p className="text-xs text-slate-700 dark:text-slate-400">{item.desc}</p>
+                              <p className="text-primary font-medium">{item.label}</p>
+                              <p className="text-xs text-secondary">{item.desc}</p>
                             </div>
                             <button
                               onClick={() => setNotificationSettings({...notificationSettings, [item.key]: !notificationSettings[item.key]})}
@@ -524,12 +524,12 @@ export default function BISettings() {
 
               {/* Display Settings */}
               {activeSection === 'display' && (
-                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-6">
-                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-6">Display & Appearance</h3>
+                <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
+                  <h3 className="text-lg font-semibold text-primary mb-6">Display & Appearance</h3>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">Theme</label>
+                      <label className="block text-sm font-medium text-secondary mb-3">Theme</label>
                       <div className="flex gap-3">
                         <button
                           onClick={() => setDisplaySettings({...displaySettings, theme: 'dark'})}
@@ -553,11 +553,11 @@ export default function BISettings() {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">Date Format</label>
+                      <label className="block text-sm font-medium text-secondary mb-3">Date Format</label>
                       <select
                         value={displaySettings.dateFormat}
                         onChange={(e) => setDisplaySettings({...displaySettings, dateFormat: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-purple-500/50"
+                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary focus:outline-none focus:border-purple-500/50"
                       >
                         <option value="MM/DD/YYYY">MM/DD/YYYY</option>
                         <option value="DD/MM/YYYY">DD/MM/YYYY</option>
@@ -566,11 +566,11 @@ export default function BISettings() {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">Time Format</label>
+                      <label className="block text-sm font-medium text-secondary mb-3">Time Format</label>
                       <select
                         value={displaySettings.timeFormat}
                         onChange={(e) => setDisplaySettings({...displaySettings, timeFormat: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-purple-500/50"
+                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary focus:outline-none focus:border-purple-500/50"
                       >
                         <option value="12h">12-hour</option>
                         <option value="24h">24-hour</option>
@@ -578,11 +578,11 @@ export default function BISettings() {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">Timezone</label>
+                      <label className="block text-sm font-medium text-secondary mb-3">Timezone</label>
                       <select
                         value={displaySettings.timezone}
                         onChange={(e) => setDisplaySettings({...displaySettings, timezone: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-purple-500/50"
+                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary focus:outline-none focus:border-purple-500/50"
                       >
                         <option value="America/New_York">Eastern Time (ET)</option>
                         <option value="America/Chicago">Central Time (CT)</option>
@@ -592,11 +592,11 @@ export default function BISettings() {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">Display Density</label>
+                      <label className="block text-sm font-medium text-secondary mb-3">Display Density</label>
                       <select
                         value={displaySettings.density}
                         onChange={(e) => setDisplaySettings({...displaySettings, density: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-purple-500/50"
+                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary focus:outline-none focus:border-purple-500/50"
                       >
                         <option value="compact">Compact</option>
                         <option value="comfortable">Comfortable</option>
@@ -604,10 +604,10 @@ export default function BISettings() {
                       </select>
                     </div>
 
-                    <div className="flex items-center justify-between p-4 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl">
+                    <div className="flex items-center justify-between p-4 bg-white dark:bg-slate-800/40 border border-border rounded-xl">
                       <div>
-                        <p className="text-slate-900 dark:text-white font-medium">Animations</p>
-                        <p className="text-sm text-slate-700 dark:text-slate-400">Enable UI animations</p>
+                        <p className="text-primary font-medium">Animations</p>
+                        <p className="text-sm text-secondary">Enable UI animations</p>
                       </div>
                       <button
                         onClick={() => setDisplaySettings({...displaySettings, animations: !displaySettings.animations})}
@@ -633,18 +633,18 @@ export default function BISettings() {
               {/* Security Settings */}
               {activeSection === 'security' && (
                 <div className="space-y-6">
-                  <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-6">
-                    <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-6">Security Settings</h3>
+                  <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
+                    <h3 className="text-lg font-semibold text-primary mb-6">Security Settings</h3>
 
                     <div className="space-y-6">
-                      <div className="flex items-center justify-between p-4 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl">
+                      <div className="flex items-center justify-between p-4 bg-white dark:bg-slate-800/40 border border-border rounded-xl">
                         <div className="flex items-center gap-4">
                           <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center">
                             <Lock className="w-5 h-5 text-green-400" />
                           </div>
                           <div>
-                            <p className="text-slate-900 dark:text-white font-medium">Two-Factor Authentication</p>
-                            <p className="text-sm text-slate-700 dark:text-slate-400">Add an extra layer of security</p>
+                            <p className="text-primary font-medium">Two-Factor Authentication</p>
+                            <p className="text-sm text-secondary">Add an extra layer of security</p>
                           </div>
                         </div>
                         <div className="flex items-center gap-3">
@@ -660,20 +660,20 @@ export default function BISettings() {
                         </div>
                       </div>
 
-                      <div className="flex items-center justify-between p-4 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl">
+                      <div className="flex items-center justify-between p-4 bg-white dark:bg-slate-800/40 border border-border rounded-xl">
                         <div className="flex items-center gap-4">
                           <div className="w-10 h-10 bg-white dark:bg-slate-700/50 rounded-xl flex items-center justify-center">
-                            <Clock className="w-5 h-5 text-slate-700 dark:text-slate-400" />
+                            <Clock className="w-5 h-5 text-secondary" />
                           </div>
                           <div>
-                            <p className="text-slate-900 dark:text-white font-medium">Session Timeout</p>
-                            <p className="text-sm text-slate-700 dark:text-slate-400">Auto-logout after inactivity</p>
+                            <p className="text-primary font-medium">Session Timeout</p>
+                            <p className="text-sm text-secondary">Auto-logout after inactivity</p>
                           </div>
                         </div>
                         <select
                           value={securitySettings.sessionTimeout}
                           onChange={(e) => setSecuritySettings({...securitySettings, sessionTimeout: e.target.value})}
-                          className="px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-purple-500/50"
+                          className="px-4 py-2 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary focus:outline-none focus:border-purple-500/50"
                         >
                           <option value="15">15 minutes</option>
                           <option value="30">30 minutes</option>
@@ -682,14 +682,14 @@ export default function BISettings() {
                         </select>
                       </div>
 
-                      <div className="flex items-center justify-between p-4 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl">
+                      <div className="flex items-center justify-between p-4 bg-white dark:bg-slate-800/40 border border-border rounded-xl">
                         <div className="flex items-center gap-4">
                           <div className="w-10 h-10 bg-white dark:bg-slate-700/50 rounded-xl flex items-center justify-center">
-                            <Bell className="w-5 h-5 text-slate-700 dark:text-slate-400" />
+                            <Bell className="w-5 h-5 text-secondary" />
                           </div>
                           <div>
-                            <p className="text-slate-900 dark:text-white font-medium">Login Notifications</p>
-                            <p className="text-sm text-slate-700 dark:text-slate-400">Get alerted for new sign-ins</p>
+                            <p className="text-primary font-medium">Login Notifications</p>
+                            <p className="text-sm text-secondary">Get alerted for new sign-ins</p>
                           </div>
                         </div>
                         <button
@@ -700,14 +700,14 @@ export default function BISettings() {
                         </button>
                       </div>
 
-                      <div className="flex items-center justify-between p-4 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl">
+                      <div className="flex items-center justify-between p-4 bg-white dark:bg-slate-800/40 border border-border rounded-xl">
                         <div className="flex items-center gap-4">
                           <div className="w-10 h-10 bg-white dark:bg-slate-700/50 rounded-xl flex items-center justify-center">
-                            <Activity className="w-5 h-5 text-slate-700 dark:text-slate-400" />
+                            <Activity className="w-5 h-5 text-secondary" />
                           </div>
                           <div>
-                            <p className="text-slate-900 dark:text-white font-medium">Audit Logging</p>
-                            <p className="text-sm text-slate-700 dark:text-slate-400">Track all account activity</p>
+                            <p className="text-primary font-medium">Audit Logging</p>
+                            <p className="text-sm text-secondary">Track all account activity</p>
                           </div>
                         </div>
                         <button
@@ -720,31 +720,31 @@ export default function BISettings() {
                     </div>
                   </div>
 
-                  <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-6">
-                    <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Change Password</h3>
+                  <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
+                    <h3 className="text-lg font-semibold text-primary mb-4">Change Password</h3>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <div>
-                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Current Password</label>
+                        <label className="block text-sm font-medium text-secondary mb-2">Current Password</label>
                         <input
                           type="password"
                           placeholder="••••••••"
-                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-purple-500/50"
+                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-purple-500/50"
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">New Password</label>
+                        <label className="block text-sm font-medium text-secondary mb-2">New Password</label>
                         <input
                           type="password"
                           placeholder="••••••••"
-                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-purple-500/50"
+                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-purple-500/50"
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Confirm Password</label>
+                        <label className="block text-sm font-medium text-secondary mb-2">Confirm Password</label>
                         <input
                           type="password"
                           placeholder="••••••••"
-                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-purple-500/50"
+                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-purple-500/50"
                         />
                       </div>
                     </div>
@@ -761,13 +761,13 @@ export default function BISettings() {
               {/* Integrations */}
               {activeSection === 'integrations' && (
                 <div className="space-y-6">
-                  <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-6">
+                  <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
                     <div className="flex items-center justify-between mb-6">
                       <div>
-                        <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Background Investigation Integrations</h3>
-                        <p className="text-sm text-slate-700 dark:text-slate-400">Connected systems and data sources for investigations</p>
+                        <h3 className="text-lg font-semibold text-primary">Background Investigation Integrations</h3>
+                        <p className="text-sm text-secondary">Connected systems and data sources for investigations</p>
                       </div>
-                      <button className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 border border-slate-600/50 rounded-xl text-slate-700 dark:text-slate-300 transition-all">
+                      <button className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 border border-slate-600/50 rounded-xl text-secondary transition-all">
                         <RefreshCw className="w-4 h-4" />
                         Sync All
                       </button>
@@ -775,7 +775,7 @@ export default function BISettings() {
 
                     <div className="space-y-6">
                       {Object.entries(integrations).map(([key, integration]) => (
-                        <div key={key} className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
+                        <div key={key} className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
                           <div className="flex items-start justify-between">
                             <div className="flex items-start gap-4">
                               <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
@@ -787,17 +787,17 @@ export default function BISettings() {
                               </div>
                               <div>
                                 <div className="flex items-center gap-3 mb-1">
-                                  <h4 className="text-slate-900 dark:text-white font-semibold">{integration.name}</h4>
+                                  <h4 className="text-primary font-semibold">{integration.name}</h4>
                                   <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${
                                     integration.status === 'connected' ? 'bg-green-500/20 text-green-400' : 'bg-slate-600/50 text-slate-500'
                                   }`}>
                                     {integration.status === 'connected' ? 'Connected' : 'Disconnected'}
                                   </span>
                                 </div>
-                                <p className="text-sm text-slate-700 dark:text-slate-400 mb-2">{integration.vendor} • {integration.type}</p>
+                                <p className="text-sm text-secondary mb-2">{integration.vendor} • {integration.type}</p>
                                 <p className="text-xs text-slate-500">{integration.description}</p>
 
-                                <div className="flex items-center gap-4 mt-3 text-xs text-slate-700 dark:text-slate-400">
+                                <div className="flex items-center gap-4 mt-3 text-xs text-secondary">
                                   <span className="flex items-center gap-1">
                                     <Clock className="w-3 h-3" />
                                     Last sync: {integration.lastSync}
@@ -814,7 +814,7 @@ export default function BISettings() {
 
                                 <div className="flex flex-wrap gap-2 mt-3">
                                   {integration.dataTypes.map((type, idx) => (
-                                    <span key={idx} className="px-2 py-1 bg-white dark:bg-slate-700/50 rounded text-xs text-slate-700 dark:text-slate-300">
+                                    <span key={idx} className="px-2 py-1 bg-white dark:bg-slate-700/50 rounded text-xs text-secondary">
                                       {type}
                                     </span>
                                   ))}
@@ -822,7 +822,7 @@ export default function BISettings() {
 
                                 <div className="mt-4 flex items-center gap-2">
                                   <span className="text-xs text-slate-500">API Key:</span>
-                                  <code className="px-2 py-1 bg-white dark:bg-slate-900/50 rounded text-xs text-slate-700 dark:text-slate-400 font-mono">
+                                  <code className="px-2 py-1 bg-white dark:bg-slate-900/50 rounded text-xs text-secondary font-mono">
                                     {showApiKey[key] ? integration.apiKey : '••••••••••••••••'}
                                   </code>
                                   <button
@@ -830,9 +830,9 @@ export default function BISettings() {
                                     className="p-1 hover:bg-slate-100 dark:hover:bg-slate-700/50 rounded transition-colors"
                                   >
                                     {showApiKey[key] ? (
-                                      <EyeOff className="w-3 h-3 text-slate-700 dark:text-slate-400" />
+                                      <EyeOff className="w-3 h-3 text-secondary" />
                                     ) : (
-                                      <Eye className="w-3 h-3 text-slate-700 dark:text-slate-400" />
+                                      <Eye className="w-3 h-3 text-secondary" />
                                     )}
                                   </button>
                                 </div>
@@ -841,8 +841,8 @@ export default function BISettings() {
 
                             <div className="flex items-center gap-2">
                               <div className="text-right mr-4">
-                                <p className="text-xs text-slate-700 dark:text-slate-400">Monthly Requests</p>
-                                <p className="text-sm text-slate-900 dark:text-white font-medium">
+                                <p className="text-xs text-secondary">Monthly Requests</p>
+                                <p className="text-sm text-primary font-medium">
                                   {integration.monthlyRequests.toLocaleString()} / {integration.requestLimit.toLocaleString()}
                                 </p>
                                 <div className="w-24 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full mt-1">
@@ -853,7 +853,7 @@ export default function BISettings() {
                                 </div>
                               </div>
                               <button className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700/50 rounded-lg transition-colors">
-                                <Settings className="w-4 h-4 text-slate-700 dark:text-slate-400" />
+                                <Settings className="w-4 h-4 text-secondary" />
                               </button>
                             </div>
                           </div>

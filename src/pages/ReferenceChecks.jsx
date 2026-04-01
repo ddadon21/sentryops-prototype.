@@ -13,13 +13,13 @@ const getRefStatusBadge = (status) => {
     case 'Pending Callback':
       return <span className="px-2.5 py-1 bg-amber-500/10 text-amber-400 rounded-lg text-xs font-medium flex items-center gap-1.5"><Clock className="w-3 h-3" />Pending Callback</span>;
     case 'Not Yet Contacted':
-      return <span className="px-2.5 py-1 bg-slate-500/10 text-slate-700 dark:text-slate-400 rounded-lg text-xs font-medium flex items-center gap-1.5"><AlertCircle className="w-3 h-3" />Not Yet Contacted</span>;
+      return <span className="px-2.5 py-1 bg-slate-500/10 text-secondary rounded-lg text-xs font-medium flex items-center gap-1.5"><AlertCircle className="w-3 h-3" />Not Yet Contacted</span>;
     case 'Scheduled':
       return <span className="px-2.5 py-1 bg-blue-500/10 text-blue-400 rounded-lg text-xs font-medium flex items-center gap-1.5"><Calendar className="w-3 h-3" />Scheduled</span>;
     case 'Required':
       return <span className="px-2.5 py-1 bg-red-500/10 text-red-400 rounded-lg text-xs font-medium flex items-center gap-1.5"><AlertTriangle className="w-3 h-3" />Required</span>;
     default:
-      return <span className="px-2.5 py-1 bg-slate-500/10 text-slate-700 dark:text-slate-400 rounded-lg text-xs font-medium">{status}</span>;
+      return <span className="px-2.5 py-1 bg-slate-500/10 text-secondary rounded-lg text-xs font-medium">{status}</span>;
   }
 };
 
@@ -31,7 +31,7 @@ const getOutcomeBadge = (outcome) => {
     case 'Positive':
       return <span className="px-2.5 py-1 bg-green-500/10 text-green-300 rounded-lg text-xs font-medium">Positive</span>;
     case 'Neutral':
-      return <span className="px-2.5 py-1 bg-slate-500/10 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium">Neutral</span>;
+      return <span className="px-2.5 py-1 bg-slate-500/10 text-secondary rounded-lg text-xs font-medium">Neutral</span>;
     case 'Negative':
       return <span className="px-2.5 py-1 bg-red-500/10 text-red-400 rounded-lg text-xs font-medium">Negative</span>;
     default:
@@ -51,7 +51,7 @@ const getRefTypeBadge = (type) => {
     case 'Personal':
       return <span className="px-2.5 py-1 bg-amber-500/10 text-amber-400 rounded-lg text-xs font-medium flex items-center gap-1"><Users className="w-3 h-3" />Personal</span>;
     default:
-      return <span className="px-2.5 py-1 bg-slate-500/10 text-slate-700 dark:text-slate-400 rounded-lg text-xs font-medium">{type}</span>;
+      return <span className="px-2.5 py-1 bg-slate-500/10 text-secondary rounded-lg text-xs font-medium">{type}</span>;
   }
 };
 
@@ -337,11 +337,11 @@ export default function ReferenceChecks() {
 
             {/* Page Header */}
             <div className="mb-6">
-              <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white mb-2">Reference Checks</h2>
-              <p className="text-slate-700 dark:text-slate-400 mb-3">Professional and personal reference verification for background investigations</p>
+              <h2 className="text-2xl lg:text-3xl font-bold text-primary mb-2">Reference Checks</h2>
+              <p className="text-secondary mb-3">Professional and personal reference verification for background investigations</p>
               <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-slate-500">
                 <span className="flex items-center gap-1.5">
-                  <Calendar className="w-4 h-4 text-slate-700 dark:text-slate-400" />
+                  <Calendar className="w-4 h-4 text-secondary" />
                   {currentDateTime.date} at {currentDateTime.time}
                 </span>
                 <span className="flex items-center gap-1.5">
@@ -351,7 +351,7 @@ export default function ReferenceChecks() {
               </div>
               <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-slate-500 mt-1">
                 <span className="flex items-center gap-1.5">
-                  <Users className="w-4 h-4 text-slate-700 dark:text-slate-400" />
+                  <Users className="w-4 h-4 text-secondary" />
                   Total references tracked: {references.length} references across active cases
                 </span>
                 <span className="flex items-center gap-1.5">
@@ -366,19 +366,19 @@ export default function ReferenceChecks() {
               <button className="flex items-center gap-2 px-4 py-2.5 bg-amber-500 hover:bg-amber-600 text-white rounded-xl font-medium transition-colors text-sm">
                 <Plus className="w-4 h-4" />Add Reference
               </button>
-              <button className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl font-medium transition-colors text-sm">
+              <button className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded-xl font-medium transition-colors text-sm">
                 <Calendar className="w-4 h-4" />Schedule Interview
               </button>
-              <button className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl font-medium transition-colors text-sm">
+              <button className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded-xl font-medium transition-colors text-sm">
                 <Users className="w-4 h-4" />View All References
               </button>
-              <button className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl font-medium transition-colors text-sm">
+              <button className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded-xl font-medium transition-colors text-sm">
                 <Download className="w-4 h-4" />Export Reference Report
               </button>
-              <button className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl font-medium transition-colors text-sm">
+              <button className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded-xl font-medium transition-colors text-sm">
                 <Phone className="w-4 h-4" />Contact Pending
               </button>
-              <button className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl font-medium transition-colors text-sm">
+              <button className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded-xl font-medium transition-colors text-sm">
                 <Printer className="w-4 h-4" />Print Reference Log
               </button>
             </div>
@@ -391,7 +391,7 @@ export default function ReferenceChecks() {
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-1">
-                    <h4 className="text-base font-semibold text-slate-900 dark:text-white">Reference Check Status Summary</h4>
+                    <h4 className="text-base font-semibold text-primary">Reference Check Status Summary</h4>
                     <span className="text-xs text-slate-500">As of {currentDateTime.date} at {currentDateTime.time}</span>
                   </div>
                 </div>
@@ -399,12 +399,12 @@ export default function ReferenceChecks() {
 
               {/* Overall Status */}
               <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 mb-4">
-                <h5 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Overall Status</h5>
+                <h5 className="text-sm font-semibold text-secondary mb-3">Overall Status</h5>
                 <div className="space-y-1.5 text-sm">
-                  <div className="text-slate-700 dark:text-slate-400">Total references required: <span className="text-slate-900 dark:text-white font-medium">5</span> <span className="text-slate-500">(per policy: 3 personal, 2 employment)</span></div>
-                  <div className="text-slate-700 dark:text-slate-400">References completed: <span className="text-green-400 font-medium">2</span> <span className="text-slate-500">(40% complete)</span></div>
-                  <div className="text-slate-700 dark:text-slate-400">References pending: <span className="text-amber-400 font-medium">2</span> <span className="text-slate-500">(1 awaiting callback, 1 not yet identified)</span></div>
-                  <div className="text-slate-700 dark:text-slate-400">References not yet contacted: <span className="text-slate-900 dark:text-white">0</span></div>
+                  <div className="text-secondary">Total references required: <span className="text-primary font-medium">5</span> <span className="text-slate-500">(per policy: 3 personal, 2 employment)</span></div>
+                  <div className="text-secondary">References completed: <span className="text-green-400 font-medium">2</span> <span className="text-slate-500">(40% complete)</span></div>
+                  <div className="text-secondary">References pending: <span className="text-amber-400 font-medium">2</span> <span className="text-slate-500">(1 awaiting callback, 1 not yet identified)</span></div>
+                  <div className="text-secondary">References not yet contacted: <span className="text-primary">0</span></div>
                 </div>
               </div>
 
@@ -416,13 +416,13 @@ export default function ReferenceChecks() {
                   </h5>
                   <div className="space-y-3 text-sm">
                     <div>
-                      <p className="text-slate-900 dark:text-white font-medium">Sgt. John Davis (Current Supervisor)</p>
-                      <p className="text-slate-700 dark:text-slate-400">Interview: Jan 23, 2026 — Employment reference</p>
+                      <p className="text-primary font-medium">Sgt. John Davis (Current Supervisor)</p>
+                      <p className="text-secondary">Interview: Jan 23, 2026 — Employment reference</p>
                       <p className="text-green-400">Outcome: POSITIVE — Strongly recommends for hire</p>
                     </div>
                     <div>
-                      <p className="text-slate-900 dark:text-white font-medium">Capt. Sarah Williams (Former Supervisor)</p>
-                      <p className="text-slate-700 dark:text-slate-400">Interview: Jan 23, 2026 — Employment reference</p>
+                      <p className="text-primary font-medium">Capt. Sarah Williams (Former Supervisor)</p>
+                      <p className="text-secondary">Interview: Jan 23, 2026 — Employment reference</p>
                       <p className="text-green-400">Outcome: POSITIVE — Recommends for hire</p>
                     </div>
                   </div>
@@ -435,13 +435,13 @@ export default function ReferenceChecks() {
                   </h5>
                   <div className="space-y-3 text-sm">
                     <div>
-                      <p className="text-slate-900 dark:text-white font-medium">Officer Michael Brown (Colleague/FTO)</p>
-                      <p className="text-slate-700 dark:text-slate-400">Status: Awaiting callback (1 contact attempt Jan 23)</p>
+                      <p className="text-primary font-medium">Officer Michael Brown (Colleague/FTO)</p>
+                      <p className="text-secondary">Status: Awaiting callback (1 contact attempt Jan 23)</p>
                       <p className="text-amber-400/80">Next action: Follow up Jan 27 if no response</p>
                     </div>
                     <div>
-                      <p className="text-slate-900 dark:text-white font-medium">Additional personal reference (to be added)</p>
-                      <p className="text-slate-700 dark:text-slate-400">Status: Not yet scheduled</p>
+                      <p className="text-primary font-medium">Additional personal reference (to be added)</p>
+                      <p className="text-secondary">Status: Not yet scheduled</p>
                       <p className="text-amber-400/80">Next action: Contact applicant for additional references</p>
                     </div>
                   </div>
@@ -450,7 +450,7 @@ export default function ReferenceChecks() {
 
               {/* Outcomes */}
               <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 mb-4">
-                <h5 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Reference Check Outcomes</h5>
+                <h5 className="text-sm font-semibold text-secondary mb-3">Reference Check Outcomes</h5>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
                   <div className="flex items-center gap-2 text-green-400">
                     <CheckCircle2 className="w-3.5 h-3.5 flex-shrink-0" />
@@ -476,50 +476,50 @@ export default function ReferenceChecks() {
                 <h5 className="text-sm font-semibold text-amber-400 mb-2 flex items-center gap-2">
                   <AlertTriangle className="w-4 h-4" />Assessment Method Note
                 </h5>
-                <p className="text-sm text-slate-700 dark:text-slate-400">
-                  References are evaluated <span className="text-slate-900 dark:text-white font-medium">qualitatively</span>, not with numerical ratings or scores. Each reference is assessed individually for: would recommend (Yes/No), performance quality (Excellent/Good/Fair/Poor), disciplinary issues (Yes/No with details), specific concerns (documented), and Brady/Giglio credibility concerns (Yes/No). There is no "overall score" or "average rating."
+                <p className="text-sm text-secondary">
+                  References are evaluated <span className="text-primary font-medium">qualitatively</span>, not with numerical ratings or scores. Each reference is assessed individually for: would recommend (Yes/No), performance quality (Excellent/Good/Fair/Poor), disciplinary issues (Yes/No with details), specific concerns (documented), and Brady/Giglio credibility concerns (Yes/No). There is no "overall score" or "average rating."
                 </p>
               </div>
 
               {/* Investigator Assessment */}
               <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4">
-                <h5 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Investigator Assessment</h5>
-                <p className="text-sm text-slate-700 dark:text-slate-400">
+                <h5 className="text-sm font-semibold text-secondary mb-2">Investigator Assessment</h5>
+                <p className="text-sm text-secondary">
                   Two strong supervisor references completed (current and former). Both strongly positive with no concerns identified. Pending colleague reference (not critical — already have 2 supervisory refs). Need at least 1 additional personal reference to meet minimum requirements. Recommend contacting applicant for 1–2 additional personal references (non-LE contacts).
                 </p>
               </div>
 
               <div className="flex flex-wrap items-center gap-3 mt-4">
-                <button className="px-3 py-1.5 bg-white dark:bg-slate-800/60 hover:bg-slate-800/80 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">View Completed References</button>
-                <button className="px-3 py-1.5 bg-white dark:bg-slate-800/60 hover:bg-slate-800/80 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">Contact Pending References</button>
+                <button className="px-3 py-1.5 bg-white dark:bg-slate-800/60 hover:bg-slate-800/80 text-secondary rounded-lg text-xs font-medium transition-colors">View Completed References</button>
+                <button className="px-3 py-1.5 bg-white dark:bg-slate-800/60 hover:bg-slate-800/80 text-secondary rounded-lg text-xs font-medium transition-colors">Contact Pending References</button>
                 <button className="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 rounded-lg text-xs font-medium transition-colors">Request Additional References from Applicant</button>
               </div>
             </div>
 
             {/* Status Cards */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
+              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
                 <div className="flex items-center justify-between mb-3">
                   <UserCheck className="w-8 h-8 text-blue-400" />
-                  <span className="text-2xl font-bold text-slate-900 dark:text-white">{references.length}</span>
+                  <span className="text-2xl font-bold text-primary">{references.length}</span>
                 </div>
-                <p className="text-sm font-medium text-slate-900 dark:text-white mb-1">Total References</p>
+                <p className="text-sm font-medium text-primary mb-1">Total References</p>
                 <p className="text-xs text-slate-500">Case BI-2024-145 (Martinez)</p>
-                <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-200 dark:border-slate-700/30 space-y-1">
-                  <p className="text-xs text-slate-700 dark:text-slate-400">Employment: 2 (current + former supervisor)</p>
-                  <p className="text-xs text-slate-700 dark:text-slate-400">Professional LE: 1 (colleague/FTO)</p>
-                  <p className="text-xs text-slate-700 dark:text-slate-400">Personal: 1 (need 2–3 per policy)</p>
+                <div className="mt-3 pt-3 border-t border-border dark:border-slate-700/30 space-y-1">
+                  <p className="text-xs text-secondary">Employment: 2 (current + former supervisor)</p>
+                  <p className="text-xs text-secondary">Professional LE: 1 (colleague/FTO)</p>
+                  <p className="text-xs text-secondary">Personal: 1 (need 2–3 per policy)</p>
                 </div>
               </div>
 
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
+              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
                 <div className="flex items-center justify-between mb-3">
                   <CheckCircle className="w-8 h-8 text-green-400" />
-                  <span className="text-2xl font-bold text-slate-900 dark:text-white">{completedRefs.length}</span>
+                  <span className="text-2xl font-bold text-primary">{completedRefs.length}</span>
                 </div>
-                <p className="text-sm font-medium text-slate-900 dark:text-white mb-1">Completed</p>
+                <p className="text-sm font-medium text-primary mb-1">Completed</p>
                 <p className="text-xs text-slate-500">Interview notes documented</p>
-                <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-200 dark:border-slate-700/30 space-y-1">
+                <div className="mt-3 pt-3 border-t border-border dark:border-slate-700/30 space-y-1">
                   <p className="text-xs text-green-400/80">Sgt. Davis — Strongly Positive</p>
                   <p className="text-xs text-green-400/80">Capt. Williams — Positive</p>
                   <p className="text-xs text-slate-500 mt-1">Both recommend for hire</p>
@@ -529,11 +529,11 @@ export default function ReferenceChecks() {
               <div className="bg-white dark:bg-slate-800/40 border border-amber-500/30 rounded-xl p-5">
                 <div className="flex items-center justify-between mb-3">
                   <Clock className="w-8 h-8 text-amber-400" />
-                  <span className="text-2xl font-bold text-slate-900 dark:text-white">{pendingRefs.length}</span>
+                  <span className="text-2xl font-bold text-primary">{pendingRefs.length}</span>
                 </div>
-                <p className="text-sm font-medium text-slate-900 dark:text-white mb-1">Pending</p>
+                <p className="text-sm font-medium text-primary mb-1">Pending</p>
                 <p className="text-xs text-slate-500">Awaiting contact/callback</p>
-                <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-200 dark:border-slate-700/30 space-y-1.5">
+                <div className="mt-3 pt-3 border-t border-border dark:border-slate-700/30 space-y-1.5">
                   <div>
                     <p className="text-xs text-amber-400/80">Officer Brown — Awaiting callback</p>
                     <p className="text-xs text-slate-500 ml-2">1 contact attempt (Jan 23)</p>
@@ -545,14 +545,14 @@ export default function ReferenceChecks() {
                 </div>
               </div>
 
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
+              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
                 <div className="flex items-center justify-between mb-3">
                   <ClipboardList className="w-8 h-8 text-amber-400" />
-                  <span className="text-lg font-bold text-slate-900 dark:text-white">QUALITATIVE</span>
+                  <span className="text-lg font-bold text-primary">QUALITATIVE</span>
                 </div>
-                <p className="text-sm font-medium text-slate-900 dark:text-white mb-1">Assessment Summary</p>
+                <p className="text-sm font-medium text-primary mb-1">Assessment Summary</p>
                 <p className="text-xs text-slate-500">Evaluated individually, not scored</p>
-                <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-200 dark:border-slate-700/30 space-y-1">
+                <div className="mt-3 pt-3 border-t border-border dark:border-slate-700/30 space-y-1">
                   <p className="text-xs text-green-400/80">Would recommend: 2/2 YES</p>
                   <p className="text-xs text-green-400/80">Concerns identified: 0</p>
                   <p className="text-xs text-green-400/80">Brady/Giglio concerns: 0</p>
@@ -561,64 +561,64 @@ export default function ReferenceChecks() {
             </div>
 
             {/* Reference Actions */}
-            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5 mb-6">
-              <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+            <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5 mb-6">
+              <h3 className="text-sm font-semibold text-primary mb-4 flex items-center gap-2">
                 <Settings className="w-4 h-4 text-amber-400" />Reference Check Actions
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                 <button className="flex items-start gap-3 p-3 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                   <Plus className="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" />
                   <div>
-                    <p className="text-sm font-medium text-slate-900 dark:text-white">Add Reference</p>
+                    <p className="text-sm font-medium text-primary">Add Reference</p>
                     <p className="text-xs text-slate-500 mt-0.5">Add new personal or professional reference</p>
                   </div>
                 </button>
                 <button className="flex items-start gap-3 p-3 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                   <Phone className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
                   <div>
-                    <p className="text-sm font-medium text-slate-900 dark:text-white">Contact Pending</p>
+                    <p className="text-sm font-medium text-primary">Contact Pending</p>
                     <p className="text-xs text-slate-500 mt-0.5">Call/email pending references</p>
                   </div>
                 </button>
                 <button className="flex items-start gap-3 p-3 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                   <Calendar className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
                   <div>
-                    <p className="text-sm font-medium text-slate-900 dark:text-white">Schedule Interview</p>
+                    <p className="text-sm font-medium text-primary">Schedule Interview</p>
                     <p className="text-xs text-slate-500 mt-0.5">Schedule phone/in-person reference check</p>
                   </div>
                 </button>
                 <button className="flex items-start gap-3 p-3 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                   <ClipboardList className="w-5 h-5 text-cyan-400 mt-0.5 flex-shrink-0" />
                   <div>
-                    <p className="text-sm font-medium text-slate-900 dark:text-white">Interview Guide</p>
+                    <p className="text-sm font-medium text-primary">Interview Guide</p>
                     <p className="text-xs text-slate-500 mt-0.5">Standard reference check questions</p>
                   </div>
                 </button>
                 <button className="flex items-start gap-3 p-3 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                   <Mail className="w-5 h-5 text-purple-400 mt-0.5 flex-shrink-0" />
                   <div>
-                    <p className="text-sm font-medium text-slate-900 dark:text-white">Send Request Form</p>
+                    <p className="text-sm font-medium text-primary">Send Request Form</p>
                     <p className="text-xs text-slate-500 mt-0.5">Email reference request to contact</p>
                   </div>
                 </button>
                 <button className="flex items-start gap-3 p-3 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
-                  <Download className="w-5 h-5 text-slate-700 dark:text-slate-400 mt-0.5 flex-shrink-0" />
+                  <Download className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" />
                   <div>
-                    <p className="text-sm font-medium text-slate-900 dark:text-white">Generate Report</p>
+                    <p className="text-sm font-medium text-primary">Generate Report</p>
                     <p className="text-xs text-slate-500 mt-0.5">Export reference check summary</p>
                   </div>
                 </button>
                 <button className="flex items-start gap-3 p-3 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                   <FileText className="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" />
                   <div>
-                    <p className="text-sm font-medium text-slate-900 dark:text-white">Add Interview Notes</p>
+                    <p className="text-sm font-medium text-primary">Add Interview Notes</p>
                     <p className="text-xs text-slate-500 mt-0.5">Document post-interview findings</p>
                   </div>
                 </button>
                 <button className="flex items-start gap-3 p-3 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
-                  <Search className="w-5 h-5 text-slate-700 dark:text-slate-400 mt-0.5 flex-shrink-0" />
+                  <Search className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" />
                   <div>
-                    <p className="text-sm font-medium text-slate-900 dark:text-white">Search References</p>
+                    <p className="text-sm font-medium text-primary">Search References</p>
                     <p className="text-xs text-slate-500 mt-0.5">By name, relationship, case, or date</p>
                   </div>
                 </button>
@@ -639,12 +639,12 @@ export default function ReferenceChecks() {
                   className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all whitespace-nowrap ${
                     selectedView === tab.id
                       ? 'bg-amber-500 text-white shadow-lg'
-                      : 'text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800/50'
+                      : 'text-secondary hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800/50'
                   }`}
                 >
                   {tab.label}
                   <span className={`px-1.5 py-0.5 rounded text-xs ${
-                    selectedView === tab.id ? 'bg-white/20 text-slate-900 dark:text-white' : 'bg-white dark:bg-slate-700/50 text-slate-500'
+                    selectedView === tab.id ? 'bg-white/20 text-primary' : 'bg-white dark:bg-slate-700/50 text-slate-500'
                   }`}>{tab.count}</span>
                 </button>
               ))}
@@ -667,12 +667,12 @@ export default function ReferenceChecks() {
                       <div className="flex items-start justify-between mb-4">
                         <div className="flex-1">
                           <div className="flex items-center gap-3 mb-1">
-                            <h3 className="text-lg font-semibold text-slate-900 dark:text-white">{ref.referenceName}</h3>
+                            <h3 className="text-lg font-semibold text-primary">{ref.referenceName}</h3>
                             {getRefStatusBadge(ref.status)}
                           </div>
                           <p className="text-sm text-amber-400 mb-1">{ref.relationship}</p>
                           {ref.organization && (
-                            <p className="text-sm text-slate-700 dark:text-slate-400 mb-1">{ref.rankPosition ? `${ref.rankPosition} — ` : ''}{ref.organization}</p>
+                            <p className="text-sm text-secondary mb-1">{ref.rankPosition ? `${ref.rankPosition} — ` : ''}{ref.organization}</p>
                           )}
                           <p className="text-sm text-slate-500">Reference for: {ref.subject} (Case {ref.caseId}) — {ref.positionApplied}</p>
                         </div>
@@ -685,13 +685,13 @@ export default function ReferenceChecks() {
                       {/* Contact Info (if available) */}
                       {ref.phone && (
                         <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3 mb-4">
-                          <h4 className="text-xs font-semibold text-slate-700 dark:text-slate-400 mb-2 uppercase tracking-wider">Contact Information</h4>
+                          <h4 className="text-xs font-semibold text-secondary mb-2 uppercase tracking-wider">Contact Information</h4>
                           <div className="flex flex-wrap gap-4 text-sm">
                             {ref.referenceName !== 'Additional Personal Reference' && (
                               <>
-                                <span className="flex items-center gap-1.5 text-slate-700 dark:text-slate-300"><Phone className="w-3.5 h-3.5 text-slate-700 dark:text-slate-400" />{ref.phone}</span>
-                                <span className="flex items-center gap-1.5 text-slate-700 dark:text-slate-300"><Mail className="w-3.5 h-3.5 text-slate-700 dark:text-slate-400" />{ref.email}</span>
-                                {ref.badge && <span className="flex items-center gap-1.5 text-slate-700 dark:text-slate-300"><Shield className="w-3.5 h-3.5 text-slate-700 dark:text-slate-400" />Badge #{ref.badge}</span>}
+                                <span className="flex items-center gap-1.5 text-secondary"><Phone className="w-3.5 h-3.5 text-secondary" />{ref.phone}</span>
+                                <span className="flex items-center gap-1.5 text-secondary"><Mail className="w-3.5 h-3.5 text-secondary" />{ref.email}</span>
+                                {ref.badge && <span className="flex items-center gap-1.5 text-secondary"><Shield className="w-3.5 h-3.5 text-secondary" />Badge #{ref.badge}</span>}
                               </>
                             )}
                           </div>
@@ -701,11 +701,11 @@ export default function ReferenceChecks() {
                       {/* Relationship Details */}
                       {ref.relationshipDetail && (
                         <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3 mb-4">
-                          <h4 className="text-xs font-semibold text-slate-700 dark:text-slate-400 mb-2 uppercase tracking-wider">Relationship to Applicant</h4>
+                          <h4 className="text-xs font-semibold text-secondary mb-2 uppercase tracking-wider">Relationship to Applicant</h4>
                           <div className="text-sm space-y-1">
-                            <p className="text-slate-700 dark:text-slate-300">{ref.relationshipDetail}</p>
-                            {ref.yearsKnown && <p className="text-slate-500">Known applicant: <span className="text-slate-700 dark:text-slate-300">{ref.yearsKnown}</span></p>}
-                            {ref.capacity && <p className="text-slate-500">Capacity: <span className="text-slate-700 dark:text-slate-300">{ref.capacity}</span></p>}
+                            <p className="text-secondary">{ref.relationshipDetail}</p>
+                            {ref.yearsKnown && <p className="text-slate-500">Known applicant: <span className="text-secondary">{ref.yearsKnown}</span></p>}
+                            {ref.capacity && <p className="text-slate-500">Capacity: <span className="text-secondary">{ref.capacity}</span></p>}
                           </div>
                         </div>
                       )}
@@ -715,37 +715,37 @@ export default function ReferenceChecks() {
                         <>
                           {/* Interview Details */}
                           <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3 mb-4">
-                            <h4 className="text-xs font-semibold text-slate-700 dark:text-slate-400 mb-2 uppercase tracking-wider">Interview Details</h4>
+                            <h4 className="text-xs font-semibold text-secondary mb-2 uppercase tracking-wider">Interview Details</h4>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-                              <div className="text-slate-500">Date: <span className="text-slate-700 dark:text-slate-300">{ref.interview.date}</span></div>
-                              <div className="text-slate-500">Time: <span className="text-slate-700 dark:text-slate-300">{ref.interview.time}</span></div>
-                              <div className="text-slate-500">Method: <span className="text-slate-700 dark:text-slate-300">{ref.interview.method}</span></div>
-                              <div className="text-slate-500">Interviewer: <span className="text-slate-700 dark:text-slate-300">{ref.interview.interviewer}</span></div>
-                              <div className="text-slate-500">Notes: <span className="text-slate-700 dark:text-slate-300">{ref.interview.notesPages}</span></div>
+                              <div className="text-slate-500">Date: <span className="text-secondary">{ref.interview.date}</span></div>
+                              <div className="text-slate-500">Time: <span className="text-secondary">{ref.interview.time}</span></div>
+                              <div className="text-slate-500">Method: <span className="text-secondary">{ref.interview.method}</span></div>
+                              <div className="text-slate-500">Interviewer: <span className="text-secondary">{ref.interview.interviewer}</span></div>
+                              <div className="text-slate-500">Notes: <span className="text-secondary">{ref.interview.notesPages}</span></div>
                             </div>
                           </div>
 
                           {/* Outcome Section */}
                           <div className="bg-green-500/5 border border-green-500/20 rounded-lg p-4 mb-4">
-                            <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3 border-b border-green-500/20 pb-2">Reference Interview Outcome</h4>
+                            <h4 className="text-sm font-semibold text-primary mb-3 border-b border-green-500/20 pb-2">Reference Interview Outcome</h4>
 
                             <div className="mb-4">
-                              <p className="text-xs font-semibold text-slate-700 dark:text-slate-400 uppercase tracking-wider mb-1">Overall Recommendation</p>
+                              <p className="text-xs font-semibold text-secondary uppercase tracking-wider mb-1">Overall Recommendation</p>
                               <p className="text-sm text-green-400 font-medium flex items-center gap-1.5">
                                 <CheckCircle2 className="w-4 h-4" />Would recommend for hire: {ref.wouldRecommend}
                               </p>
-                              {ref.recommendQuote && <p className="text-sm text-slate-700 dark:text-slate-400 mt-1 italic">"{ref.recommendQuote}"</p>}
+                              {ref.recommendQuote && <p className="text-sm text-secondary mt-1 italic">"{ref.recommendQuote}"</p>}
                             </div>
 
                             {/* Performance */}
                             {ref.performance && (
                               <div className="mb-4">
-                                <p className="text-xs font-semibold text-slate-700 dark:text-slate-400 uppercase tracking-wider mb-2">Performance Assessment</p>
+                                <p className="text-xs font-semibold text-secondary uppercase tracking-wider mb-2">Performance Assessment</p>
                                 <div className="space-y-1 text-sm">
-                                  {ref.performance.overall && <p className="text-slate-700 dark:text-slate-400">Overall: <span className="text-slate-700 dark:text-slate-300">{ref.performance.overall}</span></p>}
-                                  {ref.performance.workQuality && <p className="text-slate-700 dark:text-slate-400">Work quality: <span className="text-slate-700 dark:text-slate-300">{ref.performance.workQuality}</span></p>}
-                                  {ref.performance.reliability && <p className="text-slate-700 dark:text-slate-400">Reliability: <span className="text-slate-700 dark:text-slate-300">{ref.performance.reliability}</span></p>}
-                                  {ref.performance.professionalism && <p className="text-slate-700 dark:text-slate-400">Professionalism: <span className="text-slate-700 dark:text-slate-300">{ref.performance.professionalism}</span></p>}
+                                  {ref.performance.overall && <p className="text-secondary">Overall: <span className="text-secondary">{ref.performance.overall}</span></p>}
+                                  {ref.performance.workQuality && <p className="text-secondary">Work quality: <span className="text-secondary">{ref.performance.workQuality}</span></p>}
+                                  {ref.performance.reliability && <p className="text-secondary">Reliability: <span className="text-secondary">{ref.performance.reliability}</span></p>}
+                                  {ref.performance.professionalism && <p className="text-secondary">Professionalism: <span className="text-secondary">{ref.performance.professionalism}</span></p>}
                                 </div>
                               </div>
                             )}
@@ -753,10 +753,10 @@ export default function ReferenceChecks() {
                             {/* Strengths */}
                             {ref.strengths && (
                               <div className="mb-4">
-                                <p className="text-xs font-semibold text-slate-700 dark:text-slate-400 uppercase tracking-wider mb-2">Strengths Identified</p>
+                                <p className="text-xs font-semibold text-secondary uppercase tracking-wider mb-2">Strengths Identified</p>
                                 <ol className="space-y-1">
                                   {ref.strengths.map((s, i) => (
-                                    <li key={i} className="text-sm text-slate-700 dark:text-slate-300 flex items-start gap-2">
+                                    <li key={i} className="text-sm text-secondary flex items-start gap-2">
                                       <span className="text-amber-400/60 font-medium text-xs mt-0.5">{i + 1}.</span>{s}
                                     </li>
                                   ))}
@@ -767,10 +767,10 @@ export default function ReferenceChecks() {
                             {/* Areas for Improvement */}
                             {ref.areasForImprovement && ref.areasForImprovement.length > 0 && (
                               <div className="mb-4">
-                                <p className="text-xs font-semibold text-slate-700 dark:text-slate-400 uppercase tracking-wider mb-2">Areas for Improvement</p>
+                                <p className="text-xs font-semibold text-secondary uppercase tracking-wider mb-2">Areas for Improvement</p>
                                 {ref.areasForImprovement.map((a, i) => (
                                   <div key={i} className="text-sm mb-1">
-                                    <p className="text-slate-700 dark:text-slate-300">{i + 1}. {a.item}</p>
+                                    <p className="text-secondary">{i + 1}. {a.item}</p>
                                     {a.context && <p className="text-slate-500 ml-4 text-xs">Context: "{a.context}"</p>}
                                   </div>
                                 ))}
@@ -779,7 +779,7 @@ export default function ReferenceChecks() {
 
                             {/* Concerns */}
                             <div className="mb-4">
-                              <p className="text-xs font-semibold text-slate-700 dark:text-slate-400 uppercase tracking-wider mb-1">Concerns / Red Flags</p>
+                              <p className="text-xs font-semibold text-secondary uppercase tracking-wider mb-1">Concerns / Red Flags</p>
                               <p className="text-sm text-green-400">{ref.concerns}</p>
                               {ref.concernsQuote && <p className="text-xs text-slate-500 mt-0.5">"{ref.concernsQuote}"</p>}
                             </div>
@@ -798,41 +798,41 @@ export default function ReferenceChecks() {
                             <div className="space-y-6">
                               {/* Disciplinary */}
                               <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
-                                <h4 className="text-xs font-semibold text-slate-700 dark:text-slate-400 mb-2 uppercase tracking-wider">Disciplinary History (Per Reference)</h4>
+                                <h4 className="text-xs font-semibold text-secondary mb-2 uppercase tracking-wider">Disciplinary History (Per Reference)</h4>
                                 <div className="space-y-1 text-sm">
-                                  <p className="text-slate-700 dark:text-slate-400">Sustained complaints: <span className="text-slate-700 dark:text-slate-300">{ref.disciplinary.sustainedComplaints}</span></p>
+                                  <p className="text-secondary">Sustained complaints: <span className="text-secondary">{ref.disciplinary.sustainedComplaints}</span></p>
                                   {ref.disciplinary.unsustainedComplaints !== undefined && (
-                                    <p className="text-slate-700 dark:text-slate-400">Unsustained complaints: <span className="text-slate-700 dark:text-slate-300">{ref.disciplinary.unsustainedComplaints}</span></p>
+                                    <p className="text-secondary">Unsustained complaints: <span className="text-secondary">{ref.disciplinary.unsustainedComplaints}</span></p>
                                   )}
                                   {ref.disciplinary.useOfForce !== undefined && (
-                                    <p className="text-slate-700 dark:text-slate-400">Use of force: <span className="text-slate-700 dark:text-slate-300">{ref.disciplinary.useOfForce}</span></p>
+                                    <p className="text-secondary">Use of force: <span className="text-secondary">{ref.disciplinary.useOfForce}</span></p>
                                   )}
-                                  <p className="text-slate-700 dark:text-slate-400">Disciplinary actions: <span className="text-slate-700 dark:text-slate-300">{ref.disciplinary.disciplinaryActions}</span></p>
+                                  <p className="text-secondary">Disciplinary actions: <span className="text-secondary">{ref.disciplinary.disciplinaryActions}</span></p>
                                   {ref.disciplinary.note && <p className="text-slate-500 italic text-xs mt-1">{ref.disciplinary.note}</p>}
                                 </div>
                               </div>
 
                               {/* Reason for Leaving / Rehire */}
                               <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
-                                <h4 className="text-xs font-semibold text-slate-700 dark:text-slate-400 mb-2 uppercase tracking-wider">Reason for Leaving & Rehire Eligibility</h4>
+                                <h4 className="text-xs font-semibold text-secondary mb-2 uppercase tracking-wider">Reason for Leaving & Rehire Eligibility</h4>
                                 <div className="space-y-1.5 text-sm">
-                                  <p className="text-slate-700 dark:text-slate-400">Reason for leaving: <span className="text-slate-700 dark:text-slate-300">{ref.reasonForLeaving}</span></p>
-                                  <p className="text-slate-700 dark:text-slate-400">Eligible for rehire: <span className="text-green-400 font-medium">{ref.eligibleForRehire}</span></p>
+                                  <p className="text-secondary">Reason for leaving: <span className="text-secondary">{ref.reasonForLeaving}</span></p>
+                                  <p className="text-secondary">Eligible for rehire: <span className="text-green-400 font-medium">{ref.eligibleForRehire}</span></p>
                                   {ref.rehireQuote && <p className="text-slate-500 italic text-xs">"{ref.rehireQuote}"</p>}
                                 </div>
                               </div>
 
                               {/* Brady/Giglio */}
                               <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
-                                <h4 className="text-xs font-semibold text-slate-700 dark:text-slate-400 mb-2 uppercase tracking-wider">Brady/Giglio Concerns</h4>
+                                <h4 className="text-xs font-semibold text-secondary mb-2 uppercase tracking-wider">Brady/Giglio Concerns</h4>
                                 <p className="text-sm text-green-400 font-medium">{ref.bradyGiglio}</p>
                                 <p className="text-xs text-slate-500 mt-0.5">{ref.bradyGiglioDetail}</p>
                               </div>
 
                               {/* Investigator Assessment */}
                               <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
-                                <h4 className="text-xs font-semibold text-slate-700 dark:text-slate-400 mb-2 uppercase tracking-wider">Investigator Assessment</h4>
-                                <p className="text-sm text-slate-700 dark:text-slate-300">{ref.investigatorAssessment}</p>
+                                <h4 className="text-xs font-semibold text-secondary mb-2 uppercase tracking-wider">Investigator Assessment</h4>
+                                <p className="text-sm text-secondary">{ref.investigatorAssessment}</p>
                               </div>
                             </div>
                           )}
@@ -845,13 +845,13 @@ export default function ReferenceChecks() {
                           {/* Contact Attempts */}
                           {ref.contactAttempts && ref.contactAttempts.length > 0 && (
                             <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3 mb-4">
-                              <h4 className="text-xs font-semibold text-slate-700 dark:text-slate-400 mb-2 uppercase tracking-wider">Contact Attempts</h4>
+                              <h4 className="text-xs font-semibold text-secondary mb-2 uppercase tracking-wider">Contact Attempts</h4>
                               <div className="space-y-3">
                                 {ref.contactAttempts.map((attempt, i) => (
                                   <div key={i} className="text-sm">
-                                    <p className="text-slate-900 dark:text-white font-medium mb-0.5">Attempt #{attempt.attemptNumber}: {attempt.date}</p>
-                                    <p className="text-slate-700 dark:text-slate-400 ml-4">Method: {attempt.method}</p>
-                                    <p className="text-slate-700 dark:text-slate-400 ml-4">Outcome: {attempt.outcome}</p>
+                                    <p className="text-primary font-medium mb-0.5">Attempt #{attempt.attemptNumber}: {attempt.date}</p>
+                                    <p className="text-secondary ml-4">Method: {attempt.method}</p>
+                                    <p className="text-secondary ml-4">Outcome: {attempt.outcome}</p>
                                     <p className="text-slate-500 ml-4 text-xs">Message: {attempt.message}</p>
                                   </div>
                                 ))}
@@ -865,10 +865,10 @@ export default function ReferenceChecks() {
                             <div className="bg-amber-500/5 border border-amber-500/20 rounded-lg p-3 mb-4">
                               <h4 className="text-xs font-semibold text-amber-400 mb-2 uppercase tracking-wider">Next Actions</h4>
                               <div className="space-y-1 text-sm">
-                                <p className="text-slate-700 dark:text-slate-400">Follow-up date: <span className="text-slate-900 dark:text-white">{ref.nextActions.followUpDate}</span></p>
-                                <p className="text-slate-700 dark:text-slate-400">Action: <span className="text-slate-700 dark:text-slate-300">{ref.nextActions.action}</span></p>
-                                <p className="text-slate-700 dark:text-slate-400">Escalation: <span className="text-slate-700 dark:text-slate-300">{ref.nextActions.escalation}</span></p>
-                                <p className="text-slate-700 dark:text-slate-400">Priority: <span className="text-amber-400">{ref.nextActions.priority}</span></p>
+                                <p className="text-secondary">Follow-up date: <span className="text-primary">{ref.nextActions.followUpDate}</span></p>
+                                <p className="text-secondary">Action: <span className="text-secondary">{ref.nextActions.action}</span></p>
+                                <p className="text-secondary">Escalation: <span className="text-secondary">{ref.nextActions.escalation}</span></p>
+                                <p className="text-secondary">Priority: <span className="text-amber-400">{ref.nextActions.priority}</span></p>
                               </div>
                             </div>
                           )}
@@ -876,12 +876,12 @@ export default function ReferenceChecks() {
                           {/* Planned Interview */}
                           {ref.plannedInterview && (
                             <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3 mb-4">
-                              <h4 className="text-xs font-semibold text-slate-700 dark:text-slate-400 mb-2 uppercase tracking-wider">Interview Details (When Scheduled)</h4>
+                              <h4 className="text-xs font-semibold text-secondary mb-2 uppercase tracking-wider">Interview Details (When Scheduled)</h4>
                               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-                                <p className="text-slate-700 dark:text-slate-400">Duration: <span className="text-slate-700 dark:text-slate-300">{ref.plannedInterview.estimatedDuration}</span></p>
-                                <p className="text-slate-700 dark:text-slate-400">Type: <span className="text-slate-700 dark:text-slate-300">{ref.plannedInterview.type}</span></p>
-                                <p className="text-slate-700 dark:text-slate-400">Assigned to: <span className="text-slate-700 dark:text-slate-300">{ref.plannedInterview.assignedTo}</span></p>
-                                <p className="text-slate-700 dark:text-slate-400">Topics: <span className="text-slate-700 dark:text-slate-300">{ref.plannedInterview.topics}</span></p>
+                                <p className="text-secondary">Duration: <span className="text-secondary">{ref.plannedInterview.estimatedDuration}</span></p>
+                                <p className="text-secondary">Type: <span className="text-secondary">{ref.plannedInterview.type}</span></p>
+                                <p className="text-secondary">Assigned to: <span className="text-secondary">{ref.plannedInterview.assignedTo}</span></p>
+                                <p className="text-secondary">Topics: <span className="text-secondary">{ref.plannedInterview.topics}</span></p>
                               </div>
                             </div>
                           )}
@@ -889,8 +889,8 @@ export default function ReferenceChecks() {
                           {/* Investigator Notes */}
                           {ref.investigatorNotes && (
                             <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3 mb-4">
-                              <h4 className="text-xs font-semibold text-slate-700 dark:text-slate-400 mb-2 uppercase tracking-wider">Investigator Notes</h4>
-                              <p className="text-sm text-slate-700 dark:text-slate-300 italic">"{ref.investigatorNotes}"</p>
+                              <h4 className="text-xs font-semibold text-secondary mb-2 uppercase tracking-wider">Investigator Notes</h4>
+                              <p className="text-sm text-secondary italic">"{ref.investigatorNotes}"</p>
                             </div>
                           )}
                         </>
@@ -906,10 +906,10 @@ export default function ReferenceChecks() {
                                 <AlertTriangle className="w-3.5 h-3.5" />Required — Not Yet Provided
                               </h4>
                               <div className="space-y-1 text-sm">
-                                <p className="text-slate-700 dark:text-slate-400">Agency policy requires: <span className="text-slate-900 dark:text-white">{ref.policyRequirement.totalRequired}</span></p>
-                                <p className="text-slate-700 dark:text-slate-400 ml-4">Employment references: <span className="text-green-400">{ref.policyRequirement.employmentRequired}</span></p>
-                                <p className="text-slate-700 dark:text-slate-400 ml-4">Personal references: <span className="text-red-400">{ref.policyRequirement.personalRequired}</span></p>
-                                <p className="text-slate-700 dark:text-slate-400">Criteria: <span className="text-slate-700 dark:text-slate-300">{ref.policyRequirement.criteria}</span></p>
+                                <p className="text-secondary">Agency policy requires: <span className="text-primary">{ref.policyRequirement.totalRequired}</span></p>
+                                <p className="text-secondary ml-4">Employment references: <span className="text-green-400">{ref.policyRequirement.employmentRequired}</span></p>
+                                <p className="text-secondary ml-4">Personal references: <span className="text-red-400">{ref.policyRequirement.personalRequired}</span></p>
+                                <p className="text-secondary">Criteria: <span className="text-secondary">{ref.policyRequirement.criteria}</span></p>
                               </div>
                             </div>
                           )}
@@ -919,10 +919,10 @@ export default function ReferenceChecks() {
                             <div className="bg-amber-500/5 border border-amber-500/20 rounded-lg p-3 mb-4">
                               <h4 className="text-xs font-semibold text-amber-400 mb-2 uppercase tracking-wider">Action Required</h4>
                               <div className="space-y-1.5 text-sm">
-                                <p className="text-slate-700 dark:text-slate-400">Action: <span className="text-slate-900 dark:text-white">{ref.actionRequired.action}</span></p>
-                                <p className="text-slate-700 dark:text-slate-400">Required info: <span className="text-slate-700 dark:text-slate-300">{ref.actionRequired.requiredInfo}</span></p>
-                                <p className="text-slate-700 dark:text-slate-400">Target date: <span className="text-amber-400">{ref.actionRequired.targetDate}</span></p>
-                                <p className="text-slate-700 dark:text-slate-400">Examples: <span className="text-slate-700 dark:text-slate-300">{ref.actionRequired.examples}</span></p>
+                                <p className="text-secondary">Action: <span className="text-primary">{ref.actionRequired.action}</span></p>
+                                <p className="text-secondary">Required info: <span className="text-secondary">{ref.actionRequired.requiredInfo}</span></p>
+                                <p className="text-secondary">Target date: <span className="text-amber-400">{ref.actionRequired.targetDate}</span></p>
+                                <p className="text-secondary">Examples: <span className="text-secondary">{ref.actionRequired.examples}</span></p>
                               </div>
                             </div>
                           )}
@@ -930,8 +930,8 @@ export default function ReferenceChecks() {
                           {/* Investigator Notes */}
                           {ref.investigatorNotes && (
                             <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3 mb-4">
-                              <h4 className="text-xs font-semibold text-slate-700 dark:text-slate-400 mb-2 uppercase tracking-wider">Investigator Notes</h4>
-                              <p className="text-sm text-slate-700 dark:text-slate-300 italic">"{ref.investigatorNotes}"</p>
+                              <h4 className="text-xs font-semibold text-secondary mb-2 uppercase tracking-wider">Investigator Notes</h4>
+                              <p className="text-sm text-secondary italic">"{ref.investigatorNotes}"</p>
                             </div>
                           )}
                         </>
@@ -940,12 +940,12 @@ export default function ReferenceChecks() {
                       {/* Contact Log Tab Content */}
                       {selectedView === 'contactlog' && ref.contactAttempts && (
                         <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3 mb-4">
-                          <h4 className="text-xs font-semibold text-slate-700 dark:text-slate-400 mb-2 uppercase tracking-wider">Contact Log for {ref.referenceName}</h4>
+                          <h4 className="text-xs font-semibold text-secondary mb-2 uppercase tracking-wider">Contact Log for {ref.referenceName}</h4>
                           {ref.contactAttempts.map((attempt, i) => (
                             <div key={i} className="text-sm border-l-2 border-amber-500/30 pl-3 mb-2">
-                              <p className="text-slate-900 dark:text-white font-medium">Attempt #{attempt.attemptNumber} — {attempt.date}</p>
-                              <p className="text-slate-700 dark:text-slate-400">Method: {attempt.method}</p>
-                              <p className="text-slate-700 dark:text-slate-400">Outcome: {attempt.outcome}</p>
+                              <p className="text-primary font-medium">Attempt #{attempt.attemptNumber} — {attempt.date}</p>
+                              <p className="text-secondary">Method: {attempt.method}</p>
+                              <p className="text-secondary">Outcome: {attempt.outcome}</p>
                               <p className="text-slate-500 text-xs">Message: {attempt.message}</p>
                             </div>
                           ))}
@@ -953,16 +953,16 @@ export default function ReferenceChecks() {
                       )}
 
                       {/* Action Buttons */}
-                      <div className="flex items-center justify-between pt-4 border-t border-slate-200 dark:border-slate-200 dark:border-slate-700/30 mt-2">
-                        <div className="text-sm text-slate-700 dark:text-slate-400">
-                          Case: <span className="text-slate-900 dark:text-white font-medium">{ref.caseId}</span> — {ref.subject}
+                      <div className="flex items-center justify-between pt-4 border-t border-border dark:border-slate-700/30 mt-2">
+                        <div className="text-sm text-secondary">
+                          Case: <span className="text-primary font-medium">{ref.caseId}</span> — {ref.subject}
                         </div>
                         <div className="flex items-center gap-2 flex-wrap">
                           {isCompleted && (
                             <>
                               <button className="px-3 py-1.5 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 rounded-lg text-xs font-medium transition-colors">View Interview Notes</button>
-                              <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">Print Report</button>
-                              <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">View Case File</button>
+                              <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">Print Report</button>
+                              <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">View Case File</button>
                             </>
                           )}
                           {isPending && (
@@ -970,15 +970,15 @@ export default function ReferenceChecks() {
                               <button className="px-3 py-1.5 bg-green-500/10 hover:bg-green-500/20 text-green-400 rounded-lg text-xs font-medium transition-colors flex items-center gap-1"><Phone className="w-3 h-3" />Call Now</button>
                               <button className="px-3 py-1.5 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 rounded-lg text-xs font-medium transition-colors flex items-center gap-1"><Mail className="w-3 h-3" />Send Email</button>
                               <button className="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 rounded-lg text-xs font-medium transition-colors">Schedule Interview</button>
-                              <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">Log Contact Attempt</button>
+                              <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">Log Contact Attempt</button>
                             </>
                           )}
                           {isRequired && (
                             <>
                               <button className="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 rounded-lg text-xs font-medium transition-colors flex items-center gap-1"><Mail className="w-3 h-3" />Email Applicant</button>
                               <button className="px-3 py-1.5 bg-green-500/10 hover:bg-green-500/20 text-green-400 rounded-lg text-xs font-medium transition-colors flex items-center gap-1"><Phone className="w-3 h-3" />Call Applicant</button>
-                              <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">Reference Request Form</button>
-                              <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">View Policy</button>
+                              <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">Reference Request Form</button>
+                              <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">View Policy</button>
                             </>
                           )}
                         </div>
@@ -991,99 +991,99 @@ export default function ReferenceChecks() {
 
             {/* Footer Actions */}
             <div className="flex items-center justify-between mt-6">
-              <button className="px-4 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium transition-colors">Load More References</button>
+              <button className="px-4 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded-xl text-sm font-medium transition-colors">Load More References</button>
               <div className="flex items-center gap-3">
-                <button className="px-4 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium transition-colors flex items-center gap-2">
+                <button className="px-4 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded-xl text-sm font-medium transition-colors flex items-center gap-2">
                   <Download className="w-4 h-4" />Export All References
                 </button>
-                <button className="px-4 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl text-sm font-medium transition-colors flex items-center gap-2">
+                <button className="px-4 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded-xl text-sm font-medium transition-colors flex items-center gap-2">
                   <FileText className="w-4 h-4" />View Summary Report
                 </button>
               </div>
             </div>
 
             {/* Support & Resources Panel */}
-            <div className="mt-8 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-6">
-              <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+            <div className="mt-8 bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
+              <h3 className="text-lg font-semibold text-primary mb-4 flex items-center gap-2">
                 <HelpCircle className="w-5 h-5 text-amber-400" />
                 Support & Resources
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {/* Quick Actions */}
                 <div>
-                  <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Quick Actions</h4>
+                  <h4 className="text-sm font-semibold text-secondary mb-3">Quick Actions</h4>
                   <div className="space-y-2">
                     <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                       <Plus className="w-4 h-4 text-amber-400" />
-                      <span className="text-sm text-slate-700 dark:text-slate-300">Add New Reference</span>
+                      <span className="text-sm text-secondary">Add New Reference</span>
                     </button>
                     <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                       <Phone className="w-4 h-4 text-green-400" />
-                      <span className="text-sm text-slate-700 dark:text-slate-300">Contact Pending References</span>
+                      <span className="text-sm text-secondary">Contact Pending References</span>
                     </button>
                     <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                       <Download className="w-4 h-4 text-blue-400" />
-                      <span className="text-sm text-slate-700 dark:text-slate-300">Export Reference Report</span>
+                      <span className="text-sm text-secondary">Export Reference Report</span>
                     </button>
                     <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                       <ClipboardList className="w-4 h-4 text-cyan-400" />
-                      <span className="text-sm text-slate-700 dark:text-slate-300">View Interview Guide</span>
+                      <span className="text-sm text-secondary">View Interview Guide</span>
                     </button>
                   </div>
                 </div>
 
                 {/* Documentation */}
                 <div>
-                  <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Documentation</h4>
+                  <h4 className="text-sm font-semibold text-secondary mb-3">Documentation</h4>
                   <div className="space-y-2">
                     <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                       <BookOpen className="w-4 h-4 text-amber-400" />
-                      <span className="text-sm text-slate-700 dark:text-slate-300">Reference Check Procedures</span>
+                      <span className="text-sm text-secondary">Reference Check Procedures</span>
                     </button>
                     <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                       <BookOpen className="w-4 h-4 text-amber-400" />
-                      <span className="text-sm text-slate-700 dark:text-slate-300">Standard Interview Questions</span>
+                      <span className="text-sm text-secondary">Standard Interview Questions</span>
                     </button>
                     <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                       <BookOpen className="w-4 h-4 text-amber-400" />
-                      <span className="text-sm text-slate-700 dark:text-slate-300">Brady/Giglio Assessment Guide</span>
+                      <span className="text-sm text-secondary">Brady/Giglio Assessment Guide</span>
                     </button>
                     <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                       <ExternalLink className="w-4 h-4 text-amber-400" />
-                      <span className="text-sm text-slate-700 dark:text-slate-300">POST Reference Requirements</span>
+                      <span className="text-sm text-secondary">POST Reference Requirements</span>
                     </button>
                   </div>
                 </div>
 
                 {/* Contact */}
                 <div>
-                  <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Contact & Support</h4>
+                  <h4 className="text-sm font-semibold text-secondary mb-3">Contact & Support</h4>
                   <div className="space-y-2">
                     <div className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 rounded-lg">
-                      <Phone className="w-4 h-4 text-slate-700 dark:text-slate-400" />
+                      <Phone className="w-4 h-4 text-secondary" />
                       <div>
-                        <p className="text-sm text-slate-700 dark:text-slate-300">BI Unit</p>
+                        <p className="text-sm text-secondary">BI Unit</p>
                         <p className="text-xs text-slate-500">Ext. 4520</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 rounded-lg">
-                      <Mail className="w-4 h-4 text-slate-700 dark:text-slate-400" />
+                      <Mail className="w-4 h-4 text-secondary" />
                       <div>
-                        <p className="text-sm text-slate-700 dark:text-slate-300">BI Support</p>
+                        <p className="text-sm text-secondary">BI Support</p>
                         <p className="text-xs text-slate-500">bi.support@gcso.gov</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 rounded-lg">
-                      <Phone className="w-4 h-4 text-slate-700 dark:text-slate-400" />
+                      <Phone className="w-4 h-4 text-secondary" />
                       <div>
-                        <p className="text-sm text-slate-700 dark:text-slate-300">Legal / Brady-Giglio</p>
+                        <p className="text-sm text-secondary">Legal / Brady-Giglio</p>
                         <p className="text-xs text-slate-500">Ext. 4550 (legal counsel)</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 rounded-lg">
-                      <Phone className="w-4 h-4 text-slate-700 dark:text-slate-400" />
+                      <Phone className="w-4 h-4 text-secondary" />
                       <div>
-                        <p className="text-sm text-slate-700 dark:text-slate-300">POST Compliance</p>
+                        <p className="text-sm text-secondary">POST Compliance</p>
                         <p className="text-xs text-slate-500">Ext. 4560</p>
                       </div>
                     </div>

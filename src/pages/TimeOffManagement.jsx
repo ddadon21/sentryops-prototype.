@@ -309,11 +309,11 @@ export default function TimeOffManagement() {
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex">
       {/* Sidebar */}
       <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-slate-800/50 backdrop-blur-xl bg-slate-50 dark:bg-slate-900/30 flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
-        <div className="p-4 border-b border-slate-200 dark:border-slate-700/50 flex items-center justify-between">
+        <div className="p-4 border-b border-border flex items-center justify-between">
           {!sidebarCollapsed && (
             <div className="flex items-center gap-2">
               <Shield className="w-8 h-8 text-amber-500" />
-              <h1 className="text-xl font-bold text-slate-900 dark:text-white">SentryOps</h1>
+              <h1 className="text-xl font-bold text-primary">SentryOps</h1>
             </div>
           )}
           {sidebarCollapsed && (
@@ -323,7 +323,7 @@ export default function TimeOffManagement() {
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
             className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors hidden lg:block"
           >
-            {sidebarCollapsed ? <ChevronRight className="w-5 h-5 text-slate-700 dark:text-slate-400" /> : <ChevronLeft className="w-5 h-5 text-slate-700 dark:text-slate-400" />}
+            {sidebarCollapsed ? <ChevronRight className="w-5 h-5 text-secondary" /> : <ChevronLeft className="w-5 h-5 text-secondary" />}
           </button>
         </div>
 
@@ -336,7 +336,7 @@ export default function TimeOffManagement() {
                 key={item.id}
                 onClick={() => handleNavigation(item)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-700 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white'
+                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white'
                 } ${sidebarCollapsed ? 'justify-center' : ''}`}
                 title={sidebarCollapsed ? item.label : ''}
               >
@@ -349,7 +349,7 @@ export default function TimeOffManagement() {
           })}
         </nav>
 
-        <div className="border-t border-slate-200 dark:border-slate-700/50">
+        <div className="border-t border-border">
           {!sidebarCollapsed && (
             <div className="px-4 py-3">
               <p className="text-xs text-slate-500 text-center">Gwinnett County Sheriff's Office</p>
@@ -358,7 +358,7 @@ export default function TimeOffManagement() {
           <div className="p-4">
             <button
               onClick={() => setLogoutConfirmOpen(true)}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-slate-700 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/40 hover:text-slate-700 dark:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/40 hover:text-secondary ${sidebarCollapsed ? 'justify-center' : ''}`}
               title={sidebarCollapsed ? 'Sign Out' : ''}
             >
               <LogOut className="w-5 h-5 flex-shrink-0" />
@@ -378,19 +378,19 @@ export default function TimeOffManagement() {
       {logoutConfirmOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setLogoutConfirmOpen(false)} />
-          <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl p-6 max-w-sm w-full shadow-2xl">
+          <div className="relative bg-white dark:bg-slate-900 border border-border rounded-2xl p-6 max-w-sm w-full shadow-2xl">
             <div className="flex items-center gap-4 mb-4">
               <div className="w-12 h-12 bg-white dark:bg-slate-800/60 rounded-xl flex items-center justify-center">
-                <LogOut className="w-6 h-6 text-slate-700 dark:text-slate-400" />
+                <LogOut className="w-6 h-6 text-secondary" />
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Sign Out</h3>
-                <p className="text-sm text-slate-700 dark:text-slate-400">Are you sure you want to sign out?</p>
+                <h3 className="text-lg font-semibold text-primary">Sign Out</h3>
+                <p className="text-sm text-secondary">Are you sure you want to sign out?</p>
               </div>
             </div>
             <div className="flex gap-3 mt-6">
-              <button onClick={() => setLogoutConfirmOpen(false)} className="flex-1 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all">Cancel</button>
-              <button onClick={handleLogout} className="flex-1 px-4 py-2.5 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all">Sign Out</button>
+              <button onClick={() => setLogoutConfirmOpen(false)} className="flex-1 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-primary font-medium transition-all">Cancel</button>
+              <button onClick={handleLogout} className="flex-1 px-4 py-2.5 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-primary font-medium transition-all">Sign Out</button>
             </div>
           </div>
         </div>
@@ -399,16 +399,16 @@ export default function TimeOffManagement() {
       {/* Main Content */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Header */}
-        <header className="border-b border-slate-200 dark:border-slate-800/50 backdrop-blur-xl bg-slate-50 dark:bg-slate-900/30">
+        <header className="border-b border-border backdrop-blur-xl bg-slate-50 dark:bg-slate-900/30">
           <div className="px-4 lg:px-6 py-4 flex items-center justify-between gap-4">
             <div className="flex items-center gap-4 flex-1 min-w-0">
               <button onClick={() => setSidebarOpen(!sidebarOpen)} className="lg:hidden p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg">
-                <Menu className="w-5 h-5 text-slate-700 dark:text-slate-400" />
+                <Menu className="w-5 h-5 text-secondary" />
               </button>
               <div className="flex items-center gap-2 text-sm">
-                <button onClick={() => navigate(createPageUrl('HRDashboard'))} className="text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors">HR Dashboard</button>
+                <button onClick={() => navigate(createPageUrl('HRDashboard'))} className="text-secondary hover:text-primary transition-colors">HR Dashboard</button>
                 <ChevronRight className="w-4 h-4 text-slate-700" />
-                <span className="text-slate-900 dark:text-white">Time Off Management</span>
+                <span className="text-primary">Time Off Management</span>
               </div>
             </div>
             <div className="flex items-center gap-2 lg:gap-3">
@@ -416,33 +416,33 @@ export default function TimeOffManagement() {
                 <Download className="w-4 h-4" />
                 <span className="hidden sm:inline">Export Leave Calendar</span>
               </button>
-              <button onClick={() => setShowCoverageModal(true)} className="hidden md:flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl text-sm transition-all">
+              <button onClick={() => setShowCoverageModal(true)} className="hidden md:flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded-xl text-sm transition-all">
                 <BarChart3 className="w-4 h-4" />
                 <span>Coverage Analysis</span>
               </button>
-              <button onClick={() => setShowFMLADashboard(true)} className="hidden lg:flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-xl text-sm transition-all">
+              <button onClick={() => setShowFMLADashboard(true)} className="hidden lg:flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded-xl text-sm transition-all">
                 <ClipboardList className="w-4 h-4" />
                 <span>FMLA Dashboard</span>
               </button>
 
               <div className="relative">
                 <button onClick={() => setNotificationsOpen(!notificationsOpen)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg relative">
-                  <Bell className="w-5 h-5 text-slate-700 dark:text-slate-400" />
+                  <Bell className="w-5 h-5 text-secondary" />
                   <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                 </button>
                 {notificationsOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-96 bg-white dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-2xl z-50">
-                    <div className="p-4 border-b border-slate-200 dark:border-slate-700/50">
-                      <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Personnel Notifications</h3>
+                  <div className="absolute right-0 top-full mt-2 w-96 bg-surface-raised backdrop-blur-xl border border-border rounded-xl shadow-2xl z-50">
+                    <div className="p-4 border-b border-border">
+                      <h3 className="text-sm font-semibold text-primary">Personnel Notifications</h3>
                     </div>
                     <div className="max-h-96 overflow-y-auto">
                       {notifications.map(notification => (
-                        <div key={notification.id} className={`p-4 border-b border-slate-200 dark:border-slate-200 dark:border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
+                        <div key={notification.id} className={`p-4 border-b border-border dark:border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
                           <div className="flex items-start gap-3">
                             <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-red-400' : 'bg-blue-400'}`}></div>
                             <div className="flex-1 min-w-0">
-                              <p className="text-sm font-medium text-slate-900 dark:text-white mb-1">{notification.title}</p>
-                              <p className="text-xs text-slate-700 dark:text-slate-400 mb-2">{notification.message}</p>
+                              <p className="text-sm font-medium text-primary mb-1">{notification.title}</p>
+                              <p className="text-xs text-secondary mb-2">{notification.message}</p>
                               <p className="text-xs text-slate-500">{notification.time}</p>
                             </div>
                           </div>
@@ -456,11 +456,11 @@ export default function TimeOffManagement() {
               <div className="h-8 w-px bg-white dark:bg-slate-700/50"></div>
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
-                  <span className="text-slate-900 dark:text-white text-sm font-bold">HR</span>
+                  <span className="text-primary text-sm font-bold">HR</span>
                 </div>
                 <div className="hidden sm:block">
-                  <p className="text-sm font-medium text-slate-900 dark:text-white">HR Director</p>
-                  <p className="text-xs text-slate-700 dark:text-slate-400">Human Resources</p>
+                  <p className="text-sm font-medium text-primary">HR Director</p>
+                  <p className="text-xs text-secondary">Human Resources</p>
                 </div>
               </div>
             </div>
@@ -473,13 +473,13 @@ export default function TimeOffManagement() {
 
             {/* Page Title Section */}
             <div className="mb-6">
-              <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white mb-2">Leave Request Management & Shift Coverage Planning</h2>
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-slate-700 dark:text-slate-400">
+              <h2 className="text-2xl lg:text-3xl font-bold text-primary mb-2">Leave Request Management & Shift Coverage Planning</h2>
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-secondary">
                 <span>Gwinnett County Sheriff's Office</span>
                 <span className="text-slate-700">&bull;</span>
                 <span>Lawrenceville, Georgia</span>
               </div>
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-slate-700 dark:text-slate-400 mt-1">
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-secondary mt-1">
                 <span>Monday, February 08, 2026</span>
                 <span className="text-slate-700">&bull;</span>
                 <span>5:01 PM EST</span>
@@ -507,14 +507,14 @@ export default function TimeOffManagement() {
 
             {/* Summary Stat Cards */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
+              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
                 <div className="flex items-center gap-3 mb-2">
                   <div className="w-8 h-8 bg-amber-500/20 rounded-lg flex items-center justify-center">
                     <Clock className="w-4 h-4 text-amber-400" />
                   </div>
-                  <p className="text-xs text-slate-700 dark:text-slate-400">Pending Requests</p>
+                  <p className="text-xs text-secondary">Pending Requests</p>
                 </div>
-                <p className="text-2xl font-bold text-slate-900 dark:text-white">5</p>
+                <p className="text-2xl font-bold text-primary">5</p>
                 <p className="text-[10px] text-slate-500">Awaiting review</p>
               </div>
               <div className="bg-white dark:bg-slate-800/40 border border-red-500/30 rounded-xl p-4">
@@ -522,29 +522,29 @@ export default function TimeOffManagement() {
                   <div className="w-8 h-8 bg-red-500/20 rounded-lg flex items-center justify-center">
                     <ClipboardList className="w-4 h-4 text-red-400" />
                   </div>
-                  <p className="text-xs text-slate-700 dark:text-slate-400">FMLA Requests</p>
+                  <p className="text-xs text-secondary">FMLA Requests</p>
                 </div>
                 <p className="text-2xl font-bold text-red-400">1</p>
                 <p className="text-[10px] text-red-400 font-medium">CRITICAL - Federal deadline</p>
               </div>
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
+              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
                 <div className="flex items-center gap-3 mb-2">
                   <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">
                     <Calendar className="w-4 h-4 text-blue-400" />
                   </div>
-                  <p className="text-xs text-slate-700 dark:text-slate-400">Upcoming Absences</p>
+                  <p className="text-xs text-secondary">Upcoming Absences</p>
                 </div>
-                <p className="text-2xl font-bold text-slate-900 dark:text-white">0</p>
+                <p className="text-2xl font-bold text-primary">0</p>
                 <p className="text-[10px] text-slate-500">Next 7 days</p>
               </div>
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
+              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
                 <div className="flex items-center gap-3 mb-2">
                   <div className="w-8 h-8 bg-red-500/20 rounded-lg flex items-center justify-center">
                     <XCircle className="w-4 h-4 text-red-400" />
                   </div>
-                  <p className="text-xs text-slate-700 dark:text-slate-400">Denied Requests</p>
+                  <p className="text-xs text-secondary">Denied Requests</p>
                 </div>
-                <p className="text-2xl font-bold text-slate-900 dark:text-white">1</p>
+                <p className="text-2xl font-bold text-primary">1</p>
                 <p className="text-[10px] text-slate-500">This period</p>
               </div>
             </div>
@@ -556,7 +556,7 @@ export default function TimeOffManagement() {
                   <AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <div className="flex-1">
                     <p className="text-sm font-medium text-red-400 mb-1">Amanda Garcia FMLA Request - 48-Hour Federal Deadline Compliance Required</p>
-                    <p className="text-xs text-slate-700 dark:text-slate-400">FMLA designation notice (WH-382) due by November 07, 2024. Federal law requires employer response within 5 business days of receiving medical certification.</p>
+                    <p className="text-xs text-secondary">FMLA designation notice (WH-382) due by November 07, 2024. Federal law requires employer response within 5 business days of receiving medical certification.</p>
                   </div>
                   <span className="px-2 py-1 bg-red-500/20 border border-red-500/40 text-red-400 rounded-lg text-xs font-bold whitespace-nowrap">CRITICAL</span>
                 </div>
@@ -567,7 +567,7 @@ export default function TimeOffManagement() {
                   <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
                   <div className="flex-1">
                     <p className="text-sm font-medium text-green-400 mb-1">3 Requests Safe to Approve - Adequate Coverage, No Conflicts</p>
-                    <p className="text-xs text-slate-700 dark:text-slate-400">Marcus Chen (C-Shift, Dec 14-21), Robert Martinez (A-Shift, Nov 18-19), Daniel Wilson (A-Shift, Nov 22). All shifts maintain minimum staffing. Pending supervisor review.</p>
+                    <p className="text-xs text-secondary">Marcus Chen (C-Shift, Dec 14-21), Robert Martinez (A-Shift, Nov 18-19), Daniel Wilson (A-Shift, Nov 22). All shifts maintain minimum staffing. Pending supervisor review.</p>
                   </div>
                 </div>
               </div>
@@ -577,7 +577,7 @@ export default function TimeOffManagement() {
                   <AlertCircle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
                   <div className="flex-1">
                     <p className="text-sm font-medium text-amber-400 mb-1">2 Requests Need Review - Coverage Conflicts Require Supervisor Resolution</p>
-                    <p className="text-xs text-slate-700 dark:text-slate-400">Sarah Williams (D-Shift, Nov 5-7) - conflicts with K. Martinez same dates. Jennifer Taylor (B-Shift, Nov 25-29) - below minimum staffing for Thanksgiving week.</p>
+                    <p className="text-xs text-secondary">Sarah Williams (D-Shift, Nov 5-7) - conflicts with K. Martinez same dates. Jennifer Taylor (B-Shift, Nov 25-29) - below minimum staffing for Thanksgiving week.</p>
                   </div>
                 </div>
               </div>
@@ -587,7 +587,7 @@ export default function TimeOffManagement() {
                   <Calendar className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
                   <div className="flex-1">
                     <p className="text-sm font-medium text-blue-400 mb-1">Holiday Coverage Alert - Thanksgiving Week Needs 2 Additional Patrol Officers</p>
-                    <p className="text-xs text-slate-700 dark:text-slate-400">November 25-29, 2024: B-Shift currently 1 deputy below minimum staffing. Coordinate overtime or temporary reassignment to maintain coverage.</p>
+                    <p className="text-xs text-secondary">November 25-29, 2024: B-Shift currently 1 deputy below minimum staffing. Coordinate overtime or temporary reassignment to maintain coverage.</p>
                   </div>
                 </div>
               </div>
@@ -601,7 +601,7 @@ export default function TimeOffManagement() {
                 <div className="w-8 h-8 bg-red-500/20 rounded-lg flex items-center justify-center">
                   <ClipboardList className="w-5 h-5 text-red-400" />
                 </div>
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white">FMLA Leave Requests - Federal Law Compliance</h3>
+                <h3 className="text-lg font-bold text-primary">FMLA Leave Requests - Federal Law Compliance</h3>
                 <span className="px-2 py-1 bg-red-500/20 border border-red-500/30 rounded text-xs text-red-400 font-bold">PRIORITY</span>
               </div>
 
@@ -614,11 +614,11 @@ export default function TimeOffManagement() {
                     </div>
                     <div className="text-left">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <h4 className="text-sm font-semibold text-slate-900 dark:text-white">AMANDA GARCIA</h4>
+                        <h4 className="text-sm font-semibold text-primary">AMANDA GARCIA</h4>
                         <span className="px-2 py-0.5 bg-red-500/20 border border-red-500/30 rounded text-[10px] text-red-400 font-bold">FMLA REQUEST</span>
                         <span className="px-2 py-0.5 bg-red-500/10 border border-red-500/20 rounded text-[10px] text-red-400">MEDICAL LEAVE</span>
                       </div>
-                      <p className="text-xs text-slate-700 dark:text-slate-400 mt-0.5">Employee ID: BI-9012 | Background Investigator | Human Resources</p>
+                      <p className="text-xs text-secondary mt-0.5">Employee ID: BI-9012 | Background Investigator | Human Resources</p>
                       <p className="text-xs text-slate-500 mt-0.5">Request Submitted: October 31, 2024 &bull; 10:15 AM</p>
                     </div>
                   </div>
@@ -627,7 +627,7 @@ export default function TimeOffManagement() {
                       <p className="text-xs text-red-400 font-bold">48-HOUR FEDERAL DEADLINE</p>
                       <p className="text-[10px] text-slate-500">Due: November 07, 2024</p>
                     </div>
-                    {expandedFMLA ? <ChevronUp className="w-4 h-4 text-slate-700 dark:text-slate-400" /> : <ChevronDown className="w-4 h-4 text-slate-700 dark:text-slate-400" />}
+                    {expandedFMLA ? <ChevronUp className="w-4 h-4 text-secondary" /> : <ChevronDown className="w-4 h-4 text-secondary" />}
                   </div>
                 </button>
 
@@ -643,7 +643,7 @@ export default function TimeOffManagement() {
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
                         <div>
                           <span className="text-slate-500">Request Received:</span>
-                          <p className="text-slate-900 dark:text-white font-medium mt-0.5">10/31/2024, 10:15 AM</p>
+                          <p className="text-primary font-medium mt-0.5">10/31/2024, 10:15 AM</p>
                         </div>
                         <div>
                           <span className="text-slate-500">Federal Deadline (WH-382):</span>
@@ -657,9 +657,9 @@ export default function TimeOffManagement() {
                     </div>
 
                     {/* b) Leave Request Details */}
-                    <div className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/30 rounded-lg p-4">
-                      <h5 className="text-xs font-semibold text-slate-700 dark:text-slate-300 mb-3">Leave Request Details</h5>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-slate-700 dark:text-slate-400">
+                    <div className="bg-white dark:bg-slate-900/40 border border-border rounded-lg p-4">
+                      <h5 className="text-xs font-semibold text-secondary mb-3">Leave Request Details</h5>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-secondary">
                         <div><span className="text-slate-500">Leave Type:</span> FMLA - Serious Health Condition (29 CFR 825.113)</div>
                         <div><span className="text-slate-500">Dates Requested:</span> November 4 - December 5, 2024</div>
                         <div><span className="text-slate-500">Duration:</span> 10 working days continuous leave</div>
@@ -676,20 +676,20 @@ export default function TimeOffManagement() {
                       <div className="space-y-2">
                         <div className="flex items-start gap-2">
                           <CheckCircle2 className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
-                          <div className="text-xs text-slate-700 dark:text-slate-400">
-                            <span className="text-slate-700 dark:text-slate-300 font-medium">Employment Duration:</span> Hired October 31, 2021 (3 years). Requirement: 12+ months of employment.
+                          <div className="text-xs text-secondary">
+                            <span className="text-secondary font-medium">Employment Duration:</span> Hired October 31, 2021 (3 years). Requirement: 12+ months of employment.
                           </div>
                         </div>
                         <div className="flex items-start gap-2">
                           <CheckCircle2 className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
-                          <div className="text-xs text-slate-700 dark:text-slate-400">
-                            <span className="text-slate-700 dark:text-slate-300 font-medium">Hours Worked:</span> 2,184 hours in preceding 12 months. Requirement: 1,250+ hours worked.
+                          <div className="text-xs text-secondary">
+                            <span className="text-secondary font-medium">Hours Worked:</span> 2,184 hours in preceding 12 months. Requirement: 1,250+ hours worked.
                           </div>
                         </div>
                         <div className="flex items-start gap-2">
                           <CheckCircle2 className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
-                          <div className="text-xs text-slate-700 dark:text-slate-400">
-                            <span className="text-slate-700 dark:text-slate-300 font-medium">Employer Size:</span> 178 employees, all within 75-mile radius. Requirement: 50+ employees within 75 miles.
+                          <div className="text-xs text-secondary">
+                            <span className="text-secondary font-medium">Employer Size:</span> 178 employees, all within 75-mile radius. Requirement: 50+ employees within 75 miles.
                           </div>
                         </div>
                       </div>
@@ -702,9 +702,9 @@ export default function TimeOffManagement() {
                     </div>
 
                     {/* d) Medical Certification WH-380 */}
-                    <div className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/30 rounded-lg p-4">
-                      <h5 className="text-xs font-semibold text-slate-700 dark:text-slate-300 mb-3">Medical Certification (WH-380)</h5>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-slate-700 dark:text-slate-400">
+                    <div className="bg-white dark:bg-slate-900/40 border border-border rounded-lg p-4">
+                      <h5 className="text-xs font-semibold text-secondary mb-3">Medical Certification (WH-380)</h5>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-secondary">
                         <div><span className="text-slate-500">Certification Submitted:</span> October 31, 2024</div>
                         <div><span className="text-slate-500">Healthcare Provider:</span> Dr. R. Kumar, MD - Orthopedic Surgery</div>
                         <div><span className="text-slate-500">Diagnosis:</span> <span className="text-amber-400 font-medium">CONFIDENTIAL - HIPAA Protected</span></div>
@@ -715,9 +715,9 @@ export default function TimeOffManagement() {
                     </div>
 
                     {/* e) FMLA Entitlement Tracking */}
-                    <div className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/30 rounded-lg p-4">
-                      <h5 className="text-xs font-semibold text-slate-700 dark:text-slate-300 mb-3">FMLA Entitlement Tracking</h5>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-slate-700 dark:text-slate-400 mb-3">
+                    <div className="bg-white dark:bg-slate-900/40 border border-border rounded-lg p-4">
+                      <h5 className="text-xs font-semibold text-secondary mb-3">FMLA Entitlement Tracking</h5>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-secondary mb-3">
                         <div><span className="text-slate-500">Rolling 12-Month Period:</span> November 01, 2023 - October 31, 2024</div>
                         <div><span className="text-slate-500">Total FMLA Entitlement:</span> 480 hours (12 weeks)</div>
                         <div><span className="text-slate-500">Prior FMLA Used:</span> 0 hours</div>
@@ -741,7 +741,7 @@ export default function TimeOffManagement() {
                           <CheckCircle2 className="w-4 h-4 text-green-400" />
                           <h5 className="text-xs font-semibold text-green-400">WH-381 - Eligibility Notice</h5>
                         </div>
-                        <div className="text-xs text-slate-700 dark:text-slate-400 space-y-1">
+                        <div className="text-xs text-secondary space-y-1">
                           <p><span className="text-slate-500">Status:</span> <span className="text-green-400">SENT</span></p>
                           <p><span className="text-slate-500">Date Sent:</span> October 31, 2024</p>
                           <p><span className="text-slate-500">Method:</span> Email + US Mail (certified)</p>
@@ -752,7 +752,7 @@ export default function TimeOffManagement() {
                           <Square className="w-4 h-4 text-amber-400" />
                           <h5 className="text-xs font-semibold text-amber-400">WH-382 - Designation Notice</h5>
                         </div>
-                        <div className="text-xs text-slate-700 dark:text-slate-400 space-y-1">
+                        <div className="text-xs text-secondary space-y-1">
                           <p><span className="text-slate-500">Status:</span> <span className="text-amber-400 font-medium">PENDING</span></p>
                           <p><span className="text-slate-500">Due Date:</span> <span className="text-red-400">November 07, 2024</span></p>
                           <p><span className="text-slate-500">Action Required:</span> Complete and send to employee</p>
@@ -761,9 +761,9 @@ export default function TimeOffManagement() {
                     </div>
 
                     {/* g) Operational Impact */}
-                    <div className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/30 rounded-lg p-4">
-                      <h5 className="text-xs font-semibold text-slate-700 dark:text-slate-300 mb-3">Operational Impact Assessment</h5>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-slate-700 dark:text-slate-400">
+                    <div className="bg-white dark:bg-slate-900/40 border border-border rounded-lg p-4">
+                      <h5 className="text-xs font-semibold text-secondary mb-3">Operational Impact Assessment</h5>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-secondary">
                         <div><span className="text-slate-500">Position:</span> Background Investigator (BI), Human Resources</div>
                         <div><span className="text-slate-500">Active Caseload:</span> 3 active background investigations</div>
                         <div className="md:col-span-2"><span className="text-slate-500">Coverage Plan:</span> Lt. Hayes will reassign 2 cases to Cpl. Adams; 1 investigation placed on hold pending Garcia's return</div>
@@ -778,7 +778,7 @@ export default function TimeOffManagement() {
                         <CheckCircle2 className="w-4 h-4" />
                         Supervisor Notification
                       </h5>
-                      <div className="text-xs text-slate-700 dark:text-slate-400 space-y-1">
+                      <div className="text-xs text-secondary space-y-1">
                         <p><span className="text-slate-500">Supervisor:</span> Major R. Davis - notified October 31, 2024</p>
                         <p><span className="text-slate-500">Coverage:</span> Approved - cases reassigned to Cpl. Adams</p>
                         <p><span className="text-slate-500">Return Plan:</span> Expected return December 06, 2024 (first scheduled work day)</p>
@@ -791,7 +791,7 @@ export default function TimeOffManagement() {
                         <AlertCircle className="w-4 h-4" />
                         Payroll Notification
                       </h5>
-                      <div className="text-xs text-slate-700 dark:text-slate-400 space-y-1">
+                      <div className="text-xs text-secondary space-y-1">
                         <p><span className="text-slate-500">Status:</span> <span className="text-amber-400 font-medium">PENDING</span> - Payroll department has not been notified</p>
                         <p><span className="text-slate-500">Leave Dates:</span> November 04 - December 05, 2024</p>
                         <p><span className="text-slate-500">Leave Type:</span> FMLA - job-protected unpaid leave</p>
@@ -806,25 +806,25 @@ export default function TimeOffManagement() {
                         <h5 className="text-sm font-bold text-green-400">FMLA LEAVE APPROVED (Legally Required)</h5>
                       </div>
                       <div className="space-y-2 mb-4">
-                        <div className="flex items-start gap-2 text-xs text-slate-700 dark:text-slate-400">
+                        <div className="flex items-start gap-2 text-xs text-secondary">
                           <CheckCircle2 className="w-3.5 h-3.5 text-green-400 mt-0.5 flex-shrink-0" />
                           <span>Employee meets all FMLA eligibility requirements</span>
                         </div>
-                        <div className="flex items-start gap-2 text-xs text-slate-700 dark:text-slate-400">
+                        <div className="flex items-start gap-2 text-xs text-secondary">
                           <CheckCircle2 className="w-3.5 h-3.5 text-green-400 mt-0.5 flex-shrink-0" />
                           <span>Medical certification (WH-380) complete and sufficient</span>
                         </div>
-                        <div className="flex items-start gap-2 text-xs text-slate-700 dark:text-slate-400">
+                        <div className="flex items-start gap-2 text-xs text-secondary">
                           <CheckCircle2 className="w-3.5 h-3.5 text-green-400 mt-0.5 flex-shrink-0" />
                           <span>Employer MUST approve qualifying FMLA leave under federal law</span>
                         </div>
-                        <div className="flex items-start gap-2 text-xs text-slate-700 dark:text-slate-400">
+                        <div className="flex items-start gap-2 text-xs text-secondary">
                           <CheckCircle2 className="w-3.5 h-3.5 text-green-400 mt-0.5 flex-shrink-0" />
                           <span>Operational coverage plan in place - supervisor approved</span>
                         </div>
                       </div>
 
-                      <h6 className="text-xs font-semibold text-slate-700 dark:text-slate-300 mb-3">Required Actions Checklist:</h6>
+                      <h6 className="text-xs font-semibold text-secondary mb-3">Required Actions Checklist:</h6>
                       <div className="space-y-2">
                         {[
                           { action: 'Complete WH-382 Designation Notice and send to employee', responsible: 'C. Nguyen, HR Specialist', deadline: 'By Nov 07, 2024' },
@@ -837,7 +837,7 @@ export default function TimeOffManagement() {
                           <div key={idx} className="flex items-start gap-3 px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-900/30">
                             <Square className="w-4 h-4 text-slate-500 mt-0.5 flex-shrink-0" />
                             <div className="flex-1">
-                              <p className="text-xs text-slate-900 dark:text-white">{item.action}</p>
+                              <p className="text-xs text-primary">{item.action}</p>
                               <p className="text-[10px] text-slate-500 mt-0.5">{item.responsible} &bull; {item.deadline}</p>
                             </div>
                           </div>
@@ -850,19 +850,19 @@ export default function TimeOffManagement() {
                       <button className="px-3 py-2 bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 text-red-400 rounded-lg text-xs font-medium transition-all flex items-center gap-2">
                         <ClipboardList className="w-3.5 h-3.5" />Complete WH-382 Form
                       </button>
-                      <button className="px-3 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-all flex items-center gap-2">
+                      <button className="px-3 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-xs font-medium transition-all flex items-center gap-2">
                         <Eye className="w-3.5 h-3.5" />View FMLA File
                       </button>
-                      <button className="px-3 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-all flex items-center gap-2">
+                      <button className="px-3 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-xs font-medium transition-all flex items-center gap-2">
                         <Printer className="w-3.5 h-3.5" />Print Notices
                       </button>
-                      <button className="px-3 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-all flex items-center gap-2">
+                      <button className="px-3 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-xs font-medium transition-all flex items-center gap-2">
                         <ExternalLink className="w-3.5 h-3.5" />DOL FMLA Regulations
                       </button>
-                      <button className="px-3 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-all flex items-center gap-2">
+                      <button className="px-3 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-xs font-medium transition-all flex items-center gap-2">
                         <BarChart3 className="w-3.5 h-3.5" />Track FMLA Balance
                       </button>
-                      <button className="px-3 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-all flex items-center gap-2">
+                      <button className="px-3 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-xs font-medium transition-all flex items-center gap-2">
                         <Mail className="w-3.5 h-3.5" />Notify Payroll
                       </button>
                     </div>
@@ -879,7 +879,7 @@ export default function TimeOffManagement() {
                 <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">
                   <Clock className="w-5 h-5 text-blue-400" />
                 </div>
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white">Pending Leave Requests - Supervisor Review Required</h3>
+                <h3 className="text-lg font-bold text-primary">Pending Leave Requests - Supervisor Review Required</h3>
                 <span className="text-xs text-slate-500">Showing {filteredRequests.length} of {leaveRequests.length}</span>
               </div>
 
@@ -888,19 +888,19 @@ export default function TimeOffManagement() {
                 <div className="flex gap-2">
                   <button
                     onClick={() => setRequestFilter('all')}
-                    className={`px-3 py-2 rounded-lg text-xs font-medium transition-all ${requestFilter === 'all' ? 'bg-blue-500/20 border border-blue-500/30 text-blue-400' : 'bg-white dark:bg-slate-800/40 border border-slate-700/50 text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
+                    className={`px-3 py-2 rounded-lg text-xs font-medium transition-all ${requestFilter === 'all' ? 'bg-blue-500/20 border border-blue-500/30 text-blue-400' : 'bg-white dark:bg-slate-800/40 border border-slate-700/50 text-secondary hover:text-slate-900 dark:hover:text-white'}`}
                   >
                     All Requests
                   </button>
                   <button
                     onClick={() => setRequestFilter('approve')}
-                    className={`px-3 py-2 rounded-lg text-xs font-medium transition-all ${requestFilter === 'approve' ? 'bg-green-500/20 border border-green-500/30 text-green-400' : 'bg-white dark:bg-slate-800/40 border border-slate-700/50 text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
+                    className={`px-3 py-2 rounded-lg text-xs font-medium transition-all ${requestFilter === 'approve' ? 'bg-green-500/20 border border-green-500/30 text-green-400' : 'bg-white dark:bg-slate-800/40 border border-slate-700/50 text-secondary hover:text-slate-900 dark:hover:text-white'}`}
                   >
                     Ready to Approve
                   </button>
                   <button
                     onClick={() => setRequestFilter('review')}
-                    className={`px-3 py-2 rounded-lg text-xs font-medium transition-all ${requestFilter === 'review' ? 'bg-amber-500/20 border border-amber-500/30 text-amber-400' : 'bg-white dark:bg-slate-800/40 border border-slate-700/50 text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
+                    className={`px-3 py-2 rounded-lg text-xs font-medium transition-all ${requestFilter === 'review' ? 'bg-amber-500/20 border border-amber-500/30 text-amber-400' : 'bg-white dark:bg-slate-800/40 border border-slate-700/50 text-secondary hover:text-slate-900 dark:hover:text-white'}`}
                   >
                     Needs Review
                   </button>
@@ -912,10 +912,10 @@ export default function TimeOffManagement() {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search by name, badge, leave type, shift..."
-                    className="w-full pl-10 pr-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white text-sm placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
+                    className="w-full pl-10 pr-4 py-2 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary text-sm placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
                   />
                 </div>
-                <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer">
+                <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="px-3 py-2 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer">
                   <option value="date">Sort by Date</option>
                   <option value="name">Sort by Name</option>
                   <option value="type">Sort by Type</option>
@@ -936,11 +936,11 @@ export default function TimeOffManagement() {
                         </div>
                         <div className="text-left flex-1 min-w-0">
                           <div className="flex items-center gap-2 flex-wrap">
-                            <h4 className="text-sm font-semibold text-slate-900 dark:text-white">{request.name.toUpperCase()}</h4>
-                            <span className="px-2 py-0.5 bg-white dark:bg-slate-700/50 rounded text-[10px] text-slate-700 dark:text-slate-300 font-mono">{request.badge}</span>
+                            <h4 className="text-sm font-semibold text-primary">{request.name.toUpperCase()}</h4>
+                            <span className="px-2 py-0.5 bg-white dark:bg-slate-700/50 rounded text-[10px] text-secondary font-mono">{request.badge}</span>
                             <span className="px-2 py-0.5 bg-blue-500/20 border border-blue-500/30 rounded text-[10px] text-blue-400">{request.leaveType.toUpperCase()}</span>
                           </div>
-                          <p className="text-xs text-slate-700 dark:text-slate-400 mt-0.5">{request.position} | {request.department} | {request.shift} ({request.shiftHours})</p>
+                          <p className="text-xs text-secondary mt-0.5">{request.position} | {request.department} | {request.shift} ({request.shiftHours})</p>
                           <p className="text-xs text-slate-500 mt-0.5">{request.startDate} - {request.endDate} &bull; {request.days} day{request.days > 1 ? 's' : ''} ({request.hours}h) &bull; {request.reason}</p>
                           <p className="text-[10px] text-slate-500 mt-0.5">Submitted: {request.submitted} ({request.daysAgo} days ago)</p>
                         </div>
@@ -955,17 +955,17 @@ export default function TimeOffManagement() {
                             <span className="px-2 py-0.5 bg-amber-500/20 border border-amber-500/30 rounded text-[10px] text-amber-400">Coverage Conflict</span>
                           )}
                         </div>
-                        {expandedRequests[request.id] ? <ChevronUp className="w-4 h-4 text-slate-700 dark:text-slate-400" /> : <ChevronDown className="w-4 h-4 text-slate-700 dark:text-slate-400" />}
+                        {expandedRequests[request.id] ? <ChevronUp className="w-4 h-4 text-secondary" /> : <ChevronDown className="w-4 h-4 text-secondary" />}
                       </div>
                     </button>
 
                     {expandedRequests[request.id] && (
-                      <div className="px-5 pb-5 border-t border-slate-200 dark:border-slate-200 dark:border-slate-700/30 space-y-4">
+                      <div className="px-5 pb-5 border-t border-border dark:border-slate-700/30 space-y-4">
 
                         {/* Leave Details */}
-                        <div className="mt-4 bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/30 rounded-lg p-4">
-                          <h5 className="text-xs font-semibold text-slate-700 dark:text-slate-300 mb-3">Leave Request Details</h5>
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-slate-700 dark:text-slate-400">
+                        <div className="mt-4 bg-white dark:bg-slate-900/40 border border-border rounded-lg p-4">
+                          <h5 className="text-xs font-semibold text-secondary mb-3">Leave Request Details</h5>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-secondary">
                             <div><span className="text-slate-500">Leave Type:</span> {request.leaveType}</div>
                             <div><span className="text-slate-500">Dates:</span> {request.startDate} - {request.endDate}</div>
                             <div><span className="text-slate-500">Duration:</span> {request.days} day{request.days > 1 ? 's' : ''} ({request.hours} hours, {request.shiftLength}-hour shifts)</div>
@@ -976,11 +976,11 @@ export default function TimeOffManagement() {
                         </div>
 
                         {/* Leave Balance */}
-                        <div className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/30 rounded-lg p-4">
-                          <h5 className="text-xs font-semibold text-slate-700 dark:text-slate-300 mb-3">Leave Balance</h5>
+                        <div className="bg-white dark:bg-slate-900/40 border border-border rounded-lg p-4">
+                          <h5 className="text-xs font-semibold text-secondary mb-3">Leave Balance</h5>
                           <div className="grid grid-cols-3 gap-3 text-center mb-3">
                             <div>
-                              <p className="text-lg font-bold text-slate-900 dark:text-white">{request.balance.available}h</p>
+                              <p className="text-lg font-bold text-primary">{request.balance.available}h</p>
                               <p className="text-[10px] text-slate-500">Available</p>
                             </div>
                             <div>
@@ -1002,7 +1002,7 @@ export default function TimeOffManagement() {
                         <div className={`border rounded-lg p-4 ${
                           request.shiftCoverage.buffer < 0 ? 'bg-red-500/5 border-red-500/20' :
                           request.shiftCoverage.buffer === 0 ? 'bg-amber-500/5 border-amber-500/20' :
-                          'bg-white dark:bg-slate-900/40 border-slate-200 dark:border-slate-700/30'
+                          'bg-white dark:bg-slate-900/40 border-border'
                         }`}>
                           <h5 className={`text-xs font-semibold mb-3 ${
                             request.shiftCoverage.buffer < 0 ? 'text-red-400' :
@@ -1013,7 +1013,7 @@ export default function TimeOffManagement() {
                           </h5>
                           <div className="grid grid-cols-2 md:grid-cols-5 gap-3 text-center mb-3">
                             <div>
-                              <p className="text-lg font-bold text-slate-900 dark:text-white">{request.shiftCoverage.normal}</p>
+                              <p className="text-lg font-bold text-primary">{request.shiftCoverage.normal}</p>
                               <p className="text-[10px] text-slate-500">Normal Staffing</p>
                             </div>
                             <div>
@@ -1064,7 +1064,7 @@ export default function TimeOffManagement() {
                             <div className="mt-3 bg-amber-500/5 border border-amber-500/20 rounded-lg p-3">
                               <p className="text-xs font-semibold text-amber-400 mb-2">Scheduling Conflicts:</p>
                               {request.conflicts.map((conflict, idx) => (
-                                <div key={idx} className="flex items-start gap-2 text-xs text-slate-700 dark:text-slate-400 mb-1">
+                                <div key={idx} className="flex items-start gap-2 text-xs text-secondary mb-1">
                                   <AlertCircle className="w-3.5 h-3.5 text-amber-400 mt-0.5 flex-shrink-0" />
                                   <span>{conflict}</span>
                                 </div>
@@ -1088,7 +1088,7 @@ export default function TimeOffManagement() {
                               {request.resolutionOptions.map((option, idx) => (
                                 <div key={idx} className="flex items-start gap-3 px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-900/30">
                                   <span className="text-xs text-amber-400 font-bold mt-0.5">{idx + 1}.</span>
-                                  <p className="text-xs text-slate-700 dark:text-slate-300">{option}</p>
+                                  <p className="text-xs text-secondary">{option}</p>
                                 </div>
                               ))}
                             </div>
@@ -1096,9 +1096,9 @@ export default function TimeOffManagement() {
                         )}
 
                         {/* Operational Notes */}
-                        <div className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/30 rounded-lg p-4">
-                          <h5 className="text-xs font-semibold text-slate-700 dark:text-slate-300 mb-3">Operational Assessment</h5>
-                          <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-xs text-slate-700 dark:text-slate-400">
+                        <div className="bg-white dark:bg-slate-900/40 border border-border rounded-lg p-4">
+                          <h5 className="text-xs font-semibold text-secondary mb-3">Operational Assessment</h5>
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-xs text-secondary">
                             <div><span className="text-slate-500">Events:</span> {request.operational.events}</div>
                             <div><span className="text-slate-500">Court:</span> {request.operational.court}</div>
                             <div><span className="text-slate-500">Training:</span> {request.operational.training}</div>
@@ -1106,15 +1106,15 @@ export default function TimeOffManagement() {
                         </div>
 
                         {/* Supervisor Status */}
-                        <div className="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/30 rounded-lg p-4">
-                          <h5 className="text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2">Supervisor Review</h5>
-                          <div className="flex items-center gap-3 text-xs text-slate-700 dark:text-slate-400 flex-wrap">
+                        <div className="bg-white dark:bg-slate-900/40 border border-border rounded-lg p-4">
+                          <h5 className="text-xs font-semibold text-secondary mb-2">Supervisor Review</h5>
+                          <div className="flex items-center gap-3 text-xs text-secondary flex-wrap">
                             <span className="text-slate-500">Supervisor:</span>
                             <span>{request.supervisor.name}</span>
                             <span className="px-2 py-0.5 bg-amber-500/20 border border-amber-500/30 rounded text-[10px] text-amber-400 font-bold">{request.supervisor.status}</span>
                             <span className="text-slate-500">Notified: {request.supervisor.notified}</span>
                           </div>
-                          <div className="flex items-center gap-3 text-xs text-slate-700 dark:text-slate-400 mt-1 flex-wrap">
+                          <div className="flex items-center gap-3 text-xs text-secondary mt-1 flex-wrap">
                             <span className="text-slate-500">Seniority:</span>
                             <span>{request.seniority}</span>
                             <span className="text-slate-700">|</span>
@@ -1131,7 +1131,7 @@ export default function TimeOffManagement() {
                             </h5>
                             <div className="space-y-1.5">
                               {request.recommendReasons.map((reason, idx) => (
-                                <div key={idx} className="flex items-start gap-2 text-xs text-slate-700 dark:text-slate-400">
+                                <div key={idx} className="flex items-start gap-2 text-xs text-secondary">
                                   <CheckCircle2 className="w-3.5 h-3.5 text-green-400 mt-0.5 flex-shrink-0" />
                                   <span>{reason}</span>
                                 </div>
@@ -1148,7 +1148,7 @@ export default function TimeOffManagement() {
                             </h5>
                             <div className="space-y-1.5">
                               {request.reviewReasons.map((reason, idx) => (
-                                <div key={idx} className="flex items-start gap-2 text-xs text-slate-700 dark:text-slate-400">
+                                <div key={idx} className="flex items-start gap-2 text-xs text-secondary">
                                   <AlertCircle className="w-3.5 h-3.5 text-amber-400 mt-0.5 flex-shrink-0" />
                                   <span>{reason}</span>
                                 </div>
@@ -1177,13 +1177,13 @@ export default function TimeOffManagement() {
                           >
                             <Info className="w-3.5 h-3.5" />Request Info
                           </button>
-                          <button className="px-3 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-all flex items-center gap-2">
+                          <button className="px-3 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-xs font-medium transition-all flex items-center gap-2">
                             <Calendar className="w-3.5 h-3.5" />View Schedule
                           </button>
-                          <button className="px-3 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-all flex items-center gap-2">
+                          <button className="px-3 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-xs font-medium transition-all flex items-center gap-2">
                             <Eye className="w-3.5 h-3.5" />Calendar
                           </button>
-                          <button className="px-3 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-all flex items-center gap-2">
+                          <button className="px-3 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-xs font-medium transition-all flex items-center gap-2">
                             <Mail className="w-3.5 h-3.5" />Contact {request.supervisor.name}
                           </button>
                         </div>
@@ -1202,10 +1202,10 @@ export default function TimeOffManagement() {
                 <div className="w-8 h-8 bg-red-500/20 rounded-lg flex items-center justify-center">
                   <XCircle className="w-5 h-5 text-red-400" />
                 </div>
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white">Recently Denied Requests</h3>
+                <h3 className="text-lg font-bold text-primary">Recently Denied Requests</h3>
               </div>
 
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
+              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl overflow-hidden">
                 <div className="px-5 py-4">
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex items-center gap-3">
@@ -1214,11 +1214,11 @@ export default function TimeOffManagement() {
                       </div>
                       <div>
                         <div className="flex items-center gap-2 flex-wrap">
-                          <h4 className="text-sm font-semibold text-slate-900 dark:text-white">DEPUTY T. BROOKS</h4>
-                          <span className="px-2 py-0.5 bg-white dark:bg-slate-700/50 rounded text-[10px] text-slate-700 dark:text-slate-300 font-mono">D-3890</span>
+                          <h4 className="text-sm font-semibold text-primary">DEPUTY T. BROOKS</h4>
+                          <span className="px-2 py-0.5 bg-white dark:bg-slate-700/50 rounded text-[10px] text-secondary font-mono">D-3890</span>
                           <span className="px-2 py-0.5 bg-red-500/20 border border-red-500/30 rounded text-[10px] text-red-400 font-bold">DENIED</span>
                         </div>
-                        <p className="text-xs text-slate-700 dark:text-slate-400 mt-0.5">Deputy Sheriff | Patrol Division | B-Shift (14:00-02:00)</p>
+                        <p className="text-xs text-secondary mt-0.5">Deputy Sheriff | Patrol Division | B-Shift (14:00-02:00)</p>
                         <p className="text-xs text-slate-500 mt-0.5">Annual Leave - November 25-29, 2024 (5 days, 40 hours)</p>
                         <p className="text-xs text-slate-500 mt-0.5">Thanksgiving vacation</p>
                       </div>
@@ -1229,10 +1229,10 @@ export default function TimeOffManagement() {
                     </div>
                   </div>
                   <div className="mt-3 bg-red-500/5 border border-red-500/20 rounded-lg p-3">
-                    <p className="text-xs text-slate-700 dark:text-slate-400">
+                    <p className="text-xs text-secondary">
                       <span className="text-red-400 font-medium">Denial Reason:</span> B-Shift Thanksgiving week (Nov 25-29) already at maximum leave capacity. Two deputies (L. Park, M. Howard) previously approved for same dates. Approving additional leave would reduce B-Shift below minimum staffing of 6 deputies.
                     </p>
-                    <p className="text-xs text-slate-700 dark:text-slate-400 mt-2">
+                    <p className="text-xs text-secondary mt-2">
                       <span className="text-slate-500">Alternative Offered:</span> December 2-6, 2024 (following week) - adequate coverage available on B-Shift.
                     </p>
                   </div>
@@ -1256,27 +1256,27 @@ export default function TimeOffManagement() {
                 <CheckCircle className="w-6 h-6 text-green-400" />
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Approve Leave Request</h3>
-                <p className="text-sm text-slate-700 dark:text-slate-400">{showApproveModal.name} - {showApproveModal.leaveType}</p>
+                <h3 className="text-lg font-semibold text-primary">Approve Leave Request</h3>
+                <p className="text-sm text-secondary">{showApproveModal.name} - {showApproveModal.leaveType}</p>
               </div>
             </div>
             <div className="bg-green-500/5 border border-green-500/20 rounded-lg p-3 mb-4">
-              <p className="text-xs text-slate-700 dark:text-slate-400">
+              <p className="text-xs text-secondary">
                 <span className="text-green-400 font-medium">Dates:</span> {showApproveModal.startDate} - {showApproveModal.endDate} ({showApproveModal.days} day{showApproveModal.days > 1 ? 's' : ''})
               </p>
             </div>
             <div className="mb-4">
-              <label className="text-xs text-slate-700 dark:text-slate-400 block mb-2">Comments (optional):</label>
+              <label className="text-xs text-secondary block mb-2">Comments (optional):</label>
               <textarea
                 value={approveComment}
                 onChange={(e) => setApproveComment(e.target.value)}
                 placeholder="Add any notes for the supervisor..."
-                className="w-full px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white text-sm placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-green-500/50 resize-none h-20"
+                className="w-full px-3 py-2 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary text-sm placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-green-500/50 resize-none h-20"
               />
             </div>
             <p className="text-[10px] text-slate-500 mb-4">Leave approval will be forwarded to supervisor ({showApproveModal.supervisor.name}) for final review and confirmation.</p>
             <div className="flex gap-3">
-              <button onClick={() => { setShowApproveModal(null); setApproveComment(''); }} className="flex-1 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all text-sm">Cancel</button>
+              <button onClick={() => { setShowApproveModal(null); setApproveComment(''); }} className="flex-1 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-primary font-medium transition-all text-sm">Cancel</button>
               <button onClick={() => handleApprove(showApproveModal)} className="flex-1 px-4 py-2.5 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 rounded-xl text-green-400 font-medium transition-all text-sm">Approve Request</button>
             </div>
           </div>
@@ -1295,21 +1295,21 @@ export default function TimeOffManagement() {
                 <XCircle className="w-6 h-6 text-red-400" />
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Deny Leave Request</h3>
-                <p className="text-sm text-slate-700 dark:text-slate-400">{showDenyModal.name} - {showDenyModal.leaveType}</p>
+                <h3 className="text-lg font-semibold text-primary">Deny Leave Request</h3>
+                <p className="text-sm text-secondary">{showDenyModal.name} - {showDenyModal.leaveType}</p>
               </div>
             </div>
             <div className="bg-red-500/5 border border-red-500/20 rounded-lg p-3 mb-4">
-              <p className="text-xs text-slate-700 dark:text-slate-400">
+              <p className="text-xs text-secondary">
                 <span className="text-red-400 font-medium">Dates:</span> {showDenyModal.startDate} - {showDenyModal.endDate} ({showDenyModal.days} day{showDenyModal.days > 1 ? 's' : ''})
               </p>
             </div>
             <div className="mb-4">
-              <label className="text-xs text-slate-700 dark:text-slate-400 block mb-2">Denial Reason (required):</label>
+              <label className="text-xs text-secondary block mb-2">Denial Reason (required):</label>
               <select
                 value={denyReason}
                 onChange={(e) => setDenyReason(e.target.value)}
-                className="w-full px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white text-sm focus:outline-none focus:border-red-500/50 cursor-pointer mb-3"
+                className="w-full px-3 py-2 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary text-sm focus:outline-none focus:border-red-500/50 cursor-pointer mb-3"
               >
                 <option value="">Select a reason...</option>
                 <option value="staffing">Insufficient Staffing Coverage</option>
@@ -1319,20 +1319,20 @@ export default function TimeOffManagement() {
                 <option value="notice">Insufficient Advance Notice</option>
                 <option value="other">Other (specify in comments)</option>
               </select>
-              <label className="text-xs text-slate-700 dark:text-slate-400 block mb-2">Additional Comments:</label>
+              <label className="text-xs text-secondary block mb-2">Additional Comments:</label>
               <textarea
                 value={denyComment}
                 onChange={(e) => setDenyComment(e.target.value)}
                 placeholder="Provide details for the denial..."
-                className="w-full px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white text-sm placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-red-500/50 resize-none h-20"
+                className="w-full px-3 py-2 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary text-sm placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-red-500/50 resize-none h-20"
               />
             </div>
             <div className="flex gap-3">
-              <button onClick={() => { setShowDenyModal(null); setDenyReason(''); setDenyComment(''); }} className="flex-1 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all text-sm">Cancel</button>
+              <button onClick={() => { setShowDenyModal(null); setDenyReason(''); setDenyComment(''); }} className="flex-1 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-primary font-medium transition-all text-sm">Cancel</button>
               <button
                 onClick={() => handleDeny(showDenyModal)}
                 disabled={!denyReason}
-                className={`flex-1 px-4 py-2.5 rounded-xl font-medium transition-all text-sm ${denyReason ? 'bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 text-red-400' : 'bg-slate-100 dark:bg-slate-800/20 border border-slate-200 dark:border-slate-700/30 text-slate-700 cursor-not-allowed'}`}
+                className={`flex-1 px-4 py-2.5 rounded-xl font-medium transition-all text-sm ${denyReason ? 'bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 text-red-400' : 'bg-slate-100 dark:bg-slate-800/20 border border-border text-slate-700 cursor-not-allowed'}`}
               >
                 Deny Request
               </button>
@@ -1353,25 +1353,25 @@ export default function TimeOffManagement() {
                 <Info className="w-6 h-6 text-blue-400" />
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Request Additional Information</h3>
-                <p className="text-sm text-slate-700 dark:text-slate-400">{showRequestInfoModal.name} - {showRequestInfoModal.leaveType}</p>
+                <h3 className="text-lg font-semibold text-primary">Request Additional Information</h3>
+                <p className="text-sm text-secondary">{showRequestInfoModal.name} - {showRequestInfoModal.leaveType}</p>
               </div>
             </div>
             <div className="mb-4">
-              <label className="text-xs text-slate-700 dark:text-slate-400 block mb-2">Information Needed:</label>
+              <label className="text-xs text-secondary block mb-2">Information Needed:</label>
               <textarea
                 value={requestInfoText}
                 onChange={(e) => setRequestInfoText(e.target.value)}
                 placeholder="Describe the additional information needed from the employee..."
-                className="w-full px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white text-sm placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500/50 resize-none h-24"
+                className="w-full px-3 py-2 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary text-sm placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500/50 resize-none h-24"
               />
             </div>
             <div className="flex gap-3">
-              <button onClick={() => { setShowRequestInfoModal(null); setRequestInfoText(''); }} className="flex-1 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all text-sm">Cancel</button>
+              <button onClick={() => { setShowRequestInfoModal(null); setRequestInfoText(''); }} className="flex-1 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-primary font-medium transition-all text-sm">Cancel</button>
               <button
                 onClick={() => handleRequestInfo(showRequestInfoModal)}
                 disabled={!requestInfoText.trim()}
-                className={`flex-1 px-4 py-2.5 rounded-xl font-medium transition-all text-sm ${requestInfoText.trim() ? 'bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 text-blue-400' : 'bg-slate-100 dark:bg-slate-800/20 border border-slate-200 dark:border-slate-700/30 text-slate-700 cursor-not-allowed'}`}
+                className={`flex-1 px-4 py-2.5 rounded-xl font-medium transition-all text-sm ${requestInfoText.trim() ? 'bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 text-blue-400' : 'bg-slate-100 dark:bg-slate-800/20 border border-border text-slate-700 cursor-not-allowed'}`}
               >
                 Send Request
               </button>
@@ -1386,14 +1386,14 @@ export default function TimeOffManagement() {
       {showCoverageModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setShowCoverageModal(false)} />
-          <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl p-6 max-w-3xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
+          <div className="relative bg-white dark:bg-slate-900 border border-border rounded-2xl p-6 max-w-3xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
             <div className="flex items-start justify-between mb-6">
               <div>
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1">Shift Coverage Analysis</h3>
-                <p className="text-sm text-slate-700 dark:text-slate-400">Current staffing levels and leave impact by shift</p>
+                <h3 className="text-xl font-bold text-primary mb-1">Shift Coverage Analysis</h3>
+                <p className="text-sm text-secondary">Current staffing levels and leave impact by shift</p>
               </div>
               <button onClick={() => setShowCoverageModal(false)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors">
-                <X className="w-5 h-5 text-slate-700 dark:text-slate-400" />
+                <X className="w-5 h-5 text-secondary" />
               </button>
             </div>
 
@@ -1401,12 +1401,12 @@ export default function TimeOffManagement() {
               {/* A-Shift */}
               <div className="bg-white dark:bg-slate-800/40 border border-green-500/30 rounded-xl p-4">
                 <div className="flex items-center justify-between mb-3">
-                  <h4 className="text-sm font-semibold text-slate-900 dark:text-white">A-Shift (06:00-18:00)</h4>
+                  <h4 className="text-sm font-semibold text-primary">A-Shift (06:00-18:00)</h4>
                   <span className="px-2 py-0.5 bg-green-500/20 border border-green-500/30 rounded text-[10px] text-green-400 font-bold">ADEQUATE</span>
                 </div>
                 <div className="grid grid-cols-3 gap-2 text-center mb-3">
                   <div>
-                    <p className="text-lg font-bold text-slate-900 dark:text-white">9</p>
+                    <p className="text-lg font-bold text-primary">9</p>
                     <p className="text-[10px] text-slate-500">Assigned</p>
                   </div>
                   <div>
@@ -1428,12 +1428,12 @@ export default function TimeOffManagement() {
               {/* B-Shift */}
               <div className="bg-white dark:bg-slate-800/40 border border-red-500/30 rounded-xl p-4">
                 <div className="flex items-center justify-between mb-3">
-                  <h4 className="text-sm font-semibold text-slate-900 dark:text-white">B-Shift (14:00-02:00)</h4>
+                  <h4 className="text-sm font-semibold text-primary">B-Shift (14:00-02:00)</h4>
                   <span className="px-2 py-0.5 bg-red-500/20 border border-red-500/30 rounded text-[10px] text-red-400 font-bold">CRITICAL</span>
                 </div>
                 <div className="grid grid-cols-3 gap-2 text-center mb-3">
                   <div>
-                    <p className="text-lg font-bold text-slate-900 dark:text-white">8</p>
+                    <p className="text-lg font-bold text-primary">8</p>
                     <p className="text-[10px] text-slate-500">Assigned</p>
                   </div>
                   <div>
@@ -1456,12 +1456,12 @@ export default function TimeOffManagement() {
               {/* C-Shift */}
               <div className="bg-white dark:bg-slate-800/40 border border-green-500/30 rounded-xl p-4">
                 <div className="flex items-center justify-between mb-3">
-                  <h4 className="text-sm font-semibold text-slate-900 dark:text-white">C-Shift (18:00-06:00)</h4>
+                  <h4 className="text-sm font-semibold text-primary">C-Shift (18:00-06:00)</h4>
                   <span className="px-2 py-0.5 bg-green-500/20 border border-green-500/30 rounded text-[10px] text-green-400 font-bold">ADEQUATE</span>
                 </div>
                 <div className="grid grid-cols-3 gap-2 text-center mb-3">
                   <div>
-                    <p className="text-lg font-bold text-slate-900 dark:text-white">8</p>
+                    <p className="text-lg font-bold text-primary">8</p>
                     <p className="text-[10px] text-slate-500">Assigned</p>
                   </div>
                   <div>
@@ -1483,12 +1483,12 @@ export default function TimeOffManagement() {
               {/* D-Shift */}
               <div className="bg-white dark:bg-slate-800/40 border border-amber-500/30 rounded-xl p-4">
                 <div className="flex items-center justify-between mb-3">
-                  <h4 className="text-sm font-semibold text-slate-900 dark:text-white">D-Shift (14:00-02:00)</h4>
+                  <h4 className="text-sm font-semibold text-primary">D-Shift (14:00-02:00)</h4>
                   <span className="px-2 py-0.5 bg-amber-500/20 border border-amber-500/30 rounded text-[10px] text-amber-400 font-bold">AT MINIMUM</span>
                 </div>
                 <div className="grid grid-cols-3 gap-2 text-center mb-3">
                   <div>
-                    <p className="text-lg font-bold text-slate-900 dark:text-white">8</p>
+                    <p className="text-lg font-bold text-primary">8</p>
                     <p className="text-[10px] text-slate-500">Assigned</p>
                   </div>
                   <div>
@@ -1509,7 +1509,7 @@ export default function TimeOffManagement() {
             </div>
 
             <div className="mt-6 flex gap-3">
-              <button onClick={() => setShowCoverageModal(false)} className="flex-1 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all text-sm">Close</button>
+              <button onClick={() => setShowCoverageModal(false)} className="flex-1 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-primary font-medium transition-all text-sm">Close</button>
               <button className="flex-1 px-4 py-2.5 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 rounded-xl text-blue-400 font-medium transition-all text-sm flex items-center justify-center gap-2">
                 <Printer className="w-4 h-4" />Print Coverage Report
               </button>
@@ -1524,14 +1524,14 @@ export default function TimeOffManagement() {
       {showFMLADashboard && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setShowFMLADashboard(false)} />
-          <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl p-6 max-w-3xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
+          <div className="relative bg-white dark:bg-slate-900 border border-border rounded-2xl p-6 max-w-3xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
             <div className="flex items-start justify-between mb-6">
               <div>
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1">FMLA Dashboard</h3>
-                <p className="text-sm text-slate-700 dark:text-slate-400">Family and Medical Leave Act tracking and compliance</p>
+                <h3 className="text-xl font-bold text-primary mb-1">FMLA Dashboard</h3>
+                <p className="text-sm text-secondary">Family and Medical Leave Act tracking and compliance</p>
               </div>
               <button onClick={() => setShowFMLADashboard(false)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors">
-                <X className="w-5 h-5 text-slate-700 dark:text-slate-400" />
+                <X className="w-5 h-5 text-secondary" />
               </button>
             </div>
 
@@ -1539,31 +1539,31 @@ export default function TimeOffManagement() {
             <div className="grid grid-cols-3 gap-3 mb-6">
               <div className="bg-white dark:bg-slate-800/40 border border-blue-500/30 rounded-xl p-4 text-center">
                 <p className="text-2xl font-bold text-blue-400">1</p>
-                <p className="text-xs text-slate-700 dark:text-slate-400">Active FMLA Leave</p>
+                <p className="text-xs text-secondary">Active FMLA Leave</p>
               </div>
               <div className="bg-white dark:bg-slate-800/40 border border-green-500/30 rounded-xl p-4 text-center">
                 <p className="text-2xl font-bold text-green-400">0</p>
-                <p className="text-xs text-slate-700 dark:text-slate-400">Completed This Year</p>
+                <p className="text-xs text-secondary">Completed This Year</p>
               </div>
               <div className="bg-white dark:bg-slate-800/40 border border-red-500/30 rounded-xl p-4 text-center">
                 <p className="text-2xl font-bold text-red-400">1</p>
-                <p className="text-xs text-slate-700 dark:text-slate-400">Pending Action</p>
+                <p className="text-xs text-secondary">Pending Action</p>
               </div>
             </div>
 
             {/* Active FMLA Case */}
-            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4 mb-4">
+            <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4 mb-4">
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-10 h-10 bg-red-500/20 rounded-full flex items-center justify-center">
                   <span className="text-red-400 text-sm font-bold">AG</span>
                 </div>
                 <div>
-                  <h4 className="text-sm font-semibold text-slate-900 dark:text-white">Amanda Garcia</h4>
-                  <p className="text-xs text-slate-700 dark:text-slate-400">BI-9012 | Background Investigator | FMLA - Serious Health Condition</p>
+                  <h4 className="text-sm font-semibold text-primary">Amanda Garcia</h4>
+                  <p className="text-xs text-secondary">BI-9012 | Background Investigator | FMLA - Serious Health Condition</p>
                 </div>
                 <span className="ml-auto px-2 py-0.5 bg-blue-500/20 border border-blue-500/30 rounded text-[10px] text-blue-400 font-bold">ACTIVE</span>
               </div>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs text-slate-700 dark:text-slate-400">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs text-secondary">
                 <div><span className="text-slate-500">Leave Period:</span><br />Nov 4 - Dec 5, 2024</div>
                 <div><span className="text-slate-500">Duration:</span><br />10 days (80 hours)</div>
                 <div><span className="text-slate-500">FMLA Used:</span><br />80h of 480h (16.7%)</div>
@@ -1572,8 +1572,8 @@ export default function TimeOffManagement() {
             </div>
 
             {/* Compliance Checklist */}
-            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
-              <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">FMLA Compliance Checklist - Garcia</h4>
+            <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
+              <h4 className="text-sm font-semibold text-primary mb-3">FMLA Compliance Checklist - Garcia</h4>
               <div className="space-y-2">
                 {[
                   { text: 'Eligibility determined (12 months, 1250 hours, 50 employees)', done: true },
@@ -1591,7 +1591,7 @@ export default function TimeOffManagement() {
                     ) : (
                       <Circle className={`w-4 h-4 mt-0.5 flex-shrink-0 ${item.urgent ? 'text-red-400' : 'text-slate-500'}`} />
                     )}
-                    <span className={`text-xs ${item.done ? 'text-green-400' : item.urgent ? 'text-red-400 font-medium' : 'text-slate-900 dark:text-white'}`}>{item.text}</span>
+                    <span className={`text-xs ${item.done ? 'text-green-400' : item.urgent ? 'text-red-400 font-medium' : 'text-primary'}`}>{item.text}</span>
                     {item.urgent && <span className="px-1.5 py-0.5 bg-red-500/20 border border-red-500/30 rounded text-[9px] text-red-400 font-bold ml-auto">DUE NOV 07</span>}
                   </div>
                 ))}
@@ -1599,7 +1599,7 @@ export default function TimeOffManagement() {
             </div>
 
             <div className="mt-6 flex gap-3">
-              <button onClick={() => setShowFMLADashboard(false)} className="flex-1 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-slate-900 dark:text-white font-medium transition-all text-sm">Close</button>
+              <button onClick={() => setShowFMLADashboard(false)} className="flex-1 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-primary font-medium transition-all text-sm">Close</button>
               <button className="flex-1 px-4 py-2.5 bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 rounded-xl text-red-400 font-medium transition-all text-sm flex items-center justify-center gap-2">
                 <ClipboardList className="w-4 h-4" />Complete WH-382
               </button>
@@ -1640,38 +1640,38 @@ export default function TimeOffManagement() {
           onClick={() => setSupportOpen(!supportOpen)}
           className="w-14 h-14 bg-gradient-to-br from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110"
         >
-          {supportOpen ? <X className="w-6 h-6 text-slate-900 dark:text-white" /> : <HelpCircle className="w-6 h-6 text-slate-900 dark:text-white" />}
+          {supportOpen ? <X className="w-6 h-6 text-primary" /> : <HelpCircle className="w-6 h-6 text-primary" />}
         </button>
 
         {supportOpen && (
-          <div className="absolute bottom-16 right-0 w-80 bg-white dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200 dark:border-slate-700/50 rounded-2xl shadow-2xl overflow-hidden">
-            <div className="p-4 border-b border-slate-200 dark:border-slate-700/50">
-              <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Leave Administration Support</h3>
-              <p className="text-xs text-slate-700 dark:text-slate-400 mt-1">GCSO Human Resources Division</p>
+          <div className="absolute bottom-16 right-0 w-80 bg-surface-raised backdrop-blur-xl border border-border rounded-2xl shadow-2xl overflow-hidden">
+            <div className="p-4 border-b border-border">
+              <h3 className="text-sm font-semibold text-primary">Leave Administration Support</h3>
+              <p className="text-xs text-secondary mt-1">GCSO Human Resources Division</p>
             </div>
             <div className="p-4 space-y-3">
               <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
-                <p className="text-sm font-medium text-slate-900 dark:text-white">Leave Administration</p>
-                <p className="text-xs text-slate-700 dark:text-slate-400">C. Nguyen, HR Specialist</p>
+                <p className="text-sm font-medium text-primary">Leave Administration</p>
+                <p className="text-xs text-secondary">C. Nguyen, HR Specialist</p>
                 <p className="text-xs text-amber-400 mt-1">Ext. 4510</p>
               </div>
               <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
-                <p className="text-sm font-medium text-slate-900 dark:text-white">HR Director</p>
-                <p className="text-xs text-slate-700 dark:text-slate-400">Leave policy, FMLA compliance</p>
+                <p className="text-sm font-medium text-primary">HR Director</p>
+                <p className="text-xs text-secondary">Leave policy, FMLA compliance</p>
                 <p className="text-xs text-amber-400 mt-1">Ext. 4500</p>
               </div>
               <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
-                <p className="text-sm font-medium text-slate-900 dark:text-white">Payroll Department</p>
-                <p className="text-xs text-slate-700 dark:text-slate-400">Leave balances, pay during leave</p>
+                <p className="text-sm font-medium text-primary">Payroll Department</p>
+                <p className="text-xs text-secondary">Leave balances, pay during leave</p>
                 <p className="text-xs text-amber-400 mt-1">Ext. 4530</p>
               </div>
               <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
-                <p className="text-sm font-medium text-slate-900 dark:text-white">FMLA Resources</p>
-                <p className="text-xs text-slate-700 dark:text-slate-400">DOL guidelines, WH forms</p>
+                <p className="text-sm font-medium text-primary">FMLA Resources</p>
+                <p className="text-xs text-secondary">DOL guidelines, WH forms</p>
               </div>
               <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
-                <p className="text-sm font-medium text-slate-900 dark:text-white">GCSO Leave Policies</p>
-                <p className="text-xs text-slate-700 dark:text-slate-400">Annual, sick, personal, FMLA</p>
+                <p className="text-sm font-medium text-primary">GCSO Leave Policies</p>
+                <p className="text-xs text-secondary">Annual, sick, personal, FMLA</p>
               </div>
             </div>
           </div>

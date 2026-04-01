@@ -402,34 +402,34 @@ export default function ReportsAnalytics() {
             <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4 mb-6">
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-2">
-                  <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white">Reports & Compliance</h2>
+                  <h2 className="text-2xl lg:text-3xl font-bold text-primary">Reports & Compliance</h2>
                   <div className="flex items-center gap-1.5 px-2.5 py-1 bg-green-500/20 border border-green-500/40 rounded-lg">
                     <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
                     <span className="text-xs font-bold text-green-600 dark:text-green-400">LIVE DATA</span>
                   </div>
                 </div>
-                <p className="text-slate-700 dark:text-slate-400 text-sm mb-3">Enterprise-grade insights and performance intelligence</p>
+                <p className="text-secondary text-sm mb-3">Enterprise-grade insights and performance intelligence</p>
 
                 {/* YTD Performance At-a-Glance */}
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
                   <div className="flex items-center gap-2 px-3 py-1.5 bg-blue-500/10 border border-blue-500/30 rounded-lg">
                     <Phone className="w-4 h-4 text-blue-400" />
-                    <span className="text-slate-700 dark:text-slate-400">YTD:</span>
+                    <span className="text-secondary">YTD:</span>
                     <span className="font-bold text-blue-400">{keyMetrics.callsForService.total.toLocaleString()} calls</span>
                   </div>
                   <div className="flex items-center gap-2 px-3 py-1.5 bg-green-500/10 border border-green-500/30 rounded-lg">
                     <Clock className="w-4 h-4 text-green-600 dark:text-green-400" />
-                    <span className="text-slate-700 dark:text-slate-400">Avg Response:</span>
+                    <span className="text-secondary">Avg Response:</span>
                     <span className="font-bold text-green-600 dark:text-green-400">{keyMetrics.responseTime.average} min</span>
                   </div>
                   <div className="flex items-center gap-2 px-3 py-1.5 bg-purple-500/10 border border-purple-500/30 rounded-lg">
                     <CheckCircle className="w-4 h-4 text-purple-400" />
-                    <span className="text-slate-700 dark:text-slate-400">Clearance:</span>
+                    <span className="text-secondary">Clearance:</span>
                     <span className="font-bold text-purple-400">{keyMetrics.crimeClearanceRate.rate}%</span>
                   </div>
                   <div className="flex items-center gap-2 px-3 py-1.5 bg-amber-500/10 border border-amber-500/30 rounded-lg">
                     <Users className="w-4 h-4 text-amber-600 dark:text-amber-400" />
-                    <span className="text-slate-700 dark:text-slate-400">Staffing:</span>
+                    <span className="text-secondary">Staffing:</span>
                     <span className="font-bold text-amber-600 dark:text-amber-400">{keyMetrics.staffing.percentage}%</span>
                   </div>
                 </div>
@@ -440,7 +440,7 @@ export default function ReportsAnalytics() {
                 <select
                   value={timeRange}
                   onChange={(e) => setTimeRange(e.target.value)}
-                  className="px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white text-sm focus:outline-none focus:border-amber-500/50"
+                  className="px-3 py-2 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary text-sm focus:outline-none focus:border-amber-500/50"
                 >
                   <option value="ytd">Year to Date</option>
                   <option value="last30">Last 30 Days</option>
@@ -455,7 +455,7 @@ export default function ReportsAnalytics() {
                 </select>
                 <button
                   onClick={() => setComparisonModal(true)}
-                  className="hidden md:flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all"
+                  className="hidden md:flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all"
                 >
                   <BarChart3 className="w-4 h-4" />
                   <span className="text-sm">Compare</span>
@@ -469,14 +469,14 @@ export default function ReportsAnalytics() {
                 </button>
                 <button
                   onClick={() => setExportModal(true)}
-                  className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all"
+                  className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all"
                 >
                   <FileSpreadsheet className="w-4 h-4" />
                   <span className="hidden sm:inline text-sm">Excel</span>
                 </button>
                 <button
                   onClick={() => setScheduleModal(true)}
-                  className="hidden lg:flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all"
+                  className="hidden lg:flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all"
                 >
                   <CalendarClock className="w-4 h-4" />
                   <span className="text-sm">Schedule</span>
@@ -499,10 +499,10 @@ export default function ReportsAnalytics() {
                       <Bot className="w-6 h-6 text-purple-400" />
                     </div>
                     <div>
-                      <h4 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                      <h4 className="text-base font-bold text-primary flex items-center gap-2">
                         AI Analytics Intelligence
                       </h4>
-                      <div className="flex items-center gap-3 text-xs text-slate-700 dark:text-slate-400">
+                      <div className="flex items-center gap-3 text-xs text-secondary">
                         <span className="flex items-center gap-1.5">
                           <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
                           <span className="text-green-600 dark:text-green-400 font-medium">LIVE</span>
@@ -531,19 +531,19 @@ export default function ReportsAnalytics() {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
                         <div className="flex items-start gap-2">
                           <CheckCircle className="w-4 h-4 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
-                          <p className="text-slate-700 dark:text-slate-300"><span className="font-bold text-green-600 dark:text-green-400">Response times improved 12.3%</span> this month - excellent progress toward 8-minute target</p>
+                          <p className="text-secondary"><span className="font-bold text-green-600 dark:text-green-400">Response times improved 12.3%</span> this month - excellent progress toward 8-minute target</p>
                         </div>
                         <div className="flex items-start gap-2">
                           <CheckCircle className="w-4 h-4 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
-                          <p className="text-slate-700 dark:text-slate-300"><span className="font-bold text-blue-400">Crime clearance rate</span> at 68.5%, up 3.8% YoY - investigations performing well</p>
+                          <p className="text-secondary"><span className="font-bold text-blue-400">Crime clearance rate</span> at 68.5%, up 3.8% YoY - investigations performing well</p>
                         </div>
                         <div className="flex items-start gap-2">
                           <CheckCircle className="w-4 h-4 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
-                          <p className="text-slate-700 dark:text-slate-300"><span className="font-bold text-amber-600 dark:text-amber-400">Property crime down 5.8%</span> - community policing initiatives showing impact</p>
+                          <p className="text-secondary"><span className="font-bold text-amber-600 dark:text-amber-400">Property crime down 5.8%</span> - community policing initiatives showing impact</p>
                         </div>
                         <div className="flex items-start gap-2">
                           <CheckCircle className="w-4 h-4 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
-                          <p className="text-slate-700 dark:text-slate-300"><span className="font-bold text-purple-400">Overtime costs decreased 8.5%</span> - efficient scheduling reducing budget pressure</p>
+                          <p className="text-secondary"><span className="font-bold text-purple-400">Overtime costs decreased 8.5%</span> - efficient scheduling reducing budget pressure</p>
                         </div>
                       </div>
                     </div>
@@ -551,23 +551,23 @@ export default function ReportsAnalytics() {
                     {/* Detailed Analytics - 4 Column Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
                       {/* Performance Improvements */}
-                      <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 border border-slate-200 dark:border-slate-700/30">
+                      <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 border border-border">
                         <div className="flex items-center gap-2 mb-3">
                           <TrendingUp className="w-4 h-4 text-green-600 dark:text-green-400" />
                           <p className="text-xs font-bold text-green-600 dark:text-green-400">PERFORMANCE</p>
                         </div>
-                        <div className="space-y-2 text-xs text-slate-700 dark:text-slate-300">
+                        <div className="space-y-2 text-xs text-secondary">
                           <div className="flex justify-between">
                             <span>Patrol response:</span>
-                            <span className="font-bold text-slate-900 dark:text-white">7.8 min <span className="text-green-600 dark:text-green-400">(↓0.6)</span></span>
+                            <span className="font-bold text-primary">7.8 min <span className="text-green-600 dark:text-green-400">(↓0.6)</span></span>
                           </div>
                           <div className="flex justify-between">
                             <span>Case closure:</span>
-                            <span className="font-bold text-slate-900 dark:text-white">82.3% <span className="text-green-600 dark:text-green-400">(↑4.1%)</span></span>
+                            <span className="font-bold text-primary">82.3% <span className="text-green-600 dark:text-green-400">(↑4.1%)</span></span>
                           </div>
                           <div className="flex justify-between">
                             <span>Training complete:</span>
-                            <span className="font-bold text-slate-900 dark:text-white">94% <span className="text-green-600 dark:text-green-400">(↑8%)</span></span>
+                            <span className="font-bold text-primary">94% <span className="text-green-600 dark:text-green-400">(↑8%)</span></span>
                           </div>
                         </div>
                       </div>
@@ -578,7 +578,7 @@ export default function ReportsAnalytics() {
                           <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                           <p className="text-xs font-bold text-amber-600 dark:text-amber-400">ATTENTION NEEDED</p>
                         </div>
-                        <div className="space-y-2 text-xs text-slate-700 dark:text-slate-300">
+                        <div className="space-y-2 text-xs text-secondary">
                           <div className="flex justify-between">
                             <span>Staffing level:</span>
                             <span className="font-bold text-amber-600 dark:text-amber-400">92.1% (14 open)</span>
@@ -595,15 +595,15 @@ export default function ReportsAnalytics() {
                       </div>
 
                       {/* Budget Insights */}
-                      <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 border border-slate-200 dark:border-slate-700/30">
+                      <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 border border-border">
                         <div className="flex items-center gap-2 mb-3">
                           <DollarSign className="w-4 h-4 text-blue-400" />
                           <p className="text-xs font-bold text-blue-400">BUDGET INSIGHTS</p>
                         </div>
-                        <div className="space-y-2 text-xs text-slate-700 dark:text-slate-300">
+                        <div className="space-y-2 text-xs text-secondary">
                           <div className="flex justify-between">
                             <span>YTD spending:</span>
-                            <span className="font-bold text-slate-900 dark:text-white">85% of budget</span>
+                            <span className="font-bold text-primary">85% of budget</span>
                           </div>
                           <div className="flex justify-between">
                             <span>Year-end proj:</span>
@@ -617,12 +617,12 @@ export default function ReportsAnalytics() {
                       </div>
 
                       {/* Recommendations */}
-                      <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 border border-slate-200 dark:border-slate-700/30">
+                      <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 border border-border">
                         <div className="flex items-center gap-2 mb-3">
                           <Lightbulb className="w-4 h-4 text-purple-400" />
                           <p className="text-xs font-bold text-purple-400">RECOMMENDATIONS</p>
                         </div>
-                        <div className="space-y-2 text-xs text-slate-700 dark:text-slate-300">
+                        <div className="space-y-2 text-xs text-secondary">
                           <div className="flex items-start gap-1.5">
                             <span className="text-purple-400 mt-0.5">•</span>
                             <span>Focus hiring on patrol division</span>
@@ -663,7 +663,7 @@ export default function ReportsAnalytics() {
             </div>
 
             {/* Tabs */}
-            <div className="mb-6 flex gap-2 border-b border-slate-200 dark:border-slate-700/50 overflow-x-auto">
+            <div className="mb-6 flex gap-2 border-b border-border overflow-x-auto">
               {[
                 { id: 'overview', label: 'Overview', icon: Zap },
                 { id: 'operations', label: 'Operations', icon: Activity },
@@ -674,7 +674,7 @@ export default function ReportsAnalytics() {
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
                   className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all relative whitespace-nowrap ${
-                    activeTab === tab.id ? 'text-amber-600 dark:text-amber-400' : 'text-slate-700 dark:text-slate-400 hover:text-slate-300'
+                    activeTab === tab.id ? 'text-amber-600 dark:text-amber-400' : 'text-secondary hover:text-slate-300'
                   }`}
                 >
                   <tab.icon className="w-4 h-4" />
@@ -699,23 +699,23 @@ export default function ReportsAnalytics() {
                       </div>
                       <span className="text-xs font-medium text-blue-400">CALLS FOR SERVICE</span>
                     </div>
-                    <p className="text-2xl font-bold text-slate-900 dark:text-white mb-1">{keyMetrics.callsForService.total.toLocaleString()}</p>
-                    <p className="text-sm text-slate-700 dark:text-slate-400 mb-3">Year to Date (Jan 1 - Jan 21, 2026)</p>
-                    <div className="space-y-1.5 border-t border-slate-200 dark:border-slate-700/50 pt-3">
+                    <p className="text-2xl font-bold text-primary mb-1">{keyMetrics.callsForService.total.toLocaleString()}</p>
+                    <p className="text-sm text-secondary mb-3">Year to Date (Jan 1 - Jan 21, 2026)</p>
+                    <div className="space-y-1.5 border-t border-border pt-3">
                       <div className="flex justify-between text-xs">
-                        <span className="text-slate-700 dark:text-slate-400">Trend vs 2025:</span>
+                        <span className="text-secondary">Trend vs 2025:</span>
                         <span className={`font-bold flex items-center gap-1 ${getChangeColor(keyMetrics.callsForService.change)}`}>
                           {getChangeIcon(keyMetrics.callsForService.change)}
                           {Math.abs(keyMetrics.callsForService.change)}%
                         </span>
                       </div>
                       <div className="flex justify-between text-xs">
-                        <span className="text-slate-700 dark:text-slate-400">Avg per day:</span>
-                        <span className="font-medium text-slate-900 dark:text-white">6,936 calls</span>
+                        <span className="text-secondary">Avg per day:</span>
+                        <span className="font-medium text-primary">6,936 calls</span>
                       </div>
                       <div className="flex justify-between text-xs">
-                        <span className="text-slate-700 dark:text-slate-400">Peak hours:</span>
-                        <span className="font-medium text-slate-900 dark:text-white">1400-1800 hrs</span>
+                        <span className="text-secondary">Peak hours:</span>
+                        <span className="font-medium text-primary">1400-1800 hrs</span>
                       </div>
                     </div>
                   </div>
@@ -728,28 +728,28 @@ export default function ReportsAnalytics() {
                       </div>
                       <span className="text-xs font-medium text-green-600 dark:text-green-400">AVG RESPONSE TIME</span>
                     </div>
-                    <p className="text-2xl font-bold text-slate-900 dark:text-white mb-1">{keyMetrics.responseTime.average} min</p>
-                    <p className="text-sm text-slate-700 dark:text-slate-400 mb-3">All priorities combined</p>
+                    <p className="text-2xl font-bold text-primary mb-1">{keyMetrics.responseTime.average} min</p>
+                    <p className="text-sm text-secondary mb-3">All priorities combined</p>
                     <div className="mb-3">
                       <div className="flex justify-between text-xs mb-1">
-                        <span className="text-slate-700 dark:text-slate-400">Target: {keyMetrics.responseTime.target} min</span>
+                        <span className="text-secondary">Target: {keyMetrics.responseTime.target} min</span>
                         <span className="font-bold text-green-600 dark:text-green-400">0.4 min above</span>
                       </div>
                       <div className="w-full h-2 bg-white dark:bg-slate-700/50 rounded-full overflow-hidden">
                         <div className="h-full bg-green-500" style={{ width: '95%' }} />
                       </div>
                     </div>
-                    <div className="space-y-1.5 border-t border-slate-200 dark:border-slate-700/50 pt-3">
+                    <div className="space-y-1.5 border-t border-border pt-3">
                       <div className="flex justify-between text-xs">
-                        <span className="text-slate-700 dark:text-slate-400">P1 (Emergency):</span>
+                        <span className="text-secondary">P1 (Emergency):</span>
                         <span className="font-medium text-green-600 dark:text-green-400">3.2 min <CheckCircle className="w-3 h-3 inline" /></span>
                       </div>
                       <div className="flex justify-between text-xs">
-                        <span className="text-slate-700 dark:text-slate-400">P2 (Urgent):</span>
+                        <span className="text-secondary">P2 (Urgent):</span>
                         <span className="font-medium text-green-600 dark:text-green-400">7.8 min <CheckCircle className="w-3 h-3 inline" /></span>
                       </div>
                       <div className="flex justify-between text-xs">
-                        <span className="text-slate-700 dark:text-slate-400">P3 (Routine):</span>
+                        <span className="text-secondary">P3 (Routine):</span>
                         <span className="font-medium text-green-600 dark:text-green-400">18.4 min <CheckCircle className="w-3 h-3 inline" /></span>
                       </div>
                     </div>
@@ -763,28 +763,28 @@ export default function ReportsAnalytics() {
                       </div>
                       <span className="text-xs font-medium text-purple-400">CLEARANCE RATE</span>
                     </div>
-                    <p className="text-2xl font-bold text-slate-900 dark:text-white mb-1">{keyMetrics.crimeClearanceRate.rate}%</p>
-                    <p className="text-sm text-slate-700 dark:text-slate-400 mb-3">Cases closed/solved vs total</p>
+                    <p className="text-2xl font-bold text-primary mb-1">{keyMetrics.crimeClearanceRate.rate}%</p>
+                    <p className="text-sm text-secondary mb-3">Cases closed/solved vs total</p>
                     <div className="mb-3">
                       <div className="flex justify-between text-xs mb-1">
-                        <span className="text-slate-700 dark:text-slate-400">Target: {keyMetrics.crimeClearanceRate.target}%</span>
+                        <span className="text-secondary">Target: {keyMetrics.crimeClearanceRate.target}%</span>
                         <span className="font-bold text-amber-600 dark:text-amber-400">1.5 pts below</span>
                       </div>
                       <div className="w-full h-2 bg-white dark:bg-slate-700/50 rounded-full overflow-hidden">
                         <div className="h-full bg-purple-500" style={{ width: '97.9%' }} />
                       </div>
                     </div>
-                    <div className="space-y-1.5 border-t border-slate-200 dark:border-slate-700/50 pt-3">
+                    <div className="space-y-1.5 border-t border-border pt-3">
                       <div className="flex justify-between text-xs">
-                        <span className="text-slate-700 dark:text-slate-400">Violent crimes:</span>
+                        <span className="text-secondary">Violent crimes:</span>
                         <span className="font-medium text-green-600 dark:text-green-400">82.1% <CheckCircle className="w-3 h-3 inline" /></span>
                       </div>
                       <div className="flex justify-between text-xs">
-                        <span className="text-slate-700 dark:text-slate-400">Property crimes:</span>
+                        <span className="text-secondary">Property crimes:</span>
                         <span className="font-medium text-amber-600 dark:text-amber-400">56.8%</span>
                       </div>
                       <div className="flex justify-between text-xs">
-                        <span className="text-slate-700 dark:text-slate-400">YoY change:</span>
+                        <span className="text-secondary">YoY change:</span>
                         <span className="font-medium text-green-600 dark:text-green-400 flex items-center gap-1">
                           <ArrowUpRight className="w-3 h-3" />+3.8 pts
                         </span>
@@ -800,21 +800,21 @@ export default function ReportsAnalytics() {
                       </div>
                       <span className="text-xs font-medium text-amber-600 dark:text-amber-400">ARRESTS (YTD)</span>
                     </div>
-                    <p className="text-2xl font-bold text-slate-900 dark:text-white mb-1">{keyMetrics.arrestsYTD.total.toLocaleString()}</p>
-                    <p className="text-sm text-slate-700 dark:text-slate-400 mb-3">Jan 1 - Jan 21, 2026</p>
-                    <div className="space-y-1.5 border-t border-slate-200 dark:border-slate-700/50 pt-3">
+                    <p className="text-2xl font-bold text-primary mb-1">{keyMetrics.arrestsYTD.total.toLocaleString()}</p>
+                    <p className="text-sm text-secondary mb-3">Jan 1 - Jan 21, 2026</p>
+                    <div className="space-y-1.5 border-t border-border pt-3">
                       <div className="flex justify-between text-xs">
-                        <span className="text-slate-700 dark:text-slate-400">Trend vs 2025:</span>
+                        <span className="text-secondary">Trend vs 2025:</span>
                         <span className="font-bold text-green-600 dark:text-green-400 flex items-center gap-1">
                           <ArrowDownRight className="w-3 h-3" />-2.1% (fewer crimes)
                         </span>
                       </div>
                       <div className="flex justify-between text-xs">
-                        <span className="text-slate-700 dark:text-slate-400">Felony:</span>
-                        <span className="font-medium text-slate-900 dark:text-white">3,487 (28%)</span>
+                        <span className="text-secondary">Felony:</span>
+                        <span className="font-medium text-primary">3,487 (28%)</span>
                       </div>
                       <div className="flex justify-between text-xs">
-                        <span className="text-slate-700 dark:text-slate-400">Prosecution rate:</span>
+                        <span className="text-secondary">Prosecution rate:</span>
                         <span className="font-medium text-green-600 dark:text-green-400">87.4% <CheckCircle className="w-3 h-3 inline" /></span>
                       </div>
                     </div>
@@ -828,28 +828,28 @@ export default function ReportsAnalytics() {
                       </div>
                       <span className="text-xs font-medium text-blue-400">STAFFING LEVEL</span>
                     </div>
-                    <p className="text-2xl font-bold text-slate-900 dark:text-white mb-1">{keyMetrics.staffing.percentage}%</p>
-                    <p className="text-sm text-slate-700 dark:text-slate-400 mb-3">{keyMetrics.staffing.current} / {keyMetrics.staffing.authorized} positions</p>
+                    <p className="text-2xl font-bold text-primary mb-1">{keyMetrics.staffing.percentage}%</p>
+                    <p className="text-sm text-secondary mb-3">{keyMetrics.staffing.current} / {keyMetrics.staffing.authorized} positions</p>
                     <div className="mb-3">
                       <div className="flex justify-between text-xs mb-1">
-                        <span className="text-slate-700 dark:text-slate-400">Target: 95% (169 pos)</span>
+                        <span className="text-secondary">Target: 95% (169 pos)</span>
                         <span className="font-bold text-amber-600 dark:text-amber-400">-5 positions</span>
                       </div>
                       <div className="w-full h-2 bg-white dark:bg-slate-700/50 rounded-full overflow-hidden">
                         <div className="h-full bg-blue-500" style={{ width: `${keyMetrics.staffing.percentage}%` }} />
                       </div>
                     </div>
-                    <div className="space-y-1.5 border-t border-slate-200 dark:border-slate-700/50 pt-3">
+                    <div className="space-y-1.5 border-t border-border pt-3">
                       <div className="flex justify-between text-xs">
-                        <span className="text-slate-700 dark:text-slate-400">Vacancies:</span>
+                        <span className="text-secondary">Vacancies:</span>
                         <span className="font-medium text-amber-600 dark:text-amber-400">14 open positions</span>
                       </div>
                       <div className="flex justify-between text-xs">
-                        <span className="text-slate-700 dark:text-slate-400">Pipeline:</span>
-                        <span className="font-medium text-slate-900 dark:text-white">12 candidates</span>
+                        <span className="text-secondary">Pipeline:</span>
+                        <span className="font-medium text-primary">12 candidates</span>
                       </div>
                       <div className="flex justify-between text-xs">
-                        <span className="text-slate-700 dark:text-slate-400">Vacancy OT cost:</span>
+                        <span className="text-secondary">Vacancy OT cost:</span>
                         <span className="font-medium text-red-600 dark:text-red-400">$588K/year</span>
                       </div>
                     </div>
@@ -863,30 +863,30 @@ export default function ReportsAnalytics() {
                       </div>
                       <span className="text-xs font-medium text-green-600 dark:text-green-400">OVERTIME COST</span>
                     </div>
-                    <p className="text-2xl font-bold text-slate-900 dark:text-white mb-1">${(keyMetrics.overtime.cost / 1000000).toFixed(1)}M</p>
-                    <p className="text-sm text-slate-700 dark:text-slate-400 mb-3">{keyMetrics.overtime.hours.toLocaleString()} hours YTD</p>
+                    <p className="text-2xl font-bold text-primary mb-1">${(keyMetrics.overtime.cost / 1000000).toFixed(1)}M</p>
+                    <p className="text-sm text-secondary mb-3">{keyMetrics.overtime.hours.toLocaleString()} hours YTD</p>
                     <div className="mb-3">
                       <div className="flex justify-between text-xs mb-1">
-                        <span className="text-slate-700 dark:text-slate-400">Target: &lt;10% of budget</span>
+                        <span className="text-secondary">Target: &lt;10% of budget</span>
                         <span className="font-bold text-green-600 dark:text-green-400">8.9% <CheckCircle className="w-3 h-3 inline" /></span>
                       </div>
                       <div className="w-full h-2 bg-white dark:bg-slate-700/50 rounded-full overflow-hidden">
                         <div className="h-full bg-green-500" style={{ width: '89%' }} />
                       </div>
                     </div>
-                    <div className="space-y-1.5 border-t border-slate-200 dark:border-slate-700/50 pt-3">
+                    <div className="space-y-1.5 border-t border-border pt-3">
                       <div className="flex justify-between text-xs">
-                        <span className="text-slate-700 dark:text-slate-400">YoY change:</span>
+                        <span className="text-secondary">YoY change:</span>
                         <span className="font-medium text-green-600 dark:text-green-400 flex items-center gap-1">
                           <ArrowDownRight className="w-3 h-3" />-8.5% ($110K saved)
                         </span>
                       </div>
                       <div className="flex justify-between text-xs">
-                        <span className="text-slate-700 dark:text-slate-400">Shift coverage:</span>
-                        <span className="font-medium text-slate-900 dark:text-white">54% of OT</span>
+                        <span className="text-secondary">Shift coverage:</span>
+                        <span className="font-medium text-primary">54% of OT</span>
                       </div>
                       <div className="flex justify-between text-xs">
-                        <span className="text-slate-700 dark:text-slate-400">vs National avg:</span>
+                        <span className="text-secondary">vs National avg:</span>
                         <span className="font-medium text-green-600 dark:text-green-400">12-26% below</span>
                       </div>
                     </div>
@@ -894,12 +894,12 @@ export default function ReportsAnalytics() {
                 </div>
 
                 {/* Enhanced Monthly Trends */}
-                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-6">
+                <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
                   <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-2">
                       <TrendingUp className="w-5 h-5 text-blue-400" />
-                      <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Monthly Trends</h3>
-                      <span className="text-xs text-slate-700 dark:text-slate-400">(Last 12 Months - Rolling)</span>
+                      <h3 className="text-lg font-semibold text-primary">Monthly Trends</h3>
+                      <span className="text-xs text-secondary">(Last 12 Months - Rolling)</span>
                     </div>
                     <div className="flex items-center gap-2 text-xs">
                       <span className="px-2 py-1 bg-blue-500/20 text-blue-400 rounded">Click for details</span>
@@ -913,16 +913,16 @@ export default function ReportsAnalytics() {
                         <div key={idx} className="hover:bg-slate-50 dark:hover:bg-slate-900/30 rounded-lg p-2 -mx-2 cursor-pointer transition-colors">
                           <div className="flex items-center justify-between mb-2">
                             <div className="flex items-center gap-3">
-                              <span className="text-sm font-medium text-slate-900 dark:text-white w-8">{month.month}</span>
+                              <span className="text-sm font-medium text-primary w-8">{month.month}</span>
                               {idx === monthlyTrends.length - 1 && (
                                 <span className="text-xs px-1.5 py-0.5 bg-amber-500/20 text-amber-600 dark:text-amber-400 rounded">Current</span>
                               )}
                             </div>
                             <div className="flex items-center gap-6 text-xs">
                               <div className="flex items-center gap-2">
-                                <Phone className="w-3 h-3 text-slate-700 dark:text-slate-400" />
-                                <span className="text-slate-700 dark:text-slate-400">Calls:</span>
-                                <span className="font-bold text-slate-900 dark:text-white">{month.calls.toLocaleString()}</span>
+                                <Phone className="w-3 h-3 text-secondary" />
+                                <span className="text-secondary">Calls:</span>
+                                <span className="font-bold text-primary">{month.calls.toLocaleString()}</span>
                                 {prevMonth && (
                                   <span className={`font-medium ${parseFloat(callsChange) >= 0 ? 'text-amber-600 dark:text-amber-400' : 'text-green-600 dark:text-green-400'}`}>
                                     ({parseFloat(callsChange) >= 0 ? '+' : ''}{callsChange}%)
@@ -931,12 +931,12 @@ export default function ReportsAnalytics() {
                               </div>
                               <div className="flex items-center gap-2">
                                 <ShieldCheck className="w-3 h-3 text-blue-400" />
-                                <span className="text-slate-700 dark:text-slate-400">Arrests:</span>
+                                <span className="text-secondary">Arrests:</span>
                                 <span className="font-bold text-blue-400">{month.arrests.toLocaleString()}</span>
                               </div>
                               <div className="flex items-center gap-2">
                                 <CheckCircle className="w-3 h-3 text-green-600 dark:text-green-400" />
-                                <span className="text-slate-700 dark:text-slate-400">Clear:</span>
+                                <span className="text-secondary">Clear:</span>
                                 <span className={`font-bold ${month.clearance >= 68 ? 'text-green-600 dark:text-green-400' : 'text-amber-600 dark:text-amber-400'}`}>{month.clearance}%</span>
                               </div>
                             </div>
@@ -950,27 +950,27 @@ export default function ReportsAnalytics() {
                   </div>
 
                   {/* Seasonal Patterns Summary */}
-                  <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700/50">
-                    <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Seasonal Patterns Identified</h4>
+                  <div className="mt-4 pt-4 border-t border-border">
+                    <h4 className="text-sm font-semibold text-primary mb-3">Seasonal Patterns Identified</h4>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
                       <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
-                        <p className="text-slate-700 dark:text-slate-400 mb-1">Summer Peak (Jun-Aug)</p>
-                        <p className="font-bold text-slate-900 dark:text-white">14,782 calls/mo</p>
+                        <p className="text-secondary mb-1">Summer Peak (Jun-Aug)</p>
+                        <p className="font-bold text-primary">14,782 calls/mo</p>
                         <p className="text-amber-600 dark:text-amber-400">+18% vs winter</p>
                       </div>
                       <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
-                        <p className="text-slate-700 dark:text-slate-400 mb-1">Winter Low (Nov-Feb)</p>
-                        <p className="font-bold text-slate-900 dark:text-white">12,404 calls/mo</p>
+                        <p className="text-secondary mb-1">Winter Low (Nov-Feb)</p>
+                        <p className="font-bold text-primary">12,404 calls/mo</p>
                         <p className="text-green-600 dark:text-green-400">Lowest volume</p>
                       </div>
                       <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
-                        <p className="text-slate-700 dark:text-slate-400 mb-1">YoY Total 2025</p>
-                        <p className="font-bold text-slate-900 dark:text-white">157,423 calls</p>
+                        <p className="text-secondary mb-1">YoY Total 2025</p>
+                        <p className="font-bold text-primary">157,423 calls</p>
                         <p className="text-green-600 dark:text-green-400">+5.0% vs 2024</p>
                       </div>
                       <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
-                        <p className="text-slate-700 dark:text-slate-400 mb-1">Best Clearance</p>
-                        <p className="font-bold text-slate-900 dark:text-white">July - 69.5%</p>
+                        <p className="text-secondary mb-1">Best Clearance</p>
+                        <p className="font-bold text-primary">July - 69.5%</p>
                         <p className="text-green-600 dark:text-green-400">Peak performance</p>
                       </div>
                     </div>
@@ -982,13 +982,13 @@ export default function ReportsAnalytics() {
             {/* OPERATIONS TAB */}
             {activeTab === 'operations' && (
               <div className="space-y-6">
-                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-6">
-                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Division Performance</h3>
+                <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
+                  <h3 className="text-lg font-semibold text-primary mb-4">Division Performance</h3>
                   <div className="space-y-6">
                     {divisionPerformance.map((division, idx) => (
                       <div key={idx} className="bg-white dark:bg-slate-900/50 rounded-xl p-5">
                         <div className="flex items-center justify-between mb-6">
-                          <h4 className="text-base font-semibold text-slate-900 dark:text-white">{division.name}</h4>
+                          <h4 className="text-base font-semibold text-primary">{division.name}</h4>
                           <div className={`px-3 py-1 rounded-full text-xs font-bold ${
                             division.efficiency >= 90 ? 'bg-green-500/20 text-green-600 dark:text-green-400' :
                             division.efficiency >= 85 ? 'bg-amber-500/20 text-amber-600 dark:text-amber-400' : 'bg-red-500/20 text-red-600 dark:text-red-400'
@@ -1000,35 +1000,35 @@ export default function ReportsAnalytics() {
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                           {division.calls > 0 && (
                             <div>
-                              <p className="text-xs text-slate-700 dark:text-slate-400 mb-1">Calls</p>
-                              <p className="text-lg font-bold text-slate-900 dark:text-white">{division.calls.toLocaleString()}</p>
+                              <p className="text-xs text-secondary mb-1">Calls</p>
+                              <p className="text-lg font-bold text-primary">{division.calls.toLocaleString()}</p>
                             </div>
                           )}
                           {division.responseTime > 0 && (
                             <div>
-                              <p className="text-xs text-slate-700 dark:text-slate-400 mb-1">Response Time</p>
-                              <p className="text-lg font-bold text-slate-900 dark:text-white">{division.responseTime} min</p>
+                              <p className="text-xs text-secondary mb-1">Response Time</p>
+                              <p className="text-lg font-bold text-primary">{division.responseTime} min</p>
                             </div>
                           )}
                           {division.clearanceRate > 0 && (
                             <div>
-                              <p className="text-xs text-slate-700 dark:text-slate-400 mb-1">Clearance Rate</p>
-                              <p className="text-lg font-bold text-slate-900 dark:text-white">{division.clearanceRate}%</p>
+                              <p className="text-xs text-secondary mb-1">Clearance Rate</p>
+                              <p className="text-lg font-bold text-primary">{division.clearanceRate}%</p>
                             </div>
                           )}
                           <div>
-                            <p className="text-xs text-slate-700 dark:text-slate-400 mb-1">Staffing</p>
-                            <p className="text-lg font-bold text-slate-900 dark:text-white">{division.staffing}%</p>
+                            <p className="text-xs text-secondary mb-1">Staffing</p>
+                            <p className="text-lg font-bold text-primary">{division.staffing}%</p>
                           </div>
                           {division.inmates && (
                             <>
                               <div>
-                                <p className="text-xs text-slate-700 dark:text-slate-400 mb-1">Inmates</p>
-                                <p className="text-lg font-bold text-slate-900 dark:text-white">{division.inmates}</p>
+                                <p className="text-xs text-secondary mb-1">Inmates</p>
+                                <p className="text-lg font-bold text-primary">{division.inmates}</p>
                               </div>
                               <div>
-                                <p className="text-xs text-slate-700 dark:text-slate-400 mb-1">Capacity</p>
-                                <p className="text-lg font-bold text-slate-900 dark:text-white">{division.capacity}</p>
+                                <p className="text-xs text-secondary mb-1">Capacity</p>
+                                <p className="text-lg font-bold text-primary">{division.capacity}</p>
                               </div>
                             </>
                           )}
@@ -1043,26 +1043,26 @@ export default function ReportsAnalytics() {
             {/* CRIME STATS TAB */}
             {activeTab === 'crime' && (
               <div className="space-y-6">
-                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
+                <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl overflow-hidden">
                   <div className="overflow-x-auto">
                     <table className="w-full">
-                      <thead className="bg-slate-50 dark:bg-slate-900/50 border-b border-slate-200 dark:border-slate-700/50">
+                      <thead className="bg-slate-50 dark:bg-slate-900/50 border-b border-border">
                         <tr>
-                          <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 dark:text-slate-400 uppercase tracking-wider">Category</th>
-                          <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 dark:text-slate-400 uppercase tracking-wider">Incidents</th>
-                          <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 dark:text-slate-400 uppercase tracking-wider">YoY Change</th>
-                          <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 dark:text-slate-400 uppercase tracking-wider">Arrests</th>
-                          <th className="px-4 py-3 text-left text-xs font-semibold text-slate-700 dark:text-slate-400 uppercase tracking-wider">Clearance Rate</th>
+                          <th className="px-4 py-3 text-left text-xs font-semibold text-secondary uppercase tracking-wider">Category</th>
+                          <th className="px-4 py-3 text-left text-xs font-semibold text-secondary uppercase tracking-wider">Incidents</th>
+                          <th className="px-4 py-3 text-left text-xs font-semibold text-secondary uppercase tracking-wider">YoY Change</th>
+                          <th className="px-4 py-3 text-left text-xs font-semibold text-secondary uppercase tracking-wider">Arrests</th>
+                          <th className="px-4 py-3 text-left text-xs font-semibold text-secondary uppercase tracking-wider">Clearance Rate</th>
                         </tr>
                       </thead>
                       <tbody>
                         {crimeStats.map((stat, idx) => (
-                          <tr key={idx} className="border-b border-slate-200 dark:border-slate-200 dark:border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/30 transition-colors">
+                          <tr key={idx} className="border-b border-border dark:border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/30 transition-colors">
                             <td className="px-4 py-4">
-                              <p className="text-sm font-medium text-slate-900 dark:text-white">{stat.category}</p>
+                              <p className="text-sm font-medium text-primary">{stat.category}</p>
                             </td>
                             <td className="px-4 py-4">
-                              <p className="text-sm text-slate-700 dark:text-slate-300">{stat.incidents.toLocaleString()}</p>
+                              <p className="text-sm text-secondary">{stat.incidents.toLocaleString()}</p>
                             </td>
                             <td className="px-4 py-4">
                               <div className={`flex items-center gap-1 ${getChangeColor(stat.change)}`}>
@@ -1071,7 +1071,7 @@ export default function ReportsAnalytics() {
                               </div>
                             </td>
                             <td className="px-4 py-4">
-                              <p className="text-sm text-slate-700 dark:text-slate-300">{stat.arrests.toLocaleString()}</p>
+                              <p className="text-sm text-secondary">{stat.arrests.toLocaleString()}</p>
                             </td>
                             <td className="px-4 py-4">
                               <div className="flex items-center gap-3">
@@ -1105,13 +1105,13 @@ export default function ReportsAnalytics() {
                     <input
                       type="text"
                       placeholder="Search reports..."
-                      className="w-full pl-12 pr-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
+                      className="w-full pl-12 pr-4 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
                     />
                   </div>
                   <select
                     value={filterCategory}
                     onChange={(e) => setFilterCategory(e.target.value)}
-                    className="px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer"
+                    className="px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer"
                   >
                     <option value="all">All Categories</option>
                     <option value="Executive">Executive</option>
@@ -1128,14 +1128,14 @@ export default function ReportsAnalytics() {
                   {filteredReports.map(report => {
                     const Icon = report.icon;
                     return (
-                      <div key={report.id} className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5 hover:border-slate-600/50 transition-all group">
+                      <div key={report.id} className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5 hover:border-slate-600/50 transition-all group">
                         <div className="flex items-start gap-4">
                           <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-blue-500/30 transition-colors">
                             <Icon className="w-6 h-6 text-blue-400" />
                           </div>
                           <div className="flex-1">
                             <div className="flex items-start justify-between mb-1">
-                              <h4 className="text-base font-semibold text-slate-900 dark:text-white">{report.name}</h4>
+                              <h4 className="text-base font-semibold text-primary">{report.name}</h4>
                               <div className="flex items-center gap-1">
                                 {report.scheduled && (
                                   <div className="px-2 py-0.5 bg-green-500/20 text-green-600 dark:text-green-400 text-xs rounded-full flex items-center gap-1">
@@ -1145,7 +1145,7 @@ export default function ReportsAnalytics() {
                                 )}
                               </div>
                             </div>
-                            <p className="text-sm text-slate-700 dark:text-slate-400 mb-3">{report.description}</p>
+                            <p className="text-sm text-secondary mb-3">{report.description}</p>
                             <div className="flex items-center gap-3 text-xs text-slate-500 mb-3">
                               <span className="flex items-center gap-1">
                                 <Calendar className="w-3 h-3" />
@@ -1168,11 +1168,11 @@ export default function ReportsAnalytics() {
                                 <Eye className="w-3 h-3" />
                                 View Details
                               </button>
-                              <button className="flex items-center gap-2 px-3 py-1.5 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-900 dark:text-white rounded-lg text-xs font-medium transition-all">
+                              <button className="flex items-center gap-2 px-3 py-1.5 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-primary rounded-lg text-xs font-medium transition-all">
                                 <Download className="w-3 h-3" />
                                 Download
                               </button>
-                              <button className="flex items-center gap-2 px-3 py-1.5 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-slate-900 dark:text-white rounded-lg text-xs font-medium transition-all">
+                              <button className="flex items-center gap-2 px-3 py-1.5 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-primary rounded-lg text-xs font-medium transition-all">
                                 <RefreshCw className="w-3 h-3" />
                                 Generate
                               </button>

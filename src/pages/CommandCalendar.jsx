@@ -558,7 +558,7 @@ export default function CommandCalendar() {
         {/* Page Header */}
         <div className="mb-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           <div>
-            <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-1">Calendar & Timeline</h2>
+            <h2 className="text-xl font-bold text-primary mb-1">Calendar & Timeline</h2>
             <div className="flex items-center gap-2 text-[11px] text-slate-500">
               <span>{formatDate(currentTime)}</span>
               <span className="text-slate-700">·</span>
@@ -574,7 +574,7 @@ export default function CommandCalendar() {
               className={`flex items-center gap-2 px-3 py-2 border rounded-lg text-[13px] font-medium transition-all ${
                 showStaffingOverlay
                   ? 'bg-amber-500/10 border-amber-500/30 text-amber-600 dark:text-amber-400'
-                  : 'bg-white dark:bg-slate-800/40 border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-300'
+                  : 'bg-white dark:bg-slate-800/40 border-slate-300 dark:border-slate-700/40 text-secondary hover:text-slate-900 dark:hover:text-slate-300'
               }`}
             >
               <Users className="w-4 h-4" />
@@ -586,7 +586,7 @@ export default function CommandCalendar() {
               className={`flex items-center gap-2 px-3 py-2 border rounded-lg text-[13px] font-medium transition-all ${
                 showRiskOverlay
                   ? 'bg-red-500/10 border-red-500/30 text-red-600 dark:text-red-400'
-                  : 'bg-white dark:bg-slate-800/40 border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-300'
+                  : 'bg-white dark:bg-slate-800/40 border-slate-300 dark:border-slate-700/40 text-secondary hover:text-slate-900 dark:hover:text-slate-300'
               }`}
             >
               <Eye className="w-4 h-4" />
@@ -595,13 +595,13 @@ export default function CommandCalendar() {
             <div className="flex bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 rounded-lg overflow-hidden">
               <button
                 onClick={() => setViewMode('month')}
-                className={`px-3 py-2 text-[13px] font-medium transition-all ${viewMode === 'month' ? 'bg-slate-200 dark:bg-slate-700/50 text-slate-900 dark:text-white' : 'text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-300'}`}
+                className={`px-3 py-2 text-[13px] font-medium transition-all ${viewMode === 'month' ? 'bg-slate-200 dark:bg-slate-700/50 text-primary' : 'text-secondary hover:text-slate-900 dark:hover:text-slate-300'}`}
               >
                 Month
               </button>
               <button
                 onClick={() => setViewMode('timeline')}
-                className={`px-3 py-2 text-[13px] font-medium transition-all ${viewMode === 'timeline' ? 'bg-slate-200 dark:bg-slate-700/50 text-slate-900 dark:text-white' : 'text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-300'}`}
+                className={`px-3 py-2 text-[13px] font-medium transition-all ${viewMode === 'timeline' ? 'bg-slate-200 dark:bg-slate-700/50 text-primary' : 'text-secondary hover:text-slate-900 dark:hover:text-slate-300'}`}
               >
                 Timeline
               </button>
@@ -621,7 +621,7 @@ export default function CommandCalendar() {
                 className={`px-5 py-3 rounded-xl border flex items-start gap-3 ${
                   conflict.severity === 'high'
                     ? 'bg-amber-500/[0.05] border-amber-500/20'
-                    : 'bg-slate-50 dark:bg-slate-800/25 border-slate-200 dark:border-slate-200 dark:border-slate-700/30'
+                    : 'bg-slate-50 dark:bg-slate-800/25 border-border dark:border-slate-700/30'
                 }`}
               >
                 <Zap className={`w-4 h-4 mt-0.5 flex-shrink-0 ${conflict.severity === 'high' ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500'}`} />
@@ -630,14 +630,14 @@ export default function CommandCalendar() {
                     <span className={`text-[13px] font-semibold ${conflict.severity === 'high' ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500'}`}>
                       Conflict Detected:
                     </span>
-                    <span className="text-[13px] text-slate-900 dark:text-white font-medium">{conflict.title}</span>
+                    <span className="text-[13px] text-primary font-medium">{conflict.title}</span>
                     <span className={`px-1.5 py-0.5 border rounded text-[10px] font-semibold ${
                       conflict.severity === 'critical' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
                       conflict.severity === 'high' ? 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
                       'bg-slate-500/10 border-slate-500/20 text-slate-500'
                     }`}>{conflict.severity === 'high' ? 'High' : conflict.severity === 'critical' ? 'Critical' : 'Moderate'}</span>
                   </div>
-                  <p className="text-[11px] text-slate-700 dark:text-slate-400 mt-0.5">{conflict.detail}</p>
+                  <p className="text-[11px] text-secondary mt-0.5">{conflict.detail}</p>
                 </div>
                 <span className="text-[11px] text-slate-500 flex-shrink-0">Dec {conflict.days.join(', ')}</span>
               </div>
@@ -649,7 +649,7 @@ export default function CommandCalendar() {
             OPERATIONAL PRESSURE FORECAST — Next 7 Days
             Predictive, not reactive
             ================================================================ */}
-        <div className="mb-4 px-4 py-2 bg-slate-50 dark:bg-slate-800/15 border border-slate-200 dark:border-slate-700/15 rounded-lg">
+        <div className="mb-4 px-4 py-2 bg-slate-50 dark:bg-slate-800/15 border border-border rounded-lg">
           <div className="flex items-center gap-3">
             <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider flex-shrink-0">7-Day Pressure</span>
             <div className="h-3 w-px bg-slate-100 dark:bg-slate-700/25"></div>
@@ -675,15 +675,15 @@ export default function CommandCalendar() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-6">
 
             {/* Calendar Grid */}
-            <div className="lg:col-span-2 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+            <div className="lg:col-span-2 bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
               {/* Month Navigation */}
               <div className="flex items-center justify-between mb-6">
                 <button onClick={prevMonth} className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-700/30 rounded-lg transition-colors">
-                  <ChevronLeft className="w-4 h-4 text-slate-700 dark:text-slate-400" />
+                  <ChevronLeft className="w-4 h-4 text-secondary" />
                 </button>
-                <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">{monthName}</h3>
+                <h3 className="text-[13px] font-semibold text-primary uppercase tracking-wide">{monthName}</h3>
                 <button onClick={nextMonth} className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-700/30 rounded-lg transition-colors">
-                  <ChevronRight className="w-4 h-4 text-slate-700 dark:text-slate-400" />
+                  <ChevronRight className="w-4 h-4 text-secondary" />
                 </button>
               </div>
 
@@ -750,13 +750,13 @@ export default function CommandCalendar() {
                             className="w-full flex items-center gap-1 px-1 py-0.5 rounded hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-700/30 transition-colors text-left group"
                           >
                             <div className={`w-0.5 h-3 rounded-full flex-shrink-0 ${getCategoryAccent(event.category)}`}></div>
-                            <span className="text-[10px] text-slate-700 dark:text-slate-300 truncate group-hover:text-white transition-colors">{event.title}</span>
+                            <span className="text-[10px] text-secondary truncate group-hover:text-white transition-colors">{event.title}</span>
                           </button>
                         ))}
                         {dayEvents.length > 2 && (
                           <button
                             onClick={() => setSelectedEvent(dayEvents[2])}
-                            className="text-[10px] text-slate-500 pl-2 hover:text-slate-700 dark:text-slate-300 transition-colors"
+                            className="text-[10px] text-slate-500 pl-2 hover:text-secondary transition-colors"
                           >
                             +{dayEvents.length - 2} more
                           </button>
@@ -768,7 +768,7 @@ export default function CommandCalendar() {
               </div>
 
               {/* Legend */}
-              <div className="flex items-center gap-4 mt-4 pt-3 border-t border-slate-200 dark:border-slate-200 dark:border-slate-700/20 flex-wrap">
+              <div className="flex items-center gap-4 mt-4 pt-3 border-t border-border dark:border-slate-700/20 flex-wrap">
                 {[
                   { color: 'bg-red-500', label: 'Compliance' },
                   { color: 'bg-amber-500', label: 'Staffing' },
@@ -817,8 +817,8 @@ export default function CommandCalendar() {
             {/* ================================================================
                 HIGH PRIORITY UPCOMING — Upgraded with risk type, escalation, readiness
                 ================================================================ */}
-            <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
-              <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide mb-4">High Priority Upcoming</h3>
+            <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+              <h3 className="text-[13px] font-semibold text-primary uppercase tracking-wide mb-4">High Priority Upcoming</h3>
 
               <div className="space-y-2">
                 {upcomingDeadlines.map(event => {
@@ -829,7 +829,7 @@ export default function CommandCalendar() {
                     <button
                       key={event.id}
                       onClick={() => setSelectedEvent(event)}
-                      className={`w-full rounded-lg border border-slate-200 dark:border-slate-700/20 border-l-[3px] ${
+                      className={`w-full rounded-lg border border-border border-l-[3px] ${
                         event.severity === 'critical' ? 'border-l-red-500/60' :
                         event.severity === 'high' ? 'border-l-amber-500/50' :
                         'border-l-slate-500/30'
@@ -837,7 +837,7 @@ export default function CommandCalendar() {
                     >
                       <div className="p-3">
                         {/* Title */}
-                        <p className="text-[13px] font-medium text-slate-900 dark:text-white mb-1.5 leading-tight">{event.title}</p>
+                        <p className="text-[13px] font-medium text-primary mb-1.5 leading-tight">{event.title}</p>
 
                         {/* Badges row: risk type + severity + countdown */}
                         <div className="flex items-center gap-1.5 mb-1.5 flex-wrap">
@@ -879,9 +879,9 @@ export default function CommandCalendar() {
           </div>
         ) : (
           /* ===== TIMELINE VIEW ===== */
-          <div className="mb-6 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+          <div className="mb-6 bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Next 7 Days — Hour by Hour</h3>
+              <h3 className="text-[13px] font-semibold text-primary uppercase tracking-wide">Next 7 Days — Hour by Hour</h3>
               <span className="text-xs text-slate-500">Dec {timelineDays[0]?.day} – Dec {timelineDays[timelineDays.length - 1]?.day}, {currentYear}</span>
             </div>
 
@@ -903,7 +903,7 @@ export default function CommandCalendar() {
                         <span className={`text-[11px] font-semibold uppercase tracking-wider ${d.isToday ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500'}`}>
                           {d.dayName}
                         </span>
-                        <span className={`block text-[13px] font-semibold ${d.isToday ? 'text-amber-600 dark:text-amber-300' : 'text-slate-900 dark:text-white'}`}>
+                        <span className={`block text-[13px] font-semibold ${d.isToday ? 'text-amber-600 dark:text-amber-300' : 'text-primary'}`}>
                           {d.day}
                         </span>
                         <div className="flex items-center justify-center gap-1 mt-0.5">
@@ -920,7 +920,7 @@ export default function CommandCalendar() {
                 {timelineHours.map(hour => {
                   const hourNum = parseInt(hour.split(':')[0]);
                   return (
-                    <div key={hour} className="grid gap-px border-t border-slate-200 dark:border-slate-700/10" style={{ gridTemplateColumns: '60px repeat(7, 1fr)' }}>
+                    <div key={hour} className="grid gap-px border-t border-border" style={{ gridTemplateColumns: '60px repeat(7, 1fr)' }}>
                       <div className="py-2 pr-2 text-right">
                         <span className="text-[11px] font-mono text-slate-700">{hour}</span>
                       </div>
@@ -945,7 +945,7 @@ export default function CommandCalendar() {
                                 }`}
                               >
                                 <div className={`w-1 h-1 rounded-full flex-shrink-0 ${getCategoryAccent(event.category)}`}></div>
-                                <span className="text-[10px] text-slate-700 dark:text-slate-300 truncate">{event.title}</span>
+                                <span className="text-[10px] text-secondary truncate">{event.title}</span>
                               </button>
                             ))}
                           </div>
@@ -960,7 +960,7 @@ export default function CommandCalendar() {
         )}
 
         {/* Data Confidence Strip */}
-        <div className="mb-4 px-5 py-3 bg-slate-50 dark:bg-slate-800/10 border border-slate-200 dark:border-slate-200 dark:border-slate-800/30 rounded-lg">
+        <div className="mb-4 px-5 py-3 bg-slate-50 dark:bg-slate-800/10 border border-border dark:border-slate-800/30 rounded-lg">
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
               <Shield className="w-3.5 h-3.5 text-slate-700" />
@@ -986,11 +986,11 @@ export default function CommandCalendar() {
       {selectedEvent && (
         <>
           <div className="fixed inset-0 bg-black/30 z-40" onClick={() => setSelectedEvent(null)} />
-          <div className="fixed right-0 top-0 bottom-0 w-full max-w-md bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-700/50 shadow-2xl z-50 overflow-y-auto">
+          <div className="fixed right-0 top-0 bottom-0 w-full max-w-md bg-white dark:bg-slate-900 border-l border-border shadow-2xl z-50 overflow-y-auto">
             <div className="p-6">
               <div className="flex items-start justify-between mb-6">
                 <div className="flex-1">
-                  <h3 className="text-base font-semibold text-slate-900 dark:text-white mb-2">{selectedEvent.title}</h3>
+                  <h3 className="text-base font-semibold text-primary mb-2">{selectedEvent.title}</h3>
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className={`px-1.5 py-0.5 border rounded text-[11px] font-medium ${getStatusBadge(selectedEvent.status).classes}`}>
                       {getStatusBadge(selectedEvent.status).text}
@@ -1007,18 +1007,18 @@ export default function CommandCalendar() {
                     </span>
                   </div>
                 </div>
-                <button onClick={() => setSelectedEvent(null)} className="text-slate-700 dark:text-slate-400 hover:text-white transition-colors">
+                <button onClick={() => setSelectedEvent(null)} className="text-secondary hover:text-white transition-colors">
                   <X className="w-5 h-5" />
                 </button>
               </div>
 
               <div className="space-y-5">
                 {selectedEvent.status !== 'completed' && (
-                  <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4">
+                  <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4">
                     <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Countdown</span>
                     <div className="mt-2 flex items-baseline gap-2">
-                      <p className="text-2xl font-semibold text-slate-900 dark:text-white">{getCountdown(selectedEvent.day)}</p>
-                      <span className="text-xs text-slate-700 dark:text-slate-400">until deadline</span>
+                      <p className="text-2xl font-semibold text-primary">{getCountdown(selectedEvent.day)}</p>
+                      <span className="text-xs text-secondary">until deadline</span>
                     </div>
                   </div>
                 )}
@@ -1026,21 +1026,21 @@ export default function CommandCalendar() {
                 <div className="space-y-3">
                   <div>
                     <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Assigned Lead</span>
-                    <p className="text-sm text-slate-900 dark:text-white mt-1">{selectedEvent.assignedTo}</p>
+                    <p className="text-sm text-primary mt-1">{selectedEvent.assignedTo}</p>
                   </div>
-                  <div className="border-t border-slate-200 dark:border-slate-200 dark:border-slate-700/20 pt-3">
+                  <div className="border-t border-border dark:border-slate-700/20 pt-3">
                     <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Date & Time</span>
-                    <p className="text-sm text-slate-900 dark:text-white mt-1">December {selectedEvent.day}, 2024 · {selectedEvent.time}</p>
+                    <p className="text-sm text-primary mt-1">December {selectedEvent.day}, 2024 · {selectedEvent.time}</p>
                   </div>
                   {selectedEvent.staffingImpact && (
-                    <div className="border-t border-slate-200 dark:border-slate-200 dark:border-slate-700/20 pt-3">
+                    <div className="border-t border-border dark:border-slate-700/20 pt-3">
                       <span className="text-[11px] font-semibold text-amber-600 dark:text-amber-400/80 uppercase tracking-wider">Staffing Impact</span>
                       <p className="text-sm text-amber-600 dark:text-amber-400 mt-1">
                         {selectedEvent.deputiesAffected ? `${selectedEvent.deputiesAffected} deputies removed from field duty` : 'Staffing coverage affected'}
                       </p>
                     </div>
                   )}
-                  <div className="border-t border-slate-200 dark:border-slate-200 dark:border-slate-700/20 pt-3">
+                  <div className="border-t border-border dark:border-slate-700/20 pt-3">
                     <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Linked Module</span>
                     <button
                       onClick={() => { setSelectedEvent(null); navigate(selectedEvent.linkedModule); }}
@@ -1050,20 +1050,20 @@ export default function CommandCalendar() {
                       <ExternalLink className="w-3 h-3" />
                     </button>
                   </div>
-                  <div className="border-t border-slate-200 dark:border-slate-200 dark:border-slate-700/20 pt-3">
+                  <div className="border-t border-border dark:border-slate-700/20 pt-3">
                     <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Notes</span>
-                    <p className="text-[13px] text-slate-700 dark:text-slate-300 leading-relaxed mt-1">{selectedEvent.notes}</p>
+                    <p className="text-[13px] text-secondary leading-relaxed mt-1">{selectedEvent.notes}</p>
                   </div>
                 </div>
 
-                <div className="flex gap-2 pt-3 border-t border-slate-200 dark:border-slate-200 dark:border-slate-700/20">
+                <div className="flex gap-2 pt-3 border-t border-border dark:border-slate-700/20">
                   <button
                     onClick={() => { setSelectedEvent(null); navigate(selectedEvent.linkedModule); }}
                     className="flex-1 px-3 py-2 text-xs font-medium text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/10 rounded-lg transition-colors"
                   >
                     Open Module
                   </button>
-                  <button className="flex-1 px-3 py-2 text-xs font-medium text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/30 hover:bg-slate-100 dark:hover:bg-slate-700/20 rounded-lg transition-colors">
+                  <button className="flex-1 px-3 py-2 text-xs font-medium text-secondary border border-border hover:bg-slate-100 dark:hover:bg-slate-700/20 rounded-lg transition-colors">
                     Edit Event
                   </button>
                 </div>

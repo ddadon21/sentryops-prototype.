@@ -2,9 +2,101 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ═══════════════════════════════════════════════════════════════
+   DESIGN TOKENS — Single source of truth for light & dark mode.
+   Both modes share the same structural rules; only these values
+   differ between them. No page-level overrides needed.
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+  /* ── Text ──────────────────────────────────────────────────── */
+  --color-text-primary:   rgb(15 23 42);        /* slate-900 */
+  --color-text-secondary: rgb(51 65 85);         /* slate-700 */
+  --color-text-muted:     rgb(100 116 139);      /* slate-500 */
+
+  /* ── Surface / Background ─────────────────────────────────── */
+  --color-surface:        rgba(255, 255, 255, 0.85);
+  --color-surface-raised: rgba(255, 255, 255, 0.96);
+  --color-surface-sunken: rgba(248, 250, 252, 0.80);   /* slate-50 */
+
+  /* ── Borders ──────────────────────────────────────────────── */
+  --color-border:        rgb(226 232 240 / 0.75);   /* slate-200/75 */
+  --color-border-subtle: rgb(226 232 240 / 0.40);
+
+  /* ── Interactive ──────────────────────────────────────────── */
+  --color-primary:       rgb(37 99 235);   /* blue-600 */
+  --color-primary-hover: rgb(29 78 216);   /* blue-700 */
+  --color-success:       rgb(5 150 105);   /* emerald-600 */
+  --color-warning:       rgb(217 119 6);   /* amber-600 */
+  --color-danger:        rgb(220 38 38);   /* red-600 */
+
+  /* ── Shadows ──────────────────────────────────────────────── */
+  --shadow-card:       0 4px 24px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04);
+  --shadow-card-hover: 0 10px 36px rgba(0,0,0,0.10), 0 3px 10px rgba(0,0,0,0.06);
+  --shadow-modal:      0 20px 60px rgba(0,0,0,0.15), 0 4px 16px rgba(0,0,0,0.08);
+  --shadow-nav:        0 2px 20px rgba(0,0,0,0.06);
+  --shadow-sidebar:    2px 0 20px rgba(0,0,0,0.04);
+}
+
+/* Dark mode — same structure, inverted values */
+.dark {
+  /* ── Text ──────────────────────────────────────────────────── */
+  --color-text-primary:   rgb(255 255 255);       /* white */
+  --color-text-secondary: rgb(148 163 184);        /* slate-400 */
+  --color-text-muted:     rgb(100 116 139);        /* slate-500 */
+
+  /* ── Surface ──────────────────────────────────────────────── */
+  --color-surface:        rgba(15, 23, 42, 0.70);  /* slate-900/70 */
+  --color-surface-raised: rgba(15, 23, 42, 0.96);  /* slate-900/96 */
+  --color-surface-sunken: rgba(30, 41, 59, 0.50);  /* slate-800/50 */
+
+  /* ── Borders ──────────────────────────────────────────────── */
+  --color-border:        rgba(51, 65, 85, 0.50);  /* slate-700/50 */
+  --color-border-subtle: rgba(51, 65, 85, 0.25);
+
+  /* ── Interactive ──────────────────────────────────────────── */
+  --color-primary:       rgb(59 130 246);   /* blue-500 — slightly brighter in dark */
+  --color-primary-hover: rgb(37 99 235);    /* blue-600 */
+  --color-success:       rgb(16 185 129);   /* emerald-500 */
+  --color-warning:       rgb(245 158 11);   /* amber-500 */
+  --color-danger:        rgb(239 68 68);    /* red-500 */
+
+  /* ── Shadows — richer in dark mode ───────────────────────── */
+  --shadow-card:       0 4px 24px rgba(0,0,0,0.30), 0 1px 4px rgba(0,0,0,0.20);
+  --shadow-card-hover: 0 10px 36px rgba(0,0,0,0.40), 0 3px 10px rgba(0,0,0,0.25);
+  --shadow-modal:      0 20px 60px rgba(0,0,0,0.50), 0 4px 16px rgba(0,0,0,0.30);
+  --shadow-nav:        none;
+  --shadow-sidebar:    none;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TOKEN UTILITIES — Use these instead of hardcoded color classes.
+   These auto-adapt to light/dark via CSS variables above.
+   ═══════════════════════════════════════════════════════════════ */
+@layer components {
+  /* Text */
+  .text-primary   { color: var(--color-text-primary);   }
+  .text-secondary { color: var(--color-text-secondary);  }
+  .text-muted     { color: var(--color-text-muted);      }
+
+  /* Surfaces */
+  .bg-surface        { background-color: var(--color-surface);        }
+  .bg-surface-raised { background-color: var(--color-surface-raised); }
+  .bg-surface-sunken { background-color: var(--color-surface-sunken); }
+
+  /* Borders */
+  .border-border        { border-color: var(--color-border);        }
+  .border-border-subtle { border-color: var(--color-border-subtle);  }
+
+  /* Shadows */
+  .shadow-card       { box-shadow: var(--shadow-card);       }
+  .shadow-card-hover { box-shadow: var(--shadow-card-hover); }
+  .shadow-modal      { box-shadow: var(--shadow-modal);      }
+  .shadow-nav        { box-shadow: var(--shadow-nav);        }
+}
+
 @layer base {
-  html,
-  body {
+  html, body {
     @apply m-0 p-0 antialiased dark:bg-slate-950;
     transition: background-color 0.2s ease, color 0.2s ease;
   }
@@ -20,155 +112,113 @@
   }
 }
 
-/* ─────────────────────────────────────────────────────────────
-   SYSTEM-LEVEL — Page background gradient (light mode)
-   ───────────────────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════
+   SYSTEM RULES — Applied globally without per-component changes.
+   These use the design tokens above so both modes stay in sync.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Page background gradient ──────────────────────────────── */
 html:not(.dark) body {
   background: linear-gradient(160deg, #f8fafc 0%, #f1f5f9 45%, #e8edf4 100%);
   background-attachment: fixed;
   min-height: 100vh;
 }
 
-/* ─────────────────────────────────────────────────────────────
-   SYSTEM-LEVEL — Card glass elevation
-   Targets rounded-xl elements with slate-200 border (cards/panels)
-   Adds frosted glass look, deep shadow, and hover lift.
-   ───────────────────────────────────────────────────────────── */
-html:not(.dark) [class~="rounded-xl"][class*="border-slate-200"] {
-  background-color: rgba(255, 255, 255, 0.85);
+/* ── Card glass elevation ───────────────────────────────────── */
+/* Applies to any rounded-xl element with a slate-200 border OR  */
+/* the border-border token class. Both modes covered via tokens. */
+html:not(.dark) [class~="rounded-xl"][class*="border-slate-2"],
+html:not(.dark) [class~="rounded-xl"][class~="border-border"] {
+  background-color: var(--color-surface);
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.04);
-  border-color: rgba(226, 232, 240, 0.70);
+  box-shadow: var(--shadow-card);
+  border-color: var(--color-border);
   transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
 }
 
-/* Hover elevation for interactive cards */
-html:not(.dark) [class~="rounded-xl"][class*="border-slate-200"]:hover {
-  box-shadow: 0 10px 36px rgba(0, 0, 0, 0.10), 0 3px 10px rgba(0, 0, 0, 0.06);
-  border-color: rgba(203, 213, 225, 0.80);
-}
-
-/* Lift effect on hover — only for elements that have hover:shadow in class */
-html:not(.dark) [class~="rounded-xl"][class*="border-slate-200"][class*="hover:shadow"] {
+/* Hover elevation (only for interactive cards with hover:shadow) */
+html:not(.dark) [class~="rounded-xl"][class*="hover:shadow"][class*="border-slate-2"],
+html:not(.dark) [class~="rounded-xl"][class*="hover:shadow"][class~="border-border"] {
   cursor: default;
 }
-html:not(.dark) [class~="rounded-xl"][class*="border-slate-200"][class*="hover:shadow"]:hover {
+html:not(.dark) [class~="rounded-xl"][class*="hover:shadow"][class*="border-slate-2"]:hover,
+html:not(.dark) [class~="rounded-xl"][class*="hover:shadow"][class~="border-border"]:hover {
+  box-shadow: var(--shadow-card-hover);
+  border-color: rgb(203 213 225 / 0.85);
   transform: translateY(-1px);
 }
 
-/* ─────────────────────────────────────────────────────────────
-   SYSTEM-LEVEL — Modal / overlay panels
-   Gives modals a solid premium look
-   ───────────────────────────────────────────────────────────── */
+/* Modal / overlay panels */
 html:not(.dark) [class~="rounded-xl"][class*="shadow-2xl"] {
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: var(--color-surface-raised);
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15), 0 4px 16px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-modal);
 }
 
-/* ─────────────────────────────────────────────────────────────
-   SYSTEM-LEVEL LIGHT MODE — Tables
-   ───────────────────────────────────────────────────────────── */
+/* ── Tables ─────────────────────────────────────────────────── */
 html:not(.dark) table thead th,
 html:not(.dark) table thead td {
-  background-color: rgb(248 250 252);   /* slate-50  */
-  color: rgb(51 65 85);                 /* slate-700 */
+  background-color: rgb(248 250 252);
+  color: var(--color-text-secondary);
   font-weight: 600;
-  border-bottom: 2px solid rgb(226 232 240); /* slate-200 */
+  border-bottom: 2px solid rgb(226 232 240);
 }
 
 html:not(.dark) table tbody tr {
   background-color: rgba(255, 255, 255, 0.90);
-  border-bottom: 1px solid rgb(241 245 249); /* slate-100 */
+  border-bottom: 1px solid rgb(241 245 249);
 }
 
 html:not(.dark) table tbody tr:hover {
-  background-color: rgb(248 250 252);   /* slate-50 */
+  background-color: rgb(248 250 252);
 }
 
 html:not(.dark) table tbody td {
-  color: rgb(15 23 42);                 /* slate-900 */
+  color: var(--color-text-primary);
 }
 
-html:not(.dark) table tbody tr td.muted,
-html:not(.dark) table tbody td span.muted {
-  color: rgb(100 116 139);              /* slate-500 */
-}
-
-/* ─────────────────────────────────────────────────────────────
-   SYSTEM-LEVEL — Form inputs & textareas
-   ───────────────────────────────────────────────────────────── */
+/* ── Form inputs ────────────────────────────────────────────── */
 html:not(.dark) input:not([type="range"]),
 html:not(.dark) textarea,
 html:not(.dark) select {
   background-color: rgba(255, 255, 255, 0.90);
-  color: rgb(15 23 42);                 /* slate-900 */
-  border-color: rgb(203 213 225);       /* slate-300 */
+  color: var(--color-text-primary);
+  border-color: rgb(203 213 225);
 }
 
 html:not(.dark) input::placeholder,
 html:not(.dark) textarea::placeholder {
-  color: rgb(148 163 184);              /* slate-400 */
+  color: rgb(148 163 184);
 }
 
 html:not(.dark) input:focus,
 html:not(.dark) textarea:focus,
 html:not(.dark) select:focus {
-  border-color: rgb(147 197 253);       /* blue-300 */
+  border-color: rgb(147 197 253);
   outline: none;
-  box-shadow: 0 0 0 3px rgb(219 234 254 / 0.5); /* blue-100/50 */
+  box-shadow: 0 0 0 3px rgb(219 234 254 / 0.5);
 }
 
-/* ─────────────────────────────────────────────────────────────
-   SYSTEM-LEVEL — Scrollbars (custom thin style)
-   ───────────────────────────────────────────────────────────── */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-html:not(.dark) ::-webkit-scrollbar-thumb {
-  background: rgb(203 213 225);         /* slate-300 */
-  border-radius: 9999px;
-}
-html:not(.dark) ::-webkit-scrollbar-thumb:hover {
-  background: rgb(148 163 184);         /* slate-400 */
-}
-.dark ::-webkit-scrollbar-thumb {
-  background: rgb(51 65 85);            /* slate-700 */
-  border-radius: 9999px;
-}
-.dark ::-webkit-scrollbar-thumb:hover {
-  background: rgb(71 85 105);           /* slate-600 */
-}
+/* ── Scrollbars ─────────────────────────────────────────────── */
+::-webkit-scrollbar        { width: 6px; height: 6px; }
+::-webkit-scrollbar-track  { background: transparent; }
 
-/* ─────────────────────────────────────────────────────────────
-   SYSTEM-LEVEL — Text selection
-   ───────────────────────────────────────────────────────────── */
-html:not(.dark) ::selection {
-  background-color: rgb(219 234 254);   /* blue-100 */
-  color: rgb(15 23 42);                 /* slate-900 */
-}
-.dark ::selection {
-  background-color: rgb(59 130 246 / 0.3);
-  color: #fff;
-}
+html:not(.dark) ::-webkit-scrollbar-thumb       { background: rgb(203 213 225); border-radius: 9999px; }
+html:not(.dark) ::-webkit-scrollbar-thumb:hover { background: rgb(148 163 184); }
+.dark           ::-webkit-scrollbar-thumb       { background: rgb(51 65 85);    border-radius: 9999px; }
+.dark           ::-webkit-scrollbar-thumb:hover { background: rgb(71 85 105);   }
 
-/* ─────────────────────────────────────────────────────────────
-   SYSTEM-LEVEL — Button transitions & active states
-   ───────────────────────────────────────────────────────────── */
-button {
-  transition: all 0.15s ease;
-}
-button:active:not(:disabled) {
-  transform: scale(0.97);
-}
+/* ── Text selection ─────────────────────────────────────────── */
+html:not(.dark) ::selection { background-color: rgb(219 234 254); color: rgb(15 23 42); }
+.dark           ::selection { background-color: rgb(59 130 246 / 0.3); color: #fff;    }
 
-/* Primary buttons get a subtle inner glow */
+/* ── Buttons ────────────────────────────────────────────────── */
+button { transition: all 0.15s ease; }
+button:active:not(:disabled) { transform: scale(0.97); }
+
+/* Primary button glow */
 html:not(.dark) button[class*="bg-blue-6"]:not(:disabled),
 html:not(.dark) button[class*="bg-blue-7"]:not(:disabled) {
   box-shadow: 0 4px 14px rgba(37, 99, 235, 0.30), 0 1px 4px rgba(37, 99, 235, 0.20);
@@ -178,53 +228,42 @@ html:not(.dark) button[class*="bg-blue-7"]:hover:not(:disabled) {
   box-shadow: 0 6px 20px rgba(37, 99, 235, 0.38), 0 2px 6px rgba(37, 99, 235, 0.24);
 }
 
-/* Danger buttons */
+/* Danger button glow */
 html:not(.dark) button[class*="bg-red-6"]:not(:disabled) {
   box-shadow: 0 4px 14px rgba(220, 38, 38, 0.28), 0 1px 4px rgba(220, 38, 38, 0.18);
 }
 
-/* Success buttons */
+/* Success button glow */
 html:not(.dark) button[class*="bg-emerald-6"]:not(:disabled),
 html:not(.dark) button[class*="bg-green-5"]:not(:disabled),
 html:not(.dark) button[class*="bg-green-6"]:not(:disabled) {
   box-shadow: 0 4px 14px rgba(5, 150, 105, 0.28), 0 1px 4px rgba(5, 150, 105, 0.18);
 }
 
-/* ─────────────────────────────────────────────────────────────
-   SYSTEM-LEVEL — Stat/metric number emphasis
-   ───────────────────────────────────────────────────────────── */
+/* ── Metric number refinement ───────────────────────────────── */
 html:not(.dark) [class*="text-3xl"][class*="font-bold"],
 html:not(.dark) [class*="text-4xl"][class*="font-bold"],
 html:not(.dark) [class*="text-2xl"][class*="font-bold"] {
   letter-spacing: -0.02em;
 }
 
-/* ─────────────────────────────────────────────────────────────
+/* ═══════════════════════════════════════════════════════════════
    ANIMATIONS
-   ───────────────────────────────────────────────────────────── */
+   ═══════════════════════════════════════════════════════════════ */
 @keyframes pulse-warning {
   0%, 100% { background-color: rgba(239, 68, 68, 0.03); }
   50%       { background-color: rgba(239, 68, 68, 0.08); }
 }
-
-.audit-pulse {
-  animation: pulse-warning 2.5s ease-in-out infinite;
-}
+.audit-pulse { animation: pulse-warning 2.5s ease-in-out infinite; }
 
 @keyframes slide-in-right {
   from { transform: translateX(100%); opacity: 0; }
   to   { transform: translateX(0);    opacity: 1; }
 }
-
-.toast-enter {
-  animation: slide-in-right 0.25s ease;
-}
+.toast-enter { animation: slide-in-right 0.25s ease; }
 
 @keyframes fade-in-up {
   from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: translateY(0);   }
 }
-
-.fade-in-up {
-  animation: fade-in-up 0.3s ease both;
-}
+.fade-in-up { animation: fade-in-up 0.3s ease both; }

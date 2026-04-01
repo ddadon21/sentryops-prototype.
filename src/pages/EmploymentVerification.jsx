@@ -549,11 +549,11 @@ export default function EmploymentVerification() {
             {/* Page Header */}
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-2xl font-semibold text-slate-900 dark:text-white">Employment Verification</h1>
-                <p className="text-slate-700 dark:text-slate-400 mt-1">Marcus Thompson — Case #2024-0892</p>
+                <h1 className="text-2xl font-semibold text-primary">Employment Verification</h1>
+                <p className="text-secondary mt-1">Marcus Thompson — Case #2024-0892</p>
               </div>
               <div className="flex items-center gap-3">
-                <button className="flex items-center gap-2 px-4 py-2 bg-slate-800 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-700 transition-colors">
+                <button className="flex items-center gap-2 px-4 py-2 bg-slate-800 text-secondary rounded-lg hover:bg-slate-700 transition-colors">
                   <Download className="w-4 h-4" />
                   Export Report
                 </button>
@@ -572,7 +572,7 @@ export default function EmploymentVerification() {
                 </div>
                 <div className="flex-1">
                   <h3 className="text-amber-400 font-medium">POST Employment History Requirement</h3>
-                  <p className="text-slate-700 dark:text-slate-400 text-sm mt-1">
+                  <p className="text-secondary text-sm mt-1">
                     California POST requires verification of all employment for the past 10 years.
                     Current documentation covers <span className="text-amber-400 font-medium">14 years</span> of
                     employment history (2010-Present), exceeding the minimum requirement.
@@ -601,7 +601,7 @@ export default function EmploymentVerification() {
                       Lateral Transfer Candidate
                       <span className="px-2 py-0.5 bg-blue-500/20 text-blue-300 rounded text-xs">CURRENT SWORN LE</span>
                     </h3>
-                    <p className="text-slate-700 dark:text-slate-400 text-sm mt-1">
+                    <p className="text-secondary text-sm mt-1">
                       Candidate is currently employed as a sworn law enforcement officer. Lateral transfer
                       processing requires <span className="text-blue-400 font-medium">mandatory Internal Affairs clearance</span> from
                       current employer before conditional offer can be extended.
@@ -609,7 +609,7 @@ export default function EmploymentVerification() {
                     <div className="flex items-center gap-4 mt-3">
                       <div className="flex items-center gap-2 text-sm">
                         <Clock className="w-4 h-4 text-amber-400" />
-                        <span className="text-slate-700 dark:text-slate-400">IA Request Status:</span>
+                        <span className="text-secondary">IA Request Status:</span>
                         <span className="text-amber-400 font-medium">Pending Response</span>
                       </div>
                       <span className="text-slate-700">•</span>
@@ -622,57 +622,57 @@ export default function EmploymentVerification() {
 
             {/* Statistics Grid */}
             <div className="grid grid-cols-5 gap-4">
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
+              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-slate-100 dark:bg-slate-800 rounded-lg">
-                    <Briefcase className="w-5 h-5 text-slate-700 dark:text-slate-400" />
+                    <Briefcase className="w-5 h-5 text-secondary" />
                   </div>
                   <div>
-                    <p className="text-2xl font-semibold text-slate-900 dark:text-white">{stats.total}</p>
+                    <p className="text-2xl font-semibold text-primary">{stats.total}</p>
                     <p className="text-slate-500 text-sm">Total Employers</p>
                   </div>
                 </div>
               </div>
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
+              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-green-500/10 rounded-lg">
                     <CheckCircle2 className="w-5 h-5 text-green-400" />
                   </div>
                   <div>
-                    <p className="text-2xl font-semibold text-slate-900 dark:text-white">{stats.verified}</p>
+                    <p className="text-2xl font-semibold text-primary">{stats.verified}</p>
                     <p className="text-slate-500 text-sm">Verified</p>
                   </div>
                 </div>
               </div>
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
+              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-amber-500/10 rounded-lg">
                     <Shield className="w-5 h-5 text-amber-400" />
                   </div>
                   <div>
-                    <p className="text-2xl font-semibold text-slate-900 dark:text-white">{stats.swornLE}</p>
+                    <p className="text-2xl font-semibold text-primary">{stats.swornLE}</p>
                     <p className="text-slate-500 text-sm">Sworn LE Positions</p>
                   </div>
                 </div>
               </div>
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
+              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-blue-500/10 rounded-lg">
                     <BadgeCheck className="w-5 h-5 text-blue-400" />
                   </div>
                   <div>
-                    <p className="text-2xl font-semibold text-slate-900 dark:text-white">{stats.lateralTransfer}</p>
+                    <p className="text-2xl font-semibold text-primary">{stats.lateralTransfer}</p>
                     <p className="text-slate-500 text-sm">Lateral Transfer</p>
                   </div>
                 </div>
               </div>
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
+              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-slate-100 dark:bg-slate-800 rounded-lg">
-                    <Calendar className="w-5 h-5 text-slate-700 dark:text-slate-400" />
+                    <Calendar className="w-5 h-5 text-secondary" />
                   </div>
                   <div>
-                    <p className="text-2xl font-semibold text-slate-900 dark:text-white">{stats.yearsDocumented}</p>
+                    <p className="text-2xl font-semibold text-primary">{stats.yearsDocumented}</p>
                     <p className="text-slate-500 text-sm">Years Documented</p>
                   </div>
                 </div>
@@ -680,8 +680,8 @@ export default function EmploymentVerification() {
             </div>
 
             {/* Employment Timeline Visualization */}
-            <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-6">
-              <h3 className="text-slate-900 dark:text-white font-medium mb-4 flex items-center gap-2">
+            <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
+              <h3 className="text-primary font-medium mb-4 flex items-center gap-2">
                 <History className="w-5 h-5 text-amber-400" />
                 Employment Timeline
               </h3>
@@ -708,7 +708,7 @@ export default function EmploymentVerification() {
                         }}
                         title={`${record.employer} (${startYear}-${endYear === 2024 ? 'Present' : endYear})`}
                       >
-                        <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap text-xs text-slate-700 dark:text-slate-400 bg-slate-800 px-2 py-1 rounded z-10">
+                        <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap text-xs text-secondary bg-slate-800 px-2 py-1 rounded z-10">
                           {record.employer.length > 20 ? record.employer.substring(0, 20) + '...' : record.employer}
                         </div>
                       </div>
@@ -728,11 +728,11 @@ export default function EmploymentVerification() {
                 <div className="flex items-center gap-4 mt-4 text-xs">
                   <div className="flex items-center gap-2">
                     <div className="w-4 h-4 bg-amber-500/60 rounded"></div>
-                    <span className="text-slate-700 dark:text-slate-400">Sworn Law Enforcement</span>
+                    <span className="text-secondary">Sworn Law Enforcement</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-4 h-4 bg-slate-600 rounded"></div>
-                    <span className="text-slate-700 dark:text-slate-400">Civilian Employment</span>
+                    <span className="text-secondary">Civilian Employment</span>
                   </div>
                 </div>
               </div>
@@ -757,7 +757,7 @@ export default function EmploymentVerification() {
                         className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
                           activeTab === tab.id
                             ? 'bg-amber-500/10 text-amber-400'
-                            : 'text-slate-700 dark:text-slate-400 hover:text-slate-700 dark:text-slate-300 hover:bg-slate-800'
+                            : 'text-secondary hover:text-secondary hover:bg-slate-800'
                         }`}
                       >
                         {tab.label} ({tab.count})
@@ -771,7 +771,7 @@ export default function EmploymentVerification() {
                       placeholder="Search employers..."
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
-                      className="pl-10 pr-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white text-sm placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
+                      className="pl-10 pr-4 py-2 bg-white dark:bg-slate-800 border border-border rounded-lg text-primary text-sm placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
                     />
                   </div>
                 </div>
@@ -802,17 +802,17 @@ export default function EmploymentVerification() {
                               {record.isSwornLE ? (
                                 <Shield className="w-6 h-6 text-amber-400" />
                               ) : (
-                                <Building2 className="w-6 h-6 text-slate-700 dark:text-slate-400" />
+                                <Building2 className="w-6 h-6 text-secondary" />
                               )}
                             </div>
                             <div>
                               <div className="flex items-center gap-2">
-                                <h3 className="text-slate-900 dark:text-white font-medium">{record.employer}</h3>
+                                <h3 className="text-primary font-medium">{record.employer}</h3>
                                 {record.isCurrent && (
                                   <span className="px-2 py-0.5 bg-green-500/10 text-green-400 rounded text-xs">Current</span>
                                 )}
                               </div>
-                              <p className="text-slate-700 dark:text-slate-400 text-sm mt-0.5">{record.position}</p>
+                              <p className="text-secondary text-sm mt-0.5">{record.position}</p>
                               <div className="flex items-center gap-3 mt-2 text-xs text-slate-500">
                                 <span className="flex items-center gap-1">
                                   <MapPin className="w-3 h-3" />
@@ -840,12 +840,12 @@ export default function EmploymentVerification() {
 
                       {/* Expanded Content */}
                       {expandedEmployer === record.id && (
-                        <div className="border-t border-slate-200 dark:border-slate-700/50 p-4 space-y-4">
+                        <div className="border-t border-border p-4 space-y-4">
                           {/* Verification Details */}
                           <div className="grid grid-cols-2 gap-6">
                             <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
-                              <h4 className="text-slate-700 dark:text-slate-400 text-xs font-medium mb-2">VERIFICATION METHOD</h4>
-                              <p className="text-slate-900 dark:text-white text-sm">{record.verificationMethod}</p>
+                              <h4 className="text-secondary text-xs font-medium mb-2">VERIFICATION METHOD</h4>
+                              <p className="text-primary text-sm">{record.verificationMethod}</p>
                               {record.verificationDate && (
                                 <p className="text-slate-500 text-xs mt-1">
                                   Verified {formatDate(record.verificationDate)} by {record.verifiedBy}
@@ -854,7 +854,7 @@ export default function EmploymentVerification() {
                             </div>
                             {record.internalAffairs.required && (
                               <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
-                                <h4 className="text-slate-700 dark:text-slate-400 text-xs font-medium mb-2 flex items-center gap-1">
+                                <h4 className="text-secondary text-xs font-medium mb-2 flex items-center gap-1">
                                   <Flag className="w-3 h-3 text-amber-400" />
                                   INTERNAL AFFAIRS STATUS
                                 </h4>
@@ -873,21 +873,21 @@ export default function EmploymentVerification() {
                           {/* HR Contact */}
                           {record.hrContact && (
                             <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
-                              <h4 className="text-slate-700 dark:text-slate-400 text-xs font-medium mb-2">HR CONTACT</h4>
+                              <h4 className="text-secondary text-xs font-medium mb-2">HR CONTACT</h4>
                               <div className="flex items-center justify-between">
                                 <div>
-                                  <p className="text-slate-900 dark:text-white text-sm">{record.hrContact.name}</p>
+                                  <p className="text-primary text-sm">{record.hrContact.name}</p>
                                   <p className="text-slate-500 text-xs">{record.hrContact.title}</p>
                                 </div>
                                 <div className="flex items-center gap-3 text-sm">
                                   {record.hrContact.phone && (
-                                    <span className="text-slate-700 dark:text-slate-400 flex items-center gap-1">
+                                    <span className="text-secondary flex items-center gap-1">
                                       <Phone className="w-3 h-3" />
                                       {record.hrContact.phone}
                                     </span>
                                   )}
                                   {record.hrContact.email && (
-                                    <span className="text-slate-700 dark:text-slate-400 flex items-center gap-1">
+                                    <span className="text-secondary flex items-center gap-1">
                                       <Mail className="w-3 h-3" />
                                       {record.hrContact.email}
                                     </span>
@@ -903,15 +903,15 @@ export default function EmploymentVerification() {
                           {/* Supervisor Contact */}
                           {record.supervisorContact && (
                             <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
-                              <h4 className="text-slate-700 dark:text-slate-400 text-xs font-medium mb-2">SUPERVISOR CONTACT</h4>
+                              <h4 className="text-secondary text-xs font-medium mb-2">SUPERVISOR CONTACT</h4>
                               <div className="flex items-center justify-between">
                                 <div>
-                                  <p className="text-slate-900 dark:text-white text-sm">{record.supervisorContact.name}</p>
+                                  <p className="text-primary text-sm">{record.supervisorContact.name}</p>
                                   <p className="text-slate-500 text-xs">{record.supervisorContact.title}</p>
                                 </div>
                                 <div className="flex items-center gap-3 text-sm">
                                   {record.supervisorContact.phone && (
-                                    <span className="text-slate-700 dark:text-slate-400 flex items-center gap-1">
+                                    <span className="text-secondary flex items-center gap-1">
                                       <Phone className="w-3 h-3" />
                                       {record.supervisorContact.phone}
                                     </span>
@@ -934,9 +934,9 @@ export default function EmploymentVerification() {
                               <div className="space-y-2">
                                 {record.contactAttempts.map((attempt, index) => (
                                   <div key={index} className="flex items-center justify-between text-xs">
-                                    <span className="text-slate-700 dark:text-slate-400">{formatDate(attempt.date)}</span>
+                                    <span className="text-secondary">{formatDate(attempt.date)}</span>
                                     <span className="text-slate-500">{attempt.method}</span>
-                                    <span className="text-slate-700 dark:text-slate-400">{attempt.result}</span>
+                                    <span className="text-secondary">{attempt.result}</span>
                                   </div>
                                 ))}
                               </div>
@@ -963,7 +963,7 @@ export default function EmploymentVerification() {
                           {/* Performance & Disciplinary Grid */}
                           <div className="grid grid-cols-2 gap-6">
                             <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
-                              <h4 className="text-slate-700 dark:text-slate-400 text-xs font-medium mb-2 flex items-center gap-1">
+                              <h4 className="text-secondary text-xs font-medium mb-2 flex items-center gap-1">
                                 <TrendingUp className="w-3 h-3" />
                                 PERFORMANCE
                               </h4>
@@ -1000,7 +1000,7 @@ export default function EmploymentVerification() {
                             </div>
 
                             <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
-                              <h4 className="text-slate-700 dark:text-slate-400 text-xs font-medium mb-2 flex items-center gap-1">
+                              <h4 className="text-secondary text-xs font-medium mb-2 flex items-center gap-1">
                                 <ClipboardList className="w-3 h-3" />
                                 DISCIPLINARY
                               </h4>
@@ -1014,10 +1014,10 @@ export default function EmploymentVerification() {
                                   <p className="text-amber-400 text-sm">{record.disciplinary.details}</p>
                                   <div className="flex items-center gap-3 text-xs">
                                     <span className="text-slate-500">
-                                      Sustained: <span className="text-slate-700 dark:text-slate-400">{record.disciplinary.sustainedComplaints}</span>
+                                      Sustained: <span className="text-secondary">{record.disciplinary.sustainedComplaints}</span>
                                     </span>
                                     <span className="text-slate-500">
-                                      Pending: <span className="text-slate-700 dark:text-slate-400">{record.disciplinary.pendingInvestigations}</span>
+                                      Pending: <span className="text-secondary">{record.disciplinary.pendingInvestigations}</span>
                                     </span>
                                   </div>
                                 </div>
@@ -1030,17 +1030,17 @@ export default function EmploymentVerification() {
                           {/* Salary & Employment End */}
                           <div className="grid grid-cols-3 gap-4">
                             <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
-                              <h4 className="text-slate-700 dark:text-slate-400 text-xs font-medium mb-1">STARTING SALARY</h4>
-                              <p className="text-slate-900 dark:text-white text-sm">{record.salary.starting}</p>
+                              <h4 className="text-secondary text-xs font-medium mb-1">STARTING SALARY</h4>
+                              <p className="text-primary text-sm">{record.salary.starting}</p>
                             </div>
                             <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
-                              <h4 className="text-slate-700 dark:text-slate-400 text-xs font-medium mb-1">
+                              <h4 className="text-secondary text-xs font-medium mb-1">
                                 {record.isCurrent ? 'CURRENT SALARY' : 'ENDING SALARY'}
                               </h4>
-                              <p className="text-slate-900 dark:text-white text-sm">{record.salary.current || record.salary.ending}</p>
+                              <p className="text-primary text-sm">{record.salary.current || record.salary.ending}</p>
                             </div>
                             <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
-                              <h4 className="text-slate-700 dark:text-slate-400 text-xs font-medium mb-1">REHIRE ELIGIBLE</h4>
+                              <h4 className="text-secondary text-xs font-medium mb-1">REHIRE ELIGIBLE</h4>
                               <p className={`text-sm ${
                                 record.eligibleForRehire === 'Yes' || record.eligibleForRehire === 'Yes - Recommended'
                                   ? 'text-green-400'
@@ -1055,19 +1055,19 @@ export default function EmploymentVerification() {
 
                           {/* Reason for Leaving */}
                           <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
-                            <h4 className="text-slate-700 dark:text-slate-400 text-xs font-medium mb-1">REASON FOR LEAVING</h4>
-                            <p className="text-slate-900 dark:text-white text-sm">{record.reasonForLeaving}</p>
+                            <h4 className="text-secondary text-xs font-medium mb-1">REASON FOR LEAVING</h4>
+                            <p className="text-primary text-sm">{record.reasonForLeaving}</p>
                           </div>
 
                           {/* Verification Timeline */}
                           {record.timeline && record.timeline.length > 0 && (
                             <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
-                              <h4 className="text-slate-700 dark:text-slate-400 text-xs font-medium mb-3">VERIFICATION TIMELINE</h4>
+                              <h4 className="text-secondary text-xs font-medium mb-3">VERIFICATION TIMELINE</h4>
                               <div className="space-y-2">
                                 {record.timeline.map((event, index) => (
                                   <div key={index} className="flex items-center gap-3 text-xs">
                                     <span className="text-slate-500 w-24">{formatDate(event.date)}</span>
-                                    <span className="text-slate-700 dark:text-slate-400 flex-1">{event.action}</span>
+                                    <span className="text-secondary flex-1">{event.action}</span>
                                     <span className="text-slate-500">{event.by}</span>
                                   </div>
                                 ))}
@@ -1078,8 +1078,8 @@ export default function EmploymentVerification() {
                           {/* Notes */}
                           {record.notes && (
                             <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
-                              <h4 className="text-slate-700 dark:text-slate-400 text-xs font-medium mb-1">INVESTIGATOR NOTES</h4>
-                              <p className="text-slate-700 dark:text-slate-300 text-sm">{record.notes}</p>
+                              <h4 className="text-secondary text-xs font-medium mb-1">INVESTIGATOR NOTES</h4>
+                              <p className="text-secondary text-sm">{record.notes}</p>
                             </div>
                           )}
                         </div>
@@ -1092,8 +1092,8 @@ export default function EmploymentVerification() {
               {/* Sidebar */}
               <div className="space-y-6">
                 {/* Internal Affairs Requirement Panel */}
-                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
-                  <h3 className="text-slate-900 dark:text-white font-medium mb-4 flex items-center gap-2">
+                <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
+                  <h3 className="text-primary font-medium mb-4 flex items-center gap-2">
                     <Shield className="w-5 h-5 text-amber-400" />
                     Internal Affairs Requirements
                   </h3>
@@ -1102,14 +1102,14 @@ export default function EmploymentVerification() {
                     {employmentRecords.filter(r => r.internalAffairs.required).map(record => (
                       <div key={record.id} className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
                         <div className="flex items-center justify-between mb-2">
-                          <span className="text-slate-900 dark:text-white text-sm font-medium">
+                          <span className="text-primary text-sm font-medium">
                             {record.employer.length > 25 ? record.employer.substring(0, 25) + '...' : record.employer}
                           </span>
                           {getIAStatusBadge(record.internalAffairs.status)}
                         </div>
                         <p className="text-slate-500 text-xs mb-2">{record.internalAffairs.notes}</p>
                         {record.internalAffairs.contactPerson && (
-                          <p className="text-slate-700 dark:text-slate-400 text-xs">
+                          <p className="text-secondary text-xs">
                             Contact: {record.internalAffairs.contactPerson}
                           </p>
                         )}
@@ -1121,10 +1121,10 @@ export default function EmploymentVerification() {
                     )}
                   </div>
 
-                  <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700/50">
+                  <div className="mt-4 pt-4 border-t border-border">
                     <div className="bg-amber-500/10 rounded-lg p-3">
                       <h4 className="text-amber-400 text-xs font-medium mb-1">LATERAL TRANSFER POLICY</h4>
-                      <p className="text-slate-700 dark:text-slate-400 text-xs">
+                      <p className="text-secondary text-xs">
                         All candidates currently employed as sworn law enforcement officers require
                         mandatory IA clearance from their current employer before a conditional offer
                         may be extended.
@@ -1134,40 +1134,40 @@ export default function EmploymentVerification() {
                 </div>
 
                 {/* Verification Summary */}
-                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
-                  <h3 className="text-slate-900 dark:text-white font-medium mb-4 flex items-center gap-2">
+                <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
+                  <h3 className="text-primary font-medium mb-4 flex items-center gap-2">
                     <FileCheck className="w-5 h-5 text-amber-400" />
                     Verification Summary
                   </h3>
 
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-slate-700 dark:text-slate-400 text-sm">Employers Verified</span>
-                      <span className="text-slate-900 dark:text-white font-medium">{stats.verified} / {stats.total}</span>
+                      <span className="text-secondary text-sm">Employers Verified</span>
+                      <span className="text-primary font-medium">{stats.verified} / {stats.total}</span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-slate-700 dark:text-slate-400 text-sm">POST Requirement</span>
+                      <span className="text-secondary text-sm">POST Requirement</span>
                       <span className="text-green-400 text-sm flex items-center gap-1">
                         <CheckCircle2 className="w-3 h-3" />
                         Met
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-slate-700 dark:text-slate-400 text-sm">IA Clearance</span>
+                      <span className="text-secondary text-sm">IA Clearance</span>
                       <span className="text-amber-400 text-sm flex items-center gap-1">
                         <Clock className="w-3 h-3" />
                         Pending
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-slate-700 dark:text-slate-400 text-sm">Discrepancies Found</span>
+                      <span className="text-secondary text-sm">Discrepancies Found</span>
                       <span className="text-green-400 text-sm">None</span>
                     </div>
                   </div>
 
-                  <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700/50">
+                  <div className="mt-4 pt-4 border-t border-border">
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-slate-700 dark:text-slate-400 text-sm">Overall Status</span>
+                      <span className="text-secondary text-sm">Overall Status</span>
                     </div>
                     <div className="flex items-center gap-2 p-3 bg-amber-500/10 rounded-lg">
                       <Clock className="w-5 h-5 text-amber-400" />
@@ -1180,44 +1180,44 @@ export default function EmploymentVerification() {
                 </div>
 
                 {/* Support & Resources */}
-                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
-                  <h3 className="text-slate-900 dark:text-white font-medium mb-4 flex items-center gap-2">
+                <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
+                  <h3 className="text-primary font-medium mb-4 flex items-center gap-2">
                     <HelpCircle className="w-5 h-5 text-amber-400" />
                     Support & Resources
                   </h3>
 
                   <div className="space-y-2">
                     <a href="#" className="flex items-center gap-3 p-3 bg-white dark:bg-slate-900/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors">
-                      <BookOpen className="w-4 h-4 text-slate-700 dark:text-slate-400" />
+                      <BookOpen className="w-4 h-4 text-secondary" />
                       <div>
-                        <p className="text-slate-900 dark:text-white text-sm">POST Regulations Guide</p>
+                        <p className="text-primary text-sm">POST Regulations Guide</p>
                         <p className="text-slate-500 text-xs">Employment verification requirements</p>
                       </div>
                       <ExternalLink className="w-4 h-4 text-slate-500 ml-auto" />
                     </a>
 
                     <a href="#" className="flex items-center gap-3 p-3 bg-white dark:bg-slate-900/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors">
-                      <FileText className="w-4 h-4 text-slate-700 dark:text-slate-400" />
+                      <FileText className="w-4 h-4 text-secondary" />
                       <div>
-                        <p className="text-slate-900 dark:text-white text-sm">IA Request Templates</p>
+                        <p className="text-primary text-sm">IA Request Templates</p>
                         <p className="text-slate-500 text-xs">Standard clearance request forms</p>
                       </div>
                       <ExternalLink className="w-4 h-4 text-slate-500 ml-auto" />
                     </a>
 
                     <a href="#" className="flex items-center gap-3 p-3 bg-white dark:bg-slate-900/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors">
-                      <PhoneCall className="w-4 h-4 text-slate-700 dark:text-slate-400" />
+                      <PhoneCall className="w-4 h-4 text-secondary" />
                       <div>
-                        <p className="text-slate-900 dark:text-white text-sm">Verification Hotline</p>
+                        <p className="text-primary text-sm">Verification Hotline</p>
                         <p className="text-slate-500 text-xs">Background Unit support</p>
                       </div>
                       <ExternalLink className="w-4 h-4 text-slate-500 ml-auto" />
                     </a>
 
                     <a href="#" className="flex items-center gap-3 p-3 bg-white dark:bg-slate-900/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors">
-                      <Scale className="w-4 h-4 text-slate-700 dark:text-slate-400" />
+                      <Scale className="w-4 h-4 text-secondary" />
                       <div>
-                        <p className="text-slate-900 dark:text-white text-sm">Lateral Transfer Policy</p>
+                        <p className="text-primary text-sm">Lateral Transfer Policy</p>
                         <p className="text-slate-500 text-xs">Agency transfer procedures</p>
                       </div>
                       <ExternalLink className="w-4 h-4 text-slate-500 ml-auto" />
@@ -1226,8 +1226,8 @@ export default function EmploymentVerification() {
                 </div>
 
                 {/* Audit Trail */}
-                <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
-                  <h3 className="text-slate-900 dark:text-white font-medium mb-4 flex items-center gap-2">
+                <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
+                  <h3 className="text-primary font-medium mb-4 flex items-center gap-2">
                     <History className="w-5 h-5 text-amber-400" />
                     Recent Activity
                   </h3>
@@ -1242,7 +1242,7 @@ export default function EmploymentVerification() {
                       <div key={index} className="flex items-start gap-3">
                         <div className="w-2 h-2 bg-amber-500 rounded-full mt-1.5"></div>
                         <div className="flex-1">
-                          <p className="text-slate-700 dark:text-slate-300 text-sm">{activity.action}</p>
+                          <p className="text-secondary text-sm">{activity.action}</p>
                           <p className="text-slate-500 text-xs">{activity.employer}</p>
                           <p className="text-slate-700 text-xs">{activity.date} • {activity.by}</p>
                         </div>

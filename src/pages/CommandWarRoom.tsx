@@ -136,32 +136,32 @@ const alerts: CommandAlert[] = [
 function getDivisionColors(status: DivisionReadiness['status']) {
   if (status === 'Critical')     return { badge: 'bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/25',       dot: 'bg-red-500' };
   if (status === 'Reduced')      return { badge: 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/25', dot: 'bg-amber-400' };
-  return { badge: 'bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/20', dot: 'bg-slate-500' };
+  return { badge: 'bg-slate-100 dark:bg-slate-700/30 text-secondary border border-border', dot: 'bg-slate-500' };
 }
 
 function getBeatColors(status: PatrolBeat['status']) {
   if (status === 'Uncovered') return { bg: 'bg-red-500/15 border-red-500/35', text: 'text-red-700 dark:text-red-300', dot: 'bg-red-500' };
   if (status === 'Thin')      return { bg: 'bg-amber-500/12 border-amber-500/30', text: 'text-amber-700 dark:text-amber-300', dot: 'bg-amber-400' };
-  return { bg: 'bg-slate-50 dark:bg-slate-800/30 border-slate-200 dark:border-slate-200 dark:border-slate-700/30', text: 'text-slate-500', dot: 'bg-slate-500' };
+  return { bg: 'bg-slate-50 dark:bg-slate-800/30 border-border dark:border-slate-700/30', text: 'text-slate-500', dot: 'bg-slate-500' };
 }
 
 function getCertColors(severity: CertAlert['severity']) {
   if (severity === 'critical') return { row: 'border-l-2 border-l-red-500/70',   badge: 'bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/20',    days: 'text-red-600 dark:text-red-400 font-bold' };
   if (severity === 'warning')  return { row: 'border-l-2 border-l-amber-500/60', badge: 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/20', days: 'text-amber-600 dark:text-amber-400 font-semibold' };
-  return { row: '', badge: 'bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/20', days: 'text-slate-500' };
+  return { row: '', badge: 'bg-slate-100 dark:bg-slate-700/30 text-secondary border border-border', days: 'text-slate-500' };
 }
 
 function getDeploymentStatusColors(status: Deployment['status']) {
   if (status === 'Active')     return 'bg-emerald-100 dark:bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/20';
   if (status === 'En Route')   return 'bg-blue-100 dark:bg-blue-500/15 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-500/20';
   if (status === 'Staged')     return 'bg-amber-100 dark:bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-500/20';
-  return 'bg-slate-100 dark:bg-slate-500/15 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-500/20';
+  return 'bg-slate-100 dark:bg-slate-500/15 text-secondary border border-slate-200 dark:border-slate-500/20';
 }
 
 function getAlertColors(severity: CommandAlert['severity']) {
   if (severity === 'critical') return { border: 'border-l-red-500',   icon: 'text-red-600 dark:text-red-400',   label: 'bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/20' };
   if (severity === 'warning')  return { border: 'border-l-amber-500', icon: 'text-amber-600 dark:text-amber-400', label: 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/20' };
-  return { border: 'border-l-slate-300 dark:border-l-slate-700', icon: 'text-slate-500', label: 'bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-500 border border-slate-200 dark:border-slate-700/20' };
+  return { border: 'border-l-slate-300 dark:border-l-slate-700', icon: 'text-slate-500', label: 'bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-500 border border-border' };
 }
 
 // ── Component ─────────────────────────────────────────────────
@@ -177,7 +177,7 @@ export default function CommandWarRoom() {
       value: `${commandSnapshot.filled}/${commandSnapshot.authorizedStrength}`,
       sub: `${filledPct}% filled · ${commandSnapshot.openVacancies} vacancies`,
       icon: Users,
-      color: 'text-slate-900 dark:text-white',
+      color: 'text-primary',
       trend: null,
     },
     {
@@ -185,7 +185,7 @@ export default function CommandWarRoom() {
       value: `${commandSnapshot.onDuty}`,
       sub: `${onDutyPct}% of filled positions`,
       icon: Activity,
-      color: 'text-slate-900 dark:text-white',
+      color: 'text-primary',
       trend: null,
     },
     {
@@ -209,7 +209,7 @@ export default function CommandWarRoom() {
       value: `${commandSnapshot.activeDeployments}`,
       sub: `${commandSnapshot.mutualAidOut} mutual aid out`,
       icon: Target,
-      color: 'text-slate-900 dark:text-white',
+      color: 'text-primary',
       trend: null,
     },
     {
@@ -229,17 +229,17 @@ export default function CommandWarRoom() {
         {/* ── Page Header ─────────────────────────────────── */}
         <div className="flex items-start justify-between gap-4 mb-6">
           <div>
-            <h1 className="text-xl font-bold text-slate-900 dark:text-white mb-1">Command War Room</h1>
+            <h1 className="text-xl font-bold text-primary mb-1">Command War Room</h1>
             <p className="text-[11px] text-slate-500">
               Full-agency readiness cockpit · Updated {commandSnapshot.lastUpdated} · Gwinnett County Sheriff's Office
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1.5 text-[11px] text-slate-500 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-lg px-3 py-1.5">
+            <div className="flex items-center gap-1.5 text-[11px] text-slate-500 bg-slate-50 dark:bg-slate-800/30 border border-border dark:border-slate-700/30 rounded-lg px-3 py-1.5">
               <Circle className="w-1.5 h-1.5 fill-emerald-500 text-emerald-500" />
               Live Feed
             </div>
-            <button className="flex items-center gap-2 px-3 py-1.5 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-lg text-[12px] text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-700/30 transition-all">
+            <button className="flex items-center gap-2 px-3 py-1.5 bg-slate-50 dark:bg-slate-800/30 border border-border dark:border-slate-700/30 rounded-lg text-[12px] text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-700/30 transition-all">
               <RefreshCw className="w-3.5 h-3.5" />
               Refresh
             </button>
@@ -252,10 +252,10 @@ export default function CommandWarRoom() {
             const Icon = kpi.icon;
             return (
               <div key={kpi.label}
-                className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4"
+                className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4"
               >
                 <div className="flex items-center justify-between mb-3">
-                  <Icon className="w-4 h-4 text-slate-700 dark:text-slate-400" />
+                  <Icon className="w-4 h-4 text-secondary" />
                   {kpi.trend === 'up'   && <TrendingUp   className="w-3.5 h-3.5 text-red-600 dark:text-red-400 opacity-60" />}
                   {kpi.trend === 'down' && <TrendingDown  className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 opacity-60" />}
                 </div>
@@ -271,22 +271,22 @@ export default function CommandWarRoom() {
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-5">
 
           {/* Staffing Readiness by Division */}
-          <div className="lg:col-span-3 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl overflow-hidden">
-            <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 dark:border-slate-200 dark:border-slate-700/20">
+          <div className="lg:col-span-3 bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden">
+            <div className="flex items-center justify-between px-5 py-3.5 border-b border-border dark:border-slate-700/20">
               <div className="flex items-center gap-2">
-                <Users className="w-4 h-4 text-slate-700 dark:text-slate-400" />
-                <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Staffing Readiness by Division</span>
+                <Users className="w-4 h-4 text-secondary" />
+                <span className="text-[13px] font-semibold text-primary">Staffing Readiness by Division</span>
               </div>
               <button
                 onClick={() => navigate('/command/personnel')}
-                className="flex items-center gap-1 text-[11px] text-slate-500 hover:text-slate-700 dark:text-slate-300 transition-colors"
+                className="flex items-center gap-1 text-[11px] text-slate-500 hover:text-secondary transition-colors"
               >
                 Full View <ChevronRight className="w-3.5 h-3.5" />
               </button>
             </div>
 
             {/* Table header */}
-            <div className="grid grid-cols-12 px-5 py-2 border-b border-slate-200 dark:border-slate-700/10 text-[10px] text-slate-500 uppercase tracking-wide">
+            <div className="grid grid-cols-12 px-5 py-2 border-b border-border text-[10px] text-slate-500 uppercase tracking-wide">
               <span className="col-span-4">Division</span>
               <span className="col-span-2 text-center">Auth / Filled</span>
               <span className="col-span-2 text-center">On-Duty</span>
@@ -307,11 +307,11 @@ export default function CommandWarRoom() {
                       <p className="text-[10px] text-slate-500">{div.bureau}{div.actingSupervisor && <span className="ml-1 text-amber-600 dark:text-amber-400">⚡ Acting</span>}</p>
                     </div>
                     <div className="col-span-2 text-center">
-                      <span className="text-[12px] text-slate-700 dark:text-slate-300">{div.authorized}/{div.filled}</span>
+                      <span className="text-[12px] text-secondary">{div.authorized}/{div.filled}</span>
                     </div>
                     <div className="col-span-2 text-center">
                       <div className="flex flex-col items-center gap-0.5">
-                        <span className="text-[12px] text-slate-700 dark:text-slate-300">{div.onDuty}</span>
+                        <span className="text-[12px] text-secondary">{div.onDuty}</span>
                         <div className="w-12 h-1 bg-white dark:bg-slate-700/50 rounded-full overflow-hidden">
                           <div
                             className={`h-full rounded-full ${onDutyPct >= 70 ? 'bg-emerald-500' : onDutyPct >= 55 ? 'bg-amber-400' : 'bg-red-500'}`}
@@ -338,15 +338,15 @@ export default function CommandWarRoom() {
           </div>
 
           {/* Patrol Beat Coverage */}
-          <div className="lg:col-span-2 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl overflow-hidden">
-            <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 dark:border-slate-200 dark:border-slate-700/20">
+          <div className="lg:col-span-2 bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden">
+            <div className="flex items-center justify-between px-5 py-3.5 border-b border-border dark:border-slate-700/20">
               <div className="flex items-center gap-2">
-                <Radio className="w-4 h-4 text-slate-700 dark:text-slate-400" />
-                <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Patrol Beat Coverage</span>
+                <Radio className="w-4 h-4 text-secondary" />
+                <span className="text-[13px] font-semibold text-primary">Patrol Beat Coverage</span>
               </div>
               <button
                 onClick={() => navigate('/patrol/cad')}
-                className="flex items-center gap-1 text-[11px] text-slate-500 hover:text-slate-700 dark:text-slate-300 transition-colors"
+                className="flex items-center gap-1 text-[11px] text-slate-500 hover:text-secondary transition-colors"
               >
                 CAD <ChevronRight className="w-3.5 h-3.5" />
               </button>
@@ -382,7 +382,7 @@ export default function CommandWarRoom() {
                         </div>
                         <p className="text-[10px] text-slate-500 pl-3">
                           {beat.primaryUnit} · {beat.units}/{beat.required} units
-                          {beat.activeCall && <span className="ml-1 text-slate-700 dark:text-slate-400">· {beat.activeCall}</span>}
+                          {beat.activeCall && <span className="ml-1 text-secondary">· {beat.activeCall}</span>}
                         </p>
                       </div>
                       <MapPin className={`w-3.5 h-3.5 mt-0.5 flex-shrink-0 ${colors.text} opacity-60`} />
@@ -398,25 +398,25 @@ export default function CommandWarRoom() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
 
           {/* Certification Risk Matrix */}
-          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl overflow-hidden">
-            <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 dark:border-slate-200 dark:border-slate-700/20">
+          <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden">
+            <div className="flex items-center justify-between px-5 py-3.5 border-b border-border dark:border-slate-700/20">
               <div className="flex items-center gap-2">
-                <Award className="w-4 h-4 text-slate-700 dark:text-slate-400" />
-                <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Certification Risk</span>
+                <Award className="w-4 h-4 text-secondary" />
+                <span className="text-[13px] font-semibold text-primary">Certification Risk</span>
                 <span className="text-[10px] px-2 py-0.5 rounded-full bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/20">
                   {certAlerts.filter(c => c.severity === 'critical').length} Critical
                 </span>
               </div>
               <button
                 onClick={() => navigate('/hr/training')}
-                className="flex items-center gap-1 text-[11px] text-slate-500 hover:text-slate-700 dark:text-slate-300 transition-colors"
+                className="flex items-center gap-1 text-[11px] text-slate-500 hover:text-secondary transition-colors"
               >
                 Training <ChevronRight className="w-3.5 h-3.5" />
               </button>
             </div>
 
             {/* Legend */}
-            <div className="flex items-center gap-4 px-5 py-2 border-b border-slate-200 dark:border-slate-700/10">
+            <div className="flex items-center gap-4 px-5 py-2 border-b border-border">
               <div className="flex items-center gap-1.5 text-[10px] text-slate-500">
                 <div className="w-2 h-2 rounded-full bg-red-500" /> Critical (&lt;7 days)
               </div>
@@ -451,18 +451,18 @@ export default function CommandWarRoom() {
           </div>
 
           {/* Active Deployments */}
-          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl overflow-hidden">
-            <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 dark:border-slate-200 dark:border-slate-700/20">
+          <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden">
+            <div className="flex items-center justify-between px-5 py-3.5 border-b border-border dark:border-slate-700/20">
               <div className="flex items-center gap-2">
-                <Target className="w-4 h-4 text-slate-700 dark:text-slate-400" />
-                <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Active Deployments</span>
-                <span className="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/20">
+                <Target className="w-4 h-4 text-secondary" />
+                <span className="text-[13px] font-semibold text-primary">Active Deployments</span>
+                <span className="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-700/30 text-secondary border border-border">
                   {deployments.reduce((s, d) => s + d.personnel, 0)} deputies
                 </span>
               </div>
               <button
                 onClick={() => navigate('/command/personnel')}
-                className="flex items-center gap-1 text-[11px] text-slate-500 hover:text-slate-700 dark:text-slate-300 transition-colors"
+                className="flex items-center gap-1 text-[11px] text-slate-500 hover:text-secondary transition-colors"
               >
                 Staffing <ChevronRight className="w-3.5 h-3.5" />
               </button>
@@ -472,7 +472,7 @@ export default function CommandWarRoom() {
               {deployments.map((dep) => (
                 <div key={dep.name} className="flex items-start gap-3 px-5 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-700/10 transition-colors">
                   <div className="w-7 h-7 bg-slate-100 dark:bg-slate-700/40 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-[10px] font-bold text-slate-700 dark:text-slate-300">{dep.personnel}</span>
+                    <span className="text-[10px] font-bold text-secondary">{dep.personnel}</span>
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-[12px] font-medium text-slate-900 dark:text-slate-700 dark:text-slate-200 leading-tight">{dep.name}</p>
@@ -494,18 +494,18 @@ export default function CommandWarRoom() {
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-5">
 
           {/* Command Alert Feed */}
-          <div className="lg:col-span-3 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl overflow-hidden">
-            <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 dark:border-slate-200 dark:border-slate-700/20">
+          <div className="lg:col-span-3 bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden">
+            <div className="flex items-center justify-between px-5 py-3.5 border-b border-border dark:border-slate-700/20">
               <div className="flex items-center gap-2">
-                <AlertTriangle className="w-4 h-4 text-slate-700 dark:text-slate-400" />
-                <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Command Alert Feed</span>
+                <AlertTriangle className="w-4 h-4 text-secondary" />
+                <span className="text-[13px] font-semibold text-primary">Command Alert Feed</span>
                 <span className="text-[10px] px-2 py-0.5 rounded-full bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/20">
                   {commandSnapshot.criticalAlerts} Critical
                 </span>
               </div>
               <button
                 onClick={() => navigate('/command/alerts')}
-                className="flex items-center gap-1 text-[11px] text-slate-500 hover:text-slate-700 dark:text-slate-300 transition-colors"
+                className="flex items-center gap-1 text-[11px] text-slate-500 hover:text-secondary transition-colors"
               >
                 All Alerts <ChevronRight className="w-3.5 h-3.5" />
               </button>
@@ -525,7 +525,7 @@ export default function CommandWarRoom() {
                           <span className="text-[10px] text-slate-500">{alert.time}</span>
                         </div>
                       </div>
-                      <p className="text-[11px] text-slate-700 dark:text-slate-400 leading-relaxed">{alert.detail}</p>
+                      <p className="text-[11px] text-secondary leading-relaxed">{alert.detail}</p>
                       <div className="flex items-center gap-2 mt-1">
                         <span className={`text-[10px] px-1.5 py-0.5 rounded ${colors.label}`}>
                           {alert.severity.toUpperCase()}
@@ -543,37 +543,37 @@ export default function CommandWarRoom() {
           <div className="lg:col-span-2 flex flex-col gap-4">
 
             {/* AI Command Intelligence */}
-            <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl overflow-hidden flex-1">
-              <div className="flex items-center gap-2 px-5 py-3.5 border-b border-slate-200 dark:border-slate-200 dark:border-slate-700/20">
-                <Sparkles className="w-4 h-4 text-slate-700 dark:text-slate-400" />
-                <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Command Intelligence</span>
+            <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden flex-1">
+              <div className="flex items-center gap-2 px-5 py-3.5 border-b border-border dark:border-slate-700/20">
+                <Sparkles className="w-4 h-4 text-secondary" />
+                <span className="text-[13px] font-semibold text-primary">Command Intelligence</span>
               </div>
               <div className="p-5 space-y-3">
                 <div className="flex gap-3">
                   <AlertOctagon className="w-4 h-4 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5" />
-                  <p className="text-[12px] text-slate-700 dark:text-slate-300 leading-relaxed">
-                    <span className="text-slate-900 dark:text-white font-medium">Immediate: </span>
+                  <p className="text-[12px] text-secondary leading-relaxed">
+                    <span className="text-primary font-medium">Immediate: </span>
                     Beat 7 West has zero coverage. Divert Alpha-12 from Beat 1 (currently overloaded) to restore patrol presence.
                   </p>
                 </div>
                 <div className="flex gap-3">
                   <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
-                  <p className="text-[12px] text-slate-700 dark:text-slate-300 leading-relaxed">
-                    <span className="text-slate-900 dark:text-white font-medium">Today: </span>
+                  <p className="text-[12px] text-secondary leading-relaxed">
+                    <span className="text-primary font-medium">Today: </span>
                     Sgt. Rivera's firearms cert expires in 4 days. Restricted duty status applies automatically on day 0 unless renewed. Contact Training at 0800.
                   </p>
                 </div>
                 <div className="flex gap-3">
-                  <Shield className="w-4 h-4 text-slate-700 dark:text-slate-400 flex-shrink-0 mt-0.5" />
-                  <p className="text-[12px] text-slate-700 dark:text-slate-300 leading-relaxed">
-                    <span className="text-slate-900 dark:text-white font-medium">This Week: </span>
+                  <Shield className="w-4 h-4 text-secondary flex-shrink-0 mt-0.5" />
+                  <p className="text-[12px] text-secondary leading-relaxed">
+                    <span className="text-primary font-medium">This Week: </span>
                     Bravo Division is operating with 2 acting supervisors and 6 unfilled vacancies. Recommend priority recruiting review.
                   </p>
                 </div>
                 <div className="flex gap-3">
                   <TrendingUp className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
-                  <p className="text-[12px] text-slate-700 dark:text-slate-300 leading-relaxed">
-                    <span className="text-slate-900 dark:text-white font-medium">Positive: </span>
+                  <p className="text-[12px] text-secondary leading-relaxed">
+                    <span className="text-primary font-medium">Positive: </span>
                     Warrant sweep staged for 08:00. All 12 deputies confirmed. SAC Lt. Grant reports go/no-go ready.
                   </p>
                 </div>
@@ -581,9 +581,9 @@ export default function CommandWarRoom() {
             </div>
 
             {/* Quick Command Actions */}
-            <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl overflow-hidden">
-              <div className="px-5 py-3.5 border-b border-slate-200 dark:border-slate-200 dark:border-slate-700/20">
-                <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Quick Actions</span>
+            <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden">
+              <div className="px-5 py-3.5 border-b border-border dark:border-slate-700/20">
+                <span className="text-[13px] font-semibold text-primary">Quick Actions</span>
               </div>
               <div className="p-3 space-y-1.5">
                 {[
@@ -599,7 +599,7 @@ export default function CommandWarRoom() {
                     className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-[12px] font-medium transition-all ${
                       action.urgent
                         ? 'bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-300 hover:bg-amber-500/15'
-                        : 'bg-slate-50 dark:bg-slate-700/20 border border-slate-200 dark:border-slate-200 dark:border-slate-700/20 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-700/30'
+                        : 'bg-slate-50 dark:bg-slate-700/20 border border-border dark:border-slate-700/20 text-secondary hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-700/30'
                     }`}
                   >
                     {action.label}

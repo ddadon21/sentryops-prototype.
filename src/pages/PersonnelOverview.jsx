@@ -401,11 +401,11 @@ export default function PersonnelOverview() {
                 <div className="mb-6">
                   <div className="flex items-center justify-between">
                     <div>
-                      <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-1">Staffing Overview</h2>
+                      <h2 className="text-xl font-bold text-primary mb-1">Staffing Overview</h2>
                       <p className="text-[11px] text-slate-500">Operational workforce management + deployment readiness</p>
                     </div>
                     <div className="flex items-center gap-2">
-                      <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-100/80 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-lg text-[11px] text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors">
+                      <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-100/80 dark:bg-slate-800/30 border border-border rounded-lg text-[11px] text-secondary hover:text-primary transition-colors">
                         <Download className="w-3 h-3" />
                         Staffing Report
                       </button>
@@ -416,7 +416,7 @@ export default function PersonnelOverview() {
                 {/* ── Workforce Status Row (4 cards) ──────────── */}
                 <div className="grid grid-cols-4 gap-3 mb-4">
                   {/* Workforce Health */}
-                  <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-3">
+                  <div className="bg-surface border border-border rounded-xl shadow-sm dark:shadow-none p-3">
                     <div className="flex items-center gap-2 mb-1.5">
                       <Gauge className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
                       <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Workforce Health</span>
@@ -473,10 +473,10 @@ export default function PersonnelOverview() {
                 <div className="mb-4">
                   <button
                     onClick={() => setAiInsightsVisible(!aiInsightsVisible)}
-                    className="w-full flex items-center gap-2 px-3 py-2 bg-slate-50 dark:bg-slate-800/35 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/30 transition-colors"
+                    className="w-full flex items-center gap-2 px-3 py-2 bg-slate-50 dark:bg-slate-800/35 border border-border dark:border-slate-700/30 rounded hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/30 transition-colors"
                   >
                     <Sparkles className="w-3 h-3 text-slate-500" />
-                    <span className="text-[11px] text-slate-700 dark:text-slate-300 flex-1 text-left">
+                    <span className="text-[11px] text-secondary flex-1 text-left">
                       17 certs expiring 30d. Patrol at 75% (4 below optimal). 12 open positions — Central Patrol at risk. Turnover 6.5% (below avg).
                     </span>
                     <span className="text-[10px] text-slate-700 flex-shrink-0">{aiInsightsVisible ? 'Less' : 'Details'}</span>
@@ -499,16 +499,16 @@ export default function PersonnelOverview() {
                     <button className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-slate-900 font-semibold rounded text-[11px] transition-colors">
                       <Plus className="w-3 h-3" />Add Personnel
                     </button>
-                    <button onClick={() => navigate(createPageUrl('TrainingCertifications'))} className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded text-[11px] font-medium transition-colors">
+                    <button onClick={() => navigate(createPageUrl('TrainingCertifications'))} className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded text-[11px] font-medium transition-colors">
                       <Calendar className="w-3 h-3" />Schedule Training
                     </button>
-                    <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded text-[11px] font-medium transition-colors">
+                    <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded text-[11px] font-medium transition-colors">
                       <FileText className="w-3 h-3" />Certification Report
                     </button>
-                    <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded text-[11px] font-medium transition-colors">
+                    <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded text-[11px] font-medium transition-colors">
                       <BarChart3 className="w-3 h-3" />Workforce Analytics
                     </button>
-                    <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-slate-700 dark:text-slate-300 rounded text-[11px] font-medium transition-colors">
+                    <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded text-[11px] font-medium transition-colors">
                       <Download className="w-3 h-3" />Import Roster
                     </button>
                   </div>
@@ -521,28 +521,28 @@ export default function PersonnelOverview() {
                     <input
                       type="text"
                       placeholder="Search name, badge, division, rank..."
-                      className="w-full pl-9 pr-3 py-2 bg-slate-100/80 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded text-[11px] text-slate-900 dark:text-white placeholder-slate-600 focus:outline-none focus:border-amber-500/40 transition-all"
+                      className="w-full pl-9 pr-3 py-2 bg-slate-100/80 dark:bg-slate-800/30 border border-border rounded text-[11px] text-primary placeholder-slate-600 focus:outline-none focus:border-amber-500/40 transition-all"
                     />
                   </div>
                   <button
                     onClick={() => setFiltersOpen(!filtersOpen)}
-                    className="flex items-center gap-1.5 px-3 py-2 bg-slate-100/80 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded text-[11px] text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors"
+                    className="flex items-center gap-1.5 px-3 py-2 bg-slate-100/80 dark:bg-slate-800/30 border border-border rounded text-[11px] text-secondary hover:text-primary transition-colors"
                   >
                     <Filter className="w-3 h-3" />Filters
                   </button>
-                  <button className="flex items-center gap-1.5 px-3 py-2 bg-slate-100/80 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded text-[11px] text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors">
+                  <button className="flex items-center gap-1.5 px-3 py-2 bg-slate-100/80 dark:bg-slate-800/30 border border-border rounded text-[11px] text-secondary hover:text-primary transition-colors">
                     <Download className="w-3 h-3" />Export
                   </button>
                 </div>
 
                 {filtersOpen && (
-                  <div className="mb-3 bg-slate-50 dark:bg-slate-800/35 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded p-3">
+                  <div className="mb-3 bg-slate-50 dark:bg-slate-800/35 border border-border dark:border-slate-700/30 rounded p-3">
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-[10px] font-semibold text-slate-700 dark:text-slate-400 uppercase tracking-wider">Filters</span>
+                      <span className="text-[10px] font-semibold text-secondary uppercase tracking-wider">Filters</span>
                       <button className="text-[10px] text-amber-600 dark:text-amber-400 hover:text-amber-300">Clear</button>
                     </div>
                     <div className="grid grid-cols-4 gap-3">
-                      <select className="px-2.5 py-1.5 bg-white dark:bg-slate-900/40 border border-slate-700/50 rounded text-[11px] text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/40">
+                      <select className="px-2.5 py-1.5 bg-white dark:bg-slate-900/40 border border-slate-700/50 rounded text-[11px] text-primary focus:outline-none focus:border-amber-500/40">
                         <option>All Divisions</option>
                         <option>Patrol</option>
                         <option>Investigations</option>
@@ -550,20 +550,20 @@ export default function PersonnelOverview() {
                         <option>Dispatch</option>
                         <option>School Resource</option>
                       </select>
-                      <select className="px-2.5 py-1.5 bg-white dark:bg-slate-900/40 border border-slate-700/50 rounded text-[11px] text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/40">
+                      <select className="px-2.5 py-1.5 bg-white dark:bg-slate-900/40 border border-slate-700/50 rounded text-[11px] text-primary focus:outline-none focus:border-amber-500/40">
                         <option>All Ranks</option>
                         <option>Deputy Sheriff</option>
                         <option>Senior Deputy</option>
                         <option>Sergeant</option>
                         <option>Lieutenant</option>
                       </select>
-                      <select className="px-2.5 py-1.5 bg-white dark:bg-slate-900/40 border border-slate-700/50 rounded text-[11px] text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/40">
+                      <select className="px-2.5 py-1.5 bg-white dark:bg-slate-900/40 border border-slate-700/50 rounded text-[11px] text-primary focus:outline-none focus:border-amber-500/40">
                         <option>All Status</option>
                         <option>On Duty</option>
                         <option>Off Duty</option>
                         <option>On Leave</option>
                       </select>
-                      <select className="px-2.5 py-1.5 bg-white dark:bg-slate-900/40 border border-slate-700/50 rounded text-[11px] text-slate-900 dark:text-white focus:outline-none focus:border-amber-500/40">
+                      <select className="px-2.5 py-1.5 bg-white dark:bg-slate-900/40 border border-slate-700/50 rounded text-[11px] text-primary focus:outline-none focus:border-amber-500/40">
                         <option>All Certs</option>
                         <option>Current</option>
                         <option>Expiring</option>
@@ -582,7 +582,7 @@ export default function PersonnelOverview() {
                   {groupedPersonnel.map(group => {
                     const isCollapsed = collapsedGroups[group.key];
                     return (
-                      <div key={group.key} className="border border-slate-200 dark:border-slate-700/30 rounded overflow-hidden">
+                      <div key={group.key} className="border border-border rounded overflow-hidden">
                         {/* Group Header — clickable to collapse */}
                         <button
                           onClick={() => toggleGroup(group.key)}
@@ -605,7 +605,7 @@ export default function PersonnelOverview() {
                         {!isCollapsed && (
                           <>
                             {/* Column Headers */}
-                            <div className="grid grid-cols-[1fr_80px_100px_90px_1fr_1fr_90px] gap-1 px-3 py-1.5 bg-slate-50 dark:bg-slate-900/30 border-b border-slate-200 dark:border-slate-700/10 text-[9px] font-semibold text-slate-500 uppercase tracking-wider">
+                            <div className="grid grid-cols-[1fr_80px_100px_90px_1fr_1fr_90px] gap-1 px-3 py-1.5 bg-slate-50 dark:bg-slate-900/30 border-b border-border text-[9px] font-semibold text-slate-500 uppercase tracking-wider">
                               <span>Personnel</span>
                               <span>Division</span>
                               <span>Deployability</span>
@@ -624,7 +624,7 @@ export default function PersonnelOverview() {
                               return (
                                 <div
                                   key={person.id}
-                                  className={`grid grid-cols-[1fr_80px_100px_90px_1fr_1fr_90px] gap-1 px-3 py-3.5 items-start border-b border-slate-200 dark:border-slate-800/15 hover:bg-slate-50 dark:hover:bg-slate-50 dark:hover:bg-slate-800/15 transition-colors ${
+                                  className={`grid grid-cols-[1fr_80px_100px_90px_1fr_1fr_90px] gap-1 px-3 py-3.5 items-start border-b border-border hover:bg-slate-50 dark:hover:bg-slate-50 dark:hover:bg-slate-800/15 transition-colors ${
                                     opStatus.color === 'red' ? 'bg-red-500/[0.02]' :
                                     opStatus.color === 'amber' ? 'bg-amber-500/[0.01]' : ''
                                   }`}
@@ -642,14 +642,14 @@ export default function PersonnelOverview() {
                                       {person.photo}
                                     </div>
                                     <div className="min-w-0">
-                                      <p className="text-[11px] font-semibold text-slate-900 dark:text-white group-hover:text-amber-600 dark:text-amber-400 transition-colors truncate">{person.name}</p>
+                                      <p className="text-[11px] font-semibold text-primary group-hover:text-amber-600 dark:text-amber-400 transition-colors truncate">{person.name}</p>
                                       <p className="text-[10px] text-slate-500">{person.rank} &middot; <span className="font-mono">{person.badge}</span></p>
                                     </div>
                                   </div>
 
                                   {/* Division */}
                                   <div className="pt-0.5">
-                                    <p className="text-[10px] text-slate-700 dark:text-slate-300">{person.division}</p>
+                                    <p className="text-[10px] text-secondary">{person.division}</p>
                                     <p className="text-[9px] text-slate-700">{person.shift}</p>
                                   </div>
 
@@ -690,8 +690,8 @@ export default function PersonnelOverview() {
                                   <div className="pt-0.5">
                                     {person.aiInsight ? (
                                       <div className="flex items-start gap-1">
-                                        <ArrowRight className="w-3 h-3 text-slate-700 dark:text-slate-400 mt-0.5 flex-shrink-0" />
-                                        <p className="text-[10px] text-slate-700 dark:text-slate-300 font-medium">{person.aiInsight}</p>
+                                        <ArrowRight className="w-3 h-3 text-secondary mt-0.5 flex-shrink-0" />
+                                        <p className="text-[10px] text-secondary font-medium">{person.aiInsight}</p>
                                       </div>
                                     ) : (
                                       <span className="text-[10px] text-slate-700">&mdash;</span>
@@ -708,7 +708,7 @@ export default function PersonnelOverview() {
                                       <Eye className="w-3.5 h-3.5" />
                                     </button>
                                     <button
-                                      className="p-1.5 text-slate-500 hover:text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/30 rounded transition-all"
+                                      className="p-1.5 text-slate-500 hover:text-secondary hover:bg-slate-100 dark:hover:bg-slate-700/30 rounded transition-all"
                                       title="Reassign"
                                     >
                                       <RefreshCw className="w-3.5 h-3.5" />
@@ -744,10 +744,10 @@ export default function PersonnelOverview() {
               <div className="w-full xl:w-64 shrink-0 space-y-3">
 
                 {/* Widget 1: Operational Coverage */}
-                <div className="bg-slate-50 dark:bg-slate-800/15 border border-slate-200 dark:border-slate-700/30 rounded p-3">
+                <div className="bg-slate-50 dark:bg-slate-800/15 border border-border rounded p-3">
                   <div className="flex items-center gap-2 mb-2.5">
-                    <Shield className="w-3.5 h-3.5 text-slate-700 dark:text-slate-400" />
-                    <span className="text-[11px] font-bold text-slate-900 dark:text-white">Operational Coverage</span>
+                    <Shield className="w-3.5 h-3.5 text-secondary" />
+                    <span className="text-[11px] font-bold text-primary">Operational Coverage</span>
                   </div>
                   <div className="space-y-2">
                     {[
@@ -758,8 +758,8 @@ export default function PersonnelOverview() {
                     ].map((d, i) => (
                       <div key={i}>
                         <div className="flex items-center justify-between text-[10px] mb-0.5">
-                          <span className="text-slate-700 dark:text-slate-400">{d.division}</span>
-                          <span className="text-slate-700 dark:text-slate-300 font-mono">{d.current}/{d.required}</span>
+                          <span className="text-secondary">{d.division}</span>
+                          <span className="text-secondary font-mono">{d.current}/{d.required}</span>
                         </div>
                         <div className="w-full h-1 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
                           <div
@@ -773,9 +773,9 @@ export default function PersonnelOverview() {
                       </div>
                     ))}
                   </div>
-                  <div className="mt-2.5 pt-2 border-t border-slate-200 dark:border-slate-200 dark:border-slate-700/30 flex items-center justify-between text-[10px]">
+                  <div className="mt-2.5 pt-2 border-t border-border dark:border-slate-700/30 flex items-center justify-between text-[10px]">
                     <span className="text-slate-500">Total on duty:</span>
-                    <span className="text-slate-900 dark:text-white font-bold">127/170 (75%)</span>
+                    <span className="text-primary font-bold">127/170 (75%)</span>
                   </div>
                   <div className="flex items-center justify-between text-[10px] mt-0.5">
                     <span className="text-slate-500">On leave:</span>
@@ -783,7 +783,7 @@ export default function PersonnelOverview() {
                   </div>
                   <div className="flex items-center justify-between text-[10px] mt-0.5">
                     <span className="text-slate-500">Off duty:</span>
-                    <span className="text-slate-700 dark:text-slate-400">35</span>
+                    <span className="text-secondary">35</span>
                   </div>
                 </div>
 
@@ -791,7 +791,7 @@ export default function PersonnelOverview() {
                 <div className="bg-slate-50 dark:bg-slate-800/15 border border-amber-500/15 rounded p-3">
                   <div className="flex items-center gap-2 mb-2">
                     <AlertTriangle className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
-                    <span className="text-[11px] font-bold text-slate-900 dark:text-white">Certification Risk</span>
+                    <span className="text-[11px] font-bold text-primary">Certification Risk</span>
                   </div>
                   <div className="flex items-baseline gap-1.5 mb-2">
                     <span className="text-2xl font-bold text-amber-600 dark:text-amber-400">23</span>
@@ -799,23 +799,23 @@ export default function PersonnelOverview() {
                   </div>
                   <div className="space-y-1.5 text-[10px]">
                     <div className="flex justify-between">
-                      <span className="text-slate-700 dark:text-slate-400">Urgent (&lt;7 days):</span>
+                      <span className="text-secondary">Urgent (&lt;7 days):</span>
                       <span className="text-red-600 dark:text-red-400 font-bold">5</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-slate-700 dark:text-slate-400">Next 30 days:</span>
+                      <span className="text-secondary">Next 30 days:</span>
                       <span className="text-amber-600 dark:text-amber-400 font-bold">12</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-slate-700 dark:text-slate-400">Expired:</span>
+                      <span className="text-secondary">Expired:</span>
                       <span className="text-red-600 dark:text-red-400 font-bold">6</span>
                     </div>
                   </div>
                   <div className="mt-2.5 pt-2 border-t border-red-500/10">
                     <p className="text-[9px] font-bold text-red-600 dark:text-red-400 uppercase tracking-wider mb-1">Operational Impact</p>
-                    <p className="text-[10px] text-slate-700 dark:text-slate-300">6 Patrol Deputies affected</p>
-                    <p className="text-[10px] text-slate-700 dark:text-slate-300">Coverage drops to <span className="text-red-600 dark:text-red-400 font-bold">69%</span></p>
-                    <p className="text-[10px] text-slate-700 dark:text-slate-300">Training required within <span className="text-amber-600 dark:text-amber-400 font-bold">21 days</span></p>
+                    <p className="text-[10px] text-secondary">6 Patrol Deputies affected</p>
+                    <p className="text-[10px] text-secondary">Coverage drops to <span className="text-red-600 dark:text-red-400 font-bold">69%</span></p>
+                    <p className="text-[10px] text-secondary">Training required within <span className="text-amber-600 dark:text-amber-400 font-bold">21 days</span></p>
                   </div>
                   <button onClick={() => navigate(createPageUrl('TrainingCertifications'))} className="mt-2.5 w-full px-2.5 py-1.5 bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/20 text-amber-600 dark:text-amber-400 rounded text-[10px] font-semibold transition-colors">
                     Schedule Training
@@ -834,23 +834,23 @@ export default function PersonnelOverview() {
             className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm"
             onClick={() => setQuickPeekOpen(false)}
           />
-          <div className="relative w-full max-w-[480px] bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-700/50 shadow-2xl overflow-y-auto">
-            <div className="sticky top-0 bg-slate-900/95 backdrop-blur-xl border-b border-slate-200 dark:border-slate-700/50 p-6 z-10">
+          <div className="relative w-full max-w-[480px] bg-white dark:bg-slate-900 border-l border-border shadow-2xl overflow-y-auto">
+            <div className="sticky top-0 bg-slate-900/95 backdrop-blur-xl border-b border-border p-6 z-10">
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
-                    <span className="text-slate-900 dark:text-white font-medium">{peekData.photo}</span>
+                    <span className="text-primary font-medium">{peekData.photo}</span>
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-slate-900 dark:text-white">{peekData.name}</h3>
-                    <p className="text-sm text-slate-700 dark:text-slate-400">{peekData.rank}</p>
+                    <h3 className="text-lg font-semibold text-primary">{peekData.name}</h3>
+                    <p className="text-sm text-secondary">{peekData.rank}</p>
                   </div>
                 </div>
                 <button
                   onClick={() => setQuickPeekOpen(false)}
                   className="p-2 hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors"
                 >
-                  <X className="w-5 h-5 text-slate-700 dark:text-slate-400" />
+                  <X className="w-5 h-5 text-secondary" />
                 </button>
               </div>
               <button onClick={() => { setQuickPeekOpen(false); openFullProfile(peekData); }} className="w-full px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-sm font-medium transition-colors">
@@ -870,37 +870,37 @@ export default function PersonnelOverview() {
               {/* Key Info */}
               <div className="grid grid-cols-2 gap-6">
                 <div className="bg-slate-100/80 dark:bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
-                  <p className="text-xs text-slate-700 dark:text-slate-400 mb-1">Badge</p>
-                  <p className="text-sm font-medium text-slate-900 dark:text-white font-mono">{peekData.badge}</p>
+                  <p className="text-xs text-secondary mb-1">Badge</p>
+                  <p className="text-sm font-medium text-primary font-mono">{peekData.badge}</p>
                 </div>
                 <div className="bg-slate-100/80 dark:bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
-                  <p className="text-xs text-slate-700 dark:text-slate-400 mb-1">Division</p>
-                  <p className="text-sm font-medium text-slate-900 dark:text-white">{peekData.division}</p>
+                  <p className="text-xs text-secondary mb-1">Division</p>
+                  <p className="text-sm font-medium text-primary">{peekData.division}</p>
                 </div>
                 <div className="bg-slate-100/80 dark:bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
-                  <p className="text-xs text-slate-700 dark:text-slate-400 mb-1">Shift</p>
-                  <p className="text-sm font-medium text-slate-900 dark:text-white">{peekData.shift}</p>
+                  <p className="text-xs text-secondary mb-1">Shift</p>
+                  <p className="text-sm font-medium text-primary">{peekData.shift}</p>
                 </div>
                 <div className="bg-slate-100/80 dark:bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
-                  <p className="text-xs text-slate-700 dark:text-slate-400 mb-1">Tenure</p>
-                  <p className="text-sm font-medium text-slate-900 dark:text-white">{peekData.tenure}</p>
+                  <p className="text-xs text-secondary mb-1">Tenure</p>
+                  <p className="text-sm font-medium text-primary">{peekData.tenure}</p>
                 </div>
               </div>
 
               {/* Contact */}
               <div>
-                <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Contact</h4>
+                <h4 className="text-sm font-semibold text-primary mb-3">Contact</h4>
                 <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
-                    <Mail className="w-4 h-4 text-slate-700 dark:text-slate-400" />
+                  <div className="flex items-center gap-2 text-sm text-secondary">
+                    <Mail className="w-4 h-4 text-secondary" />
                     <span>{peekData.email}</span>
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
-                    <Phone className="w-4 h-4 text-slate-700 dark:text-slate-400" />
+                  <div className="flex items-center gap-2 text-sm text-secondary">
+                    <Phone className="w-4 h-4 text-secondary" />
                     <span>{peekData.phone}</span>
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
-                    <Users className="w-4 h-4 text-slate-700 dark:text-slate-400" />
+                  <div className="flex items-center gap-2 text-sm text-secondary">
+                    <Users className="w-4 h-4 text-secondary" />
                     <span>Reports to: {peekData.supervisor}</span>
                   </div>
                 </div>
@@ -908,7 +908,7 @@ export default function PersonnelOverview() {
 
               {/* Certifications */}
               <div>
-                <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Certifications</h4>
+                <h4 className="text-sm font-semibold text-primary mb-3">Certifications</h4>
                 <div className="space-y-2">
                   {peekData.certifications.map((cert, idx) => (
                     <div key={idx} className="flex items-center justify-between p-3 bg-slate-100/80 dark:bg-slate-800/30 rounded-lg border border-slate-700/50">
@@ -921,8 +921,8 @@ export default function PersonnelOverview() {
                           <AlertCircle className="w-4 h-4 text-red-600 dark:text-red-400" />
                         )}
                         <div>
-                          <p className="text-sm text-slate-900 dark:text-white">{cert.name}</p>
-                          <p className="text-xs text-slate-700 dark:text-slate-400">Expires: {cert.expires}</p>
+                          <p className="text-sm text-primary">{cert.name}</p>
+                          <p className="text-xs text-secondary">Expires: {cert.expires}</p>
                         </div>
                       </div>
                     </div>
@@ -931,12 +931,12 @@ export default function PersonnelOverview() {
               </div>
 
               {/* Quick Actions */}
-              <div className="pt-4 border-t border-slate-200 dark:border-slate-700/50 space-y-3">
-                <button className="w-full flex items-center gap-3 px-4 py-3 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 hover:border-slate-600/50 rounded-xl text-slate-900 dark:text-white transition-all">
-                  <Mail className="w-5 h-5 text-slate-700 dark:text-slate-400" />
+              <div className="pt-4 border-t border-border space-y-3">
+                <button className="w-full flex items-center gap-3 px-4 py-3 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 hover:border-slate-600/50 rounded-xl text-primary transition-all">
+                  <Mail className="w-5 h-5 text-secondary" />
                   <span className="text-sm font-medium">Send Message</span>
                 </button>
-                <button className="w-full flex items-center gap-3 px-4 py-3 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 hover:border-slate-600/50 rounded-xl text-slate-900 dark:text-white transition-all">
+                <button className="w-full flex items-center gap-3 px-4 py-3 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 hover:border-slate-600/50 rounded-xl text-primary transition-all">
                   <Calendar className="w-5 h-5 text-amber-600 dark:text-amber-400" />
                   <span className="text-sm font-medium">View Schedule</span>
                 </button>
@@ -956,17 +956,17 @@ export default function PersonnelOverview() {
             className="absolute inset-0 bg-slate-950/90 backdrop-blur-sm"
             onClick={() => setFullProfileOpen(false)}
           />
-          <div className="relative w-full max-w-5xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto">
+          <div className="relative w-full max-w-5xl bg-white dark:bg-slate-900 border border-border rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto">
             {/* Header */}
-            <div className="sticky top-0 bg-slate-900/95 backdrop-blur-xl border-b border-slate-200 dark:border-slate-700/50 p-6 z-10">
+            <div className="sticky top-0 bg-slate-900/95 backdrop-blur-xl border-b border-border p-6 z-10">
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-4">
                   <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
-                    <span className="text-slate-900 dark:text-white text-xl font-bold">{fullProfileData.photo}</span>
+                    <span className="text-primary text-xl font-bold">{fullProfileData.photo}</span>
                   </div>
                   <div>
-                    <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-1">{fullProfileData.name}</h2>
-                    <div className="flex items-center gap-3 text-sm text-slate-700 dark:text-slate-400">
+                    <h2 className="text-2xl font-bold text-primary mb-1">{fullProfileData.name}</h2>
+                    <div className="flex items-center gap-3 text-sm text-secondary">
                       <span>{fullProfileData.rank}</span>
                       <span>•</span>
                       <span className="font-mono">{fullProfileData.badge}</span>
@@ -979,7 +979,7 @@ export default function PersonnelOverview() {
                   onClick={() => setFullProfileOpen(false)}
                   className="p-2 hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors"
                 >
-                  <X className="w-6 h-6 text-slate-700 dark:text-slate-400" />
+                  <X className="w-6 h-6 text-secondary" />
                 </button>
               </div>
             </div>
@@ -990,81 +990,81 @@ export default function PersonnelOverview() {
                 {/* Left Column - Main Info */}
                 <div className="lg:col-span-2 space-y-6">
                   {/* Status & Quick Info */}
-                  <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
-                    <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4">Status & Information</h3>
+                  <div className="bg-surface border border-border rounded-xl shadow-sm dark:shadow-none p-5">
+                    <h3 className="text-lg font-bold text-primary mb-4">Status & Information</h3>
                     <div className="grid grid-cols-2 gap-6">
                       <div>
-                        <p className="text-xs text-slate-700 dark:text-slate-400 mb-1">Current Status</p>
+                        <p className="text-xs text-secondary mb-1">Current Status</p>
                         <div className={`inline-flex items-center gap-2 px-3 py-1.5 border rounded-lg text-sm font-medium ${getStatusColor(fullProfileData.status)}`}>
                           <div className="w-2 h-2 rounded-full bg-current"></div>
                           <span className="capitalize">{fullProfileData.status.replace('-', ' ')}</span>
                         </div>
                       </div>
                       <div>
-                        <p className="text-xs text-slate-700 dark:text-slate-400 mb-1">Tenure</p>
-                        <p className="text-sm font-medium text-slate-900 dark:text-white">{fullProfileData.tenure}</p>
+                        <p className="text-xs text-secondary mb-1">Tenure</p>
+                        <p className="text-sm font-medium text-primary">{fullProfileData.tenure}</p>
                       </div>
                       <div>
-                        <p className="text-xs text-slate-700 dark:text-slate-400 mb-1">Shift Assignment</p>
-                        <p className="text-sm font-medium text-slate-900 dark:text-white">{fullProfileData.shift}</p>
+                        <p className="text-xs text-secondary mb-1">Shift Assignment</p>
+                        <p className="text-sm font-medium text-primary">{fullProfileData.shift}</p>
                       </div>
                       <div>
-                        <p className="text-xs text-slate-700 dark:text-slate-400 mb-1">Supervisor</p>
-                        <p className="text-sm font-medium text-slate-900 dark:text-white">{fullProfileData.supervisor}</p>
+                        <p className="text-xs text-secondary mb-1">Supervisor</p>
+                        <p className="text-sm font-medium text-primary">{fullProfileData.supervisor}</p>
                       </div>
                       <div>
-                        <p className="text-xs text-slate-700 dark:text-slate-400 mb-1">Last Check-in</p>
-                        <p className="text-sm font-medium text-slate-900 dark:text-white">{fullProfileData.lastCheckIn}</p>
+                        <p className="text-xs text-secondary mb-1">Last Check-in</p>
+                        <p className="text-sm font-medium text-primary">{fullProfileData.lastCheckIn}</p>
                       </div>
                       <div>
-                        <p className="text-xs text-slate-700 dark:text-slate-400 mb-1">Performance Rating</p>
+                        <p className="text-xs text-secondary mb-1">Performance Rating</p>
                         <div className="flex items-center gap-2">
                           <Star className={`w-5 h-5 ${fullProfileData.performance >= 4.5 ? 'text-amber-600 dark:text-amber-400' : fullProfileData.performance >= 4.0 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500'}`} />
                           <span className={`text-lg font-bold ${fullProfileData.performance >= 4.5 ? 'text-amber-600 dark:text-amber-400' : fullProfileData.performance >= 4.0 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500'}`}>
                             {fullProfileData.performance.toFixed(1)}
                           </span>
-                          <span className="text-xs text-slate-700 dark:text-slate-400">/5.0</span>
+                          <span className="text-xs text-secondary">/5.0</span>
                         </div>
                       </div>
                     </div>
                   </div>
 
                   {/* Activity Stats */}
-                  <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
-                    <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
-                      <Activity className="w-5 h-5 text-slate-700 dark:text-slate-400" />
+                  <div className="bg-surface border border-border rounded-xl shadow-sm dark:shadow-none p-5">
+                    <h3 className="text-lg font-bold text-primary mb-4 flex items-center gap-2">
+                      <Activity className="w-5 h-5 text-secondary" />
                       Activity Statistics (Last 30 Days)
                     </h3>
                     <div className="grid grid-cols-3 gap-4">
                       <div className="text-center p-4 bg-white dark:bg-slate-900/50 rounded-lg">
-                        <p className="text-2xl font-bold text-slate-900 dark:text-white">142</p>
-                        <p className="text-xs text-slate-700 dark:text-slate-400 mt-1">Calls for Service</p>
+                        <p className="text-2xl font-bold text-primary">142</p>
+                        <p className="text-xs text-secondary mt-1">Calls for Service</p>
                       </div>
                       <div className="text-center p-4 bg-white dark:bg-slate-900/50 rounded-lg">
-                        <p className="text-2xl font-bold text-slate-900 dark:text-white">28</p>
-                        <p className="text-xs text-slate-700 dark:text-slate-400 mt-1">Reports Written</p>
+                        <p className="text-2xl font-bold text-primary">28</p>
+                        <p className="text-xs text-secondary mt-1">Reports Written</p>
                       </div>
                       <div className="text-center p-4 bg-white dark:bg-slate-900/50 rounded-lg">
                         <p className="text-2xl font-bold text-amber-600 dark:text-amber-400">12</p>
-                        <p className="text-xs text-slate-700 dark:text-slate-400 mt-1">Arrests Made</p>
+                        <p className="text-xs text-secondary mt-1">Arrests Made</p>
                       </div>
                     </div>
                     <div className="grid grid-cols-2 gap-6 mt-4">
                       <div className="text-center p-4 bg-white dark:bg-slate-900/50 rounded-lg">
-                        <p className="text-xl font-bold text-slate-900 dark:text-white">8.5 hrs</p>
-                        <p className="text-xs text-slate-700 dark:text-slate-400 mt-1">Avg Response Time</p>
+                        <p className="text-xl font-bold text-primary">8.5 hrs</p>
+                        <p className="text-xs text-secondary mt-1">Avg Response Time</p>
                       </div>
                       <div className="text-center p-4 bg-white dark:bg-slate-900/50 rounded-lg">
                         <p className="text-xl font-bold text-indigo-400">97%</p>
-                        <p className="text-xs text-slate-700 dark:text-slate-400 mt-1">Case Closure Rate</p>
+                        <p className="text-xs text-secondary mt-1">Case Closure Rate</p>
                       </div>
                     </div>
                   </div>
 
                   {/* Certifications & Training */}
-                  <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
-                    <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
-                      <Award className="w-5 h-5 text-slate-700 dark:text-slate-400" />
+                  <div className="bg-surface border border-border rounded-xl shadow-sm dark:shadow-none p-5">
+                    <h3 className="text-lg font-bold text-primary mb-4 flex items-center gap-2">
+                      <Award className="w-5 h-5 text-secondary" />
                       Certifications & Training History
                     </h3>
                     <div className="space-y-3">
@@ -1084,8 +1084,8 @@ export default function PersonnelOverview() {
                                 <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400 mt-0.5" />
                               )}
                               <div>
-                                <p className="text-sm font-semibold text-slate-900 dark:text-white">{cert.name}</p>
-                                <p className="text-xs text-slate-700 dark:text-slate-400 mt-1">Expires: {cert.expires}</p>
+                                <p className="text-sm font-semibold text-primary">{cert.name}</p>
+                                <p className="text-xs text-secondary mt-1">Expires: {cert.expires}</p>
                                 <p className="text-xs text-slate-500 mt-1">Last renewed: {new Date(cert.expires).getFullYear() - 2}-{new Date(cert.expires).getMonth() + 1}-{new Date(cert.expires).getDate()}</p>
                               </div>
                             </div>
@@ -1105,32 +1105,32 @@ export default function PersonnelOverview() {
                   </div>
 
                   {/* Performance Reviews */}
-                  <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
-                    <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
-                      <Star className="w-5 h-5 text-slate-700 dark:text-slate-400" />
+                  <div className="bg-surface border border-border rounded-xl shadow-sm dark:shadow-none p-5">
+                    <h3 className="text-lg font-bold text-primary mb-4 flex items-center gap-2">
+                      <Star className="w-5 h-5 text-secondary" />
                       Performance Reviews
                     </h3>
                     <div className="space-y-3">
                       <div className="p-4 bg-white dark:bg-slate-900/50 rounded-lg border border-slate-700/50">
                         <div className="flex items-center justify-between mb-2">
-                          <span className="text-sm font-medium text-slate-900 dark:text-white">2024 Annual Review</span>
+                          <span className="text-sm font-medium text-primary">2024 Annual Review</span>
                           <div className="flex items-center gap-2">
                             <Star className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                             <span className="text-sm font-bold text-amber-600 dark:text-amber-400">{fullProfileData.performance.toFixed(1)}/5.0</span>
                           </div>
                         </div>
-                        <p className="text-xs text-slate-700 dark:text-slate-400">Excellent performance in all areas. Demonstrates leadership and initiative.</p>
+                        <p className="text-xs text-secondary">Excellent performance in all areas. Demonstrates leadership and initiative.</p>
                         <p className="text-xs text-slate-500 mt-2">Reviewed by: {fullProfileData.supervisor} • Jan 15, 2024</p>
                       </div>
                       <div className="p-4 bg-white dark:bg-slate-900/50 rounded-lg border border-slate-700/50">
                         <div className="flex items-center justify-between mb-2">
-                          <span className="text-sm font-medium text-slate-900 dark:text-white">2023 Annual Review</span>
+                          <span className="text-sm font-medium text-primary">2023 Annual Review</span>
                           <div className="flex items-center gap-2">
                             <Star className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                             <span className="text-sm font-bold text-amber-600 dark:text-amber-400">{(fullProfileData.performance - 0.2).toFixed(1)}/5.0</span>
                           </div>
                         </div>
-                        <p className="text-xs text-slate-700 dark:text-slate-400">Strong work ethic and dedication to duty. Continues to improve.</p>
+                        <p className="text-xs text-secondary">Strong work ethic and dedication to duty. Continues to improve.</p>
                         <p className="text-xs text-slate-500 mt-2">Reviewed by: {fullProfileData.supervisor} • Jan 12, 2023</p>
                       </div>
                     </div>
@@ -1140,19 +1140,19 @@ export default function PersonnelOverview() {
                 {/* Right Column - Contact & Equipment */}
                 <div className="space-y-6">
                   {/* Contact Information */}
-                  <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
-                    <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4">Contact</h3>
+                  <div className="bg-surface border border-border rounded-xl shadow-sm dark:shadow-none p-5">
+                    <h3 className="text-lg font-bold text-primary mb-4">Contact</h3>
                     <div className="space-y-3">
                       <div>
-                        <p className="text-xs text-slate-700 dark:text-slate-400 mb-1">Email</p>
-                        <a href={`mailto:${fullProfileData.email}`} className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white transition-colors">
+                        <p className="text-xs text-secondary mb-1">Email</p>
+                        <a href={`mailto:${fullProfileData.email}`} className="flex items-center gap-2 text-sm text-secondary hover:text-primary transition-colors">
                           <Mail className="w-4 h-4" />
                           <span>{fullProfileData.email}</span>
                         </a>
                       </div>
                       <div>
-                        <p className="text-xs text-slate-700 dark:text-slate-400 mb-1">Phone</p>
-                        <a href={`tel:${fullProfileData.phone}`} className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white transition-colors">
+                        <p className="text-xs text-secondary mb-1">Phone</p>
+                        <a href={`tel:${fullProfileData.phone}`} className="flex items-center gap-2 text-sm text-secondary hover:text-primary transition-colors">
                           <Phone className="w-4 h-4" />
                           <span>{fullProfileData.phone}</span>
                         </a>
@@ -1161,38 +1161,38 @@ export default function PersonnelOverview() {
                   </div>
 
                   {/* Equipment Assignments */}
-                  <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
-                    <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
-                      <Shield className="w-5 h-5 text-slate-700 dark:text-slate-400" />
+                  <div className="bg-surface border border-border rounded-xl shadow-sm dark:shadow-none p-5">
+                    <h3 className="text-lg font-bold text-primary mb-4 flex items-center gap-2">
+                      <Shield className="w-5 h-5 text-secondary" />
                       Equipment
                     </h3>
                     <div className="space-y-3">
                       <div className="p-3 bg-white dark:bg-slate-900/50 rounded-lg">
-                        <p className="text-xs text-slate-700 dark:text-slate-400">Vehicle</p>
-                        <p className="text-sm font-medium text-slate-900 dark:text-white">Unit #{fullProfileData.badge.split('-')[1]}</p>
+                        <p className="text-xs text-secondary">Vehicle</p>
+                        <p className="text-sm font-medium text-primary">Unit #{fullProfileData.badge.split('-')[1]}</p>
                         <p className="text-xs text-slate-500 mt-1">2023 Ford Police Interceptor</p>
                       </div>
                       <div className="p-3 bg-white dark:bg-slate-900/50 rounded-lg">
-                        <p className="text-xs text-slate-700 dark:text-slate-400">Radio</p>
-                        <p className="text-sm font-medium text-slate-900 dark:text-white">Motorola APX 8000</p>
+                        <p className="text-xs text-secondary">Radio</p>
+                        <p className="text-sm font-medium text-primary">Motorola APX 8000</p>
                         <p className="text-xs text-slate-500 mt-1">ID: R-{fullProfileData.id.split('-')[2]}</p>
                       </div>
                       <div className="p-3 bg-white dark:bg-slate-900/50 rounded-lg">
-                        <p className="text-xs text-slate-700 dark:text-slate-400">Body Camera</p>
-                        <p className="text-sm font-medium text-slate-900 dark:text-white">Axon Body 3</p>
+                        <p className="text-xs text-secondary">Body Camera</p>
+                        <p className="text-sm font-medium text-primary">Axon Body 3</p>
                         <p className="text-xs text-slate-500 mt-1">ID: BC-{fullProfileData.badge.split('-')[1]}</p>
                       </div>
                       <div className="p-3 bg-white dark:bg-slate-900/50 rounded-lg">
-                        <p className="text-xs text-slate-700 dark:text-slate-400">Firearm</p>
-                        <p className="text-sm font-medium text-slate-900 dark:text-white">Glock 17 Gen5</p>
+                        <p className="text-xs text-secondary">Firearm</p>
+                        <p className="text-sm font-medium text-primary">Glock 17 Gen5</p>
                         <p className="text-xs text-slate-500 mt-1">Serial: G{fullProfileData.id.split('-')[2]}</p>
                       </div>
                     </div>
                   </div>
 
                   {/* Action Buttons */}
-                  <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
-                    <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4">Actions</h3>
+                  <div className="bg-surface border border-border rounded-xl shadow-sm dark:shadow-none p-5">
+                    <h3 className="text-lg font-bold text-primary mb-4">Actions</h3>
                     <div className="space-y-2">
                       <button className="w-full flex items-center gap-3 px-4 py-2.5 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-sm font-medium transition-colors">
                         <UserCircle className="w-4 h-4" />

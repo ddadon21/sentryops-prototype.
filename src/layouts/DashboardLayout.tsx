@@ -159,11 +159,11 @@ export default function DashboardLayout({
       {/* ── Sidebar ──────────────────────────────────────── */}
       <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-slate-200/70 dark:border-slate-800/30 backdrop-blur-xl bg-white/95 dark:bg-slate-900/60 shadow-[2px_0_20px_rgba(0,0,0,0.04)] dark:shadow-none flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
         {/* Logo */}
-        <div className="p-4 border-b border-slate-200 dark:border-slate-700/50 flex items-center justify-between">
+        <div className="p-4 border-b border-border flex items-center justify-between">
           {!sidebarCollapsed && (
             <div className="flex items-center gap-2">
               <Shield className="w-8 h-8 text-amber-500" />
-              <h1 className="text-xl font-bold text-slate-900 dark:text-white">SentryOps</h1>
+              <h1 className="text-xl font-bold text-primary">SentryOps</h1>
             </div>
           )}
           {sidebarCollapsed && (
@@ -173,7 +173,7 @@ export default function DashboardLayout({
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
             className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors hidden lg:block"
           >
-            {sidebarCollapsed ? <ChevronRight className="w-5 h-5 text-slate-500 dark:text-slate-400" /> : <ChevronLeft className="w-5 h-5 text-slate-500 dark:text-slate-400" />}
+            {sidebarCollapsed ? <ChevronRight className="w-5 h-5 text-muted" /> : <ChevronLeft className="w-5 h-5 text-muted" />}
           </button>
         </div>
 
@@ -189,8 +189,8 @@ export default function DashboardLayout({
                   onClick={() => handleNavigation(item)}
                   className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all ${
                     isActive
-                      ? 'bg-amber-100 dark:bg-slate-700/40 text-slate-900 dark:text-white border-l-4 border-l-amber-500 font-semibold'
-                      : 'text-slate-700 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/30 hover:text-slate-900 dark:hover:text-slate-300'
+                      ? 'bg-amber-100 dark:bg-slate-700/40 text-primary border-l-4 border-l-amber-500 font-semibold'
+                      : 'text-secondary hover:bg-slate-50 dark:hover:bg-slate-800/30 hover:text-slate-900 dark:hover:text-slate-300'
                   } ${sidebarCollapsed ? 'justify-center' : ''}`}
                   title={sidebarCollapsed ? item.label : ''}
                 >
@@ -236,16 +236,16 @@ export default function DashboardLayout({
         </nav>
 
         {/* Footer */}
-        <div className="border-t border-slate-200 dark:border-slate-700/50">
+        <div className="border-t border-border">
           {!sidebarCollapsed && (
             <div className="px-4 py-3">
-              <p className="text-xs text-slate-500 dark:text-slate-500 text-center">{orgLabel}</p>
+              <p className="text-xs text-muted text-center">{orgLabel}</p>
             </div>
           )}
           <div className="p-4">
             <button
               onClick={() => setLogoutConfirmOpen(true)}
-              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all text-slate-700 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800/30 hover:text-slate-900 dark:hover:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
+              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all text-secondary hover:bg-slate-200 dark:hover:bg-slate-800/30 hover:text-slate-900 dark:hover:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
               title={sidebarCollapsed ? 'Sign Out' : ''}
             >
               <LogOut className="w-[18px] h-[18px] flex-shrink-0" />
@@ -272,14 +272,14 @@ export default function DashboardLayout({
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={() => setLogoutConfirmOpen(false)}
           />
-          <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-xl p-6 max-w-sm w-full shadow-2xl">
+          <div className="relative bg-white dark:bg-slate-900 border border-border rounded-xl p-6 max-w-sm w-full shadow-2xl">
             <div className="flex items-center gap-4 mb-4">
               <div className="w-12 h-12 bg-slate-100 dark:bg-slate-800/60 rounded-xl flex items-center justify-center">
-                <LogOut className="w-6 h-6 text-slate-500 dark:text-slate-400" />
+                <LogOut className="w-6 h-6 text-muted" />
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Sign Out</h3>
-                <p className="text-sm text-slate-500 dark:text-slate-400">Are you sure you want to sign out?</p>
+                <h3 className="text-lg font-semibold text-primary">Sign Out</h3>
+                <p className="text-sm text-muted">Are you sure you want to sign out?</p>
               </div>
             </div>
             <div className="flex gap-3 mt-6">
@@ -311,14 +311,14 @@ export default function DashboardLayout({
                 onClick={() => setSidebarOpen(!sidebarOpen)}
                 className="lg:hidden p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg"
               >
-                <Menu className="w-5 h-5 text-slate-500 dark:text-slate-400" />
+                <Menu className="w-5 h-5 text-muted" />
               </button>
               <div className="flex-1 max-w-xl relative hidden sm:block">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 dark:text-slate-500" />
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted" />
                 <input
                   type="text"
                   placeholder="Search..."
-                  className="w-full pl-11 pr-4 py-2 bg-white/80 dark:bg-slate-800/40 backdrop-blur-sm border border-slate-200/80 dark:border-slate-700/40 rounded-xl text-[13px] text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-300 dark:focus:border-slate-600 shadow-sm dark:shadow-none"
+                  className="w-full pl-11 pr-4 py-2 bg-white/80 dark:bg-slate-800/40 backdrop-blur-sm border border-slate-200/80 dark:border-slate-700/40 rounded-xl text-[13px] text-primary placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-300 dark:focus:border-slate-600 shadow-sm dark:shadow-none"
                 />
               </div>
             </div>
@@ -326,7 +326,7 @@ export default function DashboardLayout({
             {/* Right: sync, notifications, profile */}
             <div className="flex items-center gap-2 lg:gap-3">
               {/* Sync indicator */}
-              <div className="hidden lg:flex items-center gap-1.5 text-[11px] text-slate-500 dark:text-slate-500">
+              <div className="hidden lg:flex items-center gap-1.5 text-[11px] text-muted">
                 <Circle className="w-1.5 h-1.5 fill-emerald-500 text-emerald-500" />
                 <span>Sync Healthy</span>
                 <span className="text-slate-500 dark:text-slate-600">· 2m ago</span>
@@ -339,18 +339,18 @@ export default function DashboardLayout({
                   onClick={() => setNotificationsOpen(!notificationsOpen)}
                   className="notifications-trigger p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg relative"
                 >
-                  <Bell className="w-5 h-5 text-slate-500 dark:text-slate-400" />
+                  <Bell className="w-5 h-5 text-muted" />
                   {notifications.some(n => !n.read) && (
                     <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                   )}
                 </button>
 
                 {notificationsOpen && (
-                  <div className="notifications-dropdown absolute right-0 top-full mt-2 w-80 bg-white dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-2xl z-50">
-                    <div className="p-4 border-b border-slate-200 dark:border-slate-700/50">
+                  <div className="notifications-dropdown absolute right-0 top-full mt-2 w-80 bg-surface-raised backdrop-blur-xl border border-border rounded-xl shadow-2xl z-50">
+                    <div className="p-4 border-b border-border">
                       <div className="flex items-center justify-between">
-                        <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white">Notifications</h3>
-                        <span className="text-xs text-slate-500 dark:text-slate-500">{notifications.filter(n => !n.read).length} unread</span>
+                        <h3 className="text-[13px] font-semibold text-primary">Notifications</h3>
+                        <span className="text-xs text-muted">{notifications.filter(n => !n.read).length} unread</span>
                       </div>
                     </div>
                     <div className="max-h-96 overflow-y-auto">
@@ -364,16 +364,16 @@ export default function DashboardLayout({
                               notification.read ? 'bg-slate-300 dark:bg-slate-600' : 'bg-slate-500 dark:bg-slate-400'
                             }`}></div>
                             <div className="flex-1 min-w-0">
-                              <p className="text-[13px] font-medium text-slate-900 dark:text-white mb-1">{notification.title}</p>
-                              <p className="text-xs text-slate-500 dark:text-slate-400 mb-2">{notification.message}</p>
-                              <p className="text-xs text-slate-500 dark:text-slate-500">{notification.time}</p>
+                              <p className="text-[13px] font-medium text-primary mb-1">{notification.title}</p>
+                              <p className="text-xs text-muted mb-2">{notification.message}</p>
+                              <p className="text-xs text-muted">{notification.time}</p>
                             </div>
                           </div>
                         </div>
                       ))}
                     </div>
-                    <div className="p-3 border-t border-slate-200 dark:border-slate-700/50">
-                      <button className="w-full text-center text-[13px] text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 font-medium">
+                    <div className="p-3 border-t border-border">
+                      <button className="w-full text-center text-[13px] text-muted hover:text-slate-700 dark:hover:text-slate-300 font-medium">
                         View All Notifications
                       </button>
                     </div>
@@ -393,22 +393,22 @@ export default function DashboardLayout({
                     <span className="text-white text-[13px] font-bold">{profile.initials}</span>
                   </div>
                   <div className="hidden sm:block text-left">
-                    <p className="text-[13px] font-medium text-slate-900 dark:text-white">{profile.name}</p>
-                    <p className="text-[11px] text-slate-500 dark:text-slate-500">{profile.role}</p>
+                    <p className="text-[13px] font-medium text-primary">{profile.name}</p>
+                    <p className="text-[11px] text-muted">{profile.role}</p>
                   </div>
-                  <ChevronDown className={`w-4 h-4 text-slate-500 dark:text-slate-400 hidden sm:block transition-transform ${profileMenuOpen ? 'rotate-180' : ''}`} />
+                  <ChevronDown className={`w-4 h-4 text-muted hidden sm:block transition-transform ${profileMenuOpen ? 'rotate-180' : ''}`} />
                 </button>
 
                 {profileMenuOpen && (
-                  <div className="profile-dropdown absolute right-0 top-full mt-2 w-56 bg-white dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-2xl z-50 py-2">
+                  <div className="profile-dropdown absolute right-0 top-full mt-2 w-56 bg-surface-raised backdrop-blur-xl border border-border rounded-xl shadow-2xl z-50 py-2">
                     <div className="px-4 py-3 border-b border-slate-100 dark:border-slate-700/50">
-                      <p className="text-[13px] font-medium text-slate-900 dark:text-white">{profile.name}</p>
-                      <p className="text-xs text-slate-500 dark:text-slate-500">{profile.email}</p>
+                      <p className="text-[13px] font-medium text-primary">{profile.name}</p>
+                      <p className="text-xs text-muted">{profile.email}</p>
                     </div>
                     <div className="py-1">
                       <button
                         onClick={() => { setProfileMenuOpen(false); navigate('/command/profile'); }}
-                        className="w-full flex items-center gap-3 px-4 py-2 text-[13px] text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
+                        className="w-full flex items-center gap-3 px-4 py-2 text-[13px] text-secondary hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
                       >
                         <User className="w-4 h-4" />
                         View Profile
@@ -418,7 +418,7 @@ export default function DashboardLayout({
                           setProfileMenuOpen(false);
                           navigate(settingsRoute);
                         }}
-                        className="w-full flex items-center gap-3 px-4 py-2 text-[13px] text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
+                        className="w-full flex items-center gap-3 px-4 py-2 text-[13px] text-secondary hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
                       >
                         <Settings className="w-4 h-4" />
                         Settings
@@ -430,7 +430,7 @@ export default function DashboardLayout({
                           setProfileMenuOpen(false);
                           setLogoutConfirmOpen(true);
                         }}
-                        className="w-full flex items-center gap-3 px-4 py-2 text-[13px] text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
+                        className="w-full flex items-center gap-3 px-4 py-2 text-[13px] text-muted hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
                       >
                         <LogOut className="w-4 h-4" />
                         Sign Out

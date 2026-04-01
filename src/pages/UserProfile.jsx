@@ -44,10 +44,10 @@ export default function UserProfile() {
         <div className="max-w-4xl mx-auto">
 
           {/* Page Header */}
-          <div className="mb-8 pb-6 border-b border-slate-200 dark:border-slate-700/40 flex items-center justify-between">
+          <div className="mb-8 pb-6 border-b border-border flex items-center justify-between">
             <div>
-              <p className="text-3xl font-bold text-slate-900 dark:text-white mb-0.5">My Profile</p>
-              <p className="text-base text-slate-500 dark:text-slate-400">Manage your account information and preferences</p>
+              <p className="text-3xl font-bold text-primary mb-0.5">My Profile</p>
+              <p className="text-base text-muted">Manage your account information and preferences</p>
             </div>
             {saved && (
               <div className="flex items-center gap-2 px-3 py-1.5 bg-emerald-100 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 rounded-lg">
@@ -62,7 +62,7 @@ export default function UserProfile() {
             {/* Left — Avatar + identity */}
             <div className="lg:col-span-1 space-y-6">
               {/* Avatar card */}
-              <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-6 flex flex-col items-center text-center">
+              <div className="bg-surface border border-border rounded-xl shadow-sm dark:shadow-none p-6 flex flex-col items-center text-center">
                 <div className="relative mb-4">
                   <div className="w-24 h-24 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-md">
                     <span className="text-3xl font-bold text-white">ST</span>
@@ -71,7 +71,7 @@ export default function UserProfile() {
                     <Camera className="w-4 h-4 text-white" />
                   </button>
                 </div>
-                <p className="text-lg font-bold text-slate-900 dark:text-white">{form.name}</p>
+                <p className="text-lg font-bold text-primary">{form.name}</p>
                 <p className="text-sm text-slate-600 dark:text-slate-400 mb-1">{form.title}</p>
                 <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-amber-100 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 text-amber-700 dark:text-amber-400 rounded-full text-xs font-semibold">
                   <Shield className="w-3 h-3" />
@@ -79,15 +79,15 @@ export default function UserProfile() {
                 </span>
 
                 <div className="mt-5 pt-5 border-t border-slate-100 dark:border-slate-700/40 w-full space-y-2 text-left">
-                  <div className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300">
+                  <div className="flex items-center gap-2.5 text-sm text-secondary">
                     <Award className="w-4 h-4 text-slate-500 flex-shrink-0" />
                     <span>Badge #{form.badgeNumber}</span>
                   </div>
-                  <div className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300">
+                  <div className="flex items-center gap-2.5 text-sm text-secondary">
                     <MapPin className="w-4 h-4 text-slate-500 flex-shrink-0" />
                     <span className="truncate">{form.location}</span>
                   </div>
-                  <div className="flex items-center gap-2.5 text-sm text-slate-700 dark:text-slate-300">
+                  <div className="flex items-center gap-2.5 text-sm text-secondary">
                     <Calendar className="w-4 h-4 text-slate-500 flex-shrink-0" />
                     <span>Since {form.startDate}</span>
                   </div>
@@ -95,8 +95,8 @@ export default function UserProfile() {
               </div>
 
               {/* Stats card */}
-              <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
-                <h3 className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-4">Activity Stats</h3>
+              <div className="bg-surface border border-border rounded-xl shadow-sm dark:shadow-none p-5">
+                <h3 className="text-xs font-semibold text-muted uppercase tracking-widest mb-4">Activity Stats</h3>
                 <div className="space-y-3">
                   {stats.map((stat, i) => {
                     const Icon = stat.icon;
@@ -104,7 +104,7 @@ export default function UserProfile() {
                       <div key={i} className="flex items-center justify-between">
                         <div className="flex items-center gap-2.5">
                           <Icon className={`w-4 h-4 ${stat.color}`} />
-                          <span className="text-sm text-slate-700 dark:text-slate-300">{stat.label}</span>
+                          <span className="text-sm text-secondary">{stat.label}</span>
                         </div>
                         <span className={`text-sm font-bold ${stat.color}`}>{stat.value}</span>
                       </div>
@@ -117,13 +117,13 @@ export default function UserProfile() {
             {/* Right — Details + Activity */}
             <div className="lg:col-span-2 space-y-6">
               {/* Account information card */}
-              <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none">
+              <div className="bg-surface border border-border rounded-xl shadow-sm dark:shadow-none">
                 <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 dark:border-slate-700/40">
-                  <h2 className="text-sm font-semibold text-slate-900 dark:text-white">Account Information</h2>
+                  <h2 className="text-sm font-semibold text-primary">Account Information</h2>
                   {!editing ? (
                     <button
                       onClick={() => setEditing(true)}
-                      className="flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/60 rounded-lg text-sm font-medium transition-all"
+                      className="flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 text-secondary hover:bg-slate-50 dark:hover:bg-slate-800/60 rounded-lg text-sm font-medium transition-all"
                     >
                       <Edit3 className="w-3.5 h-3.5" />
                       Edit Profile
@@ -132,7 +132,7 @@ export default function UserProfile() {
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => setEditing(false)}
-                        className="flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 text-slate-700 dark:text-slate-300 hover:bg-slate-50 rounded-lg text-sm font-medium transition-all"
+                        className="flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 text-secondary hover:bg-slate-50 rounded-lg text-sm font-medium transition-all"
                       >
                         <X className="w-3.5 h-3.5" />
                         Cancel
@@ -160,18 +160,18 @@ export default function UserProfile() {
                     const Icon = field.icon;
                     return (
                       <div key={field.key}>
-                        <label className="block text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1.5">{field.label}</label>
+                        <label className="block text-xs font-semibold text-muted uppercase tracking-wide mb-1.5">{field.label}</label>
                         {editing ? (
                           <input
                             type="text"
                             value={form[field.key]}
                             onChange={e => setForm(prev => ({ ...prev, [field.key]: e.target.value }))}
-                            className="w-full px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-lg text-sm text-slate-900 dark:text-white focus:outline-none focus:border-blue-400 dark:focus:border-blue-500/50 transition-colors"
+                            className="w-full px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-lg text-sm text-primary focus:outline-none focus:border-blue-400 dark:focus:border-blue-500/50 transition-colors"
                           />
                         ) : (
-                          <div className="flex items-center gap-2.5 px-3 py-2 bg-slate-50 dark:bg-slate-800/20 border border-slate-200 dark:border-slate-700/30 rounded-lg">
+                          <div className="flex items-center gap-2.5 px-3 py-2 bg-slate-50 dark:bg-slate-800/20 border border-border rounded-lg">
                             <Icon className="w-4 h-4 text-slate-500 flex-shrink-0" />
-                            <span className="text-sm text-slate-900 dark:text-white">{form[field.key]}</span>
+                            <span className="text-sm text-primary">{form[field.key]}</span>
                           </div>
                         )}
                       </div>
@@ -181,9 +181,9 @@ export default function UserProfile() {
               </div>
 
               {/* Recent Activity card */}
-              <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none">
+              <div className="bg-surface border border-border rounded-xl shadow-sm dark:shadow-none">
                 <div className="px-6 py-4 border-b border-slate-100 dark:border-slate-700/40">
-                  <h2 className="text-sm font-semibold text-slate-900 dark:text-white">Recent Activity</h2>
+                  <h2 className="text-sm font-semibold text-primary">Recent Activity</h2>
                 </div>
                 <div className="divide-y divide-slate-100 dark:divide-slate-700/30">
                   {activityLog.map((entry, i) => (
@@ -193,8 +193,8 @@ export default function UserProfile() {
                         entry.type === 'review' ? 'bg-blue-500' : 'bg-amber-500'
                       }`} />
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm text-slate-900 dark:text-white">{entry.action}</p>
-                        <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{entry.time}</p>
+                        <p className="text-sm text-primary">{entry.action}</p>
+                        <p className="text-xs text-muted mt-0.5">{entry.time}</p>
                       </div>
                     </div>
                   ))}

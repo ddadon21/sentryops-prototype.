@@ -321,7 +321,7 @@ export default function CommandAlerts() {
 
         {/* ── Page Header ────────────────────────────────── */}
         <div className="mb-6">
-          <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-1">Command Alerts</h2>
+          <h2 className="text-xl font-bold text-primary mb-1">Command Alerts</h2>
           <div className="flex items-center gap-2 text-[11px] text-slate-500">
             <span>{formatDate(currentTime)}</span>
             <span className="text-slate-700">·</span>
@@ -339,8 +339,8 @@ export default function CommandAlerts() {
               onClick={() => setFilterSeverity(opt.id)}
               className={`px-2.5 py-1 rounded text-[11px] font-medium border transition-all ${
                 filterSeverity === opt.id
-                  ? 'bg-slate-200 dark:bg-slate-700/50 border-slate-300 dark:border-slate-600/50 text-slate-900 dark:text-white'
-                  : 'bg-transparent border-slate-300 dark:border-slate-700/40 text-slate-500 hover:text-slate-700 dark:text-slate-300 hover:border-slate-400 dark:hover:border-slate-600/30'
+                  ? 'bg-slate-200 dark:bg-slate-700/50 border-slate-300 dark:border-slate-600/50 text-primary'
+                  : 'bg-transparent border-slate-300 dark:border-slate-700/40 text-slate-500 hover:text-secondary hover:border-slate-400 dark:hover:border-slate-600/30'
               }`}
             >
               {opt.label}
@@ -368,10 +368,10 @@ export default function CommandAlerts() {
                 key={alert.id}
                 className={`rounded border transition-colors ${
                   isResolved
-                    ? 'border-slate-200 dark:border-slate-800/10 bg-slate-50 dark:bg-slate-800/[0.06] opacity-[0.30]'
+                    ? 'border-border bg-slate-50 dark:bg-slate-800/[0.06] opacity-[0.30]'
                     : isAcknowledged
-                    ? 'border-slate-200 dark:border-slate-200 dark:border-slate-700/30 bg-white dark:bg-slate-800/15 opacity-70'
-                    : 'border-slate-200 dark:border-slate-200 dark:border-slate-700/30 bg-white dark:bg-slate-800/15 hover:bg-slate-50 dark:hover:bg-slate-100 dark:hover:bg-slate-800/30'
+                    ? 'border-border dark:border-slate-700/30 bg-white dark:bg-slate-800/15 opacity-70'
+                    : 'border-border dark:border-slate-700/30 bg-white dark:bg-slate-800/15 hover:bg-slate-50 dark:hover:bg-slate-100 dark:hover:bg-slate-800/30'
                 }`}
               >
                 {/* ── Compact Row ──────────────────────── */}
@@ -385,12 +385,12 @@ export default function CommandAlerts() {
                   </span>
 
                   {/* Title */}
-                  <span className={`text-[13px] font-bold flex-1 min-w-0 truncate ${isResolved ? 'text-slate-500' : 'text-slate-900 dark:text-white'}`}>
+                  <span className={`text-[13px] font-bold flex-1 min-w-0 truncate ${isResolved ? 'text-slate-500' : 'text-primary'}`}>
                     {alert.title}
                   </span>
 
                   {/* Impact — max ~12 words */}
-                  <span className="hidden xl:block text-[10px] text-slate-700 dark:text-slate-400 max-w-[240px] truncate flex-shrink-0">
+                  <span className="hidden xl:block text-[10px] text-secondary max-w-[240px] truncate flex-shrink-0">
                     {alert.impact}
                   </span>
 
@@ -430,14 +430,14 @@ export default function CommandAlerts() {
                     {!isResolved && !isAcknowledged && (
                       <button
                         onClick={(e) => { e.stopPropagation(); acknowledgeAlert(alert.id); }}
-                        className="px-2 py-0.5 text-[10px] font-medium text-slate-500 hover:text-white border border-slate-200 dark:border-slate-700/30 hover:border-slate-600/30 rounded transition-colors"
+                        className="px-2 py-0.5 text-[10px] font-medium text-slate-500 hover:text-white border border-border hover:border-slate-600/30 rounded transition-colors"
                       >
                         Ack
                       </button>
                     )}
                     <button
                       onClick={() => toggleExpanded(alert.id)}
-                      className="p-0.5 text-slate-500 hover:text-slate-700 dark:text-slate-300 transition-colors"
+                      className="p-0.5 text-slate-500 hover:text-secondary transition-colors"
                     >
                       {isExpanded
                         ? <ChevronUp className="w-3 h-3" />
@@ -449,17 +449,17 @@ export default function CommandAlerts() {
 
                 {/* Mobile: impact line */}
                 <div className="xl:hidden px-3.5 pb-1.5 -mt-0.5 pl-[26px]">
-                  <span className="text-[10px] text-slate-700 dark:text-slate-400">{alert.impact}</span>
+                  <span className="text-[10px] text-secondary">{alert.impact}</span>
                 </div>
 
                 {/* ── Expanded Detail ───────────────────── */}
                 {isExpanded && (
-                  <div className="px-3 pb-2.5 border-t border-slate-200 dark:border-slate-700/8 pt-2.5 ml-[22px]">
-                    <p className="text-[11px] text-slate-700 dark:text-slate-400 mb-2 leading-relaxed max-w-3xl">{alert.description}</p>
+                  <div className="px-3 pb-2.5 border-t border-border pt-2.5 ml-[22px]">
+                    <p className="text-[11px] text-secondary mb-2 leading-relaxed max-w-3xl">{alert.description}</p>
 
                     {/* Metadata */}
                     <div className="flex items-center gap-3 mb-2 text-[10px] text-slate-500 flex-wrap">
-                      <span>Owner: <span className="text-slate-700 dark:text-slate-300">{alert.owner}</span></span>
+                      <span>Owner: <span className="text-secondary">{alert.owner}</span></span>
                       <span className="text-slate-700">|</span>
                       <span>Detected {alert.detectedTime}</span>
                       <span className="text-slate-700">|</span>
@@ -482,7 +482,7 @@ export default function CommandAlerts() {
                           {alert.recommendations.map((rec, idx) => (
                             <div key={idx} className="flex items-start gap-1.5 text-[10px]">
                               <ChevronRight className="w-2.5 h-2.5 mt-0.5 text-slate-700 flex-shrink-0" />
-                              <span className="text-slate-700 dark:text-slate-400">{rec}</span>
+                              <span className="text-secondary">{rec}</span>
                             </div>
                           ))}
                         </div>
@@ -491,9 +491,9 @@ export default function CommandAlerts() {
 
                     {/* Resolution */}
                     {isResolved && alert.resolution && (
-                      <div className="mb-2 bg-slate-50 dark:bg-slate-700/20 border border-slate-200 dark:border-slate-700/50 rounded px-2.5 py-1.5">
+                      <div className="mb-2 bg-slate-50 dark:bg-slate-700/20 border border-border rounded px-2.5 py-1.5">
                         <span className="text-[9px] font-semibold text-slate-500/70 uppercase tracking-wider">Resolution</span>
-                        <p className="text-[10px] text-slate-700 dark:text-slate-400 mt-0.5">{alert.resolution}</p>
+                        <p className="text-[10px] text-secondary mt-0.5">{alert.resolution}</p>
                         <div className="mt-0.5 text-[9px] text-slate-500">
                           {alert.resolvedBy} · {alert.resolvedAt && new Date(alert.resolvedAt).toLocaleString()}
                         </div>
@@ -505,7 +505,7 @@ export default function CommandAlerts() {
                       <div className="flex items-center gap-3 mb-2 text-[10px]">
                         {Object.entries(alert.relatedData).map(([key, value]) => (
                           <span key={key} className="text-slate-500">
-                            <span className="text-slate-700 dark:text-slate-300 font-medium">{value}</span>{' '}
+                            <span className="text-secondary font-medium">{value}</span>{' '}
                             {key.replace(/([A-Z])/g, ' $1').toLowerCase()}
                           </span>
                         ))}
@@ -514,24 +514,24 @@ export default function CommandAlerts() {
 
                     {/* Expanded actions: Assign + Resolve */}
                     {!isResolved && (
-                      <div className="flex items-center gap-1.5 pt-1.5 border-t border-slate-200 dark:border-slate-700/8">
+                      <div className="flex items-center gap-1.5 pt-1.5 border-t border-border">
                         {!isAcknowledged && (
                           <button
                             onClick={() => acknowledgeAlert(alert.id)}
-                            className="px-2.5 py-1 text-[10px] font-medium text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/30 hover:bg-slate-700/15 rounded transition-colors"
+                            className="px-2.5 py-1 text-[10px] font-medium text-secondary border border-border hover:bg-slate-700/15 rounded transition-colors"
                           >
                             Acknowledge
                           </button>
                         )}
                         <button
                           onClick={() => { setAlertToAction(alert); setAssignModalOpen(true); }}
-                          className="px-2.5 py-1 text-[10px] font-medium text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/30 hover:bg-slate-700/15 rounded transition-colors"
+                          className="px-2.5 py-1 text-[10px] font-medium text-secondary border border-border hover:bg-slate-700/15 rounded transition-colors"
                         >
                           Assign
                         </button>
                         <button
                           onClick={() => { setAlertToAction(alert); setResolveModalOpen(true); }}
-                          className="px-2.5 py-1 text-[10px] font-medium text-slate-700 dark:text-slate-300 border border-slate-600/30 hover:bg-slate-100 dark:hover:bg-slate-700/20 rounded transition-colors"
+                          className="px-2.5 py-1 text-[10px] font-medium text-secondary border border-slate-600/30 hover:bg-slate-100 dark:hover:bg-slate-700/20 rounded transition-colors"
                         >
                           Resolve
                         </button>
@@ -545,7 +545,7 @@ export default function CommandAlerts() {
         </div>
 
         {/* ── Data Confidence Strip ──────────────────────── */}
-        <div className="mt-4 px-4 py-2 bg-slate-50 dark:bg-slate-800/[0.06] border border-slate-200 dark:border-slate-200 dark:border-slate-800/20 rounded">
+        <div className="mt-4 px-4 py-2 bg-slate-50 dark:bg-slate-800/[0.06] border border-border dark:border-slate-800/20 rounded">
           <div className="flex items-center gap-4 flex-wrap">
             <div className="flex items-center gap-1.5">
               <Shield className="w-3 h-3 text-slate-700" />
@@ -572,15 +572,15 @@ export default function CommandAlerts() {
         <>
           <div className="fixed inset-0 bg-black/40 z-40" onClick={() => { setAssignModalOpen(false); setAlertToAction(null); setAssignPersonnel(''); }} />
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5 max-w-sm w-full shadow-2xl">
-              <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-1">Assign Alert</h3>
-              <p className="text-[11px] text-slate-700 dark:text-slate-400 mb-3">{alertToAction.title}</p>
+            <div className="bg-white dark:bg-slate-900 border border-border rounded-xl p-5 max-w-sm w-full shadow-2xl">
+              <h3 className="text-sm font-semibold text-primary mb-1">Assign Alert</h3>
+              <p className="text-[11px] text-secondary mb-3">{alertToAction.title}</p>
               <input
                 type="text"
                 value={assignPersonnel}
                 onChange={(e) => setAssignPersonnel(e.target.value)}
                 placeholder="Personnel name..."
-                className="w-full px-3 py-2 bg-white dark:bg-slate-800/30 border border-slate-300 dark:border-slate-700/40 rounded-lg text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500/50 mb-3"
+                className="w-full px-3 py-2 bg-surface border border-slate-300 dark:border-slate-700/40 rounded-lg text-sm text-primary placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500/50 mb-3"
               />
               <div className="flex gap-2">
                 <button
@@ -606,15 +606,15 @@ export default function CommandAlerts() {
         <>
           <div className="fixed inset-0 bg-black/40 z-40" onClick={() => { setResolveModalOpen(false); setAlertToAction(null); setResolveNotes(''); }} />
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-xl p-5 max-w-sm w-full shadow-2xl">
-              <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-1">Resolve Alert</h3>
-              <p className="text-[11px] text-slate-700 dark:text-slate-400 mb-3">{alertToAction.title}</p>
+            <div className="bg-white dark:bg-slate-900 border border-border rounded-xl p-5 max-w-sm w-full shadow-2xl">
+              <h3 className="text-sm font-semibold text-primary mb-1">Resolve Alert</h3>
+              <p className="text-[11px] text-secondary mb-3">{alertToAction.title}</p>
               <textarea
                 value={resolveNotes}
                 onChange={(e) => setResolveNotes(e.target.value)}
                 placeholder="Resolution notes..."
                 rows={3}
-                className="w-full px-3 py-2 bg-white dark:bg-slate-800/30 border border-slate-300 dark:border-slate-700/40 rounded-lg text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500/50 mb-3 resize-none"
+                className="w-full px-3 py-2 bg-surface border border-slate-300 dark:border-slate-700/40 rounded-lg text-sm text-primary placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500/50 mb-3 resize-none"
               />
               <div className="flex gap-2">
                 <button

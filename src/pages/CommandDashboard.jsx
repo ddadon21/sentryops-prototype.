@@ -235,27 +235,27 @@ export default function CommandDashboard() {
         <div className="max-w-7xl mx-auto">
 
         {/* Page Header */}
-        <div className="mb-8 pb-6 border-b border-slate-200 dark:border-slate-700/40 flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
+        <div className="mb-8 pb-6 border-b border-border flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
           <div>
-            <p className="text-3xl font-bold text-slate-900 dark:text-white mb-0.5">{getGreeting(currentTime, 'Sheriff Thompson')}</p>
-            <p className="text-base text-slate-500 dark:text-slate-400">{formatDate(currentTime)} · {formatTime(currentTime)} EST · Updated 2 minutes ago</p>
+            <p className="text-3xl font-bold text-primary mb-0.5">{getGreeting(currentTime, 'Sheriff Thompson')}</p>
+            <p className="text-base text-muted">{formatDate(currentTime)} · {formatTime(currentTime)} EST · Updated 2 minutes ago</p>
           </div>
           <div className="flex items-center gap-2 flex-shrink-0">
-            <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/40 rounded-lg shadow-sm dark:shadow-none">
+            <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-slate-800/40 border border-border rounded-lg shadow-sm dark:shadow-none">
               <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
-              <span className="text-xs font-medium text-slate-700 dark:text-slate-400">All Systems Operational</span>
+              <span className="text-xs font-medium text-secondary">All Systems Operational</span>
             </div>
           </div>
         </div>
 
         {/* Executive Snapshot Row */}
-        <div className="mb-8 bg-slate-50/80 dark:bg-slate-900/30 border border-slate-200/70 dark:border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
-          <h2 className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-4">Executive Snapshot</h2>
+        <div className="mb-8 bg-slate-50/80 dark:bg-slate-900/30 border border-slate-200/70 dark:border-border rounded-xl p-5">
+          <h2 className="text-xs font-semibold text-muted uppercase tracking-widest mb-4">Executive Snapshot</h2>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {/* Personnel */}
           <button
             onClick={() => navigate(createPageUrl('PersonnelOverview'))}
-            className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none hover:shadow-lg transition-all duration-200 p-5 text-left hover:border-slate-300 dark:hover:border-slate-600/40"
+            className="bg-surface border border-border rounded-xl shadow-sm dark:shadow-none hover:shadow-lg transition-all duration-200 p-5 text-left hover:border-slate-300 dark:hover:border-slate-600/40"
           >
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
@@ -264,19 +264,19 @@ export default function CommandDashboard() {
               </div>
             </div>
             <div className="flex items-baseline gap-2 mb-1">
-              <p className="text-2xl font-semibold text-slate-900 dark:text-white">164</p>
-              <span className="flex items-center gap-0.5 text-slate-500 dark:text-slate-400 text-xs font-medium">
+              <p className="text-2xl font-semibold text-primary">164</p>
+              <span className="flex items-center gap-0.5 text-muted text-xs font-medium">
                 <ArrowUpRight className="w-3 h-3" />+2
               </span>
             </div>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mb-1">14 Vacancies (7.8%)</p>
+            <p className="text-xs text-muted mb-1">14 Vacancies (7.8%)</p>
             <p className="text-[11px] text-red-600 dark:text-red-400">3 below safety threshold (Patrol B-Shift)</p>
           </button>
 
           {/* Active Critical Incidents — dominant */}
           <button
             onClick={() => navigate(createPageUrl('Approvals'))}
-            className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none hover:shadow-lg transition-all duration-200 p-5 text-left hover:border-slate-300 dark:hover:border-slate-600/40"
+            className="bg-surface border border-border rounded-xl shadow-sm dark:shadow-none hover:shadow-lg transition-all duration-200 p-5 text-left hover:border-slate-300 dark:hover:border-slate-600/40"
           >
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
@@ -290,23 +290,23 @@ export default function CommandDashboard() {
               )}
             </div>
             <div className="flex items-baseline gap-2 mb-1">
-              <p className="text-2xl font-semibold text-slate-900 dark:text-white">{activeIncidentCount}</p>
-              <span className="text-xs text-slate-500 dark:text-slate-400">Active (2 escalated)</span>
+              <p className="text-2xl font-semibold text-primary">{activeIncidentCount}</p>
+              <span className="text-xs text-muted">Active (2 escalated)</span>
             </div>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mb-1">1 UOF · 1 Facility · 1 Staffing</p>
+            <p className="text-xs text-muted mb-1">1 UOF · 1 Facility · 1 Staffing</p>
             <p className="text-[11px] text-amber-600 dark:text-amber-400">Oldest: 1h 22m</p>
           </button>
 
           {/* Compliance Status — with breakdown */}
-          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5 text-left">
+          <div className="bg-surface border border-border rounded-xl shadow-sm dark:shadow-none p-5 text-left">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-amber-500"></div>
                 <span className="text-xs text-slate-500 font-medium uppercase tracking-wide">Compliance Readiness</span>
               </div>
             </div>
-            <p className="text-2xl font-semibold text-slate-900 dark:text-white mb-1">94%</p>
-            <div className="flex items-center gap-2 text-[11px] text-slate-500 dark:text-slate-400 mb-1">
+            <p className="text-2xl font-semibold text-primary mb-1">94%</p>
+            <div className="flex items-center gap-2 text-[11px] text-muted mb-1">
               <span>Policies 94%</span>
               <span className="text-slate-700">·</span>
               <span>Training 91%</span>
@@ -319,7 +319,7 @@ export default function CommandDashboard() {
           {/* Budget Snapshot */}
           <button
             onClick={() => navigate(createPageUrl('BudgetResources'))}
-            className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none hover:shadow-lg transition-all duration-200 p-5 text-left hover:border-slate-300 dark:hover:border-slate-600/40"
+            className="bg-surface border border-border rounded-xl shadow-sm dark:shadow-none hover:shadow-lg transition-all duration-200 p-5 text-left hover:border-slate-300 dark:hover:border-slate-600/40"
           >
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
@@ -328,25 +328,25 @@ export default function CommandDashboard() {
               </div>
             </div>
             <div className="flex items-baseline gap-2 mb-1">
-              <p className="text-2xl font-semibold text-slate-900 dark:text-white">85%</p>
+              <p className="text-2xl font-semibold text-primary">85%</p>
               <span className="flex items-center gap-0.5 text-amber-600 dark:text-amber-400 text-xs font-medium">
                 <ArrowUpRight className="w-3 h-3" />+1.2%
               </span>
             </div>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mb-1">Forecast variance +1.2% from plan</p>
+            <p className="text-xs text-muted mb-1">Forecast variance +1.2% from plan</p>
             <p className="text-[11px] text-amber-600 dark:text-amber-400">OT spend 19% above baseline</p>
           </button>
         </div>
         </div>
 
         {/* Executive Intelligence Summary */}
-        <div className="mb-8 bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 border-l-4 border-l-blue-500 dark:border-l-blue-500/50 rounded-xl shadow-sm dark:shadow-none">
+        <div className="mb-8 bg-surface border border-border border-l-4 border-l-blue-500 dark:border-l-blue-500/50 rounded-xl shadow-sm dark:shadow-none">
           <button
             onClick={() => setAiBriefExpanded(!aiBriefExpanded)}
             className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-slate-50 dark:hover:bg-slate-50 dark:hover:bg-slate-800/10 transition-colors rounded-xl"
           >
             <div className="flex items-center gap-3">
-              <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Executive Intelligence Summary</h3>
+              <h3 className="text-[13px] font-semibold text-primary uppercase tracking-wide">Executive Intelligence Summary</h3>
               <span className="px-1.5 py-0.5 bg-slate-100 dark:bg-slate-700/30 text-[11px] text-slate-700 dark:text-slate-500 rounded">3 Insights</span>
             </div>
             <div className="flex items-center gap-3">
@@ -356,7 +356,7 @@ export default function CommandDashboard() {
           </button>
 
           {aiBriefExpanded && (
-            <div className="px-5 pb-5 space-y-4 border-t border-slate-200 dark:border-slate-700/40 pt-4">
+            <div className="px-5 pb-5 space-y-4 border-t border-border pt-4">
               {/* Staffing Risk */}
               <div className="flex items-start gap-3">
                 <div className="w-1.5 h-1.5 rounded-full bg-red-500 mt-1.5 flex-shrink-0"></div>
@@ -407,11 +407,11 @@ export default function CommandDashboard() {
         </div>
 
         {/* Pending Approvals — Top 3 only */}
-        <div className="mb-8 bg-slate-50/80 dark:bg-slate-900/30 border border-slate-200/70 dark:border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
-        <h2 className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-4">Pending Approvals</h2>
-        <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none">
+        <div className="mb-8 bg-slate-50/80 dark:bg-slate-900/30 border border-slate-200/70 dark:border-border rounded-xl p-5">
+        <h2 className="text-xs font-semibold text-muted uppercase tracking-widest mb-4">Pending Approvals</h2>
+        <div className="bg-surface border border-border rounded-xl shadow-sm dark:shadow-none">
           <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100 dark:border-slate-700/40">
-            <span className="text-sm font-semibold text-slate-900 dark:text-white">Requires Your Action</span>
+            <span className="text-sm font-semibold text-primary">Requires Your Action</span>
             <button
               onClick={() => navigate(createPageUrl('Approvals'))}
               className="text-xs text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 font-medium"
@@ -425,30 +425,30 @@ export default function CommandDashboard() {
               return (
                 <div
                   key={item.id}
-                  className={`rounded-lg border border-slate-200 dark:border-slate-700/40 hover:bg-slate-50 dark:hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/35 transition-colors ${item.tier === 'critical' ? 'border-l-4 border-l-red-500' : item.tier === 'action' ? 'border-l-4 border-l-amber-500' : 'border-l-4 border-l-slate-300 dark:border-l-slate-600'}`}
+                  className={`rounded-lg border border-border hover:bg-slate-50 dark:hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/35 transition-colors ${item.tier === 'critical' ? 'border-l-4 border-l-red-500' : item.tier === 'action' ? 'border-l-4 border-l-amber-500' : 'border-l-4 border-l-slate-300 dark:border-l-slate-600'}`}
                 >
                   <div className="flex items-center gap-4 p-3">
 
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
-                        <p className="text-sm font-medium text-slate-900 dark:text-white">{item.type}</p>
+                        <p className="text-sm font-medium text-primary">{item.type}</p>
                         {badge && <span className={`px-1.5 py-0.5 border rounded text-[11px] font-medium ${badge.classes}`}>{badge.text}</span>}
                         <span className="text-[11px] text-slate-500">{getTimePending(item.timePendingMinutes)} ago</span>
                       </div>
                       <div className="flex items-center gap-2 text-[11px]">
-                        <span className="text-slate-500 dark:text-slate-400">{item.division}</span>
+                        <span className="text-muted">{item.division}</span>
                         <span className="text-slate-700">·</span>
-                        <span className="text-slate-500 dark:text-slate-400">{item.name}</span>
+                        <span className="text-muted">{item.name}</span>
                         {item.financial && (
                           <>
                             <span className="text-slate-700">·</span>
-                            <span className="text-slate-500 dark:text-slate-400">{item.financial}</span>
+                            <span className="text-muted">{item.financial}</span>
                           </>
                         )}
                         {item.impact && (
                           <>
                             <span className="text-slate-700">·</span>
-                            <span className={item.tier === 'critical' ? 'text-red-600 dark:text-red-400' : item.tier === 'action' ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500 dark:text-slate-400'}>{item.impact}</span>
+                            <span className={item.tier === 'critical' ? 'text-red-600 dark:text-red-400' : item.tier === 'action' ? 'text-amber-600 dark:text-amber-400' : 'text-muted'}>{item.impact}</span>
                           </>
                         )}
                       </div>
@@ -463,7 +463,7 @@ export default function CommandDashboard() {
                       </button>
                       <button
                         onClick={(e) => openApprovalModal(item, 'deny', e)}
-                        className="px-3 py-1.5 text-xs font-medium text-slate-700 dark:text-slate-400 border border-slate-300 dark:border-slate-700/50 hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-700/20 rounded-lg transition-colors"
+                        className="px-3 py-1.5 text-xs font-medium text-secondary border border-slate-300 dark:border-slate-700/50 hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-700/20 rounded-lg transition-colors"
                       >
                         Escalate
                       </button>
@@ -487,26 +487,26 @@ export default function CommandDashboard() {
         </div>
 
         {/* Federal Compliance & Audits — MOVED UP above Divisions/Staffing */}
-        <div className="mb-8 bg-slate-50/80 dark:bg-slate-900/30 border border-slate-200/70 dark:border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
-        <h2 className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-4">Federal Compliance & Audits</h2>
-        <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
+        <div className="mb-8 bg-slate-50/80 dark:bg-slate-900/30 border border-slate-200/70 dark:border-border rounded-xl p-5">
+        <h2 className="text-xs font-semibold text-muted uppercase tracking-widest mb-4">Federal Compliance & Audits</h2>
+        <div className="bg-surface border border-border rounded-xl shadow-sm dark:shadow-none p-5">
           <div className="flex items-center gap-2 mb-5">
-            <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">USMS Inspection</span>
+            <span className="text-xs font-semibold text-secondary">USMS Inspection</span>
             <span className="px-1.5 py-0.5 bg-red-100 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-700 dark:text-red-400 text-[10px] font-semibold rounded">Dec 12–14</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {/* USMS Readiness */}
-            <div className="bg-slate-50 dark:bg-slate-800/20 border border-slate-200 dark:border-slate-700/40 rounded-lg p-5">
+            <div className="bg-slate-50 dark:bg-slate-800/20 border border-border rounded-lg p-5">
               <div className="flex items-center gap-2 mb-4">
                 <Shield className="w-4 h-4 text-slate-500" />
-                <span className="text-sm font-medium text-slate-900 dark:text-white">USMS Inspection Readiness</span>
+                <span className="text-sm font-medium text-primary">USMS Inspection Readiness</span>
               </div>
               <div className="space-y-3">
                 <div>
                   <div className="flex items-center justify-between mb-1 text-xs">
-                    <span className="text-slate-500 dark:text-slate-400">Databases</span>
-                    <span className="text-slate-900 dark:text-white">47/47</span>
+                    <span className="text-muted">Databases</span>
+                    <span className="text-primary">47/47</span>
                   </div>
                   <div className="w-full h-1 bg-slate-200 dark:bg-slate-800/50 rounded-full overflow-hidden">
                     <div className="h-full bg-emerald-500 dark:bg-slate-600/60 rounded-full" style={{width: '100%'}} />
@@ -514,7 +514,7 @@ export default function CommandDashboard() {
                 </div>
                 <div>
                   <div className="flex items-center justify-between mb-1 text-xs">
-                    <span className="text-slate-500 dark:text-slate-400">Policies</span>
+                    <span className="text-muted">Policies</span>
                     <span className="text-amber-600 dark:text-amber-400">44/47</span>
                   </div>
                   <div className="w-full h-1 bg-slate-200 dark:bg-slate-800/50 rounded-full overflow-hidden">
@@ -523,7 +523,7 @@ export default function CommandDashboard() {
                 </div>
                 <div>
                   <div className="flex items-center justify-between mb-1 text-xs">
-                    <span className="text-slate-500 dark:text-slate-400">Training Records</span>
+                    <span className="text-muted">Training Records</span>
                     <span className="text-amber-600 dark:text-amber-400">156/164</span>
                   </div>
                   <div className="w-full h-1 bg-slate-200 dark:bg-slate-800/50 rounded-full overflow-hidden">
@@ -531,46 +531,46 @@ export default function CommandDashboard() {
                   </div>
                 </div>
               </div>
-              <div className="mt-4 pt-3 border-t border-slate-200 dark:border-slate-700/40 text-[11px] text-slate-700 dark:text-slate-400">
+              <div className="mt-4 pt-3 border-t border-border text-[11px] text-secondary">
                 <p>3 policies pending review · 8 deputies need recertification</p>
                 <p className="text-slate-500 mt-1">POC: Major Anderson (Detention)</p>
               </div>
             </div>
 
             {/* ACA Status */}
-            <div className="bg-slate-50 dark:bg-slate-800/20 border border-slate-200 dark:border-slate-700/40 rounded-lg p-5">
+            <div className="bg-slate-50 dark:bg-slate-800/20 border border-border rounded-lg p-5">
               <div className="flex items-center gap-2 mb-4">
                 <Shield className="w-4 h-4 text-slate-500" />
-                <span className="text-sm font-medium text-slate-900 dark:text-white">ACA Re-Accreditation</span>
+                <span className="text-sm font-medium text-primary">ACA Re-Accreditation</span>
               </div>
               <div className="space-y-2.5 text-xs">
                 <div className="flex justify-between">
-                  <span className="text-slate-500 dark:text-slate-400">Status</span>
+                  <span className="text-muted">Status</span>
                   <span className="text-emerald-600 dark:text-emerald-400 font-medium">Accredited</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-500 dark:text-slate-400">Expires</span>
-                  <span className="text-slate-700 dark:text-slate-300">August 2025</span>
+                  <span className="text-muted">Expires</span>
+                  <span className="text-secondary">August 2025</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-500 dark:text-slate-400">Next Review</span>
-                  <span className="text-slate-700 dark:text-slate-300">184 days</span>
+                  <span className="text-muted">Next Review</span>
+                  <span className="text-secondary">184 days</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-500 dark:text-slate-400">Risk Level</span>
+                  <span className="text-muted">Risk Level</span>
                   <span className="text-amber-600 dark:text-amber-400 font-medium">Moderate</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-500 dark:text-slate-400">Issue</span>
+                  <span className="text-muted">Issue</span>
                   <span className="text-red-600 dark:text-red-400">H2 HVAC — 72h window</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-500 dark:text-slate-400">Repair</span>
+                  <span className="text-muted">Repair</span>
                   <span className="text-amber-600 dark:text-amber-400">Pending approval</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-500 dark:text-slate-400">Assigned To</span>
-                  <span className="text-slate-700 dark:text-slate-300">Facilities Director Chen</span>
+                  <span className="text-muted">Assigned To</span>
+                  <span className="text-secondary">Facilities Director Chen</span>
                 </div>
               </div>
             </div>
@@ -579,8 +579,8 @@ export default function CommandDashboard() {
         </div>
 
         {/* Division Status — neutral text, colored dot only, hover drill */}
-        <div className="mb-8 bg-slate-50/80 dark:bg-slate-900/30 border border-slate-200/70 dark:border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
-          <h2 className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-4">Division Status</h2>
+        <div className="mb-8 bg-slate-50/80 dark:bg-slate-900/30 border border-slate-200/70 dark:border-border rounded-xl p-5">
+          <h2 className="text-xs font-semibold text-muted uppercase tracking-widest mb-4">Division Status</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
             {divisions.map((div, idx) => (
               <button
@@ -588,21 +588,21 @@ export default function CommandDashboard() {
                 onClick={() => div.route && navigate(createPageUrl(div.route))}
                 onMouseEnter={() => setHoveredDivision(idx)}
                 onMouseLeave={() => setHoveredDivision(null)}
-                className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none hover:shadow-lg transition-all duration-200 p-4 text-left hover:border-slate-300 dark:hover:border-slate-600/40 relative"
+                className="bg-surface border border-border rounded-xl shadow-sm dark:shadow-none hover:shadow-lg transition-all duration-200 p-4 text-left hover:border-slate-300 dark:hover:border-slate-600/40 relative"
               >
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium text-slate-900 dark:text-white">{div.name}</span>
+                  <span className="text-sm font-medium text-primary">{div.name}</span>
                   <div className={`w-2 h-2 rounded-full ${
                     div.severity === 'red' ? 'bg-red-500' :
                     div.severity === 'amber' ? 'bg-amber-500' : 'bg-emerald-500'
                   }`}></div>
                 </div>
                 <p className="text-xs text-slate-800 dark:text-slate-300 mb-1">{div.status}</p>
-                <p className="text-[11px] text-slate-500 dark:text-slate-400">{div.staffing} staffed</p>
+                <p className="text-[11px] text-muted">{div.staffing} staffed</p>
 
                 {/* Hover drill tooltip */}
                 {hoveredDivision === idx && (
-                  <div className="absolute left-0 right-0 top-full mt-1 z-20 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700/50 rounded-lg p-3 shadow-xl">
+                  <div className="absolute left-0 right-0 top-full mt-1 z-20 bg-white dark:bg-slate-800 border border-border rounded-lg p-3 shadow-xl">
                     {div.drill.split('\n').map((line, i) => (
                       <p key={i} className="text-[11px] text-slate-800 dark:text-slate-300 leading-relaxed">{line}</p>
                     ))}
@@ -614,11 +614,11 @@ export default function CommandDashboard() {
         </div>
 
         {/* Staffing Levels — threshold markers */}
-        <div className="mb-8 bg-slate-50/80 dark:bg-slate-900/30 border border-slate-200/70 dark:border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
-        <h2 className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-4">Staffing Levels</h2>
-        <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
+        <div className="mb-8 bg-slate-50/80 dark:bg-slate-900/30 border border-slate-200/70 dark:border-border rounded-xl p-5">
+        <h2 className="text-xs font-semibold text-muted uppercase tracking-widest mb-4">Staffing Levels</h2>
+        <div className="bg-surface border border-border rounded-xl shadow-sm dark:shadow-none p-5">
           <div className="flex items-center justify-between mb-6">
-            <span className="text-sm font-semibold text-slate-900 dark:text-white">Authorized Staffing Overview</span>
+            <span className="text-sm font-semibold text-primary">Authorized Staffing Overview</span>
             <span className="text-[11px] text-slate-500">164/178 authorized (92.1%)</span>
           </div>
           <div className="space-y-3.5">
@@ -633,10 +633,10 @@ export default function CommandDashboard() {
                 <div className="flex items-center justify-between mb-1.5">
                   <div className="flex items-center gap-2">
                     <span className="text-sm text-slate-800 dark:text-slate-300">{div.division}</span>
-                    {div.note && <span className="text-[10px] text-slate-500 dark:text-slate-400">({div.note})</span>}
+                    {div.note && <span className="text-[10px] text-muted">({div.note})</span>}
                   </div>
                   <div className="flex items-center gap-2.5">
-                    <span className="text-xs text-slate-500 dark:text-slate-400">{div.current}/{div.authorized}</span>
+                    <span className="text-xs text-muted">{div.current}/{div.authorized}</span>
                     <span className={`text-sm font-semibold ${div.percentage >= 90 ? 'text-emerald-600 dark:text-emerald-400' : div.percentage >= div.minThreshold ? 'text-amber-600 dark:text-amber-400' : 'text-red-600 dark:text-red-400'}`}>{div.percentage}%</span>
                   </div>
                 </div>
@@ -671,7 +671,7 @@ export default function CommandDashboard() {
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={closeApprovalModal}
           />
-          <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl p-8 max-w-md w-full shadow-2xl">
+          <div className="relative bg-white dark:bg-slate-900 border border-border rounded-2xl p-8 max-w-md w-full shadow-2xl">
             <div className="flex items-start gap-3 mb-5">
               <div className={`w-10 h-10 rounded-lg flex items-center justify-center border ${
                 approvalAction === 'approve' ? 'border-emerald-500/20' : 'border-red-500/20'
@@ -683,17 +683,17 @@ export default function CommandDashboard() {
                 )}
               </div>
               <div className="flex-1">
-                <h3 className="text-base font-semibold text-slate-900 dark:text-white mb-0.5">
+                <h3 className="text-base font-semibold text-primary mb-0.5">
                   {approvalAction === 'approve' ? 'Approve' : 'Deny'} {selectedApproval.title}?
                 </h3>
-                <p className="text-xs text-slate-500 dark:text-slate-400">
+                <p className="text-xs text-muted">
                   {selectedApproval.name} · {selectedApproval.details}
                 </p>
               </div>
             </div>
 
             <div className="mb-5">
-              <label className="block text-sm text-slate-500 dark:text-slate-400 mb-2">
+              <label className="block text-sm text-muted mb-2">
                 {approvalAction === 'approve' ? 'Comments (optional)' : 'Reason for denial (required)'}
               </label>
               <textarea
@@ -701,14 +701,14 @@ export default function CommandDashboard() {
                 onChange={(e) => setActionComment(e.target.value)}
                 placeholder={approvalAction === 'approve' ? 'Add any comments...' : 'Please provide a reason...'}
                 rows={3}
-                className="w-full px-3.5 py-2.5 bg-slate-100 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-700/40 rounded-lg text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-600 focus:outline-none focus:border-slate-400 dark:focus:border-slate-600 resize-none text-sm"
+                className="w-full px-3.5 py-2.5 bg-slate-100 dark:bg-slate-950/50 border border-border rounded-lg text-primary placeholder-slate-400 dark:placeholder-slate-600 focus:outline-none focus:border-slate-400 dark:focus:border-slate-600 resize-none text-sm"
               />
             </div>
 
             <div className="flex gap-3">
               <button
                 onClick={closeApprovalModal}
-                className="flex-1 px-4 py-2.5 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white text-sm font-medium transition-colors"
+                className="flex-1 px-4 py-2.5 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-border rounded-xl text-primary text-sm font-medium transition-colors"
               >
                 Cancel
               </button>

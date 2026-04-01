@@ -644,9 +644,9 @@ export default function BIReports() {
       return <AlertCircle className="w-4 h-4 text-red-400" />;
     }
     if (status === 'not-started') {
-      return <Clock className="w-4 h-4 text-slate-700 dark:text-slate-400" />;
+      return <Clock className="w-4 h-4 text-secondary" />;
     }
-    return <Clock className="w-4 h-4 text-slate-700 dark:text-slate-400" />;
+    return <Clock className="w-4 h-4 text-secondary" />;
   };
 
   const getRiskBadge = (level) => {
@@ -697,13 +697,13 @@ export default function BIReports() {
     return (
       <div className="mb-4">
         <div className="flex items-center gap-2 mb-2">
-          <Icon className="w-4 h-4 text-slate-700 dark:text-slate-400" />
-          <span className="text-sm font-semibold text-slate-900 dark:text-white">{title}:</span>
+          <Icon className="w-4 h-4 text-secondary" />
+          <span className="text-sm font-semibold text-primary">{title}:</span>
         </div>
         <div className="ml-6 space-y-1">
           <div className="flex items-center gap-2">
             {getCheckStatusIcon(check.status)}
-            <span className="text-sm text-slate-700 dark:text-slate-300">{check.label}</span>
+            <span className="text-sm text-secondary">{check.label}</span>
           </div>
           {check.details && check.details.length > 0 && (
             <div className="ml-6 space-y-1 mt-2">
@@ -730,37 +730,37 @@ export default function BIReports() {
           <div className="max-w-[1600px] mx-auto">
             {/* Page Header */}
             <div className="mb-6">
-              <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white mb-2">Background Investigation Reports</h2>
-              <p className="text-slate-700 dark:text-slate-400">Comprehensive background check documentation and status tracking</p>
+              <h2 className="text-2xl lg:text-3xl font-bold text-primary mb-2">Background Investigation Reports</h2>
+              <p className="text-secondary">Comprehensive background check documentation and status tracking</p>
             </div>
 
             {/* Processing Standards Info */}
-            <div className="mb-6 bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
-              <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
+            <div className="mb-6 bg-surface border border-border rounded-xl shadow-sm dark:shadow-none p-4">
+              <h3 className="text-sm font-semibold text-primary mb-3 flex items-center gap-2">
                 <Scale className="w-4 h-4 text-purple-400" />
                 Investigation Processing Standards
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                 <div>
-                  <p className="text-slate-700 dark:text-slate-400">Sworn LE (New Hire)</p>
-                  <p className="text-slate-900 dark:text-white font-medium">{processingStandards.swornNewHire}</p>
+                  <p className="text-secondary">Sworn LE (New Hire)</p>
+                  <p className="text-primary font-medium">{processingStandards.swornNewHire}</p>
                 </div>
                 <div>
-                  <p className="text-slate-700 dark:text-slate-400">Sworn LE (Lateral Transfer)</p>
-                  <p className="text-slate-900 dark:text-white font-medium">{processingStandards.swornLateral}</p>
+                  <p className="text-secondary">Sworn LE (Lateral Transfer)</p>
+                  <p className="text-primary font-medium">{processingStandards.swornLateral}</p>
                 </div>
                 <div>
-                  <p className="text-slate-700 dark:text-slate-400">Non-Sworn Civilian</p>
-                  <p className="text-slate-900 dark:text-white font-medium">{processingStandards.nonSwornCivilian}</p>
+                  <p className="text-secondary">Non-Sworn Civilian</p>
+                  <p className="text-primary font-medium">{processingStandards.nonSwornCivilian}</p>
                 </div>
               </div>
             </div>
 
             {/* Stats Cards */}
             <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
-              <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
-                <p className="text-slate-700 dark:text-slate-400 text-xs uppercase tracking-wide mb-1">Total Reports</p>
-                <p className="text-2xl font-bold text-slate-900 dark:text-white">{stats.total}</p>
+              <div className="bg-surface border border-border rounded-xl shadow-sm dark:shadow-none p-4">
+                <p className="text-secondary text-xs uppercase tracking-wide mb-1">Total Reports</p>
+                <p className="text-2xl font-bold text-primary">{stats.total}</p>
               </div>
               <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-4">
                 <p className="text-emerald-400 text-xs uppercase tracking-wide mb-1">Cleared</p>
@@ -781,34 +781,34 @@ export default function BIReports() {
             </div>
 
             {/* Risk Level Definitions */}
-            <div className="mb-6 bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
-              <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
+            <div className="mb-6 bg-surface border border-border rounded-xl shadow-sm dark:shadow-none p-4">
+              <h3 className="text-sm font-semibold text-primary mb-3 flex items-center gap-2">
                 <Shield className="w-4 h-4 text-purple-400" />
                 Risk Assessment Definitions
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
                 <div className="space-y-1">
                   <span className="px-2 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 font-bold">LOW</span>
-                  <p className="text-slate-700 dark:text-slate-400 mt-2">{riskDefinitions.low}</p>
+                  <p className="text-secondary mt-2">{riskDefinitions.low}</p>
                 </div>
                 <div className="space-y-1">
                   <span className="px-2 py-1 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-400 font-bold">LOW-MEDIUM</span>
-                  <p className="text-slate-700 dark:text-slate-400 mt-2">{riskDefinitions.lowMedium}</p>
+                  <p className="text-secondary mt-2">{riskDefinitions.lowMedium}</p>
                 </div>
                 <div className="space-y-1">
                   <span className="px-2 py-1 rounded-full bg-orange-500/20 border border-orange-500/30 text-orange-400 font-bold">MEDIUM</span>
-                  <p className="text-slate-700 dark:text-slate-400 mt-2">{riskDefinitions.medium}</p>
+                  <p className="text-secondary mt-2">{riskDefinitions.medium}</p>
                 </div>
                 <div className="space-y-1">
                   <span className="px-2 py-1 rounded-full bg-red-500/20 border border-red-500/30 text-red-400 font-bold">HIGH</span>
-                  <p className="text-slate-700 dark:text-slate-400 mt-2">{riskDefinitions.high}</p>
+                  <p className="text-secondary mt-2">{riskDefinitions.high}</p>
                 </div>
               </div>
             </div>
 
             {/* Filter Tabs and Export */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
-              <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
+              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl overflow-hidden">
                 <div className="flex">
                   {['all', 'cleared', 'cleared-with-notes', 'in-progress', 'review-required'].map((filter) => (
                     <button
@@ -817,7 +817,7 @@ export default function BIReports() {
                       className={`px-4 py-3 text-sm font-medium transition-all capitalize ${
                         selectedFilter === filter
                           ? 'bg-purple-500/10 text-purple-400 border-b-2 border-purple-500'
-                          : 'text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:text-white'
+                          : 'text-secondary hover:text-primary'
                       }`}
                     >
                       {filter.replace(/-/g, ' ')}
@@ -864,22 +864,22 @@ export default function BIReports() {
                               <span className={`px-2 py-0.5 rounded-full text-xs font-bold border ${getStatusColor(report.status)}`}>
                                 {report.statusLabel}
                               </span>
-                              <h3 className="text-lg font-semibold text-slate-900 dark:text-white">{report.employeeName}</h3>
+                              <h3 className="text-lg font-semibold text-primary">{report.employeeName}</h3>
                               {getRiskBadge(report.riskLevel)}
                             </div>
-                            <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-slate-700 dark:text-slate-400">
+                            <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-secondary">
                               <span>Employee ID: {report.employeeId}</span>
                               <span>Case ID: {report.id}</span>
                             </div>
-                            <p className="text-sm text-slate-700 dark:text-slate-300 mt-1">{report.position}</p>
+                            <p className="text-sm text-secondary mt-1">{report.position}</p>
                             <p className="text-xs text-slate-500">{report.assignment}</p>
                           </div>
                         </div>
                         <div className="flex items-center gap-2">
                           {isExpanded ? (
-                            <ChevronUp className="w-5 h-5 text-slate-700 dark:text-slate-400" />
+                            <ChevronUp className="w-5 h-5 text-secondary" />
                           ) : (
-                            <ChevronDown className="w-5 h-5 text-slate-700 dark:text-slate-400" />
+                            <ChevronDown className="w-5 h-5 text-secondary" />
                           )}
                         </div>
                       </div>
@@ -887,50 +887,50 @@ export default function BIReports() {
 
                     {/* Expanded Content */}
                     {isExpanded && (
-                      <div className="border-t border-slate-200 dark:border-slate-700/50 p-4">
+                      <div className="border-t border-border p-4">
                         {/* Investigation Summary */}
-                        <div className="mb-6 pb-6 border-b border-slate-200 dark:border-slate-200 dark:border-slate-700/30">
-                          <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3 uppercase tracking-wide">Background Investigation Summary</h4>
+                        <div className="mb-6 pb-6 border-b border-border dark:border-slate-700/30">
+                          <h4 className="text-sm font-semibold text-primary mb-3 uppercase tracking-wide">Background Investigation Summary</h4>
                           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
                             <div className="flex items-center gap-2">
                               <Calendar className="w-4 h-4 text-slate-500" />
-                              <span className="text-slate-700 dark:text-slate-400">Investigation dates:</span>
-                              <span className="text-slate-900 dark:text-white">{report.investigationDates}</span>
+                              <span className="text-secondary">Investigation dates:</span>
+                              <span className="text-primary">{report.investigationDates}</span>
                             </div>
                             <div className="flex items-center gap-2">
                               <Clock className="w-4 h-4 text-slate-500" />
-                              <span className="text-slate-700 dark:text-slate-400">Duration:</span>
-                              <span className="text-slate-900 dark:text-white">{report.duration}</span>
+                              <span className="text-secondary">Duration:</span>
+                              <span className="text-primary">{report.duration}</span>
                             </div>
                             <div className="flex items-center gap-2">
                               <User className="w-4 h-4 text-slate-500" />
-                              <span className="text-slate-700 dark:text-slate-400">Investigator:</span>
-                              <span className="text-slate-900 dark:text-white">{report.investigator}</span>
+                              <span className="text-secondary">Investigator:</span>
+                              <span className="text-primary">{report.investigator}</span>
                             </div>
                             <div className="flex items-center gap-2">
                               <Users className="w-4 h-4 text-slate-500" />
-                              <span className="text-slate-700 dark:text-slate-400">Supervisor:</span>
-                              <span className="text-slate-900 dark:text-white">{report.supervisor}</span>
+                              <span className="text-secondary">Supervisor:</span>
+                              <span className="text-primary">{report.supervisor}</span>
                             </div>
                             {report.approvalDate && (
                               <div className="flex items-center gap-2">
                                 <FileCheck className="w-4 h-4 text-slate-500" />
-                                <span className="text-slate-700 dark:text-slate-400">Approval:</span>
-                                <span className="text-slate-900 dark:text-white">{report.approvalDate}</span>
+                                <span className="text-secondary">Approval:</span>
+                                <span className="text-primary">{report.approvalDate}</span>
                               </div>
                             )}
                             {report.hireDate && (
                               <div className="flex items-center gap-2">
                                 <Briefcase className="w-4 h-4 text-slate-500" />
-                                <span className="text-slate-700 dark:text-slate-400">Hire date:</span>
-                                <span className="text-slate-900 dark:text-white">{report.hireDate}</span>
+                                <span className="text-secondary">Hire date:</span>
+                                <span className="text-primary">{report.hireDate}</span>
                               </div>
                             )}
                             {report.expectedCompletion && (
                               <div className="flex items-center gap-2">
                                 <Clock className="w-4 h-4 text-slate-500" />
-                                <span className="text-slate-700 dark:text-slate-400">Expected completion:</span>
-                                <span className="text-slate-900 dark:text-white">{report.expectedCompletion}</span>
+                                <span className="text-secondary">Expected completion:</span>
+                                <span className="text-primary">{report.expectedCompletion}</span>
                               </div>
                             )}
                           </div>
@@ -952,8 +952,8 @@ export default function BIReports() {
                         </div>
 
                         {/* Background Check Results */}
-                        <div className="mb-6 pb-6 border-b border-slate-200 dark:border-slate-200 dark:border-slate-700/30">
-                          <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-4 uppercase tracking-wide flex items-center gap-2">
+                        <div className="mb-6 pb-6 border-b border-border dark:border-slate-700/30">
+                          <h4 className="text-sm font-semibold text-primary mb-4 uppercase tracking-wide flex items-center gap-2">
                             <FileText className="w-4 h-4 text-purple-400" />
                             Background Check Results
                           </h4>
@@ -972,8 +972,8 @@ export default function BIReports() {
 
                         {/* Timeline (for in-progress) */}
                         {report.timeline && (
-                          <div className="mb-6 pb-6 border-b border-slate-200 dark:border-slate-200 dark:border-slate-700/30">
-                            <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-4 uppercase tracking-wide flex items-center gap-2">
+                          <div className="mb-6 pb-6 border-b border-border dark:border-slate-700/30">
+                            <h4 className="text-sm font-semibold text-primary mb-4 uppercase tracking-wide flex items-center gap-2">
                               <Calendar className="w-4 h-4 text-purple-400" />
                               Investigation Timeline
                             </h4>
@@ -981,7 +981,7 @@ export default function BIReports() {
                               {report.timeline.map((item, idx) => (
                                 <div key={idx} className="flex items-start gap-3 text-sm">
                                   <span className="text-slate-500 w-20 flex-shrink-0">{item.date}</span>
-                                  <span className="text-slate-700 dark:text-slate-300">{item.event}</span>
+                                  <span className="text-secondary">{item.event}</span>
                                 </div>
                               ))}
                             </div>
@@ -990,11 +990,11 @@ export default function BIReports() {
 
                         {/* Next Actions (for in-progress) */}
                         {report.nextActions && (
-                          <div className="mb-6 pb-6 border-b border-slate-200 dark:border-slate-200 dark:border-slate-700/30">
-                            <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-4 uppercase tracking-wide">Next Actions</h4>
+                          <div className="mb-6 pb-6 border-b border-border dark:border-slate-700/30">
+                            <h4 className="text-sm font-semibold text-primary mb-4 uppercase tracking-wide">Next Actions</h4>
                             <ul className="space-y-2">
                               {report.nextActions.map((action, idx) => (
-                                <li key={idx} className="flex items-start gap-2 text-sm text-slate-700 dark:text-slate-300">
+                                <li key={idx} className="flex items-start gap-2 text-sm text-secondary">
                                   <span className="text-slate-500">├─</span>
                                   {action}
                                 </li>
@@ -1005,13 +1005,13 @@ export default function BIReports() {
 
                         {/* Investigator Notes (for in-progress) */}
                         {report.investigatorNotes && (
-                          <div className="mb-6 pb-6 border-b border-slate-200 dark:border-slate-200 dark:border-slate-700/30">
-                            <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3 uppercase tracking-wide">Investigator Notes</h4>
-                            <p className="text-sm text-slate-700 dark:text-slate-300">{report.investigatorNotes}</p>
+                          <div className="mb-6 pb-6 border-b border-border dark:border-slate-700/30">
+                            <h4 className="text-sm font-semibold text-primary mb-3 uppercase tracking-wide">Investigator Notes</h4>
+                            <p className="text-sm text-secondary">{report.investigatorNotes}</p>
                             {report.preliminaryAssessment && (
                               <div className="mt-3 p-3 bg-slate-100 dark:bg-slate-700/30 rounded-lg">
                                 <span className="text-xs text-slate-500 uppercase">Preliminary Assessment:</span>
-                                <p className="text-sm text-slate-700 dark:text-slate-300">{report.preliminaryAssessment}</p>
+                                <p className="text-sm text-secondary">{report.preliminaryAssessment}</p>
                               </div>
                             )}
                           </div>
@@ -1020,23 +1020,23 @@ export default function BIReports() {
                         {/* Investigator Assessment */}
                         {report.assessment && (
                           <div className="mb-6">
-                            <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-4 uppercase tracking-wide flex items-center gap-2">
+                            <h4 className="text-sm font-semibold text-primary mb-4 uppercase tracking-wide flex items-center gap-2">
                               <Scale className="w-4 h-4 text-purple-400" />
                               Investigator Assessment
                             </h4>
 
                             {/* Overall Evaluation */}
                             <div className="mb-4">
-                              <h5 className="text-xs font-semibold text-slate-700 dark:text-slate-400 uppercase mb-2">Overall Evaluation</h5>
-                              <p className="text-sm text-slate-700 dark:text-slate-300">{report.assessment.overall}</p>
+                              <h5 className="text-xs font-semibold text-secondary uppercase mb-2">Overall Evaluation</h5>
+                              <p className="text-sm text-secondary">{report.assessment.overall}</p>
                             </div>
 
                             {/* Concerns */}
                             {report.assessment.concerns && (
                               <div className="mb-4">
-                                <h5 className="text-xs font-semibold text-slate-700 dark:text-slate-400 uppercase mb-2">Concerns Identified</h5>
+                                <h5 className="text-xs font-semibold text-secondary uppercase mb-2">Concerns Identified</h5>
                                 {typeof report.assessment.concerns === 'string' ? (
-                                  <p className="text-sm text-slate-700 dark:text-slate-300">{report.assessment.concerns}</p>
+                                  <p className="text-sm text-secondary">{report.assessment.concerns}</p>
                                 ) : Array.isArray(report.assessment.concerns) && typeof report.assessment.concerns[0] === 'string' ? (
                                   <ul className="space-y-1">
                                     {report.assessment.concerns.map((concern, idx) => (
@@ -1053,7 +1053,7 @@ export default function BIReports() {
                                         <h6 className="text-sm font-semibold text-red-400 mb-2">⚠️ {concern.title}</h6>
                                         <ul className="space-y-1">
                                           {concern.details.map((detail, didx) => (
-                                            <li key={didx} className="text-xs text-slate-700 dark:text-slate-300">└─ {detail}</li>
+                                            <li key={didx} className="text-xs text-secondary">└─ {detail}</li>
                                           ))}
                                         </ul>
                                       </div>
@@ -1066,7 +1066,7 @@ export default function BIReports() {
                             {/* Mitigating Factors */}
                             {report.assessment.mitigatingFactors && (
                               <div className="mb-4">
-                                <h5 className="text-xs font-semibold text-slate-700 dark:text-slate-400 uppercase mb-2">Mitigating Factors</h5>
+                                <h5 className="text-xs font-semibold text-secondary uppercase mb-2">Mitigating Factors</h5>
                                 <ul className="space-y-1">
                                   {report.assessment.mitigatingFactors.map((factor, idx) => (
                                     <li key={idx} className="text-sm text-emerald-400 flex items-start gap-2">
@@ -1081,7 +1081,7 @@ export default function BIReports() {
                             {/* Suitability */}
                             {report.assessment.suitability && report.assessment.suitability.length > 0 && (
                               <div className="mb-4">
-                                <h5 className="text-xs font-semibold text-slate-700 dark:text-slate-400 uppercase mb-2">Suitability for Position</h5>
+                                <h5 className="text-xs font-semibold text-secondary uppercase mb-2">Suitability for Position</h5>
                                 <ul className="space-y-1">
                                   {report.assessment.suitability.map((item, idx) => (
                                     <li key={idx} className={`text-sm flex items-start gap-2 ${item.includes('⚠️') ? 'text-amber-400' : 'text-slate-500'}`}>
@@ -1096,17 +1096,17 @@ export default function BIReports() {
                             {/* Risk Assessment */}
                             {report.riskLevel && (
                               <div className="mb-4 p-3 bg-slate-100 dark:bg-slate-700/30 rounded-lg">
-                                <h5 className="text-xs font-semibold text-slate-700 dark:text-slate-400 uppercase mb-2">Risk Assessment</h5>
+                                <h5 className="text-xs font-semibold text-secondary uppercase mb-2">Risk Assessment</h5>
                                 <div className="flex items-start gap-3">
                                   {getRiskBadge(report.riskLevel)}
-                                  <p className="text-xs text-slate-700 dark:text-slate-400">{riskDefinitions[report.riskLevel]}</p>
+                                  <p className="text-xs text-secondary">{riskDefinitions[report.riskLevel]}</p>
                                 </div>
                               </div>
                             )}
 
                             {/* Recommendation */}
                             <div className="p-6 bg-transparent dark:bg-slate-700/30 rounded-lg">
-                              <h5 className="text-xs font-semibold text-slate-700 dark:text-slate-400 uppercase mb-3">Recommendation</h5>
+                              <h5 className="text-xs font-semibold text-secondary uppercase mb-3">Recommendation</h5>
                               <div className={`inline-flex px-3 py-1.5 rounded-lg text-sm font-bold mb-3 ${
                                 report.assessment.recommendation.includes('APPROVED')
                                   ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
@@ -1118,14 +1118,14 @@ export default function BIReports() {
                               {report.assessment.investigatorNote && (
                                 <div className="mt-3 text-sm">
                                   <span className="text-slate-500">Investigator ({report.investigator}):</span>
-                                  <p className="text-slate-700 dark:text-slate-300 mt-1 italic">"{report.assessment.investigatorNote}"</p>
+                                  <p className="text-secondary mt-1 italic">"{report.assessment.investigatorNote}"</p>
                                 </div>
                               )}
 
                               {report.assessment.supervisorNote && (
                                 <div className="mt-3 text-sm">
                                   <span className="text-slate-500">Supervisor ({report.supervisor}):</span>
-                                  <p className="text-slate-700 dark:text-slate-300 mt-1 italic">"{report.assessment.supervisorNote}"</p>
+                                  <p className="text-secondary mt-1 italic">"{report.assessment.supervisorNote}"</p>
                                 </div>
                               )}
 
@@ -1139,14 +1139,14 @@ export default function BIReports() {
                               {report.assessment.directorReview && (
                                 <div className="mt-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
                                   <h6 className="text-sm font-semibold text-red-400 mb-2">⚠️ AWAITING DIRECTOR REVIEW</h6>
-                                  <div className="space-y-1 text-xs text-slate-700 dark:text-slate-300">
+                                  <div className="space-y-1 text-xs text-secondary">
                                     <p>├─ Forwarded to: {report.assessment.directorReview.forwardedTo}</p>
                                     <p>├─ Date forwarded: {report.assessment.directorReview.dateForwarded}</p>
                                     <p>├─ Decision required: {report.assessment.directorReview.decisionRequired}</p>
                                     <p>└─ Options:</p>
                                     <ul className="ml-4 space-y-1">
                                       {report.assessment.directorReview.options.map((option, idx) => (
-                                        <li key={idx} className="text-slate-700 dark:text-slate-400">({idx + 1}) {option}</li>
+                                        <li key={idx} className="text-secondary">({idx + 1}) {option}</li>
                                       ))}
                                     </ul>
                                   </div>
@@ -1157,16 +1157,16 @@ export default function BIReports() {
                         )}
 
                         {/* Action Buttons */}
-                        <div className="flex flex-wrap gap-3 pt-4 border-t border-slate-200 dark:border-slate-200 dark:border-slate-700/30">
-                          <button className="px-4 py-2 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 border border-slate-600/50 rounded-lg text-slate-900 dark:text-white text-sm font-medium transition-colors flex items-center gap-2">
+                        <div className="flex flex-wrap gap-3 pt-4 border-t border-border dark:border-slate-700/30">
+                          <button className="px-4 py-2 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 border border-slate-600/50 rounded-lg text-primary text-sm font-medium transition-colors flex items-center gap-2">
                             <Eye className="w-4 h-4" />
                             View Complete Investigation File
                           </button>
-                          <button className="px-4 py-2 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 border border-slate-600/50 rounded-lg text-slate-900 dark:text-white text-sm font-medium transition-colors flex items-center gap-2">
+                          <button className="px-4 py-2 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 border border-slate-600/50 rounded-lg text-primary text-sm font-medium transition-colors flex items-center gap-2">
                             <Download className="w-4 h-4" />
                             Download Full Report
                           </button>
-                          <button className="px-4 py-2 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 border border-slate-600/50 rounded-lg text-slate-900 dark:text-white text-sm font-medium transition-colors flex items-center gap-2">
+                          <button className="px-4 py-2 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 border border-slate-600/50 rounded-lg text-primary text-sm font-medium transition-colors flex items-center gap-2">
                             <Printer className="w-4 h-4" />
                             Print Report
                           </button>
@@ -1211,7 +1211,7 @@ export default function BIReports() {
             {filteredReports.length === 0 && (
               <div className="text-center py-12">
                 <FileText className="w-12 h-12 text-slate-700 mx-auto mb-4" />
-                <p className="text-slate-700 dark:text-slate-400">No reports match your search criteria</p>
+                <p className="text-secondary">No reports match your search criteria</p>
               </div>
             )}
           </div>

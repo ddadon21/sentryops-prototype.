@@ -106,7 +106,7 @@ export default function BackgroundsDashboard() {
           {/* Page Header */}
           <div className="mb-8 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
             <div>
-              <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-1">Investigations Command Overview</h2>
+              <h2 className="text-xl font-bold text-primary mb-1">Investigations Command Overview</h2>
               <div className="flex items-center gap-2 text-[11px] text-slate-500">
                 <span>{formatDate(currentTime)}</span>
                 <span className="text-slate-700">·</span>
@@ -117,32 +117,32 @@ export default function BackgroundsDashboard() {
             </div>
 
             <div className="flex items-center gap-2">
-              <button className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-700/40 text-slate-700 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all">
+              <button className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-700/40 text-secondary rounded-lg text-[13px] font-medium hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all">
                 <Download className="w-4 h-4" />
                 Export Report
               </button>
               <div className="relative filter-container">
                 <button
                   onClick={() => setFilterOpen(!filterOpen)}
-                  className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-700/40 text-slate-700 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all"
+                  className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-700/40 text-secondary rounded-lg text-[13px] font-medium hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all"
                 >
                   <Filter className="w-4 h-4" />
                   Filter
                   <ChevronDown className="w-3 h-3" />
                 </button>
                 {filterOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-48 bg-white dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200 dark:border-slate-700/50 rounded-lg shadow-2xl z-50 py-1">
-                    <button className="w-full text-left px-4 py-2 text-[13px] text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/50">All Cases</button>
-                    <button className="w-full text-left px-4 py-2 text-[13px] text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/50">With Concerns</button>
-                    <button className="w-full text-left px-4 py-2 text-[13px] text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/50">Pending Review</button>
-                    <button className="w-full text-left px-4 py-2 text-[13px] text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/50">Overdue</button>
+                  <div className="absolute right-0 top-full mt-2 w-48 bg-surface-raised backdrop-blur-xl border border-border rounded-lg shadow-2xl z-50 py-1">
+                    <button className="w-full text-left px-4 py-2 text-[13px] text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/50">All Cases</button>
+                    <button className="w-full text-left px-4 py-2 text-[13px] text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/50">With Concerns</button>
+                    <button className="w-full text-left px-4 py-2 text-[13px] text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/50">Pending Review</button>
+                    <button className="w-full text-left px-4 py-2 text-[13px] text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/50">Overdue</button>
                   </div>
                 )}
               </div>
               <select
                 value={timeRange}
                 onChange={(e) => setTimeRange(e.target.value)}
-                className="px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-700/40 rounded-lg text-slate-700 dark:text-slate-300 text-[13px] focus:outline-none focus:border-slate-600"
+                className="px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-700/40 rounded-lg text-secondary text-[13px] focus:outline-none focus:border-slate-600"
               >
                 <option value="week">This Week</option>
                 <option value="month">This Month</option>
@@ -153,42 +153,42 @@ export default function BackgroundsDashboard() {
           </div>
 
           {/* Adjudication Exposure Console */}
-          <div className="mb-8 flex items-center gap-6 px-5 py-3.5 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl">
+          <div className="mb-8 flex items-center gap-6 px-5 py-3.5 bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl">
             <div className="flex items-center gap-2.5">
               <div className="w-1.5 h-1.5 bg-red-500 rounded-full"></div>
-              <span className="text-[13px] font-semibold text-slate-700 dark:text-slate-300">Cases Awaiting Sign-Off:</span>
-              <span className="text-[13px] font-bold text-slate-900 dark:text-white">{metrics.awaitingSupervisorSignOff}</span>
+              <span className="text-[13px] font-semibold text-secondary">Cases Awaiting Sign-Off:</span>
+              <span className="text-[13px] font-bold text-primary">{metrics.awaitingSupervisorSignOff}</span>
             </div>
             <div className="h-4 w-px bg-slate-600/40"></div>
             <div className="flex items-center gap-2.5">
-              <span className="text-[13px] font-semibold text-slate-700 dark:text-slate-300">Avg Wait:</span>
-              <span className="text-[13px] font-bold text-slate-900 dark:text-white">{metrics.avgSupervisorWait} days</span>
+              <span className="text-[13px] font-semibold text-secondary">Avg Wait:</span>
+              <span className="text-[13px] font-bold text-primary">{metrics.avgSupervisorWait} days</span>
             </div>
             <div className="h-4 w-px bg-slate-600/40"></div>
             <div className="flex items-center gap-2.5">
               <div className="w-1.5 h-1.5 bg-red-500 rounded-full"></div>
-              <span className="text-[13px] font-semibold text-slate-700 dark:text-slate-300">SLA Breach:</span>
-              <span className="text-[13px] font-bold text-slate-900 dark:text-white">{metrics.slaBreachCases}</span>
+              <span className="text-[13px] font-semibold text-secondary">SLA Breach:</span>
+              <span className="text-[13px] font-bold text-primary">{metrics.slaBreachCases}</span>
             </div>
             <div className="h-4 w-px bg-slate-600/40"></div>
             <div className="flex items-center gap-2.5">
-              <span className="text-[13px] font-semibold text-slate-700 dark:text-slate-300">Avg Case Age:</span>
-              <span className="text-[13px] font-bold text-slate-900 dark:text-white">{metrics.avgCaseAge} days</span>
+              <span className="text-[13px] font-semibold text-secondary">Avg Case Age:</span>
+              <span className="text-[13px] font-bold text-primary">{metrics.avgCaseAge} days</span>
             </div>
           </div>
 
           {/* Supervisor Review Required */}
           {supervisorReviewVisible && (
-            <div className="mb-8 bg-slate-100 dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 border-l-[3px] border-l-red-500/40 rounded-xl p-5">
+            <div className="mb-8 bg-slate-100 dark:bg-slate-800/25 border border-border border-l-[3px] border-l-red-500/40 rounded-xl p-5">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-3">
-                  <h4 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Supervisor Review Required</h4>
+                  <h4 className="text-[13px] font-semibold text-primary uppercase tracking-wide">Supervisor Review Required</h4>
                   <span className="text-xs text-slate-500">{supervisorReviewCases.length} pending</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <button
                     onClick={() => navigate(createPageUrl('CaseManagement'))}
-                    className="text-[13px] text-slate-700 dark:text-slate-400 hover:text-slate-700 dark:text-slate-300 font-medium"
+                    className="text-[13px] text-secondary hover:text-secondary font-medium"
                   >
                     Review All Pending →
                   </button>
@@ -208,10 +208,10 @@ export default function BackgroundsDashboard() {
                   }`}>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-3">
-                        <span className="text-[13px] font-semibold text-slate-900 dark:text-white">{caseItem.subject}</span>
+                        <span className="text-[13px] font-semibold text-primary">{caseItem.subject}</span>
                         <span className="text-xs text-slate-500">{caseItem.caseNumber}</span>
                       </div>
-                      <p className="text-xs text-slate-700 dark:text-slate-400 mt-1">{caseItem.detail}</p>
+                      <p className="text-xs text-secondary mt-1">{caseItem.detail}</p>
                     </div>
                     <div className="text-right flex-shrink-0">
                       <span className="text-xs text-slate-500">{caseItem.issueType}</span>
@@ -221,7 +221,7 @@ export default function BackgroundsDashboard() {
                       </div>
                     </div>
                     <div className="flex-shrink-0">
-                      <span className="text-xs text-slate-700 dark:text-slate-400">{caseItem.nextAction}</span>
+                      <span className="text-xs text-secondary">{caseItem.nextAction}</span>
                     </div>
                   </div>
                 ))}
@@ -230,29 +230,29 @@ export default function BackgroundsDashboard() {
           )}
 
           {/* Investigation Status Summary */}
-          <div className="mb-8 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+          <div className="mb-8 bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
             <div className="flex items-center justify-between mb-6">
-              <h4 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Investigation Status Summary</h4>
+              <h4 className="text-[13px] font-semibold text-primary uppercase tracking-wide">Investigation Status Summary</h4>
               <span className="text-xs text-slate-500">Last sync: 2 min ago</span>
             </div>
 
             <div className="mb-5">
               <div className="flex items-center gap-2 mb-2.5">
                 <div className="w-1.5 h-1.5 bg-red-500 rounded-full"></div>
-                <h5 className="text-[13px] font-semibold text-slate-700 dark:text-slate-300">REQUIRES ACTION</h5>
+                <h5 className="text-[13px] font-semibold text-secondary">REQUIRES ACTION</h5>
               </div>
               <div className="space-y-1.5 text-[13px]">
                 <div className="flex items-start gap-3 pl-4">
                   <span className="text-slate-700 flex-shrink-0">•</span>
-                  <p className="text-slate-700 dark:text-slate-400"><span className="text-slate-900 dark:text-white font-medium">3 overdue items</span> — Reference checks pending for Thompson, Davis, Williams</p>
+                  <p className="text-secondary"><span className="text-primary font-medium">3 overdue items</span> — Reference checks pending for Thompson, Davis, Williams</p>
                 </div>
                 <div className="flex items-start gap-3 pl-4">
                   <span className="text-slate-700 flex-shrink-0">•</span>
-                  <p className="text-slate-700 dark:text-slate-400"><span className="text-slate-900 dark:text-white font-medium">5 cases with documented concerns</span> — Awaiting supervisor adjudication</p>
+                  <p className="text-secondary"><span className="text-primary font-medium">5 cases with documented concerns</span> — Awaiting supervisor adjudication</p>
                 </div>
                 <div className="flex items-start gap-3 pl-4">
                   <span className="text-slate-700 flex-shrink-0">•</span>
-                  <p className="text-slate-700 dark:text-slate-400"><span className="text-slate-900 dark:text-white font-medium">2 compliance deadlines</span> — POST certification expires in 48 hours</p>
+                  <p className="text-secondary"><span className="text-primary font-medium">2 compliance deadlines</span> — POST certification expires in 48 hours</p>
                 </div>
               </div>
             </div>
@@ -260,20 +260,20 @@ export default function BackgroundsDashboard() {
             <div className="mb-5">
               <div className="flex items-center gap-2 mb-2.5">
                 <div className="w-1.5 h-1.5 bg-amber-500 rounded-full"></div>
-                <h5 className="text-[13px] font-semibold text-slate-700 dark:text-slate-300">IN PROGRESS</h5>
+                <h5 className="text-[13px] font-semibold text-secondary">IN PROGRESS</h5>
               </div>
               <div className="space-y-1.5 text-[13px]">
                 <div className="flex items-start gap-3 pl-4">
                   <span className="text-slate-700 flex-shrink-0">•</span>
-                  <p className="text-slate-700 dark:text-slate-400"><span className="text-slate-900 dark:text-white font-medium">47 active investigations</span> — 12 initial review, 15 reference checks, 8 verifications, 7 history review, 5 final review</p>
+                  <p className="text-secondary"><span className="text-primary font-medium">47 active investigations</span> — 12 initial review, 15 reference checks, 8 verifications, 7 history review, 5 final review</p>
                 </div>
                 <div className="flex items-start gap-3 pl-4">
                   <span className="text-slate-700 flex-shrink-0">•</span>
-                  <p className="text-slate-700 dark:text-slate-400"><span className="text-slate-900 dark:text-white font-medium">15 reference checks pending</span> — 8 interviews scheduled today</p>
+                  <p className="text-secondary"><span className="text-primary font-medium">15 reference checks pending</span> — 8 interviews scheduled today</p>
                 </div>
                 <div className="flex items-start gap-3 pl-4">
                   <span className="text-slate-700 flex-shrink-0">•</span>
-                  <p className="text-slate-700 dark:text-slate-400"><span className="text-slate-900 dark:text-white font-medium">12 awaiting supervisor review</span> — Average wait: 1.2 days</p>
+                  <p className="text-secondary"><span className="text-primary font-medium">12 awaiting supervisor review</span> — Average wait: 1.2 days</p>
                 </div>
               </div>
             </div>
@@ -281,20 +281,20 @@ export default function BackgroundsDashboard() {
             <div>
               <div className="flex items-center gap-2 mb-2.5">
                 <div className="w-1.5 h-1.5 bg-slate-500 rounded-full"></div>
-                <h5 className="text-[13px] font-semibold text-slate-700 dark:text-slate-300">COMPLETED THIS MONTH</h5>
+                <h5 className="text-[13px] font-semibold text-secondary">COMPLETED THIS MONTH</h5>
               </div>
               <div className="space-y-1.5 text-[13px]">
                 <div className="flex items-start gap-3 pl-4">
                   <span className="text-slate-700 flex-shrink-0">•</span>
-                  <p className="text-slate-700 dark:text-slate-400"><span className="text-slate-900 dark:text-white font-medium">28 investigations finalized</span> — 22 cleared for hire, 6 not recommended</p>
+                  <p className="text-secondary"><span className="text-primary font-medium">28 investigations finalized</span> — 22 cleared for hire, 6 not recommended</p>
                 </div>
                 <div className="flex items-start gap-3 pl-4">
                   <span className="text-slate-700 flex-shrink-0">•</span>
-                  <p className="text-slate-700 dark:text-slate-400"><span className="text-slate-900 dark:text-white font-medium">14.5 day average turnaround</span> — 3.5 days ahead of 18-day SLA target</p>
+                  <p className="text-secondary"><span className="text-primary font-medium">14.5 day average turnaround</span> — 3.5 days ahead of 18-day SLA target</p>
                 </div>
                 <div className="flex items-start gap-3 pl-4">
                   <span className="text-slate-700 flex-shrink-0">•</span>
-                  <p className="text-slate-700 dark:text-slate-400"><span className="text-slate-900 dark:text-white font-medium">On track for monthly target</span> — 28 of 35 projected (80%)</p>
+                  <p className="text-secondary"><span className="text-primary font-medium">On track for monthly target</span> — 28 of 35 projected (80%)</p>
                 </div>
               </div>
             </div>
@@ -302,11 +302,11 @@ export default function BackgroundsDashboard() {
 
           {/* Compliance Risk Indicator */}
           {metrics.slaBreachCases > 0 && (
-            <div className="mb-8 bg-slate-100 dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 border-l-[3px] border-l-amber-500/30 rounded-xl px-5 py-3">
+            <div className="mb-8 bg-slate-100 dark:bg-slate-800/25 border border-border border-l-[3px] border-l-amber-500/30 rounded-xl px-5 py-3">
               <div className="flex items-center gap-3">
                 <div className="w-1.5 h-1.5 bg-amber-500 rounded-full flex-shrink-0"></div>
                 <div>
-                  <p className="text-[13px] text-slate-900 dark:text-white"><span className="text-slate-700 dark:text-slate-400">Compliance Notice:</span> {metrics.slaBreachCases} case(s) have exceeded the 18-day SLA target.</p>
+                  <p className="text-[13px] text-primary"><span className="text-secondary">Compliance Notice:</span> {metrics.slaBreachCases} case(s) have exceeded the 18-day SLA target.</p>
                   <p className="text-[11px] text-slate-500 mt-0.5">POST certification and hiring timelines may be affected.</p>
                 </div>
               </div>
@@ -317,7 +317,7 @@ export default function BackgroundsDashboard() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
             <button
               onClick={() => navigate(createPageUrl('ActiveCases'))}
-              className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 hover:border-slate-600/40 transition-all text-left group"
+              className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 hover:border-slate-600/40 transition-all text-left group"
             >
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
@@ -326,26 +326,26 @@ export default function BackgroundsDashboard() {
                 </div>
                 <ChevronRight className="w-4 h-4 text-slate-700 group-hover:text-slate-600 dark:text-slate-400 transition-all" />
               </div>
-              <p className="text-2xl font-semibold text-slate-900 dark:text-white mb-3">{metrics.activeCases}</p>
+              <p className="text-2xl font-semibold text-primary mb-3">{metrics.activeCases}</p>
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between text-xs">
                   <span className="text-slate-500">Initial Review</span>
-                  <span className="text-slate-700 dark:text-slate-300">12</span>
+                  <span className="text-secondary">12</span>
                 </div>
                 <div className="flex items-center justify-between text-xs">
                   <span className="text-slate-500">Reference Checks</span>
-                  <span className="text-slate-700 dark:text-slate-300">15</span>
+                  <span className="text-secondary">15</span>
                 </div>
                 <div className="flex items-center justify-between text-xs">
                   <span className="text-slate-500">Pending Review</span>
-                  <span className="text-slate-700 dark:text-slate-300">{metrics.pendingReview}</span>
+                  <span className="text-secondary">{metrics.pendingReview}</span>
                 </div>
               </div>
             </button>
 
             <button
               onClick={() => navigate(createPageUrl('CriminalHistoryReview'))}
-              className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 hover:border-slate-600/40 transition-all text-left group"
+              className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 hover:border-slate-600/40 transition-all text-left group"
             >
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
@@ -354,26 +354,26 @@ export default function BackgroundsDashboard() {
                 </div>
                 <ChevronRight className="w-4 h-4 text-slate-700 group-hover:text-slate-600 dark:text-slate-400 transition-all" />
               </div>
-              <p className="text-2xl font-semibold text-slate-900 dark:text-white mb-3">{metrics.casesWithConcerns}</p>
+              <p className="text-2xl font-semibold text-primary mb-3">{metrics.casesWithConcerns}</p>
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between text-xs">
                   <span className="text-slate-500">Criminal History</span>
-                  <span className="text-slate-700 dark:text-slate-300">3</span>
+                  <span className="text-secondary">3</span>
                 </div>
                 <div className="flex items-center justify-between text-xs">
                   <span className="text-slate-500">Financial Issues</span>
-                  <span className="text-slate-700 dark:text-slate-300">3</span>
+                  <span className="text-secondary">3</span>
                 </div>
                 <div className="flex items-center justify-between text-xs">
                   <span className="text-slate-500">Employment Gaps</span>
-                  <span className="text-slate-700 dark:text-slate-300">2</span>
+                  <span className="text-secondary">2</span>
                 </div>
               </div>
             </button>
 
             <button
               onClick={() => navigate(createPageUrl('CaseClosure'))}
-              className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 hover:border-slate-600/40 transition-all text-left group"
+              className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 hover:border-slate-600/40 transition-all text-left group"
             >
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
@@ -382,26 +382,26 @@ export default function BackgroundsDashboard() {
                 </div>
                 <ChevronRight className="w-4 h-4 text-slate-700 group-hover:text-slate-600 dark:text-slate-400 transition-all" />
               </div>
-              <p className="text-2xl font-semibold text-slate-900 dark:text-white mb-3">{metrics.completedThisMonth}</p>
+              <p className="text-2xl font-semibold text-primary mb-3">{metrics.completedThisMonth}</p>
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between text-xs">
                   <span className="text-slate-500">Cleared for Hire</span>
-                  <span className="text-slate-700 dark:text-slate-300">{metrics.clearedForHire}</span>
+                  <span className="text-secondary">{metrics.clearedForHire}</span>
                 </div>
                 <div className="flex items-center justify-between text-xs">
                   <span className="text-slate-500">Not Recommended</span>
-                  <span className="text-slate-700 dark:text-slate-300">{metrics.notRecommended}</span>
+                  <span className="text-secondary">{metrics.notRecommended}</span>
                 </div>
                 <div className="flex items-center justify-between text-xs">
                   <span className="text-slate-500">Monthly Target</span>
-                  <span className="text-slate-700 dark:text-slate-300">35</span>
+                  <span className="text-secondary">35</span>
                 </div>
               </div>
             </button>
 
             <button
               onClick={() => navigate(createPageUrl('BIReports'))}
-              className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 hover:border-slate-600/40 transition-all text-left group"
+              className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 hover:border-slate-600/40 transition-all text-left group"
             >
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
@@ -410,19 +410,19 @@ export default function BackgroundsDashboard() {
                 </div>
                 <ChevronRight className="w-4 h-4 text-slate-700 group-hover:text-slate-600 dark:text-slate-400 transition-all" />
               </div>
-              <p className="text-2xl font-semibold text-slate-900 dark:text-white mb-3">{metrics.avgCompletionDays}<span className="text-base text-slate-500 ml-1">days</span></p>
+              <p className="text-2xl font-semibold text-primary mb-3">{metrics.avgCompletionDays}<span className="text-base text-slate-500 ml-1">days</span></p>
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between text-xs">
                   <span className="text-slate-500">SLA Target</span>
-                  <span className="text-slate-700 dark:text-slate-300">{metrics.slaTarget} days</span>
+                  <span className="text-secondary">{metrics.slaTarget} days</span>
                 </div>
                 <div className="flex items-center justify-between text-xs">
                   <span className="text-slate-500">Ahead of Target</span>
-                  <span className="text-slate-700 dark:text-slate-300">3.5 days</span>
+                  <span className="text-secondary">3.5 days</span>
                 </div>
                 <div className="flex items-center justify-between text-xs">
                   <span className="text-slate-500">Fastest This Month</span>
-                  <span className="text-slate-700 dark:text-slate-300">8 days</span>
+                  <span className="text-secondary">8 days</span>
                 </div>
               </div>
             </button>
@@ -430,58 +430,58 @@ export default function BackgroundsDashboard() {
 
           {/* Secondary Metrics */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
-            <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+            <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
               <div className="flex items-center gap-2 mb-2">
                 <div className="w-1.5 h-1.5 bg-slate-500 rounded-full"></div>
                 <span className="text-xs text-slate-500 uppercase tracking-wide font-medium">Today</span>
               </div>
-              <p className="text-xl font-semibold text-slate-900 dark:text-white mb-1">{metrics.interviewsToday}</p>
-              <p className="text-xs text-slate-700 dark:text-slate-400">Reference Interviews Scheduled</p>
+              <p className="text-xl font-semibold text-primary mb-1">{metrics.interviewsToday}</p>
+              <p className="text-xs text-secondary">Reference Interviews Scheduled</p>
               <p className="text-xs text-slate-500 mt-2">Next: 10:30 AM — Thompson ref #2</p>
             </div>
 
-            <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+            <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
               <div className="flex items-center gap-2 mb-2">
                 <div className="w-1.5 h-1.5 bg-amber-500 rounded-full"></div>
                 <span className="text-xs text-slate-500 uppercase tracking-wide font-medium">Pending</span>
               </div>
-              <p className="text-xl font-semibold text-slate-900 dark:text-white mb-1">{metrics.referencesPending}</p>
-              <p className="text-xs text-slate-700 dark:text-slate-400">References Awaiting Contact</p>
+              <p className="text-xl font-semibold text-primary mb-1">{metrics.referencesPending}</p>
+              <p className="text-xs text-secondary">References Awaiting Contact</p>
               <p className="text-xs text-slate-500 mt-2">Avg response time: 2.3 days</p>
             </div>
 
-            <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+            <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
               <div className="flex items-center gap-2 mb-2">
                 <div className="w-1.5 h-1.5 bg-red-500 rounded-full"></div>
                 <span className="text-xs text-slate-500 uppercase tracking-wide font-medium">Overdue</span>
               </div>
-              <p className="text-xl font-semibold text-slate-900 dark:text-white mb-1">{metrics.overdueItems}</p>
-              <p className="text-xs text-slate-700 dark:text-slate-400">Overdue Items</p>
+              <p className="text-xl font-semibold text-primary mb-1">{metrics.overdueItems}</p>
+              <p className="text-xs text-secondary">Overdue Items</p>
               <p className="text-xs text-slate-500 mt-2">Oldest: 4 days — Johnson refs</p>
             </div>
 
-            <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+            <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
               <div className="flex items-center gap-2 mb-2">
                 <div className="w-1.5 h-1.5 bg-slate-500 rounded-full"></div>
                 <span className="text-xs text-slate-500 uppercase tracking-wide font-medium">Queue</span>
               </div>
-              <p className="text-xl font-semibold text-slate-900 dark:text-white mb-1">{metrics.pendingReview}</p>
-              <p className="text-xs text-slate-700 dark:text-slate-400">Awaiting Supervisor Review</p>
+              <p className="text-xl font-semibold text-primary mb-1">{metrics.pendingReview}</p>
+              <p className="text-xs text-secondary">Awaiting Supervisor Review</p>
               <p className="text-xs text-slate-500 mt-2">Avg wait: 1.2 days</p>
             </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-8">
             {/* Investigation Pipeline */}
-            <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+            <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
               <div className="flex items-center justify-between mb-3">
                 <div>
-                  <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Investigation Pipeline</h3>
+                  <h3 className="text-[13px] font-semibold text-primary uppercase tracking-wide">Investigation Pipeline</h3>
                   <p className="text-xs text-slate-500 mt-1">47 total active — SLA Breach: {metrics.slaBreachCases} case(s) — Avg Case Age: {metrics.avgCaseAge} days</p>
                 </div>
                 <button
                   onClick={() => navigate(createPageUrl('CaseManagement'))}
-                  className="text-[13px] text-slate-700 dark:text-slate-400 hover:text-slate-700 dark:text-slate-300"
+                  className="text-[13px] text-secondary hover:text-secondary"
                 >
                   View All →
                 </button>
@@ -493,10 +493,10 @@ export default function BackgroundsDashboard() {
                     <div key={idx}>
                       <div className="flex items-center justify-between mb-1">
                         <div className="flex items-center gap-2">
-                          <span className="text-[13px] text-slate-700 dark:text-slate-300">{stage.stage}</span>
+                          <span className="text-[13px] text-secondary">{stage.stage}</span>
                           <span className="text-xs text-slate-700">— {stage.description}</span>
                         </div>
-                        <span className="text-[13px] font-semibold text-slate-700 dark:text-slate-300">{stage.count}</span>
+                        <span className="text-[13px] font-semibold text-secondary">{stage.count}</span>
                       </div>
                       <div className="w-full h-1.5 bg-slate-100 dark:bg-slate-700/30 rounded-full overflow-hidden relative">
                         <div
@@ -511,22 +511,22 @@ export default function BackgroundsDashboard() {
                   );
                 })}
               </div>
-              <div className="mt-4 pt-3 border-t border-slate-200 dark:border-slate-200 dark:border-slate-700/20 grid grid-cols-2 gap-3 text-xs">
+              <div className="mt-4 pt-3 border-t border-border dark:border-slate-700/20 grid grid-cols-2 gap-3 text-xs">
                 <div>
                   <span className="text-slate-500">Avg Pipeline Time:</span>
-                  <span className="text-slate-700 dark:text-slate-300 ml-2 font-medium">14.5 days</span>
+                  <span className="text-secondary ml-2 font-medium">14.5 days</span>
                 </div>
                 <div>
                   <span className="text-slate-500">SLA Target:</span>
-                  <span className="text-slate-700 dark:text-slate-300 ml-2 font-medium">{metrics.slaTarget} days</span>
+                  <span className="text-secondary ml-2 font-medium">{metrics.slaTarget} days</span>
                 </div>
               </div>
             </div>
 
             {/* Recent Activity */}
-            <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+            <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Recent Activity</h3>
+                <h3 className="text-[13px] font-semibold text-primary uppercase tracking-wide">Recent Activity</h3>
                 <span className="text-xs text-slate-500">Last 24 hours</span>
               </div>
               <div className="space-y-1">
@@ -537,7 +537,7 @@ export default function BackgroundsDashboard() {
                     <div key={activity.id} className="flex items-start gap-3 px-4 py-2.5 bg-slate-100 dark:bg-slate-900/20 rounded hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/30 transition-all cursor-pointer">
                       <div className={`w-1.5 h-1.5 rounded-full mt-[7px] flex-shrink-0 ${statusDot}`}></div>
                       <div className="flex-1 min-w-0">
-                        <p className="text-[13px] text-slate-700 dark:text-slate-300 leading-snug">{activity.message}</p>
+                        <p className="text-[13px] text-secondary leading-snug">{activity.message}</p>
                         <div className="flex items-center gap-2 mt-1">
                           <span className="text-[11px] text-slate-500 font-medium">{activity.user}</span>
                           <span className="text-slate-700 text-[11px]">|</span>
@@ -554,12 +554,12 @@ export default function BackgroundsDashboard() {
           </div>
 
           {/* Priority Cases */}
-          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 mb-8">
+          <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 mb-8">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Priority Cases Requiring Action</h3>
+              <h3 className="text-[13px] font-semibold text-primary uppercase tracking-wide">Priority Cases Requiring Action</h3>
               <button
                 onClick={() => navigate(createPageUrl('ActiveCases'))}
-                className="text-[13px] text-slate-700 dark:text-slate-400 hover:text-slate-700 dark:text-slate-300 font-medium"
+                className="text-[13px] text-secondary hover:text-secondary font-medium"
               >
                 View All →
               </button>
@@ -573,13 +573,13 @@ export default function BackgroundsDashboard() {
                         caseItem.priority === 'high' ? 'bg-red-500' :
                         caseItem.priority === 'medium' ? 'bg-amber-500' : 'bg-slate-600'
                       }`}></span>
-                      <span className="text-[13px] font-semibold text-slate-900 dark:text-white">{caseItem.subject}</span>
+                      <span className="text-[13px] font-semibold text-primary">{caseItem.subject}</span>
                       <span className="text-[11px] text-slate-700">{caseItem.caseNumber}</span>
                     </div>
                     <span className="text-[11px] text-slate-500 ml-[22px]">{caseItem.position}</span>
                   </div>
                   <div className="flex-shrink-0 text-center w-48">
-                    <span className="text-[13px] text-slate-700 dark:text-slate-300">{caseItem.stage}</span>
+                    <span className="text-[13px] text-secondary">{caseItem.stage}</span>
                     <div className="text-[11px] text-slate-500">{caseItem.daysOpen} days open</div>
                   </div>
                   <div className="flex-shrink-0 text-right w-56">
@@ -592,9 +592,9 @@ export default function BackgroundsDashboard() {
           </div>
 
           {/* Upcoming Deadlines */}
-          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 mb-8">
+          <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 mb-8">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Upcoming Deadlines</h3>
+              <h3 className="text-[13px] font-semibold text-primary uppercase tracking-wide">Upcoming Deadlines</h3>
               <span className="text-xs text-slate-500">Compliance and SLA-driven milestones</span>
             </div>
 
@@ -613,19 +613,19 @@ export default function BackgroundsDashboard() {
                 <div key={group} className="mb-4 last:mb-0">
                   <div className="flex items-center gap-2 mb-1.5">
                     <div className={`w-1.5 h-1.5 ${groupConfig.dot} rounded-full`}></div>
-                    <span className="text-[13px] font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wide">{groupConfig.label}</span>
+                    <span className="text-[13px] font-semibold text-secondary uppercase tracking-wide">{groupConfig.label}</span>
                   </div>
                   {items.map(deadline => (
                     <div key={deadline.id} className={`flex items-center gap-4 px-4 py-2.5 bg-slate-100 dark:bg-slate-900/20 rounded border-l-[3px] ${groupConfig.border} ml-3`}>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-3">
-                          <span className="text-[13px] font-medium text-slate-900 dark:text-white">{deadline.subject}</span>
+                          <span className="text-[13px] font-medium text-primary">{deadline.subject}</span>
                           <span className="text-[11px] text-slate-700">{deadline.caseNumber}</span>
                         </div>
-                        <p className="text-[11px] text-slate-700 dark:text-slate-400 mt-0.5">{deadline.task}</p>
+                        <p className="text-[11px] text-secondary mt-0.5">{deadline.task}</p>
                       </div>
                       <div className="flex-shrink-0 text-right">
-                        <span className="text-[13px] font-medium text-slate-700 dark:text-slate-300">{deadline.dueDate}</span>
+                        <span className="text-[13px] font-medium text-secondary">{deadline.dueDate}</span>
                         <p className="text-[11px] text-slate-500">{deadline.compliance}</p>
                       </div>
                     </div>
@@ -636,7 +636,7 @@ export default function BackgroundsDashboard() {
           </div>
 
           {/* Audit Log Footer */}
-          <div className="mb-4 px-5 py-3 bg-slate-50 dark:bg-slate-800/10 border border-slate-200 dark:border-slate-800/30 rounded-lg">
+          <div className="mb-4 px-5 py-3 bg-slate-50 dark:bg-slate-800/10 border border-border rounded-lg">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Shield className="w-3.5 h-3.5 text-slate-700" />
@@ -658,48 +658,48 @@ export default function BackgroundsDashboard() {
         onClick={() => setChatOpen(!chatOpen)}
         className="fixed bottom-6 right-6 w-14 h-14 bg-slate-600 dark:bg-slate-700 hover:bg-slate-500 dark:hover:bg-slate-600 rounded-full shadow-lg flex items-center justify-center transition-all z-40"
       >
-        {chatOpen ? <X className="w-6 h-6 text-slate-900 dark:text-white" /> : <MessageCircle className="w-6 h-6 text-slate-700 dark:text-slate-300" />}
+        {chatOpen ? <X className="w-6 h-6 text-primary" /> : <MessageCircle className="w-6 h-6 text-secondary" />}
       </button>
 
       {chatOpen && (
-        <div className="fixed bottom-24 right-6 w-full max-w-96 bg-white dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-2xl flex flex-col z-40 mx-4 sm:mx-0">
-          <div className="p-4 border-b border-slate-200 dark:border-slate-700/50">
+        <div className="fixed bottom-24 right-6 w-full max-w-96 bg-surface-raised backdrop-blur-xl border border-border rounded-xl shadow-2xl flex flex-col z-40 mx-4 sm:mx-0">
+          <div className="p-4 border-b border-border">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-slate-200 dark:bg-slate-700 rounded-lg flex items-center justify-center">
-                <Shield className="w-5 h-5 text-slate-700 dark:text-slate-300" />
+                <Shield className="w-5 h-5 text-secondary" />
               </div>
               <div>
-                <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white">BI Support & Resources</h3>
+                <h3 className="text-[13px] font-semibold text-primary">BI Support & Resources</h3>
                 <p className="text-xs text-slate-500">Quick links and assistance</p>
               </div>
             </div>
           </div>
           <div className="p-4 space-y-2">
             <button className="w-full flex items-center gap-3 p-3 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-all text-left">
-              <FileText className="w-5 h-5 text-slate-700 dark:text-slate-400" />
+              <FileText className="w-5 h-5 text-secondary" />
               <div>
-                <p className="text-[13px] text-slate-900 dark:text-white font-medium">Investigation Guidelines</p>
+                <p className="text-[13px] text-primary font-medium">Investigation Guidelines</p>
                 <p className="text-xs text-slate-500">POST standards & procedures</p>
               </div>
             </button>
             <button className="w-full flex items-center gap-3 p-3 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-all text-left">
-              <ClipboardCheck className="w-5 h-5 text-slate-700 dark:text-slate-400" />
+              <ClipboardCheck className="w-5 h-5 text-secondary" />
               <div>
-                <p className="text-[13px] text-slate-900 dark:text-white font-medium">Adjudication Checklist</p>
+                <p className="text-[13px] text-primary font-medium">Adjudication Checklist</p>
                 <p className="text-xs text-slate-500">Review requirements</p>
               </div>
             </button>
             <button className="w-full flex items-center gap-3 p-3 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-all text-left">
-              <Phone className="w-5 h-5 text-slate-700 dark:text-slate-400" />
+              <Phone className="w-5 h-5 text-secondary" />
               <div>
-                <p className="text-[13px] text-slate-900 dark:text-white font-medium">Contact IT Support</p>
+                <p className="text-[13px] text-primary font-medium">Contact IT Support</p>
                 <p className="text-xs text-slate-500">Technical assistance</p>
               </div>
             </button>
             <button className="w-full flex items-center gap-3 p-3 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-all text-left">
-              <Scale className="w-5 h-5 text-slate-700 dark:text-slate-400" />
+              <Scale className="w-5 h-5 text-secondary" />
               <div>
-                <p className="text-[13px] text-slate-900 dark:text-white font-medium">Legal Reference</p>
+                <p className="text-[13px] text-primary font-medium">Legal Reference</p>
                 <p className="text-xs text-slate-500">Compliance documentation</p>
               </div>
             </button>
