@@ -506,7 +506,7 @@ export default function EvidenceTracking() {
       notifications={biNotifications}
       settingsRoute="/bi/settings"
     >
-      <div className="p-5 lg:p-8 space-y-8 bg-slate-100 dark:bg-transparent min-h-full">
+      <div className="p-5 lg:p-8 space-y-8 min-h-full">
           <div className="max-w-7xl mx-auto">
 
             {/* Page Header */}
@@ -577,7 +577,7 @@ export default function EvidenceTracking() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-4">
                 {/* By Status */}
                 <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4">
                   <h5 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3 flex items-center gap-2">
@@ -664,7 +664,7 @@ export default function EvidenceTracking() {
               </div>
 
               {/* Requiring Action */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div className="bg-amber-500/5 border border-amber-500/20 rounded-lg p-4">
                   <h5 className="text-sm font-semibold text-amber-400 mb-3 flex items-center gap-2">
                     <AlertTriangle className="w-4 h-4" />Pending Supervisor Review: 2 items
@@ -874,7 +874,7 @@ export default function EvidenceTracking() {
             </div>
 
             {/* Tabs */}
-            <div className="flex items-center gap-1 mb-4 bg-slate-100 dark:bg-slate-800/30 rounded-xl p-1 overflow-x-auto">
+            <div className="flex items-center gap-1 mb-4 bg-slate-100/80 dark:bg-slate-800/30 rounded-xl p-1 overflow-x-auto">
               {[
                 { id: 'all', label: 'All Evidence', count: evidenceItems.length },
                 { id: 'pending', label: 'Pending Review', count: evidenceItems.filter(e => e.status === 'Pending Review' || e.status === 'Under Review').length },
@@ -948,7 +948,7 @@ export default function EvidenceTracking() {
             </div>
 
             {/* Evidence Items */}
-            <div className="space-y-4">
+            <div className="space-y-6">
               {filteredEvidence.map((item) => {
                 const isExpanded = expandedEvidence === item.id;
                 return (

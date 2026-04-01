@@ -298,7 +298,7 @@ export default function DailyCommandBrief() {
 
   return (
     <DashboardLayout>
-      <div className="p-5 lg:p-8 bg-slate-100 dark:bg-transparent min-h-full">
+      <div className="p-6 lg:p-8 bg-transparent dark:bg-transparent min-h-full">
         <div className="max-w-7xl mx-auto">
 
         {/* Page Header */}
@@ -606,7 +606,7 @@ export default function DailyCommandBrief() {
         </div>
 
         {/* Two Column Layout — Compressed highlights + On Duty */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-5">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-5">
           {/* Operational Highlights — liability/staffing/compliance ONLY */}
           <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4">
             <div className="flex items-center justify-between mb-3">

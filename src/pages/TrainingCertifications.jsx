@@ -946,7 +946,7 @@ export default function TrainingCertifications() {
               </div>
 
               {/* Category Cards */}
-              <div className="space-y-4">
+              <div className="space-y-6">
                 {trainingCategories
                   .filter(cat => activeCategory === 'all' || cat.id === activeCategory)
                   .map(category => {

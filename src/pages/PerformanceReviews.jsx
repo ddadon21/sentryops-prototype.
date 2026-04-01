@@ -548,7 +548,7 @@ export default function PerformanceReviews() {
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {evaluationCategories.map((cat, idx) => (
-                    <div key={idx} className="flex items-center gap-2 p-2 bg-slate-100 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/30 rounded-lg">
+                    <div key={idx} className="flex items-center gap-2 p-2 bg-slate-100/80 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/30 rounded-lg">
                       <Square className="w-3.5 h-3.5 text-slate-500" />
                       <span className="text-xs text-slate-700 dark:text-slate-400">{idx + 1}. {cat}</span>
                     </div>
@@ -772,7 +772,7 @@ export default function PerformanceReviews() {
                       <div className="space-y-2">
                         <p className="text-xs text-slate-500 font-medium mb-2">ESCALATION TIMELINE:</p>
                         {overdueReview.escalationHistory.map((item, idx) => (
-                          <div key={idx} className={`flex items-start gap-3 p-2 rounded-lg ${item.icon === 'current' ? 'bg-red-500/10 border border-red-500/20' : 'bg-slate-100 dark:bg-slate-800/30'}`}>
+                          <div key={idx} className={`flex items-start gap-3 p-2 rounded-lg ${item.icon === 'current' ? 'bg-red-500/10 border border-red-500/20' : 'bg-slate-100/80 dark:bg-slate-800/30'}`}>
                             <div className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${item.icon === 'current' ? 'bg-red-500/30' : 'bg-white dark:bg-slate-700/50'}`}>
                               {item.icon === 'current' ? <AlertCircle className="w-3.5 h-3.5 text-red-400" /> : <CheckCircle className="w-3.5 h-3.5 text-slate-700 dark:text-slate-400" />}
                             </div>
@@ -815,7 +815,7 @@ export default function PerformanceReviews() {
                       </h4>
                       <div className="space-y-2">
                         {overdueReview.requiredActions.map((action, idx) => (
-                          <div key={idx} className="flex items-start gap-3 p-2 bg-slate-100 dark:bg-slate-800/30 rounded-lg">
+                          <div key={idx} className="flex items-start gap-3 p-2 bg-slate-100/80 dark:bg-slate-800/30 rounded-lg">
                             <Square className="w-4 h-4 text-slate-500 mt-0.5 flex-shrink-0" />
                             <p className="text-sm text-slate-700 dark:text-slate-300">{action}</p>
                           </div>
@@ -952,7 +952,7 @@ export default function PerformanceReviews() {
             </div>
 
             {/* Review Cards */}
-            <div className="space-y-4">
+            <div className="space-y-6">
               {filteredReviews.map(review => {
                 const statusConfig = getStatusConfig(review.status);
                 const isExpanded = expandedCards[review.id];

@@ -438,7 +438,7 @@ export default function SubjectRecords() {
       notifications={biNotifications}
       settingsRoute="/bi/settings"
     >
-      <div className="p-5 lg:p-8 space-y-8 bg-slate-100 dark:bg-transparent min-h-full">
+      <div className="p-5 lg:p-8 space-y-8 min-h-full">
           <div className="max-w-7xl mx-auto">
             {/* Page Header with Case Context */}
             <div className="mb-6">
@@ -479,7 +479,7 @@ export default function SubjectRecords() {
             </div>
 
             {/* Verification Status Summary */}
-            <div className="mb-6 grid grid-cols-1 lg:grid-cols-3 gap-4">
+            <div className="mb-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Critical Alerts */}
               <div className="lg:col-span-2 bg-gradient-to-br from-red-500/10 to-red-600/5 border border-red-500/30 rounded-xl p-5">
                 <div className="flex items-start gap-4">
@@ -872,7 +872,7 @@ export default function SubjectRecords() {
 
                 {/* Employment Tab */}
                 {selectedTab === 'employment' && (
-                  <div className="space-y-4">
+                  <div className="space-y-6">
                     {subjectData.employment.map((job, idx) => (
                       <div key={idx} className={`bg-white dark:bg-slate-900/40 rounded-xl p-4 ${job.isCurrentLEO ? 'border border-blue-500/30' : ''}`}>
                         {/* LEO Status Banner */}
@@ -973,7 +973,7 @@ export default function SubjectRecords() {
 
                 {/* Education Tab */}
                 {selectedTab === 'education' && (
-                  <div className="space-y-4">
+                  <div className="space-y-6">
                     {subjectData.education.map((edu, idx) => (
                       <div key={idx} className="bg-white dark:bg-slate-900/40 rounded-xl p-4">
                         <div className="flex items-start justify-between mb-4">
@@ -1063,7 +1063,7 @@ export default function SubjectRecords() {
 
                 {/* Certifications Tab */}
                 {selectedTab === 'certifications' && (
-                  <div className="space-y-4">
+                  <div className="space-y-6">
                     {/* Critical Alert for Expiring Certifications */}
                     {subjectData.certifications.some(cert => cert.status === 'critical') && (
                       <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-4">
@@ -1142,7 +1142,7 @@ export default function SubjectRecords() {
 
                 {/* References Tab */}
                 {selectedTab === 'references' && (
-                  <div className="space-y-4">
+                  <div className="space-y-6">
                     {/* Reference Summary */}
                     <div className="bg-white dark:bg-slate-800/60 rounded-xl p-4 mb-4">
                       <div className="flex items-center justify-between">

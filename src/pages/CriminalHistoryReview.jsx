@@ -361,7 +361,7 @@ export default function CriminalHistoryReview() {
       notifications={biNotifications}
       settingsRoute="/bi/settings"
     >
-      <div className="p-5 lg:p-8 space-y-8 bg-slate-100 dark:bg-transparent min-h-full">
+      <div className="p-5 lg:p-8 space-y-8 min-h-full">
           <div className="space-y-6">
             {/* Page Header */}
             <div className="flex items-center justify-between">
@@ -445,7 +445,7 @@ export default function CriminalHistoryReview() {
                   ))}
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-6">
                   {filteredChecks.map(check => (
                     <div key={check.id} className={`bg-white dark:bg-slate-800/40 border rounded-xl overflow-hidden ${check.status === 'Review Required' ? 'border-amber-500/30' : check.status === 'In Progress' ? 'border-blue-500/30' : 'border-slate-700/50'}`}>
                       <div className="p-4 cursor-pointer" onClick={() => setExpandedCheck(expandedCheck === check.id ? null : check.id)}>
@@ -599,7 +599,7 @@ export default function CriminalHistoryReview() {
               </div>
 
               {/* Sidebar */}
-              <div className="space-y-4">
+              <div className="space-y-6">
                 <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
                   <h3 className="text-slate-900 dark:text-white font-medium mb-4 flex items-center gap-2"><Shield className="w-5 h-5 text-amber-400" />Check Status Summary</h3>
                   <div className="space-y-3">

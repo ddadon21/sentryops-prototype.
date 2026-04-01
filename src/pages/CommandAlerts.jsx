@@ -316,7 +316,7 @@ export default function CommandAlerts() {
 
   return (
     <DashboardLayout>
-      <div className="p-4 lg:p-6">
+      <div className="p-5 lg:p-8">
         <div className="max-w-[1400px] mx-auto">
 
         {/* ── Page Header ────────────────────────────────── */}
@@ -332,7 +332,7 @@ export default function CommandAlerts() {
         </div>
 
         {/* ── Severity Filter Pills ──────────────────────── */}
-        <div className="mb-4 flex items-center gap-1.5 flex-wrap">
+        <div className="mb-6 flex items-center gap-1.5 flex-wrap">
           {filterOptions.map(opt => (
             <button
               key={opt.id}

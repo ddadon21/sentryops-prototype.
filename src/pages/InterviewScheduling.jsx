@@ -367,7 +367,7 @@ export default function InterviewScheduling() {
       notifications={biNotifications}
       settingsRoute="/bi/settings"
     >
-      <div className="p-5 lg:p-8 space-y-8 bg-slate-100 dark:bg-transparent min-h-full">
+      <div className="p-5 lg:p-8 space-y-8 min-h-full">
           <div className="max-w-7xl mx-auto">
             {/* Page Header with Date/Time Context */}
             <div className="mb-6">
@@ -407,7 +407,7 @@ export default function InterviewScheduling() {
             </div>
 
             {/* Scheduling Overview */}
-            <div className="mb-6 grid grid-cols-1 lg:grid-cols-3 gap-4">
+            <div className="mb-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* This Week's Schedule */}
               <div className="lg:col-span-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
                 <div className="flex items-start gap-4">
@@ -647,7 +647,7 @@ export default function InterviewScheduling() {
 
             {/* Upcoming Interviews */}
             {selectedView === 'upcoming' && (
-              <div className="space-y-4">
+              <div className="space-y-6">
                 <div className="flex items-center justify-between mb-2">
                   <h3 className="text-sm font-medium text-slate-700 dark:text-slate-300">Upcoming Interviews (Next 7 Days)</h3>
                   <div className="flex items-center gap-2">
@@ -848,7 +848,7 @@ export default function InterviewScheduling() {
 
             {/* Pending Confirmation Tab */}
             {selectedView === 'pending' && (
-              <div className="space-y-4">
+              <div className="space-y-6">
                 <div className="flex items-center justify-between mb-2">
                   <h3 className="text-sm font-medium text-slate-700 dark:text-slate-300">Interviews Pending Confirmation</h3>
                 </div>
@@ -909,7 +909,7 @@ export default function InterviewScheduling() {
 
             {/* Completed Interviews */}
             {selectedView === 'completed' && (
-              <div className="space-y-4">
+              <div className="space-y-6">
                 <div className="flex items-center justify-between mb-2">
                   <h3 className="text-sm font-medium text-slate-700 dark:text-slate-300">Completed Interviews (January 2025)</h3>
                   <div className="flex items-center gap-2">
@@ -1078,7 +1078,7 @@ export default function InterviewScheduling() {
 
             {/* All Interviews Tab */}
             {selectedView === 'all' && (
-              <div className="space-y-4">
+              <div className="space-y-6">
                 <div className="flex items-center justify-between mb-2">
                   <h3 className="text-sm font-medium text-slate-700 dark:text-slate-300">All Interviews</h3>
                   <div className="flex items-center gap-2">

@@ -320,7 +320,7 @@ export default function ActiveCases() {
       notifications={biNotifications}
       settingsRoute="/bi/settings"
     >
-      <div className="p-5 lg:p-8 space-y-8 bg-slate-100 dark:bg-transparent min-h-full">
+      <div className="p-5 lg:p-8 space-y-8 min-h-full">
           <div className="max-w-7xl mx-auto">
             <div className="mb-6">
               <div className="flex items-center gap-3 mb-2">
@@ -348,7 +348,7 @@ export default function ActiveCases() {
                     <ClipboardCheck className="w-6 h-6 text-blue-400" />
                   </div>
                   <div className="flex-1">
-                    <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center justify-between mb-6">
                       <h4 className="text-base font-semibold text-slate-900 dark:text-white">CASELOAD SUMMARY</h4>
                       <button
                         onClick={() => setCaseloadSummaryVisible(false)}
@@ -536,7 +536,7 @@ export default function ActiveCases() {
             </div>
 
             {/* Cases List */}
-            <div className="space-y-4">
+            <div className="space-y-6">
               {filteredCases.map((case_item) => {
                 const priorityDisplay = getPriorityDisplay(case_item.priority);
                 const isExpanded = expandedCase === case_item.id;

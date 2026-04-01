@@ -315,7 +315,7 @@ export default function CaseClosure() {
       notifications={biNotifications}
       settingsRoute="/bi/settings"
     >
-      <div className="p-5 lg:p-8 space-y-8 bg-slate-100 dark:bg-transparent min-h-full">
+      <div className="p-5 lg:p-8 space-y-8 min-h-full">
           {/* Page Header */}
           <div className="mb-6">
             <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white mb-2">
@@ -892,7 +892,7 @@ export default function CaseClosure() {
 
           {/* Investigator Assessment & Key Findings */}
           <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-6 mb-6">
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-6">
               <div>
                 <h3 className="text-lg font-semibold text-slate-900 dark:text-white">INVESTIGATOR ASSESSMENT & KEY FINDINGS</h3>
                 <p className="text-sm text-slate-700 dark:text-slate-400">Prepared by: {caseData.investigator}, Badge #{caseData.investigatorBadge} | Review date: {caseData.investigationCompleted}</p>

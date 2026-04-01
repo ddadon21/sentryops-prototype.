@@ -552,7 +552,7 @@ export default function CommandCalendar() {
 
   return (
     <DashboardLayout>
-      <div className="p-5 lg:p-8 bg-slate-100 dark:bg-transparent min-h-full">
+      <div className="p-6 lg:p-8 bg-transparent dark:bg-transparent min-h-full">
         <div className="max-w-7xl mx-auto">
 
         {/* Page Header */}
@@ -677,7 +677,7 @@ export default function CommandCalendar() {
             {/* Calendar Grid */}
             <div className="lg:col-span-2 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
               {/* Month Navigation */}
-              <div className="flex items-center justify-between mb-5">
+              <div className="flex items-center justify-between mb-6">
                 <button onClick={prevMonth} className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-700/30 rounded-lg transition-colors">
                   <ChevronLeft className="w-4 h-4 text-slate-700 dark:text-slate-400" />
                 </button>
@@ -880,7 +880,7 @@ export default function CommandCalendar() {
         ) : (
           /* ===== TIMELINE VIEW ===== */
           <div className="mb-6 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
-            <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center justify-between mb-6">
               <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Next 7 Days — Hour by Hour</h3>
               <span className="text-xs text-slate-500">Dec {timelineDays[0]?.day} – Dec {timelineDays[timelineDays.length - 1]?.day}, {currentYear}</span>
             </div>

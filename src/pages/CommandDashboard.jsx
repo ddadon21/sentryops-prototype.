@@ -231,7 +231,7 @@ export default function CommandDashboard() {
 
   return (
     <DashboardLayout>
-      <div className="p-5 lg:p-8 bg-slate-100 dark:bg-transparent min-h-full">
+      <div className="p-6 lg:p-8 bg-transparent dark:bg-transparent min-h-full">
         <div className="max-w-7xl mx-auto">
 
         {/* Page Header */}
@@ -249,13 +249,13 @@ export default function CommandDashboard() {
         </div>
 
         {/* Executive Snapshot Row */}
-        <div className="mb-8 bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
+        <div className="mb-8 bg-slate-50/80 dark:bg-slate-900/30 border border-slate-200/70 dark:border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
           <h2 className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-4">Executive Snapshot</h2>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {/* Personnel */}
           <button
             onClick={() => navigate(createPageUrl('PersonnelOverview'))}
-            className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none hover:shadow-md transition-all duration-200 p-5 text-left hover:border-slate-300 dark:hover:border-slate-600/40"
+            className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none hover:shadow-lg transition-all duration-200 p-5 text-left hover:border-slate-300 dark:hover:border-slate-600/40"
           >
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
@@ -276,7 +276,7 @@ export default function CommandDashboard() {
           {/* Active Critical Incidents — dominant */}
           <button
             onClick={() => navigate(createPageUrl('Approvals'))}
-            className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none hover:shadow-md transition-all duration-200 p-5 text-left hover:border-slate-300 dark:hover:border-slate-600/40"
+            className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none hover:shadow-lg transition-all duration-200 p-5 text-left hover:border-slate-300 dark:hover:border-slate-600/40"
           >
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
@@ -319,7 +319,7 @@ export default function CommandDashboard() {
           {/* Budget Snapshot */}
           <button
             onClick={() => navigate(createPageUrl('BudgetResources'))}
-            className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none hover:shadow-md transition-all duration-200 p-5 text-left hover:border-slate-300 dark:hover:border-slate-600/40"
+            className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none hover:shadow-lg transition-all duration-200 p-5 text-left hover:border-slate-300 dark:hover:border-slate-600/40"
           >
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
@@ -407,7 +407,7 @@ export default function CommandDashboard() {
         </div>
 
         {/* Pending Approvals — Top 3 only */}
-        <div className="mb-8 bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
+        <div className="mb-8 bg-slate-50/80 dark:bg-slate-900/30 border border-slate-200/70 dark:border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
         <h2 className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-4">Pending Approvals</h2>
         <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none">
           <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100 dark:border-slate-700/40">
@@ -457,7 +457,7 @@ export default function CommandDashboard() {
                     <div className="flex items-center gap-2 flex-shrink-0">
                       <button
                         onClick={(e) => openApprovalModal(item, 'approve', e)}
-                        className="px-3 py-1.5 text-xs font-semibold bg-blue-600 text-white hover:bg-blue-700 rounded-lg transition-colors"
+                        className="px-3 py-1.5 text-xs font-semibold bg-blue-600 text-white hover:bg-blue-700 rounded-lg font-semibold transition-colors"
                       >
                         Approve
                       </button>
@@ -487,7 +487,7 @@ export default function CommandDashboard() {
         </div>
 
         {/* Federal Compliance & Audits — MOVED UP above Divisions/Staffing */}
-        <div className="mb-8 bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
+        <div className="mb-8 bg-slate-50/80 dark:bg-slate-900/30 border border-slate-200/70 dark:border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
         <h2 className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-4">Federal Compliance & Audits</h2>
         <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
           <div className="flex items-center gap-2 mb-5">
@@ -579,7 +579,7 @@ export default function CommandDashboard() {
         </div>
 
         {/* Division Status — neutral text, colored dot only, hover drill */}
-        <div className="mb-8 bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
+        <div className="mb-8 bg-slate-50/80 dark:bg-slate-900/30 border border-slate-200/70 dark:border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
           <h2 className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-4">Division Status</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
             {divisions.map((div, idx) => (
@@ -588,7 +588,7 @@ export default function CommandDashboard() {
                 onClick={() => div.route && navigate(createPageUrl(div.route))}
                 onMouseEnter={() => setHoveredDivision(idx)}
                 onMouseLeave={() => setHoveredDivision(null)}
-                className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none hover:shadow-md transition-all duration-200 p-4 text-left hover:border-slate-300 dark:hover:border-slate-600/40 relative"
+                className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none hover:shadow-lg transition-all duration-200 p-4 text-left hover:border-slate-300 dark:hover:border-slate-600/40 relative"
               >
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-sm font-medium text-slate-900 dark:text-white">{div.name}</span>
@@ -614,10 +614,10 @@ export default function CommandDashboard() {
         </div>
 
         {/* Staffing Levels — threshold markers */}
-        <div className="mb-8 bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
+        <div className="mb-8 bg-slate-50/80 dark:bg-slate-900/30 border border-slate-200/70 dark:border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
         <h2 className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-4">Staffing Levels</h2>
         <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
-          <div className="flex items-center justify-between mb-5">
+          <div className="flex items-center justify-between mb-6">
             <span className="text-sm font-semibold text-slate-900 dark:text-white">Authorized Staffing Overview</span>
             <span className="text-[11px] text-slate-500">164/178 authorized (92.1%)</span>
           </div>
@@ -671,7 +671,7 @@ export default function CommandDashboard() {
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={closeApprovalModal}
           />
-          <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl p-6 max-w-md w-full shadow-2xl">
+          <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl p-8 max-w-md w-full shadow-2xl">
             <div className="flex items-start gap-3 mb-5">
               <div className={`w-10 h-10 rounded-lg flex items-center justify-center border ${
                 approvalAction === 'approve' ? 'border-emerald-500/20' : 'border-red-500/20'
@@ -708,7 +708,7 @@ export default function CommandDashboard() {
             <div className="flex gap-3">
               <button
                 onClick={closeApprovalModal}
-                className="flex-1 px-4 py-2.5 bg-slate-100 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white text-sm font-medium transition-colors"
+                className="flex-1 px-4 py-2.5 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-200 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-white text-sm font-medium transition-colors"
               >
                 Cancel
               </button>

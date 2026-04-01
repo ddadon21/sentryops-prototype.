@@ -402,7 +402,7 @@ export default function FinancialBackground() {
       notifications={biNotifications}
       settingsRoute="/bi/settings"
     >
-      <div className="p-5 lg:p-8 space-y-8 bg-slate-100 dark:bg-transparent min-h-full">
+      <div className="p-5 lg:p-8 space-y-8 min-h-full">
           {/* Page Header */}
           <div className="mb-6">
             <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-4">
@@ -532,7 +532,7 @@ export default function FinancialBackground() {
 
             {/* Subject Summaries */}
             <div className="mt-5 pt-5 border-t border-slate-200 dark:border-slate-700/50">
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {/* Excellent */}
                 <div className="bg-green-500/5 border border-green-500/20 rounded-lg p-3">
                   <div className="flex items-center gap-2 mb-2">
@@ -625,7 +625,7 @@ export default function FinancialBackground() {
           </div>
 
           {/* Credit Report Cards */}
-          <div className="space-y-4">
+          <div className="space-y-6">
             {filteredReports.map((report) => {
               const isExpanded = expandedReport === report.id;
               const statusColor = getStatusColor(report.statusCategory);

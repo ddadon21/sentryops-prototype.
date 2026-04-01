@@ -396,7 +396,7 @@ export default function ReportsAnalytics() {
 
   return (
     <DashboardLayout>
-      <div className="p-5 lg:p-8 space-y-8 bg-slate-100 dark:bg-transparent min-h-full">
+      <div className="p-5 lg:p-8 space-y-8 min-h-full">
           <div className="max-w-7xl mx-auto">
             {/* Enhanced Page Header with KPI Metrics */}
             <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4 mb-6">
@@ -493,7 +493,7 @@ export default function ReportsAnalytics() {
             {/* Enhanced AI Analytics Intelligence - 3 Column Grid */}
             <div className="mb-6 bg-gradient-to-br from-purple-500/10 to-purple-600/5 border border-purple-500/20 rounded-xl overflow-hidden">
               <div className="p-5">
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-purple-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
                       <Bot className="w-6 h-6 text-purple-400" />
@@ -521,7 +521,7 @@ export default function ReportsAnalytics() {
                 </div>
 
                 {aiInsightsExpanded && (
-                  <div className="space-y-4">
+                  <div className="space-y-6">
                     {/* Performance Highlights Summary */}
                     <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
                       <div className="flex items-center gap-2 mb-3">
@@ -895,7 +895,7 @@ export default function ReportsAnalytics() {
 
                 {/* Enhanced Monthly Trends */}
                 <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-6">
-                  <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-2">
                       <TrendingUp className="w-5 h-5 text-blue-400" />
                       <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Monthly Trends</h3>
@@ -984,10 +984,10 @@ export default function ReportsAnalytics() {
               <div className="space-y-6">
                 <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-6">
                   <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Division Performance</h3>
-                  <div className="space-y-4">
+                  <div className="space-y-6">
                     {divisionPerformance.map((division, idx) => (
                       <div key={idx} className="bg-white dark:bg-slate-900/50 rounded-xl p-5">
-                        <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center justify-between mb-6">
                           <h4 className="text-base font-semibold text-slate-900 dark:text-white">{division.name}</h4>
                           <div className={`px-3 py-1 rounded-full text-xs font-bold ${
                             division.efficiency >= 90 ? 'bg-green-500/20 text-green-600 dark:text-green-400' :

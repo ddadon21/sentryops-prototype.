@@ -386,7 +386,7 @@ export default function ApplicantTracking() {
             </div>
 
             {/* Applicant List */}
-            <div className="space-y-4">
+            <div className="space-y-6">
 
               {/* Marcus Johnson - Screening Stage */}
               <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
@@ -658,7 +658,7 @@ export default function ApplicantTracking() {
                     <div>
                       <h4 className="text-sm font-bold text-amber-400 uppercase tracking-wide mb-3">Interview Results</h4>
                       <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
-                        <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center justify-between mb-6">
                           <div>
                             <p className="text-sm font-bold text-green-400">ORAL BOARD INTERVIEW COMPLETED</p>
                             <p className="text-xs text-slate-700 dark:text-slate-400">February 11, 2026 • GCSO HQ, Sheriff's Conference Room</p>
@@ -1064,7 +1064,7 @@ export default function ApplicantTracking() {
                           <p className="text-sm text-slate-900 dark:text-white font-medium">3 years GA Dept of Corrections</p>
                           <p className="text-xs text-slate-700 dark:text-slate-400">Correctional Officer II, Metro State Prison (2021-2024)</p>
                         </div>
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-2 gap-6">
                           <div>
                             <p className="text-xs text-slate-500 mb-1">Education</p>
                             <p className="text-sm text-slate-900 dark:text-white">High School Diploma (South Gwinnett HS, 2020)</p>

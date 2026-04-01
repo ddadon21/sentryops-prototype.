@@ -332,7 +332,7 @@ export default function ReferenceChecks() {
       notifications={biNotifications}
       settingsRoute="/bi/settings"
     >
-      <div className="p-5 lg:p-8 space-y-8 bg-slate-100 dark:bg-transparent min-h-full">
+      <div className="p-5 lg:p-8 space-y-8 min-h-full">
           <div className="max-w-7xl mx-auto">
 
             {/* Page Header */}
@@ -408,7 +408,7 @@ export default function ReferenceChecks() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-4">
                 {/* Completed Summary */}
                 <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4">
                   <h5 className="text-sm font-semibold text-green-400 mb-3 flex items-center gap-2">
@@ -626,7 +626,7 @@ export default function ReferenceChecks() {
             </div>
 
             {/* Tabs */}
-            <div className="flex items-center gap-1 mb-6 bg-slate-100 dark:bg-slate-800/30 rounded-xl p-1 overflow-x-auto">
+            <div className="flex items-center gap-1 mb-6 bg-slate-100/80 dark:bg-slate-800/30 rounded-xl p-1 overflow-x-auto">
               {[
                 { id: 'pending', label: 'Pending', count: pendingRefs.length },
                 { id: 'completed', label: 'Completed', count: completedRefs.length },
@@ -651,7 +651,7 @@ export default function ReferenceChecks() {
             </div>
 
             {/* Reference Cards */}
-            <div className="space-y-4">
+            <div className="space-y-6">
               {getFilteredRefs().map((ref) => {
                 const isExpanded = expandedRef === ref.id;
                 const isCompleted = ref.status === 'Completed';
@@ -795,7 +795,7 @@ export default function ReferenceChecks() {
                           </button>
 
                           {isExpanded && (
-                            <div className="space-y-4">
+                            <div className="space-y-6">
                               {/* Disciplinary */}
                               <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
                                 <h4 className="text-xs font-semibold text-slate-700 dark:text-slate-400 mb-2 uppercase tracking-wider">Disciplinary History (Per Reference)</h4>

@@ -544,7 +544,7 @@ export default function EmploymentVerification() {
       notifications={biNotifications}
       settingsRoute="/bi/settings"
     >
-      <div className="p-5 lg:p-8 space-y-8 bg-slate-100 dark:bg-transparent min-h-full">
+      <div className="p-5 lg:p-8 space-y-8 min-h-full">
           <div className="space-y-6">
             {/* Page Header */}
             <div className="flex items-center justify-between">
@@ -777,7 +777,7 @@ export default function EmploymentVerification() {
                 </div>
 
                 {/* Employer Cards */}
-                <div className="space-y-4">
+                <div className="space-y-6">
                   {filteredRecords.map(record => (
                     <div
                       key={record.id}
@@ -842,7 +842,7 @@ export default function EmploymentVerification() {
                       {expandedEmployer === record.id && (
                         <div className="border-t border-slate-200 dark:border-slate-700/50 p-4 space-y-4">
                           {/* Verification Details */}
-                          <div className="grid grid-cols-2 gap-4">
+                          <div className="grid grid-cols-2 gap-6">
                             <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
                               <h4 className="text-slate-700 dark:text-slate-400 text-xs font-medium mb-2">VERIFICATION METHOD</h4>
                               <p className="text-slate-900 dark:text-white text-sm">{record.verificationMethod}</p>
@@ -961,7 +961,7 @@ export default function EmploymentVerification() {
                           )}
 
                           {/* Performance & Disciplinary Grid */}
-                          <div className="grid grid-cols-2 gap-4">
+                          <div className="grid grid-cols-2 gap-6">
                             <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
                               <h4 className="text-slate-700 dark:text-slate-400 text-xs font-medium mb-2 flex items-center gap-1">
                                 <TrendingUp className="w-3 h-3" />
@@ -1090,7 +1090,7 @@ export default function EmploymentVerification() {
               </div>
 
               {/* Sidebar */}
-              <div className="space-y-4">
+              <div className="space-y-6">
                 {/* Internal Affairs Requirement Panel */}
                 <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
                   <h3 className="text-slate-900 dark:text-white font-medium mb-4 flex items-center gap-2">

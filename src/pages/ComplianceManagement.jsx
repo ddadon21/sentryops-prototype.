@@ -832,7 +832,7 @@ export default function ComplianceManagement() {
                 </div>
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-6">
                 {criticalViolations.map(violation => (
                   <div key={violation.id} className="bg-red-500/5 border border-red-500/30 rounded-xl overflow-hidden">
                     <div
@@ -1051,7 +1051,7 @@ export default function ComplianceManagement() {
             </div>
 
             {/* Compliance Areas */}
-            <div className="space-y-4">
+            <div className="space-y-6">
               <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Regulatory Compliance Areas</h3>
               {complianceAreas.map(area => {
                 const statusConfig = getStatusConfig(area.status);

@@ -353,9 +353,9 @@ export default function HRDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-100 dark:bg-gradient-to-br dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 flex">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-slate-100/80 to-slate-100 dark:bg-gradient-to-br dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 flex">
       {/* Sidebar */}
-      <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-slate-200 dark:border-slate-800/50 backdrop-blur-xl bg-white dark:bg-slate-900/30 flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
+      <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-slate-200/70 dark:border-slate-800/50 backdrop-blur-xl bg-white/95 dark:bg-slate-900/30 shadow-[2px_0_20px_rgba(0,0,0,0.04)] dark:shadow-none flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
         <div className="p-4 border-b border-slate-200 dark:border-slate-700/50 flex items-center justify-between">
           {!sidebarCollapsed && (
             <div className="flex items-center gap-2">
@@ -374,7 +374,7 @@ export default function HRDashboard() {
           </button>
         </div>
 
-        <nav className="flex-1 overflow-y-auto bg-slate-100 dark:bg-transparent p-4 space-y-2">
+        <nav className="flex-1 overflow-y-auto p-4 space-y-2">
           {navigation.map(item => {
             const Icon = item.icon;
             const isActive = activePage === item.id;
@@ -454,7 +454,7 @@ export default function HRDashboard() {
       {/* Main Content */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Header */}
-        <header className="border-b border-slate-200 dark:border-slate-800/50 backdrop-blur-xl bg-slate-50 dark:bg-slate-900/30">
+        <header className="border-b border-slate-200/60 dark:border-slate-800/50 backdrop-blur-lg bg-white/75 dark:bg-slate-900/30 shadow-[0_2px_20px_rgba(0,0,0,0.06)] dark:shadow-none">
           <div className="px-4 lg:px-6 py-4 flex items-center justify-between gap-4">
             <div className="flex items-center gap-4 flex-1 min-w-0">
               <button onClick={() => setSidebarOpen(!sidebarOpen)} className="lg:hidden p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg">
@@ -545,7 +545,7 @@ export default function HRDashboard() {
         </header>
 
         {/* Main Content Area */}
-        <main className="flex-1 overflow-y-auto bg-slate-100 dark:bg-transparent p-4 lg:p-6">
+        <main className="flex-1 overflow-y-auto p-4 lg:p-6">
           {/* Page Header */}
           <div className="mb-6">
             <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white mb-2">Human Resources Operations Center</h2>
@@ -1087,7 +1087,7 @@ export default function HRDashboard() {
             <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-6">
               <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">PERSONNEL OPERATIONS SUMMARY</h3>
 
-              <div className="space-y-4">
+              <div className="space-y-6">
                 <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4">
                   <h4 className="text-sm font-semibold text-amber-600 dark:text-amber-400 mb-3">AUTHORIZED POSITIONS & CURRENT STAFFING</h4>
                   <p className="text-2xl font-bold text-slate-900 dark:text-white mb-2">178 <span className="text-sm font-normal text-slate-700 dark:text-slate-400">Total Authorized</span></p>
@@ -1163,7 +1163,7 @@ export default function HRDashboard() {
             <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-6">
               <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">COMPLIANCE MONITORING - LEGAL REQUIREMENTS</h3>
 
-              <div className="space-y-4">
+              <div className="space-y-6">
                 <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4">
                   <h4 className="text-sm font-semibold text-green-600 dark:text-green-400 mb-3">POST CERTIFICATION STATUS (Sworn Personnel)</h4>
                   <p className="text-xs text-slate-700 dark:text-slate-400 mb-2">Georgia POST Certification Compliance: 100% REQUIRED</p>

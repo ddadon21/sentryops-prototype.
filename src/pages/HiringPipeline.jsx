@@ -663,7 +663,7 @@ export default function HiringPipeline() {
 
             {/* Pipeline Overview */}
             <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5 mb-6">
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between mb-6">
                 <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Active Applicants by Position</h3>
                 <div className="flex items-center gap-2">
                   <span className="text-xs text-slate-700 dark:text-slate-400">Applicants-to-Vacancy Ratio:</span>
@@ -790,7 +790,7 @@ export default function HiringPipeline() {
                           )}
                         </div>
                         <p className="text-sm text-slate-700 dark:text-slate-300 mb-3">{bottleneck.description}</p>
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                           <div>
                             <p className="text-xs text-slate-500 mb-2">Details:</p>
                             <ul className="space-y-1">
@@ -933,7 +933,7 @@ export default function HiringPipeline() {
             </div>
 
             {/* Pipeline Stages */}
-            <div className="space-y-4">
+            <div className="space-y-6">
               {pipelineStages.map((stage, stageIdx) => {
                 const Icon = stage.icon;
                 const colorConfig = getStageColor(stage.color);
@@ -1063,7 +1063,7 @@ export default function HiringPipeline() {
                           <div className="mb-4">
                             <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-xl mb-4">
                               <h4 className="font-semibold text-red-400 mb-3">Investigator Capacity Analysis</h4>
-                              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                                 <div>
                                   <p className="text-xs text-slate-500 mb-2">Current Investigators:</p>
                                   {stage.investigatorCapacity.investigators.map((inv, idx) => (

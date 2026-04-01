@@ -210,9 +210,9 @@ export default function HRSettings() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-100 dark:bg-gradient-to-br dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 flex">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-slate-100/80 to-slate-100 dark:bg-gradient-to-br dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 flex">
       {/* Sidebar */}
-      <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-slate-200 dark:border-slate-800/50 backdrop-blur-xl bg-white dark:bg-slate-900/30 flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
+      <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-slate-200/70 dark:border-slate-800/50 backdrop-blur-xl bg-white/95 dark:bg-slate-900/30 shadow-[2px_0_20px_rgba(0,0,0,0.04)] dark:shadow-none flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
         <div className="p-4 border-b border-slate-200 dark:border-slate-700/50 flex items-center justify-between">
           {!sidebarCollapsed && (
             <div className="flex items-center gap-2">
@@ -231,7 +231,7 @@ export default function HRSettings() {
           </button>
         </div>
 
-        <nav className="flex-1 overflow-y-auto bg-slate-100 dark:bg-transparent p-4 space-y-2">
+        <nav className="flex-1 overflow-y-auto p-4 space-y-2">
           {navigation.map(item => {
             const Icon = item.icon;
             const isActive = activePage === item.id;
@@ -317,7 +317,7 @@ export default function HRSettings() {
       )}
 
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="border-b border-slate-200 dark:border-slate-800/50 backdrop-blur-xl bg-slate-50 dark:bg-slate-900/30">
+        <header className="border-b border-slate-200/60 dark:border-slate-800/50 backdrop-blur-lg bg-white/75 dark:bg-slate-900/30 shadow-[0_2px_20px_rgba(0,0,0,0.06)] dark:shadow-none">
           <div className="px-4 lg:px-6 py-4 flex items-center justify-between gap-4">
             <div className="flex items-center gap-4 flex-1 min-w-0">
               <button
@@ -425,7 +425,7 @@ export default function HRSettings() {
           </div>
         </header>
 
-        <main className="flex-1 overflow-y-auto bg-slate-100 dark:bg-transparent p-4 lg:p-6">
+        <main className="flex-1 overflow-y-auto p-4 lg:p-6">
           <div className="max-w-6xl mx-auto">
             <div className="mb-6">
               <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white mb-2">HR Settings</h2>
@@ -611,7 +611,7 @@ export default function HRSettings() {
                   <div className="space-y-6">
                     <div>
                       <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-4 uppercase tracking-wide">Delivery Methods</h4>
-                      <div className="space-y-4">
+                      <div className="space-y-6">
                         {[
                           { key: 'emailNotifications', label: 'Email Notifications', desc: 'Receive notifications via email', icon: Mail },
                           { key: 'smsNotifications', label: 'SMS Notifications', desc: 'Receive urgent alerts via text', icon: Smartphone },
@@ -797,7 +797,7 @@ export default function HRSettings() {
                   <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-6">
                     <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-6">Security Settings</h3>
 
-                    <div className="space-y-4">
+                    <div className="space-y-6">
                       <div className="flex items-center justify-between p-4 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl">
                         <div className="flex items-center gap-4">
                           <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center">
@@ -934,7 +934,7 @@ export default function HRSettings() {
                       </button>
                     </div>
 
-                    <div className="space-y-4">
+                    <div className="space-y-6">
                       {Object.entries(integrations).map(([key, integration]) => (
                         <div key={key} className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
                           <div className="flex items-start justify-between">

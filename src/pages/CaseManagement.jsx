@@ -215,7 +215,7 @@ export default function CaseManagement() {
       notifications={biNotifications}
       settingsRoute="/bi/settings"
     >
-      <div className="p-5 lg:p-8 space-y-8 bg-slate-100 dark:bg-transparent min-h-full">
+      <div className="p-5 lg:p-8 space-y-8 min-h-full">
           <div className="max-w-7xl mx-auto">
             {/* Case-Specific Page Header */}
             <div className="mb-6">
@@ -254,7 +254,7 @@ export default function CaseManagement() {
 
             {/* Investigation Status Summary (replaced AI Insights) */}
             <div className="mb-6 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between mb-6">
                 <h4 className="text-base font-semibold text-slate-900 dark:text-white">Investigation Status Summary</h4>
                 <span className="text-xs text-slate-500">Last updated: {caseDetails.activityHistory[0]?.date}</span>
               </div>
@@ -657,7 +657,7 @@ export default function CaseManagement() {
                 {/* Documents Tab */}
                 {selectedTab === 'documents' && (
                   <div>
-                    <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center justify-between mb-6">
                       <p className="text-sm text-slate-700 dark:text-slate-400">{caseDetails.documents.length} documents on file</p>
                       <button className="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
                         <Upload className="w-3 h-3" />
@@ -702,14 +702,14 @@ export default function CaseManagement() {
                 {/* Investigator Notes Tab */}
                 {selectedTab === 'notes' && (
                   <div>
-                    <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center justify-between mb-6">
                       <p className="text-sm text-slate-700 dark:text-slate-400">{caseDetails.notes.length} investigator notes</p>
                       <button className="px-3 py-1.5 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
                         <Plus className="w-3 h-3" />
                         Add Note
                       </button>
                     </div>
-                    <div className="space-y-4">
+                    <div className="space-y-6">
                       {caseDetails.notes.map((note, idx) => (
                         <div key={idx} className="p-4 bg-white dark:bg-slate-900/40 rounded-lg border-l-4 border-amber-500/50">
                           <div className="flex items-center justify-between mb-2">
@@ -730,7 +730,7 @@ export default function CaseManagement() {
                 {/* Activity History Tab */}
                 {selectedTab === 'history' && (
                   <div>
-                    <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center justify-between mb-6">
                       <p className="text-sm text-slate-700 dark:text-slate-400">Complete audit trail for case {caseDetails.id}</p>
                       <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
                         <Download className="w-3 h-3" />
@@ -741,7 +741,7 @@ export default function CaseManagement() {
                       {/* Timeline line */}
                       <div className="absolute left-4 top-2 bottom-2 w-px bg-white dark:bg-slate-700/50"></div>
 
-                      <div className="space-y-4">
+                      <div className="space-y-6">
                         {caseDetails.activityHistory.map((activity, idx) => (
                           <div key={idx} className="flex gap-4 relative">
                             <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 z-10 ${

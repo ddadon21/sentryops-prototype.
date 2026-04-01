@@ -550,7 +550,7 @@ export default function Approvals() {
 
   return (
     <DashboardLayout>
-      <div className="p-4 lg:p-6">
+      <div className="p-5 lg:p-8">
           <div className="max-w-[1400px] mx-auto">
 
             {/* ── Page Header ────────────────────────────────── */}
@@ -580,7 +580,7 @@ export default function Approvals() {
                     </span>
                   )}
                   {activeTab === 'decision-log' && (
-                    <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-100 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-lg text-[11px] text-slate-700 dark:text-slate-400 hover:bg-slate-200 dark:hover:text-white transition-colors">
+                    <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-100/80 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-lg text-[11px] text-slate-700 dark:text-slate-400 hover:bg-slate-200 dark:hover:text-white transition-colors">
                       <Download className="w-3 h-3" />
                       Export
                     </button>
@@ -648,7 +648,7 @@ export default function Approvals() {
 
             {/* ── Filter Pills (operational style, matches alerts) ── */}
             {activeTab === 'pending' && (
-              <div className="mb-4 flex items-center gap-1.5 flex-wrap">
+              <div className="mb-6 flex items-center gap-1.5 flex-wrap">
                 {[
                   { id: 'all', label: 'All', count: approvalsList.length },
                   { id: 'urgent', label: 'Urgent', count: urgentCount },
@@ -966,7 +966,7 @@ export default function Approvals() {
                                     {approval.documents.map((doc, idx) => (
                                       <button
                                         key={idx}
-                                        className="flex items-center gap-1 px-1.5 py-0.5 bg-slate-100 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-700/30 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded text-[10px] text-slate-700 dark:text-slate-300 transition-colors"
+                                        className="flex items-center gap-1 px-1.5 py-0.5 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-700/30 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded text-[10px] text-slate-700 dark:text-slate-300 transition-colors"
                                       >
                                         <FileText className="w-2.5 h-2.5" />
                                         {doc}
@@ -1017,7 +1017,7 @@ export default function Approvals() {
             {activeTab === 'decision-log' && (
               <>
                 {/* Filters */}
-                <div className="mb-4 flex items-center gap-1.5 flex-wrap">
+                <div className="mb-6 flex items-center gap-1.5 flex-wrap">
                   {[
                     { id: 'all', label: 'All', count: approvalHistory.length },
                     { id: 'approved', label: 'Approved', count: approvalHistory.filter(h => h.decision === 'approved').length },
@@ -1123,7 +1123,7 @@ export default function Approvals() {
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={closeApprovalModal}
           />
-          <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl p-6 max-w-md w-full shadow-2xl">
+          <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl p-8 max-w-md w-full shadow-2xl">
             <div className="flex items-start gap-4 mb-6">
               <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
                 approvalAction === 'approve' ? 'bg-green-500/20' : 'bg-red-500/20'
@@ -1199,8 +1199,8 @@ export default function Approvals() {
               </button>
             </div>
 
-            <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-6">
+              <div className="grid grid-cols-2 gap-6">
                 <div className="bg-slate-50 dark:bg-slate-800/30 rounded-xl p-4 border border-slate-200 dark:border-slate-700/50">
                   <p className="text-xs text-slate-700 dark:text-slate-400 mb-1">Submitted By</p>
                   <p className="text-sm font-medium text-slate-900 dark:text-white">{historyDetailModal.submittedBy}</p>

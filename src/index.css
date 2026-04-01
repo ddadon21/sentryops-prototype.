@@ -5,7 +5,7 @@
 @layer base {
   html,
   body {
-    @apply m-0 p-0 antialiased bg-slate-100 dark:bg-slate-950;
+    @apply m-0 p-0 antialiased dark:bg-slate-950;
     transition: background-color 0.2s ease, color 0.2s ease;
   }
 
@@ -21,20 +21,66 @@
 }
 
 /* ─────────────────────────────────────────────────────────────
+   SYSTEM-LEVEL — Page background gradient (light mode)
+   ───────────────────────────────────────────────────────────── */
+html:not(.dark) body {
+  background: linear-gradient(160deg, #f8fafc 0%, #f1f5f9 45%, #e8edf4 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   SYSTEM-LEVEL — Card glass elevation
+   Targets rounded-xl elements with slate-200 border (cards/panels)
+   Adds frosted glass look, deep shadow, and hover lift.
+   ───────────────────────────────────────────────────────────── */
+html:not(.dark) [class~="rounded-xl"][class*="border-slate-200"] {
+  background-color: rgba(255, 255, 255, 0.85);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.04);
+  border-color: rgba(226, 232, 240, 0.70);
+  transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+
+/* Hover elevation for interactive cards */
+html:not(.dark) [class~="rounded-xl"][class*="border-slate-200"]:hover {
+  box-shadow: 0 10px 36px rgba(0, 0, 0, 0.10), 0 3px 10px rgba(0, 0, 0, 0.06);
+  border-color: rgba(203, 213, 225, 0.80);
+}
+
+/* Lift effect on hover — only for elements that have hover:shadow in class */
+html:not(.dark) [class~="rounded-xl"][class*="border-slate-200"][class*="hover:shadow"] {
+  cursor: default;
+}
+html:not(.dark) [class~="rounded-xl"][class*="border-slate-200"][class*="hover:shadow"]:hover {
+  transform: translateY(-1px);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   SYSTEM-LEVEL — Modal / overlay panels
+   Gives modals a solid premium look
+   ───────────────────────────────────────────────────────────── */
+html:not(.dark) [class~="rounded-xl"][class*="shadow-2xl"] {
+  background-color: rgba(255, 255, 255, 0.95);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15), 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+/* ─────────────────────────────────────────────────────────────
    SYSTEM-LEVEL LIGHT MODE — Tables
-   Applies globally so every table in the app is consistent
-   without per-component class changes.
    ───────────────────────────────────────────────────────────── */
 html:not(.dark) table thead th,
 html:not(.dark) table thead td {
   background-color: rgb(248 250 252);   /* slate-50  */
   color: rgb(51 65 85);                 /* slate-700 */
   font-weight: 600;
-  border-bottom: 1px solid rgb(226 232 240); /* slate-200 */
+  border-bottom: 2px solid rgb(226 232 240); /* slate-200 */
 }
 
 html:not(.dark) table tbody tr {
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.90);
   border-bottom: 1px solid rgb(241 245 249); /* slate-100 */
 }
 
@@ -57,7 +103,7 @@ html:not(.dark) table tbody td span.muted {
 html:not(.dark) input:not([type="range"]),
 html:not(.dark) textarea,
 html:not(.dark) select {
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.90);
   color: rgb(15 23 42);                 /* slate-900 */
   border-color: rgb(203 213 225);       /* slate-300 */
 }
@@ -119,15 +165,38 @@ button {
   transition: all 0.15s ease;
 }
 button:active:not(:disabled) {
-  transform: scale(0.98);
+  transform: scale(0.97);
+}
+
+/* Primary buttons get a subtle inner glow */
+html:not(.dark) button[class*="bg-blue-6"]:not(:disabled),
+html:not(.dark) button[class*="bg-blue-7"]:not(:disabled) {
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.30), 0 1px 4px rgba(37, 99, 235, 0.20);
+}
+html:not(.dark) button[class*="bg-blue-6"]:hover:not(:disabled),
+html:not(.dark) button[class*="bg-blue-7"]:hover:not(:disabled) {
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.38), 0 2px 6px rgba(37, 99, 235, 0.24);
+}
+
+/* Danger buttons */
+html:not(.dark) button[class*="bg-red-6"]:not(:disabled) {
+  box-shadow: 0 4px 14px rgba(220, 38, 38, 0.28), 0 1px 4px rgba(220, 38, 38, 0.18);
+}
+
+/* Success buttons */
+html:not(.dark) button[class*="bg-emerald-6"]:not(:disabled),
+html:not(.dark) button[class*="bg-green-5"]:not(:disabled),
+html:not(.dark) button[class*="bg-green-6"]:not(:disabled) {
+  box-shadow: 0 4px 14px rgba(5, 150, 105, 0.28), 0 1px 4px rgba(5, 150, 105, 0.18);
 }
 
 /* ─────────────────────────────────────────────────────────────
-   SYSTEM-LEVEL — Card hover elevation
-   All .hover\:shadow-md cards get consistent lift
+   SYSTEM-LEVEL — Stat/metric number emphasis
    ───────────────────────────────────────────────────────────── */
-html:not(.dark) [class*="rounded-xl"][class*="shadow-sm"] {
-  transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+html:not(.dark) [class*="text-3xl"][class*="font-bold"],
+html:not(.dark) [class*="text-4xl"][class*="font-bold"],
+html:not(.dark) [class*="text-2xl"][class*="font-bold"] {
+  letter-spacing: -0.02em;
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -149,4 +218,13 @@ html:not(.dark) [class*="rounded-xl"][class*="shadow-sm"] {
 
 .toast-enter {
   animation: slide-in-right 0.25s ease;
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in-up {
+  animation: fade-in-up 0.3s ease both;
 }

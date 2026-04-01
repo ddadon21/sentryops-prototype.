@@ -40,7 +40,7 @@ export default function UserProfile() {
 
   return (
     <DashboardLayout>
-      <div className="p-5 lg:p-8 bg-slate-100 dark:bg-transparent min-h-full">
+      <div className="p-6 lg:p-8 bg-transparent dark:bg-transparent min-h-full">
         <div className="max-w-4xl mx-auto">
 
           {/* Page Header */}
@@ -139,7 +139,7 @@ export default function UserProfile() {
                       </button>
                       <button
                         onClick={handleSave}
-                        className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 text-white hover:bg-blue-700 rounded-lg text-sm font-medium transition-all shadow-sm"
+                        className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 text-white hover:bg-blue-700 rounded-lg font-semibold text-sm font-medium transition-all shadow-sm"
                       >
                         <Save className="w-3.5 h-3.5" />
                         Save Changes

@@ -872,7 +872,7 @@ export default function EmployeeRecords() {
             {/* AI Workforce Insights */}
             {aiInsightsVisible && (
               <div className="mb-6 bg-gradient-to-r from-violet-500/10 via-blue-500/10 to-cyan-500/10 border border-violet-500/20 rounded-xl p-5">
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 bg-violet-500/20 rounded-lg flex items-center justify-center">
                       <Sparkles className="w-5 h-5 text-violet-400" />
@@ -933,7 +933,7 @@ export default function EmployeeRecords() {
 
             {/* Personnel Directory */}
             <div className="mb-8">
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">
                     <Users className="w-5 h-5 text-blue-400" />
@@ -1056,7 +1056,7 @@ export default function EmployeeRecords() {
               )}
 
               {/* Employee Cards */}
-              {viewMode === 'card' && <div className="space-y-4">
+              {viewMode === 'card' && <div className="space-y-6">
                 {filteredEmployees.map(employee => {
                   const statusConfig = getStatusConfig(employee.status);
 
@@ -1286,7 +1286,7 @@ export default function EmployeeRecords() {
                   {selectedEmployee.certifications.map((cert, idx) => {
                     const certConfig = getCertStatusConfig(cert.status);
                     return (
-                      <div key={idx} className={`p-3 rounded-lg border ${certConfig.border} ${cert.status === 'expired' ? 'bg-red-500/5' : cert.status === 'expiring' ? 'bg-amber-500/5' : 'bg-slate-100 dark:bg-slate-800/30'}`}>
+                      <div key={idx} className={`p-3 rounded-lg border ${certConfig.border} ${cert.status === 'expired' ? 'bg-red-500/5' : cert.status === 'expiring' ? 'bg-amber-500/5' : 'bg-slate-100/80 dark:bg-slate-800/30'}`}>
                         <div className="flex items-center justify-between mb-1">
                           <p className="text-xs font-medium text-slate-900 dark:text-white">{cert.name}</p>
                           <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${certConfig.bg} ${certConfig.text}`}>{certConfig.label}</span>
@@ -1306,7 +1306,7 @@ export default function EmployeeRecords() {
               </div>
 
               {/* Performance */}
-              <div className="bg-slate-100 dark:bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
+              <div className="bg-slate-100/80 dark:bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
                 <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Performance Evaluations</h4>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3 text-xs">
                   <div><span className="text-slate-500">Last Evaluation:</span> <span className="text-slate-700 dark:text-slate-300">{selectedEmployee.performance.lastEvaluation}</span></div>
@@ -1319,7 +1319,7 @@ export default function EmployeeRecords() {
               </div>
 
               {/* Personnel Summary */}
-              <div className="bg-slate-100 dark:bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
+              <div className="bg-slate-100/80 dark:bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
                 <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Personnel File Summary</h4>
                 <div className="space-y-2 text-xs">
                   <div><span className="text-slate-500">Position Changes:</span> <span className="text-slate-700 dark:text-slate-300">{selectedEmployee.personnelSummary.positionChanges}</span></div>

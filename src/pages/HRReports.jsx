@@ -523,7 +523,7 @@ export default function HRReports() {
               </button>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 mb-6">
+            <div className="grid grid-cols-2 gap-6 mb-6">
               <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
                 <p className="text-xs text-slate-500 mb-1">Generated</p>
                 <p className="text-sm text-slate-900 dark:text-white">{selectedReport.generated}</p>
@@ -546,7 +546,7 @@ export default function HRReports() {
               <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Report Summary</h4>
               <div className="space-y-2">
                 {selectedReport.summary.map((item, idx) => (
-                  <div key={idx} className="flex items-start gap-2 p-2 bg-slate-100 dark:bg-slate-800/30 rounded-lg">
+                  <div key={idx} className="flex items-start gap-2 p-2 bg-slate-100/80 dark:bg-slate-800/30 rounded-lg">
                     <CheckCircle className="w-3.5 h-3.5 text-green-400 mt-0.5 flex-shrink-0" />
                     <p className="text-sm text-slate-700 dark:text-slate-300">{item}</p>
                   </div>
@@ -758,7 +758,7 @@ export default function HRReports() {
                   </div>
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-6">
                   {commandReports.map(report => {
                     const colors = getColorClasses(report.color);
                     const Icon = report.icon;
@@ -851,7 +851,7 @@ export default function HRReports() {
                   </div>
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-6">
                   {complianceReports.map(report => {
                     const colors = getColorClasses(report.color);
                     const Icon = report.icon;
@@ -945,7 +945,7 @@ export default function HRReports() {
             {/* Recently Generated Reports */}
             {(activeSection === 'all' || activeSection === 'recent') && (
               <div className="mb-8">
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 bg-white dark:bg-slate-700/50 rounded-lg flex items-center justify-center">
                       <FileText className="w-5 h-5 text-slate-700 dark:text-slate-400" />
@@ -987,7 +987,7 @@ export default function HRReports() {
                   </select>
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-6">
                   {filteredRecent.map(report => {
                     const typeColors = getColorClasses(getTypeColor(report.type));
                     const isExpanded = expandedRecent[report.id];

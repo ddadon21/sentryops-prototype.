@@ -1007,7 +1007,7 @@ export default function NewHireOnboarding() {
                                     ? 'bg-green-500/5 border-green-500/20'
                                     : task.status === 'overdue'
                                       ? 'bg-red-500/5 border-red-500/20'
-                                      : 'bg-slate-100 dark:bg-slate-800/30 border-slate-200 dark:border-slate-700/30'
+                                      : 'bg-slate-100/80 dark:bg-slate-800/30 border-slate-200 dark:border-slate-700/30'
                                 }`}
                               >
                                 <div className="flex items-start gap-3">
@@ -1065,7 +1065,7 @@ export default function NewHireOnboarding() {
                               className={`p-3 rounded-lg border ${
                                 action.status === 'overdue' ? 'bg-red-500/10 border-red-500/30' :
                                 action.status === 'due-tomorrow' ? 'bg-amber-500/10 border-amber-500/30' :
-                                'bg-slate-100 dark:bg-slate-800/30 border-slate-200 dark:border-slate-700/30'
+                                'bg-slate-100/80 dark:bg-slate-800/30 border-slate-200 dark:border-slate-700/30'
                               }`}
                             >
                               <p className={`text-sm font-medium ${
@@ -1169,7 +1169,7 @@ export default function NewHireOnboarding() {
             </div>
 
             {/* Personnel Details */}
-            <div className="grid grid-cols-2 gap-4 mb-6 p-4 bg-slate-100 dark:bg-slate-800/30 rounded-xl">
+            <div className="grid grid-cols-2 gap-6 mb-6 p-4 bg-slate-100/80 dark:bg-slate-800/30 rounded-xl">
               <div>
                 <p className="text-xs text-slate-500 mb-1">Email</p>
                 <p className="text-sm text-slate-700 dark:text-slate-300">{selectedNewHire.email}</p>
@@ -1202,7 +1202,7 @@ export default function NewHireOnboarding() {
 
             {/* Classification */}
             {selectedNewHire.hireClassification && (
-              <div className="mb-6 p-4 bg-slate-100 dark:bg-slate-800/30 rounded-xl">
+              <div className="mb-6 p-4 bg-slate-100/80 dark:bg-slate-800/30 rounded-xl">
                 <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Hire Classification</h4>
                 <div className="grid grid-cols-2 gap-3 text-xs">
                   <div>
@@ -1266,7 +1266,7 @@ export default function NewHireOnboarding() {
                         className={`p-3 rounded-lg ${
                           phase.status === 'completed' ? 'bg-green-500/10' :
                           phase.status === 'in-progress' ? 'bg-blue-500/10' :
-                          'bg-slate-100 dark:bg-slate-800/30'
+                          'bg-slate-100/80 dark:bg-slate-800/30'
                         }`}
                       >
                         <div className="flex items-center justify-between">

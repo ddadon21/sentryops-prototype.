@@ -264,7 +264,7 @@ export default function BISettings() {
       notifications={biNotifications}
       settingsRoute="/bi/settings"
     >
-      <div className="p-5 lg:p-8 space-y-8 bg-slate-100 dark:bg-transparent min-h-full">
+      <div className="p-5 lg:p-8 space-y-8 min-h-full">
           <div className="max-w-6xl mx-auto">
             <div className="mb-6">
               <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white mb-2">BI Settings</h2>
@@ -450,7 +450,7 @@ export default function BISettings() {
                   <div className="space-y-6">
                     <div>
                       <h4 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-4 uppercase tracking-wide">Delivery Methods</h4>
-                      <div className="space-y-4">
+                      <div className="space-y-6">
                         {[
                           { key: 'emailNotifications', label: 'Email Notifications', desc: 'Receive notifications via email', icon: Mail },
                           { key: 'smsNotifications', label: 'SMS Notifications', desc: 'Receive urgent alerts via text', icon: Smartphone },
@@ -636,7 +636,7 @@ export default function BISettings() {
                   <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-6">
                     <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-6">Security Settings</h3>
 
-                    <div className="space-y-4">
+                    <div className="space-y-6">
                       <div className="flex items-center justify-between p-4 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl">
                         <div className="flex items-center gap-4">
                           <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center">
@@ -773,7 +773,7 @@ export default function BISettings() {
                       </button>
                     </div>
 
-                    <div className="space-y-4">
+                    <div className="space-y-6">
                       {Object.entries(integrations).map(([key, integration]) => (
                         <div key={key} className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
                           <div className="flex items-start justify-between">

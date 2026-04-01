@@ -372,7 +372,7 @@ export default function InvestigationTimeline() {
       notifications={biNotifications}
       settingsRoute="/bi/settings"
     >
-      <div className="p-5 lg:p-8 space-y-8 bg-slate-100 dark:bg-transparent min-h-full">
+      <div className="p-5 lg:p-8 space-y-8 min-h-full">
           <div className="max-w-7xl mx-auto">
             {/* Case-Specific Page Header */}
             <div className="mb-6">
@@ -432,7 +432,7 @@ export default function InvestigationTimeline() {
 
             {/* Case Progress Summary (replaced Timeline Analysis) */}
             <div className="mb-6 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between mb-6">
                 <h4 className="text-base font-semibold text-slate-900 dark:text-white">Case Progress Summary</h4>
                 <div className="flex items-center gap-2">
                   <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors">
@@ -522,7 +522,7 @@ export default function InvestigationTimeline() {
 
             {/* Investigation Stages (Sequential) */}
             <div className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-6 mb-6">
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between mb-6">
                 <div>
                   <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Investigation Stages (Sequential)</h3>
                   <p className="text-xs text-slate-500 mt-1">Case: {caseData.id} - {caseData.subject} | Investigation Type: {caseData.position} (Full Background)</p>
@@ -533,7 +533,7 @@ export default function InvestigationTimeline() {
                 {/* Vertical timeline line */}
                 <div className="absolute left-6 top-4 bottom-4 w-0.5 bg-white dark:bg-slate-700/50"></div>
 
-                <div className="space-y-4">
+                <div className="space-y-6">
                   {investigationStages.map((stage, idx) => (
                     <div key={idx} className={`relative pl-16 ${
                       stage.status === 'completed' ? 'opacity-100' :
@@ -597,7 +597,7 @@ export default function InvestigationTimeline() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Timeline Events */}
               <div className="lg:col-span-2 space-y-4">
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center justify-between mb-6">
                   <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Chronological Activity Log</h3>
                   <div className="flex items-center gap-2">
                     <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
@@ -612,7 +612,7 @@ export default function InvestigationTimeline() {
                   {/* Timeline line */}
                   <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-white dark:bg-slate-700/50"></div>
 
-                  <div className="space-y-4">
+                  <div className="space-y-6">
                     {timelineEvents.map((event, idx) => (
                       <div key={event.id} className="relative pl-16">
                         {/* Timeline dot */}

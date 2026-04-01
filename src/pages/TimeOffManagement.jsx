@@ -924,7 +924,7 @@ export default function TimeOffManagement() {
               </div>
 
               {/* Leave Request Cards */}
-              <div className="space-y-4">
+              <div className="space-y-6">
                 {filteredRequests.map(request => (
                   <div key={request.id} className={`bg-white dark:bg-slate-800/40 border rounded-xl overflow-hidden ${request.coverageStatus === 'conflict' ? 'border-amber-500/30' : 'border-slate-700/50'}`}>
                     <button onClick={() => toggleRequest(request.id)} className="w-full px-5 py-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors">
@@ -1250,7 +1250,7 @@ export default function TimeOffManagement() {
       {showApproveModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => { setShowApproveModal(null); setApproveComment(''); }} />
-          <div className="relative bg-white dark:bg-slate-900 border border-green-500/30 rounded-2xl p-6 max-w-md w-full shadow-2xl">
+          <div className="relative bg-white dark:bg-slate-900 border border-green-500/30 rounded-2xl p-8 max-w-md w-full shadow-2xl">
             <div className="flex items-center gap-4 mb-4">
               <div className="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center">
                 <CheckCircle className="w-6 h-6 text-green-400" />
@@ -1289,7 +1289,7 @@ export default function TimeOffManagement() {
       {showDenyModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => { setShowDenyModal(null); setDenyReason(''); setDenyComment(''); }} />
-          <div className="relative bg-white dark:bg-slate-900 border border-red-500/30 rounded-2xl p-6 max-w-md w-full shadow-2xl">
+          <div className="relative bg-white dark:bg-slate-900 border border-red-500/30 rounded-2xl p-8 max-w-md w-full shadow-2xl">
             <div className="flex items-center gap-4 mb-4">
               <div className="w-12 h-12 bg-red-500/20 rounded-xl flex items-center justify-center">
                 <XCircle className="w-6 h-6 text-red-400" />
@@ -1347,7 +1347,7 @@ export default function TimeOffManagement() {
       {showRequestInfoModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => { setShowRequestInfoModal(null); setRequestInfoText(''); }} />
-          <div className="relative bg-white dark:bg-slate-900 border border-blue-500/30 rounded-2xl p-6 max-w-md w-full shadow-2xl">
+          <div className="relative bg-white dark:bg-slate-900 border border-blue-500/30 rounded-2xl p-8 max-w-md w-full shadow-2xl">
             <div className="flex items-center gap-4 mb-4">
               <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center">
                 <Info className="w-6 h-6 text-blue-400" />

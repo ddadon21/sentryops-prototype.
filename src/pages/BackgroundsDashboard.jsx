@@ -101,7 +101,7 @@ export default function BackgroundsDashboard() {
       notifications={biNotifications}
       settingsRoute="/bi/settings"
     >
-      <div className="p-5 lg:p-8 bg-slate-100 dark:bg-transparent min-h-full">
+      <div className="p-6 lg:p-8 bg-transparent dark:bg-transparent min-h-full">
         <div className="max-w-7xl mx-auto">
           {/* Page Header */}
           <div className="mb-8 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
@@ -231,7 +231,7 @@ export default function BackgroundsDashboard() {
 
           {/* Investigation Status Summary */}
           <div className="mb-8 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
-            <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center justify-between mb-6">
               <h4 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Investigation Status Summary</h4>
               <span className="text-xs text-slate-500">Last sync: 2 min ago</span>
             </div>
@@ -525,7 +525,7 @@ export default function BackgroundsDashboard() {
 
             {/* Recent Activity */}
             <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
-              <div className="flex items-center justify-between mb-5">
+              <div className="flex items-center justify-between mb-6">
                 <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Recent Activity</h3>
                 <span className="text-xs text-slate-500">Last 24 hours</span>
               </div>
@@ -555,7 +555,7 @@ export default function BackgroundsDashboard() {
 
           {/* Priority Cases */}
           <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 mb-8">
-            <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center justify-between mb-6">
               <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Priority Cases Requiring Action</h3>
               <button
                 onClick={() => navigate(createPageUrl('ActiveCases'))}
@@ -593,7 +593,7 @@ export default function BackgroundsDashboard() {
 
           {/* Upcoming Deadlines */}
           <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 mb-8">
-            <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center justify-between mb-6">
               <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Upcoming Deadlines</h3>
               <span className="text-xs text-slate-500">Compliance and SLA-driven milestones</span>
             </div>
@@ -675,28 +675,28 @@ export default function BackgroundsDashboard() {
             </div>
           </div>
           <div className="p-4 space-y-2">
-            <button className="w-full flex items-center gap-3 p-3 bg-slate-100 dark:bg-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-all text-left">
+            <button className="w-full flex items-center gap-3 p-3 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-all text-left">
               <FileText className="w-5 h-5 text-slate-700 dark:text-slate-400" />
               <div>
                 <p className="text-[13px] text-slate-900 dark:text-white font-medium">Investigation Guidelines</p>
                 <p className="text-xs text-slate-500">POST standards & procedures</p>
               </div>
             </button>
-            <button className="w-full flex items-center gap-3 p-3 bg-slate-100 dark:bg-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-all text-left">
+            <button className="w-full flex items-center gap-3 p-3 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-all text-left">
               <ClipboardCheck className="w-5 h-5 text-slate-700 dark:text-slate-400" />
               <div>
                 <p className="text-[13px] text-slate-900 dark:text-white font-medium">Adjudication Checklist</p>
                 <p className="text-xs text-slate-500">Review requirements</p>
               </div>
             </button>
-            <button className="w-full flex items-center gap-3 p-3 bg-slate-100 dark:bg-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-all text-left">
+            <button className="w-full flex items-center gap-3 p-3 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-all text-left">
               <Phone className="w-5 h-5 text-slate-700 dark:text-slate-400" />
               <div>
                 <p className="text-[13px] text-slate-900 dark:text-white font-medium">Contact IT Support</p>
                 <p className="text-xs text-slate-500">Technical assistance</p>
               </div>
             </button>
-            <button className="w-full flex items-center gap-3 p-3 bg-slate-100 dark:bg-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-all text-left">
+            <button className="w-full flex items-center gap-3 p-3 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-all text-left">
               <Scale className="w-5 h-5 text-slate-700 dark:text-slate-400" />
               <div>
                 <p className="text-[13px] text-slate-900 dark:text-white font-medium">Legal Reference</p>

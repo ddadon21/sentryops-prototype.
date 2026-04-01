@@ -598,7 +598,7 @@ export default function SettingsPage() {
 
   return (
     <DashboardLayout>
-      <div className="p-5 lg:p-8 space-y-8 bg-slate-100 dark:bg-transparent min-h-full">
+      <div className="p-5 lg:p-8 space-y-8 min-h-full">
           <div className="max-w-[1600px] mx-auto">
             <div className="mb-6">
               <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-1">Settings & Configuration</h2>
@@ -789,7 +789,7 @@ export default function SettingsPage() {
                     <span className="text-[10px] text-slate-500">Last updated: Dec 11, 2025 09:14 AM</span>
                   </div>
                   <p className="text-xs text-slate-500 mb-6">Only critical operational events are surfaced here. Cosmetic and low-priority alerts have been removed.</p>
-                  <div className="space-y-4">
+                  <div className="space-y-6">
                     {[
                       { key: 'integrationAlerts', title: 'Integration Failure', desc: 'Alert when an integration sync fails or loses connection' },
                       { key: 'criticalAlerts', title: 'Backup Failure', desc: 'Alert when a scheduled backup fails or is incomplete' },
@@ -892,7 +892,7 @@ export default function SettingsPage() {
                       <span className="text-[10px] text-slate-500">Last updated: Dec 9, 2025 11:42 AM</span>
                     </div>
                     <p className="text-xs text-slate-500 mb-6">Multi-factor authentication, session management, and access controls.</p>
-                    <div className="space-y-4">
+                    <div className="space-y-6">
                       <div className="flex items-center justify-between py-3 border-b border-slate-200 dark:border-slate-200 dark:border-slate-700/30">
                         <div className="flex-1">
                           <h4 className="text-sm font-medium text-slate-900 dark:text-white">Two-Factor Authentication</h4>
@@ -1027,7 +1027,7 @@ export default function SettingsPage() {
 
                   <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                     <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-4">Change Password</h3>
-                    <div className="space-y-4">
+                    <div className="space-y-6">
                       <div>
                         <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Current Password</label>
                         <input
@@ -1063,7 +1063,7 @@ export default function SettingsPage() {
 
               {/* Integrations Settings */}
               {activeSection === 'integrations' && (
-                <div className="space-y-4">
+                <div className="space-y-6">
                   <div className="flex items-center justify-between mb-1">
                     <h3 className="text-sm font-semibold text-slate-900 dark:text-white">System Integrations</h3>
                     <span className="text-[10px] text-slate-500">Last updated: Dec 11, 2025 09:01 AM</span>
@@ -1116,7 +1116,7 @@ export default function SettingsPage() {
                         {isExpanded && (
                           <div className="px-6 pb-6 border-t border-slate-200 dark:border-slate-200 dark:border-slate-700/30">
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
-                              <div className="space-y-4">
+                              <div className="space-y-6">
                                 <div>
                                   <p className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-2">Vendor</p>
                                   <p className="text-sm text-slate-900 dark:text-white">{integration.vendor}</p>
@@ -1162,7 +1162,7 @@ export default function SettingsPage() {
                                 </div>
                               </div>
 
-                              <div className="space-y-4">
+                              <div className="space-y-6">
                                 <div>
                                   <p className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-2">Sync Frequency</p>
                                   <p className="text-sm text-slate-900 dark:text-white">{integration.syncFrequency}</p>
@@ -1177,7 +1177,7 @@ export default function SettingsPage() {
                                     ))}
                                   </div>
                                 </div>
-                                <div className="grid grid-cols-2 gap-4">
+                                <div className="grid grid-cols-2 gap-6">
                                   <div>
                                     <p className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-2">Monthly Requests</p>
                                     <p className="text-sm text-slate-900 dark:text-white">{integration.monthlyRequests.toLocaleString()} / {integration.requestLimit.toLocaleString()}</p>
@@ -1371,7 +1371,7 @@ export default function SettingsPage() {
                       <span className="text-[10px] text-slate-500">Last updated: Dec 11, 2025 02:00 AM</span>
                     </div>
                     <p className="text-xs text-slate-500 mb-6">Export personnel records, reports, integration logs, and audit trails.</p>
-                    <div className="space-y-4">
+                    <div className="space-y-6">
                       <div className="p-4 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl">
                         <div className="flex items-center justify-between mb-3">
                           <div className="flex items-center gap-3">
@@ -1445,7 +1445,7 @@ export default function SettingsPage() {
 
                   <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                     <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-6">Backup & Restore</h3>
-                    <div className="space-y-4">
+                    <div className="space-y-6">
                       <div className="p-4 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl">
                         <div className="flex items-center justify-between mb-3">
                           <div>
@@ -1482,7 +1482,7 @@ export default function SettingsPage() {
 
                   <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                     <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-6">Data Retention</h3>
-                    <div className="space-y-4">
+                    <div className="space-y-6">
                       <div>
                         <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Audit Log Retention</label>
                         <select
@@ -1542,7 +1542,7 @@ export default function SettingsPage() {
                       <span className="text-[10px] text-slate-500">Last updated: Dec 11, 2025 08:22 AM</span>
                     </div>
                     <p className="text-xs text-slate-500 mb-6">API keys, usage statistics, and rate limiting configuration.</p>
-                    <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center justify-between mb-6">
                       <h4 className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">API Keys</h4>
                       <button className="flex items-center gap-2 px-3 py-1.5 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded-lg text-xs font-medium hover:bg-blue-500/30 transition-all">
                         <Plus className="w-3 h-3" />

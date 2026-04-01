@@ -726,7 +726,7 @@ export default function BIReports() {
       notifications={biNotifications}
       settingsRoute="/bi/settings"
     >
-      <div className="p-5 lg:p-8 space-y-8 bg-slate-100 dark:bg-transparent min-h-full">
+      <div className="p-5 lg:p-8 space-y-8 min-h-full">
           <div className="max-w-[1600px] mx-auto">
             {/* Page Header */}
             <div className="mb-6">
@@ -832,14 +832,14 @@ export default function BIReports() {
             </div>
 
             {/* Report Cards */}
-            <div className="space-y-4">
+            <div className="space-y-6">
               {filteredReports.map((report) => {
                 const isExpanded = expandedReport === report.id;
 
                 return (
                   <div
                     key={report.id}
-                    className={`bg-slate-100 dark:bg-slate-800/30 border rounded-xl overflow-hidden transition-all ${
+                    className={`bg-slate-100/80 dark:bg-slate-800/30 border rounded-xl overflow-hidden transition-all ${
                       report.status === 'Review Required' ? 'border-red-500/50' :
                       report.status === 'Cleared with Notes' ? 'border-amber-500/50' :
                       report.status === 'Cleared' ? 'border-emerald-500/30' :
@@ -1105,7 +1105,7 @@ export default function BIReports() {
                             )}
 
                             {/* Recommendation */}
-                            <div className="p-4 bg-slate-100 dark:bg-slate-700/30 rounded-lg">
+                            <div className="p-6 bg-transparent dark:bg-slate-700/30 rounded-lg">
                               <h5 className="text-xs font-semibold text-slate-700 dark:text-slate-400 uppercase mb-3">Recommendation</h5>
                               <div className={`inline-flex px-3 py-1.5 rounded-lg text-sm font-bold mb-3 ${
                                 report.assessment.recommendation.includes('APPROVED')
