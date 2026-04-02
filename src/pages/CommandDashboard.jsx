@@ -270,7 +270,7 @@ export default function CommandDashboard() {
               </span>
             </div>
             <p className="text-xs text-muted mb-1">14 Vacancies (7.8%)</p>
-            <p className="text-[11px] text-red-600 dark:text-red-400">3 below safety threshold (Patrol B-Shift)</p>
+            <p className="text-[11px] text-red-700 dark:text-red-400">3 below safety threshold (Patrol B-Shift)</p>
           </button>
 
           {/* Active Critical Incidents — dominant */}
@@ -294,7 +294,7 @@ export default function CommandDashboard() {
               <span className="text-xs text-muted">Active (2 escalated)</span>
             </div>
             <p className="text-xs text-muted mb-1">1 UOF · 1 Facility · 1 Staffing</p>
-            <p className="text-[11px] text-amber-600 dark:text-amber-400">Oldest: 1h 22m</p>
+            <p className="text-[11px] text-amber-700 dark:text-amber-400">Oldest: 1h 22m</p>
           </button>
 
           {/* Compliance Status — with breakdown */}
@@ -313,7 +313,7 @@ export default function CommandDashboard() {
               <span className="text-slate-700">·</span>
               <span>Audit 100%</span>
             </div>
-            <p className="text-[11px] text-amber-600 dark:text-amber-400">USMS inspection in 2 days</p>
+            <p className="text-[11px] text-amber-700 dark:text-amber-400">USMS inspection in 2 days</p>
           </div>
 
           {/* Budget Snapshot */}
@@ -329,12 +329,12 @@ export default function CommandDashboard() {
             </div>
             <div className="flex items-baseline gap-2 mb-1">
               <p className="text-2xl font-semibold text-primary">85%</p>
-              <span className="flex items-center gap-0.5 text-amber-600 dark:text-amber-400 text-xs font-medium">
+              <span className="flex items-center gap-0.5 text-amber-700 dark:text-amber-400 text-xs font-medium">
                 <ArrowUpRight className="w-3 h-3" />+1.2%
               </span>
             </div>
             <p className="text-xs text-muted mb-1">Forecast variance +1.2% from plan</p>
-            <p className="text-[11px] text-amber-600 dark:text-amber-400">OT spend 19% above baseline</p>
+            <p className="text-[11px] text-amber-700 dark:text-amber-400">OT spend 19% above baseline</p>
           </button>
         </div>
         </div>
@@ -361,7 +361,7 @@ export default function CommandDashboard() {
               <div className="flex items-start gap-3">
                 <div className="w-1.5 h-1.5 rounded-full bg-red-500 mt-1.5 flex-shrink-0"></div>
                 <div className="space-y-1">
-                  <p className="text-sm font-medium text-red-600 dark:text-red-400">Staffing Risk — B-Shift @ 75%</p>
+                  <p className="text-sm font-medium text-red-700 dark:text-red-400">Staffing Risk — B-Shift @ 75%</p>
                   <ul className="space-y-0.5 text-[13px] text-slate-800 dark:text-slate-300">
                     <li>Minimum threshold breached (9 of 12 required)</li>
                     <li>2 deputies recommended within 4 hrs</li>
@@ -375,7 +375,7 @@ export default function CommandDashboard() {
               <div className="flex items-start gap-3">
                 <div className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 flex-shrink-0"></div>
                 <div className="space-y-1">
-                  <p className="text-sm font-medium text-amber-600 dark:text-amber-400">Budget Alert — OT 19% Over Allocation</p>
+                  <p className="text-sm font-medium text-amber-700 dark:text-amber-400">Budget Alert — OT 19% Over Allocation</p>
                   <ul className="space-y-0.5 text-[13px] text-slate-800 dark:text-slate-300">
                     <li>OT spend $78,240 vs $65,000 allocation</li>
                     <li>2 lateral hires would reduce year-end overage by $23K</li>
@@ -389,7 +389,7 @@ export default function CommandDashboard() {
               <div className="flex items-start gap-3">
                 <div className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 flex-shrink-0"></div>
                 <div className="space-y-1">
-                  <p className="text-sm font-medium text-amber-600 dark:text-amber-400">Compliance — USMS Inspection Dec 12–14</p>
+                  <p className="text-sm font-medium text-amber-700 dark:text-amber-400">Compliance — USMS Inspection Dec 12–14</p>
                   <ul className="space-y-0.5 text-[13px] text-slate-800 dark:text-slate-300">
                     <li>H2-Pod HVAC repair requires approval within 48 hrs</li>
                     <li>3 policies require command signature before inspection</li>
@@ -414,7 +414,7 @@ export default function CommandDashboard() {
             <span className="text-sm font-semibold text-primary">Requires Your Action</span>
             <button
               onClick={() => navigate(createPageUrl('Approvals'))}
-              className="text-xs text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 font-medium"
+              className="text-xs text-amber-700 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 font-medium"
             >
               View all {dashboardApprovals.length} approvals →
             </button>
@@ -425,7 +425,7 @@ export default function CommandDashboard() {
               return (
                 <div
                   key={item.id}
-                  className={`rounded-lg border border-border hover:bg-slate-50 dark:hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/35 transition-colors ${item.tier === 'critical' ? 'border-l-4 border-l-red-500' : item.tier === 'action' ? 'border-l-4 border-l-amber-500' : 'border-l-4 border-l-slate-300 dark:border-l-slate-600'}`}
+                  className={`rounded-lg border border-border hover:bg-slate-50 dark:hover:bg-slate-800/35 transition-colors ${item.tier === 'critical' ? 'border-l-4 border-l-red-500' : item.tier === 'action' ? 'border-l-4 border-l-amber-500' : 'border-l-4 border-l-slate-300 dark:border-l-slate-600'}`}
                 >
                   <div className="flex items-center gap-4 p-3">
 
@@ -448,7 +448,7 @@ export default function CommandDashboard() {
                         {item.impact && (
                           <>
                             <span className="text-slate-700">·</span>
-                            <span className={item.tier === 'critical' ? 'text-red-600 dark:text-red-400' : item.tier === 'action' ? 'text-amber-600 dark:text-amber-400' : 'text-muted'}>{item.impact}</span>
+                            <span className={item.tier === 'critical' ? 'text-red-700 dark:text-red-400' : item.tier === 'action' ? 'text-amber-700 dark:text-amber-400' : 'text-muted'}>{item.impact}</span>
                           </>
                         )}
                       </div>
@@ -463,7 +463,7 @@ export default function CommandDashboard() {
                       </button>
                       <button
                         onClick={(e) => openApprovalModal(item, 'deny', e)}
-                        className="px-3 py-1.5 text-xs font-medium text-secondary border border-slate-300 dark:border-slate-700/50 hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-700/20 rounded-lg transition-colors"
+                        className="px-3 py-1.5 text-xs font-medium text-secondary border border-slate-300 dark:border-slate-700/50 hover:bg-slate-100 dark:hover:bg-slate-700/20 rounded-lg transition-colors"
                       >
                         Escalate
                       </button>
@@ -515,7 +515,7 @@ export default function CommandDashboard() {
                 <div>
                   <div className="flex items-center justify-between mb-1 text-xs">
                     <span className="text-muted">Policies</span>
-                    <span className="text-amber-600 dark:text-amber-400">44/47</span>
+                    <span className="text-amber-700 dark:text-amber-400">44/47</span>
                   </div>
                   <div className="w-full h-1 bg-slate-200 dark:bg-slate-800/50 rounded-full overflow-hidden">
                     <div className="h-full bg-amber-500 dark:bg-amber-500/40 rounded-full" style={{width: '94%'}} />
@@ -524,7 +524,7 @@ export default function CommandDashboard() {
                 <div>
                   <div className="flex items-center justify-between mb-1 text-xs">
                     <span className="text-muted">Training Records</span>
-                    <span className="text-amber-600 dark:text-amber-400">156/164</span>
+                    <span className="text-amber-700 dark:text-amber-400">156/164</span>
                   </div>
                   <div className="w-full h-1 bg-slate-200 dark:bg-slate-800/50 rounded-full overflow-hidden">
                     <div className="h-full bg-amber-500 dark:bg-amber-500/40 rounded-full" style={{width: '95%'}} />
@@ -558,15 +558,15 @@ export default function CommandDashboard() {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted">Risk Level</span>
-                  <span className="text-amber-600 dark:text-amber-400 font-medium">Moderate</span>
+                  <span className="text-amber-700 dark:text-amber-400 font-medium">Moderate</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted">Issue</span>
-                  <span className="text-red-600 dark:text-red-400">H2 HVAC — 72h window</span>
+                  <span className="text-red-700 dark:text-red-400">H2 HVAC — 72h window</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted">Repair</span>
-                  <span className="text-amber-600 dark:text-amber-400">Pending approval</span>
+                  <span className="text-amber-700 dark:text-amber-400">Pending approval</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted">Assigned To</span>
@@ -637,7 +637,7 @@ export default function CommandDashboard() {
                   </div>
                   <div className="flex items-center gap-2.5">
                     <span className="text-xs text-muted">{div.current}/{div.authorized}</span>
-                    <span className={`text-sm font-semibold ${div.percentage >= 90 ? 'text-emerald-600 dark:text-emerald-400' : div.percentage >= div.minThreshold ? 'text-amber-600 dark:text-amber-400' : 'text-red-600 dark:text-red-400'}`}>{div.percentage}%</span>
+                    <span className={`text-sm font-semibold ${div.percentage >= 90 ? 'text-emerald-600 dark:text-emerald-400' : div.percentage >= div.minThreshold ? 'text-amber-700 dark:text-amber-400' : 'text-red-700 dark:text-red-400'}`}>{div.percentage}%</span>
                   </div>
                 </div>
                 <div className="relative w-full h-1 bg-slate-200 dark:bg-slate-800/50 rounded-full overflow-visible">
@@ -679,7 +679,7 @@ export default function CommandDashboard() {
                 {approvalAction === 'approve' ? (
                   <ThumbsUp className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
                 ) : (
-                  <XCircle className="w-5 h-5 text-red-600 dark:text-red-400" />
+                  <XCircle className="w-5 h-5 text-red-700 dark:text-red-400" />
                 )}
               </div>
               <div className="flex-1">
@@ -708,7 +708,7 @@ export default function CommandDashboard() {
             <div className="flex gap-3">
               <button
                 onClick={closeApprovalModal}
-                className="flex-1 px-4 py-2.5 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-border rounded-xl text-primary text-sm font-medium transition-colors"
+                className="flex-1 px-4 py-2.5 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-800/60 border border-border rounded-xl text-primary text-sm font-medium transition-colors"
               >
                 Cancel
               </button>
@@ -733,7 +733,7 @@ export default function CommandDashboard() {
           <div className={`px-4 py-3 rounded-lg border flex items-center gap-2 text-sm ${
             toastMessage.type === 'success'
               ? 'bg-slate-900 border-emerald-500/20 text-emerald-600 dark:text-emerald-400'
-              : 'bg-slate-900 border-red-500/20 text-red-600 dark:text-red-400'
+              : 'bg-slate-900 border-red-500/20 text-red-700 dark:text-red-400'
           }`}>
             {toastMessage.type === 'success' ? (
               <CheckCircle className="w-4 h-4" />

@@ -786,7 +786,7 @@ export default function CaseClosure() {
                   <div key={section.id} className="bg-white dark:bg-slate-900/40 rounded-xl overflow-hidden">
                     <button
                       onClick={() => toggleSection(section.id)}
-                      className="w-full p-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/30 transition-colors"
+                      className="w-full p-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-slate-800/30 transition-colors"
                     >
                       <div className="flex items-center gap-3">
                         <CheckCircle className="w-5 h-5 text-green-400" />

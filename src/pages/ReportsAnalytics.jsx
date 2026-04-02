@@ -370,7 +370,7 @@ export default function ReportsAnalytics() {
 
   const getChangeColor = (change) => {
     if (change > 0) return 'text-green-600 dark:text-green-400';
-    if (change < 0) return 'text-red-600 dark:text-red-400';
+    if (change < 0) return 'text-red-700 dark:text-red-400';
     return 'text-slate-500';
   };
 
@@ -428,9 +428,9 @@ export default function ReportsAnalytics() {
                     <span className="font-bold text-purple-400">{keyMetrics.crimeClearanceRate.rate}%</span>
                   </div>
                   <div className="flex items-center gap-2 px-3 py-1.5 bg-amber-500/10 border border-amber-500/30 rounded-lg">
-                    <Users className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+                    <Users className="w-4 h-4 text-amber-700 dark:text-amber-400" />
                     <span className="text-secondary">Staffing:</span>
-                    <span className="font-bold text-amber-600 dark:text-amber-400">{keyMetrics.staffing.percentage}%</span>
+                    <span className="font-bold text-amber-700 dark:text-amber-400">{keyMetrics.staffing.percentage}%</span>
                   </div>
                 </div>
               </div>
@@ -539,7 +539,7 @@ export default function ReportsAnalytics() {
                         </div>
                         <div className="flex items-start gap-2">
                           <CheckCircle className="w-4 h-4 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
-                          <p className="text-secondary"><span className="font-bold text-amber-600 dark:text-amber-400">Property crime down 5.8%</span> - community policing initiatives showing impact</p>
+                          <p className="text-secondary"><span className="font-bold text-amber-700 dark:text-amber-400">Property crime down 5.8%</span> - community policing initiatives showing impact</p>
                         </div>
                         <div className="flex items-start gap-2">
                           <CheckCircle className="w-4 h-4 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
@@ -575,21 +575,21 @@ export default function ReportsAnalytics() {
                       {/* Areas Requiring Attention */}
                       <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 border border-amber-500/30">
                         <div className="flex items-center gap-2 mb-3">
-                          <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400" />
-                          <p className="text-xs font-bold text-amber-600 dark:text-amber-400">ATTENTION NEEDED</p>
+                          <AlertTriangle className="w-4 h-4 text-amber-700 dark:text-amber-400" />
+                          <p className="text-xs font-bold text-amber-700 dark:text-amber-400">ATTENTION NEEDED</p>
                         </div>
                         <div className="space-y-2 text-xs text-secondary">
                           <div className="flex justify-between">
                             <span>Staffing level:</span>
-                            <span className="font-bold text-amber-600 dark:text-amber-400">92.1% (14 open)</span>
+                            <span className="font-bold text-amber-700 dark:text-amber-400">92.1% (14 open)</span>
                           </div>
                           <div className="flex justify-between">
                             <span>Certs expiring:</span>
-                            <span className="font-bold text-amber-600 dark:text-amber-400">45 in 30 days</span>
+                            <span className="font-bold text-amber-700 dark:text-amber-400">45 in 30 days</span>
                           </div>
                           <div className="flex justify-between">
                             <span>Equipment budget:</span>
-                            <span className="font-bold text-red-600 dark:text-red-400">95% utilized</span>
+                            <span className="font-bold text-red-700 dark:text-red-400">95% utilized</span>
                           </div>
                         </div>
                       </div>
@@ -607,7 +607,7 @@ export default function ReportsAnalytics() {
                           </div>
                           <div className="flex justify-between">
                             <span>Year-end proj:</span>
-                            <span className="font-bold text-amber-600 dark:text-amber-400">100.5%</span>
+                            <span className="font-bold text-amber-700 dark:text-amber-400">100.5%</span>
                           </div>
                           <div className="flex justify-between">
                             <span>Recommend:</span>
@@ -674,7 +674,7 @@ export default function ReportsAnalytics() {
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
                   className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all relative whitespace-nowrap ${
-                    activeTab === tab.id ? 'text-amber-600 dark:text-amber-400' : 'text-secondary hover:text-slate-300'
+                    activeTab === tab.id ? 'text-amber-700 dark:text-amber-400' : 'text-secondary hover:text-slate-300'
                   }`}
                 >
                   <tab.icon className="w-4 h-4" />
@@ -768,7 +768,7 @@ export default function ReportsAnalytics() {
                     <div className="mb-3">
                       <div className="flex justify-between text-xs mb-1">
                         <span className="text-secondary">Target: {keyMetrics.crimeClearanceRate.target}%</span>
-                        <span className="font-bold text-amber-600 dark:text-amber-400">1.5 pts below</span>
+                        <span className="font-bold text-amber-700 dark:text-amber-400">1.5 pts below</span>
                       </div>
                       <div className="w-full h-2 bg-white dark:bg-slate-700/50 rounded-full overflow-hidden">
                         <div className="h-full bg-purple-500" style={{ width: '97.9%' }} />
@@ -781,7 +781,7 @@ export default function ReportsAnalytics() {
                       </div>
                       <div className="flex justify-between text-xs">
                         <span className="text-secondary">Property crimes:</span>
-                        <span className="font-medium text-amber-600 dark:text-amber-400">56.8%</span>
+                        <span className="font-medium text-amber-700 dark:text-amber-400">56.8%</span>
                       </div>
                       <div className="flex justify-between text-xs">
                         <span className="text-secondary">YoY change:</span>
@@ -796,9 +796,9 @@ export default function ReportsAnalytics() {
                   <div className="bg-white dark:bg-slate-800/40 border border-amber-500/30 rounded-xl p-5">
                     <div className="flex items-center justify-between mb-3">
                       <div className="w-10 h-10 bg-amber-500/20 rounded-xl flex items-center justify-center">
-                        <ShieldCheck className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+                        <ShieldCheck className="w-5 h-5 text-amber-700 dark:text-amber-400" />
                       </div>
-                      <span className="text-xs font-medium text-amber-600 dark:text-amber-400">ARRESTS (YTD)</span>
+                      <span className="text-xs font-medium text-amber-700 dark:text-amber-400">ARRESTS (YTD)</span>
                     </div>
                     <p className="text-2xl font-bold text-primary mb-1">{keyMetrics.arrestsYTD.total.toLocaleString()}</p>
                     <p className="text-sm text-secondary mb-3">Jan 1 - Jan 21, 2026</p>
@@ -833,7 +833,7 @@ export default function ReportsAnalytics() {
                     <div className="mb-3">
                       <div className="flex justify-between text-xs mb-1">
                         <span className="text-secondary">Target: 95% (169 pos)</span>
-                        <span className="font-bold text-amber-600 dark:text-amber-400">-5 positions</span>
+                        <span className="font-bold text-amber-700 dark:text-amber-400">-5 positions</span>
                       </div>
                       <div className="w-full h-2 bg-white dark:bg-slate-700/50 rounded-full overflow-hidden">
                         <div className="h-full bg-blue-500" style={{ width: `${keyMetrics.staffing.percentage}%` }} />
@@ -842,7 +842,7 @@ export default function ReportsAnalytics() {
                     <div className="space-y-1.5 border-t border-border pt-3">
                       <div className="flex justify-between text-xs">
                         <span className="text-secondary">Vacancies:</span>
-                        <span className="font-medium text-amber-600 dark:text-amber-400">14 open positions</span>
+                        <span className="font-medium text-amber-700 dark:text-amber-400">14 open positions</span>
                       </div>
                       <div className="flex justify-between text-xs">
                         <span className="text-secondary">Pipeline:</span>
@@ -850,7 +850,7 @@ export default function ReportsAnalytics() {
                       </div>
                       <div className="flex justify-between text-xs">
                         <span className="text-secondary">Vacancy OT cost:</span>
-                        <span className="font-medium text-red-600 dark:text-red-400">$588K/year</span>
+                        <span className="font-medium text-red-700 dark:text-red-400">$588K/year</span>
                       </div>
                     </div>
                   </div>
@@ -915,7 +915,7 @@ export default function ReportsAnalytics() {
                             <div className="flex items-center gap-3">
                               <span className="text-sm font-medium text-primary w-8">{month.month}</span>
                               {idx === monthlyTrends.length - 1 && (
-                                <span className="text-xs px-1.5 py-0.5 bg-amber-500/20 text-amber-600 dark:text-amber-400 rounded">Current</span>
+                                <span className="text-xs px-1.5 py-0.5 bg-amber-500/20 text-amber-700 dark:text-amber-400 rounded">Current</span>
                               )}
                             </div>
                             <div className="flex items-center gap-6 text-xs">
@@ -924,7 +924,7 @@ export default function ReportsAnalytics() {
                                 <span className="text-secondary">Calls:</span>
                                 <span className="font-bold text-primary">{month.calls.toLocaleString()}</span>
                                 {prevMonth && (
-                                  <span className={`font-medium ${parseFloat(callsChange) >= 0 ? 'text-amber-600 dark:text-amber-400' : 'text-green-600 dark:text-green-400'}`}>
+                                  <span className={`font-medium ${parseFloat(callsChange) >= 0 ? 'text-amber-700 dark:text-amber-400' : 'text-green-600 dark:text-green-400'}`}>
                                     ({parseFloat(callsChange) >= 0 ? '+' : ''}{callsChange}%)
                                   </span>
                                 )}
@@ -937,7 +937,7 @@ export default function ReportsAnalytics() {
                               <div className="flex items-center gap-2">
                                 <CheckCircle className="w-3 h-3 text-green-600 dark:text-green-400" />
                                 <span className="text-secondary">Clear:</span>
-                                <span className={`font-bold ${month.clearance >= 68 ? 'text-green-600 dark:text-green-400' : 'text-amber-600 dark:text-amber-400'}`}>{month.clearance}%</span>
+                                <span className={`font-bold ${month.clearance >= 68 ? 'text-green-600 dark:text-green-400' : 'text-amber-700 dark:text-amber-400'}`}>{month.clearance}%</span>
                               </div>
                             </div>
                           </div>
@@ -956,7 +956,7 @@ export default function ReportsAnalytics() {
                       <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
                         <p className="text-secondary mb-1">Summer Peak (Jun-Aug)</p>
                         <p className="font-bold text-primary">14,782 calls/mo</p>
-                        <p className="text-amber-600 dark:text-amber-400">+18% vs winter</p>
+                        <p className="text-amber-700 dark:text-amber-400">+18% vs winter</p>
                       </div>
                       <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
                         <p className="text-secondary mb-1">Winter Low (Nov-Feb)</p>
@@ -991,7 +991,7 @@ export default function ReportsAnalytics() {
                           <h4 className="text-base font-semibold text-primary">{division.name}</h4>
                           <div className={`px-3 py-1 rounded-full text-xs font-bold ${
                             division.efficiency >= 90 ? 'bg-green-500/20 text-green-600 dark:text-green-400' :
-                            division.efficiency >= 85 ? 'bg-amber-500/20 text-amber-600 dark:text-amber-400' : 'bg-red-500/20 text-red-600 dark:text-red-400'
+                            division.efficiency >= 85 ? 'bg-amber-500/20 text-amber-700 dark:text-amber-400' : 'bg-red-500/20 text-red-700 dark:text-red-400'
                           }`}>
                             {division.efficiency}% Efficiency
                           </div>
@@ -1057,7 +1057,7 @@ export default function ReportsAnalytics() {
                       </thead>
                       <tbody>
                         {crimeStats.map((stat, idx) => (
-                          <tr key={idx} className="border-b border-border dark:border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/30 transition-colors">
+                          <tr key={idx} className="border-b border-border dark:border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/30 transition-colors">
                             <td className="px-4 py-4">
                               <p className="text-sm font-medium text-primary">{stat.category}</p>
                             </td>
@@ -1077,7 +1077,7 @@ export default function ReportsAnalytics() {
                               <div className="flex items-center gap-3">
                                 <span className={`text-sm font-bold ${
                                   stat.clearance >= 80 ? 'text-green-600 dark:text-green-400' :
-                                  stat.clearance >= 65 ? 'text-amber-600 dark:text-amber-400' : 'text-red-600 dark:text-red-400'
+                                  stat.clearance >= 65 ? 'text-amber-700 dark:text-amber-400' : 'text-red-700 dark:text-red-400'
                                 }`}>{stat.clearance}%</span>
                                 <div className="flex-1 h-2 bg-white dark:bg-slate-700/50 rounded-full overflow-hidden max-w-[100px]">
                                   <div className={`h-full ${

@@ -34,7 +34,7 @@ export default function UserProfile() {
   const stats = [
     { label: 'Approvals This Month', value: '47', icon: CheckCircle, color: 'text-emerald-600' },
     { label: 'Avg Response Time', value: '1.8h', icon: Clock, color: 'text-blue-600' },
-    { label: 'Pending Items', value: '8', icon: Shield, color: 'text-amber-600' },
+    { label: 'Pending Items', value: '8', icon: Shield, color: 'text-amber-700' },
     { label: 'Days in Role', value: '1,546', icon: Award, color: 'text-slate-700' },
   ];
 

@@ -200,7 +200,7 @@ export default function DashboardLayout({
                       <span className="flex-1 text-left text-[13px] font-medium truncate">{item.label}</span>
                       {item.badge && (
                         <span className={`px-1.5 py-0.5 rounded-full text-[11px] ${
-                          isActive ? 'bg-slate-300 dark:bg-white/10 text-slate-800 dark:text-white' : 'bg-red-100 dark:bg-red-500/15 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-500/20'
+                          isActive ? 'bg-slate-300 dark:bg-white/10 text-slate-800 dark:text-white' : 'bg-red-100 dark:bg-red-500/15 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-500/20'
                         }`}>{item.badge}</span>
                       )}
                       {item.hasSubmenu && (

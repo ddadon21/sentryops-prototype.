@@ -573,7 +573,7 @@ export default function CommandCalendar() {
               onClick={() => setShowStaffingOverlay(!showStaffingOverlay)}
               className={`flex items-center gap-2 px-3 py-2 border rounded-lg text-[13px] font-medium transition-all ${
                 showStaffingOverlay
-                  ? 'bg-amber-500/10 border-amber-500/30 text-amber-600 dark:text-amber-400'
+                  ? 'bg-amber-500/10 border-amber-500/30 text-amber-700 dark:text-amber-400'
                   : 'bg-white dark:bg-slate-800/40 border-slate-300 dark:border-slate-700/40 text-secondary hover:text-slate-900 dark:hover:text-slate-300'
               }`}
             >
@@ -585,7 +585,7 @@ export default function CommandCalendar() {
               onClick={() => setShowRiskOverlay(!showRiskOverlay)}
               className={`flex items-center gap-2 px-3 py-2 border rounded-lg text-[13px] font-medium transition-all ${
                 showRiskOverlay
-                  ? 'bg-red-500/10 border-red-500/30 text-red-600 dark:text-red-400'
+                  ? 'bg-red-500/10 border-red-500/30 text-red-700 dark:text-red-400'
                   : 'bg-white dark:bg-slate-800/40 border-slate-300 dark:border-slate-700/40 text-secondary hover:text-slate-900 dark:hover:text-slate-300'
               }`}
             >
@@ -624,10 +624,10 @@ export default function CommandCalendar() {
                     : 'bg-slate-50 dark:bg-slate-800/25 border-border dark:border-slate-700/30'
                 }`}
               >
-                <Zap className={`w-4 h-4 mt-0.5 flex-shrink-0 ${conflict.severity === 'high' ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500'}`} />
+                <Zap className={`w-4 h-4 mt-0.5 flex-shrink-0 ${conflict.severity === 'high' ? 'text-amber-700 dark:text-amber-400' : 'text-slate-500'}`} />
                 <div className="flex-1">
                   <div className="flex items-center gap-2">
-                    <span className={`text-[13px] font-semibold ${conflict.severity === 'high' ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500'}`}>
+                    <span className={`text-[13px] font-semibold ${conflict.severity === 'high' ? 'text-amber-700 dark:text-amber-400' : 'text-slate-500'}`}>
                       Conflict Detected:
                     </span>
                     <span className="text-[13px] text-primary font-medium">{conflict.title}</span>
@@ -655,11 +655,11 @@ export default function CommandCalendar() {
             <div className="h-3 w-px bg-slate-100 dark:bg-slate-700/25"></div>
             <div className="flex items-center gap-4 flex-wrap">
               <div className="flex items-center gap-1.5">
-                <span className="px-1.5 py-0.5 bg-red-500/10 border border-red-500/20 rounded text-[10px] font-semibold text-red-600 dark:text-red-400">Elevated</span>
+                <span className="px-1.5 py-0.5 bg-red-500/10 border border-red-500/20 rounded text-[10px] font-semibold text-red-700 dark:text-red-400">Elevated</span>
                 <span className="text-[10px] text-slate-500">Compliance: Inspection / POST / PREA</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <span className="px-1.5 py-0.5 bg-amber-500/10 border border-amber-500/20 rounded text-[10px] font-semibold text-amber-600 dark:text-amber-400">Moderate</span>
+                <span className="px-1.5 py-0.5 bg-amber-500/10 border border-amber-500/20 rounded text-[10px] font-semibold text-amber-700 dark:text-amber-400">Moderate</span>
                 <span className="text-[10px] text-slate-500">Staffing: B-Shift + 12 at range</span>
               </div>
               <div className="flex items-center gap-1.5">
@@ -725,17 +725,17 @@ export default function CommandCalendar() {
                   return (
                     <div
                       key={day}
-                      className={`min-h-[85px] p-1.5 rounded transition-colors hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/30 ${bgClass}`}
+                      className={`min-h-[85px] p-1.5 rounded transition-colors hover:bg-slate-100 dark:hover:bg-slate-800/30 ${bgClass}`}
                     >
                       {/* Day number + density dots */}
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-1">
-                          <span className={`text-[11px] font-semibold ${isToday ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500'}`}>{day}</span>
+                          <span className={`text-[11px] font-semibold ${isToday ? 'text-amber-700 dark:text-amber-400' : 'text-slate-500'}`}>{day}</span>
                           {isToday && <span className="text-[9px] text-amber-500/60 font-medium uppercase">Today</span>}
                         </div>
                         <div className="flex items-center gap-1">
                           {showStaffingOverlay && staffingImpactDays[day] && (
-                            <Users className={`w-2.5 h-2.5 ${staffingBelow80 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500'}`} />
+                            <Users className={`w-2.5 h-2.5 ${staffingBelow80 ? 'text-amber-700 dark:text-amber-400' : 'text-slate-500'}`} />
                           )}
                           {showRiskOverlay && getDensityDots(density)}
                         </div>
@@ -747,7 +747,7 @@ export default function CommandCalendar() {
                           <button
                             key={event.id}
                             onClick={() => setSelectedEvent(event)}
-                            className="w-full flex items-center gap-1 px-1 py-0.5 rounded hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-700/30 transition-colors text-left group"
+                            className="w-full flex items-center gap-1 px-1 py-0.5 rounded hover:bg-slate-100 dark:hover:bg-slate-700/30 transition-colors text-left group"
                           >
                             <div className={`w-0.5 h-3 rounded-full flex-shrink-0 ${getCategoryAccent(event.category)}`}></div>
                             <span className="text-[10px] text-secondary truncate group-hover:text-white transition-colors">{event.title}</span>
@@ -806,8 +806,8 @@ export default function CommandCalendar() {
                   <>
                     <div className="h-3 w-px bg-slate-100 dark:bg-slate-700/30"></div>
                     <div className="flex items-center gap-1.5">
-                      <Users className="w-2.5 h-2.5 text-amber-600 dark:text-amber-400" />
-                      <span className="text-[10px] text-amber-600 dark:text-amber-400/60">Staffing impacted</span>
+                      <Users className="w-2.5 h-2.5 text-amber-700 dark:text-amber-400" />
+                      <span className="text-[10px] text-amber-700 dark:text-amber-400/60">Staffing impacted</span>
                     </div>
                   </>
                 )}
@@ -852,12 +852,12 @@ export default function CommandCalendar() {
                             {countdown}
                           </span>
                           {isEscalating && (
-                            <span className="px-1.5 py-0.5 bg-red-500/10 border border-red-500/20 rounded text-[10px] font-semibold text-red-600 dark:text-red-400">
+                            <span className="px-1.5 py-0.5 bg-red-500/10 border border-red-500/20 rounded text-[10px] font-semibold text-red-700 dark:text-red-400">
                               Escalating
                             </span>
                           )}
                           {event.staffingImpact && (
-                            <span className="px-1.5 py-0.5 bg-amber-500/8 border border-amber-500/15 rounded text-[10px] font-medium text-amber-600 dark:text-amber-400/70">
+                            <span className="px-1.5 py-0.5 bg-amber-500/8 border border-amber-500/15 rounded text-[10px] font-medium text-amber-700 dark:text-amber-400/70">
                               <Users className="w-2.5 h-2.5 inline mr-0.5 -mt-0.5" />
                               {event.deputiesAffected ? `${event.deputiesAffected} deputies` : 'Staffing'}
                             </span>
@@ -900,16 +900,16 @@ export default function CommandCalendar() {
                           d.isToday ? 'bg-amber-500/[0.07] ring-1 ring-amber-500/20' : ''
                         }`}
                       >
-                        <span className={`text-[11px] font-semibold uppercase tracking-wider ${d.isToday ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500'}`}>
+                        <span className={`text-[11px] font-semibold uppercase tracking-wider ${d.isToday ? 'text-amber-700 dark:text-amber-400' : 'text-slate-500'}`}>
                           {d.dayName}
                         </span>
-                        <span className={`block text-[13px] font-semibold ${d.isToday ? 'text-amber-600 dark:text-amber-300' : 'text-primary'}`}>
+                        <span className={`block text-[13px] font-semibold ${d.isToday ? 'text-amber-700 dark:text-amber-300' : 'text-primary'}`}>
                           {d.day}
                         </span>
                         <div className="flex items-center justify-center gap-1 mt-0.5">
                           {d.isToday && <span className="text-[9px] text-amber-500/60 font-medium">TODAY</span>}
                           {showRiskOverlay && getDensityDots(density)}
-                          {hasStaffing && <Users className="w-2.5 h-2.5 text-amber-600 dark:text-amber-400/60" />}
+                          {hasStaffing && <Users className="w-2.5 h-2.5 text-amber-700 dark:text-amber-400/60" />}
                         </div>
                       </div>
                     );
@@ -1034,8 +1034,8 @@ export default function CommandCalendar() {
                   </div>
                   {selectedEvent.staffingImpact && (
                     <div className="border-t border-border dark:border-slate-700/20 pt-3">
-                      <span className="text-[11px] font-semibold text-amber-600 dark:text-amber-400/80 uppercase tracking-wider">Staffing Impact</span>
-                      <p className="text-sm text-amber-600 dark:text-amber-400 mt-1">
+                      <span className="text-[11px] font-semibold text-amber-700 dark:text-amber-400/80 uppercase tracking-wider">Staffing Impact</span>
+                      <p className="text-sm text-amber-700 dark:text-amber-400 mt-1">
                         {selectedEvent.deputiesAffected ? `${selectedEvent.deputiesAffected} deputies removed from field duty` : 'Staffing coverage affected'}
                       </p>
                     </div>
@@ -1044,7 +1044,7 @@ export default function CommandCalendar() {
                     <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Linked Module</span>
                     <button
                       onClick={() => { setSelectedEvent(null); navigate(selectedEvent.linkedModule); }}
-                      className="flex items-center gap-1.5 mt-1 text-sm text-amber-600 dark:text-amber-400/80 hover:text-amber-300 transition-colors"
+                      className="flex items-center gap-1.5 mt-1 text-sm text-amber-700 dark:text-amber-400/80 hover:text-amber-300 transition-colors"
                     >
                       {selectedEvent.linkedModule}
                       <ExternalLink className="w-3 h-3" />

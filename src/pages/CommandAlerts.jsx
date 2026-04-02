@@ -211,7 +211,7 @@ export default function CommandAlerts() {
     const configs = {
       critical: { strip: 'bg-red-500', pill: 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400', label: 'Critical' },
       high: { strip: 'bg-amber-500', pill: 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400', label: 'High' },
-      medium: { strip: 'bg-amber-500/60', pill: 'bg-amber-500/8 border-amber-500/15 text-amber-600 dark:text-amber-400/80', label: 'Medium' },
+      medium: { strip: 'bg-amber-500/60', pill: 'bg-amber-500/8 border-amber-500/15 text-amber-700 dark:text-amber-400/80', label: 'Medium' },
       low: { strip: 'bg-slate-400', pill: 'bg-slate-500/10 border-slate-500/20 text-slate-500', label: 'Low' },
       info: { strip: 'bg-slate-500', pill: 'bg-slate-500/10 border-slate-500/20 text-slate-500', label: 'Info' }
     };
@@ -219,7 +219,7 @@ export default function CommandAlerts() {
   };
 
   const getStatusConfig = (status, escalation) => {
-    if (escalation === 'overdue') return { pill: 'bg-red-500/15 border-red-500/25 text-red-600 dark:text-red-400', label: 'Overdue' };
+    if (escalation === 'overdue') return { pill: 'bg-red-500/15 border-red-500/25 text-red-700 dark:text-red-400', label: 'Overdue' };
     if (escalation === 'escalating') return { pill: 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400', label: 'Escalating' };
     const configs = {
       new: { pill: 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400', label: 'New' },
@@ -371,7 +371,7 @@ export default function CommandAlerts() {
                     ? 'border-border bg-slate-50 dark:bg-slate-800/[0.06] opacity-[0.30]'
                     : isAcknowledged
                     ? 'border-border dark:border-slate-700/30 bg-white dark:bg-slate-800/15 opacity-70'
-                    : 'border-border dark:border-slate-700/30 bg-white dark:bg-slate-800/15 hover:bg-slate-50 dark:hover:bg-slate-100 dark:hover:bg-slate-800/30'
+                    : 'border-border dark:border-slate-700/30 bg-white dark:bg-slate-800/15 hover:bg-slate-50 dark:hover:bg-slate-800/30'
                 }`}
               >
                 {/* ── Compact Row ──────────────────────── */}
@@ -407,7 +407,7 @@ export default function CommandAlerts() {
                   {/* Open duration */}
                   {!isResolved && (
                     <span className={`text-[10px] flex-shrink-0 font-mono whitespace-nowrap ${
-                      escalation === 'overdue' ? 'text-red-600 dark:text-red-400 font-semibold' : 'text-slate-700'
+                      escalation === 'overdue' ? 'text-red-700 dark:text-red-400 font-semibold' : 'text-slate-700'
                     }`}>
                       {getOpenDuration(alert.timestamp)}
                     </span>
@@ -467,7 +467,7 @@ export default function CommandAlerts() {
                       {escalation && (
                         <>
                           <span className="text-slate-700">|</span>
-                          <span className={escalation === 'overdue' ? 'text-red-600 dark:text-red-400 font-bold' : 'text-red-600 dark:text-red-400 font-semibold'}>
+                          <span className={escalation === 'overdue' ? 'text-red-700 dark:text-red-400 font-bold' : 'text-red-700 dark:text-red-400 font-semibold'}>
                             {escalation === 'overdue' ? 'OVERDUE' : 'Escalating'}
                           </span>
                         </>

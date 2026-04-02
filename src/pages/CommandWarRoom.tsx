@@ -134,8 +134,8 @@ const alerts: CommandAlert[] = [
 // ── Helpers ───────────────────────────────────────────────────
 
 function getDivisionColors(status: DivisionReadiness['status']) {
-  if (status === 'Critical')     return { badge: 'bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/25',       dot: 'bg-red-500' };
-  if (status === 'Reduced')      return { badge: 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/25', dot: 'bg-amber-400' };
+  if (status === 'Critical')     return { badge: 'bg-red-500/15 text-red-700 dark:text-red-400 border border-red-500/25',       dot: 'bg-red-500' };
+  if (status === 'Reduced')      return { badge: 'bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/25', dot: 'bg-amber-400' };
   return { badge: 'bg-slate-100 dark:bg-slate-700/30 text-secondary border border-border', dot: 'bg-slate-500' };
 }
 
@@ -146,8 +146,8 @@ function getBeatColors(status: PatrolBeat['status']) {
 }
 
 function getCertColors(severity: CertAlert['severity']) {
-  if (severity === 'critical') return { row: 'border-l-2 border-l-red-500/70',   badge: 'bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/20',    days: 'text-red-600 dark:text-red-400 font-bold' };
-  if (severity === 'warning')  return { row: 'border-l-2 border-l-amber-500/60', badge: 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/20', days: 'text-amber-600 dark:text-amber-400 font-semibold' };
+  if (severity === 'critical') return { row: 'border-l-2 border-l-red-500/70',   badge: 'bg-red-500/15 text-red-700 dark:text-red-400 border border-red-500/20',    days: 'text-red-700 dark:text-red-400 font-bold' };
+  if (severity === 'warning')  return { row: 'border-l-2 border-l-amber-500/60', badge: 'bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/20', days: 'text-amber-700 dark:text-amber-400 font-semibold' };
   return { row: '', badge: 'bg-slate-100 dark:bg-slate-700/30 text-secondary border border-border', days: 'text-slate-500' };
 }
 
@@ -159,8 +159,8 @@ function getDeploymentStatusColors(status: Deployment['status']) {
 }
 
 function getAlertColors(severity: CommandAlert['severity']) {
-  if (severity === 'critical') return { border: 'border-l-red-500',   icon: 'text-red-600 dark:text-red-400',   label: 'bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/20' };
-  if (severity === 'warning')  return { border: 'border-l-amber-500', icon: 'text-amber-600 dark:text-amber-400', label: 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/20' };
+  if (severity === 'critical') return { border: 'border-l-red-500',   icon: 'text-red-700 dark:text-red-400',   label: 'bg-red-500/15 text-red-700 dark:text-red-400 border border-red-500/20' };
+  if (severity === 'warning')  return { border: 'border-l-amber-500', icon: 'text-amber-700 dark:text-amber-400', label: 'bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/20' };
   return { border: 'border-l-slate-300 dark:border-l-slate-700', icon: 'text-slate-500', label: 'bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-500 border border-border' };
 }
 
@@ -193,7 +193,7 @@ export default function CommandWarRoom() {
       value: `${commandSnapshot.patrolCoverage}%`,
       sub: '1 beat uncovered · 2 thin',
       icon: Radio,
-      color: 'text-amber-600 dark:text-amber-400',
+      color: 'text-amber-700 dark:text-amber-400',
       trend: 'down',
     },
     {
@@ -201,7 +201,7 @@ export default function CommandWarRoom() {
       value: `${commandSnapshot.certRiskCount}`,
       sub: '2 critical · 4 warning · 8 watch',
       icon: Award,
-      color: 'text-red-600 dark:text-red-400',
+      color: 'text-red-700 dark:text-red-400',
       trend: 'up',
     },
     {
@@ -217,7 +217,7 @@ export default function CommandWarRoom() {
       value: `${commandSnapshot.activeAlerts}`,
       sub: `${commandSnapshot.criticalAlerts} critical · needs action`,
       icon: AlertTriangle,
-      color: 'text-red-600 dark:text-red-400',
+      color: 'text-red-700 dark:text-red-400',
       trend: null,
     },
   ];
@@ -239,7 +239,7 @@ export default function CommandWarRoom() {
               <Circle className="w-1.5 h-1.5 fill-emerald-500 text-emerald-500" />
               Live Feed
             </div>
-            <button className="flex items-center gap-2 px-3 py-1.5 bg-slate-50 dark:bg-slate-800/30 border border-border dark:border-slate-700/30 rounded-lg text-[12px] text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-700/30 transition-all">
+            <button className="flex items-center gap-2 px-3 py-1.5 bg-slate-50 dark:bg-slate-800/30 border border-border dark:border-slate-700/30 rounded-lg text-[12px] text-secondary hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-700/30 transition-all">
               <RefreshCw className="w-3.5 h-3.5" />
               Refresh
             </button>
@@ -256,8 +256,8 @@ export default function CommandWarRoom() {
               >
                 <div className="flex items-center justify-between mb-3">
                   <Icon className="w-4 h-4 text-secondary" />
-                  {kpi.trend === 'up'   && <TrendingUp   className="w-3.5 h-3.5 text-red-600 dark:text-red-400 opacity-60" />}
-                  {kpi.trend === 'down' && <TrendingDown  className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 opacity-60" />}
+                  {kpi.trend === 'up'   && <TrendingUp   className="w-3.5 h-3.5 text-red-700 dark:text-red-400 opacity-60" />}
+                  {kpi.trend === 'down' && <TrendingDown  className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400 opacity-60" />}
                 </div>
                 <p className={`text-2xl font-bold mb-0.5 ${kpi.color}`}>{kpi.value}</p>
                 <p className="text-[10px] text-slate-500 leading-tight uppercase tracking-wide">{kpi.label}</p>
@@ -304,7 +304,7 @@ export default function CommandWarRoom() {
                   <div key={div.name} className="grid grid-cols-12 items-center px-5 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-700/10 transition-colors">
                     <div className="col-span-4">
                       <p className="text-[12px] font-medium text-slate-900 dark:text-slate-700 dark:text-slate-200 leading-tight">{div.name}</p>
-                      <p className="text-[10px] text-slate-500">{div.bureau}{div.actingSupervisor && <span className="ml-1 text-amber-600 dark:text-amber-400">⚡ Acting</span>}</p>
+                      <p className="text-[10px] text-slate-500">{div.bureau}{div.actingSupervisor && <span className="ml-1 text-amber-700 dark:text-amber-400">⚡ Acting</span>}</p>
                     </div>
                     <div className="col-span-2 text-center">
                       <span className="text-[12px] text-secondary">{div.authorized}/{div.filled}</span>
@@ -321,10 +321,10 @@ export default function CommandWarRoom() {
                       </div>
                     </div>
                     <div className="col-span-1 text-center">
-                      <span className={`text-[12px] ${div.vacancies > 4 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500'}`}>{div.vacancies}</span>
+                      <span className={`text-[12px] ${div.vacancies > 4 ? 'text-amber-700 dark:text-amber-400' : 'text-slate-500'}`}>{div.vacancies}</span>
                     </div>
                     <div className="col-span-1 text-center">
-                      <span className={`text-[12px] ${div.certRisk > 3 ? 'text-red-600 dark:text-red-400' : div.certRisk > 1 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500'}`}>
+                      <span className={`text-[12px] ${div.certRisk > 3 ? 'text-red-700 dark:text-red-400' : div.certRisk > 1 ? 'text-amber-700 dark:text-amber-400' : 'text-slate-500'}`}>
                         {div.certRisk > 0 ? div.certRisk : '—'}
                       </span>
                     </div>
@@ -403,7 +403,7 @@ export default function CommandWarRoom() {
               <div className="flex items-center gap-2">
                 <Award className="w-4 h-4 text-secondary" />
                 <span className="text-[13px] font-semibold text-primary">Certification Risk</span>
-                <span className="text-[10px] px-2 py-0.5 rounded-full bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/20">
+                <span className="text-[10px] px-2 py-0.5 rounded-full bg-red-500/15 text-red-700 dark:text-red-400 border border-red-500/20">
                   {certAlerts.filter(c => c.severity === 'critical').length} Critical
                 </span>
               </div>
@@ -499,7 +499,7 @@ export default function CommandWarRoom() {
               <div className="flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4 text-secondary" />
                 <span className="text-[13px] font-semibold text-primary">Command Alert Feed</span>
-                <span className="text-[10px] px-2 py-0.5 rounded-full bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/20">
+                <span className="text-[10px] px-2 py-0.5 rounded-full bg-red-500/15 text-red-700 dark:text-red-400 border border-red-500/20">
                   {commandSnapshot.criticalAlerts} Critical
                 </span>
               </div>
@@ -550,14 +550,14 @@ export default function CommandWarRoom() {
               </div>
               <div className="p-5 space-y-3">
                 <div className="flex gap-3">
-                  <AlertOctagon className="w-4 h-4 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5" />
+                  <AlertOctagon className="w-4 h-4 text-red-700 dark:text-red-400 flex-shrink-0 mt-0.5" />
                   <p className="text-[12px] text-secondary leading-relaxed">
                     <span className="text-primary font-medium">Immediate: </span>
                     Beat 7 West has zero coverage. Divert Alpha-12 from Beat 1 (currently overloaded) to restore patrol presence.
                   </p>
                 </div>
                 <div className="flex gap-3">
-                  <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
+                  <AlertTriangle className="w-4 h-4 text-amber-700 dark:text-amber-400 flex-shrink-0 mt-0.5" />
                   <p className="text-[12px] text-secondary leading-relaxed">
                     <span className="text-primary font-medium">Today: </span>
                     Sgt. Rivera's firearms cert expires in 4 days. Restricted duty status applies automatically on day 0 unless renewed. Contact Training at 0800.
@@ -599,7 +599,7 @@ export default function CommandWarRoom() {
                     className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-[12px] font-medium transition-all ${
                       action.urgent
                         ? 'bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-300 hover:bg-amber-500/15'
-                        : 'bg-slate-50 dark:bg-slate-700/20 border border-border dark:border-slate-700/20 text-secondary hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-700/30'
+                        : 'bg-slate-50 dark:bg-slate-700/20 border border-border dark:border-slate-700/20 text-secondary hover:bg-slate-100 dark:hover:bg-slate-700/30'
                     }`}
                   >
                     {action.label}

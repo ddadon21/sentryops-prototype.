@@ -225,7 +225,7 @@ export default function HRSettings() {
           )}
           <button
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-            className="p-2 hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors hidden lg:block"
+            className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors hidden lg:block"
           >
             {sidebarCollapsed ? <ChevronRight className="w-5 h-5 text-secondary" /> : <ChevronLeft className="w-5 h-5 text-secondary" />}
           </button>
@@ -240,7 +240,7 @@ export default function HRSettings() {
                 key={item.id}
                 onClick={() => handleNavigation(item)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                  isActive ? 'bg-amber-500 text-primary shadow-lg shadow-amber-500/20' : 'text-secondary hover:bg-slate-50 dark:hover:bg-slate-100 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-slate-900 dark:hover:text-white'
+                  isActive ? 'bg-amber-500 text-primary shadow-lg shadow-amber-500/20' : 'text-secondary hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-slate-900 dark:hover:text-white'
                 } ${sidebarCollapsed ? 'justify-center' : ''}`}
                 title={sidebarCollapsed ? item.label : ''}
               >
@@ -263,7 +263,7 @@ export default function HRSettings() {
           <div className="p-4">
             <button
               onClick={() => setLogoutConfirmOpen(true)}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-secondary hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/40 hover:text-slate-800 dark:hover:text-secondary dark:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/40 hover:text-slate-800 dark:hover:text-secondary dark:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
               title={sidebarCollapsed ? 'Sign Out' : ''}
             >
               <LogOut className="w-5 h-5 flex-shrink-0" />
@@ -301,7 +301,7 @@ export default function HRSettings() {
             <div className="flex gap-3 mt-6">
               <button
                 onClick={() => setLogoutConfirmOpen(false)}
-                className="flex-1 px-4 py-2.5 bg-slate-100 dark:bg-slate-800/40 hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-border rounded-xl text-primary font-medium transition-all"
+                className="flex-1 px-4 py-2.5 bg-slate-100 dark:bg-slate-800/40 hover:bg-slate-200 dark:hover:bg-slate-800/60 border border-border rounded-xl text-primary font-medium transition-all"
               >
                 Cancel
               </button>
@@ -341,7 +341,7 @@ export default function HRSettings() {
               <div className="relative">
                 <button
                   onClick={() => setNotificationsOpen(!notificationsOpen)}
-                  className="p-2 hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg relative"
+                  className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg relative"
                 >
                   <Bell className="w-5 h-5 text-secondary" />
                   <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
@@ -354,7 +354,7 @@ export default function HRSettings() {
                     </div>
                     <div className="max-h-96 overflow-y-auto">
                       {notifications.map(notification => (
-                        <div key={notification.id} className={`p-4 border-b border-slate-100 dark:border-border hover:bg-slate-50 dark:hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
+                        <div key={notification.id} className={`p-4 border-b border-slate-100 dark:border-border hover:bg-slate-50 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
                           <div className="flex items-start gap-3">
                             <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-amber-400' : 'bg-blue-400'}`}></div>
                             <div className="flex-1 min-w-0">
@@ -367,7 +367,7 @@ export default function HRSettings() {
                       ))}
                     </div>
                     <div className="p-3 border-t border-border">
-                      <button className="w-full text-center text-sm text-amber-600 dark:text-amber-400 hover:text-amber-300 font-medium">View All</button>
+                      <button className="w-full text-center text-sm text-amber-700 dark:text-amber-400 hover:text-amber-300 font-medium">View All</button>
                     </div>
                   </div>
                 )}
@@ -412,7 +412,7 @@ export default function HRSettings() {
                     <div className="border-t border-border py-1">
                       <button
                         onClick={() => setLogoutConfirmOpen(true)}
-                        className="w-full flex items-center gap-3 px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors"
+                        className="w-full flex items-center gap-3 px-4 py-2 text-sm text-red-700 dark:text-red-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors"
                       >
                         <LogOut className="w-4 h-4" />
                         Sign Out
@@ -474,7 +474,7 @@ export default function HRSettings() {
                     key={tab.id}
                     onClick={() => setActiveSection(tab.id)}
                     className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all relative whitespace-nowrap ${
-                      activeSection === tab.id ? 'text-amber-600 dark:text-amber-400' : 'text-secondary hover:text-slate-300'
+                      activeSection === tab.id ? 'text-amber-700 dark:text-amber-400' : 'text-secondary hover:text-slate-300'
                     }`}
                   >
                     <Icon className="w-4 h-4" />
@@ -695,7 +695,7 @@ export default function HRSettings() {
                         <button
                           onClick={() => setDisplaySettings({...displaySettings, theme: 'dark'})}
                           className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl border transition-all ${
-                            displaySettings.theme === 'dark' ? 'bg-amber-500/20 border-amber-500/50 text-amber-600 dark:text-amber-400' : 'bg-white dark:bg-slate-800/40 border-slate-700/50 text-slate-500'
+                            displaySettings.theme === 'dark' ? 'bg-amber-500/20 border-amber-500/50 text-amber-700 dark:text-amber-400' : 'bg-white dark:bg-slate-800/40 border-slate-700/50 text-slate-500'
                           }`}
                         >
                           <Moon className="w-5 h-5" />
@@ -704,7 +704,7 @@ export default function HRSettings() {
                         <button
                           onClick={() => setDisplaySettings({...displaySettings, theme: 'light'})}
                           className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl border transition-all ${
-                            displaySettings.theme === 'light' ? 'bg-amber-500/20 border-amber-500/50 text-amber-600 dark:text-amber-400' : 'bg-white dark:bg-slate-800/40 border-slate-700/50 text-slate-500'
+                            displaySettings.theme === 'light' ? 'bg-amber-500/20 border-amber-500/50 text-amber-700 dark:text-amber-400' : 'bg-white dark:bg-slate-800/40 border-slate-700/50 text-slate-500'
                           }`}
                         >
                           <Sun className="w-5 h-5" />

@@ -368,7 +368,7 @@ export default function HRDashboard() {
           )}
           <button
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-            className="p-2 hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors hidden lg:block"
+            className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors hidden lg:block"
           >
             {sidebarCollapsed ? <ChevronRight className="w-5 h-5 text-secondary" /> : <ChevronLeft className="w-5 h-5 text-secondary" />}
           </button>
@@ -383,7 +383,7 @@ export default function HRDashboard() {
                 key={item.id}
                 onClick={() => handleNavigation(item)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                  isActive ? 'bg-amber-500 text-primary shadow-lg shadow-amber-500/20' : 'text-secondary hover:bg-slate-50 dark:hover:bg-slate-100 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-slate-900 dark:hover:text-white'
+                  isActive ? 'bg-amber-500 text-primary shadow-lg shadow-amber-500/20' : 'text-secondary hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-slate-900 dark:hover:text-white'
                 } ${sidebarCollapsed ? 'justify-center' : ''}`}
                 title={sidebarCollapsed ? item.label : ''}
               >
@@ -406,7 +406,7 @@ export default function HRDashboard() {
           <div className="p-4">
             <button
               onClick={() => setLogoutConfirmOpen(true)}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-secondary hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/40 hover:text-slate-800 dark:hover:text-secondary dark:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/40 hover:text-slate-800 dark:hover:text-secondary dark:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
               title={sidebarCollapsed ? 'Sign Out' : ''}
             >
               <LogOut className="w-5 h-5 flex-shrink-0" />
@@ -440,10 +440,10 @@ export default function HRDashboard() {
               </div>
             </div>
             <div className="flex gap-3 mt-6">
-              <button onClick={() => setLogoutConfirmOpen(false)} className="flex-1 px-4 py-2.5 bg-slate-100 dark:bg-slate-800/40 hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-border rounded-xl text-primary font-medium transition-all">
+              <button onClick={() => setLogoutConfirmOpen(false)} className="flex-1 px-4 py-2.5 bg-slate-100 dark:bg-slate-800/40 hover:bg-slate-200 dark:hover:bg-slate-800/60 border border-border rounded-xl text-primary font-medium transition-all">
                 Cancel
               </button>
-              <button onClick={handleLogout} className="flex-1 px-4 py-2.5 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/50 rounded-xl text-amber-600 dark:text-amber-400 font-medium transition-all">
+              <button onClick={handleLogout} className="flex-1 px-4 py-2.5 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/50 rounded-xl text-amber-700 dark:text-amber-400 font-medium transition-all">
                 Sign Out
               </button>
             </div>
@@ -467,7 +467,7 @@ export default function HRDashboard() {
             </div>
             <div className="flex items-center gap-2 lg:gap-3">
               <div className="relative notifications-container">
-                <button onClick={() => setNotificationsOpen(!notificationsOpen)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg relative">
+                <button onClick={() => setNotificationsOpen(!notificationsOpen)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg relative">
                   <Bell className="w-5 h-5 text-secondary" />
                   <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                 </button>
@@ -477,12 +477,12 @@ export default function HRDashboard() {
                     <div className="p-4 border-b border-border">
                       <div className="flex items-center justify-between">
                         <h3 className="text-sm font-semibold text-primary">Notifications</h3>
-                        <span className="px-2 py-0.5 bg-red-500/20 border border-red-500/30 text-red-600 dark:text-red-400 text-xs rounded-full">{notifications.filter(n => n.urgent).length} urgent</span>
+                        <span className="px-2 py-0.5 bg-red-500/20 border border-red-500/30 text-red-700 dark:text-red-400 text-xs rounded-full">{notifications.filter(n => n.urgent).length} urgent</span>
                       </div>
                     </div>
                     <div className="max-h-96 overflow-y-auto">
                       {notifications.map(notification => (
-                        <div key={notification.id} className={`p-4 border-b border-slate-100 dark:border-border hover:bg-slate-50 dark:hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-red-500/5' : ''}`}>
+                        <div key={notification.id} className={`p-4 border-b border-slate-100 dark:border-border hover:bg-slate-50 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-red-500/5' : ''}`}>
                           <div className="flex items-start gap-3">
                             <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-red-400' : 'bg-blue-400'}`}></div>
                             <div className="flex-1 min-w-0">
@@ -495,7 +495,7 @@ export default function HRDashboard() {
                       ))}
                     </div>
                     <div className="p-3 border-t border-border">
-                      <button className="w-full text-center text-sm text-amber-600 dark:text-amber-400 hover:text-amber-300 font-medium">View All Notifications</button>
+                      <button className="w-full text-center text-sm text-amber-700 dark:text-amber-400 hover:text-amber-300 font-medium">View All Notifications</button>
                     </div>
                   </div>
                 )}
@@ -532,7 +532,7 @@ export default function HRDashboard() {
                       </button>
                     </div>
                     <div className="border-t border-border py-1">
-                      <button onClick={() => setLogoutConfirmOpen(true)} className="w-full flex items-center gap-3 px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors">
+                      <button onClick={() => setLogoutConfirmOpen(true)} className="w-full flex items-center gap-3 px-4 py-2 text-sm text-red-700 dark:text-red-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors">
                         <LogOut className="w-4 h-4" />
                         Sign Out
                       </button>
@@ -576,39 +576,39 @@ export default function HRDashboard() {
             <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-4 mb-4">
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
-                  <AlertTriangle className="w-4 h-4 text-red-600 dark:text-red-400" />
-                  <span className="text-sm text-red-600 dark:text-red-400 font-medium">3 POST certifications expire within 30 days - renewal required</span>
+                  <AlertTriangle className="w-4 h-4 text-red-700 dark:text-red-400" />
+                  <span className="text-sm text-red-700 dark:text-red-400 font-medium">3 POST certifications expire within 30 days - renewal required</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <AlertTriangle className="w-4 h-4 text-red-600 dark:text-red-400" />
-                  <span className="text-sm text-red-600 dark:text-red-400 font-medium">3 FMLA leave requests pending approval (48-hour response required)</span>
+                  <AlertTriangle className="w-4 h-4 text-red-700 dark:text-red-400" />
+                  <span className="text-sm text-red-700 dark:text-red-400 font-medium">3 FMLA leave requests pending approval (48-hour response required)</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <AlertTriangle className="w-4 h-4 text-red-600 dark:text-red-400" />
-                  <span className="text-sm text-red-600 dark:text-red-400 font-medium">2 disciplinary hearings scheduled this week - documentation review required</span>
+                  <AlertTriangle className="w-4 h-4 text-red-700 dark:text-red-400" />
+                  <span className="text-sm text-red-700 dark:text-red-400 font-medium">2 disciplinary hearings scheduled this week - documentation review required</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <AlertCircle className="w-4 h-4 text-amber-600 dark:text-amber-400" />
-                  <span className="text-sm text-amber-600 dark:text-amber-400 font-medium">Annual performance evaluations: 23 overdue (&gt;90 days past due date)</span>
+                  <AlertCircle className="w-4 h-4 text-amber-700 dark:text-amber-400" />
+                  <span className="text-sm text-amber-700 dark:text-amber-400 font-medium">Annual performance evaluations: 23 overdue (&gt;90 days past due date)</span>
                 </div>
               </div>
             </div>
 
             {/* Quick Actions */}
             <div className="flex flex-wrap gap-2">
-              <button className="px-4 py-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-600 dark:text-amber-400 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 border border-amber-500/20">
+              <button className="px-4 py-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-400 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 border border-amber-500/20">
                 <FileText className="w-4 h-4" />
                 Personnel Action Form
               </button>
-              <button className="px-4 py-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-600 dark:text-amber-400 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 border border-amber-500/20">
+              <button className="px-4 py-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-400 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 border border-amber-500/20">
                 <ClipboardList className="w-4 h-4" />
                 Workers' Comp Incident
               </button>
-              <button className="px-4 py-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-600 dark:text-amber-400 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 border border-amber-500/20">
+              <button className="px-4 py-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-400 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 border border-amber-500/20">
                 <Scale className="w-4 h-4" />
                 Disciplinary Action
               </button>
-              <button className="px-4 py-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-600 dark:text-amber-400 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 border border-amber-500/20">
+              <button className="px-4 py-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-400 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 border border-amber-500/20">
                 <Download className="w-4 h-4" />
                 Compliance Audit Export
               </button>
@@ -618,7 +618,7 @@ export default function HRDashboard() {
           {/* Critical Actions Queue */}
           <div className="mb-6">
             <div className="flex items-center gap-2 mb-4">
-              <AlertTriangle className="w-6 h-6 text-red-600 dark:text-red-400" />
+              <AlertTriangle className="w-6 h-6 text-red-700 dark:text-red-400" />
               <h3 className="text-xl font-bold text-primary">CRITICAL ACTIONS - IMMEDIATE ATTENTION REQUIRED</h3>
             </div>
 
@@ -630,10 +630,10 @@ export default function HRDashboard() {
               >
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-red-500/20 rounded-xl flex items-center justify-center">
-                    <Award className="w-5 h-5 text-red-600 dark:text-red-400" />
+                    <Award className="w-5 h-5 text-red-700 dark:text-red-400" />
                   </div>
                   <div className="text-left">
-                    <h4 className="text-base font-semibold text-red-600 dark:text-red-400">CERTIFICATION COMPLIANCE - POST REQUIREMENTS</h4>
+                    <h4 className="text-base font-semibold text-red-700 dark:text-red-400">CERTIFICATION COMPLIANCE - POST REQUIREMENTS</h4>
                     <p className="text-sm text-secondary">3 POST Certifications Expiring Within 30 Days</p>
                   </div>
                 </div>
@@ -654,8 +654,8 @@ export default function HRDashboard() {
                           <p className="text-xs text-secondary">Supervisor: {cert.supervisor}</p>
                         </div>
                         <span className={`px-2 py-1 rounded text-xs font-medium ${
-                          cert.status === 'critical' ? 'bg-red-500/20 text-red-600 dark:text-red-400' :
-                          cert.status === 'attention' ? 'bg-amber-500/20 text-amber-600 dark:text-amber-400' :
+                          cert.status === 'critical' ? 'bg-red-500/20 text-red-700 dark:text-red-400' :
+                          cert.status === 'attention' ? 'bg-amber-500/20 text-amber-700 dark:text-amber-400' :
                           'bg-green-500/20 text-green-600 dark:text-green-400'
                         }`}>
                           {cert.daysLeft} days
@@ -670,17 +670,17 @@ export default function HRDashboard() {
                         <div className="flex items-start gap-2">
                           <span className="text-slate-500">•</span>
                           <span className="text-secondary">Status:</span>
-                          <span className={cert.status === 'critical' ? 'text-red-600 dark:text-red-400 font-medium' : 'text-primary'}>{cert.trainingStatus}</span>
+                          <span className={cert.status === 'critical' ? 'text-red-700 dark:text-red-400 font-medium' : 'text-primary'}>{cert.trainingStatus}</span>
                         </div>
                         <div className="flex items-start gap-2">
                           <span className="text-slate-500">•</span>
                           <span className="text-secondary">Renewal Application:</span>
-                          <span className={cert.renewalApp === 'NOT SUBMITTED' ? 'text-red-600 dark:text-red-400 font-medium' : 'text-primary'}>{cert.renewalApp}</span>
+                          <span className={cert.renewalApp === 'NOT SUBMITTED' ? 'text-red-700 dark:text-red-400 font-medium' : 'text-primary'}>{cert.renewalApp}</span>
                         </div>
                         <div className="flex items-start gap-2">
                           <span className="text-slate-500">•</span>
                           <span className="text-secondary">Action Required:</span>
-                          <span className={cert.status === 'critical' ? 'text-red-600 dark:text-red-400 font-medium' : 'text-amber-600 dark:text-amber-400'}>{cert.actionRequired}</span>
+                          <span className={cert.status === 'critical' ? 'text-red-700 dark:text-red-400 font-medium' : 'text-amber-700 dark:text-amber-400'}>{cert.actionRequired}</span>
                         </div>
                         {cert.coveragePlan && (
                           <div className="flex items-start gap-2">
@@ -702,7 +702,7 @@ export default function HRDashboard() {
                           POST Portal
                         </button>
                         {cert.status === 'critical' && (
-                          <button className="px-3 py-1.5 bg-red-500/20 hover:bg-red-500/30 text-red-600 dark:text-red-400 rounded-lg text-xs font-medium transition-colors">
+                          <button className="px-3 py-1.5 bg-red-500/20 hover:bg-red-500/30 text-red-700 dark:text-red-400 rounded-lg text-xs font-medium transition-colors">
                             URGENT: Schedule Training
                           </button>
                         )}
@@ -721,10 +721,10 @@ export default function HRDashboard() {
               >
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-red-500/20 rounded-xl flex items-center justify-center">
-                    <UserPlus className="w-5 h-5 text-red-600 dark:text-red-400" />
+                    <UserPlus className="w-5 h-5 text-red-700 dark:text-red-400" />
                   </div>
                   <div className="text-left">
-                    <h4 className="text-base font-semibold text-red-600 dark:text-red-400">NEW HIRE ONBOARDING - LEGAL COMPLIANCE DEADLINES</h4>
+                    <h4 className="text-base font-semibold text-red-700 dark:text-red-400">NEW HIRE ONBOARDING - LEGAL COMPLIANCE DEADLINES</h4>
                     <p className="text-sm text-secondary">3 New Hires - Documentation Due This Week</p>
                   </div>
                 </div>
@@ -741,7 +741,7 @@ export default function HRDashboard() {
                           <p className="text-xs text-secondary">{hire.position}</p>
                         </div>
                         <div className="text-right">
-                          <p className="text-sm text-amber-600 dark:text-amber-400 font-medium">Start Date: {hire.startDate}</p>
+                          <p className="text-sm text-amber-700 dark:text-amber-400 font-medium">Start Date: {hire.startDate}</p>
                           <p className="text-xs text-secondary">{hire.daysUntilStart} days until start</p>
                         </div>
                       </div>
@@ -770,7 +770,7 @@ export default function HRDashboard() {
                       </div>
 
                       <div className="mb-4">
-                        <p className="text-xs font-semibold text-amber-600 dark:text-amber-400 mb-2">OUTSTANDING REQUIRED DOCUMENTS (Legal Deadlines):</p>
+                        <p className="text-xs font-semibold text-amber-700 dark:text-amber-400 mb-2">OUTSTANDING REQUIRED DOCUMENTS (Legal Deadlines):</p>
                         <div className="space-y-2">
                           {hire.outstandingDocs.map((doc, idx) => (
                             <div key={idx} className="flex items-start gap-2 text-sm">
@@ -779,7 +779,7 @@ export default function HRDashboard() {
                                 <span className="text-primary">{doc.doc}</span>
                                 <span className="text-secondary ml-2">- DUE: {doc.due}</span>
                                 <p className="text-xs text-slate-500">Status: {doc.status}</p>
-                                <p className="text-xs text-amber-600 dark:text-amber-400">Action: {doc.action}</p>
+                                <p className="text-xs text-amber-700 dark:text-amber-400">Action: {doc.action}</p>
                               </div>
                             </div>
                           ))}
@@ -799,7 +799,7 @@ export default function HRDashboard() {
                       </div>
 
                       <div className="flex flex-wrap gap-2 mt-4 pt-3 border-t border-border">
-                        <button className="px-3 py-1.5 bg-amber-500/20 hover:bg-amber-500/30 text-amber-600 dark:text-amber-400 rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
+                        <button className="px-3 py-1.5 bg-amber-500/20 hover:bg-amber-500/30 text-amber-700 dark:text-amber-400 rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
                           <Mail className="w-3 h-3" />
                           Send Document Reminder Email
                         </button>
@@ -828,10 +828,10 @@ export default function HRDashboard() {
               >
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-red-500/20 rounded-xl flex items-center justify-center">
-                    <Heart className="w-5 h-5 text-red-600 dark:text-red-400" />
+                    <Heart className="w-5 h-5 text-red-700 dark:text-red-400" />
                   </div>
                   <div className="text-left">
-                    <h4 className="text-base font-semibold text-red-600 dark:text-red-400">FMLA LEAVE REQUESTS - FEDERAL LAW COMPLIANCE (48-HOUR RESPONSE)</h4>
+                    <h4 className="text-base font-semibold text-red-700 dark:text-red-400">FMLA LEAVE REQUESTS - FEDERAL LAW COMPLIANCE (48-HOUR RESPONSE)</h4>
                     <p className="text-sm text-secondary">3 FMLA Leave Requests Pending HR Review & Approval</p>
                   </div>
                 </div>
@@ -850,11 +850,11 @@ export default function HRDashboard() {
                           <p className="text-xs text-secondary">{request.position}</p>
                         </div>
                         {request.status === 'overdue' ? (
-                          <span className="px-2 py-1 bg-red-500/20 text-red-600 dark:text-red-400 rounded text-xs font-medium">
+                          <span className="px-2 py-1 bg-red-500/20 text-red-700 dark:text-red-400 rounded text-xs font-medium">
                             OVERDUE BY: {request.overdueBy}
                           </span>
                         ) : (
-                          <span className="px-2 py-1 bg-amber-500/20 text-amber-600 dark:text-amber-400 rounded text-xs font-medium">
+                          <span className="px-2 py-1 bg-amber-500/20 text-amber-700 dark:text-amber-400 rounded text-xs font-medium">
                             {request.hoursLeft} hours left
                           </span>
                         )}
@@ -867,7 +867,7 @@ export default function HRDashboard() {
                         </div>
                         <div>
                           <span className="text-secondary">Federal Deadline:</span>
-                          <span className={`ml-2 ${request.status === 'overdue' ? 'text-red-600 dark:text-red-400 font-medium' : 'text-amber-600 dark:text-amber-400'}`}>
+                          <span className={`ml-2 ${request.status === 'overdue' ? 'text-red-700 dark:text-red-400 font-medium' : 'text-amber-700 dark:text-amber-400'}`}>
                             {request.federalDeadline}
                           </span>
                         </div>
@@ -921,7 +921,7 @@ export default function HRDashboard() {
                       </div>
 
                       <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg mb-4">
-                        <p className="text-xs font-semibold text-amber-600 dark:text-amber-400 mb-2">ACTION REQUIRED{request.status === 'overdue' ? ' - URGENT (Federal deadline passed)' : ''}:</p>
+                        <p className="text-xs font-semibold text-amber-700 dark:text-amber-400 mb-2">ACTION REQUIRED{request.status === 'overdue' ? ' - URGENT (Federal deadline passed)' : ''}:</p>
                         <ul className="text-xs text-amber-200 space-y-1">
                           <li>• Complete FMLA Eligibility Notice (WH-381)</li>
                           <li>• Complete Rights & Responsibilities Notice (WH-381)</li>
@@ -960,10 +960,10 @@ export default function HRDashboard() {
               >
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-red-500/20 rounded-xl flex items-center justify-center">
-                    <Scale className="w-5 h-5 text-red-600 dark:text-red-400" />
+                    <Scale className="w-5 h-5 text-red-700 dark:text-red-400" />
                   </div>
                   <div className="text-left">
-                    <h4 className="text-base font-semibold text-red-600 dark:text-red-400">DISCIPLINARY HEARINGS - DUE PROCESS REQUIREMENTS</h4>
+                    <h4 className="text-base font-semibold text-red-700 dark:text-red-400">DISCIPLINARY HEARINGS - DUE PROCESS REQUIREMENTS</h4>
                     <p className="text-sm text-secondary">2 Disciplinary Hearings Scheduled This Week</p>
                   </div>
                 </div>
@@ -980,7 +980,7 @@ export default function HRDashboard() {
                           <p className="text-xs text-secondary">Hearing Officer: {hearing.hearingOfficer}</p>
                         </div>
                         <div className="text-right">
-                          <p className="text-sm text-amber-600 dark:text-amber-400 font-medium">{hearing.hearingDate} • {hearing.hearingTime}</p>
+                          <p className="text-sm text-amber-700 dark:text-amber-400 font-medium">{hearing.hearingDate} • {hearing.hearingTime}</p>
                           <p className="text-xs text-secondary">{hearing.location}</p>
                         </div>
                       </div>
@@ -1025,7 +1025,7 @@ export default function HRDashboard() {
                                 ) : (
                                   <span className="w-3 h-3 border border-amber-400 rounded-sm"></span>
                                 )}
-                                <span className={doc.status === 'complete' ? 'text-slate-500' : 'text-amber-600 dark:text-amber-400'}>
+                                <span className={doc.status === 'complete' ? 'text-slate-500' : 'text-amber-700 dark:text-amber-400'}>
                                   {doc.item}: {doc.date}
                                 </span>
                               </div>
@@ -1042,7 +1042,7 @@ export default function HRDashboard() {
                               <div key={idx} className="flex items-start gap-2 text-xs">
                                 <span className="text-slate-500">•</span>
                                 <span className="text-secondary">{doc.item}:</span>
-                                <span className={doc.status.includes('PENDING') ? 'text-amber-600 dark:text-amber-400' : 'text-primary'}>{doc.status}</span>
+                                <span className={doc.status.includes('PENDING') ? 'text-amber-700 dark:text-amber-400' : 'text-primary'}>{doc.status}</span>
                               </div>
                             ))}
                           </div>
@@ -1089,7 +1089,7 @@ export default function HRDashboard() {
 
               <div className="space-y-6">
                 <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4">
-                  <h4 className="text-sm font-semibold text-amber-600 dark:text-amber-400 mb-3">AUTHORIZED POSITIONS & CURRENT STAFFING</h4>
+                  <h4 className="text-sm font-semibold text-amber-700 dark:text-amber-400 mb-3">AUTHORIZED POSITIONS & CURRENT STAFFING</h4>
                   <p className="text-2xl font-bold text-primary mb-2">178 <span className="text-sm font-normal text-secondary">Total Authorized</span></p>
 
                   <div className="space-y-3 text-sm">
@@ -1117,7 +1117,7 @@ export default function HRDashboard() {
                 </div>
 
                 <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4">
-                  <h4 className="text-sm font-semibold text-amber-600 dark:text-amber-400 mb-3">RECRUITMENT STATUS</h4>
+                  <h4 className="text-sm font-semibold text-amber-700 dark:text-amber-400 mb-3">RECRUITMENT STATUS</h4>
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
                       <span className="text-secondary">Deputy Sheriff I/II (8 vacancies)</span>
@@ -1134,7 +1134,7 @@ export default function HRDashboard() {
                     <div className="pt-2 border-t border-border">
                       <div className="flex justify-between">
                         <span className="text-secondary">Background checks in progress</span>
-                        <span className="text-amber-600 dark:text-amber-400 font-medium">12</span>
+                        <span className="text-amber-700 dark:text-amber-400 font-medium">12</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-secondary">Conditional offers extended</span>
@@ -1187,8 +1187,8 @@ export default function HRDashboard() {
                     </div>
                     <div className="pt-2 border-t border-border">
                       <div className="flex justify-between">
-                        <span className="text-amber-600 dark:text-amber-400">Expiring &lt;30 days</span>
-                        <span className="text-amber-600 dark:text-amber-400 font-medium">3 deputies</span>
+                        <span className="text-amber-700 dark:text-amber-400">Expiring &lt;30 days</span>
+                        <span className="text-amber-700 dark:text-amber-400 font-medium">3 deputies</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-secondary">Expiring 31-60 days</span>
@@ -1203,7 +1203,7 @@ export default function HRDashboard() {
                 </div>
 
                 <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-4">
-                  <h4 className="text-sm font-semibold text-amber-600 dark:text-amber-400 mb-3">ANNUAL PERFORMANCE EVALUATIONS</h4>
+                  <h4 className="text-sm font-semibold text-amber-700 dark:text-amber-400 mb-3">ANNUAL PERFORMANCE EVALUATIONS</h4>
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
                       <span className="text-secondary">2025 Evaluations Required</span>
@@ -1214,8 +1214,8 @@ export default function HRDashboard() {
                       <span className="text-green-600 dark:text-green-400">155 (87.1%)</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-amber-600 dark:text-amber-400 font-medium">Overdue (&gt;90 days past due)</span>
-                      <span className="text-red-600 dark:text-red-400 font-bold">23 (12.9%)</span>
+                      <span className="text-amber-700 dark:text-amber-400 font-medium">Overdue (&gt;90 days past due)</span>
+                      <span className="text-red-700 dark:text-red-400 font-bold">23 (12.9%)</span>
                     </div>
                     <div className="pt-2 border-t border-amber-500/20 text-xs text-amber-200">
                       <p>Patrol Division: 14 overdue • CID: 5 overdue</p>
@@ -1255,7 +1255,7 @@ export default function HRDashboard() {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-secondary">Vacant Positions</span>
-                    <span className="text-amber-600 dark:text-amber-400 font-medium">14 (12 sworn, 2 civilian)</span>
+                    <span className="text-amber-700 dark:text-amber-400 font-medium">14 (12 sworn, 2 civilian)</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-secondary">Staffing Level</span>
@@ -1313,7 +1313,7 @@ export default function HRDashboard() {
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
                     <span className="text-secondary">FMLA Requests Pending</span>
-                    <span className="text-amber-600 dark:text-amber-400 font-medium">3 (48-hr deadline)</span>
+                    <span className="text-amber-700 dark:text-amber-400 font-medium">3 (48-hr deadline)</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-secondary">Employees on Leave</span>
@@ -1339,7 +1339,7 @@ export default function HRDashboard() {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-secondary">Expiring &lt;30 days</span>
-                    <span className="text-amber-600 dark:text-amber-400 font-medium">3 deputies</span>
+                    <span className="text-amber-700 dark:text-amber-400 font-medium">3 deputies</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-secondary">Deputies in FTO</span>
@@ -1376,7 +1376,7 @@ export default function HRDashboard() {
             </div>
 
             <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-border">
-              <button onClick={() => navigate(createPageUrl('HRReports'))} className="px-4 py-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-600 dark:text-amber-400 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 border border-amber-500/20">
+              <button onClick={() => navigate(createPageUrl('HRReports'))} className="px-4 py-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-400 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 border border-amber-500/20">
                 <Download className="w-4 h-4" />
                 Export Metrics Report
               </button>

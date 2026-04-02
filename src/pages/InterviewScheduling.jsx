@@ -1104,7 +1104,7 @@ export default function InterviewScheduling() {
                     </thead>
                     <tbody className="divide-y divide-slate-700/30">
                       {[...upcomingInterviews, ...completedInterviews].map((interview) => (
-                        <tr key={interview.id} className="hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/30">
+                        <tr key={interview.id} className="hover:bg-slate-100 dark:hover:bg-slate-800/30">
                           <td className="p-4 text-sm text-primary">{interview.subject}</td>
                           <td className="p-4 text-sm text-amber-400">{interview.caseId}</td>
                           <td className="p-4 text-sm text-secondary">{interview.type}</td>

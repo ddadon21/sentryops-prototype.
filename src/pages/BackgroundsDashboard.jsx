@@ -534,7 +534,7 @@ export default function BackgroundsDashboard() {
                   const statusDot = activity.type === 'flag' ? 'bg-red-500' :
                     activity.type === 'complete' ? 'bg-emerald-500' : 'bg-slate-600';
                   return (
-                    <div key={activity.id} className="flex items-start gap-3 px-4 py-2.5 bg-slate-100 dark:bg-slate-900/20 rounded hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/30 transition-all cursor-pointer">
+                    <div key={activity.id} className="flex items-start gap-3 px-4 py-2.5 bg-slate-100 dark:bg-slate-900/20 rounded hover:bg-slate-100 dark:hover:bg-slate-800/30 transition-all cursor-pointer">
                       <div className={`w-1.5 h-1.5 rounded-full mt-[7px] flex-shrink-0 ${statusDot}`}></div>
                       <div className="flex-1 min-w-0">
                         <p className="text-[13px] text-secondary leading-snug">{activity.message}</p>
@@ -566,7 +566,7 @@ export default function BackgroundsDashboard() {
             </div>
             <div className="space-y-1">
               {priorityCases.map(caseItem => (
-                <div key={caseItem.id} className="flex items-center gap-4 px-4 py-3 bg-slate-100 dark:bg-slate-900/20 rounded hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/30 transition-all cursor-pointer">
+                <div key={caseItem.id} className="flex items-center gap-4 px-4 py-3 bg-slate-100 dark:bg-slate-900/20 rounded hover:bg-slate-100 dark:hover:bg-slate-800/30 transition-all cursor-pointer">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-4">
                       <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${

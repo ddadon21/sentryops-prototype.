@@ -184,8 +184,8 @@ export default function BudgetResources() {
 
   const getVarianceColor = (variance) => {
     if (variance > 0) return 'text-green-600 dark:text-green-400';
-    if (variance < -100000) return 'text-red-600 dark:text-red-400';
-    return 'text-amber-600 dark:text-amber-400';
+    if (variance < -100000) return 'text-red-700 dark:text-red-400';
+    return 'text-amber-700 dark:text-amber-400';
   };
 
   const getPercentColor = (percent) => {
@@ -218,9 +218,9 @@ export default function BudgetResources() {
                     <span className="font-bold text-blue-400">${(fiscalYear.totalBudget / 1000000).toFixed(1)}M</span>
                   </div>
                   <div className="flex items-center gap-2 px-3 py-1.5 bg-amber-500/10 border border-amber-500/30 rounded-lg">
-                    <CircleDollarSign className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+                    <CircleDollarSign className="w-4 h-4 text-amber-700 dark:text-amber-400" />
                     <span className="text-secondary">Spent:</span>
-                    <span className="font-bold text-amber-600 dark:text-amber-400">${(fiscalYear.spent / 1000000).toFixed(1)}M ({fiscalYear.percentSpent}%)</span>
+                    <span className="font-bold text-amber-700 dark:text-amber-400">${(fiscalYear.spent / 1000000).toFixed(1)}M ({fiscalYear.percentSpent}%)</span>
                   </div>
                   <div className="flex items-center gap-2 px-3 py-1.5 bg-green-500/10 border border-green-500/30 rounded-lg">
                     <PiggyBank className="w-4 h-4 text-green-600 dark:text-green-400" />
@@ -300,20 +300,20 @@ export default function BudgetResources() {
                     <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
                       <div className="flex items-center gap-2 mb-3">
                         <div className="w-2 h-2 bg-red-400 rounded-full animate-pulse"></div>
-                        <h5 className="text-sm font-bold text-red-600 dark:text-red-400">CRITICAL ALERTS</h5>
+                        <h5 className="text-sm font-bold text-red-700 dark:text-red-400">CRITICAL ALERTS</h5>
                       </div>
                       <div className="space-y-3 text-sm">
                         <div className="flex items-start gap-2">
-                          <ShieldAlert className="w-4 h-4 text-red-600 dark:text-red-400 mt-0.5 flex-shrink-0" />
-                          <p className="text-secondary">Currently at <span className="font-bold text-red-600 dark:text-red-400">{fiscalYear.percentSpent}%</span> with <span className="font-bold text-amber-600 dark:text-amber-400">2 months remaining</span></p>
+                          <ShieldAlert className="w-4 h-4 text-red-700 dark:text-red-400 mt-0.5 flex-shrink-0" />
+                          <p className="text-secondary">Currently at <span className="font-bold text-red-700 dark:text-red-400">{fiscalYear.percentSpent}%</span> with <span className="font-bold text-amber-700 dark:text-amber-400">2 months remaining</span></p>
                         </div>
                         <div className="flex items-start gap-2">
-                          <TrendingUp className="w-4 h-4 text-red-600 dark:text-red-400 mt-0.5 flex-shrink-0" />
-                          <p className="text-secondary">Projected: <span className="font-bold text-red-600 dark:text-red-400">$48.6M (over by $100K)</span></p>
+                          <TrendingUp className="w-4 h-4 text-red-700 dark:text-red-400 mt-0.5 flex-shrink-0" />
+                          <p className="text-secondary">Projected: <span className="font-bold text-red-700 dark:text-red-400">$48.6M (over by $100K)</span></p>
                         </div>
                         <div className="flex items-start gap-2">
-                          <AlertCircle className="w-4 h-4 text-red-600 dark:text-red-400 mt-0.5 flex-shrink-0" />
-                          <p className="text-secondary"><span className="font-bold text-red-600 dark:text-red-400">Patrol Division</span> trending <span className="font-bold text-red-600 dark:text-red-400">$150K over</span></p>
+                          <AlertCircle className="w-4 h-4 text-red-700 dark:text-red-400 mt-0.5 flex-shrink-0" />
+                          <p className="text-secondary"><span className="font-bold text-red-700 dark:text-red-400">Patrol Division</span> trending <span className="font-bold text-red-700 dark:text-red-400">$150K over</span></p>
                         </div>
                       </div>
                     </div>
@@ -321,21 +321,21 @@ export default function BudgetResources() {
                     {/* Recommendations Column */}
                     <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
                       <div className="flex items-center gap-2 mb-3">
-                        <Lightbulb className="w-4 h-4 text-amber-600 dark:text-amber-400" />
-                        <h5 className="text-sm font-bold text-amber-600 dark:text-amber-400">RECOMMENDATIONS</h5>
+                        <Lightbulb className="w-4 h-4 text-amber-700 dark:text-amber-400" />
+                        <h5 className="text-sm font-bold text-amber-700 dark:text-amber-400">RECOMMENDATIONS</h5>
                       </div>
                       <div className="space-y-3 text-sm">
                         <div className="flex items-start gap-2">
-                          <RefreshCw className="w-4 h-4 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" />
+                          <RefreshCw className="w-4 h-4 text-amber-700 dark:text-amber-400 mt-0.5 flex-shrink-0" />
                           <p className="text-secondary"><span className="font-bold text-blue-400">Training</span> surplus <span className="font-bold text-green-600 dark:text-green-400">$150K</span> - reallocate to Patrol</p>
                         </div>
                         <div className="flex items-start gap-2">
-                          <TrendingDown className="w-4 h-4 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" />
-                          <p className="text-secondary">Reduce discretionary by <span className="font-bold text-amber-600 dark:text-amber-400">15% in Nov-Dec</span></p>
+                          <TrendingDown className="w-4 h-4 text-amber-700 dark:text-amber-400 mt-0.5 flex-shrink-0" />
+                          <p className="text-secondary">Reduce discretionary by <span className="font-bold text-amber-700 dark:text-amber-400">15% in Nov-Dec</span></p>
                         </div>
                         <div className="flex items-start gap-2">
-                          <Clock className="w-4 h-4 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" />
-                          <p className="text-secondary"><span className="font-bold text-amber-600 dark:text-amber-400">3 pending ($170K)</span> would push to 88.5%</p>
+                          <Clock className="w-4 h-4 text-amber-700 dark:text-amber-400 mt-0.5 flex-shrink-0" />
+                          <p className="text-secondary"><span className="font-bold text-amber-700 dark:text-amber-400">3 pending ($170K)</span> would push to 88.5%</p>
                         </div>
                       </div>
                     </div>
@@ -371,17 +371,17 @@ export default function BudgetResources() {
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                       <div className="flex items-center gap-3 bg-slate-50 dark:bg-slate-900/30 rounded-lg p-3">
-                        <Calendar className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+                        <Calendar className="w-4 h-4 text-amber-700 dark:text-amber-400" />
                         <div>
                           <p className="text-xs text-secondary">November</p>
-                          <p className="font-bold text-amber-600 dark:text-amber-400">$4.1M (99% total)</p>
+                          <p className="font-bold text-amber-700 dark:text-amber-400">$4.1M (99% total)</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-3 bg-slate-50 dark:bg-slate-900/30 rounded-lg p-3">
-                        <Calendar className="w-4 h-4 text-red-600 dark:text-red-400" />
+                        <Calendar className="w-4 h-4 text-red-700 dark:text-red-400" />
                         <div>
                           <p className="text-xs text-secondary">December</p>
-                          <p className="font-bold text-red-600 dark:text-red-400">$3.4M (106% - OVER)</p>
+                          <p className="font-bold text-red-700 dark:text-red-400">$3.4M (106% - OVER)</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-3 bg-slate-50 dark:bg-slate-900/30 rounded-lg p-3">
@@ -450,15 +450,15 @@ export default function BudgetResources() {
               <div className={`bg-white dark:bg-slate-800/40 border rounded-xl p-5 ${fiscalYear.percentSpent >= 90 ? 'border-red-500/30' : fiscalYear.percentSpent >= 80 ? 'border-amber-500/30' : 'border-green-500/30'}`}>
                 <div className="flex items-center justify-between mb-3">
                   <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${fiscalYear.percentSpent >= 90 ? 'bg-red-500/20' : fiscalYear.percentSpent >= 80 ? 'bg-amber-500/20' : 'bg-green-500/20'}`}>
-                    <CircleDollarSign className={`w-5 h-5 ${fiscalYear.percentSpent >= 90 ? 'text-red-600 dark:text-red-400' : fiscalYear.percentSpent >= 80 ? 'text-amber-600 dark:text-amber-400' : 'text-green-600 dark:text-green-400'}`} />
+                    <CircleDollarSign className={`w-5 h-5 ${fiscalYear.percentSpent >= 90 ? 'text-red-700 dark:text-red-400' : fiscalYear.percentSpent >= 80 ? 'text-amber-700 dark:text-amber-400' : 'text-green-600 dark:text-green-400'}`} />
                   </div>
-                  <span className={`text-xs font-medium ${fiscalYear.percentSpent >= 90 ? 'text-red-600 dark:text-red-400' : fiscalYear.percentSpent >= 80 ? 'text-amber-600 dark:text-amber-400' : 'text-green-600 dark:text-green-400'}`}>SPENT</span>
+                  <span className={`text-xs font-medium ${fiscalYear.percentSpent >= 90 ? 'text-red-700 dark:text-red-400' : fiscalYear.percentSpent >= 80 ? 'text-amber-700 dark:text-amber-400' : 'text-green-600 dark:text-green-400'}`}>SPENT</span>
                 </div>
                 <p className="text-2xl font-bold text-primary mb-2">${(fiscalYear.spent / 1000000).toFixed(1)}M</p>
                 <div className="mb-3">
                   <div className="flex justify-between text-xs mb-1">
                     <span className="text-secondary">Budget utilization</span>
-                    <span className={`font-bold ${fiscalYear.percentSpent >= 90 ? 'text-red-600 dark:text-red-400' : fiscalYear.percentSpent >= 80 ? 'text-amber-600 dark:text-amber-400' : 'text-green-600 dark:text-green-400'}`}>{fiscalYear.percentSpent}%</span>
+                    <span className={`font-bold ${fiscalYear.percentSpent >= 90 ? 'text-red-700 dark:text-red-400' : fiscalYear.percentSpent >= 80 ? 'text-amber-700 dark:text-amber-400' : 'text-green-600 dark:text-green-400'}`}>{fiscalYear.percentSpent}%</span>
                   </div>
                   <div className="w-full h-2 bg-white dark:bg-slate-700/50 rounded-full overflow-hidden">
                     <div className={`h-full ${fiscalYear.percentSpent >= 90 ? 'bg-red-500' : fiscalYear.percentSpent >= 80 ? 'bg-amber-500' : 'bg-green-500'}`} style={{ width: `${fiscalYear.percentSpent}%` }} />
@@ -471,7 +471,7 @@ export default function BudgetResources() {
                   </div>
                   <div className="flex justify-between text-xs">
                     <span className="text-secondary">vs Last month:</span>
-                    <span className="font-medium text-amber-600 dark:text-amber-400 flex items-center gap-1">
+                    <span className="font-medium text-amber-700 dark:text-amber-400 flex items-center gap-1">
                       <ArrowUp className="w-3 h-3" />+2.1%
                     </span>
                   </div>
@@ -551,7 +551,7 @@ export default function BudgetResources() {
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
                   className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all relative ${
-                    activeTab === tab.id ? 'text-amber-600 dark:text-amber-400' : 'text-secondary hover:text-slate-300'
+                    activeTab === tab.id ? 'text-amber-700 dark:text-amber-400' : 'text-secondary hover:text-slate-300'
                   }`}
                 >
                   <tab.icon className="w-4 h-4" />
@@ -594,7 +594,7 @@ export default function BudgetResources() {
                       <div className="grid grid-cols-3 gap-4">
                         <div>
                           <p className="text-xs text-secondary mb-1">Spent (Cash Out)</p>
-                          <p className="text-lg font-bold text-amber-600 dark:text-amber-400">${(fiscalYear.spent / 1000000).toFixed(1)}M</p>
+                          <p className="text-lg font-bold text-amber-700 dark:text-amber-400">${(fiscalYear.spent / 1000000).toFixed(1)}M</p>
                           <p className="text-xs text-slate-500">{fiscalYear.percentSpent}%</p>
                         </div>
                         <div>
@@ -613,8 +613,8 @@ export default function BudgetResources() {
                     {/* Pending Approvals Impact */}
                     <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
                       <div className="flex items-center gap-2 mb-2">
-                        <AlertCircle className="w-4 h-4 text-amber-600 dark:text-amber-400" />
-                        <h4 className="text-xs font-bold text-amber-600 dark:text-amber-400">IF ALL PENDING APPROVALS APPROVED: +$170K</h4>
+                        <AlertCircle className="w-4 h-4 text-amber-700 dark:text-amber-400" />
+                        <h4 className="text-xs font-bold text-amber-700 dark:text-amber-400">IF ALL PENDING APPROVALS APPROVED: +$170K</h4>
                       </div>
                       <div className="grid grid-cols-2 gap-3 text-xs">
                         <div>
@@ -645,11 +645,11 @@ export default function BudgetResources() {
                         </div>
                         <div>
                           <p className="text-secondary mb-0.5">Days remaining in FY:</p>
-                          <p className="font-bold text-amber-600 dark:text-amber-400">61 days</p>
+                          <p className="font-bold text-amber-700 dark:text-amber-400">61 days</p>
                         </div>
                         <div>
                           <p className="text-secondary mb-0.5">Projected additional spend:</p>
-                          <p className="font-bold text-red-600 dark:text-red-400 flex items-center gap-1">$8.5M <AlertTriangle className="w-3 h-3" /></p>
+                          <p className="font-bold text-red-700 dark:text-red-400 flex items-center gap-1">$8.5M <AlertTriangle className="w-3 h-3" /></p>
                         </div>
                       </div>
                     </div>
@@ -663,11 +663,11 @@ export default function BudgetResources() {
                       <div className="space-y-2 text-xs">
                         <div className="flex items-center justify-between p-2 bg-red-500/10 rounded">
                           <span className="text-secondary">• Current pace:</span>
-                          <span className="font-bold text-red-600 dark:text-red-400 flex items-center gap-1">$49.73M (103% - OVER BUDGET $1.23M) <AlertCircle className="w-3 h-3" /></span>
+                          <span className="font-bold text-red-700 dark:text-red-400 flex items-center gap-1">$49.73M (103% - OVER BUDGET $1.23M) <AlertCircle className="w-3 h-3" /></span>
                         </div>
                         <div className="flex items-center justify-between p-2 bg-amber-500/10 rounded">
                           <span className="text-secondary">• Conservative estimate:</span>
-                          <span className="font-bold text-amber-600 dark:text-amber-400 flex items-center gap-1">$48.9M (101% - OVER $400K) <AlertTriangle className="w-3 h-3" /></span>
+                          <span className="font-bold text-amber-700 dark:text-amber-400 flex items-center gap-1">$48.9M (101% - OVER $400K) <AlertTriangle className="w-3 h-3" /></span>
                         </div>
                         <div className="flex items-center justify-between p-2 bg-green-500/10 rounded">
                           <span className="text-secondary">• With cost controls:</span>
@@ -694,8 +694,8 @@ export default function BudgetResources() {
                         <div>
                           <p className="text-secondary mb-1">YoY increase:</p>
                           <div className="flex items-center gap-1">
-                            <ArrowUpCircle className="w-3 h-3 text-amber-600 dark:text-amber-400" />
-                            <p className="font-bold text-amber-600 dark:text-amber-400">+3% ↑</p>
+                            <ArrowUpCircle className="w-3 h-3 text-amber-700 dark:text-amber-400" />
+                            <p className="font-bold text-amber-700 dark:text-amber-400">+3% ↑</p>
                           </div>
                         </div>
                       </div>
@@ -740,12 +740,12 @@ export default function BudgetResources() {
                           <div className="flex items-center justify-between mb-1">
                             <div className="flex items-center gap-2">
                               <span className="text-sm text-secondary">{month.month}</span>
-                              {percent > 100 && <AlertCircle className="w-3 h-3 text-red-600 dark:text-red-400" />}
+                              {percent > 100 && <AlertCircle className="w-3 h-3 text-red-700 dark:text-red-400" />}
                             </div>
                             <div className="flex items-center gap-3">
                               <span className="text-sm text-secondary">${(month.spent / 1000000).toFixed(2)}M</span>
                               <span className={`text-sm font-bold ${
-                                percent > 100 ? 'text-red-600 dark:text-red-400' : percent > 95 ? 'text-amber-600 dark:text-amber-400' : 'text-green-600 dark:text-green-400'
+                                percent > 100 ? 'text-red-700 dark:text-red-400' : percent > 95 ? 'text-amber-700 dark:text-amber-400' : 'text-green-600 dark:text-green-400'
                               }`}>{percent.toFixed(0)}%</span>
                               <Eye className="w-4 h-4 text-slate-500" />
                             </div>
@@ -784,13 +784,13 @@ export default function BudgetResources() {
 
                               {/* Status Badge */}
                               {statusColor === 'red' && (
-                                <span className="px-2 py-0.5 bg-red-500/20 border border-red-500/30 rounded text-xs text-red-600 dark:text-red-400 font-bold flex items-center gap-1">
+                                <span className="px-2 py-0.5 bg-red-500/20 border border-red-500/30 rounded text-xs text-red-700 dark:text-red-400 font-bold flex items-center gap-1">
                                   <AlertCircle className="w-3 h-3" />
                                   Over Budget
                                 </span>
                               )}
                               {statusColor === 'amber' && (
-                                <span className="px-2 py-0.5 bg-amber-500/20 border border-amber-500/30 rounded text-xs text-amber-600 dark:text-amber-400 font-bold">
+                                <span className="px-2 py-0.5 bg-amber-500/20 border border-amber-500/30 rounded text-xs text-amber-700 dark:text-amber-400 font-bold">
                                   High Usage
                                 </span>
                               )}
@@ -815,13 +815,13 @@ export default function BudgetResources() {
                             <div className="flex items-center gap-2 text-xs">
                               <span className="text-slate-500">Trend:</span>
                               {division.variance < -100000 && (
-                                <span className="text-red-600 dark:text-red-400 font-semibold flex items-center gap-1">
+                                <span className="text-red-700 dark:text-red-400 font-semibold flex items-center gap-1">
                                   <ArrowUpCircle className="w-3 h-3" />
                                   Trending over (+${Math.abs(division.variance / 1000).toFixed(0)}K projected overage)
                                 </span>
                               )}
                               {division.variance >= -100000 && division.variance < 0 && (
-                                <span className="text-amber-600 dark:text-amber-400 font-semibold flex items-center gap-1">
+                                <span className="text-amber-700 dark:text-amber-400 font-semibold flex items-center gap-1">
                                   <TrendingUp className="w-3 h-3" />
                                   On track
                                 </span>
@@ -849,8 +849,8 @@ export default function BudgetResources() {
                           <div className="flex items-center justify-between mb-2">
                             <span className="text-sm text-secondary">Budget Utilization</span>
                             <span className={`text-sm font-bold ${
-                              getPercentColor(division.percentSpent) === 'red' ? 'text-red-600 dark:text-red-400' :
-                              getPercentColor(division.percentSpent) === 'amber' ? 'text-amber-600 dark:text-amber-400' : 'text-green-600 dark:text-green-400'
+                              getPercentColor(division.percentSpent) === 'red' ? 'text-red-700 dark:text-red-400' :
+                              getPercentColor(division.percentSpent) === 'amber' ? 'text-amber-700 dark:text-amber-400' : 'text-green-600 dark:text-green-400'
                             }`}>{division.percentSpent.toFixed(1)}%</span>
                           </div>
                           <div className="w-full h-3 bg-white dark:bg-slate-700/50 rounded-full overflow-hidden">
@@ -864,7 +864,7 @@ export default function BudgetResources() {
                         <div className="grid grid-cols-3 gap-3 mb-4">
                           <div className="bg-white dark:bg-slate-900/50 rounded-lg p-3">
                             <p className="text-xs text-secondary mb-1">Spent</p>
-                            <p className="text-sm font-bold text-amber-600 dark:text-amber-400">${(division.spent / 1000000).toFixed(2)}M</p>
+                            <p className="text-sm font-bold text-amber-700 dark:text-amber-400">${(division.spent / 1000000).toFixed(2)}M</p>
                           </div>
                           <div className="bg-white dark:bg-slate-900/50 rounded-lg p-3">
                             <p className="text-xs text-secondary mb-1">Committed</p>
@@ -884,7 +884,7 @@ export default function BudgetResources() {
                           {division.variance < -50000 && (
                             <button
                               onClick={() => setReallocationModal(true)}
-                              className="px-3 py-1.5 bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 text-red-600 dark:text-red-400 rounded-lg text-xs font-medium transition-all"
+                              className="px-3 py-1.5 bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 text-red-700 dark:text-red-400 rounded-lg text-xs font-medium transition-all"
                             >
                               REQUEST ADDITIONAL FUNDS
                             </button>
@@ -911,7 +911,7 @@ export default function BudgetResources() {
                                   <div className="flex items-center gap-3">
                                     <span className="text-sm text-secondary">${(cat.spent / 1000000).toFixed(2)}M / ${(cat.budget / 1000000).toFixed(2)}M</span>
                                     <span className={`text-sm font-bold ${
-                                      cat.percent >= 95 ? 'text-red-600 dark:text-red-400' : cat.percent >= 85 ? 'text-amber-600 dark:text-amber-400' : 'text-green-600 dark:text-green-400'
+                                      cat.percent >= 95 ? 'text-red-700 dark:text-red-400' : cat.percent >= 85 ? 'text-amber-700 dark:text-amber-400' : 'text-green-600 dark:text-green-400'
                                     }`}>{cat.percent.toFixed(1)}%</span>
                                   </div>
                                 </div>
@@ -951,7 +951,7 @@ export default function BudgetResources() {
                       <p className="text-xs text-secondary mb-1">Spent YTD</p>
                       <p className="text-2xl font-bold text-primary">$32.8M</p>
                       <div className="flex items-center gap-1 mt-1">
-                        <span className="text-xs font-semibold text-amber-600 dark:text-amber-400">85% spent</span>
+                        <span className="text-xs font-semibold text-amber-700 dark:text-amber-400">85% spent</span>
                       </div>
                     </div>
                     <div className="bg-white dark:bg-slate-900/50 rounded-lg p-4 border border-border">
@@ -962,7 +962,7 @@ export default function BudgetResources() {
                       </div>
                     </div>
                     <div className="bg-amber-500/10 rounded-lg p-4 border border-amber-500/30">
-                      <p className="text-xs text-amber-600 dark:text-amber-400 mb-1">Burn Rate</p>
+                      <p className="text-xs text-amber-700 dark:text-amber-400 mb-1">Burn Rate</p>
                       <p className="text-2xl font-bold text-primary">$3.3M</p>
                       <div className="flex items-center gap-1 mt-1">
                         <span className="text-xs text-secondary">per month avg</span>
@@ -988,20 +988,20 @@ export default function BudgetResources() {
                       <div className="flex items-center justify-between mb-2">
                         <div className="flex items-center gap-2">
                           <span className="text-sm font-semibold text-primary">• Overtime:</span>
-                          <span className="px-2 py-0.5 bg-red-500/20 border border-red-500/30 rounded text-xs text-red-600 dark:text-red-400 font-bold">
+                          <span className="px-2 py-0.5 bg-red-500/20 border border-red-500/30 rounded text-xs text-red-700 dark:text-red-400 font-bold">
                             Over Budget
                           </span>
                         </div>
                         <div className="text-right">
                           <p className="text-sm font-bold text-primary">$3.2M</p>
-                          <p className="text-xs text-red-600 dark:text-red-400">92% spent</p>
+                          <p className="text-xs text-red-700 dark:text-red-400">92% spent</p>
                         </div>
                       </div>
                       <div className="w-full h-2 bg-white dark:bg-slate-700/50 rounded-full overflow-hidden">
                         <div className="h-full bg-red-500" style={{ width: '92%' }} />
                       </div>
                       <div className="mt-3 pt-3 border-t border-border dark:border-slate-700/30">
-                        <p className="text-xs font-bold text-amber-600 dark:text-amber-400 mb-2">Overtime Analysis:</p>
+                        <p className="text-xs font-bold text-amber-700 dark:text-amber-400 mb-2">Overtime Analysis:</p>
                         <div className="space-y-1 text-xs text-secondary">
                           <div className="flex justify-between">
                             <span>• YTD:</span>
@@ -1013,7 +1013,7 @@ export default function BudgetResources() {
                           </div>
                           <div className="flex justify-between">
                             <span>• Projected year-end:</span>
-                            <span className="font-medium text-red-600 dark:text-red-400 flex items-center gap-1">$3.8M (109% - OVER $300K) <AlertCircle className="w-3 h-3" /></span>
+                            <span className="font-medium text-red-700 dark:text-red-400 flex items-center gap-1">$3.8M (109% - OVER $300K) <AlertCircle className="w-3 h-3" /></span>
                           </div>
                           <div className="flex justify-between">
                             <span>• Drivers:</span>
@@ -1076,11 +1076,11 @@ export default function BudgetResources() {
                     </div>
                     <div className="bg-white dark:bg-slate-900/50 rounded-lg p-4">
                       <p className="text-xs text-secondary mb-1">In Maintenance</p>
-                      <p className="text-2xl font-bold text-amber-600 dark:text-amber-400">{resources.vehicles.maintenance}</p>
+                      <p className="text-2xl font-bold text-amber-700 dark:text-amber-400">{resources.vehicles.maintenance}</p>
                     </div>
                     <div className="bg-white dark:bg-slate-900/50 rounded-lg p-4">
                       <p className="text-xs text-secondary mb-1">Needs Replacement</p>
-                      <p className="text-2xl font-bold text-red-600 dark:text-red-400">{resources.vehicles.replacement}</p>
+                      <p className="text-2xl font-bold text-red-700 dark:text-red-400">{resources.vehicles.replacement}</p>
                     </div>
                   </div>
                 </div>
@@ -1136,7 +1136,7 @@ export default function BudgetResources() {
                           <span className="text-sm text-secondary capitalize">{key.replace(/([A-Z])/g, ' $1').trim()}</span>
                           <div className="flex items-center gap-3">
                             <span className="text-sm text-secondary">Total: {value.total}</span>
-                            <span className={`text-sm font-bold ${value.needsReplacement === 0 ? 'text-green-600 dark:text-green-400' : value.needsReplacement > 50 ? 'text-red-600 dark:text-red-400' : 'text-amber-600 dark:text-amber-400'}`}>
+                            <span className={`text-sm font-bold ${value.needsReplacement === 0 ? 'text-green-600 dark:text-green-400' : value.needsReplacement > 50 ? 'text-red-700 dark:text-red-400' : 'text-amber-700 dark:text-amber-400'}`}>
                               Replace: {value.needsReplacement}
                             </span>
                           </div>
@@ -1171,7 +1171,7 @@ export default function BudgetResources() {
                     <div className="text-sm text-secondary space-y-1 mb-4">
                       <p>• Actual spending (Jan-Oct): <span className="font-bold text-primary">$41.2M</span></p>
                       <p>• Budgeted spending: <span className="font-bold text-primary">$40.4M target</span></p>
-                      <p>• Forecasted spending (Nov-Dec): <span className="font-bold text-red-600 dark:text-red-400">$8.5M (projected)</span></p>
+                      <p>• Forecasted spending (Nov-Dec): <span className="font-bold text-red-700 dark:text-red-400">$8.5M (projected)</span></p>
                     </div>
                   </div>
 
@@ -1182,8 +1182,8 @@ export default function BudgetResources() {
                     {/* Scenario 1 - Current Pace */}
                     <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-5">
                       <div className="flex items-center gap-2 mb-3">
-                        <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400" />
-                        <h5 className="text-sm font-bold text-red-600 dark:text-red-400">SCENARIO 1: Current Pace (Do Nothing)</h5>
+                        <AlertCircle className="w-5 h-5 text-red-700 dark:text-red-400" />
+                        <h5 className="text-sm font-bold text-red-700 dark:text-red-400">SCENARIO 1: Current Pace (Do Nothing)</h5>
                       </div>
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs mb-3">
                         <div>
@@ -1200,7 +1200,7 @@ export default function BudgetResources() {
                         </div>
                         <div>
                           <p className="text-secondary mb-1">vs Budget:</p>
-                          <p className="font-bold text-red-600 dark:text-red-400 flex items-center gap-1">$1.2M OVER (103%) <AlertCircle className="w-3 h-3" /></p>
+                          <p className="font-bold text-red-700 dark:text-red-400 flex items-center gap-1">$1.2M OVER (103%) <AlertCircle className="w-3 h-3" /></p>
                         </div>
                       </div>
                     </div>
@@ -1348,7 +1348,7 @@ export default function BudgetResources() {
               </div>
               <button
                 onClick={() => setMonthDetailModal(null)}
-                className="p-2 hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors"
+                className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors"
               >
                 <X className="w-5 h-5 text-secondary" />
               </button>
@@ -1374,7 +1374,7 @@ export default function BudgetResources() {
                     </div>
                     <div className="flex justify-between">
                       <span>• Overtime:</span>
-                      <span className={`font-medium ${monthDetailModal.variance?.overtime ? 'text-amber-600 dark:text-amber-400' : 'text-primary'}`}>
+                      <span className={`font-medium ${monthDetailModal.variance?.overtime ? 'text-amber-700 dark:text-amber-400' : 'text-primary'}`}>
                         ${((monthDetailModal.personnel * 0.10) / 1000000).toFixed(2)}M
                         {monthDetailModal.variance?.overtime && <span className="text-xs ml-1 inline-flex items-center gap-0.5">(↑ 25% vs prior month <AlertTriangle className="w-3 h-3" />)</span>}
                       </span>
@@ -1444,10 +1444,10 @@ export default function BudgetResources() {
                 <div className="bg-white dark:bg-slate-800/40 rounded-xl p-4 border border-slate-700/50">
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
-                      <Package className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+                      <Package className="w-5 h-5 text-amber-700 dark:text-amber-400" />
                       <span className="font-semibold text-primary">Equipment/Capital:</span>
                     </div>
-                    <span className="text-lg font-bold text-amber-600 dark:text-amber-400">${(monthDetailModal.equipment / 1000000).toFixed(2)}M (2%)</span>
+                    <span className="text-lg font-bold text-amber-700 dark:text-amber-400">${(monthDetailModal.equipment / 1000000).toFixed(2)}M (2%)</span>
                   </div>
                   <div className="space-y-2 text-sm text-secondary pl-7">
                     <div className="flex justify-between">
@@ -1466,7 +1466,7 @@ export default function BudgetResources() {
             {/* Why Over/Under Budget */}
             {monthDetailModal.variance && (
               <div className="mb-6 bg-red-500/10 border border-red-500/30 rounded-xl p-4">
-                <h4 className="text-sm font-bold text-red-600 dark:text-red-400 mb-3">WHY OVER BUDGET:</h4>
+                <h4 className="text-sm font-bold text-red-700 dark:text-red-400 mb-3">WHY OVER BUDGET:</h4>
                 <div className="space-y-2 text-sm text-secondary">
                   <p>• Overtime spike due to 4th of July coverage (+${(monthDetailModal.variance.overtime / 1000).toFixed(0)}K)</p>
                   <p>• Emergency HVAC repair in jail (+${(monthDetailModal.variance.hvac / 1000).toFixed(0)}K)</p>
@@ -1475,7 +1475,7 @@ export default function BudgetResources() {
                 <div className="mt-4 pt-4 border-t border-red-500/20">
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-semibold text-secondary">VARIANCE:</span>
-                    <span className="text-lg font-bold text-red-600 dark:text-red-400">+${((monthDetailModal.spent - monthDetailModal.budget) / 1000).toFixed(0)}K over monthly target</span>
+                    <span className="text-lg font-bold text-red-700 dark:text-red-400">+${((monthDetailModal.spent - monthDetailModal.budget) / 1000).toFixed(0)}K over monthly target</span>
                   </div>
                 </div>
               </div>

@@ -834,7 +834,7 @@ export default function SettingsPage() {
                           <button
                             key={t.value}
                             onClick={() => setTheme(t.value)}
-                            className={`p-4 rounded-xl border-2 transition-all ${activeTheme === t.value ? 'border-amber-500 bg-amber-100 dark:bg-slate-800/60' : 'border-border bg-white dark:bg-slate-800/20 hover:bg-slate-50 dark:hover:bg-slate-100 dark:hover:bg-slate-800/40'}`}
+                            className={`p-4 rounded-xl border-2 transition-all ${activeTheme === t.value ? 'border-amber-500 bg-amber-100 dark:bg-slate-800/60' : 'border-border bg-white dark:bg-slate-800/20 hover:bg-slate-50 dark:hover:bg-slate-800/40'}`}
                           >
                             <t.Icon className="w-6 h-6 text-secondary mb-2" />
                             <p className="text-sm font-medium text-slate-800 dark:text-white">{t.label}</p>
@@ -1107,7 +1107,7 @@ export default function SettingsPage() {
                                 </span>
                               </div>
                             </div>
-                            <button className="p-2 hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-700/40 rounded-lg transition-colors">
+                            <button className="p-2 hover:bg-slate-200 dark:hover:bg-slate-700/40 rounded-lg transition-colors">
                               {isExpanded ? <ChevronUp className="w-5 h-5 text-muted" /> : <ChevronDown className="w-5 h-5 text-muted" />}
                             </button>
                           </div>
@@ -1127,7 +1127,7 @@ export default function SettingsPage() {
                                     <code className="flex-1 text-xs text-blue-400 bg-slate-100 dark:bg-slate-900/50 px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700/50 overflow-x-auto">{integration.endpoint}</code>
                                     <button
                                       onClick={() => handleCopyApiKey(integration.endpoint)}
-                                      className="p-2 hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-700/40 rounded-lg transition-colors"
+                                      className="p-2 hover:bg-slate-200 dark:hover:bg-slate-700/40 rounded-lg transition-colors"
                                       title="Copy endpoint"
                                     >
                                       <Copy className="w-4 h-4 text-muted" />
@@ -1146,14 +1146,14 @@ export default function SettingsPage() {
                                     </code>
                                     <button
                                       onClick={() => setShowApiKey({...showApiKey, [key]: !showApiKey[key]})}
-                                      className="p-2 hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-700/40 rounded-lg transition-colors"
+                                      className="p-2 hover:bg-slate-200 dark:hover:bg-slate-700/40 rounded-lg transition-colors"
                                       title={showApiKey[key] ? 'Hide' : 'Show'}
                                     >
                                       {showApiKey[key] ? <EyeOff className="w-4 h-4 text-muted" /> : <Eye className="w-4 h-4 text-muted" />}
                                     </button>
                                     <button
                                       onClick={() => handleCopyApiKey(integration.apiKey)}
-                                      className="p-2 hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-700/40 rounded-lg transition-colors"
+                                      className="p-2 hover:bg-slate-200 dark:hover:bg-slate-700/40 rounded-lg transition-colors"
                                       title="Copy API key"
                                     >
                                       <Copy className="w-4 h-4 text-muted" />
@@ -1558,13 +1558,13 @@ export default function SettingsPage() {
                           <div className="flex-1 min-w-0">
                             <p className="text-sm font-medium text-primary">{apiKey.name}</p>
                             <div className="flex items-center gap-2 mt-1">
-                              <code className="text-xs text-amber-600 dark:text-amber-400 bg-slate-100 dark:bg-slate-900/50 px-2 py-1 rounded border border-slate-300 dark:border-slate-700/50">
+                              <code className="text-xs text-amber-700 dark:text-amber-400 bg-slate-100 dark:bg-slate-900/50 px-2 py-1 rounded border border-slate-300 dark:border-slate-700/50">
                                 {showApiKey[`api_${apiKey.id}`] ? apiKey.key : '\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022'}
                               </code>
-                              <button onClick={() => setShowApiKey({...showApiKey, [`api_${apiKey.id}`]: !showApiKey[`api_${apiKey.id}`]})} className="p-1 hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-700/40 rounded transition-colors">
+                              <button onClick={() => setShowApiKey({...showApiKey, [`api_${apiKey.id}`]: !showApiKey[`api_${apiKey.id}`]})} className="p-1 hover:bg-slate-200 dark:hover:bg-slate-700/40 rounded transition-colors">
                                 {showApiKey[`api_${apiKey.id}`] ? <EyeOff className="w-3 h-3 text-muted" /> : <Eye className="w-3 h-3 text-muted" />}
                               </button>
-                              <button onClick={() => handleCopyApiKey(apiKey.key)} className="p-1 hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-700/40 rounded transition-colors">
+                              <button onClick={() => handleCopyApiKey(apiKey.key)} className="p-1 hover:bg-slate-200 dark:hover:bg-slate-700/40 rounded transition-colors">
                                 <Copy className="w-3 h-3 text-muted" />
                               </button>
                             </div>
@@ -1578,7 +1578,7 @@ export default function SettingsPage() {
                             <div className={`px-3 py-1.5 ${apiKey.status === 'active' ? 'bg-green-500/20 border-green-500/30' : 'bg-slate-50 dark:bg-slate-700/40 border-slate-600/50'} border rounded-lg`}>
                               <span className={`text-xs font-medium ${apiKey.status === 'active' ? 'text-green-400' : 'text-muted'}`}>{apiKey.status === 'active' ? 'Active' : 'Inactive'}</span>
                             </div>
-                            <button className="p-2 hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-700/40 rounded-lg transition-colors"><Edit3 className="w-4 h-4 text-muted" /></button>
+                            <button className="p-2 hover:bg-slate-200 dark:hover:bg-slate-700/40 rounded-lg transition-colors"><Edit3 className="w-4 h-4 text-muted" /></button>
                             <button className="p-2 hover:bg-red-500/20 rounded-lg transition-colors"><Trash2 className="w-4 h-4 text-red-400" /></button>
                           </div>
                         </div>
@@ -1675,7 +1675,7 @@ export default function SettingsPage() {
                         { icon: Database, color: 'amber', title: 'Optimize Database', desc: 'Run database optimization and vacuum tasks' },
                         { icon: Download, color: 'green', title: 'Check for Updates', desc: 'Check for system and dependency updates' },
                       ].map((action, i) => (
-                        <button key={i} className="w-full flex items-center justify-between p-4 border border-border dark:border-slate-700/20 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/30 transition-all">
+                        <button key={i} className="w-full flex items-center justify-between p-4 border border-border dark:border-slate-700/20 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-all">
                           <div className="flex items-center gap-3">
                             <div className={`w-10 h-10 bg-${action.color}-500/20 rounded-xl flex items-center justify-center`}>
                               <action.icon className={`w-5 h-5 text-${action.color}-400`} />

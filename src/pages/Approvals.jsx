@@ -565,7 +565,7 @@ export default function Approvals() {
                     {urgentCount > 0 && (
                       <>
                         <span className="text-slate-700">·</span>
-                        <span className="text-red-600 dark:text-red-400 font-semibold">{urgentCount} urgent</span>
+                        <span className="text-red-700 dark:text-red-400 font-semibold">{urgentCount} urgent</span>
                       </>
                     )}
                   </div>
@@ -575,7 +575,7 @@ export default function Approvals() {
                     FY24 Remaining: $550K
                   </span>
                   {activeTab === 'pending' && pendingAmount > 0 && (
-                    <span className="px-2.5 py-1 bg-amber-500/8 border border-amber-500/15 rounded text-[10px] font-semibold text-amber-600 dark:text-amber-400">
+                    <span className="px-2.5 py-1 bg-amber-500/8 border border-amber-500/15 rounded text-[10px] font-semibold text-amber-700 dark:text-amber-400">
                       ${pendingAmount.toLocaleString()} pending
                     </span>
                   )}
@@ -598,7 +598,7 @@ export default function Approvals() {
                 }`}
               >
                 Pending
-                <span className={`px-1 py-px rounded text-[10px] ${activeTab === 'pending' ? 'bg-amber-500/15 text-amber-600 dark:text-amber-400' : 'bg-slate-200 dark:bg-slate-800/50 text-slate-700 dark:text-slate-500'}`}>
+                <span className={`px-1 py-px rounded text-[10px] ${activeTab === 'pending' ? 'bg-amber-500/15 text-amber-700 dark:text-amber-400' : 'bg-slate-200 dark:bg-slate-800/50 text-slate-700 dark:text-slate-500'}`}>
                   {approvalsList.length}
                 </span>
                 {activeTab === 'pending' && <div className="absolute bottom-0 left-0 right-0 h-px bg-amber-500"></div>}
@@ -619,12 +619,12 @@ export default function Approvals() {
               <div className="mb-4">
                 <button
                   onClick={() => setAiSummaryExpanded(!aiSummaryExpanded)}
-                  className="w-full flex items-center gap-2 px-3 py-2 bg-slate-50 dark:bg-slate-800/35 border border-border dark:border-slate-700/30 rounded hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/30 transition-colors"
+                  className="w-full flex items-center gap-2 px-3 py-2 bg-slate-50 dark:bg-slate-800/35 border border-border dark:border-slate-700/30 rounded hover:bg-slate-100 dark:hover:bg-slate-800/30 transition-colors"
                 >
                   <Sparkles className="w-3 h-3 text-slate-500" />
                   <span className="text-[11px] text-secondary flex-1 text-left">
                     <span className="text-slate-500 font-medium">AI Summary:</span>{' '}
-                    <span className="text-red-600 dark:text-red-400">{urgentCount} items need decision within 24h</span>
+                    <span className="text-red-700 dark:text-red-400">{urgentCount} items need decision within 24h</span>
                     <span className="text-slate-700 mx-1">·</span>
                     <span className="text-green-600 dark:text-green-400">All recs high confidence</span>
                     <span className="text-slate-700 mx-1">·</span>
@@ -635,10 +635,10 @@ export default function Approvals() {
 
                 {aiSummaryExpanded && (
                   <div className="mt-1 px-3 py-2.5 bg-slate-50 dark:bg-slate-800/15 border border-slate-100 dark:border-slate-700/10 rounded space-y-1.5">
-                    <p className="text-[10px] text-red-600 dark:text-red-400">• B-Shift OT ($2,808) — deputies need confirmation in 3h. Single-officer patrol safety violation.</p>
-                    <p className="text-[10px] text-red-600 dark:text-red-400">• Training budget ($43K) — vendor payment deadline 1700 today. Forfeits group rate if late.</p>
-                    <p className="text-[10px] text-red-600 dark:text-red-400">• Detention HVAC emergency ($18.5K) — H2-Pod at 84°F. Contractor on standby. Must authorize by 1200.</p>
-                    <p className="text-[10px] text-amber-600 dark:text-amber-400">• Federal Deputy hire (Jane Doe) — offer expires in 3 days. Competing offer from Fulton County.</p>
+                    <p className="text-[10px] text-red-700 dark:text-red-400">• B-Shift OT ($2,808) — deputies need confirmation in 3h. Single-officer patrol safety violation.</p>
+                    <p className="text-[10px] text-red-700 dark:text-red-400">• Training budget ($43K) — vendor payment deadline 1700 today. Forfeits group rate if late.</p>
+                    <p className="text-[10px] text-red-700 dark:text-red-400">• Detention HVAC emergency ($18.5K) — H2-Pod at 84°F. Contractor on standby. Must authorize by 1200.</p>
+                    <p className="text-[10px] text-amber-700 dark:text-amber-400">• Federal Deputy hire (Jane Doe) — offer expires in 3 days. Competing offer from Fulton County.</p>
                     <p className="text-[10px] text-green-600 dark:text-green-400">• Body camera upgrade ($125K) — 88% confidence. DOJ grant pending ($37.5K offset).</p>
                     <p className="text-[10px] text-secondary">• Total pending: ${pendingAmount.toLocaleString()} / $550K remaining FY24. No constraints.</p>
                   </div>
@@ -711,7 +711,7 @@ export default function Approvals() {
                     </span>
                     <div className="flex-1" />
                     <button onClick={bulkApprove} className="px-2 py-1 text-[10px] font-medium text-green-600 dark:text-green-400 hover:bg-green-500/10 rounded transition-colors">Approve All</button>
-                    <button onClick={bulkDeny} className="px-2 py-1 text-[10px] font-medium text-red-600 dark:text-red-400 hover:bg-red-500/10 rounded transition-colors">Deny All</button>
+                    <button onClick={bulkDeny} className="px-2 py-1 text-[10px] font-medium text-red-700 dark:text-red-400 hover:bg-red-500/10 rounded transition-colors">Deny All</button>
                     <button onClick={() => setSelectedItems([])} className="px-2 py-1 text-[10px] font-medium text-slate-500 hover:text-slate-900 dark:hover:text-white rounded transition-colors">Clear</button>
                   </div>
                 )}
@@ -752,7 +752,7 @@ export default function Approvals() {
                             key={approval.id}
                             className={`rounded border transition-colors ${
                               isSelected ? 'border-slate-600/40 bg-slate-700/[0.1]' :
-                              'border-border dark:border-slate-700/30 bg-white dark:bg-slate-800/15 hover:bg-slate-50 dark:hover:bg-slate-100 dark:hover:bg-slate-800/30'
+                              'border-border dark:border-slate-700/30 bg-white dark:bg-slate-800/15 hover:bg-slate-50 dark:hover:bg-slate-800/30'
                             }`}
                           >
                             {/* ── Compact Row ──────────────────────── */}
@@ -817,7 +817,7 @@ export default function Approvals() {
                                 <span className={`px-1.5 py-px border rounded text-[10px] font-bold flex-shrink-0 ${
                                   urgencyState === 'overdue' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/15 dark:border-red-500/25 dark:text-red-400' :
                                   urgencyState === 'critical' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
-                                  'bg-amber-500/8 border-amber-500/15 text-amber-600 dark:text-amber-400'
+                                  'bg-amber-500/8 border-amber-500/15 text-amber-700 dark:text-amber-400'
                                 }`}>
                                   {deadlineLabel}
                                 </span>
@@ -833,7 +833,7 @@ export default function Approvals() {
                                 <span className={`hidden md:inline-flex items-center gap-1 px-1.5 py-px rounded text-[10px] font-semibold flex-shrink-0 ${
                                   approval.aiRecommendation.decision === 'approve'
                                     ? 'text-green-600 dark:text-green-400/80'
-                                    : 'text-red-600 dark:text-red-400/80'
+                                    : 'text-red-700 dark:text-red-400/80'
                                 }`}>
                                   <Sparkles className="w-2.5 h-2.5" />
                                   {approval.aiRecommendation.decision === 'approve' ? 'Approve' : 'Deny'} ({approval.aiRecommendation.confidence}%)
@@ -854,7 +854,7 @@ export default function Approvals() {
                                   className="p-1 rounded hover:bg-red-500/15 transition-colors"
                                   title="Deny"
                                 >
-                                  <XCircle className="w-3.5 h-3.5 text-red-600 dark:text-red-400" />
+                                  <XCircle className="w-3.5 h-3.5 text-red-700 dark:text-red-400" />
                                 </button>
                                 <button
                                   onClick={() => toggleExpandCard(approval.id)}
@@ -920,7 +920,7 @@ export default function Approvals() {
                                     <p className="text-[10px] text-secondary leading-relaxed">{approval.impact.approved}</p>
                                   </div>
                                   <div className="bg-red-500/[0.03] border border-red-500/10 rounded p-2.5">
-                                    <p className="text-[10px] font-bold text-red-600 dark:text-red-400 mb-1">IF DENIED</p>
+                                    <p className="text-[10px] font-bold text-red-700 dark:text-red-400 mb-1">IF DENIED</p>
                                     <p className="text-[10px] text-secondary leading-relaxed">{approval.impact.denied}</p>
                                   </div>
                                 </div>
@@ -934,8 +934,8 @@ export default function Approvals() {
                                     {approval.budgetImpact.spent && <span>Spent ${approval.budgetImpact.spent.toLocaleString()}</span>}
                                     {approval.budgetImpact.percentUsed && (
                                       <span className={
-                                        approval.budgetImpact.percentUsed >= 90 ? 'text-red-600 dark:text-red-400' :
-                                        approval.budgetImpact.percentUsed >= 75 ? 'text-amber-600 dark:text-amber-400' :
+                                        approval.budgetImpact.percentUsed >= 90 ? 'text-red-700 dark:text-red-400' :
+                                        approval.budgetImpact.percentUsed >= 75 ? 'text-amber-700 dark:text-amber-400' :
                                         'text-green-600 dark:text-green-400'
                                       }>{approval.budgetImpact.percentUsed}% used</span>
                                     )}
@@ -950,7 +950,7 @@ export default function Approvals() {
                                       <span className="text-slate-500 font-semibold">AI Analysis:</span>{' '}
                                       <span>{approval.aiRecommendation.reasoning}</span>
                                       {approval.aiRecommendation.urgencyNote && (
-                                        <span className="text-amber-600 dark:text-amber-400 ml-1">⚠ {approval.aiRecommendation.urgencyNote}</span>
+                                        <span className="text-amber-700 dark:text-amber-400 ml-1">⚠ {approval.aiRecommendation.urgencyNote}</span>
                                       )}
                                       {approval.aiRecommendation.considerations && (
                                         <span className="text-secondary ml-1">{approval.aiRecommendation.considerations}</span>
@@ -966,7 +966,7 @@ export default function Approvals() {
                                     {approval.documents.map((doc, idx) => (
                                       <button
                                         key={idx}
-                                        className="flex items-center gap-1 px-1.5 py-0.5 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-700/30 border border-border dark:border-slate-700/30 rounded text-[10px] text-secondary transition-colors"
+                                        className="flex items-center gap-1 px-1.5 py-0.5 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-700/30 border border-border dark:border-slate-700/30 rounded text-[10px] text-secondary transition-colors"
                                       >
                                         <FileText className="w-2.5 h-2.5" />
                                         {doc}
@@ -994,7 +994,7 @@ export default function Approvals() {
                                   </button>
                                   <button
                                     onClick={() => openApprovalModal(approval, 'deny')}
-                                    className="px-3 py-1.5 bg-red-500/10 border border-red-500/20 hover:bg-red-500/20 rounded text-[11px] font-semibold text-red-600 dark:text-red-400 transition-colors flex items-center gap-1.5"
+                                    className="px-3 py-1.5 bg-red-500/10 border border-red-500/20 hover:bg-red-500/20 rounded text-[11px] font-semibold text-red-700 dark:text-red-400 transition-colors flex items-center gap-1.5"
                                   >
                                     <XCircle className="w-3 h-3" />
                                     Deny
@@ -1131,7 +1131,7 @@ export default function Approvals() {
                 {approvalAction === 'approve' ? (
                   <ThumbsUp className="w-6 h-6 text-green-600 dark:text-green-400" />
                 ) : (
-                  <XCircle className="w-6 h-6 text-red-600 dark:text-red-400" />
+                  <XCircle className="w-6 h-6 text-red-700 dark:text-red-400" />
                 )}
               </div>
               <div className="flex-1">
@@ -1160,7 +1160,7 @@ export default function Approvals() {
             <div className="flex gap-3">
               <button
                 onClick={closeApprovalModal}
-                className="flex-1 px-4 py-3 bg-surface hover:bg-slate-50 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-700 dark:text-white font-medium transition-all"
+                className="flex-1 px-4 py-3 bg-surface hover:bg-slate-50 dark:hover:bg-slate-800/60 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-700 dark:text-white font-medium transition-all"
               >
                 Cancel
               </button>
@@ -1193,7 +1193,7 @@ export default function Approvals() {
               </div>
               <button
                 onClick={() => setHistoryDetailModal(null)}
-                className="p-2 hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors"
+                className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors"
               >
                 <X className="w-5 h-5 text-secondary" />
               </button>
@@ -1230,7 +1230,7 @@ export default function Approvals() {
                   <span className={`inline-flex items-center gap-2 px-3 py-1 rounded text-sm font-bold ${
                     historyDetailModal.decision === 'approved'
                       ? 'bg-green-500/20 text-green-600 dark:text-green-400'
-                      : 'bg-red-500/20 text-red-600 dark:text-red-400'
+                      : 'bg-red-500/20 text-red-700 dark:text-red-400'
                   }`}>
                     {historyDetailModal.decision === 'approved' ? <CheckCircle className="w-4 h-4" /> : <XCircle className="w-4 h-4" />}
                     {historyDetailModal.decision.toUpperCase()}
@@ -1269,7 +1269,7 @@ export default function Approvals() {
               </div>
               <button
                 onClick={closeRequestInfoModal}
-                className="p-2 hover:bg-slate-100 dark:hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors"
+                className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors"
               >
                 <X className="w-5 h-5 text-secondary" />
               </button>
@@ -1294,7 +1294,7 @@ export default function Approvals() {
             <div className="flex gap-3">
               <button
                 onClick={closeRequestInfoModal}
-                className="flex-1 px-4 py-3 bg-surface hover:bg-slate-50 dark:hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-700 dark:text-white font-medium transition-all"
+                className="flex-1 px-4 py-3 bg-surface hover:bg-slate-50 dark:hover:bg-slate-800/60 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-700 dark:text-white font-medium transition-all"
               >
                 Cancel
               </button>
@@ -1315,7 +1315,7 @@ export default function Approvals() {
           <div className={`px-6 py-4 rounded-xl border shadow-2xl flex items-center gap-3 ${
             toastMessage.type === 'success'
               ? 'bg-green-500/20 border-green-500/30 text-green-600 dark:text-green-400'
-              : 'bg-red-500/20 border-red-500/30 text-red-600 dark:text-red-400'
+              : 'bg-red-500/20 border-red-500/30 text-red-700 dark:text-red-400'
           }`}>
             {toastMessage.type === 'success' ? (
               <CheckCircle className="w-5 h-5" />
