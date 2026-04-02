@@ -15,6 +15,13 @@ const ThemeContext = createContext<ThemeContextValue>({
   setTheme: () => {},
 });
 
+// Routes that lock their own theme — ThemeContext must not override these.
+const THEME_LOCKED_ROUTES = ['/signin', '/'];
+
+function isThemeLockedRoute(): boolean {
+  return THEME_LOCKED_ROUTES.some(r => window.location.pathname === r);
+}
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<ThemeMode>(() => {
     return (localStorage.getItem('theme') as ThemeMode) || 'auto';
@@ -29,6 +36,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>(() => resolve(theme));
 
   const applyTheme = (resolved: ResolvedTheme) => {
+    // Never override the theme on pages that manage their own dark/light lock.
+    if (isThemeLockedRoute()) return;
+
     if (resolved === 'dark') {
       document.documentElement.classList.add('dark');
     } else {
