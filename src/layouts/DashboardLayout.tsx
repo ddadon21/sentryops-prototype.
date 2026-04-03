@@ -155,9 +155,9 @@ export default function DashboardLayout({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-slate-100/80 to-slate-100 dark:bg-gradient-to-br dark:from-slate-950 dark:via-[#0d1424] dark:to-slate-950 flex" style={{backgroundAttachment: 'fixed'}}>
+    <div className="min-h-screen bg-[#F5F7FA] dark:bg-gradient-to-br dark:from-slate-950 dark:via-[#0d1424] dark:to-slate-950 flex">
       {/* ── Sidebar ──────────────────────────────────────── */}
-      <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-slate-200/70 dark:border-slate-800/30 backdrop-blur-xl bg-white/95 dark:bg-slate-900/60 shadow-[2px_0_20px_rgba(0,0,0,0.04)] dark:shadow-none flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
+      <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-black/[0.06] dark:border-slate-800/30 bg-white dark:bg-slate-900/60 shadow-[var(--shadow-sidebar)] dark:shadow-none flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
         {/* Logo */}
         <div className="p-4 border-b border-border flex items-center justify-between">
           {!sidebarCollapsed && (
@@ -303,7 +303,7 @@ export default function DashboardLayout({
       {/* ── Main Content Area ──────────────────────────── */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Header */}
-        <header className="border-b border-slate-200/60 dark:border-slate-800/50 backdrop-blur-lg bg-white/75 dark:bg-slate-900/60 sticky top-0 z-30 shadow-[0_2px_20px_rgba(0,0,0,0.06)] dark:shadow-none">
+        <header className="border-b border-black/[0.06] dark:border-slate-800/50 backdrop-blur-md bg-[#F8FAFC]/90 dark:bg-slate-900/60 sticky top-0 z-30 shadow-[var(--shadow-nav)] dark:shadow-none">
           <div className="px-4 lg:px-6 py-4 flex items-center justify-between gap-4">
             {/* Left: mobile menu + search */}
             <div className="flex items-center gap-4 flex-1 min-w-0">
@@ -318,7 +318,7 @@ export default function DashboardLayout({
                 <input
                   type="text"
                   placeholder="Search..."
-                  className="w-full pl-11 pr-4 py-2 bg-white/80 dark:bg-slate-800/40 backdrop-blur-sm border border-slate-200/80 dark:border-slate-700/40 rounded-xl text-[13px] text-primary placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-300 dark:focus:border-slate-600 shadow-sm dark:shadow-none"
+                  className="w-full pl-11 pr-4 py-2 bg-white dark:bg-slate-800/40 border border-black/[0.08] dark:border-slate-700/40 rounded-xl text-[13px] text-primary placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-300 dark:focus:border-slate-600 shadow-[0_1px_3px_rgba(0,0,0,0.05)] dark:shadow-none"
                 />
               </div>
             </div>

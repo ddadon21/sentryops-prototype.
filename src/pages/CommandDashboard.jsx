@@ -249,7 +249,7 @@ export default function CommandDashboard() {
         </div>
 
         {/* Executive Snapshot Row */}
-        <div className="mb-8 bg-slate-50/80 dark:bg-slate-900/30 border border-slate-200/70 dark:border-border rounded-xl p-5">
+        <div className="mb-8 bg-surface-sunken dark:bg-slate-900/30 border border-slate-200/70 dark:border-border rounded-xl p-5">
           <h2 className="text-xs font-semibold text-muted uppercase tracking-widest mb-4">Executive Snapshot</h2>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {/* Personnel */}
@@ -407,7 +407,7 @@ export default function CommandDashboard() {
         </div>
 
         {/* Pending Approvals — Top 3 only */}
-        <div className="mb-8 bg-slate-50/80 dark:bg-slate-900/30 border border-slate-200/70 dark:border-border rounded-xl p-5">
+        <div className="mb-8 bg-surface-sunken dark:bg-slate-900/30 border border-slate-200/70 dark:border-border rounded-xl p-5">
         <h2 className="text-xs font-semibold text-muted uppercase tracking-widest mb-4">Pending Approvals</h2>
         <div className="bg-surface border border-border rounded-xl shadow-sm dark:shadow-none">
           <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100 dark:border-slate-700/40">
@@ -487,7 +487,7 @@ export default function CommandDashboard() {
         </div>
 
         {/* Federal Compliance & Audits — MOVED UP above Divisions/Staffing */}
-        <div className="mb-8 bg-slate-50/80 dark:bg-slate-900/30 border border-slate-200/70 dark:border-border rounded-xl p-5">
+        <div className="mb-8 bg-surface-sunken dark:bg-slate-900/30 border border-slate-200/70 dark:border-border rounded-xl p-5">
         <h2 className="text-xs font-semibold text-muted uppercase tracking-widest mb-4">Federal Compliance & Audits</h2>
         <div className="bg-surface border border-border rounded-xl shadow-sm dark:shadow-none p-5">
           <div className="flex items-center gap-2 mb-5">
@@ -579,7 +579,7 @@ export default function CommandDashboard() {
         </div>
 
         {/* Division Status — neutral text, colored dot only, hover drill */}
-        <div className="mb-8 bg-slate-50/80 dark:bg-slate-900/30 border border-slate-200/70 dark:border-border rounded-xl p-5">
+        <div className="mb-8 bg-surface-sunken dark:bg-slate-900/30 border border-slate-200/70 dark:border-border rounded-xl p-5">
           <h2 className="text-xs font-semibold text-muted uppercase tracking-widest mb-4">Division Status</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
             {divisions.map((div, idx) => (
@@ -614,7 +614,7 @@ export default function CommandDashboard() {
         </div>
 
         {/* Staffing Levels — threshold markers */}
-        <div className="mb-8 bg-slate-50/80 dark:bg-slate-900/30 border border-slate-200/70 dark:border-border rounded-xl p-5">
+        <div className="mb-8 bg-surface-sunken dark:bg-slate-900/30 border border-slate-200/70 dark:border-border rounded-xl p-5">
         <h2 className="text-xs font-semibold text-muted uppercase tracking-widest mb-4">Staffing Levels</h2>
         <div className="bg-surface border border-border rounded-xl shadow-sm dark:shadow-none p-5">
           <div className="flex items-center justify-between mb-6">
