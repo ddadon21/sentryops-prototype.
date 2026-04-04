@@ -423,7 +423,7 @@ export default function EmploymentVerification() {
         );
       case 'Pending':
         return (
-          <span className="px-2.5 py-1 bg-amber-500/10 text-amber-400 rounded-lg text-xs font-medium flex items-center gap-1.5">
+          <span className="px-2.5 py-1 bg-amber-500/10 text-amber-700 rounded-lg text-xs font-medium flex items-center gap-1.5">
             <Clock className="w-3 h-3" />
             Pending
           </span>
@@ -462,7 +462,7 @@ export default function EmploymentVerification() {
         );
       case 'Requested':
         return (
-          <span className="px-2.5 py-1 bg-amber-500/10 text-amber-400 rounded-lg text-xs font-medium flex items-center gap-1.5">
+          <span className="px-2.5 py-1 bg-amber-500/10 text-amber-700 rounded-lg text-xs font-medium flex items-center gap-1.5">
             <Clock className="w-3 h-3" />
             IA Pending
           </span>
@@ -496,7 +496,7 @@ export default function EmploymentVerification() {
     }
     if (record.isSwornLE) {
       return (
-        <span className="px-2.5 py-1 bg-amber-500/10 text-amber-400 rounded-lg text-xs font-medium flex items-center gap-1.5">
+        <span className="px-2.5 py-1 bg-amber-500/10 text-amber-700 rounded-lg text-xs font-medium flex items-center gap-1.5">
           <Shield className="w-3 h-3" />
           Sworn LE
         </span>
@@ -568,13 +568,13 @@ export default function EmploymentVerification() {
             <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-4">
               <div className="flex items-start gap-3">
                 <div className="p-2 bg-amber-500/20 rounded-lg">
-                  <Scale className="w-5 h-5 text-amber-400" />
+                  <Scale className="w-5 h-5 text-amber-700" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-amber-400 font-medium">POST Employment History Requirement</h3>
+                  <h3 className="text-amber-700 font-medium">POST Employment History Requirement</h3>
                   <p className="text-secondary text-sm mt-1">
                     California POST requires verification of all employment for the past 10 years.
-                    Current documentation covers <span className="text-amber-400 font-medium">14 years</span> of
+                    Current documentation covers <span className="text-amber-700 font-medium">14 years</span> of
                     employment history (2010-Present), exceeding the minimum requirement.
                   </p>
                   <div className="flex items-center gap-4 mt-3 text-xs">
@@ -608,9 +608,9 @@ export default function EmploymentVerification() {
                     </p>
                     <div className="flex items-center gap-4 mt-3">
                       <div className="flex items-center gap-2 text-sm">
-                        <Clock className="w-4 h-4 text-amber-400" />
+                        <Clock className="w-4 h-4 text-amber-700" />
                         <span className="text-secondary">IA Request Status:</span>
-                        <span className="text-amber-400 font-medium">Pending Response</span>
+                        <span className="text-amber-700 font-medium">Pending Response</span>
                       </div>
                       <span className="text-slate-700">•</span>
                       <span className="text-slate-500 text-sm">Expected: Feb 1, 2024</span>
@@ -647,7 +647,7 @@ export default function EmploymentVerification() {
               <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-amber-500/10 rounded-lg">
-                    <Shield className="w-5 h-5 text-amber-400" />
+                    <Shield className="w-5 h-5 text-amber-700" />
                   </div>
                   <div>
                     <p className="text-2xl font-semibold text-primary">{stats.swornLE}</p>
@@ -682,7 +682,7 @@ export default function EmploymentVerification() {
             {/* Employment Timeline Visualization */}
             <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
               <h3 className="text-primary font-medium mb-4 flex items-center gap-2">
-                <History className="w-5 h-5 text-amber-400" />
+                <History className="w-5 h-5 text-amber-700" />
                 Employment Timeline
               </h3>
               <div className="relative">
@@ -756,7 +756,7 @@ export default function EmploymentVerification() {
                         onClick={() => setActiveTab(tab.id)}
                         className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
                           activeTab === tab.id
-                            ? 'bg-amber-500/10 text-amber-400'
+                            ? 'bg-amber-500/10 text-amber-700'
                             : 'text-secondary hover:text-secondary hover:bg-slate-800'
                         }`}
                       >
@@ -800,7 +800,7 @@ export default function EmploymentVerification() {
                                 : 'bg-slate-200 dark:bg-slate-800'
                             }`}>
                               {record.isSwornLE ? (
-                                <Shield className="w-6 h-6 text-amber-400" />
+                                <Shield className="w-6 h-6 text-amber-700" />
                               ) : (
                                 <Building2 className="w-6 h-6 text-secondary" />
                               )}
@@ -855,7 +855,7 @@ export default function EmploymentVerification() {
                             {record.internalAffairs.required && (
                               <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
                                 <h4 className="text-secondary text-xs font-medium mb-2 flex items-center gap-1">
-                                  <Flag className="w-3 h-3 text-amber-400" />
+                                  <Flag className="w-3 h-3 text-amber-700" />
                                   INTERNAL AFFAIRS STATUS
                                 </h4>
                                 <div className="flex items-center gap-2">
@@ -989,7 +989,7 @@ export default function EmploymentVerification() {
                                 {record.performance.awards && record.performance.awards.length > 0 && (
                                   <div className="mt-2 space-y-1">
                                     {record.performance.awards.map((award, index) => (
-                                      <div key={index} className="flex items-center gap-1 text-xs text-amber-400">
+                                      <div key={index} className="flex items-center gap-1 text-xs text-amber-700">
                                         <Award className="w-3 h-3" />
                                         {award}
                                       </div>
@@ -1011,7 +1011,7 @@ export default function EmploymentVerification() {
                                 </p>
                               ) : record.disciplinary.hasRecords === true ? (
                                 <div className="space-y-2">
-                                  <p className="text-amber-400 text-sm">{record.disciplinary.details}</p>
+                                  <p className="text-amber-700 text-sm">{record.disciplinary.details}</p>
                                   <div className="flex items-center gap-3 text-xs">
                                     <span className="text-slate-500">
                                       Sustained: <span className="text-secondary">{record.disciplinary.sustainedComplaints}</span>
@@ -1094,7 +1094,7 @@ export default function EmploymentVerification() {
                 {/* Internal Affairs Requirement Panel */}
                 <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
                   <h3 className="text-primary font-medium mb-4 flex items-center gap-2">
-                    <Shield className="w-5 h-5 text-amber-400" />
+                    <Shield className="w-5 h-5 text-amber-700" />
                     Internal Affairs Requirements
                   </h3>
 
@@ -1123,7 +1123,7 @@ export default function EmploymentVerification() {
 
                   <div className="mt-4 pt-4 border-t border-border">
                     <div className="bg-amber-500/10 rounded-lg p-3">
-                      <h4 className="text-amber-400 text-xs font-medium mb-1">LATERAL TRANSFER POLICY</h4>
+                      <h4 className="text-amber-700 text-xs font-medium mb-1">LATERAL TRANSFER POLICY</h4>
                       <p className="text-secondary text-xs">
                         All candidates currently employed as sworn law enforcement officers require
                         mandatory IA clearance from their current employer before a conditional offer
@@ -1136,7 +1136,7 @@ export default function EmploymentVerification() {
                 {/* Verification Summary */}
                 <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
                   <h3 className="text-primary font-medium mb-4 flex items-center gap-2">
-                    <FileCheck className="w-5 h-5 text-amber-400" />
+                    <FileCheck className="w-5 h-5 text-amber-700" />
                     Verification Summary
                   </h3>
 
@@ -1154,7 +1154,7 @@ export default function EmploymentVerification() {
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-secondary text-sm">IA Clearance</span>
-                      <span className="text-amber-400 text-sm flex items-center gap-1">
+                      <span className="text-amber-700 text-sm flex items-center gap-1">
                         <Clock className="w-3 h-3" />
                         Pending
                       </span>
@@ -1170,9 +1170,9 @@ export default function EmploymentVerification() {
                       <span className="text-secondary text-sm">Overall Status</span>
                     </div>
                     <div className="flex items-center gap-2 p-3 bg-amber-500/10 rounded-lg">
-                      <Clock className="w-5 h-5 text-amber-400" />
+                      <Clock className="w-5 h-5 text-amber-700" />
                       <div>
-                        <p className="text-amber-400 font-medium text-sm">Awaiting IA Clearance</p>
+                        <p className="text-amber-700 font-medium text-sm">Awaiting IA Clearance</p>
                         <p className="text-slate-500 text-xs">Expected Feb 1, 2024</p>
                       </div>
                     </div>
@@ -1182,7 +1182,7 @@ export default function EmploymentVerification() {
                 {/* Support & Resources */}
                 <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
                   <h3 className="text-primary font-medium mb-4 flex items-center gap-2">
-                    <HelpCircle className="w-5 h-5 text-amber-400" />
+                    <HelpCircle className="w-5 h-5 text-amber-700" />
                     Support & Resources
                   </h3>
 
@@ -1228,7 +1228,7 @@ export default function EmploymentVerification() {
                 {/* Audit Trail */}
                 <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
                   <h3 className="text-primary font-medium mb-4 flex items-center gap-2">
-                    <History className="w-5 h-5 text-amber-400" />
+                    <History className="w-5 h-5 text-amber-700" />
                     Recent Activity
                   </h3>
 

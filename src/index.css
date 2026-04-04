@@ -11,8 +11,8 @@
 :root {
   /* ── Text ──────────────────────────────────────────────────── */
   --color-text-primary:   rgb(15 23 42);         /* #0F172A slate-900 */
-  --color-text-secondary: rgb(71 85 105);         /* #475569 slate-600 — readable, not harsh */
-  --color-text-muted:     rgb(148 163 184);       /* #94A3B8 slate-400 — metadata only */
+  --color-text-secondary: rgb(51 65 85);          /* #334155 slate-700 — labels & secondary info */
+  --color-text-muted:     rgb(148 163 184);       /* #94A3B8 slate-400 — timestamps & metadata only */
 
   /* ── Surface / Background ─────────────────────────────────── */
   --color-surface:        #ffffff;                /* pure white cards float on off-white bg */
@@ -157,32 +157,62 @@ html:not(.dark) [class~="rounded-xl"][class*="shadow-2xl"] {
 }
 
 /* ── Visual priority — semantic card treatments ─────────────── */
-/* Critical / danger sections get a red tint + urgent shadow    */
-html:not(.dark) [class~="rounded-xl"][class*="border-red-2"] {
-  background: linear-gradient(135deg, rgba(255, 241, 241, 0.96) 0%, rgba(255, 255, 255, 0.96) 100%);
-  box-shadow: 0 4px 20px rgba(185, 28, 28, 0.09), 0 1px 4px rgba(0,0,0,0.04);
-  border-color: rgb(252 165 165 / 0.85);
+/* ── Critical / danger — strong red treatment ───────────────── */
+/* Covers: red-200 border cards AND border-l-4 border-l-red-* cards */
+html:not(.dark) [class~="rounded-xl"][class*="border-red-2"],
+html:not(.dark) [class~="rounded-lg"][class*="border-red-2"],
+html:not(.dark) [class*="rounded"][class*="border-l-4"][class*="border-l-red-"],
+html:not(.dark) [class*="rounded"][class*="border-l-red-5"],
+html:not(.dark) [class*="rounded"][class*="border-l-red-6"] {
+  background-color: #FEF2F2;
+  box-shadow: 0 2px 12px rgba(185, 28, 28, 0.08), 0 1px 3px rgba(0,0,0,0.04);
+  border-left-color: #DC2626;
 }
 
-/* Warning / caution sections get an amber tint */
-html:not(.dark) [class~="rounded-xl"][class*="border-amber-2"] {
-  background: linear-gradient(135deg, rgba(255, 251, 235, 0.96) 0%, rgba(255, 255, 255, 0.96) 100%);
-  box-shadow: 0 4px 20px rgba(180, 83, 9, 0.07), 0 1px 4px rgba(0,0,0,0.04);
-  border-color: rgb(253 230 138 / 0.85);
+/* ── Warning — amber treatment ──────────────────────────────── */
+html:not(.dark) [class~="rounded-xl"][class*="border-amber-2"],
+html:not(.dark) [class~="rounded-lg"][class*="border-amber-2"],
+html:not(.dark) [class*="rounded"][class*="border-l-4"][class*="border-l-amber-"],
+html:not(.dark) [class*="rounded"][class*="border-l-amber-5"] {
+  background-color: #FFFBEB;
+  box-shadow: 0 2px 12px rgba(180, 83, 9, 0.07), 0 1px 3px rgba(0,0,0,0.04);
+  border-left-color: #D97706;
 }
 
-/* AI insight / analysis sections get a blue tint */
+/* ── AI insight / analysis — blue tint ─────────────────────── */
 html:not(.dark) [class~="rounded-xl"][class*="border-blue-2"],
 html:not(.dark) [class~="rounded-xl"][class*="border-indigo-2"] {
-  background: linear-gradient(135deg, rgba(239, 246, 255, 0.96) 0%, rgba(255, 255, 255, 0.96) 100%);
-  box-shadow: 0 4px 20px rgba(37, 99, 235, 0.07), 0 1px 4px rgba(0,0,0,0.04);
+  background: linear-gradient(135deg, #EFF6FF 0%, #ffffff 60%);
+  box-shadow: 0 2px 12px rgba(37, 99, 235, 0.07), 0 1px 3px rgba(0,0,0,0.04);
 }
 
-/* Elevated cards (border-slate-300 = intentionally prominent) */
+/* ── Elevated cards ─────────────────────────────────────────── */
 html:not(.dark) [class~="rounded-xl"][class*="border-slate-3"] {
-  background-color: rgba(255, 255, 255, 0.97);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.06);
-  border-color: rgb(203 213 225 / 0.90);
+  background-color: #ffffff;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.09), 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* ── Status badge contrast enforcement ──────────────────────── */
+/* Amber/warning badges: strong dark text on amber-100 bg        */
+html:not(.dark) [class*="bg-amber-1"][class*="text-amber-"] {
+  color: #92400E;
+  font-weight: 600;
+}
+html:not(.dark) [class*="bg-yellow-1"][class*="text-yellow-"],
+html:not(.dark) [class*="bg-yellow-1"][class*="text-amber-"] {
+  color: #92400E;
+  font-weight: 600;
+}
+/* Danger badges */
+html:not(.dark) [class*="bg-red-1"][class*="text-red-"] {
+  color: #7F1D1D;
+  font-weight: 600;
+}
+/* Success badges */
+html:not(.dark) [class*="bg-emerald-1"][class*="text-emerald-"],
+html:not(.dark) [class*="bg-green-1"][class*="text-green-"] {
+  color: #064E3B;
+  font-weight: 600;
 }
 
 /* ── Tables ─────────────────────────────────────────────────── */

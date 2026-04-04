@@ -412,7 +412,7 @@ export default function HiringPipeline() {
     const colors = {
       blue: { bg: 'bg-blue-500/20', text: 'text-blue-400', border: 'border-blue-500/30', solid: 'bg-blue-500' },
       purple: { bg: 'bg-purple-500/20', text: 'text-purple-400', border: 'border-purple-500/30', solid: 'bg-purple-500' },
-      amber: { bg: 'bg-amber-500/20', text: 'text-amber-400', border: 'border-amber-500/30', solid: 'bg-amber-500' },
+      amber: { bg: 'bg-amber-500/20', text: 'text-amber-700', border: 'border-amber-500/30', solid: 'bg-amber-500' },
       cyan: { bg: 'bg-cyan-500/20', text: 'text-cyan-400', border: 'border-cyan-500/30', solid: 'bg-cyan-500' },
       indigo: { bg: 'bg-indigo-500/20', text: 'text-indigo-400', border: 'border-indigo-500/30', solid: 'bg-indigo-500' },
       green: { bg: 'bg-green-500/20', text: 'text-green-400', border: 'border-green-500/30', solid: 'bg-green-500' }
@@ -423,7 +423,7 @@ export default function HiringPipeline() {
   const getSeverityColor = (severity) => {
     switch (severity) {
       case 'critical': return { bg: 'bg-red-500/20', text: 'text-red-400', border: 'border-red-500/30' };
-      case 'medium': return { bg: 'bg-amber-500/20', text: 'text-amber-400', border: 'border-amber-500/30' };
+      case 'medium': return { bg: 'bg-amber-500/20', text: 'text-amber-700', border: 'border-amber-500/30' };
       case 'low': return { bg: 'bg-blue-500/20', text: 'text-blue-400', border: 'border-blue-500/30' };
       default: return { bg: 'bg-slate-500/20', text: 'text-slate-500', border: 'border-slate-500/30' };
     }
@@ -436,12 +436,12 @@ export default function HiringPipeline() {
         <div className="p-4 border-b border-border flex items-center justify-between">
           {!sidebarCollapsed && (
             <div className="flex items-center gap-2">
-              <Shield className="w-8 h-8 text-amber-500" />
+              <Shield className="w-8 h-8 text-amber-700" />
               <h1 className="text-xl font-bold text-primary">SentryOps</h1>
             </div>
           )}
           {sidebarCollapsed && (
-            <Shield className="w-8 h-8 text-amber-500 mx-auto" />
+            <Shield className="w-8 h-8 text-amber-700 mx-auto" />
           )}
           <button
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
@@ -630,7 +630,7 @@ export default function HiringPipeline() {
               <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-slate-500">
                 <span>Sheriff: Keybo Taylor</span>
                 <span className="hidden sm:inline">|</span>
-                <span className="text-amber-400 font-medium">Active Pipeline: {totalApplicants} applicants</span>
+                <span className="text-amber-700 font-medium">Active Pipeline: {totalApplicants} applicants</span>
                 <span className="hidden sm:inline">|</span>
                 <span>Positions: {totalVacancies} vacancies (8 Deputy, 2 Background Inv, 1 Detention, 1 Admin)</span>
               </div>
@@ -648,7 +648,7 @@ export default function HiringPipeline() {
                 </span>
               </div>
               <div className="flex items-center gap-3 px-4 py-2.5 bg-amber-500/10 border border-amber-500/20 rounded-lg">
-                <AlertTriangle className="w-4 h-4 text-amber-400 flex-shrink-0" />
+                <AlertTriangle className="w-4 h-4 text-amber-700 flex-shrink-0" />
                 <span className="text-sm text-amber-300">
                   <span className="font-medium">Interview backlog:</span> 23 candidates scheduled across 3 interview days (Feb 06, 11, 13)
                 </span>
@@ -667,7 +667,7 @@ export default function HiringPipeline() {
                 <h3 className="text-lg font-semibold text-primary">Active Applicants by Position</h3>
                 <div className="flex items-center gap-2">
                   <span className="text-xs text-secondary">Applicants-to-Vacancy Ratio:</span>
-                  <span className="text-sm font-bold text-amber-400">6.4:1</span>
+                  <span className="text-sm font-bold text-amber-700">6.4:1</span>
                   <span className="text-xs text-slate-500">(Ideal: 8-10:1)</span>
                 </div>
               </div>
@@ -700,7 +700,7 @@ export default function HiringPipeline() {
                 <div className={`p-4 rounded-xl border transition-all cursor-pointer ${selectedPosition === 'detentionOfficer' ? 'bg-amber-500/20 border-amber-500/50' : 'bg-white dark:bg-slate-900/50 border-slate-700/50 hover:border-slate-600/50'}`}
                   onClick={() => setSelectedPosition(selectedPosition === 'detentionOfficer' ? 'all' : 'detentionOfficer')}>
                   <div className="flex items-center justify-between mb-2">
-                    <Users className="w-5 h-5 text-amber-400" />
+                    <Users className="w-5 h-5 text-amber-700" />
                     <span className="px-2 py-0.5 rounded text-xs font-medium bg-green-500/20 text-green-400">
                       {positionBreakdown.detentionOfficer.ratio}:1
                     </span>
@@ -713,7 +713,7 @@ export default function HiringPipeline() {
                   onClick={() => setSelectedPosition(selectedPosition === 'adminAssistant' ? 'all' : 'adminAssistant')}>
                   <div className="flex items-center justify-between mb-2">
                     <FileText className="w-5 h-5 text-cyan-400" />
-                    <span className="px-2 py-0.5 rounded text-xs font-medium bg-amber-500/20 text-amber-400">
+                    <span className="px-2 py-0.5 rounded text-xs font-medium bg-amber-500/20 text-amber-700">
                       {positionBreakdown.adminAssistant.ratio}:1
                     </span>
                   </div>
@@ -763,7 +763,7 @@ export default function HiringPipeline() {
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="px-3 py-1 bg-red-500/20 text-red-400 rounded-full text-xs font-bold">1 Critical</span>
-                    <span className="px-3 py-1 bg-amber-500/20 text-amber-400 rounded-full text-xs font-bold">1 Medium</span>
+                    <span className="px-3 py-1 bg-amber-500/20 text-amber-700 rounded-full text-xs font-bold">1 Medium</span>
                     <span className="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-xs font-bold">1 Resolved</span>
                     {expandedBottlenecks ? <ChevronUp className="w-5 h-5 text-secondary" /> : <ChevronDown className="w-5 h-5 text-secondary" />}
                   </div>
@@ -870,7 +870,7 @@ export default function HiringPipeline() {
                         <div className="p-3 bg-white dark:bg-slate-900/50 rounded-lg">
                           <div className="flex items-center justify-between mb-2">
                             <span className="text-sm font-medium text-primary">Background Investigator (Internal)</span>
-                            <span className="text-lg font-bold text-amber-400">{timeToHireMetrics.backgroundInvestigator.avgDays} days</span>
+                            <span className="text-lg font-bold text-amber-700">{timeToHireMetrics.backgroundInvestigator.avgDays} days</span>
                           </div>
                           <div className="w-full bg-white dark:bg-slate-700/50 rounded-full h-2">
                             <div className="bg-amber-500 h-2 rounded-full" style={{ width: `${(timeToHireMetrics.backgroundInvestigator.avgDays / 165) * 100}%` }}></div>
@@ -912,7 +912,7 @@ export default function HiringPipeline() {
                         </div>
                         <div className="flex items-center justify-between p-2 bg-white dark:bg-slate-900/50 rounded-lg">
                           <span className="text-xs text-secondary">Background → Cleared</span>
-                          <span className="text-sm font-bold text-amber-400">{conversionRates.backgroundToCleared}%</span>
+                          <span className="text-sm font-bold text-amber-700">{conversionRates.backgroundToCleared}%</span>
                         </div>
                         <div className="flex items-center justify-between p-2 bg-white dark:bg-slate-900/50 rounded-lg">
                           <span className="text-xs text-secondary">Offer → Accepted</span>
@@ -996,8 +996,8 @@ export default function HiringPipeline() {
                         {stage.id === 'screening' && stage.physicalTestSchedule && (
                           <div className="mb-4 p-4 bg-amber-500/10 border border-amber-500/20 rounded-xl">
                             <div className="flex items-center gap-2 mb-3">
-                              <Calendar className="w-4 h-4 text-amber-400" />
-                              <h4 className="font-semibold text-amber-400">Physical Fitness Test Scheduled</h4>
+                              <Calendar className="w-4 h-4 text-amber-700" />
+                              <h4 className="font-semibold text-amber-700">Physical Fitness Test Scheduled</h4>
                             </div>
                             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
                               <div>
@@ -1027,7 +1027,7 @@ export default function HiringPipeline() {
                               <div key={idx} className="p-4 bg-white dark:bg-slate-800/60 rounded-xl">
                                 <div className="flex items-center justify-between mb-3">
                                   <h4 className="font-semibold text-primary">{interview.position} - Oral Board</h4>
-                                  <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${interview.materialsReady ? 'bg-green-500/20 text-green-400' : 'bg-amber-500/20 text-amber-400'}`}>
+                                  <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${interview.materialsReady ? 'bg-green-500/20 text-green-400' : 'bg-amber-500/20 text-amber-700'}`}>
                                     {interview.materialsReady ? 'Materials Ready' : 'Pending PT Completion'}
                                   </span>
                                 </div>
@@ -1073,7 +1073,7 @@ export default function HiringPipeline() {
                                         <p className="text-xs text-slate-500">{inv.title}</p>
                                       </div>
                                       <div className="text-right">
-                                        <p className="text-sm font-bold text-amber-400">{inv.activeCases}/{inv.maxCapacity} cases</p>
+                                        <p className="text-sm font-bold text-amber-700">{inv.activeCases}/{inv.maxCapacity} cases</p>
                                       </div>
                                     </div>
                                   ))}
@@ -1095,7 +1095,7 @@ export default function HiringPipeline() {
                                     </div>
                                     <div className="flex justify-between text-sm pt-2 border-t border-border">
                                       <span className="text-secondary">Monthly Throughput:</span>
-                                      <span className="text-amber-400 font-medium">4-6 investigations</span>
+                                      <span className="text-amber-700 font-medium">4-6 investigations</span>
                                     </div>
                                   </div>
                                 </div>
@@ -1139,7 +1139,7 @@ export default function HiringPipeline() {
                                     </div>
                                     <span className={`px-3 py-1 rounded-full text-xs font-medium ${
                                       offer.status.includes('ACCEPTED') ? 'bg-green-500/20 text-green-400' :
-                                      offer.urgent ? 'bg-red-500/20 text-red-400' : 'bg-amber-500/20 text-amber-400'
+                                      offer.urgent ? 'bg-red-500/20 text-red-400' : 'bg-amber-500/20 text-amber-700'
                                     }`}>
                                       {offer.status}
                                     </span>
@@ -1175,7 +1175,7 @@ export default function HiringPipeline() {
                             </div>
 
                             <div className="p-4 bg-amber-500/10 border border-amber-500/20 rounded-xl">
-                              <h4 className="font-semibold text-amber-400 mb-3">Salary Competitiveness Issue</h4>
+                              <h4 className="font-semibold text-amber-700 mb-3">Salary Competitiveness Issue</h4>
                               <div className="grid grid-cols-3 gap-4 text-sm">
                                 <div className="text-center p-3 bg-white dark:bg-slate-900/50 rounded-lg">
                                   <p className="text-xs text-slate-500 mb-1">GCSO Deputy I</p>
@@ -1188,8 +1188,8 @@ export default function HiringPipeline() {
                                 </div>
                                 <div className="text-center p-3 bg-white dark:bg-slate-900/50 rounded-lg">
                                   <p className="text-xs text-slate-500 mb-1">Fulton County SO</p>
-                                  <p className="text-lg font-bold text-amber-400">${stage.salaryCompetitiveness.fultonSO.toLocaleString()}</p>
-                                  <p className="text-xs text-amber-400">{stage.salaryCompetitiveness.fultonSODiff}</p>
+                                  <p className="text-lg font-bold text-amber-700">${stage.salaryCompetitiveness.fultonSO.toLocaleString()}</p>
+                                  <p className="text-xs text-amber-700">{stage.salaryCompetitiveness.fultonSODiff}</p>
                                 </div>
                               </div>
                               <p className="text-xs text-secondary mt-3">
@@ -1228,7 +1228,7 @@ export default function HiringPipeline() {
                                               {candidate.status}
                                             </span>
                                             {candidate.score && (
-                                              <span className="text-xs text-amber-400 font-bold">{candidate.score}</span>
+                                              <span className="text-xs text-amber-700 font-bold">{candidate.score}</span>
                                             )}
                                             {candidate.rank && (
                                               <span className="text-xs text-green-400">{candidate.rank}</span>

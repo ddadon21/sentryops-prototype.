@@ -47,7 +47,7 @@ export default function InvestigationTimeline() {
   const getStageIcon = (status) => {
     switch (status) {
       case 'completed': return <CheckCircle2 className="w-5 h-5 text-green-400" />;
-      case 'in_progress': return <Clock className="w-5 h-5 text-amber-400 animate-pulse" />;
+      case 'in_progress': return <Clock className="w-5 h-5 text-amber-700 animate-pulse" />;
       case 'partial': return <PauseCircle className="w-5 h-5 text-blue-400" />;
       case 'blocked': return <AlertTriangle className="w-5 h-5 text-red-400" />;
       default: return <Circle className="w-5 h-5 text-slate-700" />;
@@ -390,9 +390,9 @@ export default function InvestigationTimeline() {
                   <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-2 text-sm text-secondary">
                     <span>Case opened: {caseData.caseOpened}</span>
                     <span className="hidden sm:inline">|</span>
-                    <span>Days in process: <span className={caseData.daysOpen > caseData.agencyTarget ? 'text-amber-400' : 'text-primary'}>{caseData.daysOpen} days</span></span>
+                    <span>Days in process: <span className={caseData.daysOpen > caseData.agencyTarget ? 'text-amber-700' : 'text-primary'}>{caseData.daysOpen} days</span></span>
                     <span className="hidden sm:inline">|</span>
-                    <span>Current stage: <span className="text-amber-400">{caseData.currentStage}</span></span>
+                    <span>Current stage: <span className="text-amber-700">{caseData.currentStage}</span></span>
                   </div>
                   <div className="mt-1 text-sm text-slate-500">
                     Last activity: {caseData.lastActivity} - {caseData.lastActivityDate}
@@ -438,7 +438,7 @@ export default function InvestigationTimeline() {
                   <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700 text-secondary rounded-lg text-xs font-medium transition-colors">
                     View Detailed Status
                   </button>
-                  <button className="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
+                  <button className="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
                     <Download className="w-3 h-3" />
                     Export Timeline Report
                   </button>
@@ -450,14 +450,14 @@ export default function InvestigationTimeline() {
                 <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4">
                   <p className="text-xs text-slate-500 uppercase tracking-wide mb-2">Investigation Status</p>
                   <div className="flex items-center gap-2 mb-1">
-                    <Clock className="w-5 h-5 text-amber-400 animate-pulse" />
+                    <Clock className="w-5 h-5 text-amber-700 animate-pulse" />
                     <span className="text-lg font-semibold text-primary">{caseData.currentStage}</span>
-                    <span className="text-xs text-amber-400">(In Progress)</span>
+                    <span className="text-xs text-amber-700">(In Progress)</span>
                   </div>
                   <p className="text-xs text-secondary">Days in Process: {caseData.daysOpen} days</p>
                   <p className="text-xs text-slate-500">(Agency target: &lt;{caseData.agencyTarget} days - extended)</p>
                   {caseData.extendedTimelineReason && (
-                    <p className="text-xs text-amber-400 mt-1">Reason: {caseData.extendedTimelineReason}</p>
+                    <p className="text-xs text-amber-700 mt-1">Reason: {caseData.extendedTimelineReason}</p>
                   )}
                 </div>
 
@@ -473,7 +473,7 @@ export default function InvestigationTimeline() {
                       <span className="text-primary font-medium">{investigationStages.filter(s => s.status === 'completed').length}</span>
                     </div>
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-amber-400 flex items-center gap-1">
+                      <span className="text-amber-700 flex items-center gap-1">
                         <Clock className="w-3.5 h-3.5" />
                         In Progress
                       </span>
@@ -501,7 +501,7 @@ export default function InvestigationTimeline() {
                       <span className="text-secondary">Offer Expires</span>
                       <span className="text-red-400 font-medium">{caseData.conditionalOfferExpires}</span>
                     </div>
-                    <p className="text-xs text-amber-400 mt-1">{caseData.daysRemaining} days remaining</p>
+                    <p className="text-xs text-amber-700 mt-1">{caseData.daysRemaining} days remaining</p>
                     <p className="text-xs text-green-400">Status: On track if references completed by Jan 25</p>
                   </div>
                 </div>
@@ -510,9 +510,9 @@ export default function InvestigationTimeline() {
               {/* Current Bottleneck */}
               <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3">
                 <div className="flex items-start gap-2">
-                  <AlertTriangle className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
+                  <AlertTriangle className="w-4 h-4 text-amber-700 mt-0.5 flex-shrink-0" />
                   <div>
-                    <p className="text-sm font-medium text-amber-400">Current Bottleneck: Reference Checks</p>
+                    <p className="text-sm font-medium text-amber-700">Current Bottleneck: Reference Checks</p>
                     <p className="text-xs text-secondary mt-1">Issue: 2 references not returning calls (documented 2-3 contact attempts each)</p>
                     <p className="text-xs text-secondary">Action Plan: Continue daily contact attempts, escalate to supervisor-to-supervisor contact if no response by Jan 25</p>
                   </div>
@@ -561,7 +561,7 @@ export default function InvestigationTimeline() {
                           </div>
                           <span className={`px-2 py-1 rounded text-xs font-medium whitespace-nowrap ${
                             stage.status === 'completed' ? 'bg-green-500/20 text-green-400' :
-                            stage.status === 'in_progress' ? 'bg-amber-500/20 text-amber-400' :
+                            stage.status === 'in_progress' ? 'bg-amber-500/20 text-amber-700' :
                             'bg-white dark:bg-slate-700/50 text-slate-500'
                           }`}>
                             {stage.outcome}
@@ -570,7 +570,7 @@ export default function InvestigationTimeline() {
                         <p className="text-xs text-secondary mb-1">By: {stage.completedBy}</p>
                         <p className="text-sm text-secondary">{stage.detail}</p>
                         {stage.targetCompletion && (
-                          <p className="text-xs text-amber-400 mt-2">Target Completion: {stage.targetCompletion}</p>
+                          <p className="text-xs text-amber-700 mt-2">Target Completion: {stage.targetCompletion}</p>
                         )}
                         {stage.pendingItems && stage.pendingItems.length > 0 && (
                           <div className="mt-2 space-y-1">
@@ -625,8 +625,8 @@ export default function InvestigationTimeline() {
                         }`}>
                           {event.type === 'stage_complete' && <CheckCircle2 className="w-4 h-4 text-green-400" />}
                           {event.type === 'stage_progress' && <CheckCircle2 className="w-4 h-4 text-green-400" />}
-                          {event.type === 'contact_attempt' && <Phone className="w-4 h-4 text-amber-400" />}
-                          {event.type === 'case_opened' && <FolderOpen className="w-4 h-4 text-amber-400" />}
+                          {event.type === 'contact_attempt' && <Phone className="w-4 h-4 text-amber-700" />}
+                          {event.type === 'case_opened' && <FolderOpen className="w-4 h-4 text-amber-700" />}
                           {event.type === 'document' && <Upload className="w-4 h-4 text-blue-400" />}
                         </div>
 
@@ -662,7 +662,7 @@ export default function InvestigationTimeline() {
                             {event.tags.map((tag, i) => (
                               <span key={i} className={`px-2 py-1 rounded text-xs ${
                                 tag.includes('Complete') || tag.includes('Clear') || tag.includes('Positive') ? 'bg-green-500/10 text-green-400' :
-                                tag.includes('Pending') || tag.includes('Contact') ? 'bg-amber-500/10 text-amber-400' :
+                                tag.includes('Pending') || tag.includes('Contact') ? 'bg-amber-500/10 text-amber-700' :
                                 'bg-white dark:bg-slate-700/50 text-slate-500'
                               }`}>
                                 {tag}
@@ -692,7 +692,7 @@ export default function InvestigationTimeline() {
                     </div>
                     <div className="flex justify-between text-sm">
                       <span className="text-secondary">Days in Process</span>
-                      <span className={caseData.daysOpen > caseData.agencyTarget ? 'text-amber-400' : 'text-primary'}>{caseData.daysOpen} days</span>
+                      <span className={caseData.daysOpen > caseData.agencyTarget ? 'text-amber-700' : 'text-primary'}>{caseData.daysOpen} days</span>
                     </div>
                     <div className="flex justify-between text-sm">
                       <span className="text-secondary">Agency Target</span>
@@ -712,7 +712,7 @@ export default function InvestigationTimeline() {
                         </div>
                         <div className="flex justify-between">
                           <span className="text-secondary pl-2">├─ Contact attempts</span>
-                          <span className="text-amber-400">{timelineEvents.filter(e => e.type === 'contact_attempt').length}</span>
+                          <span className="text-amber-700">{timelineEvents.filter(e => e.type === 'contact_attempt').length}</span>
                         </div>
                         <div className="flex justify-between">
                           <span className="text-secondary pl-2">└─ System actions</span>
@@ -734,7 +734,7 @@ export default function InvestigationTimeline() {
                         </div>
                         <div className="flex justify-between">
                           <span className="text-secondary">Pending Callbacks</span>
-                          <span className="text-amber-400">2</span>
+                          <span className="text-amber-700">2</span>
                         </div>
                       </div>
                     </div>
@@ -762,7 +762,7 @@ export default function InvestigationTimeline() {
                       <p className="text-sm font-medium text-primary">{caseData.investigator.name}</p>
                       <p className="text-xs text-secondary">Badge {caseData.investigator.badge}</p>
                       <p className="text-xs text-slate-500 mt-1">Current Caseload: {caseData.investigator.activeCases} active cases</p>
-                      <p className="text-xs text-amber-400 mt-1">{caseData.investigator.email} | {caseData.investigator.phone}</p>
+                      <p className="text-xs text-amber-700 mt-1">{caseData.investigator.email} | {caseData.investigator.phone}</p>
                     </div>
                     <div className="border-t border-border pt-3 mt-3">
                       <span className="px-2 py-1 bg-red-500/20 text-red-400 rounded text-xs font-medium">HIGH PRIORITY</span>
@@ -789,12 +789,12 @@ export default function InvestigationTimeline() {
 
                     {/* Critical */}
                     <div>
-                      <p className="text-xs text-amber-400 uppercase tracking-wide mb-2">⚠️ Critical (Within 14 Days)</p>
+                      <p className="text-xs text-amber-700 uppercase tracking-wide mb-2">⚠️ Critical (Within 14 Days)</p>
                       <div className="space-y-2">
                         <div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg">
                           <div className="flex items-center justify-between">
                             <span className="text-sm text-primary">Reference Checks</span>
-                            <span className="text-xs text-amber-400 font-medium">2 days</span>
+                            <span className="text-xs text-amber-700 font-medium">2 days</span>
                           </div>
                           <p className="text-xs text-secondary mt-1">Target: Jan 25 - Complete 2 pending callbacks</p>
                         </div>

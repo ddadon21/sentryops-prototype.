@@ -312,12 +312,12 @@ export default function TimeOffManagement() {
         <div className="p-4 border-b border-border flex items-center justify-between">
           {!sidebarCollapsed && (
             <div className="flex items-center gap-2">
-              <Shield className="w-8 h-8 text-amber-500" />
+              <Shield className="w-8 h-8 text-amber-700" />
               <h1 className="text-xl font-bold text-primary">SentryOps</h1>
             </div>
           )}
           {sidebarCollapsed && (
-            <Shield className="w-8 h-8 text-amber-500 mx-auto" />
+            <Shield className="w-8 h-8 text-amber-700 mx-auto" />
           )}
           <button
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
@@ -510,7 +510,7 @@ export default function TimeOffManagement() {
               <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
                 <div className="flex items-center gap-3 mb-2">
                   <div className="w-8 h-8 bg-amber-500/20 rounded-lg flex items-center justify-center">
-                    <Clock className="w-4 h-4 text-amber-400" />
+                    <Clock className="w-4 h-4 text-amber-700" />
                   </div>
                   <p className="text-xs text-secondary">Pending Requests</p>
                 </div>
@@ -574,9 +574,9 @@ export default function TimeOffManagement() {
 
               <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4">
                 <div className="flex items-start gap-3">
-                  <AlertCircle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                  <AlertCircle className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" />
                   <div className="flex-1">
-                    <p className="text-sm font-medium text-amber-400 mb-1">2 Requests Need Review - Coverage Conflicts Require Supervisor Resolution</p>
+                    <p className="text-sm font-medium text-amber-700 mb-1">2 Requests Need Review - Coverage Conflicts Require Supervisor Resolution</p>
                     <p className="text-xs text-secondary">Sarah Williams (D-Shift, Nov 5-7) - conflicts with K. Martinez same dates. Jennifer Taylor (B-Shift, Nov 25-29) - below minimum staffing for Thanksgiving week.</p>
                   </div>
                 </div>
@@ -651,7 +651,7 @@ export default function TimeOffManagement() {
                         </div>
                         <div>
                           <span className="text-slate-500">Time Remaining:</span>
-                          <p className="text-amber-400 font-medium mt-0.5">6 days, 14 hours <span className="text-green-400 ml-1">(COMPLIANT)</span></p>
+                          <p className="text-amber-700 font-medium mt-0.5">6 days, 14 hours <span className="text-green-400 ml-1">(COMPLIANT)</span></p>
                         </div>
                       </div>
                     </div>
@@ -707,7 +707,7 @@ export default function TimeOffManagement() {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-secondary">
                         <div><span className="text-slate-500">Certification Submitted:</span> October 31, 2024</div>
                         <div><span className="text-slate-500">Healthcare Provider:</span> Dr. R. Kumar, MD - Orthopedic Surgery</div>
-                        <div><span className="text-slate-500">Diagnosis:</span> <span className="text-amber-400 font-medium">CONFIDENTIAL - HIPAA Protected</span></div>
+                        <div><span className="text-slate-500">Diagnosis:</span> <span className="text-amber-700 font-medium">CONFIDENTIAL - HIPAA Protected</span></div>
                         <div><span className="text-slate-500">Treatment Plan:</span> Inpatient surgery November 04, recovery period 4-6 weeks</div>
                         <div><span className="text-slate-500">Period of Incapacity:</span> November 04 - December 05, 2024</div>
                         <div><span className="text-slate-500">Certification Complete:</span> <span className="text-green-400">All fields completed</span> <CheckCircle2 className="w-3 h-3 text-green-400 inline ml-1" /></div>
@@ -749,11 +749,11 @@ export default function TimeOffManagement() {
                       </div>
                       <div className="bg-amber-500/5 border border-amber-500/20 rounded-lg p-4">
                         <div className="flex items-center gap-2 mb-2">
-                          <Square className="w-4 h-4 text-amber-400" />
-                          <h5 className="text-xs font-semibold text-amber-400">WH-382 - Designation Notice</h5>
+                          <Square className="w-4 h-4 text-amber-700" />
+                          <h5 className="text-xs font-semibold text-amber-700">WH-382 - Designation Notice</h5>
                         </div>
                         <div className="text-xs text-secondary space-y-1">
-                          <p><span className="text-slate-500">Status:</span> <span className="text-amber-400 font-medium">PENDING</span></p>
+                          <p><span className="text-slate-500">Status:</span> <span className="text-amber-700 font-medium">PENDING</span></p>
                           <p><span className="text-slate-500">Due Date:</span> <span className="text-red-400">November 07, 2024</span></p>
                           <p><span className="text-slate-500">Action Required:</span> Complete and send to employee</p>
                         </div>
@@ -787,12 +787,12 @@ export default function TimeOffManagement() {
 
                     {/* i) Payroll Notification */}
                     <div className="bg-amber-500/5 border border-amber-500/20 rounded-lg p-4">
-                      <h5 className="text-xs font-semibold text-amber-400 mb-2 flex items-center gap-2">
+                      <h5 className="text-xs font-semibold text-amber-700 mb-2 flex items-center gap-2">
                         <AlertCircle className="w-4 h-4" />
                         Payroll Notification
                       </h5>
                       <div className="text-xs text-secondary space-y-1">
-                        <p><span className="text-slate-500">Status:</span> <span className="text-amber-400 font-medium">PENDING</span> - Payroll department has not been notified</p>
+                        <p><span className="text-slate-500">Status:</span> <span className="text-amber-700 font-medium">PENDING</span> - Payroll department has not been notified</p>
                         <p><span className="text-slate-500">Leave Dates:</span> November 04 - December 05, 2024</p>
                         <p><span className="text-slate-500">Leave Type:</span> FMLA - job-protected unpaid leave</p>
                         <p><span className="text-slate-500">Benefits:</span> Benefits continuation required during FMLA leave</p>
@@ -900,7 +900,7 @@ export default function TimeOffManagement() {
                   </button>
                   <button
                     onClick={() => setRequestFilter('review')}
-                    className={`px-3 py-2 rounded-lg text-xs font-medium transition-all ${requestFilter === 'review' ? 'bg-amber-500/20 border border-amber-500/30 text-amber-400' : 'bg-white dark:bg-slate-800/40 border border-slate-700/50 text-secondary hover:text-slate-900 dark:hover:text-white'}`}
+                    className={`px-3 py-2 rounded-lg text-xs font-medium transition-all ${requestFilter === 'review' ? 'bg-amber-500/20 border border-amber-500/30 text-amber-700' : 'bg-white dark:bg-slate-800/40 border border-slate-700/50 text-secondary hover:text-slate-900 dark:hover:text-white'}`}
                   >
                     Needs Review
                   </button>
@@ -930,7 +930,7 @@ export default function TimeOffManagement() {
                     <button onClick={() => toggleRequest(request.id)} className="w-full px-5 py-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors">
                       <div className="flex items-center gap-3 flex-1 min-w-0">
                         <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${request.coverageStatus === 'conflict' ? 'bg-amber-500/20' : 'bg-blue-500/20'}`}>
-                          <span className={`text-sm font-bold ${request.coverageStatus === 'conflict' ? 'text-amber-400' : 'text-blue-400'}`}>
+                          <span className={`text-sm font-bold ${request.coverageStatus === 'conflict' ? 'text-amber-700' : 'text-blue-400'}`}>
                             {request.name.split(' ').map(n => n[0]).join('')}
                           </span>
                         </div>
@@ -947,12 +947,12 @@ export default function TimeOffManagement() {
                       </div>
                       <div className="flex items-center gap-3 flex-shrink-0">
                         <div className="flex flex-col items-end gap-1">
-                          <span className="px-2 py-0.5 bg-amber-500/20 border border-amber-500/30 rounded text-[10px] text-amber-400 font-bold">PENDING</span>
+                          <span className="px-2 py-0.5 bg-amber-500/20 border border-amber-500/30 rounded text-[10px] text-amber-700 font-bold">PENDING</span>
                           {request.coverageStatus === 'adequate' && (
                             <span className="px-2 py-0.5 bg-green-500/20 border border-green-500/30 rounded text-[10px] text-green-400">Coverage Adequate</span>
                           )}
                           {request.coverageStatus === 'conflict' && (
-                            <span className="px-2 py-0.5 bg-amber-500/20 border border-amber-500/30 rounded text-[10px] text-amber-400">Coverage Conflict</span>
+                            <span className="px-2 py-0.5 bg-amber-500/20 border border-amber-500/30 rounded text-[10px] text-amber-700">Coverage Conflict</span>
                           )}
                         </div>
                         {expandedRequests[request.id] ? <ChevronUp className="w-4 h-4 text-secondary" /> : <ChevronDown className="w-4 h-4 text-secondary" />}
@@ -984,7 +984,7 @@ export default function TimeOffManagement() {
                               <p className="text-[10px] text-slate-500">Available</p>
                             </div>
                             <div>
-                              <p className="text-lg font-bold text-amber-400">{request.balance.requested}h</p>
+                              <p className="text-lg font-bold text-amber-700">{request.balance.requested}h</p>
                               <p className="text-[10px] text-slate-500">Requested</p>
                             </div>
                             <div>
@@ -1006,7 +1006,7 @@ export default function TimeOffManagement() {
                         }`}>
                           <h5 className={`text-xs font-semibold mb-3 ${
                             request.shiftCoverage.buffer < 0 ? 'text-red-400' :
-                            request.shiftCoverage.buffer === 0 ? 'text-amber-400' :
+                            request.shiftCoverage.buffer === 0 ? 'text-amber-700' :
                             'text-slate-500'
                           }`}>
                             Shift Coverage Analysis - {request.shift} ({request.shiftHours})
@@ -1017,11 +1017,11 @@ export default function TimeOffManagement() {
                               <p className="text-[10px] text-slate-500">Normal Staffing</p>
                             </div>
                             <div>
-                              <p className="text-lg font-bold text-amber-400">{request.shiftCoverage.onLeave}</p>
+                              <p className="text-lg font-bold text-amber-700">{request.shiftCoverage.onLeave}</p>
                               <p className="text-[10px] text-slate-500">On Leave</p>
                             </div>
                             <div>
-                              <p className={`text-lg font-bold ${request.shiftCoverage.remaining < request.shiftCoverage.minimum ? 'text-red-400' : request.shiftCoverage.remaining === request.shiftCoverage.minimum ? 'text-amber-400' : 'text-green-400'}`}>{request.shiftCoverage.remaining}</p>
+                              <p className={`text-lg font-bold ${request.shiftCoverage.remaining < request.shiftCoverage.minimum ? 'text-red-400' : request.shiftCoverage.remaining === request.shiftCoverage.minimum ? 'text-amber-700' : 'text-green-400'}`}>{request.shiftCoverage.remaining}</p>
                               <p className="text-[10px] text-slate-500">Remaining</p>
                             </div>
                             <div>
@@ -1029,7 +1029,7 @@ export default function TimeOffManagement() {
                               <p className="text-[10px] text-slate-500">Minimum Req.</p>
                             </div>
                             <div>
-                              <p className={`text-lg font-bold ${request.shiftCoverage.buffer < 0 ? 'text-red-400' : request.shiftCoverage.buffer === 0 ? 'text-amber-400' : 'text-green-400'}`}>{request.shiftCoverage.buffer >= 0 ? '+' : ''}{request.shiftCoverage.buffer}</p>
+                              <p className={`text-lg font-bold ${request.shiftCoverage.buffer < 0 ? 'text-red-400' : request.shiftCoverage.buffer === 0 ? 'text-amber-700' : 'text-green-400'}`}>{request.shiftCoverage.buffer >= 0 ? '+' : ''}{request.shiftCoverage.buffer}</p>
                               <p className="text-[10px] text-slate-500">Buffer</p>
                             </div>
                           </div>
@@ -1062,10 +1062,10 @@ export default function TimeOffManagement() {
                           {/* Conflicts */}
                           {request.conflicts.length > 0 && (
                             <div className="mt-3 bg-amber-500/5 border border-amber-500/20 rounded-lg p-3">
-                              <p className="text-xs font-semibold text-amber-400 mb-2">Scheduling Conflicts:</p>
+                              <p className="text-xs font-semibold text-amber-700 mb-2">Scheduling Conflicts:</p>
                               {request.conflicts.map((conflict, idx) => (
                                 <div key={idx} className="flex items-start gap-2 text-xs text-secondary mb-1">
-                                  <AlertCircle className="w-3.5 h-3.5 text-amber-400 mt-0.5 flex-shrink-0" />
+                                  <AlertCircle className="w-3.5 h-3.5 text-amber-700 mt-0.5 flex-shrink-0" />
                                   <span>{conflict}</span>
                                 </div>
                               ))}
@@ -1083,11 +1083,11 @@ export default function TimeOffManagement() {
                         {/* Resolution Options (for conflict requests) */}
                         {request.resolutionOptions && (
                           <div className="bg-amber-500/5 border border-amber-500/20 rounded-lg p-4">
-                            <h5 className="text-xs font-semibold text-amber-400 mb-3">Resolution Options:</h5>
+                            <h5 className="text-xs font-semibold text-amber-700 mb-3">Resolution Options:</h5>
                             <div className="space-y-2">
                               {request.resolutionOptions.map((option, idx) => (
                                 <div key={idx} className="flex items-start gap-3 px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-900/30">
-                                  <span className="text-xs text-amber-400 font-bold mt-0.5">{idx + 1}.</span>
+                                  <span className="text-xs text-amber-700 font-bold mt-0.5">{idx + 1}.</span>
                                   <p className="text-xs text-secondary">{option}</p>
                                 </div>
                               ))}
@@ -1111,7 +1111,7 @@ export default function TimeOffManagement() {
                           <div className="flex items-center gap-3 text-xs text-secondary flex-wrap">
                             <span className="text-slate-500">Supervisor:</span>
                             <span>{request.supervisor.name}</span>
-                            <span className="px-2 py-0.5 bg-amber-500/20 border border-amber-500/30 rounded text-[10px] text-amber-400 font-bold">{request.supervisor.status}</span>
+                            <span className="px-2 py-0.5 bg-amber-500/20 border border-amber-500/30 rounded text-[10px] text-amber-700 font-bold">{request.supervisor.status}</span>
                             <span className="text-slate-500">Notified: {request.supervisor.notified}</span>
                           </div>
                           <div className="flex items-center gap-3 text-xs text-secondary mt-1 flex-wrap">
@@ -1142,14 +1142,14 @@ export default function TimeOffManagement() {
 
                         {request.recommendation === 'review' && (
                           <div className="bg-amber-500/5 border border-amber-500/20 rounded-lg p-4">
-                            <h5 className="text-xs font-bold text-amber-400 mb-3 flex items-center gap-2">
+                            <h5 className="text-xs font-bold text-amber-700 mb-3 flex items-center gap-2">
                               <AlertCircle className="w-4 h-4" />
                               REQUIRES SUPERVISOR REVIEW
                             </h5>
                             <div className="space-y-1.5">
                               {request.reviewReasons.map((reason, idx) => (
                                 <div key={idx} className="flex items-start gap-2 text-xs text-secondary">
-                                  <AlertCircle className="w-3.5 h-3.5 text-amber-400 mt-0.5 flex-shrink-0" />
+                                  <AlertCircle className="w-3.5 h-3.5 text-amber-700 mt-0.5 flex-shrink-0" />
                                   <span>{reason}</span>
                                 </div>
                               ))}
@@ -1410,7 +1410,7 @@ export default function TimeOffManagement() {
                     <p className="text-[10px] text-slate-500">Assigned</p>
                   </div>
                   <div>
-                    <p className="text-lg font-bold text-amber-400">1</p>
+                    <p className="text-lg font-bold text-amber-700">1</p>
                     <p className="text-[10px] text-slate-500">On Leave</p>
                   </div>
                   <div>
@@ -1465,7 +1465,7 @@ export default function TimeOffManagement() {
                     <p className="text-[10px] text-slate-500">Assigned</p>
                   </div>
                   <div>
-                    <p className="text-lg font-bold text-amber-400">1</p>
+                    <p className="text-lg font-bold text-amber-700">1</p>
                     <p className="text-[10px] text-slate-500">On Leave</p>
                   </div>
                   <div>
@@ -1484,7 +1484,7 @@ export default function TimeOffManagement() {
               <div className="bg-white dark:bg-slate-800/40 border border-amber-500/30 rounded-xl p-4">
                 <div className="flex items-center justify-between mb-3">
                   <h4 className="text-sm font-semibold text-primary">D-Shift (14:00-02:00)</h4>
-                  <span className="px-2 py-0.5 bg-amber-500/20 border border-amber-500/30 rounded text-[10px] text-amber-400 font-bold">AT MINIMUM</span>
+                  <span className="px-2 py-0.5 bg-amber-500/20 border border-amber-500/30 rounded text-[10px] text-amber-700 font-bold">AT MINIMUM</span>
                 </div>
                 <div className="grid grid-cols-3 gap-2 text-center mb-3">
                   <div>
@@ -1492,18 +1492,18 @@ export default function TimeOffManagement() {
                     <p className="text-[10px] text-slate-500">Assigned</p>
                   </div>
                   <div>
-                    <p className="text-lg font-bold text-amber-400">2</p>
+                    <p className="text-lg font-bold text-amber-700">2</p>
                     <p className="text-[10px] text-slate-500">On Leave</p>
                   </div>
                   <div>
-                    <p className="text-lg font-bold text-amber-400">6</p>
+                    <p className="text-lg font-bold text-amber-700">6</p>
                     <p className="text-[10px] text-slate-500">Available</p>
                   </div>
                 </div>
                 <div className="w-full bg-white dark:bg-slate-700/50 rounded-full h-2 mb-1">
                   <div className="bg-amber-500 h-2 rounded-full" style={{ width: '75%' }}></div>
                 </div>
-                <p className="text-[10px] text-amber-400">Minimum: 6 | Buffer: 0 (AT MINIMUM)</p>
+                <p className="text-[10px] text-amber-700">Minimum: 6 | Buffer: 0 (AT MINIMUM)</p>
                 <p className="text-[10px] text-slate-500 mt-1">Pending: S. Williams (Nov 5-7). Conflict: K. Martinez same dates.</p>
               </div>
             </div>
@@ -1653,17 +1653,17 @@ export default function TimeOffManagement() {
               <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-primary">Leave Administration</p>
                 <p className="text-xs text-secondary">C. Nguyen, HR Specialist</p>
-                <p className="text-xs text-amber-400 mt-1">Ext. 4510</p>
+                <p className="text-xs text-amber-700 mt-1">Ext. 4510</p>
               </div>
               <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-primary">HR Director</p>
                 <p className="text-xs text-secondary">Leave policy, FMLA compliance</p>
-                <p className="text-xs text-amber-400 mt-1">Ext. 4500</p>
+                <p className="text-xs text-amber-700 mt-1">Ext. 4500</p>
               </div>
               <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-primary">Payroll Department</p>
                 <p className="text-xs text-secondary">Leave balances, pay during leave</p>
-                <p className="text-xs text-amber-400 mt-1">Ext. 4530</p>
+                <p className="text-xs text-amber-700 mt-1">Ext. 4530</p>
               </div>
               <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-primary">FMLA Resources</p>

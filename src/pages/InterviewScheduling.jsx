@@ -11,7 +11,7 @@ const getConfirmationBadge = (status) => {
     case 'confirmed':
       return <span className="px-2.5 py-1 bg-green-500/10 text-green-400 rounded-lg text-xs font-medium flex items-center gap-1.5"><CheckCircle2 className="w-3 h-3" />Confirmed</span>;
     case 'pending':
-      return <span className="px-2.5 py-1 bg-amber-500/10 text-amber-400 rounded-lg text-xs font-medium flex items-center gap-1.5"><Clock className="w-3 h-3" />Pending Confirmation</span>;
+      return <span className="px-2.5 py-1 bg-amber-500/10 text-amber-700 rounded-lg text-xs font-medium flex items-center gap-1.5"><Clock className="w-3 h-3" />Pending Confirmation</span>;
     case 'scheduled':
       return <span className="px-2.5 py-1 bg-blue-500/10 text-blue-400 rounded-lg text-xs font-medium flex items-center gap-1.5"><Calendar className="w-3 h-3" />Scheduled</span>;
     case 'completed':
@@ -402,7 +402,7 @@ export default function InterviewScheduling() {
                   <span>Active investigator: <span className="text-secondary">{investigatorInfo.name}</span> (Badge #{investigatorInfo.badge})</span>
                 </div>
                 <span className="text-slate-700">•</span>
-                <span>Caseload: <span className="text-amber-400">{investigatorInfo.activeCases} active cases</span></span>
+                <span>Caseload: <span className="text-amber-700">{investigatorInfo.activeCases} active cases</span></span>
               </div>
             </div>
 
@@ -412,7 +412,7 @@ export default function InterviewScheduling() {
               <div className="lg:col-span-2 bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
                 <div className="flex items-start gap-4">
                   <div className="w-10 h-10 bg-amber-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Calendar className="w-6 h-6 text-amber-400" />
+                    <Calendar className="w-6 h-6 text-amber-700" />
                   </div>
                   <div className="flex-1">
                     <h4 className="text-base font-semibold text-primary mb-3">Scheduling Overview</h4>
@@ -429,7 +429,7 @@ export default function InterviewScheduling() {
                           </div>
                           <div className="flex items-center justify-between text-secondary">
                             <span>Today (Jan 27):</span>
-                            <span className="text-amber-400 font-medium">1 interview at 3:30 PM</span>
+                            <span className="text-amber-700 font-medium">1 interview at 3:30 PM</span>
                           </div>
                           <div className="flex items-center justify-between text-secondary">
                             <span>Tomorrow (Jan 28):</span>
@@ -449,7 +449,7 @@ export default function InterviewScheduling() {
                           <div className="space-y-2">
                             {pendingConfirmation.map((interview, idx) => (
                               <div key={idx} className="p-2 bg-amber-500/10 rounded-lg border border-amber-500/20">
-                                <div className="flex items-center gap-2 text-amber-400 text-sm font-medium mb-1">
+                                <div className="flex items-center gap-2 text-amber-700 text-sm font-medium mb-1">
                                   <AlertCircle className="w-3.5 h-3.5" />
                                   Pending confirmation
                                 </div>
@@ -470,7 +470,7 @@ export default function InterviewScheduling() {
               {/* Investigator Workload */}
               <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
                 <h4 className="text-sm font-semibold text-primary mb-4 flex items-center gap-2">
-                  <Users className="w-4 h-4 text-amber-400" />
+                  <Users className="w-4 h-4 text-amber-700" />
                   Investigator Workload
                 </h4>
                 <div className="space-y-3">
@@ -528,7 +528,7 @@ export default function InterviewScheduling() {
                 <div className="space-y-1 text-xs text-secondary">
                   <div className="flex justify-between">
                     <span>Today:</span>
-                    <span className="text-amber-400">1 interview</span>
+                    <span className="text-amber-700">1 interview</span>
                   </div>
                   <div className="flex justify-between">
                     <span>This week:</span>
@@ -554,14 +554,14 @@ export default function InterviewScheduling() {
               {/* Pending Confirmation */}
               <div className="bg-white dark:bg-slate-800/40 border border-amber-500/30 rounded-xl p-5">
                 <div className="flex items-center justify-between mb-3">
-                  <AlertCircle className="w-8 h-8 text-amber-400" />
-                  <span className="text-2xl font-bold text-amber-400">{pendingConfirmation.length}</span>
+                  <AlertCircle className="w-8 h-8 text-amber-700" />
+                  <span className="text-2xl font-bold text-amber-700">{pendingConfirmation.length}</span>
                 </div>
                 <p className="text-sm font-medium text-primary mb-1">Pending Confirmation</p>
                 <p className="text-xs text-slate-500 mb-3">Awaiting response</p>
                 {pendingConfirmation.length > 0 && (
                   <div className="p-2 bg-amber-500/10 rounded-lg border border-amber-500/20">
-                    <p className="text-xs text-amber-400 font-medium">{pendingConfirmation[0].subject}</p>
+                    <p className="text-xs text-amber-700 font-medium">{pendingConfirmation[0].subject}</p>
                     <p className="text-xs text-slate-500">{pendingConfirmation[0].contactAttempts?.length || 0} contact attempts</p>
                   </div>
                 )}
@@ -620,25 +620,25 @@ export default function InterviewScheduling() {
               <div className="flex border-b border-border overflow-x-auto">
                 <button
                   onClick={() => setSelectedView('upcoming')}
-                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedView === 'upcoming' ? 'bg-amber-500/10 text-amber-400 border-b-2 border-amber-500' : 'text-secondary hover:text-slate-900 dark:hover:text-white'}`}
+                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedView === 'upcoming' ? 'bg-amber-500/10 text-amber-700 border-b-2 border-amber-500' : 'text-secondary hover:text-slate-900 dark:hover:text-white'}`}
                 >
                   Upcoming ({upcomingInterviews.length})
                 </button>
                 <button
                   onClick={() => setSelectedView('pending')}
-                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedView === 'pending' ? 'bg-amber-500/10 text-amber-400 border-b-2 border-amber-500' : 'text-secondary hover:text-slate-900 dark:hover:text-white'}`}
+                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedView === 'pending' ? 'bg-amber-500/10 text-amber-700 border-b-2 border-amber-500' : 'text-secondary hover:text-slate-900 dark:hover:text-white'}`}
                 >
                   Pending Confirmation ({pendingConfirmation.length})
                 </button>
                 <button
                   onClick={() => setSelectedView('completed')}
-                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedView === 'completed' ? 'bg-amber-500/10 text-amber-400 border-b-2 border-amber-500' : 'text-secondary hover:text-slate-900 dark:hover:text-white'}`}
+                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedView === 'completed' ? 'bg-amber-500/10 text-amber-700 border-b-2 border-amber-500' : 'text-secondary hover:text-slate-900 dark:hover:text-white'}`}
                 >
                   Completed ({completedInterviews.length})
                 </button>
                 <button
                   onClick={() => setSelectedView('all')}
-                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedView === 'all' ? 'bg-amber-500/10 text-amber-400 border-b-2 border-amber-500' : 'text-secondary hover:text-slate-900 dark:hover:text-white'}`}
+                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedView === 'all' ? 'bg-amber-500/10 text-amber-700 border-b-2 border-amber-500' : 'text-secondary hover:text-slate-900 dark:hover:text-white'}`}
                 >
                   All Interviews ({upcomingInterviews.length + completedInterviews.length})
                 </button>
@@ -666,10 +666,10 @@ export default function InterviewScheduling() {
                         <div className="flex items-center gap-3 mb-1">
                           <h3 className="text-lg font-semibold text-primary">{interview.subject}</h3>
                           {interview.dateShort === 'Today' && (
-                            <span className="px-2 py-0.5 bg-amber-500/20 text-amber-400 rounded text-xs font-bold">TODAY</span>
+                            <span className="px-2 py-0.5 bg-amber-500/20 text-amber-700 rounded text-xs font-bold">TODAY</span>
                           )}
                         </div>
-                        <p className="text-sm text-amber-400 mb-1">Case: {interview.caseId}</p>
+                        <p className="text-sm text-amber-700 mb-1">Case: {interview.caseId}</p>
                         <p className="text-sm text-secondary">{interview.type} — {interview.typeDetail}</p>
                         {interview.applicantFor && (
                           <p className="text-xs text-slate-500 mt-1">Position: {interview.applicantFor}</p>
@@ -738,7 +738,7 @@ export default function InterviewScheduling() {
 
                     {interview.confirmationStatus === 'pending' && interview.contactAttempts && (
                       <div className="mb-4 p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg">
-                        <div className="flex items-center gap-2 text-amber-400 text-sm font-medium mb-2">
+                        <div className="flex items-center gap-2 text-amber-700 text-sm font-medium mb-2">
                           <AlertCircle className="w-4 h-4" />
                           Pending Confirmation — Action Required
                         </div>
@@ -831,12 +831,12 @@ export default function InterviewScheduling() {
                           <Trash2 className="w-4 h-4 text-secondary" />
                         </button>
                         {interview.confirmationStatus === 'pending' && (
-                          <button className="px-3 py-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 rounded-xl text-xs font-medium transition-colors flex items-center gap-1">
+                          <button className="px-3 py-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 rounded-xl text-xs font-medium transition-colors flex items-center gap-1">
                             <Phone className="w-3.5 h-3.5" />
                             Call Now
                           </button>
                         )}
-                        <button className="px-3 py-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 rounded-xl text-xs font-medium transition-colors">
+                        <button className="px-3 py-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 rounded-xl text-xs font-medium transition-colors">
                           View Case
                         </button>
                       </div>
@@ -866,13 +866,13 @@ export default function InterviewScheduling() {
                       <div className="flex items-start justify-between mb-4">
                         <div>
                           <h3 className="text-lg font-semibold text-primary mb-1">{interview.subject}</h3>
-                          <p className="text-sm text-amber-400">Case: {interview.caseId} • {interview.type}</p>
+                          <p className="text-sm text-amber-700">Case: {interview.caseId} • {interview.type}</p>
                         </div>
                         {getConfirmationBadge('pending')}
                       </div>
 
                       <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg mb-4">
-                        <div className="flex items-center gap-2 text-amber-400 text-sm font-medium mb-2">
+                        <div className="flex items-center gap-2 text-amber-700 text-sm font-medium mb-2">
                           <AlertCircle className="w-4 h-4" />
                           ACTION REQUIRED
                         </div>
@@ -933,7 +933,7 @@ export default function InterviewScheduling() {
                           <CheckCircle2 className="w-5 h-5 text-green-400" />
                           <h3 className="text-lg font-semibold text-primary">{interview.subject}</h3>
                         </div>
-                        <p className="text-sm text-amber-400">Case: {interview.caseId}</p>
+                        <p className="text-sm text-amber-700">Case: {interview.caseId}</p>
                         <p className="text-sm text-secondary">{interview.type} — {interview.typeDetail}</p>
                         {interview.referenceFor && (
                           <p className="text-xs text-slate-500 mt-1">Reference for: {interview.referenceFor}</p>
@@ -1067,7 +1067,7 @@ export default function InterviewScheduling() {
                         <Printer className="w-3.5 h-3.5" />
                         Print Report
                       </button>
-                      <button className="px-3 py-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 rounded-xl text-xs font-medium transition-colors">
+                      <button className="px-3 py-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 rounded-xl text-xs font-medium transition-colors">
                         View Case File
                       </button>
                     </div>
@@ -1106,7 +1106,7 @@ export default function InterviewScheduling() {
                       {[...upcomingInterviews, ...completedInterviews].map((interview) => (
                         <tr key={interview.id} className="hover:bg-slate-100 dark:hover:bg-slate-800/30">
                           <td className="p-4 text-sm text-primary">{interview.subject}</td>
-                          <td className="p-4 text-sm text-amber-400">{interview.caseId}</td>
+                          <td className="p-4 text-sm text-amber-700">{interview.caseId}</td>
                           <td className="p-4 text-sm text-secondary">{interview.type}</td>
                           <td className="p-4 text-sm text-secondary">
                             {interview.dateShort || interview.completedDate?.split(' at')[0]}

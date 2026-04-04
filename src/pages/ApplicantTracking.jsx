@@ -90,12 +90,12 @@ export default function ApplicantTracking() {
         <div className="p-4 border-b border-border flex items-center justify-between">
           {!sidebarCollapsed && (
             <div className="flex items-center gap-2">
-              <Shield className="w-8 h-8 text-amber-500" />
+              <Shield className="w-8 h-8 text-amber-700" />
               <h1 className="text-xl font-bold text-primary">SentryOps</h1>
             </div>
           )}
           {sidebarCollapsed && (
-            <Shield className="w-8 h-8 text-amber-500 mx-auto" />
+            <Shield className="w-8 h-8 text-amber-700 mx-auto" />
           )}
           <button
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
@@ -260,13 +260,13 @@ export default function ApplicantTracking() {
               <span className="text-slate-700">|</span>
               <span>Total Active Applicants: <span className="text-primary font-medium">77</span></span>
               <span className="text-slate-700">|</span>
-              <span>Sheriff: <span className="text-amber-400 font-medium">Keybo Taylor</span></span>
+              <span>Sheriff: <span className="text-amber-700 font-medium">Keybo Taylor</span></span>
             </div>
 
             {/* Pipeline Status */}
             <div className="flex flex-wrap items-center gap-4 text-xs text-secondary mb-4">
               <span>Pipeline Status:</span>
-              <span className="px-2 py-1 bg-amber-500/20 text-amber-400 rounded">9 interviews scheduled</span>
+              <span className="px-2 py-1 bg-amber-500/20 text-amber-700 rounded">9 interviews scheduled</span>
               <span className="px-2 py-1 bg-purple-500/20 text-purple-400 rounded">5 backgrounds in progress</span>
               <span className="px-2 py-1 bg-green-500/20 text-green-400 rounded">3 offers pending</span>
             </div>
@@ -294,7 +294,7 @@ export default function ApplicantTracking() {
             {/* Alert Context Bar */}
             <div className="space-y-2">
               <div className="flex items-center gap-3 px-4 py-2.5 bg-amber-500/10 border border-amber-500/30 rounded-lg">
-                <AlertCircle className="w-4 h-4 text-amber-400 flex-shrink-0" />
+                <AlertCircle className="w-4 h-4 text-amber-700 flex-shrink-0" />
                 <span className="text-sm text-amber-200">
                   <span className="font-semibold">8 oral board interviews</span> scheduled Feb 06, 2026 - Deputy Sheriff candidates (review files)
                 </span>
@@ -338,12 +338,12 @@ export default function ApplicantTracking() {
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
                   className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all relative whitespace-nowrap ${
-                    activeTab === tab.id ? 'text-amber-400' : 'text-secondary hover:text-slate-300'
+                    activeTab === tab.id ? 'text-amber-700' : 'text-secondary hover:text-slate-300'
                   }`}
                 >
                   {tab.label}
                   <span className={`px-2 py-0.5 rounded-full text-xs ${
-                    activeTab === tab.id ? 'bg-amber-500/20 text-amber-400' : 'bg-white dark:bg-slate-700/50 text-slate-500'
+                    activeTab === tab.id ? 'bg-amber-500/20 text-amber-700' : 'bg-white dark:bg-slate-700/50 text-slate-500'
                   }`}>{tab.count}</span>
                   {activeTab === tab.id && (
                     <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500"></div>
@@ -409,7 +409,7 @@ export default function ApplicantTracking() {
                   <div className="flex items-center gap-4">
                     <div className="text-right hidden md:block">
                       <p className="text-sm text-primary font-medium">Applied: Oct 12, 2024</p>
-                      <p className="text-xs text-amber-400">Interview Scheduled: Feb 06</p>
+                      <p className="text-xs text-amber-700">Interview Scheduled: Feb 06</p>
                     </div>
                     {expandedApplicant === 'marcus' ? <ChevronUp className="w-5 h-5 text-secondary" /> : <ChevronDown className="w-5 h-5 text-secondary" />}
                   </div>
@@ -439,7 +439,7 @@ export default function ApplicantTracking() {
 
                     {/* Qualifications */}
                     <div>
-                      <h4 className="text-sm font-bold text-amber-400 uppercase tracking-wide mb-3">Qualifications Summary</h4>
+                      <h4 className="text-sm font-bold text-amber-700 uppercase tracking-wide mb-3">Qualifications Summary</h4>
                       <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 border border-border space-y-3">
                         <div>
                           <p className="text-xs text-slate-500 mb-1">Experience</p>
@@ -472,7 +472,7 @@ export default function ApplicantTracking() {
 
                     {/* Documents */}
                     <div>
-                      <h4 className="text-sm font-bold text-amber-400 uppercase tracking-wide mb-3">Documents Submitted</h4>
+                      <h4 className="text-sm font-bold text-amber-700 uppercase tracking-wide mb-3">Documents Submitted</h4>
                       <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                         <div className="flex items-center gap-2 text-sm">
                           <CheckCircle className="w-4 h-4 text-green-400" />
@@ -503,7 +503,7 @@ export default function ApplicantTracking() {
 
                     {/* Screening Status */}
                     <div>
-                      <h4 className="text-sm font-bold text-amber-400 uppercase tracking-wide mb-3">Screening Status</h4>
+                      <h4 className="text-sm font-bold text-amber-700 uppercase tracking-wide mb-3">Screening Status</h4>
                       <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 border border-border space-y-3">
                         <div className="flex items-start gap-3">
                           <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
@@ -535,8 +535,8 @@ export default function ApplicantTracking() {
                     {/* Next Steps */}
                     <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
                       <div className="flex items-center gap-2 mb-3">
-                        <Calendar className="w-5 h-5 text-amber-400" />
-                        <span className="text-sm font-bold text-amber-400">ORAL BOARD INTERVIEW SCHEDULED</span>
+                        <Calendar className="w-5 h-5 text-amber-700" />
+                        <span className="text-sm font-bold text-amber-700">ORAL BOARD INTERVIEW SCHEDULED</span>
                       </div>
                       <div className="text-sm text-secondary space-y-1">
                         <p><span className="text-primary font-medium">Date:</span> February 06, 2026 • 09:30 AM (30-minute slot)</p>
@@ -578,12 +578,12 @@ export default function ApplicantTracking() {
                 >
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-12 bg-amber-500/20 rounded-full flex items-center justify-center">
-                      <User className="w-6 h-6 text-amber-400" />
+                      <User className="w-6 h-6 text-amber-700" />
                     </div>
                     <div className="text-left">
                       <div className="flex items-center gap-3 flex-wrap">
                         <h3 className="text-lg font-bold text-primary">SARAH CHEN</h3>
-                        <span className="px-2 py-1 bg-amber-500/20 border border-amber-500/30 rounded text-xs text-amber-400 font-bold">INTERVIEW COMPLETED</span>
+                        <span className="px-2 py-1 bg-amber-500/20 border border-amber-500/30 rounded text-xs text-amber-700 font-bold">INTERVIEW COMPLETED</span>
                         <span className="px-2 py-1 bg-green-500/20 border border-green-500/30 rounded text-xs text-green-400 font-bold">TOP CANDIDATE</span>
                       </div>
                       <p className="text-sm text-secondary">Background Investigator (HR/IA) • Ref: 2026-APP-0087</p>
@@ -622,7 +622,7 @@ export default function ApplicantTracking() {
 
                     {/* Qualifications */}
                     <div>
-                      <h4 className="text-sm font-bold text-amber-400 uppercase tracking-wide mb-3">Qualifications Summary</h4>
+                      <h4 className="text-sm font-bold text-amber-700 uppercase tracking-wide mb-3">Qualifications Summary</h4>
                       <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 border border-border space-y-3">
                         <div>
                           <p className="text-xs text-slate-500 mb-1">Experience</p>
@@ -648,7 +648,7 @@ export default function ApplicantTracking() {
                             <span className="px-2 py-1 bg-purple-500/20 text-purple-400 rounded text-xs">Polygraph Examiner (FBI 2020)</span>
                             <span className="px-2 py-1 bg-purple-500/20 text-purple-400 rounded text-xs">Advanced Interrogation (FBI 2019)</span>
                             <span className="px-2 py-1 bg-purple-500/20 text-purple-400 rounded text-xs">Background Investigations (FBI 2018)</span>
-                            <span className="px-2 py-1 bg-amber-500/20 text-amber-400 rounded text-xs">TOP SECRET/SCI Clearance (Active)</span>
+                            <span className="px-2 py-1 bg-amber-500/20 text-amber-700 rounded text-xs">TOP SECRET/SCI Clearance (Active)</span>
                           </div>
                         </div>
                       </div>
@@ -656,7 +656,7 @@ export default function ApplicantTracking() {
 
                     {/* Interview Results */}
                     <div>
-                      <h4 className="text-sm font-bold text-amber-400 uppercase tracking-wide mb-3">Interview Results</h4>
+                      <h4 className="text-sm font-bold text-amber-700 uppercase tracking-wide mb-3">Interview Results</h4>
                       <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
                         <div className="flex items-center justify-between mb-6">
                           <div>
@@ -698,8 +698,8 @@ export default function ApplicantTracking() {
                     {/* Next Steps */}
                     <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
                       <div className="flex items-center gap-2 mb-2">
-                        <AlertCircle className="w-5 h-5 text-amber-400" />
-                        <span className="text-sm font-bold text-amber-400">AWAITING SHERIFF'S APPROVAL FOR CONDITIONAL OFFER</span>
+                        <AlertCircle className="w-5 h-5 text-amber-700" />
+                        <span className="text-sm font-bold text-amber-700">AWAITING SHERIFF'S APPROVAL FOR CONDITIONAL OFFER</span>
                       </div>
                       <div className="text-sm text-secondary space-y-1">
                         <p>• Interview panel recommendation forwarded to Sheriff Taylor: 02/11/2026</p>
@@ -759,7 +759,7 @@ export default function ApplicantTracking() {
                   <div className="px-5 pb-5 space-y-5 border-t border-border">
                     {/* Hiring Process Completed */}
                     <div className="pt-5">
-                      <h4 className="text-sm font-bold text-amber-400 uppercase tracking-wide mb-3">Hiring Process - COMPLETED</h4>
+                      <h4 className="text-sm font-bold text-amber-700 uppercase tracking-wide mb-3">Hiring Process - COMPLETED</h4>
                       <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 border border-border space-y-2">
                         <div className="flex items-center gap-3 text-sm">
                           <CheckCircle className="w-4 h-4 text-green-400" />
@@ -818,7 +818,7 @@ export default function ApplicantTracking() {
 
                     {/* Onboarding Status */}
                     <div>
-                      <h4 className="text-sm font-bold text-amber-400 uppercase tracking-wide mb-3">Pre-Start Onboarding Status</h4>
+                      <h4 className="text-sm font-bold text-amber-700 uppercase tracking-wide mb-3">Pre-Start Onboarding Status</h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         <div className="flex items-center gap-2 text-sm">
                           <div className="w-4 h-4 border border-amber-500 rounded-full"></div>
@@ -929,7 +929,7 @@ export default function ApplicantTracking() {
 
                     {/* Background Investigation Status */}
                     <div>
-                      <h4 className="text-sm font-bold text-amber-400 uppercase tracking-wide mb-3">Background Investigation Status</h4>
+                      <h4 className="text-sm font-bold text-amber-700 uppercase tracking-wide mb-3">Background Investigation Status</h4>
                       <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-4 mb-4">
                         <div className="flex items-center justify-between mb-3">
                           <div>
@@ -989,7 +989,7 @@ export default function ApplicantTracking() {
                         <div className="flex items-start gap-3">
                           <div className="w-4 h-4 border-2 border-amber-400 rounded-full flex-shrink-0 mt-0.5 animate-pulse"></div>
                           <div className="flex-1">
-                            <p className="text-sm text-amber-400">Reference Interviews - IN PROGRESS (4 of 5)</p>
+                            <p className="text-sm text-amber-700">Reference Interviews - IN PROGRESS (4 of 5)</p>
                             <p className="text-xs text-secondary">Reference #5 (Lt. J. Davis) scheduled 02/05/2026 - Lt. returning from vacation</p>
                           </div>
                         </div>
@@ -1049,7 +1049,7 @@ export default function ApplicantTracking() {
                   <div className="flex items-center gap-4">
                     <div className="text-right hidden md:block">
                       <p className="text-sm text-primary font-medium">Applied: Nov 01, 2024</p>
-                      <p className="text-xs text-amber-400">Pending Initial Screening</p>
+                      <p className="text-xs text-amber-700">Pending Initial Screening</p>
                     </div>
                     {expandedApplicant === 'lisa' ? <ChevronUp className="w-5 h-5 text-secondary" /> : <ChevronDown className="w-5 h-5 text-secondary" />}
                   </div>
@@ -1080,8 +1080,8 @@ export default function ApplicantTracking() {
 
                     <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
                       <div className="flex items-center gap-2 mb-2">
-                        <AlertCircle className="w-5 h-5 text-amber-400" />
-                        <span className="text-sm font-bold text-amber-400">PENDING INITIAL SCREENING REVIEW</span>
+                        <AlertCircle className="w-5 h-5 text-amber-700" />
+                        <span className="text-sm font-bold text-amber-700">PENDING INITIAL SCREENING REVIEW</span>
                       </div>
                       <div className="text-sm text-secondary space-y-1">
                         <p>• Application received 93 days ago - awaiting HR review</p>

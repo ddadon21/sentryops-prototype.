@@ -511,14 +511,14 @@ const CADDispatch = () => {
                 className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border text-[12px] font-semibold transition-colors ${
                   operationalPressure === 'Critical' ? 'bg-red-500/10 border-red-500/30 text-red-600 dark:text-red-400 hover:bg-red-500/15' :
                   operationalPressure === 'High'     ? 'bg-amber-500/10 border-amber-500/30 text-amber-600 dark:text-amber-400 hover:bg-amber-500/15' :
-                  operationalPressure === 'Moderate' ? 'bg-yellow-500/10 border-yellow-500/30 text-yellow-400 hover:bg-yellow-500/15' :
+                  operationalPressure === 'Moderate' ? 'bg-yellow-500/10 border-yellow-500/30 text-amber-800 hover:bg-yellow-500/15' :
                                                        'bg-emerald-500/10 border-emerald-500/30 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/15'
                 }`}
               >
                 <Circle className={`w-1.5 h-1.5 ${
                   operationalPressure === 'Critical' ? 'fill-red-500 text-red-500' :
                   operationalPressure === 'High'     ? 'fill-amber-400 text-amber-600 dark:text-amber-400' :
-                  operationalPressure === 'Moderate' ? 'fill-yellow-400 text-yellow-400' :
+                  operationalPressure === 'Moderate' ? 'fill-yellow-400 text-amber-800' :
                                                        'fill-emerald-500 text-emerald-500'
                 }`} />
                 Pressure: {operationalPressure}
@@ -534,7 +534,7 @@ const CADDispatch = () => {
                       const isIssue = !factor.startsWith('✓');
                       return (
                         <li key={i} className="flex items-start gap-2 text-[11px]">
-                          <span className={`mt-0.5 flex-shrink-0 font-bold ${isIssue ? 'text-amber-500' : 'text-emerald-600'}`}>{isIssue ? '—' : '✓'}</span>
+                          <span className={`mt-0.5 flex-shrink-0 font-bold ${isIssue ? 'text-amber-700' : 'text-emerald-600'}`}>{isIssue ? '—' : '✓'}</span>
                           <span className={isIssue ? 'text-slate-500' : 'text-slate-500'}>{factor.replace(/^✓ /, '')}</span>
                         </li>
                       );
@@ -666,7 +666,7 @@ const CADDispatch = () => {
               <ul className="space-y-0.5">
                 {holdingCalls.map((c, i) => (
                   <li key={i} className="text-[11px] text-slate-700 dark:text-slate-300 flex items-start gap-1.5">
-                    <span className="text-amber-500 flex-shrink-0 mt-0.5">—</span>
+                    <span className="text-amber-700 flex-shrink-0 mt-0.5">—</span>
                     {c.type} · holding {c.holdTime}
                   </li>
                 ))}

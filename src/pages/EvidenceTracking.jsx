@@ -11,7 +11,7 @@ const getStatusBadge = (status) => {
     case 'Verified':
       return <span className="px-2.5 py-1 bg-green-500/10 text-green-400 rounded-lg text-xs font-medium flex items-center gap-1.5"><CheckCircle2 className="w-3 h-3" />Verified</span>;
     case 'Pending Review':
-      return <span className="px-2.5 py-1 bg-amber-500/10 text-amber-400 rounded-lg text-xs font-medium flex items-center gap-1.5"><Clock className="w-3 h-3" />Pending Review</span>;
+      return <span className="px-2.5 py-1 bg-amber-500/10 text-amber-700 rounded-lg text-xs font-medium flex items-center gap-1.5"><Clock className="w-3 h-3" />Pending Review</span>;
     case 'Under Review':
       return <span className="px-2.5 py-1 bg-blue-500/10 text-blue-400 rounded-lg text-xs font-medium flex items-center gap-1.5"><Eye className="w-3 h-3" />Under Review</span>;
     case 'Archived':
@@ -33,7 +33,7 @@ const getAccessBadge = (level, legalBasis) => {
       );
     case 'Restricted':
       return (
-        <span className="px-2.5 py-1 bg-amber-500/10 text-amber-400 rounded-lg text-xs font-medium flex items-center gap-1.5">
+        <span className="px-2.5 py-1 bg-amber-500/10 text-amber-700 rounded-lg text-xs font-medium flex items-center gap-1.5">
           <Key className="w-3 h-3" />Restricted (BI Unit Only)
         </span>
       );
@@ -51,7 +51,7 @@ const getAccessBadge = (level, legalBasis) => {
 // Helper: Evidence type icon
 const getEvidenceTypeIcon = (category) => {
   switch (category) {
-    case 'Documentation': return <FileText className="w-6 h-6 text-amber-400" />;
+    case 'Documentation': return <FileText className="w-6 h-6 text-amber-700" />;
     case 'Background Check': return <ShieldCheck className="w-6 h-6 text-blue-400" />;
     case 'References': return <Users className="w-6 h-6 text-green-400" />;
     case 'Employment': return <UserCheck className="w-6 h-6 text-cyan-400" />;
@@ -519,7 +519,7 @@ export default function EvidenceTracking() {
                   {currentDateTime.date} at {currentDateTime.time}
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <Shield className="w-4 h-4 text-amber-400" />
+                  <Shield className="w-4 h-4 text-amber-700" />
                   Active investigator: {investigatorInfo.name} (Badge #{investigatorInfo.badge})
                 </span>
               </div>
@@ -567,7 +567,7 @@ export default function EvidenceTracking() {
             <div className="mb-6 bg-gradient-to-br from-amber-500/10 to-amber-600/5 border border-amber-500/20 rounded-xl p-5">
               <div className="flex items-start gap-4 mb-4">
                 <div className="w-10 h-10 bg-amber-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <FileCheck className="w-6 h-6 text-amber-400" />
+                  <FileCheck className="w-6 h-6 text-amber-700" />
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-1">
@@ -581,7 +581,7 @@ export default function EvidenceTracking() {
                 {/* By Status */}
                 <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4">
                   <h5 className="text-sm font-semibold text-secondary mb-3 flex items-center gap-2">
-                    <Circle className="w-3 h-3 text-amber-400" />By Status
+                    <Circle className="w-3 h-3 text-amber-700" />By Status
                   </h5>
                   <div className="space-y-2 text-sm">
                     <div className="flex items-center justify-between">
@@ -589,7 +589,7 @@ export default function EvidenceTracking() {
                       <span className="text-primary font-medium">3 items</span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-amber-400 flex items-center gap-1.5"><Clock className="w-3 h-3" />Pending Review</span>
+                      <span className="text-amber-700 flex items-center gap-1.5"><Clock className="w-3 h-3" />Pending Review</span>
                       <span className="text-primary font-medium">2 items</span>
                     </div>
                     <div className="flex items-center justify-between">
@@ -602,7 +602,7 @@ export default function EvidenceTracking() {
                 {/* By Type */}
                 <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4">
                   <h5 className="text-sm font-semibold text-secondary mb-3 flex items-center gap-2">
-                    <Tag className="w-3 h-3 text-amber-400" />By Type
+                    <Tag className="w-3 h-3 text-amber-700" />By Type
                   </h5>
                   <div className="space-y-2 text-sm">
                     <div className="flex items-center justify-between">
@@ -623,7 +623,7 @@ export default function EvidenceTracking() {
                 {/* By Case */}
                 <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4">
                   <h5 className="text-sm font-semibold text-secondary mb-3 flex items-center gap-2">
-                    <FolderOpen className="w-3 h-3 text-amber-400" />By Case
+                    <FolderOpen className="w-3 h-3 text-amber-700" />By Case
                   </h5>
                   <div className="space-y-2 text-sm">
                     <div className="flex items-center justify-between">
@@ -666,7 +666,7 @@ export default function EvidenceTracking() {
               {/* Requiring Action */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div className="bg-amber-500/5 border border-amber-500/20 rounded-lg p-4">
-                  <h5 className="text-sm font-semibold text-amber-400 mb-3 flex items-center gap-2">
+                  <h5 className="text-sm font-semibold text-amber-700 mb-3 flex items-center gap-2">
                     <AlertTriangle className="w-4 h-4" />Pending Supervisor Review: 2 items
                   </h5>
                   <div className="space-y-2 text-sm">
@@ -709,7 +709,7 @@ export default function EvidenceTracking() {
                 <button className="px-3 py-1.5 bg-white dark:bg-slate-800/60 hover:bg-slate-800/80 text-secondary rounded-lg text-xs font-medium transition-colors flex items-center gap-1.5">
                   <RefreshCw className="w-3 h-3" />Run Integrity Check
                 </button>
-                <button className="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 rounded-lg text-xs font-medium transition-colors">Request Supervisor Review</button>
+                <button className="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 rounded-lg text-xs font-medium transition-colors">Request Supervisor Review</button>
               </div>
             </div>
 
@@ -746,18 +746,18 @@ export default function EvidenceTracking() {
 
               <div className="bg-white dark:bg-slate-800/40 border border-amber-500/30 rounded-xl p-5">
                 <div className="flex items-center justify-between mb-3">
-                  <Clock className="w-8 h-8 text-amber-400" />
+                  <Clock className="w-8 h-8 text-amber-700" />
                   <span className="text-2xl font-bold text-primary">{evidenceItems.filter(e => e.status === 'Pending Review' || e.status === 'Under Review').length}</span>
                 </div>
                 <p className="text-sm font-medium text-primary mb-1">Pending Review</p>
                 <p className="text-xs text-slate-500">Awaiting supervisor review</p>
                 <div className="mt-3 pt-3 border-t border-border dark:border-slate-700/30 space-y-1.5">
                   <div>
-                    <p className="text-xs text-amber-400/80">Reference Letters (Nov 4, 2024)</p>
+                    <p className="text-xs text-amber-700/80">Reference Letters (Nov 4, 2024)</p>
                     <p className="text-xs text-slate-500 ml-2">Awaiting: review for completeness</p>
                   </div>
                   <div>
-                    <p className="text-xs text-amber-400/80">Financial Report (Nov 1, 2024)</p>
+                    <p className="text-xs text-amber-700/80">Financial Report (Nov 1, 2024)</p>
                     <p className="text-xs text-slate-500 ml-2">Awaiting: review of findings</p>
                   </div>
                 </div>
@@ -780,12 +780,12 @@ export default function EvidenceTracking() {
             {/* Evidence Management Actions */}
             <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5 mb-6">
               <h3 className="text-sm font-semibold text-primary mb-4 flex items-center gap-2">
-                <Settings className="w-4 h-4 text-amber-400" />
+                <Settings className="w-4 h-4 text-amber-700" />
                 Evidence Management Actions
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                 <button className="flex items-start gap-3 p-3 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
-                  <Upload className="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" />
+                  <Upload className="w-5 h-5 text-amber-700 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-sm font-medium text-primary">Upload Evidence</p>
                     <p className="text-xs text-slate-500 mt-0.5">Upload document, report, or recording</p>
@@ -962,7 +962,7 @@ export default function EvidenceTracking() {
                           </div>
                           <div className="flex-1 min-w-0">
                             <h3 className="text-lg font-semibold text-primary mb-1">{item.name}</h3>
-                            <p className="text-sm text-amber-400 mb-2">
+                            <p className="text-sm text-amber-700 mb-2">
                               Evidence ID: {item.id} | Case ID: {item.caseId}
                             </p>
                             <p className="text-sm text-slate-500 mb-1">Subject: <span className="text-secondary">{item.subject}</span></p>
@@ -1024,20 +1024,20 @@ export default function EvidenceTracking() {
                           </div>
                         ) : (
                           <div className="space-y-2">
-                            <p className="text-sm text-amber-400 flex items-center gap-1.5">
+                            <p className="text-sm text-amber-700 flex items-center gap-1.5">
                               <AlertTriangle className="w-3.5 h-3.5" />
                               {item.verification.verificationNote}
                             </p>
                             {item.pendingAction && (
                               <div className="mt-2 bg-amber-500/5 border border-amber-500/20 rounded-lg p-3">
-                                <p className="text-xs font-semibold text-amber-400 mb-1">Action Required:</p>
+                                <p className="text-xs font-semibold text-amber-700 mb-1">Action Required:</p>
                                 <p className="text-sm text-secondary mb-2">Assigned to: {item.pendingAction.assignedTo}</p>
                                 <p className="text-sm text-secondary">{item.pendingAction.action}</p>
                                 {item.pendingAction.requirements && (
                                   <ul className="mt-2 space-y-1">
                                     {item.pendingAction.requirements.map((req, i) => (
                                       <li key={i} className="text-xs text-secondary flex items-start gap-1.5">
-                                        <Circle className="w-2 h-2 mt-1.5 text-amber-400/60 flex-shrink-0" />
+                                        <Circle className="w-2 h-2 mt-1.5 text-amber-700/60 flex-shrink-0" />
                                         {req}
                                       </li>
                                     ))}
@@ -1076,7 +1076,7 @@ export default function EvidenceTracking() {
                       {/* Expand/Collapse for detailed content */}
                       <button
                         onClick={() => setExpandedEvidence(isExpanded ? null : item.id)}
-                        className="w-full flex items-center justify-center gap-2 py-2 text-sm text-amber-400 hover:text-amber-300 transition-colors"
+                        className="w-full flex items-center justify-center gap-2 py-2 text-sm text-amber-700 hover:text-amber-300 transition-colors"
                       >
                         {isExpanded ? 'Hide Details' : 'Show Contents, Chain of Custody & Retention Details'}
                         <ChevronDown className={`w-4 h-4 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
@@ -1094,7 +1094,7 @@ export default function EvidenceTracking() {
                               <ul className="space-y-1.5">
                                 {(item.contents || item.verificationContents || item.reportContents).map((content, i) => (
                                   <li key={i} className="text-sm text-secondary flex items-start gap-2">
-                                    <Circle className="w-2 h-2 mt-2 text-amber-400/60 flex-shrink-0" />
+                                    <Circle className="w-2 h-2 mt-2 text-amber-700/60 flex-shrink-0" />
                                     {content}
                                   </li>
                                 ))}
@@ -1191,7 +1191,7 @@ export default function EvidenceTracking() {
                                 </div>
                               ))}
                             </div>
-                            <button className="mt-3 text-xs text-amber-400 hover:text-amber-300 transition-colors">
+                            <button className="mt-3 text-xs text-amber-700 hover:text-amber-300 transition-colors">
                               View Complete Access Log ({item.totalAccessEntries} entries)
                             </button>
                           </div>
@@ -1237,7 +1237,7 @@ export default function EvidenceTracking() {
                           <button className="px-3 py-1.5 bg-green-500/10 hover:bg-green-500/20 text-green-400 rounded-lg text-xs font-medium transition-colors">
                             Download
                           </button>
-                          <button className="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 rounded-lg text-xs font-medium transition-colors">
+                          <button className="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 rounded-lg text-xs font-medium transition-colors">
                             Chain of Custody
                           </button>
                           <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
@@ -1247,7 +1247,7 @@ export default function EvidenceTracking() {
                             Print
                           </button>
                           {(item.status === 'Pending Review' || item.status === 'Under Review') && (
-                            <button className="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 rounded-lg text-xs font-medium transition-colors">
+                            <button className="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 rounded-lg text-xs font-medium transition-colors">
                               Request Supervisor Review
                             </button>
                           )}
@@ -1277,7 +1277,7 @@ export default function EvidenceTracking() {
             {/* Support & Resources Panel */}
             <div className="mt-8 bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
               <h3 className="text-lg font-semibold text-primary mb-4 flex items-center gap-2">
-                <HelpCircle className="w-5 h-5 text-amber-400" />
+                <HelpCircle className="w-5 h-5 text-amber-700" />
                 Support & Resources
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -1286,7 +1286,7 @@ export default function EvidenceTracking() {
                   <h4 className="text-sm font-semibold text-secondary mb-3">Quick Actions</h4>
                   <div className="space-y-2">
                     <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
-                      <Upload className="w-4 h-4 text-amber-400" />
+                      <Upload className="w-4 h-4 text-amber-700" />
                       <span className="text-sm text-secondary">Upload New Evidence</span>
                     </button>
                     <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
@@ -1309,23 +1309,23 @@ export default function EvidenceTracking() {
                   <h4 className="text-sm font-semibold text-secondary mb-3">Documentation</h4>
                   <div className="space-y-2">
                     <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
-                      <BookOpen className="w-4 h-4 text-amber-400" />
+                      <BookOpen className="w-4 h-4 text-amber-700" />
                       <span className="text-sm text-secondary">Evidence Handling Procedures</span>
                     </button>
                     <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
-                      <BookOpen className="w-4 h-4 text-amber-400" />
+                      <BookOpen className="w-4 h-4 text-amber-700" />
                       <span className="text-sm text-secondary">Chain of Custody Standards</span>
                     </button>
                     <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
-                      <BookOpen className="w-4 h-4 text-amber-400" />
+                      <BookOpen className="w-4 h-4 text-amber-700" />
                       <span className="text-sm text-secondary">CJIS Compliance Guidelines</span>
                     </button>
                     <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
-                      <BookOpen className="w-4 h-4 text-amber-400" />
+                      <BookOpen className="w-4 h-4 text-amber-700" />
                       <span className="text-sm text-secondary">FCRA Requirements Reference</span>
                     </button>
                     <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
-                      <ExternalLink className="w-4 h-4 text-amber-400" />
+                      <ExternalLink className="w-4 h-4 text-amber-700" />
                       <span className="text-sm text-secondary">POST Evidence Retention Policy</span>
                     </button>
                   </div>

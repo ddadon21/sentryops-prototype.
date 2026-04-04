@@ -162,12 +162,12 @@ export default function DashboardLayout({
         <div className="p-4 border-b border-border flex items-center justify-between">
           {!sidebarCollapsed && (
             <div className="flex items-center gap-2">
-              <Shield className="w-8 h-8 text-amber-500" />
+              <Shield className="w-8 h-8 text-amber-700" />
               <h1 className="text-xl font-bold text-primary">SentryOps</h1>
             </div>
           )}
           {sidebarCollapsed && (
-            <Shield className="w-8 h-8 text-amber-500 mx-auto" />
+            <Shield className="w-8 h-8 text-amber-700 mx-auto" />
           )}
           <button
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}

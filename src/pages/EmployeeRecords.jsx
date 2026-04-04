@@ -375,7 +375,7 @@ export default function EmployeeRecords() {
   const getStatusConfig = (status) => {
     const configs = {
       'active': { bg: 'bg-green-500/20', text: 'text-green-400', border: 'border-green-500/30', label: 'ACTIVE' },
-      'on-leave': { bg: 'bg-amber-500/20', text: 'text-amber-400', border: 'border-amber-500/30', label: 'ON LEAVE' },
+      'on-leave': { bg: 'bg-amber-500/20', text: 'text-amber-700', border: 'border-amber-500/30', label: 'ON LEAVE' },
       'suspended': { bg: 'bg-red-500/20', text: 'text-red-400', border: 'border-red-500/30', label: 'SUSPENDED' },
       'separated': { bg: 'bg-slate-500/20', text: 'text-slate-500', border: 'border-slate-500/30', label: 'SEPARATED' }
     };
@@ -384,7 +384,7 @@ export default function EmployeeRecords() {
 
   const getCertStatusConfig = (status) => {
     if (status === 'expired') return { bg: 'bg-red-500/20', text: 'text-red-400', border: 'border-red-500/30', label: 'EXPIRED' };
-    if (status === 'expiring') return { bg: 'bg-amber-500/20', text: 'text-amber-400', border: 'border-amber-500/30', label: 'EXPIRING' };
+    if (status === 'expiring') return { bg: 'bg-amber-500/20', text: 'text-amber-700', border: 'border-amber-500/30', label: 'EXPIRING' };
     return { bg: 'bg-green-500/20', text: 'text-green-400', border: 'border-green-500/30', label: 'CURRENT' };
   };
 
@@ -420,12 +420,12 @@ export default function EmployeeRecords() {
         <div className="p-4 border-b border-border flex items-center justify-between">
           {!sidebarCollapsed && (
             <div className="flex items-center gap-2">
-              <Shield className="w-8 h-8 text-amber-500" />
+              <Shield className="w-8 h-8 text-amber-700" />
               <h1 className="text-xl font-bold text-primary">SentryOps</h1>
             </div>
           )}
           {sidebarCollapsed && (
-            <Shield className="w-8 h-8 text-amber-500 mx-auto" />
+            <Shield className="w-8 h-8 text-amber-700 mx-auto" />
           )}
           <button
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
@@ -610,9 +610,9 @@ export default function EmployeeRecords() {
 
               <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4">
                 <div className="flex items-start gap-3">
-                  <Clock className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                  <Clock className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" />
                   <div className="flex-1">
-                    <p className="text-sm font-medium text-amber-400 mb-1">Deputy M. Chen (#D-2345): CIT Certification Expires in 19 Days - Renewal NOT Scheduled</p>
+                    <p className="text-sm font-medium text-amber-700 mb-1">Deputy M. Chen (#D-2345): CIT Certification Expires in 19 Days - Renewal NOT Scheduled</p>
                     <p className="text-xs text-secondary">CIT expires Feb 27, next recert class not until Mar 10. Urgent: research external courses or plan coverage gap.</p>
                   </div>
                 </div>
@@ -643,7 +643,7 @@ export default function EmployeeRecords() {
               </div>
               <div className="bg-white dark:bg-slate-800/40 border border-amber-500/30 rounded-xl p-4">
                 <p className="text-xs text-secondary mb-1">On Leave</p>
-                <p className="text-xl font-bold text-amber-400">{personnelStats.onLeave}</p>
+                <p className="text-xl font-bold text-amber-700">{personnelStats.onLeave}</p>
                 <p className="text-[10px] text-slate-500">FMLA / Medical / Military</p>
               </div>
               <div className="bg-white dark:bg-slate-800/40 border border-red-500/30 rounded-xl p-4">
@@ -658,7 +658,7 @@ export default function EmployeeRecords() {
               </div>
               <div className="bg-white dark:bg-slate-800/40 border border-amber-500/30 rounded-xl p-4">
                 <p className="text-xs text-secondary mb-1">Expiring Soon</p>
-                <p className="text-xl font-bold text-amber-400">1</p>
+                <p className="text-xl font-bold text-amber-700">1</p>
                 <p className="text-[10px] text-slate-500">Within 30 days</p>
               </div>
             </div>
@@ -702,7 +702,7 @@ export default function EmployeeRecords() {
                     </div>
 
                     <div className="mt-4 bg-amber-500/5 border border-amber-500/20 rounded-lg p-4">
-                      <h5 className="text-xs font-semibold text-amber-400 mb-2">Operational Impact:</h5>
+                      <h5 className="text-xs font-semibold text-amber-700 mb-2">Operational Impact:</h5>
                       <p className="text-xs text-secondary">Deputy Martinez CANNOT carry firearm without current annual qualification per GCSO Policy 4.12 and Georgia POST standards.</p>
                     </div>
 
@@ -714,7 +714,7 @@ export default function EmployeeRecords() {
                           <span>Duty weapon (Glock 17 #GC2362) removed from duty belt and secured in armory as of 02/06/2026</span>
                         </div>
                         <div className="flex items-start gap-2">
-                          <AlertCircle className="w-3.5 h-3.5 text-amber-400 mt-0.5 flex-shrink-0" />
+                          <AlertCircle className="w-3.5 h-3.5 text-amber-700 mt-0.5 flex-shrink-0" />
                           <span>Temporarily assigned to desk duties (report review, administrative tasks) - NO field patrol until qualified</span>
                         </div>
                         <div className="flex items-start gap-2">
@@ -725,7 +725,7 @@ export default function EmployeeRecords() {
                     </div>
 
                     <div className="mt-4">
-                      <h5 className="text-xs font-semibold text-amber-400 mb-3 flex items-center gap-2">
+                      <h5 className="text-xs font-semibold text-amber-700 mb-3 flex items-center gap-2">
                         <ClipboardCheck className="w-4 h-4" />
                         Corrective Action Plan
                       </h5>
@@ -776,14 +776,14 @@ export default function EmployeeRecords() {
               <div className="mb-4 bg-white dark:bg-slate-800/40 border border-amber-500/30 rounded-xl overflow-hidden">
                 <button onClick={() => toggleIssue('chen')} className="w-full px-5 py-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors">
                   <div className="flex items-center gap-3">
-                    <ShieldAlert className="w-5 h-5 text-amber-400" />
+                    <ShieldAlert className="w-5 h-5 text-amber-700" />
                     <div className="text-left">
-                      <h4 className="text-sm font-semibold text-amber-400">Deputy Marcus Chen - CIT Certification Expiring (19 Days)</h4>
+                      <h4 className="text-sm font-semibold text-amber-700">Deputy Marcus Chen - CIT Certification Expiring (19 Days)</h4>
                       <p className="text-xs text-secondary mt-0.5">Badge #D-2345 | Patrol Division | C-Shift (18:00-06:00) | Recertification NOT scheduled</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="px-2 py-1 bg-amber-500/20 border border-amber-500/40 rounded text-xs text-amber-400 font-bold">EXPIRING</span>
+                    <span className="px-2 py-1 bg-amber-500/20 border border-amber-500/40 rounded text-xs text-amber-700 font-bold">EXPIRING</span>
                     {expandedIssue.chen ? <ChevronUp className="w-4 h-4 text-secondary" /> : <ChevronDown className="w-4 h-4 text-secondary" />}
                   </div>
                 </button>
@@ -791,12 +791,12 @@ export default function EmployeeRecords() {
                 {expandedIssue.chen && (
                   <div className="px-5 pb-5 border-t border-amber-500/20">
                     <div className="mt-4 bg-amber-500/5 border border-amber-500/20 rounded-lg p-4">
-                      <h5 className="text-xs font-semibold text-amber-400 mb-3">Certification Expiring Soon:</h5>
+                      <h5 className="text-xs font-semibold text-amber-700 mb-3">Certification Expiring Soon:</h5>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-secondary">
                         <div><span className="text-slate-500">Certification:</span> Crisis Intervention Training (CIT) - 40 hours</div>
                         <div><span className="text-slate-500">Initial Certification:</span> February 27, 2024</div>
                         <div><span className="text-slate-500">Certificate Number:</span> CIT-2024-1287</div>
-                        <div><span className="text-slate-500">Expiration Date:</span> <span className="text-amber-400 font-bold">February 27, 2026 (19 DAYS)</span></div>
+                        <div><span className="text-slate-500">Expiration Date:</span> <span className="text-amber-700 font-bold">February 27, 2026 (19 DAYS)</span></div>
                         <div><span className="text-slate-500">Instructor:</span> Dr. S. Martinez, PsyD (GCSO Training Center)</div>
                         <div><span className="text-slate-500">Certification Cycle:</span> 2-year recertification required</div>
                       </div>
@@ -814,24 +814,24 @@ export default function EmployeeRecords() {
                       <h5 className="text-xs font-semibold text-red-400 mb-2">Renewal Status: RECERTIFICATION NOT SCHEDULED</h5>
                       <div className="space-y-1 text-xs text-secondary">
                         <p>CIT recertification requires 40-hour course (same as initial certification).</p>
-                        <p>Next available GCSO CIT recertification class: <span className="text-amber-400">March 10-14, 2026</span> (AFTER expiration date).</p>
+                        <p>Next available GCSO CIT recertification class: <span className="text-amber-700">March 10-14, 2026</span> (AFTER expiration date).</p>
                         <p>Previous CIT class: January 13-17, 2026 (MISSED - Deputy Chen was not enrolled).</p>
                       </div>
                     </div>
 
                     <div className="mt-4">
-                      <h5 className="text-xs font-semibold text-amber-400 mb-3">Options:</h5>
+                      <h5 className="text-xs font-semibold text-amber-700 mb-3">Options:</h5>
                       <div className="space-y-2">
                         <div className="flex items-start gap-3 px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-900/30">
-                          <span className="text-xs text-amber-400 font-bold mt-0.5">1.</span>
+                          <span className="text-xs text-amber-700 font-bold mt-0.5">1.</span>
                           <p className="text-xs text-secondary">Enroll in external CIT recertification course (check local LE training providers, NAMI Georgia)</p>
                         </div>
                         <div className="flex items-start gap-3 px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-900/30">
-                          <span className="text-xs text-amber-400 font-bold mt-0.5">2.</span>
+                          <span className="text-xs text-amber-700 font-bold mt-0.5">2.</span>
                           <p className="text-xs text-secondary">Request Sheriff approval for special CIT recert class (requires min. 10 deputies, coordinate with Training Division)</p>
                         </div>
                         <div className="flex items-start gap-3 px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-900/30">
-                          <span className="text-xs text-amber-400 font-bold mt-0.5">3.</span>
+                          <span className="text-xs text-amber-700 font-bold mt-0.5">3.</span>
                           <p className="text-xs text-secondary">Allow certification to lapse, remove from CIT roster, recertify in March 2026 class (10+ days without CIT coverage on C-Shift)</p>
                         </div>
                       </div>
@@ -900,13 +900,13 @@ export default function EmployeeRecords() {
                   </div>
                   <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3 border border-border">
                     <div className="flex items-center gap-2 mb-2">
-                      <Activity className="w-4 h-4 text-amber-400" />
-                      <span className="text-xs font-semibold text-amber-400">Staffing Pressure</span>
+                      <Activity className="w-4 h-4 text-amber-700" />
+                      <span className="text-xs font-semibold text-amber-700">Staffing Pressure</span>
                     </div>
                     <p className="text-xs text-secondary">Patrol Division operating at reduced capacity: 1 deputy on desk duty (Martinez), 1 detention officer on FMLA (Davis). B-Shift most impacted with coverage gaps.</p>
                     <div className="mt-2 flex items-center gap-1">
-                      <TrendingDown className="w-3 h-3 text-amber-400" />
-                      <span className="text-[10px] text-amber-400">2 positions effectively offline</span>
+                      <TrendingDown className="w-3 h-3 text-amber-700" />
+                      <span className="text-[10px] text-amber-700">2 positions effectively offline</span>
                     </div>
                   </div>
                   <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3 border border-border">
@@ -944,14 +944,14 @@ export default function EmployeeRecords() {
                 <div className="flex items-center gap-1 bg-white dark:bg-slate-800/40 border border-slate-700/50 rounded-lg p-1">
                   <button
                     onClick={() => setViewMode('card')}
-                    className={`p-2 rounded-md transition-all ${viewMode === 'card' ? 'bg-amber-500/20 text-amber-400' : 'text-secondary hover:text-slate-900 dark:hover:text-white'}`}
+                    className={`p-2 rounded-md transition-all ${viewMode === 'card' ? 'bg-amber-500/20 text-amber-700' : 'text-secondary hover:text-slate-900 dark:hover:text-white'}`}
                     title="Card View"
                   >
                     <LayoutGrid className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => setViewMode('list')}
-                    className={`p-2 rounded-md transition-all ${viewMode === 'list' ? 'bg-amber-500/20 text-amber-400' : 'text-secondary hover:text-slate-900 dark:hover:text-white'}`}
+                    className={`p-2 rounded-md transition-all ${viewMode === 'list' ? 'bg-amber-500/20 text-amber-700' : 'text-secondary hover:text-slate-900 dark:hover:text-white'}`}
                     title="List View"
                   >
                     <List className="w-4 h-4" />
@@ -1034,7 +1034,7 @@ export default function EmployeeRecords() {
                             <span className="px-2 py-0.5 bg-red-500/20 border border-red-500/30 rounded text-[10px] text-red-400 font-bold">EXPIRED</span>
                           )}
                           {employee.certAlert === 'expiring' && (
-                            <span className="px-2 py-0.5 bg-amber-500/20 border border-amber-500/30 rounded text-[10px] text-amber-400 font-bold">EXPIRING</span>
+                            <span className="px-2 py-0.5 bg-amber-500/20 border border-amber-500/30 rounded text-[10px] text-amber-700 font-bold">EXPIRING</span>
                           )}
                           {!employee.certAlert && (
                             <span className="px-2 py-0.5 bg-green-500/20 border border-green-500/30 rounded text-[10px] text-green-400">OK</span>
@@ -1096,7 +1096,7 @@ export default function EmployeeRecords() {
                                   <span className="px-2 py-0.5 bg-red-500/20 border border-red-500/30 rounded text-[10px] text-red-400 font-bold">CERT EXPIRED</span>
                                 )}
                                 {employee.certAlert === 'expiring' && (
-                                  <span className="px-2 py-0.5 bg-amber-500/20 border border-amber-500/30 rounded text-[10px] text-amber-400 font-bold">CERT EXPIRING</span>
+                                  <span className="px-2 py-0.5 bg-amber-500/20 border border-amber-500/30 rounded text-[10px] text-amber-700 font-bold">CERT EXPIRING</span>
                                 )}
                               </div>
 
@@ -1123,8 +1123,8 @@ export default function EmployeeRecords() {
                                   </div>
                                 ) : employee.status === 'on-leave' && employee.leaveDetails ? (
                                   <div className="flex items-start gap-2 text-xs">
-                                    <Clock className="w-3.5 h-3.5 text-amber-400 mt-0.5 flex-shrink-0" />
-                                    <span className="text-amber-400">{employee.leaveDetails.type} - Started {employee.leaveDetails.startDate} | Expected return: {employee.leaveDetails.anticipatedReturn}</span>
+                                    <Clock className="w-3.5 h-3.5 text-amber-700 mt-0.5 flex-shrink-0" />
+                                    <span className="text-amber-700">{employee.leaveDetails.type} - Started {employee.leaveDetails.startDate} | Expected return: {employee.leaveDetails.anticipatedReturn}</span>
                                   </div>
                                 ) : (
                                   <div className="flex items-center gap-2 text-xs">
@@ -1164,13 +1164,13 @@ export default function EmployeeRecords() {
                                       <div className="flex items-center justify-between mt-1">
                                         <p className="text-[10px] text-slate-500">Last: {cert.lastDate}</p>
                                         {cert.daysRemaining !== undefined && (
-                                          <p className={`text-[10px] ${cert.daysRemaining <= 30 ? 'text-amber-400' : 'text-slate-500'}`}>{cert.daysRemaining} days</p>
+                                          <p className={`text-[10px] ${cert.daysRemaining <= 30 ? 'text-amber-700' : 'text-slate-500'}`}>{cert.daysRemaining} days</p>
                                         )}
                                         {cert.daysOverdue !== undefined && (
                                           <p className="text-[10px] text-red-400 font-bold">{cert.daysOverdue} days overdue</p>
                                         )}
                                       </div>
-                                      {cert.note && <p className={`text-[10px] mt-1 ${cert.urgent ? 'text-amber-400 font-medium' : 'text-slate-500'}`}>{cert.note}</p>}
+                                      {cert.note && <p className={`text-[10px] mt-1 ${cert.urgent ? 'text-amber-700 font-medium' : 'text-slate-500'}`}>{cert.note}</p>}
                                     </div>
                                   );
                                 })}
@@ -1298,7 +1298,7 @@ export default function EmployeeRecords() {
                           {cert.expires && <div>Expires: {cert.expires}</div>}
                           {cert.nextDue && <div>Next Due: {cert.nextDue}</div>}
                         </div>
-                        {cert.note && <p className={`text-[10px] mt-1 ${cert.urgent ? 'text-amber-400 font-medium' : 'text-slate-500'}`}>{cert.note}</p>}
+                        {cert.note && <p className={`text-[10px] mt-1 ${cert.urgent ? 'text-amber-700 font-medium' : 'text-slate-500'}`}>{cert.note}</p>}
                       </div>
                     );
                   })}
@@ -1329,7 +1329,7 @@ export default function EmployeeRecords() {
                       <div className="ml-4 mt-1 space-y-1">
                         {selectedEmployee.personnelSummary.commendations.map((c, i) => (
                           <p key={i} className="text-secondary flex items-center gap-2">
-                            <Award className="w-3 h-3 text-amber-400" />{c}
+                            <Award className="w-3 h-3 text-amber-700" />{c}
                           </p>
                         ))}
                       </div>
@@ -1369,17 +1369,17 @@ export default function EmployeeRecords() {
               <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-primary">HR Director</p>
                 <p className="text-xs text-secondary">Personnel file access, confidential records</p>
-                <p className="text-xs text-amber-400 mt-1">Ext. 4500</p>
+                <p className="text-xs text-amber-700 mt-1">Ext. 4500</p>
               </div>
               <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-primary">Records Custodian</p>
                 <p className="text-xs text-secondary">HR Specialist J. Martinez</p>
-                <p className="text-xs text-amber-400 mt-1">Ext. 4505</p>
+                <p className="text-xs text-amber-700 mt-1">Ext. 4505</p>
               </div>
               <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-primary">Training Division</p>
                 <p className="text-xs text-secondary">Sgt. R. Martinez - Certifications & Training</p>
-                <p className="text-xs text-amber-400 mt-1">Ext. 4521</p>
+                <p className="text-xs text-amber-700 mt-1">Ext. 4521</p>
               </div>
               <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-primary">Open Records Requests</p>

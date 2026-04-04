@@ -231,7 +231,7 @@ const IncidentReports = () => {
     switch (severity) {
       case 'Critical': return 'bg-red-500/20 text-red-400 border-red-500/30';
       case 'High': return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
-      case 'Medium': return 'bg-amber-500/20 text-amber-400 border-amber-500/30';
+      case 'Medium': return 'bg-amber-500/20 text-amber-700 border-amber-500/30';
       case 'Low': return 'bg-slate-50 dark:bg-slate-700/40 text-slate-700 dark:text-slate-300 border-slate-600/50';
       default: return 'bg-slate-500/20 text-slate-700 dark:text-slate-400 border-slate-500/30';
     }
@@ -240,8 +240,8 @@ const IncidentReports = () => {
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'Resolved': return 'bg-emerald-500/20 text-emerald-400';
-      case 'Under Review': return 'bg-amber-500/20 text-amber-400';
-      case 'Investigating': return 'bg-amber-500/20 text-amber-400';
+      case 'Under Review': return 'bg-amber-500/20 text-amber-700';
+      case 'Investigating': return 'bg-amber-500/20 text-amber-700';
       case 'Pending': return 'bg-slate-500/20 text-slate-500';
       default: return 'bg-slate-500/20 text-slate-500';
     }
@@ -253,7 +253,7 @@ const IncidentReports = () => {
         <div className="mb-6">
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center gap-3">
-              <Shield className="w-8 h-8 text-amber-500" />
+              <Shield className="w-8 h-8 text-amber-700" />
               <div>
                 <h1 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white">Incident Reports</h1>
                 <p className="text-slate-700 dark:text-slate-400">Facility Incident Management & Documentation</p>
@@ -281,7 +281,7 @@ const IncidentReports = () => {
           </div>
           <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4">
             <div className="text-sm text-slate-700 dark:text-slate-400 mb-1">Under Review</div>
-            <div className="text-2xl font-bold text-amber-400">{stats.underReview}</div>
+            <div className="text-2xl font-bold text-amber-700">{stats.underReview}</div>
           </div>
         </div>
 
@@ -425,7 +425,7 @@ const IncidentReports = () => {
                       <h4 className="text-slate-900 dark:text-white font-semibold mb-3">Inmates Involved</h4>
                       <div className="space-y-1 mb-4">
                         {incident.inmatesInvolved.map((inmate, idx) => (
-                          <div key={idx} className="text-sm text-amber-400">• {inmate}</div>
+                          <div key={idx} className="text-sm text-amber-700">• {inmate}</div>
                         ))}
                       </div>
 

@@ -623,7 +623,7 @@ export default function BIReports() {
   const getStatusColor = (status) => {
     const colors = {
       'Cleared': 'bg-emerald-500/20 border-emerald-500/30 text-emerald-400',
-      'Cleared with Notes': 'bg-amber-500/20 border-amber-500/30 text-amber-400',
+      'Cleared with Notes': 'bg-amber-500/20 border-amber-500/30 text-amber-700',
       'In Progress': 'bg-blue-500/20 border-blue-500/30 text-blue-400',
       'Review Required': 'bg-red-500/20 border-red-500/30 text-red-400'
     };
@@ -635,7 +635,7 @@ export default function BIReports() {
       return <CheckCircle className="w-4 h-4 text-emerald-400" />;
     }
     if (status === 'clear-note' || status === 'fair') {
-      return <AlertTriangle className="w-4 h-4 text-amber-400" />;
+      return <AlertTriangle className="w-4 h-4 text-amber-700" />;
     }
     if (status === 'in-progress' || status === 'pending' || status === 'scheduled') {
       return <Clock className="w-4 h-4 text-blue-400" />;
@@ -653,7 +653,7 @@ export default function BIReports() {
     if (!level) return null;
     const styles = {
       low: 'bg-emerald-500/20 border-emerald-500/30 text-emerald-400',
-      lowMedium: 'bg-amber-500/20 border-amber-500/30 text-amber-400',
+      lowMedium: 'bg-amber-500/20 border-amber-500/30 text-amber-700',
       medium: 'bg-orange-500/20 border-orange-500/30 text-orange-400',
       high: 'bg-red-500/20 border-red-500/30 text-red-400'
     };
@@ -708,7 +708,7 @@ export default function BIReports() {
           {check.details && check.details.length > 0 && (
             <div className="ml-6 space-y-1 mt-2">
               {check.details.map((detail, idx) => (
-                <p key={idx} className={`text-xs ${detail.startsWith('⚠️') || detail.includes('⚠️') ? 'text-amber-400' : 'text-slate-500'}`}>
+                <p key={idx} className={`text-xs ${detail.startsWith('⚠️') || detail.includes('⚠️') ? 'text-amber-700' : 'text-slate-500'}`}>
                   {detail.startsWith('   ') ? detail : `├─ ${detail}`}
                 </p>
               ))}
@@ -767,8 +767,8 @@ export default function BIReports() {
                 <p className="text-2xl font-bold text-emerald-400">{stats.cleared}</p>
               </div>
               <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4">
-                <p className="text-amber-400 text-xs uppercase tracking-wide mb-1">With Notes</p>
-                <p className="text-2xl font-bold text-amber-400">{stats.withNotes}</p>
+                <p className="text-amber-700 text-xs uppercase tracking-wide mb-1">With Notes</p>
+                <p className="text-2xl font-bold text-amber-700">{stats.withNotes}</p>
               </div>
               <div className="bg-blue-500/10 border border-blue-500/30 rounded-xl p-4">
                 <p className="text-blue-400 text-xs uppercase tracking-wide mb-1">In Progress</p>
@@ -792,7 +792,7 @@ export default function BIReports() {
                   <p className="text-secondary mt-2">{riskDefinitions.low}</p>
                 </div>
                 <div className="space-y-1">
-                  <span className="px-2 py-1 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-400 font-bold">LOW-MEDIUM</span>
+                  <span className="px-2 py-1 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-700 font-bold">LOW-MEDIUM</span>
                   <p className="text-secondary mt-2">{riskDefinitions.lowMedium}</p>
                 </div>
                 <div className="space-y-1">
@@ -1040,7 +1040,7 @@ export default function BIReports() {
                                 ) : Array.isArray(report.assessment.concerns) && typeof report.assessment.concerns[0] === 'string' ? (
                                   <ul className="space-y-1">
                                     {report.assessment.concerns.map((concern, idx) => (
-                                      <li key={idx} className="text-sm text-amber-400 flex items-start gap-2">
+                                      <li key={idx} className="text-sm text-amber-700 flex items-start gap-2">
                                         <span>•</span>
                                         {concern}
                                       </li>
@@ -1084,7 +1084,7 @@ export default function BIReports() {
                                 <h5 className="text-xs font-semibold text-secondary uppercase mb-2">Suitability for Position</h5>
                                 <ul className="space-y-1">
                                   {report.assessment.suitability.map((item, idx) => (
-                                    <li key={idx} className={`text-sm flex items-start gap-2 ${item.includes('⚠️') ? 'text-amber-400' : 'text-slate-500'}`}>
+                                    <li key={idx} className={`text-sm flex items-start gap-2 ${item.includes('⚠️') ? 'text-amber-700' : 'text-slate-500'}`}>
                                       {item.includes('⚠️') ? '' : <CheckCircle className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />}
                                       {item}
                                     </li>
@@ -1110,7 +1110,7 @@ export default function BIReports() {
                               <div className={`inline-flex px-3 py-1.5 rounded-lg text-sm font-bold mb-3 ${
                                 report.assessment.recommendation.includes('APPROVED')
                                   ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
-                                  : 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
+                                  : 'bg-amber-500/20 text-amber-700 border border-amber-500/30'
                               }`}>
                                 {report.assessment.recommendation}
                               </div>

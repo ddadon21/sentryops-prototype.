@@ -284,7 +284,7 @@ export default function ActiveCases() {
   const getStageIcon = (status) => {
     switch (status) {
       case 'completed': return <CheckCircle2 className="w-4 h-4 text-green-400" />;
-      case 'in_progress': return <Clock className="w-4 h-4 text-amber-400 animate-pulse" />;
+      case 'in_progress': return <Clock className="w-4 h-4 text-amber-700 animate-pulse" />;
       case 'partial': return <PauseCircle className="w-4 h-4 text-blue-400" />;
       case 'blocked': return <AlertCircle className="w-4 h-4 text-red-400" />;
       case 'not_required': return <Circle className="w-4 h-4 text-slate-500" />;
@@ -372,7 +372,7 @@ export default function ActiveCases() {
                           </div>
                           <div className="flex items-center justify-between">
                             <span className="text-secondary">Requiring supervisor action</span>
-                            <span className="text-amber-400">{summaryStats.requireingSupervisor} cases</span>
+                            <span className="text-amber-700">{summaryStats.requireingSupervisor} cases</span>
                           </div>
                           <div className="flex items-center justify-between">
                             <span className="text-secondary">On hold (external response)</span>
@@ -388,8 +388,8 @@ export default function ActiveCases() {
                       {/* Average Days */}
                       <div>
                         <div className="flex items-center gap-2 mb-3">
-                          <Clock className="w-4 h-4 text-amber-400" />
-                          <span className="text-sm font-semibold text-amber-400">Average Days in Process: {summaryStats.avgDaysInProcess}</span>
+                          <Clock className="w-4 h-4 text-amber-700" />
+                          <span className="text-sm font-semibold text-amber-700">Average Days in Process: {summaryStats.avgDaysInProcess}</span>
                         </div>
                         <div className="space-y-1.5 text-sm">
                           <div className="flex items-center justify-between">
@@ -526,7 +526,7 @@ export default function ActiveCases() {
                     Print Case List
                   </button>
                   <div className="relative">
-                    <button className="flex items-center gap-2 px-4 py-2 bg-amber-500/20 border border-amber-500/30 text-amber-400 rounded-xl text-sm font-medium hover:bg-amber-500/30 transition-all">
+                    <button className="flex items-center gap-2 px-4 py-2 bg-amber-500/20 border border-amber-500/30 text-amber-700 rounded-xl text-sm font-medium hover:bg-amber-500/30 transition-all">
                       Bulk Actions
                       <ChevronDown className="w-4 h-4" />
                     </button>
@@ -573,7 +573,7 @@ export default function ActiveCases() {
                         </div>
                         <div>
                           <p className="text-xs text-slate-500 mb-1">Days in Process</p>
-                          <p className={`text-sm font-medium ${case_item.daysOpen > 18 ? 'text-amber-400' : 'text-green-400'}`}>
+                          <p className={`text-sm font-medium ${case_item.daysOpen > 18 ? 'text-amber-700' : 'text-green-400'}`}>
                             {case_item.daysOpen} days
                             <span className="text-slate-500 font-normal"> (target: &lt;18)</span>
                           </p>
@@ -598,9 +598,9 @@ export default function ActiveCases() {
                       {/* Current Status */}
                       <div className="mb-4">
                         <div className="flex items-center gap-2 mb-2">
-                          <Clock className="w-4 h-4 text-amber-400" />
+                          <Clock className="w-4 h-4 text-amber-700" />
                           <span className="text-sm font-semibold text-primary">CURRENT STATUS:</span>
-                          <span className="text-sm text-amber-400 font-medium">{case_item.status}</span>
+                          <span className="text-sm text-amber-700 font-medium">{case_item.status}</span>
                         </div>
                         <p className="text-xs text-secondary">Last Activity: {case_item.lastActivity} — {case_item.lastUpdate}</p>
                       </div>
@@ -624,7 +624,7 @@ export default function ActiveCases() {
                                 {getStageIcon(stage.status)}
                                 <span className={`text-xs font-medium ${
                                   stage.status === 'completed' ? 'text-green-400' :
-                                  stage.status === 'in_progress' ? 'text-amber-400' :
+                                  stage.status === 'in_progress' ? 'text-amber-700' :
                                   stage.status === 'partial' ? 'text-blue-400' :
                                   stage.status === 'blocked' ? 'text-red-400' :
                                   'text-slate-500'
@@ -681,13 +681,13 @@ export default function ActiveCases() {
                       {case_item.documentedConcerns && (
                         <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg mb-4">
                           <div className="flex items-center gap-2 mb-2">
-                            <FileWarning className="w-4 h-4 text-amber-400" />
-                            <span className="text-xs font-semibold text-amber-400 uppercase">Documented Concerns (Investigation Complete)</span>
+                            <FileWarning className="w-4 h-4 text-amber-700" />
+                            <span className="text-xs font-semibold text-amber-700 uppercase">Documented Concerns (Investigation Complete)</span>
                           </div>
                           <div className="space-y-2">
                             {case_item.documentedConcerns.map((concern, idx) => (
                               <div key={idx} className="text-sm">
-                                <p className="text-secondary"><span className="text-amber-400 font-medium">{concern.type}:</span> {concern.detail}</p>
+                                <p className="text-secondary"><span className="text-amber-700 font-medium">{concern.type}:</span> {concern.detail}</p>
                                 <p className="text-xs text-slate-500 mt-0.5">Mitigation: {concern.mitigation}</p>
                               </div>
                             ))}

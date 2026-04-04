@@ -535,7 +535,7 @@ export default function SettingsPage() {
   };
 
   const getStatusColor = (status) => {
-    return status === 'connected' ? 'text-green-400' : status === 'error' ? 'text-red-400' : 'text-yellow-400';
+    return status === 'connected' ? 'text-green-400' : status === 'error' ? 'text-red-400' : 'text-amber-800';
   };
 
   const getStatusBg = (status) => {
@@ -626,8 +626,8 @@ export default function SettingsPage() {
 
             {/* Role Badge */}
             <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 bg-amber-500/20 border border-amber-500/30 rounded-xl">
-              <Shield className="w-4 h-4 text-amber-400" />
-              <span className="text-sm font-semibold text-amber-400 uppercase">{userRole === 'command' ? 'Command Staff' : userRole === 'hr' ? 'Human Resources' : 'Officer'} Access Level</span>
+              <Shield className="w-4 h-4 text-amber-700" />
+              <span className="text-sm font-semibold text-amber-700 uppercase">{userRole === 'command' ? 'Command Staff' : userRole === 'hr' ? 'Human Resources' : 'Officer'} Access Level</span>
             </div>
 
             {/* Settings Navigation */}
@@ -644,7 +644,7 @@ export default function SettingsPage() {
                     <button
                       onClick={() => setActiveSection(tab.id)}
                       className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all relative whitespace-nowrap ${
-                        activeSection === tab.id ? 'text-amber-400' : tab.tier === 3 ? 'text-red-400/70 hover:text-red-300' : 'text-muted hover:text-slate-700 dark:hover:text-slate-300'
+                        activeSection === tab.id ? 'text-amber-700' : tab.tier === 3 ? 'text-red-400/70 hover:text-red-300' : 'text-muted hover:text-slate-700 dark:hover:text-slate-300'
                       }`}
                     >
                       <Icon className="w-4 h-4" />
@@ -1141,7 +1141,7 @@ export default function SettingsPage() {
                                 <div>
                                   <p className="text-xs font-medium text-muted mb-2">API Key</p>
                                   <div className="flex items-center gap-2">
-                                    <code className="flex-1 text-xs text-amber-400 bg-slate-100 dark:bg-slate-900/50 px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700/50">
+                                    <code className="flex-1 text-xs text-amber-700 bg-slate-100 dark:bg-slate-900/50 px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700/50">
                                       {showApiKey[key] ? integration.apiKey : '••••••••••••••••••••'}
                                     </code>
                                     <button
@@ -1253,13 +1253,13 @@ export default function SettingsPage() {
                                   {integration.expiringSoon && (
                                     <div className="bg-slate-50 dark:bg-slate-900/50 border border-border rounded-xl p-4">
                                       <p className="text-xs text-muted mb-1">Expiring Soon</p>
-                                      <p className="text-sm font-semibold text-amber-400">{integration.expiringSoon}</p>
+                                      <p className="text-sm font-semibold text-amber-700">{integration.expiringSoon}</p>
                                     </div>
                                   )}
                                   {integration.pendingAcknowledgments && (
                                     <div className="bg-slate-50 dark:bg-slate-900/50 border border-border rounded-xl p-4">
                                       <p className="text-xs text-muted mb-1">Pending</p>
-                                      <p className="text-sm font-semibold text-amber-400">{integration.pendingAcknowledgments}</p>
+                                      <p className="text-sm font-semibold text-amber-700">{integration.pendingAcknowledgments}</p>
                                     </div>
                                   )}
                                   {integration.policyUpdates && (
@@ -1271,7 +1271,7 @@ export default function SettingsPage() {
                                   {integration.pendingApprovals && (
                                     <div className="bg-slate-50 dark:bg-slate-900/50 border border-border rounded-xl p-4">
                                       <p className="text-xs text-muted mb-1">Pending Approvals</p>
-                                      <p className="text-sm font-semibold text-amber-400">{integration.pendingApprovals}</p>
+                                      <p className="text-sm font-semibold text-amber-700">{integration.pendingApprovals}</p>
                                     </div>
                                   )}
                                   {integration.vehiclesInService !== undefined && (
@@ -1427,7 +1427,7 @@ export default function SettingsPage() {
                         <div className="flex items-center justify-between mb-3">
                           <div className="flex items-center gap-3">
                             <div className="w-10 h-10 bg-amber-500/20 rounded-xl flex items-center justify-center">
-                              <Shield className="w-5 h-5 text-amber-400" />
+                              <Shield className="w-5 h-5 text-amber-700" />
                             </div>
                             <div>
                               <h4 className="text-sm font-medium text-primary">Audit Trail</h4>
@@ -1470,7 +1470,7 @@ export default function SettingsPage() {
                       </div>
                       <div className="p-4 bg-amber-500/10 border border-amber-500/20 rounded-xl">
                         <div className="flex items-start gap-3">
-                          <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" />
+                          <AlertTriangle className="w-5 h-5 text-amber-700 mt-0.5 flex-shrink-0" />
                           <div>
                             <p className="text-sm font-medium text-amber-300">Backup Schedule</p>
                             <p className="text-xs text-amber-200/70 mt-1">Automated backups run daily at 2:00 AM EST. Backups are retained for 90 days and stored in encrypted cloud storage with geographic redundancy.</p>
@@ -1589,7 +1589,7 @@ export default function SettingsPage() {
                       {[
                         { icon: BarChart3, color: 'text-blue-400', label: 'Total Requests', value: '8.2M', sub: '+12% vs last month', subColor: 'text-green-400' },
                         { icon: Activity, color: 'text-green-400', label: 'Success Rate', value: '99.7%', sub: '24,891 errors', subColor: 'text-muted' },
-                        { icon: Clock, color: 'text-amber-400', label: 'Avg Response', value: '187ms', sub: '-23ms vs last month', subColor: 'text-green-400' },
+                        { icon: Clock, color: 'text-amber-700', label: 'Avg Response', value: '187ms', sub: '-23ms vs last month', subColor: 'text-green-400' },
                         { icon: Zap, color: 'text-purple-400', label: 'Peak RPS', value: '1,247', sub: 'requests/second', subColor: 'text-muted' },
                       ].map((s, i) => (
                         <div key={i} className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4 shadow-sm dark:shadow-none">
@@ -1764,12 +1764,12 @@ export default function SettingsPage() {
 
                     <div className="flex items-start gap-4 p-4 bg-slate-50 dark:bg-slate-800/30 border border-border dark:border-slate-700/30 rounded-xl">
                       <div className="w-10 h-10 bg-amber-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                        <Key className="w-5 h-5 text-amber-400" />
+                        <Key className="w-5 h-5 text-amber-700" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
                           <p className="text-sm font-medium text-primary">API Key Rotated</p>
-                          <span className="px-2 py-0.5 bg-amber-500/20 border border-amber-500/30 rounded text-xs text-amber-400">Security</span>
+                          <span className="px-2 py-0.5 bg-amber-500/20 border border-amber-500/30 rounded text-xs text-amber-700">Security</span>
                         </div>
                         <p className="text-xs text-muted">Axon Evidence.com API key was rotated</p>
                         <div className="flex items-center gap-4 mt-2 text-xs text-slate-500">

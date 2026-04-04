@@ -731,7 +731,7 @@ export default function CommandCalendar() {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-1">
                           <span className={`text-[11px] font-semibold ${isToday ? 'text-amber-700 dark:text-amber-400' : 'text-slate-500'}`}>{day}</span>
-                          {isToday && <span className="text-[9px] text-amber-500/60 font-medium uppercase">Today</span>}
+                          {isToday && <span className="text-[9px] text-amber-700/60 font-medium uppercase">Today</span>}
                         </div>
                         <div className="flex items-center gap-1">
                           {showStaffingOverlay && staffingImpactDays[day] && (
@@ -907,7 +907,7 @@ export default function CommandCalendar() {
                           {d.day}
                         </span>
                         <div className="flex items-center justify-center gap-1 mt-0.5">
-                          {d.isToday && <span className="text-[9px] text-amber-500/60 font-medium">TODAY</span>}
+                          {d.isToday && <span className="text-[9px] text-amber-700/60 font-medium">TODAY</span>}
                           {showRiskOverlay && getDensityDots(density)}
                           {hasStaffing && <Users className="w-2.5 h-2.5 text-amber-700 dark:text-amber-400/60" />}
                         </div>

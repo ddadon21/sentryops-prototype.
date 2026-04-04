@@ -1024,7 +1024,7 @@ export default function OrgChart() {
       zoneBg: 'bg-red-900/40', zoneBorder: 'border-red-500/50', zoneConnector: 'bg-red-500/40'
     };
     return {
-      dot: 'bg-amber-400',   text: 'text-amber-400',   border: 'border-l-amber-500',
+      dot: 'bg-amber-400',   text: 'text-amber-700',   border: 'border-l-amber-500',
       nodeBg: 'from-amber-900/20 to-slate-800/30',
       zoneBg: 'bg-amber-900/30', zoneBorder: 'border-amber-500/45', zoneConnector: 'bg-amber-500/40'
     };
@@ -1133,22 +1133,22 @@ export default function OrgChart() {
               <div className={`px-5 py-3 rounded-xl border-2 shadow-lg min-w-[220px] ${
                 isOp ? `${rc.zoneBg} ${rc.zoneBorder}` : 'bg-gradient-to-r from-amber-500/20 to-amber-600/20 border-amber-500/40'
               }`}>
-                <p className={`text-[11px] font-bold tracking-wider text-center mb-1.5 ${isOp ? rc.text : 'text-amber-400'}`}>
+                <p className={`text-[11px] font-bold tracking-wider text-center mb-1.5 ${isOp ? rc.text : 'text-amber-700'}`}>
                   {bureauLabelText}
                 </p>
                 {bm && (
                   <div className="flex items-center justify-center gap-3 text-[10px] flex-wrap">
                     <span className="text-secondary">{bm.personnel} personnel</span>
                     <span className="text-slate-700">·</span>
-                    <span className={pct >= 95 ? 'text-emerald-400' : pct >= 80 ? 'text-amber-400' : 'text-red-400'}>
+                    <span className={pct >= 95 ? 'text-emerald-400' : pct >= 80 ? 'text-amber-700' : 'text-red-400'}>
                       {pct}% staffed
                     </span>
                     {bm.vacancies > 0 && <><span className="text-slate-700">·</span><span className="text-red-400">{bm.vacancies} vacant</span></>}
-                    {bm.certRisk > 0 && <><span className="text-slate-700">·</span><span className="text-amber-400/80">{bm.certRisk} cert risk</span></>}
+                    {bm.certRisk > 0 && <><span className="text-slate-700">·</span><span className="text-amber-700/80">{bm.certRisk} cert risk</span></>}
                   </div>
                 )}
                 {bm && (
-                  <p className={`text-[10px] text-center mt-1 ${bm.leadershipLabel === 'Stable' ? 'text-emerald-400/70' : 'text-amber-400'}`}>
+                  <p className={`text-[10px] text-center mt-1 ${bm.leadershipLabel === 'Stable' ? 'text-emerald-400/70' : 'text-amber-700'}`}>
                     Leadership: {bm.leadershipLabel}
                   </p>
                 )}
@@ -1175,17 +1175,17 @@ export default function OrgChart() {
                 {(node.divisionStrength || dm) && (
                   <div className="flex items-center justify-center gap-2 text-[9px] mt-0.5 flex-wrap">
                     {node.divisionStrength && (
-                      <span className={sColor === 'green' ? 'text-emerald-400' : sColor === 'amber' ? 'text-amber-400' : 'text-red-400'}>
+                      <span className={sColor === 'green' ? 'text-emerald-400' : sColor === 'amber' ? 'text-amber-700' : 'text-red-400'}>
                         {node.divisionStrength.current}/{node.divisionStrength.authorized}
                       </span>
                     )}
                     {dm?.vacancies > 0 && <><span className="text-slate-700">·</span><span className="text-red-400">{dm.vacancies} vacant</span></>}
-                    {dm?.certRisk > 0 && <><span className="text-slate-700">·</span><span className="text-amber-400/80">{dm.certRisk} cert risk</span></>}
+                    {dm?.certRisk > 0 && <><span className="text-slate-700">·</span><span className="text-amber-700/80">{dm.certRisk} cert risk</span></>}
                   </div>
                 )}
                 {dm?.alert && (
                   <p className={`text-[9px] text-center mt-0.5 font-medium ${
-                    node.readinessStatus === 'red' ? 'text-red-400' : 'text-amber-400'
+                    node.readinessStatus === 'red' ? 'text-red-400' : 'text-amber-700'
                   }`}>⚠ {dm.alert}</p>
                 )}
               </div>
@@ -1284,7 +1284,7 @@ export default function OrgChart() {
                   {size !== 'xs' && (
                     <>
                       <div className={`text-slate-500 truncate ${size === 'lg' ? 'text-[10px]' : 'text-[9px]'}`}>{node.division}</div>
-                      <div className={`text-amber-400 ${size === 'lg' ? 'text-[10px]' : 'text-[9px]'}`}>
+                      <div className={`text-amber-700 ${size === 'lg' ? 'text-[10px]' : 'text-[9px]'}`}>
                         {node.daysVacant} days vacant
                       </div>
                       <div className={`text-secondary ${size === 'lg' ? 'text-[10px]' : 'text-[9px]'}`}>
@@ -1316,7 +1316,7 @@ export default function OrgChart() {
                           {[...Array(5)].map((_, i) => (
                             <Star key={i} className={`w-2 h-2 ${
                               i < Math.floor(node.performance)
-                                ? 'text-amber-400 fill-amber-400'
+                                ? 'text-amber-700 fill-amber-400'
                                 : 'text-slate-700'
                             }`} />
                           ))}
@@ -1375,7 +1375,7 @@ export default function OrgChart() {
               <div className={`-mx-4 -mb-4 mt-2 px-2 py-1 rounded-b-xl flex items-center gap-1.5 text-[9px] font-semibold ${
                 node.spanWarning === 'high'
                   ? 'bg-amber-500/25 text-amber-300'
-                  : 'bg-amber-500/15 text-amber-400/80'
+                  : 'bg-amber-500/15 text-amber-700/80'
               }`}>
                 <AlertTriangle className="w-2.5 h-2.5 flex-shrink-0" />
                 <span>Span: {node.spanWarning === 'high' ? 'HIGH' : 'Elevated'} — {node.reports} direct reports</span>
@@ -1521,7 +1521,7 @@ export default function OrgChart() {
                         alert.type === 'critical'
                           ? 'bg-red-500/10 text-red-400 border-red-500/20 hover:bg-red-500/20'
                           : alert.type === 'warning'
-                            ? 'bg-amber-500/10 text-amber-400 border-amber-500/20 hover:bg-amber-500/20'
+                            ? 'bg-amber-500/10 text-amber-700 border-amber-500/20 hover:bg-amber-500/20'
                             : 'bg-slate-100 dark:bg-slate-700/25 text-secondary border-slate-700/50 hover:bg-slate-100 dark:hover:bg-slate-700/40'
                       }`}
                     >
@@ -1553,14 +1553,14 @@ export default function OrgChart() {
                     }`}
                   >
                     <span className={`text-[9px] font-bold uppercase tracking-wider pt-0.5 shrink-0 w-12 ${
-                      alert.type === 'critical' ? 'text-red-400' : alert.type === 'warning' ? 'text-amber-400' : 'text-slate-500'
+                      alert.type === 'critical' ? 'text-red-400' : alert.type === 'warning' ? 'text-amber-700' : 'text-slate-500'
                     }`}>{alert.type}</span>
                     <span className={`text-[11px] leading-snug ${
                       alert.type === 'critical' ? 'text-red-200' : alert.type === 'warning' ? 'text-amber-200' : 'text-slate-500'
                     }`}>{alert.full}</span>
                     {alert.nodeId && (
                       <ArrowRight className={`w-3.5 h-3.5 shrink-0 mt-0.5 ml-auto ${
-                        alert.type === 'critical' ? 'text-red-500' : alert.type === 'warning' ? 'text-amber-500' : 'text-slate-700'
+                        alert.type === 'critical' ? 'text-red-500' : alert.type === 'warning' ? 'text-amber-700' : 'text-slate-700'
                       }`} />
                     )}
                   </button>
@@ -1642,7 +1642,7 @@ export default function OrgChart() {
                     onClick={() => setViewMode('operational')}
                     className={`flex items-center gap-1.5 px-2.5 py-2 text-[11px] font-medium transition-all ${
                       viewMode === 'operational'
-                        ? 'bg-amber-500/20 text-amber-400'
+                        ? 'bg-amber-500/20 text-amber-700'
                         : 'text-secondary hover:text-slate-300'
                     }`}
                   >
@@ -1736,7 +1736,7 @@ export default function OrgChart() {
                     <button onClick={() => { setPanOffset({ x: 0, y: 0 }); setZoomLevel(100); }} className="w-full px-2 py-1 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 text-[9px] text-secondary rounded transition-colors text-left">
                       Center on Sheriff
                     </button>
-                    <button className="w-full px-2 py-1 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/30 text-[9px] text-amber-400 rounded transition-colors text-left">
+                    <button className="w-full px-2 py-1 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/30 text-[9px] text-amber-700 rounded transition-colors text-left">
                       Show Vacancies (8)
                     </button>
                   </div>
@@ -1794,7 +1794,7 @@ export default function OrgChart() {
                 <span className="text-secondary">Acting supervisor</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <AlertTriangle className="w-3 h-3 text-amber-400" />
+                <AlertTriangle className="w-3 h-3 text-amber-700" />
                 <span className="text-secondary">Span of control alert</span>
               </div>
               <div className="flex items-center gap-1.5">
@@ -1923,7 +1923,7 @@ export default function OrgChart() {
                         </div>
                         <div className="text-center">
                           <p className="text-[11px] text-secondary mb-0.5">Cert Risk</p>
-                          <p className={`text-base font-bold ${divisionMetrics[selectedNode.id].certRisk > 2 ? 'text-amber-400' : 'text-slate-500'}`}>
+                          <p className={`text-base font-bold ${divisionMetrics[selectedNode.id].certRisk > 2 ? 'text-amber-700' : 'text-slate-500'}`}>
                             {divisionMetrics[selectedNode.id].certRisk}
                           </p>
                         </div>
@@ -1933,7 +1933,7 @@ export default function OrgChart() {
                     {divisionMetrics[selectedNode.id]?.alert && (
                       <div className="pt-2 border-t border-border">
                         <div className="flex items-start gap-2 text-xs">
-                          <AlertTriangle className="w-3.5 h-3.5 text-amber-400 mt-0.5 flex-shrink-0" />
+                          <AlertTriangle className="w-3.5 h-3.5 text-amber-700 mt-0.5 flex-shrink-0" />
                           <span className="text-amber-300">{divisionMetrics[selectedNode.id].alert}</span>
                         </div>
                       </div>
@@ -1972,7 +1972,7 @@ export default function OrgChart() {
                         {[...Array(5)].map((_, i) => (
                           <Star key={i} className={`w-5 h-5 ${
                             i < Math.floor(selectedNode.performance)
-                              ? 'text-amber-400 fill-amber-400'
+                              ? 'text-amber-700 fill-amber-400'
                               : 'text-slate-700'
                           }`} />
                         ))}
@@ -1994,10 +1994,10 @@ export default function OrgChart() {
                         <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
                           selectedNode.retirementMonths === 0 ? 'bg-amber-500/20 border border-amber-500/20' : 'bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50'
                         }`}>
-                          <Clock className={`w-4 h-4 ${selectedNode.retirementMonths === 0 ? 'text-amber-400' : 'text-slate-500'}`} />
+                          <Clock className={`w-4 h-4 ${selectedNode.retirementMonths === 0 ? 'text-amber-700' : 'text-slate-500'}`} />
                         </div>
                         <div>
-                          <p className={`text-sm font-medium ${selectedNode.retirementMonths === 0 ? 'text-amber-400' : 'text-slate-500'}`}>
+                          <p className={`text-sm font-medium ${selectedNode.retirementMonths === 0 ? 'text-amber-700' : 'text-slate-500'}`}>
                             {selectedNode.retirementMonths === 0
                               ? 'Retirement eligible now'
                               : `Retirement eligible in ${selectedNode.retirementMonths} months`
@@ -2080,8 +2080,8 @@ export default function OrgChart() {
                       : 'bg-amber-500/5 border-amber-500/20'
                   }`}>
                     <div className="flex items-center gap-2">
-                      <AlertTriangle className={`w-4 h-4 ${selectedNode.spanWarning === 'high' ? 'text-amber-400' : 'text-amber-500/70'}`} />
-                      <span className={`text-sm font-medium ${selectedNode.spanWarning === 'high' ? 'text-amber-400' : 'text-amber-500'}`}>
+                      <AlertTriangle className={`w-4 h-4 ${selectedNode.spanWarning === 'high' ? 'text-amber-700' : 'text-amber-700/70'}`} />
+                      <span className={`text-sm font-medium ${selectedNode.spanWarning === 'high' ? 'text-amber-700' : 'text-amber-700'}`}>
                         {selectedNode.reports} direct reports · Span of control {selectedNode.spanWarning === 'high' ? 'HIGH' : 'ELEVATED'}
                       </span>
                     </div>
@@ -2101,7 +2101,7 @@ export default function OrgChart() {
               {vacancyImpactData[selectedNode.id] && !selectedNode.isVacant && (
                 <div>
                   <h4 className="text-sm font-semibold text-primary mb-3 flex items-center gap-2">
-                    <Zap className="w-4 h-4 text-amber-400" />
+                    <Zap className="w-4 h-4 text-amber-700" />
                     Vacancy Impact Simulation
                   </h4>
                   <div className={`rounded-xl p-4 border space-y-3 ${
@@ -2117,7 +2117,7 @@ export default function OrgChart() {
                         vacancyImpactData[selectedNode.id].riskLevel === 'critical'
                           ? 'bg-red-500/20 text-red-400 border-red-500/30'
                           : vacancyImpactData[selectedNode.id].riskLevel === 'high'
-                            ? 'bg-amber-500/20 text-amber-400 border-amber-500/30'
+                            ? 'bg-amber-500/20 text-amber-700 border-amber-500/30'
                             : 'bg-slate-50 dark:bg-slate-700/40 text-secondary border-slate-600/30'
                       }`}>
                         {vacancyImpactData[selectedNode.id].riskLevel.toUpperCase()} RISK
@@ -2158,7 +2158,7 @@ export default function OrgChart() {
                         <div className="flex items-center gap-0.5">
                           {[...Array(5)].map((_, i) => (
                             <Star key={i} className={`w-2.5 h-2.5 ${
-                              i < 4 ? 'text-amber-400 fill-amber-400' : 'text-slate-700'
+                              i < 4 ? 'text-amber-700 fill-amber-400' : 'text-slate-700'
                             }`} />
                           ))}
                         </div>

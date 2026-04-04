@@ -425,7 +425,7 @@ export default function CustodyOperations() {
                       const isIssue = factor.includes('violation') || factor.includes('uncovered') || factor.includes('unresolved') || factor.includes('required');
                       return (
                         <li key={i} className="flex items-start gap-2 text-[11px]">
-                          <span className={`mt-0.5 flex-shrink-0 font-bold ${isIssue ? 'text-amber-500' : 'text-emerald-600'}`}>{isIssue ? '—' : '✓'}</span>
+                          <span className={`mt-0.5 flex-shrink-0 font-bold ${isIssue ? 'text-amber-700' : 'text-emerald-600'}`}>{isIssue ? '—' : '✓'}</span>
                           <span className={isIssue ? 'text-slate-500' : 'text-slate-500'}>{factor}</span>
                         </li>
                       );
@@ -499,7 +499,7 @@ export default function CustodyOperations() {
                   <ul className="space-y-0.5">
                     {staffingRisks.map((r, i) => (
                       <li key={i} className="text-[11px] text-slate-700 dark:text-slate-300 flex items-start gap-1.5">
-                        <span className="text-amber-500 flex-shrink-0 mt-0.5">—</span>{r}
+                        <span className="text-amber-700 flex-shrink-0 mt-0.5">—</span>{r}
                       </li>
                     ))}
                   </ul>
@@ -521,7 +521,7 @@ export default function CustodyOperations() {
                   <ul className="space-y-0.5">
                     {activeEscalations.map((r, i) => (
                       <li key={i} className="text-[11px] text-slate-700 dark:text-slate-300 flex items-start gap-1.5">
-                        <span className="text-amber-500 flex-shrink-0 mt-0.5">—</span>{r}
+                        <span className="text-amber-700 flex-shrink-0 mt-0.5">—</span>{r}
                       </li>
                     ))}
                   </ul>
@@ -1191,7 +1191,7 @@ export default function CustodyOperations() {
                         </span>
                       )}
                       {isPriorityPost && (
-                        <span className="text-[9px] px-1.5 py-0.5 bg-slate-100 dark:bg-slate-700/30 text-amber-500/80 border border-amber-500/20 rounded font-semibold uppercase tracking-wide" title="Assigned to high-priority housing unit">
+                        <span className="text-[9px] px-1.5 py-0.5 bg-slate-100 dark:bg-slate-700/30 text-amber-700/80 border border-amber-500/20 rounded font-semibold uppercase tracking-wide" title="Assigned to high-priority housing unit">
                           Priority
                         </span>
                       )}

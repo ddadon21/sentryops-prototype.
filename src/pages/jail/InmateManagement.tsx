@@ -511,7 +511,7 @@ const InmateManagement = () => {
       case 'Administrative Segregation':
         return 'text-red-400';
       case 'Medium Security':
-        return 'text-amber-400';
+        return 'text-amber-700';
       case 'Minimum Security':
         return 'text-emerald-400';
       case 'Protective Custody':
@@ -527,7 +527,7 @@ const InmateManagement = () => {
         <div className="mb-6">
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center gap-3">
-              <User className="w-8 h-8 text-amber-500" />
+              <User className="w-8 h-8 text-amber-700" />
               <div>
                 <h1 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white">Inmate Management</h1>
                 <p className="text-slate-700 dark:text-slate-400">Current Population: {stats.total} Inmates</p>
@@ -568,7 +568,7 @@ const InmateManagement = () => {
           </div>
           <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4">
             <div className="text-sm text-slate-700 dark:text-slate-400 mb-1">Medical</div>
-            <div className="text-2xl font-bold text-amber-400">{stats.medical}</div>
+            <div className="text-2xl font-bold text-amber-700">{stats.medical}</div>
           </div>
         </div>
 
@@ -624,7 +624,7 @@ const InmateManagement = () => {
                 {filteredInmates.map((inmate) => (
                   <tr key={inmate.id} className="hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors">
                     <td className="px-4 py-4 text-sm">
-                      <div className="text-amber-400 font-mono">{inmate.id}</div>
+                      <div className="text-amber-700 font-mono">{inmate.id}</div>
                       <div className="text-xs text-slate-500">{inmate.bookingNumber}</div>
                     </td>
                     <td className="px-4 py-4">
@@ -645,7 +645,7 @@ const InmateManagement = () => {
                     <td className="px-4 py-4 text-sm">
                       <div className="text-slate-900 dark:text-white">{inmate.charges[0].description}</div>
                       {inmate.charges.length > 1 && (
-                        <div className="text-xs text-amber-400">+{inmate.charges.length - 1} more</div>
+                        <div className="text-xs text-amber-700">+{inmate.charges.length - 1} more</div>
                       )}
                     </td>
                     <td className="px-4 py-4 text-sm">
@@ -671,7 +671,7 @@ const InmateManagement = () => {
                           setSelectedInmate(inmate);
                           setShowDetailModal(true);
                         }}
-                        className="text-amber-400 hover:text-amber-300 text-sm font-medium flex items-center gap-1"
+                        className="text-amber-700 hover:text-amber-300 text-sm font-medium flex items-center gap-1"
                       >
                         View
                         <ExternalLink className="w-4 h-4" />
@@ -707,7 +707,7 @@ const InmateManagement = () => {
                 {/* Personal Information */}
                 <div>
                   <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
-                    <User className="w-5 h-5 text-amber-400" />
+                    <User className="w-5 h-5 text-amber-700" />
                     Personal Information
                   </h3>
                   <div className="grid grid-cols-2 gap-4 bg-white dark:bg-slate-900/50 border border-slate-700 rounded-lg p-4">
@@ -731,7 +731,7 @@ const InmateManagement = () => {
                   <div className="grid grid-cols-2 gap-4 bg-white dark:bg-slate-900/50 border border-slate-700 rounded-lg p-4">
                     <div>
                       <div className="text-sm text-slate-700 dark:text-slate-400">Booking Number</div>
-                      <div className="text-amber-400 font-mono">{selectedInmate.bookingNumber}</div>
+                      <div className="text-amber-700 font-mono">{selectedInmate.bookingNumber}</div>
                     </div>
                     <div>
                       <div className="text-sm text-slate-700 dark:text-slate-400">Booking Date/Time</div>
@@ -765,7 +765,7 @@ const InmateManagement = () => {
                           <span className={`px-3 py-1 rounded text-sm font-medium ${
                             charge.degree === 'Felony' ? 'bg-red-500/20 text-red-400' :
                             charge.degree === 'Federal' ? 'bg-slate-50 dark:bg-slate-700/40 text-slate-500' :
-                            'bg-amber-500/20 text-amber-400'
+                            'bg-amber-500/20 text-amber-700'
                           }`}>
                             {charge.degree}
                           </span>
@@ -813,7 +813,7 @@ const InmateManagement = () => {
                 {selectedInmate.nextCourtDate && (
                   <div>
                     <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
-                      <Scale className="w-5 h-5 text-amber-400" />
+                      <Scale className="w-5 h-5 text-amber-700" />
                       Court Information
                     </h3>
                     <div className="grid grid-cols-2 gap-4 bg-white dark:bg-slate-900/50 border border-slate-700 rounded-lg p-4">

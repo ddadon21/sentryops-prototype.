@@ -396,7 +396,7 @@ export default function HRReports() {
 
   const getColorClasses = (color) => {
     const colors = {
-      amber: { bg: 'bg-amber-500/20', border: 'border-amber-500/30', text: 'text-amber-400', icon: 'text-amber-400' },
+      amber: { bg: 'bg-amber-500/20', border: 'border-amber-500/30', text: 'text-amber-700', icon: 'text-amber-700' },
       blue: { bg: 'bg-blue-500/20', border: 'border-blue-500/30', text: 'text-blue-400', icon: 'text-blue-400' },
       green: { bg: 'bg-green-500/20', border: 'border-green-500/30', text: 'text-green-400', icon: 'text-green-400' },
       red: { bg: 'bg-red-500/20', border: 'border-red-500/30', text: 'text-red-400', icon: 'text-red-400' },
@@ -427,12 +427,12 @@ export default function HRReports() {
         <div className="p-4 border-b border-border flex items-center justify-between">
           {!sidebarCollapsed && (
             <div className="flex items-center gap-2">
-              <Shield className="w-8 h-8 text-amber-500" />
+              <Shield className="w-8 h-8 text-amber-700" />
               <h1 className="text-xl font-bold text-primary">SentryOps</h1>
             </div>
           )}
           {sidebarCollapsed && (
-            <Shield className="w-8 h-8 text-amber-500 mx-auto" />
+            <Shield className="w-8 h-8 text-amber-700 mx-auto" />
           )}
           <button onClick={() => setSidebarCollapsed(!sidebarCollapsed)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors hidden lg:block">
             {sidebarCollapsed ? <ChevronRight className="w-5 h-5 text-secondary" /> : <ChevronLeft className="w-5 h-5 text-secondary" />}
@@ -560,7 +560,7 @@ export default function HRReports() {
                 <div className="space-y-2">
                   {selectedReport.findings.map((item, idx) => (
                     <div key={idx} className="flex items-start gap-2 p-2 bg-amber-500/10 border border-amber-500/20 rounded-lg">
-                      <AlertTriangle className="w-3.5 h-3.5 text-amber-400 mt-0.5 flex-shrink-0" />
+                      <AlertTriangle className="w-3.5 h-3.5 text-amber-700 mt-0.5 flex-shrink-0" />
                       <p className="text-sm text-secondary">{item}</p>
                     </div>
                   ))}
@@ -652,7 +652,7 @@ export default function HRReports() {
                       ))}
                     </div>
                     <div className="p-3 border-t border-border">
-                      <button className="w-full text-center text-sm text-amber-400 hover:text-amber-300 font-medium">View All</button>
+                      <button className="w-full text-center text-sm text-amber-700 hover:text-amber-300 font-medium">View All</button>
                     </div>
                   </div>
                 )}
@@ -705,20 +705,20 @@ export default function HRReports() {
             {/* Context Alerts */}
             <div className="mb-6 space-y-2">
               <div className="flex items-start gap-3 p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg">
-                <AlertTriangle className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                <p className="text-sm text-secondary">Hiring velocity: Time-to-fill <span className="text-amber-400 font-medium">127 days</span> (Deputy Sheriff) — background investigation bottleneck identified</p>
+                <AlertTriangle className="w-4 h-4 text-amber-700 mt-0.5 flex-shrink-0" />
+                <p className="text-sm text-secondary">Hiring velocity: Time-to-fill <span className="text-amber-700 font-medium">127 days</span> (Deputy Sheriff) — background investigation bottleneck identified</p>
               </div>
               <div className="flex items-start gap-3 p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg">
-                <AlertTriangle className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                <p className="text-sm text-secondary">Training compliance at <span className="text-amber-400 font-medium">98.8%</span> (POST): 2 deputies with expired firearms, 4 certifications expiring next 30 days</p>
+                <AlertTriangle className="w-4 h-4 text-amber-700 mt-0.5 flex-shrink-0" />
+                <p className="text-sm text-secondary">Training compliance at <span className="text-amber-700 font-medium">98.8%</span> (POST): 2 deputies with expired firearms, 4 certifications expiring next 30 days</p>
               </div>
               <div className="flex items-start gap-3 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
                 <Info className="w-4 h-4 text-blue-400 mt-0.5 flex-shrink-0" />
                 <p className="text-sm text-secondary">PTO average balance: <span className="text-blue-400 font-medium">72 hours</span> — 8 employees at accrual cap (risk of losing leave)</p>
               </div>
               <div className="flex items-start gap-3 p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg">
-                <AlertTriangle className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                <p className="text-sm text-secondary">Performance reviews: <span className="text-amber-400 font-medium">89% completion</span> — 3 reviews pending supervisor approval, 1 severely overdue (510+ days)</p>
+                <AlertTriangle className="w-4 h-4 text-amber-700 mt-0.5 flex-shrink-0" />
+                <p className="text-sm text-secondary">Performance reviews: <span className="text-amber-700 font-medium">89% completion</span> — 3 reviews pending supervisor approval, 1 severely overdue (510+ days)</p>
               </div>
             </div>
 
@@ -734,7 +734,7 @@ export default function HRReports() {
                   key={tab.id}
                   onClick={() => setActiveSection(tab.id)}
                   className={`px-4 py-3 text-sm font-medium transition-all relative whitespace-nowrap ${
-                    activeSection === tab.id ? 'text-amber-400' : 'text-secondary hover:text-slate-300'
+                    activeSection === tab.id ? 'text-amber-700' : 'text-secondary hover:text-slate-300'
                   }`}
                 >
                   {tab.label}
@@ -750,7 +750,7 @@ export default function HRReports() {
               <div className="mb-8">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-8 h-8 bg-amber-500/20 rounded-lg flex items-center justify-center">
-                    <BarChart3 className="w-5 h-5 text-amber-400" />
+                    <BarChart3 className="w-5 h-5 text-amber-700" />
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold text-primary">Sheriff's Command Briefing Reports</h3>
@@ -870,7 +870,7 @@ export default function HRReports() {
                             <div className="flex items-center gap-3 mb-1 flex-wrap">
                               <h4 className="text-base font-semibold text-primary">{report.title}</h4>
                               {report.nextDueUrgent && (
-                                <span className="px-2 py-0.5 bg-amber-500/20 border border-amber-500/30 rounded-full text-xs text-amber-400 font-medium">OVERDUE</span>
+                                <span className="px-2 py-0.5 bg-amber-500/20 border border-amber-500/30 rounded-full text-xs text-amber-700 font-medium">OVERDUE</span>
                               )}
                             </div>
                             <p className="text-sm text-secondary mb-2">{report.description}</p>
@@ -895,7 +895,7 @@ export default function HRReports() {
                               </div>
                               <div className={`bg-white dark:bg-slate-900/40 border ${report.nextDueUrgent ? 'border-amber-500/30' : 'border-border'} rounded-xl p-3`}>
                                 <p className="text-xs text-slate-500 mb-1">Next Due</p>
-                                <p className={`text-sm font-medium ${report.nextDueUrgent ? 'text-amber-400' : 'text-slate-500'}`}>{report.nextDue}</p>
+                                <p className={`text-sm font-medium ${report.nextDueUrgent ? 'text-amber-700' : 'text-slate-500'}`}>{report.nextDue}</p>
                               </div>
                             </div>
 
@@ -1015,7 +1015,7 @@ export default function HRReports() {
                             <div className="flex items-center gap-2">
                               <button
                                 onClick={() => setSelectedReport(report)}
-                                className="px-3 py-1.5 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/30 text-amber-400 rounded-lg text-sm font-medium transition-all"
+                                className="px-3 py-1.5 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/30 text-amber-700 rounded-lg text-sm font-medium transition-all"
                               >
                                 View
                               </button>
@@ -1048,11 +1048,11 @@ export default function HRReports() {
 
                             {report.findings && report.findings.length > 0 && (
                               <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-4">
-                                <h5 className="text-sm font-semibold text-amber-400 mb-3">Key Findings</h5>
+                                <h5 className="text-sm font-semibold text-amber-700 mb-3">Key Findings</h5>
                                 <div className="space-y-1.5">
                                   {report.findings.map((item, idx) => (
                                     <div key={idx} className="flex items-start gap-2">
-                                      <AlertTriangle className="w-3.5 h-3.5 text-amber-400 mt-0.5 flex-shrink-0" />
+                                      <AlertTriangle className="w-3.5 h-3.5 text-amber-700 mt-0.5 flex-shrink-0" />
                                       <span className="text-xs text-secondary">{item}</span>
                                     </div>
                                   ))}
@@ -1164,17 +1164,17 @@ export default function HRReports() {
               <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-primary">HR Director</p>
                 <p className="text-xs text-secondary">Report authorization, confidential data access</p>
-                <p className="text-xs text-amber-400 mt-1">Ext. 4500</p>
+                <p className="text-xs text-amber-700 mt-1">Ext. 4500</p>
               </div>
               <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-primary">Report Administrator</p>
                 <p className="text-xs text-secondary">HR Specialist J. Martinez — report generation, data queries</p>
-                <p className="text-xs text-amber-400 mt-1">Ext. 4505</p>
+                <p className="text-xs text-amber-700 mt-1">Ext. 4505</p>
               </div>
               <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-primary">Training Division</p>
                 <p className="text-xs text-secondary">POST compliance data, certification reports</p>
-                <p className="text-xs text-amber-400 mt-1">Ext. 4521</p>
+                <p className="text-xs text-amber-700 mt-1">Ext. 4521</p>
               </div>
               <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-primary">County Budget Office</p>

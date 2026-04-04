@@ -32,7 +32,7 @@ export default function CaseManagement() {
   const getStageIcon = (status) => {
     switch (status) {
       case 'completed': return <CheckCircle2 className="w-4 h-4 text-green-400" />;
-      case 'in_progress': return <Clock className="w-4 h-4 text-amber-400 animate-pulse" />;
+      case 'in_progress': return <Clock className="w-4 h-4 text-amber-700 animate-pulse" />;
       case 'partial': return <PauseCircle className="w-4 h-4 text-blue-400" />;
       case 'blocked': return <AlertTriangle className="w-4 h-4 text-red-400" />;
       case 'not_required': return <Circle className="w-4 h-4 text-slate-500" />;
@@ -262,7 +262,7 @@ export default function CaseManagement() {
                 <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4">
                   <p className="text-xs text-slate-500 uppercase tracking-wide mb-2">Current Stage</p>
                   <div className="flex items-center gap-2">
-                    <Clock className="w-5 h-5 text-amber-400 animate-pulse" />
+                    <Clock className="w-5 h-5 text-amber-700 animate-pulse" />
                     <span className="text-lg font-semibold text-primary">{caseDetails.currentStage}</span>
                   </div>
                   <p className="text-xs text-secondary mt-1">
@@ -271,7 +271,7 @@ export default function CaseManagement() {
                 </div>
                 <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4">
                   <p className="text-xs text-slate-500 uppercase tracking-wide mb-2">Next Required Action</p>
-                  <p className="text-sm text-amber-400 font-medium">{caseDetails.nextAction}</p>
+                  <p className="text-sm text-amber-700 font-medium">{caseDetails.nextAction}</p>
                   {caseDetails.blockers && (
                     <p className="text-xs text-red-400 mt-2 flex items-start gap-1">
                       <AlertTriangle className="w-3 h-3 mt-0.5 flex-shrink-0" />
@@ -290,7 +290,7 @@ export default function CaseManagement() {
                       <span className="text-secondary">Offer Expires</span>
                       <span className="text-red-400 font-medium">{caseDetails.conditionalOfferExpires}</span>
                     </div>
-                    <p className="text-xs text-amber-400 mt-1">7 days remaining</p>
+                    <p className="text-xs text-amber-700 mt-1">7 days remaining</p>
                   </div>
                 </div>
               </div>
@@ -372,7 +372,7 @@ export default function CaseManagement() {
                                 <p className="text-xs text-slate-500 mt-0.5">Source: {stage.source}</p>
                               )}
                               {stage.nextStep && (
-                                <p className="text-xs text-amber-400 mt-1">Next: {stage.nextStep}</p>
+                                <p className="text-xs text-amber-700 mt-1">Next: {stage.nextStep}</p>
                               )}
                               {stage.pendingItems && stage.pendingItems.length > 0 && (
                                 <div className="mt-2 space-y-1">
@@ -387,7 +387,7 @@ export default function CaseManagement() {
                           </div>
                           <span className={`px-2 py-1 rounded text-xs font-medium whitespace-nowrap ${
                             stage.status === 'completed' ? 'bg-green-500/20 text-green-400' :
-                            stage.status === 'in_progress' ? 'bg-amber-500/20 text-amber-400' :
+                            stage.status === 'in_progress' ? 'bg-amber-500/20 text-amber-700' :
                             stage.status === 'partial' ? 'bg-blue-500/20 text-blue-400' :
                             stage.status === 'blocked' ? 'bg-red-500/20 text-red-400' :
                             'bg-white dark:bg-slate-700/50 text-slate-500'
@@ -506,25 +506,25 @@ export default function CaseManagement() {
               <div className="flex border-b border-border overflow-x-auto">
                 <button
                   onClick={() => setSelectedTab('overview')}
-                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedTab === 'overview' ? 'bg-amber-500/10 text-amber-400 border-b-2 border-amber-500' : 'text-secondary hover:text-slate-900 dark:hover:text-white'}`}
+                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedTab === 'overview' ? 'bg-amber-500/10 text-amber-700 border-b-2 border-amber-500' : 'text-secondary hover:text-slate-900 dark:hover:text-white'}`}
                 >
                   Overview
                 </button>
                 <button
                   onClick={() => setSelectedTab('documents')}
-                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedTab === 'documents' ? 'bg-amber-500/10 text-amber-400 border-b-2 border-amber-500' : 'text-secondary hover:text-slate-900 dark:hover:text-white'}`}
+                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedTab === 'documents' ? 'bg-amber-500/10 text-amber-700 border-b-2 border-amber-500' : 'text-secondary hover:text-slate-900 dark:hover:text-white'}`}
                 >
                   Documents ({caseDetails.documents.length})
                 </button>
                 <button
                   onClick={() => setSelectedTab('notes')}
-                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedTab === 'notes' ? 'bg-amber-500/10 text-amber-400 border-b-2 border-amber-500' : 'text-secondary hover:text-slate-900 dark:hover:text-white'}`}
+                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedTab === 'notes' ? 'bg-amber-500/10 text-amber-700 border-b-2 border-amber-500' : 'text-secondary hover:text-slate-900 dark:hover:text-white'}`}
                 >
                   Investigator Notes ({caseDetails.notes.length})
                 </button>
                 <button
                   onClick={() => setSelectedTab('history')}
-                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedTab === 'history' ? 'bg-amber-500/10 text-amber-400 border-b-2 border-amber-500' : 'text-secondary hover:text-slate-900 dark:hover:text-white'}`}
+                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedTab === 'history' ? 'bg-amber-500/10 text-amber-700 border-b-2 border-amber-500' : 'text-secondary hover:text-slate-900 dark:hover:text-white'}`}
                 >
                   Activity History ({caseDetails.activityHistory.length})
                 </button>
@@ -575,7 +575,7 @@ export default function CaseManagement() {
                             <p className="text-xs text-slate-500">Completed</p>
                           </div>
                           <div className="text-center">
-                            <p className="text-2xl font-bold text-amber-400">
+                            <p className="text-2xl font-bold text-amber-700">
                               {caseDetails.stages.filter(s => s.status === 'in_progress' || s.status === 'partial').length}
                             </p>
                             <p className="text-xs text-slate-500">In Progress</p>
@@ -605,7 +605,7 @@ export default function CaseManagement() {
                               <span className="text-secondary">Employment at current and previous employer verified</span>
                             </li>
                             <li className="flex items-start gap-2">
-                              <Clock className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
+                              <Clock className="w-4 h-4 text-amber-700 mt-0.5 flex-shrink-0" />
                               <span className="text-secondary">3 of 5 references completed - 2 pending contact</span>
                             </li>
                           </ul>
@@ -616,8 +616,8 @@ export default function CaseManagement() {
                           <div className="border-t border-border pt-4 mt-4">
                             <p className="text-xs text-slate-500 uppercase tracking-wide mb-2">Documented Concerns</p>
                             <div className="flex items-start gap-2 text-sm">
-                              <AlertTriangle className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                              <span className="text-amber-400">{caseDetails.blockers}</span>
+                              <AlertTriangle className="w-4 h-4 text-amber-700 mt-0.5 flex-shrink-0" />
+                              <span className="text-amber-700">{caseDetails.blockers}</span>
                             </div>
                           </div>
                         )}
@@ -646,7 +646,7 @@ export default function CaseManagement() {
                           </div>
                           <div>
                             <p className="text-xs text-slate-500 mb-1">Days Remaining</p>
-                            <p className="text-sm text-amber-400 font-medium">7 days</p>
+                            <p className="text-sm text-amber-700 font-medium">7 days</p>
                           </div>
                         </div>
                       </div>
@@ -659,7 +659,7 @@ export default function CaseManagement() {
                   <div>
                     <div className="flex items-center justify-between mb-6">
                       <p className="text-sm text-secondary">{caseDetails.documents.length} documents on file</p>
-                      <button className="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
+                      <button className="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
                         <Upload className="w-3 h-3" />
                         Upload New
                       </button>
@@ -671,7 +671,7 @@ export default function CaseManagement() {
                             <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
                               doc.status === 'verified' ? 'bg-green-500/10' : 'bg-amber-500/10'
                             }`}>
-                              <FileText className={`w-5 h-5 ${doc.status === 'verified' ? 'text-green-400' : 'text-amber-400'}`} />
+                              <FileText className={`w-5 h-5 ${doc.status === 'verified' ? 'text-green-400' : 'text-amber-700'}`} />
                             </div>
                             <div>
                               <div className="flex items-center gap-2">
@@ -689,7 +689,7 @@ export default function CaseManagement() {
                             <button className="px-3 py-1 bg-white dark:bg-slate-700/50 hover:bg-slate-700 text-secondary rounded-lg text-xs font-medium transition-colors">
                               Download
                             </button>
-                            <button className="px-3 py-1 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 rounded-lg text-xs font-medium transition-colors">
+                            <button className="px-3 py-1 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 rounded-lg text-xs font-medium transition-colors">
                               View
                             </button>
                           </div>
@@ -751,10 +751,10 @@ export default function CaseManagement() {
                               'bg-white dark:bg-slate-700/50'
                             }`}>
                               {activity.action === 'Stage completed' && <CheckCircle2 className="w-4 h-4 text-green-400" />}
-                              {activity.action === 'Case opened' && <FolderOpen className="w-4 h-4 text-amber-400" />}
+                              {activity.action === 'Case opened' && <FolderOpen className="w-4 h-4 text-amber-700" />}
                               {activity.action === 'Document uploaded' && <Upload className="w-4 h-4 text-blue-400" />}
                               {activity.action === 'Note added' && <FileText className="w-4 h-4 text-secondary" />}
-                              {activity.action === 'Stage updated' && <Clock className="w-4 h-4 text-amber-400" />}
+                              {activity.action === 'Stage updated' && <Clock className="w-4 h-4 text-amber-700" />}
                               {activity.action === 'Interview completed' && <Users className="w-4 h-4 text-purple-400" />}
                               {activity.action === 'Contact attempt' && <Phone className="w-4 h-4 text-secondary" />}
                             </div>

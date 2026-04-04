@@ -357,7 +357,7 @@ export default function CaseClosure() {
                   <XCircle className="w-4 h-4" />
                   Reject Candidate
                 </button>
-                <button className="px-4 py-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 border border-amber-500/20">
+                <button className="px-4 py-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 border border-amber-500/20">
                   <RotateCcw className="w-4 h-4" />
                   Return for Additional Investigation
                 </button>
@@ -467,7 +467,7 @@ export default function CaseClosure() {
                     <span className="text-secondary">Supervisor review complete</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Clock className="w-4 h-4 text-amber-400" />
+                    <Clock className="w-4 h-4 text-amber-700" />
                     <span className="text-amber-300">Awaiting final hiring authority decision</span>
                   </div>
                 </div>
@@ -602,7 +602,7 @@ export default function CaseClosure() {
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">└─</span>
                     <span className="text-secondary">Final approver:</span>
-                    <span className="text-amber-400">[Pending - Hiring Authority]</span>
+                    <span className="text-amber-700">[Pending - Hiring Authority]</span>
                   </div>
                 </div>
               </div>
@@ -637,7 +637,7 @@ export default function CaseClosure() {
                   <div className="flex items-start gap-2">
                     <span className="text-slate-500">└─</span>
                     <span className="text-secondary">Awaiting:</span>
-                    <span className="text-amber-400">Final hiring authority decision</span>
+                    <span className="text-amber-700">Final hiring authority decision</span>
                   </div>
                 </div>
               </div>
@@ -645,32 +645,32 @@ export default function CaseClosure() {
               {/* IA Review Contingency - CRITICAL */}
               <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4">
                 <div className="flex items-center gap-2 mb-3">
-                  <AlertTriangle className="w-5 h-5 text-amber-400" />
-                  <h4 className="text-sm font-semibold text-amber-400">CONTINGENCY: INTERNAL AFFAIRS REVIEW PENDING</h4>
+                  <AlertTriangle className="w-5 h-5 text-amber-700" />
+                  <h4 className="text-sm font-semibold text-amber-700">CONTINGENCY: INTERNAL AFFAIRS REVIEW PENDING</h4>
                 </div>
                 <div className="space-y-2 text-sm">
                   <div className="flex items-start gap-2">
-                    <span className="text-amber-500/50">├─</span>
+                    <span className="text-amber-700/50">├─</span>
                     <span className="text-amber-300/70">Status:</span>
                     <span className="text-amber-200">IA review requested from {iaReviewStatus.requestingAgency}</span>
                   </div>
                   <div className="flex items-start gap-2">
-                    <span className="text-amber-500/50">├─</span>
+                    <span className="text-amber-700/50">├─</span>
                     <span className="text-amber-300/70">Request date:</span>
                     <span className="text-amber-200">{iaReviewStatus.requestDate}</span>
                   </div>
                   <div className="flex items-start gap-2">
-                    <span className="text-amber-500/50">├─</span>
+                    <span className="text-amber-700/50">├─</span>
                     <span className="text-amber-300/70">Expected response:</span>
                     <span className="text-amber-200">{iaReviewStatus.expectedResponse} (14-21 day turnaround)</span>
                   </div>
                   <div className="flex items-start gap-2">
-                    <span className="text-amber-500/50">├─</span>
+                    <span className="text-amber-700/50">├─</span>
                     <span className="text-amber-300/70">Requirement:</span>
                     <span className="text-amber-200 font-medium">MANDATORY for lateral transfers (POST)</span>
                   </div>
                   <div className="flex items-start gap-2">
-                    <span className="text-amber-500/50">└─</span>
+                    <span className="text-amber-700/50">└─</span>
                     <span className="text-amber-300/70">Note:</span>
                     <span className="text-amber-200">Final clearance contingent on IA approval</span>
                   </div>
@@ -692,8 +692,8 @@ export default function CaseClosure() {
                       <span className="text-sm font-medium text-green-400">APPROVE & CLOSE CASE</span>
                     </div>
                     <p className="text-xs text-secondary ml-6">Recommend applicant for hire (contingent offer approved)</p>
-                    <p className="text-xs text-amber-400 ml-6 mt-1">⚠️ Requires: Disposition rationale, supervisor approval</p>
-                    <p className="text-xs text-amber-400 ml-6">⚠️ Note: Final clearance contingent on IA review completion</p>
+                    <p className="text-xs text-amber-700 ml-6 mt-1">⚠️ Requires: Disposition rationale, supervisor approval</p>
+                    <p className="text-xs text-amber-700 ml-6">⚠️ Note: Final clearance contingent on IA review completion</p>
                   </button>
 
                   <button className="w-full p-3 bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 rounded-xl text-left transition-colors">
@@ -702,16 +702,16 @@ export default function CaseClosure() {
                       <span className="text-sm font-medium text-red-400">REJECT CANDIDATE</span>
                     </div>
                     <p className="text-xs text-secondary ml-6">Do not recommend applicant for hire (disqualifying factors)</p>
-                    <p className="text-xs text-amber-400 ml-6 mt-1">⚠️ Requires: Specific disqualification reason, adverse action notice per FCRA (if credit/background basis)</p>
+                    <p className="text-xs text-amber-700 ml-6 mt-1">⚠️ Requires: Specific disqualification reason, adverse action notice per FCRA (if credit/background basis)</p>
                   </button>
 
                   <button className="w-full p-3 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 rounded-xl text-left transition-colors">
                     <div className="flex items-center gap-2 mb-1">
-                      <RotateCcw className="w-4 h-4 text-amber-400" />
-                      <span className="text-sm font-medium text-amber-400">RETURN FOR ADDITIONAL INVESTIGATION</span>
+                      <RotateCcw className="w-4 h-4 text-amber-700" />
+                      <span className="text-sm font-medium text-amber-700">RETURN FOR ADDITIONAL INVESTIGATION</span>
                     </div>
                     <p className="text-xs text-secondary ml-6">Require additional checks, clarification, or follow-up</p>
-                    <p className="text-xs text-amber-400 ml-6 mt-1">⚠️ Requires: Specific areas requiring additional investigation</p>
+                    <p className="text-xs text-amber-700 ml-6 mt-1">⚠️ Requires: Specific areas requiring additional investigation</p>
                   </button>
                 </div>
 
@@ -839,38 +839,38 @@ export default function CaseClosure() {
               {/* Lateral Transfer Requirements - IA Review */}
               <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4">
                 <div className="flex items-center gap-3 mb-3">
-                  <AlertTriangle className="w-5 h-5 text-amber-400" />
+                  <AlertTriangle className="w-5 h-5 text-amber-700" />
                   <div>
-                    <span className="text-sm font-medium text-amber-400">LATERAL TRANSFER REQUIREMENTS</span>
+                    <span className="text-sm font-medium text-amber-700">LATERAL TRANSFER REQUIREMENTS</span>
                     <div className="flex items-center gap-2 mt-0.5">
-                      <Clock className="w-3 h-3 text-amber-400" />
+                      <Clock className="w-3 h-3 text-amber-700" />
                       <span className="text-xs text-amber-300">Internal Affairs Review: PENDING (MANDATORY)</span>
                     </div>
                   </div>
                 </div>
                 <div className="space-y-2 text-sm">
                   <div className="flex items-start gap-2">
-                    <span className="text-amber-500/50">├─</span>
+                    <span className="text-amber-700/50">├─</span>
                     <span className="text-amber-300/70">IA request sent:</span>
                     <span className="text-amber-200">{iaReviewStatus.requestDate}</span>
                   </div>
                   <div className="flex items-start gap-2">
-                    <span className="text-amber-500/50">├─</span>
+                    <span className="text-amber-700/50">├─</span>
                     <span className="text-amber-300/70">Requesting agency:</span>
                     <span className="text-amber-200">{iaReviewStatus.requestingAgency}</span>
                   </div>
                   <div className="flex items-start gap-2">
-                    <span className="text-amber-500/50">├─</span>
+                    <span className="text-amber-700/50">├─</span>
                     <span className="text-amber-300/70">Expected response:</span>
                     <span className="text-amber-200">{iaReviewStatus.expectedResponse}</span>
                   </div>
                   <div className="flex items-start gap-2">
-                    <span className="text-amber-500/50">├─</span>
+                    <span className="text-amber-700/50">├─</span>
                     <span className="text-amber-300/70">Documents requested:</span>
                     <span className="text-amber-200">{iaReviewStatus.documentsRequested.join(', ')}</span>
                   </div>
                   <div className="flex items-start gap-2">
-                    <span className="text-amber-500/50">└─</span>
+                    <span className="text-amber-700/50">└─</span>
                     <span className="text-amber-300/70">Status:</span>
                     <span className="text-amber-200 font-medium">CANNOT FINALIZE WITHOUT IA CLEARANCE (POST req)</span>
                   </div>
@@ -969,7 +969,7 @@ export default function CaseClosure() {
 
             {/* Minor Concerns */}
             <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4 mb-4">
-              <h4 className="text-sm font-semibold text-amber-400 mb-3 border-b border-amber-500/20 pb-2">MINOR CONCERNS (NON-DISQUALIFYING)</h4>
+              <h4 className="text-sm font-semibold text-amber-700 mb-3 border-b border-amber-500/20 pb-2">MINOR CONCERNS (NON-DISQUALIFYING)</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <p className="text-xs font-medium text-primary mb-2">1. TRAFFIC VIOLATIONS:</p>
@@ -1105,7 +1105,7 @@ export default function CaseClosure() {
                 </p>
               </div>
               <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3 mb-3">
-                <p className="text-xs font-medium text-amber-400 mb-1">CONTINGENCY:</p>
+                <p className="text-xs font-medium text-amber-700 mb-1">CONTINGENCY:</p>
                 <p className="text-xs text-amber-200">
                   Final clearance is contingent upon completion of Internal Affairs review from Metro Atlanta Police Department (mandatory for
                   lateral transfers per POST requirements). IA review expected February 3-7, 2026. Assuming IA clearance with no disqualifying
@@ -1186,7 +1186,7 @@ export default function CaseClosure() {
                     className="mt-1"
                   />
                   <div>
-                    <p className="text-sm font-medium text-amber-400">RETURN FOR ADDITIONAL INVESTIGATION</p>
+                    <p className="text-sm font-medium text-amber-700">RETURN FOR ADDITIONAL INVESTIGATION</p>
                     <p className="text-xs text-secondary">Require additional checks, clarification, or follow-up</p>
                     <p className="text-xs text-slate-500 mt-1">Requires: Specific areas for additional investigation</p>
                   </div>
@@ -1219,7 +1219,7 @@ export default function CaseClosure() {
                       />
                       <div>
                         <span className="text-sm text-secondary">{reason.label}</span>
-                        {reason.note && <span className="text-xs text-amber-400 ml-2">{reason.note}</span>}
+                        {reason.note && <span className="text-xs text-amber-700 ml-2">{reason.note}</span>}
                       </div>
                     </label>
                   ))}
@@ -1306,8 +1306,8 @@ export default function CaseClosure() {
             {/* Important Notes */}
             <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-4">
               <div className="flex items-center gap-2 mb-2">
-                <AlertCircle className="w-4 h-4 text-amber-400" />
-                <span className="text-sm font-medium text-amber-400">IMPORTANT NOTES:</span>
+                <AlertCircle className="w-4 h-4 text-amber-700" />
+                <span className="text-sm font-medium text-amber-700">IMPORTANT NOTES:</span>
               </div>
               <ul className="text-xs text-amber-200 space-y-2">
                 <li>• If <strong>APPROVING</strong>: Case will be closed and applicant will receive contingent offer letter. Final clearance requires IA review.</li>

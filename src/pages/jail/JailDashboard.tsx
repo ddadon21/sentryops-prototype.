@@ -468,7 +468,7 @@ const JailDashboard = () => {
                   {/* Monitoring Section */}
                   <div className="pt-3 border-t border-purple-500/20">
                     <div className="flex items-center gap-2 mb-3">
-                      <AlertTriangle className="w-4 h-4 text-yellow-400" />
+                      <AlertTriangle className="w-4 h-4 text-amber-800" />
                       <h5 className="text-sm font-semibold text-amber-600 dark:text-amber-400">MONITORING</h5>
                     </div>
                     <div className="space-y-3 text-sm ml-4">
@@ -873,7 +873,7 @@ const JailDashboard = () => {
                     <div className="bg-white dark:bg-slate-900/50 border border-amber-500/30 rounded-lg p-4">
                       <div className="flex items-start justify-between gap-3 mb-3">
                         <div className="flex items-start gap-2 flex-1">
-                          <Circle className="w-3 h-3 fill-amber-500 text-amber-500 mt-1 flex-shrink-0" />
+                          <Circle className="w-3 h-3 fill-amber-500 text-amber-700 mt-1 flex-shrink-0" />
                           <div>
                             <p className="text-sm text-slate-900 dark:text-white font-semibold">E-Pod: Medical Housing at 92% (44/48 beds)</p>
                             <p className="text-xs text-slate-700 dark:text-slate-400 mt-1">Medical observation pod approaching capacity</p>
@@ -921,7 +921,7 @@ const JailDashboard = () => {
                     <div className="bg-white dark:bg-slate-900/50 border border-amber-500/30 rounded-lg p-4">
                       <div className="flex items-start justify-between gap-3 mb-3">
                         <div className="flex items-start gap-2 flex-1">
-                          <Circle className="w-3 h-3 fill-amber-500 text-amber-500 mt-1 flex-shrink-0" />
+                          <Circle className="w-3 h-3 fill-amber-500 text-amber-700 mt-1 flex-shrink-0" />
                           <div>
                             <p className="text-sm text-slate-900 dark:text-white font-semibold">B-Shift: 1 position unfilled - Coverage adjusted</p>
                             <p className="text-xs text-slate-700 dark:text-slate-400 mt-1">Officer Martinez called out (family emergency - approved leave)</p>
@@ -1208,7 +1208,7 @@ const JailDashboard = () => {
                 {/* Medium Security */}
                 <div className="p-3 bg-yellow-500/10 border border-yellow-500/20 rounded-lg">
                   <div className="flex justify-between text-sm mb-1">
-                    <span className="text-yellow-400 font-medium flex items-center gap-1">
+                    <span className="text-amber-800 font-medium flex items-center gap-1">
                       <Circle className="w-2 h-2 fill-yellow-400" />
                       Medium Security
                     </span>
@@ -1218,7 +1218,7 @@ const JailDashboard = () => {
                     Criteria: Standard inmates, moderate risk, most common classification
                   </div>
                   <div className="text-xs text-slate-500 mt-1">Housing: A-Pod, B-Pod (general population)</div>
-                  <div className="text-xs text-yellow-400 mt-1">Privileges: Standard visitation, commissary, recreation</div>
+                  <div className="text-xs text-amber-800 mt-1">Privileges: Standard visitation, commissary, recreation</div>
                 </div>
 
                 {/* Maximum Security */}

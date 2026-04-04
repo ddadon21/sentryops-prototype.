@@ -143,7 +143,7 @@ const BookingProcessing = () => {
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'completed': return 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30';
-      case 'in-progress': return 'bg-amber-500/20 text-amber-400 border-amber-500/30';
+      case 'in-progress': return 'bg-amber-500/20 text-amber-700 border-amber-500/30';
       case 'pending': return 'bg-slate-500/20 text-slate-700 dark:text-slate-400 border-slate-500/30';
       default: return 'bg-slate-500/20 text-slate-700 dark:text-slate-400 border-slate-500/30';
     }
@@ -154,7 +154,7 @@ const BookingProcessing = () => {
       <div className="p-4 lg:p-6">
         <div className="mb-6">
           <div className="flex items-center gap-3 mb-2">
-            <FileText className="w-8 h-8 text-amber-500" />
+            <FileText className="w-8 h-8 text-amber-700" />
             <div>
               <h1 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white">Booking & Processing</h1>
               <p className="text-slate-700 dark:text-slate-400">Intake Management & Workflow Tracking</p>
@@ -166,7 +166,7 @@ const BookingProcessing = () => {
             <div className="flex items-center gap-3">
               <div className="px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg">
                 <div className="text-xs text-slate-700 dark:text-slate-400">In Process</div>
-                <div className="text-xl font-bold text-amber-400">{inProgressBookings.length}</div>
+                <div className="text-xl font-bold text-amber-700">{inProgressBookings.length}</div>
               </div>
               <div className="px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg">
                 <div className="text-xs text-slate-700 dark:text-slate-400">Pending Intake</div>
@@ -237,7 +237,7 @@ const BookingProcessing = () => {
                     <div className="grid grid-cols-2 gap-4 text-sm">
                       <div>
                         <span className="text-slate-700 dark:text-slate-400">Booking #:</span>{' '}
-                        <span className="text-amber-400 font-mono font-semibold">{booking.id}</span>
+                        <span className="text-amber-700 font-mono font-semibold">{booking.id}</span>
                       </div>
                       <div>
                         <span className="text-slate-700 dark:text-slate-400">Inmate ID:</span>{' '}
@@ -249,7 +249,7 @@ const BookingProcessing = () => {
                       </div>
                       <div>
                         <span className="text-slate-700 dark:text-slate-400">Current Step:</span>{' '}
-                        <span className="text-amber-400 font-semibold">{booking.currentStep}</span>
+                        <span className="text-amber-700 font-semibold">{booking.currentStep}</span>
                       </div>
                     </div>
                   </div>
@@ -303,7 +303,7 @@ const BookingProcessing = () => {
                             {step.status === 'completed' ? (
                               <CheckCircle className="w-5 h-5 text-emerald-400" />
                             ) : step.status === 'in-progress' ? (
-                              <Clock className="w-5 h-5 text-amber-400 animate-pulse" />
+                              <Clock className="w-5 h-5 text-amber-700 animate-pulse" />
                             ) : (
                               getStepIcon(step.id)
                             )}
@@ -354,14 +354,14 @@ const BookingProcessing = () => {
                   <div>
                     <div className="flex items-center gap-3 mb-3">
                       <h3 className="text-xl font-bold text-slate-900 dark:text-white">{booking.name}</h3>
-                      <span className="px-3 py-1 bg-amber-500/20 border border-amber-500/30 text-amber-400 rounded text-sm font-medium">
+                      <span className="px-3 py-1 bg-amber-500/20 border border-amber-500/30 text-amber-700 rounded text-sm font-medium">
                         {booking.status}
                       </span>
                     </div>
                     <div className="grid grid-cols-2 gap-4 text-sm">
                       <div>
                         <span className="text-slate-700 dark:text-slate-400">ETA:</span>{' '}
-                        <span className="text-amber-400 font-semibold">{booking.eta}</span>
+                        <span className="text-amber-700 font-semibold">{booking.eta}</span>
                       </div>
                       <div>
                         <span className="text-slate-700 dark:text-slate-400">Transport Officer:</span>{' '}
@@ -411,7 +411,7 @@ const BookingProcessing = () => {
                       <div className="grid grid-cols-2 gap-x-6 gap-y-1 text-sm">
                         <div>
                           <span className="text-slate-700 dark:text-slate-400">Booking #:</span>{' '}
-                          <span className="text-amber-400 font-mono">{booking.id}</span>
+                          <span className="text-amber-700 font-mono">{booking.id}</span>
                         </div>
                         <div>
                           <span className="text-slate-700 dark:text-slate-400">Inmate ID:</span>{' '}

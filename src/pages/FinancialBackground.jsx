@@ -439,9 +439,9 @@ export default function FinancialBackground() {
             {/* FCRA Compliance Notice */}
             <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4 mb-4">
               <div className="flex items-start gap-3">
-                <Lock className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                <Lock className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="text-sm font-semibold text-amber-400 mb-1">FCRA PROTECTED - Fair Credit Reporting Act Compliance Required</h4>
+                  <h4 className="text-sm font-semibold text-amber-700 mb-1">FCRA PROTECTED - Fair Credit Reporting Act Compliance Required</h4>
                   <p className="text-xs text-amber-300/80">Consumer credit information - authorized use for employment screening only. All access logged per 15 USC 1681. Adverse action notices required if applicant disqualified based on credit information.</p>
                 </div>
               </div>
@@ -487,9 +487,9 @@ export default function FinancialBackground() {
                     <span className="text-blue-400 font-medium">{acceptableCount}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <AlertCircle className="w-4 h-4 text-amber-400" />
+                    <AlertCircle className="w-4 h-4 text-amber-700" />
                     <span className="text-secondary">Conditional (pending discussion):</span>
-                    <span className="text-amber-400 font-medium">{reviewCount}</span>
+                    <span className="text-amber-700 font-medium">{reviewCount}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Ban className="w-4 h-4 text-red-400" />
@@ -564,14 +564,14 @@ export default function FinancialBackground() {
                 {/* Review Required */}
                 <div className="bg-amber-500/5 border border-amber-500/20 rounded-lg p-3">
                   <div className="flex items-center gap-2 mb-2">
-                    <AlertCircle className="w-4 h-4 text-amber-400" />
-                    <span className="text-sm font-medium text-amber-400">Conditional - Discussion Required ({reviewCount})</span>
+                    <AlertCircle className="w-4 h-4 text-amber-700" />
+                    <span className="text-sm font-medium text-amber-700">Conditional - Discussion Required ({reviewCount})</span>
                   </div>
                   {financialReports.filter(r => r.statusCategory === 'review').map(r => (
                     <div key={r.id} className="text-xs text-secondary mb-1">
                       <span className="font-medium">{r.subject}</span> ({r.caseId})
                       <div className="text-slate-500 ml-2">Credit: {r.creditScore.score} | DTI: {r.debt.debtToIncome}%</div>
-                      <div className="text-amber-400/80 ml-2 mt-1">Action: {r.conditionalAction}</div>
+                      <div className="text-amber-700/80 ml-2 mt-1">Action: {r.conditionalAction}</div>
                     </div>
                   ))}
                 </div>
@@ -615,7 +615,7 @@ export default function FinancialBackground() {
             </button>
             <button
               onClick={() => setActiveTab('review')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'review' ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' : 'bg-white dark:bg-slate-800/40 text-secondary hover:text-slate-900 dark:hover:text-white border border-slate-700/50'}`}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'review' ? 'bg-amber-500/20 text-amber-700 border border-amber-500/30' : 'bg-white dark:bg-slate-800/40 text-secondary hover:text-slate-900 dark:hover:text-white border border-slate-700/50'}`}
             >
               <span className="flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4" />
@@ -648,13 +648,13 @@ export default function FinancialBackground() {
                         }`}>
                           {report.statusCategory === 'excellent' ? <CheckCircle2 className="w-6 h-6 text-green-400" /> :
                            report.statusCategory === 'acceptable' ? <CheckCircle2 className="w-6 h-6 text-blue-400" /> :
-                           <AlertCircle className="w-6 h-6 text-amber-400" />}
+                           <AlertCircle className="w-6 h-6 text-amber-700" />}
                         </div>
                         <div>
                           <div className="flex items-center gap-2 mb-1">
                             <span className={`text-xs font-medium px-2 py-0.5 rounded ${
                               report.statusCategory === 'excellent' ? 'bg-green-500/20 text-green-400' :
-                              report.statusCategory === 'acceptable' ? 'bg-blue-500/20 text-blue-400' : 'bg-amber-500/20 text-amber-400'
+                              report.statusCategory === 'acceptable' ? 'bg-blue-500/20 text-blue-400' : 'bg-amber-500/20 text-amber-700'
                             }`}>
                               {report.status}
                             </span>
@@ -670,7 +670,7 @@ export default function FinancialBackground() {
                         <div className="text-right">
                           <p className="text-3xl font-bold text-primary">{report.creditScore.score}</p>
                           <p className="text-xs text-slate-500">Credit Score ({report.creditScore.range})</p>
-                          <p className={`text-xs ${report.creditScore.exceedsBy > 50 ? 'text-green-400' : 'text-amber-400'}`}>
+                          <p className={`text-xs ${report.creditScore.exceedsBy > 50 ? 'text-green-400' : 'text-amber-700'}`}>
                             {report.creditScore.exceedsBy > 0 ? `+${report.creditScore.exceedsBy} above minimum` : 'Meets minimum'}
                           </p>
                         </div>
@@ -690,21 +690,21 @@ export default function FinancialBackground() {
                       </div>
                       <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
                         <p className="text-xs text-slate-500 mb-1">Debt-to-Income</p>
-                        <p className={`text-sm font-medium ${report.debt.debtToIncomeConcern ? 'text-amber-400' : 'text-green-400'}`}>
+                        <p className={`text-sm font-medium ${report.debt.debtToIncomeConcern ? 'text-amber-700' : 'text-green-400'}`}>
                           {report.debt.debtToIncome}%
                           {report.debt.debtToIncomeConcern && <AlertTriangle className="w-3 h-3 inline ml-1" />}
                         </p>
                       </div>
                       <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
                         <p className="text-xs text-slate-500 mb-1">Credit Utilization</p>
-                        <p className={`text-sm font-medium ${report.debt.creditUtilizationConcern ? 'text-amber-400' : 'text-green-400'}`}>
+                        <p className={`text-sm font-medium ${report.debt.creditUtilizationConcern ? 'text-amber-700' : 'text-green-400'}`}>
                           {report.debt.creditUtilization}%
                           {report.debt.creditUtilizationConcern && <AlertTriangle className="w-3 h-3 inline ml-1" />}
                         </p>
                       </div>
                       <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
                         <p className="text-xs text-slate-500 mb-1">On-Time Payments</p>
-                        <p className={`text-sm font-medium ${report.paymentHistory.onTimePercent >= 95 ? 'text-green-400' : report.paymentHistory.onTimePercent >= 85 ? 'text-amber-400' : 'text-red-400'}`}>
+                        <p className={`text-sm font-medium ${report.paymentHistory.onTimePercent >= 95 ? 'text-green-400' : report.paymentHistory.onTimePercent >= 85 ? 'text-amber-700' : 'text-red-400'}`}>
                           {report.paymentHistory.onTimePercent}%
                         </p>
                       </div>
@@ -751,7 +751,7 @@ export default function FinancialBackground() {
                               <span className="text-4xl font-bold text-primary">{report.creditScore.score}</span>
                               <span className={`text-sm font-medium ${
                                 report.creditScore.range === 'Excellent' ? 'text-green-400' :
-                                report.creditScore.range === 'Good' ? 'text-blue-400' : 'text-amber-400'
+                                report.creditScore.range === 'Good' ? 'text-blue-400' : 'text-amber-700'
                               }`}>({report.creditScore.range})</span>
                             </div>
                             <div className="space-y-1 text-sm">
@@ -793,7 +793,7 @@ export default function FinancialBackground() {
                                     {item.type === 'Medical Debt' && <Building2 className="w-4 h-4" />}
                                     {item.type}
                                   </span>
-                                  <span className={`font-medium ${item.concern ? 'text-amber-400' : 'text-primary'}`}>
+                                  <span className={`font-medium ${item.concern ? 'text-amber-700' : 'text-primary'}`}>
                                     {formatCurrency(item.amount)}
                                     {item.concern && <AlertTriangle className="w-3 h-3 inline ml-1" />}
                                   </span>
@@ -811,7 +811,7 @@ export default function FinancialBackground() {
                             <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
                               <div className="flex justify-between items-center">
                                 <span className="text-sm text-secondary">Debt-to-Income Ratio</span>
-                                <span className={`text-sm font-medium ${report.debt.debtToIncome > 50 ? 'text-amber-400' : 'text-green-400'}`}>
+                                <span className={`text-sm font-medium ${report.debt.debtToIncome > 50 ? 'text-amber-700' : 'text-green-400'}`}>
                                   {report.debt.debtToIncome}%
                                   {report.debt.debtToIncome <= 50 ? ' (PASS)' : ' (CONCERN)'}
                                 </span>
@@ -821,7 +821,7 @@ export default function FinancialBackground() {
                             <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
                               <div className="flex justify-between items-center">
                                 <span className="text-sm text-secondary">Credit Utilization</span>
-                                <span className={`text-sm font-medium ${report.debt.creditUtilization > 30 ? (report.debt.creditUtilization > 50 ? 'text-amber-400' : 'text-yellow-400') : 'text-green-400'}`}>
+                                <span className={`text-sm font-medium ${report.debt.creditUtilization > 30 ? (report.debt.creditUtilization > 50 ? 'text-amber-700' : 'text-amber-800') : 'text-green-400'}`}>
                                   {report.debt.creditUtilization}%
                                 </span>
                               </div>
@@ -840,7 +840,7 @@ export default function FinancialBackground() {
                         <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4">
                           <div className="flex items-center justify-between mb-3">
                             <span className="text-sm text-secondary">On-time payments:</span>
-                            <span className={`text-sm font-medium ${report.paymentHistory.onTimePercent === 100 ? 'text-green-400' : report.paymentHistory.onTimePercent >= 90 ? 'text-blue-400' : 'text-amber-400'}`}>
+                            <span className={`text-sm font-medium ${report.paymentHistory.onTimePercent === 100 ? 'text-green-400' : report.paymentHistory.onTimePercent >= 90 ? 'text-blue-400' : 'text-amber-700'}`}>
                               {report.paymentHistory.onTimePercent}% {report.paymentHistory.onTimePercent === 100 ? '(perfect)' : ''}
                             </span>
                           </div>
@@ -851,7 +851,7 @@ export default function FinancialBackground() {
                                 {report.paymentHistory.latePayments.map((late, idx) => (
                                   <div key={idx} className="text-xs bg-white dark:bg-slate-800/60 rounded-lg p-2">
                                     <div className="flex items-center justify-between mb-1">
-                                      <span className="text-amber-400">{late.type}: {late.daysLate} days late</span>
+                                      <span className="text-amber-700">{late.type}: {late.daysLate} days late</span>
                                       <span className="text-slate-500">{late.date}</span>
                                     </div>
                                     <p className="text-secondary">Context: {late.context}</p>
@@ -879,7 +879,7 @@ export default function FinancialBackground() {
                           {Object.entries(report.negativeItems).map(([key, value]) => (
                             <div key={key} className={`rounded-lg p-3 ${value.count > 0 ? 'bg-amber-500/10 border border-amber-500/30' : 'bg-white dark:bg-slate-900/40'}`}>
                               <p className="text-xs text-slate-500 capitalize mb-1">{key}</p>
-                              <p className={`text-sm font-medium ${value.count > 0 ? 'text-amber-400' : 'text-green-400'}`}>
+                              <p className={`text-sm font-medium ${value.count > 0 ? 'text-amber-700' : 'text-green-400'}`}>
                                 {value.status}
                                 {value.count === 0 && <CheckCircle className="w-3.5 h-3.5 inline ml-1" />}
                               </p>
@@ -890,7 +890,7 @@ export default function FinancialBackground() {
                         {/* Collection/Judgment Details if present */}
                         {report.negativeItems.collections.count > 0 && (
                           <div className="mt-3 bg-amber-500/10 border border-amber-500/30 rounded-lg p-3">
-                            <p className="text-sm font-medium text-amber-400 mb-2">Collections Details:</p>
+                            <p className="text-sm font-medium text-amber-700 mb-2">Collections Details:</p>
                             {report.negativeItems.collections.details.map((col, idx) => (
                               <div key={idx} className="text-xs text-secondary mb-2 ml-2">
                                 <span className="text-amber-300">{formatCurrency(col.amount)}</span> - {col.originalCreditor}
@@ -901,7 +901,7 @@ export default function FinancialBackground() {
                         )}
                         {report.negativeItems.judgments.count > 0 && (
                           <div className="mt-3 bg-amber-500/10 border border-amber-500/30 rounded-lg p-3">
-                            <p className="text-sm font-medium text-amber-400 mb-2">Judgment Details:</p>
+                            <p className="text-sm font-medium text-amber-700 mb-2">Judgment Details:</p>
                             {report.negativeItems.judgments.details.map((jud, idx) => (
                               <div key={idx} className="text-xs text-secondary mb-2 ml-2">
                                 <span className="text-amber-300">{formatCurrency(jud.amount)}</span> - {jud.creditor}
@@ -923,8 +923,8 @@ export default function FinancialBackground() {
                             <div key={key} className={`flex items-center gap-2 text-sm p-2 rounded-lg ${std.status === 'pass' ? 'bg-green-500/5' : std.status === 'fail' ? 'bg-red-500/5' : 'bg-amber-500/5'}`}>
                               {std.status === 'pass' ? <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" /> :
                                std.status === 'fail' ? <XCircle className="w-4 h-4 text-red-500 flex-shrink-0" /> :
-                               <AlertCircle className="w-4 h-4 text-amber-500 flex-shrink-0" />}
-                              <span className={`${std.status === 'pass' ? 'text-green-400' : std.status === 'fail' ? 'text-red-400' : 'text-amber-400'}`}>
+                               <AlertCircle className="w-4 h-4 text-amber-700 flex-shrink-0" />}
+                              <span className={`${std.status === 'pass' ? 'text-green-400' : std.status === 'fail' ? 'text-red-400' : 'text-amber-700'}`}>
                                 {key === 'creditScore' && `Credit score ≥650: ${std.status.toUpperCase()} (${std.value})`}
                                 {key === 'bankruptcies' && `No active bankruptcies: ${std.status.toUpperCase()}`}
                                 {key === 'foreclosures' && `No recent foreclosures: ${std.status.toUpperCase()}`}
@@ -940,14 +940,14 @@ export default function FinancialBackground() {
                       {/* Concerns (if any) */}
                       {report.concerns && report.concerns.length > 0 && (
                         <div className="mb-6 bg-amber-500/10 border border-amber-500/30 rounded-xl p-4">
-                          <h4 className="text-sm font-semibold text-amber-400 mb-3 flex items-center gap-2">
+                          <h4 className="text-sm font-semibold text-amber-700 mb-3 flex items-center gap-2">
                             <AlertTriangle className="w-4 h-4" />
                             Concerns Identified
                           </h4>
                           <ul className="space-y-1">
                             {report.concerns.map((concern, idx) => (
                               <li key={idx} className="text-sm text-amber-300/80 flex items-start gap-2">
-                                <span className="text-amber-400">•</span>
+                                <span className="text-amber-700">•</span>
                                 {concern}
                               </li>
                             ))}
@@ -973,7 +973,7 @@ export default function FinancialBackground() {
                           <div className="flex items-center gap-2 mb-2">
                             <span className={`text-sm font-semibold ${
                               report.statusCategory === 'excellent' ? 'text-green-400' :
-                              report.statusCategory === 'acceptable' ? 'text-blue-400' : 'text-amber-400'
+                              report.statusCategory === 'acceptable' ? 'text-blue-400' : 'text-amber-700'
                             }`}>
                               RECOMMENDATION: {report.recommendation.toUpperCase()}
                             </span>
@@ -1032,7 +1032,7 @@ export default function FinancialBackground() {
                         </button>
                         {report.statusCategory === 'review' && (
                           <>
-                            <button className="flex items-center gap-2 px-4 py-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 rounded-xl text-sm font-medium transition-colors border border-amber-500/20">
+                            <button className="flex items-center gap-2 px-4 py-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 rounded-xl text-sm font-medium transition-colors border border-amber-500/20">
                               <Calendar className="w-4 h-4" />Schedule Discussion
                             </button>
                             <button className="flex items-center gap-2 px-4 py-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 rounded-xl text-sm font-medium transition-colors border border-red-500/20">

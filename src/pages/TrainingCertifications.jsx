@@ -258,7 +258,7 @@ export default function TrainingCertifications() {
       id: 'taser',
       name: 'TASER Certification',
       icon: Zap,
-      iconColor: 'text-yellow-400',
+      iconColor: 'text-amber-800',
       bgColor: 'bg-yellow-500/10',
       borderColor: 'border-yellow-500/30',
       authority: 'Axon TASER Certification Program | GCSO Policy 4.15 - Electronic Control Devices (TASER)',
@@ -385,12 +385,12 @@ export default function TrainingCertifications() {
         <div className="p-4 border-b border-border flex items-center justify-between">
           {!sidebarCollapsed && (
             <div className="flex items-center gap-2">
-              <Shield className="w-8 h-8 text-amber-500" />
+              <Shield className="w-8 h-8 text-amber-700" />
               <h1 className="text-xl font-bold text-primary">SentryOps</h1>
             </div>
           )}
           {sidebarCollapsed && (
-            <Shield className="w-8 h-8 text-amber-500 mx-auto" />
+            <Shield className="w-8 h-8 text-amber-700 mx-auto" />
           )}
           <button
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
@@ -618,9 +618,9 @@ export default function TrainingCertifications() {
 
               <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4">
                 <div className="flex items-start gap-3">
-                  <Clock className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                  <Clock className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" />
                   <div className="flex-1">
-                    <p className="text-sm font-medium text-amber-400 mb-1">23 Certifications Expire Within 60 Days - Schedule Renewals Immediately</p>
+                    <p className="text-sm font-medium text-amber-700 mb-1">23 Certifications Expire Within 60 Days - Schedule Renewals Immediately</p>
                     <p className="text-xs text-secondary">POST (8), TASER (5), CPR/First Aid (10) - Review individual expiration dates below</p>
                   </div>
                 </div>
@@ -628,9 +628,9 @@ export default function TrainingCertifications() {
 
               <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4">
                 <div className="flex items-start gap-3">
-                  <Clock className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                  <Clock className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" />
                   <div className="flex-1">
-                    <p className="text-sm font-medium text-amber-400 mb-1">34 Defensive Tactics Recertifications Due Q1 2026</p>
+                    <p className="text-sm font-medium text-amber-700 mb-1">34 Defensive Tactics Recertifications Due Q1 2026</p>
                     <p className="text-xs text-secondary">Due by March 31, 2026 - 3 training sessions scheduled (Feb 18, Mar 3, Mar 17) - Range time required</p>
                   </div>
                 </div>
@@ -645,7 +645,7 @@ export default function TrainingCertifications() {
                 }`}>
                   <p className="text-xs text-secondary mb-1 truncate">{item.label}</p>
                   <p className={`text-xl font-bold mb-1 ${
-                    item.status === 'critical' ? 'text-red-400' : item.status === 'warning' ? 'text-amber-400' : 'text-green-400'
+                    item.status === 'critical' ? 'text-red-400' : item.status === 'warning' ? 'text-amber-700' : 'text-green-400'
                   }`}>{item.pct}</p>
                   <p className="text-xs text-slate-500">{item.compliant}/{item.total}</p>
                   <div className="mt-2 w-full h-1.5 bg-white dark:bg-slate-700/50 rounded-full overflow-hidden">
@@ -777,7 +777,7 @@ export default function TrainingCertifications() {
 
                     {/* Corrective Action Plan */}
                     <div className="mt-4">
-                      <h5 className="text-xs font-semibold text-amber-400 mb-3 flex items-center gap-2">
+                      <h5 className="text-xs font-semibold text-amber-700 mb-3 flex items-center gap-2">
                         <ClipboardCheck className="w-4 h-4" />
                         Corrective Action Plan
                       </h5>
@@ -878,7 +878,7 @@ export default function TrainingCertifications() {
 
                     {/* Recertification Training Details */}
                     <div className="mt-4 bg-amber-500/5 border border-amber-500/20 rounded-lg p-4">
-                      <h5 className="text-xs font-semibold text-amber-400 mb-3">Recertification Training Scheduled:</h5>
+                      <h5 className="text-xs font-semibold text-amber-700 mb-3">Recertification Training Scheduled:</h5>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-secondary">
                         <div><span className="text-slate-500">Date:</span> {criticalViolations.expiredTaser.recertTraining.date}</div>
                         <div><span className="text-slate-500">Location:</span> {criticalViolations.expiredTaser.recertTraining.location}</div>
@@ -972,7 +972,7 @@ export default function TrainingCertifications() {
                             <div className="text-right hidden sm:block">
                               <p className={`text-lg font-bold ${
                                 category.stats.certifiedPct === '100%' ? 'text-green-400' :
-                                parseFloat(category.stats.certifiedPct) >= 95 ? 'text-amber-400' :
+                                parseFloat(category.stats.certifiedPct) >= 95 ? 'text-amber-700' :
                                 'text-red-400'
                               }`}>{category.stats.certifiedPct}</p>
                               <p className="text-[10px] text-slate-500">{category.stats.certified}/{category.totalPersonnel} compliant</p>
@@ -1028,7 +1028,7 @@ export default function TrainingCertifications() {
 
                                   {/* CJIS-specific */}
                                   {category.stats.nextAudit && (
-                                    <p className="text-[10px] text-amber-400 ml-6 mt-1">{category.stats.nextAudit}</p>
+                                    <p className="text-[10px] text-amber-700 ml-6 mt-1">{category.stats.nextAudit}</p>
                                   )}
                                 </div>
 
@@ -1079,8 +1079,8 @@ export default function TrainingCertifications() {
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                                   <div className="bg-amber-500/5 border border-amber-500/20 rounded-lg p-3">
                                     <div className="flex items-center gap-2 mb-2">
-                                      <AlertCircle className="w-3.5 h-3.5 text-amber-400" />
-                                      <span className="text-xs font-medium text-amber-400">Within 30 days: {category.upcoming.within30.count}</span>
+                                      <AlertCircle className="w-3.5 h-3.5 text-amber-700" />
+                                      <span className="text-xs font-medium text-amber-700">Within 30 days: {category.upcoming.within30.count}</span>
                                     </div>
                                     {category.upcoming.within30.deputies && (
                                       <div className="space-y-2">
@@ -1091,7 +1091,7 @@ export default function TrainingCertifications() {
                                             {dep.renewalScheduled ? (
                                               <p className="text-green-400">Renewal scheduled: {dep.renewalDate}</p>
                                             ) : (
-                                              <p className="text-amber-400 font-medium">Need to schedule renewal</p>
+                                              <p className="text-amber-700 font-medium">Need to schedule renewal</p>
                                             )}
                                           </div>
                                         ))}
@@ -1168,7 +1168,7 @@ export default function TrainingCertifications() {
                                       </div>
                                       <span className={`px-2 py-0.5 rounded text-[10px] font-medium ${
                                         day.status === 'scheduled' ? 'bg-green-500/20 text-green-400' :
-                                        day.status === 'tentative' ? 'bg-amber-500/20 text-amber-400' :
+                                        day.status === 'tentative' ? 'bg-amber-500/20 text-amber-700' :
                                         'bg-blue-500/20 text-blue-400'
                                       }`}>{day.status}</span>
                                     </div>
@@ -1187,7 +1187,7 @@ export default function TrainingCertifications() {
                                       <div className="flex items-center justify-between">
                                         <p className="text-xs text-primary font-medium">{session.date}</p>
                                         <span className={`px-2 py-0.5 rounded text-[10px] font-medium ${
-                                          session.status === 'Open' ? 'bg-green-500/20 text-green-400' : 'bg-amber-500/20 text-amber-400'
+                                          session.status === 'Open' ? 'bg-green-500/20 text-green-400' : 'bg-amber-500/20 text-amber-700'
                                         }`}>{session.status}</span>
                                       </div>
                                       <p className="text-[10px] text-secondary mt-1">Enrolled: {session.enrolled}/{session.slots} slots</p>
@@ -1245,17 +1245,17 @@ export default function TrainingCertifications() {
               <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-primary">Training Coordinator</p>
                 <p className="text-xs text-secondary">Sgt. R. Martinez (Training Division)</p>
-                <p className="text-xs text-amber-400 mt-1">Ext. 4521</p>
+                <p className="text-xs text-amber-700 mt-1">Ext. 4521</p>
               </div>
               <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-primary">Firearms Instructor</p>
                 <p className="text-xs text-secondary">Sgt. R. Martinez (Lead), Deputy K. Chen (Asst.)</p>
-                <p className="text-xs text-amber-400 mt-1">Range: Ext. 4530</p>
+                <p className="text-xs text-amber-700 mt-1">Range: Ext. 4530</p>
               </div>
               <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-primary">DT Instructor</p>
                 <p className="text-xs text-secondary">Deputy M. Johnson</p>
-                <p className="text-xs text-amber-400 mt-1">Ext. 4525</p>
+                <p className="text-xs text-amber-700 mt-1">Ext. 4525</p>
               </div>
               <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-primary">GA POST Portal</p>

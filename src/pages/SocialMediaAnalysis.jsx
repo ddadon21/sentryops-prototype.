@@ -496,9 +496,9 @@ export default function SocialMediaAnalysis() {
                     <span className="text-green-400 font-medium">{clearCount}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <AlertCircle className="w-4 h-4 text-amber-400" />
+                    <AlertCircle className="w-4 h-4 text-amber-700" />
                     <span className="text-secondary">Conditional (requires discussion):</span>
-                    <span className="text-amber-400 font-medium">{reviewCount}</span>
+                    <span className="text-amber-700 font-medium">{reviewCount}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Clock className="w-4 h-4 text-blue-400" />
@@ -560,14 +560,14 @@ export default function SocialMediaAnalysis() {
                 {/* Review Required */}
                 <div className="bg-amber-500/5 border border-amber-500/20 rounded-lg p-3">
                   <div className="flex items-center gap-2 mb-2">
-                    <AlertCircle className="w-4 h-4 text-amber-400" />
-                    <span className="text-sm font-medium text-amber-400">Conditional - Discussion Required ({reviewCount})</span>
+                    <AlertCircle className="w-4 h-4 text-amber-700" />
+                    <span className="text-sm font-medium text-amber-700">Conditional - Discussion Required ({reviewCount})</span>
                   </div>
                   {socialMediaReports.filter(r => r.statusCategory === 'review').map(r => (
                     <div key={r.id} className="text-xs text-secondary mb-1">
                       <span className="font-medium">{r.subject}</span> ({r.caseId})
                       <div className="text-slate-500 ml-2">{r.flaggedPosts} flagged posts (old content)</div>
-                      <div className="text-amber-400/80 ml-2 mt-1">Action: {r.conditionalAction}</div>
+                      <div className="text-amber-700/80 ml-2 mt-1">Action: {r.conditionalAction}</div>
                     </div>
                   ))}
                 </div>
@@ -624,7 +624,7 @@ export default function SocialMediaAnalysis() {
             </button>
             <button
               onClick={() => setActiveTab('review')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'review' ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' : 'bg-white dark:bg-slate-800/40 text-secondary hover:text-slate-900 dark:hover:text-white border border-slate-700/50'}`}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'review' ? 'bg-amber-500/20 text-amber-700 border border-amber-500/30' : 'bg-white dark:bg-slate-800/40 text-secondary hover:text-slate-900 dark:hover:text-white border border-slate-700/50'}`}
             >
               <span className="flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4" />
@@ -665,14 +665,14 @@ export default function SocialMediaAnalysis() {
                           report.statusCategory === 'review' ? 'bg-amber-500/20' : 'bg-blue-500/20'
                         }`}>
                           {report.statusCategory === 'clear' ? <CheckCircle2 className="w-6 h-6 text-green-400" /> :
-                           report.statusCategory === 'review' ? <AlertCircle className="w-6 h-6 text-amber-400" /> :
+                           report.statusCategory === 'review' ? <AlertCircle className="w-6 h-6 text-amber-700" /> :
                            <Clock className="w-6 h-6 text-blue-400" />}
                         </div>
                         <div>
                           <div className="flex items-center gap-2 mb-1">
                             <span className={`text-xs font-medium px-2 py-0.5 rounded ${
                               report.statusCategory === 'clear' ? 'bg-green-500/20 text-green-400' :
-                              report.statusCategory === 'review' ? 'bg-amber-500/20 text-amber-400' : 'bg-blue-500/20 text-blue-400'
+                              report.statusCategory === 'review' ? 'bg-amber-500/20 text-amber-700' : 'bg-blue-500/20 text-blue-400'
                             }`}>
                               {report.status}
                             </span>
@@ -689,7 +689,7 @@ export default function SocialMediaAnalysis() {
                           <p className="text-2xl font-bold text-primary">{report.totalPostsReviewed}</p>
                           <p className="text-xs text-slate-500">Posts Reviewed</p>
                           {report.flaggedPosts > 0 && (
-                            <p className="text-xs text-amber-400">{report.flaggedPosts} flagged (old content)</p>
+                            <p className="text-xs text-amber-700">{report.flaggedPosts} flagged (old content)</p>
                           )}
                         </div>
                         {isExpanded ? <ChevronUp className="w-5 h-5 text-secondary" /> : <ChevronDown className="w-5 h-5 text-secondary" />}
@@ -820,7 +820,7 @@ export default function SocialMediaAnalysis() {
                       {/* Flagged Content (for review cases) */}
                       {report.flaggedContent && report.flaggedContent.length > 0 && (
                         <div className="mb-6">
-                          <h4 className="text-sm font-semibold text-amber-400 mb-3 flex items-center gap-2">
+                          <h4 className="text-sm font-semibold text-amber-700 mb-3 flex items-center gap-2">
                             <Flag className="w-4 h-4" />
                             Flagged Content - Requires Discussion ({report.flaggedContent.length} posts)
                           </h4>
@@ -829,7 +829,7 @@ export default function SocialMediaAnalysis() {
                               <div key={idx} className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
                                 <div className="flex items-start justify-between mb-2">
                                   <div>
-                                    <span className="text-sm font-medium text-amber-400">Flagged Post #{flagged.id}</span>
+                                    <span className="text-sm font-medium text-amber-700">Flagged Post #{flagged.id}</span>
                                     <span className="text-xs text-slate-500 ml-2">({flagged.platform}, {flagged.date})</span>
                                   </div>
                                   <span className="text-xs px-2 py-0.5 bg-amber-500/20 text-amber-300 rounded">{flagged.yearsAgo} years ago</span>
@@ -846,7 +846,7 @@ export default function SocialMediaAnalysis() {
                                 </div>
                                 <p className="text-sm text-secondary mb-1">{flagged.description}</p>
                                 <p className="text-xs text-slate-500">Context: {flagged.context}</p>
-                                <p className="text-xs text-amber-400/80 mt-1">Severity: {flagged.severity}</p>
+                                <p className="text-xs text-amber-700/80 mt-1">Severity: {flagged.severity}</p>
                               </div>
                             ))}
                           </div>
@@ -932,8 +932,8 @@ export default function SocialMediaAnalysis() {
                           <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                             {Object.entries(report.professionalBoundaries).filter(([key]) => !key.includes('Issues')).map(([key, value]) => (
                               <div key={key} className={`flex items-center gap-2 text-sm p-2 rounded-lg ${value ? 'bg-green-500/5' : 'bg-amber-500/5'}`}>
-                                {value ? <CheckCircle className="w-4 h-4 text-green-500" /> : <AlertCircle className="w-4 h-4 text-amber-500" />}
-                                <span className={value ? 'text-green-400' : 'text-amber-400'}>
+                                {value ? <CheckCircle className="w-4 h-4 text-green-500" /> : <AlertCircle className="w-4 h-4 text-amber-700" />}
+                                <span className={value ? 'text-green-400' : 'text-amber-700'}>
                                   {key === 'maintainsAppropriate' && 'Appropriate boundaries'}
                                   {key === 'noDisparaging' && 'No disparaging comments'}
                                   {key === 'noConfidentialDisclosure' && 'No confidential disclosures'}
@@ -1008,7 +1008,7 @@ export default function SocialMediaAnalysis() {
                           <div className="flex items-center gap-2 mb-2">
                             <span className={`text-sm font-semibold ${
                               report.statusCategory === 'clear' ? 'text-green-400' :
-                              report.statusCategory === 'review' ? 'text-amber-400' : 'text-blue-400'
+                              report.statusCategory === 'review' ? 'text-amber-700' : 'text-blue-400'
                             }`}>
                               RECOMMENDATION: {report.recommendation.toUpperCase()}
                             </span>
@@ -1052,10 +1052,10 @@ export default function SocialMediaAnalysis() {
                         )}
                         {report.statusCategory === 'review' && (
                           <>
-                            <button className="flex items-center gap-2 px-4 py-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 rounded-xl text-sm font-medium transition-colors border border-amber-500/20">
+                            <button className="flex items-center gap-2 px-4 py-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 rounded-xl text-sm font-medium transition-colors border border-amber-500/20">
                               <Flag className="w-4 h-4" />View Flagged Posts
                             </button>
-                            <button className="flex items-center gap-2 px-4 py-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 rounded-xl text-sm font-medium transition-colors border border-amber-500/20">
+                            <button className="flex items-center gap-2 px-4 py-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 rounded-xl text-sm font-medium transition-colors border border-amber-500/20">
                               <Calendar className="w-4 h-4" />Schedule Discussion
                             </button>
                           </>

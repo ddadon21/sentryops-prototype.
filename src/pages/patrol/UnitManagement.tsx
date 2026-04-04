@@ -286,7 +286,7 @@ const UnitManagement = () => {
     switch (status) {
       case 'Available': return 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30';
       case 'Dispatched': return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
-      case 'En Route': return 'bg-amber-500/20 text-amber-400 border-amber-500/30';
+      case 'En Route': return 'bg-amber-500/20 text-amber-700 border-amber-500/30';
       case 'On Scene': return 'bg-purple-500/20 text-purple-400 border-purple-500/30';
       case 'Meal Break': return 'bg-slate-500/20 text-slate-700 dark:text-slate-400 border-slate-500/30';
       case 'Administrative': return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
@@ -297,7 +297,7 @@ const UnitManagement = () => {
 
   const getFuelColor = (level: number) => {
     if (level >= 60) return 'text-emerald-400';
-    if (level >= 30) return 'text-amber-400';
+    if (level >= 30) return 'text-amber-700';
     return 'text-red-400';
   };
 
@@ -306,7 +306,7 @@ const UnitManagement = () => {
       <div className="p-4 lg:p-6">
         <div className="mb-6">
           <div className="flex items-center gap-3 mb-2">
-            <Car className="w-8 h-8 text-amber-500" />
+            <Car className="w-8 h-8 text-amber-700" />
             <div>
               <h1 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white">Patrol Unit Management</h1>
               <p className="text-slate-700 dark:text-slate-400">Real-Time Unit Status & Fleet Management</p>
@@ -326,7 +326,7 @@ const UnitManagement = () => {
           </div>
           <div className="bg-slate-800 border border-amber-500/30 rounded-lg p-4">
             <div className="text-sm text-slate-700 dark:text-slate-400 mb-1">Deployed</div>
-            <div className="text-2xl font-bold text-amber-400">{stats.deployed}</div>
+            <div className="text-2xl font-bold text-amber-700">{stats.deployed}</div>
           </div>
           <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4">
             <div className="text-sm text-slate-700 dark:text-slate-400 mb-1">Out of Service</div>
@@ -415,8 +415,8 @@ const UnitManagement = () => {
                 </div>
                 {unit.currentCall && (
                   <div className="flex items-center gap-2">
-                    <Radio className="w-4 h-4 text-amber-400" />
-                    <span className="text-amber-400 font-medium text-xs">{unit.currentCall}</span>
+                    <Radio className="w-4 h-4 text-amber-700" />
+                    <span className="text-amber-700 font-medium text-xs">{unit.currentCall}</span>
                   </div>
                 )}
               </div>

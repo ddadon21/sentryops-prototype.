@@ -526,7 +526,7 @@ export default function ComplianceManagement() {
     const configs = {
       compliant: { bg: 'bg-green-500/20', text: 'text-green-400', border: 'border-green-500/30', label: 'COMPLIANT', icon: CheckCircle2 },
       'in-progress': { bg: 'bg-blue-500/20', text: 'text-blue-400', border: 'border-blue-500/30', label: 'IN PROGRESS', icon: Clock },
-      'needs-attention': { bg: 'bg-amber-500/20', text: 'text-amber-400', border: 'border-amber-500/30', label: 'NEEDS ATTENTION', icon: AlertTriangle },
+      'needs-attention': { bg: 'bg-amber-500/20', text: 'text-amber-700', border: 'border-amber-500/30', label: 'NEEDS ATTENTION', icon: AlertTriangle },
       'violation': { bg: 'bg-red-500/20', text: 'text-red-400', border: 'border-red-500/30', label: 'VIOLATION', icon: XCircle }
     };
     return configs[status] || configs.compliant;
@@ -542,12 +542,12 @@ export default function ComplianceManagement() {
         <div className="p-4 border-b border-border flex items-center justify-between">
           {!sidebarCollapsed && (
             <div className="flex items-center gap-2">
-              <Shield className="w-8 h-8 text-amber-500" />
+              <Shield className="w-8 h-8 text-amber-700" />
               <h1 className="text-xl font-bold text-primary">SentryOps</h1>
             </div>
           )}
           {sidebarCollapsed && (
-            <Shield className="w-8 h-8 text-amber-500 mx-auto" />
+            <Shield className="w-8 h-8 text-amber-700 mx-auto" />
           )}
           <button
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
@@ -760,7 +760,7 @@ export default function ComplianceManagement() {
                 </span>
               </div>
               <div className="flex items-center gap-3 px-4 py-2.5 bg-amber-500/10 border border-amber-500/20 rounded-lg">
-                <AlertTriangle className="w-4 h-4 text-amber-400 flex-shrink-0" />
+                <AlertTriangle className="w-4 h-4 text-amber-700 flex-shrink-0" />
                 <span className="text-sm text-amber-300">
                   <span className="font-medium">CJIS Security Training:</span> 8 employees need training by Nov 30, 2024 (294 days remaining)
                 </span>
@@ -789,12 +789,12 @@ export default function ComplianceManagement() {
               <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-5">
                 <div className="flex items-center justify-between mb-3">
                   <div className="w-10 h-10 bg-amber-500/20 rounded-xl flex items-center justify-center">
-                    <AlertTriangle className="w-5 h-5 text-amber-400" />
+                    <AlertTriangle className="w-5 h-5 text-amber-700" />
                   </div>
                 </div>
-                <p className="text-2xl font-bold text-amber-400 mb-1">{attentionAreas}</p>
+                <p className="text-2xl font-bold text-amber-700 mb-1">{attentionAreas}</p>
                 <p className="text-sm text-secondary">Areas Need Attention</p>
-                <p className="text-xs text-amber-400 mt-1">POST, CJIS training pending</p>
+                <p className="text-xs text-amber-700 mt-1">POST, CJIS training pending</p>
               </div>
 
               <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-5">
@@ -909,7 +909,7 @@ export default function ComplianceManagement() {
                                     </div>
                                     <div>
                                       <p className="text-slate-500">Renewal Status</p>
-                                      <p className="text-amber-400">{person.renewalStatus}</p>
+                                      <p className="text-amber-700">{person.renewalStatus}</p>
                                     </div>
                                     <div>
                                       <p className="text-slate-500">Supervisor</p>
@@ -1027,7 +1027,7 @@ export default function ComplianceManagement() {
                           </div>
                           <div className="text-right">
                             <p className="text-xs text-slate-500">Deadline</p>
-                            <p className="text-sm text-amber-400 font-medium">{violation.deadline}</p>
+                            <p className="text-sm text-amber-700 font-medium">{violation.deadline}</p>
                           </div>
                         </div>
 
@@ -1036,7 +1036,7 @@ export default function ComplianceManagement() {
                           <button className="flex-1 px-4 py-2 bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 text-red-400 rounded-lg text-sm font-medium transition-all">
                             Schedule Training Immediately
                           </button>
-                          <button className="flex-1 px-4 py-2 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/30 text-amber-400 rounded-lg text-sm font-medium transition-all">
+                          <button className="flex-1 px-4 py-2 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/30 text-amber-700 rounded-lg text-sm font-medium transition-all">
                             Notify Sheriff - Violation Report
                           </button>
                           <button className="px-4 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-sm font-medium transition-all">
@@ -1243,7 +1243,7 @@ export default function ComplianceManagement() {
 
                                 {req.needTraining !== undefined && (
                                   <p className="text-xs mt-1">
-                                    <span className="text-amber-400">{req.needTraining} employees need training</span>
+                                    <span className="text-amber-700">{req.needTraining} employees need training</span>
                                     <span className="text-slate-500 ml-2">• Deadline: {req.deadline}</span>
                                     <span className="text-slate-500 ml-2">• {req.daysRemaining} days remaining</span>
                                   </p>

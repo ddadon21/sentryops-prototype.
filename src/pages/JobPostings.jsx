@@ -85,12 +85,12 @@ export default function JobPostings() {
         <div className="p-4 border-b border-border flex items-center justify-between">
           {!sidebarCollapsed && (
             <div className="flex items-center gap-2">
-              <Shield className="w-8 h-8 text-amber-500" />
+              <Shield className="w-8 h-8 text-amber-700" />
               <h1 className="text-xl font-bold text-primary">SentryOps</h1>
             </div>
           )}
           {sidebarCollapsed && (
-            <Shield className="w-8 h-8 text-amber-500 mx-auto" />
+            <Shield className="w-8 h-8 text-amber-700 mx-auto" />
           )}
           <button
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
@@ -257,7 +257,7 @@ export default function JobPostings() {
               <span className="text-slate-700">|</span>
               <span>Total Applicants: <span className="text-primary font-medium">47</span> (active pipeline)</span>
               <span className="text-slate-700">|</span>
-              <span>Sheriff: <span className="text-amber-400 font-medium">Keybo Taylor</span></span>
+              <span>Sheriff: <span className="text-amber-700 font-medium">Keybo Taylor</span></span>
             </div>
 
             {/* Quick Actions */}
@@ -283,7 +283,7 @@ export default function JobPostings() {
             {/* Alert Context Bar */}
             <div className="space-y-2">
               <div className="flex items-center gap-3 px-4 py-2.5 bg-amber-500/10 border border-amber-500/30 rounded-lg">
-                <AlertCircle className="w-4 h-4 text-amber-400 flex-shrink-0" />
+                <AlertCircle className="w-4 h-4 text-amber-700 flex-shrink-0" />
                 <span className="text-sm text-amber-200">
                   <span className="font-semibold">Deputy Sheriff (Patrol):</span> 23 applicants for 8 vacancies - oral board Feb 06, 2026
                 </span>
@@ -344,7 +344,7 @@ export default function JobPostings() {
                 <div className="px-5 pb-5 space-y-6 border-t border-border">
                   {/* Posting Details */}
                   <div className="pt-5">
-                    <h4 className="text-sm font-bold text-amber-400 uppercase tracking-wide mb-4">Posting Details</h4>
+                    <h4 className="text-sm font-bold text-amber-700 uppercase tracking-wide mb-4">Posting Details</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                       <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 border border-border">
                         <p className="text-xs text-slate-500 mb-1">Positions Available</p>
@@ -394,7 +394,7 @@ export default function JobPostings() {
 
                   {/* Minimum Qualifications */}
                   <div>
-                    <h4 className="text-sm font-bold text-amber-400 uppercase tracking-wide mb-4">Minimum Qualifications</h4>
+                    <h4 className="text-sm font-bold text-amber-700 uppercase tracking-wide mb-4">Minimum Qualifications</h4>
                     <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 border border-border">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
                         <div className="flex items-start gap-2">
@@ -427,7 +427,7 @@ export default function JobPostings() {
 
                   {/* Benefits */}
                   <div>
-                    <h4 className="text-sm font-bold text-amber-400 uppercase tracking-wide mb-4">GCSO Benefits Package</h4>
+                    <h4 className="text-sm font-bold text-amber-700 uppercase tracking-wide mb-4">GCSO Benefits Package</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
                       <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3 border border-border">
                         <Heart className="w-5 h-5 text-red-400 mb-2" />
@@ -454,7 +454,7 @@ export default function JobPostings() {
 
                   {/* Recruitment Metrics */}
                   <div>
-                    <h4 className="text-sm font-bold text-amber-400 uppercase tracking-wide mb-4">Recruitment Metrics</h4>
+                    <h4 className="text-sm font-bold text-amber-700 uppercase tracking-wide mb-4">Recruitment Metrics</h4>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                       <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 border border-border text-center">
                         <p className="text-2xl font-bold text-primary">23</p>
@@ -470,9 +470,9 @@ export default function JobPostings() {
                         <p className="text-xs text-secondary">Job Posting Views</p>
                       </div>
                       <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 border border-border text-center">
-                        <p className="text-2xl font-bold text-amber-400">14.7%</p>
+                        <p className="text-2xl font-bold text-amber-700">14.7%</p>
                         <p className="text-xs text-secondary">Conversion Rate</p>
-                        <p className="text-xs text-amber-400 mt-1">Below target (20-25%)</p>
+                        <p className="text-xs text-amber-700 mt-1">Below target (20-25%)</p>
                       </div>
                       <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 border border-border text-center">
                         <p className="text-2xl font-bold text-primary">127</p>
@@ -483,7 +483,7 @@ export default function JobPostings() {
 
                   {/* Applicant Pipeline */}
                   <div>
-                    <h4 className="text-sm font-bold text-amber-400 uppercase tracking-wide mb-4">Applicant Pipeline Status</h4>
+                    <h4 className="text-sm font-bold text-amber-700 uppercase tracking-wide mb-4">Applicant Pipeline Status</h4>
                     <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 border border-border space-y-4">
                       {/* Pipeline stages */}
                       <div className="flex items-center gap-4">
@@ -526,7 +526,7 @@ export default function JobPostings() {
 
                   {/* Competitive Intelligence */}
                   <div>
-                    <h4 className="text-sm font-bold text-amber-400 uppercase tracking-wide mb-4">Competitive Intelligence - Metro Atlanta Agencies</h4>
+                    <h4 className="text-sm font-bold text-amber-700 uppercase tracking-wide mb-4">Competitive Intelligence - Metro Atlanta Agencies</h4>
                     <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4 mb-4">
                       <div className="flex items-center gap-2 mb-2">
                         <AlertTriangle className="w-5 h-5 text-red-400" />
@@ -553,16 +553,16 @@ export default function JobPostings() {
                       </div>
                       <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3 border border-border">
                         <p className="text-xs font-medium text-primary">Fulton County Sheriff</p>
-                        <p className="text-sm text-amber-400 font-bold">$52,500 starting</p>
-                        <div className="flex items-center gap-1 text-xs text-amber-400 mt-1">
+                        <p className="text-sm text-amber-700 font-bold">$52,500 starting</p>
+                        <div className="flex items-center gap-1 text-xs text-amber-700 mt-1">
                           <ArrowUpRight className="w-3 h-3" />
                           <span>+9.4% vs GCSO + $5K bonus</span>
                         </div>
                       </div>
                       <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3 border border-border">
                         <p className="text-xs font-medium text-primary">Cobb County Sheriff</p>
-                        <p className="text-sm text-amber-400 font-bold">$49,800 starting</p>
-                        <div className="flex items-center gap-1 text-xs text-amber-400 mt-1">
+                        <p className="text-sm text-amber-700 font-bold">$49,800 starting</p>
+                        <div className="flex items-center gap-1 text-xs text-amber-700 mt-1">
                           <ArrowUpRight className="w-3 h-3" />
                           <span>+3.8% vs GCSO</span>
                         </div>
@@ -580,7 +580,7 @@ export default function JobPostings() {
 
                   {/* Recommended Actions */}
                   <div>
-                    <h4 className="text-sm font-bold text-amber-400 uppercase tracking-wide mb-4">Recommended Actions</h4>
+                    <h4 className="text-sm font-bold text-amber-700 uppercase tracking-wide mb-4">Recommended Actions</h4>
                     <div className="space-y-2">
                       <div className="flex items-start gap-3 p-3 bg-green-500/10 border border-green-500/30 rounded-lg">
                         <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
@@ -591,15 +591,15 @@ export default function JobPostings() {
                         <span className="text-sm text-secondary">Follow up with J. Wilson on pending offer (deadline 02/05)</span>
                       </div>
                       <div className="flex items-start gap-3 p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg">
-                        <AlertTriangle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                        <AlertTriangle className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" />
                         <span className="text-sm text-secondary"><span className="font-semibold">URGENT:</span> Request Sheriff/Command Staff review of deputy starting salary to address 12.8% gap with Gwinnett County PD</span>
                       </div>
                       <div className="flex items-start gap-3 p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg">
-                        <AlertTriangle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                        <AlertTriangle className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" />
                         <span className="text-sm text-secondary">Consider hiring incentives: Sign-on bonus, accelerated take-home vehicle, enhanced shift differential</span>
                       </div>
                       <div className="flex items-start gap-3 p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg">
-                        <AlertTriangle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                        <AlertTriangle className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" />
                         <span className="text-sm text-secondary">Evaluate adding 3rd background investigator to reduce time-to-hire (currently 127 days avg)</span>
                       </div>
                     </div>
@@ -659,7 +659,7 @@ export default function JobPostings() {
               {expandedPostings.investigator && (
                 <div className="px-5 pb-5 space-y-6 border-t border-border">
                   <div className="pt-5">
-                    <h4 className="text-sm font-bold text-amber-400 uppercase tracking-wide mb-4">Posting Details</h4>
+                    <h4 className="text-sm font-bold text-amber-700 uppercase tracking-wide mb-4">Posting Details</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                       <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 border border-border">
                         <p className="text-xs text-slate-500 mb-1">Positions Available</p>
@@ -669,7 +669,7 @@ export default function JobPostings() {
                       <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 border border-border">
                         <p className="text-xs text-slate-500 mb-1">Posting Timeline</p>
                         <p className="text-sm text-primary font-medium">Posted: October 15, 2024 (110 days)</p>
-                        <p className="text-xs text-amber-400 mt-1">EXTENDED TO: February 28, 2026</p>
+                        <p className="text-xs text-amber-700 mt-1">EXTENDED TO: February 28, 2026</p>
                       </div>
                       <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 border border-border">
                         <p className="text-xs text-slate-500 mb-1">Salary Range</p>
@@ -681,7 +681,7 @@ export default function JobPostings() {
 
                   {/* Qualifications */}
                   <div>
-                    <h4 className="text-sm font-bold text-amber-400 uppercase tracking-wide mb-4">Minimum Qualifications</h4>
+                    <h4 className="text-sm font-bold text-amber-700 uppercase tracking-wide mb-4">Minimum Qualifications</h4>
                     <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 border border-border">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
                         <div className="flex items-start gap-2">
@@ -706,7 +706,7 @@ export default function JobPostings() {
 
                   {/* Applicant Breakdown */}
                   <div>
-                    <h4 className="text-sm font-bold text-amber-400 uppercase tracking-wide mb-4">Applicant Pool</h4>
+                    <h4 className="text-sm font-bold text-amber-700 uppercase tracking-wide mb-4">Applicant Pool</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 border border-border">
                         <p className="text-sm font-medium text-primary mb-3">Internal Applicants (7)</p>
@@ -774,7 +774,7 @@ export default function JobPostings() {
               >
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 bg-amber-500/20 rounded-xl flex items-center justify-center">
-                    <Building className="w-6 h-6 text-amber-400" />
+                    <Building className="w-6 h-6 text-amber-700" />
                   </div>
                   <div className="text-left">
                     <div className="flex items-center gap-3 flex-wrap">
@@ -796,7 +796,7 @@ export default function JobPostings() {
               {expandedPostings.detention && (
                 <div className="px-5 pb-5 space-y-6 border-t border-border">
                   <div className="pt-5">
-                    <h4 className="text-sm font-bold text-amber-400 uppercase tracking-wide mb-4">Posting Details</h4>
+                    <h4 className="text-sm font-bold text-amber-700 uppercase tracking-wide mb-4">Posting Details</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                       <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 border border-border">
                         <p className="text-xs text-slate-500 mb-1">Positions Available</p>
@@ -806,7 +806,7 @@ export default function JobPostings() {
                       <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 border border-border">
                         <p className="text-xs text-slate-500 mb-1">Posting Timeline</p>
                         <p className="text-sm text-primary font-medium">Posted: October 27, 2024 (98 days)</p>
-                        <p className="text-xs text-amber-400 mt-1">EXTENDED TO: March 31, 2026</p>
+                        <p className="text-xs text-amber-700 mt-1">EXTENDED TO: March 31, 2026</p>
                       </div>
                       <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 border border-border">
                         <p className="text-xs text-slate-500 mb-1">Salary Range</p>
@@ -832,7 +832,7 @@ export default function JobPostings() {
 
                   {/* Competitive Analysis */}
                   <div>
-                    <h4 className="text-sm font-bold text-amber-400 uppercase tracking-wide mb-4">Competitive Position</h4>
+                    <h4 className="text-sm font-bold text-amber-700 uppercase tracking-wide mb-4">Competitive Position</h4>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                       <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3 border border-border">
                         <p className="text-xs font-medium text-primary">Fulton County Sheriff</p>
@@ -844,8 +844,8 @@ export default function JobPostings() {
                       </div>
                       <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3 border border-border">
                         <p className="text-xs font-medium text-primary">Cobb County Sheriff</p>
-                        <p className="text-sm text-amber-400 font-bold">$43,500 starting</p>
-                        <div className="flex items-center gap-1 text-xs text-amber-400 mt-1">
+                        <p className="text-sm text-amber-700 font-bold">$43,500 starting</p>
+                        <div className="flex items-center gap-1 text-xs text-amber-700 mt-1">
                           <ArrowUpRight className="w-3 h-3" />
                           <span>+3.6% vs GCSO</span>
                         </div>
@@ -863,18 +863,18 @@ export default function JobPostings() {
 
                   {/* Recommendations */}
                   <div>
-                    <h4 className="text-sm font-bold text-amber-400 uppercase tracking-wide mb-4">Urgent Recommendations</h4>
+                    <h4 className="text-sm font-bold text-amber-700 uppercase tracking-wide mb-4">Urgent Recommendations</h4>
                     <div className="space-y-2">
                       <div className="flex items-start gap-3 p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
                         <AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
                         <span className="text-sm text-secondary">Increase salary to $45K-47K to match Fulton/Cobb</span>
                       </div>
                       <div className="flex items-start gap-3 p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg">
-                        <AlertTriangle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                        <AlertTriangle className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" />
                         <span className="text-sm text-secondary">Consider sign-on bonus ($2,000-3,000) and enhanced shift differential</span>
                       </div>
                       <div className="flex items-start gap-3 p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg">
-                        <AlertTriangle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                        <AlertTriangle className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" />
                         <span className="text-sm text-secondary">Expand recruitment: Criminal justice colleges, military veteran outreach</span>
                       </div>
                     </div>
@@ -930,7 +930,7 @@ export default function JobPostings() {
               {expandedPostings.admin && (
                 <div className="px-5 pb-5 space-y-6 border-t border-border">
                   <div className="pt-5">
-                    <h4 className="text-sm font-bold text-amber-400 uppercase tracking-wide mb-4">Posting Details</h4>
+                    <h4 className="text-sm font-bold text-amber-700 uppercase tracking-wide mb-4">Posting Details</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                       <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 border border-border">
                         <p className="text-xs text-slate-500 mb-1">Positions Available</p>
@@ -966,7 +966,7 @@ export default function JobPostings() {
 
                   {/* Root Cause */}
                   <div>
-                    <h4 className="text-sm font-bold text-amber-400 uppercase tracking-wide mb-4">Root Cause Analysis</h4>
+                    <h4 className="text-sm font-bold text-amber-700 uppercase tracking-wide mb-4">Root Cause Analysis</h4>
                     <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 border border-border">
                       <div className="space-y-3 text-sm text-secondary">
                         <p><span className="text-primary font-medium">Salary not competitive:</span> GCSO pays $38K-45K, but other Gwinnett County departments pay $42K-50K (+10% more)</p>
@@ -979,7 +979,7 @@ export default function JobPostings() {
 
                   {/* Competitive Analysis */}
                   <div>
-                    <h4 className="text-sm font-bold text-amber-400 uppercase tracking-wide mb-4">Salary Comparison</h4>
+                    <h4 className="text-sm font-bold text-amber-700 uppercase tracking-wide mb-4">Salary Comparison</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3 border border-border">
                         <p className="text-xs font-medium text-primary">Gwinnett County Government (other depts)</p>
@@ -988,8 +988,8 @@ export default function JobPostings() {
                       </div>
                       <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3 border border-border">
                         <p className="text-xs font-medium text-primary">Gwinnett County Public Schools</p>
-                        <p className="text-sm text-amber-400 font-bold">$40,000 - $48,000</p>
-                        <p className="text-xs text-amber-400">GCSO pays 5-6.7% less</p>
+                        <p className="text-sm text-amber-700 font-bold">$40,000 - $48,000</p>
+                        <p className="text-xs text-amber-700">GCSO pays 5-6.7% less</p>
                       </div>
                       <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3 border border-border">
                         <p className="text-xs font-medium text-primary">Private Sector (Gwinnett area)</p>
@@ -1033,7 +1033,7 @@ export default function JobPostings() {
 
                   <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
                     <div className="flex items-center gap-2">
-                      <AlertCircle className="w-5 h-5 text-amber-400" />
+                      <AlertCircle className="w-5 h-5 text-amber-700" />
                       <span className="text-sm text-amber-300"><span className="font-bold">DO NOT</span> proceed with interviews of only 3 candidates - insufficient pool (need 8-12 minimum)</span>
                     </div>
                   </div>

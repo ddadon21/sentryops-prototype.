@@ -9,7 +9,7 @@ import { biNavigation, biProfile, biNotifications } from '../config/biConfig';
 const getVerificationIcon = (status) => {
   switch (status) {
     case 'verified': return <CheckCircle2 className="w-4 h-4 text-green-400" />;
-    case 'pending': return <Clock className="w-4 h-4 text-amber-400" />;
+    case 'pending': return <Clock className="w-4 h-4 text-amber-700" />;
     case 'in_progress': return <Circle className="w-4 h-4 text-blue-400 animate-pulse" />;
     case 'requires_attention': return <AlertCircle className="w-4 h-4 text-red-400" />;
     case 'restricted': return <Shield className="w-4 h-4 text-slate-500" />;
@@ -23,7 +23,7 @@ const getStatusBadge = (status) => {
     case 'verified':
       return <span className="px-2.5 py-1 bg-green-500/10 text-green-400 rounded-lg text-xs font-medium flex items-center gap-1.5"><CheckCircle2 className="w-3 h-3" />Verified</span>;
     case 'pending':
-      return <span className="px-2.5 py-1 bg-amber-500/10 text-amber-400 rounded-lg text-xs font-medium flex items-center gap-1.5"><Clock className="w-3 h-3" />Pending</span>;
+      return <span className="px-2.5 py-1 bg-amber-500/10 text-amber-700 rounded-lg text-xs font-medium flex items-center gap-1.5"><Clock className="w-3 h-3" />Pending</span>;
     case 'in_progress':
       return <span className="px-2.5 py-1 bg-blue-500/10 text-blue-400 rounded-lg text-xs font-medium flex items-center gap-1.5"><Circle className="w-3 h-3" />In Progress</span>;
     case 'requires_attention':
@@ -33,7 +33,7 @@ const getStatusBadge = (status) => {
     case 'active':
       return <span className="px-2.5 py-1 bg-green-500/10 text-green-400 rounded-lg text-xs font-medium">Active</span>;
     case 'expiring_soon':
-      return <span className="px-2.5 py-1 bg-amber-500/10 text-amber-400 rounded-lg text-xs font-medium flex items-center gap-1.5"><AlertTriangle className="w-3 h-3" />Expiring Soon</span>;
+      return <span className="px-2.5 py-1 bg-amber-500/10 text-amber-700 rounded-lg text-xs font-medium flex items-center gap-1.5"><AlertTriangle className="w-3 h-3" />Expiring Soon</span>;
     case 'critical':
       return <span className="px-2.5 py-1 bg-red-500/10 text-red-400 rounded-lg text-xs font-medium flex items-center gap-1.5 animate-pulse"><AlertCircle className="w-3 h-3" />CRITICAL</span>;
     case 'contacted':
@@ -41,7 +41,7 @@ const getStatusBadge = (status) => {
     case 'interviewed':
       return <span className="px-2.5 py-1 bg-blue-500/10 text-blue-400 rounded-lg text-xs font-medium">Interviewed</span>;
     case 'awaiting_response':
-      return <span className="px-2.5 py-1 bg-amber-500/10 text-amber-400 rounded-lg text-xs font-medium">Awaiting Response</span>;
+      return <span className="px-2.5 py-1 bg-amber-500/10 text-amber-700 rounded-lg text-xs font-medium">Awaiting Response</span>;
     default:
       return <span className="px-2.5 py-1 bg-slate-500/10 text-secondary rounded-lg text-xs font-medium">{status}</span>;
   }
@@ -462,7 +462,7 @@ export default function SubjectRecords() {
                   <div className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 rounded-lg border border-slate-700/50">
                     <FileText className="w-4 h-4 text-slate-500" />
                     <span className="text-secondary">Case:</span>
-                    <span className="text-amber-400 font-medium">{caseInfo.caseId}</span>
+                    <span className="text-amber-700 font-medium">{caseInfo.caseId}</span>
                   </div>
                   <div className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 rounded-lg border border-slate-700/50">
                     <Clock className="w-4 h-4 text-slate-500" />
@@ -497,17 +497,17 @@ export default function SubjectRecords() {
                         </div>
                       </div>
                       <div className="flex items-start gap-2 p-2 bg-amber-500/10 rounded-lg">
-                        <Clock className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
+                        <Clock className="w-4 h-4 text-amber-700 mt-0.5 flex-shrink-0" />
                         <div>
                           <p className="text-sm text-amber-300 font-medium">Internal Affairs records pending (MANDATORY for lateral transfers)</p>
-                          <p className="text-xs text-amber-400/70 mt-1">Request submitted January 15, 2025 to Metro Atlanta PD IA Unit. Est. response: 10 business days.</p>
+                          <p className="text-xs text-amber-700/70 mt-1">Request submitted January 15, 2025 to Metro Atlanta PD IA Unit. Est. response: 10 business days.</p>
                         </div>
                       </div>
                       <div className="flex items-start gap-2 p-2 bg-amber-500/10 rounded-lg">
-                        <Clock className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
+                        <Clock className="w-4 h-4 text-amber-700 mt-0.5 flex-shrink-0" />
                         <div>
                           <p className="text-sm text-amber-300 font-medium">Reference contact pending: Officer Michael Brown</p>
-                          <p className="text-xs text-amber-400/70 mt-1">2 contact attempts made. Next attempt scheduled January 25, 2025.</p>
+                          <p className="text-xs text-amber-700/70 mt-1">2 contact attempts made. Next attempt scheduled January 25, 2025.</p>
                         </div>
                       </div>
                     </div>
@@ -660,31 +660,31 @@ export default function SubjectRecords() {
               <div className="flex border-b border-border overflow-x-auto">
                 <button
                   onClick={() => setSelectedTab('personal')}
-                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedTab === 'personal' ? 'bg-amber-500/10 text-amber-400 border-b-2 border-amber-500' : 'text-secondary hover:text-slate-900 dark:hover:text-white'}`}
+                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedTab === 'personal' ? 'bg-amber-500/10 text-amber-700 border-b-2 border-amber-500' : 'text-secondary hover:text-slate-900 dark:hover:text-white'}`}
                 >
                   Personal Info
                 </button>
                 <button
                   onClick={() => setSelectedTab('employment')}
-                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedTab === 'employment' ? 'bg-amber-500/10 text-amber-400 border-b-2 border-amber-500' : 'text-secondary hover:text-slate-900 dark:hover:text-white'}`}
+                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedTab === 'employment' ? 'bg-amber-500/10 text-amber-700 border-b-2 border-amber-500' : 'text-secondary hover:text-slate-900 dark:hover:text-white'}`}
                 >
                   Employment History
                 </button>
                 <button
                   onClick={() => setSelectedTab('education')}
-                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedTab === 'education' ? 'bg-amber-500/10 text-amber-400 border-b-2 border-amber-500' : 'text-secondary hover:text-slate-900 dark:hover:text-white'}`}
+                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedTab === 'education' ? 'bg-amber-500/10 text-amber-700 border-b-2 border-amber-500' : 'text-secondary hover:text-slate-900 dark:hover:text-white'}`}
                 >
                   Education
                 </button>
                 <button
                   onClick={() => setSelectedTab('certifications')}
-                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedTab === 'certifications' ? 'bg-amber-500/10 text-amber-400 border-b-2 border-amber-500' : 'text-secondary hover:text-slate-900 dark:hover:text-white'}`}
+                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedTab === 'certifications' ? 'bg-amber-500/10 text-amber-700 border-b-2 border-amber-500' : 'text-secondary hover:text-slate-900 dark:hover:text-white'}`}
                 >
                   Certifications
                 </button>
                 <button
                   onClick={() => setSelectedTab('references')}
-                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedTab === 'references' ? 'bg-amber-500/10 text-amber-400 border-b-2 border-amber-500' : 'text-secondary hover:text-slate-900 dark:hover:text-white'}`}
+                  className={`px-6 py-4 text-sm font-medium transition-all whitespace-nowrap ${selectedTab === 'references' ? 'bg-amber-500/10 text-amber-700 border-b-2 border-amber-500' : 'text-secondary hover:text-slate-900 dark:hover:text-white'}`}
                 >
                   References
                 </button>
@@ -697,7 +697,7 @@ export default function SubjectRecords() {
                     {/* Identity Verification */}
                     <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4">
                       <h4 className="text-sm font-semibold text-primary mb-4 flex items-center gap-2">
-                        <User className="w-4 h-4 text-amber-400" />
+                        <User className="w-4 h-4 text-amber-700" />
                         Identity Information
                       </h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -746,7 +746,7 @@ export default function SubjectRecords() {
                     {/* Driver's License Details */}
                     <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4">
                       <h4 className="text-sm font-semibold text-primary mb-4 flex items-center gap-2">
-                        <FileText className="w-4 h-4 text-amber-400" />
+                        <FileText className="w-4 h-4 text-amber-700" />
                         Driver's License
                       </h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -779,7 +779,7 @@ export default function SubjectRecords() {
                     {/* Contact & Address */}
                     <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4">
                       <h4 className="text-sm font-semibold text-primary mb-4 flex items-center gap-2">
-                        <MapPin className="w-4 h-4 text-amber-400" />
+                        <MapPin className="w-4 h-4 text-amber-700" />
                         Contact & Residence
                       </h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -813,7 +813,7 @@ export default function SubjectRecords() {
                     {subjectData.personal.militaryService.served && (
                       <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4">
                         <h4 className="text-sm font-semibold text-primary mb-4 flex items-center gap-2">
-                          <Shield className="w-4 h-4 text-amber-400" />
+                          <Shield className="w-4 h-4 text-amber-700" />
                           Military Service
                         </h4>
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -846,7 +846,7 @@ export default function SubjectRecords() {
                     {/* Emergency Contact */}
                     <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4">
                       <h4 className="text-sm font-semibold text-primary mb-4 flex items-center gap-2">
-                        <Users className="w-4 h-4 text-amber-400" />
+                        <Users className="w-4 h-4 text-amber-700" />
                         Emergency Contact
                       </h4>
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -894,7 +894,7 @@ export default function SubjectRecords() {
                               <h4 className="text-base font-semibold text-primary">{job.position}</h4>
                               {job.badge && <span className="text-xs text-slate-500">Badge {job.badge}</span>}
                             </div>
-                            <p className="text-sm text-amber-400">{job.employer}</p>
+                            <p className="text-sm text-amber-700">{job.employer}</p>
                           </div>
                           {getStatusBadge(job.status)}
                         </div>
@@ -937,7 +937,7 @@ export default function SubjectRecords() {
                           <div className={`mt-4 p-3 rounded-lg ${job.iaRecordsStatus === 'in_progress' ? 'bg-amber-500/10 border border-amber-500/20' : 'bg-green-500/10 border border-green-500/20'}`}>
                             <div className="flex items-start gap-2">
                               {job.iaRecordsStatus === 'in_progress' ? (
-                                <Clock className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
+                                <Clock className="w-4 h-4 text-amber-700 mt-0.5 flex-shrink-0" />
                               ) : (
                                 <CheckCircle2 className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
                               )}
@@ -945,7 +945,7 @@ export default function SubjectRecords() {
                                 <p className={`text-sm font-medium ${job.iaRecordsStatus === 'in_progress' ? 'text-amber-300' : 'text-green-300'}`}>
                                   Internal Affairs Records Review — {job.iaRecordsStatus === 'in_progress' ? 'PENDING' : 'COMPLETE'}
                                 </p>
-                                <p className={`text-xs mt-1 ${job.iaRecordsStatus === 'in_progress' ? 'text-amber-400/70' : 'text-green-400/70'}`}>
+                                <p className={`text-xs mt-1 ${job.iaRecordsStatus === 'in_progress' ? 'text-amber-700/70' : 'text-green-400/70'}`}>
                                   {job.iaRecordsNote}
                                 </p>
                               </div>
@@ -981,12 +981,12 @@ export default function SubjectRecords() {
                             <div className="flex items-center gap-2 mb-1">
                               <h4 className="text-base font-semibold text-primary">{edu.degree}</h4>
                               {edu.honors && (
-                                <span className="px-2 py-0.5 bg-amber-500/10 text-amber-400 rounded text-xs font-medium">
+                                <span className="px-2 py-0.5 bg-amber-500/10 text-amber-700 rounded text-xs font-medium">
                                   {edu.honors}
                                 </span>
                               )}
                             </div>
-                            <p className="text-sm text-amber-400">{edu.institution}</p>
+                            <p className="text-sm text-amber-700">{edu.institution}</p>
                           </div>
                           {getStatusBadge(edu.status)}
                         </div>
@@ -1045,8 +1045,8 @@ export default function SubjectRecords() {
                             </>
                           ) : (
                             <>
-                              <Clock className="w-4 h-4 text-amber-400" />
-                              <span className="text-amber-400">Awaiting official transcript</span>
+                              <Clock className="w-4 h-4 text-amber-700" />
+                              <span className="text-amber-700">Awaiting official transcript</span>
                             </>
                           )}
                         </div>
@@ -1110,13 +1110,13 @@ export default function SubjectRecords() {
                           </div>
                           <div>
                             <p className="text-slate-500 text-xs mb-1">Expiration Date</p>
-                            <p className={`${cert.status === 'critical' ? 'text-red-400 font-bold' : cert.status === 'expiring_soon' ? 'text-amber-400' : 'text-slate-500'}`}>
+                            <p className={`${cert.status === 'critical' ? 'text-red-400 font-bold' : cert.status === 'expiring_soon' ? 'text-amber-700' : 'text-slate-500'}`}>
                               {cert.expires}
                             </p>
                           </div>
                           <div>
                             <p className="text-slate-500 text-xs mb-1">Days Until Expiration</p>
-                            <p className={`font-medium ${cert.daysUntilExpiration <= 7 ? 'text-red-400' : cert.daysUntilExpiration <= 60 ? 'text-amber-400' : 'text-green-400'}`}>
+                            <p className={`font-medium ${cert.daysUntilExpiration <= 7 ? 'text-red-400' : cert.daysUntilExpiration <= 60 ? 'text-amber-700' : 'text-green-400'}`}>
                               {cert.daysUntilExpiration} days
                             </p>
                           </div>
@@ -1147,7 +1147,7 @@ export default function SubjectRecords() {
                     <div className="bg-white dark:bg-slate-800/60 rounded-xl p-4 mb-4">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                          <Users className="w-5 h-5 text-amber-400" />
+                          <Users className="w-5 h-5 text-amber-700" />
                           <span className="text-sm font-medium text-primary">Reference Check Progress</span>
                         </div>
                         <span className="text-sm text-secondary">
@@ -1165,7 +1165,7 @@ export default function SubjectRecords() {
                               <Scale className="w-4 h-4" />
                               MANDATORY — Internal Affairs Records Review
                             </div>
-                            <p className="text-xs text-amber-400/70">
+                            <p className="text-xs text-amber-700/70">
                               Required for all lateral transfers from other law enforcement agencies. Cannot proceed to final hiring recommendation without IA clearance.
                             </p>
                           </div>
@@ -1174,7 +1174,7 @@ export default function SubjectRecords() {
                         <div className="flex items-start justify-between mb-4">
                           <div>
                             <h4 className="text-base font-semibold text-primary mb-1">{ref.name}</h4>
-                            <p className="text-sm text-amber-400">{ref.relationship}</p>
+                            <p className="text-sm text-amber-700">{ref.relationship}</p>
                           </div>
                           {getStatusBadge(ref.status)}
                         </div>
@@ -1246,7 +1246,7 @@ export default function SubjectRecords() {
                         {/* Pending Contact Info */}
                         {ref.attemptedContact && (
                           <div className="bg-amber-500/10 rounded-lg p-3 mb-4">
-                            <p className="text-xs text-amber-400/70 mb-1">Contact Attempts</p>
+                            <p className="text-xs text-amber-700/70 mb-1">Contact Attempts</p>
                             <p className="text-sm text-amber-300">{ref.attemptedContact}</p>
                           </div>
                         )}

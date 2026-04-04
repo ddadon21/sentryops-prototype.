@@ -313,7 +313,7 @@ export default function PerformanceReviews() {
 
   const getStatusConfig = (status) => {
     const configs = {
-      'in-progress': { bg: 'bg-amber-500/20', text: 'text-amber-400', border: 'border-amber-500/30', label: 'IN PROGRESS' },
+      'in-progress': { bg: 'bg-amber-500/20', text: 'text-amber-700', border: 'border-amber-500/30', label: 'IN PROGRESS' },
       completed: { bg: 'bg-green-500/20', text: 'text-green-400', border: 'border-green-500/30', label: 'COMPLETED' },
       overdue: { bg: 'bg-red-500/20', text: 'text-red-400', border: 'border-red-500/30', label: 'OVERDUE' }
     };
@@ -324,7 +324,7 @@ export default function PerformanceReviews() {
     if (status === 'completed') return <CheckCircle className="w-4 h-4 text-green-400" />;
     if (status === 'pending') return <Circle className="w-4 h-4 text-slate-500" />;
     if (status === 'not-completed' || status === 'not-started') return <XCircle className="w-4 h-4 text-red-400" />;
-    return <Clock className="w-4 h-4 text-amber-400" />;
+    return <Clock className="w-4 h-4 text-amber-700" />;
   };
 
   const statusCounts = {
@@ -354,12 +354,12 @@ export default function PerformanceReviews() {
         <div className="p-4 border-b border-border flex items-center justify-between">
           {!sidebarCollapsed && (
             <div className="flex items-center gap-2">
-              <Shield className="w-8 h-8 text-amber-500" />
+              <Shield className="w-8 h-8 text-amber-700" />
               <h1 className="text-xl font-bold text-primary">SentryOps</h1>
             </div>
           )}
           {sidebarCollapsed && (
-            <Shield className="w-8 h-8 text-amber-500 mx-auto" />
+            <Shield className="w-8 h-8 text-amber-700 mx-auto" />
           )}
           <button
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
@@ -526,7 +526,7 @@ export default function PerformanceReviews() {
                         <p className="text-xs text-red-400 mt-1 font-medium">{step.data.daysOverdue} days overdue</p>
                       )}
                       {step.data.reminders && step.data.reminders.length > 0 && (
-                        <p className="text-xs text-amber-400 mt-1">Reminders sent: {step.data.reminders.join(', ')}</p>
+                        <p className="text-xs text-amber-700 mt-1">Reminders sent: {step.data.reminders.join(', ')}</p>
                       )}
                     </div>
                   </div>
@@ -540,8 +540,8 @@ export default function PerformanceReviews() {
               {selectedReview.status === 'completed' ? (
                 <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
                   <div className="flex items-center gap-2 mb-3">
-                    <Shield className="w-4 h-4 text-amber-400" />
-                    <p className="text-sm text-amber-400 font-medium">Confidential — Supervisor & HR Eyes Only</p>
+                    <Shield className="w-4 h-4 text-amber-700" />
+                    <p className="text-sm text-amber-700 font-medium">Confidential — Supervisor & HR Eyes Only</p>
                   </div>
                   <p className="text-xs text-secondary">Evaluation ratings are confidential personnel records. Accessible only to: employee, reviewing supervisor, HR Director, command staff, and Sheriff Taylor. Contact HR Director for authorized access.</p>
                 </div>
@@ -653,7 +653,7 @@ export default function PerformanceReviews() {
                       ))}
                     </div>
                     <div className="p-3 border-t border-border">
-                      <button className="w-full text-center text-sm text-amber-400 hover:text-amber-300 font-medium">View All</button>
+                      <button className="w-full text-center text-sm text-amber-700 hover:text-amber-300 font-medium">View All</button>
                     </div>
                   </div>
                 )}
@@ -706,12 +706,12 @@ export default function PerformanceReviews() {
             {/* Context Alerts */}
             <div className="mb-6 space-y-2">
               <div className="flex items-start gap-3 p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg">
-                <AlertTriangle className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                <p className="text-sm text-secondary">Review cycle on track: <span className="text-amber-400 font-medium">89% completion rate</span> for Q4 2024 reviews (due 01/31/2025)</p>
+                <AlertTriangle className="w-4 h-4 text-amber-700 mt-0.5 flex-shrink-0" />
+                <p className="text-sm text-secondary">Review cycle on track: <span className="text-amber-700 font-medium">89% completion rate</span> for Q4 2024 reviews (due 01/31/2025)</p>
               </div>
               <div className="flex items-start gap-3 p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg">
-                <AlertTriangle className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                <p className="text-sm text-secondary"><span className="text-amber-400 font-medium">3 supervisor reviews pending:</span> Marcus Chen, Sarah Williams, Robert Martinez need supervisor input</p>
+                <AlertTriangle className="w-4 h-4 text-amber-700 mt-0.5 flex-shrink-0" />
+                <p className="text-sm text-secondary"><span className="text-amber-700 font-medium">3 supervisor reviews pending:</span> Marcus Chen, Sarah Williams, Robert Martinez need supervisor input</p>
               </div>
               <div className="flex items-start gap-3 p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
                 <AlertCircle className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
@@ -787,13 +787,13 @@ export default function PerformanceReviews() {
 
                     {/* Impact on Employee */}
                     <div className="bg-white dark:bg-slate-900/60 border border-amber-500/20 rounded-xl p-4">
-                      <h4 className="text-sm font-semibold text-amber-400 mb-3 flex items-center gap-2">
+                      <h4 className="text-sm font-semibold text-amber-700 mb-3 flex items-center gap-2">
                         <AlertTriangle className="w-4 h-4" /> Impact on Employee — {overdueReview.employee}
                       </h4>
                       <div className="space-y-2">
                         {overdueReview.impact.map((item, idx) => (
                           <div key={idx} className="flex items-start gap-2">
-                            <XCircle className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
+                            <XCircle className="w-4 h-4 text-amber-700 mt-0.5 flex-shrink-0" />
                             <p className="text-sm text-secondary">{item}</p>
                           </div>
                         ))}
@@ -870,7 +870,7 @@ export default function PerformanceReviews() {
               <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
                 <div className="flex items-center justify-between mb-3">
                   <div className="w-10 h-10 bg-amber-500/20 rounded-xl flex items-center justify-center">
-                    <Clock className="w-5 h-5 text-amber-400" />
+                    <Clock className="w-5 h-5 text-amber-700" />
                   </div>
                 </div>
                 <p className="text-2xl font-bold text-primary mb-1">{statusCounts['in-progress']}</p>
@@ -937,12 +937,12 @@ export default function PerformanceReviews() {
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
                   className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all relative whitespace-nowrap ${
-                    activeTab === tab.id ? 'text-amber-400' : 'text-secondary hover:text-slate-300'
+                    activeTab === tab.id ? 'text-amber-700' : 'text-secondary hover:text-slate-300'
                   }`}
                 >
                   {tab.label}
                   <span className={`px-2 py-0.5 rounded-full text-xs ${
-                    activeTab === tab.id ? 'bg-amber-500/20 text-amber-400' : 'bg-white dark:bg-slate-700/50 text-slate-500'
+                    activeTab === tab.id ? 'bg-amber-500/20 text-amber-700' : 'bg-white dark:bg-slate-700/50 text-slate-500'
                   }`}>{tab.count}</span>
                   {activeTab === tab.id && (
                     <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500"></div>
@@ -1065,7 +1065,7 @@ export default function PerformanceReviews() {
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                             <div>
                               <p className="text-xs text-slate-500 mb-1">Status</p>
-                              <p className={`font-medium ${review.selfAssessment.status === 'completed' ? 'text-green-400' : 'text-amber-400'}`}>
+                              <p className={`font-medium ${review.selfAssessment.status === 'completed' ? 'text-green-400' : 'text-amber-700'}`}>
                                 {review.selfAssessment.status === 'completed' ? 'COMPLETED' : 'PENDING'}
                               </p>
                             </div>
@@ -1077,7 +1077,7 @@ export default function PerformanceReviews() {
                             )}
                           </div>
                           {review.selfAssessment.note && (
-                            <p className="text-xs text-amber-400 mt-2">{review.selfAssessment.note}</p>
+                            <p className="text-xs text-amber-700 mt-2">{review.selfAssessment.note}</p>
                           )}
                           {review.selfAssessment.components && (
                             <div className="mt-3">
@@ -1102,7 +1102,7 @@ export default function PerformanceReviews() {
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                             <div>
                               <p className="text-xs text-slate-500 mb-1">Status</p>
-                              <p className={`font-medium ${review.supervisorReview.status === 'completed' ? 'text-green-400' : review.supervisorReview.daysOverdue > 0 ? 'text-red-400' : 'text-amber-400'}`}>
+                              <p className={`font-medium ${review.supervisorReview.status === 'completed' ? 'text-green-400' : review.supervisorReview.daysOverdue > 0 ? 'text-red-400' : 'text-amber-700'}`}>
                                 {review.supervisorReview.status === 'completed' ? 'COMPLETED' : review.supervisorReview.daysOverdue > 0 ? `PENDING (${review.supervisorReview.daysOverdue} days overdue)` : review.supervisorReview.status === 'not-started' ? 'NOT YET STARTED' : 'PENDING'}
                               </p>
                             </div>
@@ -1124,14 +1124,14 @@ export default function PerformanceReviews() {
                             )}
                           </div>
                           {review.supervisorReview.reminders && review.supervisorReview.reminders.length > 0 && (
-                            <p className="text-xs text-amber-400 mt-2">Reminders sent: {review.supervisorReview.reminders.join(', ')}</p>
+                            <p className="text-xs text-amber-700 mt-2">Reminders sent: {review.supervisorReview.reminders.join(', ')}</p>
                           )}
                           {review.supervisorReview.note && (
                             <p className="text-xs text-secondary mt-2">{review.supervisorReview.note}</p>
                           )}
                           {review.supervisorPattern && (
                             <div className="mt-3 p-2 bg-amber-500/10 border border-amber-500/20 rounded-lg">
-                              <p className="text-xs text-amber-400">{review.supervisorPattern}</p>
+                              <p className="text-xs text-amber-700">{review.supervisorPattern}</p>
                             </div>
                           )}
                         </div>
@@ -1177,7 +1177,7 @@ export default function PerformanceReviews() {
                             </div>
                             {review.nextDeadline && (
                               <div className="mt-3 p-2 bg-amber-500/10 border border-amber-500/20 rounded-lg">
-                                <p className="text-xs text-amber-400">Next Deadline: {review.nextDeadline}</p>
+                                <p className="text-xs text-amber-700">Next Deadline: {review.nextDeadline}</p>
                                 {review.escalationNote && <p className="text-xs text-secondary mt-1">{review.escalationNote}</p>}
                               </div>
                             )}
@@ -1188,8 +1188,8 @@ export default function PerformanceReviews() {
                         {review.status === 'completed' ? (
                           <div className="bg-white dark:bg-slate-900/40 border border-border rounded-xl p-4">
                             <div className="flex items-center gap-2 mb-2">
-                              <Shield className="w-4 h-4 text-amber-400" />
-                              <p className="text-sm text-amber-400 font-medium">Evaluation Ratings — Confidential</p>
+                              <Shield className="w-4 h-4 text-amber-700" />
+                              <p className="text-sm text-amber-700 font-medium">Evaluation Ratings — Confidential</p>
                             </div>
                             <p className="text-xs text-secondary">Performance ratings for {review.employee} are confidential personnel records. Access restricted to: employee, reviewing supervisor ({review.supervisor}), HR Director, command staff, and Sheriff Taylor.</p>
                           </div>
@@ -1298,17 +1298,17 @@ export default function PerformanceReviews() {
               <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-primary">HR Director</p>
                 <p className="text-xs text-secondary">Evaluation policy, confidential records access</p>
-                <p className="text-xs text-amber-400 mt-1">Ext. 4500</p>
+                <p className="text-xs text-amber-700 mt-1">Ext. 4500</p>
               </div>
               <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-primary">Evaluation Coordinator</p>
                 <p className="text-xs text-secondary">HR Specialist J. Martinez — scheduling, deadlines</p>
-                <p className="text-xs text-amber-400 mt-1">Ext. 4505</p>
+                <p className="text-xs text-amber-700 mt-1">Ext. 4505</p>
               </div>
               <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-primary">Training Division</p>
                 <p className="text-xs text-secondary">Professional development, certification tracking</p>
-                <p className="text-xs text-amber-400 mt-1">Ext. 4521</p>
+                <p className="text-xs text-amber-700 mt-1">Ext. 4521</p>
               </div>
               <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-primary">GCSO Evaluation Policy</p>

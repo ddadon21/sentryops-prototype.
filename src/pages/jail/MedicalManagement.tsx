@@ -244,7 +244,7 @@ const MedicalManagement = () => {
     switch (priority) {
       case 'Critical': return 'text-red-400 bg-red-500/20 border-red-500/30';
       case 'High': return 'text-orange-400 bg-orange-500/20 border-orange-500/30';
-      case 'Medium': return 'text-amber-400 bg-amber-500/20 border-amber-500/30';
+      case 'Medium': return 'text-amber-700 bg-amber-500/20 border-amber-500/30';
       case 'Low': return 'text-slate-700 dark:text-slate-400 bg-slate-50 dark:bg-slate-700/40 border-slate-600/50';
       default: return 'text-slate-700 dark:text-slate-400 bg-slate-500/20 border-slate-500/30';
     }
@@ -255,7 +255,7 @@ const MedicalManagement = () => {
       <div className="p-4 lg:p-6">
         <div className="mb-6">
           <div className="flex items-center gap-3 mb-2">
-            <Hospital className="w-8 h-8 text-amber-500" />
+            <Hospital className="w-8 h-8 text-amber-700" />
             <div>
               <h1 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white">Medical Management</h1>
               <p className="text-slate-700 dark:text-slate-400">Inmate Health Services & Medical Monitoring</p>
@@ -301,9 +301,9 @@ const MedicalManagement = () => {
           <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4">
             <div className="flex items-center justify-between mb-2">
               <div className="text-sm text-slate-700 dark:text-slate-400">Sick Call Pending</div>
-              <FileText className="w-5 h-5 text-amber-400" />
+              <FileText className="w-5 h-5 text-amber-700" />
             </div>
-            <div className="text-2xl font-bold text-amber-400">{medicalStats.sickCallPending}</div>
+            <div className="text-2xl font-bold text-amber-700">{medicalStats.sickCallPending}</div>
           </div>
         </div>
 
@@ -394,7 +394,7 @@ const MedicalManagement = () => {
                     <div className="grid grid-cols-3 gap-4 text-sm">
                       <div>
                         <span className="text-slate-700 dark:text-slate-400">Inmate ID:</span>{' '}
-                        <span className="text-amber-400 font-mono">{record.inmateId}</span>
+                        <span className="text-amber-700 font-mono">{record.inmateId}</span>
                       </div>
                       <div>
                         <span className="text-slate-700 dark:text-slate-400">Housing:</span>{' '}
@@ -434,7 +434,7 @@ const MedicalManagement = () => {
                       ))}
                     </div>
                     {record.nextDose && (
-                      <div className="mt-2 text-sm text-amber-400">
+                      <div className="mt-2 text-sm text-amber-700">
                         Next dose: {record.nextDose}
                       </div>
                     )}
@@ -466,7 +466,7 @@ const MedicalManagement = () => {
                         <div className="text-2xl font-bold text-slate-900 dark:text-white">{round.time}</div>
                         <span className={`px-3 py-1 rounded text-sm font-medium ${
                           round.status === 'Completed' ? 'bg-emerald-500/20 text-emerald-400' :
-                          round.status === 'In Progress' ? 'bg-amber-500/20 text-amber-400' :
+                          round.status === 'In Progress' ? 'bg-amber-500/20 text-amber-700' :
                           'bg-slate-500/20 text-slate-500'
                         }`}>
                           {round.status}
@@ -534,9 +534,9 @@ const MedicalManagement = () => {
                 </div>
                 <div className="flex items-center justify-between">
                   <span className={`px-3 py-1 rounded text-sm font-medium ${
-                    request.status.includes('Scheduled') ? 'bg-amber-500/20 text-amber-400' :
+                    request.status.includes('Scheduled') ? 'bg-amber-500/20 text-amber-700' :
                     request.status.includes('Approved') ? 'bg-emerald-500/20 text-emerald-400' :
-                    'bg-amber-500/20 text-amber-400'
+                    'bg-amber-500/20 text-amber-700'
                   }`}>
                     {request.status}
                   </span>
@@ -570,7 +570,7 @@ const MedicalManagement = () => {
                   <span className={`px-3 py-1 rounded text-sm font-medium ${
                     record.status === 'Stable' ? 'bg-emerald-500/20 text-emerald-400' :
                     record.status === 'Improving' ? 'bg-slate-50 dark:bg-slate-700/40 text-slate-500' :
-                    'bg-amber-500/20 text-amber-400'
+                    'bg-amber-500/20 text-amber-700'
                   }`}>
                     {record.status}
                   </span>

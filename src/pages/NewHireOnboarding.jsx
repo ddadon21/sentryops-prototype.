@@ -374,7 +374,7 @@ export default function NewHireOnboarding() {
 
   const getTaskStatusIcon = (status) => {
     if (status === 'completed') return <CheckCircle2 className="w-4 h-4 text-green-400" />;
-    if (status === 'pending') return <Circle className="w-4 h-4 text-amber-400" />;
+    if (status === 'pending') return <Circle className="w-4 h-4 text-amber-700" />;
     if (status === 'overdue') return <AlertTriangle className="w-4 h-4 text-red-400" />;
     return <Clock className="w-4 h-4 text-blue-400" />;
   };
@@ -426,12 +426,12 @@ export default function NewHireOnboarding() {
         <div className="p-4 border-b border-border flex items-center justify-between">
           {!sidebarCollapsed && (
             <div className="flex items-center gap-2">
-              <Shield className="w-8 h-8 text-amber-500" />
+              <Shield className="w-8 h-8 text-amber-700" />
               <h1 className="text-xl font-bold text-primary">SentryOps</h1>
             </div>
           )}
           {sidebarCollapsed && (
-            <Shield className="w-8 h-8 text-amber-500 mx-auto" />
+            <Shield className="w-8 h-8 text-amber-700 mx-auto" />
           )}
           <button
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
@@ -643,9 +643,9 @@ export default function NewHireOnboarding() {
 
               <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4">
                 <div className="flex items-start gap-3">
-                  <Clock className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                  <Clock className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" />
                   <div className="flex-1">
-                    <p className="text-sm font-medium text-amber-400 mb-1">Christopher Lee (Deputy): FTO Week 8 Evaluation Due Tomorrow (02/07/2026)</p>
+                    <p className="text-sm font-medium text-amber-700 mb-1">Christopher Lee (Deputy): FTO Week 8 Evaluation Due Tomorrow (02/07/2026)</p>
                     <p className="text-xs text-secondary">FTO Deputy M. Rodriguez must complete and submit Week 8 evaluation to Sgt. Martinez</p>
                   </div>
                 </div>
@@ -653,9 +653,9 @@ export default function NewHireOnboarding() {
 
               <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4">
                 <div className="flex items-start gap-3">
-                  <Clock className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                  <Clock className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" />
                   <div className="flex-1">
-                    <p className="text-sm font-medium text-amber-400 mb-1">Nicole Brown (Detention): 4 Pending Tasks with Approaching Deadlines</p>
+                    <p className="text-sm font-medium text-amber-700 mb-1">Nicole Brown (Detention): 4 Pending Tasks with Approaching Deadlines</p>
                     <p className="text-xs text-secondary">Uniform issue (02/07), Radio training (02/08), CPR/First Aid (02/10), CJIS Training (02/12)</p>
                   </div>
                 </div>
@@ -689,7 +689,7 @@ export default function NewHireOnboarding() {
               <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
                 <div className="flex items-center justify-between mb-3">
                   <div className="w-10 h-10 bg-amber-500/20 rounded-xl flex items-center justify-center">
-                    <GraduationCap className="w-5 h-5 text-amber-400" />
+                    <GraduationCap className="w-5 h-5 text-amber-700" />
                   </div>
                 </div>
                 <p className="text-2xl font-bold text-primary mb-1">2</p>
@@ -723,12 +723,12 @@ export default function NewHireOnboarding() {
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
                     className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all relative whitespace-nowrap ${
-                      activeTab === tab.id ? 'text-amber-400' : 'text-secondary hover:text-slate-300'
+                      activeTab === tab.id ? 'text-amber-700' : 'text-secondary hover:text-slate-300'
                     }`}
                   >
                     {tab.label}
                     <span className={`px-2 py-0.5 rounded-full text-xs ${
-                      activeTab === tab.id ? 'bg-amber-500/20 text-amber-400' : 'bg-white dark:bg-slate-700/50 text-slate-500'
+                      activeTab === tab.id ? 'bg-amber-500/20 text-amber-700' : 'bg-white dark:bg-slate-700/50 text-slate-500'
                     }`}>{tab.count}</span>
                     {activeTab === tab.id && (
                       <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500"></div>
@@ -877,10 +877,10 @@ export default function NewHireOnboarding() {
                     {hire.ftoProgram && hire.ftoProgram.enrolled && (
                       <div className="px-5 py-4 bg-gradient-to-r from-amber-500/5 to-transparent border-b border-border dark:border-slate-700/30">
                         <div className="flex items-center gap-2 mb-3">
-                          <GraduationCap className="w-4 h-4 text-amber-400" />
-                          <h4 className="text-sm font-semibold text-amber-400">Field Training Officer (FTO) Program</h4>
+                          <GraduationCap className="w-4 h-4 text-amber-700" />
+                          <h4 className="text-sm font-semibold text-amber-700">Field Training Officer (FTO) Program</h4>
                           {hire.ftoProgram.currentWeek !== 'COMPLETED' && (
-                            <span className="px-2 py-0.5 bg-amber-500/20 border border-amber-500/30 rounded text-xs text-amber-400">
+                            <span className="px-2 py-0.5 bg-amber-500/20 border border-amber-500/30 rounded text-xs text-amber-700">
                               Week {hire.ftoProgram.currentWeek} of {hire.ftoProgram.duration.split(' ')[0]}
                             </span>
                           )}
@@ -1025,7 +1025,7 @@ export default function NewHireOnboarding() {
                                         </span>
                                       )}
                                       {task.status === 'pending' && task.dueDate && (
-                                        <span className="text-xs text-amber-400">
+                                        <span className="text-xs text-amber-700">
                                           Due: {task.dueDate}
                                         </span>
                                       )}
@@ -1040,7 +1040,7 @@ export default function NewHireOnboarding() {
                                       <p className="text-xs text-slate-500 mt-1">{task.notes}</p>
                                     )}
                                     {task.actionRequired && (
-                                      <p className="text-xs text-amber-400 mt-1 font-medium">Action Required: {task.actionRequired}</p>
+                                      <p className="text-xs text-amber-700 mt-1 font-medium">Action Required: {task.actionRequired}</p>
                                     )}
                                   </div>
                                 </div>
@@ -1054,7 +1054,7 @@ export default function NewHireOnboarding() {
                     {/* Pending Actions */}
                     {hire.pendingActions && hire.pendingActions.length > 0 && hire.status !== 'completed' && (
                       <div className="px-5 py-4 bg-amber-500/5">
-                        <h4 className="text-sm font-semibold text-amber-400 mb-3 flex items-center gap-2">
+                        <h4 className="text-sm font-semibold text-amber-700 mb-3 flex items-center gap-2">
                           <AlertCircle className="w-4 h-4" />
                           Pending Action Items
                         </h4>
@@ -1070,7 +1070,7 @@ export default function NewHireOnboarding() {
                             >
                               <p className={`text-sm font-medium ${
                                 action.status === 'overdue' ? 'text-red-400' :
-                                action.status === 'due-tomorrow' ? 'text-amber-400' :
+                                action.status === 'due-tomorrow' ? 'text-amber-700' :
                                 'text-slate-500'
                               }`}>
                                 {action.action}
@@ -1120,7 +1120,7 @@ export default function NewHireOnboarding() {
                         View Full Details
                       </button>
                       {hire.ftoProgram?.enrolled && hire.status === 'in-progress' && (
-                        <button className="px-4 py-2 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/30 text-amber-400 rounded-lg text-sm font-medium transition-all flex items-center gap-2">
+                        <button className="px-4 py-2 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/30 text-amber-700 rounded-lg text-sm font-medium transition-all flex items-center gap-2">
                           <GraduationCap className="w-4 h-4" />
                           View FTO Evaluations
                         </button>
@@ -1238,7 +1238,7 @@ export default function NewHireOnboarding() {
             {/* FTO Program Details */}
             {selectedNewHire.ftoProgram?.enrolled && (
               <div className="mb-6 p-4 bg-amber-500/10 border border-amber-500/20 rounded-xl">
-                <h4 className="text-sm font-semibold text-amber-400 mb-3">FTO Program Details</h4>
+                <h4 className="text-sm font-semibold text-amber-700 mb-3">FTO Program Details</h4>
                 <div className="grid grid-cols-2 gap-3 text-xs mb-4">
                   <div>
                     <span className="text-slate-500">FTO:</span>

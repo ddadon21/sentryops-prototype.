@@ -447,7 +447,7 @@ export default function DailyCommandBrief() {
                     <div className="ml-3 mt-2 flex items-center gap-3 text-[11px]">
                       <span className="text-slate-500">{item.owner.name} · #{item.owner.badge}</span>
                       <span className="text-slate-700">|</span>
-                      <span className="text-red-700 dark:text-red-400/70">If delayed → {item.consequence}</span>
+                      <span className="text-red-700 dark:text-red-400">If delayed → {item.consequence}</span>
                     </div>
                   </div>
 

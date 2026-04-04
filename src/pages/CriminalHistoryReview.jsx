@@ -319,13 +319,13 @@ export default function CriminalHistoryReview() {
       case 'Clear':
         return <span className="px-2.5 py-1 bg-green-500/10 text-green-400 rounded-lg text-xs font-medium flex items-center gap-1.5"><CheckCircle2 className="w-3 h-3" />Clear</span>;
       case 'Review Required':
-        return <span className="px-2.5 py-1 bg-amber-500/10 text-amber-400 rounded-lg text-xs font-medium flex items-center gap-1.5"><AlertTriangle className="w-3 h-3" />Review Required</span>;
+        return <span className="px-2.5 py-1 bg-amber-500/10 text-amber-700 rounded-lg text-xs font-medium flex items-center gap-1.5"><AlertTriangle className="w-3 h-3" />Review Required</span>;
       case 'In Progress':
         return <span className="px-2.5 py-1 bg-blue-500/10 text-blue-400 rounded-lg text-xs font-medium flex items-center gap-1.5"><Clock className="w-3 h-3" />In Progress</span>;
       case 'Pass':
         return <span className="px-2 py-0.5 bg-green-500/10 text-green-400 rounded text-xs">Pass</span>;
       case 'Review':
-        return <span className="px-2 py-0.5 bg-amber-500/10 text-amber-400 rounded text-xs">Review</span>;
+        return <span className="px-2 py-0.5 bg-amber-500/10 text-amber-700 rounded text-xs">Review</span>;
       case 'Flag':
         return <span className="text-red-400 text-xs flex items-center gap-1"><Flag className="w-3 h-3" />Flag</span>;
       case 'Pending':
@@ -408,7 +408,7 @@ export default function CriminalHistoryReview() {
               </div>
               <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-amber-500/10 rounded-lg"><AlertTriangle className="w-5 h-5 text-amber-400" /></div>
+                  <div className="p-2 bg-amber-500/10 rounded-lg"><AlertTriangle className="w-5 h-5 text-amber-700" /></div>
                   <div><p className="text-2xl font-semibold text-primary">{stats.review}</p><p className="text-slate-500 text-sm">Review Required</p></div>
                 </div>
               </div>
@@ -422,7 +422,7 @@ export default function CriminalHistoryReview() {
 
             {/* Standard Protocol */}
             <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
-              <h3 className="text-primary font-medium mb-3 flex items-center gap-2"><ClipboardList className="w-5 h-5 text-amber-400" />Standard Background Check Protocol</h3>
+              <h3 className="text-primary font-medium mb-3 flex items-center gap-2"><ClipboardList className="w-5 h-5 text-amber-700" />Standard Background Check Protocol</h3>
               <div className="grid grid-cols-4 gap-4 text-sm">
                 <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-green-400" /><span className="text-secondary">GCIC (Georgia Crime Information)</span></div>
                 <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-green-400" /><span className="text-secondary">FBI NCIC (National Crime)</span></div>
@@ -441,7 +441,7 @@ export default function CriminalHistoryReview() {
               <div className="col-span-2 space-y-4">
                 <div className="flex items-center gap-2">
                   {[{ id: 'all', label: 'All Checks', count: stats.total }, { id: 'clear', label: 'Clear', count: stats.clear }, { id: 'review', label: 'Review Required', count: stats.review }, { id: 'progress', label: 'In Progress', count: stats.inProgress }].map(tab => (
-                    <button key={tab.id} onClick={() => setActiveTab(tab.id)} className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${activeTab === tab.id ? 'bg-amber-500/10 text-amber-400' : 'text-secondary hover:text-secondary hover:bg-slate-800'}`}>{tab.label} ({tab.count})</button>
+                    <button key={tab.id} onClick={() => setActiveTab(tab.id)} className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${activeTab === tab.id ? 'bg-amber-500/10 text-amber-700' : 'text-secondary hover:text-secondary hover:bg-slate-800'}`}>{tab.label} ({tab.count})</button>
                   ))}
                 </div>
 
@@ -452,7 +452,7 @@ export default function CriminalHistoryReview() {
                         <div className="flex items-start justify-between">
                           <div className="flex items-start gap-4">
                             <div className={`p-3 rounded-xl ${check.status === 'Clear' ? 'bg-green-500/10' : check.status === 'Review Required' ? 'bg-amber-500/10' : 'bg-blue-500/10'}`}>
-                              {check.status === 'Clear' ? <CheckCircle2 className="w-6 h-6 text-green-400" /> : check.status === 'Review Required' ? <AlertTriangle className="w-6 h-6 text-amber-400" /> : <Clock className="w-6 h-6 text-blue-400" />}
+                              {check.status === 'Clear' ? <CheckCircle2 className="w-6 h-6 text-green-400" /> : check.status === 'Review Required' ? <AlertTriangle className="w-6 h-6 text-amber-700" /> : <Clock className="w-6 h-6 text-blue-400" />}
                             </div>
                             <div>
                               <div className="flex items-center gap-2"><h3 className="text-primary font-medium">{check.subject}</h3>{getStatusBadge(check.status)}</div>
@@ -483,7 +483,7 @@ export default function CriminalHistoryReview() {
                           <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
                             <h4 className="text-secondary text-xs font-medium mb-3 flex items-center gap-2">
                               {check.status === 'Clear' && <CheckCircle2 className="w-4 h-4 text-green-400" />}
-                              {check.status === 'Review Required' && <AlertTriangle className="w-4 h-4 text-amber-400" />}
+                              {check.status === 'Review Required' && <AlertTriangle className="w-4 h-4 text-amber-700" />}
                               {check.status === 'In Progress' && <Clock className="w-4 h-4 text-blue-400" />}
                               CRIMINAL HISTORY RESULTS
                             </h4>
@@ -500,7 +500,7 @@ export default function CriminalHistoryReview() {
                               {check.sexOffenderRegistry && <div className="flex items-center justify-between py-2 border-b border-border"><div><p className="text-primary text-sm">Sex Offender Registries</p><p className="text-slate-500 text-xs">National and state registries</p></div>{getStatusBadge(check.sexOffenderRegistry.national)}</div>}
                               <div className="grid grid-cols-3 gap-4 pt-2">
                                 <div><p className="text-slate-500 text-xs">Warrants</p><p className={`text-sm ${check.warrants === 'None' ? 'text-green-400' : check.warrants === 'Pending' ? 'text-blue-400' : 'text-red-400'}`}>{check.warrants}</p></div>
-                                <div><p className="text-slate-500 text-xs">Arrests</p><p className={`text-sm ${check.arrests === 'None' ? 'text-green-400' : check.arrests === 'Pending' ? 'text-blue-400' : 'text-amber-400'}`}>{Array.isArray(check.arrests) ? `${check.arrests.length} found` : check.arrests}</p></div>
+                                <div><p className="text-slate-500 text-xs">Arrests</p><p className={`text-sm ${check.arrests === 'None' ? 'text-green-400' : check.arrests === 'Pending' ? 'text-blue-400' : 'text-amber-700'}`}>{Array.isArray(check.arrests) ? `${check.arrests.length} found` : check.arrests}</p></div>
                                 <div><p className="text-slate-500 text-xs">Convictions</p><p className={`text-sm ${check.convictions === 'None' ? 'text-green-400' : check.convictions === 'Pending' ? 'text-blue-400' : 'text-red-400'}`}>{check.convictions}</p></div>
                               </div>
                             </div>
@@ -508,13 +508,13 @@ export default function CriminalHistoryReview() {
 
                           {check.arrests && Array.isArray(check.arrests) && check.arrests.length > 0 && (
                             <div className="bg-amber-500/5 border border-amber-500/20 rounded-lg p-3">
-                              <h4 className="text-amber-400 text-xs font-medium mb-3 flex items-center gap-2"><AlertTriangle className="w-4 h-4" />ARREST RECORD - REQUIRES REVIEW</h4>
+                              <h4 className="text-amber-700 text-xs font-medium mb-3 flex items-center gap-2"><AlertTriangle className="w-4 h-4" />ARREST RECORD - REQUIRES REVIEW</h4>
                               {check.arrests.map((arrest, idx) => (
                                 <div key={idx} className="space-y-2 text-sm">
                                   <div className="grid grid-cols-2 gap-2">
                                     <div><span className="text-slate-500">Date:</span><span className="text-primary ml-2">{arrest.date}</span></div>
                                     <div><span className="text-slate-500">Agency:</span><span className="text-primary ml-2">{arrest.agency}</span></div>
-                                    <div><span className="text-slate-500">Charge:</span><span className="text-amber-400 ml-2">{arrest.charge}</span></div>
+                                    <div><span className="text-slate-500">Charge:</span><span className="text-amber-700 ml-2">{arrest.charge}</span></div>
                                     <div><span className="text-slate-500">Case #:</span><span className="text-primary ml-2">{arrest.caseNumber}</span></div>
                                     <div><span className="text-slate-500">Disposition:</span><span className="text-green-400 ml-2">{arrest.disposition}</span></div>
                                     <div><span className="text-slate-500">Age at time:</span><span className="text-primary ml-2">{arrest.subjectAge} years old</span></div>
@@ -539,7 +539,7 @@ export default function CriminalHistoryReview() {
 
                           {check.postAssessment && (
                             <div className={`rounded-lg p-3 ${check.postAssessment.meetsPostStandards === true ? 'bg-green-500/5 border border-green-500/20' : check.postAssessment.meetsPostStandards === false ? 'bg-red-500/5 border border-red-500/20' : 'bg-amber-500/5 border border-amber-500/20'}`}>
-                              <h4 className={`text-xs font-medium mb-3 flex items-center gap-2 ${check.postAssessment.meetsPostStandards === true ? 'text-green-400' : check.postAssessment.meetsPostStandards === false ? 'text-red-400' : 'text-amber-400'}`}>
+                              <h4 className={`text-xs font-medium mb-3 flex items-center gap-2 ${check.postAssessment.meetsPostStandards === true ? 'text-green-400' : check.postAssessment.meetsPostStandards === false ? 'text-red-400' : 'text-amber-700'}`}>
                                 <Scale className="w-4 h-4" />POST DISQUALIFIER ASSESSMENT
                                 {check.postAssessment.supervisorDecisionRequired && <span className="px-2 py-0.5 bg-amber-500/20 text-amber-300 rounded text-xs ml-2">SUPERVISOR DECISION REQUIRED</span>}
                               </h4>
@@ -551,7 +551,7 @@ export default function CriminalHistoryReview() {
                                 <div className="flex items-center justify-between"><span className="text-secondary">Moral Turpitude:</span>{getStatusBadge(check.postAssessment.moralTurpitude.status)}</div>
                                 <div className="flex items-center justify-between"><span className="text-secondary">Traffic Violations:</span>{getStatusBadge(check.postAssessment.trafficViolations.status)}</div>
                               </div>
-                              {check.postAssessment.policyQuestion && <div className="mt-3 pt-3 border-t border-border"><p className="text-amber-400 text-xs font-medium mb-1">POLICY QUESTION FOR SUPERVISOR:</p><p className="text-secondary text-xs">{check.postAssessment.policyQuestion}</p></div>}
+                              {check.postAssessment.policyQuestion && <div className="mt-3 pt-3 border-t border-border"><p className="text-amber-700 text-xs font-medium mb-1">POLICY QUESTION FOR SUPERVISOR:</p><p className="text-secondary text-xs">{check.postAssessment.policyQuestion}</p></div>}
                             </div>
                           )}
 
@@ -601,15 +601,15 @@ export default function CriminalHistoryReview() {
               {/* Sidebar */}
               <div className="space-y-6">
                 <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
-                  <h3 className="text-primary font-medium mb-4 flex items-center gap-2"><Shield className="w-5 h-5 text-amber-400" />Check Status Summary</h3>
+                  <h3 className="text-primary font-medium mb-4 flex items-center gap-2"><Shield className="w-5 h-5 text-amber-700" />Check Status Summary</h3>
                   <div className="space-y-3">
                     <div className="bg-green-500/5 border border-green-500/20 rounded-lg p-3">
                       <div className="flex items-center justify-between mb-2"><span className="text-green-400 text-sm font-medium">Clear - No Disqualifiers</span><span className="text-green-400 font-bold">{stats.clear}</span></div>
                       {criminalChecks.filter(c => c.status === 'Clear').map(c => <div key={c.id} className="text-xs text-secondary flex items-center gap-1"><CheckCircle2 className="w-3 h-3 text-green-400" />{c.subject} ({c.caseId})</div>)}
                     </div>
                     <div className="bg-amber-500/5 border border-amber-500/20 rounded-lg p-3">
-                      <div className="flex items-center justify-between mb-2"><span className="text-amber-400 text-sm font-medium">Pending Supervisor Review</span><span className="text-amber-400 font-bold">{stats.review}</span></div>
-                      {criminalChecks.filter(c => c.status === 'Review Required').map(c => <div key={c.id} className="text-xs text-secondary"><div className="flex items-center gap-1"><AlertTriangle className="w-3 h-3 text-amber-400" />{c.subject} ({c.caseId})</div><p className="text-slate-500 ml-4">{c.arrests && Array.isArray(c.arrests) ? `${c.arrests.length} arrest (charges dismissed)` : 'Requires review'}</p></div>)}
+                      <div className="flex items-center justify-between mb-2"><span className="text-amber-700 text-sm font-medium">Pending Supervisor Review</span><span className="text-amber-700 font-bold">{stats.review}</span></div>
+                      {criminalChecks.filter(c => c.status === 'Review Required').map(c => <div key={c.id} className="text-xs text-secondary"><div className="flex items-center gap-1"><AlertTriangle className="w-3 h-3 text-amber-700" />{c.subject} ({c.caseId})</div><p className="text-slate-500 ml-4">{c.arrests && Array.isArray(c.arrests) ? `${c.arrests.length} arrest (charges dismissed)` : 'Requires review'}</p></div>)}
                     </div>
                     <div className="bg-blue-500/5 border border-blue-500/20 rounded-lg p-3">
                       <div className="flex items-center justify-between mb-2"><span className="text-blue-400 text-sm font-medium">In Progress</span><span className="text-blue-400 font-bold">{stats.inProgress}</span></div>
@@ -630,7 +630,7 @@ export default function CriminalHistoryReview() {
                 </div>
 
                 <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
-                  <h3 className="text-primary font-medium mb-4 flex items-center gap-2"><HelpCircle className="w-5 h-5 text-amber-400" />Support & Resources</h3>
+                  <h3 className="text-primary font-medium mb-4 flex items-center gap-2"><HelpCircle className="w-5 h-5 text-amber-700" />Support & Resources</h3>
                   <div className="space-y-2">
                     <a href="#" className="flex items-center gap-3 p-3 bg-white dark:bg-slate-900/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors"><BookOpen className="w-4 h-4 text-secondary" /><div><p className="text-primary text-sm">POST Disqualifier Guide</p><p className="text-slate-500 text-xs">Georgia POST standards</p></div><ExternalLink className="w-4 h-4 text-slate-500 ml-auto" /></a>
                     <a href="#" className="flex items-center gap-3 p-3 bg-white dark:bg-slate-900/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors"><Lock className="w-4 h-4 text-secondary" /><div><p className="text-primary text-sm">CJIS Security Policy</p><p className="text-slate-500 text-xs">28 CFR Part 20</p></div><ExternalLink className="w-4 h-4 text-slate-500 ml-auto" /></a>
@@ -640,7 +640,7 @@ export default function CriminalHistoryReview() {
                 </div>
 
                 <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
-                  <h3 className="text-primary font-medium mb-4 flex items-center gap-2"><History className="w-5 h-5 text-amber-400" />Recent Activity</h3>
+                  <h3 className="text-primary font-medium mb-4 flex items-center gap-2"><History className="w-5 h-5 text-amber-700" />Recent Activity</h3>
                   <div className="space-y-3">
                     {[{ action: 'Check initiated', subject: 'Maria Rodriguez', date: '2024-11-01', by: 'Agent Brooks' }, { action: 'Flagged for review', subject: 'James Wilson', date: '2024-10-22', by: 'Agent Brooks' }, { action: 'Check completed - Clear', subject: 'Sarah Chen', date: '2024-10-20', by: 'Inv. Davis' }, { action: 'Check completed - Clear', subject: 'Robert Martinez', date: '2024-10-18', by: 'Agent Brooks' }].map((activity, index) => (
                       <div key={index} className="flex items-start gap-3"><div className="w-2 h-2 bg-amber-500 rounded-full mt-1.5"></div><div className="flex-1"><p className="text-secondary text-sm">{activity.action}</p><p className="text-slate-500 text-xs">{activity.subject}</p><p className="text-slate-700 text-xs">{activity.date} • {activity.by}</p></div></div>

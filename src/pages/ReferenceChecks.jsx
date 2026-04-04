@@ -11,7 +11,7 @@ const getRefStatusBadge = (status) => {
     case 'Completed':
       return <span className="px-2.5 py-1 bg-green-500/10 text-green-400 rounded-lg text-xs font-medium flex items-center gap-1.5"><CheckCircle2 className="w-3 h-3" />Completed</span>;
     case 'Pending Callback':
-      return <span className="px-2.5 py-1 bg-amber-500/10 text-amber-400 rounded-lg text-xs font-medium flex items-center gap-1.5"><Clock className="w-3 h-3" />Pending Callback</span>;
+      return <span className="px-2.5 py-1 bg-amber-500/10 text-amber-700 rounded-lg text-xs font-medium flex items-center gap-1.5"><Clock className="w-3 h-3" />Pending Callback</span>;
     case 'Not Yet Contacted':
       return <span className="px-2.5 py-1 bg-slate-500/10 text-secondary rounded-lg text-xs font-medium flex items-center gap-1.5"><AlertCircle className="w-3 h-3" />Not Yet Contacted</span>;
     case 'Scheduled':
@@ -49,7 +49,7 @@ const getRefTypeBadge = (type) => {
     case 'Professional LE':
       return <span className="px-2.5 py-1 bg-purple-500/10 text-purple-400 rounded-lg text-xs font-medium flex items-center gap-1"><Shield className="w-3 h-3" />Professional LE</span>;
     case 'Personal':
-      return <span className="px-2.5 py-1 bg-amber-500/10 text-amber-400 rounded-lg text-xs font-medium flex items-center gap-1"><Users className="w-3 h-3" />Personal</span>;
+      return <span className="px-2.5 py-1 bg-amber-500/10 text-amber-700 rounded-lg text-xs font-medium flex items-center gap-1"><Users className="w-3 h-3" />Personal</span>;
     default:
       return <span className="px-2.5 py-1 bg-slate-500/10 text-secondary rounded-lg text-xs font-medium">{type}</span>;
   }
@@ -345,7 +345,7 @@ export default function ReferenceChecks() {
                   {currentDateTime.date} at {currentDateTime.time}
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <Shield className="w-4 h-4 text-amber-400" />
+                  <Shield className="w-4 h-4 text-amber-700" />
                   Active investigator: {investigatorInfo.name} (Badge #{investigatorInfo.badge})
                 </span>
               </div>
@@ -355,7 +355,7 @@ export default function ReferenceChecks() {
                   Total references tracked: {references.length} references across active cases
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <Clock className="w-4 h-4 text-amber-400" />
+                  <Clock className="w-4 h-4 text-amber-700" />
                   Pending completion: {pendingRefs.length} references (awaiting callbacks)
                 </span>
               </div>
@@ -387,7 +387,7 @@ export default function ReferenceChecks() {
             <div className="mb-6 bg-gradient-to-br from-amber-500/10 to-amber-600/5 border border-amber-500/20 rounded-xl p-5">
               <div className="flex items-start gap-4 mb-4">
                 <div className="w-10 h-10 bg-amber-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <ClipboardList className="w-6 h-6 text-amber-400" />
+                  <ClipboardList className="w-6 h-6 text-amber-700" />
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-1">
@@ -403,7 +403,7 @@ export default function ReferenceChecks() {
                 <div className="space-y-1.5 text-sm">
                   <div className="text-secondary">Total references required: <span className="text-primary font-medium">5</span> <span className="text-slate-500">(per policy: 3 personal, 2 employment)</span></div>
                   <div className="text-secondary">References completed: <span className="text-green-400 font-medium">2</span> <span className="text-slate-500">(40% complete)</span></div>
-                  <div className="text-secondary">References pending: <span className="text-amber-400 font-medium">2</span> <span className="text-slate-500">(1 awaiting callback, 1 not yet identified)</span></div>
+                  <div className="text-secondary">References pending: <span className="text-amber-700 font-medium">2</span> <span className="text-slate-500">(1 awaiting callback, 1 not yet identified)</span></div>
                   <div className="text-secondary">References not yet contacted: <span className="text-primary">0</span></div>
                 </div>
               </div>
@@ -430,19 +430,19 @@ export default function ReferenceChecks() {
 
                 {/* Pending Summary */}
                 <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4">
-                  <h5 className="text-sm font-semibold text-amber-400 mb-3 flex items-center gap-2">
+                  <h5 className="text-sm font-semibold text-amber-700 mb-3 flex items-center gap-2">
                     <Clock className="w-4 h-4" />Pending References (2)
                   </h5>
                   <div className="space-y-3 text-sm">
                     <div>
                       <p className="text-primary font-medium">Officer Michael Brown (Colleague/FTO)</p>
                       <p className="text-secondary">Status: Awaiting callback (1 contact attempt Jan 23)</p>
-                      <p className="text-amber-400/80">Next action: Follow up Jan 27 if no response</p>
+                      <p className="text-amber-700/80">Next action: Follow up Jan 27 if no response</p>
                     </div>
                     <div>
                       <p className="text-primary font-medium">Additional personal reference (to be added)</p>
                       <p className="text-secondary">Status: Not yet scheduled</p>
-                      <p className="text-amber-400/80">Next action: Contact applicant for additional references</p>
+                      <p className="text-amber-700/80">Next action: Contact applicant for additional references</p>
                     </div>
                   </div>
                 </div>
@@ -464,7 +464,7 @@ export default function ReferenceChecks() {
                     <CheckCircle2 className="w-3.5 h-3.5 flex-shrink-0" />
                     <span>No concerns identified by either supervisor</span>
                   </div>
-                  <div className="flex items-center gap-2 text-amber-400">
+                  <div className="flex items-center gap-2 text-amber-700">
                     <AlertTriangle className="w-3.5 h-3.5 flex-shrink-0" />
                     <span>Cannot finalize without minimum 3 completed</span>
                   </div>
@@ -473,7 +473,7 @@ export default function ReferenceChecks() {
 
               {/* Assessment Method Note */}
               <div className="bg-amber-500/5 border border-amber-500/20 rounded-lg p-4 mb-4">
-                <h5 className="text-sm font-semibold text-amber-400 mb-2 flex items-center gap-2">
+                <h5 className="text-sm font-semibold text-amber-700 mb-2 flex items-center gap-2">
                   <AlertTriangle className="w-4 h-4" />Assessment Method Note
                 </h5>
                 <p className="text-sm text-secondary">
@@ -492,7 +492,7 @@ export default function ReferenceChecks() {
               <div className="flex flex-wrap items-center gap-3 mt-4">
                 <button className="px-3 py-1.5 bg-white dark:bg-slate-800/60 hover:bg-slate-800/80 text-secondary rounded-lg text-xs font-medium transition-colors">View Completed References</button>
                 <button className="px-3 py-1.5 bg-white dark:bg-slate-800/60 hover:bg-slate-800/80 text-secondary rounded-lg text-xs font-medium transition-colors">Contact Pending References</button>
-                <button className="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 rounded-lg text-xs font-medium transition-colors">Request Additional References from Applicant</button>
+                <button className="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 rounded-lg text-xs font-medium transition-colors">Request Additional References from Applicant</button>
               </div>
             </div>
 
@@ -528,14 +528,14 @@ export default function ReferenceChecks() {
 
               <div className="bg-white dark:bg-slate-800/40 border border-amber-500/30 rounded-xl p-5">
                 <div className="flex items-center justify-between mb-3">
-                  <Clock className="w-8 h-8 text-amber-400" />
+                  <Clock className="w-8 h-8 text-amber-700" />
                   <span className="text-2xl font-bold text-primary">{pendingRefs.length}</span>
                 </div>
                 <p className="text-sm font-medium text-primary mb-1">Pending</p>
                 <p className="text-xs text-slate-500">Awaiting contact/callback</p>
                 <div className="mt-3 pt-3 border-t border-border dark:border-slate-700/30 space-y-1.5">
                   <div>
-                    <p className="text-xs text-amber-400/80">Officer Brown — Awaiting callback</p>
+                    <p className="text-xs text-amber-700/80">Officer Brown — Awaiting callback</p>
                     <p className="text-xs text-slate-500 ml-2">1 contact attempt (Jan 23)</p>
                   </div>
                   <div>
@@ -547,7 +547,7 @@ export default function ReferenceChecks() {
 
               <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
                 <div className="flex items-center justify-between mb-3">
-                  <ClipboardList className="w-8 h-8 text-amber-400" />
+                  <ClipboardList className="w-8 h-8 text-amber-700" />
                   <span className="text-lg font-bold text-primary">QUALITATIVE</span>
                 </div>
                 <p className="text-sm font-medium text-primary mb-1">Assessment Summary</p>
@@ -563,11 +563,11 @@ export default function ReferenceChecks() {
             {/* Reference Actions */}
             <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5 mb-6">
               <h3 className="text-sm font-semibold text-primary mb-4 flex items-center gap-2">
-                <Settings className="w-4 h-4 text-amber-400" />Reference Check Actions
+                <Settings className="w-4 h-4 text-amber-700" />Reference Check Actions
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                 <button className="flex items-start gap-3 p-3 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
-                  <Plus className="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" />
+                  <Plus className="w-5 h-5 text-amber-700 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-sm font-medium text-primary">Add Reference</p>
                     <p className="text-xs text-slate-500 mt-0.5">Add new personal or professional reference</p>
@@ -609,7 +609,7 @@ export default function ReferenceChecks() {
                   </div>
                 </button>
                 <button className="flex items-start gap-3 p-3 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
-                  <FileText className="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" />
+                  <FileText className="w-5 h-5 text-amber-700 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-sm font-medium text-primary">Add Interview Notes</p>
                     <p className="text-xs text-slate-500 mt-0.5">Document post-interview findings</p>
@@ -670,7 +670,7 @@ export default function ReferenceChecks() {
                             <h3 className="text-lg font-semibold text-primary">{ref.referenceName}</h3>
                             {getRefStatusBadge(ref.status)}
                           </div>
-                          <p className="text-sm text-amber-400 mb-1">{ref.relationship}</p>
+                          <p className="text-sm text-amber-700 mb-1">{ref.relationship}</p>
                           {ref.organization && (
                             <p className="text-sm text-secondary mb-1">{ref.rankPosition ? `${ref.rankPosition} — ` : ''}{ref.organization}</p>
                           )}
@@ -757,7 +757,7 @@ export default function ReferenceChecks() {
                                 <ol className="space-y-1">
                                   {ref.strengths.map((s, i) => (
                                     <li key={i} className="text-sm text-secondary flex items-start gap-2">
-                                      <span className="text-amber-400/60 font-medium text-xs mt-0.5">{i + 1}.</span>{s}
+                                      <span className="text-amber-700/60 font-medium text-xs mt-0.5">{i + 1}.</span>{s}
                                     </li>
                                   ))}
                                 </ol>
@@ -788,7 +788,7 @@ export default function ReferenceChecks() {
                           {/* Expand for more details */}
                           <button
                             onClick={() => setExpandedRef(isExpanded ? null : ref.id)}
-                            className="w-full flex items-center justify-center gap-2 py-2 text-sm text-amber-400 hover:text-amber-300 transition-colors mb-2"
+                            className="w-full flex items-center justify-center gap-2 py-2 text-sm text-amber-700 hover:text-amber-300 transition-colors mb-2"
                           >
                             {isExpanded ? 'Hide Details' : 'Show Disciplinary, Rehire, Brady/Giglio & Assessment'}
                             <ChevronDown className={`w-4 h-4 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
@@ -863,12 +863,12 @@ export default function ReferenceChecks() {
                           {/* Next Actions */}
                           {ref.nextActions && (
                             <div className="bg-amber-500/5 border border-amber-500/20 rounded-lg p-3 mb-4">
-                              <h4 className="text-xs font-semibold text-amber-400 mb-2 uppercase tracking-wider">Next Actions</h4>
+                              <h4 className="text-xs font-semibold text-amber-700 mb-2 uppercase tracking-wider">Next Actions</h4>
                               <div className="space-y-1 text-sm">
                                 <p className="text-secondary">Follow-up date: <span className="text-primary">{ref.nextActions.followUpDate}</span></p>
                                 <p className="text-secondary">Action: <span className="text-secondary">{ref.nextActions.action}</span></p>
                                 <p className="text-secondary">Escalation: <span className="text-secondary">{ref.nextActions.escalation}</span></p>
-                                <p className="text-secondary">Priority: <span className="text-amber-400">{ref.nextActions.priority}</span></p>
+                                <p className="text-secondary">Priority: <span className="text-amber-700">{ref.nextActions.priority}</span></p>
                               </div>
                             </div>
                           )}
@@ -917,11 +917,11 @@ export default function ReferenceChecks() {
                           {/* Action Required */}
                           {ref.actionRequired && (
                             <div className="bg-amber-500/5 border border-amber-500/20 rounded-lg p-3 mb-4">
-                              <h4 className="text-xs font-semibold text-amber-400 mb-2 uppercase tracking-wider">Action Required</h4>
+                              <h4 className="text-xs font-semibold text-amber-700 mb-2 uppercase tracking-wider">Action Required</h4>
                               <div className="space-y-1.5 text-sm">
                                 <p className="text-secondary">Action: <span className="text-primary">{ref.actionRequired.action}</span></p>
                                 <p className="text-secondary">Required info: <span className="text-secondary">{ref.actionRequired.requiredInfo}</span></p>
-                                <p className="text-secondary">Target date: <span className="text-amber-400">{ref.actionRequired.targetDate}</span></p>
+                                <p className="text-secondary">Target date: <span className="text-amber-700">{ref.actionRequired.targetDate}</span></p>
                                 <p className="text-secondary">Examples: <span className="text-secondary">{ref.actionRequired.examples}</span></p>
                               </div>
                             </div>
@@ -969,13 +969,13 @@ export default function ReferenceChecks() {
                             <>
                               <button className="px-3 py-1.5 bg-green-500/10 hover:bg-green-500/20 text-green-400 rounded-lg text-xs font-medium transition-colors flex items-center gap-1"><Phone className="w-3 h-3" />Call Now</button>
                               <button className="px-3 py-1.5 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 rounded-lg text-xs font-medium transition-colors flex items-center gap-1"><Mail className="w-3 h-3" />Send Email</button>
-                              <button className="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 rounded-lg text-xs font-medium transition-colors">Schedule Interview</button>
+                              <button className="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 rounded-lg text-xs font-medium transition-colors">Schedule Interview</button>
                               <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">Log Contact Attempt</button>
                             </>
                           )}
                           {isRequired && (
                             <>
-                              <button className="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 rounded-lg text-xs font-medium transition-colors flex items-center gap-1"><Mail className="w-3 h-3" />Email Applicant</button>
+                              <button className="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 rounded-lg text-xs font-medium transition-colors flex items-center gap-1"><Mail className="w-3 h-3" />Email Applicant</button>
                               <button className="px-3 py-1.5 bg-green-500/10 hover:bg-green-500/20 text-green-400 rounded-lg text-xs font-medium transition-colors flex items-center gap-1"><Phone className="w-3 h-3" />Call Applicant</button>
                               <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">Reference Request Form</button>
                               <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">View Policy</button>
@@ -1005,7 +1005,7 @@ export default function ReferenceChecks() {
             {/* Support & Resources Panel */}
             <div className="mt-8 bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
               <h3 className="text-lg font-semibold text-primary mb-4 flex items-center gap-2">
-                <HelpCircle className="w-5 h-5 text-amber-400" />
+                <HelpCircle className="w-5 h-5 text-amber-700" />
                 Support & Resources
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -1014,7 +1014,7 @@ export default function ReferenceChecks() {
                   <h4 className="text-sm font-semibold text-secondary mb-3">Quick Actions</h4>
                   <div className="space-y-2">
                     <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
-                      <Plus className="w-4 h-4 text-amber-400" />
+                      <Plus className="w-4 h-4 text-amber-700" />
                       <span className="text-sm text-secondary">Add New Reference</span>
                     </button>
                     <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
@@ -1037,19 +1037,19 @@ export default function ReferenceChecks() {
                   <h4 className="text-sm font-semibold text-secondary mb-3">Documentation</h4>
                   <div className="space-y-2">
                     <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
-                      <BookOpen className="w-4 h-4 text-amber-400" />
+                      <BookOpen className="w-4 h-4 text-amber-700" />
                       <span className="text-sm text-secondary">Reference Check Procedures</span>
                     </button>
                     <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
-                      <BookOpen className="w-4 h-4 text-amber-400" />
+                      <BookOpen className="w-4 h-4 text-amber-700" />
                       <span className="text-sm text-secondary">Standard Interview Questions</span>
                     </button>
                     <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
-                      <BookOpen className="w-4 h-4 text-amber-400" />
+                      <BookOpen className="w-4 h-4 text-amber-700" />
                       <span className="text-sm text-secondary">Brady/Giglio Assessment Guide</span>
                     </button>
                     <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
-                      <ExternalLink className="w-4 h-4 text-amber-400" />
+                      <ExternalLink className="w-4 h-4 text-amber-700" />
                       <span className="text-sm text-secondary">POST Reference Requirements</span>
                     </button>
                   </div>
