@@ -33,6 +33,27 @@ interface Case {
   criticalReason?: string;
 }
 
+interface CommandAction {
+  id: string;
+  urgency: 'Critical' | 'High' | 'Medium';
+  title: string;
+  consequence: string;
+  recommendation: string;
+  actionLabel: 'Approve' | 'Assign' | 'Escalate';
+}
+
+interface DetectiveLoad {
+  name: string;
+  badge: string;
+  openCases: number;
+  criticalCases: number;
+  clearanceRate: number;
+  utilization: number;
+  risk: 'High' | 'Moderate' | 'Low';
+  bottleneck?: string;
+  recommendation?: string;
+}
+
 const ActiveCasesDashboard = () => {
   const [selectedType, setSelectedType] = useState<string>('all');
   const [selectedPriority, setSelectedPriority] = useState<string>('all');
@@ -286,6 +307,39 @@ const ActiveCasesDashboard = () => {
     multiAgency: cases.filter(c => c.multiAgency).length
   };
 
+  const commandActions: CommandAction[] = [
+    {
+      id: 'cmd-1',
+      urgency: 'Critical',
+      title: 'Homicide #2024-0847 — approve expedited lab escalation',
+      consequence: 'If ignored: charge window can collapse and suspect release risk increases.',
+      recommendation: 'Escalate to GBI command liaison now and notify DA intake.',
+      actionLabel: 'Escalate'
+    },
+    {
+      id: 'cmd-2',
+      urgency: 'Critical',
+      title: 'DEA Task Force #2024-1234 — surveillance extension expires today',
+      consequence: 'If ignored: 84-day operation terminates and fentanyl network disperses.',
+      recommendation: 'Approve 30-day continuation before EOD command cutoff.',
+      actionLabel: 'Approve'
+    },
+    {
+      id: 'cmd-3',
+      urgency: 'High',
+      title: 'Robbery Series #2024-1489 — task force staffing decision pending',
+      consequence: 'If ignored: likely 4th incident within 72 hours and victim exposure rises.',
+      recommendation: 'Assign 2 detectives and launch focused retail-surveillance plan.',
+      actionLabel: 'Assign'
+    }
+  ];
+
+  const detectiveLoad: DetectiveLoad[] = [
+    { name: 'Det. Rodriguez, Maria', badge: 'I-5234', openCases: 3, criticalCases: 1, clearanceRate: 85, utilization: 96, risk: 'High', bottleneck: 'Critical homicide + burglary overlap', recommendation: 'Reassign burglary #2024-1712 immediately.' },
+    { name: 'Det. Anderson / Lt. Anderson', badge: 'I-4892 / I-3456', openCases: 2, criticalCases: 1, clearanceRate: 72, utilization: 78, risk: 'Moderate', bottleneck: 'DEA extension approval dependency', recommendation: 'Approve extension to prevent investigative stall.' },
+    { name: 'Det. Wilson, Amanda', badge: 'I-4521', openCases: 1, criticalCases: 0, clearanceRate: 80, utilization: 42, risk: 'Low', recommendation: 'Best reassignment candidate for burglary support.' }
+  ];
+
   const getPriorityDot = (priority: string) => {
     switch (priority) {
       case 'Critical': return 'bg-red-500';
@@ -303,6 +357,28 @@ const ActiveCasesDashboard = () => {
       case 'Medium': return 'bg-slate-500/10 border-slate-500/20 text-slate-500 dark:text-slate-400';
       case 'Low': return 'bg-blue-500/10 border-blue-500/20 text-blue-400';
       default: return 'bg-slate-500/10 border-slate-500/20 text-slate-500 dark:text-slate-400';
+    }
+  };
+
+  const getUrgencyStyles = (urgency: CommandAction['urgency']) => {
+    switch (urgency) {
+      case 'Critical':
+        return 'border-red-300/70 dark:border-red-500/40 bg-red-50 dark:bg-red-500/10 text-red-800 dark:text-red-300';
+      case 'High':
+        return 'border-amber-300/70 dark:border-amber-500/40 bg-amber-50 dark:bg-amber-500/10 text-amber-800 dark:text-amber-300';
+      default:
+        return 'border-blue-300/70 dark:border-blue-500/40 bg-blue-50 dark:bg-blue-500/10 text-blue-800 dark:text-blue-300';
+    }
+  };
+
+  const getRiskStyles = (risk: DetectiveLoad['risk']) => {
+    switch (risk) {
+      case 'High':
+        return 'bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-300 border-red-200 dark:border-red-500/30';
+      case 'Moderate':
+        return 'bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-500/30';
+      default:
+        return 'bg-emerald-100 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-500/30';
     }
   };
 
@@ -324,76 +400,38 @@ const ActiveCasesDashboard = () => {
           </div>
         </div>
 
-        {/* Command Priority Strip */}
-        <div className="bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/40 rounded-xl overflow-hidden">
+        {/* Command Actions */}
+        <div className="bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-700/40 rounded-xl overflow-hidden">
           <div className="flex items-center gap-3 px-5 py-3 border-b border-slate-200 dark:border-slate-200 dark:border-slate-700/30">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
             </span>
-            <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Command Priority — Action Required</span>
+            <span className="text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-widest">Command Actions — Make These Decisions Now</span>
           </div>
-          <div className="divide-y divide-slate-200 dark:divide-slate-700/20">
-            {/* Row 1 */}
-            <div className="flex items-start gap-4 px-5 py-3.5">
-              <span className="text-[11px] font-bold text-red-700 dark:text-red-400 uppercase w-16 flex-shrink-0 mt-0.5">URGENT</span>
-              <div className="flex-1 min-w-0">
-                <p className="text-[13px] text-slate-900 dark:text-white font-medium">Homicide #2024-0847 — Charge window closes in 14 hrs</p>
-                <p className="text-[11px] text-red-700 dark:text-red-700 dark:text-red-400/70 mt-0.5">If ignored: suspect released, case collapses. Risk: double jeopardy bars future prosecution.</p>
+          <div className="p-4 space-y-3.5">
+            {commandActions.map((action) => (
+              <div key={action.id} className="rounded-lg border border-slate-200 dark:border-slate-700/30 bg-white dark:bg-slate-800/30 p-4">
+                <div className="flex items-start gap-4">
+                  <span className={`inline-flex items-center px-2 py-0.5 rounded border text-[10px] font-bold uppercase tracking-wide ${getUrgencyStyles(action.urgency)}`}>
+                    {action.urgency}
+                  </span>
+                  <div className="flex-1 min-w-0 space-y-1.5">
+                    <p className="text-[14px] text-slate-900 dark:text-white font-semibold leading-5">{action.title}</p>
+                    <p className="text-[12px] text-red-800 dark:text-red-300">{action.consequence}</p>
+                    <p className="text-[12px] text-slate-700 dark:text-slate-200">{action.recommendation}</p>
+                  </div>
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    <button className="px-3 py-1.5 bg-red-100 dark:bg-red-500/10 border border-red-300 dark:border-red-500/30 text-red-800 dark:text-red-300 rounded text-[12px] font-semibold hover:bg-red-200 dark:hover:bg-red-500/20 transition-all">
+                      {action.actionLabel}
+                    </button>
+                    <button className="px-3 py-1.5 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-600/50 text-slate-800 dark:text-slate-200 rounded text-[12px] font-semibold hover:bg-slate-200 dark:hover:bg-slate-700/60 transition-all">
+                      View
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div className="flex items-center gap-1.5 flex-shrink-0">
-                <button className="px-2.5 py-1 bg-red-100 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-700 dark:text-red-400 rounded text-[11px] font-medium hover:bg-red-200 dark:hover:bg-red-500/20 transition-all">Escalate</button>
-                <button className="px-2.5 py-1 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-400 rounded text-[11px] font-medium hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-700/40 transition-all">View</button>
-              </div>
-            </div>
-            {/* Row 2 */}
-            <div className="flex items-start gap-4 px-5 py-3.5">
-              <span className="text-[11px] font-bold text-red-700 dark:text-red-400 uppercase w-16 flex-shrink-0 mt-0.5">URGENT</span>
-              <div className="flex-1 min-w-0">
-                <p className="text-[13px] text-slate-900 dark:text-white font-medium">DEA Task Force — Surveillance extension expires EOD</p>
-                <p className="text-[11px] text-red-700 dark:text-red-700 dark:text-red-400/70 mt-0.5">If ignored: 84-day operation terminates. Risk: 8 suspects walk, fentanyl network reconstitutes.</p>
-              </div>
-              <div className="flex items-center gap-1.5 flex-shrink-0">
-                <button className="px-2.5 py-1 bg-red-100 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 text-red-700 dark:text-red-400 rounded text-[11px] font-medium hover:bg-red-200 dark:hover:bg-red-500/20 transition-all">Approve</button>
-                <button className="px-2.5 py-1 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-400 rounded text-[11px] font-medium hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-700/40 transition-all">View</button>
-              </div>
-            </div>
-            {/* Row 3 */}
-            <div className="flex items-start gap-4 px-5 py-3.5">
-              <span className="text-[11px] font-bold text-amber-700 dark:text-amber-400 uppercase w-16 flex-shrink-0 mt-0.5">ACTION</span>
-              <div className="flex-1 min-w-0">
-                <p className="text-[13px] text-slate-900 dark:text-white font-medium">Meth Lab — HAZMAT standby confirmation needed by Dec 06</p>
-                <p className="text-[11px] text-amber-700 dark:text-amber-700 dark:text-amber-400/60 mt-0.5">If ignored: warrant execution proceeds without HAZMAT. Risk: officer exposure, scene contamination, evidence inadmissibility.</p>
-              </div>
-              <div className="flex items-center gap-1.5 flex-shrink-0">
-                <button className="px-2.5 py-1 bg-amber-100 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 text-amber-700 dark:text-amber-400 rounded text-[11px] font-medium hover:bg-amber-200 dark:hover:bg-amber-500/20 transition-all">Escalate</button>
-                <button className="px-2.5 py-1 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-400 rounded text-[11px] font-medium hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-700/40 transition-all">View</button>
-              </div>
-            </div>
-            {/* Row 4 */}
-            <div className="flex items-start gap-4 px-5 py-3.5">
-              <span className="text-[11px] font-bold text-amber-700 dark:text-amber-400 uppercase w-16 flex-shrink-0 mt-0.5">ACTION</span>
-              <div className="flex-1 min-w-0">
-                <p className="text-[13px] text-slate-900 dark:text-white font-medium">Pharmacy robbery series — task force not formed, 4th incident imminent</p>
-                <p className="text-[11px] text-amber-700 dark:text-amber-700 dark:text-amber-400/60 mt-0.5">If ignored: series continues, public exposure increases. Risk: media scrutiny, victim harm, robbery rate hits 20-year high.</p>
-              </div>
-              <div className="flex items-center gap-1.5 flex-shrink-0">
-                <button className="px-2.5 py-1 bg-amber-100 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 text-amber-700 dark:text-amber-400 rounded text-[11px] font-medium hover:bg-amber-200 dark:hover:bg-amber-500/20 transition-all">Approve</button>
-                <button className="px-2.5 py-1 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-400 rounded text-[11px] font-medium hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-700/40 transition-all">View</button>
-              </div>
-            </div>
-            {/* Row 5 */}
-            <div className="flex items-start gap-4 px-5 py-3.5">
-              <span className="text-[11px] font-bold text-amber-700 dark:text-amber-400 uppercase w-16 flex-shrink-0 mt-0.5">ACTION</span>
-              <div className="flex-1 min-w-0">
-                <p className="text-[13px] text-slate-900 dark:text-white font-medium">Det. Rodriguez at capacity — critical homicide coverage at risk</p>
-                <p className="text-[11px] text-amber-700 dark:text-amber-700 dark:text-amber-400/60 mt-0.5">If ignored: homicide investigation slows. Risk: missed charge window, witness attrition on active gang case.</p>
-              </div>
-              <div className="flex items-center gap-1.5 flex-shrink-0">
-                <button className="px-2.5 py-1 bg-amber-100 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 text-amber-700 dark:text-amber-400 rounded text-[11px] font-medium hover:bg-amber-200 dark:hover:bg-amber-500/20 transition-all">Reassign</button>
-                <button className="px-2.5 py-1 bg-slate-100 dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-400 rounded text-[11px] font-medium hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-700/40 transition-all">View</button>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
 
@@ -760,15 +798,15 @@ const ActiveCasesDashboard = () => {
           </div>
         )}
 
-        {/* Detective Workload — collapsible, matches Command pattern */}
+        {/* Detective Load & Risk */}
         <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none">
           <button
             onClick={() => setShowWorkload(!showWorkload)}
             className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-slate-50 dark:hover:bg-slate-50 dark:hover:bg-slate-800/10 transition-colors rounded-xl"
           >
             <div className="flex items-center gap-3">
-              <h3 className="text-sm font-medium text-slate-700 dark:text-slate-300">Detective Workload</h3>
-              <span className="px-1.5 py-0.5 bg-slate-200 dark:bg-slate-700/30 text-[11px] text-slate-500 rounded">3 Detectives</span>
+              <h3 className="text-sm font-semibold text-slate-800 dark:text-slate-100">Detective Load & Risk</h3>
+              <span className="px-1.5 py-0.5 bg-slate-200 dark:bg-slate-700/30 text-[11px] text-slate-700 dark:text-slate-300 rounded">3 Detectives</span>
             </div>
             {showWorkload ? <ChevronUp className="w-4 h-4 text-slate-700" /> : <ChevronDown className="w-4 h-4 text-slate-700" />}
           </button>
@@ -789,53 +827,40 @@ const ActiveCasesDashboard = () => {
                 </button>
               </div>
 
-              {/* Rodriguez */}
-              <div className="flex items-center gap-4 px-4 py-2.5 bg-slate-50 dark:bg-slate-900/20 rounded border-l-[3px] border-l-red-800/60">
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-3">
-                    <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Det. Rodriguez, Maria</span>
-                    <span className="text-[11px] text-slate-700">I-5234</span>
-                    <span className="px-1.5 py-0.5 border rounded text-[11px] font-medium bg-red-100 dark:bg-red-500/10 border-red-200 dark:border-red-500/20 text-red-700 dark:text-red-400">AT CAPACITY</span>
+              {detectiveLoad.map((d) => (
+                <div key={d.name} className="px-4 py-3.5 bg-slate-50 dark:bg-slate-900/20 rounded-lg border border-slate-200/80 dark:border-slate-700/30 space-y-2.5">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-2.5 flex-wrap">
+                      <span className="text-[13px] font-semibold text-slate-900 dark:text-white">{d.name}</span>
+                      <span className="text-[11px] text-slate-700 dark:text-slate-300">{d.badge}</span>
+                      <span className={`px-1.5 py-0.5 border rounded text-[11px] font-semibold ${getRiskStyles(d.risk)}`}>{d.risk} RISK</span>
+                      {d.bottleneck && <span className="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-slate-200 dark:bg-slate-700/40 text-slate-700 dark:text-slate-200">BOTTLENECK</span>}
+                    </div>
+                    <span className="text-xs text-slate-700 dark:text-slate-300">Clearance: {d.clearanceRate}%</span>
                   </div>
-                  <div className="text-xs text-slate-500 dark:text-slate-400 mt-1">3 cases — Homicide (Critical) · Robbery (High) · Burglary (Medium)</div>
-                  <div className="text-[10px] text-red-700 dark:text-red-700 dark:text-red-400/70 mt-0.5">Transfer Burglary #2024-1712 to free critical case capacity</div>
-                </div>
-                <div className="text-right flex-shrink-0">
-                  <span className="text-xs text-slate-500 dark:text-slate-400">Clearance: 85%</span>
-                </div>
-              </div>
-
-              {/* Anderson */}
-              <div className="flex items-center gap-4 px-4 py-2.5 bg-slate-50 dark:bg-slate-900/20 rounded border-l-[3px] border-l-amber-700/50">
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-3">
-                    <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Det. Anderson / Lt. Anderson</span>
-                    <span className="text-[11px] text-slate-700">I-4892 / I-3456</span>
-                    <span className="px-1.5 py-0.5 border rounded text-[11px] font-medium bg-amber-100 dark:bg-amber-500/10 border-amber-200 dark:border-amber-500/20 text-amber-700 dark:text-amber-400">MODERATE</span>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-[11px]">
+                    <div className="text-slate-700 dark:text-slate-300">Open cases: <span className="font-semibold">{d.openCases}</span> · Critical: <span className="font-semibold">{d.criticalCases}</span></div>
+                    <div className="md:col-span-2">
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-slate-600 dark:text-slate-300">Utilization</span>
+                        <span className="font-semibold text-slate-800 dark:text-slate-100">{d.utilization}%</span>
+                      </div>
+                      <div className="h-2 rounded-full bg-slate-200 dark:bg-slate-700/50 overflow-hidden">
+                        <div
+                          className={`h-full rounded-full ${d.utilization >= 90 ? 'bg-red-500' : d.utilization >= 70 ? 'bg-amber-500' : 'bg-emerald-500'}`}
+                          style={{ width: `${d.utilization}%` }}
+                        />
+                      </div>
+                    </div>
                   </div>
-                  <div className="text-xs text-slate-500 dark:text-slate-400 mt-1">2 cases — Cold Case Homicide · DEA Task Force (Critical)</div>
-                  <div className="text-[10px] text-slate-500 mt-0.5">DEA approval will clear task force case — monitor closely</div>
+                  {d.bottleneck && (
+                    <p className="text-[11px] text-red-800 dark:text-red-300">Bottleneck: {d.bottleneck}</p>
+                  )}
+                  {d.recommendation && (
+                    <p className="text-[11px] text-slate-700 dark:text-slate-200">Suggested reassignment: {d.recommendation}</p>
+                  )}
                 </div>
-                <div className="text-right flex-shrink-0">
-                  <span className="text-xs text-slate-500 dark:text-slate-400">Clearance: 72%</span>
-                </div>
-              </div>
-
-              {/* Wilson */}
-              <div className="flex items-center gap-4 px-4 py-2.5 bg-slate-50 dark:bg-slate-900/20 rounded border-l-[3px] border-l-emerald-700/40">
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-3">
-                    <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Det. Wilson, Amanda</span>
-                    <span className="text-[11px] text-slate-700">I-4521</span>
-                    <span className="px-1.5 py-0.5 border rounded text-[11px] font-medium bg-emerald-500/10 border-emerald-500/20 text-emerald-700 dark:text-emerald-400">AVAILABLE</span>
-                  </div>
-                  <div className="text-xs text-slate-500 dark:text-slate-400 mt-1">1 case — Armed Robbery (High) · 4 days open</div>
-                  <div className="text-[10px] text-emerald-700 dark:text-emerald-400/60 mt-0.5">Capacity available — ideal for Burglary #2024-1712 reassignment</div>
-                </div>
-                <div className="text-right flex-shrink-0">
-                  <span className="text-xs text-slate-500 dark:text-slate-400">Clearance: 80%</span>
-                </div>
-              </div>
+              ))}
             </div>
           )}
         </div>
@@ -1016,14 +1041,14 @@ const ActiveCasesDashboard = () => {
         </div>
 
         {/* Cases List — unified container styling */}
-        <div className="space-y-2">
+        <div className="space-y-3">
           {filteredCases.map((c) => (
             <div
               key={c.id}
-              className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none hover:border-slate-600/40 transition-colors cursor-pointer"
+              className={`bg-white dark:bg-slate-800/25 border rounded-xl shadow-sm dark:shadow-none hover:border-slate-500/70 transition-colors cursor-pointer ${c.priority === 'Critical' ? 'border-red-300/70 dark:border-red-500/35 ring-1 ring-red-300/40 dark:ring-red-500/20' : 'border-slate-200 dark:border-slate-700/30'}`}
               onClick={() => setSelectedCase(c)}
             >
-              <div className="flex items-center gap-4 p-5">
+              <div className="flex items-center gap-4 p-6">
                 <div className={`w-0.5 self-stretch rounded-full flex-shrink-0 ${getPriorityDot(c.priority)}`}></div>
 
                 <div className="flex-1 min-w-0">
@@ -1054,7 +1079,7 @@ const ActiveCasesDashboard = () => {
                     {c.nextAction && (
                       <>
                         <span className="text-slate-700">·</span>
-                        <span className={c.priority === 'Critical' ? 'text-red-700 dark:text-red-400' : 'text-amber-700 dark:text-amber-400'}>{c.nextAction}</span>
+                      <span className={c.priority === 'Critical' ? 'text-red-800 dark:text-red-300 font-medium' : 'text-amber-800 dark:text-amber-300 font-medium'}>{c.nextAction}</span>
                       </>
                     )}
                   </div>
