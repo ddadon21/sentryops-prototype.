@@ -29,6 +29,24 @@ interface Case {
   notes: string;
 }
 
+interface CommandAction {
+  id: string;
+  title: string;
+  urgency: 'Critical' | 'High' | 'Medium';
+  impactIfIgnored: string;
+  recommendation: string;
+  actionLabel: 'Approve' | 'Assign' | 'Escalate';
+}
+
+interface DetectiveLoad {
+  detective: string;
+  badge: string;
+  activeCases: number;
+  capacity: number;
+  bottleneck: string;
+  reassignmentOpportunity: string;
+}
+
 const ActiveCasesDashboard = () => {
   const [selectedType, setSelectedType] = useState<string>('all');
   const [selectedPriority, setSelectedPriority] = useState<string>('all');
@@ -259,6 +277,78 @@ const ActiveCasesDashboard = () => {
     multiAgency: cases.filter(c => c.multiAgency).length
   };
 
+  const commandActions: CommandAction[] = [
+    {
+      id: 'cmd-1',
+      title: 'DEA surveillance extension expires end of day',
+      urgency: 'Critical',
+      impactIfIgnored: 'Task force surveillance authority lapses, creating intelligence blind spots in a fentanyl distribution operation.',
+      recommendation: 'Approve 30-day extension and overtime package immediately.',
+      actionLabel: 'Approve'
+    },
+    {
+      id: 'cmd-2',
+      title: 'Homicide case #2024-0847 needs senior case support',
+      urgency: 'High',
+      impactIfIgnored: 'Lead detective remains overloaded and forensic follow-up may slip beyond prosecutorial timelines.',
+      recommendation: 'Assign an additional detective and analyst to preserve momentum.',
+      actionLabel: 'Assign'
+    },
+    {
+      id: 'cmd-3',
+      title: 'Pharmacy robbery series showing escalation pattern',
+      urgency: 'Medium',
+      impactIfIgnored: 'Likely repeat incidents at high-risk locations in the next 72 hours.',
+      recommendation: 'Escalate to coordinated task force brief with patrol and gang unit.',
+      actionLabel: 'Escalate'
+    }
+  ];
+
+  const detectiveLoad: DetectiveLoad[] = [
+    {
+      detective: 'Det. Rodriguez, Maria',
+      badge: 'I-5234',
+      activeCases: 3,
+      capacity: 3,
+      bottleneck: 'Critical homicide + robbery + burglary simultaneously',
+      reassignmentOpportunity: 'Shift burglary follow-ups to Det. Wilson for immediate relief'
+    },
+    {
+      detective: 'Det. Anderson/Lt. James',
+      badge: 'I-4892 / I-3456',
+      activeCases: 2,
+      capacity: 3,
+      bottleneck: 'Long-running DEA coordination and cold-case DNA reviews',
+      reassignmentOpportunity: 'Reassign cold-case document prep to analyst support'
+    },
+    {
+      detective: 'Det. Wilson, Amanda',
+      badge: 'I-4521',
+      activeCases: 1,
+      capacity: 3,
+      bottleneck: 'No major bottleneck',
+      reassignmentOpportunity: 'Can absorb one high-priority transfer within this shift'
+    }
+  ];
+
+  const getUrgencyStyles = (urgency: CommandAction['urgency']) => {
+    switch (urgency) {
+      case 'Critical':
+        return 'bg-red-500/20 text-red-300 border-red-400/50';
+      case 'High':
+        return 'bg-orange-500/20 text-orange-300 border-orange-400/50';
+      default:
+        return 'bg-amber-500/20 text-amber-300 border-amber-400/50';
+    }
+  };
+
+  const getLoadRisk = (activeCases: number, capacity: number) => {
+    const utilization = Math.round((activeCases / capacity) * 100);
+    if (utilization >= 100) return { label: 'Overloaded', text: 'text-red-300', bar: 'bg-red-500' };
+    if (utilization >= 70) return { label: 'Elevated', text: 'text-orange-300', bar: 'bg-orange-500' };
+    return { label: 'Stable', text: 'text-emerald-300', bar: 'bg-emerald-500' };
+  };
+
   const getPriorityColor = (priority: string) => {
     switch (priority) {
       case 'Critical': return 'bg-red-500/20 text-red-400 border-red-500/30';
@@ -289,9 +379,51 @@ const ActiveCasesDashboard = () => {
           <div className="flex items-center gap-3 mb-2">
             <Target className="w-8 h-8 text-amber-500" />
             <div>
-              <h1 className="text-2xl lg:text-3xl font-bold text-white">Criminal Investigations</h1>
-              <p className="text-slate-400">Active Criminal Investigations Dashboard</p>
+              <h1 className="text-2xl lg:text-3xl font-bold text-white">Investigative Oversight</h1>
+              <p className="text-slate-300">Command-focused intelligence and action guidance for active investigations</p>
             </div>
+          </div>
+        </div>
+
+        {/* Command Actions */}
+        <div className="mb-6 bg-slate-800 border border-slate-600 rounded-xl p-5 lg:p-6">
+          <div className="flex items-center justify-between gap-3 mb-4">
+            <div>
+              <h3 className="text-lg lg:text-xl font-bold text-white">Command Actions</h3>
+              <p className="text-sm text-slate-300 mt-1">Prioritized decisions requiring command attention right now</p>
+            </div>
+            <span className="px-3 py-1 rounded-full border border-red-400/40 bg-red-500/10 text-red-300 text-xs font-semibold">
+              {commandActions.filter((action) => action.urgency === 'Critical').length} Critical Decision
+              {commandActions.filter((action) => action.urgency === 'Critical').length !== 1 ? 's' : ''}
+            </span>
+          </div>
+
+          <div className="space-y-4">
+            {commandActions.map((action) => (
+              <div key={action.id} className="bg-slate-900/70 border border-slate-600 rounded-lg p-4 lg:p-5">
+                <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
+                  <div className="flex-1 space-y-3">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className={`px-2.5 py-1 rounded-md border text-xs font-bold uppercase tracking-wide ${getUrgencyStyles(action.urgency)}`}>
+                        {action.urgency}
+                      </span>
+                      <h4 className="text-base font-semibold text-white">{action.title}</h4>
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-1">If ignored</p>
+                      <p className="text-sm text-slate-200">{action.impactIfIgnored}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-1">Recommended command action</p>
+                      <p className="text-sm text-amber-300 font-medium">{action.recommendation}</p>
+                    </div>
+                  </div>
+                  <button className="self-start px-4 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-semibold rounded-lg transition-colors text-sm">
+                    {action.actionLabel}
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
@@ -762,136 +894,207 @@ const ActiveCasesDashboard = () => {
           </div>
         )}
 
-        {/* Detective Workload View - Collapsible */}
-        <div className="mb-6 bg-slate-800 border border-slate-700 rounded-lg p-5">
+        {/* Detective Load & Risk */}
+        <div className="mb-6 bg-slate-800 border border-slate-600 rounded-lg p-5">
           <button
             onClick={() => setShowWorkload(!showWorkload)}
             className="w-full flex items-center justify-between"
           >
             <div className="flex items-center gap-2">
               <UserCircle className="w-5 h-5 text-blue-400" />
-              <h3 className="text-lg font-bold text-white">Detective Workload</h3>
+              <h3 className="text-lg font-bold text-white">Detective Load & Risk</h3>
             </div>
             <ChevronRight className={`w-5 h-5 text-slate-400 transition-transform ${showWorkload ? 'rotate-90' : ''}`} />
           </button>
 
           {showWorkload && (
-            <div className="mt-4 space-y-3">
-              {/* Det. Rodriguez */}
-              <div className="bg-slate-900/50 border border-red-500/30 rounded-lg p-4">
-                <div className="flex items-start justify-between mb-3">
-                  <div>
-                    <h4 className="text-base font-bold text-white">Det. Rodriguez, Maria</h4>
-                    <p className="text-sm text-slate-400">Badge: I-5234</p>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-sm text-slate-400">Active Cases</div>
-                    <div className="text-2xl font-bold text-red-400">3</div>
-                    <span className="px-2 py-1 bg-red-500/20 text-red-400 rounded text-xs font-bold">AT CAPACITY</span>
-                  </div>
+            <div className="mt-4 space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div className="bg-slate-900/70 border border-red-500/30 rounded-lg p-3">
+                  <p className="text-xs uppercase tracking-wide text-slate-400">Overloaded</p>
+                  <p className="text-xl font-bold text-red-300 mt-1">
+                    {detectiveLoad.filter((d) => getLoadRisk(d.activeCases, d.capacity).label === 'Overloaded').length}
+                  </p>
                 </div>
-                <div className="space-y-1 mb-3 text-sm">
-                  <div className="flex items-center gap-2 text-slate-300">
-                    <div className="w-1.5 h-1.5 bg-red-400 rounded-full"></div>
-                    Case #2024-0847 - Homicide (Critical) - 7 days
-                  </div>
-                  <div className="flex items-center gap-2 text-slate-300">
-                    <div className="w-1.5 h-1.5 bg-orange-400 rounded-full"></div>
-                    Case #2024-1567 - Robbery (High) - 4 days
-                  </div>
-                  <div className="flex items-center gap-2 text-slate-300">
-                    <div className="w-1.5 h-1.5 bg-amber-400 rounded-full"></div>
-                    Case #2024-1712 - Burglary (Medium) - 5 days
-                  </div>
+                <div className="bg-slate-900/70 border border-orange-500/30 rounded-lg p-3">
+                  <p className="text-xs uppercase tracking-wide text-slate-400">Elevated Risk</p>
+                  <p className="text-xl font-bold text-orange-300 mt-1">
+                    {detectiveLoad.filter((d) => getLoadRisk(d.activeCases, d.capacity).label === 'Elevated').length}
+                  </p>
                 </div>
-                <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <span className="text-slate-400">Clearance Rate:</span>
-                    <span className="text-emerald-400 font-semibold ml-2">85%</span>
-                  </div>
-                  <div>
-                    <span className="text-slate-400">Avg Time to Close:</span>
-                    <span className="text-white font-medium ml-2">28 days</span>
-                  </div>
+                <div className="bg-slate-900/70 border border-emerald-500/30 rounded-lg p-3">
+                  <p className="text-xs uppercase tracking-wide text-slate-400">Reassignment Ready</p>
+                  <p className="text-xl font-bold text-emerald-300 mt-1">
+                    {detectiveLoad.filter((d) => getLoadRisk(d.activeCases, d.capacity).label === 'Stable').length}
+                  </p>
                 </div>
-                <p className="text-xs text-red-400 mt-2">Recommendation: Do not assign new cases</p>
               </div>
 
-              {/* Det. Anderson */}
-              <div className="bg-slate-900/50 border border-amber-500/30 rounded-lg p-4">
-                <div className="flex items-start justify-between mb-3">
-                  <div>
-                    <h4 className="text-base font-bold text-white">Det. Anderson, Kevin/Lt. James</h4>
-                    <p className="text-sm text-slate-400">Badge: I-4892 / I-3456</p>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-sm text-slate-400">Active Cases</div>
-                    <div className="text-2xl font-bold text-amber-400">2</div>
-                    <span className="px-2 py-1 bg-amber-500/20 text-amber-400 rounded text-xs font-bold">MODERATE</span>
-                  </div>
-                </div>
-                <div className="space-y-1 mb-3 text-sm">
-                  <div className="flex items-center gap-2 text-slate-300">
-                    <div className="w-1.5 h-1.5 bg-amber-400 rounded-full"></div>
-                    Case #2024-0923 - Cold Case Homicide (Medium) - 51 days
-                  </div>
-                  <div className="flex items-center gap-2 text-slate-300">
-                    <div className="w-1.5 h-1.5 bg-red-400 rounded-full"></div>
-                    Case #2024-1234 - DEA Task Force (Critical) - 84 days
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <span className="text-slate-400">Clearance Rate:</span>
-                    <span className="text-emerald-400 font-semibold ml-2">72%</span>
-                  </div>
-                  <div>
-                    <span className="text-slate-400">Specialist:</span>
-                    <span className="text-purple-400 font-medium ml-2">Cold cases, multi-agency</span>
-                  </div>
-                </div>
-                <p className="text-xs text-amber-400 mt-2">Can take 1 more case if needed</p>
-              </div>
+              {detectiveLoad.map((load) => {
+                const utilization = Math.round((load.activeCases / load.capacity) * 100);
+                const risk = getLoadRisk(load.activeCases, load.capacity);
 
-              {/* Det. Wilson */}
-              <div className="bg-slate-900/50 border border-emerald-500/30 rounded-lg p-4">
-                <div className="flex items-start justify-between mb-3">
-                  <div>
-                    <h4 className="text-base font-bold text-white">Det. Wilson, Amanda</h4>
-                    <p className="text-sm text-slate-400">Badge: I-4521</p>
+                return (
+                  <div key={load.badge} className="bg-slate-900/70 border border-slate-600 rounded-lg p-4">
+                    <div className="flex items-start justify-between gap-3 mb-3">
+                      <div>
+                        <h4 className="text-base font-bold text-white">{load.detective}</h4>
+                        <p className="text-sm text-slate-300">Badge: {load.badge}</p>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-xs text-slate-400 uppercase tracking-wide">Load Status</div>
+                        <div className={`text-sm font-bold ${risk.text}`}>{risk.label}</div>
+                      </div>
+                    </div>
+
+                    <div className="mb-3">
+                      <div className="flex justify-between text-xs text-slate-300 mb-1">
+                        <span>Utilization</span>
+                        <span>{load.activeCases}/{load.capacity} active cases ({utilization}%)</span>
+                      </div>
+                      <div className="h-2.5 bg-slate-700 rounded-full overflow-hidden">
+                        <div className={`${risk.bar} h-full`} style={{ width: `${Math.min(utilization, 100)}%` }} />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 text-sm">
+                      <div className="bg-slate-800/70 border border-slate-600 rounded-md p-3">
+                        <p className="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-1">Bottleneck</p>
+                        <p className="text-slate-100">{load.bottleneck}</p>
+                      </div>
+                      <div className="bg-slate-800/70 border border-slate-600 rounded-md p-3">
+                        <p className="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-1">Reassignment Opportunity</p>
+                        <p className="text-emerald-300">{load.reassignmentOpportunity}</p>
+                      </div>
+                    </div>
                   </div>
-                  <div className="text-right">
-                    <div className="text-sm text-slate-400">Active Cases</div>
-                    <div className="text-2xl font-bold text-emerald-400">1</div>
-                    <span className="px-2 py-1 bg-emerald-500/20 text-emerald-400 rounded text-xs font-bold">AVAILABLE</span>
-                  </div>
-                </div>
-                <div className="space-y-1 mb-3 text-sm">
-                  <div className="flex items-center gap-2 text-slate-300">
-                    <div className="w-1.5 h-1.5 bg-orange-400 rounded-full"></div>
-                    Case #2024-1567 - Armed Robbery (High) - 4 days
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <span className="text-slate-400">Clearance Rate:</span>
-                    <span className="text-emerald-400 font-semibold ml-2">80%</span>
-                  </div>
-                  <div>
-                    <span className="text-slate-400">Specialist:</span>
-                    <span className="text-blue-400 font-medium ml-2">Violent crimes</span>
-                  </div>
-                </div>
-                <button className="mt-2 px-3 py-1.5 bg-emerald-500 hover:bg-emerald-600 text-slate-900 font-medium rounded text-xs transition-colors">
-                  Assign New Case to Det. Wilson
-                </button>
-              </div>
+                );
+              })}
             </div>
           )}
         </div>
 
+        {/* Detective Workload Details */}
+        <div className="mb-6 bg-slate-800 border border-slate-700 rounded-lg p-5">
+          <div className="flex items-center gap-2 mb-4">
+            <Users className="w-5 h-5 text-blue-400" />
+            <h3 className="text-lg font-bold text-white">Current Detective Assignments</h3>
+          </div>
+          <div className="space-y-3">
+            {/* Det. Rodriguez */}
+            <div className="bg-slate-900/50 border border-red-500/30 rounded-lg p-4">
+              <div className="flex items-start justify-between mb-3">
+                <div>
+                  <h4 className="text-base font-bold text-white">Det. Rodriguez, Maria</h4>
+                  <p className="text-sm text-slate-300">Badge: I-5234</p>
+                </div>
+                <div className="text-right">
+                  <div className="text-sm text-slate-300">Active Cases</div>
+                  <div className="text-2xl font-bold text-red-300">3</div>
+                  <span className="px-2 py-1 bg-red-500/20 text-red-300 rounded text-xs font-bold border border-red-400/40">AT CAPACITY</span>
+                </div>
+              </div>
+              <div className="space-y-1 mb-3 text-sm">
+                <div className="flex items-center gap-2 text-slate-200">
+                  <div className="w-1.5 h-1.5 bg-red-400 rounded-full"></div>
+                  Case #2024-0847 - Homicide (Critical) - 7 days
+                </div>
+                <div className="flex items-center gap-2 text-slate-200">
+                  <div className="w-1.5 h-1.5 bg-orange-400 rounded-full"></div>
+                  Case #2024-1567 - Robbery (High) - 4 days
+                </div>
+                <div className="flex items-center gap-2 text-slate-200">
+                  <div className="w-1.5 h-1.5 bg-amber-400 rounded-full"></div>
+                  Case #2024-1712 - Burglary (Medium) - 5 days
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4 text-sm">
+                <div>
+                  <span className="text-slate-300">Clearance Rate:</span>
+                  <span className="text-emerald-300 font-semibold ml-2">85%</span>
+                </div>
+                <div>
+                  <span className="text-slate-300">Avg Time to Close:</span>
+                  <span className="text-white font-medium ml-2">28 days</span>
+                </div>
+              </div>
+              <p className="text-xs text-red-300 mt-2">Recommendation: Do not assign new cases</p>
+            </div>
+
+            {/* Det. Anderson */}
+            <div className="bg-slate-900/50 border border-amber-500/30 rounded-lg p-4">
+              <div className="flex items-start justify-between mb-3">
+                <div>
+                  <h4 className="text-base font-bold text-white">Det. Anderson, Kevin/Lt. James</h4>
+                  <p className="text-sm text-slate-300">Badge: I-4892 / I-3456</p>
+                </div>
+                <div className="text-right">
+                  <div className="text-sm text-slate-300">Active Cases</div>
+                  <div className="text-2xl font-bold text-amber-300">2</div>
+                  <span className="px-2 py-1 bg-amber-500/20 text-amber-300 rounded text-xs font-bold border border-amber-400/40">MODERATE</span>
+                </div>
+              </div>
+              <div className="space-y-1 mb-3 text-sm">
+                <div className="flex items-center gap-2 text-slate-200">
+                  <div className="w-1.5 h-1.5 bg-amber-400 rounded-full"></div>
+                  Case #2024-0923 - Cold Case Homicide (Medium) - 51 days
+                </div>
+                <div className="flex items-center gap-2 text-slate-200">
+                  <div className="w-1.5 h-1.5 bg-red-400 rounded-full"></div>
+                  Case #2024-1234 - DEA Task Force (Critical) - 84 days
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4 text-sm">
+                <div>
+                  <span className="text-slate-300">Clearance Rate:</span>
+                  <span className="text-emerald-300 font-semibold ml-2">72%</span>
+                </div>
+                <div>
+                  <span className="text-slate-300">Specialist:</span>
+                  <span className="text-purple-300 font-medium ml-2">Cold cases, multi-agency</span>
+                </div>
+              </div>
+              <p className="text-xs text-amber-300 mt-2">Can take 1 more case if needed</p>
+            </div>
+
+            {/* Det. Wilson */}
+            <div className="bg-slate-900/50 border border-emerald-500/30 rounded-lg p-4">
+              <div className="flex items-start justify-between mb-3">
+                <div>
+                  <h4 className="text-base font-bold text-white">Det. Wilson, Amanda</h4>
+                  <p className="text-sm text-slate-300">Badge: I-4521</p>
+                </div>
+                <div className="text-right">
+                  <div className="text-sm text-slate-300">Active Cases</div>
+                  <div className="text-2xl font-bold text-emerald-300">1</div>
+                  <span className="px-2 py-1 bg-emerald-500/20 text-emerald-300 rounded text-xs font-bold border border-emerald-400/40">AVAILABLE</span>
+                </div>
+              </div>
+              <div className="space-y-1 mb-3 text-sm">
+                <div className="flex items-center gap-2 text-slate-200">
+                  <div className="w-1.5 h-1.5 bg-orange-400 rounded-full"></div>
+                  Case #2024-1567 - Armed Robbery (High) - 4 days
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4 text-sm">
+                <div>
+                  <span className="text-slate-300">Clearance Rate:</span>
+                  <span className="text-emerald-300 font-semibold ml-2">80%</span>
+                </div>
+                <div>
+                  <span className="text-slate-300">Specialist:</span>
+                  <span className="text-blue-300 font-medium ml-2">Violent crimes</span>
+                </div>
+              </div>
+              <button className="mt-2 px-3 py-1.5 bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-medium rounded text-xs transition-colors">
+                Assign New Case to Det. Wilson
+              </button>
+            </div>
+          </div>
+        </div>
+
         {/* Filters */}
-        <div className="bg-slate-800 border border-slate-700 rounded-lg p-4 mb-6">
+        <div className="bg-slate-800 border border-slate-600 rounded-lg p-5 mb-6">
           <div className="flex items-center gap-4 mb-4">
             <div className="flex-1 relative">
               <Search className="w-5 h-5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
@@ -935,11 +1138,11 @@ const ActiveCasesDashboard = () => {
         </div>
 
         {/* Cases List - Enhanced */}
-        <div className="space-y-4">
+        <div className="space-y-5">
           {filteredCases.map((c) => (
             <div
               key={c.id}
-              className="bg-slate-800 border border-slate-700 rounded-lg p-6 hover:border-slate-600 transition-colors cursor-pointer"
+              className="bg-slate-800 border border-slate-600 rounded-lg p-6 lg:p-7 hover:border-slate-400/70 transition-colors cursor-pointer"
               onClick={() => setSelectedCase(c)}
             >
               <div className="flex items-start justify-between mb-4">
@@ -962,10 +1165,10 @@ const ActiveCasesDashboard = () => {
                     )}
                   </div>
                   <h3 className="text-xl font-bold text-white mb-1">{c.title}</h3>
-                  <p className="text-sm text-slate-400">Case #{c.caseNumber}</p>
+                  <p className="text-sm text-slate-300">Case #{c.caseNumber}</p>
                 </div>
                 <div className="text-right">
-                  <div className="text-sm text-slate-400">Days Open</div>
+                  <div className="text-sm text-slate-300">Days Open</div>
                   <div className={`text-2xl font-bold ${c.daysOpen > 60 ? 'text-red-400' : c.daysOpen > 30 ? 'text-amber-400' : 'text-emerald-400'}`}>
                     {c.daysOpen}
                   </div>
@@ -973,26 +1176,26 @@ const ActiveCasesDashboard = () => {
               </div>
 
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-                <div className="bg-slate-900/50 border border-slate-700 rounded p-3">
-                  <div className="text-xs text-slate-400 mb-1">Lead Detective</div>
+                <div className="bg-slate-900/60 border border-slate-600 rounded p-3.5">
+                  <div className="text-xs text-slate-300 mb-1">Lead Detective</div>
                   <div className="text-white font-medium text-sm">{c.leadDetective}</div>
-                  <div className="text-xs text-slate-500">Badge: {c.badge}</div>
+                  <div className="text-xs text-slate-400">Badge: {c.badge}</div>
                 </div>
-                <div className="bg-slate-900/50 border border-slate-700 rounded p-3">
-                  <div className="text-xs text-slate-400 mb-1">Status</div>
+                <div className="bg-slate-900/60 border border-slate-600 rounded p-3.5">
+                  <div className="text-xs text-slate-300 mb-1">Status</div>
                   <div className="text-white font-medium text-sm">{c.status}</div>
-                  <div className="text-xs text-slate-500">Opened: {c.openedDate}</div>
+                  <div className="text-xs text-slate-400">Opened: {c.openedDate}</div>
                 </div>
-                <div className="bg-slate-900/50 border border-slate-700 rounded p-3">
-                  <div className="text-xs text-slate-400 mb-1">Evidence/Witnesses</div>
+                <div className="bg-slate-900/60 border border-slate-600 rounded p-3.5">
+                  <div className="text-xs text-slate-300 mb-1">Evidence/Witnesses</div>
                   <div className="text-white font-medium">{c.evidence} items / {c.witnesses} witnesses</div>
-                  <div className="text-xs text-slate-500">Suspects: {c.suspects}</div>
+                  <div className="text-xs text-slate-400">Suspects: {c.suspects}</div>
                 </div>
-                <div className="bg-slate-900/50 border border-slate-700 rounded p-3">
-                  <div className="text-xs text-slate-400 mb-1">Next Action</div>
-                  <div className="text-amber-400 font-medium text-sm">{c.nextAction}</div>
+                <div className="bg-slate-900/60 border border-slate-600 rounded p-3.5">
+                  <div className="text-xs text-slate-300 mb-1">Next Action</div>
+                  <div className="text-amber-300 font-semibold text-sm">{c.nextAction}</div>
                   {c.deadline && (
-                    <div className="text-xs text-red-400">Due: {c.deadline}</div>
+                    <div className="text-xs text-red-300">Due: {c.deadline}</div>
                   )}
                 </div>
               </div>
