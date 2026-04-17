@@ -161,13 +161,15 @@ export default function DashboardLayout({
         {/* Logo */}
         <div className="p-4 border-b border-border flex items-center justify-between">
           {!sidebarCollapsed && (
-            <div className="flex items-center gap-2">
-              <Shield className="w-8 h-8 text-amber-700" />
-              <h1 className="text-xl font-bold text-primary">SentryOps</h1>
+            <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 shadow-sm">
+              <Shield className="w-8 h-8 text-amber-500" />
+              <h1 className="text-xl font-bold text-white tracking-tight">SentryOps</h1>
             </div>
           )}
           {sidebarCollapsed && (
-            <Shield className="w-8 h-8 text-amber-700 mx-auto" />
+            <div className="mx-auto p-2 rounded-xl bg-slate-900 border border-slate-700 shadow-sm">
+              <Shield className="w-8 h-8 text-amber-500" />
+            </div>
           )}
           <button
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
@@ -182,16 +184,21 @@ export default function DashboardLayout({
           {navigation.map(item => {
             const Icon = item.icon;
             const isActive = isNavActive(item);
+            const isHomeItem = item.icon === Home || item.id === 'command-overview' || item.label === 'Home';
+
+            const navItemClass = isHomeItem
+              ? (isActive
+                ? 'bg-slate-900 text-white border-l-4 border-l-amber-500 font-semibold shadow-sm'
+                : 'bg-slate-800 text-white border border-slate-700/80 hover:bg-slate-700 hover:text-white')
+              : (isActive
+                ? 'bg-amber-100 dark:bg-slate-700/40 text-primary border-l-4 border-l-amber-500 font-semibold'
+                : 'text-secondary hover:bg-slate-50 dark:hover:bg-slate-800/30 hover:text-slate-900 dark:hover:text-slate-300');
 
             return (
               <div key={item.id}>
                 <button
                   onClick={() => handleNavigation(item)}
-                  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all ${
-                    isActive
-                      ? 'bg-amber-100 dark:bg-slate-700/40 text-primary border-l-4 border-l-amber-500 font-semibold'
-                      : 'text-secondary hover:bg-slate-50 dark:hover:bg-slate-800/30 hover:text-slate-900 dark:hover:text-slate-300'
-                  } ${sidebarCollapsed ? 'justify-center' : ''}`}
+                  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all ${navItemClass} ${sidebarCollapsed ? 'justify-center' : ''}`}
                   title={sidebarCollapsed ? item.label : ''}
                 >
                   <Icon className="w-[18px] h-[18px] flex-shrink-0" />
