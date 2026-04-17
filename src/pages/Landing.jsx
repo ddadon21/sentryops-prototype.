@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Shield, Check, Lock, ArrowRight, Zap, Globe, Users, TrendingUp, Menu, X, Home } from 'lucide-react';
+import { Shield, Check, Lock, ArrowRight, Zap, Globe, Users, TrendingUp, Menu, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 
@@ -21,10 +21,6 @@ export default function Landing() {
 
             {/* Desktop Nav */}
             <div className="hidden md:flex items-center gap-4">
-              <Link to="/" className="inline-flex items-center gap-1.5 text-slate-300 hover:text-white transition-colors">
-                <Home className="w-4 h-4" />
-                <span>Home</span>
-              </Link>
               <a href="#features" className="text-slate-300 hover:text-white transition-colors">Features</a>
               <a href="#security" className="text-slate-300 hover:text-white transition-colors">Security</a>
               <a href="#pricing" className="text-slate-300 hover:text-white transition-colors">Pricing</a>
@@ -49,10 +45,6 @@ export default function Landing() {
           {/* Mobile Menu */}
           {mobileMenuOpen && (
             <div className="md:hidden mt-4 pb-4 space-y-3">
-              <Link to="/" className="inline-flex items-center gap-1.5 text-slate-300 hover:text-white transition-colors">
-                <Home className="w-4 h-4" />
-                <span>Home</span>
-              </Link>
               <a href="#features" className="block text-slate-300 hover:text-white transition-colors">Features</a>
               <a href="#security" className="block text-slate-300 hover:text-white transition-colors">Security</a>
               <a href="#pricing" className="block text-slate-300 hover:text-white transition-colors">Pricing</a>
@@ -71,14 +63,14 @@ export default function Landing() {
       {/* Hero */}
       <div className="max-w-7xl mx-auto px-6 py-12 md:py-20">
         <div className="text-center mb-12 md:mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-slate-800/50 border border-slate-700/50 rounded-lg text-slate-600 dark:text-slate-400 text-xs font-semibold uppercase tracking-widest mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-slate-800/50 border border-slate-700/50 rounded-lg text-slate-400 text-xs font-semibold uppercase tracking-widest mb-6">
             <Shield className="w-3.5 h-3.5" />
             Law Enforcement Command Platform
           </div>
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
             The Central Hub for<br />Sheriff Operations
           </h1>
-          <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-8 max-w-2xl mx-auto px-4">
+          <p className="text-lg md:text-xl text-slate-400 mb-8 max-w-2xl mx-auto px-4">
             Unified command platform that integrates your existing tools into one AI-powered hub.
             Built for law enforcement, designed for efficiency.
           </p>
@@ -94,7 +86,7 @@ export default function Landing() {
         </div>
 
         {/* Trust Badges */}
-        <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8 mb-12 md:mb-16 text-sm text-slate-600 dark:text-slate-400 px-4">
+        <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8 mb-12 md:mb-16 text-sm text-slate-400 px-4">
           <div className="flex items-center gap-2">
             <Check className="w-4 h-4 text-slate-500" />
             <span>CJIS Compliant</span>
@@ -120,7 +112,7 @@ export default function Landing() {
             <div className="bg-slate-950 rounded-xl aspect-video flex items-center justify-center">
               <div className="text-center">
                 <Shield className="w-12 h-12 md:w-20 md:h-20 text-slate-700 mx-auto mb-4" />
-                <p className="text-slate-600 text-sm md:text-base">Dashboard Preview</p>
+                <p className="text-slate-400 text-sm md:text-base">Dashboard Preview</p>
               </div>
             </div>
           </div>
@@ -130,7 +122,7 @@ export default function Landing() {
       {/* Features */}
       <div className="max-w-7xl mx-auto px-6 py-12 md:py-20">
         <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-4">Everything You Need</h2>
-        <p className="text-slate-600 dark:text-slate-400 text-center mb-12 max-w-2xl mx-auto px-4">
+        <p className="text-slate-400 text-center mb-12 max-w-2xl mx-auto px-4">
           Integrate all your existing tools into one intelligent platform
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
@@ -146,10 +138,10 @@ export default function Landing() {
             return (
               <div key={idx} className="bg-slate-800/40 backdrop-blur-xl border border-slate-700/50 rounded-xl p-6 hover:border-slate-600/50 transition-all">
                 <div className="w-12 h-12 bg-slate-700/60 rounded-xl flex items-center justify-center mb-4">
-                  <Icon className="w-6 h-6 text-slate-600 dark:text-slate-400" />
+                  <Icon className="w-6 h-6 text-slate-400" />
                 </div>
-                <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">{feature.title}</h3>
-                <p className="text-sm text-slate-600 dark:text-slate-400">{feature.desc}</p>
+                <h3 className="text-lg font-semibold text-white mb-2">{feature.title}</h3>
+                <p className="text-sm text-slate-400">{feature.desc}</p>
               </div>
             );
           })}
@@ -160,7 +152,7 @@ export default function Landing() {
       <div className="max-w-7xl mx-auto px-6 py-12 md:py-20">
         <div className="bg-slate-800/30 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-8 md:p-12 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Ready to transform your operations?</h2>
-          <p className="text-slate-600 dark:text-slate-400 mb-8 max-w-2xl mx-auto px-4">
+          <p className="text-slate-400 mb-8 max-w-2xl mx-auto px-4">
             Join forward-thinking sheriff's departments using SentryOps to streamline operations and improve efficiency.
           </p>
           <button className="px-8 py-4 bg-amber-500 hover:bg-amber-600 rounded-xl text-white font-medium text-lg transition-colors inline-flex items-center gap-2">
