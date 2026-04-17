@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Shield, Check, Lock, ArrowRight, Zap, Globe, Users, TrendingUp, Menu, X } from 'lucide-react';
+import { Shield, Check, Lock, ArrowRight, Zap, Globe, Users, TrendingUp, Menu, X, Home } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 
@@ -16,14 +16,18 @@ export default function Landing() {
               <div className="w-10 h-10 bg-gradient-to-br from-amber-400 to-amber-600 rounded-xl flex items-center justify-center">
                 <Shield className="w-6 h-6 text-slate-900" />
               </div>
-              <span className="text-xl font-bold text-slate-900 dark:text-white">SentryOps</span>
+              <span className="text-xl font-bold text-white">SentryOps</span>
             </div>
 
             {/* Desktop Nav */}
             <div className="hidden md:flex items-center gap-4">
-              <a href="#features" className="text-slate-600 dark:text-slate-400 hover:text-white transition-colors">Features</a>
-              <a href="#security" className="text-slate-600 dark:text-slate-400 hover:text-white transition-colors">Security</a>
-              <a href="#pricing" className="text-slate-600 dark:text-slate-400 hover:text-white transition-colors">Pricing</a>
+              <Link to="/" className="inline-flex items-center gap-1.5 text-slate-300 hover:text-white transition-colors">
+                <Home className="w-4 h-4" />
+                <span>Home</span>
+              </Link>
+              <a href="#features" className="text-slate-300 hover:text-white transition-colors">Features</a>
+              <a href="#security" className="text-slate-300 hover:text-white transition-colors">Security</a>
+              <a href="#pricing" className="text-slate-300 hover:text-white transition-colors">Pricing</a>
               <Link
                 to={createPageUrl('SignIn')}
                 className="px-4 py-2 bg-amber-500 hover:bg-amber-600 rounded-lg text-white font-medium transition-colors flex items-center gap-2"
@@ -45,9 +49,13 @@ export default function Landing() {
           {/* Mobile Menu */}
           {mobileMenuOpen && (
             <div className="md:hidden mt-4 pb-4 space-y-3">
-              <a href="#features" className="block text-slate-600 dark:text-slate-400 hover:text-white transition-colors">Features</a>
-              <a href="#security" className="block text-slate-600 dark:text-slate-400 hover:text-white transition-colors">Security</a>
-              <a href="#pricing" className="block text-slate-600 dark:text-slate-400 hover:text-white transition-colors">Pricing</a>
+              <Link to="/" className="inline-flex items-center gap-1.5 text-slate-300 hover:text-white transition-colors">
+                <Home className="w-4 h-4" />
+                <span>Home</span>
+              </Link>
+              <a href="#features" className="block text-slate-300 hover:text-white transition-colors">Features</a>
+              <a href="#security" className="block text-slate-300 hover:text-white transition-colors">Security</a>
+              <a href="#pricing" className="block text-slate-300 hover:text-white transition-colors">Pricing</a>
               <Link
                 to={createPageUrl('SignIn')}
                 className="w-full px-4 py-2 bg-amber-500 hover:bg-amber-600 rounded-lg text-white font-medium transition-colors flex items-center justify-center gap-2"
