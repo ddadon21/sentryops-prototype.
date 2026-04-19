@@ -374,11 +374,22 @@ const ActiveCasesDashboard = () => {
   const getUrgencyStyles = (urgency: CommandAction['urgency']) => {
     switch (urgency) {
       case 'Critical':
-        return 'border-red-400 dark:border-red-500/60 bg-red-100/90 dark:bg-red-500/15 text-red-900 dark:text-red-200 shadow-[0_0_0_1px_rgba(239,68,68,0.35)]';
+        return 'bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-300 border-red-200 dark:border-red-500/30';
       case 'High':
-        return 'border-amber-300 dark:border-amber-500/45 bg-amber-100/90 dark:bg-amber-500/12 text-amber-900 dark:text-amber-200';
+        return 'bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-500/30';
       default:
-        return 'border-blue-200 dark:border-blue-500/35 bg-blue-50 dark:bg-blue-500/10 text-blue-800 dark:text-blue-200';
+        return 'bg-blue-100 dark:bg-blue-500/10 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-500/30';
+    }
+  };
+
+  const getActionAccent = (urgency: CommandAction['urgency']) => {
+    switch (urgency) {
+      case 'Critical':
+        return 'border-l-red-500';
+      case 'High':
+        return 'border-l-amber-500';
+      default:
+        return 'border-l-blue-500';
     }
   };
 
@@ -412,16 +423,16 @@ const ActiveCasesDashboard = () => {
         </div>
 
         {/* Command Actions */}
-        <div className="bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-700/40 rounded-xl overflow-hidden">
-          <div className="flex items-center justify-between gap-3 px-5 py-3 border-b border-slate-200 dark:border-slate-200 dark:border-slate-700/30 bg-red-50/70 dark:bg-red-500/10">
+        <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none overflow-hidden">
+          <div className="flex items-center justify-between gap-3 px-5 py-3 border-b border-slate-200 dark:border-slate-700/30">
             <div className="flex items-center gap-3">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
               </span>
-              <span className="text-[11px] font-semibold text-red-800 dark:text-red-200 uppercase tracking-widest">Command Actions — Immediate Decisions Required</span>
+              <span className="text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-widest">Command Actions — Immediate Decisions Required</span>
             </div>
-            <span className="px-2 py-1 rounded bg-red-100 dark:bg-red-500/15 border border-red-300 dark:border-red-500/30 text-[11px] font-bold text-red-800 dark:text-red-200">
+            <span className="px-2 py-1 rounded bg-slate-100 dark:bg-slate-700/30 border border-slate-200 dark:border-slate-600/30 text-[11px] font-bold text-slate-800 dark:text-slate-200">
               {commandActions.filter(a => a.urgency === 'Critical').length} Critical Decisions
             </span>
           </div>
@@ -429,41 +440,41 @@ const ActiveCasesDashboard = () => {
             {commandActions.map((action) => (
               <div
                 key={action.id}
-                className={`rounded-lg border p-4 ${getUrgencyStyles(action.urgency)} ${action.urgency === 'Critical' ? 'ring-1 ring-red-400/60 dark:ring-red-500/40' : ''}`}
+                className={`rounded-lg border border-slate-200 dark:border-slate-700/30 border-l-[3px] ${getActionAccent(action.urgency)} bg-slate-50 dark:bg-slate-900/30 p-4`}
               >
                 <div className="flex items-start gap-4">
                   <div className="flex flex-col gap-2 items-start">
-                    <span className="inline-flex items-center px-2 py-0.5 rounded border border-current/30 text-[10px] font-bold uppercase tracking-wide">
+                    <span className={`inline-flex items-center px-2 py-0.5 rounded border text-[10px] font-bold uppercase tracking-wide ${getUrgencyStyles(action.urgency)}`}>
                       {action.urgency}
                     </span>
                     {action.countdown && (
-                      <span className="px-2 py-0.5 rounded bg-black/10 dark:bg-black/20 text-[10px] font-semibold tracking-wide">
+                      <span className="px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-700/40 text-slate-700 dark:text-slate-200 text-[10px] font-semibold tracking-wide">
                         {action.countdown}
                       </span>
                     )}
                   </div>
                   <div className="flex-1 min-w-0 space-y-1.5">
-                    <p className="text-[14px] font-extrabold leading-5">
+                    <p className="text-[14px] text-slate-900 dark:text-slate-100 font-bold leading-5">
                       Decision required: {action.decision}
                     </p>
-                    <p className="text-[12px] font-medium">
+                    <p className="text-[12px] text-slate-800 dark:text-slate-200 font-medium">
                       At risk if ignored: {action.ifIgnored}
                     </p>
-                    <p className="text-[12px] font-semibold opacity-90">
+                    <p className="text-[12px] text-slate-700 dark:text-slate-300 font-semibold">
                       {action.timeSensitivity}
                     </p>
                   </div>
                   <div className="flex items-center gap-2 flex-shrink-0">
                     <button className={`px-3 py-1.5 border rounded text-[12px] font-bold transition-all ${
                       action.urgency === 'Critical'
-                        ? 'bg-red-700 border-red-800 text-white hover:bg-red-800'
+                        ? 'bg-red-600 border-red-700 text-white hover:bg-red-700'
                         : action.urgency === 'High'
                         ? 'bg-amber-600 border-amber-700 text-white hover:bg-amber-700'
-                        : 'bg-blue-700 border-blue-800 text-white hover:bg-blue-800'
+                        : 'bg-blue-600 border-blue-700 text-white hover:bg-blue-700'
                     }`}>
                       {action.actionLabel}
                     </button>
-                    <button className="px-3 py-1.5 bg-white/70 dark:bg-slate-800/60 border border-slate-300 dark:border-slate-600/50 text-slate-900 dark:text-slate-100 rounded text-[12px] font-semibold hover:bg-white dark:hover:bg-slate-700/60 transition-all">
+                    <button className="px-3 py-1.5 bg-transparent border border-slate-300 dark:border-slate-600/50 text-slate-700 dark:text-slate-200 rounded text-[12px] font-semibold hover:bg-slate-100 dark:hover:bg-slate-700/40 transition-all">
                       View
                     </button>
                   </div>
