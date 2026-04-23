@@ -36,10 +36,15 @@ interface Case {
 interface CommandAction {
   id: string;
   urgency: 'Critical' | 'High' | 'Normal';
+  state: 'Pending' | 'In Progress' | 'Completed' | 'Escalated';
   decision: string;
   ifIgnored: string;
   timeSensitivity: string;
   countdown?: string;
+  immediateImpact: string;
+  shortTermOutcome: string;
+  result: string;
+  rationale: string;
   actionLabel: 'Approve' | 'Assign' | 'Escalate';
 }
 
@@ -312,35 +317,55 @@ const ActiveCasesDashboard = () => {
     {
       id: 'cmd-1',
       urgency: 'Critical',
+      state: 'Escalated',
       decision: 'Escalate GBI lab for Homicide #2024-0847 before charge window closes.',
       ifIgnored: 'If ignored, suspect release risk increases and prosecution may fail.',
       timeSensitivity: 'Deadline: Today 14:00',
       countdown: '5h 42m remaining',
+      immediateImpact: 'GBI prioritizes ballistic queue and command is notified.',
+      shortTermOutcome: 'Charging packet is filed within the legal window.',
+      result: 'Homicide prosecution path remains viable.',
+      rationale: 'Based on legal timing window and overdue forensic dependency.',
       actionLabel: 'Escalate'
     },
     {
       id: 'cmd-2',
       urgency: 'Critical',
+      state: 'Pending',
       decision: 'Approve DEA Task Force #2024-1234 surveillance extension.',
       ifIgnored: 'If ignored, operation stops tonight and fentanyl targets disperse.',
       timeSensitivity: 'Deadline: End of day',
       countdown: '8h 11m remaining',
+      immediateImpact: 'Surveillance authority remains active through next cycle.',
+      shortTermOutcome: 'Task force keeps controlled tracking on all eight targets.',
+      result: 'Arrest phase can proceed without restarting intelligence collection.',
+      rationale: 'Based on expiring legal authorization and active DEA dependency.',
       actionLabel: 'Approve'
     },
     {
       id: 'cmd-3',
       urgency: 'High',
+      state: 'In Progress',
       decision: 'Assign 2 detectives to Robbery Series #2024-1489 task force.',
       ifIgnored: 'If ignored, a fourth robbery is likely within 72 hours.',
       timeSensitivity: 'Target: next shift briefing',
+      immediateImpact: 'Coverage expands to target pharmacies and hot zones.',
+      shortTermOutcome: 'Pattern disruption likely before next predicted event window.',
+      result: 'Robbery trend pressure decreases and victim risk drops.',
+      rationale: 'Based on recent robbery pattern increase and repeat MO detection.',
       actionLabel: 'Assign'
     },
     {
       id: 'cmd-4',
       urgency: 'Normal',
+      state: 'Pending',
       decision: 'Approve witness relocation support for Sexual Assault #2024-1678.',
       ifIgnored: 'If ignored, victim cooperation and safety posture may degrade.',
       timeSensitivity: 'Decision needed within 24h',
+      immediateImpact: 'Victim protection resources are activated immediately.',
+      shortTermOutcome: 'Interview continuity and testimony reliability improve.',
+      result: 'Case momentum and victim safety confidence both increase.',
+      rationale: 'Based on current victim risk profile and interview dependency.',
       actionLabel: 'Approve'
     }
   ];
@@ -391,6 +416,26 @@ const ActiveCasesDashboard = () => {
       default:
         return 'border-l-blue-500';
     }
+  };
+
+  const getStateStyles = (state: CommandAction['state']) => {
+    switch (state) {
+      case 'Escalated':
+        return 'bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-300 border-red-200 dark:border-red-500/30';
+      case 'In Progress':
+        return 'bg-blue-100 dark:bg-blue-500/10 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-500/30';
+      case 'Completed':
+        return 'bg-emerald-100 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-500/30';
+      default:
+        return 'bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-500/30';
+    }
+  };
+
+  const getCaseState = (c: Case): CommandAction['state'] => {
+    if (c.status === 'Closed') return 'Completed';
+    if (c.priority === 'Critical' || c.status === 'Pending Warrant') return 'Escalated';
+    if (c.status === 'Active Investigation') return 'In Progress';
+    return 'Pending';
   };
 
   const getRiskStyles = (risk: DetectiveLoad['risk']) => {
@@ -447,13 +492,16 @@ const ActiveCasesDashboard = () => {
                     <span className={`inline-flex items-center px-2 py-0.5 rounded border text-[10px] font-bold uppercase tracking-wide ${getUrgencyStyles(action.urgency)}`}>
                       {action.urgency}
                     </span>
+                    <span className={`inline-flex items-center px-2 py-0.5 rounded border text-[10px] font-semibold uppercase tracking-wide ${getStateStyles(action.state)}`}>
+                      {action.state}
+                    </span>
                     {action.countdown && (
                       <span className="px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-700/40 text-slate-700 dark:text-slate-200 text-[10px] font-semibold tracking-wide">
                         {action.countdown}
                       </span>
                     )}
                   </div>
-                  <div className="flex-1 min-w-0 space-y-1.5">
+                  <div className="flex-1 min-w-0 space-y-2">
                     <p className="text-[14px] text-slate-900 dark:text-slate-100 font-bold leading-5">
                       Decision required: {action.decision}
                     </p>
@@ -463,6 +511,23 @@ const ActiveCasesDashboard = () => {
                     <p className="text-[12px] text-slate-700 dark:text-slate-300 font-semibold">
                       {action.timeSensitivity}
                     </p>
+                    <p className="text-[11px] text-slate-600 dark:text-slate-300">
+                      AI reasoning: {action.rationale}
+                    </p>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-[10px]">
+                      <div>
+                        <p className="font-semibold text-slate-700 dark:text-slate-200 uppercase tracking-wide">Immediate Impact</p>
+                        <p className="text-slate-600 dark:text-slate-300">{action.immediateImpact}</p>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-slate-700 dark:text-slate-200 uppercase tracking-wide">Short-Term Outcome</p>
+                        <p className="text-slate-600 dark:text-slate-300">{action.shortTermOutcome}</p>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-slate-700 dark:text-slate-200 uppercase tracking-wide">Result</p>
+                        <p className="text-slate-600 dark:text-slate-300">{action.result}</p>
+                      </div>
+                    </div>
                   </div>
                   <div className="flex items-center gap-2 flex-shrink-0">
                     <button className={`px-3 py-1.5 border rounded text-[12px] font-bold transition-all ${
@@ -927,10 +992,14 @@ const ActiveCasesDashboard = () => {
               <div className="flex-1">
                 <div className="flex items-center justify-between mb-0.5">
                   <p className="text-[11px] font-semibold text-red-700 dark:text-red-400">Urgent Deadline Collision</p>
-                  <span className="text-[10px] font-bold text-red-700 dark:text-red-700 dark:text-red-400/70">97% confidence</span>
+                  <div className="flex items-center gap-1.5">
+                    <span className="px-1.5 py-0.5 border rounded text-[9px] font-semibold uppercase bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-300 border-red-200 dark:border-red-500/30">Escalated</span>
+                    <span className="text-[10px] font-bold text-red-700 dark:text-red-700 dark:text-red-400/70">97% confidence</span>
+                  </div>
                 </div>
                 <p className="text-[11px] text-slate-500 dark:text-slate-400 mb-1">Homicide charge window + DEA surveillance expiration hit today.</p>
                 <p className="text-[10px] text-slate-700 mb-2">Recommended action: Approve DEA extension and escalate lab now.</p>
+                <p className="text-[10px] text-slate-600 dark:text-slate-300 mb-2">Based on expiring legal deadlines and unresolved forensic dependency.</p>
                 <button className="px-2.5 py-1 bg-red-700 text-white rounded text-[10px] font-semibold hover:bg-red-800 transition-colors">Execute 2-step action</button>
               </div>
             </div>
@@ -939,10 +1008,14 @@ const ActiveCasesDashboard = () => {
               <div className="flex-1">
                 <div className="flex items-center justify-between mb-0.5">
                   <p className="text-[11px] font-semibold text-amber-700 dark:text-amber-400">Robbery Escalation Risk</p>
-                  <span className="text-[10px] font-bold text-amber-700 dark:text-amber-400/70">88% confidence</span>
+                  <div className="flex items-center gap-1.5">
+                    <span className="px-1.5 py-0.5 border rounded text-[9px] font-semibold uppercase bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-500/30">Pending</span>
+                    <span className="text-[10px] font-bold text-amber-700 dark:text-amber-400/70">88% confidence</span>
+                  </div>
                 </div>
                 <p className="text-[11px] text-slate-500 dark:text-slate-400 mb-1">Pattern indicates probable 4th pharmacy robbery within 72 hours.</p>
                 <p className="text-[10px] text-slate-700 mb-2">Recommended action: Assign task force before next shift turnover.</p>
+                <p className="text-[10px] text-slate-600 dark:text-slate-300 mb-2">Based on pattern clustering and unchanged suspect MO profile.</p>
                 <button className="px-2.5 py-1 bg-amber-600 text-white rounded text-[10px] font-semibold hover:bg-amber-700 transition-colors">Assign task force now</button>
               </div>
             </div>
@@ -951,10 +1024,14 @@ const ActiveCasesDashboard = () => {
               <div className="flex-1">
                 <div className="flex items-center justify-between mb-0.5">
                   <p className="text-[11px] font-semibold text-slate-700 dark:text-slate-300">Workload Bottleneck</p>
-                  <span className="text-[10px] font-bold text-slate-500">92% confidence</span>
+                  <div className="flex items-center gap-1.5">
+                    <span className="px-1.5 py-0.5 border rounded text-[9px] font-semibold uppercase bg-blue-100 dark:bg-blue-500/10 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-500/30">In Progress</span>
+                    <span className="text-[10px] font-bold text-slate-500">92% confidence</span>
+                  </div>
                 </div>
                 <p className="text-[11px] text-slate-500 dark:text-slate-400 mb-1">Rodriguez overload is constraining homicide follow-up speed.</p>
                 <p className="text-[10px] text-slate-700 mb-2">Recommended action: Reassign burglary #2024-1712 to Det. Wilson.</p>
+                <p className="text-[10px] text-slate-600 dark:text-slate-300 mb-2">Based on current utilization imbalance across detectives.</p>
                 <button className="px-2.5 py-1 bg-slate-700 text-white rounded text-[10px] font-semibold hover:bg-slate-800 transition-colors">Apply reassignment</button>
               </div>
             </div>
@@ -963,10 +1040,14 @@ const ActiveCasesDashboard = () => {
               <div className="flex-1">
                 <div className="flex items-center justify-between mb-0.5">
                   <p className="text-[11px] font-semibold text-slate-700 dark:text-slate-300">Clearance Gap Recovery</p>
-                  <span className="text-[10px] font-bold text-slate-500">81% confidence</span>
+                  <div className="flex items-center gap-1.5">
+                    <span className="px-1.5 py-0.5 border rounded text-[9px] font-semibold uppercase bg-emerald-100 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-500/30">Pending</span>
+                    <span className="text-[10px] font-bold text-slate-500">81% confidence</span>
+                  </div>
                 </div>
                 <p className="text-[11px] text-slate-500 dark:text-slate-400 mb-1">Robbery and burglary are below target and trending negative.</p>
                 <p className="text-[10px] text-slate-700 mb-2">Recommended action: Approve both task-force staffing and reassignment package.</p>
+                <p className="text-[10px] text-slate-600 dark:text-slate-300 mb-2">Based on projected 30-day clearance trajectory against target.</p>
                 <button className="px-2.5 py-1 bg-blue-700 text-white rounded text-[10px] font-semibold hover:bg-blue-800 transition-colors">Approve recovery package</button>
               </div>
             </div>
@@ -1108,6 +1189,7 @@ const ActiveCasesDashboard = () => {
                   <div className="flex items-center gap-2 mb-2 flex-wrap">
                     <span className="text-[13px] font-semibold text-slate-900 dark:text-white">{c.title}</span>
                     <span className={`px-1.5 py-0.5 border rounded text-[11px] font-medium ${getPriorityBadge(c.priority)}`}>{c.priority.toUpperCase()}</span>
+                    <span className={`px-1.5 py-0.5 border rounded text-[11px] font-semibold ${getStateStyles(getCaseState(c))}`}>{getCaseState(c).toUpperCase()}</span>
                     {c.multiAgency && (
                       <span className="px-1.5 py-0.5 border rounded text-[11px] font-medium bg-blue-500/10 border-blue-500/20 text-blue-400">MULTI-AGENCY</span>
                     )}
@@ -1128,7 +1210,7 @@ const ActiveCasesDashboard = () => {
                   {c.criticalReason && (
                     <div className="flex items-center gap-1.5 mb-1">
                       <AlertTriangle className="w-3 h-3 text-slate-500 flex-shrink-0" />
-                      <span className="text-[11px] text-slate-500 italic">{c.criticalReason}</span>
+                      <span className="text-[11px] text-slate-600 dark:text-slate-300 italic">{c.criticalReason}</span>
                     </div>
                   )}
                   <div className="flex items-center gap-2 text-[11px] flex-wrap">
