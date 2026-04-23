@@ -464,6 +464,8 @@ const ActiveCasesDashboard = () => {
             <span>75% clearance YTD</span>
             <span>·</span>
             <span>Updated 2 minutes ago</span>
+            <span>·</span>
+            <span>Data confidence: High</span>
           </div>
         </div>
 
@@ -1055,7 +1057,7 @@ const ActiveCasesDashboard = () => {
         </div>
 
         {/* Recommended Action */}
-        <div className="bg-white dark:bg-slate-900/70 border border-amber-500/25 rounded-xl overflow-hidden">
+        <div className="bg-white dark:bg-slate-900/70 border border-amber-400/35 dark:border-amber-500/35 rounded-xl overflow-hidden shadow-sm dark:shadow-none">
           {/* Urgency header */}
           <div className="flex items-center justify-between px-5 py-3 bg-amber-500/8 border-b border-amber-500/15">
             <div className="flex items-center gap-2">
@@ -1067,7 +1069,7 @@ const ActiveCasesDashboard = () => {
               <span className="text-[12px] font-bold text-red-700 dark:text-red-400 tabular-nums">Must act within {fmtCountdown(urgencySeconds)}</span>
             </div>
           </div>
-          <div className="p-5">
+          <div className="p-6">
             <p className="text-[15px] text-slate-900 dark:text-white font-semibold mb-1">Approve DEA surveillance extension + escalate Homicide lab request</p>
             <p className="text-[12px] text-slate-500 dark:text-slate-400 mb-4">Two actions. ~5 minutes total. Resolves both URGENT items before EOD. Deferral risks: task force collapse + suspect release on homicide.</p>
 
@@ -1088,11 +1090,11 @@ const ActiveCasesDashboard = () => {
               </div>
             </div>
 
-            <div className="flex items-center gap-2">
-              <button className="flex items-center gap-2 px-4 py-2.5 bg-amber-500 dark:bg-amber-500/15 border border-amber-500 dark:border-amber-500/30 text-white dark:text-amber-300 rounded-lg text-[13px] font-bold hover:bg-amber-600 dark:hover:bg-amber-500/25 transition-all">
+            <div className="flex items-center gap-3">
+              <button className="flex items-center gap-2 px-5 py-3 bg-amber-500 border border-amber-600 text-white rounded-lg text-[13px] font-bold hover:bg-amber-600 transition-all">
                 <CheckCircle className="w-4 h-4" /> Approve DEA Extension
               </button>
-              <button className="flex items-center gap-2 px-4 py-2.5 bg-slate-100 dark:bg-slate-800/50 border border-slate-300 dark:border-slate-700/50 text-slate-700 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-all">
+              <button className="flex items-center gap-2 px-5 py-3 bg-transparent border border-slate-300 dark:border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-[13px] font-semibold hover:bg-slate-100 dark:hover:bg-slate-700/40 transition-all">
                 <ArrowUpRight className="w-4 h-4" /> Escalate Lab Request
               </button>
             </div>
@@ -1131,8 +1133,8 @@ const ActiveCasesDashboard = () => {
         </div>
 
         {/* Filters — unified styling */}
-        <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
-          <div className="flex items-center gap-4 mb-4">
+        <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6">
+          <div className="flex items-center gap-4 mb-5 p-3 bg-slate-50 dark:bg-slate-900/25 border border-slate-200 dark:border-slate-700/30 rounded-lg">
             <div className="flex-1 relative">
               <Search className="w-4 h-4 text-slate-500 absolute left-4 top-1/2 -translate-y-1/2" />
               <input
@@ -1176,26 +1178,28 @@ const ActiveCasesDashboard = () => {
 
         {/* Cases List — unified container styling */}
         <div className="space-y-3">
-          {filteredCases.map((c) => (
-            <div
-              key={c.id}
-              className={`bg-white dark:bg-slate-800/25 border rounded-xl shadow-sm dark:shadow-none hover:border-slate-500/70 transition-colors cursor-pointer ${c.priority === 'Critical' ? 'border-red-300/70 dark:border-red-500/35 ring-1 ring-red-300/40 dark:ring-red-500/20' : 'border-slate-200 dark:border-slate-700/30'}`}
-              onClick={() => setSelectedCase(c)}
-            >
-              <div className="flex items-center gap-4 p-6">
+          {filteredCases.map((c) => {
+            const caseState = getCaseState(c);
+            const secondaryTag = c.deadline && new Date(c.deadline) < new Date(Date.now() + 86400000)
+              ? 'DEADLINE'
+              : caseState === 'Escalated'
+                ? 'ESCALATED'
+                : null;
+
+            return (
+              <div
+                key={c.id}
+                className={`bg-white dark:bg-slate-800/25 border rounded-xl shadow-sm dark:shadow-none hover:border-slate-500/70 transition-colors cursor-pointer ${c.priority === 'Critical' ? 'border-red-300/70 dark:border-red-500/35 ring-1 ring-red-300/40 dark:ring-red-500/20' : 'border-slate-200 dark:border-slate-700/30'}`}
+                onClick={() => setSelectedCase(c)}
+              >
+                <div className="flex items-center gap-4 p-6">
                 <div className={`w-0.5 self-stretch rounded-full flex-shrink-0 ${getPriorityDot(c.priority)}`}></div>
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-2 flex-wrap">
                     <span className="text-[13px] font-semibold text-slate-900 dark:text-white">{c.title}</span>
                     <span className={`px-1.5 py-0.5 border rounded text-[11px] font-medium ${getPriorityBadge(c.priority)}`}>{c.priority.toUpperCase()}</span>
-                    <span className={`px-1.5 py-0.5 border rounded text-[11px] font-semibold ${getStateStyles(getCaseState(c))}`}>{getCaseState(c).toUpperCase()}</span>
-                    {c.multiAgency && (
-                      <span className="px-1.5 py-0.5 border rounded text-[11px] font-medium bg-blue-500/10 border-blue-500/20 text-blue-400">MULTI-AGENCY</span>
-                    )}
-                    {c.deadline && new Date(c.deadline) < new Date(Date.now() + 86400000) && (
-                      <span className="px-1.5 py-0.5 border rounded text-[11px] font-bold bg-red-100 dark:bg-red-500/10 border-red-200 dark:border-red-500/20 text-red-700 dark:text-red-300">DEADLINE</span>
-                    )}
+                    {secondaryTag && <span className={`px-1.5 py-0.5 border rounded text-[11px] font-semibold ${getStateStyles(caseState)}`}>{secondaryTag}</span>}
                   </div>
                   <div className="flex items-center gap-2 flex-wrap mb-2">
                     <span className="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700/30 border border-slate-200 dark:border-slate-600/30 text-[11px] text-slate-700 dark:text-slate-200">
@@ -1205,6 +1209,9 @@ const ActiveCasesDashboard = () => {
                       <span className="px-2 py-0.5 rounded bg-amber-100 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/25 text-[11px] font-semibold text-amber-800 dark:text-amber-300">
                         Deadline: {c.deadline}
                       </span>
+                    )}
+                    {c.multiAgency && (
+                      <span className="text-[11px] text-blue-700 dark:text-blue-300 font-medium">Multi-agency coordination active</span>
                     )}
                   </div>
                   {c.criticalReason && (
@@ -1239,26 +1246,27 @@ const ActiveCasesDashboard = () => {
                   </div>
                   <button
                     onClick={(e) => { e.stopPropagation(); setSelectedCase(c); }}
-                    className="flex items-center gap-1 px-2.5 py-1.5 bg-slate-100 dark:bg-slate-700/30 border border-slate-300 dark:border-slate-600/30 text-slate-700 dark:text-slate-300 rounded text-[11px] font-medium hover:bg-slate-200 dark:hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-all"
+                    className="flex items-center gap-1 px-3 py-1.5 bg-transparent border border-slate-300 dark:border-slate-600/40 text-slate-700 dark:text-slate-300 rounded text-[11px] font-semibold hover:bg-slate-100 dark:hover:bg-slate-700/40 transition-all"
                   >
                     <Eye className="w-3 h-3" /> Open
                   </button>
                   <button
                     onClick={(e) => e.stopPropagation()}
-                    className="flex items-center gap-1 px-2.5 py-1.5 bg-slate-50 dark:bg-slate-700/20 border border-slate-200 dark:border-slate-600/20 text-slate-700 dark:text-slate-300 rounded text-[11px] font-semibold hover:bg-slate-100 dark:hover:bg-slate-700/40 transition-all"
+                    className="flex items-center gap-1 px-3 py-1.5 bg-transparent border border-transparent text-slate-600 dark:text-slate-300 rounded text-[11px] font-medium hover:bg-slate-100 dark:hover:bg-slate-700/30 transition-all"
                   >
                     <UserCheck className="w-3 h-3" /> Reassign
                   </button>
                   <button
                     onClick={(e) => e.stopPropagation()}
-                    className={`flex items-center gap-1 px-2.5 py-1.5 rounded text-[11px] font-semibold transition-all ${c.priority === 'Critical' ? 'bg-red-500/15 border border-red-500/30 text-red-800 dark:text-red-300 hover:bg-red-500/25' : 'bg-amber-500/15 border border-amber-500/30 text-amber-800 dark:text-amber-300 hover:bg-amber-500/25'}`}
+                    className={`flex items-center gap-1 px-3 py-1.5 rounded text-[11px] font-semibold text-white transition-all ${c.priority === 'Critical' ? 'bg-red-600 border border-red-700 hover:bg-red-700' : 'bg-amber-600 border border-amber-700 hover:bg-amber-700'}`}
                   >
                     <ShieldAlert className="w-3 h-3" /> Escalate
                   </button>
                 </div>
               </div>
-            </div>
-          ))}
+              </div>
+            );
+          })}
         </div>
 
         {/* Case Detail Modal — unified */}
