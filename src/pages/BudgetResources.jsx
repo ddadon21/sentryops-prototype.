@@ -1,1596 +1,448 @@
-import React, { useState } from 'react';
-import { Home, Users, FileText, LayoutDashboard, TrendingUp, AlertCircle, Settings, Bell, MessageCircle, Search, ChevronRight, DollarSign, CheckCircle, Shield, Sparkles, X, Send, Menu, ChevronLeft, LogOut, Download, ArrowUpRight, ArrowDownRight, TrendingDown, Calendar, Filter, Eye, PieChart, BarChart3, LineChart, Package, Truck, Building2, Wrench, ChevronDown, ChevronUp, Radio, Target, Info, ArrowUpCircle, RefreshCw, FileSpreadsheet, Mail, Zap, Clock } from 'lucide-react';
+import React, { useMemo, useState } from 'react';
+import {
+  AlertCircle,
+  Bell,
+  Building2,
+  Calendar,
+  CheckCircle,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  DollarSign,
+  Download,
+  Home,
+  LayoutDashboard,
+  LogOut,
+  Menu,
+  Radio,
+  Settings,
+  Shield,
+  Target,
+  TrendingUp,
+  Users,
+  X
+} from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 
+const buttonStyles = {
+  primary: 'px-3 py-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold rounded-lg border border-blue-500 transition-colors',
+  secondary: 'px-3 py-2 bg-transparent hover:bg-slate-800 text-slate-200 text-sm font-semibold rounded-lg border border-slate-600 transition-colors',
+  destructive: 'px-3 py-2 bg-red-600 hover:bg-red-500 text-white text-sm font-semibold rounded-lg border border-red-500 transition-colors',
+  success: 'px-3 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold rounded-lg border border-emerald-500 transition-colors'
+};
+
+const navigation = [
+  { id: 'dashboard', label: 'Executive Dashboard', icon: Home, route: '/command/dashboard' },
+  { id: 'detention', label: 'Detention Operations', icon: Building2, route: '/jail/dashboard' },
+  { id: 'patrol', label: 'Patrol Operations', icon: Radio, route: '/patrol/cad' },
+  { id: 'investigations', label: 'Criminal Investigations', icon: Target, route: '/investigations/cases' },
+  { id: 'personnel', label: 'Personnel Overview', icon: Users, route: '/command/personnel' },
+  { id: 'org-chart', label: 'Org Chart', icon: LayoutDashboard, route: '/command/orgchart' },
+  { id: 'approvals', label: 'Approvals', icon: CheckCircle, badge: '8', route: '/command/approvals' },
+  { id: 'budget', label: 'Budget & Assets', icon: DollarSign, route: '/command/budget' },
+  { id: 'reports', label: 'Reports & Analytics', icon: TrendingUp, route: '/command/reports' },
+  { id: 'alerts', label: 'Command Alerts', icon: AlertCircle, badge: '3', route: '/command/alerts' },
+  { id: 'settings', label: 'Settings', icon: Settings, route: '/command/settings' }
+];
+
+const monthlyTrend = [
+  { month: 'Jan', spent: 3.80, budget: 4.04 },
+  { month: 'Feb', spent: 3.75, budget: 4.04 },
+  { month: 'Mar', spent: 3.90, budget: 4.04 },
+  { month: 'Apr', spent: 3.85, budget: 4.04 },
+  { month: 'May', spent: 3.92, budget: 4.04 },
+  { month: 'Jun', spent: 3.98, budget: 4.04 },
+  { month: 'Jul', spent: 4.10, budget: 4.04 },
+  { month: 'Aug', spent: 4.05, budget: 4.04 },
+  { month: 'Sep', spent: 3.90, budget: 4.04 },
+  { month: 'Oct', spent: 3.98, budget: 4.04 }
+];
+
+const initialDecisionCards = [
+  {
+    id: 'ot',
+    title: 'Overtime Overrun Risk',
+    status: 'CRITICAL',
+    note: 'Patrol overtime is pacing 14% above allocation for remaining period.',
+    recommendation: 'Authorize capped overtime blocks + shift rebalance this week.',
+    actionLabel: 'Reduce Spending Plan',
+    actionType: 'reduce'
+  },
+  {
+    id: 'fleet',
+    title: 'Fleet Maintenance Exposure',
+    status: 'WARNING',
+    note: 'Deferred service orders could increase emergency repair costs next cycle.',
+    recommendation: 'Move $120K from training reserve into preventive maintenance.',
+    actionLabel: 'Reallocate Budget',
+    actionType: 'reallocate'
+  },
+  {
+    id: 'procurement',
+    title: 'Procurement Controls Stable',
+    status: 'STABLE',
+    note: 'Quarterly purchasing controls reduced discretionary spend variance by 3.8%.',
+    recommendation: 'Retain controls and refresh forecast assumptions for Q4.',
+    actionLabel: 'Adjust Forecast',
+    actionType: 'forecast'
+  }
+];
+
 export default function BudgetResources() {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState('overview'); // overview, divisions, resources, forecast
-  const [chatOpen, setChatOpen] = useState(false);
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false);
-  const [selectedDivision, setSelectedDivision] = useState(null);
-  const [timeRange, setTimeRange] = useState('ytd'); // ytd, q4, monthly
-  const [expandedCategories, setExpandedCategories] = useState(new Set());
-  const [selectedMonth, setSelectedMonth] = useState(null);
-  const [monthDetailModal, setMonthDetailModal] = useState(null);
-  const [reallocationModal, setReallocationModal] = useState(false);
-  const [exportModal, setExportModal] = useState(false);
-  const [varianceReportOpen, setVarianceReportOpen] = useState(false);
-  const [aiInsightsExpanded, setAiInsightsExpanded] = useState(true);
+  const [timeRange, setTimeRange] = useState('Year to Date');
 
-  const navigation = [
-    { id: 'dashboard', label: 'Executive Dashboard', icon: Home, route: '/command/dashboard' },
-    { id: 'detention', label: 'Detention Operations', icon: Building2, route: '/jail/dashboard' },
-    { id: 'patrol', label: 'Patrol Operations', icon: Radio, route: '/patrol/cad' },
-    { id: 'investigations', label: 'Criminal Investigations', icon: Target, route: '/investigations/cases' },
-    { id: 'personnel', label: 'Personnel Overview', icon: Users, route: '/command/personnel' },
-    { id: 'org-chart', label: 'Org Chart', icon: LayoutDashboard, route: '/command/orgchart' },
-    { id: 'approvals', label: 'Approvals', icon: CheckCircle, badge: '8', route: '/command/approvals' },
-    { id: 'budget', label: 'Budget & Resources', icon: DollarSign, route: '/command/budget' },
-    { id: 'reports', label: 'Reports & Analytics', icon: TrendingUp, route: '/command/reports' },
-    { id: 'alerts', label: 'Command Alerts', icon: AlertCircle, badge: '3', route: '/command/alerts' },
-    { id: 'settings', label: 'Settings', icon: Settings, route: '/command/settings' }
-  ];
+  const [decisionCards, setDecisionCards] = useState(initialDecisionCards);
+  const [showReduceModal, setShowReduceModal] = useState(false);
+  const [showForecastModal, setShowForecastModal] = useState(false);
+  const [showVarianceModal, setShowVarianceModal] = useState(false);
+  const [reallocateOpen, setReallocateOpen] = useState(false);
 
-  const notifications = [
-    { id: 1, title: '3 Certifications Expiring Soon', message: 'CPR, Firearms, and P.O.S.T. renewals needed', time: '10 min ago', urgent: true },
-    { id: 2, title: 'Budget Approval Required', message: 'Q1 2025 Training Budget: $45,000', time: '1 hour ago', urgent: true },
-    { id: 3, title: 'Leave Request Submitted', message: 'Deputy Marcus Chen - Dec 15-22', time: '2 hours ago', urgent: false }
-  ];
+  const [planApplied, setPlanApplied] = useState(false);
+  const [projectionDelta, setProjectionDelta] = useState(0.35);
+  const [forecastAdjustment, setForecastAdjustment] = useState(0.1);
 
-  // Budget data
-  const fiscalYear = {
-    year: 'FY 2024',
-    totalBudget: 48500000,
-    spent: 41225000,
-    committed: 3800000,
-    available: 3475000,
+  const totals = {
+    totalBudget: 48.5,
+    spent: 41.23,
+    committed: 3.8,
+    available: 3.47,
     percentSpent: 85,
-    percentCommitted: 7.8,
-    variance: -250000, // negative = over budget
-    projectedYearEnd: 48750000
+    daysRemaining: 72
   };
 
-  const divisionBudgets = [
-    {
-      id: 1,
-      name: 'Patrol Division',
-      budget: 15200000,
-      spent: 12900000,
-      committed: 1200000,
-      available: 1100000,
-      percentSpent: 84.9,
-      variance: -150000,
-      categories: [
-        { name: 'Personnel', budget: 11500000, spent: 9800000, percent: 85.2 },
-        { name: 'Vehicles', budget: 2100000, spent: 1800000, percent: 85.7 },
-        { name: 'Equipment', budget: 980000, spent: 820000, percent: 83.7 },
-        { name: 'Training', budget: 420000, spent: 310000, percent: 73.8 },
-        { name: 'Operations', budget: 200000, spent: 170000, percent: 85.0 }
-      ]
-    },
-    {
-      id: 2,
-      name: 'Detention Division',
-      budget: 18500000,
-      spent: 15800000,
-      committed: 1400000,
-      available: 1300000,
-      percentSpent: 85.4,
-      variance: 100000,
-      categories: [
-        { name: 'Personnel', budget: 14200000, spent: 12100000, percent: 85.2 },
-        { name: 'Inmate Services', budget: 2800000, spent: 2400000, percent: 85.7 },
-        { name: 'Facility Maintenance', budget: 980000, spent: 850000, percent: 86.7 },
-        { name: 'Medical', budget: 420000, spent: 360000, percent: 85.7 },
-        { name: 'Food Services', budget: 100000, spent: 90000, percent: 90.0 }
-      ]
-    },
-    {
-      id: 3,
-      name: 'Investigations',
-      budget: 5200000,
-      spent: 4450000,
-      committed: 450000,
-      available: 300000,
-      percentSpent: 85.6,
-      variance: -50000,
-      categories: [
-        { name: 'Personnel', budget: 4100000, spent: 3500000, percent: 85.4 },
-        { name: 'Forensics', budget: 680000, spent: 580000, percent: 85.3 },
-        { name: 'Equipment', budget: 280000, spent: 240000, percent: 85.7 },
-        { name: 'Training', budget: 140000, spent: 130000, percent: 92.9 }
-      ]
-    },
-    {
-      id: 4,
-      name: 'Administrative Services',
-      budget: 4100000,
-      spent: 3480000,
-      committed: 380000,
-      available: 240000,
-      percentSpent: 84.9,
-      variance: 50000,
-      categories: [
-        { name: 'Personnel', budget: 2800000, spent: 2380000, percent: 85.0 },
-        { name: 'IT Infrastructure', budget: 680000, spent: 580000, percent: 85.3 },
-        { name: 'Facilities', budget: 420000, spent: 360000, percent: 85.7 },
-        { name: 'Office Supplies', budget: 200000, spent: 160000, percent: 80.0 }
-      ]
-    },
-    {
-      id: 5,
-      name: 'Training Division',
-      budget: 2600000,
-      spent: 2100000,
-      committed: 280000,
-      available: 220000,
-      percentSpent: 80.8,
-      variance: 150000,
-      categories: [
-        { name: 'Personnel', budget: 1200000, spent: 980000, percent: 81.7 },
-        { name: 'Programs', budget: 850000, spent: 680000, percent: 80.0 },
-        { name: 'Certifications', budget: 380000, spent: 310000, percent: 81.6 },
-        { name: 'Equipment', budget: 170000, spent: 130000, percent: 76.5 }
-      ]
-    },
-    {
-      id: 6,
-      name: 'Support Services',
-      budget: 2900000,
-      spent: 2495000,
-      committed: 90000,
-      available: 315000,
-      percentSpent: 86.0,
-      variance: -100000,
-      categories: [
-        { name: 'Fleet Maintenance', budget: 1400000, spent: 1200000, percent: 85.7 },
-        { name: 'Communications', budget: 780000, spent: 670000, percent: 85.9 },
-        { name: 'Records Management', budget: 520000, spent: 445000, percent: 85.6 },
-        { name: 'Property & Evidence', budget: 200000, spent: 180000, percent: 90.0 }
-      ]
-    }
-  ];
-
-  const resources = {
-    vehicles: {
-      total: 245,
-      patrol: 128,
-      investigation: 42,
-      administration: 35,
-      support: 40,
-      maintenance: 18,
-      replacement: 25
-    },
-    facilities: {
-      main: 'Gwinnett Justice & Admin Center',
-      detention: 'Gwinnett County Detention Center',
-      substations: 4,
-      trainingFacility: 1,
-      totalSqFt: 485000
-    },
-    equipment: {
-      bodyArmor: { total: 520, needsReplacement: 45 },
-      firearms: { total: 680, needsReplacement: 28 },
-      radios: { total: 550, needsReplacement: 62 },
-      computers: { total: 420, needsReplacement: 85 },
-      bodyCameras: { total: 380, needsReplacement: 0 }
-    }
-  };
-
-  const monthlyTrend = [
-    { month: 'Jan', spent: 3800000, budget: 4040000, personnel: 3000000, operations: 520000, training: 150000, equipment: 130000 },
-    { month: 'Feb', spent: 3750000, budget: 4040000, personnel: 2950000, operations: 510000, training: 140000, equipment: 150000 },
-    { month: 'Mar', spent: 3900000, budget: 4040000, personnel: 3050000, operations: 530000, training: 180000, equipment: 140000 },
-    { month: 'Apr', spent: 3850000, budget: 4040000, personnel: 3020000, operations: 525000, training: 160000, equipment: 145000 },
-    { month: 'May', spent: 3920000, budget: 4040000, personnel: 3080000, operations: 535000, training: 165000, equipment: 140000 },
-    { month: 'Jun', spent: 3980000, budget: 4040000, personnel: 3120000, operations: 540000, training: 170000, equipment: 150000 },
-    { month: 'Jul', spent: 4100000, budget: 4040000, personnel: 3200000, operations: 650000, training: 150000, equipment: 100000,
-      variance: { overtime: 80000, hvac: 45000, vehicles: 35000 } },
-    { month: 'Aug', spent: 4050000, budget: 4040000, personnel: 3180000, operations: 560000, training: 160000, equipment: 150000 },
-    { month: 'Sep', spent: 3900000, budget: 4040000, personnel: 3060000, operations: 530000, training: 170000, equipment: 140000 },
-    { month: 'Oct', spent: 3975000, budget: 4040000, personnel: 3100000, operations: 545000, training: 180000, equipment: 150000 }
-  ];
+  const projectedCurrent = useMemo(() => totals.spent + totals.committed + projectionDelta, [projectionDelta, totals.spent, totals.committed]);
+  const projectedWithControls = useMemo(() => totals.spent + totals.committed - Math.max(0.22, forecastAdjustment), [forecastAdjustment, totals.spent, totals.committed]);
 
   const handleNavigation = (item) => {
     navigate(item.route);
     setSidebarOpen(false);
   };
 
-  const handleLogout = () => {
-    navigate(createPageUrl('SignIn'));
+  const statusTone = (status) => {
+    if (status === 'CRITICAL') return 'text-red-400 border-red-500/40 bg-red-500/10';
+    if (status === 'WARNING') return 'text-amber-400 border-amber-500/40 bg-amber-500/10';
+    return 'text-emerald-400 border-emerald-500/40 bg-emerald-500/10';
   };
 
-  const toggleCategory = (divisionId) => {
-    const newExpanded = new Set(expandedCategories);
-    if (newExpanded.has(divisionId)) {
-      newExpanded.delete(divisionId);
-    } else {
-      newExpanded.add(divisionId);
-    }
-    setExpandedCategories(newExpanded);
+  const trendTone = (ratio) => {
+    if (ratio > 100) return 'text-red-400';
+    if (ratio > 95) return 'text-amber-400';
+    return 'text-emerald-400';
   };
 
-  const getVarianceColor = (variance) => {
-    if (variance > 0) return 'text-green-400';
-    if (variance < -100000) return 'text-red-400';
-    return 'text-amber-400';
+  const applyRecommendedPlan = () => {
+    setPlanApplied(true);
+    setProjectionDelta(-0.18);
+    setDecisionCards((cards) => cards.map((card) => (
+      card.id === 'ot'
+        ? { ...card, status: 'WARNING', note: 'Overtime spend normalized after capped authorization windows.' }
+        : card
+    )));
   };
 
-  const getPercentColor = (percent) => {
-    if (percent >= 95) return 'red';
-    if (percent >= 85) return 'amber';
-    return 'green';
+  const exportReport = () => {
+    const lines = [
+      'Budget & Assets Report',
+      `Range: ${timeRange}`,
+      `Total Budget: $${totals.totalBudget.toFixed(2)}M`,
+      `Spent: $${totals.spent.toFixed(2)}M (${totals.percentSpent}%)`,
+      `Projected Current Pace: $${projectedCurrent.toFixed(2)}M`,
+      `Projected With Controls: $${projectedWithControls.toFixed(2)}M`
+    ];
+    const blob = new Blob([lines.join('\n')], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'budget-assets-report.txt';
+    link.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const runCardAction = (type) => {
+    if (type === 'reduce') setShowReduceModal(true);
+    if (type === 'reallocate') setReallocateOpen(true);
+    if (type === 'forecast') setShowForecastModal(true);
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex">
-      {/* Sidebar */}
-      <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-slate-800/50 backdrop-blur-xl bg-slate-900/30 flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
-        <div className="p-4 border-b border-slate-700/50 flex items-center justify-between">
+    <div className="min-h-screen bg-slate-950 flex">
+      <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-slate-800 bg-slate-900 flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
+        <div className="p-4 border-b border-slate-800 flex items-center justify-between">
           {!sidebarCollapsed && (
             <div className="flex items-center gap-2">
-              <Shield className="w-8 h-8 text-amber-500" />
+              <Shield className="w-8 h-8 text-blue-500" />
               <h1 className="text-xl font-bold text-white">SentryOps</h1>
             </div>
           )}
-          {sidebarCollapsed && (
-            <Shield className="w-8 h-8 text-amber-500 mx-auto" />
-          )}
-          <button
-            onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-            className="p-2 hover:bg-slate-800/50 rounded-lg transition-colors hidden lg:block"
-          >
+          {sidebarCollapsed && <Shield className="w-8 h-8 text-blue-500 mx-auto" />}
+          <button onClick={() => setSidebarCollapsed(!sidebarCollapsed)} className="p-2 hover:bg-slate-800 rounded-lg transition-colors hidden lg:block">
             {sidebarCollapsed ? <ChevronRight className="w-5 h-5 text-slate-400" /> : <ChevronLeft className="w-5 h-5 text-slate-400" />}
           </button>
         </div>
 
         <nav className="flex-1 overflow-y-auto p-4 space-y-2">
-          {navigation.map(item => {
+          {navigation.map((item) => {
             const Icon = item.icon;
             const isActive = window.location.pathname === item.route;
             return (
               <button
                 key={item.id}
                 onClick={() => handleNavigation(item)}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'
-                } ${sidebarCollapsed ? 'justify-center' : ''}`}
-                title={sidebarCollapsed ? item.label : ''}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive ? 'bg-slate-800 border border-slate-700 text-white' : 'text-slate-400 hover:bg-slate-800 hover:text-white'}`}
               >
                 <Icon className="w-5 h-5 flex-shrink-0" />
                 {!sidebarCollapsed && (
                   <>
-                    <span className="flex-1 text-left text-sm font-medium truncate">{item.label}</span>
-                    {item.badge && <span className={`px-2 py-0.5 rounded-full text-xs ${isActive ? 'bg-white/20' : 'bg-red-500 text-white'}`}>{item.badge}</span>}
+                    <span className="font-medium text-sm flex-1 text-left">{item.label}</span>
+                    {item.badge && <span className="bg-red-600 text-white text-xs px-2 py-0.5 rounded-full">{item.badge}</span>}
                   </>
                 )}
               </button>
             );
           })}
         </nav>
-
-        <div className="border-t border-slate-700/50">
-          {!sidebarCollapsed && (
-            <div className="px-4 py-3">
-              <p className="text-xs text-slate-500 text-center">Gwinnett County Sheriff's Office</p>
-            </div>
-          )}
-
-          <div className="p-4">
-            <button
-              onClick={() => setLogoutConfirmOpen(true)}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-slate-400 hover:bg-slate-800/40 hover:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
-              title={sidebarCollapsed ? 'Sign Out' : ''}
-            >
-              <LogOut className="w-5 h-5 flex-shrink-0" />
-              {!sidebarCollapsed && (
-                <span className="flex-1 text-left text-sm font-medium">Sign Out</span>
-              )}
-            </button>
-          </div>
-        </div>
       </aside>
 
-      {/* Overlay for mobile */}
-      {sidebarOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
-
-      {logoutConfirmOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-            onClick={() => setLogoutConfirmOpen(false)}
-          />
-          <div className="relative bg-slate-900 border border-slate-700/50 rounded-2xl p-6 max-w-sm w-full shadow-2xl">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="w-12 h-12 bg-slate-800/60 rounded-xl flex items-center justify-center">
-                <LogOut className="w-6 h-6 text-slate-400" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold text-white">Sign Out</h3>
-                <p className="text-sm text-slate-400">Are you sure you want to sign out?</p>
-              </div>
-            </div>
-            <div className="flex gap-3 mt-6">
-              <button
-                onClick={() => setLogoutConfirmOpen(false)}
-                className="flex-1 px-4 py-2.5 bg-slate-800/40 hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-white font-medium transition-all"
-              >
-                Cancel
+      <main className="flex-1 overflow-y-auto">
+        <header className="sticky top-0 z-40 bg-slate-950/95 border-b border-slate-800 backdrop-blur-sm">
+          <div className="px-4 lg:px-6 py-4 flex items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <button onClick={() => setSidebarOpen(true)} className="lg:hidden p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors">
+                <Menu className="w-5 h-5" />
               </button>
-              <button
-                onClick={handleLogout}
-                className="flex-1 px-4 py-2.5 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-white font-medium transition-all"
-              >
-                Sign Out
-              </button>
+              <div className="text-sm text-slate-400">Command / Budget & Assets</div>
             </div>
-          </div>
-        </div>
-      )}
-
-      <div className="flex-1 flex flex-col min-w-0">
-        <header className="border-b border-slate-800/50 backdrop-blur-xl bg-slate-900/30">
-          <div className="px-4 lg:px-6 py-4 flex items-center justify-between gap-4">
-            <div className="flex items-center gap-4 flex-1 min-w-0">
-              <button
-                onClick={() => setSidebarOpen(!sidebarOpen)}
-                className="lg:hidden p-2 hover:bg-slate-800/50 rounded-lg"
-              >
-                <Menu className="w-5 h-5 text-slate-400" />
+            <div className="flex items-center gap-2">
+              <button onClick={() => setNotificationsOpen(!notificationsOpen)} className="relative p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors">
+                <Bell className="w-5 h-5" />
+                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full" />
               </button>
-              <div className="flex items-center gap-2 text-sm">
-                <button
-                  onClick={() => navigate(createPageUrl('CommandDashboard'))}
-                  className="text-slate-400 hover:text-white transition-colors"
-                >
-                  Dashboard
-                </button>
-                <ChevronRight className="w-4 h-4 text-slate-600" />
-                <span className="text-white">Budget & Resources</span>
-              </div>
-            </div>
-            <div className="flex items-center gap-2 lg:gap-3">
-              <div className="relative">
-                <button
-                  onClick={() => setNotificationsOpen(!notificationsOpen)}
-                  className="p-2 hover:bg-slate-800/50 rounded-lg relative"
-                >
-                  <Bell className="w-5 h-5 text-slate-400" />
-                  <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-                </button>
-
-                {notificationsOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-96 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-2xl z-50">
-                    <div className="p-4 border-b border-slate-700/50">
-                      <h3 className="text-sm font-semibold text-white">Notifications</h3>
-                    </div>
-                    <div className="max-h-96 overflow-y-auto">
-                      {notifications.map(notification => (
-                        <div key={notification.id} className={`p-4 border-b border-slate-800/30 hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
-                          <div className="flex items-start gap-3">
-                            <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-amber-400' : 'bg-blue-400'}`}></div>
-                            <div className="flex-1 min-w-0">
-                              <p className="text-sm font-medium text-white mb-1">{notification.title}</p>
-                              <p className="text-xs text-slate-400 mb-2">{notification.message}</p>
-                              <p className="text-xs text-slate-500">{notification.time}</p>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="p-3 border-t border-slate-700/50">
-                      <button className="w-full text-center text-sm text-amber-400 hover:text-amber-300 font-medium">View All</button>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              <div className="h-8 w-px bg-slate-700/50"></div>
-
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-gradient-to-br from-amber-500 to-amber-600 rounded-full flex items-center justify-center">
-                  <span className="text-white text-sm font-bold">ST</span>
-                </div>
-                <div className="hidden sm:block">
-                  <p className="text-sm font-medium text-white">Sheriff Thompson</p>
-                  <p className="text-xs text-slate-400">Administrator</p>
-                </div>
-              </div>
+              <button onClick={() => setLogoutConfirmOpen(true)} className="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors">
+                <LogOut className="w-5 h-5" />
+              </button>
             </div>
           </div>
         </header>
 
-        <main className="flex-1 overflow-y-auto p-4 lg:p-6">
-          <div className="max-w-7xl mx-auto">
-            <div className="flex items-center justify-between mb-6">
+        <div className="p-4 lg:p-6 space-y-5">
+          <section className="border border-slate-800 bg-slate-900 rounded-xl p-4 lg:p-5">
+            <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
               <div>
-                <h2 className="text-2xl lg:text-3xl font-bold text-white mb-2">Budget & Resources</h2>
-                <p className="text-slate-400">Fiscal oversight and resource management for FY 2024</p>
+                <div className="flex items-center gap-3 mb-2">
+                  <h1 className="text-2xl font-bold text-white">Budget & Assets</h1>
+                  <span className="text-xs font-semibold px-2 py-1 rounded-md border border-emerald-500/30 bg-emerald-500/10 text-emerald-400">Fiscal Active</span>
+                </div>
+                <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm">
+                  <span className="text-slate-400">Total Budget <span className="text-white font-semibold">${totals.totalBudget.toFixed(1)}M</span></span>
+                  <span className="text-slate-400">Spent <span className="text-white font-semibold">${totals.spent.toFixed(2)}M ({totals.percentSpent}%)</span></span>
+                  <span className="text-slate-400">Available <span className="text-emerald-400 font-semibold">${totals.available.toFixed(2)}M</span></span>
+                  <span className="text-slate-400">Days Remaining <span className="text-white font-semibold">{totals.daysRemaining}</span></span>
+                </div>
               </div>
-              <div className="flex items-center gap-3">
-                <select
-                  value={timeRange}
-                  onChange={(e) => setTimeRange(e.target.value)}
-                  className="px-4 py-2 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white text-sm focus:outline-none focus:border-amber-500/50"
-                >
-                  <option value="ytd">Year to Date</option>
-                  <option value="q4">Q4 2024</option>
-                  <option value="monthly">Monthly</option>
-                </select>
-                <button className="flex items-center gap-2 px-4 py-2 bg-slate-800/40 border border-slate-700/50 rounded-xl text-slate-300 hover:bg-slate-800/60 transition-all">
-                  <Download className="w-4 h-4" />
-                  <span className="hidden sm:inline">Export</span>
+
+              <div className="flex flex-wrap items-center gap-2">
+                <button className={buttonStyles.secondary} onClick={() => setTimeRange(timeRange === 'Year to Date' ? 'Quarter to Date' : 'Year to Date')}>
+                  {timeRange} <ChevronDown className="w-4 h-4 inline ml-1" />
                 </button>
+                <button className={buttonStyles.secondary} onClick={() => setShowVarianceModal(true)}>Variance</button>
+                <button className={buttonStyles.secondary} onClick={() => setReallocateOpen(true)}>Reallocate</button>
+                <button className={buttonStyles.primary} onClick={exportReport}><Download className="w-4 h-4 inline mr-1" />Export</button>
               </div>
             </div>
+          </section>
 
-            {/* Enhanced AI Budget Intelligence */}
-            <div className="mb-6 bg-gradient-to-br from-purple-500/10 to-purple-600/5 border border-purple-500/20 rounded-xl p-5">
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 bg-purple-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <Sparkles className="w-6 h-6 text-purple-400" />
+          <section className="border border-red-500/40 bg-slate-900 rounded-xl p-4 lg:p-5">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <h2 className="text-lg font-semibold text-white">Budget Risk Detected</h2>
+                  <span className="text-[11px] font-bold px-2 py-0.5 rounded border border-red-500/40 bg-red-500/10 text-red-400">CRITICAL</span>
                 </div>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between mb-4">
-                    <h4 className="text-base font-bold text-white flex items-center gap-2">
-                      🤖 AI BUDGET INTELLIGENCE
-                    </h4>
-                    <button
-                      onClick={() => setAiInsightsExpanded(!aiInsightsExpanded)}
-                      className="text-xs text-purple-400 hover:text-purple-300 font-medium transition-colors"
-                    >
-                      {aiInsightsExpanded ? 'HIDE' : 'SHOW'}
-                    </button>
-                  </div>
-
-                  {aiInsightsExpanded && (
-                    <div className="space-y-4">
-                      {/* Critical Alerts */}
-                      <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
-                        <div className="flex items-center gap-2 mb-3">
-                          <AlertCircle className="w-5 h-5 text-red-400" />
-                          <h5 className="text-sm font-bold text-red-400">🔴 CRITICAL ALERTS:</h5>
-                        </div>
-                        <div className="space-y-2 text-sm text-slate-300 pl-7">
-                          <p>• Currently at <span className="font-bold text-red-400">{fiscalYear.percentSpent}% of annual budget</span> with <span className="font-bold text-amber-400">2 months remaining</span></p>
-                          <p>• Projected year-end: <span className="font-bold text-red-400">$48.6M (over budget by $100K)</span> at current burn rate</p>
-                          <p>• <span className="font-bold text-red-400">Patrol Division</span> trending <span className="font-bold text-red-400">$150K over</span> - recommend review and reallocation</p>
-                        </div>
-                      </div>
-
-                      {/* Recommendations */}
-                      <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
-                        <div className="flex items-center gap-2 mb-3">
-                          <Zap className="w-5 h-5 text-amber-400" />
-                          <h5 className="text-sm font-bold text-amber-400">🟡 RECOMMENDATIONS:</h5>
-                        </div>
-                        <div className="space-y-2 text-sm text-slate-300 pl-7">
-                          <p>• <span className="font-bold text-blue-400">Training Division</span> has highest surplus (<span className="font-bold text-green-400">$150K available</span>) - consider reallocating to Patrol</p>
-                          <p>• Reduce discretionary spending by <span className="font-bold text-amber-400">15% in Nov-Dec</span> to stay under budget</p>
-                          <p>• <span className="font-bold text-amber-400">3 pending approvals ($170K)</span> would push to 88.5% - prioritize carefully</p>
-                        </div>
-                      </div>
-
-                      {/* Positive Trends */}
-                      <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
-                        <div className="flex items-center gap-2 mb-3">
-                          <CheckCircle className="w-5 h-5 text-green-400" />
-                          <h5 className="text-sm font-bold text-green-400">✅ POSITIVE TRENDS:</h5>
-                        </div>
-                        <div className="space-y-2 text-sm text-slate-300 pl-7">
-                          <p>• On track to finish within <span className="font-bold text-green-400">2% of budget ✅</span></p>
-                          <p>• Q3 spending decreased <span className="font-bold text-green-400">5% vs Q2</span> (cost controls working)</p>
-                          <p>• Overtime down <span className="font-bold text-green-400">12% vs last year</span></p>
-                        </div>
-                      </div>
-
-                      {/* Forecast */}
-                      <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
-                        <div className="flex items-center gap-2 mb-3">
-                          <TrendingUp className="w-5 h-5 text-blue-400" />
-                          <h5 className="text-sm font-bold text-blue-400">FORECAST (If current trends continue):</h5>
-                        </div>
-                        <div className="space-y-2 text-sm text-slate-300 pl-7">
-                          <p>• <span className="font-bold">November:</span> <span className="text-amber-400 font-bold">$4.1M (99% total)</span></p>
-                          <p>• <span className="font-bold">December:</span> <span className="text-red-400 font-bold">$3.4M (106% total - OVER BUDGET) ⚠️</span></p>
-                          <p>• <span className="font-bold text-green-400">Recommended Nov-Dec cap: $7.27M</span> to stay under budget</p>
-                        </div>
-                      </div>
-
-                      {/* Action Buttons */}
-                      <div className="flex flex-wrap gap-2 pt-2">
-                        <button className="px-3 py-1.5 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 text-blue-400 rounded-lg text-xs font-medium transition-all">
-                          VIEW DETAILED ANALYSIS
-                        </button>
-                        <button
-                          onClick={() => setActiveTab('forecast')}
-                          className="px-3 py-1.5 bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/30 text-purple-400 rounded-lg text-xs font-medium transition-all"
-                        >
-                          ADJUST FORECAST
-                        </button>
-                        <button
-                          onClick={() => setReallocationModal(true)}
-                          className="px-3 py-1.5 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-400 rounded-lg text-xs font-medium transition-all"
-                        >
-                          REALLOCATION PLANNER
-                        </button>
-                      </div>
-                    </div>
-                  )}
-                </div>
+                <p className="text-slate-200 mb-2">Projected overrun: <span className="text-red-400 font-semibold">$420K</span> if current pace continues through fiscal close.</p>
+                <ul className="text-sm text-slate-300 space-y-1 list-disc pl-5">
+                  <li>Overtime outpacing authorization windows in Patrol and Detention.</li>
+                  <li>Emergency vehicle repairs exceeded monthly reserve by $96K.</li>
+                  <li>Unplanned evidence storage contract extension impacts Q4 line items.</li>
+                </ul>
               </div>
             </div>
+            <div className="mt-4 flex flex-wrap gap-2">
+              <button className={buttonStyles.primary} onClick={() => setShowReduceModal(true)}>Reduce Spending Plan</button>
+              <button className={buttonStyles.secondary} onClick={() => setReallocateOpen(true)}>Reallocate Budget</button>
+            </div>
+          </section>
 
-            {/* Overview Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-              <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center">
-                    <DollarSign className="w-5 h-5 text-blue-400" />
-                  </div>
-                  <span className="text-xs text-slate-400">Total Budget</span>
-                </div>
-                <p className="text-2xl font-bold text-white mb-1">${(fiscalYear.totalBudget / 1000000).toFixed(1)}M</p>
-                <p className="text-xs text-slate-400">{fiscalYear.year}</p>
+          {decisionCards.map((card) => (
+            <section key={card.id} className="border border-slate-800 bg-slate-900 rounded-xl p-4 lg:p-5 hover:border-slate-700 transition-colors">
+              <div className="flex items-start justify-between gap-4 mb-2">
+                <h3 className="text-base font-semibold text-white">{card.title}</h3>
+                <span className={`text-[11px] font-bold px-2 py-0.5 rounded border ${statusTone(card.status)}`}>{card.status}</span>
               </div>
-
-              <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="w-10 h-10 bg-amber-500/20 rounded-xl flex items-center justify-center">
-                    <TrendingUp className="w-5 h-5 text-amber-400" />
-                  </div>
-                  <span className="text-xs text-slate-400">Spent</span>
-                </div>
-                <p className="text-2xl font-bold text-white mb-1">${(fiscalYear.spent / 1000000).toFixed(1)}M</p>
-                <div className="flex items-center gap-1 text-xs">
-                  <span className={`font-semibold ${getPercentColor(fiscalYear.percentSpent) === 'red' ? 'text-red-400' : getPercentColor(fiscalYear.percentSpent) === 'amber' ? 'text-amber-400' : 'text-green-400'}`}>
-                    {fiscalYear.percentSpent}%
-                  </span>
-                  <span className="text-slate-500">of budget</span>
-                </div>
+              <p className="text-sm text-slate-300 mb-2">{card.note}</p>
+              <p className="text-sm text-slate-200"><span className="text-slate-400">Recommendation:</span> {card.recommendation}</p>
+              <div className="mt-3">
+                <button className={buttonStyles.primary} onClick={() => runCardAction(card.actionType)}>{card.actionLabel}</button>
               </div>
+            </section>
+          ))}
 
-              <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="w-10 h-10 bg-purple-500/20 rounded-xl flex items-center justify-center">
-                    <Calendar className="w-5 h-5 text-purple-400" />
-                  </div>
-                  <span className="text-xs text-slate-400">Committed</span>
-                </div>
-                <p className="text-2xl font-bold text-white mb-1">${(fiscalYear.committed / 1000000).toFixed(1)}M</p>
-                <div className="flex items-center gap-1 text-xs">
-                  <span className="font-semibold text-purple-400">{fiscalYear.percentCommitted.toFixed(1)}%</span>
-                  <span className="text-slate-500">of budget</span>
-                </div>
+          <section className="border border-slate-800 bg-slate-900 rounded-xl p-4 lg:p-5">
+            <div className="flex items-center justify-between gap-3 mb-2">
+              <h3 className="text-base font-semibold text-white">Budget Forecast</h3>
+              {planApplied && <span className="text-[11px] font-semibold px-2 py-0.5 rounded border border-emerald-500/40 bg-emerald-500/10 text-emerald-400">Recommended Plan Active</span>}
+            </div>
+            <p className="text-sm text-slate-300 mb-3">
+              Current trajectory is {projectedCurrent > totals.totalBudget ? <span className="text-red-400 font-semibold">over budget</span> : <span className="text-emerald-400 font-semibold">under budget</span>} at fiscal close.
+            </p>
+            <div className="space-y-2 text-sm">
+              <div className="flex items-center justify-between border border-slate-800 rounded-lg p-3">
+                <span className="text-slate-300">Current pace</span>
+                <span className={`${projectedCurrent > totals.totalBudget ? 'text-red-400' : 'text-emerald-400'} font-semibold`}>${projectedCurrent.toFixed(2)}M</span>
               </div>
-
-              <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-5">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center">
-                    <CheckCircle className="w-5 h-5 text-green-400" />
-                  </div>
-                  <span className="text-xs text-slate-400">Available</span>
-                </div>
-                <p className="text-2xl font-bold text-white mb-1">${(fiscalYear.available / 1000000).toFixed(1)}M</p>
-                <div className="flex items-center gap-1 text-xs">
-                  <span className="font-semibold text-green-400">{((fiscalYear.available / fiscalYear.totalBudget) * 100).toFixed(1)}%</span>
-                  <span className="text-slate-500">remaining</span>
-                </div>
+              <div className="flex items-center justify-between border border-emerald-500/40 bg-emerald-500/5 rounded-lg p-3">
+                <span className="text-slate-300">With controls (recommended)</span>
+                <span className="text-emerald-400 font-semibold">${projectedWithControls.toFixed(2)}M</span>
               </div>
             </div>
-
-            {/* Tabs */}
-            <div className="mb-6 flex gap-2 border-b border-slate-700/50">
-              {[
-                { id: 'overview', label: 'Overview', icon: PieChart },
-                { id: 'divisions', label: 'By Division', icon: BarChart3 },
-                { id: 'resources', label: 'Resources', icon: Package },
-                { id: 'forecast', label: 'Forecast', icon: LineChart }
-              ].map(tab => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all relative ${
-                    activeTab === tab.id ? 'text-amber-400' : 'text-slate-400 hover:text-slate-300'
-                  }`}
-                >
-                  <tab.icon className="w-4 h-4" />
-                  {tab.label}
-                  {activeTab === tab.id && (
-                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500"></div>
-                  )}
-                </button>
-              ))}
+            <div className="mt-3 flex gap-2">
+              <button className={buttonStyles.success} onClick={applyRecommendedPlan}>Apply Recommended Plan</button>
+              <button className={buttonStyles.secondary} onClick={() => setShowForecastModal(true)}>Adjust Forecast</button>
             </div>
+          </section>
 
-            {/* OVERVIEW TAB */}
-            {activeTab === 'overview' && (
-              <div className="space-y-6">
-                {/* Enhanced Fiscal Year Progress */}
-                <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
-                  <div className="flex items-center gap-2 mb-4">
-                    <PieChart className="w-5 h-5 text-blue-400" />
-                    <h3 className="text-lg font-semibold text-white">Fiscal Year Progress (FY 2024)</h3>
-                  </div>
-
-                  <div className="space-y-5">
-                    {/* Main Progress Bar */}
-                    <div>
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-sm font-semibold text-slate-300">TOTAL EXPENDITURES:</span>
-                        <span className="text-sm font-bold text-white">${(fiscalYear.spent / 1000000).toFixed(2)}M / ${(fiscalYear.totalBudget / 1000000).toFixed(1)}M ({fiscalYear.percentSpent}%)</span>
-                      </div>
-                      <div className="w-full h-3 bg-slate-700/50 rounded-full overflow-hidden">
-                        <div className={`h-full transition-all ${
-                          getPercentColor(fiscalYear.percentSpent) === 'red' ? 'bg-red-500' :
-                          getPercentColor(fiscalYear.percentSpent) === 'amber' ? 'bg-amber-500' : 'bg-green-500'
-                        }`} style={{ width: `${fiscalYear.percentSpent}%` }} />
-                      </div>
-                    </div>
-
-                    {/* Breakdown */}
-                    <div className="bg-slate-900/50 rounded-lg p-4 border border-slate-700/30">
-                      <h4 className="text-xs font-bold text-slate-400 mb-3">BREAKDOWN:</h4>
-                      <div className="grid grid-cols-3 gap-4">
-                        <div>
-                          <p className="text-xs text-slate-400 mb-1">Spent (Cash Out)</p>
-                          <p className="text-lg font-bold text-amber-400">${(fiscalYear.spent / 1000000).toFixed(1)}M</p>
-                          <p className="text-xs text-slate-500">{fiscalYear.percentSpent}%</p>
-                        </div>
-                        <div>
-                          <p className="text-xs text-slate-400 mb-1">Committed (Approved, Not Paid)</p>
-                          <p className="text-lg font-bold text-purple-400">${(fiscalYear.committed / 1000000).toFixed(1)}M</p>
-                          <p className="text-xs text-slate-500">{fiscalYear.percentCommitted.toFixed(1)}%</p>
-                        </div>
-                        <div>
-                          <p className="text-xs text-slate-400 mb-1">Available (Unallocated)</p>
-                          <p className="text-lg font-bold text-green-400">${(fiscalYear.available / 1000000).toFixed(1)}M</p>
-                          <p className="text-xs text-slate-500">{((fiscalYear.available / fiscalYear.totalBudget) * 100).toFixed(1)}%</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Pending Approvals Impact */}
-                    <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
-                      <div className="flex items-center gap-2 mb-2">
-                        <AlertCircle className="w-4 h-4 text-amber-400" />
-                        <h4 className="text-xs font-bold text-amber-400">IF ALL PENDING APPROVALS APPROVED: +$170K</h4>
-                      </div>
-                      <div className="grid grid-cols-2 gap-3 text-xs">
-                        <div>
-                          <span className="text-slate-400">• New total committed: </span>
-                          <span className="font-bold text-white">$4.0M (8.2%)</span>
-                        </div>
-                        <div>
-                          <span className="text-slate-400">• New available: </span>
-                          <span className="font-bold text-white">$3.33M (6.9%)</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Burn Rate */}
-                    <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
-                      <div className="flex items-center gap-2 mb-3">
-                        <Clock className="w-4 h-4 text-blue-400" />
-                        <h4 className="text-xs font-bold text-blue-400">BURN RATE:</h4>
-                      </div>
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
-                        <div>
-                          <p className="text-slate-400 mb-0.5">Daily average:</p>
-                          <p className="font-bold text-white">$140K</p>
-                        </div>
-                        <div>
-                          <p className="text-slate-400 mb-0.5">Monthly average:</p>
-                          <p className="font-bold text-white">$4.1M</p>
-                        </div>
-                        <div>
-                          <p className="text-slate-400 mb-0.5">Days remaining in FY:</p>
-                          <p className="font-bold text-amber-400">61 days</p>
-                        </div>
-                        <div>
-                          <p className="text-slate-400 mb-0.5">Projected additional spend:</p>
-                          <p className="font-bold text-red-400">$8.5M ⚠️</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Year-End Forecast */}
-                    <div className="bg-purple-500/10 border border-purple-500/30 rounded-lg p-4">
-                      <div className="flex items-center gap-2 mb-3">
-                        <TrendingUp className="w-4 h-4 text-purple-400" />
-                        <h4 className="text-xs font-bold text-purple-400">YEAR-END FORECAST:</h4>
-                      </div>
-                      <div className="space-y-2 text-xs">
-                        <div className="flex items-center justify-between p-2 bg-red-500/10 rounded">
-                          <span className="text-slate-300">• Current pace:</span>
-                          <span className="font-bold text-red-400">$49.73M (103% - OVER BUDGET $1.23M) 🔴</span>
-                        </div>
-                        <div className="flex items-center justify-between p-2 bg-amber-500/10 rounded">
-                          <span className="text-slate-300">• Conservative estimate:</span>
-                          <span className="font-bold text-amber-400">$48.9M (101% - OVER $400K) 🟡</span>
-                        </div>
-                        <div className="flex items-center justify-between p-2 bg-green-500/10 rounded">
-                          <span className="text-slate-300">• With cost controls:</span>
-                          <span className="font-bold text-green-400">$48.3M (99.6% - UNDER BUDGET $200K) ✅</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Comparison to Last Year */}
-                    <div className="bg-slate-900/50 border border-slate-700/30 rounded-lg p-4">
-                      <div className="flex items-center gap-2 mb-3">
-                        <RefreshCw className="w-4 h-4 text-slate-400" />
-                        <h4 className="text-xs font-bold text-slate-300">COMPARISON TO LAST YEAR (FY 2023):</h4>
-                      </div>
-                      <div className="grid grid-cols-3 gap-3 text-xs">
-                        <div>
-                          <p className="text-slate-400 mb-1">Same period last year:</p>
-                          <p className="font-bold text-white">$39.8M (82%)</p>
-                        </div>
-                        <div>
-                          <p className="text-slate-400 mb-1">Current year:</p>
-                          <p className="font-bold text-white">$41.2M (85%)</p>
-                        </div>
-                        <div>
-                          <p className="text-slate-400 mb-1">YoY increase:</p>
-                          <div className="flex items-center gap-1">
-                            <ArrowUpCircle className="w-3 h-3 text-amber-400" />
-                            <p className="font-bold text-amber-400">+3% ↑</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Action Buttons */}
-                    <div className="flex flex-wrap gap-2 pt-2">
-                      <button className="px-3 py-1.5 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 text-blue-400 rounded-lg text-xs font-medium transition-all">
-                        VIEW DETAILED BREAKDOWN
-                      </button>
-                      <button
-                        onClick={() => setActiveTab('forecast')}
-                        className="px-3 py-1.5 bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/30 text-purple-400 rounded-lg text-xs font-medium transition-all"
-                      >
-                        ADJUST FORECAST
-                      </button>
-                      <button
-                        onClick={() => setVarianceReportOpen(true)}
-                        className="px-3 py-1.5 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-400 rounded-lg text-xs font-medium transition-all"
-                      >
-                        VARIANCE REPORT
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Monthly Trend with Drill-Down */}
-                <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-lg font-semibold text-white">Monthly Spending Trend</h3>
-                    <span className="text-xs text-slate-400">Click any month for details</span>
-                  </div>
-                  <div className="space-y-2">
-                    {monthlyTrend.map((month, idx) => {
-                      const percent = (month.spent / month.budget) * 100;
-                      return (
-                        <div
-                          key={idx}
-                          className="cursor-pointer hover:bg-slate-700/20 rounded-lg p-2 -mx-2 transition-colors"
-                          onClick={() => setMonthDetailModal(month)}
-                        >
-                          <div className="flex items-center justify-between mb-1">
-                            <div className="flex items-center gap-2">
-                              <span className="text-sm text-slate-300">{month.month}</span>
-                              {percent > 100 && <AlertCircle className="w-3 h-3 text-red-400" />}
-                            </div>
-                            <div className="flex items-center gap-3">
-                              <span className="text-sm text-slate-400">${(month.spent / 1000000).toFixed(2)}M</span>
-                              <span className={`text-sm font-bold ${
-                                percent > 100 ? 'text-red-400' : percent > 95 ? 'text-amber-400' : 'text-green-400'
-                              }`}>{percent.toFixed(0)}%</span>
-                              <Eye className="w-4 h-4 text-slate-500" />
-                            </div>
-                          </div>
-                          <div className="w-full h-2 bg-slate-700/50 rounded-full overflow-hidden">
-                            <div className={`h-full ${
-                              percent > 100 ? 'bg-red-500' : percent > 95 ? 'bg-amber-500' : 'bg-green-500'
-                            }`} style={{ width: `${Math.min(percent, 100)}%` }} />
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
+          <section className="border border-slate-800 bg-slate-900 rounded-xl p-4 lg:p-5">
+            <h3 className="text-base font-semibold text-white mb-3">Fiscal Progress</h3>
+            <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden mb-3">
+              <div className="h-full bg-slate-500" style={{ width: `${totals.percentSpent}%` }} />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
+              <div className="border border-slate-800 rounded-lg p-3"><p className="text-slate-400">Spent</p><p className="text-white font-semibold">${totals.spent.toFixed(2)}M</p></div>
+              <div className="border border-slate-800 rounded-lg p-3"><p className="text-slate-400">Committed</p><p className="text-amber-400 font-semibold">${totals.committed.toFixed(2)}M</p></div>
+              <div className="border border-slate-800 rounded-lg p-3"><p className="text-slate-400">Available</p><p className="text-emerald-400 font-semibold">${totals.available.toFixed(2)}M</p></div>
+            </div>
+            {projectedCurrent > totals.totalBudget && (
+              <p className="text-xs text-red-400 mt-2">Projected overrun marker: +${(projectedCurrent - totals.totalBudget).toFixed(2)}M.</p>
             )}
+          </section>
 
-            {/* ENHANCED DIVISIONS TAB */}
-            {activeTab === 'divisions' && (
-              <div className="space-y-4">
-                {divisionBudgets.map(division => {
-                  const isExpanded = expandedCategories.has(division.id);
-                  const statusColor = division.variance < -100000 ? 'red' : division.variance < 0 ? 'amber' : 'green';
-                  const trendIcon = division.variance < 0 ? TrendingUp : division.variance > 50000 ? TrendingDown : ArrowUpCircle;
-                  const TrendIcon = trendIcon;
-
-                  return (
-                    <div key={division.id} className={`bg-slate-800/40 border rounded-xl overflow-hidden ${
-                      statusColor === 'red' ? 'border-red-500/40' : statusColor === 'amber' ? 'border-amber-500/40' : 'border-slate-700/50'
-                    }`}>
-                      <div className="p-5">
-                        <div className="flex items-center justify-between mb-4">
-                          <div className="flex-1">
-                            <div className="flex items-center gap-3 mb-2">
-                              <h3 className="text-lg font-semibold text-white">{division.name}</h3>
-
-                              {/* Status Badge */}
-                              {statusColor === 'red' && (
-                                <span className="px-2 py-0.5 bg-red-500/20 border border-red-500/30 rounded text-xs text-red-400 font-bold flex items-center gap-1">
-                                  <AlertCircle className="w-3 h-3" />
-                                  🔴 Over Budget
-                                </span>
-                              )}
-                              {statusColor === 'amber' && (
-                                <span className="px-2 py-0.5 bg-amber-500/20 border border-amber-500/30 rounded text-xs text-amber-400 font-bold">
-                                  ⚠️ High Usage
-                                </span>
-                              )}
-                              {statusColor === 'green' && division.variance > 50000 && (
-                                <span className="px-2 py-0.5 bg-green-500/20 border border-green-500/30 rounded text-xs text-green-400 font-bold">
-                                  ✅ Under Budget
-                                </span>
-                              )}
-                            </div>
-
-                            <p className="text-sm text-slate-400 mb-2">
-                              ${(division.spent / 1000000).toFixed(2)}M / ${(division.budget / 1000000).toFixed(1)}M
-                              {division.variance !== 0 && (
-                                <span className={`ml-2 font-semibold flex items-center gap-1 inline-flex ${getVarianceColor(division.variance)}`}>
-                                  <TrendIcon className="w-3 h-3" />
-                                  ({division.variance > 0 ? '+' : ''}${(division.variance / 1000).toFixed(0)}K)
-                                </span>
-                              )}
-                            </p>
-
-                            {/* Trend Indicator */}
-                            <div className="flex items-center gap-2 text-xs">
-                              <span className="text-slate-500">Trend:</span>
-                              {division.variance < -100000 && (
-                                <span className="text-red-400 font-semibold flex items-center gap-1">
-                                  <ArrowUpCircle className="w-3 h-3" />
-                                  Trending over (+${Math.abs(division.variance / 1000).toFixed(0)}K projected overage)
-                                </span>
-                              )}
-                              {division.variance >= -100000 && division.variance < 0 && (
-                                <span className="text-amber-400 font-semibold flex items-center gap-1">
-                                  <TrendingUp className="w-3 h-3" />
-                                  On track
-                                </span>
-                              )}
-                              {division.variance > 50000 && (
-                                <span className="text-green-400 font-semibold flex items-center gap-1">
-                                  <TrendingDown className="w-3 h-3" />
-                                  Under budget (Highest surplus: ${(division.variance / 1000).toFixed(0)}K available)
-                                </span>
-                              )}
-                              {division.variance >= 0 && division.variance <= 50000 && (
-                                <span className="text-slate-400 font-semibold">→ On track</span>
-                              )}
-                            </div>
-                          </div>
-                          <button
-                            onClick={() => toggleCategory(division.id)}
-                            className="p-2 hover:bg-slate-700/50 rounded-lg transition-colors"
-                          >
-                            {isExpanded ? <ChevronUp className="w-5 h-5 text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-400" />}
-                          </button>
-                        </div>
-
-                        <div className="mb-3">
-                          <div className="flex items-center justify-between mb-2">
-                            <span className="text-sm text-slate-300">Budget Utilization</span>
-                            <span className={`text-sm font-bold ${
-                              getPercentColor(division.percentSpent) === 'red' ? 'text-red-400' :
-                              getPercentColor(division.percentSpent) === 'amber' ? 'text-amber-400' : 'text-green-400'
-                            }`}>{division.percentSpent.toFixed(1)}%</span>
-                          </div>
-                          <div className="w-full h-3 bg-slate-700/50 rounded-full overflow-hidden">
-                            <div className={`h-full ${
-                              getPercentColor(division.percentSpent) === 'red' ? 'bg-red-500' :
-                              getPercentColor(division.percentSpent) === 'amber' ? 'bg-amber-500' : 'bg-green-500'
-                            }`} style={{ width: `${division.percentSpent}%` }} />
-                          </div>
-                        </div>
-
-                        <div className="grid grid-cols-3 gap-3 mb-4">
-                          <div className="bg-slate-900/50 rounded-lg p-3">
-                            <p className="text-xs text-slate-400 mb-1">Spent</p>
-                            <p className="text-sm font-bold text-amber-400">${(division.spent / 1000000).toFixed(2)}M</p>
-                          </div>
-                          <div className="bg-slate-900/50 rounded-lg p-3">
-                            <p className="text-xs text-slate-400 mb-1">Committed</p>
-                            <p className="text-sm font-bold text-purple-400">${(division.committed / 1000000).toFixed(2)}M</p>
-                          </div>
-                          <div className="bg-slate-900/50 rounded-lg p-3">
-                            <p className="text-xs text-slate-400 mb-1">Available</p>
-                            <p className="text-sm font-bold text-green-400">${(division.available / 1000000).toFixed(2)}M</p>
-                          </div>
-                        </div>
-
-                        {/* Action Buttons */}
-                        <div className="flex flex-wrap gap-2">
-                          <button className="px-3 py-1.5 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 text-blue-400 rounded-lg text-xs font-medium transition-all">
-                            VIEW DETAILS
-                          </button>
-                          {division.variance < -50000 && (
-                            <button
-                              onClick={() => setReallocationModal(true)}
-                              className="px-3 py-1.5 bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 text-red-400 rounded-lg text-xs font-medium transition-all"
-                            >
-                              REQUEST ADDITIONAL FUNDS
-                            </button>
-                          )}
-                          {division.variance > 50000 && (
-                            <button
-                              onClick={() => setReallocationModal(true)}
-                              className="px-3 py-1.5 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-400 rounded-lg text-xs font-medium transition-all"
-                            >
-                              REALLOCATE FROM
-                            </button>
-                          )}
-                        </div>
-                      </div>
-
-                      {isExpanded && (
-                        <div className="border-t border-slate-700/50 p-5 bg-slate-900/30">
-                          <h4 className="text-sm font-semibold text-white mb-3">Budget Categories</h4>
-                          <div className="space-y-3">
-                            {division.categories.map((cat, idx) => (
-                              <div key={idx}>
-                                <div className="flex items-center justify-between mb-2">
-                                  <span className="text-sm text-slate-300">{cat.name}</span>
-                                  <div className="flex items-center gap-3">
-                                    <span className="text-sm text-slate-400">${(cat.spent / 1000000).toFixed(2)}M / ${(cat.budget / 1000000).toFixed(2)}M</span>
-                                    <span className={`text-sm font-bold ${
-                                      cat.percent >= 95 ? 'text-red-400' : cat.percent >= 85 ? 'text-amber-400' : 'text-green-400'
-                                    }`}>{cat.percent.toFixed(1)}%</span>
-                                  </div>
-                                </div>
-                                <div className="w-full h-2 bg-slate-700/50 rounded-full overflow-hidden">
-                                  <div className={`h-full ${
-                                    cat.percent >= 95 ? 'bg-red-500' : cat.percent >= 85 ? 'bg-amber-500' : 'bg-green-500'
-                                  }`} style={{ width: `${cat.percent}%` }} />
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-
-            {/* ENHANCED RESOURCES TAB */}
-            {activeTab === 'resources' && (
-              <div className="space-y-6">
-                {/* Personnel Breakdown */}
-                <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center">
-                      <Users className="w-5 h-5 text-blue-400" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-white">💼 PERSONNEL (Largest expense)</h3>
-                      <p className="text-sm text-slate-400">Annual Budget: $38.5M (79% of total)</p>
-                    </div>
+          <section className="border border-slate-800 bg-slate-900 rounded-xl p-4 lg:p-5">
+            <h3 className="text-base font-semibold text-white mb-3">Monthly Trend</h3>
+            <div className="space-y-2">
+              {monthlyTrend.map((item) => {
+                const ratio = (item.spent / item.budget) * 100;
+                return (
+                  <div key={item.month} className="border border-slate-800 rounded-lg px-3 py-2 flex items-center justify-between text-sm">
+                    <span className="text-slate-200 w-12">{item.month}</span>
+                    <span className="text-slate-300">${item.spent.toFixed(2)}M</span>
+                    <span className={`${trendTone(ratio)} font-semibold`}>{ratio.toFixed(1)}%</span>
                   </div>
+                );
+              })}
+            </div>
+          </section>
+        </div>
+      </main>
 
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                    <div className="bg-slate-900/50 rounded-lg p-4 border border-slate-700/30">
-                      <p className="text-xs text-slate-400 mb-1">Spent YTD</p>
-                      <p className="text-2xl font-bold text-white">$32.8M</p>
-                      <div className="flex items-center gap-1 mt-1">
-                        <span className="text-xs font-semibold text-amber-400">85% spent</span>
-                      </div>
-                    </div>
-                    <div className="bg-slate-900/50 rounded-lg p-4 border border-slate-700/30">
-                      <p className="text-xs text-slate-400 mb-1">Remaining</p>
-                      <p className="text-2xl font-bold text-green-400">$5.7M</p>
-                      <div className="flex items-center gap-1 mt-1">
-                        <span className="text-xs text-slate-500">15% remaining</span>
-                      </div>
-                    </div>
-                    <div className="bg-amber-500/10 rounded-lg p-4 border border-amber-500/30">
-                      <p className="text-xs text-amber-400 mb-1">Burn Rate</p>
-                      <p className="text-2xl font-bold text-white">$3.3M</p>
-                      <div className="flex items-center gap-1 mt-1">
-                        <span className="text-xs text-slate-400">per month avg</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="space-y-3">
-                    <div className="bg-slate-900/50 rounded-lg p-4 border border-slate-700/30">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-sm font-semibold text-white">• Salaries:</span>
-                        <div className="text-right">
-                          <p className="text-sm font-bold text-white">$28.2M</p>
-                          <p className="text-xs text-green-400">87% spent</p>
-                        </div>
-                      </div>
-                      <div className="w-full h-2 bg-slate-700/50 rounded-full overflow-hidden">
-                        <div className="h-full bg-green-500" style={{ width: '87%' }} />
-                      </div>
-                    </div>
-
-                    <div className="bg-slate-900/50 rounded-lg p-4 border border-slate-700/30">
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm font-semibold text-white">• Overtime:</span>
-                          <span className="px-2 py-0.5 bg-red-500/20 border border-red-500/30 rounded text-xs text-red-400 font-bold">
-                            ⚠️ Over Budget
-                          </span>
-                        </div>
-                        <div className="text-right">
-                          <p className="text-sm font-bold text-white">$3.2M</p>
-                          <p className="text-xs text-red-400">92% spent</p>
-                        </div>
-                      </div>
-                      <div className="w-full h-2 bg-slate-700/50 rounded-full overflow-hidden">
-                        <div className="h-full bg-red-500" style={{ width: '92%' }} />
-                      </div>
-                      <div className="mt-3 pt-3 border-t border-slate-700/30">
-                        <p className="text-xs font-bold text-amber-400 mb-2">Overtime Analysis:</p>
-                        <div className="space-y-1 text-xs text-slate-300">
-                          <div className="flex justify-between">
-                            <span>• YTD:</span>
-                            <span className="font-medium text-white">$3.2M</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span>• Budget:</span>
-                            <span className="font-medium text-white">$3.5M</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span>• Projected year-end:</span>
-                            <span className="font-medium text-red-400">$3.8M (109% - OVER $300K) 🔴</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span>• Drivers:</span>
-                            <span className="font-medium text-slate-400">Patrol understaffing, court coverage</span>
-                          </div>
-                        </div>
-                        <div className="mt-3 flex gap-2">
-                          <button className="px-3 py-1.5 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 text-blue-400 rounded-lg text-xs font-medium transition-all">
-                            VIEW OT DETAILS
-                          </button>
-                          <button className="px-3 py-1.5 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-400 rounded-lg text-xs font-medium transition-all">
-                            OT REDUCTION PLAN
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="bg-slate-900/50 rounded-lg p-4 border border-slate-700/30">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-sm font-semibold text-white">• Benefits:</span>
-                        <div className="text-right">
-                          <p className="text-sm font-bold text-white">$7.1M</p>
-                          <p className="text-xs text-green-400">83% spent</p>
-                        </div>
-                      </div>
-                      <div className="w-full h-2 bg-slate-700/50 rounded-full overflow-hidden">
-                        <div className="h-full bg-green-500" style={{ width: '83%' }} />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                {/* Vehicles */}
-                <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center">
-                      <Truck className="w-5 h-5 text-blue-400" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-white">Fleet Management</h3>
-                      <p className="text-sm text-slate-400">{resources.vehicles.total} total vehicles</p>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                    <div className="bg-slate-900/50 rounded-lg p-4">
-                      <p className="text-xs text-slate-400 mb-1">Patrol</p>
-                      <p className="text-2xl font-bold text-white">{resources.vehicles.patrol}</p>
-                    </div>
-                    <div className="bg-slate-900/50 rounded-lg p-4">
-                      <p className="text-xs text-slate-400 mb-1">Investigation</p>
-                      <p className="text-2xl font-bold text-white">{resources.vehicles.investigation}</p>
-                    </div>
-                    <div className="bg-slate-900/50 rounded-lg p-4">
-                      <p className="text-xs text-slate-400 mb-1">Support</p>
-                      <p className="text-2xl font-bold text-white">{resources.vehicles.support}</p>
-                    </div>
-                    <div className="bg-slate-900/50 rounded-lg p-4">
-                      <p className="text-xs text-slate-400 mb-1">Administration</p>
-                      <p className="text-2xl font-bold text-white">{resources.vehicles.administration}</p>
-                    </div>
-                    <div className="bg-slate-900/50 rounded-lg p-4">
-                      <p className="text-xs text-slate-400 mb-1">In Maintenance</p>
-                      <p className="text-2xl font-bold text-amber-400">{resources.vehicles.maintenance}</p>
-                    </div>
-                    <div className="bg-slate-900/50 rounded-lg p-4">
-                      <p className="text-xs text-slate-400 mb-1">Needs Replacement</p>
-                      <p className="text-2xl font-bold text-red-400">{resources.vehicles.replacement}</p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Facilities */}
-                <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-10 h-10 bg-purple-500/20 rounded-xl flex items-center justify-center">
-                      <Building2 className="w-5 h-5 text-purple-400" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-white">Facilities</h3>
-                      <p className="text-sm text-slate-400">{resources.facilities.totalSqFt.toLocaleString()} sq ft total</p>
-                    </div>
-                  </div>
-
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between p-3 bg-slate-900/50 rounded-lg">
-                      <span className="text-sm text-slate-300">Main Headquarters</span>
-                      <span className="text-sm font-medium text-white">{resources.facilities.main}</span>
-                    </div>
-                    <div className="flex items-center justify-between p-3 bg-slate-900/50 rounded-lg">
-                      <span className="text-sm text-slate-300">Detention Center</span>
-                      <span className="text-sm font-medium text-white">{resources.facilities.detention}</span>
-                    </div>
-                    <div className="flex items-center justify-between p-3 bg-slate-900/50 rounded-lg">
-                      <span className="text-sm text-slate-300">Substations</span>
-                      <span className="text-sm font-medium text-white">{resources.facilities.substations} locations</span>
-                    </div>
-                    <div className="flex items-center justify-between p-3 bg-slate-900/50 rounded-lg">
-                      <span className="text-sm text-slate-300">Training Facility</span>
-                      <span className="text-sm font-medium text-white">{resources.facilities.trainingFacility} facility</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Equipment */}
-                <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center">
-                      <Wrench className="w-5 h-5 text-green-400" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-white">Equipment Inventory</h3>
-                      <p className="text-sm text-slate-400">Critical equipment status</p>
-                    </div>
-                  </div>
-
-                  <div className="space-y-4">
-                    {Object.entries(resources.equipment).map(([key, value]) => (
-                      <div key={key}>
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="text-sm text-slate-300 capitalize">{key.replace(/([A-Z])/g, ' $1').trim()}</span>
-                          <div className="flex items-center gap-3">
-                            <span className="text-sm text-slate-400">Total: {value.total}</span>
-                            <span className={`text-sm font-bold ${value.needsReplacement === 0 ? 'text-green-400' : value.needsReplacement > 50 ? 'text-red-400' : 'text-amber-400'}`}>
-                              Replace: {value.needsReplacement}
-                            </span>
-                          </div>
-                        </div>
-                        <div className="w-full h-2 bg-slate-700/50 rounded-full overflow-hidden">
-                          <div className={`h-full ${value.needsReplacement === 0 ? 'bg-green-500' : value.needsReplacement > 50 ? 'bg-red-500' : 'bg-amber-500'}`}
-                            style={{ width: `${((value.total - value.needsReplacement) / value.total) * 100}%` }} />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* ENHANCED FORECAST TAB */}
-            {activeTab === 'forecast' && (
-              <div className="space-y-6">
-                <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-6">
-                  <div className="flex items-center gap-2 mb-6">
-                    <LineChart className="w-5 h-5 text-purple-400" />
-                    <h3 className="text-lg font-semibold text-white">BUDGET FORECAST</h3>
-                  </div>
-
-                  {/* Current Trajectory */}
-                  <div className="mb-6 bg-blue-500/10 border border-blue-500/30 rounded-xl p-5">
-                    <div className="flex items-center justify-between mb-4">
-                      <h4 className="text-sm font-bold text-blue-400">CURRENT TRAJECTORY:</h4>
-                      <TrendingUp className="w-5 h-5 text-blue-400" />
-                    </div>
-                    <p className="text-xs text-slate-400 mb-3">Based on current spending patterns</p>
-                    <div className="text-sm text-slate-300 space-y-1 mb-4">
-                      <p>• Actual spending (Jan-Oct): <span className="font-bold text-white">$41.2M</span></p>
-                      <p>• Budgeted spending: <span className="font-bold text-white">$40.4M target</span></p>
-                      <p>• Forecasted spending (Nov-Dec): <span className="font-bold text-red-400">$8.5M (projected)</span></p>
-                    </div>
-                  </div>
-
-                  {/* Three Scenarios */}
-                  <div className="space-y-4 mb-6">
-                    <h4 className="text-sm font-bold text-white">SCENARIOS:</h4>
-
-                    {/* Scenario 1 - Current Pace */}
-                    <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-5">
-                      <div className="flex items-center gap-2 mb-3">
-                        <AlertCircle className="w-5 h-5 text-red-400" />
-                        <h5 className="text-sm font-bold text-red-400">SCENARIO 1: Current Pace (Do Nothing)</h5>
-                      </div>
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs mb-3">
-                        <div>
-                          <p className="text-slate-400 mb-1">Nov spending:</p>
-                          <p className="font-bold text-white">$4.3M</p>
-                        </div>
-                        <div>
-                          <p className="text-slate-400 mb-1">Dec spending:</p>
-                          <p className="font-bold text-white">$4.2M</p>
-                        </div>
-                        <div>
-                          <p className="text-slate-400 mb-1">Year-end total:</p>
-                          <p className="font-bold text-white">$49.7M</p>
-                        </div>
-                        <div>
-                          <p className="text-slate-400 mb-1">vs Budget:</p>
-                          <p className="font-bold text-red-400">$1.2M OVER (103%) 🔴</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Scenario 2 - Cost Controls */}
-                    <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-5">
-                      <div className="flex items-center gap-2 mb-3">
-                        <CheckCircle className="w-5 h-5 text-green-400" />
-                        <h5 className="text-sm font-bold text-green-400">SCENARIO 2: Cost Controls (15% Reduction) ✅ RECOMMENDED</h5>
-                      </div>
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs mb-3">
-                        <div>
-                          <p className="text-slate-400 mb-1">Nov spending:</p>
-                          <p className="font-bold text-white">$3.7M</p>
-                        </div>
-                        <div>
-                          <p className="text-slate-400 mb-1">Dec spending:</p>
-                          <p className="font-bold text-white">$3.6M</p>
-                        </div>
-                        <div>
-                          <p className="text-slate-400 mb-1">Year-end total:</p>
-                          <p className="font-bold text-white">$48.5M</p>
-                        </div>
-                        <div>
-                          <p className="text-slate-400 mb-1">vs Budget:</p>
-                          <p className="font-bold text-green-400">$0 variance (100%) ✅</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Scenario 3 - Aggressive Controls */}
-                    <div className="bg-blue-500/10 border border-blue-500/30 rounded-xl p-5">
-                      <div className="flex items-center gap-2 mb-3">
-                        <TrendingDown className="w-5 h-5 text-blue-400" />
-                        <h5 className="text-sm font-bold text-blue-400">SCENARIO 3: Aggressive Controls (25% Reduction)</h5>
-                      </div>
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs mb-3">
-                        <div>
-                          <p className="text-slate-400 mb-1">Nov spending:</p>
-                          <p className="font-bold text-white">$3.2M</p>
-                        </div>
-                        <div>
-                          <p className="text-slate-400 mb-1">Dec spending:</p>
-                          <p className="font-bold text-white">$3.1M</p>
-                        </div>
-                        <div>
-                          <p className="text-slate-400 mb-1">Year-end total:</p>
-                          <p className="font-bold text-white">$47.5M</p>
-                        </div>
-                        <div>
-                          <p className="text-slate-400 mb-1">vs Budget:</p>
-                          <p className="font-bold text-green-400">-$1.0M UNDER (98%) ✅</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Recommended Actions for Scenario 2 */}
-                  <div className="bg-purple-500/10 border border-purple-500/30 rounded-xl p-5">
-                    <div className="flex items-center gap-2 mb-4">
-                      <Zap className="w-5 h-5 text-purple-400" />
-                      <h5 className="text-sm font-bold text-purple-400">RECOMMENDED ACTIONS (Scenario 2):</h5>
-                    </div>
-                    <div className="space-y-2 text-sm text-slate-300 mb-4">
-                      <div className="flex items-start gap-2">
-                        <div className="w-1.5 h-1.5 bg-purple-400 rounded-full mt-1.5 flex-shrink-0"></div>
-                        <p>Freeze non-essential purchases</p>
-                      </div>
-                      <div className="flex items-start gap-2">
-                        <div className="w-1.5 h-1.5 bg-purple-400 rounded-full mt-1.5 flex-shrink-0"></div>
-                        <p>Limit overtime to emergencies only</p>
-                      </div>
-                      <div className="flex items-start gap-2">
-                        <div className="w-1.5 h-1.5 bg-purple-400 rounded-full mt-1.5 flex-shrink-0"></div>
-                        <p>Defer equipment purchases to next FY</p>
-                      </div>
-                      <div className="flex items-start gap-2">
-                        <div className="w-1.5 h-1.5 bg-purple-400 rounded-full mt-1.5 flex-shrink-0"></div>
-                        <p>Delay 2 new hires until Jan 2025</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Reallocation Opportunities */}
-                  <div className="mt-6 bg-gradient-to-r from-green-500/10 to-blue-500/10 border border-green-500/30 rounded-xl p-5">
-                    <div className="flex items-center gap-2 mb-4">
-                      <RefreshCw className="w-5 h-5 text-green-400" />
-                      <h5 className="text-sm font-bold text-green-400">REALLOCATION OPPORTUNITIES:</h5>
-                    </div>
-                    <div className="space-y-3 text-sm">
-                      <div className="bg-slate-900/50 rounded-lg p-3 border border-slate-700/30">
-                        <p className="text-slate-300 mb-2">• <span className="font-bold text-white">Training Division</span> surplus: <span className="font-bold text-green-400">$600K</span></p>
-                        <div className="pl-4 space-y-1 text-xs text-slate-400">
-                          <p>→ Move $300K to Patrol (cover OT)</p>
-                          <p>→ Move $200K to Administration (HVAC emergency)</p>
-                          <p>→ Keep $100K buffer</p>
-                        </div>
-                      </div>
-                      <div className="bg-slate-900/50 rounded-lg p-3 border border-slate-700/30">
-                        <p className="text-slate-300 mb-2">• <span className="font-bold text-white">Investigations</span> under budget: <span className="font-bold text-green-400">$200K</span></p>
-                        <div className="pl-4 space-y-1 text-xs text-slate-400">
-                          <p>→ Move $150K to Support Services (IT needs)</p>
-                          <p>→ Keep $50K buffer</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="mt-4 flex gap-2">
-                      <button
-                        onClick={() => setReallocationModal(true)}
-                        className="px-4 py-2 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-400 rounded-lg text-sm font-medium transition-all"
-                      >
-                        APPLY COST CONTROLS
-                      </button>
-                      <button
-                        onClick={() => setReallocationModal(true)}
-                        className="px-4 py-2 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 text-blue-400 rounded-lg text-sm font-medium transition-all"
-                      >
-                        REQUEST REALLOCATION
-                      </button>
-                      <button className="px-4 py-2 bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/30 text-purple-400 rounded-lg text-sm font-medium transition-all">
-                        DOWNLOAD FORECAST
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
+      {notificationsOpen && (
+        <div className="fixed top-16 right-4 w-80 bg-slate-900 border border-slate-700 rounded-xl p-4 z-50">
+          <div className="flex items-center justify-between mb-2"><h4 className="text-white font-semibold">Notifications</h4><button onClick={() => setNotificationsOpen(false)}><X className="w-4 h-4 text-slate-400" /></button></div>
+          <div className="space-y-2 text-sm text-slate-300">
+            <p className="border border-slate-800 rounded-lg p-2">Budget approval queue updated.</p>
+            <p className="border border-slate-800 rounded-lg p-2">Overtime threshold reached in Patrol.</p>
+            <p className="border border-slate-800 rounded-lg p-2">Forecast refresh available for Q4.</p>
           </div>
-        </main>
-      </div>
+        </div>
+      )}
 
-      {/* Month Detail Modal */}
-      {monthDetailModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-            onClick={() => setMonthDetailModal(null)}
-          />
-          <div className="relative bg-slate-900 border border-slate-700/50 rounded-2xl p-6 max-w-3xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
-            <div className="flex items-start justify-between mb-6">
-              <div>
-                <h3 className="text-2xl font-bold text-white mb-1">{monthDetailModal.month} 2024 Detailed Breakdown</h3>
-                <p className="text-sm text-slate-400">
-                  Total Spent: <span className="font-bold text-white">${(monthDetailModal.spent / 1000000).toFixed(2)}M</span> ({((monthDetailModal.spent / monthDetailModal.budget) * 100).toFixed(0)}% of monthly target)
-                </p>
-              </div>
-              <button
-                onClick={() => setMonthDetailModal(null)}
-                className="p-2 hover:bg-slate-800/50 rounded-lg transition-colors"
-              >
-                <X className="w-5 h-5 text-slate-400" />
-              </button>
-            </div>
-
-            {/* Category Breakdown */}
-            <div className="mb-6">
-              <h4 className="text-lg font-semibold text-white mb-4">BY CATEGORY:</h4>
-              <div className="space-y-4">
-                {/* Personnel */}
-                <div className="bg-slate-800/40 rounded-xl p-4 border border-slate-700/50">
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center gap-2">
-                      <Users className="w-5 h-5 text-blue-400" />
-                      <span className="font-semibold text-white">Personnel:</span>
-                    </div>
-                    <span className="text-lg font-bold text-blue-400">${(monthDetailModal.personnel / 1000000).toFixed(2)}M (78%)</span>
-                  </div>
-                  <div className="space-y-2 text-sm text-slate-300 pl-7">
-                    <div className="flex justify-between">
-                      <span>• Salaries:</span>
-                      <span className="font-medium text-white">${((monthDetailModal.personnel * 0.875) / 1000000).toFixed(2)}M</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>• Overtime:</span>
-                      <span className={`font-medium ${monthDetailModal.variance?.overtime ? 'text-amber-400' : 'text-white'}`}>
-                        ${((monthDetailModal.personnel * 0.10) / 1000000).toFixed(2)}M
-                        {monthDetailModal.variance?.overtime && <span className="text-xs ml-1">(↑ 25% vs prior month ⚠️)</span>}
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>• Benefits:</span>
-                      <span className="font-medium text-white">${((monthDetailModal.personnel * 0.025) / 1000000).toFixed(2)}M</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Operations */}
-                <div className="bg-slate-800/40 rounded-xl p-4 border border-slate-700/50">
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center gap-2">
-                      <Wrench className="w-5 h-5 text-green-400" />
-                      <span className="font-semibold text-white">Operations:</span>
-                    </div>
-                    <span className="text-lg font-bold text-green-400">${(monthDetailModal.operations / 1000000).toFixed(2)}M (16%)</span>
-                  </div>
-                  <div className="space-y-2 text-sm text-slate-300 pl-7">
-                    <div className="flex justify-between">
-                      <span>• Vehicle fuel:</span>
-                      <span className="font-medium text-white">${((monthDetailModal.operations * 0.35) / 1000000).toFixed(2)}M</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>• Equipment maintenance:</span>
-                      <span className="font-medium text-white">${((monthDetailModal.operations * 0.23) / 1000000).toFixed(2)}M</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>• Utilities:</span>
-                      <span className="font-medium text-white">${((monthDetailModal.operations * 0.18) / 1000000).toFixed(2)}M</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>• Supplies:</span>
-                      <span className="font-medium text-white">${((monthDetailModal.operations * 0.24) / 1000000).toFixed(2)}M</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Training */}
-                <div className="bg-slate-800/40 rounded-xl p-4 border border-slate-700/50">
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center gap-2">
-                      <Target className="w-5 h-5 text-purple-400" />
-                      <span className="font-semibold text-white">Training:</span>
-                    </div>
-                    <span className="text-lg font-bold text-purple-400">${(monthDetailModal.training / 1000000).toFixed(2)}M (4%)</span>
-                  </div>
-                  <div className="space-y-2 text-sm text-slate-300 pl-7">
-                    <div className="flex justify-between">
-                      <span>• Firearms recertification:</span>
-                      <span className="font-medium text-white">${((monthDetailModal.training * 0.30) / 1000000).toFixed(2)}M</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>• Tactical training:</span>
-                      <span className="font-medium text-white">${((monthDetailModal.training * 0.43) / 1000000).toFixed(2)}M</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>• CPR/First Aid:</span>
-                      <span className="font-medium text-white">${((monthDetailModal.training * 0.27) / 1000000).toFixed(2)}M</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Equipment/Capital */}
-                <div className="bg-slate-800/40 rounded-xl p-4 border border-slate-700/50">
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center gap-2">
-                      <Package className="w-5 h-5 text-amber-400" />
-                      <span className="font-semibold text-white">Equipment/Capital:</span>
-                    </div>
-                    <span className="text-lg font-bold text-amber-400">${(monthDetailModal.equipment / 1000000).toFixed(2)}M (2%)</span>
-                  </div>
-                  <div className="space-y-2 text-sm text-slate-300 pl-7">
-                    <div className="flex justify-between">
-                      <span>• Body camera repairs:</span>
-                      <span className="font-medium text-white">${((monthDetailModal.equipment * 0.60) / 1000000).toFixed(2)}M</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>• Computer upgrades:</span>
-                      <span className="font-medium text-white">${((monthDetailModal.equipment * 0.40) / 1000000).toFixed(2)}M</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Why Over/Under Budget */}
-            {monthDetailModal.variance && (
-              <div className="mb-6 bg-red-500/10 border border-red-500/30 rounded-xl p-4">
-                <h4 className="text-sm font-bold text-red-400 mb-3">WHY OVER BUDGET:</h4>
-                <div className="space-y-2 text-sm text-slate-300">
-                  <p>• Overtime spike due to 4th of July coverage (+${(monthDetailModal.variance.overtime / 1000).toFixed(0)}K)</p>
-                  <p>• Emergency HVAC repair in jail (+${(monthDetailModal.variance.hvac / 1000).toFixed(0)}K)</p>
-                  <p>• Unplanned vehicle repairs (+${(monthDetailModal.variance.vehicles / 1000).toFixed(0)}K)</p>
-                </div>
-                <div className="mt-4 pt-4 border-t border-red-500/20">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-semibold text-slate-300">VARIANCE:</span>
-                    <span className="text-lg font-bold text-red-400">+${((monthDetailModal.spent - monthDetailModal.budget) / 1000).toFixed(0)}K over monthly target</span>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Action Buttons */}
-            <div className="flex flex-wrap gap-3">
-              <button className="px-4 py-2 bg-blue-500/20 border border-blue-500/30 hover:bg-blue-500/30 text-blue-400 rounded-lg text-sm font-medium transition-all">
-                VIEW INVOICE DETAILS
-              </button>
-              <button className="px-4 py-2 bg-purple-500/20 border border-purple-500/30 hover:bg-purple-500/30 text-purple-400 rounded-lg text-sm font-medium transition-all">
-                COMPARE TO PREV MONTH
-              </button>
-              <button className="px-4 py-2 bg-green-500/20 border border-green-500/30 hover:bg-green-500/30 text-green-400 rounded-lg text-sm font-medium transition-all">
-                EXPORT REPORT
-              </button>
+      {logoutConfirmOpen && (
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
+          <div className="w-full max-w-sm bg-slate-900 border border-slate-700 rounded-xl p-4">
+            <h4 className="text-white font-semibold mb-2">Sign out?</h4>
+            <p className="text-sm text-slate-400 mb-4">You will return to the sign-in page.</p>
+            <div className="flex justify-end gap-2">
+              <button className={buttonStyles.secondary} onClick={() => setLogoutConfirmOpen(false)}>Cancel</button>
+              <button className={buttonStyles.destructive} onClick={() => navigate(createPageUrl('SignIn'))}>Sign Out</button>
             </div>
           </div>
         </div>
       )}
 
-      {/* AI Chat Button */}
-      <button
-        onClick={() => setChatOpen(!chatOpen)}
-        className="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-400 hover:to-blue-500 rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 z-40"
-      >
-        {chatOpen ? <X className="w-6 h-6 text-white" /> : <MessageCircle className="w-6 h-6 text-white" />}
-      </button>
-
-      {/* AI Chat Panel */}
-      {chatOpen && (
-        <div className="fixed bottom-24 right-6 w-full max-w-96 h-[500px] bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-2xl flex flex-col z-40 mx-4 sm:mx-0">
-          <div className="p-4 border-b border-slate-700/50">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <h3 className="text-sm font-semibold text-white">Budget AI Assistant</h3>
-                <p className="text-xs text-green-400">Online</p>
-              </div>
-            </div>
-          </div>
-          <div className="flex-1 p-4 overflow-y-auto">
-            <div className="flex gap-3">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Sparkles className="w-4 h-4 text-white" />
-              </div>
-              <div className="flex-1">
-                <div className="bg-slate-800/60 p-3 rounded-xl">
-                  <p className="text-sm text-slate-200">Hi! I can help you analyze budget trends, forecast spending, identify cost savings, compare divisions, and answer questions about fiscal management. What would you like to know?</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="p-4 border-t border-slate-700/50">
-            <div className="flex items-center gap-2">
-              <input type="text" placeholder="Ask about budget..." className="flex-1 px-4 py-2 bg-slate-800/40 border border-slate-700/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-blue-500/50" />
-              <button className="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center">
-                <Send className="w-5 h-5 text-white" />
-              </button>
+      {showReduceModal && (
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
+          <div className="w-full max-w-lg bg-slate-900 border border-slate-700 rounded-xl p-5">
+            <h4 className="text-white font-semibold mb-2">Reduce Spending Plan</h4>
+            <p className="text-sm text-slate-300 mb-4">Activate overtime caps and suspend non-critical procurement for 30 days.</p>
+            <div className="flex justify-end gap-2">
+              <button className={buttonStyles.secondary} onClick={() => setShowReduceModal(false)}>Cancel</button>
+              <button className={buttonStyles.success} onClick={() => { setProjectionDelta(0.12); setShowReduceModal(false); }}>Apply Plan</button>
             </div>
           </div>
         </div>
       )}
+
+      {showForecastModal && (
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
+          <div className="w-full max-w-lg bg-slate-900 border border-slate-700 rounded-xl p-5">
+            <h4 className="text-white font-semibold mb-3">Adjust Forecast</h4>
+            <label className="text-sm text-slate-300 block mb-2">Control impact adjustment (in millions): {forecastAdjustment.toFixed(2)}</label>
+            <input
+              type="range"
+              min="0.05"
+              max="0.45"
+              step="0.01"
+              value={forecastAdjustment}
+              onChange={(e) => setForecastAdjustment(Number(e.target.value))}
+              className="w-full"
+            />
+            <div className="flex justify-end gap-2 mt-4">
+              <button className={buttonStyles.secondary} onClick={() => setShowForecastModal(false)}>Close</button>
+              <button className={buttonStyles.primary} onClick={() => setShowForecastModal(false)}>Save Forecast</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showVarianceModal && (
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
+          <div className="w-full max-w-lg bg-slate-900 border border-slate-700 rounded-xl p-5">
+            <h4 className="text-white font-semibold mb-2">Variance Summary</h4>
+            <ul className="text-sm text-slate-300 space-y-1 list-disc pl-4 mb-4">
+              <li>Personnel variance: -$180K driven by overtime usage.</li>
+              <li>Fleet variance: -$96K from unscheduled repairs.</li>
+              <li>Training variance: +$74K under plan.</li>
+            </ul>
+            <div className="flex justify-end"><button className={buttonStyles.secondary} onClick={() => setShowVarianceModal(false)}>Close</button></div>
+          </div>
+        </div>
+      )}
+
+      {reallocateOpen && (
+        <div className="fixed inset-y-0 right-0 w-full max-w-md bg-slate-900 border-l border-slate-700 z-50 p-5">
+          <div className="flex items-center justify-between mb-3">
+            <h4 className="text-white font-semibold">Reallocate Budget</h4>
+            <button onClick={() => setReallocateOpen(false)} className="text-slate-400 hover:text-white"><X className="w-4 h-4" /></button>
+          </div>
+          <p className="text-sm text-slate-300 mb-3">Move funds from low-risk lines into critical overtime and maintenance needs.</p>
+          <div className="space-y-2 text-sm mb-4">
+            <div className="border border-slate-800 rounded-lg p-3 text-slate-300">From: Training Reserve <span className="text-white float-right">$120K</span></div>
+            <div className="border border-slate-800 rounded-lg p-3 text-slate-300">To: Patrol Overtime <span className="text-white float-right">$80K</span></div>
+            <div className="border border-slate-800 rounded-lg p-3 text-slate-300">To: Fleet Maintenance <span className="text-white float-right">$40K</span></div>
+          </div>
+          <div className="flex gap-2">
+            <button className={buttonStyles.secondary} onClick={() => setReallocateOpen(false)}>Cancel</button>
+            <button className={buttonStyles.primary} onClick={() => { setProjectionDelta(0.2); setReallocateOpen(false); }}>Confirm Reallocation</button>
+          </div>
+        </div>
+      )}
+
+      {sidebarOpen && <div className="fixed inset-0 bg-black/40 z-40 lg:hidden" onClick={() => setSidebarOpen(false)} />}
     </div>
   );
 }
