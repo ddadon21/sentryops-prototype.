@@ -226,8 +226,13 @@ export default function BudgetResources() {
     return 'green';
   };
 
+  const overBudgetProjection = fiscalYear.projectedYearEnd - fiscalYear.totalBudget;
+  const isOverBudgetProjection = overBudgetProjection > 0;
+  const primaryBtn = 'px-4 py-2 rounded-lg text-sm font-semibold transition-colors';
+  const secondaryBtn = 'px-4 py-2 rounded-lg text-sm font-semibold border border-slate-600/40 text-slate-300 hover:bg-slate-800/40 transition-colors';
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex">
+    <div className="min-h-screen bg-slate-950 flex">
       {/* Sidebar */}
       <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-slate-800/50 backdrop-blur-xl bg-slate-900/30 flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
         <div className="p-4 border-b border-slate-700/50 flex items-center justify-between">
@@ -413,8 +418,19 @@ export default function BudgetResources() {
           <div className="max-w-7xl mx-auto">
             <div className="flex items-center justify-between mb-6">
               <div>
-                <h2 className="text-2xl lg:text-3xl font-bold text-white mb-2">Budget & Resources</h2>
-                <p className="text-slate-400">Fiscal oversight and resource management for FY 2024</p>
+                <div className="flex items-center gap-3 mb-2">
+                  <h2 className="text-2xl lg:text-3xl font-bold text-white">Budget & Assets</h2>
+                  <div className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/40 border border-slate-700/40 rounded-lg">
+                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                    <span className="text-xs font-bold text-green-400">FISCAL ACTIVE</span>
+                  </div>
+                </div>
+                <p className="text-slate-400 text-sm mb-2">Fiscal oversight and resource management for FY 2024</p>
+                <div className={`text-xs font-semibold ${isOverBudgetProjection ? 'text-red-400' : 'text-green-400'}`}>
+                  {isOverBudgetProjection
+                    ? `⚠️ Projected to exceed budget by $${(overBudgetProjection / 1000).toFixed(0)}K by year-end`
+                    : `✅ Budget stable with ${((fiscalYear.available / fiscalYear.totalBudget) * 100).toFixed(1)}% remaining buffer`}
+                </div>
               </div>
               <div className="flex items-center gap-3">
                 <select
@@ -434,10 +450,10 @@ export default function BudgetResources() {
             </div>
 
             {/* Enhanced AI Budget Intelligence */}
-            <div className="mb-6 bg-gradient-to-br from-purple-500/10 to-purple-600/5 border border-purple-500/20 rounded-xl p-5">
+            <div className="mb-6 bg-slate-800/30 border border-slate-700/40 rounded-xl p-6">
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 bg-purple-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <Sparkles className="w-6 h-6 text-purple-400" />
+                <div className="w-10 h-10 bg-slate-700/40 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <Sparkles className="w-6 h-6 text-blue-500" />
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center justify-between mb-4">
@@ -446,7 +462,7 @@ export default function BudgetResources() {
                     </h4>
                     <button
                       onClick={() => setAiInsightsExpanded(!aiInsightsExpanded)}
-                      className="text-xs text-purple-400 hover:text-purple-300 font-medium transition-colors"
+                      className={secondaryBtn}
                     >
                       {aiInsightsExpanded ? 'HIDE' : 'SHOW'}
                     </button>
@@ -455,7 +471,7 @@ export default function BudgetResources() {
                   {aiInsightsExpanded && (
                     <div className="space-y-4">
                       {/* Critical Alerts */}
-                      <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
+                      <div className="bg-slate-900/30 border border-red-500/30 rounded-lg p-4">
                         <div className="flex items-center gap-2 mb-3">
                           <AlertCircle className="w-5 h-5 text-red-400" />
                           <h5 className="text-sm font-bold text-red-400">🔴 CRITICAL ALERTS:</h5>
@@ -468,7 +484,7 @@ export default function BudgetResources() {
                       </div>
 
                       {/* Recommendations */}
-                      <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
+                      <div className="bg-slate-900/30 border border-slate-700/30 rounded-lg p-4">
                         <div className="flex items-center gap-2 mb-3">
                           <Zap className="w-5 h-5 text-amber-400" />
                           <h5 className="text-sm font-bold text-amber-400">🟡 RECOMMENDATIONS:</h5>
@@ -481,7 +497,7 @@ export default function BudgetResources() {
                       </div>
 
                       {/* Positive Trends */}
-                      <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
+                      <div className="bg-slate-900/30 border border-slate-700/30 rounded-lg p-4">
                         <div className="flex items-center gap-2 mb-3">
                           <CheckCircle className="w-5 h-5 text-green-400" />
                           <h5 className="text-sm font-bold text-green-400">✅ POSITIVE TRENDS:</h5>
@@ -494,7 +510,7 @@ export default function BudgetResources() {
                       </div>
 
                       {/* Forecast */}
-                      <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
+                      <div className="bg-slate-900/30 border border-slate-700/30 rounded-lg p-4">
                         <div className="flex items-center gap-2 mb-3">
                           <TrendingUp className="w-5 h-5 text-blue-400" />
                           <h5 className="text-sm font-bold text-blue-400">FORECAST (If current trends continue):</h5>
@@ -508,18 +524,18 @@ export default function BudgetResources() {
 
                       {/* Action Buttons */}
                       <div className="flex flex-wrap gap-2 pt-2">
-                        <button className="px-3 py-1.5 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 text-blue-400 rounded-lg text-xs font-medium transition-all">
+                        <button className={`flex items-center gap-2 ${secondaryBtn}`}>
                           VIEW DETAILED ANALYSIS
                         </button>
                         <button
                           onClick={() => setActiveTab('forecast')}
-                          className="px-3 py-1.5 bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/30 text-purple-400 rounded-lg text-xs font-medium transition-all"
+                          className={`flex items-center gap-2 ${secondaryBtn}`}
                         >
                           ADJUST FORECAST
                         </button>
                         <button
                           onClick={() => setReallocationModal(true)}
-                          className="px-3 py-1.5 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-400 rounded-lg text-xs font-medium transition-all"
+                          className={`flex items-center gap-2 ${primaryBtn} bg-blue-600 text-white border border-blue-700 hover:bg-blue-700`}
                         >
                           REALLOCATION PLANNER
                         </button>
@@ -822,9 +838,7 @@ export default function BudgetResources() {
                   const TrendIcon = trendIcon;
 
                   return (
-                    <div key={division.id} className={`bg-slate-800/40 border rounded-xl overflow-hidden ${
-                      statusColor === 'red' ? 'border-red-500/40' : statusColor === 'amber' ? 'border-amber-500/40' : 'border-slate-700/50'
-                    }`}>
+                    <div key={division.id} className="bg-slate-800/40 border border-slate-700/40 rounded-xl overflow-hidden">
                       <div className="p-5">
                         <div className="flex items-center justify-between mb-4">
                           <div className="flex-1">
@@ -927,8 +941,8 @@ export default function BudgetResources() {
 
                         {/* Action Buttons */}
                         <div className="flex flex-wrap gap-2">
-                          <button className="px-3 py-1.5 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 text-blue-400 rounded-lg text-xs font-medium transition-all">
-                            VIEW DETAILS
+                          <button className={secondaryBtn}>
+                            View Details
                           </button>
                           {division.variance < -50000 && (
                             <button
@@ -1073,8 +1087,8 @@ export default function BudgetResources() {
                           <button className="px-3 py-1.5 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 text-blue-400 rounded-lg text-xs font-medium transition-all">
                             VIEW OT DETAILS
                           </button>
-                          <button className="px-3 py-1.5 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-400 rounded-lg text-xs font-medium transition-all">
-                            OT REDUCTION PLAN
+                          <button className={`${primaryBtn} bg-red-600 text-white border border-red-700 hover:bg-red-700`}>
+                            Reduce Overtime Plan
                           </button>
                         </div>
                       </div>
@@ -1211,10 +1225,10 @@ export default function BudgetResources() {
                   </div>
 
                   {/* Current Trajectory */}
-                  <div className="mb-6 bg-blue-500/10 border border-blue-500/30 rounded-xl p-5">
+                  <div className="mb-6 bg-slate-900/30 border border-slate-700/30 rounded-xl p-5">
                     <div className="flex items-center justify-between mb-4">
-                      <h4 className="text-sm font-bold text-blue-400">CURRENT TRAJECTORY:</h4>
-                      <TrendingUp className="w-5 h-5 text-blue-400" />
+                      <h4 className="text-sm font-bold text-slate-200">CURRENT TRAJECTORY:</h4>
+                      <TrendingUp className="w-5 h-5 text-blue-500" />
                     </div>
                     <p className="text-xs text-slate-400 mb-3">Based on current spending patterns</p>
                     <div className="text-sm text-slate-300 space-y-1 mb-4">
@@ -1229,7 +1243,7 @@ export default function BudgetResources() {
                     <h4 className="text-sm font-bold text-white">SCENARIOS:</h4>
 
                     {/* Scenario 1 - Current Pace */}
-                    <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-5">
+                    <div className="bg-slate-900/30 border border-slate-700/30 rounded-xl p-5">
                       <div className="flex items-center gap-2 mb-3">
                         <AlertCircle className="w-5 h-5 text-red-400" />
                         <h5 className="text-sm font-bold text-red-400">SCENARIO 1: Current Pace (Do Nothing)</h5>
@@ -1255,7 +1269,7 @@ export default function BudgetResources() {
                     </div>
 
                     {/* Scenario 2 - Cost Controls */}
-                    <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-5">
+                    <div className="bg-slate-900/30 border border-green-500/40 rounded-xl p-5">
                       <div className="flex items-center gap-2 mb-3">
                         <CheckCircle className="w-5 h-5 text-green-400" />
                         <h5 className="text-sm font-bold text-green-400">SCENARIO 2: Cost Controls (15% Reduction) ✅ RECOMMENDED</h5>
@@ -1281,7 +1295,7 @@ export default function BudgetResources() {
                     </div>
 
                     {/* Scenario 3 - Aggressive Controls */}
-                    <div className="bg-blue-500/10 border border-blue-500/30 rounded-xl p-5">
+                    <div className="bg-slate-900/30 border border-slate-700/30 rounded-xl p-5">
                       <div className="flex items-center gap-2 mb-3">
                         <TrendingDown className="w-5 h-5 text-blue-400" />
                         <h5 className="text-sm font-bold text-blue-400">SCENARIO 3: Aggressive Controls (25% Reduction)</h5>
@@ -1308,10 +1322,10 @@ export default function BudgetResources() {
                   </div>
 
                   {/* Recommended Actions for Scenario 2 */}
-                  <div className="bg-purple-500/10 border border-purple-500/30 rounded-xl p-5">
+                  <div className="bg-slate-900/30 border border-slate-700/30 rounded-xl p-5">
                     <div className="flex items-center gap-2 mb-4">
                       <Zap className="w-5 h-5 text-purple-400" />
-                      <h5 className="text-sm font-bold text-purple-400">RECOMMENDED ACTIONS (Scenario 2):</h5>
+                      <h5 className="text-sm font-bold text-slate-200">RECOMMENDED ACTIONS (Scenario 2):</h5>
                     </div>
                     <div className="space-y-2 text-sm text-slate-300 mb-4">
                       <div className="flex items-start gap-2">
@@ -1334,10 +1348,10 @@ export default function BudgetResources() {
                   </div>
 
                   {/* Reallocation Opportunities */}
-                  <div className="mt-6 bg-gradient-to-r from-green-500/10 to-blue-500/10 border border-green-500/30 rounded-xl p-5">
+                  <div className="mt-6 bg-slate-900/30 border border-slate-700/30 rounded-xl p-5">
                     <div className="flex items-center gap-2 mb-4">
                       <RefreshCw className="w-5 h-5 text-green-400" />
-                      <h5 className="text-sm font-bold text-green-400">REALLOCATION OPPORTUNITIES:</h5>
+                      <h5 className="text-sm font-bold text-slate-200">REALLOCATION OPPORTUNITIES:</h5>
                     </div>
                     <div className="space-y-3 text-sm">
                       <div className="bg-slate-900/50 rounded-lg p-3 border border-slate-700/30">
@@ -1359,18 +1373,18 @@ export default function BudgetResources() {
                     <div className="mt-4 flex gap-2">
                       <button
                         onClick={() => setReallocationModal(true)}
-                        className="px-4 py-2 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-400 rounded-lg text-sm font-medium transition-all"
+                        className={`${primaryBtn} bg-blue-600 text-white border border-blue-700 hover:bg-blue-700`}
                       >
-                        APPLY COST CONTROLS
+                        Apply This Plan
                       </button>
                       <button
                         onClick={() => setReallocationModal(true)}
-                        className="px-4 py-2 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 text-blue-400 rounded-lg text-sm font-medium transition-all"
+                        className={secondaryBtn}
                       >
-                        REQUEST REALLOCATION
+                        Compare
                       </button>
-                      <button className="px-4 py-2 bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/30 text-purple-400 rounded-lg text-sm font-medium transition-all">
-                        DOWNLOAD FORECAST
+                      <button className={secondaryBtn}>
+                        Export
                       </button>
                     </div>
                   </div>
@@ -1388,7 +1402,8 @@ export default function BudgetResources() {
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={() => setMonthDetailModal(null)}
           />
-          <div className="relative bg-slate-900 border border-slate-700/50 rounded-2xl p-6 max-w-3xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
+          <div className="relative bg-slate-900 border border-slate-700/50 rounded-2xl max-w-3xl w-full shadow-2xl max-h-[90vh] flex flex-col overflow-hidden">
+            <div className="p-6 overflow-y-auto">
             <div className="flex items-start justify-between mb-6">
               <div>
                 <h3 className="text-2xl font-bold text-white mb-1">{monthDetailModal.month} 2024 Detailed Breakdown</h3>
@@ -1531,17 +1546,10 @@ export default function BudgetResources() {
               </div>
             )}
 
-            {/* Action Buttons */}
-            <div className="flex flex-wrap gap-3">
-              <button className="px-4 py-2 bg-blue-500/20 border border-blue-500/30 hover:bg-blue-500/30 text-blue-400 rounded-lg text-sm font-medium transition-all">
-                VIEW INVOICE DETAILS
-              </button>
-              <button className="px-4 py-2 bg-purple-500/20 border border-purple-500/30 hover:bg-purple-500/30 text-purple-400 rounded-lg text-sm font-medium transition-all">
-                COMPARE TO PREV MONTH
-              </button>
-              <button className="px-4 py-2 bg-green-500/20 border border-green-500/30 hover:bg-green-500/30 text-green-400 rounded-lg text-sm font-medium transition-all">
-                EXPORT REPORT
-              </button>
+            </div>
+            <div className="sticky bottom-0 p-4 border-t border-slate-700/50 bg-slate-900 flex items-center justify-end gap-2">
+              <button className={secondaryBtn}>Compare to Previous</button>
+              <button className={`${primaryBtn} bg-blue-600 text-white border border-blue-700 hover:bg-blue-700`}>Export Report</button>
             </div>
           </div>
         </div>
