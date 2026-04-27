@@ -199,6 +199,14 @@ export default function BudgetResources() {
   const primaryBtn = 'px-4 py-2 rounded-lg text-sm font-semibold transition-colors';
   const secondaryBtn = 'px-4 py-2 rounded-lg text-sm font-semibold border border-slate-300 dark:border-slate-600/40 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/40 transition-colors';
 
+  const recommendedActions = [
+    { id: 1, title: 'Reallocate Training Division surplus to Patrol', impact: 300000, urgency: 'High', confidence: 'High', detail: 'Training has $600K surplus. Moving $300K directly covers Patrol overtime overrun.' },
+    { id: 2, title: 'Cap overtime to emergencies only — Nov & Dec', impact: 220000, urgency: 'High', confidence: 'High', detail: 'Overtime at 92% with 2 months left. Hard cap projected to save $220K by year-end.' },
+    { id: 3, title: 'Defer non-critical equipment purchases to FY 2025', impact: 180000, urgency: 'Medium', confidence: 'Medium', detail: 'Defer $180K of Q4 equipment orders. No immediate operational impact identified.' },
+    { id: 4, title: 'Freeze discretionary spend in Support Services', impact: 100000, urgency: 'Medium', confidence: 'High', detail: 'Support has $315K available, $90K committed. Freeze non-PO\'d spend through Dec.' },
+    { id: 5, title: 'Delay 2 admin hires until January 2025', impact: 85000, urgency: 'Low', confidence: 'Medium', detail: 'Headcount delay saves $85K in Nov–Dec salary and benefits with no service impact.' },
+  ];
+
   return (
     <DashboardLayout>
       <div className="p-5 lg:p-8">
@@ -384,6 +392,57 @@ export default function BudgetResources() {
               </div>
             </div>
 
+            {/* Recommended Actions */}
+            <div className="mb-6 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none overflow-hidden">
+              <div className="flex items-center justify-between px-5 py-4 border-b border-slate-200 dark:border-slate-700/30">
+                <div className="flex items-center gap-3">
+                  <Zap className="w-4 h-4 text-slate-500 dark:text-slate-400" />
+                  <span className="text-sm font-semibold text-slate-900 dark:text-white">Recommended Actions</span>
+                  <span className="text-[11px] text-slate-500 dark:text-slate-400 hidden sm:inline">5 actions · Est. impact: $885K</span>
+                </div>
+                <span className="px-1.5 py-0.5 bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400 text-[11px] font-semibold rounded">Action Required</span>
+              </div>
+              <div className="divide-y divide-slate-100 dark:divide-slate-700/20">
+                {recommendedActions.map((action, idx) => (
+                  <div key={action.id} className="flex items-center gap-3 px-5 py-3.5 hover:bg-slate-50 dark:hover:bg-slate-800/10 transition-colors">
+                    <span className="text-[11px] font-bold text-slate-400 w-4 flex-shrink-0 tabular-nums">{idx + 1}</span>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-0.5 flex-wrap">
+                        <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded flex-shrink-0 ${
+                          action.urgency === 'High' ? 'bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-400' :
+                          action.urgency === 'Medium' ? 'bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400' :
+                          'bg-slate-100 dark:bg-slate-700/40 text-slate-600 dark:text-slate-400'
+                        }`}>{action.urgency}</span>
+                        <span className="text-[13px] font-semibold text-slate-800 dark:text-slate-200">{action.title}</span>
+                      </div>
+                      <p className="text-[12px] text-slate-500 dark:text-slate-400 truncate">{action.detail}</p>
+                    </div>
+                    <div className="flex items-center gap-3 flex-shrink-0">
+                      <div className="text-right hidden sm:block">
+                        <p className="text-[13px] font-bold text-green-600 dark:text-green-400">${(action.impact / 1000).toFixed(0)}K</p>
+                        <p className="text-[10px] text-slate-500 dark:text-slate-400">{action.confidence} confidence</p>
+                      </div>
+                      <button
+                        onClick={() => setReallocationModal(true)}
+                        className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg transition-colors"
+                      >
+                        Apply Action
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="px-5 py-3 border-t border-slate-200 dark:border-slate-700/30 flex items-center justify-between bg-slate-50 dark:bg-slate-900/20">
+                <span className="text-[11px] text-slate-500 dark:text-slate-400">Applying all actions prevents $1.2M overrun · High overall confidence</span>
+                <button
+                  onClick={() => setReallocationModal(true)}
+                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-colors"
+                >
+                  Apply All
+                </button>
+              </div>
+            </div>
+
             {/* AI Budget Intelligence */}
             <div className="mb-6 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none">
               <button
@@ -402,128 +461,37 @@ export default function BudgetResources() {
               </button>
 
               {aiInsightsExpanded && (
-                <div className="px-5 pb-5 border-t border-slate-200 dark:border-slate-700/30 pt-4 space-y-4">
-                  {/* 3-Column Grid */}
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                    {/* Critical Alerts */}
-                    <div className="bg-red-500/5 border border-red-500/15 rounded-lg p-4">
-                      <div className="flex items-center gap-2 mb-3">
-                        <div className="w-1.5 h-1.5 bg-red-500 rounded-full"></div>
-                        <h5 className="text-[11px] font-bold text-red-700 dark:text-red-400 uppercase tracking-wide">Critical Alerts</h5>
-                      </div>
-                      <div className="space-y-2 text-[13px] mb-3">
-                        <div className="flex items-start gap-2">
-                          <ShieldAlert className="w-3.5 h-3.5 text-red-700 dark:text-red-400 mt-0.5 flex-shrink-0" />
-                          <p className="text-slate-700 dark:text-slate-300">At <span className="font-semibold text-red-700 dark:text-red-400">{fiscalYear.percentSpent}%</span> with 2 months remaining</p>
+                <div className="border-t border-slate-200 dark:border-slate-700/30">
+                  <div className="divide-y divide-slate-100 dark:divide-slate-700/20">
+                    {[
+                      { rank: 1, urgency: 'Critical', urgencyColor: 'text-red-700 dark:text-red-400', urgencyBg: 'bg-red-100 dark:bg-red-500/10', icon: ShieldAlert, action: 'Patrol Division discretionary spend exceeds budget by $150K — halt non-essential purchasing', outcome: 'Prevents overrun · saves up to $170K before year-end' },
+                      { rank: 2, urgency: 'High', urgencyColor: 'text-amber-700 dark:text-amber-400', urgencyBg: 'bg-amber-100 dark:bg-amber-500/10', icon: RefreshCw, action: 'Move $150K from Training surplus into Patrol to cover shortfall', outcome: 'Resolves Patrol gap · releases $350K as buffer' },
+                      { rank: 3, urgency: 'High', urgencyColor: 'text-amber-700 dark:text-amber-400', urgencyBg: 'bg-amber-100 dark:bg-amber-500/10', icon: TrendingDown, action: 'Reduce discretionary spending 15% across all divisions for Nov–Dec', outcome: 'Saves ~$500K · brings year-end forecast to 100%' },
+                      { rank: 4, urgency: 'Medium', urgencyColor: 'text-slate-600 dark:text-slate-400', urgencyBg: 'bg-slate-100 dark:bg-slate-700/40', icon: Clock, action: 'Defer 3 pending approvals totalling $170K until December budget review', outcome: 'Maintains 6.9% unallocated buffer if deferred' },
+                    ].map(item => {
+                      const Icon = item.icon;
+                      return (
+                        <div key={item.rank} className="flex items-center gap-4 px-5 py-3.5 hover:bg-slate-50 dark:hover:bg-slate-800/10 transition-colors">
+                          <span className="text-[11px] font-bold text-slate-400 w-4 flex-shrink-0 tabular-nums">{item.rank}</span>
+                          <Icon className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 flex-shrink-0" />
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 mb-0.5 flex-wrap">
+                              <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded flex-shrink-0 ${item.urgencyBg} ${item.urgencyColor}`}>{item.urgency}</span>
+                              <span className="text-[13px] font-semibold text-slate-800 dark:text-slate-200">{item.action}</span>
+                            </div>
+                            <p className="text-[12px] text-slate-500 dark:text-slate-400">{item.outcome}</p>
+                          </div>
+                          <button onClick={() => setReallocationModal(true)} className={`flex-shrink-0 ${secondaryBtn}`}>Apply</button>
                         </div>
-                        <div className="flex items-start gap-2">
-                          <TrendingUp className="w-3.5 h-3.5 text-red-700 dark:text-red-400 mt-0.5 flex-shrink-0" />
-                          <p className="text-slate-700 dark:text-slate-300">Projected <span className="font-semibold text-red-700 dark:text-red-400">$48.6M — over by $100K</span></p>
-                        </div>
-                        <div className="flex items-start gap-2">
-                          <AlertCircle className="w-3.5 h-3.5 text-red-700 dark:text-red-400 mt-0.5 flex-shrink-0" />
-                          <p className="text-slate-700 dark:text-slate-300">Patrol Division trending <span className="font-semibold text-red-700 dark:text-red-400">$150K over</span></p>
-                        </div>
-                      </div>
-                      <button className={`flex items-center gap-1.5 ${secondaryBtn}`}>
-                        <Zap className="w-3 h-3" /> Reduce Spending Plan
-                      </button>
-                      <p className="text-[11px] text-slate-500 mt-2">→ Est. savings: $170K</p>
-                    </div>
-
-                    {/* Recommendations */}
-                    <div className="bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-700/20 rounded-lg p-4">
-                      <div className="flex items-center gap-2 mb-3">
-                        <Lightbulb className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
-                        <h5 className="text-[11px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wide">Recommendations</h5>
-                      </div>
-                      <div className="space-y-2 text-[13px] mb-3">
-                        <div className="flex items-start gap-2">
-                          <RefreshCw className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 mt-0.5 flex-shrink-0" />
-                          <p className="text-slate-700 dark:text-slate-300">Training surplus <span className="font-semibold text-green-600 dark:text-green-400">$150K</span> — reallocate to Patrol</p>
-                        </div>
-                        <div className="flex items-start gap-2">
-                          <TrendingDown className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 mt-0.5 flex-shrink-0" />
-                          <p className="text-slate-700 dark:text-slate-300">Reduce discretionary <span className="font-semibold text-amber-600 dark:text-amber-400">15%</span> in Nov–Dec</p>
-                        </div>
-                        <div className="flex items-start gap-2">
-                          <Clock className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 mt-0.5 flex-shrink-0" />
-                          <p className="text-slate-700 dark:text-slate-300">3 pending approvals ($170K) push to 88.5%</p>
-                        </div>
-                      </div>
-                      <button className={`flex items-center gap-1.5 ${secondaryBtn}`} onClick={() => setReallocationModal(true)}>
-                        <RefreshCw className="w-3 h-3" /> Reallocate Budget
-                      </button>
-                      <p className="text-[11px] text-slate-500 mt-2">→ Est. savings: $500K</p>
-                    </div>
-
-                    {/* Positive Trends */}
-                    <div className="bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-700/20 rounded-lg p-4">
-                      <div className="flex items-center gap-2 mb-3">
-                        <BadgeCheck className="w-3.5 h-3.5 text-green-600 dark:text-green-400" />
-                        <h5 className="text-[11px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wide">Positive Trends</h5>
-                      </div>
-                      <div className="space-y-2 text-[13px] mb-3">
-                        <div className="flex items-start gap-2">
-                          <CheckCircle className="w-3.5 h-3.5 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
-                          <p className="text-slate-700 dark:text-slate-300">On track within <span className="font-semibold text-green-600 dark:text-green-400">2% of budget</span></p>
-                        </div>
-                        <div className="flex items-start gap-2">
-                          <TrendingDown className="w-3.5 h-3.5 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
-                          <p className="text-slate-700 dark:text-slate-300">Q3 spending <span className="font-semibold text-green-600 dark:text-green-400">down 5%</span> vs Q2</p>
-                        </div>
-                        <div className="flex items-start gap-2">
-                          <Activity className="w-3.5 h-3.5 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
-                          <p className="text-slate-700 dark:text-slate-300">Overtime <span className="font-semibold text-green-600 dark:text-green-400">down 12%</span> vs last year</p>
-                        </div>
-                      </div>
-                      <button className={`flex items-center gap-1.5 ${secondaryBtn}`}>
-                        <CheckCircle className="w-3 h-3" /> Apply Plan
-                      </button>
-                      <p className="text-[11px] text-slate-500 mt-2">→ Maintains 2% operating buffer</p>
-                    </div>
+                      );
+                    })}
                   </div>
-
-                  {/* Forecast Row */}
-                  <div className="bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-700/20 rounded-lg p-4">
-                    <div className="flex items-center gap-2 mb-3">
-                      <LineChart className="w-4 h-4 text-slate-500 dark:text-slate-400" />
-                      <h5 className="text-[11px] font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wide">Forecast — if current trends continue</h5>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                      <div className="flex items-center gap-3 p-3 bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/20 rounded-lg">
-                        <Calendar className="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0" />
-                        <div>
-                          <p className="text-xs text-slate-500 dark:text-slate-400">November</p>
-                          <p className="text-[13px] font-semibold text-amber-600 dark:text-amber-400">$4.1M (99% total)</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-3 p-3 bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/20 rounded-lg">
-                        <Calendar className="w-4 h-4 text-red-700 dark:text-red-400 flex-shrink-0" />
-                        <div>
-                          <p className="text-xs text-slate-500 dark:text-slate-400">December</p>
-                          <p className="text-[13px] font-semibold text-red-700 dark:text-red-400">$3.4M (106% — OVER)</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-3 p-3 bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/20 rounded-lg">
-                        <Target className="w-4 h-4 text-green-600 dark:text-green-400 flex-shrink-0" />
-                        <div>
-                          <p className="text-xs text-slate-500 dark:text-slate-400">Recommended Cap</p>
-                          <p className="text-[13px] font-semibold text-green-600 dark:text-green-400">$7.27M Nov–Dec</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-wrap gap-2 pt-1">
-                    <button className={`flex items-center gap-2 ${secondaryBtn}`}>
-                      <Eye className="w-3.5 h-3.5" /> View Detailed Analysis
-                    </button>
+                  <div className="px-5 py-3 border-t border-slate-200 dark:border-slate-700/30 flex items-center justify-between bg-slate-50 dark:bg-slate-900/20">
                     <button onClick={() => setActiveTab('forecast')} className={`flex items-center gap-2 ${secondaryBtn}`}>
-                      <LineChart className="w-3.5 h-3.5" /> Adjust Forecast
+                      <LineChart className="w-3.5 h-3.5" /> View Full Forecast
                     </button>
-                    <button onClick={() => setReallocationModal(true)} className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold bg-blue-600 text-white border border-blue-700 hover:bg-blue-700 transition-colors`}>
-                      <RefreshCw className="w-3.5 h-3.5" /> Reallocation Planner
+                    <button onClick={() => setReallocationModal(true)} className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold bg-blue-600 text-white border border-blue-700 hover:bg-blue-700 transition-colors">
+                      <RefreshCw className="w-3.5 h-3.5" /> Open Reallocation Planner
                     </button>
                   </div>
                 </div>
@@ -704,24 +672,46 @@ export default function BudgetResources() {
                 {/* Monthly Spending Trend */}
                 <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
                   <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Monthly Spending</h3>
-                    <span className="text-[11px] text-slate-500">Click any month for breakdown</span>
+                    <div>
+                      <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Monthly Spending</h3>
+                      <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Click any month for breakdown · Anomalies flagged</p>
+                    </div>
+                    {monthlyTrend.some(m => m.variance) && (
+                      <span className="px-1.5 py-0.5 bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-400 text-[11px] font-semibold rounded">1 Anomaly</span>
+                    )}
                   </div>
                   <div className="space-y-1.5">
                     {monthlyTrend.map((month, idx) => {
                       const percent = (month.spent / month.budget) * 100;
+                      const prevMonth = idx > 0 ? monthlyTrend[idx - 1] : null;
+                      const delta = prevMonth ? ((month.spent - prevMonth.spent) / prevMonth.spent) * 100 : null;
+                      const isAnomaly = !!month.variance;
                       return (
                         <div
                           key={idx}
-                          className="cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700/20 rounded-lg px-2 py-1.5 -mx-2 transition-colors"
+                          className={`cursor-pointer rounded-lg px-2 py-2 -mx-2 transition-colors ${
+                            isAnomaly
+                              ? 'bg-red-50 dark:bg-red-500/5 hover:bg-red-100 dark:hover:bg-red-500/10 border border-red-200 dark:border-red-500/15'
+                              : 'hover:bg-slate-50 dark:hover:bg-slate-700/20'
+                          }`}
                           onClick={() => setMonthDetailModal(month)}
                         >
                           <div className="flex items-center justify-between mb-1">
                             <div className="flex items-center gap-2">
                               <span className="text-xs text-slate-500 dark:text-slate-400 w-6">{month.month}</span>
-                              {percent > 100 && <AlertCircle className="w-3 h-3 text-red-700 dark:text-red-400" />}
+                              {isAnomaly && (
+                                <span className="flex items-center gap-1 px-1.5 py-0.5 bg-red-100 dark:bg-red-500/15 text-red-700 dark:text-red-400 text-[10px] font-bold rounded">
+                                  <AlertTriangle className="w-2.5 h-2.5" /> Spike
+                                </span>
+                              )}
+                              {!isAnomaly && percent > 100 && <AlertCircle className="w-3 h-3 text-red-700 dark:text-red-400" />}
                             </div>
                             <div className="flex items-center gap-3">
+                              {delta !== null && Math.abs(delta) >= 2 && (
+                                <span className={`text-[10px] font-medium hidden sm:inline ${delta > 0 ? 'text-red-700 dark:text-red-400' : 'text-green-600 dark:text-green-400'}`}>
+                                  {delta > 0 ? '+' : ''}{delta.toFixed(1)}% vs prior
+                                </span>
+                              )}
                               <span className="text-xs text-slate-500 dark:text-slate-400">${(month.spent / 1000000).toFixed(2)}M</span>
                               <span className={`text-xs font-semibold w-8 text-right ${
                                 percent > 100 ? 'text-red-700 dark:text-red-400' : percent > 95 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-600 dark:text-slate-300'
@@ -730,9 +720,14 @@ export default function BudgetResources() {
                           </div>
                           <div className="w-full h-1 bg-slate-100 dark:bg-slate-700/50 rounded-full overflow-hidden">
                             <div className={`h-full rounded-full ${
-                              percent > 100 ? 'bg-red-500' : percent > 95 ? 'bg-amber-500' : 'bg-slate-400 dark:bg-slate-500'
+                              percent > 100 || isAnomaly ? 'bg-red-500' : percent > 95 ? 'bg-amber-500' : 'bg-slate-400 dark:bg-slate-500'
                             }`} style={{ width: `${Math.min(percent, 100)}%` }} />
                           </div>
+                          {isAnomaly && (
+                            <p className="text-[10px] text-red-600 dark:text-red-400 mt-1">
+                              Spike: OT +${(month.variance.overtime / 1000).toFixed(0)}K · HVAC +${(month.variance.hvac / 1000).toFixed(0)}K · Fleet +${(month.variance.vehicles / 1000).toFixed(0)}K
+                            </p>
+                          )}
                         </div>
                       );
                     })}
@@ -1128,6 +1123,34 @@ export default function BudgetResources() {
                     <h3 className="text-lg font-semibold text-primary">BUDGET FORECAST</h3>
                   </div>
 
+                  {/* Scenario Comparison */}
+                  <div className="mb-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="bg-red-500/5 border border-red-500/20 rounded-xl p-4">
+                      <div className="flex items-center gap-2 mb-2">
+                        <AlertCircle className="w-4 h-4 text-red-700 dark:text-red-400" />
+                        <span className="text-xs font-bold text-red-700 dark:text-red-400 uppercase tracking-wide">If No Action Taken</span>
+                      </div>
+                      <p className="text-2xl font-bold text-red-700 dark:text-red-400 mb-0.5">$49.7M</p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 mb-3">103% of budget · $1.2M overrun</p>
+                      <div className="border-t border-red-500/20 pt-3 space-y-1 text-xs text-slate-600 dark:text-slate-400">
+                        <p>Nov: $4.3M &nbsp;·&nbsp; Dec: $4.2M at current pace</p>
+                        <p className="text-red-700 dark:text-red-400 font-medium">Triggers FY25 budget reduction request</p>
+                      </div>
+                    </div>
+                    <div className="bg-green-500/5 border border-green-500/20 rounded-xl p-4">
+                      <div className="flex items-center gap-2 mb-2">
+                        <CheckCircle className="w-4 h-4 text-green-600 dark:text-green-400" />
+                        <span className="text-xs font-bold text-green-600 dark:text-green-400 uppercase tracking-wide">If Recommended Actions Applied</span>
+                      </div>
+                      <p className="text-2xl font-bold text-green-600 dark:text-green-400 mb-0.5">$48.3M</p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 mb-3">99.6% of budget · $200K under</p>
+                      <div className="border-t border-green-500/20 pt-3 space-y-1 text-xs text-slate-600 dark:text-slate-400">
+                        <p>Nov: $3.7M &nbsp;·&nbsp; Dec: $3.6M with controls</p>
+                        <p className="text-green-600 dark:text-green-400 font-medium">Maintains 2% operating buffer</p>
+                      </div>
+                    </div>
+                  </div>
+
                   {/* Current Trajectory */}
                   <div className="mb-6 bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
                     <div className="flex items-center justify-between mb-6">
@@ -1308,20 +1331,48 @@ export default function BudgetResources() {
           />
           <div className="relative bg-white dark:bg-slate-900 border border-border rounded-2xl max-w-3xl w-full shadow-2xl max-h-[90vh] flex flex-col overflow-hidden">
             <div className="p-6 overflow-y-auto">
-            <div className="flex items-start justify-between mb-6">
-              <div>
-                <h3 className="text-2xl font-bold text-primary mb-1">{monthDetailModal.month} 2024 Detailed Breakdown</h3>
-                <p className="text-sm text-secondary">
-                  Total Spent: <span className="font-bold text-primary">${(monthDetailModal.spent / 1000000).toFixed(2)}M</span> ({((monthDetailModal.spent / monthDetailModal.budget) * 100).toFixed(0)}% of monthly target)
-                </p>
-              </div>
-              <button
-                onClick={() => setMonthDetailModal(null)}
-                className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors"
-              >
-                <X className="w-5 h-5 text-secondary" />
-              </button>
-            </div>
+            {(() => {
+              const _idx = monthlyTrend.findIndex(m => m.month === monthDetailModal.month);
+              const _prev = _idx > 0 ? monthlyTrend[_idx - 1] : null;
+              const _delta = _prev ? ((monthDetailModal.spent - _prev.spent) / _prev.spent) * 100 : null;
+              const _cats = [
+                { label: 'Personnel', value: monthDetailModal.personnel },
+                { label: 'Operations', value: monthDetailModal.operations },
+                { label: 'Training', value: monthDetailModal.training },
+                { label: 'Equipment', value: monthDetailModal.equipment },
+              ];
+              const _largest = _cats.reduce((a, b) => a.value > b.value ? a : b);
+              return (
+                <>
+                  <div className="flex items-start justify-between mb-4">
+                    <div>
+                      <h3 className="text-2xl font-bold text-primary mb-1">{monthDetailModal.month} 2024 Detailed Breakdown</h3>
+                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-secondary">
+                        <span>Total Spent: <span className="font-bold text-primary">${(monthDetailModal.spent / 1000000).toFixed(2)}M</span> ({((monthDetailModal.spent / monthDetailModal.budget) * 100).toFixed(0)}% of target)</span>
+                        {_delta !== null && (
+                          <span className={`font-semibold ${_delta > 0 ? 'text-red-700 dark:text-red-400' : 'text-green-600 dark:text-green-400'}`}>
+                            {_delta > 0 ? '+' : ''}{_delta.toFixed(1)}% vs {_prev.month}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => setMonthDetailModal(null)}
+                      className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors"
+                    >
+                      <X className="w-5 h-5 text-secondary" />
+                    </button>
+                  </div>
+                  <div className="mb-5 p-3 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/30 rounded-lg flex items-center gap-3">
+                    <TrendingUp className="w-4 h-4 text-slate-500 dark:text-slate-400 flex-shrink-0" />
+                    <p className="text-[13px] text-slate-700 dark:text-slate-300">
+                      <span className="font-semibold">Largest cost driver: </span>
+                      {_largest.label} — ${(_largest.value / 1000000).toFixed(2)}M ({((_largest.value / monthDetailModal.spent) * 100).toFixed(0)}% of total spend)
+                    </p>
+                  </div>
+                </>
+              );
+            })()}
 
             {/* Category Breakdown */}
             <div className="mb-6">
@@ -1353,6 +1404,9 @@ export default function BudgetResources() {
                       <span className="font-medium text-primary">${((monthDetailModal.personnel * 0.025) / 1000000).toFixed(2)}M</span>
                     </div>
                   </div>
+                  <div className="mt-3 pt-3 border-t border-slate-100 dark:border-slate-700/30">
+                    <p className="text-[11px] text-slate-600 dark:text-slate-400"><span className="font-semibold text-blue-600 dark:text-blue-400">Optimization:</span> Cap overtime at 8% of monthly personnel budget — saves ~$24K/month</p>
+                  </div>
                 </div>
 
                 {/* Operations */}
@@ -1382,6 +1436,9 @@ export default function BudgetResources() {
                       <span className="font-medium text-primary">${((monthDetailModal.operations * 0.24) / 1000000).toFixed(2)}M</span>
                     </div>
                   </div>
+                  <div className="mt-3 pt-3 border-t border-slate-100 dark:border-slate-700/30">
+                    <p className="text-[11px] text-slate-600 dark:text-slate-400"><span className="font-semibold text-blue-600 dark:text-blue-400">Optimization:</span> Fleet route optimization could reduce fuel costs (35% of ops) by 10% — saves ~$18K/month</p>
+                  </div>
                 </div>
 
                 {/* Training */}
@@ -1407,6 +1464,9 @@ export default function BudgetResources() {
                       <span className="font-medium text-primary">${((monthDetailModal.training * 0.27) / 1000000).toFixed(2)}M</span>
                     </div>
                   </div>
+                  <div className="mt-3 pt-3 border-t border-slate-100 dark:border-slate-700/30">
+                    <p className="text-[11px] text-slate-600 dark:text-slate-400"><span className="font-semibold text-blue-600 dark:text-blue-400">Optimization:</span> Consolidate tactical training to quarterly sessions — reduces facility costs by ~$8K/month</p>
+                  </div>
                 </div>
 
                 {/* Equipment/Capital */}
@@ -1427,6 +1487,9 @@ export default function BudgetResources() {
                       <span>• Computer upgrades:</span>
                       <span className="font-medium text-primary">${((monthDetailModal.equipment * 0.40) / 1000000).toFixed(2)}M</span>
                     </div>
+                  </div>
+                  <div className="mt-3 pt-3 border-t border-slate-100 dark:border-slate-700/30">
+                    <p className="text-[11px] text-slate-600 dark:text-slate-400"><span className="font-semibold text-blue-600 dark:text-blue-400">Optimization:</span> Batch body camera repairs — reduces per-unit service cost by 15% (~$9K savings)</p>
                   </div>
                 </div>
               </div>
