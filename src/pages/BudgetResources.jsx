@@ -17,6 +17,10 @@ export default function BudgetResources() {
   const [exportModal, setExportModal] = useState(false);
   const [varianceReportOpen, setVarianceReportOpen] = useState(false);
   const [aiInsightsExpanded, setAiInsightsExpanded] = useState(true);
+  const [confirmActionModal, setConfirmActionModal] = useState(null);
+  const [applyAllModal, setApplyAllModal] = useState(false);
+  const [actionFilter, setActionFilter] = useState('all');
+  const [selectedActions, setSelectedActions] = useState(new Set([1, 2, 3, 4, 5]));
 
   // Budget data
   const fiscalYear = {
@@ -199,13 +203,68 @@ export default function BudgetResources() {
   const primaryBtn = 'px-4 py-2 rounded-lg text-sm font-semibold transition-colors';
   const secondaryBtn = 'px-4 py-2 rounded-lg text-sm font-semibold border border-slate-300 dark:border-slate-600/40 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/40 transition-colors';
 
+  const fmt = (v) => {
+    const abs = Math.abs(v);
+    if (abs >= 1000000) return `$${(v / 1000000).toFixed(1)}M`;
+    if (abs >= 1000) return `$${Math.round(v / 1000)}K`;
+    return `$${v}`;
+  };
+
   const recommendedActions = [
-    { id: 1, title: 'Reallocate Training Division surplus to Patrol', impact: 300000, urgency: 'High', confidence: 'High', detail: 'Training has $600K surplus. Moving $300K directly covers Patrol overtime overrun.' },
-    { id: 2, title: 'Cap overtime to emergencies only — Nov & Dec', impact: 220000, urgency: 'High', confidence: 'High', detail: 'Overtime at 92% with 2 months left. Hard cap projected to save $220K by year-end.' },
-    { id: 3, title: 'Defer non-critical equipment purchases to FY 2025', impact: 180000, urgency: 'Medium', confidence: 'Medium', detail: 'Defer $180K of Q4 equipment orders. No immediate operational impact identified.' },
-    { id: 4, title: 'Freeze discretionary spend in Support Services', impact: 100000, urgency: 'Medium', confidence: 'High', detail: 'Support has $315K available, $90K committed. Freeze non-PO\'d spend through Dec.' },
-    { id: 5, title: 'Delay 2 admin hires until January 2025', impact: 85000, urgency: 'Low', confidence: 'Medium', detail: 'Headcount delay saves $85K in Nov–Dec salary and benefits with no service impact.' },
+    {
+      id: 1,
+      title: 'Reallocate Training Division surplus to Patrol',
+      why: 'Patrol is trending $150K over budget with 61 days left. Without intervention it will close the FY in deficit — impacting next year\'s allocation request.',
+      consequence: 'Moves $300K from Training\'s $600K surplus directly into Patrol. Training still closes with $300K buffer. Patrol returns to within budget.',
+      impact: 300000, urgency: 'High', confidence: 92, confidenceLabel: 'High',
+      riskLevel: 'Low', affectedDepts: ['Patrol Division', 'Training Division'],
+      categories: ['urgent', 'cost-saving'],
+    },
+    {
+      id: 2,
+      title: 'Cap overtime to emergencies only — Nov & Dec',
+      why: 'Overtime is at 92% utilization with two months remaining and on pace to exceed its allocation by $300K — the single largest controllable cost driver.',
+      consequence: 'Hard cap saves $220K. All non-emergency OT requires supervisor sign-off. Patrol coverage maintained through existing scheduling.',
+      impact: 220000, urgency: 'High', confidence: 88, confidenceLabel: 'High',
+      riskLevel: 'Medium', affectedDepts: ['All Divisions'],
+      categories: ['urgent', 'high-impact', 'cost-saving'],
+    },
+    {
+      id: 3,
+      title: 'Defer non-critical equipment purchases to FY 2025',
+      why: 'Q4 equipment orders are discretionary and already budgeted in FY25. Executing them now accelerates spend with no operational advantage this year.',
+      consequence: 'Defers $180K to next fiscal year. Safety and mission-critical equipment is excluded — reviewed item by item.',
+      impact: 180000, urgency: 'Medium', confidence: 79, confidenceLabel: 'Medium',
+      riskLevel: 'Low', affectedDepts: ['All Divisions'],
+      categories: ['high-impact', 'cost-saving'],
+    },
+    {
+      id: 4,
+      title: 'Freeze discretionary spend in Support Services',
+      why: 'Support Services has $315K available but $90K already committed, leaving only $225K of true buffer. Uncontrolled end-of-year spend is a common overage source.',
+      consequence: 'Saves $100K. Freezes all non-PO\'d, non-essential purchases through Dec 31. No active contracts or services disrupted.',
+      impact: 100000, urgency: 'Medium', confidence: 91, confidenceLabel: 'High',
+      riskLevel: 'Low', affectedDepts: ['Support Services'],
+      categories: ['cost-saving'],
+    },
+    {
+      id: 5,
+      title: 'Delay 2 admin hires until January 2025',
+      why: 'Two admin positions are open but not operationally critical for Q4. Filling them now adds payroll that pushes the year-end total closer to the limit.',
+      consequence: 'Saves $85K in Nov–Dec salary and benefits. Positions remain approved and will be filled on schedule in January.',
+      impact: 85000, urgency: 'Low', confidence: 75, confidenceLabel: 'Medium',
+      riskLevel: 'Low', affectedDepts: ['Administrative Services'],
+      categories: ['cost-saving'],
+    },
   ];
+
+  const totalActionSavings = recommendedActions.reduce((sum, a) => sum + a.impact, 0);
+  const filteredActions = actionFilter === 'all'
+    ? recommendedActions
+    : recommendedActions.filter(a => a.categories.includes(actionFilter));
+  const selectedActionSavings = [...selectedActions].reduce(
+    (sum, id) => sum + (recommendedActions.find(a => a.id === id)?.impact || 0), 0
+  );
 
   return (
     <DashboardLayout>
@@ -225,7 +284,7 @@ export default function BudgetResources() {
                 <div className="flex items-center gap-2 text-[11px] text-slate-500">
                   <span className={`font-semibold ${isOverBudgetProjection ? 'text-red-700 dark:text-red-400' : 'text-green-600 dark:text-green-400'}`}>
                     {isOverBudgetProjection
-                      ? `Projected to exceed budget by $${(overBudgetProjection / 1000).toFixed(0)}K`
+                      ? `Projected to exceed budget by ${fmt(overBudgetProjection)}`
                       : `${((fiscalYear.available / fiscalYear.totalBudget) * 100).toFixed(1)}% budget remaining`}
                   </span>
                   <span>·</span>
@@ -272,9 +331,22 @@ export default function BudgetResources() {
               </div>
             </div>
 
+            {/* If No Action Taken Banner */}
+            {isOverBudgetProjection && (
+              <div className="mb-5 flex items-center gap-3 px-4 py-3 bg-red-50 dark:bg-red-500/5 border border-red-200 dark:border-red-500/20 rounded-xl">
+                <ShieldAlert className="w-4 h-4 text-red-700 dark:text-red-400 flex-shrink-0" />
+                <div className="flex-1 text-sm">
+                  <span className="font-semibold text-red-700 dark:text-red-400">If no action is taken: </span>
+                  <span className="text-slate-700 dark:text-slate-300">projected to exceed budget by <span className="font-semibold text-red-700 dark:text-red-400">$1.2M</span> by December 31 at the current burn rate of $140K/day.</span>
+                </div>
+                <button onClick={() => setActiveTab('forecast')} className="flex-shrink-0 text-xs font-semibold text-red-700 dark:text-red-400 hover:underline whitespace-nowrap">
+                  View Forecast →
+                </button>
+              </div>
+            )}
+
             {/* KPI Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-              {/* Total Budget */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">              {/* Total Budget */}
               <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Total Budget</span>
@@ -282,7 +354,7 @@ export default function BudgetResources() {
                     <Wallet className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                   </div>
                 </div>
-                <p className="text-3xl font-bold text-slate-900 dark:text-white mb-1">${(fiscalYear.totalBudget / 1000000).toFixed(1)}M</p>
+                <p className="text-3xl font-bold text-slate-900 dark:text-white mb-1">{fmt(fiscalYear.totalBudget)}</p>
                 <div className="space-y-1.5 border-t border-slate-200 dark:border-slate-700/30 pt-3 mt-3">
                   <div className="flex justify-between text-xs">
                     <span className="text-slate-500 dark:text-slate-400">Fiscal Year:</span>
@@ -307,7 +379,7 @@ export default function BudgetResources() {
                     <CircleDollarSign className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                   </div>
                 </div>
-                <p className="text-3xl font-bold text-slate-900 dark:text-white mb-1">${(fiscalYear.spent / 1000000).toFixed(1)}M</p>
+                <p className="text-3xl font-bold text-slate-900 dark:text-white mb-1">{fmt(fiscalYear.spent)}</p>
                 <div className="mb-3">
                   <div className="flex justify-between text-xs mb-1.5">
                     <span className="text-slate-500 dark:text-slate-400">Budget utilization</span>
@@ -339,7 +411,7 @@ export default function BudgetResources() {
                     <Receipt className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                   </div>
                 </div>
-                <p className="text-3xl font-bold text-slate-900 dark:text-white mb-1">${(fiscalYear.committed / 1000000).toFixed(1)}M</p>
+                <p className="text-3xl font-bold text-slate-900 dark:text-white mb-1">{fmt(fiscalYear.committed)}</p>
                 <div className="mb-3">
                   <div className="flex justify-between text-xs mb-1.5">
                     <span className="text-slate-500 dark:text-slate-400">Of total budget</span>
@@ -369,7 +441,7 @@ export default function BudgetResources() {
                     <PiggyBank className="w-4 h-4 text-green-600 dark:text-green-400" />
                   </div>
                 </div>
-                <p className="text-3xl font-bold text-slate-900 dark:text-white mb-1">${(fiscalYear.available / 1000000).toFixed(1)}M</p>
+                <p className="text-3xl font-bold text-slate-900 dark:text-white mb-1">{fmt(fiscalYear.available)}</p>
                 <div className="mb-3">
                   <div className="flex justify-between text-xs mb-1.5">
                     <span className="text-slate-500 dark:text-slate-400">Remaining budget</span>
@@ -398,16 +470,64 @@ export default function BudgetResources() {
                 <div className="flex items-center gap-3">
                   <Zap className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                   <span className="text-sm font-semibold text-slate-900 dark:text-white">Recommended Actions</span>
-                  <span className="text-[11px] text-slate-500 dark:text-slate-400 hidden sm:inline">5 actions · Est. impact: $885K</span>
+                  <span className="text-[11px] text-slate-500 dark:text-slate-400 hidden sm:inline">{recommendedActions.length} actions · Est. impact: {fmt(totalActionSavings)}</span>
                 </div>
                 <span className="px-1.5 py-0.5 bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400 text-[11px] font-semibold rounded">Action Required</span>
               </div>
+
+              {/* Impact Summary */}
+              <div className="px-5 py-4 border-b border-slate-200 dark:border-slate-700/30 grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div className="p-3 bg-red-50 dark:bg-red-500/5 border border-red-200 dark:border-red-500/20 rounded-lg">
+                  <p className="text-[10px] font-bold text-red-700 dark:text-red-400 uppercase tracking-wide mb-1">Current Projection</p>
+                  <p className="text-xl font-bold text-red-700 dark:text-red-400">$49.7M</p>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">103% · $1.2M over budget</p>
+                </div>
+                <div className="p-3 bg-green-50 dark:bg-green-500/5 border border-green-200 dark:border-green-500/20 rounded-lg">
+                  <p className="text-[10px] font-bold text-green-600 dark:text-green-400 uppercase tracking-wide mb-1">After All Actions Applied</p>
+                  <p className="text-xl font-bold text-green-600 dark:text-green-400">$48.3M</p>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">99.6% · $200K under budget</p>
+                </div>
+                <div className="p-3 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/30 rounded-lg">
+                  <p className="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wide mb-1">Total Potential Savings</p>
+                  <p className="text-xl font-bold text-slate-900 dark:text-white">{fmt(totalActionSavings)}</p>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">Across {recommendedActions.length} recommended actions</p>
+                </div>
+              </div>
+
+              {/* Filters */}
+              <div className="px-5 py-3 border-b border-slate-200 dark:border-slate-700/30 flex items-center gap-2 flex-wrap">
+                {[
+                  { id: 'all', label: 'All' },
+                  { id: 'urgent', label: 'Urgent' },
+                  { id: 'high-impact', label: 'High Impact' },
+                  { id: 'cost-saving', label: 'Cost-Saving' },
+                ].map(f => (
+                  <button
+                    key={f.id}
+                    onClick={() => setActionFilter(f.id)}
+                    className={`px-2.5 py-1 text-[11px] font-semibold rounded-lg transition-colors ${
+                      actionFilter === f.id
+                        ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900'
+                        : 'bg-slate-100 dark:bg-slate-700/40 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700/60'
+                    }`}
+                  >
+                    {f.label}
+                    {f.id !== 'all' && (
+                      <span className="ml-1 opacity-60">{recommendedActions.filter(a => a.categories.includes(f.id)).length}</span>
+                    )}
+                  </button>
+                ))}
+                <span className="ml-auto text-[11px] text-slate-500 dark:text-slate-400">
+                  {filteredActions.length} of {recommendedActions.length} actions
+                </span>
+              </div>
+
               <div className="divide-y divide-slate-100 dark:divide-slate-700/20">
-                {recommendedActions.map((action, idx) => (
-                  <div key={action.id} className="flex items-center gap-3 px-5 py-3.5 hover:bg-slate-50 dark:hover:bg-slate-800/10 transition-colors">
-                    <span className="text-[11px] font-bold text-slate-400 w-4 flex-shrink-0 tabular-nums">{idx + 1}</span>
+                {filteredActions.map((action, idx) => (
+                  <div key={action.id} className="flex items-start gap-3 px-5 py-4 hover:bg-slate-50 dark:hover:bg-slate-800/10 transition-colors">
+                    <span className="text-[11px] font-bold text-slate-400 w-4 flex-shrink-0 tabular-nums mt-0.5">{idx + 1}</span>
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-0.5 flex-wrap">
+                      <div className="flex items-center gap-2 mb-1 flex-wrap">
                         <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded flex-shrink-0 ${
                           action.urgency === 'High' ? 'bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-400' :
                           action.urgency === 'Medium' ? 'bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400' :
@@ -415,15 +535,22 @@ export default function BudgetResources() {
                         }`}>{action.urgency}</span>
                         <span className="text-[13px] font-semibold text-slate-800 dark:text-slate-200">{action.title}</span>
                       </div>
-                      <p className="text-[12px] text-slate-500 dark:text-slate-400 truncate">{action.detail}</p>
+                      <p className="text-[12px] text-slate-600 dark:text-slate-400 mb-1 leading-relaxed">{action.why}</p>
+                      <div className="flex items-center gap-3 text-[11px] text-slate-500 dark:text-slate-400">
+                        <span>AI confidence: <span className="font-semibold text-slate-700 dark:text-slate-300">{action.confidence}%</span></span>
+                        <span>·</span>
+                        <span>Risk: <span className={`font-semibold ${action.riskLevel === 'Low' ? 'text-green-600 dark:text-green-400' : action.riskLevel === 'Medium' ? 'text-amber-600 dark:text-amber-400' : 'text-red-700 dark:text-red-400'}`}>{action.riskLevel}</span></span>
+                        <span>·</span>
+                        <span>{action.affectedDepts.join(', ')}</span>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-3 flex-shrink-0">
+                    <div className="flex items-center gap-3 flex-shrink-0 mt-0.5">
                       <div className="text-right hidden sm:block">
-                        <p className="text-[13px] font-bold text-green-600 dark:text-green-400">${(action.impact / 1000).toFixed(0)}K</p>
-                        <p className="text-[10px] text-slate-500 dark:text-slate-400">{action.confidence} confidence</p>
+                        <p className="text-[13px] font-bold text-green-600 dark:text-green-400">{fmt(action.impact)}</p>
+                        <p className="text-[10px] text-slate-500 dark:text-slate-400">{action.confidenceLabel} confidence</p>
                       </div>
                       <button
-                        onClick={() => setReallocationModal(true)}
+                        onClick={() => setConfirmActionModal(action)}
                         className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg transition-colors"
                       >
                         Apply Action
@@ -433,12 +560,14 @@ export default function BudgetResources() {
                 ))}
               </div>
               <div className="px-5 py-3 border-t border-slate-200 dark:border-slate-700/30 flex items-center justify-between bg-slate-50 dark:bg-slate-900/20">
-                <span className="text-[11px] text-slate-500 dark:text-slate-400">Applying all actions prevents $1.2M overrun · High overall confidence</span>
+                <span className="text-[11px] text-slate-500 dark:text-slate-400">
+                  {selectedActions.size} of {recommendedActions.length} actions selected · Saves {fmt(selectedActionSavings)}
+                </span>
                 <button
-                  onClick={() => setReallocationModal(true)}
-                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-colors"
+                  onClick={() => setApplyAllModal(true)}
+                  className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-colors"
                 >
-                  Apply All
+                  <Zap className="w-3.5 h-3.5" /> Apply All — {fmt(totalActionSavings)}
                 </button>
               </div>
             </div>
@@ -537,7 +666,7 @@ export default function BudgetResources() {
                     <div>
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-sm font-semibold text-secondary">TOTAL EXPENDITURES:</span>
-                        <span className="text-sm font-bold text-primary">${(fiscalYear.spent / 1000000).toFixed(2)}M / ${(fiscalYear.totalBudget / 1000000).toFixed(1)}M ({fiscalYear.percentSpent}%)</span>
+                        <span className="text-sm font-bold text-primary">{fmt(fiscalYear.spent)} / {fmt(fiscalYear.totalBudget)} ({fiscalYear.percentSpent}%)</span>
                       </div>
                       <div className="w-full h-3 bg-white dark:bg-slate-700/50 rounded-full overflow-hidden">
                         <div className={`h-full transition-all ${
@@ -553,17 +682,17 @@ export default function BudgetResources() {
                       <div className="grid grid-cols-3 gap-4">
                         <div>
                           <p className="text-xs text-secondary mb-1">Spent (Cash Out)</p>
-                          <p className="text-lg font-bold text-amber-700 dark:text-amber-400">${(fiscalYear.spent / 1000000).toFixed(1)}M</p>
+                          <p className="text-lg font-bold text-amber-700 dark:text-amber-400">{fmt(fiscalYear.spent)}</p>
                           <p className="text-xs text-slate-500">{fiscalYear.percentSpent}%</p>
                         </div>
                         <div>
                           <p className="text-xs text-secondary mb-1">Committed (Approved, Not Paid)</p>
-                          <p className="text-lg font-bold text-purple-400">${(fiscalYear.committed / 1000000).toFixed(1)}M</p>
+                          <p className="text-lg font-bold text-purple-400">{fmt(fiscalYear.committed)}</p>
                           <p className="text-xs text-slate-500">{fiscalYear.percentCommitted.toFixed(1)}%</p>
                         </div>
                         <div>
                           <p className="text-xs text-secondary mb-1">Available (Unallocated)</p>
-                          <p className="text-lg font-bold text-green-600 dark:text-green-400">${(fiscalYear.available / 1000000).toFixed(1)}M</p>
+                          <p className="text-lg font-bold text-green-600 dark:text-green-400">{fmt(fiscalYear.available)}</p>
                           <p className="text-xs text-slate-500">{((fiscalYear.available / fiscalYear.totalBudget) * 100).toFixed(1)}%</p>
                         </div>
                       </div>
@@ -712,7 +841,7 @@ export default function BudgetResources() {
                                   {delta > 0 ? '+' : ''}{delta.toFixed(1)}% vs prior
                                 </span>
                               )}
-                              <span className="text-xs text-slate-500 dark:text-slate-400">${(month.spent / 1000000).toFixed(2)}M</span>
+                              <span className="text-xs text-slate-500 dark:text-slate-400">{fmt(month.spent)}</span>
                               <span className={`text-xs font-semibold w-8 text-right ${
                                 percent > 100 ? 'text-red-700 dark:text-red-400' : percent > 95 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-600 dark:text-slate-300'
                               }`}>{percent.toFixed(0)}%</span>
@@ -725,7 +854,7 @@ export default function BudgetResources() {
                           </div>
                           {isAnomaly && (
                             <p className="text-[10px] text-red-600 dark:text-red-400 mt-1">
-                              Spike: OT +${(month.variance.overtime / 1000).toFixed(0)}K · HVAC +${(month.variance.hvac / 1000).toFixed(0)}K · Fleet +${(month.variance.vehicles / 1000).toFixed(0)}K
+                              Spike: OT +{fmt(month.variance.overtime)} · HVAC +{fmt(month.variance.hvac)} · Fleet +{fmt(month.variance.vehicles)}
                             </p>
                           )}
                         </div>
@@ -773,11 +902,11 @@ export default function BudgetResources() {
                             </div>
 
                             <p className="text-sm text-secondary mb-2">
-                              ${(division.spent / 1000000).toFixed(2)}M / ${(division.budget / 1000000).toFixed(1)}M
+                              {fmt(division.spent)} / {fmt(division.budget)}
                               {division.variance !== 0 && (
                                 <span className={`ml-2 font-semibold flex items-center gap-1 inline-flex ${getVarianceColor(division.variance)}`}>
                                   <TrendIcon className="w-3 h-3" />
-                                  ({division.variance > 0 ? '+' : ''}${(division.variance / 1000).toFixed(0)}K)
+                                  ({division.variance > 0 ? '+' : ''}{fmt(Math.abs(division.variance))})
                                 </span>
                               )}
                             </p>
@@ -788,7 +917,7 @@ export default function BudgetResources() {
                               {division.variance < -100000 && (
                                 <span className="text-red-700 dark:text-red-400 font-semibold flex items-center gap-1">
                                   <ArrowUpCircle className="w-3 h-3" />
-                                  Trending over (+${Math.abs(division.variance / 1000).toFixed(0)}K projected overage)
+                                  Trending over (+{fmt(Math.abs(division.variance))} projected overage)
                                 </span>
                               )}
                               {division.variance >= -100000 && division.variance < 0 && (
@@ -800,7 +929,7 @@ export default function BudgetResources() {
                               {division.variance > 50000 && (
                                 <span className="text-green-600 dark:text-green-400 font-semibold flex items-center gap-1">
                                   <TrendingDown className="w-3 h-3" />
-                                  Under budget (Highest surplus: ${(division.variance / 1000).toFixed(0)}K available)
+                                  Under budget (Highest surplus: {fmt(division.variance)} available)
                                 </span>
                               )}
                               {division.variance >= 0 && division.variance <= 50000 && (
@@ -835,15 +964,15 @@ export default function BudgetResources() {
                         <div className="grid grid-cols-3 gap-3 mb-4">
                           <div className="bg-white dark:bg-slate-900/50 rounded-lg p-3">
                             <p className="text-xs text-secondary mb-1">Spent</p>
-                            <p className="text-sm font-bold text-amber-700 dark:text-amber-400">${(division.spent / 1000000).toFixed(2)}M</p>
+                            <p className="text-sm font-bold text-amber-700 dark:text-amber-400">{fmt(division.spent)}</p>
                           </div>
                           <div className="bg-white dark:bg-slate-900/50 rounded-lg p-3">
                             <p className="text-xs text-secondary mb-1">Committed</p>
-                            <p className="text-sm font-bold text-purple-400">${(division.committed / 1000000).toFixed(2)}M</p>
+                            <p className="text-sm font-bold text-purple-400">{fmt(division.committed)}</p>
                           </div>
                           <div className="bg-white dark:bg-slate-900/50 rounded-lg p-3">
                             <p className="text-xs text-secondary mb-1">Available</p>
-                            <p className="text-sm font-bold text-green-600 dark:text-green-400">${(division.available / 1000000).toFixed(2)}M</p>
+                            <p className="text-sm font-bold text-green-600 dark:text-green-400">{fmt(division.available)}</p>
                           </div>
                         </div>
 
@@ -870,7 +999,7 @@ export default function BudgetResources() {
                                 <div className="flex items-center justify-between mb-2">
                                   <span className="text-sm text-secondary">{cat.name}</span>
                                   <div className="flex items-center gap-3">
-                                    <span className="text-sm text-secondary">${(cat.spent / 1000000).toFixed(2)}M / ${(cat.budget / 1000000).toFixed(2)}M</span>
+                                    <span className="text-sm text-secondary">{fmt(cat.spent)} / {fmt(cat.budget)}</span>
                                     <span className={`text-sm font-bold ${
                                       cat.percent >= 95 ? 'text-red-700 dark:text-red-400' : cat.percent >= 85 ? 'text-amber-700 dark:text-amber-400' : 'text-green-600 dark:text-green-400'
                                     }`}>{cat.percent.toFixed(1)}%</span>
@@ -1322,6 +1451,144 @@ export default function BudgetResources() {
           </div>
         </div>
 
+      {/* Confirm Action Modal */}
+      {confirmActionModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setConfirmActionModal(null)} />
+          <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl max-w-lg w-full shadow-2xl p-6">
+            <div className="flex items-start justify-between mb-5">
+              <div>
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-1">Confirm Action</h3>
+                <p className="text-sm text-slate-500 dark:text-slate-400">Review before applying</p>
+              </div>
+              <button onClick={() => setConfirmActionModal(null)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors">
+                <X className="w-5 h-5 text-slate-500" />
+              </button>
+            </div>
+            <div className="space-y-4 mb-5">
+              <div>
+                <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1">Action</p>
+                <p className="text-sm font-semibold text-slate-900 dark:text-white">{confirmActionModal.title}</p>
+              </div>
+              <div>
+                <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1">Why This Matters</p>
+                <p className="text-sm text-slate-700 dark:text-slate-300">{confirmActionModal.why}</p>
+              </div>
+              <div>
+                <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1">Expected Outcome</p>
+                <p className="text-sm text-slate-700 dark:text-slate-300">{confirmActionModal.consequence}</p>
+              </div>
+              <div className="grid grid-cols-3 gap-3">
+                <div className="p-3 bg-green-50 dark:bg-green-500/5 border border-green-200 dark:border-green-500/20 rounded-lg text-center">
+                  <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">Savings</p>
+                  <p className="text-lg font-bold text-green-600 dark:text-green-400">{fmt(confirmActionModal.impact)}</p>
+                </div>
+                <div className={`p-3 rounded-lg text-center border ${
+                  confirmActionModal.riskLevel === 'High' ? 'bg-red-50 dark:bg-red-500/5 border-red-200 dark:border-red-500/20' :
+                  confirmActionModal.riskLevel === 'Medium' ? 'bg-amber-50 dark:bg-amber-500/5 border-amber-200 dark:border-amber-500/20' :
+                  'bg-slate-50 dark:bg-slate-800/30 border-slate-200 dark:border-slate-700/30'
+                }`}>
+                  <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">Risk</p>
+                  <p className={`text-sm font-bold ${
+                    confirmActionModal.riskLevel === 'High' ? 'text-red-700 dark:text-red-400' :
+                    confirmActionModal.riskLevel === 'Medium' ? 'text-amber-700 dark:text-amber-400' :
+                    'text-green-600 dark:text-green-400'
+                  }`}>{confirmActionModal.riskLevel}</p>
+                </div>
+                <div className="p-3 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/30 rounded-lg text-center">
+                  <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">AI Confidence</p>
+                  <p className="text-sm font-bold text-slate-900 dark:text-white">{confirmActionModal.confidence}%</p>
+                </div>
+              </div>
+              <div>
+                <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1.5">Affected Departments</p>
+                <div className="flex flex-wrap gap-1.5">
+                  {confirmActionModal.affectedDepts.map(d => (
+                    <span key={d} className="px-2 py-0.5 bg-slate-100 dark:bg-slate-700/40 text-slate-600 dark:text-slate-400 text-xs rounded-lg">{d}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className="flex gap-2 pt-4 border-t border-slate-200 dark:border-slate-700/30">
+              <button onClick={() => setConfirmActionModal(null)} className={`flex-1 ${secondaryBtn}`}>Cancel</button>
+              <button
+                onClick={() => { setReallocationModal(true); setConfirmActionModal(null); }}
+                className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-colors"
+              >
+                Confirm & Apply
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Apply All Modal */}
+      {applyAllModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setApplyAllModal(false)} />
+          <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl max-w-lg w-full shadow-2xl">
+            <div className="p-6 border-b border-slate-200 dark:border-slate-700/30">
+              <div className="flex items-start justify-between">
+                <div>
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white">Apply Recommended Actions</h3>
+                  <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">Toggle actions on or off before applying</p>
+                </div>
+                <button onClick={() => setApplyAllModal(false)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors">
+                  <X className="w-5 h-5 text-slate-500" />
+                </button>
+              </div>
+            </div>
+            <div className="p-6 space-y-2.5 max-h-80 overflow-y-auto">
+              {recommendedActions.map(action => {
+                const isSelected = selectedActions.has(action.id);
+                return (
+                  <div
+                    key={action.id}
+                    className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-colors ${
+                      isSelected
+                        ? 'bg-blue-50 dark:bg-blue-500/5 border-blue-200 dark:border-blue-500/25'
+                        : 'bg-slate-50 dark:bg-slate-800/20 border-slate-200 dark:border-slate-700/30 opacity-60'
+                    }`}
+                    onClick={() => {
+                      const next = new Set(selectedActions);
+                      if (next.has(action.id)) next.delete(action.id); else next.add(action.id);
+                      setSelectedActions(next);
+                    }}
+                  >
+                    <div className={`w-4 h-4 rounded flex-shrink-0 border-2 flex items-center justify-center ${
+                      isSelected ? 'bg-blue-600 border-blue-600' : 'border-slate-400 dark:border-slate-500'
+                    }`}>
+                      {isSelected && <CheckCircle className="w-3 h-3 text-white" />}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-[13px] font-semibold text-slate-800 dark:text-slate-200 truncate">{action.title}</p>
+                      <p className="text-[11px] text-slate-500 dark:text-slate-400">{action.urgency} urgency · {action.confidence}% AI confidence · Risk: {action.riskLevel}</p>
+                    </div>
+                    <span className="text-[13px] font-bold text-green-600 dark:text-green-400 flex-shrink-0">{fmt(action.impact)}</span>
+                  </div>
+                );
+              })}
+            </div>
+            <div className="p-6 border-t border-slate-200 dark:border-slate-700/30">
+              <div className="flex items-center justify-between mb-4">
+                <span className="text-sm text-slate-500 dark:text-slate-400">{selectedActions.size} of {recommendedActions.length} actions selected</span>
+                <span className="text-sm font-bold text-green-600 dark:text-green-400">Total savings: {fmt(selectedActionSavings)}</span>
+              </div>
+              <div className="flex gap-2">
+                <button onClick={() => setApplyAllModal(false)} className={`flex-1 ${secondaryBtn}`}>Cancel</button>
+                <button
+                  onClick={() => { setReallocationModal(true); setApplyAllModal(false); }}
+                  disabled={selectedActions.size === 0}
+                  className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white text-sm font-semibold rounded-lg transition-colors"
+                >
+                  Apply {selectedActions.size} Action{selectedActions.size !== 1 ? 's' : ''} — {fmt(selectedActionSavings)}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Month Detail Modal */}
       {monthDetailModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -1342,13 +1609,27 @@ export default function BudgetResources() {
                 { label: 'Equipment', value: monthDetailModal.equipment },
               ];
               const _largest = _cats.reduce((a, b) => a.value > b.value ? a : b);
+              const _smallest = _cats.reduce((a, b) => a.value < b.value ? a : b);
+              const _biggestProblem = monthDetailModal.variance
+                ? {
+                    label: `Unplanned expense spike — ${fmt(monthDetailModal.variance.overtime + monthDetailModal.variance.hvac + monthDetailModal.variance.vehicles)} above budget`,
+                    detail: `Emergency HVAC +${fmt(monthDetailModal.variance.hvac)}, overtime surge +${fmt(monthDetailModal.variance.overtime)}, unplanned vehicle repairs +${fmt(monthDetailModal.variance.vehicles)}.`,
+                  }
+                : {
+                    label: `${_largest.label} — ${((_largest.value / monthDetailModal.spent) * 100).toFixed(0)}% of total spend`,
+                    detail: `At ${fmt(_largest.value)}, this is the dominant cost category. Focused controls here have the highest ROI.`,
+                  };
+              const _biggestOpportunity = {
+                label: `${_smallest.label} — most deferrable category at ${fmt(_smallest.value)}`,
+                detail: `${_smallest.label} represents ${((_smallest.value / monthDetailModal.spent) * 100).toFixed(0)}% of spend and has the most scheduling flexibility. Consolidation could save 10–15%.`,
+              };
               return (
                 <>
                   <div className="flex items-start justify-between mb-4">
                     <div>
                       <h3 className="text-2xl font-bold text-primary mb-1">{monthDetailModal.month} 2024 Detailed Breakdown</h3>
                       <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-secondary">
-                        <span>Total Spent: <span className="font-bold text-primary">${(monthDetailModal.spent / 1000000).toFixed(2)}M</span> ({((monthDetailModal.spent / monthDetailModal.budget) * 100).toFixed(0)}% of target)</span>
+                        <span>Total Spent: <span className="font-bold text-primary">{fmt(monthDetailModal.spent)}</span> ({((monthDetailModal.spent / monthDetailModal.budget) * 100).toFixed(0)}% of target)</span>
                         {_delta !== null && (
                           <span className={`font-semibold ${_delta > 0 ? 'text-red-700 dark:text-red-400' : 'text-green-600 dark:text-green-400'}`}>
                             {_delta > 0 ? '+' : ''}{_delta.toFixed(1)}% vs {_prev.month}
@@ -1363,12 +1644,17 @@ export default function BudgetResources() {
                       <X className="w-5 h-5 text-secondary" />
                     </button>
                   </div>
-                  <div className="mb-5 p-3 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/30 rounded-lg flex items-center gap-3">
-                    <TrendingUp className="w-4 h-4 text-slate-500 dark:text-slate-400 flex-shrink-0" />
-                    <p className="text-[13px] text-slate-700 dark:text-slate-300">
-                      <span className="font-semibold">Largest cost driver: </span>
-                      {_largest.label} — ${(_largest.value / 1000000).toFixed(2)}M ({((_largest.value / monthDetailModal.spent) * 100).toFixed(0)}% of total spend)
-                    </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5">
+                    <div className="p-3 bg-red-50 dark:bg-red-500/5 border border-red-200 dark:border-red-500/15 rounded-lg">
+                      <p className="text-[10px] font-bold text-red-700 dark:text-red-400 uppercase tracking-wide mb-1">Biggest Problem</p>
+                      <p className="text-[13px] font-semibold text-slate-800 dark:text-slate-200 mb-0.5">{_biggestProblem.label}</p>
+                      <p className="text-[11px] text-slate-500 dark:text-slate-400">{_biggestProblem.detail}</p>
+                    </div>
+                    <div className="p-3 bg-green-50 dark:bg-green-500/5 border border-green-200 dark:border-green-500/15 rounded-lg">
+                      <p className="text-[10px] font-bold text-green-600 dark:text-green-400 uppercase tracking-wide mb-1">Biggest Opportunity</p>
+                      <p className="text-[13px] font-semibold text-slate-800 dark:text-slate-200 mb-0.5">{_biggestOpportunity.label}</p>
+                      <p className="text-[11px] text-slate-500 dark:text-slate-400">{_biggestOpportunity.detail}</p>
+                    </div>
                   </div>
                 </>
               );
@@ -1385,23 +1671,23 @@ export default function BudgetResources() {
                       <Users className="w-5 h-5 text-blue-400" />
                       <span className="font-semibold text-primary">Personnel:</span>
                     </div>
-                    <span className="text-lg font-bold text-blue-400">${(monthDetailModal.personnel / 1000000).toFixed(2)}M (78%)</span>
+                    <span className="text-lg font-bold text-blue-400">{fmt(monthDetailModal.personnel)} (78%)</span>
                   </div>
                   <div className="space-y-2 text-sm text-secondary pl-7">
                     <div className="flex justify-between">
                       <span>• Salaries:</span>
-                      <span className="font-medium text-primary">${((monthDetailModal.personnel * 0.875) / 1000000).toFixed(2)}M</span>
+                      <span className="font-medium text-primary">{fmt(monthDetailModal.personnel * 0.875)}</span>
                     </div>
                     <div className="flex justify-between">
                       <span>• Overtime:</span>
                       <span className={`font-medium ${monthDetailModal.variance?.overtime ? 'text-amber-700 dark:text-amber-400' : 'text-primary'}`}>
-                        ${((monthDetailModal.personnel * 0.10) / 1000000).toFixed(2)}M
+                        {fmt(monthDetailModal.personnel * 0.10)}
                         {monthDetailModal.variance?.overtime && <span className="text-xs ml-1 inline-flex items-center gap-0.5">(↑ 25% vs prior month <AlertTriangle className="w-3 h-3" />)</span>}
                       </span>
                     </div>
                     <div className="flex justify-between">
                       <span>• Benefits:</span>
-                      <span className="font-medium text-primary">${((monthDetailModal.personnel * 0.025) / 1000000).toFixed(2)}M</span>
+                      <span className="font-medium text-primary">{fmt(monthDetailModal.personnel * 0.025)}</span>
                     </div>
                   </div>
                   <div className="mt-3 pt-3 border-t border-slate-100 dark:border-slate-700/30">
@@ -1416,24 +1702,24 @@ export default function BudgetResources() {
                       <Wrench className="w-5 h-5 text-green-600 dark:text-green-400" />
                       <span className="font-semibold text-primary">Operations:</span>
                     </div>
-                    <span className="text-lg font-bold text-green-600 dark:text-green-400">${(monthDetailModal.operations / 1000000).toFixed(2)}M (16%)</span>
+                    <span className="text-lg font-bold text-green-600 dark:text-green-400">{fmt(monthDetailModal.operations)} (16%)</span>
                   </div>
                   <div className="space-y-2 text-sm text-secondary pl-7">
                     <div className="flex justify-between">
                       <span>• Vehicle fuel:</span>
-                      <span className="font-medium text-primary">${((monthDetailModal.operations * 0.35) / 1000000).toFixed(2)}M</span>
+                      <span className="font-medium text-primary">{fmt(monthDetailModal.operations * 0.35)}</span>
                     </div>
                     <div className="flex justify-between">
                       <span>• Equipment maintenance:</span>
-                      <span className="font-medium text-primary">${((monthDetailModal.operations * 0.23) / 1000000).toFixed(2)}M</span>
+                      <span className="font-medium text-primary">{fmt(monthDetailModal.operations * 0.23)}</span>
                     </div>
                     <div className="flex justify-between">
                       <span>• Utilities:</span>
-                      <span className="font-medium text-primary">${((monthDetailModal.operations * 0.18) / 1000000).toFixed(2)}M</span>
+                      <span className="font-medium text-primary">{fmt(monthDetailModal.operations * 0.18)}</span>
                     </div>
                     <div className="flex justify-between">
                       <span>• Supplies:</span>
-                      <span className="font-medium text-primary">${((monthDetailModal.operations * 0.24) / 1000000).toFixed(2)}M</span>
+                      <span className="font-medium text-primary">{fmt(monthDetailModal.operations * 0.24)}</span>
                     </div>
                   </div>
                   <div className="mt-3 pt-3 border-t border-slate-100 dark:border-slate-700/30">
@@ -1448,20 +1734,20 @@ export default function BudgetResources() {
                       <Target className="w-5 h-5 text-purple-400" />
                       <span className="font-semibold text-primary">Training:</span>
                     </div>
-                    <span className="text-lg font-bold text-purple-400">${(monthDetailModal.training / 1000000).toFixed(2)}M (4%)</span>
+                    <span className="text-lg font-bold text-purple-400">{fmt(monthDetailModal.training)} (4%)</span>
                   </div>
                   <div className="space-y-2 text-sm text-secondary pl-7">
                     <div className="flex justify-between">
                       <span>• Firearms recertification:</span>
-                      <span className="font-medium text-primary">${((monthDetailModal.training * 0.30) / 1000000).toFixed(2)}M</span>
+                      <span className="font-medium text-primary">{fmt(monthDetailModal.training * 0.30)}</span>
                     </div>
                     <div className="flex justify-between">
                       <span>• Tactical training:</span>
-                      <span className="font-medium text-primary">${((monthDetailModal.training * 0.43) / 1000000).toFixed(2)}M</span>
+                      <span className="font-medium text-primary">{fmt(monthDetailModal.training * 0.43)}</span>
                     </div>
                     <div className="flex justify-between">
                       <span>• CPR/First Aid:</span>
-                      <span className="font-medium text-primary">${((monthDetailModal.training * 0.27) / 1000000).toFixed(2)}M</span>
+                      <span className="font-medium text-primary">{fmt(monthDetailModal.training * 0.27)}</span>
                     </div>
                   </div>
                   <div className="mt-3 pt-3 border-t border-slate-100 dark:border-slate-700/30">
@@ -1476,16 +1762,16 @@ export default function BudgetResources() {
                       <Package className="w-5 h-5 text-amber-700 dark:text-amber-400" />
                       <span className="font-semibold text-primary">Equipment/Capital:</span>
                     </div>
-                    <span className="text-lg font-bold text-amber-700 dark:text-amber-400">${(monthDetailModal.equipment / 1000000).toFixed(2)}M (2%)</span>
+                    <span className="text-lg font-bold text-amber-700 dark:text-amber-400">{fmt(monthDetailModal.equipment)} (2%)</span>
                   </div>
                   <div className="space-y-2 text-sm text-secondary pl-7">
                     <div className="flex justify-between">
                       <span>• Body camera repairs:</span>
-                      <span className="font-medium text-primary">${((monthDetailModal.equipment * 0.60) / 1000000).toFixed(2)}M</span>
+                      <span className="font-medium text-primary">{fmt(monthDetailModal.equipment * 0.60)}</span>
                     </div>
                     <div className="flex justify-between">
                       <span>• Computer upgrades:</span>
-                      <span className="font-medium text-primary">${((monthDetailModal.equipment * 0.40) / 1000000).toFixed(2)}M</span>
+                      <span className="font-medium text-primary">{fmt(monthDetailModal.equipment * 0.40)}</span>
                     </div>
                   </div>
                   <div className="mt-3 pt-3 border-t border-slate-100 dark:border-slate-700/30">
@@ -1500,14 +1786,14 @@ export default function BudgetResources() {
               <div className="mb-6 bg-red-500/10 border border-red-500/30 rounded-xl p-4">
                 <h4 className="text-sm font-bold text-red-700 dark:text-red-400 mb-3">WHY OVER BUDGET:</h4>
                 <div className="space-y-2 text-sm text-secondary">
-                  <p>• Overtime spike due to 4th of July coverage (+${(monthDetailModal.variance.overtime / 1000).toFixed(0)}K)</p>
-                  <p>• Emergency HVAC repair in jail (+${(monthDetailModal.variance.hvac / 1000).toFixed(0)}K)</p>
-                  <p>• Unplanned vehicle repairs (+${(monthDetailModal.variance.vehicles / 1000).toFixed(0)}K)</p>
+                  <p>• Overtime spike due to 4th of July coverage (+{fmt(monthDetailModal.variance.overtime)})</p>
+                  <p>• Emergency HVAC repair in jail (+{fmt(monthDetailModal.variance.hvac)})</p>
+                  <p>• Unplanned vehicle repairs (+{fmt(monthDetailModal.variance.vehicles)})</p>
                 </div>
                 <div className="mt-4 pt-4 border-t border-red-500/20">
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-semibold text-secondary">VARIANCE:</span>
-                    <span className="text-lg font-bold text-red-700 dark:text-red-400">+${((monthDetailModal.spent - monthDetailModal.budget) / 1000).toFixed(0)}K over monthly target</span>
+                    <span className="text-lg font-bold text-red-700 dark:text-red-400">+{fmt(monthDetailModal.spent - monthDetailModal.budget)} over monthly target</span>
                   </div>
                 </div>
               </div>
