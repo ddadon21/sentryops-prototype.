@@ -20,7 +20,15 @@ export default function BudgetResources() {
   const [confirmActionModal, setConfirmActionModal] = useState(null);
   const [applyAllModal, setApplyAllModal] = useState(false);
   const [actionFilter, setActionFilter] = useState('all');
+  const [actionSort, setActionSort] = useState('impact');
   const [selectedActions, setSelectedActions] = useState(new Set([1, 2, 3, 4, 5]));
+  const [auditLog, setAuditLog] = useState([
+    { id: 'al-1', actionTitle: 'Fleet maintenance contract renegotiated', appliedBy: 'Chief R. Johnson', appliedAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000), savings: 45000, riskLevel: 'Low', note: 'Vendor agreed to 8% reduction for 3-year extension. Effective immediately.' },
+    { id: 'al-2', actionTitle: 'Patrol overtime cap enforced — October', appliedBy: 'Capt. D. Martinez', appliedAt: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000), savings: 28000, riskLevel: 'Low', note: 'Cap enforced for 4 weeks. No service incidents reported.' },
+    { id: 'al-3', actionTitle: 'Deferred HVAC upgrade to Q1 FY2025', appliedBy: 'Dir. S. Park', appliedAt: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000), savings: 62000, riskLevel: 'Medium', note: 'Upgrade deferred pending contractor availability review.' },
+  ]);
+  const [auditLogExpanded, setAuditLogExpanded] = useState(false);
+  const [predictiveExpanded, setPredictiveExpanded] = useState(true);
 
   // Budget data
   const fiscalYear = {
@@ -219,6 +227,11 @@ export default function BudgetResources() {
       impact: 300000, urgency: 'High', confidence: 92, confidenceLabel: 'High',
       riskLevel: 'Low', affectedDepts: ['Patrol Division', 'Training Division'],
       categories: ['urgent', 'cost-saving'],
+      exactChanges: [
+        { account: 'Training Division — Available', before: 600000, after: 300000, delta: -300000 },
+        { account: 'Patrol Division — Available', before: 1100000, after: 1400000, delta: 300000 },
+        { account: 'Patrol Division — Variance', before: -150000, after: 150000, delta: 300000 },
+      ],
     },
     {
       id: 2,
@@ -228,6 +241,10 @@ export default function BudgetResources() {
       impact: 220000, urgency: 'High', confidence: 88, confidenceLabel: 'High',
       riskLevel: 'Medium', affectedDepts: ['All Divisions'],
       categories: ['urgent', 'high-impact', 'cost-saving'],
+      exactChanges: [
+        { account: 'Personnel — Overtime (All Divisions)', before: 1840000, after: 1620000, delta: -220000 },
+        { account: 'Projected Year-End Total', before: 49700000, after: 49480000, delta: -220000 },
+      ],
     },
     {
       id: 3,
@@ -237,6 +254,10 @@ export default function BudgetResources() {
       impact: 180000, urgency: 'Medium', confidence: 79, confidenceLabel: 'Medium',
       riskLevel: 'Low', affectedDepts: ['All Divisions'],
       categories: ['high-impact', 'cost-saving'],
+      exactChanges: [
+        { account: 'Equipment — Discretionary Purchases', before: 420000, after: 240000, delta: -180000 },
+        { account: 'Committed — FY2025 Carry-forward', before: 0, after: 180000, delta: 180000 },
+      ],
     },
     {
       id: 4,
@@ -246,6 +267,10 @@ export default function BudgetResources() {
       impact: 100000, urgency: 'Medium', confidence: 91, confidenceLabel: 'High',
       riskLevel: 'Low', affectedDepts: ['Support Services'],
       categories: ['cost-saving'],
+      exactChanges: [
+        { account: 'Support Services — Discretionary', before: 225000, after: 125000, delta: -100000 },
+        { account: 'Support Services — Available (true)', before: 225000, after: 325000, delta: 100000 },
+      ],
     },
     {
       id: 5,
@@ -255,16 +280,36 @@ export default function BudgetResources() {
       impact: 85000, urgency: 'Low', confidence: 75, confidenceLabel: 'Medium',
       riskLevel: 'Low', affectedDepts: ['Administrative Services'],
       categories: ['cost-saving'],
+      exactChanges: [
+        { account: 'Admin Services — Personnel (Nov–Dec)', before: 485000, after: 400000, delta: -85000 },
+        { account: 'Admin Services — Available', before: 240000, after: 325000, delta: 85000 },
+      ],
     },
   ];
 
   const totalActionSavings = recommendedActions.reduce((sum, a) => sum + a.impact, 0);
+  const urgencyOrder = { High: 0, Medium: 1, Low: 2 };
+  const riskOrder = { Low: 0, Medium: 1, High: 2 };
+  const sortedActions = [...recommendedActions].sort((a, b) => {
+    if (actionSort === 'impact') return b.impact - a.impact;
+    if (actionSort === 'urgency') return urgencyOrder[a.urgency] - urgencyOrder[b.urgency];
+    if (actionSort === 'risk') return riskOrder[a.riskLevel] - riskOrder[b.riskLevel];
+    return 0;
+  });
   const filteredActions = actionFilter === 'all'
-    ? recommendedActions
-    : recommendedActions.filter(a => a.categories.includes(actionFilter));
+    ? sortedActions
+    : sortedActions.filter(a => a.categories.includes(actionFilter));
   const selectedActionSavings = [...selectedActions].reduce(
     (sum, id) => sum + (recommendedActions.find(a => a.id === id)?.impact || 0), 0
   );
+  const overrunAmount = 1200000;
+  const postActionOverrun = overrunAmount - selectedActionSavings;
+  const fmtAuditDate = (d) => {
+    const diff = Math.floor((Date.now() - d.getTime()) / 86400000);
+    if (diff === 0) return 'Today';
+    if (diff === 1) return 'Yesterday';
+    return `${diff} days ago`;
+  };
 
   return (
     <DashboardLayout>
@@ -494,8 +539,21 @@ export default function BudgetResources() {
                 </div>
               </div>
 
-              {/* Filters */}
+              {/* Decision Summary */}
+              <div className="px-5 py-3 border-b border-slate-200 dark:border-slate-700/30 flex items-center gap-3 bg-blue-50 dark:bg-blue-500/5">
+                <Target className="w-4 h-4 text-blue-600 dark:text-blue-400 flex-shrink-0" />
+                <p className="text-[13px] font-semibold text-slate-800 dark:text-slate-200">
+                  Apply all {recommendedActions.length} actions to move from{' '}
+                  <span className="text-red-600 dark:text-red-400">+$1.2M over budget</span>
+                  {' '}→{' '}
+                  <span className="text-green-600 dark:text-green-400">$200K under budget</span>
+                  {' '}— preventing the overrun entirely and closing FY 2024 in surplus.
+                </p>
+              </div>
+
+              {/* Filters + Sort */}
               <div className="px-5 py-3 border-b border-slate-200 dark:border-slate-700/30 flex items-center gap-2 flex-wrap">
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wide mr-1">Filter:</span>
                 {[
                   { id: 'all', label: 'All' },
                   { id: 'urgent', label: 'Urgent' },
@@ -517,6 +575,25 @@ export default function BudgetResources() {
                     )}
                   </button>
                 ))}
+                <span className="w-px h-4 bg-slate-200 dark:bg-slate-700/40 mx-1" />
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wide mr-1">Sort:</span>
+                {[
+                  { id: 'impact', label: 'Highest Savings' },
+                  { id: 'urgency', label: 'Urgency' },
+                  { id: 'risk', label: 'Lowest Risk' },
+                ].map(s => (
+                  <button
+                    key={s.id}
+                    onClick={() => setActionSort(s.id)}
+                    className={`px-2.5 py-1 text-[11px] font-semibold rounded-lg transition-colors ${
+                      actionSort === s.id
+                        ? 'bg-blue-600 text-white'
+                        : 'bg-slate-100 dark:bg-slate-700/40 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700/60'
+                    }`}
+                  >
+                    {s.label}
+                  </button>
+                ))}
                 <span className="ml-auto text-[11px] text-slate-500 dark:text-slate-400">
                   {filteredActions.length} of {recommendedActions.length} actions
                 </span>
@@ -536,12 +613,23 @@ export default function BudgetResources() {
                         <span className="text-[13px] font-semibold text-slate-800 dark:text-slate-200">{action.title}</span>
                       </div>
                       <p className="text-[12px] text-slate-600 dark:text-slate-400 mb-1 leading-relaxed">{action.why}</p>
-                      <div className="flex items-center gap-3 text-[11px] text-slate-500 dark:text-slate-400">
-                        <span>AI confidence: <span className="font-semibold text-slate-700 dark:text-slate-300">{action.confidence}%</span></span>
-                        <span>·</span>
-                        <span>Risk: <span className={`font-semibold ${action.riskLevel === 'Low' ? 'text-green-600 dark:text-green-400' : action.riskLevel === 'Medium' ? 'text-amber-600 dark:text-amber-400' : 'text-red-700 dark:text-red-400'}`}>{action.riskLevel}</span></span>
-                        <span>·</span>
-                        <span>{action.affectedDepts.join(', ')}</span>
+                      <div className="flex items-center gap-2 flex-wrap">
+                        {/* Risk vs Reward badge */}
+                        <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border ${
+                          action.riskLevel === 'Low'
+                            ? 'bg-green-50 dark:bg-green-500/5 border-green-200 dark:border-green-500/20 text-green-700 dark:text-green-400'
+                            : action.riskLevel === 'Medium'
+                            ? 'bg-amber-50 dark:bg-amber-500/5 border-amber-200 dark:border-amber-500/20 text-amber-700 dark:text-amber-400'
+                            : 'bg-red-50 dark:bg-red-500/5 border-red-200 dark:border-red-500/20 text-red-700 dark:text-red-400'
+                        }`}>
+                          <span>{action.riskLevel === 'Low' ? '▼' : action.riskLevel === 'Medium' ? '◆' : '▲'}</span>
+                          <span>{action.riskLevel} Risk</span>
+                          <span className="opacity-40">·</span>
+                          <span className="text-green-600 dark:text-green-400">+{fmt(action.impact)} saved</span>
+                        </span>
+                        <span className="text-[11px] text-slate-500 dark:text-slate-400">AI: {action.confidence}%</span>
+                        <span className="text-[11px] text-slate-400 dark:text-slate-500">·</span>
+                        <span className="text-[11px] text-slate-500 dark:text-slate-400">{action.affectedDepts.join(', ')}</span>
                       </div>
                     </div>
                     <div className="flex items-center gap-3 flex-shrink-0 mt-0.5">
@@ -559,13 +647,17 @@ export default function BudgetResources() {
                   </div>
                 ))}
               </div>
-              <div className="px-5 py-3 border-t border-slate-200 dark:border-slate-700/30 flex items-center justify-between bg-slate-50 dark:bg-slate-900/20">
-                <span className="text-[11px] text-slate-500 dark:text-slate-400">
-                  {selectedActions.size} of {recommendedActions.length} actions selected · Saves {fmt(selectedActionSavings)}
-                </span>
+              <div className="px-5 py-3 border-t border-slate-200 dark:border-slate-700/30 flex items-center justify-between gap-3 bg-slate-50 dark:bg-slate-900/20">
+                <div className="text-[11px] text-slate-500 dark:text-slate-400 min-w-0">
+                  <span className="font-semibold text-slate-700 dark:text-slate-300">{selectedActions.size} of {recommendedActions.length} selected</span>
+                  {selectedActionSavings > 0 && (
+                    <> · prevents <span className="font-semibold text-green-600 dark:text-green-400">{fmt(Math.min(selectedActionSavings, overrunAmount))}</span> of overrun
+                    {selectedActionSavings > overrunAmount && <span> + recovers <span className="font-semibold text-blue-600 dark:text-blue-400">{fmt(selectedActionSavings - overrunAmount)}</span> surplus</span>}</>
+                  )}
+                </div>
                 <button
                   onClick={() => setApplyAllModal(true)}
-                  className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-colors"
+                  className="flex-shrink-0 flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-colors"
                 >
                   <Zap className="w-3.5 h-3.5" /> Apply All — {fmt(totalActionSavings)}
                 </button>
@@ -621,6 +713,174 @@ export default function BudgetResources() {
                     </button>
                     <button onClick={() => setReallocationModal(true)} className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold bg-blue-600 text-white border border-blue-700 hover:bg-blue-700 transition-colors">
                       <RefreshCw className="w-3.5 h-3.5" /> Open Reallocation Planner
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Predictive Spike Forecast */}
+            <div className="mb-6 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none">
+              <button
+                onClick={() => setPredictiveExpanded(!predictiveExpanded)}
+                className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-slate-50 dark:hover:bg-slate-800/10 transition-colors rounded-xl"
+              >
+                <div className="flex items-center gap-3">
+                  <Activity className="w-4 h-4 text-violet-500 dark:text-violet-400" />
+                  <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">Predictive Spend Forecast</span>
+                  <span className="px-1.5 py-0.5 bg-violet-100 dark:bg-violet-500/10 text-violet-700 dark:text-violet-400 text-[11px] font-semibold rounded">3 Spikes Detected</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="hidden sm:inline text-[10px] text-slate-500">Based on 3-year spending patterns</span>
+                  {predictiveExpanded ? <ChevronUp className="w-4 h-4 text-slate-500" /> : <ChevronDown className="w-4 h-4 text-slate-500" />}
+                </div>
+              </button>
+              {predictiveExpanded && (
+                <div className="border-t border-slate-200 dark:border-slate-700/30">
+                  <div className="px-5 py-3 border-b border-slate-100 dark:border-slate-700/20 bg-violet-50 dark:bg-violet-500/5">
+                    <p className="text-[12px] text-slate-600 dark:text-slate-400">
+                      Based on 3 years of historical patterns, the model predicts three elevated-spend windows before fiscal year-end. Preventive action now reduces exposure before each spike arrives.
+                    </p>
+                  </div>
+                  <div className="divide-y divide-slate-100 dark:divide-slate-700/20">
+                    {[
+                      {
+                        window: 'November 2024',
+                        daysOut: 2,
+                        risk: 'High',
+                        driver: 'Holiday season overtime surge',
+                        detail: 'Nov historically runs 18–22% above baseline OT. With current utilization at 92%, estimated spike is $180K. Pattern is consistent across all 3 prior years.',
+                        amount: 180000,
+                        mitigated: true,
+                        mitigationAction: 'Action #2: OT cap covers this window',
+                      },
+                      {
+                        window: 'December 15–31, 2024',
+                        daysOut: 46,
+                        risk: 'Medium',
+                        driver: 'Year-end equipment & supply rush',
+                        detail: 'Divisions historically spend ~$95K of unplanned discretionary budget in the final 2 weeks to avoid "losing" carryover budget. Freeze order prevents this.',
+                        amount: 95000,
+                        mitigated: true,
+                        mitigationAction: 'Action #4: Support Services freeze covers this',
+                      },
+                      {
+                        window: 'Q1 FY2025 Carry-overs',
+                        daysOut: 63,
+                        risk: 'Low',
+                        driver: 'Committed spend rolling into new fiscal year',
+                        detail: '$240K of currently committed funds will convert to spend in Q1 FY2025. Budget impact is known and already included in next year\'s planning.',
+                        amount: 240000,
+                        mitigated: false,
+                        mitigationAction: null,
+                      },
+                    ].map((spike) => (
+                      <div key={spike.window} className="px-5 py-4 flex items-start gap-4">
+                        <div className="flex-shrink-0 text-center w-14">
+                          <p className="text-[10px] font-bold text-slate-400 uppercase">In</p>
+                          <p className="text-xl font-bold text-slate-700 dark:text-slate-300">{spike.daysOut}</p>
+                          <p className="text-[10px] text-slate-400">days</p>
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-1 flex-wrap">
+                            <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
+                              spike.risk === 'High' ? 'bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-400' :
+                              spike.risk === 'Medium' ? 'bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400' :
+                              'bg-slate-100 dark:bg-slate-700/40 text-slate-600 dark:text-slate-400'
+                            }`}>{spike.risk} Risk</span>
+                            <span className="text-[13px] font-semibold text-slate-800 dark:text-slate-200">{spike.window}</span>
+                            <span className="text-[12px] text-slate-500 dark:text-slate-400">— {spike.driver}</span>
+                          </div>
+                          <p className="text-[12px] text-slate-500 dark:text-slate-400 mb-1.5 leading-relaxed">{spike.detail}</p>
+                          {spike.mitigated ? (
+                            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-green-50 dark:bg-green-500/5 border border-green-200 dark:border-green-500/20 rounded-lg">
+                              <CheckCircle className="w-3 h-3 text-green-600 dark:text-green-400" />
+                              <span className="text-[11px] font-semibold text-green-700 dark:text-green-400">{spike.mitigationAction}</span>
+                            </div>
+                          ) : (
+                            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-slate-100 dark:bg-slate-700/30 border border-slate-200 dark:border-slate-600/30 rounded-lg">
+                              <Info className="w-3 h-3 text-slate-500 dark:text-slate-400" />
+                              <span className="text-[11px] text-slate-600 dark:text-slate-400">Included in FY2025 planning — no action needed</span>
+                            </div>
+                          )}
+                        </div>
+                        <div className="flex-shrink-0 text-right">
+                          <p className={`text-[14px] font-bold ${spike.mitigated ? 'text-green-600 dark:text-green-400 line-through opacity-60' : 'text-amber-700 dark:text-amber-400'}`}>
+                            +{fmt(spike.amount)}
+                          </p>
+                          <p className="text-[10px] text-slate-400">{spike.mitigated ? 'mitigated' : 'exposure'}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="px-5 py-3 border-t border-slate-200 dark:border-slate-700/30 flex items-center justify-between bg-slate-50 dark:bg-slate-900/20">
+                    <span className="text-[11px] text-slate-500 dark:text-slate-400">2 of 3 spikes mitigated by recommended actions · Total exposure: $515K</span>
+                    <button onClick={() => setActiveTab('forecast')} className={`flex items-center gap-2 text-[12px] font-semibold text-blue-600 dark:text-blue-400 hover:underline`}>
+                      Full Forecast →
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Audit Log */}
+            <div className="mb-6 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none">
+              <button
+                onClick={() => setAuditLogExpanded(!auditLogExpanded)}
+                className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-slate-50 dark:hover:bg-slate-800/10 transition-colors rounded-xl"
+              >
+                <div className="flex items-center gap-3">
+                  <FileText className="w-4 h-4 text-slate-500 dark:text-slate-400" />
+                  <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">Decision Audit Log</span>
+                  <span className="px-1.5 py-0.5 bg-slate-100 dark:bg-slate-700/40 text-slate-600 dark:text-slate-400 text-[11px] font-semibold rounded">{auditLog.length} entries</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="hidden sm:inline text-[10px] text-slate-500">Who applied what · when · outcome</span>
+                  {auditLogExpanded ? <ChevronUp className="w-4 h-4 text-slate-500" /> : <ChevronDown className="w-4 h-4 text-slate-500" />}
+                </div>
+              </button>
+              {auditLogExpanded && (
+                <div className="border-t border-slate-200 dark:border-slate-700/30">
+                  {auditLog.length === 0 ? (
+                    <div className="px-5 py-8 text-center text-sm text-slate-400 dark:text-slate-500">No actions have been applied yet.</div>
+                  ) : (
+                    <div className="divide-y divide-slate-100 dark:divide-slate-700/20">
+                      {auditLog.map((entry) => (
+                        <div key={entry.id} className="px-5 py-4 flex items-start gap-4">
+                          <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-700/40 flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <BadgeCheck className="w-4 h-4 text-green-600 dark:text-green-400" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 mb-0.5 flex-wrap">
+                              <span className="text-[13px] font-semibold text-slate-800 dark:text-slate-200">{entry.actionTitle}</span>
+                              <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
+                                entry.riskLevel === 'Low' ? 'bg-green-100 dark:bg-green-500/10 text-green-700 dark:text-green-400' :
+                                entry.riskLevel === 'Medium' ? 'bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400' :
+                                'bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-400'
+                              }`}>{entry.riskLevel} Risk</span>
+                            </div>
+                            <p className="text-[12px] text-slate-500 dark:text-slate-400 mb-1">{entry.note}</p>
+                            <div className="flex items-center gap-2 text-[11px] text-slate-400 dark:text-slate-500">
+                              <Users className="w-3 h-3" />
+                              <span className="font-medium text-slate-600 dark:text-slate-400">{entry.appliedBy}</span>
+                              <span>·</span>
+                              <span>{fmtAuditDate(entry.appliedAt)}</span>
+                            </div>
+                          </div>
+                          <div className="flex-shrink-0 text-right">
+                            <p className="text-[13px] font-bold text-green-600 dark:text-green-400">{fmt(entry.savings)}</p>
+                            <p className="text-[10px] text-slate-400">saved</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  <div className="px-5 py-3 border-t border-slate-200 dark:border-slate-700/30 flex items-center justify-between bg-slate-50 dark:bg-slate-900/20">
+                    <span className="text-[11px] text-slate-500 dark:text-slate-400">
+                      Total recovered: <span className="font-semibold text-green-600 dark:text-green-400">{fmt(auditLog.reduce((s, e) => s + e.savings, 0))}</span>
+                    </span>
+                    <button className={`flex items-center gap-2 text-[12px] font-semibold text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 transition-colors`}>
+                      <Download className="w-3.5 h-3.5" /> Export Log
                     </button>
                   </div>
                 </div>
@@ -1455,67 +1715,139 @@ export default function BudgetResources() {
       {confirmActionModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setConfirmActionModal(null)} />
-          <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl max-w-lg w-full shadow-2xl p-6">
-            <div className="flex items-start justify-between mb-5">
+          <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl max-w-xl w-full shadow-2xl max-h-[92vh] flex flex-col overflow-hidden">
+            {/* Header */}
+            <div className="flex items-start justify-between px-6 pt-6 pb-4 border-b border-slate-200 dark:border-slate-700/30">
               <div>
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-1">Confirm Action</h3>
-                <p className="text-sm text-slate-500 dark:text-slate-400">Review before applying</p>
+                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-1">Review Before Applying</p>
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white">{confirmActionModal.title}</h3>
               </div>
-              <button onClick={() => setConfirmActionModal(null)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors">
+              <button onClick={() => setConfirmActionModal(null)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors flex-shrink-0">
                 <X className="w-5 h-5 text-slate-500" />
               </button>
             </div>
-            <div className="space-y-4 mb-5">
-              <div>
-                <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1">Action</p>
-                <p className="text-sm font-semibold text-slate-900 dark:text-white">{confirmActionModal.title}</p>
-              </div>
-              <div>
-                <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1">Why This Matters</p>
-                <p className="text-sm text-slate-700 dark:text-slate-300">{confirmActionModal.why}</p>
-              </div>
-              <div>
-                <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1">Expected Outcome</p>
-                <p className="text-sm text-slate-700 dark:text-slate-300">{confirmActionModal.consequence}</p>
-              </div>
-              <div className="grid grid-cols-3 gap-3">
-                <div className="p-3 bg-green-50 dark:bg-green-500/5 border border-green-200 dark:border-green-500/20 rounded-lg text-center">
-                  <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">Savings</p>
-                  <p className="text-lg font-bold text-green-600 dark:text-green-400">{fmt(confirmActionModal.impact)}</p>
+            {/* Body */}
+            <div className="overflow-y-auto px-6 py-4 space-y-5 flex-1">
+              {/* Risk vs Reward meter */}
+              <div className={`p-4 rounded-xl border ${
+                confirmActionModal.riskLevel === 'Low'
+                  ? 'bg-green-50 dark:bg-green-500/5 border-green-200 dark:border-green-500/20'
+                  : confirmActionModal.riskLevel === 'Medium'
+                  ? 'bg-amber-50 dark:bg-amber-500/5 border-amber-200 dark:border-amber-500/20'
+                  : 'bg-red-50 dark:bg-red-500/5 border-red-200 dark:border-red-500/20'
+              }`}>
+                <div className="flex items-center justify-between mb-3">
+                  <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Risk vs Reward</p>
+                  <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full ${
+                    confirmActionModal.riskLevel === 'Low' ? 'bg-green-200 dark:bg-green-500/20 text-green-800 dark:text-green-300' :
+                    confirmActionModal.riskLevel === 'Medium' ? 'bg-amber-200 dark:bg-amber-500/20 text-amber-800 dark:text-amber-300' :
+                    'bg-red-200 dark:bg-red-500/20 text-red-800 dark:text-red-300'
+                  }`}>{confirmActionModal.riskLevel} Risk</span>
                 </div>
-                <div className={`p-3 rounded-lg text-center border ${
-                  confirmActionModal.riskLevel === 'High' ? 'bg-red-50 dark:bg-red-500/5 border-red-200 dark:border-red-500/20' :
-                  confirmActionModal.riskLevel === 'Medium' ? 'bg-amber-50 dark:bg-amber-500/5 border-amber-200 dark:border-amber-500/20' :
-                  'bg-slate-50 dark:bg-slate-800/30 border-slate-200 dark:border-slate-700/30'
-                }`}>
-                  <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">Risk</p>
-                  <p className={`text-sm font-bold ${
-                    confirmActionModal.riskLevel === 'High' ? 'text-red-700 dark:text-red-400' :
-                    confirmActionModal.riskLevel === 'Medium' ? 'text-amber-700 dark:text-amber-400' :
-                    'text-green-600 dark:text-green-400'
-                  }`}>{confirmActionModal.riskLevel}</p>
+                <div className="grid grid-cols-3 gap-3 text-center">
+                  <div>
+                    <p className={`text-xl font-bold ${
+                      confirmActionModal.riskLevel === 'Low' ? 'text-green-700 dark:text-green-400' :
+                      confirmActionModal.riskLevel === 'Medium' ? 'text-amber-700 dark:text-amber-400' :
+                      'text-red-700 dark:text-red-400'
+                    }`}>{confirmActionModal.riskLevel}</p>
+                    <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">Operational Risk</p>
+                  </div>
+                  <div>
+                    <p className="text-xl font-bold text-green-600 dark:text-green-400">{fmt(confirmActionModal.impact)}</p>
+                    <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">Expected Savings</p>
+                  </div>
+                  <div>
+                    <p className="text-xl font-bold text-blue-600 dark:text-blue-400">{confirmActionModal.confidence}%</p>
+                    <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">AI Confidence</p>
+                  </div>
                 </div>
-                <div className="p-3 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/30 rounded-lg text-center">
-                  <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase mb-1">AI Confidence</p>
-                  <p className="text-sm font-bold text-slate-900 dark:text-white">{confirmActionModal.confidence}%</p>
+                {/* Visual reward bar */}
+                <div className="mt-3">
+                  <div className="flex items-center justify-between text-[10px] text-slate-400 mb-1">
+                    <span>Reward relative to total overrun</span>
+                    <span>{((confirmActionModal.impact / overrunAmount) * 100).toFixed(0)}% of $1.2M overrun</span>
+                  </div>
+                  <div className="w-full h-2 bg-white dark:bg-slate-800/50 rounded-full overflow-hidden border border-slate-200 dark:border-slate-700/30">
+                    <div
+                      className="h-full bg-green-500 rounded-full transition-all"
+                      style={{ width: `${Math.min((confirmActionModal.impact / overrunAmount) * 100, 100)}%` }}
+                    />
+                  </div>
                 </div>
               </div>
+
+              {/* Why + Outcome */}
+              <div className="space-y-3">
+                <div>
+                  <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1">Why This Matters</p>
+                  <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">{confirmActionModal.why}</p>
+                </div>
+                <div>
+                  <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1">Expected Outcome</p>
+                  <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">{confirmActionModal.consequence}</p>
+                </div>
+              </div>
+
+              {/* Exact Changes */}
+              <div>
+                <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-2">Exact Budget Changes</p>
+                <div className="border border-slate-200 dark:border-slate-700/30 rounded-xl overflow-hidden">
+                  <table className="w-full text-[12px]">
+                    <thead>
+                      <tr className="bg-slate-50 dark:bg-slate-800/40 border-b border-slate-200 dark:border-slate-700/30">
+                        <th className="text-left px-3 py-2 font-bold text-slate-500 dark:text-slate-400">Account</th>
+                        <th className="text-right px-3 py-2 font-bold text-slate-500 dark:text-slate-400">Before</th>
+                        <th className="text-right px-3 py-2 font-bold text-slate-500 dark:text-slate-400">After</th>
+                        <th className="text-right px-3 py-2 font-bold text-slate-500 dark:text-slate-400">Change</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100 dark:divide-slate-700/20">
+                      {confirmActionModal.exactChanges.map((row, i) => (
+                        <tr key={i} className="hover:bg-slate-50 dark:hover:bg-slate-800/10">
+                          <td className="px-3 py-2 text-slate-700 dark:text-slate-300">{row.account}</td>
+                          <td className="px-3 py-2 text-right text-slate-500 dark:text-slate-400 tabular-nums">{fmt(row.before)}</td>
+                          <td className="px-3 py-2 text-right font-semibold text-slate-800 dark:text-slate-200 tabular-nums">{fmt(row.after)}</td>
+                          <td className={`px-3 py-2 text-right font-bold tabular-nums ${
+                            row.delta > 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'
+                          }`}>{row.delta > 0 ? '+' : ''}{fmt(row.delta)}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              {/* Affected Departments */}
               <div>
                 <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1.5">Affected Departments</p>
                 <div className="flex flex-wrap gap-1.5">
                   {confirmActionModal.affectedDepts.map(d => (
-                    <span key={d} className="px-2 py-0.5 bg-slate-100 dark:bg-slate-700/40 text-slate-600 dark:text-slate-400 text-xs rounded-lg">{d}</span>
+                    <span key={d} className="px-2 py-0.5 bg-slate-100 dark:bg-slate-700/40 text-slate-600 dark:text-slate-400 text-xs font-medium rounded-lg">{d}</span>
                   ))}
                 </div>
               </div>
             </div>
-            <div className="flex gap-2 pt-4 border-t border-slate-200 dark:border-slate-700/30">
+            {/* Footer */}
+            <div className="flex gap-2 px-6 py-4 border-t border-slate-200 dark:border-slate-700/30 bg-white dark:bg-slate-900">
               <button onClick={() => setConfirmActionModal(null)} className={`flex-1 ${secondaryBtn}`}>Cancel</button>
               <button
-                onClick={() => { setReallocationModal(true); setConfirmActionModal(null); }}
-                className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-colors"
+                onClick={() => {
+                  const entry = {
+                    id: `al-${Date.now()}`,
+                    actionTitle: confirmActionModal.title,
+                    appliedBy: 'Sheriff D. Williams',
+                    appliedAt: new Date(),
+                    savings: confirmActionModal.impact,
+                    riskLevel: confirmActionModal.riskLevel,
+                    note: confirmActionModal.consequence,
+                  };
+                  setAuditLog(prev => [entry, ...prev]);
+                  setConfirmActionModal(null);
+                }}
+                className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-colors"
               >
-                Confirm & Apply
+                <BadgeCheck className="w-4 h-4" /> Confirm & Apply
               </button>
             </div>
           </div>
@@ -1523,71 +1855,120 @@ export default function BudgetResources() {
       )}
 
       {/* Apply All Modal */}
-      {applyAllModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setApplyAllModal(false)} />
-          <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl max-w-lg w-full shadow-2xl">
-            <div className="p-6 border-b border-slate-200 dark:border-slate-700/30">
-              <div className="flex items-start justify-between">
-                <div>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white">Apply Recommended Actions</h3>
-                  <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">Toggle actions on or off before applying</p>
-                </div>
-                <button onClick={() => setApplyAllModal(false)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors">
-                  <X className="w-5 h-5 text-slate-500" />
-                </button>
-              </div>
-            </div>
-            <div className="p-6 space-y-2.5 max-h-80 overflow-y-auto">
-              {recommendedActions.map(action => {
-                const isSelected = selectedActions.has(action.id);
-                return (
-                  <div
-                    key={action.id}
-                    className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-colors ${
-                      isSelected
-                        ? 'bg-blue-50 dark:bg-blue-500/5 border-blue-200 dark:border-blue-500/25'
-                        : 'bg-slate-50 dark:bg-slate-800/20 border-slate-200 dark:border-slate-700/30 opacity-60'
-                    }`}
-                    onClick={() => {
-                      const next = new Set(selectedActions);
-                      if (next.has(action.id)) next.delete(action.id); else next.add(action.id);
-                      setSelectedActions(next);
-                    }}
-                  >
-                    <div className={`w-4 h-4 rounded flex-shrink-0 border-2 flex items-center justify-center ${
-                      isSelected ? 'bg-blue-600 border-blue-600' : 'border-slate-400 dark:border-slate-500'
-                    }`}>
-                      {isSelected && <CheckCircle className="w-3 h-3 text-white" />}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-[13px] font-semibold text-slate-800 dark:text-slate-200 truncate">{action.title}</p>
-                      <p className="text-[11px] text-slate-500 dark:text-slate-400">{action.urgency} urgency · {action.confidence}% AI confidence · Risk: {action.riskLevel}</p>
-                    </div>
-                    <span className="text-[13px] font-bold text-green-600 dark:text-green-400 flex-shrink-0">{fmt(action.impact)}</span>
+      {applyAllModal && (() => {
+        const _prevents = Math.min(selectedActionSavings, overrunAmount);
+        const _surplus = selectedActionSavings > overrunAmount ? selectedActionSavings - overrunAmount : 0;
+        const _newProjection = 49700000 - selectedActionSavings;
+        return (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setApplyAllModal(false)} />
+            <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl max-w-lg w-full shadow-2xl max-h-[92vh] flex flex-col overflow-hidden">
+              {/* Header */}
+              <div className="px-6 pt-6 pb-4 border-b border-slate-200 dark:border-slate-700/30">
+                <div className="flex items-start justify-between mb-3">
+                  <div>
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-white">Apply Recommended Actions</h3>
+                    <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">Toggle actions on or off, then apply selected</p>
                   </div>
-                );
-              })}
-            </div>
-            <div className="p-6 border-t border-slate-200 dark:border-slate-700/30">
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-sm text-slate-500 dark:text-slate-400">{selectedActions.size} of {recommendedActions.length} actions selected</span>
-                <span className="text-sm font-bold text-green-600 dark:text-green-400">Total savings: {fmt(selectedActionSavings)}</span>
+                  <button onClick={() => setApplyAllModal(false)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors">
+                    <X className="w-5 h-5 text-slate-500" />
+                  </button>
+                </div>
+                {/* Decision summary */}
+                <div className={`p-3 rounded-xl border text-[12px] font-semibold ${
+                  selectedActions.size === 0
+                    ? 'bg-slate-50 dark:bg-slate-800/30 border-slate-200 dark:border-slate-700/30 text-slate-400'
+                    : selectedActionSavings >= overrunAmount
+                    ? 'bg-green-50 dark:bg-green-500/5 border-green-200 dark:border-green-500/20 text-slate-700 dark:text-slate-300'
+                    : 'bg-amber-50 dark:bg-amber-500/5 border-amber-200 dark:border-amber-500/20 text-slate-700 dark:text-slate-300'
+                }`}>
+                  {selectedActions.size === 0
+                    ? 'Select at least one action to see the impact.'
+                    : selectedActionSavings >= overrunAmount
+                    ? <>Applying {selectedActions.size} action{selectedActions.size !== 1 ? 's' : ''} prevents <span className="text-green-700 dark:text-green-400">{fmt(_prevents)}</span> overrun and recovers <span className="text-blue-600 dark:text-blue-400">{fmt(_surplus)}</span> surplus — closing FY at <span className="text-green-700 dark:text-green-400">{fmt(_newProjection)}</span> (<span className="text-green-700 dark:text-green-400">{((_newProjection / 48500000) * 100).toFixed(1)}%</span>).</>
+                    : <>Applying {selectedActions.size} action{selectedActions.size !== 1 ? 's' : ''} prevents <span className="text-amber-700 dark:text-amber-400">{fmt(_prevents)}</span> of the <span className="text-red-600 dark:text-red-400">$1.2M</span> overrun — still <span className="text-red-600 dark:text-red-400">{fmt(overrunAmount - selectedActionSavings)}</span> short. Select more actions to close the gap.</>
+                  }
+                </div>
               </div>
-              <div className="flex gap-2">
-                <button onClick={() => setApplyAllModal(false)} className={`flex-1 ${secondaryBtn}`}>Cancel</button>
-                <button
-                  onClick={() => { setReallocationModal(true); setApplyAllModal(false); }}
-                  disabled={selectedActions.size === 0}
-                  className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white text-sm font-semibold rounded-lg transition-colors"
-                >
-                  Apply {selectedActions.size} Action{selectedActions.size !== 1 ? 's' : ''} — {fmt(selectedActionSavings)}
-                </button>
+              {/* Action list */}
+              <div className="p-4 space-y-2.5 overflow-y-auto flex-1">
+                {sortedActions.map(action => {
+                  const isSelected = selectedActions.has(action.id);
+                  return (
+                    <div
+                      key={action.id}
+                      className={`flex items-start gap-3 p-3 rounded-xl border cursor-pointer transition-all ${
+                        isSelected
+                          ? 'bg-blue-50 dark:bg-blue-500/5 border-blue-200 dark:border-blue-500/25'
+                          : 'bg-slate-50 dark:bg-slate-800/20 border-slate-200 dark:border-slate-700/30 opacity-50'
+                      }`}
+                      onClick={() => {
+                        const next = new Set(selectedActions);
+                        if (next.has(action.id)) next.delete(action.id); else next.add(action.id);
+                        setSelectedActions(next);
+                      }}
+                    >
+                      <div className={`w-4 h-4 rounded flex-shrink-0 border-2 flex items-center justify-center mt-0.5 ${
+                        isSelected ? 'bg-blue-600 border-blue-600' : 'border-slate-400 dark:border-slate-500'
+                      }`}>
+                        {isSelected && <CheckCircle className="w-3 h-3 text-white" />}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[13px] font-semibold text-slate-800 dark:text-slate-200 mb-0.5">{action.title}</p>
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
+                            action.urgency === 'High' ? 'bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-400' :
+                            action.urgency === 'Medium' ? 'bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400' :
+                            'bg-slate-100 dark:bg-slate-700/40 text-slate-600 dark:text-slate-400'
+                          }`}>{action.urgency}</span>
+                          <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
+                            action.riskLevel === 'Low' ? 'bg-green-100 dark:bg-green-500/10 text-green-700 dark:text-green-400' :
+                            action.riskLevel === 'Medium' ? 'bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400' :
+                            'bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-400'
+                          }`}>{action.riskLevel} Risk</span>
+                          <span className="text-[11px] text-slate-500 dark:text-slate-400">AI: {action.confidence}%</span>
+                        </div>
+                      </div>
+                      <span className="text-[14px] font-bold text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5">{fmt(action.impact)}</span>
+                    </div>
+                  );
+                })}
+              </div>
+              {/* Footer */}
+              <div className="px-6 py-4 border-t border-slate-200 dark:border-slate-700/30 bg-white dark:bg-slate-900">
+                <div className="flex items-center justify-between mb-3 text-[12px]">
+                  <span className="text-slate-500 dark:text-slate-400">
+                    <span className="font-semibold text-slate-700 dark:text-slate-300">{selectedActions.size}</span> of {recommendedActions.length} actions selected
+                  </span>
+                  <span className="font-bold text-green-600 dark:text-green-400">{fmt(selectedActionSavings)} total savings</span>
+                </div>
+                <div className="flex gap-2">
+                  <button onClick={() => setApplyAllModal(false)} className={`flex-1 ${secondaryBtn}`}>Cancel</button>
+                  <button
+                    onClick={() => {
+                      const entries = sortedActions.filter(a => selectedActions.has(a.id)).map(a => ({
+                        id: `al-${Date.now()}-${a.id}`,
+                        actionTitle: a.title,
+                        appliedBy: 'Sheriff D. Williams',
+                        appliedAt: new Date(),
+                        savings: a.impact,
+                        riskLevel: a.riskLevel,
+                        note: a.consequence,
+                      }));
+                      setAuditLog(prev => [...entries, ...prev]);
+                      setApplyAllModal(false);
+                    }}
+                    disabled={selectedActions.size === 0}
+                    className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white text-sm font-semibold rounded-lg transition-colors"
+                  >
+                    <BadgeCheck className="w-4 h-4" /> Apply {selectedActions.size} Action{selectedActions.size !== 1 ? 's' : ''} — {fmt(selectedActionSavings)}
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
 
       {/* Month Detail Modal */}
       {monthDetailModal && (
