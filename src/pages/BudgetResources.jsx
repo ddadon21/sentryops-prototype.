@@ -22,6 +22,7 @@ export default function BudgetResources() {
   const [actionFilter, setActionFilter] = useState('all');
   const [actionSort, setActionSort] = useState('impact');
   const [selectedActions, setSelectedActions] = useState(new Set([1, 2, 3, 4, 5]));
+  const [appliedActionIds, setAppliedActionIds] = useState(new Set());
   const [auditLog, setAuditLog] = useState([
     { id: 'al-1', actionTitle: 'Fleet maintenance contract renegotiated', appliedBy: 'Chief R. Johnson', appliedAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000), savings: 45000, riskLevel: 'Low', note: 'Vendor agreed to 8% reduction for 3-year extension. Effective immediately.' },
     { id: 'al-2', actionTitle: 'Patrol overtime cap enforced — October', appliedBy: 'Capt. D. Martinez', appliedAt: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000), savings: 28000, riskLevel: 'Low', note: 'Cap enforced for 4 weeks. No service incidents reported.' },
@@ -311,6 +312,20 @@ export default function BudgetResources() {
     return `${diff} days ago`;
   };
 
+  // Live forecast — updates as actions are applied
+  const BASE_PROJECTION = 49700000;
+  const BUDGET = fiscalYear.totalBudget; // 48,500,000
+  const appliedSavings = [...appliedActionIds].reduce(
+    (sum, id) => sum + (recommendedActions.find(a => a.id === id)?.impact || 0), 0
+  );
+  const liveProjection = BASE_PROJECTION - appliedSavings;
+  const liveOverrun = liveProjection - BUDGET; // positive = over, negative = under budget
+  const isLiveOverBudget = liveOverrun > 0;
+  const pendingActions = recommendedActions.filter(a => !appliedActionIds.has(a.id));
+  const pendingSavings = pendingActions.reduce((sum, a) => sum + a.impact, 0);
+  const projectionAfterAllPending = liveProjection - pendingSavings;
+  const projectionAfterAllPendingOverrun = projectionAfterAllPending - BUDGET;
+
   return (
     <DashboardLayout>
       <div className="p-5 lg:p-8">
@@ -327,10 +342,10 @@ export default function BudgetResources() {
                 </div>
                 <p className="text-secondary text-sm mb-3">Fiscal oversight and resource management for FY 2024</p>
                 <div className="flex items-center gap-2 text-[11px] text-slate-500">
-                  <span className={`font-semibold ${isOverBudgetProjection ? 'text-red-700 dark:text-red-400' : 'text-green-600 dark:text-green-400'}`}>
-                    {isOverBudgetProjection
-                      ? `Projected to exceed budget by ${fmt(overBudgetProjection)}`
-                      : `${((fiscalYear.available / fiscalYear.totalBudget) * 100).toFixed(1)}% budget remaining`}
+                  <span className={`font-semibold ${isLiveOverBudget ? 'text-red-700 dark:text-red-400' : 'text-green-600 dark:text-green-400'}`}>
+                    {isLiveOverBudget
+                      ? `Projected to exceed budget by ${fmt(liveOverrun)}`
+                      : `Overrun prevented — ${fmt(Math.abs(liveOverrun))} under budget`}
                   </span>
                   <span>·</span>
                   <span>61 days left in FY</span>
@@ -376,19 +391,29 @@ export default function BudgetResources() {
               </div>
             </div>
 
-            {/* If No Action Taken Banner */}
-            {isOverBudgetProjection && (
+            {/* Forecast Status Banner — updates live */}
+            {isLiveOverBudget ? (
               <div className="mb-5 flex items-center gap-3 px-4 py-3 bg-red-50 dark:bg-red-500/5 border border-red-200 dark:border-red-500/20 rounded-xl">
                 <ShieldAlert className="w-4 h-4 text-red-700 dark:text-red-400 flex-shrink-0" />
                 <div className="flex-1 text-sm">
-                  <span className="font-semibold text-red-700 dark:text-red-400">If no action is taken: </span>
-                  <span className="text-slate-700 dark:text-slate-300">projected to exceed budget by <span className="font-semibold text-red-700 dark:text-red-400">$1.2M</span> by December 31 at the current burn rate of $140K/day.</span>
+                  {appliedActionIds.size === 0
+                    ? <><span className="font-semibold text-red-700 dark:text-red-400">If no action is taken: </span><span className="text-slate-700 dark:text-slate-300">projected to exceed budget by <span className="font-semibold text-red-700 dark:text-red-400">{fmt(liveOverrun)}</span> by December 31.</span></>
+                    : <><span className="font-semibold text-amber-700 dark:text-amber-400">Still at risk: </span><span className="text-slate-700 dark:text-slate-300">{appliedActionIds.size} action{appliedActionIds.size > 1 ? 's' : ''} applied, saving <span className="font-semibold text-green-600 dark:text-green-400">{fmt(appliedSavings)}</span>. Projection is now <span className="font-semibold text-amber-700 dark:text-amber-400">{fmt(liveOverrun)} over budget</span>. {pendingActions.length} action{pendingActions.length > 1 ? 's' : ''} remaining.</span></>
+                  }
                 </div>
                 <button onClick={() => setActiveTab('forecast')} className="flex-shrink-0 text-xs font-semibold text-red-700 dark:text-red-400 hover:underline whitespace-nowrap">
                   View Forecast →
                 </button>
               </div>
-            )}
+            ) : appliedActionIds.size > 0 ? (
+              <div className="mb-5 flex items-center gap-3 px-4 py-3 bg-green-50 dark:bg-green-500/5 border border-green-200 dark:border-green-500/20 rounded-xl">
+                <CheckCircle className="w-4 h-4 text-green-600 dark:text-green-400 flex-shrink-0" />
+                <div className="flex-1 text-sm">
+                  <span className="font-semibold text-green-700 dark:text-green-400">Overrun prevented. </span>
+                  <span className="text-slate-700 dark:text-slate-300">FY 2024 now projected at <span className="font-semibold text-green-700 dark:text-green-400">{fmt(liveProjection)}</span> — <span className="font-semibold text-green-700 dark:text-green-400">{fmt(Math.abs(liveOverrun))} under budget.</span></span>
+                </div>
+              </div>
+            ) : null}
 
             {/* KPI Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">              {/* Total Budget */}
@@ -522,32 +547,62 @@ export default function BudgetResources() {
 
               {/* Impact Summary */}
               <div className="px-5 py-4 border-b border-slate-200 dark:border-slate-700/30 grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <div className="p-3 bg-red-50 dark:bg-red-500/5 border border-red-200 dark:border-red-500/20 rounded-lg">
-                  <p className="text-[10px] font-bold text-red-700 dark:text-red-400 uppercase tracking-wide mb-1">Current Projection</p>
-                  <p className="text-xl font-bold text-red-700 dark:text-red-400">$49.7M</p>
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400">103% · $1.2M over budget</p>
+                {/* Card 1: live projection */}
+                <div className={`p-3 border rounded-lg ${isLiveOverBudget ? 'bg-red-50 dark:bg-red-500/5 border-red-200 dark:border-red-500/20' : 'bg-green-50 dark:bg-green-500/5 border-green-200 dark:border-green-500/20'}`}>
+                  <p className={`text-[10px] font-bold uppercase tracking-wide mb-1 ${isLiveOverBudget ? 'text-red-700 dark:text-red-400' : 'text-green-600 dark:text-green-400'}`}>
+                    {appliedActionIds.size > 0 ? 'Updated Projection' : 'Current Projection'}
+                  </p>
+                  <p className={`text-xl font-bold ${isLiveOverBudget ? 'text-red-700 dark:text-red-400' : 'text-green-600 dark:text-green-400'}`}>
+                    {fmt(liveProjection)}
+                  </p>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                    {((liveProjection / BUDGET) * 100).toFixed(1)}% ·{' '}
+                    {isLiveOverBudget
+                      ? <span className="text-red-600 dark:text-red-400 font-semibold">{fmt(liveOverrun)} over budget</span>
+                      : <span className="text-green-600 dark:text-green-400 font-semibold">{fmt(Math.abs(liveOverrun))} under budget</span>
+                    }
+                  </p>
                 </div>
-                <div className="p-3 bg-green-50 dark:bg-green-500/5 border border-green-200 dark:border-green-500/20 rounded-lg">
-                  <p className="text-[10px] font-bold text-green-600 dark:text-green-400 uppercase tracking-wide mb-1">After All Actions Applied</p>
-                  <p className="text-xl font-bold text-green-600 dark:text-green-400">$48.3M</p>
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400">99.6% · $200K under budget</p>
+                {/* Card 2: after all pending applied */}
+                <div className={`p-3 border rounded-lg ${pendingActions.length === 0 ? 'bg-slate-50 dark:bg-slate-800/30 border-slate-200 dark:border-slate-700/30' : 'bg-green-50 dark:bg-green-500/5 border-green-200 dark:border-green-500/20'}`}>
+                  <p className={`text-[10px] font-bold uppercase tracking-wide mb-1 ${pendingActions.length === 0 ? 'text-slate-600 dark:text-slate-400' : 'text-green-600 dark:text-green-400'}`}>
+                    {pendingActions.length === 0 ? 'All Actions Applied' : `After ${pendingActions.length} Remaining Applied`}
+                  </p>
+                  <p className={`text-xl font-bold ${pendingActions.length === 0 ? 'text-green-600 dark:text-green-400' : 'text-green-600 dark:text-green-400'}`}>
+                    {pendingActions.length === 0 ? fmt(liveProjection) : fmt(projectionAfterAllPending)}
+                  </p>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                    {pendingActions.length === 0
+                      ? '✓ Fully optimised'
+                      : `${((projectionAfterAllPending / BUDGET) * 100).toFixed(1)}% · ${projectionAfterAllPendingOverrun < 0 ? fmt(Math.abs(projectionAfterAllPendingOverrun)) + ' under budget' : fmt(projectionAfterAllPendingOverrun) + ' over budget'}`
+                    }
+                  </p>
                 </div>
+                {/* Card 3: savings applied / remaining */}
                 <div className="p-3 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/30 rounded-lg">
-                  <p className="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wide mb-1">Total Potential Savings</p>
-                  <p className="text-xl font-bold text-slate-900 dark:text-white">{fmt(totalActionSavings)}</p>
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400">Across {recommendedActions.length} recommended actions</p>
+                  <p className="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wide mb-1">Savings Applied</p>
+                  <p className="text-xl font-bold text-slate-900 dark:text-white">{fmt(appliedSavings)}</p>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                    {appliedActionIds.size} of {recommendedActions.length} applied
+                    {pendingSavings > 0 && <> · <span className="text-blue-600 dark:text-blue-400 font-semibold">{fmt(pendingSavings)} remaining</span></>}
+                  </p>
                 </div>
               </div>
 
               {/* Decision Summary */}
-              <div className="px-5 py-3 border-b border-slate-200 dark:border-slate-700/30 flex items-center gap-3 bg-blue-50 dark:bg-blue-500/5">
-                <Target className="w-4 h-4 text-blue-600 dark:text-blue-400 flex-shrink-0" />
+              <div className={`px-5 py-3 border-b border-slate-200 dark:border-slate-700/30 flex items-center gap-3 ${
+                appliedActionIds.size === recommendedActions.length
+                  ? 'bg-green-50 dark:bg-green-500/5'
+                  : 'bg-blue-50 dark:bg-blue-500/5'
+              }`}>
+                <Target className={`w-4 h-4 flex-shrink-0 ${appliedActionIds.size === recommendedActions.length ? 'text-green-600 dark:text-green-400' : 'text-blue-600 dark:text-blue-400'}`} />
                 <p className="text-[13px] font-semibold text-slate-800 dark:text-slate-200">
-                  Apply all {recommendedActions.length} actions to move from{' '}
-                  <span className="text-red-600 dark:text-red-400">+$1.2M over budget</span>
-                  {' '}→{' '}
-                  <span className="text-green-600 dark:text-green-400">$200K under budget</span>
-                  {' '}— preventing the overrun entirely and closing FY 2024 in surplus.
+                  {appliedActionIds.size === 0
+                    ? <>Apply all {recommendedActions.length} actions to move from <span className="text-red-600 dark:text-red-400">+{fmt(liveOverrun)} over budget</span> → <span className="text-green-600 dark:text-green-400">{fmt(Math.abs(projectionAfterAllPendingOverrun))} under budget</span> — preventing the overrun entirely.</>
+                    : appliedActionIds.size === recommendedActions.length
+                    ? <><span className="text-green-600 dark:text-green-400">All {recommendedActions.length} actions applied.</span> FY 2024 closing at {fmt(liveProjection)} — <span className="text-green-600 dark:text-green-400">{fmt(Math.abs(liveOverrun))} under budget.</span></>
+                    : <>{appliedActionIds.size} of {recommendedActions.length} actions applied. Projection improved to <span className="text-amber-700 dark:text-amber-400">{fmt(liveProjection)}</span>. Apply {pendingActions.length} more to reach <span className="text-green-600 dark:text-green-400">{fmt(projectionAfterAllPending)}</span> ({fmt(Math.abs(projectionAfterAllPendingOverrun))} under budget).</>
+                  }
                 </p>
               </div>
 
@@ -600,67 +655,103 @@ export default function BudgetResources() {
               </div>
 
               <div className="divide-y divide-slate-100 dark:divide-slate-700/20">
-                {filteredActions.map((action, idx) => (
-                  <div key={action.id} className="flex items-start gap-3 px-5 py-4 hover:bg-slate-50 dark:hover:bg-slate-800/10 transition-colors">
-                    <span className="text-[11px] font-bold text-slate-400 w-4 flex-shrink-0 tabular-nums mt-0.5">{idx + 1}</span>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1 flex-wrap">
-                        <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded flex-shrink-0 ${
-                          action.urgency === 'High' ? 'bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-400' :
-                          action.urgency === 'Medium' ? 'bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400' :
-                          'bg-slate-100 dark:bg-slate-700/40 text-slate-600 dark:text-slate-400'
-                        }`}>{action.urgency}</span>
-                        <span className="text-[13px] font-semibold text-slate-800 dark:text-slate-200">{action.title}</span>
+                {filteredActions.map((action, idx) => {
+                  const isApplied = appliedActionIds.has(action.id);
+                  return (
+                    <div
+                      key={action.id}
+                      className={`flex items-start gap-3 px-5 py-4 transition-colors ${
+                        isApplied
+                          ? 'bg-green-50/60 dark:bg-green-500/5'
+                          : 'hover:bg-slate-50 dark:hover:bg-slate-800/10'
+                      }`}
+                    >
+                      <span className={`text-[11px] font-bold w-4 flex-shrink-0 tabular-nums mt-0.5 ${isApplied ? 'text-green-500 dark:text-green-400' : 'text-slate-400'}`}>
+                        {isApplied ? '✓' : idx + 1}
+                      </span>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1 flex-wrap">
+                          {isApplied ? (
+                            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 bg-green-100 dark:bg-green-500/15 text-green-700 dark:text-green-400 text-[10px] font-bold rounded">
+                              <CheckCircle className="w-3 h-3" /> Applied
+                            </span>
+                          ) : (
+                            <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded flex-shrink-0 ${
+                              action.urgency === 'High' ? 'bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-400' :
+                              action.urgency === 'Medium' ? 'bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400' :
+                              'bg-slate-100 dark:bg-slate-700/40 text-slate-600 dark:text-slate-400'
+                            }`}>{action.urgency}</span>
+                          )}
+                          <span className={`text-[13px] font-semibold ${isApplied ? 'text-slate-400 dark:text-slate-500 line-through' : 'text-slate-800 dark:text-slate-200'}`}>
+                            {action.title}
+                          </span>
+                        </div>
+                        {!isApplied && (
+                          <p className="text-[12px] text-slate-600 dark:text-slate-400 mb-1 leading-relaxed">{action.why}</p>
+                        )}
+                        {isApplied ? (
+                          <p className="text-[12px] text-green-600 dark:text-green-400">{action.consequence}</p>
+                        ) : (
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border ${
+                              action.riskLevel === 'Low'
+                                ? 'bg-green-50 dark:bg-green-500/5 border-green-200 dark:border-green-500/20 text-green-700 dark:text-green-400'
+                                : action.riskLevel === 'Medium'
+                                ? 'bg-amber-50 dark:bg-amber-500/5 border-amber-200 dark:border-amber-500/20 text-amber-700 dark:text-amber-400'
+                                : 'bg-red-50 dark:bg-red-500/5 border-red-200 dark:border-red-500/20 text-red-700 dark:text-red-400'
+                            }`}>
+                              <span>{action.riskLevel === 'Low' ? '▼' : action.riskLevel === 'Medium' ? '◆' : '▲'}</span>
+                              <span>{action.riskLevel} Risk</span>
+                              <span className="opacity-40">·</span>
+                              <span className="text-green-600 dark:text-green-400">+{fmt(action.impact)} saved</span>
+                            </span>
+                            <span className="text-[11px] text-slate-500 dark:text-slate-400">AI: {action.confidence}%</span>
+                            <span className="text-[11px] text-slate-400 dark:text-slate-500">·</span>
+                            <span className="text-[11px] text-slate-500 dark:text-slate-400">{action.affectedDepts.join(', ')}</span>
+                          </div>
+                        )}
                       </div>
-                      <p className="text-[12px] text-slate-600 dark:text-slate-400 mb-1 leading-relaxed">{action.why}</p>
-                      <div className="flex items-center gap-2 flex-wrap">
-                        {/* Risk vs Reward badge */}
-                        <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border ${
-                          action.riskLevel === 'Low'
-                            ? 'bg-green-50 dark:bg-green-500/5 border-green-200 dark:border-green-500/20 text-green-700 dark:text-green-400'
-                            : action.riskLevel === 'Medium'
-                            ? 'bg-amber-50 dark:bg-amber-500/5 border-amber-200 dark:border-amber-500/20 text-amber-700 dark:text-amber-400'
-                            : 'bg-red-50 dark:bg-red-500/5 border-red-200 dark:border-red-500/20 text-red-700 dark:text-red-400'
-                        }`}>
-                          <span>{action.riskLevel === 'Low' ? '▼' : action.riskLevel === 'Medium' ? '◆' : '▲'}</span>
-                          <span>{action.riskLevel} Risk</span>
-                          <span className="opacity-40">·</span>
-                          <span className="text-green-600 dark:text-green-400">+{fmt(action.impact)} saved</span>
-                        </span>
-                        <span className="text-[11px] text-slate-500 dark:text-slate-400">AI: {action.confidence}%</span>
-                        <span className="text-[11px] text-slate-400 dark:text-slate-500">·</span>
-                        <span className="text-[11px] text-slate-500 dark:text-slate-400">{action.affectedDepts.join(', ')}</span>
+                      <div className="flex items-center gap-3 flex-shrink-0 mt-0.5">
+                        {!isApplied && (
+                          <div className="text-right hidden sm:block">
+                            <p className="text-[13px] font-bold text-green-600 dark:text-green-400">{fmt(action.impact)}</p>
+                            <p className="text-[10px] text-slate-500 dark:text-slate-400">{action.confidenceLabel} confidence</p>
+                          </div>
+                        )}
+                        {isApplied ? (
+                          <div className="flex items-center gap-1.5 px-3 py-1.5 bg-green-100 dark:bg-green-500/10 border border-green-200 dark:border-green-500/20 rounded-lg">
+                            <CheckCircle className="w-3.5 h-3.5 text-green-600 dark:text-green-400" />
+                            <span className="text-xs font-bold text-green-700 dark:text-green-400">{fmt(action.impact)} saved</span>
+                          </div>
+                        ) : (
+                          <button
+                            onClick={() => setConfirmActionModal(action)}
+                            className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg transition-colors"
+                          >
+                            Apply Action
+                          </button>
+                        )}
                       </div>
                     </div>
-                    <div className="flex items-center gap-3 flex-shrink-0 mt-0.5">
-                      <div className="text-right hidden sm:block">
-                        <p className="text-[13px] font-bold text-green-600 dark:text-green-400">{fmt(action.impact)}</p>
-                        <p className="text-[10px] text-slate-500 dark:text-slate-400">{action.confidenceLabel} confidence</p>
-                      </div>
-                      <button
-                        onClick={() => setConfirmActionModal(action)}
-                        className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg transition-colors"
-                      >
-                        Apply Action
-                      </button>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
-              <div className="px-5 py-3 border-t border-slate-200 dark:border-slate-700/30 flex items-center justify-between gap-3 bg-slate-50 dark:bg-slate-900/20">
+              <div className={`px-5 py-3 border-t border-slate-200 dark:border-slate-700/30 flex items-center justify-between gap-3 ${appliedActionIds.size === recommendedActions.length ? 'bg-green-50 dark:bg-green-500/5' : 'bg-slate-50 dark:bg-slate-900/20'}`}>
                 <div className="text-[11px] text-slate-500 dark:text-slate-400 min-w-0">
-                  <span className="font-semibold text-slate-700 dark:text-slate-300">{selectedActions.size} of {recommendedActions.length} selected</span>
-                  {selectedActionSavings > 0 && (
-                    <> · prevents <span className="font-semibold text-green-600 dark:text-green-400">{fmt(Math.min(selectedActionSavings, overrunAmount))}</span> of overrun
-                    {selectedActionSavings > overrunAmount && <span> + recovers <span className="font-semibold text-blue-600 dark:text-blue-400">{fmt(selectedActionSavings - overrunAmount)}</span> surplus</span>}</>
-                  )}
+                  {appliedActionIds.size > 0
+                    ? <><span className="font-semibold text-green-600 dark:text-green-400">{appliedActionIds.size} applied</span> · {fmt(appliedSavings)} saved{pendingActions.length > 0 && <> · <span className="font-semibold text-slate-600 dark:text-slate-300">{pendingActions.length} pending</span> ({fmt(pendingSavings)} more available)</>}</>
+                    : <><span className="font-semibold text-slate-700 dark:text-slate-300">{recommendedActions.length} actions pending</span> · {fmt(totalActionSavings)} total available savings</>
+                  }
                 </div>
-                <button
-                  onClick={() => setApplyAllModal(true)}
-                  className="flex-shrink-0 flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-colors"
-                >
-                  <Zap className="w-3.5 h-3.5" /> Apply All — {fmt(totalActionSavings)}
-                </button>
+                {pendingActions.length > 0 && (
+                  <button
+                    onClick={() => setApplyAllModal(true)}
+                    className="flex-shrink-0 flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-colors"
+                  >
+                    <Zap className="w-3.5 h-3.5" />
+                    {appliedActionIds.size > 0 ? `Apply Remaining ${pendingActions.length}` : 'Apply All'} — {fmt(pendingSavings)}
+                  </button>
+                )}
               </div>
             </div>
 
@@ -1712,153 +1803,184 @@ export default function BudgetResources() {
         </div>
 
       {/* Confirm Action Modal */}
-      {confirmActionModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setConfirmActionModal(null)} />
-          <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl max-w-xl w-full shadow-2xl max-h-[92vh] flex flex-col overflow-hidden">
-            {/* Header */}
-            <div className="flex items-start justify-between px-6 pt-6 pb-4 border-b border-slate-200 dark:border-slate-700/30">
-              <div>
-                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-1">Review Before Applying</p>
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white">{confirmActionModal.title}</h3>
-              </div>
-              <button onClick={() => setConfirmActionModal(null)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors flex-shrink-0">
-                <X className="w-5 h-5 text-slate-500" />
-              </button>
-            </div>
-            {/* Body */}
-            <div className="overflow-y-auto px-6 py-4 space-y-5 flex-1">
-              {/* Risk vs Reward meter */}
-              <div className={`p-4 rounded-xl border ${
-                confirmActionModal.riskLevel === 'Low'
-                  ? 'bg-green-50 dark:bg-green-500/5 border-green-200 dark:border-green-500/20'
-                  : confirmActionModal.riskLevel === 'Medium'
-                  ? 'bg-amber-50 dark:bg-amber-500/5 border-amber-200 dark:border-amber-500/20'
-                  : 'bg-red-50 dark:bg-red-500/5 border-red-200 dark:border-red-500/20'
-              }`}>
-                <div className="flex items-center justify-between mb-3">
-                  <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Risk vs Reward</p>
-                  <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full ${
-                    confirmActionModal.riskLevel === 'Low' ? 'bg-green-200 dark:bg-green-500/20 text-green-800 dark:text-green-300' :
-                    confirmActionModal.riskLevel === 'Medium' ? 'bg-amber-200 dark:bg-amber-500/20 text-amber-800 dark:text-amber-300' :
-                    'bg-red-200 dark:bg-red-500/20 text-red-800 dark:text-red-300'
-                  }`}>{confirmActionModal.riskLevel} Risk</span>
+      {confirmActionModal && (() => {
+        const _beforeProjection = liveProjection;
+        const _afterProjection = liveProjection - confirmActionModal.impact;
+        const _beforeOverrun = liveOverrun;
+        const _afterOverrun = _afterProjection - BUDGET;
+        return (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setConfirmActionModal(null)} />
+            <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl max-w-lg w-full shadow-2xl max-h-[92vh] flex flex-col overflow-hidden">
+              {/* Header */}
+              <div className="flex items-start justify-between px-6 pt-5 pb-4 border-b border-slate-200 dark:border-slate-700/30">
+                <div>
+                  <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1">Confirm Action</p>
+                  <h3 className="text-base font-bold text-slate-900 dark:text-white leading-snug">{confirmActionModal.title}</h3>
                 </div>
-                <div className="grid grid-cols-3 gap-3 text-center">
-                  <div>
-                    <p className={`text-xl font-bold ${
-                      confirmActionModal.riskLevel === 'Low' ? 'text-green-700 dark:text-green-400' :
-                      confirmActionModal.riskLevel === 'Medium' ? 'text-amber-700 dark:text-amber-400' :
-                      'text-red-700 dark:text-red-400'
-                    }`}>{confirmActionModal.riskLevel}</p>
-                    <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">Operational Risk</p>
-                  </div>
-                  <div>
-                    <p className="text-xl font-bold text-green-600 dark:text-green-400">{fmt(confirmActionModal.impact)}</p>
-                    <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">Expected Savings</p>
-                  </div>
-                  <div>
-                    <p className="text-xl font-bold text-blue-600 dark:text-blue-400">{confirmActionModal.confidence}%</p>
-                    <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">AI Confidence</p>
-                  </div>
-                </div>
-                {/* Visual reward bar */}
-                <div className="mt-3">
-                  <div className="flex items-center justify-between text-[10px] text-slate-400 mb-1">
-                    <span>Reward relative to total overrun</span>
-                    <span>{((confirmActionModal.impact / overrunAmount) * 100).toFixed(0)}% of $1.2M overrun</span>
-                  </div>
-                  <div className="w-full h-2 bg-white dark:bg-slate-800/50 rounded-full overflow-hidden border border-slate-200 dark:border-slate-700/30">
-                    <div
-                      className="h-full bg-green-500 rounded-full transition-all"
-                      style={{ width: `${Math.min((confirmActionModal.impact / overrunAmount) * 100, 100)}%` }}
-                    />
-                  </div>
-                </div>
+                <button onClick={() => setConfirmActionModal(null)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors flex-shrink-0 ml-3">
+                  <X className="w-5 h-5 text-slate-500" />
+                </button>
               </div>
 
-              {/* Why + Outcome */}
-              <div className="space-y-3">
-                <div>
-                  <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1">Why This Matters</p>
-                  <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">{confirmActionModal.why}</p>
-                </div>
-                <div>
-                  <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1">Expected Outcome</p>
-                  <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">{confirmActionModal.consequence}</p>
-                </div>
-              </div>
+              {/* Body */}
+              <div className="overflow-y-auto flex-1">
+                {/* Primary summary — matches spec */}
+                <div className="px-6 py-5 space-y-3">
+                  <p className="text-[13px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wide">This will:</p>
+                  <ul className="space-y-2.5">
+                    <li className="flex items-start gap-2.5 text-[14px] text-slate-800 dark:text-slate-200">
+                      <span className="text-green-600 dark:text-green-400 font-bold mt-0.5">•</span>
+                      <span>
+                        Reduce projected{' '}
+                        {_beforeOverrun > 0 ? 'deficit' : 'spend'} by{' '}
+                        <span className="font-bold text-green-600 dark:text-green-400">{fmt(confirmActionModal.impact)}</span>
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2.5 text-[14px] text-slate-800 dark:text-slate-200">
+                      <span className="text-green-600 dark:text-green-400 font-bold mt-0.5">•</span>
+                      <span>
+                        Affect:{' '}
+                        <span className="font-semibold">{confirmActionModal.affectedDepts.join(' + ')}</span>
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2.5 text-[14px] text-slate-800 dark:text-slate-200">
+                      <span className="text-green-600 dark:text-green-400 font-bold mt-0.5">•</span>
+                      <div>
+                        <span>Change year-end forecast from:</span>
+                        <div className="mt-1.5 pl-0.5 space-y-1">
+                          <div className="flex items-center gap-2">
+                            <span className={`text-[13px] font-bold tabular-nums ${_beforeOverrun > 0 ? 'text-red-600 dark:text-red-400' : 'text-green-600 dark:text-green-400'}`}>
+                              {fmt(_beforeProjection)} ({_beforeOverrun > 0 ? '+' : ''}{fmt(_beforeOverrun)} {_beforeOverrun > 0 ? 'over' : 'under'})
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <ArrowDown className="w-3.5 h-3.5 text-green-500" />
+                            <span className={`text-[13px] font-bold tabular-nums ${_afterOverrun > 0 ? 'text-amber-700 dark:text-amber-400' : 'text-green-600 dark:text-green-400'}`}>
+                              {fmt(_afterProjection)} ({_afterOverrun > 0 ? '+' : ''}{fmt(_afterOverrun)} {_afterOverrun > 0 ? 'over' : 'under'})
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
 
-              {/* Exact Changes */}
-              <div>
-                <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-2">Exact Budget Changes</p>
-                <div className="border border-slate-200 dark:border-slate-700/30 rounded-xl overflow-hidden">
-                  <table className="w-full text-[12px]">
-                    <thead>
-                      <tr className="bg-slate-50 dark:bg-slate-800/40 border-b border-slate-200 dark:border-slate-700/30">
-                        <th className="text-left px-3 py-2 font-bold text-slate-500 dark:text-slate-400">Account</th>
-                        <th className="text-right px-3 py-2 font-bold text-slate-500 dark:text-slate-400">Before</th>
-                        <th className="text-right px-3 py-2 font-bold text-slate-500 dark:text-slate-400">After</th>
-                        <th className="text-right px-3 py-2 font-bold text-slate-500 dark:text-slate-400">Change</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-100 dark:divide-slate-700/20">
-                      {confirmActionModal.exactChanges.map((row, i) => (
-                        <tr key={i} className="hover:bg-slate-50 dark:hover:bg-slate-800/10">
-                          <td className="px-3 py-2 text-slate-700 dark:text-slate-300">{row.account}</td>
-                          <td className="px-3 py-2 text-right text-slate-500 dark:text-slate-400 tabular-nums">{fmt(row.before)}</td>
-                          <td className="px-3 py-2 text-right font-semibold text-slate-800 dark:text-slate-200 tabular-nums">{fmt(row.after)}</td>
-                          <td className={`px-3 py-2 text-right font-bold tabular-nums ${
-                            row.delta > 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'
-                          }`}>{row.delta > 0 ? '+' : ''}{fmt(row.delta)}</td>
+                  {/* Forecast progress bar */}
+                  <div className="pt-1">
+                    <div className="flex items-center justify-between text-[10px] text-slate-400 mb-1.5">
+                      <span>Year-end projection vs budget ({fmt(BUDGET)})</span>
+                      <span className={_afterOverrun <= 0 ? 'text-green-600 dark:text-green-400 font-semibold' : ''}>
+                        {((_afterProjection / BUDGET) * 100).toFixed(1)}% after action
+                      </span>
+                    </div>
+                    <div className="relative w-full h-3 bg-slate-100 dark:bg-slate-800/50 rounded-full overflow-hidden">
+                      {/* Before bar */}
+                      <div
+                        className="absolute inset-y-0 left-0 bg-red-400/40 dark:bg-red-500/30 rounded-full transition-all"
+                        style={{ width: `${Math.min((_beforeProjection / BUDGET) * 100, 110)}%` }}
+                      />
+                      {/* After bar */}
+                      <div
+                        className={`absolute inset-y-0 left-0 rounded-full transition-all ${_afterOverrun > 0 ? 'bg-amber-500' : 'bg-green-500'}`}
+                        style={{ width: `${Math.min((_afterProjection / BUDGET) * 100, 100)}%` }}
+                      />
+                      {/* Budget line */}
+                      <div className="absolute inset-y-0 right-0 w-0.5 bg-slate-400 dark:bg-slate-500" />
+                    </div>
+                  </div>
+
+                  {/* Confidence + Risk */}
+                  <div className="flex items-center gap-3 pt-1">
+                    <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-100 dark:bg-slate-800/40 rounded-lg">
+                      <span className="text-[11px] text-slate-500 dark:text-slate-400">Confidence:</span>
+                      <span className="text-[12px] font-bold text-blue-600 dark:text-blue-400">{confirmActionModal.confidence}%</span>
+                    </div>
+                    <div className={`flex items-center gap-2 px-3 py-1.5 rounded-lg ${
+                      confirmActionModal.riskLevel === 'Low' ? 'bg-green-100 dark:bg-green-500/10' :
+                      confirmActionModal.riskLevel === 'Medium' ? 'bg-amber-100 dark:bg-amber-500/10' :
+                      'bg-red-100 dark:bg-red-500/10'
+                    }`}>
+                      <span className="text-[11px] text-slate-500 dark:text-slate-400">Risk:</span>
+                      <span className={`text-[12px] font-bold ${
+                        confirmActionModal.riskLevel === 'Low' ? 'text-green-700 dark:text-green-400' :
+                        confirmActionModal.riskLevel === 'Medium' ? 'text-amber-700 dark:text-amber-400' :
+                        'text-red-700 dark:text-red-400'
+                      }`}>{confirmActionModal.riskLevel}</span>
+                    </div>
+                  </div>
+
+                  {/* Outcome note */}
+                  <p className="text-[12px] text-slate-500 dark:text-slate-400 leading-relaxed border-t border-slate-100 dark:border-slate-800/50 pt-3">{confirmActionModal.consequence}</p>
+                </div>
+
+                {/* Exact budget changes — collapsible detail */}
+                <div className="px-6 pb-5 border-t border-slate-100 dark:border-slate-800/50">
+                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wide mt-4 mb-2">Exact Budget Changes</p>
+                  <div className="border border-slate-200 dark:border-slate-700/30 rounded-xl overflow-hidden">
+                    <table className="w-full text-[12px]">
+                      <thead>
+                        <tr className="bg-slate-50 dark:bg-slate-800/40 border-b border-slate-200 dark:border-slate-700/30">
+                          <th className="text-left px-3 py-2 font-bold text-slate-500 dark:text-slate-400">Account</th>
+                          <th className="text-right px-3 py-2 font-bold text-slate-500 dark:text-slate-400">Before</th>
+                          <th className="text-right px-3 py-2 font-bold text-slate-500 dark:text-slate-400">After</th>
+                          <th className="text-right px-3 py-2 font-bold text-slate-500 dark:text-slate-400">Δ</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody className="divide-y divide-slate-100 dark:divide-slate-700/20">
+                        {confirmActionModal.exactChanges.map((row, i) => (
+                          <tr key={i}>
+                            <td className="px-3 py-2 text-slate-700 dark:text-slate-300">{row.account}</td>
+                            <td className="px-3 py-2 text-right text-slate-400 tabular-nums">{fmt(row.before)}</td>
+                            <td className="px-3 py-2 text-right font-semibold text-slate-800 dark:text-slate-200 tabular-nums">{fmt(row.after)}</td>
+                            <td className={`px-3 py-2 text-right font-bold tabular-nums ${row.delta > 0 ? 'text-green-600 dark:text-green-400' : 'text-red-500 dark:text-red-400'}`}>
+                              {row.delta > 0 ? '+' : ''}{fmt(row.delta)}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
 
-              {/* Affected Departments */}
-              <div>
-                <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1.5">Affected Departments</p>
-                <div className="flex flex-wrap gap-1.5">
-                  {confirmActionModal.affectedDepts.map(d => (
-                    <span key={d} className="px-2 py-0.5 bg-slate-100 dark:bg-slate-700/40 text-slate-600 dark:text-slate-400 text-xs font-medium rounded-lg">{d}</span>
-                  ))}
-                </div>
+              {/* Footer */}
+              <div className="flex gap-2 px-6 py-4 border-t border-slate-200 dark:border-slate-700/30 bg-white dark:bg-slate-900">
+                <button onClick={() => setConfirmActionModal(null)} className={`flex-1 ${secondaryBtn}`}>Cancel</button>
+                <button
+                  onClick={() => {
+                    const entry = {
+                      id: `al-${Date.now()}`,
+                      actionTitle: confirmActionModal.title,
+                      appliedBy: 'Sheriff D. Williams',
+                      appliedAt: new Date(),
+                      savings: confirmActionModal.impact,
+                      riskLevel: confirmActionModal.riskLevel,
+                      note: confirmActionModal.consequence,
+                    };
+                    setAppliedActionIds(prev => new Set([...prev, confirmActionModal.id]));
+                    setAuditLog(prev => [entry, ...prev]);
+                    setConfirmActionModal(null);
+                  }}
+                  className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-colors"
+                >
+                  <BadgeCheck className="w-4 h-4" /> Confirm & Apply
+                </button>
               </div>
-            </div>
-            {/* Footer */}
-            <div className="flex gap-2 px-6 py-4 border-t border-slate-200 dark:border-slate-700/30 bg-white dark:bg-slate-900">
-              <button onClick={() => setConfirmActionModal(null)} className={`flex-1 ${secondaryBtn}`}>Cancel</button>
-              <button
-                onClick={() => {
-                  const entry = {
-                    id: `al-${Date.now()}`,
-                    actionTitle: confirmActionModal.title,
-                    appliedBy: 'Sheriff D. Williams',
-                    appliedAt: new Date(),
-                    savings: confirmActionModal.impact,
-                    riskLevel: confirmActionModal.riskLevel,
-                    note: confirmActionModal.consequence,
-                  };
-                  setAuditLog(prev => [entry, ...prev]);
-                  setConfirmActionModal(null);
-                }}
-                className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-colors"
-              >
-                <BadgeCheck className="w-4 h-4" /> Confirm & Apply
-              </button>
             </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
 
-      {/* Apply All Modal */}
+      {/* Apply All Modal — only shows pending (unapplied) actions */}
       {applyAllModal && (() => {
-        const _prevents = Math.min(selectedActionSavings, overrunAmount);
-        const _surplus = selectedActionSavings > overrunAmount ? selectedActionSavings - overrunAmount : 0;
-        const _newProjection = 49700000 - selectedActionSavings;
+        // Local selection state is initialized to all pending actions
+        const pendingInModal = pendingActions; // already-applied ones not shown
+        const modalSelectedSavings = [...selectedActions]
+          .filter(id => !appliedActionIds.has(id))
+          .reduce((sum, id) => sum + (recommendedActions.find(a => a.id === id)?.impact || 0), 0);
+        const newProjectionAfterSelected = liveProjection - modalSelectedSavings;
+        const newOverrunAfterSelected = newProjectionAfterSelected - BUDGET;
+        const selectedInModal = [...selectedActions].filter(id => !appliedActionIds.has(id));
         return (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
             <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setApplyAllModal(false)} />
@@ -1867,32 +1989,41 @@ export default function BudgetResources() {
               <div className="px-6 pt-6 pb-4 border-b border-slate-200 dark:border-slate-700/30">
                 <div className="flex items-start justify-between mb-3">
                   <div>
-                    <h3 className="text-lg font-bold text-slate-900 dark:text-white">Apply Recommended Actions</h3>
-                    <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">Toggle actions on or off, then apply selected</p>
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                      {appliedActionIds.size > 0 ? `Apply Remaining ${pendingInModal.length} Actions` : 'Apply Recommended Actions'}
+                    </h3>
+                    <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">Toggle actions on or off, then confirm</p>
                   </div>
                   <button onClick={() => setApplyAllModal(false)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors">
                     <X className="w-5 h-5 text-slate-500" />
                   </button>
                 </div>
-                {/* Decision summary */}
-                <div className={`p-3 rounded-xl border text-[12px] font-semibold ${
-                  selectedActions.size === 0
+                {/* Live decision summary */}
+                <div className={`p-3 rounded-xl border text-[12px] font-medium ${
+                  selectedInModal.length === 0
                     ? 'bg-slate-50 dark:bg-slate-800/30 border-slate-200 dark:border-slate-700/30 text-slate-400'
-                    : selectedActionSavings >= overrunAmount
+                    : newOverrunAfterSelected <= 0
                     ? 'bg-green-50 dark:bg-green-500/5 border-green-200 dark:border-green-500/20 text-slate-700 dark:text-slate-300'
                     : 'bg-amber-50 dark:bg-amber-500/5 border-amber-200 dark:border-amber-500/20 text-slate-700 dark:text-slate-300'
                 }`}>
-                  {selectedActions.size === 0
-                    ? 'Select at least one action to see the impact.'
-                    : selectedActionSavings >= overrunAmount
-                    ? <>Applying {selectedActions.size} action{selectedActions.size !== 1 ? 's' : ''} prevents <span className="text-green-700 dark:text-green-400">{fmt(_prevents)}</span> overrun and recovers <span className="text-blue-600 dark:text-blue-400">{fmt(_surplus)}</span> surplus — closing FY at <span className="text-green-700 dark:text-green-400">{fmt(_newProjection)}</span> (<span className="text-green-700 dark:text-green-400">{((_newProjection / 48500000) * 100).toFixed(1)}%</span>).</>
-                    : <>Applying {selectedActions.size} action{selectedActions.size !== 1 ? 's' : ''} prevents <span className="text-amber-700 dark:text-amber-400">{fmt(_prevents)}</span> of the <span className="text-red-600 dark:text-red-400">$1.2M</span> overrun — still <span className="text-red-600 dark:text-red-400">{fmt(overrunAmount - selectedActionSavings)}</span> short. Select more actions to close the gap.</>
+                  {selectedInModal.length === 0
+                    ? 'Select at least one action to see the updated forecast.'
+                    : newOverrunAfterSelected <= 0
+                    ? <>Applying these {selectedInModal.length} action{selectedInModal.length > 1 ? 's' : ''} will move FY forecast from <span className={`font-bold ${isLiveOverBudget ? 'text-red-600 dark:text-red-400' : 'text-green-600 dark:text-green-400'}`}>{fmt(liveProjection)}</span> → <span className="font-bold text-green-700 dark:text-green-400">{fmt(newProjectionAfterSelected)}</span> — <span className="text-green-700 dark:text-green-400 font-bold">{fmt(Math.abs(newOverrunAfterSelected))} under budget.</span></>
+                    : <>Forecast improves from <span className="font-bold text-red-600 dark:text-red-400">{fmt(liveProjection)}</span> → <span className="font-bold text-amber-700 dark:text-amber-400">{fmt(newProjectionAfterSelected)}</span> · still <span className="font-bold text-red-600 dark:text-red-400">{fmt(newOverrunAfterSelected)}</span> over. Select more to close the gap.</>
                   }
                 </div>
               </div>
-              {/* Action list */}
-              <div className="p-4 space-y-2.5 overflow-y-auto flex-1">
-                {sortedActions.map(action => {
+
+              {/* Action list — only pending actions shown */}
+              <div className="p-4 space-y-2 overflow-y-auto flex-1">
+                {pendingInModal.length === 0 ? (
+                  <div className="py-8 text-center">
+                    <CheckCircle className="w-8 h-8 text-green-500 mx-auto mb-2" />
+                    <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">All actions have been applied.</p>
+                    <p className="text-[12px] text-slate-500 dark:text-slate-400 mt-1">FY 2024 is closing at {fmt(liveProjection)}</p>
+                  </div>
+                ) : pendingInModal.map(action => {
                   const isSelected = selectedActions.has(action.id);
                   return (
                     <div
@@ -1923,8 +2054,7 @@ export default function BudgetResources() {
                           }`}>{action.urgency}</span>
                           <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
                             action.riskLevel === 'Low' ? 'bg-green-100 dark:bg-green-500/10 text-green-700 dark:text-green-400' :
-                            action.riskLevel === 'Medium' ? 'bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400' :
-                            'bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-400'
+                            'bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400'
                           }`}>{action.riskLevel} Risk</span>
                           <span className="text-[11px] text-slate-500 dark:text-slate-400">AI: {action.confidence}%</span>
                         </div>
@@ -1934,35 +2064,44 @@ export default function BudgetResources() {
                   );
                 })}
               </div>
+
               {/* Footer */}
               <div className="px-6 py-4 border-t border-slate-200 dark:border-slate-700/30 bg-white dark:bg-slate-900">
-                <div className="flex items-center justify-between mb-3 text-[12px]">
-                  <span className="text-slate-500 dark:text-slate-400">
-                    <span className="font-semibold text-slate-700 dark:text-slate-300">{selectedActions.size}</span> of {recommendedActions.length} actions selected
-                  </span>
-                  <span className="font-bold text-green-600 dark:text-green-400">{fmt(selectedActionSavings)} total savings</span>
-                </div>
+                {pendingInModal.length > 0 && (
+                  <div className="flex items-center justify-between mb-3 text-[12px]">
+                    <span className="text-slate-500 dark:text-slate-400">
+                      <span className="font-semibold text-slate-700 dark:text-slate-300">{selectedInModal.length}</span> of {pendingInModal.length} pending actions selected
+                    </span>
+                    <span className="font-bold text-green-600 dark:text-green-400">{fmt(modalSelectedSavings)} savings</span>
+                  </div>
+                )}
                 <div className="flex gap-2">
-                  <button onClick={() => setApplyAllModal(false)} className={`flex-1 ${secondaryBtn}`}>Cancel</button>
-                  <button
-                    onClick={() => {
-                      const entries = sortedActions.filter(a => selectedActions.has(a.id)).map(a => ({
-                        id: `al-${Date.now()}-${a.id}`,
-                        actionTitle: a.title,
-                        appliedBy: 'Sheriff D. Williams',
-                        appliedAt: new Date(),
-                        savings: a.impact,
-                        riskLevel: a.riskLevel,
-                        note: a.consequence,
-                      }));
-                      setAuditLog(prev => [...entries, ...prev]);
-                      setApplyAllModal(false);
-                    }}
-                    disabled={selectedActions.size === 0}
-                    className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white text-sm font-semibold rounded-lg transition-colors"
-                  >
-                    <BadgeCheck className="w-4 h-4" /> Apply {selectedActions.size} Action{selectedActions.size !== 1 ? 's' : ''} — {fmt(selectedActionSavings)}
+                  <button onClick={() => setApplyAllModal(false)} className={`flex-1 ${secondaryBtn}`}>
+                    {pendingInModal.length === 0 ? 'Close' : 'Cancel'}
                   </button>
+                  {pendingInModal.length > 0 && (
+                    <button
+                      onClick={() => {
+                        const toApply = pendingInModal.filter(a => selectedActions.has(a.id));
+                        const entries = toApply.map(a => ({
+                          id: `al-${Date.now()}-${a.id}`,
+                          actionTitle: a.title,
+                          appliedBy: 'Sheriff D. Williams',
+                          appliedAt: new Date(),
+                          savings: a.impact,
+                          riskLevel: a.riskLevel,
+                          note: a.consequence,
+                        }));
+                        setAppliedActionIds(prev => new Set([...prev, ...toApply.map(a => a.id)]));
+                        setAuditLog(prev => [...entries, ...prev]);
+                        setApplyAllModal(false);
+                      }}
+                      disabled={selectedInModal.length === 0}
+                      className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white text-sm font-semibold rounded-lg transition-colors"
+                    >
+                      <BadgeCheck className="w-4 h-4" /> Apply {selectedInModal.length} Action{selectedInModal.length !== 1 ? 's' : ''} — {fmt(modalSelectedSavings)}
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
