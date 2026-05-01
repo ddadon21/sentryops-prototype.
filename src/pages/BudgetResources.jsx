@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FileText, TrendingUp, AlertCircle, AlertTriangle, MessageCircle, DollarSign, CheckCircle, Sparkles, X, Send, Download, ArrowUpRight, ArrowDownRight, TrendingDown, Calendar, Filter, Eye, PieChart, BarChart3, LineChart, Package, Truck, Wrench, ChevronDown, ChevronUp, Info, ArrowUpCircle, RefreshCw, FileSpreadsheet, Mail, Zap, Clock, Users, Building2, Target, Wallet, CircleDollarSign, Receipt, CreditCard, CalendarClock, Bot, CircleAlert, Lightbulb, Percent, ArrowDown, ArrowUp, Briefcase, ShieldAlert, BadgeCheck, BadgeAlert, Activity, Banknote, PiggyBank, Calculator, FileBarChart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
@@ -30,6 +30,9 @@ export default function BudgetResources() {
   ]);
   const [auditLogExpanded, setAuditLogExpanded] = useState(false);
   const [predictiveExpanded, setPredictiveExpanded] = useState(true);
+  const [toast, setToast] = useState(null); // { id, message, saving }
+  const [flashSet, setFlashSet] = useState(new Set()); // element keys currently flashing
+  const toastTimerRef = useRef(null);
 
   // Budget data
   const fiscalYear = {
@@ -228,6 +231,11 @@ export default function BudgetResources() {
       impact: 300000, urgency: 'High', confidence: 92, confidenceLabel: 'High',
       riskLevel: 'Low', affectedDepts: ['Patrol Division', 'Training Division'],
       categories: ['urgent', 'cost-saving'],
+      affectedAreas: [
+        { area: 'Training Division — Available', delta: -300000 },
+        { area: 'Patrol Division — Available', delta: 300000 },
+        { area: 'Patrol Division — Deficit (eliminated)', delta: 150000 },
+      ],
       exactChanges: [
         { account: 'Training Division — Available', before: 600000, after: 300000, delta: -300000 },
         { account: 'Patrol Division — Available', before: 1100000, after: 1400000, delta: 300000 },
@@ -242,6 +250,11 @@ export default function BudgetResources() {
       impact: 220000, urgency: 'High', confidence: 88, confidenceLabel: 'High',
       riskLevel: 'Medium', affectedDepts: ['All Divisions'],
       categories: ['urgent', 'high-impact', 'cost-saving'],
+      affectedAreas: [
+        { area: 'Patrol Division — Overtime', delta: -120000 },
+        { area: 'Detention Division — Overtime', delta: -65000 },
+        { area: 'Investigations — Overtime', delta: -35000 },
+      ],
       exactChanges: [
         { account: 'Personnel — Overtime (All Divisions)', before: 1840000, after: 1620000, delta: -220000 },
         { account: 'Projected Year-End Total', before: 49700000, after: 49480000, delta: -220000 },
@@ -255,6 +268,10 @@ export default function BudgetResources() {
       impact: 180000, urgency: 'Medium', confidence: 79, confidenceLabel: 'Medium',
       riskLevel: 'Low', affectedDepts: ['All Divisions'],
       categories: ['high-impact', 'cost-saving'],
+      affectedAreas: [
+        { area: 'Equipment Budget', delta: -180000 },
+        { area: 'FY2025 Carryover', delta: 180000 },
+      ],
       exactChanges: [
         { account: 'Equipment — Discretionary Purchases', before: 420000, after: 240000, delta: -180000 },
         { account: 'Committed — FY2025 Carry-forward', before: 0, after: 180000, delta: 180000 },
@@ -268,6 +285,10 @@ export default function BudgetResources() {
       impact: 100000, urgency: 'Medium', confidence: 91, confidenceLabel: 'High',
       riskLevel: 'Low', affectedDepts: ['Support Services'],
       categories: ['cost-saving'],
+      affectedAreas: [
+        { area: 'Support Services — Discretionary', delta: -100000 },
+        { area: 'Support Services — Available Buffer', delta: 100000 },
+      ],
       exactChanges: [
         { account: 'Support Services — Discretionary', before: 225000, after: 125000, delta: -100000 },
         { account: 'Support Services — Available (true)', before: 225000, after: 325000, delta: 100000 },
@@ -281,6 +302,10 @@ export default function BudgetResources() {
       impact: 85000, urgency: 'Low', confidence: 75, confidenceLabel: 'Medium',
       riskLevel: 'Low', affectedDepts: ['Administrative Services'],
       categories: ['cost-saving'],
+      affectedAreas: [
+        { area: 'Admin Services — Personnel (Nov–Dec)', delta: -85000 },
+        { area: 'Available Buffer', delta: 85000 },
+      ],
       exactChanges: [
         { account: 'Admin Services — Personnel (Nov–Dec)', before: 485000, after: 400000, delta: -85000 },
         { account: 'Admin Services — Available', before: 240000, after: 325000, delta: 85000 },
@@ -321,10 +346,41 @@ export default function BudgetResources() {
   const liveProjection = BASE_PROJECTION - appliedSavings;
   const liveOverrun = liveProjection - BUDGET; // positive = over, negative = under budget
   const isLiveOverBudget = liveOverrun > 0;
+  const liveAvailable = fiscalYear.available + appliedSavings;
   const pendingActions = recommendedActions.filter(a => !appliedActionIds.has(a.id));
   const pendingSavings = pendingActions.reduce((sum, a) => sum + a.impact, 0);
   const projectionAfterAllPending = liveProjection - pendingSavings;
   const projectionAfterAllPendingOverrun = projectionAfterAllPending - BUDGET;
+
+  const fmtDateTime = (d) => d.toLocaleString('en-US', {
+    month: 'short', day: 'numeric', year: 'numeric',
+    hour: 'numeric', minute: '2-digit', hour12: true,
+  });
+
+  const flash = (keys) => {
+    setFlashSet(new Set(keys));
+    setTimeout(() => setFlashSet(new Set()), 1100);
+  };
+
+  const applyAction = (action) => {
+    const entry = {
+      id: `al-${Date.now()}`,
+      actionTitle: action.title,
+      appliedBy: 'Sheriff D. Williams',
+      appliedAt: new Date(),
+      savings: action.impact,
+      riskLevel: action.riskLevel,
+      note: action.consequence,
+    };
+    setAppliedActionIds(prev => new Set([...prev, action.id]));
+    setAuditLog(prev => [entry, ...prev]);
+    setConfirmActionModal(null);
+    flash(['available', 'forecast-bar', 'projection-card']);
+    if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+    const tid = Date.now();
+    setToast({ id: tid, message: `Action Applied — Budget improved by ${fmt(action.impact)}`, saving: action.impact });
+    toastTimerRef.current = setTimeout(() => setToast(null), 4500);
+  };
 
   return (
     <DashboardLayout>
@@ -504,14 +560,14 @@ export default function BudgetResources() {
               </div>
 
               {/* Available */}
-              <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+              <div className={`bg-white dark:bg-slate-800/25 border rounded-xl shadow-sm dark:shadow-none p-5 transition-all duration-300 ${flashSet.has('available') ? 'border-green-400 dark:border-green-400 ring-2 ring-green-400/40' : 'border-slate-200 dark:border-slate-700/30'}`}>
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Available</span>
                   <div className="w-8 h-8 bg-slate-100 dark:bg-slate-700/40 rounded-lg flex items-center justify-center">
                     <PiggyBank className="w-4 h-4 text-green-600 dark:text-green-400" />
                   </div>
                 </div>
-                <p className="text-3xl font-bold text-slate-900 dark:text-white mb-1">{fmt(fiscalYear.available)}</p>
+                <p className={`text-3xl font-bold mb-1 transition-colors ${flashSet.has('available') ? 'text-green-600 dark:text-green-400' : 'text-slate-900 dark:text-white'}`}>{fmt(liveAvailable)}</p>
                 <div className="mb-3">
                   <div className="flex justify-between text-xs mb-1.5">
                     <span className="text-slate-500 dark:text-slate-400">Remaining budget</span>
@@ -1823,12 +1879,25 @@ export default function BudgetResources() {
                 </button>
               </div>
 
+              {/* Attribution strip */}
+              <div className="px-6 py-3 bg-blue-50 dark:bg-blue-500/5 border-b border-slate-100 dark:border-slate-800/50">
+                <div className="flex items-center gap-2 mb-1">
+                  <ShieldAlert className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 flex-shrink-0" />
+                  <p className="text-[12px] font-semibold text-blue-700 dark:text-blue-300">This action will be recorded and applied immediately</p>
+                </div>
+                <div className="flex items-center gap-2 text-[11px] text-slate-500 dark:text-slate-400 pl-5 flex-wrap">
+                  <span><span className="font-semibold text-slate-700 dark:text-slate-300">Applied by:</span> Sheriff D. Williams</span>
+                  <span className="text-slate-300 dark:text-slate-600">·</span>
+                  <span>Effective immediately · {fmtDateTime(new Date())}</span>
+                </div>
+              </div>
+
               {/* Body */}
               <div className="overflow-y-auto flex-1">
-                {/* Primary summary — matches spec */}
-                <div className="px-6 py-5 space-y-3">
+                {/* Primary summary */}
+                <div className="px-6 py-5 space-y-4">
                   <p className="text-[13px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wide">This will:</p>
-                  <ul className="space-y-2.5">
+                  <ul className="space-y-3">
                     <li className="flex items-start gap-2.5 text-[14px] text-slate-800 dark:text-slate-200">
                       <span className="text-green-600 dark:text-green-400 font-bold mt-0.5">•</span>
                       <span>
@@ -1839,10 +1908,19 @@ export default function BudgetResources() {
                     </li>
                     <li className="flex items-start gap-2.5 text-[14px] text-slate-800 dark:text-slate-200">
                       <span className="text-green-600 dark:text-green-400 font-bold mt-0.5">•</span>
-                      <span>
-                        Affect:{' '}
-                        <span className="font-semibold">{confirmActionModal.affectedDepts.join(' + ')}</span>
-                      </span>
+                      <div className="flex-1">
+                        <span className="text-slate-700 dark:text-slate-300">Affect the following budget areas:</span>
+                        <div className="mt-2 space-y-1 pl-0.5">
+                          {confirmActionModal.affectedAreas.map((a, i) => (
+                            <div key={i} className="flex items-center justify-between text-[12px] py-0.5">
+                              <span className="text-slate-600 dark:text-slate-400">{a.area}</span>
+                              <span className={`font-bold tabular-nums ${a.delta > 0 ? 'text-green-600 dark:text-green-400' : 'text-red-500 dark:text-red-400'}`}>
+                                {a.delta > 0 ? '+' : ''}{fmt(a.delta)}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
                     </li>
                     <li className="flex items-start gap-2.5 text-[14px] text-slate-800 dark:text-slate-200">
                       <span className="text-green-600 dark:text-green-400 font-bold mt-0.5">•</span>
@@ -1865,27 +1943,37 @@ export default function BudgetResources() {
                     </li>
                   </ul>
 
-                  {/* Forecast progress bar */}
+                  {/* Enhanced BEFORE→AFTER forecast bar */}
                   <div className="pt-1">
-                    <div className="flex items-center justify-between text-[10px] text-slate-400 mb-1.5">
-                      <span>Year-end projection vs budget ({fmt(BUDGET)})</span>
-                      <span className={_afterOverrun <= 0 ? 'text-green-600 dark:text-green-400 font-semibold' : ''}>
-                        {((_afterProjection / BUDGET) * 100).toFixed(1)}% after action
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-3 text-[11px]">
+                        <span className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400">
+                          <span className="w-2.5 h-2.5 rounded-sm bg-red-400/60 inline-block flex-shrink-0"></span>
+                          Before
+                        </span>
+                        <span className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400">
+                          <span className={`w-2.5 h-2.5 rounded-sm inline-block flex-shrink-0 ${_afterOverrun > 0 ? 'bg-amber-500' : 'bg-green-500'}`}></span>
+                          After
+                        </span>
+                      </div>
+                      <span className="px-2 py-0.5 bg-green-100 dark:bg-green-500/15 text-green-700 dark:text-green-400 text-[10px] font-bold rounded-full">
+                        -{fmt(confirmActionModal.impact)} impact
                       </span>
                     </div>
-                    <div className="relative w-full h-3 bg-slate-100 dark:bg-slate-800/50 rounded-full overflow-hidden">
-                      {/* Before bar */}
+                    <div className="relative w-full h-4 bg-slate-100 dark:bg-slate-800/50 rounded-full overflow-hidden">
                       <div
                         className="absolute inset-y-0 left-0 bg-red-400/40 dark:bg-red-500/30 rounded-full transition-all"
                         style={{ width: `${Math.min((_beforeProjection / BUDGET) * 100, 110)}%` }}
                       />
-                      {/* After bar */}
                       <div
                         className={`absolute inset-y-0 left-0 rounded-full transition-all ${_afterOverrun > 0 ? 'bg-amber-500' : 'bg-green-500'}`}
                         style={{ width: `${Math.min((_afterProjection / BUDGET) * 100, 100)}%` }}
                       />
-                      {/* Budget line */}
                       <div className="absolute inset-y-0 right-0 w-0.5 bg-slate-400 dark:bg-slate-500" />
+                    </div>
+                    <div className="flex justify-between text-[10px] text-slate-400 mt-1">
+                      <span>$0</span>
+                      <span>Budget: {fmt(BUDGET)}</span>
                     </div>
                   </div>
 
@@ -1913,7 +2001,7 @@ export default function BudgetResources() {
                   <p className="text-[12px] text-slate-500 dark:text-slate-400 leading-relaxed border-t border-slate-100 dark:border-slate-800/50 pt-3">{confirmActionModal.consequence}</p>
                 </div>
 
-                {/* Exact budget changes — collapsible detail */}
+                {/* Exact budget changes */}
                 <div className="px-6 pb-5 border-t border-slate-100 dark:border-slate-800/50">
                   <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wide mt-4 mb-2">Exact Budget Changes</p>
                   <div className="border border-slate-200 dark:border-slate-700/30 rounded-xl overflow-hidden">
@@ -1947,20 +2035,7 @@ export default function BudgetResources() {
               <div className="flex gap-2 px-6 py-4 border-t border-slate-200 dark:border-slate-700/30 bg-white dark:bg-slate-900">
                 <button onClick={() => setConfirmActionModal(null)} className={`flex-1 ${secondaryBtn}`}>Cancel</button>
                 <button
-                  onClick={() => {
-                    const entry = {
-                      id: `al-${Date.now()}`,
-                      actionTitle: confirmActionModal.title,
-                      appliedBy: 'Sheriff D. Williams',
-                      appliedAt: new Date(),
-                      savings: confirmActionModal.impact,
-                      riskLevel: confirmActionModal.riskLevel,
-                      note: confirmActionModal.consequence,
-                    };
-                    setAppliedActionIds(prev => new Set([...prev, confirmActionModal.id]));
-                    setAuditLog(prev => [entry, ...prev]);
-                    setConfirmActionModal(null);
-                  }}
+                  onClick={() => applyAction(confirmActionModal)}
                   className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-colors"
                 >
                   <BadgeCheck className="w-4 h-4" /> Confirm & Apply
@@ -2092,9 +2167,14 @@ export default function BudgetResources() {
                           riskLevel: a.riskLevel,
                           note: a.consequence,
                         }));
+                        const totalSaved = toApply.reduce((s, a) => s + a.impact, 0);
                         setAppliedActionIds(prev => new Set([...prev, ...toApply.map(a => a.id)]));
                         setAuditLog(prev => [...entries, ...prev]);
                         setApplyAllModal(false);
+                        flash(['available', 'forecast-bar', 'projection-card']);
+                        if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+                        setToast({ id: Date.now(), message: `${toApply.length} Action${toApply.length !== 1 ? 's' : ''} Applied — Budget improved by ${fmt(totalSaved)}`, saving: totalSaved });
+                        toastTimerRef.current = setTimeout(() => setToast(null), 4500);
                       }}
                       disabled={selectedInModal.length === 0}
                       className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white text-sm font-semibold rounded-lg transition-colors"
@@ -2325,6 +2405,24 @@ export default function BudgetResources() {
               <button className={`${primaryBtn} bg-blue-600 text-white border border-blue-700 hover:bg-blue-700`}>Export Report</button>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* Toast notification */}
+      {toast && (
+        <div
+          key={toast.id}
+          className="fixed bottom-24 right-6 z-50 flex items-center gap-3 px-4 py-3 bg-slate-900 dark:bg-slate-800 border border-green-500/30 rounded-xl shadow-2xl max-w-sm fade-in-up"
+        >
+          <div className="w-8 h-8 bg-green-500/15 rounded-lg flex items-center justify-center flex-shrink-0">
+            <CheckCircle className="w-4 h-4 text-green-400" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-[13px] font-semibold text-white leading-snug">{toast.message}</p>
+          </div>
+          <button onClick={() => setToast(null)} className="flex-shrink-0 p-1 hover:bg-slate-700 rounded transition-colors">
+            <X className="w-3.5 h-3.5 text-slate-400" />
+          </button>
         </div>
       )}
 
