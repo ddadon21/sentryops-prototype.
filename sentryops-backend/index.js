@@ -1,13 +1,24 @@
 'use strict';
 
 require('dotenv').config();
-const express = require('express');
+const express   = require('express');
 const { pool, initializeTables } = require('./db');
+const authRoutes = require('./src/routes/auth');
+
+if (!process.env.JWT_SECRET) {
+  console.error('[server] JWT_SECRET is not set. Refusing to start.');
+  process.exit(1);
+}
 
 const app  = express();
 const PORT = process.env.PORT || 3001;
 
 app.use(express.json());
+
+// ---------------------------------------------------------------------------
+// Routes
+// ---------------------------------------------------------------------------
+app.use('/auth', authRoutes);
 
 // ---------------------------------------------------------------------------
 // Health check — returns live DB connectivity status
