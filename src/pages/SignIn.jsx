@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Shield, Lock, Mail, ChevronRight, Eye, EyeOff, ArrowLeft, ChevronDown, AlertCircle, Activity } from 'lucide-react';
+import { Shield, Lock, Mail, ChevronRight, Eye, EyeOff, ArrowLeft, ChevronDown, AlertCircle, Activity, Loader2 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
+import { api } from '../api';
 
 export default function SignIn() {
   const navigate = useNavigate();
@@ -11,7 +12,8 @@ export default function SignIn() {
   const [demoDropdownOpen, setDemoDropdownOpen] = useState(false);
   const [selectedDemo, setSelectedDemo] = useState(null);
   const [rememberDevice, setRememberDevice] = useState(false);
-  const [error, setError] = useState(null); // 'invalid' | 'expired' | 'restricted'
+  const [error, setError] = useState(null); // 'invalid' | 'expired' | 'restricted' | 'network'
+  const [loading, setLoading] = useState(false);
 
   // ── Lock login page to dark mode permanently ──────────────────
   // Stores the current html.dark state, forces dark while mounted,
@@ -61,11 +63,35 @@ export default function SignIn() {
     setError(null);
   };
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
+    // Demo accounts bypass the real backend — navigate directly.
     if (selectedDemo) {
       navigate(createPageUrl(selectedDemo.route));
-    } else if (email) {
-      navigate(createPageUrl('CommandDashboard'));
+      return;
+    }
+
+    if (!email || !password) return;
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const data = await api.post('/auth/login', { email, password });
+
+      localStorage.setItem('sentryops_token', data.token);
+      localStorage.setItem('sentryops_user', JSON.stringify(data.user));
+
+      navigate('/command/dashboard');
+    } catch (err) {
+      if (err.status === 401) {
+        setError('invalid');
+      } else if (err.status === 403) {
+        setError('restricted');
+      } else {
+        setError('network');
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -133,9 +159,10 @@ export default function SignIn() {
           <div className="mb-4 bg-red-500/10 border border-red-500/30 rounded-lg px-4 py-3 flex items-start gap-2.5">
             <AlertCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
             <p className="text-sm text-red-400">
-              {error === 'invalid' && 'Invalid credentials. Verify your email address and password.'}
-              {error === 'expired' && 'Your session has expired. Please sign in again to continue.'}
+              {error === 'invalid'    && 'Invalid credentials. Verify your email address and password.'}
+              {error === 'expired'    && 'Your session has expired. Please sign in again to continue.'}
               {error === 'restricted' && 'Access restricted. Contact your system administrator for authorization.'}
+              {error === 'network'    && 'Unable to reach the server. Check your connection and try again.'}
             </p>
           </div>
         )}
@@ -267,12 +294,21 @@ export default function SignIn() {
             {/* Sign In Button */}
             <button
               onClick={handleLogin}
-              disabled={!email}
+              disabled={!email || loading}
               className="w-full py-2.5 bg-amber-500/90 hover:bg-amber-500 disabled:bg-slate-700/60 disabled:cursor-not-allowed rounded-lg text-white font-semibold transition-all flex items-center justify-center gap-2 text-sm shadow-lg shadow-amber-900/20 hover:shadow-amber-900/30 mt-1"
             >
-              <Lock className="w-4 h-4" />
-              Authenticate
-              <ChevronRight className="w-4 h-4" />
+              {loading ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Authenticating…
+                </>
+              ) : (
+                <>
+                  <Lock className="w-4 h-4" />
+                  Authenticate
+                  <ChevronRight className="w-4 h-4" />
+                </>
+              )}
             </button>
           </div>
 
