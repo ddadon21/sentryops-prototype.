@@ -4,13 +4,9 @@ require('dotenv').config();
 const { Pool } = require('pg');
 
 const pool = new Pool({
-  host:     process.env.DB_HOST,
-  port:     parseInt(process.env.DB_PORT, 10),
-  database: process.env.DB_NAME,
-  user:     process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  // Keep idle connections alive; enforce a hard connect timeout.
-  idleTimeoutMillis:    30000,
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false }, // required for Supabase
+  idleTimeoutMillis:       30000,
   connectionTimeoutMillis: 5000,
 });
 
