@@ -12,11 +12,13 @@ if (!BASE_URL) {
  */
 async function request(path, options = {}) {
   const url = `${BASE_URL}${path}`;
+  const token = localStorage.getItem('sentryops_token');
 
   const config = {
     ...options,
     headers: {
       'Content-Type': 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...options.headers,
     },
   };

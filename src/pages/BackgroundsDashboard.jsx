@@ -4,8 +4,28 @@ import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import DashboardLayout from '../layouts/DashboardLayout';
 import { biNavigation, biProfile, biNotifications } from '../config/biConfig';
+import { api } from '../api';
 
 // ── Component ─────────────────────────────────────────────────
+
+const getDaysOld = (dateStr) => Math.floor((Date.now() - new Date(dateStr)) / 86400000);
+const fmtCaseId = (id) => `BI-${String(id).padStart(7, '0')}`;
+
+const STATUS_DISPLAY = {
+  submitted:    'Initial Review',
+  in_progress:  'In Progress',
+  under_review: 'Supervisor Review',
+  on_hold:      'On Hold',
+  completed:    'Completed',
+};
+
+const NEXT_ACTION = {
+  submitted:    'Complete initial document review',
+  in_progress:  'Continue active investigation stages',
+  under_review: 'Awaiting supervisor adjudication decision',
+  on_hold:      'Awaiting applicant or external response',
+  completed:    'Case closed',
+};
 
 export default function BackgroundsDashboard() {
   const navigate = useNavigate();
@@ -14,6 +34,15 @@ export default function BackgroundsDashboard() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [supervisorReviewVisible, setSupervisorReviewVisible] = useState(true);
   const [filterOpen, setFilterOpen] = useState(false);
+  const [casesData, setCasesData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    api.get('/cases')
+      .then(data => setCasesData(data ?? []))
+      .catch(() => setCasesData([]))
+      .finally(() => setLoading(false));
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 60000);
@@ -38,31 +67,82 @@ export default function BackgroundsDashboard() {
     return date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
   };
 
+  // ── Derived metrics from real API data ───────────────────────
+  const now = new Date();
+  const thisMonthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+  const activeCasesList   = casesData.filter(c => c.status !== 'completed');
+  const completedList     = casesData.filter(c => c.status === 'completed');
+  const completedThisMo   = completedList.filter(c => new Date(c.updated_at) >= thisMonthStart);
+  const underReviewList   = casesData.filter(c => c.status === 'under_review');
+  const slaBreachList     = activeCasesList.filter(c => getDaysOld(c.created_at) > 18);
+
+  const avgCompletionDays = completedList.length
+    ? +(completedList.reduce((s, c) =>
+        s + Math.max(0, Math.floor((new Date(c.updated_at) - new Date(c.created_at)) / 86400000)), 0
+      ) / completedList.length).toFixed(1)
+    : '--';
+
+  const avgCaseAgeVal = activeCasesList.length
+    ? +(activeCasesList.reduce((s, c) => s + getDaysOld(c.created_at), 0) / activeCasesList.length).toFixed(1)
+    : 0;
+
   const metrics = {
-    activeCases: 47,
-    pendingReview: 12,
-    completedThisMonth: 28,
-    avgCompletionDays: 14.5,
-    casesWithConcerns: 8,
-    overdueItems: 3,
-    referencesPending: 15,
-    clearedForHire: 22,
-    notRecommended: 6,
-    interviewsToday: 8,
-    slaTarget: 18,
-    awaitingSupervisorSignOff: 5,
-    avgSupervisorWait: 1.2,
-    slaBreachCases: 2,
-    avgCaseAge: 11.3
+    activeCases:              activeCasesList.length,
+    pendingReview:            underReviewList.length,
+    completedThisMonth:       completedThisMo.length,
+    avgCompletionDays,
+    casesWithConcerns:        0,
+    overdueItems:             slaBreachList.length,
+    referencesPending:        0,
+    clearedForHire:           0,
+    notRecommended:           0,
+    interviewsToday:          0,
+    slaTarget:                18,
+    awaitingSupervisorSignOff: underReviewList.length,
+    avgSupervisorWait:        '--',
+    slaBreachCases:           slaBreachList.length,
+    avgCaseAge:               avgCaseAgeVal,
   };
 
+  // ── Real supervisor-review cases ─────────────────────────────
+  const supervisorReviewCases = underReviewList.map(c => ({
+    id: c.id,
+    subject: `${c.candidate_first_name} ${c.candidate_last_name}`,
+    issueType: 'Pending Adjudication',
+    severity: c.priority === 'critical' || c.priority === 'high' ? 'high' : 'medium',
+    daysOpen: getDaysOld(c.created_at),
+    nextAction: 'Supervisor adjudication',
+    detail: 'Case submitted for supervisor review',
+    caseNumber: fmtCaseId(c.id),
+  }));
+
+  // ── Real priority cases ───────────────────────────────────────
+  const priorityCases = casesData
+    .filter(c => (c.priority === 'critical' || c.priority === 'high') && c.status !== 'completed')
+    .slice(0, 5)
+    .map(c => ({
+      id: c.id,
+      subject: `${c.candidate_first_name} ${c.candidate_last_name}`,
+      position: '—',
+      stage: STATUS_DISPLAY[c.status] || c.status,
+      daysOpen: getDaysOld(c.created_at),
+      priority: 'high',
+      investigator: c.investigator_first_name
+        ? `${c.investigator_first_name} ${c.investigator_last_name}`
+        : 'Unassigned',
+      nextAction: NEXT_ACTION[c.status] || 'Review case',
+      caseNumber: fmtCaseId(c.id),
+    }));
+
+  // ── Pipeline stage counts derived from status ─────────────────
   const investigationStages = [
-    { stage: 'Application Review', count: 12, description: 'Initial documentation review' },
-    { stage: 'Reference Interviews', count: 15, description: '8 scheduled today' },
-    { stage: 'Employment Verification', count: 8, description: '3 awaiting employer response' },
-    { stage: 'Background Checks', count: 7, description: 'Criminal, financial, digital footprint' },
-    { stage: 'Supervisor Review', count: 5, description: 'Final adjudication pending' }
+    { stage: 'Application Review',    count: casesData.filter(c => c.status === 'submitted').length,    description: 'Initial documentation review' },
+    { stage: 'Reference Interviews',  count: casesData.filter(c => c.status === 'in_progress').length,  description: 'Active investigation' },
+    { stage: 'Employment Verification', count: 0,                                                        description: 'Awaiting employer response' },
+    { stage: 'Background Checks',     count: 0,                                                         description: 'Criminal, financial, digital footprint' },
+    { stage: 'Supervisor Review',     count: underReviewList.length,                                     description: 'Final adjudication pending' },
   ];
+  const totalActive = activeCasesList.length || 1;
 
   const recentActivity = [
     { id: 1, type: 'complete', message: 'Investigation finalized — Elena Rodriguez cleared for hire as Background Investigator', time: '30 min ago', detail: 'Case #BI-2024-0847', user: 'Inv. Smith' },
@@ -70,21 +150,6 @@ export default function BackgroundsDashboard() {
     { id: 3, type: 'interview', message: 'Reference interview completed — Marcus Johnson, former supervisor contacted', time: '3 hours ago', detail: 'Case #BI-2024-0831', user: 'Inv. Davis' },
     { id: 4, type: 'new', message: 'New investigation initiated — Sarah Chen applying for Detention Officer position', time: '5 hours ago', detail: 'Case #BI-2024-0892', user: 'System' },
     { id: 5, type: 'update', message: 'Employment confirmation received — Robert Martinez, Metro PD confirmed 3-year tenure', time: '1 day ago', detail: 'Case #BI-2024-0844', user: 'Inv. Smith' }
-  ];
-
-  const supervisorReviewCases = [
-    { id: 1, subject: 'Marcus Johnson', issueType: 'Criminal Record Flag', severity: 'high', daysOpen: 12, nextAction: 'Supervisor adjudication', detail: 'Prior misdemeanor arrest (2019), requires adjudication review', caseNumber: 'BI-2024-0831' },
-    { id: 2, subject: 'Robert Martinez', issueType: 'Criminal Record Flag', severity: 'high', daysOpen: 9, nextAction: 'Supervisor adjudication', detail: 'Discrepancy in disclosed vs. documented history', caseNumber: 'BI-2024-0844' },
-    { id: 3, subject: 'David Kim', issueType: 'Financial Risk', severity: 'high', daysOpen: 7, nextAction: 'Supervisor adjudication', detail: 'Outstanding debt exceeds threshold ($47,500)', caseNumber: 'BI-2024-0863' },
-    { id: 4, subject: 'Jennifer Lopez', issueType: 'Financial Risk', severity: 'medium', daysOpen: 5, nextAction: 'Supervisor adjudication', detail: 'Recent bankruptcy filing requires evaluation', caseNumber: 'BI-2024-0871' },
-    { id: 5, subject: 'Lisa Chen', issueType: 'Employment Discrepancy', severity: 'medium', daysOpen: 4, nextAction: 'Supervisor adjudication', detail: '6-month gap in employment history unexplained', caseNumber: 'BI-2024-0856' }
-  ];
-
-  const priorityCases = [
-    { id: 1, subject: 'Marcus Johnson', position: 'Deputy Sheriff', stage: 'Supervisor Review', daysOpen: 12, priority: 'high', investigator: 'Inv. Smith', nextAction: 'Supervisor sign-off needed', caseNumber: 'BI-2024-0831' },
-    { id: 2, subject: 'Lisa Martinez', position: 'Background Investigator', stage: 'Reference Verification', daysOpen: 8, priority: 'high', investigator: 'Inv. Wilson', nextAction: 'Attempt alternate contacts', caseNumber: 'BI-2024-0856' },
-    { id: 3, subject: 'David Chen', position: 'Deputy Sheriff', stage: 'Financial Risk Review', daysOpen: 15, priority: 'medium', investigator: 'Inv. Smith', nextAction: 'Request documentation', caseNumber: 'BI-2024-0819' },
-    { id: 4, subject: 'Sarah Thompson', position: 'Detention Officer', stage: 'Employment Confirmation', daysOpen: 5, priority: 'low', investigator: 'Inv. Davis', nextAction: 'Follow up Friday', caseNumber: 'BI-2024-0878' }
   ];
 
   const upcomingDeadlines = [
@@ -103,6 +168,12 @@ export default function BackgroundsDashboard() {
     >
       <div className="p-6 lg:p-8 bg-transparent dark:bg-transparent min-h-full">
         <div className="max-w-7xl mx-auto">
+          {loading && (
+            <div className="mb-4 flex items-center gap-2 text-xs text-slate-500">
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse inline-block"></span>
+              Loading live data…
+            </div>
+          )}
           {/* Page Header */}
           <div className="mb-8 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
             <div>
@@ -265,15 +336,15 @@ export default function BackgroundsDashboard() {
               <div className="space-y-1.5 text-[13px]">
                 <div className="flex items-start gap-3 pl-4">
                   <span className="text-slate-700 flex-shrink-0">•</span>
-                  <p className="text-secondary"><span className="text-primary font-medium">47 active investigations</span> — 12 initial review, 15 reference checks, 8 verifications, 7 history review, 5 final review</p>
+                  <p className="text-secondary"><span className="text-primary font-medium">{metrics.activeCases} active investigations</span> — {casesData.filter(c => c.status === 'submitted').length} initial review, {casesData.filter(c => c.status === 'in_progress').length} in progress, {underReviewList.length} supervisor review, {casesData.filter(c => c.status === 'on_hold').length} on hold</p>
                 </div>
                 <div className="flex items-start gap-3 pl-4">
                   <span className="text-slate-700 flex-shrink-0">•</span>
-                  <p className="text-secondary"><span className="text-primary font-medium">15 reference checks pending</span> — 8 interviews scheduled today</p>
+                  <p className="text-secondary"><span className="text-primary font-medium">{metrics.overdueItems} cases exceeding SLA</span> — Cases open longer than 18-day target</p>
                 </div>
                 <div className="flex items-start gap-3 pl-4">
                   <span className="text-slate-700 flex-shrink-0">•</span>
-                  <p className="text-secondary"><span className="text-primary font-medium">12 awaiting supervisor review</span> — Average wait: 1.2 days</p>
+                  <p className="text-secondary"><span className="text-primary font-medium">{metrics.pendingReview} awaiting supervisor review</span> — Avg case age: {metrics.avgCaseAge} days</p>
                 </div>
               </div>
             </div>
@@ -286,15 +357,15 @@ export default function BackgroundsDashboard() {
               <div className="space-y-1.5 text-[13px]">
                 <div className="flex items-start gap-3 pl-4">
                   <span className="text-slate-700 flex-shrink-0">•</span>
-                  <p className="text-secondary"><span className="text-primary font-medium">28 investigations finalized</span> — 22 cleared for hire, 6 not recommended</p>
+                  <p className="text-secondary"><span className="text-primary font-medium">{metrics.completedThisMonth} investigations finalized this month</span> — {completedList.length} total completed</p>
                 </div>
                 <div className="flex items-start gap-3 pl-4">
                   <span className="text-slate-700 flex-shrink-0">•</span>
-                  <p className="text-secondary"><span className="text-primary font-medium">14.5 day average turnaround</span> — 3.5 days ahead of 18-day SLA target</p>
+                  <p className="text-secondary"><span className="text-primary font-medium">{metrics.avgCompletionDays} day average turnaround</span> — SLA target: 18 days</p>
                 </div>
                 <div className="flex items-start gap-3 pl-4">
                   <span className="text-slate-700 flex-shrink-0">•</span>
-                  <p className="text-secondary"><span className="text-primary font-medium">On track for monthly target</span> — 28 of 35 projected (80%)</p>
+                  <p className="text-secondary"><span className="text-primary font-medium">{metrics.slaBreachCases} case(s) breaching 18-day SLA</span> — POST certification and hiring timelines may be affected</p>
                 </div>
               </div>
             </div>
@@ -477,7 +548,7 @@ export default function BackgroundsDashboard() {
               <div className="flex items-center justify-between mb-3">
                 <div>
                   <h3 className="text-[13px] font-semibold text-primary uppercase tracking-wide">Investigation Pipeline</h3>
-                  <p className="text-xs text-slate-500 mt-1">47 total active — SLA Breach: {metrics.slaBreachCases} case(s) — Avg Case Age: {metrics.avgCaseAge} days</p>
+                  <p className="text-xs text-slate-500 mt-1">{metrics.activeCases} total active — SLA Breach: {metrics.slaBreachCases} case(s) — Avg Case Age: {metrics.avgCaseAge} days</p>
                 </div>
                 <button
                   onClick={() => navigate(createPageUrl('CaseManagement'))}
@@ -501,7 +572,7 @@ export default function BackgroundsDashboard() {
                       <div className="w-full h-1.5 bg-slate-100 dark:bg-slate-700/30 rounded-full overflow-hidden relative">
                         <div
                           className={`h-full rounded-full transition-all ${isBreaching ? 'bg-red-500/40' : 'bg-slate-500/40'}`}
-                          style={{ width: `${(stage.count / 47) * 100}%` }}
+                          style={{ width: `${(stage.count / totalActive) * 100}%` }}
                         />
                         {isBreaching && (
                           <div className="absolute top-0 bottom-0 w-px bg-red-500/40" style={{ left: '21%' }}></div>

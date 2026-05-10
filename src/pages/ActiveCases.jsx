@@ -4,6 +4,86 @@ import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import DashboardLayout from '../layouts/DashboardLayout';
 import { biNavigation, biProfile, biNotifications } from '../config/biConfig';
+import { api } from '../api';
+
+// ── Helpers ────────────────────────────────────────────────────
+
+const STATUS_DISPLAY = {
+  submitted:    'Initial Review',
+  in_progress:  'In Progress',
+  under_review: 'Supervisor Review',
+  on_hold:      'On Hold (Awaiting Applicant)',
+  completed:    'Completed',
+};
+
+const NEXT_ACTION = {
+  submitted:    'Complete initial document review',
+  in_progress:  'Continue active investigation stages',
+  under_review: 'Awaiting supervisor adjudication decision',
+  on_hold:      'If no response by deadline, recommend case closure',
+  completed:    'Case closed',
+};
+
+const deriveStages = (status) => {
+  const names = ['Initial Review', 'Criminal History', 'Reference Checks', 'Employment Verification', 'Financial Review', 'Supervisor Review'];
+  return names.map((name, i) => {
+    if (status === 'completed') return { name, status: 'completed', detail: 'Completed' };
+    if (status === 'submitted') {
+      return i === 0
+        ? { name, status: 'in_progress', detail: 'Under review' }
+        : { name, status: 'pending', detail: 'Not started' };
+    }
+    if (status === 'in_progress') {
+      if (i === 0) return { name, status: 'completed', detail: 'Completed' };
+      if (i === 1) return { name, status: 'in_progress', detail: 'In progress' };
+      return { name, status: 'pending', detail: 'Not started' };
+    }
+    if (status === 'under_review') {
+      return i < 5
+        ? { name, status: 'completed', detail: 'Completed' }
+        : { name, status: 'in_progress', detail: 'Pending supervisor decision' };
+    }
+    if (status === 'on_hold') {
+      if (i === 0) return { name, status: 'completed', detail: 'Completed' };
+      if (i === 1) return { name, status: 'blocked', detail: 'Case on hold' };
+      return { name, status: 'pending', detail: 'Waiting' };
+    }
+    return { name, status: 'pending', detail: 'Not started' };
+  });
+};
+
+const relativeTime = (dateStr) => {
+  const diff = Date.now() - new Date(dateStr).getTime();
+  const mins = Math.floor(diff / 60000);
+  if (mins < 2) return 'Just now';
+  if (mins < 60) return `${mins} min ago`;
+  const hrs = Math.floor(mins / 60);
+  if (hrs < 24) return `${hrs} hour${hrs > 1 ? 's' : ''} ago`;
+  const days = Math.floor(hrs / 24);
+  return `${days} day${days > 1 ? 's' : ''} ago`;
+};
+
+const transformCase = (c) => {
+  const daysOpen = Math.max(0, Math.floor((Date.now() - new Date(c.created_at)) / 86400000));
+  const priorityMap = { critical: 'high', high: 'high', medium: 'standard', low: 'standard' };
+  const uiPriority = c.status === 'on_hold' ? 'on_hold' : (priorityMap[c.priority] || 'standard');
+  const investigator = c.investigator_last_name || 'Unassigned';
+  return {
+    id: `BI-${String(c.id).padStart(7, '0')}`,
+    subject: `${c.candidate_first_name} ${c.candidate_last_name}`,
+    position: '—',
+    applicationDate: new Date(c.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+    daysOpen,
+    status: STATUS_DISPLAY[c.status] || c.status,
+    priority: uiPriority,
+    priorityReason: uiPriority === 'high' ? `Priority level: ${c.priority}` : null,
+    investigator,
+    lastUpdate: relativeTime(c.updated_at),
+    lastActivity: `Status updated to: ${STATUS_DISPLAY[c.status] || c.status}`,
+    stages: deriveStages(c.status),
+    nextAction: NEXT_ACTION[c.status] || 'Review case details',
+  };
+};
 
 export default function ActiveCases() {
   const navigate = useNavigate();
@@ -21,6 +101,15 @@ export default function ActiveCases() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [caseloadSummaryVisible, setCaseloadSummaryVisible] = useState(true);
   const [expandedCase, setExpandedCase] = useState(null);
+  const [cases, setCases] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    api.get('/cases')
+      .then(data => setCases((data ?? []).map(transformCase)))
+      .catch(() => setCases([]))
+      .finally(() => setLoading(false));
+  }, []);
 
   // Update time every minute
   useEffect(() => {
@@ -53,205 +142,14 @@ export default function ActiveCases() {
     { id: 'case-closure', label: 'Case Closure', icon: XCircle, page: 'CaseClosure' }
   ];
 
-  const cases = [
-    {
-      id: 'BI-2024-145',
-      subject: 'Robert Martinez',
-      position: 'Deputy Sheriff',
-      applicationDate: 'Dec 31, 2025',
-      daysOpen: 23,
-      status: 'Reference Checks',
-      priority: 'high',
-      priorityReason: 'Conditional offer expires in 7 days (Jan 30)',
-      investigator: 'Brooks',
-      lastUpdate: '2 hours ago',
-      lastActivity: 'Reference interview completed',
-      stages: [
-        { name: 'Initial Review', status: 'completed', detail: 'Packet received Dec 31' },
-        { name: 'Criminal History', status: 'completed', detail: 'GCIC/FBI clear - no hits' },
-        { name: 'Reference Checks', status: 'in_progress', detail: '3 of 5 completed', subDetail: 'Personal: 2/3, Employment: 1/2' },
-        { name: 'Employment Verification', status: 'pending', detail: 'Not started' },
-        { name: 'Financial Review', status: 'pending', detail: 'Not started' },
-        { name: 'Supervisor Review', status: 'pending', detail: 'Not started' }
-      ],
-      nextAction: 'Complete remaining reference checks by Jan 25',
-      blockers: 'Former supervisor not returning calls (documented 3 attempts)'
-    },
-    {
-      id: 'BI-2024-143',
-      subject: 'Sarah Chen',
-      position: 'Detention Officer',
-      applicationDate: 'Dec 9, 2025',
-      daysOpen: 45,
-      status: 'Supervisor Review',
-      priority: 'standard',
-      priorityReason: null,
-      investigator: 'Davis',
-      lastUpdate: '1 day ago',
-      lastActivity: 'Submitted to supervisor for review',
-      stages: [
-        { name: 'Initial Review', status: 'completed', detail: 'Completed' },
-        { name: 'Criminal History', status: 'completed', detail: 'GCIC clear' },
-        { name: 'Reference Checks', status: 'completed', detail: '5 of 5 - all positive' },
-        { name: 'Employment Verification', status: 'completed', detail: 'All confirmed' },
-        { name: 'Financial Review', status: 'completed', detail: 'No concerns' },
-        { name: 'Supervisor Review', status: 'in_progress', detail: 'Submitted Jan 22 - pending decision' }
-      ],
-      nextAction: 'Supervisor to review by Jan 24',
-      recommendation: 'Clear for hire (no disqualifying factors)',
-      extendedReason: 'Applicant out of state - employment verification delayed. Prior employer HR took 3 weeks to respond.'
-    },
-    {
-      id: 'BI-2024-141',
-      subject: 'James Wilson',
-      position: 'Deputy Sheriff',
-      applicationDate: 'Jan 11, 2026',
-      daysOpen: 12,
-      status: 'Criminal History Review',
-      priority: 'high',
-      priorityReason: 'Lateral hire - academy starts Feb 10',
-      investigator: 'Brooks',
-      lastUpdate: '3 hours ago',
-      lastActivity: 'Criminal history results received',
-      stages: [
-        { name: 'Initial Review', status: 'completed', detail: 'Packet received Jan 11' },
-        { name: 'Criminal History', status: 'in_progress', detail: 'Results received Jan 23', subDetail: 'Minor traffic citation 2023 - reviewing' },
-        { name: 'Reference Checks', status: 'pending', detail: 'Scheduled to begin Jan 24' },
-        { name: 'Employment Verification', status: 'pending', detail: 'Not started' },
-        { name: 'Financial Review', status: 'not_required', detail: 'Lateral hire exception' },
-        { name: 'Supervisor Review', status: 'pending', detail: 'Not started' }
-      ],
-      nextAction: 'Complete criminal history review today, begin reference checks tomorrow',
-      lateralNotes: 'Currently employed: Atlanta PD (6 years, good standing). POST certified.'
-    },
-    {
-      id: 'BI-2024-138',
-      subject: 'Maria Rodriguez',
-      position: 'Detention Officer',
-      applicationDate: 'Nov 17, 2025',
-      daysOpen: 67,
-      status: 'On Hold (Awaiting Applicant)',
-      priority: 'on_hold',
-      priorityReason: null,
-      investigator: 'Thompson',
-      lastUpdate: '5 days ago',
-      lastActivity: 'Waiting on applicant documentation',
-      stages: [
-        { name: 'Initial Review', status: 'completed', detail: 'Completed' },
-        { name: 'Criminal History', status: 'partial', detail: '1 hit requires explanation', subDetail: '2019 misdemeanor arrest - no disposition on file' },
-        { name: 'Reference Checks', status: 'blocked', detail: 'Waiting on crim history resolution' },
-        { name: 'Employment Verification', status: 'pending', detail: 'Not started' },
-        { name: 'Financial Review', status: 'pending', detail: 'Not started' },
-        { name: 'Supervisor Review', status: 'pending', detail: 'Not started' }
-      ],
-      nextAction: 'If no response by Jan 30, recommend case closure',
-      holdReason: 'Applicant must provide court disposition records for 2019 misdemeanor arrest',
-      contactAttempts: ['Nov 22: Initial request (certified mail)', 'Dec 15: Reminder email', 'Jan 18: Phone message (no callback)']
-    },
-    {
-      id: 'BI-2024-136',
-      subject: 'David Kim',
-      position: 'Deputy Sheriff',
-      applicationDate: 'Dec 20, 2025',
-      daysOpen: 34,
-      status: 'Financial Review',
-      priority: 'standard',
-      priorityReason: null,
-      investigator: 'Davis',
-      lastUpdate: '4 hours ago',
-      lastActivity: 'Financial review completed',
-      stages: [
-        { name: 'Initial Review', status: 'completed', detail: 'Completed' },
-        { name: 'Criminal History', status: 'completed', detail: 'GCIC clear' },
-        { name: 'Reference Checks', status: 'completed', detail: '5 of 5 - all positive' },
-        { name: 'Employment Verification', status: 'completed', detail: 'All confirmed' },
-        { name: 'Financial Review', status: 'completed', detail: 'Score 712 (acceptable), no concerns' },
-        { name: 'Supervisor Review', status: 'pending', detail: 'Submitting today' }
-      ],
-      nextAction: 'Submit to supervisor for review by EOD Jan 23',
-      recommendation: 'Clear for hire (no disqualifying factors)',
-      extendedReason: 'Holiday processing delays (Dec 23-Jan 2 closure). 2 references out of town.'
-    },
-    {
-      id: 'BI-2024-134',
-      subject: 'Lisa Anderson',
-      position: 'Detention Officer',
-      applicationDate: 'Jan 4, 2026',
-      daysOpen: 19,
-      status: 'Employment Verification',
-      priority: 'standard',
-      priorityReason: null,
-      investigator: 'Brooks',
-      lastUpdate: '1 hour ago',
-      lastActivity: 'Employment verification request sent',
-      stages: [
-        { name: 'Initial Review', status: 'completed', detail: 'Completed' },
-        { name: 'Criminal History', status: 'completed', detail: 'GCIC clear' },
-        { name: 'Reference Checks', status: 'completed', detail: '5 of 5 completed' },
-        { name: 'Employment Verification', status: 'in_progress', detail: '2 of 3 verified', subDetail: 'Awaiting current employer response' },
-        { name: 'Financial Review', status: 'pending', detail: 'Not started' },
-        { name: 'Supervisor Review', status: 'pending', detail: 'Not started' }
-      ],
-      nextAction: 'Follow up with current employer by Jan 25'
-    },
-    {
-      id: 'BI-2024-132',
-      subject: 'Michael Brown',
-      position: 'Deputy Sheriff',
-      applicationDate: 'Dec 2, 2025',
-      daysOpen: 52,
-      status: 'Supervisor Review',
-      priority: 'standard',
-      priorityReason: null,
-      investigator: 'Thompson',
-      lastUpdate: '2 days ago',
-      lastActivity: 'Submitted to supervisor',
-      stages: [
-        { name: 'Initial Review', status: 'completed', detail: 'Completed' },
-        { name: 'Criminal History', status: 'completed', detail: 'See documented concerns' },
-        { name: 'Reference Checks', status: 'completed', detail: '5 of 5 completed' },
-        { name: 'Employment Verification', status: 'completed', detail: 'All confirmed' },
-        { name: 'Financial Review', status: 'completed', detail: 'See documented concerns' },
-        { name: 'Supervisor Review', status: 'in_progress', detail: 'Submitted Jan 21 - pending decision' }
-      ],
-      nextAction: 'Supervisor to review findings and recommendation by Jan 25',
-      recommendation: 'Conditional hire - concerns mitigated by documented explanations',
-      documentedConcerns: [
-        { type: 'Criminal History', detail: '2018 DUI conviction (misdemeanor)', mitigation: 'Disclosed on application, completed court-ordered classes, 6+ years ago' },
-        { type: 'Financial', detail: 'Credit score 580 (below 650 threshold)', mitigation: 'Medical debt from 2020, payment plan in place, current on payments' }
-      ]
-    },
-    {
-      id: 'BI-2024-129',
-      subject: 'Jennifer Lee',
-      position: 'Detention Officer',
-      applicationDate: 'Dec 26, 2025',
-      daysOpen: 28,
-      status: 'Reference Checks',
-      priority: 'standard',
-      priorityReason: null,
-      investigator: 'Davis',
-      lastUpdate: '6 hours ago',
-      lastActivity: 'Reference interview completed',
-      stages: [
-        { name: 'Initial Review', status: 'completed', detail: 'Completed' },
-        { name: 'Criminal History', status: 'completed', detail: 'GCIC clear' },
-        { name: 'Reference Checks', status: 'in_progress', detail: '4 of 5 completed', subDetail: 'Personal: 3/3, Employment: 1/2' },
-        { name: 'Employment Verification', status: 'partial', detail: '2 of 3 verified' },
-        { name: 'Financial Review', status: 'pending', detail: 'Not started' },
-        { name: 'Supervisor Review', status: 'pending', detail: 'Not started' }
-      ],
-      nextAction: 'Complete final reference interview Jan 24 (scheduled 1800 hrs)',
-      notes: 'Applicant currently employed - scheduling reference interviews during non-work hours'
-    }
-  ];
-
-  // Investigator workload data
-  const investigatorWorkload = [
-    { name: 'Agent Brooks', cases: 3 },
-    { name: 'Agent Davis', cases: 3 },
-    { name: 'Agent Thompson', cases: 2 }
-  ];
+  // Investigator workload derived from live cases
+  const investigatorWorkload = Object.entries(
+    cases.reduce((acc, c) => {
+      const name = c.investigator === 'Unassigned' ? 'Unassigned' : `Agent ${c.investigator}`;
+      acc[name] = (acc[name] || 0) + 1;
+      return acc;
+    }, {})
+  ).map(([name, count]) => ({ name, cases: count }));
 
   const notifications = [
     { id: 1, title: '3 Cases Awaiting Review', message: 'Final approval needed', time: '10 min ago', urgent: true },
@@ -536,6 +434,19 @@ export default function ActiveCases() {
             </div>
 
             {/* Cases List */}
+            {loading && (
+              <div className="flex items-center justify-center py-16 text-slate-500 text-sm gap-2">
+                <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse inline-block"></span>
+                Loading cases…
+              </div>
+            )}
+            {!loading && cases.length === 0 && (
+              <div className="flex flex-col items-center justify-center py-16 text-slate-500 text-sm gap-2">
+                <FolderOpen className="w-10 h-10 text-slate-600 mb-2" />
+                <p className="font-medium text-primary">No active cases</p>
+                <p>Cases will appear here once investigations are opened in the backend.</p>
+              </div>
+            )}
             <div className="space-y-6">
               {filteredCases.map((case_item) => {
                 const priorityDisplay = getPriorityDisplay(case_item.priority);
