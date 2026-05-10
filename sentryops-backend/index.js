@@ -1,9 +1,12 @@
 'use strict';
 
 require('dotenv').config();
-const express   = require('express');
+const express    = require('express');
+const cors       = require('cors');
 const { pool, initializeTables } = require('./db');
-const authRoutes = require('./src/routes/auth');
+const authRoutes       = require('./src/routes/auth');
+const casesRoutes      = require('./src/routes/cases');
+const candidatesRoutes = require('./src/routes/candidates');
 
 if (!process.env.JWT_SECRET) {
   console.error('[server] JWT_SECRET is not set. Refusing to start.');
@@ -13,12 +16,34 @@ if (!process.env.JWT_SECRET) {
 const app  = express();
 const PORT = process.env.PORT || 3001;
 
+const ALLOWED_ORIGINS = [
+  'https://sentryops-prototype-qzgoqgywe-dwights-projects-8a9a094f.vercel.app',
+  'https://sentryops-prototype.vercel.app',
+  'http://localhost:5173',
+];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    // Allow requests with no origin (mobile apps, curl, Postman)
+    if (!origin || ALLOWED_ORIGINS.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error(`CORS: origin '${origin}' not allowed`));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+}));
+
 app.use(express.json());
 
 // ---------------------------------------------------------------------------
 // Routes
 // ---------------------------------------------------------------------------
-app.use('/auth', authRoutes);
+app.use('/auth',       authRoutes);
+app.use('/cases',      casesRoutes);
+app.use('/candidates', candidatesRoutes);
 
 // ---------------------------------------------------------------------------
 // Health check — returns live DB connectivity status

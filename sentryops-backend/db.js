@@ -89,8 +89,14 @@ async function initializeTables() {
         action         VARCHAR(255) NOT NULL,
         table_affected VARCHAR(100),
         record_id      INTEGER,
+        notes          TEXT,
         timestamp      TIMESTAMPTZ NOT NULL DEFAULT NOW()
       );
+    `);
+
+    // Migrate: add notes column to audit_log if it was created before this column existed
+    await client.query(`
+      ALTER TABLE audit_log ADD COLUMN IF NOT EXISTS notes TEXT;
     `);
 
     await client.query('COMMIT');
