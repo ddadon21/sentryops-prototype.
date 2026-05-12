@@ -106,7 +106,7 @@ export default function ActiveCases() {
 
   useEffect(() => {
     api.get('/cases')
-      .then(data => setCases((data ?? []).map(transformCase)))
+      .then(data => setCases((Array.isArray(data) ? data : (data?.cases ?? [])).map(transformCase)))
       .catch(() => setCases([]))
       .finally(() => setLoading(false));
   }, []);
