@@ -67,10 +67,10 @@ const transformCase = (c) => {
   const daysOpen = Math.max(0, Math.floor((Date.now() - new Date(c.created_at)) / 86400000));
   const priorityMap = { critical: 'high', high: 'high', medium: 'standard', low: 'standard' };
   const uiPriority = c.status === 'on_hold' ? 'on_hold' : (priorityMap[c.priority] || 'standard');
-  const investigator = c.investigator_last_name || 'Unassigned';
+  const investigator = c.investigator_name || 'Unassigned';
   return {
     id: `BI-${String(c.id).padStart(7, '0')}`,
-    subject: `${c.candidate_first_name} ${c.candidate_last_name}`,
+    subject: `${c.first_name ?? ''} ${c.last_name ?? ''}`.trim() || 'Unknown',
     position: '—',
     applicationDate: new Date(c.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
     daysOpen,

@@ -107,7 +107,7 @@ export default function BackgroundsDashboard() {
   // ── Real supervisor-review cases ─────────────────────────────
   const supervisorReviewCases = underReviewList.map(c => ({
     id: c.id,
-    subject: `${c.candidate_first_name} ${c.candidate_last_name}`,
+    subject: `${c.first_name ?? ''} ${c.last_name ?? ''}`.trim() || 'Unknown',
     issueType: 'Pending Adjudication',
     severity: c.priority === 'critical' || c.priority === 'high' ? 'high' : 'medium',
     daysOpen: getDaysOld(c.created_at),
@@ -122,14 +122,12 @@ export default function BackgroundsDashboard() {
     .slice(0, 5)
     .map(c => ({
       id: c.id,
-      subject: `${c.candidate_first_name} ${c.candidate_last_name}`,
-      position: '—',
+      subject: `${c.first_name ?? ''} ${c.last_name ?? ''}`.trim() || 'Unknown',
+      position: c.position_applied || '—',
       stage: STATUS_DISPLAY[c.status] || c.status,
       daysOpen: getDaysOld(c.created_at),
       priority: 'high',
-      investigator: c.investigator_first_name
-        ? `${c.investigator_first_name} ${c.investigator_last_name}`
-        : 'Unassigned',
+      investigator: c.investigator_name || 'Unassigned',
       nextAction: NEXT_ACTION[c.status] || 'Review case',
       caseNumber: fmtCaseId(c.id),
     }));
