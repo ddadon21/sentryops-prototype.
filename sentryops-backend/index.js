@@ -17,15 +17,18 @@ const app  = express();
 const PORT = process.env.PORT || 3001;
 
 const ALLOWED_ORIGINS = [
-  'https://sentryops-prototype-qzgoqgywe-dwights-projects-8a9a094f.vercel.app',
   'https://sentryops-prototype.vercel.app',
   'http://localhost:5173',
 ];
 
+// Matches any Vercel preview URL for the dwights-projects-8a9a094f team,
+// e.g. https://sentryops-prototype-abc123-dwights-projects-8a9a094f.vercel.app
+const VERCEL_PREVIEW_RE = /^https:\/\/[a-z0-9-]+-dwights-projects-8a9a094f\.vercel\.app$/;
+
 app.use(cors({
   origin: (origin, callback) => {
     // Allow requests with no origin (mobile apps, curl, Postman)
-    if (!origin || ALLOWED_ORIGINS.includes(origin)) {
+    if (!origin || ALLOWED_ORIGINS.includes(origin) || VERCEL_PREVIEW_RE.test(origin)) {
       callback(null, true);
     } else {
       callback(new Error(`CORS: origin '${origin}' not allowed`));
