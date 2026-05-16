@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import DashboardLayout from '../layouts/DashboardLayout';
 import { biNavigation, biProfile, biNotifications } from '../config/biConfig';
-import { api } from '../api';
+import { api, API_BASE_URL } from '../api';
 
 // ── Helpers ────────────────────────────────────────────────────
 
@@ -69,6 +69,7 @@ const transformCase = (c) => {
   const uiPriority = c.status === 'on_hold' ? 'on_hold' : (priorityMap[c.priority] || 'standard');
   const investigator = c.investigator_name || 'Unassigned';
   return {
+    rawId: c.id,
     id: `BI-${String(c.id).padStart(7, '0')}`,
     subject: `${c.first_name ?? ''} ${c.last_name ?? ''}`.trim() || 'Unknown',
     position: '—',
@@ -103,6 +104,7 @@ export default function ActiveCases() {
   const [expandedCase, setExpandedCase] = useState(null);
   const [cases, setCases] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [exportingId, setExportingId] = useState(null);
 
   useEffect(() => {
     api.get('/cases')
@@ -116,6 +118,29 @@ export default function ActiveCases() {
     const timer = setInterval(() => setCurrentTime(new Date()), 60000);
     return () => clearInterval(timer);
   }, []);
+
+  const handleExportPDF = async (rawId, caseId) => {
+    setExportingId(rawId);
+    try {
+      const token = localStorage.getItem('sentryops_token');
+      const res = await fetch(`${API_BASE_URL}/cases/${rawId}/export`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!res.ok) throw new Error('Export failed');
+      const blob = await res.blob();
+      const url  = URL.createObjectURL(blob);
+      const a    = document.createElement('a');
+      a.href     = url;
+      a.download = `SentryOps-${caseId}-${new Date().toISOString().slice(0, 10)}.pdf`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch {
+      alert('Failed to generate PDF report. Please try again.');
+    } finally {
+      setExportingId(null);
+    }
+  };
 
   const formatTime = (date) => {
     return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
@@ -651,10 +676,18 @@ export default function ActiveCases() {
                       )}
 
                       {/* Action Buttons */}
-                      <div className="flex items-center gap-2 pt-4 border-t border-border dark:border-slate-700/30">
+                      <div className="flex items-center gap-2 pt-4 border-t border-border dark:border-slate-700/30 flex-wrap">
                         <button className="flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-sm font-medium transition-all">
                           <Eye className="w-4 h-4" />
                           View Full Case File
+                        </button>
+                        <button
+                          onClick={() => handleExportPDF(case_item.rawId, case_item.id)}
+                          disabled={exportingId === case_item.rawId}
+                          className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-60 disabled:cursor-wait text-white rounded-xl text-sm font-medium transition-all"
+                        >
+                          <Download className="w-4 h-4" />
+                          {exportingId === case_item.rawId ? 'Generating…' : 'Export PDF'}
                         </button>
                         <button className="flex items-center gap-2 px-4 py-2 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-700/60 transition-all">
                           <Phone className="w-4 h-4" />
