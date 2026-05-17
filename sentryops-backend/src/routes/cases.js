@@ -192,7 +192,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // ---------------------------------------------------------------------------
-// POST /cases/:id/export — generate and stream a PDF investigation report
+// POST /cases/:id/export — generate and stream a professionally designed PDF
 // ---------------------------------------------------------------------------
 router.post('/:id/export', async (req, res) => {
   const id = parseInt(req.params.id, 10);
@@ -220,23 +220,38 @@ router.post('/:id/export', async (req, res) => {
     return res.status(500).json({ error: 'Failed to fetch case.' });
   }
 
+  // Color palette
+  const NAVY        = '#0a1f3d';
+  const NAVY_MID    = '#112d52';
+  const GOLD        = '#c9a84c';
+  const GRAY_BG     = '#f7f8fa';
+  const CREAM       = '#fdf8ee';
+  const TEXT_MUTED  = '#888888';
+  const GREEN_DARK  = '#1e4d2b';
+  const GREEN_LIGHT = '#7fc99a';
+
   // ── Derived values ────────────────────────────────────────────
   const caseId   = `BI-${String(c.id).padStart(7, '0')}`;
   const daysOpen = Math.max(0, Math.floor((Date.now() - new Date(c.created_at)) / 86400000));
 
-  const STATUS_DISPLAY = {
-    submitted:    'Initial Review',
-    in_progress:  'In Progress',
-    under_review: 'Supervisor Review',
-    on_hold:      'On Hold',
-    completed:    'Completed',
+  const now      = new Date();
+  const dateStr  = now.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'America/New_York' });
+  const timeStr  = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true, timeZone: 'America/New_York' });
+  const genTimestamp = `${dateStr} · ${timeStr} EST`;
+
+  const STATUS_LABEL = {
+    submitted:         'Submitted',
+    in_progress:       'In Progress',
+    pending_review:    'Pending Review',
+    pending_signature: 'Pending Signature',
+    complete:          'Complete',
   };
   const NEXT_ACTION = {
-    submitted:    'Complete initial document review',
-    in_progress:  'Continue active investigation stages',
-    under_review: 'Awaiting supervisor adjudication decision',
-    on_hold:      'Awaiting applicant or external response',
-    completed:    'Case closed — no further action required',
+    submitted:         'Complete initial document review and verify all applicant materials.',
+    in_progress:       'Continue active investigation — all stages must be completed before supervisor review.',
+    pending_review:    'Awaiting supervisor adjudication decision.',
+    pending_signature: 'Pending supervisor signature before case can be closed.',
+    complete:          'Case closed — no further action required.',
   };
 
   const STAGE_NAMES = [
@@ -245,16 +260,16 @@ router.post('/:id/export', async (req, res) => {
   ];
   const stages = STAGE_NAMES.map((name, i) => {
     let status = 'Not Started';
-    if      (c.status === 'completed')    status = 'Completed';
-    else if (c.status === 'submitted')    status = i === 0 ? 'In Progress' : 'Not Started';
-    else if (c.status === 'in_progress')  status = i === 0 ? 'Completed' : i === 1 ? 'In Progress' : 'Not Started';
-    else if (c.status === 'under_review') status = i < 5 ? 'Completed' : 'In Progress';
-    else if (c.status === 'on_hold')      status = i === 0 ? 'Completed' : i === 1 ? 'On Hold' : 'Pending';
+    if      (c.status === 'complete')          status = 'Completed';
+    else if (c.status === 'submitted')         status = i === 0 ? 'In Progress' : 'Not Started';
+    else if (c.status === 'in_progress')       status = i === 0 ? 'Completed' : i === 1 ? 'In Progress' : 'Not Started';
+    else if (c.status === 'pending_review')    status = i < 5   ? 'Completed' : 'In Progress';
+    else if (c.status === 'pending_signature') status = 'Completed';
     return { name, status };
   });
 
   // ── Stream PDF ────────────────────────────────────────────────
-  const filename = `SentryOps-${caseId}-${new Date().toISOString().slice(0, 10)}.pdf`;
+  const filename = `SentryOps-${caseId}-${now.toISOString().slice(0, 10)}.pdf`;
   res.setHeader('Content-Type', 'application/pdf');
   res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
 
@@ -262,136 +277,158 @@ router.post('/:id/export', async (req, res) => {
   doc.pipe(res);
 
   const PW     = doc.page.width;   // 612 pt
-  const MARGIN = 50;
-  const CW     = PW - MARGIN * 2;  // 512 pt
+  const PH     = doc.page.height;  // 792 pt
+  const MARGIN = 44;
+  const CW     = PW - MARGIN * 2;  // 524 pt
 
-  // ── HEADER ────────────────────────────────────────────────────
-  doc.rect(0, 0, PW, 72).fill('#1a2e4a');
-  doc.fillColor('white').font('Helvetica-Bold').fontSize(20)
-     .text('SENTRYOPS', MARGIN, 16, { characterSpacing: 3, lineBreak: false });
-  doc.font('Helvetica').fontSize(9)
-     .text("Gwinnett County Sheriff's Office  |  Background Investigations Unit", MARGIN, 40, { lineBreak: false });
-  doc.fontSize(8)
+  // ── 1. NAVY HEADER BLOCK ──────────────────────────────────────
+  doc.rect(0, 0, PW, 80).fill(NAVY);
+  doc.rect(MARGIN, 16, 6, 48).fill(GOLD);
+  doc.fillColor('white').font('Helvetica-Bold').fontSize(16)
+     .text('SENTRYOPS', MARGIN + 16, 20, { characterSpacing: 2, lineBreak: false });
+  doc.fillColor(GOLD).font('Helvetica-Bold').fontSize(7.5)
+     .text('BACKGROUND INVESTIGATIONS UNIT', MARGIN + 16, 42, { characterSpacing: 1.5, lineBreak: false });
+  doc.fillColor('white').font('Helvetica').fontSize(8)
+     .text("Gwinnett County Sheriff's Office", MARGIN + 16, 57, { lineBreak: false });
+  doc.fillColor(GOLD).font('Helvetica-Bold').fontSize(8.5)
      .text('BACKGROUND INVESTIGATION REPORT', 0, 28, { align: 'right', width: PW - MARGIN, lineBreak: false });
+  doc.fillColor('#aabbcc').font('Helvetica').fontSize(7.5)
+     .text('CONFIDENTIAL  ·  LAW ENFORCEMENT SENSITIVE', 0, 44, { align: 'right', width: PW - MARGIN, lineBreak: false });
 
-  // ── CASE BANNER ───────────────────────────────────────────────
-  doc.rect(MARGIN, 82, CW, 32).fillAndStroke('#eef2f7', '#c8d6e8');
-  doc.fillColor('#1a2e4a').font('Helvetica-Bold').fontSize(11)
-     .text(`Case ID: ${caseId}`, MARGIN + 10, 91, { lineBreak: false });
-  const genDate = new Date().toLocaleString('en-US', { dateStyle: 'long', timeStyle: 'short' });
-  doc.fillColor('#555').font('Helvetica').fontSize(9)
-     .text(`Generated: ${genDate}`, 0, 94, { align: 'right', width: PW - MARGIN - 10, lineBreak: false });
-  doc.fillColor('#b91c1c').font('Helvetica-Bold').fontSize(7.5)
-     .text('CONFIDENTIAL  —  LAW ENFORCEMENT SENSITIVE  —  NOT FOR PUBLIC RELEASE',
-           0, 107, { align: 'center', width: PW, lineBreak: false });
+  // ── 2. CASE ID BANNER ─────────────────────────────────────────
+  doc.rect(0, 80, PW, 38).fill(NAVY_MID);
+  doc.rect(0, 80, 4, 38).fill(GOLD);
+  doc.fillColor(GOLD).font('Helvetica-Bold').fontSize(13)
+     .text(caseId, MARGIN, 91, { characterSpacing: 1, lineBreak: false });
+  doc.fillColor('#ccddee').font('Helvetica').fontSize(8)
+     .text(`Generated: ${genTimestamp}`, 0, 95, { align: 'right', width: PW - MARGIN, lineBreak: false });
 
-  // ── Layout helpers ────────────────────────────────────────────
-  let y = 132;
+  let y = 136;
 
-  const sectionHead = (title) => {
-    y += 8;
-    doc.rect(MARGIN, y, CW, 19).fill('#1a2e4a');
-    doc.fillColor('white').font('Helvetica-Bold').fontSize(8)
-       .text(title, MARGIN + 10, y + 5, { characterSpacing: 0.8, lineBreak: false });
-    y += 27;
+  // ── Helper: navy section heading bar ─────────────────────────
+  const secHead = (title) => {
+    y += 10;
+    doc.rect(MARGIN, y, CW, 20).fill(NAVY);
+    doc.rect(MARGIN, y, 3, 20).fill(GOLD);
+    doc.fillColor('white').font('Helvetica-Bold').fontSize(7.5)
+       .text(title, MARGIN + 12, y + 6, { characterSpacing: 1, lineBreak: false });
+    y += 28;
   };
 
-  // label + value cell at fixed coordinates; does not move y
-  const cell = (label, value, cx, cy, cw) => {
-    doc.fillColor('#8899aa').font('Helvetica-Bold').fontSize(7)
+  // ── Helper: label-value (does NOT advance y) ──────────────────
+  const lv = (label, value, cx, cy, cw) => {
+    doc.fillColor(TEXT_MUTED).font('Helvetica-Bold').fontSize(6.5)
        .text(label, cx, cy, { width: cw, lineBreak: false });
-    doc.fillColor('#111111').font('Helvetica').fontSize(9.5)
-       .text(String(value ?? '—'), cx, cy + 11, { width: cw, lineBreak: false });
+    doc.fillColor('#111111').font('Helvetica').fontSize(9)
+       .text(String(value ?? '—'), cx, cy + 10, { width: cw, lineBreak: false });
   };
 
-  // ── CANDIDATE INFORMATION ─────────────────────────────────────
-  sectionHead('CANDIDATE INFORMATION');
-  cell('FULL NAME',        `${c.first_name} ${c.last_name}`,
-       MARGIN,       y, 160);
-  cell('DATE OF BIRTH',    c.date_of_birth
-         ? new Date(c.date_of_birth).toLocaleDateString('en-US')
-         : '—',
-       MARGIN + 175, y, 145);
-  cell('SSN (LAST 4)',     c.ssn_last_four ? `XXX-XX-${c.ssn_last_four}` : '—',
-       MARGIN + 335, y, 175);
-  y += 36;
+  // ── Helper: shaded detail box ─────────────────────────────────
+  const detailBox = (label, value, bx, by, bw, bh, bg) => {
+    doc.rect(bx, by, bw, bh).fill(bg || GRAY_BG);
+    lv(label, value, bx + 8, by + 7, bw - 16);
+  };
 
-  cell('POSITION APPLIED', c.position_applied || '—', MARGIN,       y, 200);
-  cell('PHONE',            c.phone            || '—', MARGIN + 215, y, 140);
-  cell('EMAIL',            c.candidate_email  || '—', MARGIN + 370, y, 140);
-  y += 36;
+  // ── Helper: investigation stage card ─────────────────────────
+  const stageCard = (name, status, bx, by, bw, bh) => {
+    const bg          = status === 'Completed'   ? '#dff6ea' : status === 'In Progress' ? CREAM       : '#f2f4f7';
+    const borderColor = status === 'Completed'   ? GREEN_LIGHT : status === 'In Progress' ? GOLD      : '#d0d5dd';
+    const statusColor = status === 'Completed'   ? GREEN_DARK  : status === 'In Progress' ? '#7a5c00' : '#555555';
+    const dot         = status === 'Completed'   ? GREEN_LIGHT : status === 'In Progress' ? GOLD      : '#aaaaaa';
 
-  cell('ADDRESS', c.address || '—', MARGIN, y, CW);
-  y += 40;
+    doc.rect(bx, by, bw, bh).fill(bg);
+    doc.rect(bx, by, 3, bh).fill(borderColor);
+    doc.fillColor('#222222').font('Helvetica-Bold').fontSize(7.5)
+       .text(name, bx + 10, by + 8, { width: bw - 20, lineBreak: false });
+    doc.circle(bx + 13, by + bh - 13, 3).fill(dot);
+    doc.fillColor(statusColor).font('Helvetica').fontSize(7.5)
+       .text(status, bx + 22, by + bh - 18, { width: bw - 32, lineBreak: false });
+  };
 
-  // ── CASE DETAILS ──────────────────────────────────────────────
-  sectionHead('CASE DETAILS');
-  cell('STATUS',           STATUS_DISPLAY[c.status] || c.status,  MARGIN,       y, 155);
-  cell('PRIORITY',         (c.priority || '').toUpperCase(),       MARGIN + 170, y, 130);
-  cell('DAYS IN PROCESS',  `${daysOpen} days  (SLA target: <18)`, MARGIN + 315, y, 195);
-  y += 36;
+  // ── 3. CANDIDATE INFORMATION ──────────────────────────────────
+  secHead('CANDIDATE INFORMATION');
 
-  cell('ASSIGNED INVESTIGATOR', c.investigator_name  || 'Unassigned', MARGIN,       y, 200);
-  cell('BADGE NUMBER',          c.investigator_badge || '—',           MARGIN + 215, y, 140);
-  cell('OPENED',
-       new Date(c.created_at).toLocaleDateString('en-US', { dateStyle: 'long' }),
-       MARGIN + 370, y, 140);
+  const COL3 = Math.floor(CW / 3);
+  detailBox('FULL NAME',      `${c.first_name} ${c.last_name}`,                                          MARGIN,            y, COL3 - 6, 42, GRAY_BG);
+  detailBox('DATE OF BIRTH',  c.date_of_birth ? new Date(c.date_of_birth).toLocaleDateString('en-US') : '—', MARGIN + COL3, y, COL3 - 6, 42, GRAY_BG);
+  detailBox('SSN (LAST 4)',   c.ssn_last_four ? `XXX-XX-${c.ssn_last_four}` : '—',                      MARGIN + COL3 * 2, y, COL3,     42, GRAY_BG);
+  y += 50;
+
+  detailBox('POSITION APPLIED', c.position_applied || '—', MARGIN,            y, COL3 - 6, 42, GRAY_BG);
+  detailBox('PHONE',            c.phone            || '—', MARGIN + COL3,     y, COL3 - 6, 42, GRAY_BG);
+  detailBox('EMAIL',            c.candidate_email  || '—', MARGIN + COL3 * 2, y, COL3,     42, GRAY_BG);
+  y += 50;
+
+  detailBox('ADDRESS', c.address || '—', MARGIN, y, CW, 34, GRAY_BG);
   y += 42;
 
-  // ── INVESTIGATION STAGES ─────────────────────────────────────
-  sectionHead('INVESTIGATION STAGES');
-  const BOX_W = 157, BOX_H = 36, BOX_GAP = 10;
-  stages.forEach(({ name, status }, i) => {
-    const col = i % 3;
-    const row = Math.floor(i / 3);
-    const bx  = MARGIN + col * (BOX_W + BOX_GAP);
-    const by  = y + row * (BOX_H + 8);
+  // ── 4. CASE DETAILS ───────────────────────────────────────────
+  secHead('CASE DETAILS');
 
-    const bg = status === 'Completed'  ? '#d1fae5'
-             : status === 'In Progress' ? '#fef3c7'
-             : status === 'On Hold'     ? '#fee2e2'
-             : '#f1f5f9';
-    const bd = status === 'Completed'  ? '#10b981'
-             : status === 'In Progress' ? '#f59e0b'
-             : status === 'On Hold'     ? '#ef4444'
-             : '#cbd5e1';
-    const tc = status === 'Completed'  ? '#065f46'
-             : status === 'In Progress' ? '#78350f'
-             : status === 'On Hold'     ? '#991b1b'
-             : '#64748b';
+  const COL4 = Math.floor(CW / 4);
+  detailBox('STATUS',          STATUS_LABEL[c.status] || c.status,   MARGIN,            y, COL4 - 5, 42, CREAM);
+  detailBox('PRIORITY',        (c.priority || '').toUpperCase(),      MARGIN + COL4,     y, COL4 - 5, 42, CREAM);
+  detailBox('DAYS IN PROCESS', `${daysOpen} days`,                    MARGIN + COL4 * 2, y, COL4 - 5, 42, CREAM);
+  detailBox('DATE OPENED',
+    new Date(c.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+    MARGIN + COL4 * 3, y, COL4, 42, CREAM);
+  y += 50;
 
-    doc.rect(bx, by, BOX_W, BOX_H).fillAndStroke(bg, bd);
-    doc.fillColor('#222').font('Helvetica-Bold').fontSize(7.5)
-       .text(name,   bx + 8, by + 7,  { width: BOX_W - 16, lineBreak: false });
-    doc.fillColor(tc).font('Helvetica').fontSize(8)
-       .text(status, bx + 8, by + 20, { width: BOX_W - 16, lineBreak: false });
-  });
-  y += 2 * (BOX_H + 8) + 10;
-
-  // ── NEXT ACTION ──────────────────────────────────────────────
-  sectionHead('NEXT ACTION REQUIRED');
-  doc.rect(MARGIN, y, CW, 30).fillAndStroke('#fffbeb', '#fcd34d');
-  doc.fillColor('#333333').font('Helvetica').fontSize(10)
-     .text(NEXT_ACTION[c.status] || 'Review case details.',
-           MARGIN + 12, y + 9, { width: CW - 24, lineBreak: false });
+  // Investigator row — omit badge field entirely when absent
+  const investigatorName = c.investigator_name || 'Pending Assignment';
+  if (c.investigator_badge) {
+    const INV_W = Math.floor(CW * 0.55);
+    const BDG_W = CW - INV_W - 6;
+    detailBox('ASSIGNED INVESTIGATOR', investigatorName,      MARGIN,              y, INV_W, 36, CREAM);
+    detailBox('BADGE NUMBER',          c.investigator_badge,  MARGIN + INV_W + 6,  y, BDG_W, 36, CREAM);
+  } else {
+    detailBox('ASSIGNED INVESTIGATOR', investigatorName, MARGIN, y, CW, 36, CREAM);
+  }
   y += 44;
 
-  // ── FOOTER ───────────────────────────────────────────────────
-  const FY = doc.page.height - 56;
-  doc.rect(0, FY, PW, 56).fillAndStroke('#f8fafc', '#e2e8f0');
-  doc.fillColor('#667788').font('Helvetica').fontSize(6.5)
+  // ── 5. INVESTIGATION STAGES ───────────────────────────────────
+  secHead('INVESTIGATION STAGES');
+
+  const SCOLS    = 3;
+  const SGAP     = 8;
+  const SW       = Math.floor((CW - SGAP * (SCOLS - 1)) / SCOLS);
+  const SH       = 52;
+  const SROW_GAP = 8;
+
+  stages.forEach(({ name, status }, i) => {
+    const col = i % SCOLS;
+    const row = Math.floor(i / SCOLS);
+    stageCard(name, status, MARGIN + col * (SW + SGAP), y + row * (SH + SROW_GAP), SW, SH);
+  });
+  y += Math.ceil(stages.length / SCOLS) * (SH + SROW_GAP) + 4;
+
+  // ── 6. NEXT ACTION ────────────────────────────────────────────
+  secHead('NEXT ACTION REQUIRED');
+  const ACTION_H   = 36;
+  const actionText = NEXT_ACTION[c.status] || 'Review case details and proceed accordingly.';
+  doc.rect(MARGIN, y, CW, ACTION_H).fill('#fffaeb');
+  doc.rect(MARGIN, y, 4, ACTION_H).fill(GOLD);
+  doc.fillColor('#444400').font('Helvetica-Bold').fontSize(8)
+     .text('ACTION:', MARGIN + 12, y + 10, { lineBreak: false });
+  doc.fillColor('#333300').font('Helvetica').fontSize(9)
+     .text(actionText, MARGIN + 58, y + 9, { width: CW - 70, lineBreak: false });
+  y += ACTION_H + 10;
+
+  // ── 7. NAVY FOOTER ────────────────────────────────────────────
+  const FH = 52;
+  const FY = PH - FH;
+  doc.rect(0, FY, PW, FH).fill(NAVY);
+  doc.rect(0, FY, PW, 1).fill(GOLD);
+  doc.fillColor('#aabbcc').font('Helvetica').fontSize(6.5)
      .text(
        'CJIS COMPLIANCE NOTICE: This document contains Criminal Justice Information (CJI) subject to FBI CJIS Security Policy v5.9. ' +
        'Unauthorized access, use, or distribution is a federal offense. Retain and destroy per GCSO Records Retention Schedule 4.12.',
-       MARGIN, FY + 8, { width: CW }
+       MARGIN, FY + 10, { width: CW, align: 'center' }
      );
-  doc.fillColor('#334455').font('Helvetica-Bold').fontSize(7)
-     .text('CONFIDENTIAL  —  FOR AUTHORIZED LAW ENFORCEMENT USE ONLY  —  NOT FOR PUBLIC DISCLOSURE',
-           MARGIN, FY + 30, { align: 'center', width: CW, lineBreak: false });
-  doc.fillColor('#99aabb').font('Helvetica').fontSize(6)
+  doc.fillColor(GOLD).font('Helvetica-Bold').fontSize(6.5)
      .text(
-       `SentryOps Background Investigations  |  ${new Date().toISOString()}  |  ${caseId}`,
-       MARGIN, FY + 43, { align: 'center', width: CW, lineBreak: false }
+       `SentryOps  ·  ${caseId}  ·  ${genTimestamp}  ·  FOR AUTHORIZED LAW ENFORCEMENT USE ONLY`,
+       MARGIN, FY + 34, { width: CW, align: 'center', lineBreak: false }
      );
 
   doc.end();
