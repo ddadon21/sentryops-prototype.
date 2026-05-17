@@ -201,7 +201,8 @@ router.post('/:id/export', async (req, res) => {
   let c;
   try {
     const r = await pool.query(
-      `SELECT c.*,
+      `SELECT c.id, c.status, c.priority, c.created_at, c.updated_at,
+              c.candidate_id, c.assigned_investigator_id,
               ca.first_name, ca.last_name, ca.date_of_birth, ca.ssn_last_four,
               ca.phone, ca.email AS candidate_email, ca.address,
               ca.position_applied, ca.application_date,
@@ -340,7 +341,7 @@ router.post('/:id/export', async (req, res) => {
     doc.rect(bx, by, 3, bh).fill(borderColor);
     doc.fillColor('#222222').font('Helvetica-Bold').fontSize(7.5)
        .text(name, bx + 10, by + 8, { width: bw - 20, lineBreak: false });
-    doc.circle(bx + 13, by + bh - 13, 3).fill(dot);
+    doc.fillColor(dot).circle(bx + 13, by + bh - 13, 3).fill();
     doc.fillColor(statusColor).font('Helvetica').fontSize(7.5)
        .text(status, bx + 22, by + bh - 18, { width: bw - 32, lineBreak: false });
   };
@@ -368,7 +369,7 @@ router.post('/:id/export', async (req, res) => {
   const COL4 = Math.floor(CW / 4);
   detailBox('STATUS',          STATUS_LABEL[c.status] || c.status,   MARGIN,            y, COL4 - 5, 42, CREAM);
   detailBox('PRIORITY',        (c.priority || '').toUpperCase(),      MARGIN + COL4,     y, COL4 - 5, 42, CREAM);
-  detailBox('DAYS IN PROCESS', `${daysOpen} days`,                    MARGIN + COL4 * 2, y, COL4 - 5, 42, CREAM);
+  detailBox('DAYS IN PROCESS', `${daysOpen} days · SLA: 18 days`,     MARGIN + COL4 * 2, y, COL4 - 5, 42, CREAM);
   detailBox('DATE OPENED',
     new Date(c.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
     MARGIN + COL4 * 3, y, COL4, 42, CREAM);
