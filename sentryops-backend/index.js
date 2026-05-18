@@ -3,7 +3,7 @@
 require('dotenv').config();
 const express    = require('express');
 const cors       = require('cors');
-const { pool, initializeTables } = require('./db');
+const { pool, initializeTables, seedDemoData } = require('./db');
 const authRoutes       = require('./src/routes/auth');
 const casesRoutes      = require('./src/routes/cases');
 const candidatesRoutes = require('./src/routes/candidates');
@@ -80,6 +80,7 @@ app.get('/health', async (req, res) => {
 async function start() {
   try {
     await initializeTables();
+    await seedDemoData();
 
     // Verify the connection pool can reach the database.
     const result = await pool.query('SELECT NOW() AS time');
