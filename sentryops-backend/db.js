@@ -99,6 +99,14 @@ async function initializeTables() {
       ALTER TABLE audit_log ADD COLUMN IF NOT EXISTS notes TEXT;
     `);
 
+    // Migrate: candidates table may have been created before these columns were added
+    await client.query(`
+      ALTER TABLE candidates ADD COLUMN IF NOT EXISTS position_applied VARCHAR(255);
+    `);
+    await client.query(`
+      ALTER TABLE candidates ADD COLUMN IF NOT EXISTS application_date DATE;
+    `);
+
     await client.query('COMMIT');
     console.log('[db] All tables verified / created.');
   } catch (err) {
@@ -116,11 +124,26 @@ async function initializeTables() {
 async function seedDemoData() {
   const client = await pool.connect();
   try {
+    // Patch any demo candidates that were inserted before position_applied column existed
+    const patches = [
+      { first_name: 'Darius',   last_name: 'Thompson', position: 'Deputy Sheriff',       app_date: '2026-05-06' },
+      { first_name: 'Ashley',   last_name: 'Reeves',   position: 'Correctional Officer', app_date: '2026-05-10' },
+      { first_name: 'James',    last_name: 'Okafor',   position: 'Deputy Sheriff',       app_date: '2026-05-02' },
+      { first_name: 'Brittany', last_name: 'Salazar',  position: 'Communications Officer', app_date: '2026-05-13' },
+    ];
+    for (const p of patches) {
+      await client.query(
+        `UPDATE candidates SET position_applied = $1, application_date = $2
+         WHERE first_name = $3 AND last_name = $4 AND position_applied IS NULL`,
+        [p.position, p.app_date, p.first_name, p.last_name]
+      );
+    }
+
     const check = await client.query(
       `SELECT id FROM candidates WHERE first_name = 'Darius' AND last_name = 'Thompson' LIMIT 1`
     );
     if (check.rowCount > 0) {
-      console.log('[seed] Demo data already present — skipping.');
+      console.log('[seed] Demo candidates already present — skipping inserts.');
       return;
     }
 

@@ -8,13 +8,21 @@ import { api, API_BASE_URL } from '../api';
 
 // ── Helpers ────────────────────────────────────────────────────
 
-const STATUS_DISPLAY = {
+const STATUS_MAP = {
   submitted:         'Initial Review',
+  initial_review:    'Initial Review',
   in_progress:       'In Progress',
-  pending_review:    'Pending Supervisor Review',
+  pending_review:    'Pending Review',
   pending_signature: 'Pending Signature',
   complete:          'Complete',
+  completed:         'Complete',
 };
+
+// Converts any DB enum value to a human-readable label.
+// Falls back to capitalising words if the key isn't in STATUS_MAP.
+const formatStatus = (raw) =>
+  STATUS_MAP[raw] ||
+  String(raw).replace(/_/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase());
 
 const NEXT_ACTION = {
   submitted:         'Complete initial document review',
@@ -71,12 +79,12 @@ const transformCase = (c) => {
       ? new Date(c.application_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
       : new Date(c.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
     daysOpen,
-    status: STATUS_DISPLAY[c.status] || c.status,
+    status: formatStatus(c.status),
     priority: uiPriority,
     priorityReason: uiPriority === 'high' ? `Priority level: ${c.priority}` : null,
     investigator,
     lastUpdate: relativeTime(c.updated_at),
-    lastActivity: `Status updated to: ${STATUS_DISPLAY[c.status] || c.status}`,
+    lastActivity: `Status updated to: ${formatStatus(c.status)}`,
     stages: deriveStages(c.status),
     nextAction: NEXT_ACTION[c.status] || 'Review case details',
   };
