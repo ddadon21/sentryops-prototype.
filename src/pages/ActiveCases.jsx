@@ -9,45 +9,39 @@ import { api, API_BASE_URL } from '../api';
 // ── Helpers ────────────────────────────────────────────────────
 
 const STATUS_DISPLAY = {
-  submitted:    'Initial Review',
-  in_progress:  'In Progress',
-  under_review: 'Supervisor Review',
-  on_hold:      'On Hold (Awaiting Applicant)',
-  completed:    'Completed',
+  submitted:         'Initial Review',
+  in_progress:       'In Progress',
+  pending_review:    'Pending Supervisor Review',
+  pending_signature: 'Pending Signature',
+  complete:          'Complete',
 };
 
 const NEXT_ACTION = {
-  submitted:    'Complete initial document review',
-  in_progress:  'Continue active investigation stages',
-  under_review: 'Awaiting supervisor adjudication decision',
-  on_hold:      'If no response by deadline, recommend case closure',
-  completed:    'Case closed',
+  submitted:         'Complete initial document review',
+  in_progress:       'Continue active investigation stages',
+  pending_review:    'Awaiting supervisor adjudication decision',
+  pending_signature: 'Awaiting supervisor signature before case can be closed',
+  complete:          'Case closed — no further action required',
 };
 
 const deriveStages = (status) => {
   const names = ['Initial Review', 'Criminal History', 'Reference Checks', 'Employment Verification', 'Financial Review', 'Supervisor Review'];
   return names.map((name, i) => {
-    if (status === 'completed') return { name, status: 'completed', detail: 'Completed' };
-    if (status === 'submitted') {
+    if (status === 'complete' || status === 'pending_signature')
+      return { name, status: 'completed', detail: 'Completed' };
+    if (status === 'submitted')
       return i === 0
         ? { name, status: 'in_progress', detail: 'Under review' }
         : { name, status: 'pending', detail: 'Not started' };
-    }
     if (status === 'in_progress') {
       if (i === 0) return { name, status: 'completed', detail: 'Completed' };
       if (i === 1) return { name, status: 'in_progress', detail: 'In progress' };
       return { name, status: 'pending', detail: 'Not started' };
     }
-    if (status === 'under_review') {
+    if (status === 'pending_review')
       return i < 5
         ? { name, status: 'completed', detail: 'Completed' }
         : { name, status: 'in_progress', detail: 'Pending supervisor decision' };
-    }
-    if (status === 'on_hold') {
-      if (i === 0) return { name, status: 'completed', detail: 'Completed' };
-      if (i === 1) return { name, status: 'blocked', detail: 'Case on hold' };
-      return { name, status: 'pending', detail: 'Waiting' };
-    }
     return { name, status: 'pending', detail: 'Not started' };
   });
 };
@@ -72,8 +66,10 @@ const transformCase = (c) => {
     rawId: c.id,
     id: `BI-${String(c.id).padStart(7, '0')}`,
     subject: `${c.first_name ?? ''} ${c.last_name ?? ''}`.trim() || 'Unknown',
-    position: '—',
-    applicationDate: new Date(c.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+    position: c.position_applied || '—',
+    applicationDate: c.application_date
+      ? new Date(c.application_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+      : new Date(c.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
     daysOpen,
     status: STATUS_DISPLAY[c.status] || c.status,
     priority: uiPriority,
