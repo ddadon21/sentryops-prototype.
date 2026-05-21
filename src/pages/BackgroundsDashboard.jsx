@@ -123,7 +123,7 @@ export default function BackgroundsDashboard() {
 
   // ── Real priority cases ───────────────────────────────────────
   const priorityCases = casesData
-    .filter(c => (c.priority === 'critical' || c.priority === 'high') && c.status !== 'completed')
+    .filter(c => (c.priority === 'critical' || c.priority === 'high') && c.status !== 'complete' && c.status !== 'completed')
     .slice(0, 5)
     .map(c => ({
       id: c.id,
