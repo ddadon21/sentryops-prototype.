@@ -8,26 +8,34 @@ import { api } from '../api';
 
 // ── Helpers ────────────────────────────────────────────────────
 
-const STATUS_DISPLAY = {
-  submitted:    'Initial Review',
-  in_progress:  'In Progress',
-  under_review: 'Supervisor Review',
-  on_hold:      'On Hold (Awaiting Applicant)',
-  completed:    'Completed',
+const STATUS_MAP = {
+  submitted:         'Initial Review',
+  initial_review:    'Initial Review',
+  in_progress:       'In Progress',
+  pending_review:    'Pending Review',
+  pending_signature: 'Pending Signature',
+  complete:          'Complete',
+  completed:         'Complete',
 };
 
+const formatStatus = (raw) =>
+  STATUS_MAP[raw] ||
+  String(raw).replace(/_/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase());
+
 const NEXT_ACTION = {
-  submitted:    'Complete initial document review',
-  in_progress:  'Continue active investigation stages',
-  under_review: 'Awaiting supervisor adjudication decision',
-  on_hold:      'If no response by deadline, recommend case closure',
-  completed:    'Case closed',
+  submitted:         'Complete initial document review',
+  in_progress:       'Continue active investigation stages',
+  pending_review:    'Awaiting supervisor adjudication decision',
+  pending_signature: 'Awaiting supervisor signature before case can be closed',
+  complete:          'Case closed — no further action required',
+  completed:         'Case closed — no further action required',
 };
 
 const deriveStages = (status) => {
   const names = ['Initial Review', 'Criminal History', 'Reference Checks', 'Employment Verification', 'Financial Review', 'Supervisor Review'];
   return names.map((name, i) => {
-    if (status === 'completed') return { name, status: 'completed', detail: 'Completed' };
+    if (status === 'complete' || status === 'completed' || status === 'pending_signature')
+      return { name, status: 'completed', detail: 'Completed' };
     if (status === 'submitted') {
       return i === 0
         ? { name, status: 'in_progress', detail: 'Under review' }
@@ -38,15 +46,10 @@ const deriveStages = (status) => {
       if (i === 1) return { name, status: 'in_progress', detail: 'In progress' };
       return { name, status: 'pending', detail: 'Not started' };
     }
-    if (status === 'under_review') {
+    if (status === 'pending_review') {
       return i < 5
         ? { name, status: 'completed', detail: 'Completed' }
         : { name, status: 'in_progress', detail: 'Pending supervisor decision' };
-    }
-    if (status === 'on_hold') {
-      if (i === 0) return { name, status: 'completed', detail: 'Completed' };
-      if (i === 1) return { name, status: 'blocked', detail: 'Case on hold' };
-      return { name, status: 'pending', detail: 'Waiting' };
     }
     return { name, status: 'pending', detail: 'Not started' };
   });
@@ -66,20 +69,22 @@ const relativeTime = (dateStr) => {
 const transformCase = (c) => {
   const daysOpen = Math.max(0, Math.floor((Date.now() - new Date(c.created_at)) / 86400000));
   const priorityMap = { critical: 'high', high: 'high', medium: 'standard', low: 'standard' };
-  const uiPriority = c.status === 'on_hold' ? 'on_hold' : (priorityMap[c.priority] || 'standard');
-  const investigator = c.investigator_last_name || 'Unassigned';
+  const uiPriority = priorityMap[c.priority] || 'standard';
+  const investigator = c.investigator_name || 'Unassigned';
   return {
     id: `BI-${String(c.id).padStart(7, '0')}`,
-    subject: `${c.candidate_first_name} ${c.candidate_last_name}`,
-    position: '—',
-    applicationDate: new Date(c.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+    subject: `${c.first_name ?? ''} ${c.last_name ?? ''}`.trim() || 'Unknown',
+    position: c.position_applied || '—',
+    applicationDate: c.application_date
+      ? new Date(c.application_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+      : new Date(c.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
     daysOpen,
-    status: STATUS_DISPLAY[c.status] || c.status,
+    status: formatStatus(c.status),
     priority: uiPriority,
     priorityReason: uiPriority === 'high' ? `Priority level: ${c.priority}` : null,
     investigator,
     lastUpdate: relativeTime(c.updated_at),
-    lastActivity: `Status updated to: ${STATUS_DISPLAY[c.status] || c.status}`,
+    lastActivity: `Status updated to: ${formatStatus(c.status)}`,
     stages: deriveStages(c.status),
     nextAction: NEXT_ACTION[c.status] || 'Review case details',
   };
