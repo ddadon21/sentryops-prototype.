@@ -53,10 +53,12 @@ import TimeOffManagement from './pages/TimeOffManagement';
 import PerformanceReviews from './pages/PerformanceReviews';
 import TrainingCertifications from './pages/TrainingCertifications';
 import ComplianceManagement from './pages/ComplianceManagement';
+import HRCalendar from './pages/HRCalendar';
 import HRReports from './pages/HRReports';
 import HRSettings from './pages/HRSettings';
 
 // Background Investigations Module
+import BICalendar from './pages/BICalendar';
 import BackgroundsDashboard from './pages/BackgroundsDashboard';
 import ActiveCases from './pages/ActiveCases';
 import CaseManagement from './pages/CaseManagement';
@@ -129,6 +131,7 @@ function App() {
         <Route path="/hr/reviews" element={<PerformanceReviews />} />
         <Route path="/hr/training" element={<TrainingCertifications />} />
         <Route path="/hr/compliance" element={<ComplianceManagement />} />
+        <Route path="/hr/calendar" element={<HRCalendar />} />
         <Route path="/hr/reports" element={<HRReports />} />
         <Route path="/hr/settings" element={<HRSettings />} />
 
@@ -147,6 +150,7 @@ function App() {
         <Route path="/bi/social" element={<SocialMediaAnalysis />} />
         <Route path="/bi/reports" element={<BIReports />} />
         <Route path="/bi/closure" element={<CaseClosure />} />
+        <Route path="/bi/calendar" element={<BICalendar />} />
         <Route path="/bi/settings" element={<BISettings />} />
 
         {/* App routes with MainLayout */}

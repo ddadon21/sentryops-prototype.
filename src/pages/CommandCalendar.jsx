@@ -21,8 +21,8 @@ export default function CommandCalendar() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [viewMode, setViewMode] = useState('month');
   const [selectedEvent, setSelectedEvent] = useState(null);
-  const [currentMonth, setCurrentMonth] = useState(11);
-  const [currentYear, setCurrentYear] = useState(2024);
+  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
+  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const [showRiskOverlay, setShowRiskOverlay] = useState(false);
   const [showStaffingOverlay, setShowStaffingOverlay] = useState(false);
 
@@ -438,6 +438,8 @@ export default function CommandCalendar() {
   };
 
   // Calendar grid
+  const shortMonth = new Date(currentYear, currentMonth, 1).toLocaleDateString('en-US', { month: 'long' });
+  const shortMonthAbbr = new Date(currentYear, currentMonth, 1).toLocaleDateString('en-US', { month: 'short' });
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
   const firstDayOfWeek = new Date(currentYear, currentMonth, 1).getDay();
   const monthName = new Date(currentYear, currentMonth, 1).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
@@ -639,7 +641,7 @@ export default function CommandCalendar() {
                   </div>
                   <p className="text-[11px] text-secondary mt-0.5">{conflict.detail}</p>
                 </div>
-                <span className="text-[11px] text-slate-500 flex-shrink-0">Dec {conflict.days.join(', ')}</span>
+                <span className="text-[11px] text-slate-500 flex-shrink-0">{shortMonthAbbr} {conflict.days.join(', ')}</span>
               </div>
             ))}
           </div>
@@ -882,7 +884,7 @@ export default function CommandCalendar() {
           <div className="mb-6 bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-[13px] font-semibold text-primary uppercase tracking-wide">Next 7 Days — Hour by Hour</h3>
-              <span className="text-xs text-slate-500">Dec {timelineDays[0]?.day} – Dec {timelineDays[timelineDays.length - 1]?.day}, {currentYear}</span>
+              <span className="text-xs text-slate-500">{shortMonthAbbr} {timelineDays[0]?.day} – {shortMonthAbbr} {timelineDays[timelineDays.length - 1]?.day}, {currentYear}</span>
             </div>
 
             <div className="overflow-x-auto">
@@ -1030,7 +1032,7 @@ export default function CommandCalendar() {
                   </div>
                   <div className="border-t border-border dark:border-slate-700/20 pt-3">
                     <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Date & Time</span>
-                    <p className="text-sm text-primary mt-1">December {selectedEvent.day}, 2024 · {selectedEvent.time}</p>
+                    <p className="text-sm text-primary mt-1">{shortMonth} {selectedEvent.day}, {currentYear} · {selectedEvent.time}</p>
                   </div>
                   {selectedEvent.staffingImpact && (
                     <div className="border-t border-border dark:border-slate-700/20 pt-3">

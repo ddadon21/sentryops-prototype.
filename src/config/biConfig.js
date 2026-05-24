@@ -19,6 +19,7 @@ export const biNavigation = [
   { id: 'social-media', label: 'Digital Footprint Review', icon: Eye, route: '/bi/social' },
   { id: 'bi-reports', label: 'Adjudication Reports', icon: Activity, route: '/bi/reports' },
   { id: 'case-closure', label: 'Final Determinations', icon: XCircle, route: '/bi/closure' },
+  { id: 'bi-calendar', label: 'Investigation Calendar', icon: Calendar, route: '/bi/calendar' },
 ];
 
 export const biProfile = {

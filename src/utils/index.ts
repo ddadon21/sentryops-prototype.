@@ -22,6 +22,7 @@ export function createPageUrl(pageName: string): string {
     Settings: '/command/settings',
 
     // HR Module
+    HRCalendar: '/hr/calendar',
     HRDashboard: '/hr/dashboard',
     ApplicantTracking: '/hr/applicants',
     JobPostings: '/hr/jobs',
@@ -36,6 +37,7 @@ export function createPageUrl(pageName: string): string {
     HRSettings: '/hr/settings',
 
     // Background Investigations Module
+    BICalendar: '/bi/calendar',
     BackgroundsDashboard: '/bi/dashboard',
     BIDashboard: '/bi/dashboard',
     ActiveCases: '/bi/active',
