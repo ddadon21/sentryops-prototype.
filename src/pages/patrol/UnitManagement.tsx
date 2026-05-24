@@ -2,6 +2,7 @@ import { useState } from 'react';
 import {
   Users, Clock, MapPin, Radio, Search, Filter, Navigation, Car
 } from 'lucide-react';
+import { formatStatus } from '@/utils/formatStatus';
 import DashboardLayout from '../../layouts/DashboardLayout';
 
 interface PatrolUnit {
@@ -382,7 +383,7 @@ const UnitManagement = () => {
                   <div className="text-sm text-slate-700 dark:text-slate-400">{unit.vehicle}</div>
                 </div>
                 <span className={`px-3 py-1 rounded text-xs font-medium border ${getStatusColor(unit.status)}`}>
-                  {unit.status}
+                  {formatStatus(unit.status)}
                 </span>
               </div>
 

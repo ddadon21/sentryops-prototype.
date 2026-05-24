@@ -11,20 +11,25 @@ import { api } from '../api';
 const getDaysOld = (dateStr) => Math.floor((Date.now() - new Date(dateStr)) / 86400000);
 const fmtCaseId = (id) => `BI-${String(id).padStart(7, '0')}`;
 
-const STATUS_DISPLAY = {
-  submitted:    'Initial Review',
-  in_progress:  'In Progress',
-  under_review: 'Supervisor Review',
-  on_hold:      'On Hold',
-  completed:    'Completed',
+const STATUS_MAP = {
+  submitted:         'Initial Review',
+  in_progress:       'In Progress',
+  pending_review:    'Pending Review',
+  pending_signature: 'Pending Signature',
+  complete:          'Complete',
+  completed:         'Complete',
 };
 
+const formatStatus = (raw) =>
+  STATUS_MAP[raw] ||
+  String(raw).replace(/_/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase());
+
 const NEXT_ACTION = {
-  submitted:    'Complete initial document review',
-  in_progress:  'Continue active investigation stages',
-  under_review: 'Awaiting supervisor adjudication decision',
-  on_hold:      'Awaiting applicant or external response',
-  completed:    'Case closed',
+  submitted:         'Complete initial document review',
+  in_progress:       'Continue active investigation stages',
+  pending_review:    'Awaiting supervisor adjudication decision',
+  pending_signature: 'Awaiting supervisor signature before case can be closed',
+  complete:          'Case closed — no further action required',
 };
 
 export default function BackgroundsDashboard() {
@@ -70,10 +75,10 @@ export default function BackgroundsDashboard() {
   // ── Derived metrics from real API data ───────────────────────
   const now = new Date();
   const thisMonthStart = new Date(now.getFullYear(), now.getMonth(), 1);
-  const activeCasesList   = casesData.filter(c => c.status !== 'completed');
-  const completedList     = casesData.filter(c => c.status === 'completed');
+  const activeCasesList   = casesData.filter(c => c.status !== 'complete' && c.status !== 'completed');
+  const completedList     = casesData.filter(c => c.status === 'complete' || c.status === 'completed');
   const completedThisMo   = completedList.filter(c => new Date(c.updated_at) >= thisMonthStart);
-  const underReviewList   = casesData.filter(c => c.status === 'under_review');
+  const underReviewList   = casesData.filter(c => c.status === 'pending_review');
   const slaBreachList     = activeCasesList.filter(c => getDaysOld(c.created_at) > 18);
 
   const avgCompletionDays = completedList.length
@@ -118,13 +123,13 @@ export default function BackgroundsDashboard() {
 
   // ── Real priority cases ───────────────────────────────────────
   const priorityCases = casesData
-    .filter(c => (c.priority === 'critical' || c.priority === 'high') && c.status !== 'completed')
+    .filter(c => (c.priority === 'critical' || c.priority === 'high') && c.status !== 'complete' && c.status !== 'completed')
     .slice(0, 5)
     .map(c => ({
       id: c.id,
       subject: `${c.first_name ?? ''} ${c.last_name ?? ''}`.trim() || 'Unknown',
       position: c.position_applied || '—',
-      stage: STATUS_DISPLAY[c.status] || c.status,
+      stage: formatStatus(c.status),
       daysOpen: getDaysOld(c.created_at),
       priority: 'high',
       investigator: c.investigator_name || 'Unassigned',

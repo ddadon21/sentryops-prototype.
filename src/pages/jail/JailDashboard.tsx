@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DashboardLayout from '../../layouts/DashboardLayout';
+import { formatStatus } from '@/utils/formatStatus';
 import {
   Users, AlertTriangle, Activity, TrendingUp,
   Clock, Shield, Bed, Hospital, Scale, Calendar, UserCheck, MapPin,
@@ -1136,7 +1137,7 @@ const JailDashboard = () => {
                     <div className="flex items-center gap-3">
                       <div className="text-lg font-bold text-slate-900 dark:text-white">{unit.name}</div>
                       <span className={`px-2 py-1 rounded text-xs font-medium ${getStatusColor(unit.status)}`}>
-                        {unit.status}
+                        {formatStatus(unit.status)}
                       </span>
                     </div>
                     <div className="text-right">
@@ -1597,7 +1598,7 @@ const JailDashboard = () => {
                       booking.status === 'Processing Release' ? 'bg-green-500/20 text-green-600 dark:text-green-400' :
                       'bg-amber-500/20 text-amber-600 dark:text-amber-400'
                     }`}>
-                      {booking.status}
+                      {formatStatus(booking.status)}
                     </span>
                   </div>
 
@@ -1682,7 +1683,7 @@ const JailDashboard = () => {
                       incident.status === 'Transported' ? 'bg-slate-50 dark:bg-slate-700/40 text-slate-500' :
                       'bg-slate-50 dark:bg-slate-700/40 text-slate-500'
                     }`}>
-                      {incident.status}
+                      {formatStatus(incident.status)}
                     </span>
                     <span className="text-xs text-slate-700 dark:text-slate-400">{incident.id}</span>
                   </div>
@@ -1733,7 +1734,7 @@ const JailDashboard = () => {
                       court.status === 'Staging' ? 'bg-amber-500/20 text-amber-600 dark:text-amber-400' :
                       'bg-slate-500/20 text-slate-500'
                     }`}>
-                      {court.status}
+                      {formatStatus(court.status)}
                     </span>
                   </div>
 
@@ -2110,7 +2111,7 @@ const JailDashboard = () => {
                     service.status === 'Operational' ? 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400' :
                     'bg-red-500/20 text-red-600 dark:text-red-400'
                   }`}>
-                    {service.status}
+                    {formatStatus(service.status)}
                   </span>
                 </div>
 
@@ -2249,7 +2250,7 @@ const JailDashboard = () => {
               <div className="bg-white dark:bg-slate-800/50 border border-slate-700 rounded-lg p-4">
                 <div className="text-sm text-slate-700 dark:text-slate-400 mb-1">Status</div>
                 <span className={`px-2 py-1 rounded text-xs font-medium ${getStatusColor(selectedPod.status)}`}>
-                  {selectedPod.status}
+                  {formatStatus(selectedPod.status)}
                 </span>
               </div>
             </div>

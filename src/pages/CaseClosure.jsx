@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
+import { formatStatus } from '@/utils/formatStatus';
 import {
   LayoutDashboard,
   FileText,
@@ -345,7 +346,7 @@ export default function CaseClosure() {
               </div>
               <div className="flex items-center gap-2 mb-4">
                 <span className="px-3 py-1 bg-green-500/10 text-green-400 rounded-lg text-sm font-medium border border-green-500/20">
-                  {caseData.status}
+                  {formatStatus(caseData.status)}
                 </span>
               </div>
               <div className="flex flex-wrap gap-2">

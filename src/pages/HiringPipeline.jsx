@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Home, Users, FileText, LayoutDashboard, TrendingUp, AlertCircle, Settings, Bell, MessageCircle, Search, ChevronRight, DollarSign, CheckCircle, Shield, X, Send, Menu, ChevronLeft, LogOut, UserPlus, Briefcase, Clock, Award, Filter, Download, Eye, ArrowRight, Calendar, Phone, Mail, MapPin, Star, ChevronDown, ChevronUp, FileCheck, ClipboardCheck, GraduationCap, BarChart3, Target, AlertTriangle, Activity } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
+import { formatStatus } from '@/utils/formatStatus';
 
 export default function HiringPipeline() {
   const navigate = useNavigate();
@@ -1141,7 +1142,7 @@ export default function HiringPipeline() {
                                       offer.status.includes('ACCEPTED') ? 'bg-green-500/20 text-green-400' :
                                       offer.urgent ? 'bg-red-500/20 text-red-400' : 'bg-amber-500/20 text-amber-700'
                                     }`}>
-                                      {offer.status}
+                                      {formatStatus(offer.status)}
                                     </span>
                                   </div>
                                   <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
@@ -1225,7 +1226,7 @@ export default function HiringPipeline() {
                                               candidate.urgent ? 'bg-red-500/20 text-red-400' :
                                               'bg-white dark:bg-slate-700/50 text-slate-500'
                                             }`}>
-                                              {candidate.status}
+                                              {formatStatus(candidate.status)}
                                             </span>
                                             {candidate.score && (
                                               <span className="text-xs text-amber-700 font-bold">{candidate.score}</span>

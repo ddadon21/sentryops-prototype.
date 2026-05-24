@@ -2,6 +2,7 @@ import { useState } from 'react';
 import {
   Hospital, AlertTriangle, Pill, User, FileText
 } from 'lucide-react';
+import { formatStatus } from '@/utils/formatStatus';
 import DashboardLayout from '../../layouts/DashboardLayout';
 
 interface MedicalRecord {
@@ -469,7 +470,7 @@ const MedicalManagement = () => {
                           round.status === 'In Progress' ? 'bg-amber-500/20 text-amber-700' :
                           'bg-slate-500/20 text-slate-500'
                         }`}>
-                          {round.status}
+                          {formatStatus(round.status)}
                         </span>
                       </div>
                       <div className="text-right">
@@ -538,7 +539,7 @@ const MedicalManagement = () => {
                     request.status.includes('Approved') ? 'bg-emerald-500/20 text-emerald-400' :
                     'bg-amber-500/20 text-amber-700'
                   }`}>
-                    {request.status}
+                    {formatStatus(request.status)}
                   </span>
                   <div className="flex gap-2">
                     <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-sm">
@@ -572,7 +573,7 @@ const MedicalManagement = () => {
                     record.status === 'Improving' ? 'bg-slate-50 dark:bg-slate-700/40 text-slate-500' :
                     'bg-amber-500/20 text-amber-700'
                   }`}>
-                    {record.status}
+                    {formatStatus(record.status)}
                   </span>
                 </div>
                 <div className="bg-white dark:bg-slate-800/60 border border-slate-700/50 rounded-lg p-4 mb-3">

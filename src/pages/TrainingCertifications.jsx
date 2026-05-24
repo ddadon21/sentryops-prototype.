@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Home, Users, FileText, LayoutDashboard, TrendingUp, AlertCircle, Settings, Bell, MessageCircle, Search, ChevronRight, DollarSign, CheckCircle, Shield, X, Send, Menu, ChevronLeft, LogOut, UserPlus, Briefcase, Clock, Award, Filter, Download, Eye, Calendar, Phone, Mail, MapPin, Star, FileCheck, Upload, CheckCircle2, Circle, AlertTriangle, ClipboardCheck, GraduationCap, ChevronDown, ChevronUp, Car, Radio, Target, Heart, FileWarning, Building, BadgeCheck, Clipboard, UserCheck, Crosshair, Zap, ShieldAlert, BookOpen, ExternalLink, Printer, BarChart3, HelpCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
+import { formatStatus } from '@/utils/formatStatus';
 
 export default function TrainingCertifications() {
   const navigate = useNavigate();
@@ -1170,7 +1171,7 @@ export default function TrainingCertifications() {
                                         day.status === 'scheduled' ? 'bg-green-500/20 text-green-400' :
                                         day.status === 'tentative' ? 'bg-amber-500/20 text-amber-700' :
                                         'bg-blue-500/20 text-blue-400'
-                                      }`}>{day.status}</span>
+                                      }`}>{formatStatus(day.status)}</span>
                                     </div>
                                   ))}
                                 </div>
@@ -1188,7 +1189,7 @@ export default function TrainingCertifications() {
                                         <p className="text-xs text-primary font-medium">{session.date}</p>
                                         <span className={`px-2 py-0.5 rounded text-[10px] font-medium ${
                                           session.status === 'Open' ? 'bg-green-500/20 text-green-400' : 'bg-amber-500/20 text-amber-700'
-                                        }`}>{session.status}</span>
+                                        }`}>{formatStatus(session.status)}</span>
                                       </div>
                                       <p className="text-[10px] text-secondary mt-1">Enrolled: {session.enrolled}/{session.slots} slots</p>
                                       <div className="mt-1 w-full h-1 bg-white dark:bg-slate-700/50 rounded-full overflow-hidden">
