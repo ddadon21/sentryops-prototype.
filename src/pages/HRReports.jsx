@@ -30,6 +30,7 @@ export default function HRReports() {
     { id: 'time-off', label: 'Time Off Management', icon: Calendar, page: 'TimeOffManagement' },
     { id: 'performance', label: 'Performance Reviews', icon: Award, page: 'PerformanceReviews' },
     { id: 'hr-reports', label: 'HR Reports', icon: LayoutDashboard },
+    { id: 'hr-calendar', label: 'HR Calendar', icon: Calendar, page: 'HRCalendar' },
     { id: 'settings', label: 'Settings', icon: Settings, page: 'HRSettings' }
   ];
 

@@ -57,7 +57,8 @@ export default function HRDashboard() {
     { id: 'employee-records', label: 'Employee Records', icon: FileText, page: 'EmployeeRecords' },
     { id: 'time-off', label: 'Time Off Management', icon: Calendar, page: 'TimeOffManagement' },
     { id: 'performance', label: 'Performance Reviews', icon: Award, page: 'PerformanceReviews' },
-    { id: 'hr-reports', label: 'HR Reports', icon: LayoutDashboard, page: 'HRReports' }
+    { id: 'hr-reports', label: 'HR Reports', icon: LayoutDashboard, page: 'HRReports' },
+    { id: 'hr-calendar', label: 'HR Calendar', icon: Calendar, page: 'HRCalendar' }
   ];
 
   const notifications = [
