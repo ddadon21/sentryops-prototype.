@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
+import { formatStatus } from '@/utils/formatStatus';
 import {
   Shield,
   AlertTriangle,
@@ -656,7 +657,7 @@ export default function FinancialBackground() {
                               report.statusCategory === 'excellent' ? 'bg-green-500/20 text-green-400' :
                               report.statusCategory === 'acceptable' ? 'bg-blue-500/20 text-blue-400' : 'bg-amber-500/20 text-amber-700'
                             }`}>
-                              {report.status}
+                              {formatStatus(report.status)}
                             </span>
                             <span className="text-xs text-slate-500 flex items-center gap-1">
                               <Lock className="w-3 h-3" /> FCRA Protected
@@ -880,7 +881,7 @@ export default function FinancialBackground() {
                             <div key={key} className={`rounded-lg p-3 ${value.count > 0 ? 'bg-amber-500/10 border border-amber-500/30' : 'bg-white dark:bg-slate-900/40'}`}>
                               <p className="text-xs text-slate-500 capitalize mb-1">{key}</p>
                               <p className={`text-sm font-medium ${value.count > 0 ? 'text-amber-700' : 'text-green-400'}`}>
-                                {value.status}
+                                {formatStatus(value.status)}
                                 {value.count === 0 && <CheckCircle className="w-3.5 h-3.5 inline ml-1" />}
                               </p>
                             </div>

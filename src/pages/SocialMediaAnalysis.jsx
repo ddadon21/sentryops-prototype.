@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
+import { formatStatus } from '@/utils/formatStatus';
 import {
   Shield,
   AlertTriangle,
@@ -674,7 +675,7 @@ export default function SocialMediaAnalysis() {
                               report.statusCategory === 'clear' ? 'bg-green-500/20 text-green-400' :
                               report.statusCategory === 'review' ? 'bg-amber-500/20 text-amber-700' : 'bg-blue-500/20 text-blue-400'
                             }`}>
-                              {report.status}
+                              {formatStatus(report.status)}
                             </span>
                             <span className="text-xs text-slate-500 flex items-center gap-1">
                               <Globe className="w-3 h-3" /> Public Info Only
@@ -702,7 +703,7 @@ export default function SocialMediaAnalysis() {
                         <span key={idx} className={`px-2.5 py-1 rounded-lg text-xs font-medium ${
                           platform.posts > 0 ? 'bg-purple-500/10 text-purple-400' : 'bg-white dark:bg-slate-700/50 text-slate-500'
                         }`}>
-                          {platform.name}: {platform.posts > 0 ? `${platform.posts} posts` : platform.status}
+                          {platform.name}: {platform.posts > 0 ? `${platform.posts} posts` : formatStatus(platform.status)}
                         </span>
                       ))}
                     </div>
@@ -754,7 +755,7 @@ export default function SocialMediaAnalysis() {
                               </div>
                               <div className="text-xs text-secondary">
                                 <p>Handle: {platform.handle || 'N/A'}</p>
-                                <p>Status: {platform.status}</p>
+                                <p>Status: {formatStatus(platform.status)}</p>
                                 {platform.connections && <p>Connections: {platform.connections}</p>}
                               </div>
                             </div>

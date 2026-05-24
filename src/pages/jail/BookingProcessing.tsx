@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { formatStatus } from '@/utils/formatStatus';
 import {
   Camera, Fingerprint, FileText, Shield, AlertTriangle,
   CheckCircle, Clock, User, MapPin
@@ -355,7 +356,7 @@ const BookingProcessing = () => {
                     <div className="flex items-center gap-3 mb-3">
                       <h3 className="text-xl font-bold text-slate-900 dark:text-white">{booking.name}</h3>
                       <span className="px-3 py-1 bg-amber-500/20 border border-amber-500/30 text-amber-700 rounded text-sm font-medium">
-                        {booking.status}
+                        {formatStatus(booking.status)}
                       </span>
                     </div>
                     <div className="grid grid-cols-2 gap-4 text-sm">

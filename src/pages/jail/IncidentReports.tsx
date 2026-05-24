@@ -3,6 +3,7 @@ import {
   FileText, Shield, MapPin, Clock,
   Search, Filter, ChevronDown, ChevronUp, Video
 } from 'lucide-react';
+import { formatStatus } from '@/utils/formatStatus';
 import DashboardLayout from '../../layouts/DashboardLayout';
 
 interface Incident {
@@ -328,7 +329,7 @@ const IncidentReports = () => {
                         {incident.severity.toUpperCase()}
                       </span>
                       <span className={`px-3 py-1 rounded text-sm font-medium ${getStatusColor(incident.status)}`}>
-                        {incident.status}
+                        {formatStatus(incident.status)}
                       </span>
                       {incident.useOfForce && (
                         <span className="px-3 py-1 bg-red-500/20 text-red-400 rounded text-sm font-bold border border-red-500/30">
