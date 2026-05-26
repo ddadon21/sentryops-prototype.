@@ -1,99 +1,77 @@
 import React, { useState, useEffect } from 'react';
-import { Users, FileText, LayoutDashboard, TrendingUp, Settings, Bell, MessageCircle, ChevronRight, CheckCircle, Shield, Sparkles, X, Send, Menu, ChevronLeft, LogOut, UserPlus, Briefcase, Clock, Award, Calendar, User, Lock, Palette, Globe, Mail, Moon, Sun, Save, Camera, Database, Key, Cloud, Zap, Activity, CheckCircle2, ClipboardCheck, GraduationCap, FileCheck, Eye, EyeOff, Smartphone, Link, RefreshCw, AlertTriangle, ChevronDown } from 'lucide-react';
+import { useTheme } from '../contexts/ThemeContext';
+import {
+  Users, FileText, LayoutDashboard, TrendingUp, Bell, ChevronRight,
+  CheckCircle, Shield, X, Menu, ChevronLeft, LogOut, UserPlus, Briefcase,
+  Clock, Award, Calendar, User, Lock, Globe, Mail, Moon, Sun, Save, Camera,
+  Database, Key, Zap, Activity, CheckCircle2, ClipboardCheck, GraduationCap,
+  FileCheck, Eye, EyeOff, Smartphone, Link, RefreshCw, AlertTriangle,
+  ChevronDown, ChevronUp, Monitor, Download, Copy, Wifi, Webhook, Plus,
+  Edit3, Trash2, BarChart3, FileJson, Server, HardDrive, Cpu
+} from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { createPageUrl } from '@/utils';
+import DashboardLayout from '../layouts/DashboardLayout';
+
+const hrNavigation = [
+  { id: 'hr-dashboard',            label: 'HR Dashboard',             icon: Users,          route: '/hr/dashboard' },
+  { id: 'job-postings',            label: 'Job Postings',             icon: Briefcase,      route: '/hr/jobs' },
+  { id: 'applicant-tracking',      label: 'Applicant Tracking',       icon: UserPlus,       route: '/hr/applicants' },
+  { id: 'hiring-pipeline',         label: 'Hiring Pipeline',          icon: TrendingUp,     route: '/hr/pipeline' },
+  { id: 'onboarding',              label: 'New Hire Onboarding',      icon: FileCheck,      route: '/hr/onboarding' },
+  { id: 'training-certifications', label: 'Training & Certifications',icon: GraduationCap,  route: '/hr/training' },
+  { id: 'employee-records',        label: 'Employee Records',         icon: FileText,       route: '/hr/records' },
+  { id: 'time-off',                label: 'Time Off Management',      icon: Calendar,       route: '/hr/timeoff' },
+  { id: 'performance',             label: 'Performance Reviews',      icon: Award,          route: '/hr/reviews' },
+  { id: 'compliance',              label: 'HR Compliance',            icon: ClipboardCheck, route: '/hr/compliance' },
+  { id: 'hr-reports',              label: 'HR Reports',               icon: LayoutDashboard,route: '/hr/reports' },
+  { id: 'hr-calendar',             label: 'HR Calendar',              icon: Calendar,       route: '/hr/calendar' },
+];
+
+const hrProfile = {
+  name: 'HR Director',
+  role: 'Human Resources',
+  email: 'hr.director@gcso.gov',
+  initials: 'HR',
+};
+
+const hrNotifications = [
+  { id: 1, title: 'POST Cert Expiring', message: 'Sgt. Thompson — cert expires in 7 days, training not scheduled', time: '30 min ago', urgent: true },
+  { id: 2, title: 'FMLA Deadline Today', message: 'Deputy Chen FMLA designation notice due by 17:00', time: '1 hour ago', urgent: true },
+  { id: 3, title: 'New Applicant Submitted', message: 'Deputy Sheriff — 3 new applications received', time: '2 hours ago', urgent: false },
+];
 
 export default function HRSettings() {
   const navigate = useNavigate();
-  const [activePage, setActivePage] = useState('settings');
-  const [chatOpen, setChatOpen] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const [notificationsOpen, setNotificationsOpen] = useState(false);
-  const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false);
-  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('profile');
+  const { theme: activeTheme, setTheme } = useTheme();
+  const [activeSection, setActiveSection] = useState('integrations');
   const [showApiKey, setShowApiKey] = useState({});
-  const [saveSuccess, setSaveSuccess] = useState(false);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (profileMenuOpen && !event.target.closest('.profile-menu-container')) {
-        setProfileMenuOpen(false);
-      }
-      if (notificationsOpen && !event.target.closest('.notifications-container')) {
-        setNotificationsOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [profileMenuOpen, notificationsOpen]);
-
-  const navigation = [
-    { id: 'hr-dashboard', label: 'HR Dashboard', icon: Users, page: 'HRDashboard' },
-    { id: 'job-postings', label: 'Job Postings', icon: Briefcase, page: 'JobPostings' },
-    { id: 'applicant-tracking', label: 'Applicant Tracking', icon: UserPlus, page: 'ApplicantTracking' },
-    { id: 'hiring-pipeline', label: 'Hiring Pipeline', icon: TrendingUp, page: 'HiringPipeline' },
-    { id: 'compliance', label: 'HR Compliance', icon: ClipboardCheck, page: 'ComplianceManagement' },
-    { id: 'onboarding', label: 'New Hire Onboarding', icon: FileCheck, page: 'NewHireOnboarding' },
-    { id: 'training-certifications', label: 'Training & Certifications', icon: GraduationCap, page: 'TrainingCertifications' },
-    { id: 'employee-records', label: 'Employee Records', icon: FileText, page: 'EmployeeRecords' },
-    { id: 'time-off', label: 'Time Off Management', icon: Calendar, page: 'TimeOffManagement' },
-    { id: 'performance', label: 'Performance Reviews', icon: Award, page: 'PerformanceReviews' },
-    { id: 'hr-reports', label: 'HR Reports', icon: LayoutDashboard, page: 'HRReports' },
-    { id: 'hr-calendar', label: 'HR Calendar', icon: Calendar, page: 'HRCalendar' }
-  ];
-
-  const settingsTabs = [
-    { id: 'profile', label: 'Profile', icon: User },
-    { id: 'notifications', label: 'Notifications', icon: Bell },
-    { id: 'display', label: 'Display', icon: Palette },
-    { id: 'security', label: 'Security', icon: Lock },
-    { id: 'integrations', label: 'HR Integrations', icon: Link }
-  ];
-
-  const notifications = [
-    { id: 1, title: 'Profile Updated', message: 'Your profile information was saved', time: '15 min ago', urgent: false },
-    { id: 2, title: 'NeoGov Synced', message: 'Applicant data sync completed', time: '1 hour ago', urgent: false },
-    { id: 3, title: 'Password Expiring', message: 'Your password expires in 14 days', time: '2 hours ago', urgent: true }
-  ];
+  const [testingConnection, setTestingConnection] = useState(null);
+  const [expandedIntegration, setExpandedIntegration] = useState(null);
 
   const [profileSettings, setProfileSettings] = useState({
     fullName: 'Patricia Henderson',
     email: 'patricia.henderson@gwinnettcounty.gov',
-    employeeId: 'HR-0015',
+    badge: 'HR-0015',
     phone: '(770) 619-6520',
     department: 'Human Resources',
     position: 'HR Director',
     division: 'Sheriff Administration',
     hireDate: '2015-03-20',
-    certifications: 'PHR, SHRM-CP'
+    certificationExpiry: '2026-09-30',
   });
 
   const [notificationSettings, setNotificationSettings] = useState({
-    emailNotifications: true,
-    smsNotifications: false,
-    pushNotifications: true,
-    applicantAlerts: true,
-    hiringPipelineUpdates: true,
-    onboardingReminders: true,
-    complianceAlerts: true,
-    certificationExpiry: true,
-    performanceReviewDue: true,
-    timeOffRequests: true,
-    policyUpdates: true,
-    systemUpdates: false
+    postCertExpiring: true,
+    fmlaDeadlines: true,
+    integrationFailure: true,
+    newApplicant: true,
+    performanceOverdue: true,
   });
 
   const [displaySettings, setDisplaySettings] = useState({
-    theme: 'dark',
-    sidebarCollapsed: false,
-    dateFormat: 'MM/DD/YYYY',
-    timeFormat: '12h',
-    language: 'en',
     timezone: 'America/New_York',
+    dateFormat: 'MM/DD/YYYY',
     density: 'comfortable',
-    animations: true
   });
 
   const [securitySettings, setSecuritySettings] = useState({
@@ -101,977 +79,717 @@ export default function HRSettings() {
     sessionTimeout: '30',
     loginNotifications: true,
     passwordExpiry: '90',
-    auditLogging: true
+    ipWhitelist: false,
+    ssoEnabled: true,
   });
 
-  const [integrations] = useState({
+  const [integrations, setIntegrations] = useState({
     neoGov: {
       name: 'NeoGov',
       vendor: 'NEOGOV',
-      type: 'Recruiting & Onboarding',
+      type: 'hr',
       status: 'connected',
       version: 'v2024.1',
       endpoint: 'https://api.neogov.com/gwinnett/v2',
+      authMethod: 'OAuth 2.0 + County SSO',
       apiKey: 'ng_live_9K1L2M3N4P5Q6R7S',
       lastSync: '15 min ago',
       syncFrequency: 'Every 30 minutes',
-      dataTypes: ['Applicants', 'Job Postings', 'Onboarding', 'Background Checks'],
+      dataTypes: ['Applicants', 'Recruiting', 'Onboarding', 'Positions', 'Applications', 'Background Checks'],
       monthlyRequests: 67890,
       requestLimit: 150000,
       uptime: 99.93,
-      description: 'Recruiting, applicant tracking, and onboarding platform'
+      avgResponseTime: '285ms',
+      errors24h: 2,
+      activeRequisitions: 12,
+      pendingOnboarding: 8,
+      webhooks: ['applicant.submitted', 'onboarding.started', 'background.completed'],
     },
-    sapHR: {
-      name: 'SAP HR/Payroll',
+    sapERP: {
+      name: 'SAP ERP (HR/Payroll)',
       vendor: 'SAP',
-      type: 'HRIS & Payroll',
+      type: 'erp',
       status: 'connected',
       version: 'S/4HANA 2023',
-      endpoint: 'https://sap.gwinnettcounty.gov/api/hr/v2',
-      apiKey: 'sap_hr_1L2M3N4P5Q6R7S8T',
+      endpoint: 'https://sap.gwinnettcounty.gov/api/odata/v2',
+      authMethod: 'SAP SSO + API Key',
+      apiKey: 'sap_live_1L2M3N4P5Q6R7S8T',
       lastSync: '10 min ago',
       syncFrequency: 'Every 15 minutes',
-      dataTypes: ['Employee Records', 'Payroll', 'Benefits', 'Time & Attendance'],
-      monthlyRequests: 234567,
-      requestLimit: 500000,
+      dataTypes: ['HR', 'Payroll', 'Finance', 'Employees', 'Time & Attendance', 'Benefits'],
+      monthlyRequests: 534567,
+      requestLimit: 1000000,
       uptime: 99.97,
-      description: 'Core HR, payroll processing, and benefits administration'
-    },
-    gaPOST: {
-      name: 'GA POST Certification',
-      vendor: 'Georgia POST',
-      type: 'Training & Compliance',
-      status: 'connected',
-      version: 'v3.1.5',
-      endpoint: 'https://post.ga.gov/api/certifications',
-      apiKey: 'post_live_3N4P5Q6R7S8T9U1V',
-      lastSync: '1 hour ago',
-      syncFrequency: 'Daily',
-      dataTypes: ['Certifications', 'Training Hours', 'Compliance Status'],
-      monthlyRequests: 12456,
-      requestLimit: 50000,
-      uptime: 99.85,
-      description: 'Peace Officer certification tracking and compliance'
-    },
-    powerDMS: {
-      name: 'PowerDMS',
-      vendor: 'NEOGOV',
-      type: 'Policy Management',
-      status: 'connected',
-      version: 'v5.2.1',
-      endpoint: 'https://powerdms.gwinnettcounty.gov/api/v1',
-      apiKey: 'pdms_live_4P5Q6R7S8T9U1V2W',
-      lastSync: '30 min ago',
-      syncFrequency: 'Every hour',
-      dataTypes: ['Policies', 'Acknowledgments', 'Training Records'],
-      monthlyRequests: 45678,
-      requestLimit: 100000,
-      uptime: 99.91,
-      description: 'Policy distribution and compliance tracking'
+      avgResponseTime: '195ms',
+      errors24h: 1,
+      employees: 856,
+      webhooks: ['payroll.processed', 'employee.updated', 'timesheet.submitted'],
     },
     gcWorkplace: {
       name: 'GC Workplace',
       vendor: 'Gwinnett County IT',
-      type: 'Employee Portal',
+      type: 'employee-portal',
       status: 'connected',
       version: 'v3.5.2',
       endpoint: 'https://gcworkplace.gwinnettcounty.gov/api',
+      authMethod: 'County AD + SSO',
       apiKey: 'gcw_live_2M3N4P5Q6R7S8T9U',
       lastSync: '5 min ago',
       syncFrequency: 'Every 10 minutes',
-      dataTypes: ['Employee Resources', 'Forms', 'Benefits Info'],
-      monthlyRequests: 89012,
-      requestLimit: 200000,
+      dataTypes: ['Procedures', 'Forms', 'Benefits', 'Policies', 'Documents'],
+      monthlyRequests: 123456,
+      requestLimit: 300000,
       uptime: 99.95,
-      description: 'Internal employee portal and self-service'
-    }
+      avgResponseTime: '145ms',
+      errors24h: 0,
+      activeUsers: 856,
+      webhooks: ['document.published', 'form.submitted'],
+    },
+    gaPOST: {
+      name: 'GA POST Certification',
+      vendor: 'Georgia Peace Officer Standards & Training',
+      type: 'training',
+      status: 'connected',
+      version: 'v3.1.5',
+      endpoint: 'https://post.ga.gov/api/certifications',
+      authMethod: 'API Key + Agency Certificate',
+      apiKey: 'post_live_3N4P5Q6R7S8T9U1V',
+      lastSync: '1 hour ago',
+      syncFrequency: 'Daily',
+      dataTypes: ['Certifications', 'Training Hours', 'Renewals', 'Compliance', 'Officer Records'],
+      monthlyRequests: 12456,
+      requestLimit: 50000,
+      uptime: 99.85,
+      avgResponseTime: '450ms',
+      errors24h: 0,
+      expiringSoon: 8,
+      webhooks: ['cert.expiring', 'training.completed'],
+    },
+    uPerform: {
+      name: 'UPerform',
+      vendor: 'Ancile Solutions',
+      type: 'learning',
+      status: 'connected',
+      version: 'v8.4.2',
+      endpoint: 'https://uperform.gwinnettcounty.gov/api/v1',
+      authMethod: 'County SSO',
+      apiKey: 'up_live_4P5Q6R7S8T9U1V2W',
+      lastSync: '30 min ago',
+      syncFrequency: 'Every hour',
+      dataTypes: ['Training Content', 'Performance Support', 'Tutorials', 'Documentation'],
+      monthlyRequests: 34567,
+      requestLimit: 100000,
+      uptime: 99.91,
+      avgResponseTime: '265ms',
+      errors24h: 1,
+      activeCourses: 47,
+      webhooks: ['training.completed', 'content.accessed'],
+    },
+    powerDMS: {
+      name: 'PowerDMS',
+      vendor: 'NEOGOV',
+      type: 'policy',
+      status: 'connected',
+      version: 'v9.7.3',
+      endpoint: 'https://api.powerdms.com/v3',
+      authMethod: 'API Key',
+      apiKey: 'pdms_live_5Q6R7S8T9U1V2W3X',
+      lastSync: '20 min ago',
+      syncFrequency: 'Every 30 minutes',
+      dataTypes: ['Policies', 'Training', 'Acknowledgments', 'Compliance', 'Accreditation'],
+      monthlyRequests: 45678,
+      requestLimit: 100000,
+      uptime: 99.93,
+      avgResponseTime: '195ms',
+      errors24h: 3,
+      pendingAcknowledgments: 23,
+      webhooks: ['policy.updated', 'training.assigned', 'compliance.due'],
+    },
   });
 
-  const handleNavigation = (item) => {
-    if (item.page) {
-      navigate(createPageUrl(item.page));
-    } else {
-      setActivePage(item.id);
-      setSidebarOpen(false);
-    }
+  const [apiKeys, setApiKeys] = useState([
+    { id: 1, name: 'SentryOps HR Portal', key: 'sk_live_HR4F8K9N2P5Q7R8S', created: '2024-01-15', lastUsed: '2 min ago', permissions: 'Full Access', status: 'active' },
+    { id: 2, name: 'Mobile Application', key: 'sk_live_HR7H8J9K1L2M3N4P', created: '2024-03-22', lastUsed: '12 min ago', permissions: 'Read Only', status: 'active' },
+  ]);
+
+  const settingsTabs = [
+    { id: 'integrations', label: 'Integrations', icon: Link, tier: 1 },
+    { id: 'security',     label: 'Security',     icon: Lock, tier: 1 },
+    { id: 'audit',        label: 'Audit & Compliance', icon: FileText, tier: 1 },
+    { id: 'data',         label: 'Backup & Retention', icon: Database, tier: 1 },
+    { id: 'profile',      label: 'Profile',      icon: User, tier: 2 },
+    { id: 'notifications',label: 'Notifications',icon: Bell, tier: 2 },
+    { id: 'display',      label: 'Display',      icon: Monitor, tier: 2 },
+  ];
+
+  const getIntegrationIcon = (type) => {
+    const icons = { 'hr': Users, 'erp': Database, 'employee-portal': Globe, 'training': FileCheck, 'learning': FileText, 'policy': Shield };
+    return icons[type] || Server;
   };
 
-  const handleLogout = () => {
-    navigate(createPageUrl('SignIn'));
+  const getStatusColor = (status) => status === 'connected' ? 'text-green-400' : 'text-red-400';
+  const getStatusBg    = (status) => status === 'connected' ? 'bg-green-500/20' : 'bg-red-500/20';
+  const getStatusBorder= (status) => status === 'connected' ? 'border-green-500/30' : 'border-red-500/30';
+
+  const handleTestConnection = async (key) => {
+    setTestingConnection(key);
+    await new Promise(r => setTimeout(r, 2000));
+    setTestingConnection(null);
+    alert(`Connection test successful for ${integrations[key].name}`);
   };
 
-  const handleSave = () => {
-    setSaveSuccess(true);
-    setTimeout(() => setSaveSuccess(false), 3000);
+  const handleCopyApiKey = (val) => {
+    navigator.clipboard.writeText(val);
+    alert('Copied to clipboard');
   };
 
-  const toggleApiKeyVisibility = (key) => {
-    setShowApiKey(prev => ({ ...prev, [key]: !prev[key] }));
-  };
+  const handleSaveSettings = () => alert('Settings saved successfully!');
 
   return (
-    <div className="min-h-screen bg-[#F5F7FA] dark:bg-gradient-to-br dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 flex">
-      {/* Sidebar */}
-      <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-black/[0.06] dark:border-slate-800/50 bg-white dark:bg-slate-900/30 shadow-[var(--shadow-sidebar)] dark:shadow-none flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
-        <div className="p-4 border-b border-border flex items-center justify-between">
-          {!sidebarCollapsed && (
-            <div className="flex items-center gap-2">
-              <Shield className="w-8 h-8 text-amber-700" />
-              <h1 className="text-xl font-bold text-primary">SentryOps</h1>
-            </div>
-          )}
-          {sidebarCollapsed && (
-            <Shield className="w-8 h-8 text-amber-700 mx-auto" />
-          )}
-          <button
-            onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-            className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors hidden lg:block"
-          >
-            {sidebarCollapsed ? <ChevronRight className="w-5 h-5 text-secondary" /> : <ChevronLeft className="w-5 h-5 text-secondary" />}
-          </button>
-        </div>
-
-        <nav className="flex-1 overflow-y-auto p-4 space-y-2">
-          {navigation.map(item => {
-            const Icon = item.icon;
-            const isActive = activePage === item.id;
-            return (
-              <button
-                key={item.id}
-                onClick={() => handleNavigation(item)}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                  isActive ? 'bg-amber-500 text-primary shadow-lg shadow-amber-500/20' : 'text-secondary hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-slate-900 dark:hover:text-white'
-                } ${sidebarCollapsed ? 'justify-center' : ''}`}
-                title={sidebarCollapsed ? item.label : ''}
-              >
-                <Icon className="w-5 h-5 flex-shrink-0" />
-                {!sidebarCollapsed && (
-                  <span className="flex-1 text-left text-sm font-medium truncate">{item.label}</span>
-                )}
-              </button>
-            );
-          })}
-        </nav>
-
-        <div className="border-t border-border">
-          {!sidebarCollapsed && (
-            <div className="px-4 py-3">
-              <p className="text-xs text-slate-500 text-center">Gwinnett County Sheriff's Office</p>
-            </div>
-          )}
-
-          <div className="p-4">
-            <button
-              onClick={() => setLogoutConfirmOpen(true)}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/40 hover:text-slate-800 dark:hover:text-secondary dark:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
-              title={sidebarCollapsed ? 'Sign Out' : ''}
-            >
-              <LogOut className="w-5 h-5 flex-shrink-0" />
-              {!sidebarCollapsed && (
-                <span className="flex-1 text-left text-sm font-medium">Sign Out</span>
-              )}
-            </button>
+    <DashboardLayout navigation={hrNavigation} profile={hrProfile} notifications={hrNotifications}>
+      <div className="p-5 lg:p-8 space-y-8 min-h-full">
+        <div className="max-w-[1600px] mx-auto">
+          <div className="mb-6">
+            <h2 className="text-xl font-bold text-primary mb-1">Settings & Configuration</h2>
+            <p className="text-xs text-slate-500">Manage your account, HR system integrations, and enterprise settings</p>
           </div>
-        </div>
-      </aside>
 
-      {sidebarOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
-
-      {logoutConfirmOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-            onClick={() => setLogoutConfirmOpen(false)}
-          />
-          <div className="relative bg-white dark:bg-slate-900 border border-border rounded-2xl p-6 max-w-sm w-full shadow-2xl">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="w-12 h-12 bg-slate-100 dark:bg-slate-800/60 rounded-xl flex items-center justify-center">
-                <LogOut className="w-6 h-6 text-secondary" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold text-primary">Sign Out</h3>
-                <p className="text-sm text-secondary">Are you sure you want to sign out?</p>
-              </div>
-            </div>
-            <div className="flex gap-3 mt-6">
-              <button
-                onClick={() => setLogoutConfirmOpen(false)}
-                className="flex-1 px-4 py-2.5 bg-slate-100 dark:bg-slate-800/40 hover:bg-slate-200 dark:hover:bg-slate-800/60 border border-border rounded-xl text-primary font-medium transition-all"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleLogout}
-                className="flex-1 px-4 py-2.5 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-primary font-medium transition-all"
-              >
-                Sign Out
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      <div className="flex-1 flex flex-col min-w-0">
-        <header className="border-b border-black/[0.06] dark:border-slate-800/50 backdrop-blur-md bg-[#F8FAFC]/90 dark:bg-slate-900/30 shadow-[var(--shadow-nav)] dark:shadow-none">
-          <div className="px-4 lg:px-6 py-4 flex items-center justify-between gap-4">
-            <div className="flex items-center gap-4 flex-1 min-w-0">
-              <button
-                onClick={() => setSidebarOpen(!sidebarOpen)}
-                className="lg:hidden p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg"
-              >
-                <Menu className="w-5 h-5 text-secondary" />
-              </button>
-              <div className="flex items-center gap-2 text-sm">
-                <button
-                  onClick={() => navigate(createPageUrl('HRDashboard'))}
-                  className="text-secondary hover:text-primary transition-colors"
-                >
-                  HR Dashboard
-                </button>
-                <ChevronRight className="w-4 h-4 text-slate-700" />
-                <span className="text-primary">Settings</span>
-              </div>
-            </div>
-            <div className="flex items-center gap-2 lg:gap-3">
-              <div className="relative">
-                <button
-                  onClick={() => setNotificationsOpen(!notificationsOpen)}
-                  className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg relative"
-                >
-                  <Bell className="w-5 h-5 text-secondary" />
-                  <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-                </button>
-
-                {notificationsOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-96 bg-surface-raised backdrop-blur-xl border border-border rounded-xl shadow-2xl z-50">
-                    <div className="p-4 border-b border-border">
-                      <h3 className="text-sm font-semibold text-primary">Notifications</h3>
-                    </div>
-                    <div className="max-h-96 overflow-y-auto">
-                      {notifications.map(notification => (
-                        <div key={notification.id} className={`p-4 border-b border-slate-100 dark:border-border hover:bg-slate-50 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
-                          <div className="flex items-start gap-3">
-                            <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-amber-400' : 'bg-blue-400'}`}></div>
-                            <div className="flex-1 min-w-0">
-                              <p className="text-sm font-medium text-primary mb-1">{notification.title}</p>
-                              <p className="text-xs text-secondary mb-2">{notification.message}</p>
-                              <p className="text-xs text-slate-500">{notification.time}</p>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="p-3 border-t border-border">
-                      <button className="w-full text-center text-sm text-amber-700 dark:text-amber-400 hover:text-amber-300 font-medium">View All</button>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              <div className="h-8 w-px bg-white dark:bg-slate-700/50"></div>
-
-              <div className="relative profile-menu-container">
-                <button
-                  onClick={() => setProfileMenuOpen(!profileMenuOpen)}
-                  className="flex items-center gap-3 p-1.5 pr-3 hover:bg-white dark:bg-slate-800/50 rounded-xl transition-colors"
-                >
-                  <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
-                    <span className="text-primary text-sm font-bold">HR</span>
-                  </div>
-                  <div className="hidden sm:block text-left">
-                    <p className="text-sm font-medium text-primary">{profileSettings.fullName}</p>
-                    <p className="text-xs text-secondary">{profileSettings.department}</p>
-                  </div>
-                  <ChevronDown className={`w-4 h-4 text-secondary hidden sm:block transition-transform ${profileMenuOpen ? 'rotate-180' : ''}`} />
-                </button>
-
-                {profileMenuOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-56 bg-surface-raised backdrop-blur-xl border border-border rounded-xl shadow-2xl z-50 py-2">
-                    <div className="px-4 py-3 border-b border-border">
-                      <p className="text-sm font-medium text-primary">{profileSettings.fullName}</p>
-                      <p className="text-xs text-secondary">{profileSettings.email}</p>
-                    </div>
-                    <div className="py-1">
-                      <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors">
-                        <User className="w-4 h-4" />
-                        View Profile
-                      </button>
-                      <button
-                        onClick={() => setActiveSection('profile')}
-                        className="w-full flex items-center gap-3 px-4 py-2 text-sm text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors"
-                      >
-                        <Settings className="w-4 h-4" />
-                        Settings
-                      </button>
-                    </div>
-                    <div className="border-t border-border py-1">
-                      <button
-                        onClick={() => setLogoutConfirmOpen(true)}
-                        className="w-full flex items-center gap-3 px-4 py-2 text-sm text-red-700 dark:text-red-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors"
-                      >
-                        <LogOut className="w-4 h-4" />
-                        Sign Out
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        </header>
-
-        <main className="flex-1 overflow-y-auto p-4 lg:p-6">
-          <div className="max-w-6xl mx-auto">
-            <div className="mb-6">
-              <h2 className="text-2xl lg:text-3xl font-bold text-primary mb-2">HR Settings</h2>
-              <p className="text-secondary">Manage your account, notifications, and HR system integrations</p>
-            </div>
-
-            {/* Save Success Banner */}
-            {saveSuccess && (
-              <div className="mb-6 bg-green-500/20 border border-green-500/30 rounded-xl p-4 flex items-center gap-3">
-                <CheckCircle2 className="w-5 h-5 text-green-600 dark:text-green-400" />
-                <span className="text-green-600 dark:text-green-400 font-medium">Settings saved successfully</span>
-              </div>
-            )}
-
-            {/* System Status Banner */}
-            <div className="mb-6 bg-gradient-to-r from-green-500/10 to-emerald-500/5 border border-green-500/20 rounded-xl p-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center">
-                    <CheckCircle2 className="w-6 h-6 text-green-600 dark:text-green-400" />
-                  </div>
-                  <div>
-                    <h4 className="text-base font-semibold text-primary">All HR Systems Operational</h4>
-                    <p className="text-sm text-secondary">5 integrations active • 99.92% average uptime • Last sync: 5 min ago</p>
-                  </div>
+          {/* System Status Banner */}
+          <div className="mb-6 bg-gradient-to-r from-green-500/10 to-emerald-500/5 border border-green-500/20 rounded-xl p-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center">
+                  <CheckCircle2 className="w-6 h-6 text-green-400" />
                 </div>
-                <div className="flex items-center gap-2 px-4 py-2 bg-green-500/20 border border-green-500/30 rounded-lg">
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                  <span className="text-sm font-semibold text-green-600 dark:text-green-400 uppercase">Live</span>
+                <div>
+                  <h4 className="text-base font-semibold text-primary">All Systems Operational</h4>
+                  <p className="text-sm text-secondary">6 integrations active • 99.93% average uptime • Last sync: 1 min ago</p>
                 </div>
               </div>
+              <div className="flex items-center gap-2 px-4 py-2 bg-green-500/20 border border-green-500/30 rounded-lg">
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                <span className="text-sm font-semibold text-green-400 uppercase">Live</span>
+              </div>
             </div>
+          </div>
 
-            {/* Role Badge */}
-            <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 bg-blue-500/20 border border-blue-500/30 rounded-xl">
-              <Users className="w-4 h-4 text-blue-400" />
-              <span className="text-sm font-semibold text-blue-400 uppercase">Human Resources Access Level</span>
-            </div>
+          {/* Role Badge */}
+          <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 bg-amber-500/20 border border-amber-500/30 rounded-xl">
+            <Shield className="w-4 h-4 text-amber-700" />
+            <span className="text-sm font-semibold text-amber-700 uppercase">Human Resources Access Level</span>
+          </div>
 
-            {/* Settings Navigation Tabs */}
-            <div className="mb-6 flex gap-2 border-b border-border overflow-x-auto">
-              {settingsTabs.map(tab => {
-                const Icon = tab.icon;
-                return (
+          {/* Settings Tab Navigation */}
+          <div className="mb-6 flex gap-1 border-b border-border overflow-x-auto scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-transparent">
+            {settingsTabs.map((tab, idx) => {
+              const Icon = tab.icon;
+              const prevTier = idx > 0 ? settingsTabs[idx - 1].tier : tab.tier;
+              const showDivider = tab.tier !== prevTier;
+              return (
+                <React.Fragment key={tab.id}>
+                  {showDivider && <div className="self-center mx-1 w-px h-5 bg-white dark:bg-slate-700/60" />}
                   <button
-                    key={tab.id}
                     onClick={() => setActiveSection(tab.id)}
                     className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all relative whitespace-nowrap ${
-                      activeSection === tab.id ? 'text-amber-700 dark:text-amber-400' : 'text-secondary hover:text-slate-300'
+                      activeSection === tab.id ? 'text-amber-700' : 'text-muted hover:text-slate-700 dark:hover:text-slate-300'
                     }`}
                   >
                     <Icon className="w-4 h-4" />
                     {tab.label}
-                    {activeSection === tab.id && (
-                      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500"></div>
-                    )}
+                    {activeSection === tab.id && <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500"></div>}
                   </button>
-                );
-              })}
-            </div>
+                </React.Fragment>
+              );
+            })}
+          </div>
 
-            {/* Settings Content */}
-            <div className="space-y-6">
-              {/* Profile Settings */}
-              {activeSection === 'profile' && (
-                <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
-                  <div className="flex items-center justify-between mb-6">
-                    <h3 className="text-lg font-semibold text-primary">Profile Information</h3>
-                    <div className="flex items-center gap-2 px-3 py-1.5 bg-green-500/20 border border-green-500/30 rounded-lg">
-                      <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                      <span className="text-xs font-medium text-green-600 dark:text-green-400">Verified Account</span>
-                    </div>
-                  </div>
+          {/* Settings Content */}
+          <div className="space-y-6">
 
-                  <div className="flex items-center gap-6 mb-8">
-                    <div className="relative">
-                      <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
-                        <span className="text-primary text-2xl font-bold">PH</span>
-                      </div>
-                      <button className="absolute bottom-0 right-0 w-8 h-8 bg-amber-500 hover:bg-amber-400 rounded-full flex items-center justify-center transition-colors">
-                        <Camera className="w-4 h-4 text-primary" />
-                      </button>
-                    </div>
-                    <div>
-                      <h4 className="text-xl font-semibold text-primary">{profileSettings.fullName}</h4>
-                      <p className="text-secondary">{profileSettings.position}</p>
-                      <p className="text-sm text-slate-500">{profileSettings.department}</p>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-secondary mb-2">Full Name</label>
-                      <input
-                        type="text"
-                        value={profileSettings.fullName}
-                        onChange={(e) => setProfileSettings({...profileSettings, fullName: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-secondary mb-2">Email Address</label>
-                      <input
-                        type="email"
-                        value={profileSettings.email}
-                        onChange={(e) => setProfileSettings({...profileSettings, email: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-secondary mb-2">Employee ID</label>
-                      <input
-                        type="text"
-                        value={profileSettings.employeeId}
-                        disabled
-                        className="w-full px-4 py-2.5 bg-slate-100 dark:bg-slate-800/20 border border-slate-700/50 rounded-xl text-secondary cursor-not-allowed"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-secondary mb-2">Phone Number</label>
-                      <input
-                        type="tel"
-                        value={profileSettings.phone}
-                        onChange={(e) => setProfileSettings({...profileSettings, phone: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-secondary mb-2">Department</label>
-                      <input
-                        type="text"
-                        value={profileSettings.department}
-                        disabled
-                        className="w-full px-4 py-2.5 bg-slate-100 dark:bg-slate-800/20 border border-slate-700/50 rounded-xl text-secondary cursor-not-allowed"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-secondary mb-2">Position</label>
-                      <input
-                        type="text"
-                        value={profileSettings.position}
-                        disabled
-                        className="w-full px-4 py-2.5 bg-slate-100 dark:bg-slate-800/20 border border-slate-700/50 rounded-xl text-secondary cursor-not-allowed"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-secondary mb-2">Hire Date</label>
-                      <input
-                        type="text"
-                        value={new Date(profileSettings.hireDate).toLocaleDateString()}
-                        disabled
-                        className="w-full px-4 py-2.5 bg-slate-100 dark:bg-slate-800/20 border border-slate-700/50 rounded-xl text-secondary cursor-not-allowed"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-secondary mb-2">Certifications</label>
-                      <input
-                        type="text"
-                        value={profileSettings.certifications}
-                        onChange={(e) => setProfileSettings({...profileSettings, certifications: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="mt-6 flex justify-end">
-                    <button
-                      onClick={handleSave}
-                      className="flex items-center gap-2 px-6 py-2.5 bg-amber-500 hover:bg-amber-400 rounded-xl text-primary font-medium transition-all"
-                    >
-                      <Save className="w-4 h-4" />
-                      Save Changes
-                    </button>
-                  </div>
+            {/* Integrations */}
+            {activeSection === 'integrations' && (
+              <div className="space-y-6">
+                <div className="flex items-center justify-between mb-1">
+                  <h3 className="text-sm font-semibold text-primary">HR System Integrations</h3>
+                  <span className="text-[10px] text-slate-500">Last updated: {new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
                 </div>
-              )}
-
-              {/* Notification Settings */}
-              {activeSection === 'notifications' && (
-                <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
-                  <h3 className="text-lg font-semibold text-primary mb-6">Notification Preferences</h3>
-
-                  <div className="space-y-6">
-                    <div>
-                      <h4 className="text-sm font-semibold text-secondary mb-4 uppercase tracking-wide">Delivery Methods</h4>
-                      <div className="space-y-6">
-                        {[
-                          { key: 'emailNotifications', label: 'Email Notifications', desc: 'Receive notifications via email', icon: Mail },
-                          { key: 'smsNotifications', label: 'SMS Notifications', desc: 'Receive urgent alerts via text', icon: Smartphone },
-                          { key: 'pushNotifications', label: 'Push Notifications', desc: 'Browser and mobile push alerts', icon: Bell }
-                        ].map(item => {
-                          const Icon = item.icon;
-                          return (
-                            <div key={item.key} className="flex items-center justify-between p-4 bg-white dark:bg-slate-800/40 border border-border rounded-xl">
-                              <div className="flex items-center gap-4">
-                                <div className="w-10 h-10 bg-white dark:bg-slate-700/50 rounded-xl flex items-center justify-center">
-                                  <Icon className="w-5 h-5 text-secondary" />
-                                </div>
-                                <div>
-                                  <p className="text-primary font-medium">{item.label}</p>
-                                  <p className="text-sm text-secondary">{item.desc}</p>
-                                </div>
-                              </div>
-                              <button
-                                onClick={() => setNotificationSettings({...notificationSettings, [item.key]: !notificationSettings[item.key]})}
-                                className={`w-12 h-6 rounded-full transition-colors ${notificationSettings[item.key] ? 'bg-amber-500' : 'bg-slate-600'}`}
-                              >
-                                <div className={`w-5 h-5 bg-white rounded-full transition-transform ${notificationSettings[item.key] ? 'translate-x-6' : 'translate-x-0.5'}`}></div>
-                              </button>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-
-                    <div>
-                      <h4 className="text-sm font-semibold text-secondary mb-4 uppercase tracking-wide">HR Alert Types</h4>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {[
-                          { key: 'applicantAlerts', label: 'Applicant Alerts', desc: 'New applications and status changes' },
-                          { key: 'hiringPipelineUpdates', label: 'Hiring Pipeline', desc: 'Candidate progression updates' },
-                          { key: 'onboardingReminders', label: 'Onboarding Reminders', desc: 'New hire task deadlines' },
-                          { key: 'complianceAlerts', label: 'Compliance Alerts', desc: 'Policy and compliance deadlines' },
-                          { key: 'certificationExpiry', label: 'Certification Expiry', desc: 'Training and cert renewals' },
-                          { key: 'performanceReviewDue', label: 'Performance Reviews', desc: 'Review cycle reminders' },
-                          { key: 'timeOffRequests', label: 'Time Off Requests', desc: 'Leave request notifications' },
-                          { key: 'policyUpdates', label: 'Policy Updates', desc: 'New policies and changes' }
-                        ].map(item => (
-                          <div key={item.key} className="flex items-center justify-between p-4 bg-white dark:bg-slate-800/40 border border-border rounded-xl">
-                            <div>
-                              <p className="text-primary font-medium">{item.label}</p>
-                              <p className="text-xs text-secondary">{item.desc}</p>
-                            </div>
-                            <button
-                              onClick={() => setNotificationSettings({...notificationSettings, [item.key]: !notificationSettings[item.key]})}
-                              className={`w-12 h-6 rounded-full transition-colors ${notificationSettings[item.key] ? 'bg-amber-500' : 'bg-slate-600'}`}
-                            >
-                              <div className={`w-5 h-5 bg-white rounded-full transition-transform ${notificationSettings[item.key] ? 'translate-x-6' : 'translate-x-0.5'}`}></div>
-                            </button>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="mt-6 flex justify-end">
-                    <button
-                      onClick={handleSave}
-                      className="flex items-center gap-2 px-6 py-2.5 bg-amber-500 hover:bg-amber-400 rounded-xl text-primary font-medium transition-all"
-                    >
-                      <Save className="w-4 h-4" />
-                      Save Preferences
-                    </button>
-                  </div>
-                </div>
-              )}
-
-              {/* Display Settings */}
-              {activeSection === 'display' && (
-                <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
-                  <h3 className="text-lg font-semibold text-primary mb-6">Display & Appearance</h3>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-sm font-medium text-secondary mb-3">Theme</label>
-                      <div className="flex gap-3">
-                        <button
-                          onClick={() => setDisplaySettings({...displaySettings, theme: 'dark'})}
-                          className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl border transition-all ${
-                            displaySettings.theme === 'dark' ? 'bg-amber-500/20 border-amber-500/50 text-amber-700 dark:text-amber-400' : 'bg-white dark:bg-slate-800/40 border-slate-700/50 text-slate-500'
-                          }`}
-                        >
-                          <Moon className="w-5 h-5" />
-                          Dark
-                        </button>
-                        <button
-                          onClick={() => setDisplaySettings({...displaySettings, theme: 'light'})}
-                          className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl border transition-all ${
-                            displaySettings.theme === 'light' ? 'bg-amber-500/20 border-amber-500/50 text-amber-700 dark:text-amber-400' : 'bg-white dark:bg-slate-800/40 border-slate-700/50 text-slate-500'
-                          }`}
-                        >
-                          <Sun className="w-5 h-5" />
-                          Light
-                        </button>
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-secondary mb-3">Date Format</label>
-                      <select
-                        value={displaySettings.dateFormat}
-                        onChange={(e) => setDisplaySettings({...displaySettings, dateFormat: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50"
-                      >
-                        <option value="MM/DD/YYYY">MM/DD/YYYY</option>
-                        <option value="DD/MM/YYYY">DD/MM/YYYY</option>
-                        <option value="YYYY-MM-DD">YYYY-MM-DD</option>
-                      </select>
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-secondary mb-3">Time Format</label>
-                      <select
-                        value={displaySettings.timeFormat}
-                        onChange={(e) => setDisplaySettings({...displaySettings, timeFormat: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50"
-                      >
-                        <option value="12h">12-hour</option>
-                        <option value="24h">24-hour</option>
-                      </select>
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-secondary mb-3">Timezone</label>
-                      <select
-                        value={displaySettings.timezone}
-                        onChange={(e) => setDisplaySettings({...displaySettings, timezone: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50"
-                      >
-                        <option value="America/New_York">Eastern Time (ET)</option>
-                        <option value="America/Chicago">Central Time (CT)</option>
-                        <option value="America/Denver">Mountain Time (MT)</option>
-                        <option value="America/Los_Angeles">Pacific Time (PT)</option>
-                      </select>
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-secondary mb-3">Display Density</label>
-                      <select
-                        value={displaySettings.density}
-                        onChange={(e) => setDisplaySettings({...displaySettings, density: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50"
-                      >
-                        <option value="compact">Compact</option>
-                        <option value="comfortable">Comfortable</option>
-                        <option value="spacious">Spacious</option>
-                      </select>
-                    </div>
-
-                    <div className="flex items-center justify-between p-4 bg-white dark:bg-slate-800/40 border border-border rounded-xl">
-                      <div>
-                        <p className="text-primary font-medium">Animations</p>
-                        <p className="text-sm text-secondary">Enable UI animations</p>
-                      </div>
-                      <button
-                        onClick={() => setDisplaySettings({...displaySettings, animations: !displaySettings.animations})}
-                        className={`w-12 h-6 rounded-full transition-colors ${displaySettings.animations ? 'bg-amber-500' : 'bg-slate-600'}`}
-                      >
-                        <div className={`w-5 h-5 bg-white rounded-full transition-transform ${displaySettings.animations ? 'translate-x-6' : 'translate-x-0.5'}`}></div>
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="mt-6 flex justify-end">
-                    <button
-                      onClick={handleSave}
-                      className="flex items-center gap-2 px-6 py-2.5 bg-amber-500 hover:bg-amber-400 rounded-xl text-primary font-medium transition-all"
-                    >
-                      <Save className="w-4 h-4" />
-                      Save Display Settings
-                    </button>
-                  </div>
-                </div>
-              )}
-
-              {/* Security Settings */}
-              {activeSection === 'security' && (
-                <div className="space-y-6">
-                  <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
-                    <h3 className="text-lg font-semibold text-primary mb-6">Security Settings</h3>
-
-                    <div className="space-y-6">
-                      <div className="flex items-center justify-between p-4 bg-white dark:bg-slate-800/40 border border-border rounded-xl">
+                {Object.entries(integrations).map(([key, integration]) => {
+                  const Icon = getIntegrationIcon(integration.type);
+                  const isExpanded = expandedIntegration === key;
+                  return (
+                    <div key={key} className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden shadow-sm dark:shadow-none">
+                      <div onClick={() => setExpandedIntegration(isExpanded ? null : key)} className="p-6 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/20 transition-colors">
                         <div className="flex items-center gap-4">
-                          <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center">
-                            <Lock className="w-5 h-5 text-green-600 dark:text-green-400" />
+                          <div className={`w-12 h-12 ${getStatusBg(integration.status)} border ${getStatusBorder(integration.status)} rounded-xl flex items-center justify-center`}>
+                            <Icon className={`w-6 h-6 ${getStatusColor(integration.status)}`} />
                           </div>
-                          <div>
-                            <p className="text-primary font-medium">Two-Factor Authentication</p>
-                            <p className="text-sm text-secondary">Add an extra layer of security</p>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-3 mb-1">
+                              <h4 className="text-base font-semibold text-primary">{integration.name}</h4>
+                              <div className={`flex items-center gap-1.5 px-2 py-1 ${getStatusBg(integration.status)} border ${getStatusBorder(integration.status)} rounded-md`}>
+                                <div className={`w-1.5 h-1.5 ${integration.status === 'connected' ? 'bg-green-400' : 'bg-red-400'} rounded-full`}></div>
+                                <span className={`text-xs font-medium ${getStatusColor(integration.status)}`}>{integration.status === 'connected' ? 'Connected' : 'Disconnected'}</span>
+                              </div>
+                              <span className="text-xs text-muted">{integration.version}</span>
+                            </div>
+                            <div className="flex items-center gap-4 text-xs text-muted">
+                              <span className="flex items-center gap-1"><Activity className="w-3 h-3" />{integration.uptime}% uptime</span>
+                              <span className="flex items-center gap-1"><Clock className="w-3 h-3" />{integration.avgResponseTime}</span>
+                              <span className="flex items-center gap-1"><RefreshCw className="w-3 h-3" />{integration.lastSync}</span>
+                            </div>
                           </div>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          {securitySettings.twoFactorAuth && (
-                            <span className="px-2 py-1 bg-green-500/20 border border-green-500/30 rounded text-xs text-green-600 dark:text-green-400 font-medium">Enabled</span>
-                          )}
-                          <button
-                            onClick={() => setSecuritySettings({...securitySettings, twoFactorAuth: !securitySettings.twoFactorAuth})}
-                            className={`w-12 h-6 rounded-full transition-colors ${securitySettings.twoFactorAuth ? 'bg-green-500' : 'bg-slate-600'}`}
-                          >
-                            <div className={`w-5 h-5 bg-white rounded-full transition-transform ${securitySettings.twoFactorAuth ? 'translate-x-6' : 'translate-x-0.5'}`}></div>
+                          <button className="p-2 hover:bg-slate-200 dark:hover:bg-slate-700/40 rounded-lg transition-colors">
+                            {isExpanded ? <ChevronUp className="w-5 h-5 text-muted" /> : <ChevronDown className="w-5 h-5 text-muted" />}
                           </button>
                         </div>
                       </div>
-
-                      <div className="flex items-center justify-between p-4 bg-white dark:bg-slate-800/40 border border-border rounded-xl">
-                        <div className="flex items-center gap-4">
-                          <div className="w-10 h-10 bg-white dark:bg-slate-700/50 rounded-xl flex items-center justify-center">
-                            <Clock className="w-5 h-5 text-secondary" />
+                      {isExpanded && (
+                        <div className="px-6 pb-6 border-t border-border dark:border-slate-700/30">
+                          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+                            <div className="space-y-6">
+                              <div><p className="text-xs font-medium text-muted mb-2">Vendor</p><p className="text-sm text-primary">{integration.vendor}</p></div>
+                              <div>
+                                <p className="text-xs font-medium text-muted mb-2">API Endpoint</p>
+                                <div className="flex items-center gap-2">
+                                  <code className="flex-1 text-xs text-blue-400 bg-slate-100 dark:bg-slate-900/50 px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700/50 overflow-x-auto">{integration.endpoint}</code>
+                                  <button onClick={() => handleCopyApiKey(integration.endpoint)} className="p-2 hover:bg-slate-200 dark:hover:bg-slate-700/40 rounded-lg transition-colors"><Copy className="w-4 h-4 text-muted" /></button>
+                                </div>
+                              </div>
+                              <div><p className="text-xs font-medium text-muted mb-2">Authentication Method</p><p className="text-sm text-primary">{integration.authMethod}</p></div>
+                              <div>
+                                <p className="text-xs font-medium text-muted mb-2">API Key</p>
+                                <div className="flex items-center gap-2">
+                                  <code className="flex-1 text-xs text-amber-700 bg-slate-100 dark:bg-slate-900/50 px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700/50">
+                                    {showApiKey[key] ? integration.apiKey : '••••••••••••••••••••'}
+                                  </code>
+                                  <button onClick={() => setShowApiKey({...showApiKey, [key]: !showApiKey[key]})} className="p-2 hover:bg-slate-200 dark:hover:bg-slate-700/40 rounded-lg transition-colors">
+                                    {showApiKey[key] ? <EyeOff className="w-4 h-4 text-muted" /> : <Eye className="w-4 h-4 text-muted" />}
+                                  </button>
+                                  <button onClick={() => handleCopyApiKey(integration.apiKey)} className="p-2 hover:bg-slate-200 dark:hover:bg-slate-700/40 rounded-lg transition-colors"><Copy className="w-4 h-4 text-muted" /></button>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="space-y-6">
+                              <div><p className="text-xs font-medium text-muted mb-2">Sync Frequency</p><p className="text-sm text-primary">{integration.syncFrequency}</p></div>
+                              <div>
+                                <p className="text-xs font-medium text-muted mb-2">Data Types</p>
+                                <div className="flex flex-wrap gap-2">
+                                  {integration.dataTypes.map((type, i) => (
+                                    <span key={i} className="px-2 py-1 bg-slate-200 dark:bg-slate-700/40 border border-slate-300 dark:border-slate-600/50 rounded-md text-xs text-secondary">{type}</span>
+                                  ))}
+                                </div>
+                              </div>
+                              <div className="grid grid-cols-2 gap-6">
+                                <div>
+                                  <p className="text-xs font-medium text-muted mb-2">Monthly Requests</p>
+                                  <p className="text-sm text-primary">{integration.monthlyRequests.toLocaleString()} / {integration.requestLimit.toLocaleString()}</p>
+                                  <div className="mt-2 h-2 bg-slate-200 dark:bg-slate-700/40 rounded-full overflow-hidden">
+                                    <div className="h-full bg-gradient-to-r from-blue-500 to-cyan-500" style={{width: `${(integration.monthlyRequests / integration.requestLimit) * 100}%`}}></div>
+                                  </div>
+                                </div>
+                                <div><p className="text-xs font-medium text-muted mb-2">24h Errors</p><p className="text-sm text-primary">{integration.errors24h} errors</p></div>
+                              </div>
+                              {integration.webhooks && integration.webhooks.length > 0 && (
+                                <div>
+                                  <p className="text-xs font-medium text-muted mb-2">Active Webhooks</p>
+                                  <div className="space-y-1">
+                                    {integration.webhooks.map((wh, i) => (
+                                      <div key={i} className="flex items-center gap-2 text-xs text-secondary">
+                                        <Webhook className="w-3 h-3 text-muted" />
+                                        <code className="text-green-400">{wh}</code>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+                            </div>
                           </div>
-                          <div>
-                            <p className="text-primary font-medium">Session Timeout</p>
-                            <p className="text-sm text-secondary">Auto-logout after inactivity</p>
+                          {(integration.activeRequisitions || integration.pendingOnboarding || integration.employees || integration.activeUsers || integration.expiringSoon || integration.pendingAcknowledgments || integration.activeCourses) && (
+                            <div className="mt-6 pt-6 border-t border-border dark:border-slate-700/30">
+                              <p className="text-xs font-medium text-muted mb-3">Live Metrics</p>
+                              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                                {integration.activeRequisitions && <div className="bg-slate-50 dark:bg-slate-900/50 border border-border rounded-xl p-4"><p className="text-xs text-muted mb-1">Open Requisitions</p><p className="text-sm font-semibold text-primary">{integration.activeRequisitions}</p></div>}
+                                {integration.pendingOnboarding && <div className="bg-slate-50 dark:bg-slate-900/50 border border-border rounded-xl p-4"><p className="text-xs text-muted mb-1">Pending Onboarding</p><p className="text-sm font-semibold text-amber-700">{integration.pendingOnboarding}</p></div>}
+                                {integration.employees && <div className="bg-slate-50 dark:bg-slate-900/50 border border-border rounded-xl p-4"><p className="text-xs text-muted mb-1">Employees</p><p className="text-sm font-semibold text-primary">{integration.employees}</p></div>}
+                                {integration.activeUsers && <div className="bg-slate-50 dark:bg-slate-900/50 border border-border rounded-xl p-4"><p className="text-xs text-muted mb-1">Active Users</p><p className="text-sm font-semibold text-primary">{integration.activeUsers}</p></div>}
+                                {integration.expiringSoon && <div className="bg-slate-50 dark:bg-slate-900/50 border border-border rounded-xl p-4"><p className="text-xs text-muted mb-1">Certs Expiring Soon</p><p className="text-sm font-semibold text-red-400">{integration.expiringSoon}</p></div>}
+                                {integration.pendingAcknowledgments && <div className="bg-slate-50 dark:bg-slate-900/50 border border-border rounded-xl p-4"><p className="text-xs text-muted mb-1">Pending Acknowledgments</p><p className="text-sm font-semibold text-amber-700">{integration.pendingAcknowledgments}</p></div>}
+                                {integration.activeCourses && <div className="bg-slate-50 dark:bg-slate-900/50 border border-border rounded-xl p-4"><p className="text-xs text-muted mb-1">Active Courses</p><p className="text-sm font-semibold text-primary">{integration.activeCourses}</p></div>}
+                              </div>
+                            </div>
+                          )}
+                          <div className="mt-6 flex items-center gap-3">
+                            <button onClick={() => handleTestConnection(key)} disabled={testingConnection === key} className="flex items-center gap-2 px-4 py-2 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded-xl text-sm font-medium hover:bg-blue-500/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+                              {testingConnection === key ? <><RefreshCw className="w-4 h-4 animate-spin" />Testing...</> : <><Wifi className="w-4 h-4" />Test Connection</>}
+                            </button>
+                            <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-700/40 border border-slate-300 dark:border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700/60 transition-all"><RefreshCw className="w-4 h-4" />Sync Now</button>
+                            <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-700/40 border border-slate-300 dark:border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700/60 transition-all"><Shield className="w-4 h-4" />Configure</button>
                           </div>
                         </div>
-                        <select
-                          value={securitySettings.sessionTimeout}
-                          onChange={(e) => setSecuritySettings({...securitySettings, sessionTimeout: e.target.value})}
-                          className="px-4 py-2 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50"
-                        >
-                          <option value="15">15 minutes</option>
-                          <option value="30">30 minutes</option>
-                          <option value="60">1 hour</option>
-                          <option value="120">2 hours</option>
-                        </select>
-                      </div>
-
-                      <div className="flex items-center justify-between p-4 bg-white dark:bg-slate-800/40 border border-border rounded-xl">
-                        <div className="flex items-center gap-4">
-                          <div className="w-10 h-10 bg-white dark:bg-slate-700/50 rounded-xl flex items-center justify-center">
-                            <Bell className="w-5 h-5 text-secondary" />
-                          </div>
-                          <div>
-                            <p className="text-primary font-medium">Login Notifications</p>
-                            <p className="text-sm text-secondary">Get alerted for new sign-ins</p>
-                          </div>
-                        </div>
-                        <button
-                          onClick={() => setSecuritySettings({...securitySettings, loginNotifications: !securitySettings.loginNotifications})}
-                          className={`w-12 h-6 rounded-full transition-colors ${securitySettings.loginNotifications ? 'bg-amber-500' : 'bg-slate-600'}`}
-                        >
-                          <div className={`w-5 h-5 bg-white rounded-full transition-transform ${securitySettings.loginNotifications ? 'translate-x-6' : 'translate-x-0.5'}`}></div>
-                        </button>
-                      </div>
-
-                      <div className="flex items-center justify-between p-4 bg-white dark:bg-slate-800/40 border border-border rounded-xl">
-                        <div className="flex items-center gap-4">
-                          <div className="w-10 h-10 bg-white dark:bg-slate-700/50 rounded-xl flex items-center justify-center">
-                            <Activity className="w-5 h-5 text-secondary" />
-                          </div>
-                          <div>
-                            <p className="text-primary font-medium">Audit Logging</p>
-                            <p className="text-sm text-secondary">Track all account activity</p>
-                          </div>
-                        </div>
-                        <button
-                          onClick={() => setSecuritySettings({...securitySettings, auditLogging: !securitySettings.auditLogging})}
-                          className={`w-12 h-6 rounded-full transition-colors ${securitySettings.auditLogging ? 'bg-amber-500' : 'bg-slate-600'}`}
-                        >
-                          <div className={`w-5 h-5 bg-white rounded-full transition-transform ${securitySettings.auditLogging ? 'translate-x-6' : 'translate-x-0.5'}`}></div>
-                        </button>
-                      </div>
+                      )}
                     </div>
+                  );
+                })}
+              </div>
+            )}
+
+            {/* Security */}
+            {activeSection === 'security' && (
+              <div className="space-y-6">
+                <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6">
+                  <div className="flex items-center justify-between mb-1">
+                    <h3 className="text-sm font-semibold text-primary">Authentication & Access</h3>
+                    <span className="text-[10px] text-slate-500">Last updated: Dec 9, 2025 11:42 AM</span>
                   </div>
-
-                  <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
-                    <h3 className="text-lg font-semibold text-primary mb-4">Change Password</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <div>
-                        <label className="block text-sm font-medium text-secondary mb-2">Current Password</label>
-                        <input
-                          type="password"
-                          placeholder="••••••••"
-                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
-                        />
+                  <p className="text-xs text-slate-500 mb-6">Multi-factor authentication, session management, and access controls.</p>
+                  <div className="space-y-6">
+                    {[
+                      { key: 'twoFactorAuth', label: 'Two-Factor Authentication', desc: 'Require 2FA for account access', extra: 'Enabled' },
+                      { key: 'loginNotifications', label: 'Login Notifications', desc: 'Notify on new device login' },
+                      { key: 'ipWhitelist', label: 'IP Whitelist', desc: 'Restrict access to approved IPs' },
+                    ].map((item) => (
+                      <div key={item.key} className="flex items-center justify-between py-3 border-b border-border dark:border-slate-700/30">
+                        <div className="flex-1">
+                          <h4 className="text-sm font-medium text-primary">{item.label}</h4>
+                          <p className="text-xs text-muted mt-1">{item.desc}</p>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          {item.extra && <span className="text-xs font-medium text-green-400">{item.extra}</span>}
+                          <button onClick={() => setSecuritySettings({...securitySettings, [item.key]: !securitySettings[item.key]})} className={`relative w-12 h-6 rounded-full transition-colors ${securitySettings[item.key] ? 'bg-green-500' : 'bg-slate-600'}`}>
+                            <div className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform ${securitySettings[item.key] ? 'translate-x-6' : 'translate-x-0'}`}></div>
+                          </button>
+                        </div>
                       </div>
-                      <div>
-                        <label className="block text-sm font-medium text-secondary mb-2">New Password</label>
-                        <input
-                          type="password"
-                          placeholder="••••••••"
-                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
-                        />
+                    ))}
+                    <div>
+                      <label className="block text-sm font-medium text-secondary mb-2">Session Timeout (minutes)</label>
+                      <select value={securitySettings.sessionTimeout} onChange={(e) => setSecuritySettings({...securitySettings, sessionTimeout: e.target.value})} className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50 transition-colors">
+                        <option value="15">15 minutes</option>
+                        <option value="30">30 minutes</option>
+                        <option value="60">1 hour</option>
+                        <option value="120">2 hours</option>
+                        <option value="480">8 hours</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-secondary mb-2">Password Expiry (days)</label>
+                      <select value={securitySettings.passwordExpiry} onChange={(e) => setSecuritySettings({...securitySettings, passwordExpiry: e.target.value})} className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50 transition-colors">
+                        <option value="30">30 days</option>
+                        <option value="60">60 days</option>
+                        <option value="90">90 days</option>
+                        <option value="180">180 days</option>
+                        <option value="never">Never</option>
+                      </select>
+                    </div>
+                    <div className="flex items-center justify-between py-3 border-b border-border dark:border-slate-700/30">
+                      <div className="flex-1">
+                        <h4 className="text-sm font-medium text-primary">Audit Logging</h4>
+                        <p className="text-xs text-muted mt-1">Track all user actions</p>
                       </div>
-                      <div>
-                        <label className="block text-sm font-medium text-secondary mb-2">Confirm Password</label>
-                        <input
-                          type="password"
-                          placeholder="••••••••"
-                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
-                        />
+                      <div className="flex items-center gap-3">
+                        <span className="text-xs font-medium text-green-400">Required</span>
+                        <button disabled className="relative w-12 h-6 rounded-full bg-green-500 cursor-not-allowed opacity-75">
+                          <div className="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full translate-x-6"></div>
+                        </button>
                       </div>
                     </div>
-                    <div className="mt-4 flex justify-end">
-                      <button className="flex items-center gap-2 px-6 py-2.5 bg-amber-500 hover:bg-amber-400 rounded-xl text-primary font-medium transition-all">
-                        <Key className="w-4 h-4" />
-                        Update Password
-                      </button>
+                    <div className="flex items-center justify-between py-3">
+                      <div className="flex-1">
+                        <h4 className="text-sm font-medium text-primary">SSO Integration</h4>
+                        <p className="text-xs text-muted mt-1">Single Sign-On with County AD</p>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <span className="text-xs font-medium text-green-400">Active</span>
+                        <button onClick={() => setSecuritySettings({...securitySettings, ssoEnabled: !securitySettings.ssoEnabled})} className={`relative w-12 h-6 rounded-full transition-colors ${securitySettings.ssoEnabled ? 'bg-green-500' : 'bg-slate-600'}`}>
+                          <div className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform ${securitySettings.ssoEnabled ? 'translate-x-6' : 'translate-x-0'}`}></div>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              )}
-
-              {/* Integrations */}
-              {activeSection === 'integrations' && (
-                <div className="space-y-6">
-                  <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
-                    <div className="flex items-center justify-between mb-6">
-                      <div>
-                        <h3 className="text-lg font-semibold text-primary">HR System Integrations</h3>
-                        <p className="text-sm text-secondary">Connected systems and data sources</p>
+                <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6">
+                  <h3 className="text-sm font-semibold text-primary mb-6">Active Sessions</h3>
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800/30 border border-border dark:border-slate-700/30 rounded-xl">
+                      <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center"><Monitor className="w-5 h-5 text-green-400" /></div>
+                      <div className="flex-1">
+                        <p className="text-sm font-medium text-primary">Chrome on Windows • Current Session</p>
+                        <p className="text-xs text-muted">GCSO HR Office • 172.16.45.110</p>
+                        <p className="text-xs text-slate-500 mt-1">Last active: Just now</p>
                       </div>
-                      <button className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 border border-slate-600/50 rounded-xl text-secondary transition-all">
-                        <RefreshCw className="w-4 h-4" />
-                        Sync All
+                      <div className="px-3 py-1.5 bg-green-500/20 border border-green-500/30 rounded-lg"><span className="text-xs font-medium text-green-400">Active</span></div>
+                    </div>
+                    <div className="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800/30 border border-border dark:border-slate-700/30 rounded-xl">
+                      <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center"><Smartphone className="w-5 h-5 text-blue-400" /></div>
+                      <div className="flex-1">
+                        <p className="text-sm font-medium text-primary">Mobile App • iPhone 14</p>
+                        <p className="text-xs text-muted">HR Director • Mobile Network</p>
+                        <p className="text-xs text-slate-500 mt-1">Last active: 1 hour ago</p>
+                      </div>
+                      <button className="px-3 py-1.5 bg-red-500/20 border border-red-500/30 text-red-400 rounded-lg text-xs font-medium hover:bg-red-500/30 transition-all">Revoke</button>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6">
+                  <h3 className="text-sm font-semibold text-primary mb-4">Change Password</h3>
+                  <div className="space-y-6">
+                    {['Current Password', 'New Password', 'Confirm New Password'].map((label, i) => (
+                      <div key={i}>
+                        <label className="block text-sm font-medium text-secondary mb-2">{label}</label>
+                        <input type="password" className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-primary placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors" placeholder={`Enter ${label.toLowerCase()}`} />
+                      </div>
+                    ))}
+                    <button className="flex items-center gap-2 px-4 py-2 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded-xl text-sm font-medium hover:bg-blue-500/30 transition-all"><Key className="w-4 h-4" />Update Password</button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Audit & Compliance */}
+            {activeSection === 'audit' && (
+              <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6">
+                <div className="flex items-center justify-between mb-6">
+                  <div>
+                    <h3 className="text-sm font-semibold text-primary">Audit & Compliance Trail</h3>
+                    <p className="text-xs text-slate-500 mt-1">Recent HR actions, security events, and integration activity. All changes are logged.</p>
+                  </div>
+                  <button className="flex items-center gap-2 px-4 py-2 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded-xl text-sm font-medium hover:bg-blue-500/30 transition-all"><Download className="w-4 h-4" />Export Logs</button>
+                </div>
+                <div className="space-y-3">
+                  {[
+                    { Icon: CheckCircle2, bg: 'bg-green-500/20', iconColor: 'text-green-400', title: 'Employee Record Accessed', tag: 'HR Action', tagBg: 'bg-blue-500/20', tagBorder: 'border-blue-500/30', tagText: 'text-blue-400', desc: 'HR Director reviewed Deputy Martinez personnel file', meta: ['IP: 172.16.45.110', 'Device: Chrome on Windows', '10 minutes ago'] },
+                    { Icon: Lock, bg: 'bg-blue-500/20', iconColor: 'text-blue-400', title: 'Successful Login', tag: 'Authentication', tagBg: 'bg-green-500/20', tagBorder: 'border-green-500/30', tagText: 'text-green-400', desc: 'HR Director logged in from HR Office', meta: ['IP: 172.16.45.110', '2FA: Verified', '2 hours ago'] },
+                    { Icon: RefreshCw, bg: 'bg-purple-500/20', iconColor: 'text-purple-400', title: 'NeoGov Synced', tag: 'Integration', tagBg: 'bg-purple-500/20', tagBorder: 'border-purple-500/30', tagText: 'text-purple-400', desc: 'Applicant data sync completed: 3 new applications received', meta: ['Records: 3 new', 'Duration: 1.2s', '3 hours ago'] },
+                    { Icon: Shield, bg: 'bg-amber-500/20', iconColor: 'text-amber-700', title: 'POST Cert Updated', tag: 'Compliance', tagBg: 'bg-amber-500/20', tagBorder: 'border-amber-500/30', tagText: 'text-amber-700', desc: 'Sgt. Thompson POST certification renewal processed via GA POST API', meta: ['Cert #: POST-2025-8841', 'Expires: Dec 2027', '5 hours ago'] },
+                    { Icon: CheckCircle, bg: 'bg-green-500/20', iconColor: 'text-green-400', title: 'FMLA Approved', tag: 'HR Action', tagBg: 'bg-blue-500/20', tagBorder: 'border-blue-500/30', tagText: 'text-blue-400', desc: 'Deputy Rodriguez 12-week FMLA approved by HR Director', meta: ['Start: Jun 1, 2026', 'Return: Aug 24, 2026', '8 hours ago'] },
+                    { Icon: FileText, bg: 'bg-slate-500/20', iconColor: 'text-slate-400', title: 'Performance Review Submitted', tag: 'HR Action', tagBg: 'bg-blue-500/20', tagBorder: 'border-blue-500/30', tagText: 'text-blue-400', desc: 'Q2 patrol evaluation submitted for Deputy Chen by Sgt. Williams', meta: ['Rating: Meets Expectations', 'Q2 2026', '12 hours ago'] },
+                  ].map((event, i) => (
+                    <div key={i} className="flex items-start gap-4 p-4 bg-slate-50 dark:bg-slate-800/30 border border-border dark:border-slate-700/30 rounded-xl">
+                      <div className={`w-10 h-10 ${event.bg} rounded-xl flex items-center justify-center flex-shrink-0`}><event.Icon className={`w-5 h-5 ${event.iconColor}`} /></div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1">
+                          <p className="text-sm font-medium text-primary">{event.title}</p>
+                          <span className={`px-2 py-0.5 ${event.tagBg} border ${event.tagBorder} rounded text-xs ${event.tagText}`}>{event.tag}</span>
+                        </div>
+                        <p className="text-xs text-muted">{event.desc}</p>
+                        <div className="flex items-center gap-4 mt-2 text-xs text-slate-500">
+                          {event.meta.map((m, j) => <span key={j}>{m}</span>)}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-6 flex justify-center">
+                  <button className="px-4 py-2 bg-slate-100 dark:bg-slate-700/40 border border-slate-300 dark:border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700/60 transition-all">Load More</button>
+                </div>
+              </div>
+            )}
+
+            {/* Backup & Retention */}
+            {activeSection === 'data' && (
+              <div className="space-y-6">
+                <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6">
+                  <div className="flex items-center justify-between mb-1">
+                    <h3 className="text-sm font-semibold text-primary">Data Export</h3>
+                    <span className="text-[10px] text-slate-500">Last updated: {new Date().toLocaleDateString()} 02:00 AM</span>
+                  </div>
+                  <p className="text-xs text-slate-500 mb-6">Export personnel records, training data, compliance documents, and integration logs.</p>
+                  <div className="space-y-6">
+                    {[
+                      { Icon: Database, color: 'blue', label: 'Personnel Records', desc: 'Export all employee data', fmt: 'Export CSV' },
+                      { Icon: GraduationCap, color: 'green', label: 'Training Records', desc: 'Export POST cert and training history', fmt: 'Export CSV' },
+                      { Icon: FileCheck, color: 'purple', label: 'Compliance Documents', desc: 'Export FMLA, ADA, and compliance records', fmt: 'Export PDF' },
+                      { Icon: FileJson, color: 'amber', label: 'Integration Logs', desc: 'Export NeoGov/SAP sync logs', fmt: 'Export JSON' },
+                    ].map((item, i) => (
+                      <div key={i} className="p-4 bg-slate-50 dark:bg-slate-800/30 border border-border dark:border-slate-700/30 rounded-xl">
+                        <div className="flex items-center justify-between mb-3">
+                          <div className="flex items-center gap-3">
+                            <div className={`w-10 h-10 bg-${item.color}-500/20 rounded-xl flex items-center justify-center`}><item.Icon className={`w-5 h-5 text-${item.color}-400`} /></div>
+                            <div><h4 className="text-sm font-medium text-primary">{item.label}</h4><p className="text-xs text-muted">{item.desc}</p></div>
+                          </div>
+                          <button className="flex items-center gap-2 px-4 py-2 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded-xl text-sm font-medium hover:bg-blue-500/30 transition-all"><Download className="w-4 h-4" />{item.fmt}</button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6">
+                  <h3 className="text-sm font-semibold text-primary mb-6">Backup & Restore</h3>
+                  <div className="space-y-6">
+                    <div className="p-4 bg-slate-50 dark:bg-slate-800/30 border border-border dark:border-slate-700/30 rounded-xl">
+                      <div className="flex items-center justify-between mb-3">
+                        <div><h4 className="text-sm font-medium text-primary mb-1">Last Backup</h4><p className="text-xs text-muted">Today at 2:00 AM EST</p></div>
+                        <div className="flex items-center gap-2 px-3 py-1.5 bg-green-500/20 border border-green-500/30 rounded-lg"><CheckCircle2 className="w-4 h-4 text-green-400" /><span className="text-xs font-medium text-green-400">Successful</span></div>
+                      </div>
+                      <div className="flex gap-3 mt-4">
+                        <button className="flex items-center gap-2 px-4 py-2 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded-xl text-sm font-medium hover:bg-blue-500/30 transition-all"><Download className="w-4 h-4" />Download Backup</button>
+                        <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-700/40 border border-slate-300 dark:border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700/60 transition-all"><RefreshCw className="w-4 h-4" />Create New Backup</button>
+                      </div>
+                    </div>
+                    <div className="p-4 bg-amber-500/10 border border-amber-500/20 rounded-xl">
+                      <div className="flex items-start gap-3">
+                        <AlertTriangle className="w-5 h-5 text-amber-700 mt-0.5 flex-shrink-0" />
+                        <div><p className="text-sm font-medium text-amber-300">Backup Schedule</p><p className="text-xs text-amber-200/70 mt-1">Automated backups run daily at 2:00 AM EST. Personnel records retained per GCSO policy. Backups stored in encrypted cloud storage.</p></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6">
+                  <h3 className="text-sm font-semibold text-primary mb-6">Data Retention</h3>
+                  <div className="space-y-6">
+                    {[
+                      { label: 'Audit Log Retention', opts: [['90','90 days'],['180','180 days'],['365','1 year'],['1825','5 years (Recommended)']] },
+                      { label: 'Personnel Records Retention', opts: [['1825','5 years'],['3650','10 years (Recommended)'],['permanent','Permanent']] },
+                      { label: 'Training Records Retention', opts: [['1825','5 years (Recommended)'],['3650','10 years'],['permanent','Permanent']] },
+                      { label: 'HR Reports Retention', opts: [['365','1 year'],['730','2 years'],['1825','5 years (Recommended)']] },
+                    ].map((item, i) => (
+                      <div key={i}>
+                        <label className="block text-sm font-medium text-secondary mb-2">{item.label}</label>
+                        <select className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50 transition-colors">
+                          {item.opts.map(([val, label]) => <option key={val} value={val}>{label}</option>)}
+                        </select>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Profile */}
+            {activeSection === 'profile' && (
+              <>
+                <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6">
+                  <div className="flex items-center justify-between mb-1">
+                    <h3 className="text-sm font-semibold text-primary">Profile Information</h3>
+                    <span className="text-[10px] text-slate-500">Last updated: Dec 11, 2025 09:14 AM</span>
+                  </div>
+                  <div className="flex items-center gap-2 mb-6"><div className="w-2 h-2 bg-green-400 rounded-full"></div><span className="text-xs font-medium text-green-400">Verified Account</span></div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {[
+                      { label: 'Full Name', field: 'fullName', type: 'text', editable: true },
+                      { label: 'Email Address', field: 'email', type: 'email', editable: true },
+                      { label: 'Employee ID', field: 'badge', type: 'text', editable: false },
+                      { label: 'Phone Number', field: 'phone', type: 'tel', editable: true },
+                      { label: 'Department', field: 'department', type: 'text', editable: false },
+                      { label: 'Position', field: 'position', type: 'text', editable: false },
+                      { label: 'Division', field: 'division', type: 'text', editable: false },
+                      { label: 'Hire Date', field: 'hireDate', type: 'text', editable: false },
+                      { label: 'Certification Expiry', field: 'certificationExpiry', type: 'text', editable: false },
+                    ].map((f) => (
+                      <div key={f.field}>
+                        <label className="block text-sm font-medium text-secondary mb-2">{f.label}</label>
+                        <input type={f.type} value={profileSettings[f.field]} disabled={!f.editable} onChange={(e) => f.editable && setProfileSettings({...profileSettings, [f.field]: e.target.value})}
+                          className={`w-full px-4 py-2.5 border rounded-xl text-primary focus:outline-none transition-colors ${f.editable ? 'bg-white dark:bg-slate-800/40 border-slate-300 dark:border-slate-700/50 focus:border-amber-500/50' : 'bg-slate-100 dark:bg-slate-800/20 border-border text-muted cursor-not-allowed'}`} />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
+                  <h3 className="text-lg font-semibold text-primary mb-4">Profile Photo</h3>
+                  <div className="flex items-center gap-6">
+                    <div className="w-24 h-24 bg-gradient-to-br from-amber-500 to-amber-600 rounded-full flex items-center justify-center"><span className="text-primary text-3xl font-bold">PH</span></div>
+                    <div className="flex-1">
+                      <p className="text-sm text-secondary mb-3">Update your profile photo. Recommended size: 400x400px</p>
+                      <div className="flex gap-3">
+                        <button className="flex items-center gap-2 px-4 py-2 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded-xl text-sm font-medium hover:bg-blue-500/30 transition-all"><Camera className="w-4 h-4" />Upload Photo</button>
+                        <button className="px-4 py-2 bg-slate-100 dark:bg-slate-700/40 border border-slate-300 dark:border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700/60 transition-all">Remove</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
+
+            {/* Notifications */}
+            {activeSection === 'notifications' && (
+              <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6">
+                <div className="flex items-center justify-between mb-1">
+                  <h3 className="text-sm font-semibold text-primary">Operational Alert Preferences</h3>
+                  <span className="text-[10px] text-slate-500">Last updated: Dec 11, 2025 09:14 AM</span>
+                </div>
+                <p className="text-xs text-slate-500 mb-6">Only critical HR operational events are surfaced here.</p>
+                <div className="space-y-6">
+                  {[
+                    { key: 'postCertExpiring', title: 'POST Certification Expiring', desc: 'Alert when a deputy certification is within 30 days of expiry' },
+                    { key: 'fmlaDeadlines', title: 'FMLA Designation Deadlines', desc: 'Alert when pending FMLA actions reach the 5-day notice window' },
+                    { key: 'integrationFailure', title: 'Integration Failure', desc: 'Alert when NeoGov or SAP ERP sync fails or loses connection' },
+                    { key: 'newApplicant', title: 'New Applicant Submitted', desc: 'Alert when an applicant submits to an open requisition' },
+                    { key: 'performanceOverdue', title: 'Performance Review Overdue', desc: 'Alert when an evaluation is past its due date' },
+                  ].map((item, idx, arr) => (
+                    <div key={item.key} className={`flex items-center justify-between py-3 ${idx < arr.length - 1 ? 'border-b border-border dark:border-slate-700/20' : ''}`}>
+                      <div className="flex-1"><h4 className="text-sm font-medium text-primary">{item.title}</h4><p className="text-xs text-muted mt-1">{item.desc}</p></div>
+                      <button onClick={() => setNotificationSettings({...notificationSettings, [item.key]: !notificationSettings[item.key]})} className={`relative w-12 h-6 rounded-full transition-colors ${notificationSettings[item.key] ? 'bg-green-500' : 'bg-slate-600'}`}>
+                        <div className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform ${notificationSettings[item.key] ? 'translate-x-6' : 'translate-x-0'}`}></div>
                       </button>
                     </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
-                    <div className="space-y-6">
-                      {Object.entries(integrations).map(([key, integration]) => (
-                        <div key={key} className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
-                          <div className="flex items-start justify-between">
-                            <div className="flex items-start gap-4">
-                              <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                                integration.status === 'connected' ? 'bg-green-500/20' : 'bg-white dark:bg-slate-700/50'
-                              }`}>
-                                <Database className={`w-6 h-6 ${
-                                  integration.status === 'connected' ? 'text-green-600 dark:text-green-400' : 'text-slate-500'
-                                }`} />
-                              </div>
-                              <div>
-                                <div className="flex items-center gap-3 mb-1">
-                                  <h4 className="text-primary font-semibold">{integration.name}</h4>
-                                  <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${
-                                    integration.status === 'connected' ? 'bg-green-500/20 text-green-600 dark:text-green-400' : 'bg-slate-600/50 text-slate-500'
-                                  }`}>
-                                    {integration.status === 'connected' ? 'Connected' : 'Disconnected'}
-                                  </span>
-                                </div>
-                                <p className="text-sm text-secondary mb-2">{integration.vendor} • {integration.type}</p>
-                                <p className="text-xs text-slate-500">{integration.description}</p>
-
-                                <div className="flex items-center gap-4 mt-3 text-xs text-secondary">
-                                  <span className="flex items-center gap-1">
-                                    <Clock className="w-3 h-3" />
-                                    Last sync: {integration.lastSync}
-                                  </span>
-                                  <span className="flex items-center gap-1">
-                                    <Activity className="w-3 h-3" />
-                                    {integration.uptime}% uptime
-                                  </span>
-                                  <span className="flex items-center gap-1">
-                                    <Zap className="w-3 h-3" />
-                                    {integration.syncFrequency}
-                                  </span>
-                                </div>
-
-                                <div className="flex flex-wrap gap-2 mt-3">
-                                  {integration.dataTypes.map((type, idx) => (
-                                    <span key={idx} className="px-2 py-1 bg-white dark:bg-slate-700/50 rounded text-xs text-secondary">
-                                      {type}
-                                    </span>
-                                  ))}
-                                </div>
-
-                                <div className="mt-4 flex items-center gap-2">
-                                  <span className="text-xs text-slate-500">API Key:</span>
-                                  <code className="px-2 py-1 bg-white dark:bg-slate-900/50 rounded text-xs text-secondary font-mono">
-                                    {showApiKey[key] ? integration.apiKey : '••••••••••••••••'}
-                                  </code>
-                                  <button
-                                    onClick={() => toggleApiKeyVisibility(key)}
-                                    className="p-1 hover:bg-slate-100 dark:hover:bg-slate-700/50 rounded transition-colors"
-                                  >
-                                    {showApiKey[key] ? (
-                                      <EyeOff className="w-3 h-3 text-secondary" />
-                                    ) : (
-                                      <Eye className="w-3 h-3 text-secondary" />
-                                    )}
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="flex items-center gap-2">
-                              <div className="text-right mr-4">
-                                <p className="text-xs text-secondary">Monthly Requests</p>
-                                <p className="text-sm text-primary font-medium">
-                                  {integration.monthlyRequests.toLocaleString()} / {integration.requestLimit.toLocaleString()}
-                                </p>
-                                <div className="w-24 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full mt-1">
-                                  <div
-                                    className="h-full bg-amber-500 rounded-full"
-                                    style={{ width: `${(integration.monthlyRequests / integration.requestLimit) * 100}%` }}
-                                  ></div>
-                                </div>
-                              </div>
-                              <button className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700/50 rounded-lg transition-colors">
-                                <Settings className="w-4 h-4 text-secondary" />
-                              </button>
-                            </div>
-                          </div>
-                        </div>
+            {/* Display */}
+            {activeSection === 'display' && (
+              <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6">
+                <div className="flex items-center justify-between mb-1">
+                  <h3 className="text-sm font-semibold text-primary">Display Preferences</h3>
+                  <span className="text-[10px] text-slate-500">Last updated: Dec 10, 2025 02:30 PM</span>
+                </div>
+                <p className="text-xs text-slate-500 mb-6">Theme, timezone, date format, and dashboard density.</p>
+                <div className="space-y-5">
+                  <div>
+                    <label className="block text-sm font-medium text-secondary mb-3">Theme</label>
+                    <div className="grid grid-cols-3 gap-3">
+                      {[{ value: 'dark', label: 'Dark', Icon: Moon }, { value: 'light', label: 'Light', Icon: Sun }, { value: 'auto', label: 'Auto', Icon: Monitor }].map(t => (
+                        <button key={t.value} onClick={() => setTheme(t.value)} className={`p-4 rounded-xl border-2 transition-all ${activeTheme === t.value ? 'border-amber-500 bg-amber-100 dark:bg-slate-800/60' : 'border-border bg-white dark:bg-slate-800/20 hover:bg-slate-50 dark:hover:bg-slate-800/40'}`}>
+                          <t.Icon className="w-6 h-6 text-secondary mb-2" />
+                          <p className="text-sm font-medium text-slate-800 dark:text-white">{t.label}</p>
+                        </button>
                       ))}
                     </div>
                   </div>
+                  <div>
+                    <label className="block text-sm font-medium text-secondary mb-2">Timezone</label>
+                    <select value={displaySettings.timezone} onChange={(e) => setDisplaySettings({...displaySettings, timezone: e.target.value})} className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50 transition-colors">
+                      <option value="America/New_York">Eastern Time (ET)</option>
+                      <option value="America/Chicago">Central Time (CT)</option>
+                      <option value="America/Denver">Mountain Time (MT)</option>
+                      <option value="America/Los_Angeles">Pacific Time (PT)</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-secondary mb-2">Date Format</label>
+                    <select value={displaySettings.dateFormat} onChange={(e) => setDisplaySettings({...displaySettings, dateFormat: e.target.value})} className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50 transition-colors">
+                      <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                      <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                      <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-secondary mb-2">Dashboard Density</label>
+                    <select value={displaySettings.density} onChange={(e) => setDisplaySettings({...displaySettings, density: e.target.value})} className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50 transition-colors">
+                      <option value="compact">Compact</option>
+                      <option value="comfortable">Comfortable</option>
+                      <option value="spacious">Spacious</option>
+                    </select>
+                  </div>
                 </div>
-              )}
-            </div>
-          </div>
-        </main>
-      </div>
-
-      {/* AI Chat */}
-      <button
-        onClick={() => setChatOpen(!chatOpen)}
-        className="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-400 hover:to-blue-500 rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 z-40"
-      >
-        {chatOpen ? <X className="w-6 h-6 text-primary" /> : <MessageCircle className="w-6 h-6 text-primary" />}
-      </button>
-
-      {chatOpen && (
-        <div className="fixed bottom-24 right-6 w-full max-w-96 h-[500px] bg-surface-raised backdrop-blur-xl border border-border rounded-2xl shadow-2xl flex flex-col z-40 mx-4 sm:mx-0">
-          <div className="p-4 border-b border-border">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-primary" />
               </div>
-              <div>
-                <h3 className="text-sm font-semibold text-primary">Settings AI Assistant</h3>
-                <p className="text-xs text-green-600 dark:text-green-400">Online</p>
-              </div>
-            </div>
+            )}
           </div>
-          <div className="flex-1 p-4 overflow-y-auto">
+
+          {/* Save Changes Footer */}
+          <div className="mt-8 flex items-center justify-between p-5 bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none">
+            <div>
+              <p className="text-sm font-medium text-primary">Unsaved Changes</p>
+              <p className="text-xs text-muted mt-1">Save your changes to apply the new settings</p>
+            </div>
             <div className="flex gap-3">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Sparkles className="w-4 h-4 text-primary" />
-              </div>
-              <div className="flex-1">
-                <div className="bg-white dark:bg-slate-800/60 p-3 rounded-xl">
-                  <p className="text-sm text-slate-700 dark:text-slate-200">Hi! I can help you configure your HR settings, manage integrations, set up notifications, and troubleshoot connectivity issues. What do you need help with?</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="p-4 border-t border-border">
-            <div className="flex items-center gap-2">
-              <input type="text" placeholder="Ask about settings..." className="flex-1 px-4 py-2 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500/50" />
-              <button className="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center">
-                <Send className="w-5 h-5 text-primary" />
-              </button>
+              <button className="px-6 py-2.5 bg-slate-100 dark:bg-slate-700/40 border border-slate-300 dark:border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700/60 transition-all">Reset</button>
+              <button onClick={handleSaveSettings} className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 rounded-xl text-primary text-sm font-medium shadow-lg shadow-amber-500/20 transition-all"><Save className="w-4 h-4" />Save Changes</button>
             </div>
           </div>
         </div>
-      )}
-    </div>
+      </div>
+    </DashboardLayout>
   );
 }
