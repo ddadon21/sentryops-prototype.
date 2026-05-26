@@ -10,10 +10,16 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
-import DashboardLayout from '../layouts/DashboardLayout';
 
 export default function JobPostings() {
-  const navigate = useNavigate();  const [activeTab, setActiveTab] = useState('active');
+  const navigate = useNavigate();
+  const [activePage, setActivePage] = useState('job-postings');
+  const [chatOpen, setChatOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState('active');
   const [expandedPostings, setExpandedPostings] = useState({
     deputy: true,
     investigator: false,
@@ -72,37 +78,233 @@ export default function JobPostings() {
     navigate(createPageUrl('SignIn'));
   };
 
-
-const hrNavigation = [
-  { id: 'hr-dashboard',            label: 'HR Dashboard',             icon: Users,          route: '/hr/dashboard' },
-  { id: 'job-postings',            label: 'Job Postings',             icon: Briefcase,      route: '/hr/jobs' },
-  { id: 'applicant-tracking',      label: 'Applicant Tracking',       icon: UserPlus,       route: '/hr/applicants' },
-  { id: 'hiring-pipeline',         label: 'Hiring Pipeline',          icon: TrendingUp,     route: '/hr/pipeline' },
-  { id: 'onboarding',              label: 'New Hire Onboarding',      icon: FileCheck,      route: '/hr/onboarding' },
-  { id: 'training-certifications', label: 'Training & Certifications',icon: GraduationCap,  route: '/hr/training' },
-  { id: 'employee-records',        label: 'Employee Records',         icon: FileText,       route: '/hr/records' },
-  { id: 'time-off',                label: 'Time Off Management',      icon: Calendar,       route: '/hr/timeoff' },
-  { id: 'performance',             label: 'Performance Reviews',      icon: Award,          route: '/hr/reviews' },
-  { id: 'compliance',              label: 'HR Compliance',            icon: ClipboardCheck, route: '/hr/compliance' },
-  { id: 'hr-reports',              label: 'HR Reports',               icon: LayoutDashboard,route: '/hr/reports' },
-  { id: 'hr-calendar',             label: 'HR Calendar',              icon: Calendar,       route: '/hr/calendar' },
-];
-
-const hrProfile = {
-  name: 'HR Director',
-  role: 'Human Resources',
-  email: 'hr.director@gcso.gov',
-  initials: 'HR',
-};
-
-const hrNotifications = [
-  { id: 1, title: 'POST Cert Expiring', message: 'Sgt. Thompson — cert expires in 7 days, training not scheduled', time: '30 min ago', urgent: true },
-  { id: 2, title: 'FMLA Deadline Today', message: 'Deputy Chen FMLA designation notice due by 17:00', time: '1 hour ago', urgent: true },
-  { id: 3, title: 'New Applicant Submitted', message: 'Deputy Sheriff — 3 new applications received', time: '2 hours ago', urgent: false },
-];
   return (
-    <DashboardLayout navigation={hrNavigation} profile={hrProfile} notifications={hrNotifications} settingsRoute="/hr/settings">
-      <div className="p-4 lg:p-6 min-h-full">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex">
+      {/* Sidebar */}
+      <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-slate-800/50 backdrop-blur-xl bg-slate-50 dark:bg-slate-900/30 flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
+        <div className="p-4 border-b border-border flex items-center justify-between">
+          {!sidebarCollapsed && (
+            <div className="flex items-center gap-2">
+              <Shield className="w-8 h-8 text-amber-700" />
+              <h1 className="text-xl font-bold text-primary">SentryOps</h1>
+            </div>
+          )}
+          {sidebarCollapsed && (
+            <Shield className="w-8 h-8 text-amber-700 mx-auto" />
+          )}
+          <button
+            onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+            className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors hidden lg:block"
+          >
+            {sidebarCollapsed ? <ChevronRight className="w-5 h-5 text-secondary" /> : <ChevronLeft className="w-5 h-5 text-secondary" />}
+          </button>
+        </div>
+
+        <nav className="flex-1 overflow-y-auto p-4 space-y-2">
+          {navigation.map(item => {
+            const Icon = item.icon;
+            const isActive = activePage === item.id;
+            return (
+              <button
+                key={item.id}
+                onClick={() => handleNavigation(item)}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white'
+                } ${sidebarCollapsed ? 'justify-center' : ''}`}
+                title={sidebarCollapsed ? item.label : ''}
+              >
+                <Icon className="w-5 h-5 flex-shrink-0" />
+                {!sidebarCollapsed && (
+                  <span className="flex-1 text-left text-sm font-medium truncate">{item.label}</span>
+                )}
+              </button>
+            );
+          })}
+        </nav>
+
+        <div className="border-t border-border">
+          {!sidebarCollapsed && (
+            <div className="px-4 py-3">
+              <p className="text-xs text-slate-500 text-center">Gwinnett County Sheriff's Office</p>
+            </div>
+          )}
+
+          <div className="p-4">
+            <button
+              onClick={() => setLogoutConfirmOpen(true)}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/40 hover:text-secondary ${sidebarCollapsed ? 'justify-center' : ''}`}
+              title={sidebarCollapsed ? 'Sign Out' : ''}
+            >
+              <LogOut className="w-5 h-5 flex-shrink-0" />
+              {!sidebarCollapsed && (
+                <span className="flex-1 text-left text-sm font-medium">Sign Out</span>
+              )}
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      {logoutConfirmOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            onClick={() => setLogoutConfirmOpen(false)}
+          />
+          <div className="relative bg-white dark:bg-slate-900 border border-border rounded-2xl p-6 max-w-sm w-full shadow-2xl">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-12 h-12 bg-white dark:bg-slate-800/60 rounded-xl flex items-center justify-center">
+                <LogOut className="w-6 h-6 text-secondary" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-primary">Sign Out</h3>
+                <p className="text-sm text-secondary">Are you sure you want to sign out?</p>
+              </div>
+            </div>
+            <div className="flex gap-3 mt-6">
+              <button
+                onClick={() => setLogoutConfirmOpen(false)}
+                className="flex-1 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-primary font-medium transition-all"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleLogout}
+                className="flex-1 px-4 py-2.5 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-primary font-medium transition-all"
+              >
+                Sign Out
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="flex-1 flex flex-col min-w-0">
+        {/* Header */}
+        <header className="border-b border-border backdrop-blur-xl bg-slate-50 dark:bg-slate-900/30">
+          <div className="px-4 lg:px-6 py-4">
+            <div className="flex items-center justify-between gap-4 mb-4">
+              <div className="flex items-center gap-4 flex-1 min-w-0">
+                <button
+                  onClick={() => setSidebarOpen(!sidebarOpen)}
+                  className="lg:hidden p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg"
+                >
+                  <Menu className="w-5 h-5 text-secondary" />
+                </button>
+                <div>
+                  <h1 className="text-xl lg:text-2xl font-bold text-primary">Job Postings & Recruitment Management</h1>
+                  <p className="text-sm text-secondary">Gwinnett County Sheriff's Office • Lawrenceville, Georgia</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2 lg:gap-3">
+                <div className="relative">
+                  <button
+                    onClick={() => setNotificationsOpen(!notificationsOpen)}
+                    className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg relative"
+                  >
+                    <Bell className="w-5 h-5 text-secondary" />
+                    <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                  </button>
+
+                  {notificationsOpen && (
+                    <div className="absolute right-0 top-full mt-2 w-96 bg-surface-raised backdrop-blur-xl border border-border rounded-xl shadow-2xl z-50">
+                      <div className="p-4 border-b border-border">
+                        <h3 className="text-sm font-semibold text-primary">Notifications</h3>
+                      </div>
+                      <div className="max-h-96 overflow-y-auto">
+                        {notifications.map(notification => (
+                          <div key={notification.id} className={`p-4 border-b border-border dark:border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
+                            <div className="flex items-start gap-3">
+                              <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-amber-400' : 'bg-blue-400'}`}></div>
+                              <div className="flex-1 min-w-0">
+                                <p className="text-sm font-medium text-primary mb-1">{notification.title}</p>
+                                <p className="text-xs text-secondary mb-2">{notification.message}</p>
+                                <p className="text-xs text-slate-500">{notification.time}</p>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <div className="h-8 w-px bg-white dark:bg-slate-700/50"></div>
+
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
+                    <span className="text-primary text-sm font-bold">HR</span>
+                  </div>
+                  <div className="hidden sm:block">
+                    <p className="text-sm font-medium text-primary">HR Director</p>
+                    <p className="text-xs text-secondary">Human Resources</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Date/Time and System Info */}
+            <div className="flex flex-wrap items-center gap-4 text-xs text-secondary mb-4">
+              <span>{formattedDate} • {formattedTime} EST</span>
+              <span className="text-slate-700">|</span>
+              <span>Active Postings: <span className="text-primary font-medium">4 positions</span> (12 vacancies)</span>
+              <span className="text-slate-700">|</span>
+              <span>Total Applicants: <span className="text-primary font-medium">47</span> (active pipeline)</span>
+              <span className="text-slate-700">|</span>
+              <span>Sheriff: <span className="text-amber-700 font-medium">Keybo Taylor</span></span>
+            </div>
+
+            {/* Quick Actions */}
+            <div className="flex flex-wrap gap-2 mb-4">
+              <button className="flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-medium transition-all">
+                <Plus className="w-4 h-4" />
+                Create Job Posting
+              </button>
+              <button className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/60 hover:bg-slate-800/80 border border-slate-700/50 text-secondary rounded-lg text-sm transition-all">
+                <Users className="w-4 h-4" />
+                View Applicant Pipeline
+              </button>
+              <button className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/60 hover:bg-slate-800/80 border border-slate-700/50 text-secondary rounded-lg text-sm transition-all">
+                <LayoutDashboard className="w-4 h-4" />
+                GCSO Recruitment Report
+              </button>
+              <button className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/60 hover:bg-slate-800/80 border border-slate-700/50 text-secondary rounded-lg text-sm transition-all">
+                <ExternalLink className="w-4 h-4" />
+                Post to External Boards
+              </button>
+            </div>
+
+            {/* Alert Context Bar */}
+            <div className="space-y-2">
+              <div className="flex items-center gap-3 px-4 py-2.5 bg-amber-500/10 border border-amber-500/30 rounded-lg">
+                <AlertCircle className="w-4 h-4 text-amber-700 flex-shrink-0" />
+                <span className="text-sm text-amber-200">
+                  <span className="font-semibold">Deputy Sheriff (Patrol):</span> 23 applicants for 8 vacancies - oral board Feb 06, 2026
+                </span>
+              </div>
+              <div className="flex items-center gap-3 px-4 py-2.5 bg-blue-500/10 border border-blue-500/30 rounded-lg">
+                <AlertCircle className="w-4 h-4 text-blue-400 flex-shrink-0" />
+                <span className="text-sm text-blue-200">
+                  <span className="font-semibold">Background Investigator:</span> Only 89 views in 110 days - specialized recruitment needed
+                </span>
+              </div>
+              <div className="flex items-center gap-3 px-4 py-2.5 bg-red-500/10 border border-red-500/30 rounded-lg">
+                <AlertTriangle className="w-4 h-4 text-red-400 flex-shrink-0" />
+                <span className="text-sm text-red-200">
+                  <span className="font-semibold">Administrative Assistant:</span> 4 applicants in 94 days - posting closes Feb 11 (critically low)
+                </span>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <main className="flex-1 overflow-y-auto p-4 lg:p-6">
           <div className="max-w-7xl mx-auto space-y-6">
 
             {/* Section Title */}
@@ -860,6 +1062,7 @@ const hrNotifications = [
             </div>
 
           </div>
+        </main>
 
         {/* System Footer */}
         <footer className="border-t border-border px-6 py-3 bg-slate-50 dark:bg-slate-900/30">
@@ -868,6 +1071,7 @@ const hrNotifications = [
             <span>Gwinnett County Sheriff's Office • Human Resources Division</span>
           </div>
         </footer>
+      </div>
 
       {/* AI Chat Button */}
       <button
@@ -912,7 +1116,6 @@ const hrNotifications = [
           </div>
         </div>
       )}
-      </div>
-    </DashboardLayout>
+    </div>
   );
 }

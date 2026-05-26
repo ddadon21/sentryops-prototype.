@@ -9,10 +9,17 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
-import DashboardLayout from '../layouts/DashboardLayout';
 
 export default function HRDashboard() {
-  const navigate = useNavigate();  const [expandedSections, setExpandedSections] = useState({
+  const navigate = useNavigate();
+  const [activePage, setActivePage] = useState('hr-dashboard');
+  const [chatOpen, setChatOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false);
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+  const [expandedSections, setExpandedSections] = useState({
     certifications: true,
     onboarding: true,
     fmla: true,
@@ -345,37 +352,200 @@ export default function HRDashboard() {
     navigate(createPageUrl('SignIn'));
   };
 
-
-const hrNavigation = [
-  { id: 'hr-dashboard',            label: 'HR Dashboard',             icon: Users,          route: '/hr/dashboard' },
-  { id: 'job-postings',            label: 'Job Postings',             icon: Briefcase,      route: '/hr/jobs' },
-  { id: 'applicant-tracking',      label: 'Applicant Tracking',       icon: UserPlus,       route: '/hr/applicants' },
-  { id: 'hiring-pipeline',         label: 'Hiring Pipeline',          icon: TrendingUp,     route: '/hr/pipeline' },
-  { id: 'onboarding',              label: 'New Hire Onboarding',      icon: FileCheck,      route: '/hr/onboarding' },
-  { id: 'training-certifications', label: 'Training & Certifications',icon: GraduationCap,  route: '/hr/training' },
-  { id: 'employee-records',        label: 'Employee Records',         icon: FileText,       route: '/hr/records' },
-  { id: 'time-off',                label: 'Time Off Management',      icon: Calendar,       route: '/hr/timeoff' },
-  { id: 'performance',             label: 'Performance Reviews',      icon: Award,          route: '/hr/reviews' },
-  { id: 'compliance',              label: 'HR Compliance',            icon: ClipboardCheck, route: '/hr/compliance' },
-  { id: 'hr-reports',              label: 'HR Reports',               icon: LayoutDashboard,route: '/hr/reports' },
-  { id: 'hr-calendar',             label: 'HR Calendar',              icon: Calendar,       route: '/hr/calendar' },
-];
-
-const hrProfile = {
-  name: 'HR Director',
-  role: 'Human Resources',
-  email: 'hr.director@gcso.gov',
-  initials: 'HR',
-};
-
-const hrNotifications = [
-  { id: 1, title: 'POST Cert Expiring', message: 'Sgt. Thompson — cert expires in 7 days, training not scheduled', time: '30 min ago', urgent: true },
-  { id: 2, title: 'FMLA Deadline Today', message: 'Deputy Chen FMLA designation notice due by 17:00', time: '1 hour ago', urgent: true },
-  { id: 3, title: 'New Applicant Submitted', message: 'Deputy Sheriff — 3 new applications received', time: '2 hours ago', urgent: false },
-];
   return (
-    <DashboardLayout navigation={hrNavigation} profile={hrProfile} notifications={hrNotifications} settingsRoute="/hr/settings">
-      <div className="p-4 lg:p-6 min-h-full">
+    <div className="min-h-screen bg-[#F5F7FA] dark:bg-gradient-to-br dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 flex">
+      {/* Sidebar */}
+      <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-black/[0.06] dark:border-slate-800/50 bg-white dark:bg-slate-900/30 shadow-[var(--shadow-sidebar)] dark:shadow-none flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
+        <div className="p-4 border-b border-border flex items-center justify-between">
+          {!sidebarCollapsed && (
+            <div className="flex items-center gap-2">
+              <Shield className="w-8 h-8 text-amber-700" />
+              <h1 className="text-xl font-bold text-primary">SentryOps</h1>
+            </div>
+          )}
+          {sidebarCollapsed && (
+            <Shield className="w-8 h-8 text-amber-700 mx-auto" />
+          )}
+          <button
+            onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+            className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors hidden lg:block"
+          >
+            {sidebarCollapsed ? <ChevronRight className="w-5 h-5 text-secondary" /> : <ChevronLeft className="w-5 h-5 text-secondary" />}
+          </button>
+        </div>
+
+        <nav className="flex-1 overflow-y-auto p-4 space-y-2">
+          {navigation.map(item => {
+            const Icon = item.icon;
+            const isActive = activePage === item.id;
+            return (
+              <button
+                key={item.id}
+                onClick={() => handleNavigation(item)}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                  isActive ? 'bg-amber-500 text-primary shadow-lg shadow-amber-500/20' : 'text-secondary hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-slate-900 dark:hover:text-white'
+                } ${sidebarCollapsed ? 'justify-center' : ''}`}
+                title={sidebarCollapsed ? item.label : ''}
+              >
+                <Icon className="w-5 h-5 flex-shrink-0" />
+                {!sidebarCollapsed && (
+                  <span className="flex-1 text-left text-sm font-medium truncate">{item.label}</span>
+                )}
+              </button>
+            );
+          })}
+        </nav>
+
+        <div className="border-t border-border">
+          {!sidebarCollapsed && (
+            <div className="px-4 py-3">
+              <p className="text-xs text-slate-500 text-center">Gwinnett County Sheriff's Office</p>
+            </div>
+          )}
+
+          <div className="p-4">
+            <button
+              onClick={() => setLogoutConfirmOpen(true)}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/40 hover:text-slate-800 dark:hover:text-secondary dark:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
+              title={sidebarCollapsed ? 'Sign Out' : ''}
+            >
+              <LogOut className="w-5 h-5 flex-shrink-0" />
+              {!sidebarCollapsed && (
+                <span className="flex-1 text-left text-sm font-medium">Sign Out</span>
+              )}
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      {/* Logout Modal */}
+      {logoutConfirmOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setLogoutConfirmOpen(false)} />
+          <div className="relative bg-white dark:bg-slate-900 border border-border rounded-2xl p-6 max-w-sm w-full shadow-2xl">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-12 h-12 bg-slate-100 dark:bg-slate-800/60 rounded-xl flex items-center justify-center">
+                <LogOut className="w-6 h-6 text-secondary" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-primary">Sign Out</h3>
+                <p className="text-sm text-secondary">Are you sure you want to sign out?</p>
+              </div>
+            </div>
+            <div className="flex gap-3 mt-6">
+              <button onClick={() => setLogoutConfirmOpen(false)} className="flex-1 px-4 py-2.5 bg-slate-100 dark:bg-slate-800/40 hover:bg-slate-200 dark:hover:bg-slate-800/60 border border-border rounded-xl text-primary font-medium transition-all">
+                Cancel
+              </button>
+              <button onClick={handleLogout} className="flex-1 px-4 py-2.5 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/50 rounded-xl text-amber-700 dark:text-amber-400 font-medium transition-all">
+                Sign Out
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col min-w-0">
+        {/* Header */}
+        <header className="border-b border-black/[0.06] dark:border-slate-800/50 backdrop-blur-md bg-[#F8FAFC]/90 dark:bg-slate-900/30 shadow-[var(--shadow-nav)] dark:shadow-none">
+          <div className="px-4 lg:px-6 py-4 flex items-center justify-between gap-4">
+            <div className="flex items-center gap-4 flex-1 min-w-0">
+              <button onClick={() => setSidebarOpen(!sidebarOpen)} className="lg:hidden p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg">
+                <Menu className="w-5 h-5 text-secondary" />
+              </button>
+              <div className="flex-1 max-w-xl relative hidden sm:block">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
+                <input type="text" placeholder="Search employees, applicants, positions..." className="w-full pl-12 pr-4 py-2 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50" />
+              </div>
+            </div>
+            <div className="flex items-center gap-2 lg:gap-3">
+              <div className="relative notifications-container">
+                <button onClick={() => setNotificationsOpen(!notificationsOpen)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg relative">
+                  <Bell className="w-5 h-5 text-secondary" />
+                  <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                </button>
+
+                {notificationsOpen && (
+                  <div className="absolute right-0 top-full mt-2 w-96 bg-surface-raised backdrop-blur-xl border border-border rounded-xl shadow-2xl z-50">
+                    <div className="p-4 border-b border-border">
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-sm font-semibold text-primary">Notifications</h3>
+                        <span className="px-2 py-0.5 bg-red-500/20 border border-red-500/30 text-red-700 dark:text-red-400 text-xs rounded-full">{notifications.filter(n => n.urgent).length} urgent</span>
+                      </div>
+                    </div>
+                    <div className="max-h-96 overflow-y-auto">
+                      {notifications.map(notification => (
+                        <div key={notification.id} className={`p-4 border-b border-slate-100 dark:border-border hover:bg-slate-50 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-red-500/5' : ''}`}>
+                          <div className="flex items-start gap-3">
+                            <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-red-400' : 'bg-blue-400'}`}></div>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm font-medium text-primary mb-1">{notification.title}</p>
+                              <p className="text-xs text-secondary mb-2">{notification.message}</p>
+                              <p className="text-xs text-slate-500">{notification.time}</p>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="p-3 border-t border-border">
+                      <button className="w-full text-center text-sm text-amber-700 dark:text-amber-400 hover:text-amber-300 font-medium">View All Notifications</button>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div className="h-8 w-px bg-white dark:bg-slate-700/50"></div>
+
+              <div className="relative profile-menu-container">
+                <button onClick={() => setProfileMenuOpen(!profileMenuOpen)} className="flex items-center gap-3 p-1.5 pr-3 hover:bg-white dark:bg-slate-800/50 rounded-xl transition-colors">
+                  <div className="w-8 h-8 bg-gradient-to-br from-amber-500 to-amber-600 rounded-full flex items-center justify-center">
+                    <span className="text-primary text-sm font-bold">HR</span>
+                  </div>
+                  <div className="hidden sm:block text-left">
+                    <p className="text-sm font-medium text-primary">HR Director</p>
+                    <p className="text-xs text-secondary">Human Resources</p>
+                  </div>
+                  <ChevronDown className={`w-4 h-4 text-secondary hidden sm:block transition-transform ${profileMenuOpen ? 'rotate-180' : ''}`} />
+                </button>
+
+                {profileMenuOpen && (
+                  <div className="absolute right-0 top-full mt-2 w-56 bg-surface-raised backdrop-blur-xl border border-border rounded-xl shadow-2xl z-50 py-2">
+                    <div className="px-4 py-3 border-b border-border">
+                      <p className="text-sm font-medium text-primary">HR Director</p>
+                      <p className="text-xs text-secondary">hr.director@gcso.gov</p>
+                    </div>
+                    <div className="py-1">
+                      <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors">
+                        <User className="w-4 h-4" />
+                        View Profile
+                      </button>
+                      <button onClick={() => navigate(createPageUrl('HRSettings'))} className="w-full flex items-center gap-3 px-4 py-2 text-sm text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors">
+                        <Settings className="w-4 h-4" />
+                        Settings
+                      </button>
+                    </div>
+                    <div className="border-t border-border py-1">
+                      <button onClick={() => setLogoutConfirmOpen(true)} className="w-full flex items-center gap-3 px-4 py-2 text-sm text-red-700 dark:text-red-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors">
+                        <LogOut className="w-4 h-4" />
+                        Sign Out
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </header>
+
+        {/* Main Content Area */}
+        <main className="flex-1 overflow-y-auto p-4 lg:p-6">
           {/* Page Header */}
           <div className="mb-6">
             <h2 className="text-2xl lg:text-3xl font-bold text-primary mb-2">Human Resources Operations Center</h2>
@@ -1215,6 +1385,8 @@ const hrNotifications = [
               </button>
             </div>
           </div>
+        </main>
+      </div>
 
       {/* Chat Button */}
       <button
@@ -1272,7 +1444,6 @@ const hrNotifications = [
           </div>
         </div>
       )}
-      </div>
-    </DashboardLayout>
+    </div>
   );
 }
