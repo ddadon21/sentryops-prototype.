@@ -88,8 +88,7 @@ export default function BISettings() {
     { id: 'financial-background', label: 'Financial Background', icon: DollarSign, page: 'FinancialBackground' },
     { id: 'social-media', label: 'Social Media Analysis', icon: Eye, page: 'SocialMediaAnalysis' },
     { id: 'bi-reports', label: 'BI Reports', icon: LayoutDashboard, page: 'BIReports' },
-    { id: 'case-closure', label: 'Case Closure', icon: XCircle, page: 'CaseClosure' },
-    { id: 'settings', label: 'Settings', icon: Settings }
+    { id: 'case-closure', label: 'Case Closure', icon: XCircle, page: 'CaseClosure' }
   ];
 
   const settingsTabs = [
