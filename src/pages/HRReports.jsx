@@ -2,15 +2,10 @@ import React, { useState } from 'react';
 import { Users, FileText, LayoutDashboard, TrendingUp, Settings, Bell, Search, ChevronRight, CheckCircle, Shield, X, Menu, ChevronLeft, LogOut, UserPlus, Briefcase, Clock, Award, Download, Calendar, FileCheck, AlertTriangle, AlertCircle, ClipboardCheck, GraduationCap, ChevronDown, ChevronUp, Eye, HelpCircle, Printer, Info, BarChart3, FileBarChart, ExternalLink, Filter, Circle, Square } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
+import DashboardLayout from '../layouts/DashboardLayout';
 
 export default function HRReports() {
-  const navigate = useNavigate();
-  const [activePage, setActivePage] = useState('hr-reports');
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const [notificationsOpen, setNotificationsOpen] = useState(false);
-  const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false);
-  const [supportOpen, setSupportOpen] = useState(false);
+  const navigate = useNavigate();  const [supportOpen, setSupportOpen] = useState(false);
   const [expandedReports, setExpandedReports] = useState({});
   const [expandedRecent, setExpandedRecent] = useState({});
   const [activeSection, setActiveSection] = useState('all');
@@ -420,261 +415,37 @@ export default function HRReports() {
     return true;
   });
 
+
+const hrNavigation = [
+  { id: 'hr-dashboard',            label: 'HR Dashboard',             icon: Users,          route: '/hr/dashboard' },
+  { id: 'job-postings',            label: 'Job Postings',             icon: Briefcase,      route: '/hr/jobs' },
+  { id: 'applicant-tracking',      label: 'Applicant Tracking',       icon: UserPlus,       route: '/hr/applicants' },
+  { id: 'hiring-pipeline',         label: 'Hiring Pipeline',          icon: TrendingUp,     route: '/hr/pipeline' },
+  { id: 'onboarding',              label: 'New Hire Onboarding',      icon: FileCheck,      route: '/hr/onboarding' },
+  { id: 'training-certifications', label: 'Training & Certifications',icon: GraduationCap,  route: '/hr/training' },
+  { id: 'employee-records',        label: 'Employee Records',         icon: FileText,       route: '/hr/records' },
+  { id: 'time-off',                label: 'Time Off Management',      icon: Calendar,       route: '/hr/timeoff' },
+  { id: 'performance',             label: 'Performance Reviews',      icon: Award,          route: '/hr/reviews' },
+  { id: 'compliance',              label: 'HR Compliance',            icon: ClipboardCheck, route: '/hr/compliance' },
+  { id: 'hr-reports',              label: 'HR Reports',               icon: LayoutDashboard,route: '/hr/reports' },
+  { id: 'hr-calendar',             label: 'HR Calendar',              icon: Calendar,       route: '/hr/calendar' },
+];
+
+const hrProfile = {
+  name: 'HR Director',
+  role: 'Human Resources',
+  email: 'hr.director@gcso.gov',
+  initials: 'HR',
+};
+
+const hrNotifications = [
+  { id: 1, title: 'POST Cert Expiring', message: 'Sgt. Thompson — cert expires in 7 days, training not scheduled', time: '30 min ago', urgent: true },
+  { id: 2, title: 'FMLA Deadline Today', message: 'Deputy Chen FMLA designation notice due by 17:00', time: '1 hour ago', urgent: true },
+  { id: 3, title: 'New Applicant Submitted', message: 'Deputy Sheriff — 3 new applications received', time: '2 hours ago', urgent: false },
+];
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex">
-      {/* Sidebar */}
-      <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-slate-800/50 backdrop-blur-xl bg-slate-50 dark:bg-slate-900/30 flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
-        <div className="p-4 border-b border-border flex items-center justify-between">
-          {!sidebarCollapsed && (
-            <div className="flex items-center gap-2">
-              <Shield className="w-8 h-8 text-amber-700" />
-              <h1 className="text-xl font-bold text-primary">SentryOps</h1>
-            </div>
-          )}
-          {sidebarCollapsed && (
-            <Shield className="w-8 h-8 text-amber-700 mx-auto" />
-          )}
-          <button onClick={() => setSidebarCollapsed(!sidebarCollapsed)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors hidden lg:block">
-            {sidebarCollapsed ? <ChevronRight className="w-5 h-5 text-secondary" /> : <ChevronLeft className="w-5 h-5 text-secondary" />}
-          </button>
-        </div>
-
-        <nav className="flex-1 overflow-y-auto p-4 space-y-2">
-          {navigation.map(item => {
-            const Icon = item.icon;
-            const isActive = activePage === item.id;
-            return (
-              <button
-                key={item.id}
-                onClick={() => handleNavigation(item)}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                  isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white'
-                } ${sidebarCollapsed ? 'justify-center' : ''}`}
-                title={sidebarCollapsed ? item.label : ''}
-              >
-                <Icon className="w-5 h-5 flex-shrink-0" />
-                {!sidebarCollapsed && (
-                  <span className="flex-1 text-left text-sm font-medium truncate">{item.label}</span>
-                )}
-              </button>
-            );
-          })}
-        </nav>
-
-        <div className="border-t border-border">
-          {!sidebarCollapsed && (
-            <div className="px-4 py-3">
-              <p className="text-xs text-slate-500 text-center">Gwinnett County Sheriff's Office</p>
-            </div>
-          )}
-          <div className="p-4">
-            <button
-              onClick={() => setLogoutConfirmOpen(true)}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/40 hover:text-secondary ${sidebarCollapsed ? 'justify-center' : ''}`}
-              title={sidebarCollapsed ? 'Sign Out' : ''}
-            >
-              <LogOut className="w-5 h-5 flex-shrink-0" />
-              {!sidebarCollapsed && (
-                <span className="flex-1 text-left text-sm font-medium">Sign Out</span>
-              )}
-            </button>
-          </div>
-        </div>
-      </aside>
-
-      {sidebarOpen && (
-        <div className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={() => setSidebarOpen(false)} />
-      )}
-
-      {/* Logout Confirmation */}
-      {logoutConfirmOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setLogoutConfirmOpen(false)} />
-          <div className="relative bg-white dark:bg-slate-900 border border-border rounded-2xl p-6 max-w-sm w-full shadow-2xl">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="w-12 h-12 bg-white dark:bg-slate-800/60 rounded-xl flex items-center justify-center">
-                <LogOut className="w-6 h-6 text-secondary" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold text-primary">Sign Out</h3>
-                <p className="text-sm text-secondary">Are you sure you want to sign out?</p>
-              </div>
-            </div>
-            <div className="flex gap-3 mt-6">
-              <button onClick={() => setLogoutConfirmOpen(false)} className="flex-1 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-primary font-medium transition-all">Cancel</button>
-              <button onClick={handleLogout} className="flex-1 px-4 py-2.5 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-primary font-medium transition-all">Sign Out</button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Report Detail Modal */}
-      {selectedReport && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setSelectedReport(null)} />
-          <div className="relative bg-white dark:bg-slate-900 border border-border rounded-2xl p-6 max-w-3xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
-            <div className="flex items-start justify-between mb-6">
-              <div>
-                <h3 className="text-xl font-bold text-primary mb-1">{selectedReport.name}</h3>
-                <p className="text-sm text-secondary">{selectedReport.type} Report • {selectedReport.period}</p>
-              </div>
-              <button onClick={() => setSelectedReport(null)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors">
-                <X className="w-5 h-5 text-secondary" />
-              </button>
-            </div>
-
-            <div className="grid grid-cols-2 gap-6 mb-6">
-              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
-                <p className="text-xs text-slate-500 mb-1">Generated</p>
-                <p className="text-sm text-primary">{selectedReport.generated}</p>
-              </div>
-              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
-                <p className="text-xs text-slate-500 mb-1">Generated By</p>
-                <p className="text-sm text-primary">{selectedReport.generatedBy}</p>
-              </div>
-              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
-                <p className="text-xs text-slate-500 mb-1">File Size</p>
-                <p className="text-sm text-primary">{selectedReport.fileSize}</p>
-              </div>
-              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
-                <p className="text-xs text-slate-500 mb-1">Pages</p>
-                <p className="text-sm text-primary">{selectedReport.pages} pages</p>
-              </div>
-            </div>
-
-            <div className="mb-6">
-              <h4 className="text-sm font-semibold text-primary mb-3">Report Summary</h4>
-              <div className="space-y-2">
-                {selectedReport.summary.map((item, idx) => (
-                  <div key={idx} className="flex items-start gap-2 p-2 bg-slate-100/80 dark:bg-slate-800/30 rounded-lg">
-                    <CheckCircle className="w-3.5 h-3.5 text-green-400 mt-0.5 flex-shrink-0" />
-                    <p className="text-sm text-secondary">{item}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {selectedReport.findings && selectedReport.findings.length > 0 && (
-              <div className="mb-6">
-                <h4 className="text-sm font-semibold text-primary mb-3">Key Findings</h4>
-                <div className="space-y-2">
-                  {selectedReport.findings.map((item, idx) => (
-                    <div key={idx} className="flex items-start gap-2 p-2 bg-amber-500/10 border border-amber-500/20 rounded-lg">
-                      <AlertTriangle className="w-3.5 h-3.5 text-amber-700 mt-0.5 flex-shrink-0" />
-                      <p className="text-sm text-secondary">{item}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {selectedReport.recommendations && selectedReport.recommendations.length > 0 && (
-              <div className="mb-6">
-                <h4 className="text-sm font-semibold text-primary mb-3">Recommendations</h4>
-                <div className="space-y-2">
-                  {selectedReport.recommendations.map((item, idx) => (
-                    <div key={idx} className="flex items-start gap-2 p-2 bg-blue-500/10 border border-blue-500/20 rounded-lg">
-                      <Info className="w-3.5 h-3.5 text-blue-400 mt-0.5 flex-shrink-0" />
-                      <p className="text-sm text-secondary">{item}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            <div className="flex flex-wrap gap-3">
-              <button className="flex-1 px-4 py-2.5 bg-amber-500 hover:bg-amber-400 rounded-xl text-white font-medium transition-all flex items-center justify-center gap-2 text-sm">
-                <Eye className="w-4 h-4" /> View Full Report
-              </button>
-              <button className="flex-1 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-primary font-medium transition-all flex items-center justify-center gap-2 text-sm">
-                <Download className="w-4 h-4" /> Download PDF
-              </button>
-              <button className="px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-primary font-medium transition-all flex items-center justify-center gap-2 text-sm">
-                <Printer className="w-4 h-4" /> Print
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col min-w-0">
-        {/* Header */}
-        <header className="border-b border-border backdrop-blur-xl bg-slate-50 dark:bg-slate-900/30">
-          <div className="px-4 lg:px-6 py-4 flex items-center justify-between gap-4">
-            <div className="flex items-center gap-4 flex-1 min-w-0">
-              <button onClick={() => setSidebarOpen(!sidebarOpen)} className="lg:hidden p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg">
-                <Menu className="w-5 h-5 text-secondary" />
-              </button>
-              <div className="flex items-center gap-2 text-sm">
-                <button onClick={() => navigate(createPageUrl('HRDashboard'))} className="text-secondary hover:text-primary transition-colors">HR Dashboard</button>
-                <ChevronRight className="w-4 h-4 text-slate-700" />
-                <span className="text-primary">HR Reports</span>
-              </div>
-            </div>
-            <div className="flex items-center gap-2 lg:gap-3">
-              <button className="flex items-center gap-2 px-3 py-2 bg-amber-500 hover:bg-amber-400 rounded-xl text-white font-medium transition-all text-sm">
-                <FileBarChart className="w-4 h-4" />
-                <span className="hidden sm:inline">New Report</span>
-              </button>
-              <button className="hidden md:flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-secondary font-medium transition-all text-sm">
-                <BarChart3 className="w-4 h-4" />
-                <span>Report Builder</span>
-              </button>
-              <button className="hidden lg:flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 rounded-xl text-secondary font-medium transition-all text-sm">
-                <Calendar className="w-4 h-4" />
-                <span>Scheduled</span>
-              </button>
-
-              <div className="relative">
-                <button onClick={() => setNotificationsOpen(!notificationsOpen)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg relative">
-                  <Bell className="w-5 h-5 text-secondary" />
-                  <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-                </button>
-
-                {notificationsOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-96 bg-surface-raised backdrop-blur-xl border border-border rounded-xl shadow-2xl z-50">
-                    <div className="p-4 border-b border-border">
-                      <h3 className="text-sm font-semibold text-primary">Notifications</h3>
-                    </div>
-                    <div className="max-h-96 overflow-y-auto">
-                      {notifications.map(notification => (
-                        <div key={notification.id} className={`p-4 border-b border-border dark:border-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
-                          <div className="flex items-start gap-3">
-                            <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-amber-400' : 'bg-blue-400'}`}></div>
-                            <div className="flex-1 min-w-0">
-                              <p className="text-sm font-medium text-primary mb-1">{notification.title}</p>
-                              <p className="text-xs text-secondary mb-2">{notification.message}</p>
-                              <p className="text-xs text-slate-500">{notification.time}</p>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="p-3 border-t border-border">
-                      <button className="w-full text-center text-sm text-amber-700 hover:text-amber-300 font-medium">View All</button>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              <div className="h-8 w-px bg-white dark:bg-slate-700/50"></div>
-
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
-                  <span className="text-primary text-sm font-bold">HR</span>
-                </div>
-                <div className="hidden sm:block">
-                  <p className="text-sm font-medium text-primary">HR Director</p>
-                  <p className="text-xs text-secondary">Human Resources</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </header>
-
-        {/* Page Content */}
-        <main className="flex-1 overflow-y-auto p-4 lg:p-6">
+    <DashboardLayout navigation={hrNavigation} profile={hrProfile} notifications={hrNotifications} settingsRoute="/hr/settings">
+      <div className="p-4 lg:p-6 min-h-full">
           <div className="max-w-7xl mx-auto">
 
             {/* Page Title */}
@@ -1188,6 +959,7 @@ export default function HRReports() {
           </div>
         )}
       </div>
-    </div>
+      </div>
+    </DashboardLayout>
   );
 }
