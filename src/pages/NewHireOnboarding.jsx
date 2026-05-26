@@ -980,8 +980,6 @@ const hrNotifications = [
               })}
             </div>
           </div>
-        </main>
-      </div>
 
       {/* Detail Modal */}
       {selectedNewHire && (

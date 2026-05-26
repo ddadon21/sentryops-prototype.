@@ -860,7 +860,6 @@ const hrNotifications = [
             </div>
 
           </div>
-        </main>
 
         {/* System Footer */}
         <footer className="border-t border-border px-6 py-3 bg-slate-50 dark:bg-slate-900/30">
@@ -869,7 +868,6 @@ const hrNotifications = [
             <span>Gwinnett County Sheriff's Office • Human Resources Division</span>
           </div>
         </footer>
-      </div>
 
       {/* AI Chat Button */}
       <button

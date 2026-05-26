@@ -1215,8 +1215,6 @@ const hrNotifications = [
               </button>
             </div>
           </div>
-        </main>
-      </div>
 
       {/* Chat Button */}
       <button

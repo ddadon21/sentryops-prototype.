@@ -1108,8 +1108,6 @@ const hrNotifications = [
               })}
             </div>
           </div>
-        </main>
-      </div>
 
       {/* Chat Button */}
       <button
