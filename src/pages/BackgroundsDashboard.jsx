@@ -44,7 +44,7 @@ export default function BackgroundsDashboard() {
 
   useEffect(() => {
     api.get('/cases')
-      .then(data => setCasesData(data ?? []))
+      .then(data => setCasesData(Array.isArray(data) ? data : (data?.cases ?? [])))
       .catch(() => setCasesData([]))
       .finally(() => setLoading(false));
   }, []);
