@@ -1,10 +1,6 @@
 'use strict';
 
-const BASE_URL = import.meta.env.VITE_API_URL;
-
-if (!BASE_URL) {
-  console.error('[api] VITE_API_URL is not set. Add it to your .env file.');
-}
+const BASE_URL = import.meta.env.VITE_API_URL || 'https://sentryops-backend-production.up.railway.app';
 
 /**
  * Core fetch wrapper — attaches base URL, JSON headers, and normalizes errors.
