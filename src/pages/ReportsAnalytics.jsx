@@ -1,202 +1,23 @@
-            {/* Page Header */}
-            <div className="mb-6">
-              <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-1">Reports &amp; Compliance</h2>
-              <div className="flex flex-wrap items-center gap-2 text-[11px] text-slate-500 dark:text-slate-400 mb-3">
-                <span>FY 2025–26</span>
-                <span>·</span>
-                <span>Jan 1 – May 28, 2026</span>
-                <span>·</span>
-                <span className="text-amber-700 dark:text-amber-400 font-semibold">2 critical reports pending command signature</span>
-                <span>·</span>
-                <span className="text-red-700 dark:text-red-400 font-semibold">1 compliance deadline in 48 hrs</span>
-              </div>
-              <div className="flex items-center gap-2 flex-wrap">
-                <select
-                  value={timeRange}
-                  onChange={(e) => setTimeRange(e.target.value)}
-                  className="px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/30 rounded-lg text-slate-700 dark:text-slate-300 text-sm focus:outline-none focus:border-amber-500/50"
-                >
-                  <option value="ytd">Year to Date</option>
-                  <option value="last30">Last 30 Days</option>
-                  <option value="last90">Last 90 Days</option>
-                  <option value="thisMonth">This Month</option>
-                  <option value="lastMonth">Last Month</option>
-                  <option value="q4">This Quarter</option>
-                  <option value="lastQuarter">Last Quarter</option>
-                  <option value="fy2024">Fiscal Year 2024</option>
-                  <option value="fy2023">Fiscal Year 2023</option>
-                  <option value="custom">Custom Date Range...</option>
-                </select>
-                <button
-                  onClick={() => setComparisonModal(true)}
-                  className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/30 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all text-sm"
-                >
-                  <BarChart3 className="w-4 h-4" />
-                  Compare
-                </button>
-                <button
-                  onClick={() => setCustomReportModal(true)}
-                  className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/30 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all text-sm"
-                >
-                  <Plus className="w-4 h-4" />
-                  Custom Report
-                </button>
-                <button
-                  onClick={() => setExportModal(true)}
-                  className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/30 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all text-sm"
-                >
-                  <FileSpreadsheet className="w-4 h-4" />
-                  Excel
-                </button>
-                <button
-                  onClick={() => setScheduleModal(true)}
-                  className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/30 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all text-sm"
-                >
-                  <CalendarClock className="w-4 h-4" />
-                  Schedule
-                </button>
-                <button
-                  className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/30 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all text-sm"
-                >
-                  <Printer className="w-4 h-4" />
-                  Print
-                </button>
-              </div>
-            </div>
-
-            {/* Report Command Actions */}
-            <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none overflow-hidden mb-6">
-              <div className="flex items-center justify-between gap-3 px-5 py-3 border-b border-slate-200 dark:border-slate-700/30 bg-slate-50/80 dark:bg-slate-900/20">
-                <div className="flex items-center gap-3">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
-                  </span>
-                  <span className="text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-widest">
-                    Report Command Actions — Immediate Decisions Required
-                  </span>
-                </div>
-                <span className="px-2 py-1 rounded bg-slate-100 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/30 text-[11px] font-semibold text-slate-600 dark:text-slate-400">
-                  {reportActions.filter(a => a.urgency === 'Critical').length} Critical Decisions
-                </span>
-              </div>
-              <div className="p-4 space-y-3.5">
-                {reportActions.map((action) => {
-                  const isActioned = actionedIds.has(action.id);
-                  const urgencyAccent = action.urgency === 'Critical'
-                    ? 'border-red-400 dark:border-red-500 bg-red-50/60 dark:bg-red-900/10'
-                    : action.urgency === 'High'
-                    ? 'border-amber-400 dark:border-amber-500 bg-amber-50/60 dark:bg-amber-900/10'
-                    : 'border-blue-300 dark:border-blue-600 bg-blue-50/40 dark:bg-blue-900/10';
-                  const urgencyBadge = action.urgency === 'Critical'
-                    ? 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-800/50'
-                    : action.urgency === 'High'
-                    ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800/50'
-                    : 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-800/50';
-                  const actionBtn = action.urgency === 'Critical'
-                    ? 'bg-red-600 hover:bg-red-700 text-white'
-                    : action.urgency === 'High'
-                    ? 'bg-amber-600 hover:bg-amber-700 text-white'
-                    : 'bg-blue-600 hover:bg-blue-700 text-white';
-                  return (
-                    <div
-                      key={action.id}
-                      className={`rounded-lg border border-l-[3px] ${urgencyAccent} p-4 transition-opacity ${isActioned ? 'opacity-50' : ''}`}
-                    >
-                      <div className="flex items-start gap-4">
-                        <div className="flex flex-col items-center gap-1.5 flex-shrink-0 pt-0.5">
-                          <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide ${urgencyBadge}`}>
-                            {action.urgency}
-                          </span>
-                          <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 tabular-nums">
-                            {action.countdown}
-                          </span>
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-semibold text-slate-900 dark:text-slate-100 leading-snug mb-1">
-                            {action.decision}
-                          </p>
-                          <p className="text-xs text-slate-500 dark:text-slate-400 mb-1.5">
-                            <span className="font-medium text-red-600 dark:text-red-400">At risk if ignored:</span> {action.ifIgnored}
-                          </p>
-                          <p className="text-xs text-slate-500 dark:text-slate-400 mb-2">{action.rationale}</p>
-                          <div className="flex items-center gap-2 flex-wrap">
-                            <span className="text-[11px] text-slate-400 dark:text-slate-500">{action.timeSensitivity}</span>
-                          </div>
-                        </div>
-                        <div className="flex flex-col gap-2 flex-shrink-0">
-                          <button
-                            onClick={() => !isActioned && handleAction(action)}
-                            disabled={isActioned}
-                            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${isActioned ? 'bg-slate-100 dark:bg-slate-700/40 text-slate-400 cursor-not-allowed' : actionBtn}`}
-                          >
-                            {isActioned ? 'Logged' : action.actionLabel}
-                          </button>
-                          <button className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-white dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/30 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/40 transition-all">
-                            View
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Compliance Status Overview */}
-            <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none overflow-hidden mb-6">
-              <div className="flex items-center justify-between gap-3 px-5 py-3 border-b border-slate-200 dark:border-slate-700/30 bg-slate-50/80 dark:bg-slate-900/20">
-                <span className="text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-widest">
-                  Compliance Status Overview
-                </span>
-                <span className="text-[11px] text-slate-500 dark:text-slate-400">Live · Updated daily</span>
-              </div>
-              <div className="p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                {complianceStatus.map((item, idx) => {
-                  const statusStyle = item.status === 'Compliant'
-                    ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 border-green-200 dark:border-green-800/50'
-                    : item.status === 'At Risk'
-                    ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-800/50'
-                    : 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 border-red-200 dark:border-red-800/50';
-                  const barStyle = item.status === 'Compliant'
-                    ? 'bg-green-500'
-                    : item.status === 'At Risk'
-                    ? 'bg-amber-500'
-                    : 'bg-red-500';
-                  const barWidth = item.status === 'Compliant' ? '100%' : item.status === 'At Risk' ? '65%' : '30%';
-                  return (
-                    <div key={idx} className="bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-700/30 rounded-lg p-4 space-y-3">
-                      <div className="flex items-center justify-between gap-2">
-                        <span className="text-sm font-semibold text-slate-800 dark:text-slate-200">{item.label}</span>
-                        <span className={`px-2 py-0.5 rounded text-[10px] font-bold border ${statusStyle}`}>
-                          {item.status}
-                        </span>
-                      </div>
-                      <div className="w-full h-1.5 bg-slate-200 dark:bg-slate-700/50 rounded-full overflow-hidden">
-                        <div className={`h-full rounded-full ${barStyle}`} style={{ width: barWidth }} />
-                      </div>
-                      <p className="text-xs text-slate-500 dark:text-slate-400">{item.detail}</p>
-                      <button
-                        onClick={() => navigate(item.route)}
-                        className="text-[11px] font-semibold text-amber-700 dark:text-amber-400 hover:text-amber-800 dark:hover:text-amber-300 transition-colors"
-                      >
-                        View details →
-                      </button>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-import React, { useState, useEffect, useRef } from 'react';
-import { Users, FileText, TrendingUp, AlertCircle, DollarSign, CheckCircle, Shield, X, Download, Calendar, Filter, BarChart3, Activity, Clock, ArrowUpRight, ArrowDownRight, Eye, RefreshCw, FileSpreadsheet, Building2, Target, Plus, BookOpen, PlayCircle, Printer, ChevronDown, ChevronUp, TrendingDown, Zap, AlertTriangle, CheckCircle2, ShieldCheck, Phone, Lightbulb, Bot, CalendarClock, Search } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Home, Users, FileText, LayoutDashboard, TrendingUp, AlertCircle, Settings, Bell, MessageCircle, Search, ChevronRight, DollarSign, CheckCircle, Shield, Sparkles, X, Send, Menu, ChevronLeft, LogOut, Download, Calendar, Filter, BarChart3, PieChart, LineChart, Activity, Clock, ArrowUpRight, ArrowDownRight, Eye, RefreshCw, FileSpreadsheet, Mail, Share2, Building2, Radio, Target, Plus, Sliders, BookOpen, PlayCircle, PauseCircle, Printer, FileDown, ChevronDown, ChevronUp, TrendingDown, Zap, Info, Star, AlertTriangle, CheckCircle2, Maximize2, Minimize2, ShieldCheck, User, Phone, Lightbulb, Bot, CalendarClock, Library } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import DashboardLayout from '../layouts/DashboardLayout';
 
 export default function ReportsAnalytics() {
   const navigate = useNavigate();
+  const [activePage, setActivePage] = useState('reports');
   const [activeTab, setActiveTab] = useState('overview');
+  const [chatOpen, setChatOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(() => {
+    const saved = localStorage.getItem('sidebarCollapsed');
+    return saved === 'true';
+  });
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false);
+  const [staffingExpanded, setStaffingExpanded] = useState(false);
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const [timeRange, setTimeRange] = useState('ytd');
   const [selectedReport, setSelectedReport] = useState(null);
   const [reportDetailModal, setReportDetailModal] = useState(null);
@@ -209,70 +30,30 @@ export default function ReportsAnalytics() {
   const [selectedComparison, setSelectedComparison] = useState('yoy'); // yoy, mom, qoq
   const [filterCategory, setFilterCategory] = useState('all');
 
-  const [actionedIds, setActionedIds] = useState(new Set());
-  const [toast, setToast] = useState(null);
-  const toastTimerRef = useRef(null);
-
-  const reportActions = [
-    {
-      id: 'ra-1',
-      urgency: 'Critical',
-      decision: 'Sign USMS Inspection Compliance Report',
-      ifIgnored: 'ACA accreditation review blocked — federal housing contract at risk',
-      timeSensitivity: 'Due in 2 days',
-      countdown: '48 hrs',
-      rationale: 'USMS inspection Dec 12–14. Unsigned report prevents facility clearance. Major Anderson has prepared all supporting documentation.',
-      actionLabel: 'Sign & Submit',
-    },
-    {
-      id: 'ra-2',
-      urgency: 'Critical',
-      decision: 'Approve Q4 Overtime Variance Report for Board Submission',
-      ifIgnored: 'Board meeting delayed — county finance review blocked without sign-off',
-      timeSensitivity: 'Due Friday',
-      countdown: '3 days',
-      rationale: 'OT spend is 19% over allocation. Report documents approved exceptions and mitigating actions. Finance Dir. requires command signature before packet closes.',
-      actionLabel: 'Approve',
-    },
-    {
-      id: 'ra-3',
-      urgency: 'High',
-      decision: 'Review Annual POST Compliance Report — 8 deputies not certified',
-      ifIgnored: 'Deputies face restricted-duty status on Jan 1 — patrol coverage gap',
-      timeSensitivity: 'Within 7 days',
-      countdown: '7 days',
-      rationale: '8 deputies have lapsed or expiring POST certs. Training Division needs command authorization to fast-track recertification scheduling.',
-      actionLabel: 'Review',
-    },
-    {
-      id: 'ra-4',
-      urgency: 'Normal',
-      decision: 'Schedule Q1 2025 Executive Performance Review Briefing',
-      ifIgnored: 'Department KPI baseline for next fiscal year not established on time',
-      timeSensitivity: 'Within 14 days',
-      countdown: '14 days',
-      rationale: 'Annual performance briefing sets targets for clearance rate, response time, and staffing. Recommended before Jan 15 to align command priorities.',
-      actionLabel: 'Schedule',
-    },
+  const navigation = [
+    { id: 'command-overview', label: 'Command Overview', icon: Home, route: '/command/dashboard' },
+    { id: 'daily-brief', label: 'Daily Command Brief', icon: FileText, route: '/command/brief' },
+    { id: 'alerts', label: 'Command Alerts', icon: AlertCircle, badge: '3', route: '/command/alerts' },
+    { id: 'approvals', label: 'Command Approvals', icon: CheckCircle, badge: '8', route: '/command/approvals' },
+    { id: 'risk-compliance', label: 'Risk & Compliance', icon: ShieldCheck, route: '/command/risk' },
+    { id: 'staffing', label: 'Staffing & Readiness', icon: Users, hasSubmenu: true },
+    { id: 'custody', label: 'Custody Operations', icon: Building2, route: '/jail/dashboard' },
+    { id: 'field-ops', label: 'Field Operations (Overview)', icon: Radio, route: '/patrol/cad' },
+    { id: 'investigative', label: 'Investigative Oversight', icon: Target, route: '/investigations/cases' },
+    { id: 'budget', label: 'Budget & Assets', icon: DollarSign, route: '/command/budget' },
+    { id: 'reports', label: 'Reports & Compliance', icon: TrendingUp, route: '/command/reports' }
   ];
 
-  const complianceStatus = [
-    { label: 'CJIS Security', status: 'Compliant', detail: 'v5.9 — All 158 staff trained', trend: 'stable', route: '/command/risk' },
-    { label: 'ACA Detention', status: 'At Risk', detail: '2 open findings — HVAC deadline', trend: 'down', route: '/command/risk' },
-    { label: 'PREA Standards', status: 'Compliant', detail: 'Zero incidents YTD · 100% trained', trend: 'stable', route: '/command/risk' },
-    { label: 'GA POST Certs', status: 'Action Needed', detail: '8 deputies expiring within 30 days', trend: 'down', route: '/hr/training' },
+  const staffingSubmenu = [
+    { id: 'staffing-overview', label: 'Staffing Overview', route: '/command/personnel' },
+    { id: 'org-chart', label: 'Org Chart', route: '/command/orgchart' }
   ];
 
-  const showToast = (msg) => {
-    if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
-    setToast(msg);
-    toastTimerRef.current = setTimeout(() => setToast(null), 3000);
-  };
-
-  const handleAction = (action) => {
-    setActionedIds(prev => new Set([...prev, action.id]));
-    showToast(`${action.actionLabel}: "${action.decision.slice(0, 50)}…" logged to audit trail.`);
-  };
+  const notifications = [
+    { id: 1, title: '3 Certifications Expiring Soon', message: 'CPR, Firearms, and P.O.S.T. renewals needed', time: '10 min ago', urgent: true },
+    { id: 2, title: 'Budget Approval Required', message: 'Q1 2025 Training Budget: $45,000', time: '1 hour ago', urgent: true },
+    { id: 3, title: 'Leave Request Submitted', message: 'Deputy Marcus Chen - Dec 15-22', time: '2 hours ago', urgent: false }
+  ];
 
   // Key metrics data
   const keyMetrics = {
@@ -552,6 +333,41 @@ export default function ReportsAnalytics() {
     }
   ];
 
+  useEffect(() => {
+    localStorage.setItem('sidebarCollapsed', sidebarCollapsed);
+  }, [sidebarCollapsed]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (profileMenuOpen && !event.target.closest('.profile-menu-container')) {
+        setProfileMenuOpen(false);
+      }
+      if (notificationsOpen && !event.target.closest('.notifications-container')) {
+        setNotificationsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [profileMenuOpen, notificationsOpen]);
+
+  const handleNavigation = (item) => {
+    if (item.hasSubmenu) {
+      setStaffingExpanded(!staffingExpanded);
+    } else {
+      navigate(item.route);
+      setSidebarOpen(false);
+    }
+  };
+
+  const handleSubmenuNavigation = (item) => {
+    navigate(item.route);
+    setSidebarOpen(false);
+  };
+
+  const handleLogout = () => {
+    navigate(createPageUrl('SignIn'));
+  };
+
   const getChangeColor = (change) => {
     if (change > 0) return 'text-green-600 dark:text-green-400';
     if (change < 0) return 'text-red-700 dark:text-red-400';
@@ -580,15 +396,46 @@ export default function ReportsAnalytics() {
 
   return (
     <DashboardLayout>
-      <div className="p-5 lg:p-8 space-y-6 min-h-full">
+      <div className="p-5 lg:p-8 space-y-8 min-h-full">
           <div className="max-w-7xl mx-auto">
+            {/* Enhanced Page Header with KPI Metrics */}
+            <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4 mb-6">
+              <div className="flex-1">
+                <div className="flex items-center gap-3 mb-2">
+                  <h2 className="text-2xl lg:text-3xl font-bold text-primary">Reports & Compliance</h2>
+                  <div className="flex items-center gap-1.5 px-2.5 py-1 bg-green-500/20 border border-green-500/40 rounded-lg">
+                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                    <span className="text-xs font-bold text-green-600 dark:text-green-400">LIVE DATA</span>
+                  </div>
+                </div>
+                <p className="text-secondary text-sm mb-3">Enterprise-grade insights and performance intelligence</p>
 
-            {/* Page Header */}
-            <div className="mb-6 pb-5 border-b border-border flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-              <div>
-                <h2 className="text-2xl lg:text-3xl font-bold text-primary mb-0.5">Reports & Compliance</h2>
-                <p className="text-sm text-muted">FY 2024 · Updated {new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })} EST</p>
+                {/* YTD Performance At-a-Glance */}
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
+                  <div className="flex items-center gap-2 px-3 py-1.5 bg-blue-500/10 border border-blue-500/30 rounded-lg">
+                    <Phone className="w-4 h-4 text-blue-400" />
+                    <span className="text-secondary">YTD:</span>
+                    <span className="font-bold text-blue-400">{keyMetrics.callsForService.total.toLocaleString()} calls</span>
+                  </div>
+                  <div className="flex items-center gap-2 px-3 py-1.5 bg-green-500/10 border border-green-500/30 rounded-lg">
+                    <Clock className="w-4 h-4 text-green-600 dark:text-green-400" />
+                    <span className="text-secondary">Avg Response:</span>
+                    <span className="font-bold text-green-600 dark:text-green-400">{keyMetrics.responseTime.average} min</span>
+                  </div>
+                  <div className="flex items-center gap-2 px-3 py-1.5 bg-purple-500/10 border border-purple-500/30 rounded-lg">
+                    <CheckCircle className="w-4 h-4 text-purple-400" />
+                    <span className="text-secondary">Clearance:</span>
+                    <span className="font-bold text-purple-400">{keyMetrics.crimeClearanceRate.rate}%</span>
+                  </div>
+                  <div className="flex items-center gap-2 px-3 py-1.5 bg-amber-500/10 border border-amber-500/30 rounded-lg">
+                    <Users className="w-4 h-4 text-amber-700 dark:text-amber-400" />
+                    <span className="text-secondary">Staffing:</span>
+                    <span className="font-bold text-amber-700 dark:text-amber-400">{keyMetrics.staffing.percentage}%</span>
+                  </div>
+                </div>
               </div>
+
+              {/* Action Buttons */}
               <div className="flex items-center gap-2 flex-wrap">
                 <select
                   value={timeRange}
@@ -598,149 +445,221 @@ export default function ReportsAnalytics() {
                   <option value="ytd">Year to Date</option>
                   <option value="last30">Last 30 Days</option>
                   <option value="last90">Last 90 Days</option>
+                  <option value="thisMonth">This Month</option>
+                  <option value="lastMonth">Last Month</option>
                   <option value="q4">This Quarter</option>
+                  <option value="lastQuarter">Last Quarter</option>
                   <option value="fy2024">Fiscal Year 2024</option>
+                  <option value="fy2023">Fiscal Year 2023</option>
+                  <option value="custom">Custom Date Range...</option>
                 </select>
-                <button onClick={() => setExportModal(true)} className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all text-sm">
-                  <FileSpreadsheet className="w-4 h-4" />Export
+                <button
+                  onClick={() => setComparisonModal(true)}
+                  className="hidden md:flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all"
+                >
+                  <BarChart3 className="w-4 h-4" />
+                  <span className="text-sm">Compare</span>
                 </button>
-                <button onClick={() => setCustomReportModal(true)} className="flex items-center gap-2 px-3 py-2 bg-blue-600 hover:bg-blue-700 rounded-xl text-white text-sm font-medium transition-all">
-                  <Plus className="w-4 h-4" />Custom Report
+                <button
+                  onClick={() => setCustomReportModal(true)}
+                  className="hidden md:flex items-center gap-2 px-3 py-2 bg-purple-500/20 border border-purple-500/30 rounded-xl text-purple-300 hover:bg-purple-500/30 transition-all"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span className="text-sm">Custom Report</span>
+                </button>
+                <button
+                  onClick={() => setExportModal(true)}
+                  className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all"
+                >
+                  <FileSpreadsheet className="w-4 h-4" />
+                  <span className="hidden sm:inline text-sm">Excel</span>
+                </button>
+                <button
+                  onClick={() => setScheduleModal(true)}
+                  className="hidden lg:flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all"
+                >
+                  <CalendarClock className="w-4 h-4" />
+                  <span className="text-sm">Schedule</span>
+                </button>
+                <button
+                  className="flex items-center gap-2 px-3 py-2 bg-amber-500/20 border border-amber-500/30 rounded-xl text-amber-300 hover:bg-amber-500/30 transition-all"
+                >
+                  <Printer className="w-4 h-4" />
+                  <span className="hidden sm:inline text-sm">Print</span>
                 </button>
               </div>
             </div>
 
-            {/* ── Report Command Actions ───────────────────── */}
-            <div className="mb-6">
-              <h3 className="text-xs font-semibold text-muted uppercase tracking-widest mb-3">Reports Requiring Action</h3>
-              <div className="space-y-3">
-                {reportActions.map((action) => {
-                  const actioned = actionedIds.has(action.id);
-                  const urgencyStyles =
-                    action.urgency === 'Critical' ? { badge: 'bg-red-100 text-red-700 dark:bg-red-500/10 dark:text-red-400 border border-red-200 dark:border-red-500/20', strip: 'bg-red-500' } :
-                    action.urgency === 'High'     ? { badge: 'bg-amber-100 text-amber-700 dark:bg-amber-500/10 dark:text-amber-400 border border-amber-200 dark:border-amber-500/20', strip: 'bg-amber-500' } :
-                                                    { badge: 'bg-slate-100 text-slate-600 dark:bg-slate-700/30 dark:text-slate-400 border border-slate-200 dark:border-slate-600/30', strip: 'bg-slate-400' };
-                  return (
-                    <div key={action.id} className={`bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden flex transition-opacity ${actioned ? 'opacity-60' : ''}`}>
-                      <div className={`w-1 flex-shrink-0 ${urgencyStyles.strip}`} />
-                      <div className="flex-1 p-4">
-                        <div className="flex flex-col lg:flex-row lg:items-start gap-3">
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-                              <span className={`px-2 py-0.5 rounded text-[11px] font-semibold ${urgencyStyles.badge}`}>{action.urgency}</span>
-                              <span className="text-[11px] text-muted">{action.countdown} remaining</span>
-                              {actioned && <span className="px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-100 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/20">Actioned</span>}
-                            </div>
-                            <p className="text-sm font-semibold text-primary mb-1">{action.decision}</p>
-                            <p className="text-xs text-red-700 dark:text-red-400 mb-1.5"><span className="font-medium">If ignored: </span>{action.ifIgnored}</p>
-                            <p className="text-[11px] text-muted leading-relaxed">{action.rationale}</p>
+            {/* Enhanced AI Analytics Intelligence - 3 Column Grid */}
+            <div className="mb-6 bg-gradient-to-br from-purple-500/10 to-purple-600/5 border border-purple-500/20 rounded-xl overflow-hidden">
+              <div className="p-5">
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-purple-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Bot className="w-6 h-6 text-purple-400" />
+                    </div>
+                    <div>
+                      <h4 className="text-base font-bold text-primary flex items-center gap-2">
+                        AI Analytics Intelligence
+                      </h4>
+                      <div className="flex items-center gap-3 text-xs text-secondary">
+                        <span className="flex items-center gap-1.5">
+                          <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                          <span className="text-green-600 dark:text-green-400 font-medium">LIVE</span>
+                        </span>
+                        <span>Last updated: 4:23 PM</span>
+                        <span>Auto-refresh: Every 15 min</span>
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setAiInsightsExpanded(!aiInsightsExpanded)}
+                    className="px-3 py-1.5 bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/30 text-purple-400 rounded-lg text-xs font-medium transition-all"
+                  >
+                    {aiInsightsExpanded ? 'COLLAPSE' : 'EXPAND'}
+                  </button>
+                </div>
+
+                {aiInsightsExpanded && (
+                  <div className="space-y-6">
+                    {/* Performance Highlights Summary */}
+                    <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
+                      <div className="flex items-center gap-2 mb-3">
+                        <TrendingUp className="w-4 h-4 text-green-600 dark:text-green-400" />
+                        <h5 className="text-sm font-bold text-green-600 dark:text-green-400">PERFORMANCE HIGHLIGHTS</h5>
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                        <div className="flex items-start gap-2">
+                          <CheckCircle className="w-4 h-4 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
+                          <p className="text-secondary"><span className="font-bold text-green-600 dark:text-green-400">Response times improved 12.3%</span> this month - excellent progress toward 8-minute target</p>
+                        </div>
+                        <div className="flex items-start gap-2">
+                          <CheckCircle className="w-4 h-4 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
+                          <p className="text-secondary"><span className="font-bold text-blue-400">Crime clearance rate</span> at 68.5%, up 3.8% YoY - investigations performing well</p>
+                        </div>
+                        <div className="flex items-start gap-2">
+                          <CheckCircle className="w-4 h-4 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
+                          <p className="text-secondary"><span className="font-bold text-amber-700 dark:text-amber-400">Property crime down 5.8%</span> - community policing initiatives showing impact</p>
+                        </div>
+                        <div className="flex items-start gap-2">
+                          <CheckCircle className="w-4 h-4 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
+                          <p className="text-secondary"><span className="font-bold text-purple-400">Overtime costs decreased 8.5%</span> - efficient scheduling reducing budget pressure</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Detailed Analytics - 4 Column Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+                      {/* Performance Improvements */}
+                      <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 border border-border">
+                        <div className="flex items-center gap-2 mb-3">
+                          <TrendingUp className="w-4 h-4 text-green-600 dark:text-green-400" />
+                          <p className="text-xs font-bold text-green-600 dark:text-green-400">PERFORMANCE</p>
+                        </div>
+                        <div className="space-y-2 text-xs text-secondary">
+                          <div className="flex justify-between">
+                            <span>Patrol response:</span>
+                            <span className="font-bold text-primary">7.8 min <span className="text-green-600 dark:text-green-400">(↓0.6)</span></span>
                           </div>
-                          <div className="flex items-center gap-2 flex-shrink-0">
-                            <button
-                              onClick={() => !actioned && handleAction(action)}
-                              disabled={actioned}
-                              className={`px-4 py-2 rounded-lg text-xs font-semibold transition-colors ${actioned ? 'bg-slate-100 dark:bg-slate-700/30 text-slate-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 text-white'}`}
-                            >
-                              {action.actionLabel}
-                            </button>
-                            <button className="px-4 py-2 rounded-lg text-xs font-medium border border-slate-300 dark:border-slate-700/50 text-secondary hover:bg-slate-50 dark:hover:bg-slate-700/20 transition-colors">
-                              Escalate
-                            </button>
+                          <div className="flex justify-between">
+                            <span>Case closure:</span>
+                            <span className="font-bold text-primary">82.3% <span className="text-green-600 dark:text-green-400">(↑4.1%)</span></span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Training complete:</span>
+                            <span className="font-bold text-primary">94% <span className="text-green-600 dark:text-green-400">(↑8%)</span></span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Areas Requiring Attention */}
+                      <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 border border-amber-500/30">
+                        <div className="flex items-center gap-2 mb-3">
+                          <AlertTriangle className="w-4 h-4 text-amber-700 dark:text-amber-400" />
+                          <p className="text-xs font-bold text-amber-700 dark:text-amber-400">ATTENTION NEEDED</p>
+                        </div>
+                        <div className="space-y-2 text-xs text-secondary">
+                          <div className="flex justify-between">
+                            <span>Staffing level:</span>
+                            <span className="font-bold text-amber-700 dark:text-amber-400">92.1% (14 open)</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Certs expiring:</span>
+                            <span className="font-bold text-amber-700 dark:text-amber-400">45 in 30 days</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Equipment budget:</span>
+                            <span className="font-bold text-red-700 dark:text-red-400">95% utilized</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Budget Insights */}
+                      <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 border border-border">
+                        <div className="flex items-center gap-2 mb-3">
+                          <DollarSign className="w-4 h-4 text-blue-400" />
+                          <p className="text-xs font-bold text-blue-400">BUDGET INSIGHTS</p>
+                        </div>
+                        <div className="space-y-2 text-xs text-secondary">
+                          <div className="flex justify-between">
+                            <span>YTD spending:</span>
+                            <span className="font-bold text-primary">85% of budget</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Year-end proj:</span>
+                            <span className="font-bold text-amber-700 dark:text-amber-400">100.5%</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Recommend:</span>
+                            <span className="font-bold text-blue-400">$250K realloc</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Recommendations */}
+                      <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 border border-border">
+                        <div className="flex items-center gap-2 mb-3">
+                          <Lightbulb className="w-4 h-4 text-purple-400" />
+                          <p className="text-xs font-bold text-purple-400">RECOMMENDATIONS</p>
+                        </div>
+                        <div className="space-y-2 text-xs text-secondary">
+                          <div className="flex items-start gap-1.5">
+                            <span className="text-purple-400 mt-0.5">•</span>
+                            <span>Focus hiring on patrol division</span>
+                          </div>
+                          <div className="flex items-start gap-1.5">
+                            <span className="text-purple-400 mt-0.5">•</span>
+                            <span>Schedule cert training Q1 2025</span>
+                          </div>
+                          <div className="flex items-start gap-1.5">
+                            <span className="text-purple-400 mt-0.5">•</span>
+                            <span>Review fleet replacement</span>
                           </div>
                         </div>
                       </div>
                     </div>
-                  );
-                })}
-              </div>
-            </div>
 
-            {/* ── Compliance Status Overview ───────────────── */}
-            <div className="mb-6">
-              <h3 className="text-xs font-semibold text-muted uppercase tracking-widest mb-3">Compliance Status</h3>
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-                {complianceStatus.map((item) => {
-                  const isRisk = item.status === 'At Risk' || item.status === 'Action Needed';
-                  const statusStyle =
-                    item.status === 'Compliant'      ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400' :
-                    item.status === 'At Risk'         ? 'bg-red-100 text-red-700 dark:bg-red-500/10 dark:text-red-400' :
-                                                       'bg-amber-100 text-amber-700 dark:bg-amber-500/10 dark:text-amber-400';
-                  return (
-                    <button
-                      key={item.label}
-                      onClick={() => navigate(item.route)}
-                      className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl p-4 text-left hover:shadow-md transition-all"
-                    >
-                      <p className="text-xs font-semibold text-muted uppercase tracking-wide mb-2">{item.label}</p>
-                      <span className={`px-2 py-0.5 rounded text-[11px] font-semibold ${statusStyle}`}>{item.status}</span>
-                      <p className="text-[11px] text-muted mt-2 leading-relaxed">{item.detail}</p>
-                    </button>
-                  );
-                })}
+                    {/* Action Buttons */}
+                    <div className="flex flex-wrap gap-2 pt-2">
+                      <button className="flex items-center gap-2 px-3 py-1.5 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 text-blue-400 rounded-lg text-xs font-medium transition-all">
+                        <Eye className="w-3.5 h-3.5" />
+                        VIEW FULL ANALYSIS
+                      </button>
+                      <button className="flex items-center gap-2 px-3 py-1.5 bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/30 text-purple-400 rounded-lg text-xs font-medium transition-all">
+                        <Download className="w-3.5 h-3.5" />
+                        EXPORT INSIGHTS
+                      </button>
+                      <button
+                        onClick={() => setComparisonModal(true)}
+                        className="flex items-center gap-2 px-3 py-1.5 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-600 dark:text-green-400 rounded-lg text-xs font-medium transition-all"
+                      >
+                        <BarChart3 className="w-3.5 h-3.5" />
+                        COMPARE PERIODS
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
-            </div>
-
-            {/* ── Performance Intelligence (flat, collapsible) ─ */}
-            <div className="mb-6 bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden">
-              <button
-                onClick={() => setAiInsightsExpanded(!aiInsightsExpanded)}
-                className="w-full flex items-center justify-between px-5 py-3.5 hover:bg-slate-50 dark:hover:bg-slate-800/10 transition-colors"
-              >
-                <div className="flex items-center gap-2">
-                  <Bot className="w-4 h-4 text-secondary" />
-                  <span className="text-[13px] font-semibold text-primary">Performance Intelligence</span>
-                  <span className="px-1.5 py-0.5 bg-slate-100 dark:bg-slate-700/30 text-[11px] text-slate-600 dark:text-slate-400 rounded">4 insights</span>
-                </div>
-                {aiInsightsExpanded ? <ChevronUp className="w-4 h-4 text-muted" /> : <ChevronDown className="w-4 h-4 text-muted" />}
-              </button>
-              {aiInsightsExpanded && (
-                <div className="px-5 pb-5 border-t border-border grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 pt-4">
-                  <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 border border-border">
-                    <div className="flex items-center gap-2 mb-2">
-                      <TrendingUp className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                      <p className="text-xs font-semibold text-emerald-600 dark:text-emerald-400">Performance</p>
-                    </div>
-                    <div className="space-y-1.5 text-xs text-secondary">
-                      <div className="flex justify-between"><span>Patrol response:</span><span className="font-medium text-primary">7.8 min <span className="text-emerald-600 dark:text-emerald-400">↓0.6</span></span></div>
-                      <div className="flex justify-between"><span>Case closure:</span><span className="font-medium text-primary">82.3% <span className="text-emerald-600 dark:text-emerald-400">↑4.1%</span></span></div>
-                      <div className="flex justify-between"><span>Training:</span><span className="font-medium text-primary">94% <span className="text-emerald-600 dark:text-emerald-400">↑8%</span></span></div>
-                    </div>
-                  </div>
-                  <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 border border-amber-200 dark:border-amber-500/20">
-                    <div className="flex items-center gap-2 mb-2">
-                      <AlertTriangle className="w-4 h-4 text-amber-700 dark:text-amber-400" />
-                      <p className="text-xs font-semibold text-amber-700 dark:text-amber-400">Attention Needed</p>
-                    </div>
-                    <div className="space-y-1.5 text-xs text-secondary">
-                      <div className="flex justify-between"><span>Staffing:</span><span className="font-medium text-amber-700 dark:text-amber-400">92.1% (14 open)</span></div>
-                      <div className="flex justify-between"><span>Certs expiring:</span><span className="font-medium text-amber-700 dark:text-amber-400">45 in 30 days</span></div>
-                      <div className="flex justify-between"><span>Equip. budget:</span><span className="font-medium text-red-700 dark:text-red-400">95% used</span></div>
-                    </div>
-                  </div>
-                  <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 border border-border">
-                    <div className="flex items-center gap-2 mb-2">
-                      <DollarSign className="w-4 h-4 text-secondary" />
-                      <p className="text-xs font-semibold text-secondary">Budget</p>
-                    </div>
-                    <div className="space-y-1.5 text-xs text-secondary">
-                      <div className="flex justify-between"><span>YTD spending:</span><span className="font-medium text-primary">85% of budget</span></div>
-                      <div className="flex justify-between"><span>Year-end proj:</span><span className="font-medium text-amber-700 dark:text-amber-400">100.5%</span></div>
-                      <div className="flex justify-between"><span>Recommend:</span><span className="font-medium text-secondary">$250K realloc</span></div>
-                    </div>
-                  </div>
-                  <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 border border-border">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Lightbulb className="w-4 h-4 text-secondary" />
-                      <p className="text-xs font-semibold text-secondary">Recommendations</p>
-                    </div>
-                    <div className="space-y-1.5 text-xs text-secondary">
-                      <p>• Focus hiring on patrol division</p>
-                      <p>• Schedule cert training Q1 2025</p>
-                      <p>• Review fleet replacement timeline</p>
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
 
             {/* Tabs */}
@@ -1277,15 +1196,6 @@ export default function ReportsAnalytics() {
             )}
           </div>
       </div>
-      {/* Toast Notification */}
-      {toast && (
-        <div className="fixed bottom-6 right-6 z-50">
-          <div className="px-4 py-3 rounded-lg border flex items-center gap-2 text-sm shadow-lg bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100">
-            <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
-            <p className="max-w-xs">{toast}</p>
-          </div>
-        </div>
-      )}
     </DashboardLayout>
   );
 }

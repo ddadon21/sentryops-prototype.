@@ -525,35 +525,38 @@ export default function BudgetResources() {
     <DashboardLayout>
       <div className="p-5 lg:p-8">
         <div className="max-w-7xl mx-auto">
-            {/* Page Header */}
-            <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-6">
-              <div>
-                <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-1">Budget &amp; Assets</h2>
-                <div className="flex flex-wrap items-center gap-2 text-[11px] text-slate-500">
-                  <span>{fiscalYear.year}</span>
-                  <span>·</span>
-                  <span className={`font-semibold ${isLiveOverBudget ? 'text-red-700 dark:text-red-400' : 'text-emerald-700 dark:text-emerald-400'}`}>
+            {/* Enhanced Page Header with Fiscal Metrics */}
+            <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4 mb-6">
+              <div className="flex-1">
+                <div className="flex items-center gap-3 mb-2">
+                  <h2 className="text-2xl lg:text-3xl font-bold text-primary">Budget & Assets</h2>
+                  <div className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-100 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/40 rounded-lg">
+                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                    <span className="text-xs font-bold text-green-600 dark:text-green-400">FISCAL ACTIVE</span>
+                  </div>
+                </div>
+                <p className="text-secondary text-sm mb-3">Fiscal oversight and resource management for FY 2024</p>
+                <div className="flex items-center gap-2 text-[11px] text-slate-500">
+                  <span className={`font-semibold ${isLiveOverBudget ? 'text-red-700 dark:text-red-400' : 'text-green-600 dark:text-green-400'}`}>
                     {isLiveOverBudget
-                      ? `Projected ${fmt(liveOverrun)} over budget`
+                      ? `Projected to exceed budget by ${fmt(liveOverrun)}`
                       : `Overrun prevented — ${fmt(Math.abs(liveOverrun))} under budget`}
                   </span>
                   <span>·</span>
-                  <span>61 days remaining in FY</span>
+                  <span>61 days left in FY</span>
                   <span>·</span>
                   <span>Last synced: 2 min ago</span>
-                  {pendingBudgetCount > 0 && (
-                    <>
-                      <span>·</span>
-                      <span className="text-amber-700 dark:text-amber-400 font-semibold">{pendingBudgetCount} budget decisions pending</span>
-                    </>
-                  )}
+                  <span>·</span>
+                  <span>Forecast confidence: High</span>
                 </div>
               </div>
-              <div className="flex items-center gap-2 flex-shrink-0 flex-wrap">
+
+              {/* Actions */}
+              <div className="flex items-center gap-2">
                 <select
                   value={timeRange}
                   onChange={(e) => setTimeRange(e.target.value)}
-                  className="px-3 py-1.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/30 rounded-lg text-slate-700 dark:text-slate-300 text-sm focus:outline-none"
+                  className="px-4 py-2 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary text-sm focus:outline-none focus:border-amber-500/50"
                 >
                   <option value="ytd">Year to Date</option>
                   <option value="q4">Q4 2024</option>
@@ -561,167 +564,25 @@ export default function BudgetResources() {
                 </select>
                 <button
                   onClick={() => setVarianceReportOpen(true)}
-                  className="flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/30 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-all text-sm"
+                  className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all"
                 >
                   <FileBarChart className="w-4 h-4" />
                   <span className="hidden sm:inline">Variance</span>
                 </button>
                 <button
                   onClick={() => setReallocationModal(true)}
-                  className="flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/30 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-all text-sm"
+                  className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all"
                 >
                   <RefreshCw className="w-4 h-4" />
                   <span className="hidden sm:inline">Reallocate</span>
                 </button>
                 <button
                   onClick={() => setExportModal(true)}
-                  className="flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/30 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-all text-sm"
+                  className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all"
                 >
                   <Download className="w-4 h-4" />
                   <span className="hidden sm:inline">Export</span>
                 </button>
-              </div>
-            </div>
-
-            {/* BUDGET COMMAND ACTIONS */}
-            <div className="mb-6 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none overflow-hidden">
-              <div className="flex items-center justify-between gap-3 px-5 py-3 border-b border-slate-200 dark:border-slate-700/30">
-                <div className="flex items-center gap-3">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
-                  </span>
-                  <span className="text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-widest">
-                    Budget Command Actions — Immediate Decisions Required
-                  </span>
-                </div>
-                <span className="px-2 py-1 rounded bg-slate-100 dark:bg-slate-700/30 border border-slate-200 dark:border-slate-600/30 text-[11px] font-bold text-slate-800 dark:text-slate-200">
-                  {criticalBudgetCount} Critical
-                </span>
-              </div>
-              <div className="p-4 space-y-3.5">
-                {budgetCommandActions.map((action) => {
-                  const isActioned = actionedBudgetActions.has(action.id);
-                  return (
-                    <div
-                      key={action.id}
-                      className={`rounded-lg border border-l-[3px] ${getUrgencyAccentBudget(action.urgency)} p-4 transition-all ${
-                        isActioned
-                          ? 'bg-emerald-50/40 dark:bg-emerald-500/5 border-slate-200 dark:border-slate-700/20 opacity-70'
-                          : 'bg-slate-50 dark:bg-slate-900/30 border-slate-200 dark:border-slate-700/30'
-                      }`}
-                    >
-                      <div className="flex items-start gap-4">
-                        <div className="flex flex-col gap-2 items-start flex-shrink-0">
-                          {isActioned ? (
-                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded border bg-emerald-100 dark:bg-emerald-500/10 border-emerald-200 dark:border-emerald-500/20 text-emerald-700 dark:text-emerald-400 text-[10px] font-bold uppercase tracking-wide">
-                              <CheckCircle className="w-3 h-3" /> Actioned
-                            </span>
-                          ) : (
-                            <>
-                              <span className={`inline-flex items-center px-2 py-0.5 rounded border text-[10px] font-bold uppercase tracking-wide ${getUrgencyBadgeBudget(action.urgency)}`}>
-                                {action.urgency}
-                              </span>
-                              {action.countdown && (
-                                <span className="px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-700/40 text-slate-700 dark:text-slate-200 text-[10px] font-semibold tracking-wide">
-                                  {action.countdown}
-                                </span>
-                              )}
-                            </>
-                          )}
-                        </div>
-                        <div className="flex-1 min-w-0 space-y-1.5">
-                          <p className={`text-[14px] font-bold leading-5 ${isActioned ? 'text-slate-500 dark:text-slate-400 line-through' : 'text-slate-900 dark:text-slate-100'}`}>
-                            Decision required: {action.decision}
-                          </p>
-                          {!isActioned && (
-                            <>
-                              <p className="text-[12px] text-slate-800 dark:text-slate-200 font-medium">
-                                At risk if ignored: {action.ifIgnored}
-                              </p>
-                              <p className="text-[12px] text-slate-700 dark:text-slate-300 font-semibold">
-                                {action.timeSensitivity}
-                                {action.financial && (
-                                  <span className="ml-2 text-slate-500 font-normal">· {action.financial}</span>
-                                )}
-                              </p>
-                            </>
-                          )}
-                          {isActioned && (
-                            <p className="text-[12px] text-emerald-600 dark:text-emerald-400">Action recorded — logged to audit trail.</p>
-                          )}
-                        </div>
-                        {!isActioned && (
-                          <div className="flex items-center gap-2 flex-shrink-0">
-                            <button
-                              onClick={() => handleBudgetCommandAction(action)}
-                              className={`px-3 py-1.5 border rounded text-[12px] font-bold transition-all ${getActionBtnBudget(action.urgency)}`}
-                            >
-                              {action.actionLabel}
-                            </button>
-                            <button className="px-3 py-1.5 bg-transparent border border-slate-300 dark:border-slate-600/50 text-slate-700 dark:text-slate-200 rounded text-[12px] font-semibold hover:bg-slate-100 dark:hover:bg-slate-700/40 transition-all">
-                              View
-                            </button>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* DIVISION BUDGET RISK */}
-            <div className="mb-6 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none overflow-hidden">
-              <div className="flex items-center justify-between px-5 py-3 border-b border-slate-200 dark:border-slate-700/30">
-                <div className="flex items-center gap-3">
-                  <Activity className="w-4 h-4 text-slate-500 dark:text-slate-400" />
-                  <span className="text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-widest">
-                    Division Budget Risk
-                  </span>
-                </div>
-                <span className="text-[10px] text-slate-500">
-                  {divisionBudgetRisks.filter(d => d.risk === 'High').length} high-risk divisions
-                </span>
-              </div>
-              <div className="p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                {divisionBudgetRisks.map((div) => (
-                  <div
-                    key={div.id}
-                    className="bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-700/30 rounded-lg p-4 space-y-3"
-                  >
-                    <div className="flex items-start justify-between gap-2">
-                      <span className="text-[13px] font-semibold text-slate-900 dark:text-slate-100">{div.division}</span>
-                      <span className={`flex-shrink-0 inline-flex items-center px-2 py-0.5 rounded border text-[10px] font-bold uppercase tracking-wide ${getRiskBadgeBudget(div.risk)}`}>
-                        {div.risk}
-                      </span>
-                    </div>
-                    <div>
-                      <div className="flex items-center justify-between mb-1">
-                        <span className="text-[10px] text-slate-500 uppercase tracking-wide">% Spent</span>
-                        <span className={`text-[11px] font-bold ${
-                          div.percentSpent >= 90 ? 'text-red-700 dark:text-red-400' :
-                          div.percentSpent >= 80 ? 'text-amber-700 dark:text-amber-400' :
-                          'text-emerald-700 dark:text-emerald-400'
-                        }`}>{div.percentSpent}%</span>
-                      </div>
-                      <div className="h-1.5 bg-slate-200 dark:bg-slate-700/50 rounded-full overflow-hidden">
-                        <div
-                          className={`h-full rounded-full ${getRiskBarBudget(div.risk)}`}
-                          style={{ width: `${Math.min(div.percentSpent, 100)}%` }}
-                        />
-                      </div>
-                    </div>
-                    <p className="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed">{div.bottleneck}</p>
-                    <button
-                      onClick={() => setActiveTab(div.tabTarget)}
-                      className="w-full flex items-center justify-center gap-1.5 px-3 py-1.5 bg-slate-100 dark:bg-slate-700/30 border border-slate-300 dark:border-slate-600/40 text-slate-700 dark:text-slate-300 rounded text-[11px] font-semibold hover:bg-slate-200 dark:hover:bg-slate-700/50 transition-all"
-                    >
-                      <ArrowRight className="w-3 h-3" />
-                      {div.action}
-                    </button>
-                  </div>
-                ))}
               </div>
             </div>
 
@@ -2745,23 +2606,6 @@ export default function BudgetResources() {
                 <Send className="w-5 h-5 text-primary" />
               </button>
             </div>
-          </div>
-        </div>
-      )}
-      {/* Budget Command Action Toast */}
-      {budgetToast && (
-        <div className="fixed bottom-6 right-6 z-[60]">
-          <div className={`px-4 py-3 rounded-lg border flex items-center gap-2 text-sm shadow-lg ${
-            budgetToast.type === 'success'
-              ? 'bg-slate-900 border-emerald-500/20 text-emerald-400'
-              : 'bg-slate-900 border-red-500/20 text-red-400'
-          }`}>
-            {budgetToast.type === 'success' ? (
-              <CheckCircle className="w-4 h-4 flex-shrink-0" />
-            ) : (
-              <AlertCircle className="w-4 h-4 flex-shrink-0" />
-            )}
-            <p className="max-w-xs">{budgetToast.message}</p>
           </div>
         </div>
       )}
