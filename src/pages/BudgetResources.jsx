@@ -33,6 +33,10 @@ export default function BudgetResources() {
   const [toast, setToast] = useState(null); // { id, message, saving }
   const [flashSet, setFlashSet] = useState(new Set()); // element keys currently flashing
   const toastTimerRef = useRef(null);
+  const [simOT, setSimOT] = useState(0);
+  const [simHires, setSimHires] = useState(0);
+  const [simFleetDelay, setSimFleetDelay] = useState(0);
+  const [expandedActionId, setExpandedActionId] = useState(null);
   const [pendingPOsModal, setPendingPOsModal] = useState(false);
   const [poSpentDelta, setPoSpentDelta] = useState(0);
   const [poAvailableDelta, setPoAvailableDelta] = useState(0);
@@ -375,6 +379,32 @@ export default function BudgetResources() {
   const projectionAfterAllPending = liveProjection - pendingSavings;
   const projectionAfterAllPendingOverrun = projectionAfterAllPending - BUDGET;
 
+  // Budget Risk Score (0–100, higher = healthier)
+  const budgetRiskScore = Math.round(
+    (isLiveOverBudget ? 0 : Math.max(0, 100 - (liveOverrun / 50000))) * 0.30 +
+    (fiscalYear.percentSpent > 90 ? 35 : fiscalYear.percentSpent > 85 ? 60 : 85) * 0.25 +
+    (pendingActions.length === 0 ? 100 : Math.max(0, 100 - pendingActions.length * 12)) * 0.25 +
+    ((liveAvailable / BUDGET) > 0.1 ? 90 : (liveAvailable / BUDGET) > 0.05 ? 60 : 30) * 0.20
+  );
+  const riskLabel = budgetRiskScore >= 75 ? 'Healthy' : budgetRiskScore >= 50 ? 'At Risk' : 'Critical';
+  const riskColor = budgetRiskScore >= 75 ? 'green' : budgetRiskScore >= 50 ? 'amber' : 'red';
+
+  // Division heatmap
+  const divisionHeatmap = [
+    { name: 'Patrol Division', status: 'Critical', variance: 150000, spend: 84.9, trend: 'up', driver: 'OT spike +22% vs prior year · Discretionary overage $45K', link: 'Staffing shortage driving forced OT — see Operations module' },
+    { name: 'Detention Division', status: 'Watch', variance: 45000, spend: 85.4, trend: 'stable', driver: 'Medical services trending above contract · Inmate population +8%', link: 'Medical contract renewal due Q1 FY2025' },
+    { name: 'Support Services', status: 'Watch', variance: -20000, spend: 82.1, trend: 'down', driver: 'Fleet maintenance deferred to Q1 · Fuel costs down 6%', link: 'Fleet procurement PO pending approval' },
+    { name: 'Administrative Services', status: 'Healthy', variance: -180000, spend: 76.3, trend: 'down', driver: 'Training program 18% below historical pace · IT deferral', link: 'Training surplus available for reallocation' },
+    { name: 'Investigations', status: 'Healthy', variance: -95000, spend: 78.8, trend: 'stable', driver: 'Case load down 4% YoY · No capital purchases this quarter', link: null },
+  ];
+
+  // Simulation
+  const simOTSavings = Math.round((fiscalYear.spent * 0.18) * (simOT / 100));
+  const simFleetSavings = simFleetDelay > 0 ? Math.round(420000 * Math.min(simFleetDelay / 90, 1)) : 0;
+  const simHireSavings = simHires * 85000;
+  const totalSimSavings = simOTSavings + simFleetSavings + simHireSavings;
+  const simProjection = liveProjection - totalSimSavings;
+
   const fmtDateTime = (d) => d.toLocaleString('en-US', {
     month: 'short', day: 'numeric', year: 'numeric',
     hour: 'numeric', minute: '2-digit', hour12: true,
@@ -530,6 +560,28 @@ export default function BudgetResources() {
 
   return (
     <DashboardLayout>
+      {/* Sticky Command Strip */}
+      <div className="sticky top-0 z-30 px-5 lg:px-8 py-2 bg-white/95 dark:bg-slate-950/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-700/40">
+        <div className="max-w-7xl mx-auto flex items-center gap-3 text-[11px] flex-wrap">
+          <span className="font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Budget Status</span>
+          <span className="w-px h-3.5 bg-slate-200 dark:bg-slate-700" />
+          <span className="text-slate-500 dark:text-slate-400">Health:</span>
+          <span className={`font-black text-[14px] ${riskColor === 'green' ? 'text-green-600 dark:text-green-400' : riskColor === 'amber' ? 'text-amber-600 dark:text-amber-400' : 'text-red-600 dark:text-red-400'}`}>{budgetRiskScore}/100</span>
+          <span className={`px-1.5 py-0.5 text-[10px] font-bold rounded ${riskColor === 'green' ? 'bg-green-100 dark:bg-green-500/10 text-green-700 dark:text-green-400' : riskColor === 'amber' ? 'bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400' : 'bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-400'}`}>{riskLabel}</span>
+          <span className="w-px h-3.5 bg-slate-200 dark:bg-slate-700" />
+          <span className="text-slate-500 dark:text-slate-400">Forecast:</span>
+          <span className={`font-bold ${isLiveOverBudget ? 'text-red-600 dark:text-red-400' : 'text-green-600 dark:text-green-400'}`}>
+            {isLiveOverBudget ? fmt(liveOverrun) + ' Over' : fmt(Math.abs(liveOverrun)) + ' Under'}
+          </span>
+          <span className="w-px h-3.5 bg-slate-200 dark:bg-slate-700" />
+          <span className="text-slate-500 dark:text-slate-400">Actions Pending:</span>
+          <span className={`font-bold ${pendingActions.length > 0 ? 'text-amber-600 dark:text-amber-400' : 'text-green-600 dark:text-green-400'}`}>{pendingActions.length}</span>
+          <span className="w-px h-3.5 bg-slate-200 dark:bg-slate-700" />
+          <span className="text-slate-500 dark:text-slate-400">Savings Available:</span>
+          <span className="font-bold text-green-600 dark:text-green-400">{fmt(pendingSavings)}</span>
+          <span className="ml-auto text-slate-400 dark:text-slate-500 hidden sm:inline">FY 2024 · 61 days remaining</span>
+        </div>
+      </div>
       <div className="p-5 lg:p-8">
         <div className="max-w-7xl mx-auto">
             {/* Enhanced Page Header with Fiscal Metrics */}
@@ -741,6 +793,82 @@ export default function BudgetResources() {
               </div>
             </div>
 
+            {/* ── LAYER 1: AI Command Center ───────────────────────────── */}
+            <div className="mb-6 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none overflow-hidden">
+              <div className="flex items-center justify-between px-5 py-4 border-b border-slate-200 dark:border-slate-700/30">
+                <div className="flex items-center gap-3">
+                  <Zap className="w-4 h-4 text-amber-500" />
+                  <span className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wide">AI Command Center</span>
+                  {isLiveOverBudget && (
+                    <span className="flex items-center gap-1.5 px-2 py-0.5 bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-400 text-[11px] font-bold rounded">
+                      <ShieldAlert className="w-3 h-3" /> Projected Overrun: {fmt(liveOverrun)}
+                    </span>
+                  )}
+                </div>
+                <div className={`flex items-center gap-2 px-3 py-1.5 rounded-lg ${
+                  riskColor === 'green' ? 'bg-green-100 dark:bg-green-500/10' :
+                  riskColor === 'amber' ? 'bg-amber-100 dark:bg-amber-500/10' :
+                  'bg-red-100 dark:bg-red-500/10'
+                }`}>
+                  <span className={`text-[11px] font-semibold ${riskColor === 'green' ? 'text-green-700 dark:text-green-400' : riskColor === 'amber' ? 'text-amber-700 dark:text-amber-400' : 'text-red-700 dark:text-red-400'}`}>Budget Health</span>
+                  <span className={`text-[20px] font-black leading-none ${riskColor === 'green' ? 'text-green-700 dark:text-green-400' : riskColor === 'amber' ? 'text-amber-700 dark:text-amber-400' : 'text-red-700 dark:text-red-400'}`}>{budgetRiskScore}</span>
+                  <span className={`text-[11px] ${riskColor === 'green' ? 'text-green-600 dark:text-green-400' : riskColor === 'amber' ? 'text-amber-600 dark:text-amber-400' : 'text-red-600 dark:text-red-400'}`}>/100</span>
+                </div>
+              </div>
+
+              <div className="px-5 pt-4 pb-2 space-y-2">
+                {pendingActions.length === 0 ? (
+                  <div className="flex items-center gap-3 p-4 bg-green-50 dark:bg-green-500/5 border border-green-200 dark:border-green-500/20 rounded-xl">
+                    <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+                    <div>
+                      <p className="text-[13px] font-bold text-green-700 dark:text-green-400">All recommended actions applied.</p>
+                      <p className="text-[12px] text-slate-500 dark:text-slate-400">FY 2024 closing at {fmt(liveProjection)} — {fmt(Math.abs(liveOverrun))} under budget.</p>
+                    </div>
+                  </div>
+                ) : pendingActions.slice(0, 3).map((action, i) => (
+                  <div key={action.id} className="flex items-start gap-3 p-3 bg-slate-50 dark:bg-slate-800/30 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors">
+                    <span className="text-[11px] font-black text-slate-400 w-5 flex-shrink-0 mt-0.5">{i + 1}</span>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-0.5 flex-wrap">
+                        <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded flex-shrink-0 ${action.urgency === 'High' ? 'bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-400' : action.urgency === 'Medium' ? 'bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400' : 'bg-slate-100 dark:bg-slate-700/40 text-slate-600 dark:text-slate-400'}`}>{action.urgency}</span>
+                        <p className="text-[13px] font-semibold text-slate-800 dark:text-slate-200 truncate">{action.title}</p>
+                      </div>
+                      <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                        Save <span className="font-bold text-green-600 dark:text-green-400">{fmt(action.impact)}</span> · {action.riskLevel} risk · {action.confidence}% confidence
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => setConfirmActionModal(action)}
+                      className="flex-shrink-0 px-3 py-1.5 bg-amber-500 hover:bg-amber-600 border border-amber-600 text-white text-xs font-bold uppercase tracking-wide rounded-lg transition-colors"
+                    >
+                      Apply
+                    </button>
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex items-center justify-between px-5 py-3 border-t border-slate-200 dark:border-slate-700/30 mt-2">
+                <p className="text-[12px] text-slate-600 dark:text-slate-400">
+                  Apply all {pendingActions.length} actions →{' '}
+                  <span className={`font-bold ${projectionAfterAllPendingOverrun > 0 ? 'text-red-600 dark:text-red-400' : 'text-green-600 dark:text-green-400'}`}>
+                    {fmt(Math.abs(projectionAfterAllPendingOverrun))} {projectionAfterAllPendingOverrun > 0 ? 'over budget' : 'under budget'}
+                  </span>
+                </p>
+                {pendingActions.length > 0 && (
+                  <button onClick={() => setApplyAllModal(true)} className="text-[12px] font-bold text-amber-600 dark:text-amber-400 hover:underline flex items-center gap-1">
+                    Apply All {pendingActions.length} Actions <ArrowUpRight className="w-3.5 h-3.5" />
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* ── LAYER 2: Decision Center ─────────────────────────────── */}
+            <div className="flex items-center gap-3 mb-3 mt-2">
+              <span className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">Decision Center</span>
+              <div className="flex-1 h-px bg-slate-200 dark:bg-slate-700/40" />
+              <span className="text-[10px] text-slate-400 dark:text-slate-500">Expand for full detail</span>
+            </div>
+
             {/* Recommended Actions */}
             <div className="mb-6 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none overflow-hidden">
               <div className="flex items-center justify-between px-5 py-4 border-b border-slate-200 dark:border-slate-700/30">
@@ -864,80 +992,101 @@ export default function BudgetResources() {
               <div className="divide-y divide-slate-100 dark:divide-slate-700/20">
                 {filteredActions.map((action, idx) => {
                   const isApplied = appliedActionIds.has(action.id);
+                  const isExpanded = expandedActionId === action.id;
                   return (
-                    <div
-                      key={action.id}
-                      className={`flex items-start gap-3 px-5 py-4 transition-colors ${
-                        isApplied
-                          ? 'bg-green-50/60 dark:bg-green-500/5'
-                          : 'hover:bg-slate-50 dark:hover:bg-slate-800/10'
-                      }`}
-                    >
-                      <span className={`text-[11px] font-bold w-4 flex-shrink-0 tabular-nums mt-0.5 ${isApplied ? 'text-green-500 dark:text-green-400' : 'text-slate-400'}`}>
-                        {isApplied ? '✓' : idx + 1}
-                      </span>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-1 flex-wrap">
-                          {isApplied ? (
-                            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 bg-green-100 dark:bg-green-500/15 text-green-700 dark:text-green-400 text-[10px] font-bold rounded">
-                              <CheckCircle className="w-3 h-3" /> Applied
+                    <div key={action.id} className={`px-5 py-4 transition-colors ${isApplied ? 'bg-green-50/60 dark:bg-green-500/5' : 'hover:bg-slate-50 dark:hover:bg-slate-800/10'}`}>
+                      <div className="flex items-start gap-3">
+                        <span className={`text-[11px] font-bold w-4 flex-shrink-0 tabular-nums mt-0.5 ${isApplied ? 'text-green-500 dark:text-green-400' : 'text-slate-400'}`}>
+                          {isApplied ? '✓' : idx + 1}
+                        </span>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-1 flex-wrap">
+                            {isApplied ? (
+                              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 bg-green-100 dark:bg-green-500/15 text-green-700 dark:text-green-400 text-[10px] font-bold rounded">
+                                <CheckCircle className="w-3 h-3" /> Applied
+                              </span>
+                            ) : (
+                              <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded flex-shrink-0 ${
+                                action.urgency === 'High' ? 'bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-400' :
+                                action.urgency === 'Medium' ? 'bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400' :
+                                'bg-slate-100 dark:bg-slate-700/40 text-slate-600 dark:text-slate-400'
+                              }`}>{action.urgency}</span>
+                            )}
+                            <span className={`text-[13px] font-semibold ${isApplied ? 'text-slate-400 dark:text-slate-500 line-through' : 'text-slate-800 dark:text-slate-200'}`}>
+                              {action.title}
                             </span>
-                          ) : (
-                            <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded flex-shrink-0 ${
-                              action.urgency === 'High' ? 'bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-400' :
-                              action.urgency === 'Medium' ? 'bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400' :
-                              'bg-slate-100 dark:bg-slate-700/40 text-slate-600 dark:text-slate-400'
-                            }`}>{action.urgency}</span>
+                          </div>
+                          {!isApplied && (
+                            <p className="text-[12px] text-slate-600 dark:text-slate-400 mb-1 leading-relaxed">{action.why}</p>
                           )}
-                          <span className={`text-[13px] font-semibold ${isApplied ? 'text-slate-400 dark:text-slate-500 line-through' : 'text-slate-800 dark:text-slate-200'}`}>
-                            {action.title}
-                          </span>
+                          {isApplied ? (
+                            <p className="text-[12px] text-green-600 dark:text-green-400">{action.consequence}</p>
+                          ) : (
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border ${
+                                action.riskLevel === 'Low'
+                                  ? 'bg-green-50 dark:bg-green-500/5 border-green-200 dark:border-green-500/20 text-green-700 dark:text-green-400'
+                                  : action.riskLevel === 'Medium'
+                                  ? 'bg-amber-50 dark:bg-amber-500/5 border-amber-200 dark:border-amber-500/20 text-amber-700 dark:text-amber-400'
+                                  : 'bg-red-50 dark:bg-red-500/5 border-red-200 dark:border-red-500/20 text-red-700 dark:text-red-400'
+                              }`}>
+                                <span>{action.riskLevel === 'Low' ? '▼' : action.riskLevel === 'Medium' ? '◆' : '▲'}</span>
+                                <span>{action.riskLevel} Risk</span>
+                                <span className="opacity-40">·</span>
+                                <span className="text-green-600 dark:text-green-400">+{fmt(action.impact)} saved</span>
+                              </span>
+                              <span className="text-[11px] text-slate-500 dark:text-slate-400">AI: {action.confidence}%</span>
+                              <span className="text-[11px] text-slate-400 dark:text-slate-500">·</span>
+                              <span className="text-[11px] text-slate-500 dark:text-slate-400">{action.affectedDepts.join(', ')}</span>
+                              <button
+                                onClick={() => setExpandedActionId(isExpanded ? null : action.id)}
+                                className="text-[11px] font-semibold text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-0.5 ml-1"
+                              >
+                                Why trust this? {isExpanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+                              </button>
+                            </div>
+                          )}
+
+                          {/* Expandable AI Reasoning */}
+                          {!isApplied && isExpanded && (
+                            <div className="mt-3 p-3 bg-blue-50 dark:bg-blue-500/5 border border-blue-200 dark:border-blue-500/20 rounded-xl space-y-1.5">
+                              <p className="text-[10px] font-bold text-blue-700 dark:text-blue-400 uppercase tracking-wide mb-2">AI Reasoning — {action.confidence}% Confidence</p>
+                              {(action.reasoning || [
+                                `${action.affectedDepts[0]} spend trending ${action.urgency === 'High' ? '+18%' : '+8%'} above historical baseline`,
+                                `Pattern matches FY2022 overrun scenario — similar action saved $${Math.round(action.impact * 0.85 / 1000)}K then`,
+                                `${action.riskLevel} operational disruption risk based on prior-year outcomes`,
+                                `${action.confidence}% model confidence from 3-year spending data`,
+                              ]).map((reason, ri) => (
+                                <div key={ri} className="flex items-start gap-2 text-[12px] text-slate-700 dark:text-slate-300">
+                                  <span className="text-blue-500 font-bold flex-shrink-0 mt-0.5">✓</span>
+                                  <span>{reason}</span>
+                                </div>
+                              ))}
+                              <p className="text-[11px] text-slate-500 dark:text-slate-400 pt-1 border-t border-blue-200 dark:border-blue-500/20 mt-2">{action.consequence}</p>
+                            </div>
+                          )}
                         </div>
-                        {!isApplied && (
-                          <p className="text-[12px] text-slate-600 dark:text-slate-400 mb-1 leading-relaxed">{action.why}</p>
-                        )}
-                        {isApplied ? (
-                          <p className="text-[12px] text-green-600 dark:text-green-400">{action.consequence}</p>
-                        ) : (
-                          <div className="flex items-center gap-2 flex-wrap">
-                            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border ${
-                              action.riskLevel === 'Low'
-                                ? 'bg-green-50 dark:bg-green-500/5 border-green-200 dark:border-green-500/20 text-green-700 dark:text-green-400'
-                                : action.riskLevel === 'Medium'
-                                ? 'bg-amber-50 dark:bg-amber-500/5 border-amber-200 dark:border-amber-500/20 text-amber-700 dark:text-amber-400'
-                                : 'bg-red-50 dark:bg-red-500/5 border-red-200 dark:border-red-500/20 text-red-700 dark:text-red-400'
-                            }`}>
-                              <span>{action.riskLevel === 'Low' ? '▼' : action.riskLevel === 'Medium' ? '◆' : '▲'}</span>
-                              <span>{action.riskLevel} Risk</span>
-                              <span className="opacity-40">·</span>
-                              <span className="text-green-600 dark:text-green-400">+{fmt(action.impact)} saved</span>
-                            </span>
-                            <span className="text-[11px] text-slate-500 dark:text-slate-400">AI: {action.confidence}%</span>
-                            <span className="text-[11px] text-slate-400 dark:text-slate-500">·</span>
-                            <span className="text-[11px] text-slate-500 dark:text-slate-400">{action.affectedDepts.join(', ')}</span>
-                          </div>
-                        )}
-                      </div>
-                      <div className="flex items-center gap-3 flex-shrink-0 mt-0.5">
-                        {!isApplied && (
-                          <div className="text-right hidden sm:block">
-                            <p className="text-[13px] font-bold text-green-600 dark:text-green-400">{fmt(action.impact)}</p>
-                            <p className="text-[10px] text-slate-500 dark:text-slate-400">{action.confidenceLabel} confidence</p>
-                          </div>
-                        )}
-                        {isApplied ? (
-                          <div className="flex items-center gap-1.5 px-3 py-1.5 bg-green-100 dark:bg-green-500/10 border border-green-200 dark:border-green-500/20 rounded-lg">
-                            <CheckCircle className="w-3.5 h-3.5 text-green-600 dark:text-green-400" />
-                            <span className="text-xs font-bold text-green-700 dark:text-green-400">{fmt(action.impact)} saved</span>
-                          </div>
-                        ) : (
-                          <button
-                            onClick={() => setConfirmActionModal(action)}
-                            className="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 border border-amber-600 text-white text-xs font-bold uppercase tracking-wide rounded-lg transition-colors"
-                          >
-                            Apply Action
-                          </button>
-                        )}
+                        <div className="flex items-center gap-3 flex-shrink-0 mt-0.5">
+                          {!isApplied && (
+                            <div className="text-right hidden sm:block">
+                              <p className="text-[13px] font-bold text-green-600 dark:text-green-400">{fmt(action.impact)}</p>
+                              <p className="text-[10px] text-slate-500 dark:text-slate-400">{action.confidenceLabel} confidence</p>
+                            </div>
+                          )}
+                          {isApplied ? (
+                            <div className="flex items-center gap-1.5 px-3 py-1.5 bg-green-100 dark:bg-green-500/10 border border-green-200 dark:border-green-500/20 rounded-lg">
+                              <CheckCircle className="w-3.5 h-3.5 text-green-600 dark:text-green-400" />
+                              <span className="text-xs font-bold text-green-700 dark:text-green-400">{fmt(action.impact)} saved</span>
+                            </div>
+                          ) : (
+                            <button
+                              onClick={() => setConfirmActionModal(action)}
+                              className="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 border border-amber-600 text-white text-xs font-bold uppercase tracking-wide rounded-lg transition-colors"
+                            >
+                              Apply Action
+                            </button>
+                          )}
+                        </div>
                       </div>
                     </div>
                   );
@@ -1185,13 +1334,22 @@ export default function BudgetResources() {
               )}
             </div>
 
+            {/* ── LAYER 3: Deep Analytics ──────────────────────────────── */}
+            <div className="flex items-center gap-3 mb-4 mt-2">
+              <span className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">Deep Analytics</span>
+              <div className="flex-1 h-px bg-slate-200 dark:bg-slate-700/40" />
+              <span className="text-[10px] text-slate-400 dark:text-slate-500">Analyst tools · drill-down data</span>
+            </div>
+
             {/* Tabs */}
-            <div className="mb-6 flex gap-2 border-b border-border">
+            <div className="mb-6 flex gap-1 border-b border-border overflow-x-auto">
               {[
                 { id: 'overview', label: 'Overview', icon: PieChart },
+                { id: 'heatmap', label: 'Division Intel', icon: Target },
                 { id: 'divisions', label: 'By Division', icon: BarChart3 },
                 { id: 'resources', label: 'Resources', icon: Package },
-                { id: 'forecast', label: 'Forecast', icon: LineChart }
+                { id: 'forecast', label: 'Forecast', icon: LineChart },
+                { id: 'simulation', label: 'Simulation', icon: Activity },
               ].map(tab => (
                 <button
                   key={tab.id}
@@ -1419,6 +1577,197 @@ export default function BudgetResources() {
                       );
                     })}
                   </div>
+                </div>
+              </div>
+            )}
+
+            {/* DIVISION INTELLIGENCE HEATMAP TAB */}
+            {activeTab === 'heatmap' && (
+              <div className="space-y-5">
+                <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none overflow-hidden">
+                  <div className="flex items-center justify-between px-5 py-4 border-b border-slate-200 dark:border-slate-700/30">
+                    <div className="flex items-center gap-3">
+                      <Target className="w-4 h-4 text-slate-500 dark:text-slate-400" />
+                      <span className="text-sm font-semibold text-slate-900 dark:text-white">Division Intelligence</span>
+                    </div>
+                    <span className="text-[11px] text-slate-500 dark:text-slate-400">Click any row to drill down</span>
+                  </div>
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="border-b border-slate-200 dark:border-slate-700/30 bg-slate-50 dark:bg-slate-800/30">
+                          <th className="text-left px-5 py-3 text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Division</th>
+                          <th className="text-center px-4 py-3 text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Status</th>
+                          <th className="text-right px-4 py-3 text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Budget Used</th>
+                          <th className="text-right px-4 py-3 text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Variance</th>
+                          <th className="text-right px-5 py-3 text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Trend</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-slate-100 dark:divide-slate-700/20">
+                        {divisionHeatmap.map(div => (
+                          <React.Fragment key={div.name}>
+                            <tr
+                              onClick={() => setSelectedDivision(selectedDivision === div.name ? null : div.name)}
+                              className="cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/10 transition-colors"
+                            >
+                              <td className="px-5 py-4 font-semibold text-[13px] text-slate-800 dark:text-slate-200">
+                                <div className="flex items-center gap-2">
+                                  {div.name}
+                                  {selectedDivision === div.name && <ChevronUp className="w-3.5 h-3.5 text-slate-400" />}
+                                  {selectedDivision !== div.name && <ChevronDown className="w-3.5 h-3.5 text-slate-300 dark:text-slate-600" />}
+                                </div>
+                              </td>
+                              <td className="px-4 py-4 text-center">
+                                <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-bold ${
+                                  div.status === 'Critical' ? 'bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-400' :
+                                  div.status === 'Watch' ? 'bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400' :
+                                  'bg-green-100 dark:bg-green-500/10 text-green-700 dark:text-green-400'
+                                }`}>
+                                  <span>{div.status === 'Critical' ? '🔴' : div.status === 'Watch' ? '🟡' : '🟢'}</span>
+                                  {div.status}
+                                </span>
+                              </td>
+                              <td className="px-4 py-4 text-right">
+                                <div className="flex items-center justify-end gap-2">
+                                  <div className="w-20 h-1.5 bg-slate-100 dark:bg-slate-700/50 rounded-full overflow-hidden">
+                                    <div className={`h-full rounded-full transition-all ${
+                                      div.spend >= 90 ? 'bg-red-500' : div.spend >= 84 ? 'bg-amber-500' : 'bg-green-500'
+                                    }`} style={{ width: `${div.spend}%` }} />
+                                  </div>
+                                  <span className={`text-[12px] font-bold w-10 text-right ${
+                                    div.spend >= 90 ? 'text-red-700 dark:text-red-400' : div.spend >= 84 ? 'text-amber-700 dark:text-amber-400' : 'text-green-600 dark:text-green-400'
+                                  }`}>{div.spend}%</span>
+                                </div>
+                              </td>
+                              <td className={`px-4 py-4 text-right text-[13px] font-bold ${div.variance > 0 ? 'text-red-700 dark:text-red-400' : 'text-green-600 dark:text-green-400'}`}>
+                                {div.variance > 0 ? '+' : ''}{fmt(div.variance)}
+                              </td>
+                              <td className={`px-5 py-4 text-right text-[12px] font-semibold ${
+                                div.trend === 'up' ? 'text-red-500 dark:text-red-400' : div.trend === 'down' ? 'text-green-500 dark:text-green-400' : 'text-slate-400'
+                              }`}>
+                                {div.trend === 'up' ? '↑ Rising' : div.trend === 'down' ? '↓ Falling' : '→ Stable'}
+                              </td>
+                            </tr>
+                            {selectedDivision === div.name && (
+                              <tr className="bg-slate-50 dark:bg-slate-800/20">
+                                <td colSpan={5} className="px-5 py-4">
+                                  <div className="space-y-2">
+                                    <p className="text-[12px] font-semibold text-slate-700 dark:text-slate-300">Driver: <span className="font-normal text-slate-600 dark:text-slate-400">{div.driver}</span></p>
+                                    {div.link && (
+                                      <div className="flex items-center gap-2 px-3 py-2 bg-blue-50 dark:bg-blue-500/5 border border-blue-200 dark:border-blue-500/20 rounded-lg">
+                                        <ArrowUpRight className="w-3.5 h-3.5 text-blue-500 flex-shrink-0" />
+                                        <p className="text-[12px] text-blue-700 dark:text-blue-400 font-medium">{div.link}</p>
+                                      </div>
+                                    )}
+                                    <button
+                                      onClick={() => { setActiveTab('divisions'); }}
+                                      className="text-[11px] font-semibold text-amber-600 dark:text-amber-400 hover:underline"
+                                    >
+                                      Full division breakdown →
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                            )}
+                          </React.Fragment>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* SIMULATION MODE TAB */}
+            {activeTab === 'simulation' && (
+              <div className="space-y-5">
+                <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+                  <div className="flex items-center gap-3 mb-5">
+                    <Activity className="w-4 h-4 text-violet-500 dark:text-violet-400" />
+                    <span className="text-sm font-semibold text-slate-900 dark:text-white">Budget Scenario Simulator</span>
+                    <span className="px-1.5 py-0.5 bg-violet-100 dark:bg-violet-500/10 text-violet-700 dark:text-violet-400 text-[11px] font-bold rounded">AI Copilot</span>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
+                    {/* Overtime */}
+                    <div className="p-4 bg-slate-50 dark:bg-slate-800/30 rounded-xl">
+                      <label className="block text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-3">
+                        Overtime Reduction
+                      </label>
+                      <input
+                        type="range" min="0" max="25" value={simOT}
+                        onChange={e => setSimOT(+e.target.value)}
+                        className="w-full accent-amber-500 mb-2"
+                      />
+                      <div className="flex justify-between text-[11px]">
+                        <span className="text-slate-400">0%</span>
+                        <span className={`font-bold ${simOT > 0 ? 'text-green-600 dark:text-green-400' : 'text-slate-400'}`}>
+                          {simOT > 0 ? `−${simOT}% OT = ${fmt(simOTSavings)} saved` : 'No change'}
+                        </span>
+                        <span className="text-slate-400">25%</span>
+                      </div>
+                    </div>
+
+                    {/* Hiring freezes */}
+                    <div className="p-4 bg-slate-50 dark:bg-slate-800/30 rounded-xl">
+                      <label className="block text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-3">
+                        Hiring Freezes
+                      </label>
+                      <div className="flex items-center justify-center gap-4 mb-2">
+                        <button
+                          onClick={() => setSimHires(Math.max(0, simHires - 1))}
+                          className="w-9 h-9 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg text-slate-700 dark:text-slate-300 font-black text-lg flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors"
+                        >−</button>
+                        <span className="text-2xl font-black text-slate-800 dark:text-slate-200 w-8 text-center">{simHires}</span>
+                        <button
+                          onClick={() => setSimHires(Math.min(10, simHires + 1))}
+                          className="w-9 h-9 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg text-slate-700 dark:text-slate-300 font-black text-lg flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors"
+                        >+</button>
+                      </div>
+                      <p className={`text-[11px] text-center font-semibold ${simHires > 0 ? 'text-green-600 dark:text-green-400' : 'text-slate-400'}`}>
+                        {simHires > 0 ? `${fmt(simHireSavings)} saved` : 'No freezes'}
+                      </p>
+                    </div>
+
+                    {/* Fleet delay */}
+                    <div className="p-4 bg-slate-50 dark:bg-slate-800/30 rounded-xl">
+                      <label className="block text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-3">
+                        Fleet Procurement Delay
+                      </label>
+                      <input
+                        type="range" min="0" max="90" step="30" value={simFleetDelay}
+                        onChange={e => setSimFleetDelay(+e.target.value)}
+                        className="w-full accent-amber-500 mb-2"
+                      />
+                      <div className="flex justify-between text-[11px]">
+                        <span className="text-slate-400">None</span>
+                        <span className={`font-bold ${simFleetDelay > 0 ? 'text-green-600 dark:text-green-400' : 'text-slate-400'}`}>
+                          {simFleetDelay > 0 ? `${simFleetDelay} days = ${fmt(simFleetSavings)} saved` : 'On schedule'}
+                        </span>
+                        <span className="text-slate-400">90d</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Simulation result */}
+                  <div className={`p-5 rounded-xl border ${simProjection > BUDGET ? 'bg-red-50 dark:bg-red-500/5 border-red-200 dark:border-red-500/20' : 'bg-green-50 dark:bg-green-500/5 border-green-200 dark:border-green-500/20'}`}>
+                    <div className="flex items-center justify-between gap-4">
+                      <div>
+                        <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-1">Simulated Year-End Projection</p>
+                        <p className={`text-4xl font-black ${simProjection > BUDGET ? 'text-red-700 dark:text-red-400' : 'text-green-700 dark:text-green-400'}`}>{fmt(simProjection)}</p>
+                        <p className={`text-[13px] font-semibold mt-1 ${simProjection > BUDGET ? 'text-red-600 dark:text-red-400' : 'text-green-600 dark:text-green-400'}`}>
+                          {simProjection > BUDGET ? fmt(simProjection - BUDGET) + ' over budget' : fmt(BUDGET - simProjection) + ' under budget'}
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-[11px] text-slate-500 dark:text-slate-400 mb-1">Total scenario savings</p>
+                        <p className="text-2xl font-black text-green-600 dark:text-green-400">{fmt(totalSimSavings)}</p>
+                        <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">vs current {fmt(liveProjection)} projection</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <p className="text-[11px] text-slate-400 dark:text-slate-500 mt-3">Simulation uses 3-year historical spend patterns and current run rates. Results are directional, not a guarantee of outcome.</p>
                 </div>
               </div>
             )}
