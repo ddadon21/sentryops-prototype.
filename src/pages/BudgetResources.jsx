@@ -236,8 +236,18 @@ export default function BudgetResources() {
 
   const overBudgetProjection = fiscalYear.projectedYearEnd - fiscalYear.totalBudget;
   const isOverBudgetProjection = overBudgetProjection > 0;
-  const primaryBtn = 'px-4 py-2 rounded-lg text-sm font-semibold transition-colors';
-  const secondaryBtn = 'px-4 py-2 rounded-lg text-sm font-semibold border border-slate-300 dark:border-slate-600/40 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/40 transition-colors';
+  const primaryBtn = 'inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold bg-amber-500 hover:bg-amber-600 text-white border border-amber-600/40 transition-colors';
+  const secondaryBtn = 'inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold bg-white dark:bg-slate-800/60 hover:bg-slate-50 dark:hover:bg-slate-700/60 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700/40 transition-colors';
+  const ghostBtn = 'inline-flex items-center gap-1 text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors';
+  const CARD = 'bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl';
+  const CARD_HEADER = 'flex items-center justify-between px-5 py-3.5 border-b border-slate-100 dark:border-slate-800/60';
+  const BADGE = (color) => {
+    if (color === 'red') return 'px-2 py-0.5 text-[10px] font-bold rounded bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-400';
+    if (color === 'amber') return 'px-2 py-0.5 text-[10px] font-bold rounded bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400';
+    if (color === 'green') return 'px-2 py-0.5 text-[10px] font-bold rounded bg-green-100 dark:bg-green-500/10 text-green-700 dark:text-green-400';
+    if (color === 'violet') return 'px-2 py-0.5 text-[10px] font-bold rounded bg-violet-100 dark:bg-violet-500/10 text-violet-700 dark:text-violet-400';
+    return 'px-2 py-0.5 text-[10px] font-bold rounded bg-slate-100 dark:bg-slate-700/40 text-slate-600 dark:text-slate-400';
+  };
 
   const fmt = (v) => {
     const abs = Math.abs(v);
@@ -793,15 +803,14 @@ export default function BudgetResources() {
               </div>
             </div>
 
-            {/* ── LAYER 1: AI Command Center ───────────────────────────── */}
-            <div className="mb-6 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none overflow-hidden">
-              <div className="flex items-center justify-between px-5 py-4 border-b border-slate-200 dark:border-slate-700/30">
+            <div className="mb-5 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none overflow-hidden">
+              <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-100 dark:border-slate-800/60">
                 <div className="flex items-center gap-3">
                   <Zap className="w-4 h-4 text-amber-500" />
-                  <span className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wide">AI Command Center</span>
+                  <span className="text-sm font-semibold text-slate-900 dark:text-white">AI Command Center</span>
                   {isLiveOverBudget && (
-                    <span className="flex items-center gap-1.5 px-2 py-0.5 bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-400 text-[11px] font-bold rounded">
-                      <ShieldAlert className="w-3 h-3" /> Projected Overrun: {fmt(liveOverrun)}
+                    <span className={BADGE('red') + ' flex items-center gap-1'}>
+                      <ShieldAlert className="w-3 h-3" /> Overrun: {fmt(liveOverrun)}
                     </span>
                   )}
                 </div>
@@ -862,22 +871,21 @@ export default function BudgetResources() {
               </div>
             </div>
 
-            {/* ── LAYER 2: Decision Center ─────────────────────────────── */}
-            <div className="flex items-center gap-3 mb-3 mt-2">
-              <span className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">Decision Center</span>
-              <div className="flex-1 h-px bg-slate-200 dark:bg-slate-700/40" />
-              <span className="text-[10px] text-slate-400 dark:text-slate-500">Expand for full detail</span>
+            {/* Decision Center */}
+            <div className="flex items-center gap-3 mb-3 mt-1">
+              <span className="text-[9px] font-black text-slate-300 dark:text-slate-600 uppercase tracking-[0.2em]">Decision Center</span>
+              <div className="flex-1 h-px bg-slate-100 dark:bg-slate-800/80" />
             </div>
 
             {/* Recommended Actions */}
-            <div className="mb-6 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none overflow-hidden">
-              <div className="flex items-center justify-between px-5 py-4 border-b border-slate-200 dark:border-slate-700/30">
-                <div className="flex items-center gap-3">
-                  <Zap className="w-4 h-4 text-slate-500 dark:text-slate-400" />
+            <div className="mb-4 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none overflow-hidden">
+              <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-100 dark:border-slate-800/60">
+                <div className="flex items-center gap-2.5">
+                  <Zap className="w-4 h-4 text-slate-400 dark:text-slate-500" />
                   <span className="text-sm font-semibold text-slate-900 dark:text-white">Recommended Actions</span>
-                  <span className="text-[11px] text-slate-500 dark:text-slate-400 hidden sm:inline">{recommendedActions.length} actions · Est. impact: {fmt(totalActionSavings)}</span>
+                  <span className="text-[11px] text-slate-400 dark:text-slate-500 hidden sm:inline">{recommendedActions.length} actions · {fmt(totalActionSavings)} potential</span>
                 </div>
-                <span className="px-1.5 py-0.5 bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400 text-[11px] font-semibold rounded">Action Required</span>
+                <span className={BADGE('amber')}>Action Required</span>
               </div>
 
               {/* Impact Summary */}
@@ -977,7 +985,7 @@ export default function BudgetResources() {
                     onClick={() => setActionSort(s.id)}
                     className={`px-2.5 py-1 text-[11px] font-semibold rounded-lg transition-colors ${
                       actionSort === s.id
-                        ? 'bg-blue-600 text-white'
+                        ? 'bg-amber-500 text-white border border-amber-600/30'
                         : 'bg-slate-100 dark:bg-slate-700/40 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700/60'
                     }`}
                   >
@@ -994,7 +1002,7 @@ export default function BudgetResources() {
                   const isApplied = appliedActionIds.has(action.id);
                   const isExpanded = expandedActionId === action.id;
                   return (
-                    <div key={action.id} className={`px-5 py-4 transition-colors ${isApplied ? 'bg-green-50/60 dark:bg-green-500/5' : 'hover:bg-slate-50 dark:hover:bg-slate-800/10'}`}>
+                    <div key={action.id} className={`px-5 py-3 transition-colors ${isApplied ? 'bg-green-50/60 dark:bg-green-500/5' : 'hover:bg-slate-50 dark:hover:bg-slate-800/10'}`}>
                       <div className="flex items-start gap-3">
                         <span className={`text-[11px] font-bold w-4 flex-shrink-0 tabular-nums mt-0.5 ${isApplied ? 'text-green-500 dark:text-green-400' : 'text-slate-400'}`}>
                           {isApplied ? '✓' : idx + 1}
@@ -1115,12 +1123,12 @@ export default function BudgetResources() {
             <div className="mb-6 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none">
               <button
                 onClick={() => setAiInsightsExpanded(!aiInsightsExpanded)}
-                className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-slate-50 dark:hover:bg-slate-800/10 transition-colors rounded-xl"
+                className="w-full flex items-center justify-between px-5 py-3.5 text-left hover:bg-slate-50 dark:hover:bg-slate-800/10 transition-colors rounded-xl"
               >
-                <div className="flex items-center gap-3">
-                  <Bot className="w-4 h-4 text-slate-500 dark:text-slate-400" />
-                  <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">Budget Intelligence</span>
-                  <span className="px-1.5 py-0.5 bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-400 text-[11px] font-semibold rounded">1 Alert</span>
+                <div className="flex items-center gap-2.5">
+                  <Bot className="w-4 h-4 text-slate-400 dark:text-slate-500" />
+                  <span className="text-sm font-semibold text-slate-900 dark:text-white">Budget Intelligence</span>
+                  <span className={BADGE('red')}>1 Alert</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <span className="hidden sm:inline text-[10px] text-slate-500">AI-assisted · Updated 2 min ago</span>
@@ -1139,27 +1147,27 @@ export default function BudgetResources() {
                     ].map(item => {
                       const Icon = item.icon;
                       return (
-                        <div key={item.rank} className="flex items-center gap-4 px-5 py-3.5 hover:bg-slate-50 dark:hover:bg-slate-800/10 transition-colors">
-                          <span className="text-[11px] font-bold text-slate-400 w-4 flex-shrink-0 tabular-nums">{item.rank}</span>
-                          <Icon className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 flex-shrink-0" />
+                        <div key={item.rank} className="flex items-center gap-3 px-5 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800/10 transition-colors">
+                          <span className="text-[11px] font-bold text-slate-300 dark:text-slate-600 w-4 flex-shrink-0 tabular-nums">{item.rank}</span>
+                          <Icon className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500 flex-shrink-0" />
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-0.5 flex-wrap">
-                              <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded flex-shrink-0 ${item.urgencyBg} ${item.urgencyColor}`}>{item.urgency}</span>
-                              <span className="text-[13px] font-semibold text-slate-800 dark:text-slate-200">{item.action}</span>
+                              <span className={`${BADGE(item.urgency === 'Critical' ? 'red' : item.urgency === 'High' ? 'amber' : '')} flex-shrink-0`}>{item.urgency}</span>
+                              <span className="text-[12px] font-semibold text-slate-800 dark:text-slate-200">{item.action}</span>
                             </div>
-                            <p className="text-[12px] text-slate-500 dark:text-slate-400">{item.outcome}</p>
+                            <p className="text-[11px] text-slate-500 dark:text-slate-400">{item.outcome}</p>
                           </div>
-                          <button onClick={() => setReallocationModal(true)} className={`flex-shrink-0 ${secondaryBtn}`}>Apply</button>
+                          <button onClick={() => setReallocationModal(true)} className={`flex-shrink-0 ${secondaryBtn}`}>Review</button>
                         </div>
                       );
                     })}
                   </div>
-                  <div className="px-5 py-3 border-t border-slate-200 dark:border-slate-700/30 flex items-center justify-between bg-slate-50 dark:bg-slate-900/20">
-                    <button onClick={() => setActiveTab('forecast')} className={`flex items-center gap-2 ${secondaryBtn}`}>
+                  <div className="px-5 py-3 border-t border-slate-100 dark:border-slate-800/60 flex items-center justify-between">
+                    <button onClick={() => setActiveTab('forecast')} className={ghostBtn}>
                       <LineChart className="w-3.5 h-3.5" /> View Full Forecast
                     </button>
-                    <button onClick={() => setReallocationModal(true)} className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold bg-blue-600 text-white border border-blue-700 hover:bg-blue-700 transition-colors">
-                      <RefreshCw className="w-3.5 h-3.5" /> Open Reallocation Planner
+                    <button onClick={() => setReallocationModal(true)} className={secondaryBtn}>
+                      <RefreshCw className="w-3.5 h-3.5" /> Reallocation Planner
                     </button>
                   </div>
                 </div>
@@ -1170,12 +1178,12 @@ export default function BudgetResources() {
             <div className="mb-6 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none">
               <button
                 onClick={() => setPredictiveExpanded(!predictiveExpanded)}
-                className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-slate-50 dark:hover:bg-slate-800/10 transition-colors rounded-xl"
+                className="w-full flex items-center justify-between px-5 py-3.5 text-left hover:bg-slate-50 dark:hover:bg-slate-800/10 transition-colors rounded-xl"
               >
-                <div className="flex items-center gap-3">
-                  <Activity className="w-4 h-4 text-violet-500 dark:text-violet-400" />
-                  <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">Predictive Spend Forecast</span>
-                  <span className="px-1.5 py-0.5 bg-violet-100 dark:bg-violet-500/10 text-violet-700 dark:text-violet-400 text-[11px] font-semibold rounded">3 Spikes Detected</span>
+                <div className="flex items-center gap-2.5">
+                  <Activity className="w-4 h-4 text-slate-400 dark:text-slate-500" />
+                  <span className="text-sm font-semibold text-slate-900 dark:text-white">Predictive Spend Forecast</span>
+                  <span className={BADGE('violet')}>3 Spikes Detected</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <span className="hidden sm:inline text-[10px] text-slate-500">Based on 3-year spending patterns</span>
@@ -1189,81 +1197,47 @@ export default function BudgetResources() {
                       Based on 3 years of historical patterns, the model predicts three elevated-spend windows before fiscal year-end. Preventive action now reduces exposure before each spike arrives.
                     </p>
                   </div>
-                  <div className="divide-y divide-slate-100 dark:divide-slate-700/20">
+                  <div className="px-5 pt-3 pb-1">
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400 mb-3">Based on 3-year historical patterns. Preventive action now reduces exposure before each spike arrives.</p>
+                    <div className="space-y-2">
                     {[
-                      {
-                        window: 'November 2024',
-                        daysOut: 2,
-                        risk: 'High',
-                        driver: 'Holiday season overtime surge',
-                        detail: 'Nov historically runs 18–22% above baseline OT. With current utilization at 92%, estimated spike is $180K. Pattern is consistent across all 3 prior years.',
-                        amount: 180000,
-                        mitigated: true,
-                        mitigationAction: 'Action #2: OT cap covers this window',
-                      },
-                      {
-                        window: 'December 15–31, 2024',
-                        daysOut: 46,
-                        risk: 'Medium',
-                        driver: 'Year-end equipment & supply rush',
-                        detail: 'Divisions historically spend ~$95K of unplanned discretionary budget in the final 2 weeks to avoid "losing" carryover budget. Freeze order prevents this.',
-                        amount: 95000,
-                        mitigated: true,
-                        mitigationAction: 'Action #4: Support Services freeze covers this',
-                      },
-                      {
-                        window: 'Q1 FY2025 Carry-overs',
-                        daysOut: 63,
-                        risk: 'Low',
-                        driver: 'Committed spend rolling into new fiscal year',
-                        detail: '$240K of currently committed funds will convert to spend in Q1 FY2025. Budget impact is known and already included in next year\'s planning.',
-                        amount: 240000,
-                        mitigated: false,
-                        mitigationAction: null,
-                      },
+                      { window: 'November 2024', daysOut: 2, risk: 'High', driver: 'Holiday season OT surge — est. $180K spike', amount: 180000, mitigated: true, mitigationAction: 'Action #2: OT cap covers this window' },
+                      { window: 'Dec 15–31, 2024', daysOut: 46, risk: 'Medium', driver: 'Year-end discretionary rush — est. $95K spike', amount: 95000, mitigated: true, mitigationAction: 'Action #4: Support Services freeze covers this' },
+                      { window: 'Q1 FY2025 Carry-overs', daysOut: 63, risk: 'Low', driver: '$240K committed converting to spend — already planned', amount: 240000, mitigated: false, mitigationAction: null },
                     ].map((spike) => (
-                      <div key={spike.window} className="px-5 py-4 flex items-start gap-4">
-                        <div className="flex-shrink-0 text-center w-14">
-                          <p className="text-[10px] font-bold text-slate-400 uppercase">In</p>
-                          <p className="text-xl font-bold text-slate-700 dark:text-slate-300">{spike.daysOut}</p>
-                          <p className="text-[10px] text-slate-400">days</p>
+                      <div key={spike.window} className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-slate-50 dark:bg-slate-800/30 border border-slate-100 dark:border-slate-700/20">
+                        <div className="w-10 text-center flex-shrink-0">
+                          <p className="text-[17px] font-black text-slate-700 dark:text-slate-300 leading-none">{spike.daysOut}</p>
+                          <p className="text-[9px] text-slate-400 uppercase tracking-wide">days</p>
                         </div>
+                        <div className="w-px h-8 bg-slate-200 dark:bg-slate-700/40 flex-shrink-0" />
+                        <span className={`flex-shrink-0 ${BADGE(spike.risk === 'High' ? 'red' : spike.risk === 'Medium' ? 'amber' : '')}`}>
+                          {spike.risk}
+                        </span>
                         <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 mb-1 flex-wrap">
-                            <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
-                              spike.risk === 'High' ? 'bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-400' :
-                              spike.risk === 'Medium' ? 'bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400' :
-                              'bg-slate-100 dark:bg-slate-700/40 text-slate-600 dark:text-slate-400'
-                            }`}>{spike.risk} Risk</span>
-                            <span className="text-[13px] font-semibold text-slate-800 dark:text-slate-200">{spike.window}</span>
-                            <span className="text-[12px] text-slate-500 dark:text-slate-400">— {spike.driver}</span>
-                          </div>
-                          <p className="text-[12px] text-slate-500 dark:text-slate-400 mb-1.5 leading-relaxed">{spike.detail}</p>
-                          {spike.mitigated ? (
-                            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-green-50 dark:bg-green-500/5 border border-green-200 dark:border-green-500/20 rounded-lg">
-                              <CheckCircle className="w-3 h-3 text-green-600 dark:text-green-400" />
-                              <span className="text-[11px] font-semibold text-green-700 dark:text-green-400">{spike.mitigationAction}</span>
-                            </div>
-                          ) : (
-                            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-slate-100 dark:bg-slate-700/30 border border-slate-200 dark:border-slate-600/30 rounded-lg">
-                              <Info className="w-3 h-3 text-slate-500 dark:text-slate-400" />
-                              <span className="text-[11px] text-slate-600 dark:text-slate-400">Included in FY2025 planning — no action needed</span>
-                            </div>
-                          )}
+                          <p className="text-[12px] font-semibold text-slate-800 dark:text-slate-200 truncate">{spike.window}</p>
+                          <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate">{spike.driver}</p>
                         </div>
-                        <div className="flex-shrink-0 text-right">
-                          <p className={`text-[14px] font-bold ${spike.mitigated ? 'text-green-600 dark:text-green-400 line-through opacity-60' : 'text-amber-700 dark:text-amber-400'}`}>
+                        <div className="flex-shrink-0 flex items-center gap-2">
+                          {spike.mitigated ? (
+                            <span className="flex items-center gap-1 text-[10px] font-semibold text-green-600 dark:text-green-400">
+                              <CheckCircle className="w-3 h-3" /> Mitigated
+                            </span>
+                          ) : (
+                            <span className="text-[10px] font-semibold text-slate-400">Planned</span>
+                          )}
+                          <span className={`text-[12px] font-bold tabular-nums ${spike.mitigated ? 'text-green-600 dark:text-green-400 line-through opacity-50' : 'text-amber-700 dark:text-amber-400'}`}>
                             +{fmt(spike.amount)}
-                          </p>
-                          <p className="text-[10px] text-slate-400">{spike.mitigated ? 'mitigated' : 'exposure'}</p>
+                          </span>
                         </div>
                       </div>
                     ))}
+                    </div>
                   </div>
-                  <div className="px-5 py-3 border-t border-slate-200 dark:border-slate-700/30 flex items-center justify-between bg-slate-50 dark:bg-slate-900/20">
-                    <span className="text-[11px] text-slate-500 dark:text-slate-400">2 of 3 spikes mitigated by recommended actions · Total exposure: $515K</span>
-                    <button onClick={() => setActiveTab('forecast')} className={`flex items-center gap-2 text-[12px] font-semibold text-blue-600 dark:text-blue-400 hover:underline`}>
-                      Full Forecast →
+                  <div className="px-5 py-3 border-t border-slate-100 dark:border-slate-800/60 flex items-center justify-between">
+                    <span className="text-[11px] text-slate-500 dark:text-slate-400">2 of 3 spikes mitigated · Total exposure: $515K</span>
+                    <button onClick={() => setActiveTab('forecast')} className={ghostBtn}>
+                      Full Forecast <ArrowUpRight className="w-3.5 h-3.5" />
                     </button>
                   </div>
                 </div>
@@ -1274,12 +1248,12 @@ export default function BudgetResources() {
             <div className="mb-6 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none">
               <button
                 onClick={() => setAuditLogExpanded(!auditLogExpanded)}
-                className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-slate-50 dark:hover:bg-slate-800/10 transition-colors rounded-xl"
+                className="w-full flex items-center justify-between px-5 py-3.5 text-left hover:bg-slate-50 dark:hover:bg-slate-800/10 transition-colors rounded-xl"
               >
-                <div className="flex items-center gap-3">
-                  <FileText className="w-4 h-4 text-slate-500 dark:text-slate-400" />
-                  <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">Decision Audit Log</span>
-                  <span className="px-1.5 py-0.5 bg-slate-100 dark:bg-slate-700/40 text-slate-600 dark:text-slate-400 text-[11px] font-semibold rounded">{auditLog.length} entries</span>
+                <div className="flex items-center gap-2.5">
+                  <FileText className="w-4 h-4 text-slate-400 dark:text-slate-500" />
+                  <span className="text-sm font-semibold text-slate-900 dark:text-white">Decision Audit Log</span>
+                  <span className={BADGE('')}>{auditLog.length} entries</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <span className="hidden sm:inline text-[10px] text-slate-500">Who applied what · when · outcome</span>
@@ -1287,46 +1261,39 @@ export default function BudgetResources() {
                 </div>
               </button>
               {auditLogExpanded && (
-                <div className="border-t border-slate-200 dark:border-slate-700/30">
+                <div className="border-t border-slate-100 dark:border-slate-800/60">
                   {auditLog.length === 0 ? (
-                    <div className="px-5 py-8 text-center text-sm text-slate-400 dark:text-slate-500">No actions have been applied yet.</div>
+                    <div className="px-5 py-6 text-center text-xs text-slate-400 dark:text-slate-500">No actions applied yet.</div>
                   ) : (
-                    <div className="divide-y divide-slate-100 dark:divide-slate-700/20">
+                    <div className="divide-y divide-slate-100 dark:divide-slate-800/60">
                       {auditLog.map((entry) => (
-                        <div key={entry.id} className="px-5 py-4 flex items-start gap-4">
-                          <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-700/40 flex items-center justify-center flex-shrink-0 mt-0.5">
-                            <BadgeCheck className="w-4 h-4 text-green-600 dark:text-green-400" />
-                          </div>
+                        <div key={entry.id} className="px-5 py-2.5 flex items-center gap-3">
+                          <BadgeCheck className="w-4 h-4 text-green-500 dark:text-green-400 flex-shrink-0" />
                           <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2 mb-0.5 flex-wrap">
-                              <span className="text-[13px] font-semibold text-slate-800 dark:text-slate-200">{entry.actionTitle}</span>
-                              <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
-                                entry.riskLevel === 'Low' ? 'bg-green-100 dark:bg-green-500/10 text-green-700 dark:text-green-400' :
-                                entry.riskLevel === 'Medium' ? 'bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400' :
-                                'bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-400'
-                              }`}>{entry.riskLevel} Risk</span>
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <span className="text-[12px] font-semibold text-slate-800 dark:text-slate-200">{entry.actionTitle}</span>
+                              <span className={BADGE(entry.riskLevel === 'Low' ? 'green' : entry.riskLevel === 'Medium' ? 'amber' : 'red')}>{entry.riskLevel}</span>
                             </div>
-                            <p className="text-[12px] text-slate-500 dark:text-slate-400 mb-1">{entry.note}</p>
-                            <div className="flex items-center gap-2 text-[11px] text-slate-400 dark:text-slate-500">
-                              <Users className="w-3 h-3" />
-                              <span className="font-medium text-slate-600 dark:text-slate-400">{entry.appliedBy}</span>
+                            <div className="flex items-center gap-2 text-[10px] text-slate-400 dark:text-slate-500 mt-0.5">
+                              <span className="font-medium">{entry.appliedBy}</span>
                               <span>·</span>
                               <span>{fmtAuditDate(entry.appliedAt)}</span>
+                              <span>·</span>
+                              <span className="truncate">{entry.note}</span>
                             </div>
                           </div>
-                          <div className="flex-shrink-0 text-right">
-                            <p className="text-[13px] font-bold text-green-600 dark:text-green-400">{fmt(entry.savings)}</p>
-                            <p className="text-[10px] text-slate-400">saved</p>
-                          </div>
+                          {entry.savings > 0 && (
+                            <span className="flex-shrink-0 text-[12px] font-bold text-green-600 dark:text-green-400 tabular-nums">{fmt(entry.savings)}</span>
+                          )}
                         </div>
                       ))}
                     </div>
                   )}
-                  <div className="px-5 py-3 border-t border-slate-200 dark:border-slate-700/30 flex items-center justify-between bg-slate-50 dark:bg-slate-900/20">
+                  <div className="px-5 py-3 border-t border-slate-100 dark:border-slate-800/60 flex items-center justify-between">
                     <span className="text-[11px] text-slate-500 dark:text-slate-400">
-                      Total recovered: <span className="font-semibold text-green-600 dark:text-green-400">{fmt(auditLog.reduce((s, e) => s + e.savings, 0))}</span>
+                      Total savings applied: <span className="font-bold text-green-600 dark:text-green-400">{fmt(auditLog.reduce((s, e) => s + e.savings, 0))}</span>
                     </span>
-                    <button className={`flex items-center gap-2 text-[12px] font-semibold text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 transition-colors`}>
+                    <button className={ghostBtn} onClick={handleExportPDF}>
                       <Download className="w-3.5 h-3.5" /> Export Log
                     </button>
                   </div>
@@ -1334,11 +1301,10 @@ export default function BudgetResources() {
               )}
             </div>
 
-            {/* ── LAYER 3: Deep Analytics ──────────────────────────────── */}
-            <div className="flex items-center gap-3 mb-4 mt-2">
-              <span className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">Deep Analytics</span>
-              <div className="flex-1 h-px bg-slate-200 dark:bg-slate-700/40" />
-              <span className="text-[10px] text-slate-400 dark:text-slate-500">Analyst tools · drill-down data</span>
+            {/* Deep Analytics */}
+            <div className="flex items-center gap-3 mb-4 mt-1">
+              <span className="text-[9px] font-black text-slate-300 dark:text-slate-600 uppercase tracking-[0.2em]">Deep Analytics</span>
+              <div className="flex-1 h-px bg-slate-100 dark:bg-slate-800/80" />
             </div>
 
             {/* Tabs */}
@@ -2902,7 +2868,7 @@ export default function BudgetResources() {
             </div>
             <div className="sticky bottom-0 p-4 border-t border-border bg-white dark:bg-slate-900 flex items-center justify-end gap-2">
               <button className={secondaryBtn}>Compare to Previous</button>
-              <button className={`${primaryBtn} bg-blue-600 text-white border border-blue-700 hover:bg-blue-700`}>Export Report</button>
+              <button className={primaryBtn} onClick={handleExportPDF}><Download className="w-3.5 h-3.5" /> Export Report</button>
             </div>
           </div>
         </div>
