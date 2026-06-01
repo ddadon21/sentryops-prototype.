@@ -33,6 +33,26 @@ export default function BudgetResources() {
   const [toast, setToast] = useState(null); // { id, message, saving }
   const [flashSet, setFlashSet] = useState(new Set()); // element keys currently flashing
   const toastTimerRef = useRef(null);
+  const [pendingPOsModal, setPendingPOsModal] = useState(false);
+  const [poSpentDelta, setPoSpentDelta] = useState(0);
+  const [poAvailableDelta, setPoAvailableDelta] = useState(0);
+  const [pendingPOs, setPendingPOs] = useState([
+    { id: 'po-001', vendor: 'Fleet Solutions Inc.', description: 'Q4 Fleet Maintenance — Patrol vehicles', division: 'Support Services', amount: 420000, submitted: 'Nov 2, 2024', priority: 'High', category: 'Fleet' },
+    { id: 'po-002', vendor: 'Axon Enterprise', description: 'Body camera refresh — 85 units', division: 'Patrol Division', amount: 248500, submitted: 'Oct 28, 2024', priority: 'High', category: 'Equipment' },
+    { id: 'po-003', vendor: 'Motorola Solutions', description: 'Radio equipment & maintenance contract', division: 'Support Services', amount: 187000, submitted: 'Nov 4, 2024', priority: 'Medium', category: 'Communications' },
+    { id: 'po-004', vendor: 'Correct Care Solutions', description: 'Medical services Q4 — Detention Division', division: 'Detention Division', amount: 165000, submitted: 'Nov 1, 2024', priority: 'High', category: 'Medical' },
+    { id: 'po-005', vendor: 'CDW Government', description: 'IT infrastructure refresh — 85 workstations', division: 'Administrative Services', amount: 142000, submitted: 'Oct 30, 2024', priority: 'Medium', category: 'IT' },
+    { id: 'po-006', vendor: 'Aramark Correctional', description: 'Inmate food services — Nov & Dec', division: 'Detention Division', amount: 136000, submitted: 'Nov 3, 2024', priority: 'High', category: 'Operations' },
+    { id: 'po-007', vendor: 'Galls LLC', description: 'Patrol uniforms & tactical gear Q4', division: 'Patrol Division', amount: 89500, submitted: 'Oct 25, 2024', priority: 'Low', category: 'Equipment' },
+    { id: 'po-008', vendor: 'Taser International', description: 'CEW device replacements — 32 units', division: 'Patrol Division', amount: 76800, submitted: 'Nov 5, 2024', priority: 'Medium', category: 'Equipment' },
+    { id: 'po-009', vendor: 'Georgia Power', description: 'Facility utilities — Nov & Dec', division: 'Detention Division', amount: 68000, submitted: 'Nov 1, 2024', priority: 'High', category: 'Facilities' },
+    { id: 'po-010', vendor: 'SafariLand Group', description: 'Body armor replacement — 45 units', division: 'Patrol Division', amount: 58500, submitted: 'Oct 27, 2024', priority: 'High', category: 'Equipment' },
+    { id: 'po-011', vendor: 'WatchGuard Video', description: 'In-car video maintenance contract', division: 'Patrol Division', amount: 45200, submitted: 'Nov 6, 2024', priority: 'Low', category: 'Equipment' },
+    { id: 'po-012', vendor: 'Lexipol LLC', description: 'Policy management software renewal', division: 'Administrative Services', amount: 38400, submitted: 'Oct 29, 2024', priority: 'Medium', category: 'IT' },
+    { id: 'po-013', vendor: 'Axon Enterprise', description: 'Taser cartridge resupply Q4', division: 'Patrol Division', amount: 34200, submitted: 'Nov 7, 2024', priority: 'Low', category: 'Equipment' },
+    { id: 'po-014', vendor: 'Stericycle Inc.', description: 'Medical waste disposal — Nov & Dec', division: 'Detention Division', amount: 28900, submitted: 'Nov 3, 2024', priority: 'Low', category: 'Facilities' },
+    { id: 'po-015', vendor: 'Office Depot Business', description: 'Office supplies — all divisions Q4', division: 'Administrative Services', amount: 24000, submitted: 'Nov 5, 2024', priority: 'Low', category: 'Supplies' },
+  ]);
 
   // Budget data
   const fiscalYear = {
@@ -346,7 +366,10 @@ export default function BudgetResources() {
   const liveProjection = BASE_PROJECTION - appliedSavings;
   const liveOverrun = liveProjection - BUDGET; // positive = over, negative = under budget
   const isLiveOverBudget = liveOverrun > 0;
-  const liveAvailable = fiscalYear.available + appliedSavings;
+  const liveAvailable = fiscalYear.available + appliedSavings + poAvailableDelta;
+  const liveSpent = fiscalYear.spent + poSpentDelta;
+  const liveCommitted = fiscalYear.committed - poSpentDelta - poAvailableDelta;
+  const liveCommittedPct = (liveCommitted / fiscalYear.totalBudget) * 100;
   const pendingActions = recommendedActions.filter(a => !appliedActionIds.has(a.id));
   const pendingSavings = pendingActions.reduce((sum, a) => sum + a.impact, 0);
   const projectionAfterAllPending = liveProjection - pendingSavings;
@@ -360,6 +383,129 @@ export default function BudgetResources() {
   const flash = (keys) => {
     setFlashSet(new Set(keys));
     setTimeout(() => setFlashSet(new Set()), 1100);
+  };
+
+  const showToast = (message) => {
+    const tid = Date.now();
+    setToast({ id: tid, message, saving: 0 });
+    if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+    toastTimerRef.current = setTimeout(() => setToast(null), 4500);
+  };
+
+  const approvePO = (po) => {
+    setPoSpentDelta(prev => prev + po.amount);
+    setPendingPOs(prev => prev.filter(p => p.id !== po.id));
+    setAuditLog(prev => [{
+      id: `al-${Date.now()}`,
+      actionTitle: `PO Approved — ${po.vendor}: ${po.description}`,
+      appliedBy: 'Sheriff D. Williams',
+      appliedAt: new Date(),
+      savings: 0,
+      riskLevel: 'Low',
+      note: `${fmt(po.amount)} moved from Committed to Spent.`,
+    }, ...prev]);
+    showToast(`PO Approved — ${fmt(po.amount)} moved to Spent (${po.vendor})`);
+  };
+
+  const denyPO = (po) => {
+    setPoAvailableDelta(prev => prev + po.amount);
+    setPendingPOs(prev => prev.filter(p => p.id !== po.id));
+    setAuditLog(prev => [{
+      id: `al-${Date.now()}`,
+      actionTitle: `PO Denied — ${po.vendor}: ${po.description}`,
+      appliedBy: 'Sheriff D. Williams',
+      appliedAt: new Date(),
+      savings: po.amount,
+      riskLevel: 'Low',
+      note: `${fmt(po.amount)} returned to Available budget.`,
+    }, ...prev]);
+    showToast(`PO Denied — ${fmt(po.amount)} returned to Available`);
+  };
+
+  const handleExportPDF = () => {
+    const auditRows = auditLog.map(e => `
+      <tr style="border-bottom:1px solid #e2e8f0">
+        <td style="padding:8px 12px;font-size:12px;color:#1e293b">${e.actionTitle}</td>
+        <td style="padding:8px 12px;font-size:12px;color:#64748b">${e.appliedBy}</td>
+        <td style="padding:8px 12px;font-size:12px;color:#64748b">${fmtDateTime(e.appliedAt)}</td>
+        <td style="padding:8px 12px;font-size:12px;font-weight:700;color:#16a34a;text-align:right">${fmt(e.savings)}</td>
+      </tr>`).join('');
+
+    const html = '<!DOCTYPE html><html><head><title>GCSO Budget Report — FY 2024</title>'
+      + '<style>body{font-family:\'Segoe UI\',Arial,sans-serif;margin:0;padding:0;color:#1e293b}'
+      + '@media print{.no-print{display:none}body{margin:0}}</style></head><body>'
+      + '<div style="background:#0f172a;color:white;padding:32px 40px 24px">'
+      + '<div style="display:flex;justify-content:space-between;align-items:flex-start">'
+      + '<div>'
+      + '<div style="font-size:11px;font-weight:700;letter-spacing:2px;color:#94a3b8;margin-bottom:4px">GCSO — OFFICIAL FISCAL DOCUMENT</div>'
+      + '<div style="font-size:28px;font-weight:800;margin-bottom:4px">Budget Report — FY 2024</div>'
+      + '<div style="font-size:14px;color:#cbd5e1">Gwinnett County Sheriff\'s Office · Fiscal Year 2024</div>'
+      + '</div>'
+      + '<div style="text-align:right">'
+      + '<div style="font-size:11px;color:#94a3b8">Generated: ' + fmtDateTime(new Date()) + '</div>'
+      + '<div style="font-size:11px;color:#94a3b8;margin-top:4px">Prepared by: Sheriff D. Williams</div>'
+      + '<div style="margin-top:8px;padding:4px 12px;background:#1d4ed8;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">CONFIDENTIAL</div>'
+      + '</div></div></div>'
+      + '<div style="padding:32px 40px">'
+      + '<h2 style="font-size:14px;font-weight:700;color:#64748b;letter-spacing:1px;text-transform:uppercase;margin:0 0 16px">Fiscal Summary</h2>'
+      + '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px">'
+      + '<div style="border:1px solid #e2e8f0;border-radius:8px;padding:16px">'
+      + '<div style="font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Total Budget</div>'
+      + '<div style="font-size:22px;font-weight:800;color:#0f172a">' + fmt(fiscalYear.totalBudget) + '</div>'
+      + '<div style="font-size:11px;color:#64748b;margin-top:4px">FY 2024</div></div>'
+      + '<div style="border:1px solid #e2e8f0;border-radius:8px;padding:16px">'
+      + '<div style="font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Spent</div>'
+      + '<div style="font-size:22px;font-weight:800;color:#0f172a">' + fmt(liveSpent) + '</div>'
+      + '<div style="font-size:11px;color:#d97706;margin-top:4px">' + fiscalYear.percentSpent + '% utilized</div></div>'
+      + '<div style="border:1px solid #e2e8f0;border-radius:8px;padding:16px">'
+      + '<div style="font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Committed</div>'
+      + '<div style="font-size:22px;font-weight:800;color:#0f172a">' + fmt(liveCommitted) + '</div>'
+      + '<div style="font-size:11px;color:#64748b;margin-top:4px">' + liveCommittedPct.toFixed(1) + '% of budget</div></div>'
+      + '<div style="border:1px solid #e2e8f0;border-radius:8px;padding:16px">'
+      + '<div style="font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Available</div>'
+      + '<div style="font-size:22px;font-weight:800;color:#16a34a">' + fmt(liveAvailable) + '</div>'
+      + '<div style="font-size:11px;color:#64748b;margin-top:4px">' + ((liveAvailable / fiscalYear.totalBudget) * 100).toFixed(1) + '% remaining</div></div>'
+      + '</div>'
+      + '<h2 style="font-size:14px;font-weight:700;color:#64748b;letter-spacing:1px;text-transform:uppercase;margin:0 0 12px">Year-End Forecast Scenarios</h2>'
+      + '<table style="width:100%;border-collapse:collapse;margin-bottom:32px;font-size:12px">'
+      + '<thead><tr style="background:#f8fafc;border-bottom:2px solid #e2e8f0">'
+      + '<th style="padding:10px 12px;text-align:left;font-weight:700;color:#64748b">Scenario</th>'
+      + '<th style="padding:10px 12px;text-align:right;font-weight:700;color:#64748b">Projected Total</th>'
+      + '<th style="padding:10px 12px;text-align:right;font-weight:700;color:#64748b">vs Budget</th>'
+      + '<th style="padding:10px 12px;text-align:right;font-weight:700;color:#64748b">Status</th>'
+      + '</tr></thead><tbody>'
+      + '<tr style="border-bottom:1px solid #e2e8f0;background:#fef2f2">'
+      + '<td style="padding:10px 12px">Current pace (no action)</td>'
+      + '<td style="padding:10px 12px;text-align:right;font-weight:700;color:#dc2626">$49.73M</td>'
+      + '<td style="padding:10px 12px;text-align:right;color:#dc2626">+$1.23M</td>'
+      + '<td style="padding:10px 12px;text-align:right;font-weight:700;color:#dc2626">OVER BUDGET</td></tr>'
+      + '<tr style="border-bottom:1px solid #e2e8f0;background:#fffbeb">'
+      + '<td style="padding:10px 12px">Conservative estimate</td>'
+      + '<td style="padding:10px 12px;text-align:right;font-weight:700;color:#d97706">$48.9M</td>'
+      + '<td style="padding:10px 12px;text-align:right;color:#d97706">+$400K</td>'
+      + '<td style="padding:10px 12px;text-align:right;font-weight:700;color:#d97706">AT RISK</td></tr>'
+      + '<tr style="border-bottom:1px solid #e2e8f0;background:#f0fdf4">'
+      + '<td style="padding:10px 12px">With cost controls (' + appliedActionIds.size + ' actions applied)</td>'
+      + '<td style="padding:10px 12px;text-align:right;font-weight:700;color:#16a34a">' + fmt(liveProjection) + '</td>'
+      + '<td style="padding:10px 12px;text-align:right;color:#16a34a">' + (isLiveOverBudget ? '+' + fmt(liveOverrun) : '-' + fmt(Math.abs(liveOverrun))) + '</td>'
+      + '<td style="padding:10px 12px;text-align:right;font-weight:700;color:#16a34a">' + (isLiveOverBudget ? 'OVER BUDGET' : 'UNDER BUDGET') + '</td></tr>'
+      + '</tbody></table>'
+      + '<h2 style="font-size:14px;font-weight:700;color:#64748b;letter-spacing:1px;text-transform:uppercase;margin:0 0 12px">Decision Audit Log</h2>'
+      + '<table style="width:100%;border-collapse:collapse;font-size:12px">'
+      + '<thead><tr style="background:#f8fafc;border-bottom:2px solid #e2e8f0">'
+      + '<th style="padding:10px 12px;text-align:left;font-weight:700;color:#64748b">Action</th>'
+      + '<th style="padding:10px 12px;text-align:left;font-weight:700;color:#64748b">Applied By</th>'
+      + '<th style="padding:10px 12px;text-align:left;font-weight:700;color:#64748b">Date/Time</th>'
+      + '<th style="padding:10px 12px;text-align:right;font-weight:700;color:#64748b">Savings</th>'
+      + '</tr></thead><tbody>'
+      + (auditRows || '<tr><td colspan="4" style="padding:12px;text-align:center;color:#94a3b8">No actions recorded</td></tr>')
+      + '</tbody></table>'
+      + '<div style="margin-top:40px;padding-top:16px;border-top:1px solid #e2e8f0;display:flex;justify-content:space-between;font-size:10px;color:#94a3b8">'
+      + '<span>GCSO Budget Report · Confidential · FY 2024</span>'
+      + '<span>Generated ' + fmtDateTime(new Date()) + '</span></div>'
+      + '</div><script>window.onload=function(){window.print();}<\/script></body></html>';
+    const win = window.open('', '_blank');
+    if (win) { win.document.write(html); win.document.close(); }
   };
 
   const applyAction = (action) => {
@@ -438,7 +584,7 @@ export default function BudgetResources() {
                   <span className="hidden sm:inline">Reallocate</span>
                 </button>
                 <button
-                  onClick={() => setExportModal(true)}
+                  onClick={handleExportPDF}
                   className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all"
                 >
                   <Download className="w-4 h-4" />
@@ -505,7 +651,7 @@ export default function BudgetResources() {
                     <CircleDollarSign className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                   </div>
                 </div>
-                <p className="text-3xl font-bold text-slate-900 dark:text-white mb-1">{fmt(fiscalYear.spent)}</p>
+                <p className="text-3xl font-bold text-slate-900 dark:text-white mb-1">{fmt(liveSpent)}</p>
                 <div className="mb-3">
                   <div className="flex justify-between text-xs mb-1.5">
                     <span className="text-slate-500 dark:text-slate-400">Budget utilization</span>
@@ -537,20 +683,25 @@ export default function BudgetResources() {
                     <Receipt className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                   </div>
                 </div>
-                <p className="text-3xl font-bold text-slate-900 dark:text-white mb-1">{fmt(fiscalYear.committed)}</p>
+                <p className="text-3xl font-bold text-slate-900 dark:text-white mb-1">{fmt(liveCommitted)}</p>
                 <div className="mb-3">
                   <div className="flex justify-between text-xs mb-1.5">
                     <span className="text-slate-500 dark:text-slate-400">Of total budget</span>
-                    <span className="font-bold text-slate-600 dark:text-slate-300">{fiscalYear.percentCommitted.toFixed(1)}%</span>
+                    <span className="font-bold text-slate-600 dark:text-slate-300">{liveCommittedPct.toFixed(1)}%</span>
                   </div>
                   <div className="w-full h-1.5 bg-slate-100 dark:bg-slate-700/50 rounded-full overflow-hidden">
-                    <div className="h-full bg-slate-400 dark:bg-slate-500 rounded-full" style={{ width: `${fiscalYear.percentCommitted}%` }} />
+                    <div className="h-full bg-amber-500 rounded-full" style={{ width: `${Math.min(liveCommittedPct, 100)}%` }} />
                   </div>
                 </div>
                 <div className="space-y-1.5 border-t border-slate-200 dark:border-slate-700/30 pt-3">
                   <div className="flex justify-between text-xs">
                     <span className="text-slate-500 dark:text-slate-400">Pending POs:</span>
-                    <span className="font-medium text-slate-700 dark:text-slate-300">23 orders</span>
+                    <button
+                      onClick={() => setPendingPOsModal(true)}
+                      className="font-semibold text-amber-600 dark:text-amber-400 hover:underline"
+                    >
+                      {pendingPOs.length} orders / {fmt(pendingPOs.reduce((s, p) => s + p.amount, 0))}
+                    </button>
                   </div>
                   <div className="flex justify-between text-xs">
                     <span className="text-slate-500 dark:text-slate-400">Largest:</span>
@@ -782,7 +933,7 @@ export default function BudgetResources() {
                         ) : (
                           <button
                             onClick={() => setConfirmActionModal(action)}
-                            className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg transition-colors"
+                            className="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 border border-amber-600 text-white text-xs font-bold uppercase tracking-wide rounded-lg transition-colors"
                           >
                             Apply Action
                           </button>
@@ -802,7 +953,7 @@ export default function BudgetResources() {
                 {pendingActions.length > 0 && (
                   <button
                     onClick={() => setApplyAllModal(true)}
-                    className="flex-shrink-0 flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-colors"
+                    className="flex-shrink-0 flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-600 border border-amber-600 text-white text-sm font-bold uppercase tracking-wide rounded-lg transition-colors"
                   >
                     <Zap className="w-3.5 h-3.5" />
                     {appliedActionIds.size > 0 ? `Apply Remaining ${pendingActions.length}` : 'Apply All'} — {fmt(pendingSavings)}
@@ -1089,18 +1240,18 @@ export default function BudgetResources() {
                       <div className="grid grid-cols-3 gap-4">
                         <div>
                           <p className="text-xs text-secondary mb-1">Spent (Cash Out)</p>
-                          <p className="text-lg font-bold text-amber-700 dark:text-amber-400">{fmt(fiscalYear.spent)}</p>
+                          <p className="text-lg font-bold text-amber-700 dark:text-amber-400">{fmt(liveSpent)}</p>
                           <p className="text-xs text-slate-500">{fiscalYear.percentSpent}%</p>
                         </div>
                         <div>
                           <p className="text-xs text-secondary mb-1">Committed (Approved, Not Paid)</p>
-                          <p className="text-lg font-bold text-purple-400">{fmt(fiscalYear.committed)}</p>
-                          <p className="text-xs text-slate-500">{fiscalYear.percentCommitted.toFixed(1)}%</p>
+                          <p className="text-lg font-bold text-purple-400">{fmt(liveCommitted)}</p>
+                          <p className="text-xs text-slate-500">{liveCommittedPct.toFixed(1)}%</p>
                         </div>
                         <div>
                           <p className="text-xs text-secondary mb-1">Available (Unallocated)</p>
-                          <p className="text-lg font-bold text-green-600 dark:text-green-400">{fmt(fiscalYear.available)}</p>
-                          <p className="text-xs text-slate-500">{((fiscalYear.available / fiscalYear.totalBudget) * 100).toFixed(1)}%</p>
+                          <p className="text-lg font-bold text-green-600 dark:text-green-400">{fmt(liveAvailable)}</p>
+                          <p className="text-xs text-slate-500">{((liveAvailable / fiscalYear.totalBudget) * 100).toFixed(1)}%</p>
                         </div>
                       </div>
                     </div>
@@ -1254,9 +1405,9 @@ export default function BudgetResources() {
                               }`}>{percent.toFixed(0)}%</span>
                             </div>
                           </div>
-                          <div className="w-full h-1 bg-slate-100 dark:bg-slate-700/50 rounded-full overflow-hidden">
+                          <div className="w-full h-2.5 bg-slate-100 dark:bg-slate-700/50 rounded-full overflow-hidden">
                             <div className={`h-full rounded-full ${
-                              percent > 100 || isAnomaly ? 'bg-red-500' : percent > 95 ? 'bg-amber-500' : 'bg-slate-400 dark:bg-slate-500'
+                              percent > 100 || isAnomaly ? 'bg-red-500' : percent > 95 ? 'bg-amber-500' : 'bg-amber-500'
                             }`} style={{ width: `${Math.min(percent, 100)}%` }} />
                           </div>
                           {isAnomaly && (
@@ -2036,7 +2187,7 @@ export default function BudgetResources() {
                 <button onClick={() => setConfirmActionModal(null)} className={`flex-1 ${secondaryBtn}`}>Cancel</button>
                 <button
                   onClick={() => applyAction(confirmActionModal)}
-                  className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-colors"
+                  className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-600 border border-amber-600 text-white text-sm font-bold uppercase tracking-wide rounded-lg transition-colors"
                 >
                   <BadgeCheck className="w-4 h-4" /> Confirm & Apply
                 </button>
@@ -2177,7 +2328,7 @@ export default function BudgetResources() {
                         toastTimerRef.current = setTimeout(() => setToast(null), 4500);
                       }}
                       disabled={selectedInModal.length === 0}
-                      className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white text-sm font-semibold rounded-lg transition-colors"
+                      className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-600 border border-amber-600 disabled:opacity-50 text-white text-sm font-bold uppercase tracking-wide rounded-lg transition-colors"
                     >
                       <BadgeCheck className="w-4 h-4" /> Apply {selectedInModal.length} Action{selectedInModal.length !== 1 ? 's' : ''} — {fmt(modalSelectedSavings)}
                     </button>
@@ -2403,6 +2554,82 @@ export default function BudgetResources() {
             <div className="sticky bottom-0 p-4 border-t border-border bg-white dark:bg-slate-900 flex items-center justify-end gap-2">
               <button className={secondaryBtn}>Compare to Previous</button>
               <button className={`${primaryBtn} bg-blue-600 text-white border border-blue-700 hover:bg-blue-700`}>Export Report</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Pending POs Modal */}
+      {pendingPOsModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setPendingPOsModal(false)} />
+          <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl max-w-2xl w-full shadow-2xl max-h-[90vh] flex flex-col overflow-hidden">
+            <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-slate-200 dark:border-slate-700/30">
+              <div>
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white">Pending Purchase Orders</h3>
+                <p className="text-[12px] text-slate-500 dark:text-slate-400 mt-0.5">
+                  {pendingPOs.length} orders · {fmt(pendingPOs.reduce((s, p) => s + p.amount, 0))} committed · Approve to move to Spent, Deny to return to Available
+                </p>
+              </div>
+              <button onClick={() => setPendingPOsModal(false)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors">
+                <X className="w-5 h-5 text-slate-500" />
+              </button>
+            </div>
+            <div className="flex-1 overflow-y-auto divide-y divide-slate-100 dark:divide-slate-700/20">
+              {pendingPOs.length === 0 ? (
+                <div className="px-6 py-12 text-center">
+                  <CheckCircle className="w-10 h-10 text-green-500 mx-auto mb-3" />
+                  <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">All purchase orders resolved</p>
+                  <p className="text-xs text-slate-500 mt-1">Actions have been logged to the Decision Audit Log.</p>
+                </div>
+              ) : pendingPOs.map(po => (
+                <div key={po.id} className="flex items-start gap-4 px-6 py-4 hover:bg-slate-50 dark:hover:bg-slate-800/10 transition-colors">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-0.5 flex-wrap">
+                      <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded flex-shrink-0 ${
+                        po.priority === 'High' ? 'bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-400' :
+                        po.priority === 'Medium' ? 'bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400' :
+                        'bg-slate-100 dark:bg-slate-700/40 text-slate-500 dark:text-slate-400'
+                      }`}>{po.priority}</span>
+                      <span className="text-[13px] font-semibold text-slate-800 dark:text-slate-200 truncate">{po.vendor}</span>
+                      <span className="text-[11px] text-slate-400 dark:text-slate-500 flex-shrink-0">{po.id}</span>
+                    </div>
+                    <p className="text-[12px] text-slate-600 dark:text-slate-400 mb-1">{po.description}</p>
+                    <div className="flex items-center gap-3 text-[11px] text-slate-400 dark:text-slate-500">
+                      <span>{po.division}</span>
+                      <span>·</span>
+                      <span>{po.category}</span>
+                      <span>·</span>
+                      <span>Submitted {po.submitted}</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    <span className="text-[14px] font-bold text-slate-800 dark:text-slate-200 tabular-nums">{fmt(po.amount)}</span>
+                    <button
+                      onClick={() => approvePO(po)}
+                      className="flex items-center gap-1 px-3 py-1.5 bg-green-100 dark:bg-green-500/10 hover:bg-green-200 dark:hover:bg-green-500/20 border border-green-300 dark:border-green-500/30 text-green-700 dark:text-green-400 text-xs font-bold rounded-lg transition-colors"
+                    >
+                      <CheckCircle className="w-3 h-3" /> Approve
+                    </button>
+                    <button
+                      onClick={() => denyPO(po)}
+                      className="flex items-center gap-1 px-3 py-1.5 bg-red-50 dark:bg-red-500/10 hover:bg-red-100 dark:hover:bg-red-500/20 border border-red-200 dark:border-red-500/30 text-red-700 dark:text-red-400 text-xs font-bold rounded-lg transition-colors"
+                    >
+                      <X className="w-3 h-3" /> Deny
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="px-6 py-4 border-t border-slate-200 dark:border-slate-700/30 bg-slate-50 dark:bg-slate-900/50 flex items-center justify-between">
+              <span className="text-[11px] text-slate-500 dark:text-slate-400">
+                {pendingPOs.length > 0
+                  ? <>{pendingPOs.length} orders pending · <span className="font-semibold text-slate-700 dark:text-slate-300">{fmt(pendingPOs.reduce((s, p) => s + p.amount, 0))}</span> committed</>
+                  : 'All orders resolved'}
+              </span>
+              <button onClick={() => setPendingPOsModal(false)} className="px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700/40 text-slate-700 dark:text-slate-300 text-sm font-semibold rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors">
+                Close
+              </button>
             </div>
           </div>
         </div>
