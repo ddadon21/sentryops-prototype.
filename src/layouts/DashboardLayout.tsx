@@ -69,7 +69,7 @@ const defaultNavigation: NavItem[] = [
   { id: 'field-ops', label: 'Field Operations (Overview)', icon: Radio, route: '/patrol/cad' },
   { id: 'investigative', label: 'Investigative Oversight', icon: Target, route: '/investigations/cases' },
   { id: 'budget', label: 'Budget & Assets', icon: DollarSign, route: '/command/budget' },
-  { id: 'reports', label: 'Reports & Compliance', icon: TrendingUp, route: '/command/reports' }
+  { id: 'reports', label: 'Performance & Compliance', icon: TrendingUp, route: '/command/reports' }
 ];
 
 const defaultProfile: ProfileConfig = {
