@@ -57,7 +57,7 @@ const defaultNavigation: NavItem[] = [
   { id: 'command-overview',   label: 'Executive Command Center', icon: Home,         route: '/command/dashboard' },
   { id: 'executive-briefing', label: 'Executive Briefing',       icon: FileText,     route: '/command/brief' },
   { id: 'war-room',           label: 'Command War Room',         icon: Target,       route: '/command/warroom' },
-  { id: 'decision-layer',     label: 'Decision Layer',           icon: Layers,       route: '/command/risk' },
+  { id: 'decision-layer',     label: 'Agency Risk Center',       icon: Layers,       route: '/command/risk' },
   { id: 'alerts',             label: 'Command Alerts',           icon: AlertCircle,  badge: '7', route: '/command/alerts' },
   { id: 'approvals',          label: 'Command Approvals',        icon: CheckCircle,  badge: '8', route: '/command/approvals' },
   { id: 'calendar',           label: 'Calendar & Timeline',      icon: Calendar,     route: '/command/calendar' },
