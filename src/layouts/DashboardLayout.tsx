@@ -53,7 +53,7 @@ interface DashboardLayoutProps {
 // ── Default config (Command module) ───────────────────────────
 
 const defaultNavigation: NavItem[] = [
-  { id: 'command-overview', label: 'Command Overview', icon: Home, route: '/command/dashboard' },
+  { id: 'command-overview', label: 'Executive Command Center', icon: Home, route: '/command/dashboard' },
   { id: 'war-room', label: 'Command War Room', icon: Target, route: '/command/warroom' },
   { id: 'daily-brief', label: 'Daily Command Brief', icon: FileText, route: '/command/brief' },
   { id: 'alerts', label: 'Command Alerts', icon: AlertCircle, badge: '7', route: '/command/alerts' },
