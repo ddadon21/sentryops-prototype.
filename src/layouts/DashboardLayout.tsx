@@ -58,7 +58,7 @@ const defaultNavigation: NavItem[] = [
   { id: 'executive-briefing', label: 'Executive Briefing',       icon: FileText,     route: '/command/brief' },
   { id: 'war-room',           label: 'Command War Room',         icon: Target,       route: '/command/warroom' },
   { id: 'decision-layer',     label: 'Agency Risk Center',       icon: Layers,       route: '/command/risk' },
-  { id: 'alerts',             label: 'Command Alerts',           icon: AlertCircle,  badge: '7', route: '/command/alerts' },
+  { id: 'alerts',             label: 'Command Notifications Center', icon: AlertCircle,  badge: '7', route: '/command/alerts' },
   { id: 'approvals',          label: 'Command Approvals',        icon: CheckCircle,  badge: '8', route: '/command/approvals' },
   { id: 'calendar',           label: 'Calendar & Timeline',      icon: Calendar,     route: '/command/calendar' },
   { id: 'section-agency',     label: 'Agency Operations',        type: 'section' },
