@@ -1,9 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import DashboardLayout from '../layouts/DashboardLayout';
 import {
-  Users, AlertTriangle, Shield, Radio, Target, Award,
+  Users, AlertTriangle, Radio, Target, Award,
   Circle, RefreshCw, Sparkles, AlertOctagon,
-  MapPin, ChevronRight, Activity, TrendingUp,
+  MapPin, ChevronRight, Activity,
   Layers, ArrowRight, CheckCircle, Brain,
 } from 'lucide-react';
 
