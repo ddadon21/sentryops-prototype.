@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import {
   Home, Users, CheckCircle, DollarSign, TrendingUp,
   AlertCircle, Shield, ChevronLeft, ChevronRight, Menu,
-  LogOut, Building2, Radio, Target, FileText, ShieldCheck, ChevronDown,
+  LogOut, Building2, Radio, Target, FileText, Layers, ChevronDown,
   Search, Bell, Settings, User, Circle, Calendar
 } from 'lucide-react';
 
@@ -18,7 +18,8 @@ interface NavSubItem {
 export interface NavItem {
   id: string;
   label: string;
-  icon: React.ComponentType<any>;
+  type?: 'section';
+  icon?: React.ComponentType<any>;
   route?: string;
   badge?: string;
   hasSubmenu?: boolean;
@@ -53,23 +54,25 @@ interface DashboardLayoutProps {
 // ── Default config (Command module) ───────────────────────────
 
 const defaultNavigation: NavItem[] = [
-  { id: 'command-overview', label: 'Executive Command Center', icon: Home, route: '/command/dashboard' },
-  { id: 'war-room', label: 'Command War Room', icon: Target, route: '/command/warroom' },
-  { id: 'daily-brief', label: 'Daily Command Brief', icon: FileText, route: '/command/brief' },
-  { id: 'alerts', label: 'Command Alerts', icon: AlertCircle, badge: '7', route: '/command/alerts' },
-  { id: 'approvals', label: 'Command Approvals', icon: CheckCircle, badge: '8', route: '/command/approvals' },
-  { id: 'calendar', label: 'Calendar & Timeline', icon: Calendar, route: '/command/calendar' },
-  { id: 'risk-compliance', label: 'Risk & Compliance', icon: ShieldCheck, route: '/command/risk' },
-  { id: 'staffing', label: 'Staffing & Readiness', icon: Users, hasSubmenu: true, submenu: [
+  { id: 'command-overview',   label: 'Executive Command Center', icon: Home,         route: '/command/dashboard' },
+  { id: 'executive-briefing', label: 'Executive Briefing',       icon: FileText,     route: '/command/brief' },
+  { id: 'war-room',           label: 'Command War Room',         icon: Target,       route: '/command/warroom' },
+  { id: 'decision-layer',     label: 'Decision Layer',           icon: Layers,       route: '/command/risk' },
+  { id: 'alerts',             label: 'Command Alerts',           icon: AlertCircle,  badge: '7', route: '/command/alerts' },
+  { id: 'approvals',          label: 'Command Approvals',        icon: CheckCircle,  badge: '8', route: '/command/approvals' },
+  { id: 'calendar',           label: 'Calendar & Timeline',      icon: Calendar,     route: '/command/calendar' },
+  { id: 'section-agency',     label: 'Agency Operations',        type: 'section' },
+  { id: 'staffing',           label: 'Staffing & Readiness',     icon: Users,        hasSubmenu: true, submenu: [
     { id: 'staffing-overview', label: 'Staffing Overview', route: '/command/personnel' },
-    { id: 'org-chart', label: 'Org Chart', route: '/command/orgchart' }
+    { id: 'org-chart',         label: 'Org Chart',         route: '/command/orgchart' },
   ]},
-  { id: 'detention-command', label: 'Detention Command Center', icon: Shield, route: '/jail/command' },
-  { id: 'custody', label: 'Custody Operations', icon: Building2, route: '/jail/custody' },
-  { id: 'field-ops', label: 'Field Operations (Overview)', icon: Radio, route: '/patrol/cad' },
-  { id: 'investigative', label: 'Investigative Oversight', icon: Target, route: '/investigations/cases' },
-  { id: 'budget', label: 'Budget & Assets', icon: DollarSign, route: '/command/budget' },
-  { id: 'reports', label: 'Performance & Compliance', icon: TrendingUp, route: '/command/reports' }
+  { id: 'detention-command',  label: 'Detention Command Center', icon: Shield,       route: '/jail/command' },
+  { id: 'custody',            label: 'Custody Operations',       icon: Building2,    route: '/jail/custody' },
+  { id: 'field-ops',          label: 'Field Operations',         icon: Radio,        route: '/patrol/cad' },
+  { id: 'investigative',      label: 'Investigative Oversight',  icon: Target,       route: '/investigations/cases' },
+  { id: 'section-business',   label: 'Business & Compliance',    type: 'section' },
+  { id: 'budget',             label: 'Budget & Assets',          icon: DollarSign,   route: '/command/budget' },
+  { id: 'reports',            label: 'Performance & Compliance', icon: TrendingUp,   route: '/command/reports' },
 ];
 
 const defaultProfile: ProfileConfig = {
@@ -180,7 +183,17 @@ export default function DashboardLayout({
         {/* Navigation */}
         <nav className="flex-1 overflow-y-auto p-4 space-y-1">
           {navigation.map(item => {
-            const Icon = item.icon;
+            // Section label
+            if (item.type === 'section') {
+              if (sidebarCollapsed) return null;
+              return (
+                <div key={item.id} className="pt-4 pb-1 px-2">
+                  <p className="text-[9.5px] font-bold text-slate-400 dark:text-slate-600 uppercase tracking-widest">{item.label}</p>
+                </div>
+              );
+            }
+
+            const Icon = item.icon!;
             const isActive = isNavActive(item);
 
             return (
