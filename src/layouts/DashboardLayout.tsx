@@ -305,20 +305,20 @@ export default function DashboardLayout({
         {/* Header */}
         <header className="border-b border-black/[0.06] dark:border-slate-800/50 backdrop-blur-md bg-[#F8FAFC]/90 dark:bg-slate-900/60 sticky top-0 z-30 shadow-[var(--shadow-nav)] dark:shadow-none">
           <div className="px-4 lg:px-6 py-4 flex items-center justify-between gap-4">
-            {/* Left: mobile menu + search */}
-            <div className="flex items-center gap-4 flex-1 min-w-0">
+            {/* Left: mobile menu + compact search */}
+            <div className="flex items-center gap-3">
               <button
                 onClick={() => setSidebarOpen(!sidebarOpen)}
                 className="lg:hidden p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg"
               >
                 <Menu className="w-5 h-5 text-muted" />
               </button>
-              <div className="flex-1 max-w-xl relative hidden sm:block">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted" />
+              <div className="w-44 relative hidden sm:block">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted" />
                 <input
                   type="text"
-                  placeholder="Search..."
-                  className="w-full pl-11 pr-4 py-2 bg-white dark:bg-slate-800/40 border border-black/[0.08] dark:border-slate-700/40 rounded-xl text-[13px] text-primary placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-300 dark:focus:border-slate-600 shadow-[0_1px_3px_rgba(0,0,0,0.05)] dark:shadow-none"
+                  placeholder="Quick search…"
+                  className="w-full pl-9 pr-3 py-1.5 bg-white dark:bg-slate-800/40 border border-black/[0.08] dark:border-slate-700/40 rounded-lg text-[12px] text-primary placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-300 dark:focus:border-slate-600 shadow-[0_1px_2px_rgba(0,0,0,0.04)] dark:shadow-none"
                 />
               </div>
             </div>
