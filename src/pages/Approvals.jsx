@@ -1,10 +1,410 @@
 import React, { useState } from 'react';
-import { Users, FileText, AlertCircle, Search, DollarSign, CheckCircle, ThumbsUp, XCircle, Sparkles, X, Send, Calendar, Clock, Download, Eye, ChevronDown, ChevronUp, Building2, Info, FileCheck, CheckSquare, Square, Package, Shield, Wrench, FileSignature, Handshake } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import {
+  Users, FileText, AlertCircle, Search, DollarSign, CheckCircle,
+  ThumbsUp, XCircle, Sparkles, X, Send, Calendar, Clock, Download,
+  ChevronDown, ChevronUp, Building2, Info, FileCheck, CheckSquare,
+  Square, Package, Shield, Wrench, FileSignature, Handshake,
+  TrendingUp, TrendingDown, AlertTriangle, UserCheck, Gauge, Activity
+} from 'lucide-react';
 import DashboardLayout from '../layouts/DashboardLayout';
 
+// ─────────────────────────────────────────────────────────────────
+// DECISION DATA
+// Each item carries: decisionImpactScore, aiRecommendation (with
+// confidence), plus 4-dimension impact analysis (financial,
+// compliance, staffing, operational) for both approval and denial.
+// ─────────────────────────────────────────────────────────────────
+const INITIAL_DECISIONS = [
+  {
+    id: 1,
+    type: 'overtime',
+    title: 'Overtime Authorization',
+    submittedBy: 'Patrol Major Davis',
+    submittedByTitle: 'Patrol Major',
+    details: 'B-Shift mandatory OT — 6 deputies × 6 hrs',
+    division: 'Patrol Division - B Shift',
+    urgent: true,
+    amount: 2808,
+    submittedDate: '2024-11-04',
+    daysAgo: 0,
+    deadlineHrs: 3,
+    decisionImpactScore: 87,
+    justification: 'B-Shift operating at 9/12 deputies (75%). Zones 4 & 7 single-officer patrol — safety policy violation. 6 deputies authorized for 6 hours OT each at 1.5x rate ($46.80/hr). Coverage needed 1800-0000 tonight.',
+    aiRecommendation: {
+      decision: 'approve',
+      confidence: 96,
+      summary: 'Officer safety violation in progress. OT cost lower than all alternatives.',
+      urgencyNote: 'B-Shift starts in 3 hours. Deputies need confirmation to report.'
+    },
+    financialImpact: {
+      approval: '$2,808 OT cost at 1.5x rate. OT budget moves to 130% of quarterly allocation.',
+      denial: 'Mutual aid alternative: $4,200 (Lawrenceville PD). Net cost increase: $1,392.'
+    },
+    complianceImpact: {
+      approval: 'SOP-12 two-officer patrol policy restored in all zones.',
+      denial: 'SOP-12 violation continues for duration of B-Shift. Documented policy breach if incident occurs.'
+    },
+    staffingImpact: {
+      approval: 'All 12 patrol zones restored to dual-officer coverage through midnight.',
+      denial: 'Zones 4 and 7 remain single-officer for 6+ hours. Mutual aid request required immediately.'
+    },
+    operationalImpact: {
+      approval: 'Normal patrol posture. Full response capability across all zones.',
+      denial: 'Degraded response in Zones 4 and 7. Any serious incident triggers backup delay of 8–12 min.'
+    },
+    documents: ['OT_Authorization_Form.pdf', 'Staffing_Report.pdf'],
+  },
+  {
+    id: 2,
+    type: 'budget',
+    title: 'Q1 Training Budget',
+    submittedBy: 'Training Director Martinez',
+    submittedByTitle: 'Training Director',
+    details: 'POST recertification — 23 deputies ($43,000)',
+    division: 'Training Division',
+    urgent: true,
+    amount: 43000,
+    submittedDate: '2024-11-02',
+    daysAgo: 2,
+    deadlineHrs: 5,
+    decisionImpactScore: 95,
+    justification: 'Mandatory P.O.S.T. recertifications for 23 deputies (deadline: March 31, 2025). State mandate requires completion for deputies to maintain peace officer status. Breakdown: Firearms ($18K), Defensive tactics ($14K), Legal updates ($8K), CPR/First Aid ($3K). Group rate locked — forfeited if not paid by 1700 today.',
+    aiRecommendation: {
+      decision: 'approve',
+      confidence: 99,
+      summary: 'State legal mandate. No alternative. Denial removes 23 deputies from patrol.',
+      urgencyNote: 'Vendor payment deadline 1700 today. Group rate lost if late — costs increase 30%.'
+    },
+    financialImpact: {
+      approval: '$43,000 from Training budget (75% spent, $45K remaining). $2K buffer after approval.',
+      denial: 'Avoids $43K spend today but future individual recertifications cost ~$56K (+30%). No net savings.'
+    },
+    complianceImpact: {
+      approval: 'GA P.O.S.T. compliance maintained for all 170 sworn personnel through March 2025.',
+      denial: '23 deputies lose certification and cannot legally serve as peace officers. State POST violation documented.'
+    },
+    staffingImpact: {
+      approval: 'All 23 deputies retain deployable status. No operational disruption.',
+      denial: '23 deputies removed from patrol duty. Staffing drops from 170 to 147 deployable — 3 shifts below minimum.'
+    },
+    operationalImpact: {
+      approval: 'Training completed by March 31. No service delivery impact.',
+      denial: 'Patrol capacity drops 14%. All zones understaffed. OT costs increase to cover gaps — far exceeds $43K savings.'
+    },
+    budgetImpact: { allocated: 180000, spent: 135000, percentUsed: 75, remainingAfter: 2000 },
+    documents: ['Training_Budget_Request.pdf', 'POST_Requirements.pdf', 'Vendor_Quotes.pdf'],
+  },
+  {
+    id: 3,
+    type: 'hiring',
+    title: 'Hiring Decision — Federal Deputy',
+    submittedBy: 'HR Director Collins',
+    submittedByTitle: 'HR Director',
+    details: 'Jane Doe — Court Security (8 yrs experience)',
+    division: 'Field Operations - Court Security',
+    urgent: true,
+    submittedDate: '2024-11-02',
+    daysAgo: 2,
+    deadlineHrs: 72,
+    backgroundCleared: true,
+    decisionImpactScore: 76,
+    justification: 'Jane Doe — 8 years LE (5 Fulton County Marshal, 3 DeKalb SO). POST certified, federal court security certified, bilingual English/Spanish. Position vacant 47 days. Competing offer from Fulton County ($4K higher). Salary: $58,500. Offer expires Jan 16.',
+    aiRecommendation: {
+      decision: 'approve',
+      confidence: 89,
+      summary: 'Exceptional qualifications. Reduces $2,400/month OT immediately. Offer expires 3 days.',
+      urgencyNote: 'Competing offer from Fulton County SO. Candidate will accept whichever arrives first.'
+    },
+    financialImpact: {
+      approval: '$76,050 first year (salary $58,500 + benefits $17,550). Eliminates $2,400/mo OT = net savings of $28,800/yr.',
+      denial: 'Continue $2,400/month OT ($28,800/year). Next qualified candidate not available until March 2025.'
+    },
+    complianceImpact: {
+      approval: 'Court Security at 100% authorized staffing. Federal court contract maintained.',
+      denial: 'Court Security at 87% staffing. Federal court coverage gap risk.'
+    },
+    staffingImpact: {
+      approval: 'Vacancy filled Feb 1. Bilingual capability added. Full court coverage immediately.',
+      denial: 'Position vacant minimum 2 more months. Court OT burden continues across team.'
+    },
+    operationalImpact: {
+      approval: 'Spanish-language court capability added. Immediate deployment Feb 1 after onboarding.',
+      denial: 'Court Security team continues overloaded. Morale and retention risk increases.'
+    },
+    budgetImpact: { firstYearCost: 58500, benefits: 17550, totalFirstYear: 76050 },
+    documents: ['Resume.pdf', 'Background_Check.pdf', 'Civil_Service_Scores.pdf', 'Offer_Letter.pdf'],
+  },
+  {
+    id: 4,
+    type: 'emergency',
+    title: 'Emergency HVAC Repair — H2-Pod',
+    submittedBy: 'Facilities Director Brooks',
+    submittedByTitle: 'Facilities Director',
+    details: 'Detention HVAC failure — pod at 84°F, 36 inmates',
+    division: 'Detention Facility',
+    urgent: true,
+    amount: 18500,
+    submittedDate: '2024-11-04',
+    daysAgo: 0,
+    deadlineHrs: 6,
+    decisionImpactScore: 97,
+    justification: 'H2-Pod HVAC compressor failure at 0430. Temperature 84°F and rising (state max: 78°F). 36 inmates. Comfort Systems quoted $18,500 emergency repair (vs $12,200 standard, 3-week lead time). USMS inspection Jan 22. Contractor on standby — authorization required by 1200.',
+    aiRecommendation: {
+      decision: 'approve',
+      confidence: 97,
+      summary: 'Inmate safety at risk. State compliance violation imminent. Delay costs far more.',
+      urgencyNote: 'Temperature rising ~1°F/hr. Mandatory state violation at 85°F. Contractor on standby — authorize by 1200.'
+    },
+    financialImpact: {
+      approval: '$18,500 emergency rate vs $12,200 standard. $6,300 premium for same-day service. Budget: 64% spent, funds available.',
+      denial: 'Inmate transfer costs: ~$8,000–12,000. Potential litigation exposure: unquantified. USMS contract at risk: $1.2M/yr.'
+    },
+    complianceImpact: {
+      approval: 'ACA and state detention standards maintained. USMS inspection Jan 22 unaffected.',
+      denial: 'State detention standards violation at 85°F (imminent). ACA finding. USMS inspection failure Jan 22.'
+    },
+    staffingImpact: {
+      approval: 'No staffing changes required.',
+      denial: 'Emergency pod evacuation requires 8–10 staff for 4–6 hours. Facility at 91.5% capacity — no buffer for 36 transfers.'
+    },
+    operationalImpact: {
+      approval: 'HVAC restored within 8 hours. H2-Pod fully operational.',
+      denial: 'H2-Pod taken offline. 36 inmates redistributed to already-strained pods. Federal housing at risk.'
+    },
+    budgetImpact: { allocated: 95000, spent: 61000, percentUsed: 64 },
+    documents: ['Emergency_Work_Order.pdf', 'Contractor_Quote.pdf', 'Temperature_Log.pdf'],
+  },
+  {
+    id: 5,
+    type: 'equipment',
+    title: 'Body Camera System Upgrade',
+    submittedBy: 'IT Director Harrison',
+    submittedByTitle: 'IT Director',
+    details: '68 Axon Body 4 units — EOL Dec 31 ($125,000)',
+    division: 'Administrative Services - IT',
+    urgent: false,
+    amount: 125000,
+    submittedDate: '2024-10-28',
+    daysAgo: 7,
+    deadlineHrs: 432,
+    vendor: 'Axon',
+    decisionImpactScore: 84,
+    justification: 'Current Axon Body 2 cameras (2019) reach EOL Dec 31. Vendor discontinuing cloud storage Jan 1. 68 cameras, 5-year cloud, training, warranty. Pricing locked until Jan 31 (+8% Feb 1). DOJ grant $37,500 pending — net cost $87,500.',
+    aiRecommendation: {
+      decision: 'approve',
+      confidence: 88,
+      summary: 'Current system EOL Dec 31. State compliance requires continuous camera operation.',
+      considerations: 'DOJ grant ($37,500) pending — net cost $87,500 if approved.'
+    },
+    financialImpact: {
+      approval: '$125,000 gross; $87,500 net after DOJ grant. Price locked until Jan 31 (+8% = $135K after).',
+      denial: 'Camera cloud storage ends Jan 1. No recording capability. Each UOF incident creates unquantified civil liability.'
+    },
+    complianceImpact: {
+      approval: 'GA POST evidence integrity mandate satisfied. State compliance maintained.',
+      denial: 'GA POST compliance violation Jan 1. Evidence integrity gaps across 142 active cases.'
+    },
+    staffingImpact: {
+      approval: 'No staffing impact. Auto-activation reduces officer administrative burden.',
+      denial: 'Manual evidence documentation required for every incident — adds 30–45 min per officer per shift.'
+    },
+    operationalImpact: {
+      approval: '68 cameras upgraded. 4K recording, auto-activation, real-time monitoring, 7-year cloud.',
+      denial: 'Evidence gaps in 142 active cases. Civil liability on any unrecorded use-of-force incident.'
+    },
+    budgetImpact: { allocated: 550000, spent: 315000, percentUsed: 57, grantOffset: 37500, netCost: 87500 },
+    documents: ['Equipment_Proposal.pdf', 'Vendor_Comparison.pdf', 'EOL_Notice.pdf', 'Cost_Benefit.pdf'],
+  },
+  {
+    id: 6,
+    type: 'policy',
+    title: 'Use-of-Force Policy Sign-off',
+    submittedBy: 'Chief Deputy Anderson',
+    submittedByTitle: 'Chief Deputy',
+    details: 'SOP-127 annual revision — GA POST mandate',
+    division: 'Office of the Sheriff',
+    urgent: false,
+    submittedDate: '2024-10-30',
+    daysAgo: 5,
+    deadlineHrs: 408,
+    decisionImpactScore: 72,
+    justification: 'GA POST Rule 464-5-.03 requires annual review. SOP-127 last updated Jan 2024. Revisions: updated de-escalation requirements (Section 4.2), body camera activation mandate (Section 6.1), supervisor notification reduced to 30 min (Section 7.3). Legal review completed Dec 2. Training rollout plan ready.',
+    aiRecommendation: {
+      decision: 'approve',
+      confidence: 94,
+      summary: 'State-mandated annual review. Legal approved. No operational disruption. 15-minute sign-off.',
+    },
+    financialImpact: {
+      approval: 'No cost. Training rollout covered under existing Q1 training budget.',
+      denial: 'No immediate cost. Civil liability exposure on any UOF incident after Dec 31 using outdated policy.'
+    },
+    complianceImpact: {
+      approval: 'GA POST Rule 464-5-.03 satisfied. Policy defensible in any UOF litigation through 2025.',
+      denial: 'State compliance violation Dec 31. Any UOF incident after that date uses an expired policy.'
+    },
+    staffingImpact: {
+      approval: 'Training rollout Jan 6–10. No patrol disruption. All personnel updated.',
+      denial: 'No immediate staffing impact, but personnel operating under outdated policy creates risk.'
+    },
+    operationalImpact: {
+      approval: 'Updated de-escalation + camera protocols active by Dec 20. Training complete Jan 10.',
+      denial: 'Operations continue under Jan 2024 policy. Audit finding if inspected after Dec 31.'
+    },
+    documents: ['SOP-127-R1_Draft.pdf', 'Legal_Review.pdf', 'Change_Summary.pdf'],
+  },
+  {
+    id: 7,
+    type: 'mutual-aid',
+    title: 'Mutual Aid Agreement',
+    submittedBy: 'Captain Rodriguez',
+    submittedByTitle: 'Operations Captain',
+    details: 'Lawrenceville PD — Championship game traffic ($832 reimbursed)',
+    division: 'Patrol Division',
+    urgent: false,
+    submittedDate: '2024-11-01',
+    daysAgo: 3,
+    deadlineHrs: 96,
+    decisionImpactScore: 45,
+    justification: 'Gwinnett Stadium regional championship Friday 7:30 PM. 8–10K attendance. Lawrenceville PD requests 4 GCSO units for Sugarloaf/Satellite intersection. Rate: $52/hr × 4 units × 4 hrs = $832 fully reimbursed. Joint briefing Thursday 1600.',
+    aiRecommendation: {
+      decision: 'approve',
+      confidence: 92,
+      summary: 'Fully reimbursed. No cost. Strengthens interagency relationship. Units available from A-Shift overlap.',
+    },
+    financialImpact: {
+      approval: '$832 OT cost, fully reimbursed by Lawrenceville PD. Net cost: $0.',
+      denial: 'No cost. Loss of event revenue relationship for future events.'
+    },
+    complianceImpact: {
+      approval: 'Standard mutual aid protocol. No compliance impact.',
+      denial: 'No compliance impact.'
+    },
+    staffingImpact: {
+      approval: '4 OT units from A-Shift overlap. No regular staffing disruption.',
+      denial: 'Units not needed. No staffing impact.'
+    },
+    operationalImpact: {
+      approval: 'Safe event operations. Intersection coverage secured. Interagency relationship strengthened.',
+      denial: 'Intersection coverage gap. Lawrenceville PD requests mutual aid from another agency — relationship risk.'
+    },
+    documents: ['Mutual_Aid_Request.pdf', 'Traffic_Plan.pdf', 'Event_Brief.pdf'],
+  },
+  {
+    id: 8,
+    type: 'leave',
+    title: 'Annual Leave Request',
+    submittedBy: 'Deputy Marcus Chen #4103',
+    submittedByTitle: 'Deputy Sheriff',
+    details: 'Dec 15–22 (8 days / 64 hrs) — coverage confirmed',
+    division: 'Patrol Division - A Shift',
+    urgent: false,
+    submittedDate: '2024-11-01',
+    daysAgo: 3,
+    leaveBalance: 120,
+    deadlineHrs: 96,
+    decisionImpactScore: 22,
+    justification: 'Pre-planned family vacation. 120 hours accrued (max 200). Coverage: Rodriguez #4087 covers Dec 15–18, Williams #4028 covers Dec 19–22. No conflicts. Last vacation July 2024. Attendance record 98% in 2024.',
+    aiRecommendation: {
+      decision: 'approve',
+      confidence: 95,
+      summary: 'Coverage confirmed. Sufficient balance. No operational conflicts. Strong attendance record.',
+    },
+    financialImpact: {
+      approval: 'No cost. Coverage by colleagues at no additional pay.',
+      denial: 'Non-refundable deposits at risk (~$1,200 estimated). Morale impact — retention risk.'
+    },
+    complianceImpact: {
+      approval: 'No compliance impact. Leave policy followed.',
+      denial: 'No compliance impact.'
+    },
+    staffingImpact: {
+      approval: 'Patrol at 92% during leave period. Coverage pre-arranged and confirmed.',
+      denial: 'Deputy Chen available but morale and trust impact. Next request window: February 2025.'
+    },
+    operationalImpact: {
+      approval: 'Minimal impact. Shift coverage arranged across 8 days.',
+      denial: 'No operational benefit. Unnecessary morale impact on high-performing deputy.'
+    },
+    documents: ['Leave_Request_Form.pdf', 'Coverage_Plan.pdf'],
+  }
+];
+
+const INITIAL_HISTORY = [
+  {
+    id: 'H001', type: 'budget', title: 'Budget Approval', submittedBy: 'Fleet Division',
+    details: 'New patrol vehicles (3 units)', division: 'Patrol Division', amount: 180000,
+    decision: 'approved', decidedBy: 'Sheriff Thompson', decidedDate: '2024-10-25',
+    decisionNotes: 'Approved to maintain fleet standards', submittedDate: '2024-10-20'
+  },
+  {
+    id: 'H002', type: 'leave', title: 'Leave Request', submittedBy: 'Sgt. Williams',
+    details: 'Personal leave: Nov 1-7', division: 'Patrol Division',
+    decision: 'approved', decidedBy: 'Captain Anderson', decidedDate: '2024-10-24',
+    decisionNotes: 'Coverage arranged', submittedDate: '2024-10-18'
+  },
+  {
+    id: 'H003', type: 'equipment', title: 'Equipment Purchase', submittedBy: 'SWAT Team',
+    details: 'Tactical gear upgrade', division: 'Special Operations', amount: 85000,
+    decision: 'denied', decidedBy: 'Sheriff Thompson', decidedDate: '2024-10-23',
+    decisionNotes: 'Budget constraints — resubmit Q1 2025', submittedDate: '2024-10-15'
+  },
+  {
+    id: 'H004', type: 'hiring', title: 'Hiring Decision', submittedBy: 'Robert Martinez',
+    details: 'Deputy Sheriff Position', division: 'Patrol Division',
+    decision: 'approved', decidedBy: 'Sheriff Thompson', decidedDate: '2024-10-22',
+    decisionNotes: 'Strong candidate, excellent background', submittedDate: '2024-10-10'
+  },
+  {
+    id: 'H005', type: 'budget', title: 'Budget Approval', submittedBy: 'IT Department',
+    details: 'Server upgrade', division: 'Administrative Services', amount: 65000,
+    decision: 'approved', decidedBy: 'Sheriff Thompson', decidedDate: '2024-10-21',
+    decisionNotes: 'Critical infrastructure', submittedDate: '2024-10-12'
+  }
+];
+
+// ─── Helpers ─────────────────────────────────────────────────────
+
+const getTypeLabel = (type) => ({
+  'leave': 'Leave', 'budget': 'Budget', 'hiring': 'Hiring',
+  'equipment': 'Equipment', 'overtime': 'OT', 'emergency': 'Emergency',
+  'policy': 'Policy', 'mutual-aid': 'Mutual Aid'
+}[type] || type);
+
+const getTypePill = (type) => ({
+  'overtime':   'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400',
+  'budget':     'bg-green-100 border-green-200 text-green-700 dark:bg-green-500/10 dark:border-green-500/20 dark:text-green-400',
+  'emergency':  'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400',
+  'hiring':     'bg-slate-100 dark:bg-slate-700/40 border-slate-300 dark:border-slate-600/50 text-slate-500',
+  'equipment':  'bg-violet-100 border-violet-200 text-violet-700 dark:bg-violet-500/10 dark:border-violet-500/20 dark:text-violet-400',
+  'policy':     'bg-slate-400/10 border-slate-400/20 text-slate-500',
+  'mutual-aid': 'bg-cyan-500/10 border-cyan-500/20 text-cyan-600 dark:text-cyan-400',
+  'leave':      'bg-slate-100 dark:bg-slate-700/40 border-slate-300 dark:border-slate-600/50 text-slate-500',
+}[type] || 'bg-slate-100 border-slate-300 text-slate-500');
+
+const getImpactScoreColor = (score) => {
+  if (score >= 85) return 'text-red-700 dark:text-red-400';
+  if (score >= 65) return 'text-amber-700 dark:text-amber-400';
+  if (score >= 40) return 'text-amber-600 dark:text-amber-500';
+  return 'text-slate-500';
+};
+
+const getImpactScoreBg = (score) => {
+  if (score >= 85) return 'bg-red-500/8 border-red-500/20';
+  if (score >= 65) return 'bg-amber-500/8 border-amber-500/15';
+  if (score >= 40) return 'bg-amber-500/5 border-amber-500/10';
+  return 'bg-slate-100 dark:bg-slate-700/20 border-slate-200 dark:border-slate-700/30';
+};
+
+const getConfidenceColor = (confidence) => {
+  if (confidence >= 95) return 'text-green-600 dark:text-green-400';
+  if (confidence >= 85) return 'text-green-600 dark:text-green-400';
+  if (confidence >= 70) return 'text-amber-700 dark:text-amber-400';
+  return 'text-slate-500';
+};
+
+// ─────────────────────────────────────────────────────────────────
+
 export default function Approvals() {
-  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('pending');
   const [selectedApproval, setSelectedApproval] = useState(null);
   const [approvalAction, setApprovalAction] = useState(null);
@@ -16,353 +416,92 @@ export default function Approvals() {
   const [expandedCards, setExpandedCards] = useState([]);
   const [requestInfoModal, setRequestInfoModal] = useState(null);
   const [infoRequest, setInfoRequest] = useState('');
-  const [aiSummaryExpanded, setAiSummaryExpanded] = useState(false);
   const [sortBy, setSortBy] = useState('urgency');
   const [logFilter, setLogFilter] = useState('all');
+  const [decisionsList, setDecisionsList] = useState(INITIAL_DECISIONS);
+  const [decisionHistory, setDecisionHistory] = useState(INITIAL_HISTORY);
 
-  const [approvalsList, setApprovalsList] = useState([
-    {
-      id: 1,
-      type: 'overtime',
-      title: 'Overtime Authorization',
-      submittedBy: 'Patrol Major Davis',
-      submittedByTitle: 'Patrol Major',
-      details: 'B-Shift mandatory OT — 6 deputies × 6 hrs ($2,808)',
-      division: 'Patrol Division - B Shift',
-      urgent: true,
-      amount: 2808,
-      submittedDate: '2024-11-04',
-      daysAgo: 0,
-      deadlineHrs: 3,
-      justification: 'B-Shift operating at 9/12 deputies (75%). Zones 4 & 7 single-officer patrol — safety policy violation. 6 deputies authorized for 6 hours OT each at 1.5x rate ($46.80/hr). Coverage needed 1800-0000 tonight. Already exceeds quarterly OT budget by 26%.',
-      impact: {
-        approved: 'All patrol zones dual-officer coverage restored tonight. Officer safety maintained. $2,808 cost. OT budget now at 130% of quarterly allocation.',
-        denied: 'Zones 4 & 7 remain single-officer. Policy violation continues. Liability exposure if incident occurs. Mutual aid from Lawrenceville PD only alternative ($4,200 cost).'
-      },
-      aiRecommendation: {
-        decision: 'approve',
-        confidence: 96,
-        reasoning: 'Officer safety requirement. Single-officer patrol violates SOP-12. OT cost ($2,808) lower than mutual aid alternative ($4,200). Budget impact manageable.',
-        urgencyNote: 'B-Shift starts in 3 hours. Deputies need confirmation to report.'
-      },
-      documents: ['OT_Authorization_Form.pdf', 'Staffing_Report.pdf'],
-      relatedApprovals: []
-    },
-    {
-      id: 2,
-      type: 'budget',
-      title: 'Budget Approval',
-      submittedBy: 'Training Director Martinez (#TR-005)',
-      submittedByTitle: 'Training Director',
-      details: 'Q1 2025 Training Budget ($43,000)',
-      division: 'Training Division',
-      urgent: true,
-      amount: 43000,
-      submittedDate: '2024-11-02',
-      daysAgo: 2,
-      deadlineHrs: 5,
-      justification: 'Mandatory P.O.S.T. recertifications for 23 deputies (deadline: March 31, 2025). State mandate requires completion for deputies to maintain peace officer status. Breakdown: Firearms qualification ($18K), Defensive tactics ($14K), Legal updates ($8K), CPR/First Aid ($3K). Training Division secured group rates with POST-certified vendors.',
-      impact: {
-        approved: 'All 23 deputies maintain certifications. No operational disruptions. Compliance with GA P.O.S.T. requirements. Training completed by March 31, 2025.',
-        denied: 'Deputies lose certification and cannot patrol. Potential liability exposure. Reduced field staffing by 23 officers. Violation of state requirements. County liability for non-compliance.'
-      },
-      budgetImpact: {
-        amount: 43000,
-        category: 'Training & Development',
-        allocated: 180000,
-        spent: 135000,
-        percentUsed: 75,
-        remainingAfter: 2000
-      },
-      aiRecommendation: {
-        decision: 'approve',
-        confidence: 99,
-        reasoning: 'Critical compliance requirement. Legal mandate — no alternative. High risk if denied. Budget available ($45K remaining in category).',
-        urgencyNote: 'Vendor payment deadline 1700 hrs today. Late payment forfeits group rate.'
-      },
-      documents: ['Training_Budget_Request.pdf', 'Certification_Requirements.pdf', 'Vendor_Quotes.pdf'],
-      relatedApprovals: ['Part of Q1 Training Budget (3 of 5 requests approved)'],
-      approvalChain: 'Captain → Major → Sheriff (you are: Sheriff)'
-    },
-    {
-      id: 3,
-      type: 'hiring',
-      title: 'Hiring Decision',
-      submittedBy: 'HR Director Collins',
-      submittedByTitle: 'HR Director',
-      details: 'Federal Deputy — Jane Doe (Court Security)',
-      division: 'Field Operations - Court Security',
-      urgent: true,
-      submittedDate: '2024-11-02',
-      daysAgo: 2,
-      deadlineHrs: 72,
-      backgroundCleared: true,
-      justification: 'Candidate: Jane Doe, 8 years law enforcement (5 yrs Fulton County Marshal, 3 yrs DeKalb County SO). P.O.S.T. certified, federal court security certified, bilingual (English/Spanish). Position vacant 47 days. Competing offer from Fulton County SO ($4K higher). Salary: $58,500 (GS-7 equivalent). Start date: Feb 1, 2025.',
-      impact: {
-        approved: 'Court Security at 100% staffing. Bilingual capability. Experienced hire reduces training costs. Immediate deployment Feb 1.',
-        denied: 'Lose candidate to Fulton County. Court Security at 87%. Next qualified candidate March 2025. Continue $2,400/month OT.'
-      },
-      budgetImpact: {
-        amount: 58500,
-        category: 'Personnel - Annual Salary',
-        firstYearCost: 58500,
-        benefits: 17550,
-        totalFirstYear: 76050
-      },
-      aiRecommendation: {
-        decision: 'approve',
-        confidence: 89,
-        reasoning: 'Qualifications exceed requirements, salary within range, critical vacancy (47 days). Reduces overtime costs ($2,400/mo).',
-        urgencyNote: 'Offer expires Jan 16. Competing offer from Fulton County SO.'
-      },
-      documents: ['Resume.pdf', 'Background_Check.pdf', 'Civil_Service_Scores.pdf', 'Offer_Letter.pdf'],
-      relatedApprovals: []
-    },
-    {
-      id: 4,
-      type: 'emergency',
-      title: 'Emergency Repair Approval',
-      submittedBy: 'Facilities Director Brooks',
-      submittedByTitle: 'Facilities Director',
-      details: 'Detention HVAC emergency — H2-Pod at 84°F',
-      division: 'Detention Facility',
-      urgent: true,
-      amount: 18500,
-      submittedDate: '2024-11-04',
-      daysAgo: 0,
-      deadlineHrs: 6,
-      justification: 'H2-Pod HVAC compressor failure at 0430 today. Temperature 84°F and rising (max safe: 78°F per state detention standards). 36 inmates in pod. Emergency HVAC contractor (Comfort Systems) quoted $18,500 for emergency compressor replacement. Standard repair would be $12,200 but 3-week lead time. State inspection scheduled Jan 22.',
-      impact: {
-        approved: 'HVAC restored within 8 hours. Inmates safe. State compliance maintained. $18,500 emergency rate.',
-        denied: 'Must evacuate H2-Pod (36 inmates) to other pods already at 91.5% capacity. State violation if temp exceeds 85°F. Potential litigation. Inspection failure Jan 22.'
-      },
-      budgetImpact: {
-        amount: 18500,
-        category: 'Facility Maintenance - Emergency',
-        allocated: 95000,
-        spent: 61000,
-        percentUsed: 64
-      },
-      aiRecommendation: {
-        decision: 'approve',
-        confidence: 97,
-        reasoning: 'State compliance requirement. Inmate safety at risk. Emergency rate justified — delay costs more (pod evacuation, litigation risk). Budget available.',
-        urgencyNote: 'Contractor on standby. Temperature rising ~1°F/hr. Must authorize by 1200.'
-      },
-      documents: ['Emergency_Work_Order.pdf', 'Contractor_Quote.pdf', 'Temperature_Log.pdf'],
-      relatedApprovals: []
-    },
-    {
-      id: 5,
-      type: 'equipment',
-      title: 'Equipment Purchase',
-      submittedBy: 'IT Director Harrison (#IT-001)',
-      submittedByTitle: 'IT Director',
-      details: 'Body camera upgrade — 68 Axon Body 4 units',
-      division: 'Administrative Services - IT',
-      urgent: false,
-      amount: 125000,
-      submittedDate: '2024-10-28',
-      daysAgo: 7,
-      deadlineHrs: 432,
-      vendor: 'Axon',
-      justification: 'Current Axon Body 2 cameras (2019, 68 units) reach end-of-life Dec 31. Vendor discontinuing cloud storage Jan 1, 2025. New system: 68 cameras ($82,450), 5-year cloud ($31,200), training ($6,350), warranty ($5,000). Pricing locked until Jan 31 — increases 8% Feb 1. Federal DOJ grant covers $37,500 (pending). Net cost: $87,500.',
-      impact: {
-        approved: '68 new 4K cameras. Auto-activation, real-time monitoring, 7-year cloud storage. Enhanced accountability.',
-        denied: 'Cameras lose vendor support Jan 1. No cloud storage. Evidence gaps. State compliance violation. Price +8% after Jan 31.'
-      },
-      budgetImpact: {
-        amount: 125000,
-        category: 'Equipment & Technology',
-        allocated: 550000,
-        spent: 315000,
-        percentUsed: 57,
-        grantOffset: 37500,
-        netCost: 87500
-      },
-      aiRecommendation: {
-        decision: 'approve',
-        confidence: 88,
-        reasoning: 'Mission-critical. Current system EOL. State compliance. Vendor pricing expires Jan 31.',
-        considerations: 'DOJ grant ($37,500) pending — net cost $87,500 if approved.'
-      },
-      documents: ['Equipment_Proposal.pdf', 'Vendor_Comparison.pdf', 'EOL_Notice.pdf', 'Cost_Benefit.pdf'],
-      relatedApprovals: []
-    },
-    {
-      id: 6,
-      type: 'policy',
-      title: 'Policy Update Sign-off',
-      submittedBy: 'Chief Deputy Anderson',
-      submittedByTitle: 'Chief Deputy',
-      details: 'Use-of-Force SOP-127 annual revision',
-      division: 'Office of the Sheriff',
-      urgent: false,
-      submittedDate: '2024-10-30',
-      daysAgo: 5,
-      deadlineHrs: 408,
-      justification: 'GA POST Rule 464-5-.03 requires annual review of use-of-force policy. SOP-127 last updated Jan 2024. Revisions include: updated de-escalation requirements (Section 4.2), body camera activation mandate (Section 6.1), supervisor notification timeline reduced to 30 min (Section 7.3). Legal review completed Dec 2. Training Division prepared rollout plan.',
-      impact: {
-        approved: 'Compliance with state mandate. Policy distributed to all personnel by Dec 20. Training rollout Jan 6-10.',
-        denied: 'State compliance violation. Potential liability in any use-of-force incident after Dec 31. Audit finding if inspected.'
-      },
-      aiRecommendation: {
-        decision: 'approve',
-        confidence: 94,
-        reasoning: 'State-mandated annual review. Legal has approved revisions. Training plan ready. No operational disruption.'
-      },
-      documents: ['SOP-127-R1_Draft.pdf', 'Legal_Review.pdf', 'Change_Summary.pdf'],
-      relatedApprovals: []
-    },
-    {
-      id: 7,
-      type: 'mutual-aid',
-      title: 'Mutual Aid Agreement',
-      submittedBy: 'Captain Rodriguez',
-      submittedByTitle: 'Operations Captain',
-      details: 'Lawrenceville PD — Regional Championship traffic support',
-      division: 'Patrol Division',
-      urgent: false,
-      submittedDate: '2024-11-01',
-      daysAgo: 3,
-      deadlineHrs: 96,
-      justification: 'Gwinnett Stadium regional championship game Friday 7:30 PM. Expected 8-10K attendance. Lawrenceville PD requesting 4 GCSO units for traffic control on Sugarloaf/Satellite intersection. Standard mutual aid rate: $52/hr per unit × 4 hrs = $832 total (reimbursed). Joint briefing Thursday 1600.',
-      impact: {
-        approved: 'Traffic control coverage secured. $832 reimbursed by Lawrenceville. Strengthens interagency relationship. Safe event operations.',
-        denied: 'Traffic control gaps at major intersection. Potential liability. Damages interagency relationship.'
-      },
-      aiRecommendation: {
-        decision: 'approve',
-        confidence: 92,
-        reasoning: 'Standard mutual aid. Fully reimbursed. No cost to GCSO. A-Shift overlap provides available units.'
-      },
-      documents: ['Mutual_Aid_Request.pdf', 'Traffic_Plan.pdf', 'Event_Brief.pdf'],
-      relatedApprovals: []
-    },
-    {
-      id: 8,
-      type: 'leave',
-      title: 'Leave Request',
-      submittedBy: 'Deputy Marcus Chen (#4103)',
-      submittedByTitle: 'Deputy Sheriff',
-      details: 'Annual leave Dec 15-22 (8 days, 64 hours)',
-      division: 'Patrol Division - A Shift',
-      urgent: false,
-      submittedDate: '2024-11-01',
-      daysAgo: 3,
-      leaveBalance: 120,
-      justification: 'Pre-planned family vacation (Orlando). 120 hours accrued (max: 200). Shift coverage confirmed: Rodriguez (#4087) covers Dec 15-18, Williams (#4028) covers Dec 19-22. No operational conflicts. Last vacation: July 2024.',
-      impact: {
-        approved: 'Staffing at 92% during leave. Coverage arranged. Morale boost.',
-        denied: 'Non-refundable deposits at risk. Morale impact. Next window February 2025.'
-      },
-      aiRecommendation: {
-        decision: 'approve',
-        confidence: 95,
-        reasoning: 'Sufficient balance (120 hrs), coverage confirmed, no conflicts. Strong attendance (98% in 2024).'
-      },
-      documents: ['Leave_Request_Form.pdf', 'Coverage_Plan.pdf'],
-      relatedApprovals: []
-    }
-  ]);
+  // ── Derived values ──────────────────────────────────────────
+  const pendingAmount = decisionsList.filter(a => a.amount).reduce((s, a) => s + a.amount, 0);
+  const criticalCount = decisionsList.filter(a => a.decisionImpactScore >= 85).length;
+  const urgentCount = decisionsList.filter(a => a.urgent || (a.deadlineHrs != null && a.deadlineHrs <= 24)).length;
+  const riskExposureIfDenied = '$1.2M federal contract + POST violations + civil liability';
 
-  const [approvalHistory, setApprovalHistory] = useState([
-    {
-      id: 'H001',
-      type: 'budget',
-      title: 'Budget Approval',
-      submittedBy: 'Fleet Division',
-      details: 'New patrol vehicles (3 units)',
-      division: 'Patrol Division',
-      amount: 180000,
-      decision: 'approved',
-      decidedBy: 'Sheriff Thompson',
-      decidedDate: '2024-10-25',
-      decisionNotes: 'Approved to maintain fleet standards',
-      submittedDate: '2024-10-20',
-      requestSnapshot: { vehicles: 3, type: 'Ford Explorer', urgency: 'high' }
-    },
-    {
-      id: 'H002',
-      type: 'leave',
-      title: 'Leave Request',
-      submittedBy: 'Sgt. Williams',
-      details: 'Personal leave: Nov 1-7',
-      division: 'Patrol Division',
-      decision: 'approved',
-      decidedBy: 'Captain Anderson',
-      decidedDate: '2024-10-24',
-      decisionNotes: 'Coverage arranged',
-      submittedDate: '2024-10-18'
-    },
-    {
-      id: 'H003',
-      type: 'equipment',
-      title: 'Equipment Purchase',
-      submittedBy: 'SWAT Team',
-      details: 'Tactical gear upgrade',
-      division: 'Special Operations',
-      amount: 85000,
-      decision: 'denied',
-      decidedBy: 'Sheriff Thompson',
-      decidedDate: '2024-10-23',
-      decisionNotes: 'Budget constraints - resubmit Q1 2025',
-      submittedDate: '2024-10-15'
-    },
-    {
-      id: 'H004',
-      type: 'hiring',
-      title: 'Hiring Decision',
-      submittedBy: 'Robert Martinez',
-      details: 'Deputy Sheriff Position',
-      division: 'Patrol Division',
-      decision: 'approved',
-      decidedBy: 'Sheriff Thompson',
-      decidedDate: '2024-10-22',
-      decisionNotes: 'Strong candidate, excellent background',
-      submittedDate: '2024-10-10'
-    },
-    {
-      id: 'H005',
-      type: 'budget',
-      title: 'Budget Approval',
-      submittedBy: 'IT Department',
-      details: 'Server upgrade',
-      division: 'Administrative Services',
-      amount: 65000,
-      decision: 'approved',
-      decidedBy: 'Sheriff Thompson',
-      decidedDate: '2024-10-21',
-      decisionNotes: 'Critical infrastructure',
-      submittedDate: '2024-10-12'
-    }
-  ]);
+  // Top decisions for AI Executive Summary
+  const topDecisions = [...decisionsList]
+    .sort((a, b) => b.decisionImpactScore - a.decisionImpactScore)
+    .slice(0, 3);
 
-  const pendingAmount = approvalsList.filter(a => a.amount).reduce((sum, a) => sum + a.amount, 0);
+  // ── Urgency helpers ──────────────────────────────────────
+  const getUrgencyState = (d) => {
+    if (d.deadlineHrs == null) return null;
+    if (d.deadlineHrs <= 0) return 'overdue';
+    if (d.deadlineHrs <= 24) return 'critical';
+    if (d.deadlineHrs <= 72) return 'soon';
+    return null;
+  };
 
-  const openApprovalModal = (approval, action) => {
-    setSelectedApproval(approval);
+  const getDeadlineLabel = (d) => {
+    if (d.deadlineHrs == null) return null;
+    if (d.deadlineHrs <= 0) return 'OVERDUE';
+    if (d.deadlineHrs < 1) return `${Math.round(d.deadlineHrs * 60)}m left`;
+    if (d.deadlineHrs < 24) return `${Math.round(d.deadlineHrs)}h left`;
+    return `${Math.round(d.deadlineHrs / 24)}d left`;
+  };
+
+  const getPendingTime = (daysAgo) => {
+    if (daysAgo === 0) return 'Today';
+    if (daysAgo === 1) return '1d';
+    return `${daysAgo}d`;
+  };
+
+  // ── Filter + sort ──────────────────────────────────────
+  const filteredDecisions = decisionsList
+    .filter(d => {
+      if (filterType === 'all') return true;
+      if (filterType === 'urgent') return d.urgent || (d.deadlineHrs != null && d.deadlineHrs <= 24);
+      if (filterType === 'critical') return d.decisionImpactScore >= 85;
+      return d.type === filterType;
+    })
+    .sort((a, b) => {
+      const aDeadline = a.deadlineHrs ?? 9999;
+      const bDeadline = b.deadlineHrs ?? 9999;
+      const aUrgent = aDeadline <= 24;
+      const bUrgent = bDeadline <= 24;
+      if (aUrgent && !bUrgent) return -1;
+      if (!aUrgent && bUrgent) return 1;
+      if (aUrgent && bUrgent) return aDeadline - bDeadline;
+      if (sortBy === 'amount') return (b.amount || 0) - (a.amount || 0);
+      if (sortBy === 'impact') return b.decisionImpactScore - a.decisionImpactScore;
+      if (sortBy === 'oldest') return b.daysAgo - a.daysAgo;
+      return b.decisionImpactScore - a.decisionImpactScore;
+    });
+
+  const filteredHistory = decisionHistory.filter(h => {
+    if (logFilter === 'approved') return h.decision === 'approved';
+    if (logFilter === 'denied') return h.decision === 'denied';
+    return true;
+  });
+
+  // ── Actions ──────────────────────────────────────────
+  const openModal = (decision, action) => {
+    setSelectedApproval(decision);
     setApprovalAction(action);
     setActionComment('');
   };
 
-  const closeApprovalModal = () => {
+  const closeModal = () => {
     setSelectedApproval(null);
     setApprovalAction(null);
     setActionComment('');
   };
 
-  const confirmApprovalAction = () => {
+  const confirmAction = () => {
     if (approvalAction === 'deny' && !actionComment.trim()) {
       showToast('Please provide a reason for denial', 'error');
       return;
     }
-
-    setApprovalsList(approvalsList.filter(a => a.id !== selectedApproval.id));
-
-    const actionText = approvalAction === 'approve' ? 'approved' : 'denied';
-
-    const newHistoryEntry = {
+    const newEntry = {
       id: `H${Date.now()}`,
       type: selectedApproval.type,
       title: selectedApproval.title,
@@ -374,15 +513,14 @@ export default function Approvals() {
       decidedBy: 'Sheriff Thompson',
       decidedDate: new Date().toISOString().split('T')[0],
       decisionNotes: actionComment.trim() || (approvalAction === 'approve' ? 'Approved by command authority.' : 'Denied by command authority.'),
-      submittedDate: selectedApproval.submittedDate || new Date().toISOString().split('T')[0],
+      submittedDate: selectedApproval.submittedDate,
+      decisionImpactScore: selectedApproval.decisionImpactScore,
     };
-    setApprovalHistory(prev => [newHistoryEntry, ...prev]);
-
-    showToast(`${selectedApproval.title} ${actionText} successfully`, 'success');
-
-    closeApprovalModal();
+    setDecisionHistory(prev => [newEntry, ...prev]);
+    setDecisionsList(prev => prev.filter(a => a.id !== selectedApproval.id));
+    showToast(`${selectedApproval.title} ${newEntry.decision}`, 'success');
+    closeModal();
     setActiveTab('decision-log');
-    setLogFilter('all');
   };
 
   const showToast = (message, type = 'success') => {
@@ -391,594 +529,522 @@ export default function Approvals() {
   };
 
   const toggleSelectItem = (id) => {
-    setSelectedItems(prev =>
-      prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
-    );
+    setSelectedItems(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]);
   };
 
   const toggleSelectAll = () => {
-    if (selectedItems.length === filteredApprovals.length) {
-      setSelectedItems([]);
-    } else {
-      setSelectedItems(filteredApprovals.map(a => a.id));
-    }
+    setSelectedItems(selectedItems.length === filteredDecisions.length ? [] : filteredDecisions.map(a => a.id));
   };
 
-  const bulkApprove = () => {
+  const bulkDecide = (decision) => {
     if (selectedItems.length === 0) return;
-    const items = approvalsList.filter(a => selectedItems.includes(a.id));
+    const items = decisionsList.filter(a => selectedItems.includes(a.id));
     const newEntries = items.map(a => ({
       id: `H${Date.now()}-${a.id}`,
-      type: a.type,
-      title: a.title,
-      submittedBy: a.submittedBy,
-      details: a.details,
-      division: a.division,
-      amount: a.amount || null,
-      decision: 'approved',
-      decidedBy: 'Sheriff Thompson',
+      type: a.type, title: a.title, submittedBy: a.submittedBy,
+      details: a.details, division: a.division, amount: a.amount || null,
+      decision, decidedBy: 'Sheriff Thompson',
       decidedDate: new Date().toISOString().split('T')[0],
-      decisionNotes: 'Bulk approved by command authority.',
-      submittedDate: a.submittedDate || new Date().toISOString().split('T')[0],
+      decisionNotes: `Bulk ${decision} by command authority.`,
+      submittedDate: a.submittedDate,
     }));
-    setApprovalHistory(prev => [...newEntries, ...prev]);
-    setApprovalsList(approvalsList.filter(a => !selectedItems.includes(a.id)));
-    showToast(`${selectedItems.length} items approved successfully`, 'success');
+    setDecisionHistory(prev => [...newEntries, ...prev]);
+    setDecisionsList(prev => prev.filter(a => !selectedItems.includes(a.id)));
+    showToast(`${selectedItems.length} decisions ${decision}`, 'success');
     setSelectedItems([]);
   };
 
-  const bulkDeny = () => {
-    if (selectedItems.length === 0) return;
-    const items = approvalsList.filter(a => selectedItems.includes(a.id));
-    const newEntries = items.map(a => ({
-      id: `H${Date.now()}-${a.id}`,
-      type: a.type,
-      title: a.title,
-      submittedBy: a.submittedBy,
-      details: a.details,
-      division: a.division,
-      amount: a.amount || null,
-      decision: 'denied',
-      decidedBy: 'Sheriff Thompson',
-      decidedDate: new Date().toISOString().split('T')[0],
-      decisionNotes: 'Bulk denied by command authority.',
-      submittedDate: a.submittedDate || new Date().toISOString().split('T')[0],
-    }));
-    setApprovalHistory(prev => [...newEntries, ...prev]);
-    setApprovalsList(approvalsList.filter(a => !selectedItems.includes(a.id)));
-    showToast(`${selectedItems.length} items denied`, 'success');
-    setSelectedItems([]);
+  const toggleExpand = (id) => {
+    setExpandedCards(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]);
   };
 
-  const toggleExpandCard = (id) => {
-    setExpandedCards(prev =>
-      prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
-    );
-  };
-
-  const openRequestInfoModal = (approval) => {
-    setRequestInfoModal(approval);
-    setInfoRequest('');
-  };
-
-  const closeRequestInfoModal = () => {
+  const sendInfoRequest = () => {
+    if (!infoRequest.trim()) { showToast('Enter your request', 'error'); return; }
+    showToast(`Information request sent to ${requestInfoModal.submittedBy}`, 'success');
     setRequestInfoModal(null);
     setInfoRequest('');
   };
 
-  const sendInfoRequest = () => {
-    if (!infoRequest.trim()) {
-      showToast('Please enter your information request', 'error');
-      return;
-    }
-    showToast(`Information request sent to ${requestInfoModal.submittedBy}`, 'success');
-    closeRequestInfoModal();
-  };
-
-  const getTypeIcon = (type) => {
-    switch (type) {
-      case 'leave': return Calendar;
-      case 'budget': return DollarSign;
-      case 'hiring': return Users;
-      case 'equipment': return Package;
-      case 'overtime': return Clock;
-      case 'emergency': return Wrench;
-      case 'policy': return FileSignature;
-      case 'mutual-aid': return Handshake;
-      default: return FileText;
-    }
-  };
-
-  // ── Urgency Logic ──────────────────────────────
-  // deadlineHrs: hours until decision deadline (from data)
-  // < 0 = overdue, < 24 = critical, < 72 = soon
-  const getUrgencyState = (approval) => {
-    if (approval.deadlineHrs == null) return null;
-    if (approval.deadlineHrs <= 0) return 'overdue';
-    if (approval.deadlineHrs <= 24) return 'critical';
-    if (approval.deadlineHrs <= 72) return 'soon';
-    return null;
-  };
-
-  const getDeadlineLabel = (approval) => {
-    if (approval.deadlineHrs == null) return null;
-    if (approval.deadlineHrs <= 0) return 'OVERDUE';
-    if (approval.deadlineHrs < 1) return `${Math.round(approval.deadlineHrs * 60)}m left`;
-    if (approval.deadlineHrs < 24) return `${Math.round(approval.deadlineHrs)}h left`;
-    const days = Math.round(approval.deadlineHrs / 24);
-    return `${days}d left`;
-  };
-
-  const getPendingTime = (daysAgo) => {
-    if (daysAgo === 0) return 'Today';
-    if (daysAgo === 1) return '1d';
-    return `${daysAgo}d`;
-  };
-
-  const filteredApprovals = approvalsList
-    .filter(approval => {
-      if (filterType === 'all') return true;
-      if (filterType === 'urgent') return approval.urgent || (approval.deadlineHrs != null && approval.deadlineHrs <= 24);
-      return approval.type === filterType;
-    })
-    .sort((a, b) => {
-      // Always: overdue/critical deadline items pinned to top
-      const aDeadline = a.deadlineHrs ?? 9999;
-      const bDeadline = b.deadlineHrs ?? 9999;
-      const aUrgent = aDeadline <= 24;
-      const bUrgent = bDeadline <= 24;
-      if (aUrgent && !bUrgent) return -1;
-      if (!aUrgent && bUrgent) return 1;
-      if (aUrgent && bUrgent) return aDeadline - bDeadline;
-      // Secondary sort by user selection
-      if (sortBy === 'amount') return (b.amount || 0) - (a.amount || 0);
-      if (sortBy === 'oldest') return b.daysAgo - a.daysAgo;
-      // Default (urgency): dollar impact then oldest
-      const amountDiff = (b.amount || 0) - (a.amount || 0);
-      if (amountDiff !== 0) return amountDiff;
-      return b.daysAgo - a.daysAgo;
-    });
-
-  const filteredHistory = approvalHistory
-    .filter(h => {
-      if (logFilter === 'approved') return h.decision === 'approved';
-      if (logFilter === 'denied') return h.decision === 'denied';
-      return true;
-    });
-
-  const urgentCount = approvalsList.filter(a => a.urgent || (a.deadlineHrs != null && a.deadlineHrs <= 24)).length;
-
   return (
     <DashboardLayout>
-      <div className="p-5 lg:p-8">
-          <div className="max-w-[1400px] mx-auto">
+      <div className="p-5 lg:p-7">
+        <div className="max-w-[1300px] mx-auto">
 
-            {/* ── Page Header ────────────────────────────────── */}
-            <div className="mb-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h2 className="text-xl font-bold text-primary mb-1">Command Approvals</h2>
-                  <div className="flex items-center gap-2 text-[11px] text-slate-500">
-                    <span>Decision execution surface</span>
-                    <span className="text-slate-700">·</span>
-                    <span>{approvalsList.length} pending</span>
-                    {urgentCount > 0 && (
-                      <>
-                        <span className="text-slate-700">·</span>
-                        <span className="text-red-700 dark:text-red-400 font-semibold">{urgentCount} urgent</span>
-                      </>
-                    )}
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="px-2.5 py-1 bg-green-500/8 border border-green-500/15 rounded text-[10px] font-semibold text-green-600 dark:text-green-400">
-                    FY24 Remaining: $550K
-                  </span>
-                  {activeTab === 'pending' && pendingAmount > 0 && (
-                    <span className="px-2.5 py-1 bg-amber-500/8 border border-amber-500/15 rounded text-[10px] font-semibold text-amber-700 dark:text-amber-400">
-                      ${pendingAmount.toLocaleString()} pending
-                    </span>
-                  )}
-                  {activeTab === 'decision-log' && (
-                    <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-100/80 dark:bg-slate-800/30 border border-border rounded-lg text-[11px] text-secondary hover:bg-slate-200 dark:hover:text-white transition-colors">
-                      <Download className="w-3 h-3" />
-                      Export
-                    </button>
-                  )}
+          {/* ── Page Header ─────────────────────────────────── */}
+          <div className="mb-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-xl font-bold text-primary mb-1">Decision Center</h2>
+                <div className="flex items-center gap-2 text-[11px] text-slate-500">
+                  <span>Executive command decisions</span>
+                  <span className="text-slate-700">·</span>
+                  <span>{decisionsList.length} pending</span>
+                  {urgentCount > 0 && <><span className="text-slate-700">·</span><span className="text-red-700 dark:text-red-400 font-semibold">{urgentCount} urgent</span></>}
+                  {criticalCount > 0 && <><span className="text-slate-700">·</span><span className="text-red-700 dark:text-red-400 font-semibold">{criticalCount} critical impact</span></>}
                 </div>
               </div>
-            </div>
-
-            {/* ── Tabs ────────────────────────────────── */}
-            <div className="flex gap-1.5 mb-4 border-b border-border pb-px">
-              <button
-                onClick={() => setActiveTab('pending')}
-                className={`px-2.5 py-1.5 text-[11px] font-medium transition-all relative flex items-center gap-1.5 ${
-                  activeTab === 'pending' ? 'text-primary' : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
-                }`}
-              >
-                Pending
-                <span className={`px-1 py-px rounded text-[10px] ${activeTab === 'pending' ? 'bg-amber-500/15 text-amber-700 dark:text-amber-400' : 'bg-slate-200 dark:bg-slate-800/50 text-slate-700 dark:text-slate-500'}`}>
-                  {approvalsList.length}
+              <div className="flex items-center gap-2">
+                <span className="px-2.5 py-1 bg-green-500/8 border border-green-500/15 rounded text-[10px] font-semibold text-green-600 dark:text-green-400">
+                  FY24 Budget: $550K remaining
                 </span>
-                {activeTab === 'pending' && <div className="absolute bottom-0 left-0 right-0 h-px bg-amber-500"></div>}
-              </button>
-              <button
-                onClick={() => setActiveTab('decision-log')}
-                className={`px-2.5 py-1.5 text-[11px] font-medium transition-all relative ${
-                  activeTab === 'decision-log' ? 'text-primary' : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
-                }`}
-              >
-                Decision Log
-                {activeTab === 'decision-log' && <div className="absolute bottom-0 left-0 right-0 h-px bg-amber-500"></div>}
-              </button>
-            </div>
-
-            {/* ── AI Summary Bar (collapsed by default) ────── */}
-            {activeTab === 'pending' && (
-              <div className="mb-4">
-                <button
-                  onClick={() => setAiSummaryExpanded(!aiSummaryExpanded)}
-                  className="w-full flex items-center gap-2 px-3 py-2 bg-slate-50 dark:bg-slate-800/35 border border-border dark:border-slate-700/30 rounded hover:bg-slate-100 dark:hover:bg-slate-800/30 transition-colors"
-                >
-                  <Sparkles className="w-3 h-3 text-slate-500" />
-                  <span className="text-[11px] text-secondary flex-1 text-left">
-                    <span className="text-slate-500 font-medium">AI Summary:</span>{' '}
-                    <span className="text-red-700 dark:text-red-400">{urgentCount} items need decision within 24h</span>
-                    <span className="text-slate-700 mx-1">·</span>
-                    <span className="text-green-600 dark:text-green-400">All recs high confidence</span>
-                    <span className="text-slate-700 mx-1">·</span>
-                    <span className="text-secondary">No projected deficit risk</span>
-                  </span>
-                  {aiSummaryExpanded ? <ChevronUp className="w-3 h-3 text-slate-700" /> : <ChevronDown className="w-3 h-3 text-slate-700" />}
-                </button>
-
-                {aiSummaryExpanded && (
-                  <div className="mt-1 px-3 py-2.5 bg-slate-50 dark:bg-slate-800/15 border border-slate-100 dark:border-slate-700/10 rounded space-y-1.5">
-                    <p className="text-[10px] text-red-700 dark:text-red-400">• B-Shift OT ($2,808) — deputies need confirmation in 3h. Single-officer patrol safety violation.</p>
-                    <p className="text-[10px] text-red-700 dark:text-red-400">• Training budget ($43K) — vendor payment deadline 1700 today. Forfeits group rate if late.</p>
-                    <p className="text-[10px] text-red-700 dark:text-red-400">• Detention HVAC emergency ($18.5K) — H2-Pod at 84°F. Contractor on standby. Must authorize by 1200.</p>
-                    <p className="text-[10px] text-amber-700 dark:text-amber-400">• Federal Deputy hire (Jane Doe) — offer expires in 3 days. Competing offer from Fulton County.</p>
-                    <p className="text-[10px] text-green-600 dark:text-green-400">• Body camera upgrade ($125K) — 88% confidence. DOJ grant pending ($37.5K offset).</p>
-                    <p className="text-[10px] text-secondary">• Total pending: ${pendingAmount.toLocaleString()} / $550K remaining FY24. No constraints.</p>
-                  </div>
+                {activeTab === 'decision-log' && (
+                  <button className="flex items-center gap-1.5 px-2.5 py-1 bg-surface border border-border rounded-lg text-[11px] text-secondary hover:bg-slate-50 transition-colors">
+                    <Download className="w-3 h-3" />
+                    Export
+                  </button>
                 )}
               </div>
-            )}
+            </div>
+          </div>
 
-            {/* ── Filter Pills (operational style, matches alerts) ── */}
-            {activeTab === 'pending' && (
-              <div className="mb-6 flex items-center gap-1.5 flex-wrap">
+          {/* ── AI Executive Decision Summary ─────────────── */}
+          {activeTab === 'pending' && (
+            <div className="mb-4 bg-slate-900 dark:bg-slate-950 border border-slate-700/60 rounded-xl overflow-hidden">
+              <div className="px-4 py-2.5 border-b border-slate-700/50 flex items-center gap-2">
+                <Sparkles className="w-3.5 h-3.5 text-violet-400" />
+                <span className="text-[11px] font-bold text-white uppercase tracking-wider">AI Executive Decision Summary</span>
+                <div className="ml-auto flex items-center gap-4 text-[10px]">
+                  <div className="flex items-center gap-1.5 text-slate-300">
+                    <span className="font-mono font-bold text-white">{decisionsList.length}</span>
+                    <span className="text-slate-400">pending</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 text-slate-300">
+                    <span className="font-mono font-bold text-white">${pendingAmount.toLocaleString()}</span>
+                    <span className="text-slate-400">total value</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="font-mono font-bold text-red-400">{criticalCount}</span>
+                    <span className="text-slate-400">critical impact</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-slate-400">Denial exposure:</span>
+                    <span className="text-red-400 font-semibold">$1.2M+</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* 4-stat strip */}
+              <div className="grid grid-cols-4 gap-px bg-slate-700/30">
                 {[
-                  { id: 'all', label: 'All', count: approvalsList.length },
-                  { id: 'urgent', label: 'Urgent', count: urgentCount },
-                  { id: 'budget', label: 'Budget', count: approvalsList.filter(a => a.type === 'budget').length },
-                  { id: 'overtime', label: 'OT', count: approvalsList.filter(a => a.type === 'overtime').length },
-                  { id: 'hiring', label: 'Hiring', count: approvalsList.filter(a => a.type === 'hiring').length },
-                  { id: 'equipment', label: 'Equipment', count: approvalsList.filter(a => a.type === 'equipment').length },
-                  { id: 'emergency', label: 'Emergency', count: approvalsList.filter(a => a.type === 'emergency').length },
-                  { id: 'policy', label: 'Policy', count: approvalsList.filter(a => a.type === 'policy').length },
-                  { id: 'leave', label: 'Leave', count: approvalsList.filter(a => a.type === 'leave').length },
-                ].filter(opt => opt.id === 'all' || opt.id === 'urgent' || opt.count > 0).map(opt => (
+                  { label: 'Pending Decisions', value: decisionsList.length, sub: `${urgentCount} need decision today`, color: 'text-white' },
+                  { label: 'Total Dollar Value', value: `$${pendingAmount.toLocaleString()}`, sub: 'Across all pending items', color: 'text-green-400' },
+                  { label: 'Critical Decisions', value: criticalCount, sub: 'Impact score ≥ 85', color: 'text-red-400' },
+                  { label: 'Risk If All Denied', value: '$1.2M+', sub: 'Federal contract + compliance', color: 'text-amber-400' },
+                ].map((stat, i) => (
+                  <div key={i} className="px-4 py-2.5 bg-slate-900 dark:bg-slate-950">
+                    <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1">{stat.label}</p>
+                    <p className={`text-2xl font-black leading-none mb-0.5 ${stat.color}`}>{stat.value}</p>
+                    <p className="text-[9px] text-slate-500">{stat.sub}</p>
+                  </div>
+                ))}
+              </div>
+
+              {/* Top decisions needing attention */}
+              <div className="divide-y divide-slate-700/40">
+                {topDecisions.map((d, i) => (
+                  <div key={d.id} className="flex items-start gap-3 px-4 py-2.5">
+                    <div className="flex items-center gap-2 flex-shrink-0 mt-0.5">
+                      <span className="text-[9px] font-black text-slate-500 w-3">{i + 1}</span>
+                      <div className={`text-[11px] font-black font-mono ${getImpactScoreColor(d.decisionImpactScore)}`}>{d.decisionImpactScore}</div>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-0.5">
+                        <span className="text-[11px] font-semibold text-white">{d.title}</span>
+                        {d.amount && <span className="text-[10px] font-mono text-green-400">${d.amount.toLocaleString()}</span>}
+                        {d.deadlineHrs != null && d.deadlineHrs <= 24 && (
+                          <span className="text-[9px] font-bold text-red-400 bg-red-500/10 border border-red-500/20 px-1 py-px rounded">{getDeadlineLabel(d)}</span>
+                        )}
+                      </div>
+                      <p className="text-[10px] text-slate-300 leading-snug">
+                        <span className="text-violet-300 font-semibold">AI ({d.aiRecommendation.confidence}% confidence): </span>
+                        {d.aiRecommendation.recommendation === 'deny' ? 'Deny — ' : 'Approve — '}
+                        {d.aiRecommendation.summary}
+                      </p>
+                      {d.aiRecommendation.urgencyNote && (
+                        <p className="text-[9px] text-amber-400 mt-0.5">⚠ {d.aiRecommendation.urgencyNote}</p>
+                      )}
+                    </div>
+                    <div className="flex gap-1.5 flex-shrink-0">
+                      <button
+                        onClick={() => openModal(d, 'approve')}
+                        className="px-2 py-1 bg-green-500/15 hover:bg-green-500/25 border border-green-500/20 rounded text-[10px] font-bold text-green-400 transition-colors"
+                      >
+                        Approve
+                      </button>
+                      <button
+                        onClick={() => openModal(d, 'deny')}
+                        className="px-2 py-1 bg-red-500/10 hover:bg-red-500/20 border border-red-500/15 rounded text-[10px] font-bold text-red-400 transition-colors"
+                      >
+                        Deny
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* ── Tabs ─────────────────────────────────────────── */}
+          <div className="flex gap-1.5 mb-4 border-b border-border pb-px">
+            {[
+              { id: 'pending', label: 'Pending Decisions', count: decisionsList.length },
+              { id: 'decision-log', label: 'Decision Log', count: null },
+            ].map(tab => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`px-2.5 py-1.5 text-[11px] font-medium transition-all relative flex items-center gap-1.5 ${
+                  activeTab === tab.id ? 'text-primary' : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
+                }`}
+              >
+                {tab.label}
+                {tab.count !== null && (
+                  <span className={`px-1 py-px rounded text-[10px] ${activeTab === tab.id ? 'bg-amber-500/15 text-amber-700 dark:text-amber-400' : 'bg-slate-200 dark:bg-slate-800/50 text-slate-700 dark:text-slate-500'}`}>
+                    {tab.count}
+                  </span>
+                )}
+                {activeTab === tab.id && <div className="absolute bottom-0 left-0 right-0 h-px bg-amber-500" />}
+              </button>
+            ))}
+          </div>
+
+          {/* ═══════════════════════════════════════════════
+              PENDING DECISIONS
+              ═══════════════════════════════════════════════ */}
+          {activeTab === 'pending' && (
+            <>
+              {/* Filter pills + sort */}
+              <div className="mb-4 flex items-center gap-1.5 flex-wrap">
+                {[
+                  { id: 'all',       label: 'All',      count: decisionsList.length },
+                  { id: 'urgent',    label: 'Urgent',   count: urgentCount },
+                  { id: 'critical',  label: 'Critical Impact', count: criticalCount },
+                  { id: 'budget',    label: 'Budget',   count: decisionsList.filter(a => a.type === 'budget').length },
+                  { id: 'overtime',  label: 'OT',       count: decisionsList.filter(a => a.type === 'overtime').length },
+                  { id: 'hiring',    label: 'Hiring',   count: decisionsList.filter(a => a.type === 'hiring').length },
+                  { id: 'equipment', label: 'Equipment',count: decisionsList.filter(a => a.type === 'equipment').length },
+                  { id: 'emergency', label: 'Emergency',count: decisionsList.filter(a => a.type === 'emergency').length },
+                  { id: 'policy',    label: 'Policy',   count: decisionsList.filter(a => a.type === 'policy').length },
+                  { id: 'leave',     label: 'Leave',    count: decisionsList.filter(a => a.type === 'leave').length },
+                ].filter(o => o.id === 'all' || o.id === 'urgent' || o.id === 'critical' || o.count > 0).map(opt => (
                   <button
                     key={opt.id}
                     onClick={() => setFilterType(opt.id)}
                     className={`px-2.5 py-1 rounded text-[11px] font-medium border transition-all ${
                       filterType === opt.id
                         ? 'bg-slate-200 dark:bg-slate-700/50 border-slate-300 dark:border-slate-600/50 text-primary'
-                        : 'bg-transparent border-slate-300 dark:border-slate-700/40 text-slate-500 hover:text-secondary hover:border-slate-400 dark:hover:border-slate-600/30'
+                        : 'bg-transparent border-slate-300 dark:border-slate-700/40 text-slate-500 hover:text-secondary'
                     }`}
                   >
                     {opt.label}
                     <span className={`ml-1 ${filterType === opt.id ? 'text-slate-500' : 'text-slate-700'}`}>{opt.count}</span>
                   </button>
                 ))}
-
                 <div className="flex-1" />
-
-                {/* Sort toggle */}
                 <div className="flex items-center gap-1">
                   <span className="text-[10px] text-slate-700 mr-1">Sort:</span>
                   {[
+                    { id: 'impact', label: 'Impact' },
                     { id: 'urgency', label: 'Urgency' },
                     { id: 'amount', label: 'Amount' },
-                    { id: 'oldest', label: 'Oldest' },
                   ].map(s => (
                     <button
                       key={s.id}
                       onClick={() => setSortBy(s.id)}
-                      className={`px-2 py-0.5 rounded text-[10px] font-medium transition-all ${
-                        sortBy === s.id
-                          ? 'bg-slate-200 dark:bg-slate-700/50 text-primary'
-                          : 'text-slate-700 hover:text-slate-900 dark:hover:text-slate-400'
-                      }`}
+                      className={`px-2 py-0.5 rounded text-[10px] font-medium transition-all ${sortBy === s.id ? 'bg-slate-200 dark:bg-slate-700/50 text-primary' : 'text-slate-700 hover:text-secondary'}`}
                     >
                       {s.label}
                     </button>
                   ))}
                 </div>
               </div>
-            )}
 
-            {activeTab === 'pending' && (
-              <>
-                {/* Bulk Actions Toolbar */}
-                {selectedItems.length > 0 && (
-                  <div className="mb-3 flex items-center gap-2 px-3 py-2 bg-slate-50 dark:bg-slate-800/35 border border-border dark:border-slate-700/30 rounded">
-                    <CheckSquare className="w-3.5 h-3.5 text-secondary" />
-                    <span className="text-[11px] font-semibold text-primary">
-                      {selectedItems.length} selected
-                    </span>
-                    <div className="flex-1" />
-                    <button onClick={bulkApprove} className="px-2 py-1 text-[10px] font-medium text-green-600 dark:text-green-400 hover:bg-green-500/10 rounded transition-colors">Approve All</button>
-                    <button onClick={bulkDeny} className="px-2 py-1 text-[10px] font-medium text-red-700 dark:text-red-400 hover:bg-red-500/10 rounded transition-colors">Deny All</button>
-                    <button onClick={() => setSelectedItems([])} className="px-2 py-1 text-[10px] font-medium text-slate-500 hover:text-slate-900 dark:hover:text-white rounded transition-colors">Clear</button>
+              {/* Bulk toolbar */}
+              {selectedItems.length > 0 && (
+                <div className="mb-3 flex items-center gap-2 px-3 py-2 bg-slate-50 dark:bg-slate-800/35 border border-border rounded">
+                  <CheckSquare className="w-3.5 h-3.5 text-secondary" />
+                  <span className="text-[11px] font-semibold text-primary">{selectedItems.length} selected</span>
+                  <div className="flex-1" />
+                  <button onClick={() => bulkDecide('approved')} className="px-2 py-1 text-[10px] font-medium text-green-600 dark:text-green-400 hover:bg-green-500/10 rounded transition-colors">Approve All</button>
+                  <button onClick={() => bulkDecide('denied')} className="px-2 py-1 text-[10px] font-medium text-red-700 dark:text-red-400 hover:bg-red-500/10 rounded transition-colors">Deny All</button>
+                  <button onClick={() => setSelectedItems([])} className="px-2 py-1 text-[10px] font-medium text-slate-500 hover:text-slate-900 dark:hover:text-white rounded transition-colors">Clear</button>
+                </div>
+              )}
+
+              {filteredDecisions.length === 0 ? (
+                <div className="py-12 text-center">
+                  <CheckCircle className="w-10 h-10 text-green-600 dark:text-green-400/50 mx-auto mb-3" />
+                  <p className="text-sm font-semibold text-primary mb-1">All decisions complete</p>
+                  <p className="text-[11px] text-slate-500">No pending decisions.</p>
+                </div>
+              ) : (
+                <>
+                  {/* Select all */}
+                  <div className="mb-2 flex items-center gap-2 px-1">
+                    <button onClick={toggleSelectAll} className="flex items-center gap-1.5 text-[11px] text-slate-500 hover:text-secondary transition-colors">
+                      {selectedItems.length === filteredDecisions.length
+                        ? <CheckSquare className="w-3.5 h-3.5 text-secondary" />
+                        : <Square className="w-3.5 h-3.5" />}
+                      Select all ({filteredDecisions.length})
+                    </button>
                   </div>
-                )}
 
-                {filteredApprovals.length === 0 ? (
-                  <div className="py-12 text-center">
-                    <CheckCircle className="w-10 h-10 text-green-600 dark:text-green-400/50 mx-auto mb-3" />
-                    <p className="text-sm font-semibold text-primary mb-1">All caught up</p>
-                    <p className="text-[11px] text-slate-500">No pending approvals.</p>
-                  </div>
-                ) : (
-                  <>
-                    {/* Select All */}
-                    <div className="mb-2 flex items-center gap-2 px-1">
-                      <button
-                        onClick={toggleSelectAll}
-                        className="flex items-center gap-1.5 text-[11px] text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors"
-                      >
-                        {selectedItems.length === filteredApprovals.length ? (
-                          <CheckSquare className="w-3.5 h-3.5 text-secondary" />
-                        ) : (
-                          <Square className="w-3.5 h-3.5" />
-                        )}
-                        Select all ({filteredApprovals.length})
-                      </button>
-                    </div>
+                  {/* ── Decision Cards ─────────────────────── */}
+                  <div className="space-y-px">
+                    {filteredDecisions.map((decision) => {
+                      const isExpanded = expandedCards.includes(decision.id);
+                      const isSelected = selectedItems.includes(decision.id);
+                      const urgencyState = getUrgencyState(decision);
+                      const deadlineLabel = getDeadlineLabel(decision);
+                      const ai = decision.aiRecommendation;
 
-                    {/* ── Decision Cards ────────────────────── */}
-                    <div className="space-y-px">
-                      {filteredApprovals.map((approval) => {
-                        const isExpanded = expandedCards.includes(approval.id);
-                        const isSelected = selectedItems.includes(approval.id);
-                        const urgencyState = getUrgencyState(approval);
-                        const deadlineLabel = getDeadlineLabel(approval);
+                      return (
+                        <div
+                          key={decision.id}
+                          className={`rounded border transition-colors ${
+                            isSelected
+                              ? 'border-slate-600/40 bg-slate-700/[0.1]'
+                              : 'border-border dark:border-slate-700/30 bg-white dark:bg-slate-800/15 hover:bg-slate-50 dark:hover:bg-slate-800/30'
+                          }`}
+                        >
+                          {/* ── Compact Row ── */}
+                          <div className="flex items-center gap-2.5 px-3.5 py-[9px]">
+                            {/* Urgency strip */}
+                            <div className={`w-[4px] self-stretch rounded-full flex-shrink-0 ${
+                              urgencyState === 'overdue' ? 'bg-red-500' :
+                              urgencyState === 'critical' ? 'bg-amber-500' :
+                              urgencyState === 'soon' ? 'bg-amber-400/60' :
+                              decision.decisionImpactScore >= 85 ? 'bg-red-400/50' :
+                              'bg-slate-200 dark:bg-slate-700/30'
+                            }`} />
 
-                        return (
-                          <div
-                            key={approval.id}
-                            className={`rounded border transition-colors ${
-                              isSelected ? 'border-slate-600/40 bg-slate-700/[0.1]' :
-                              'border-border dark:border-slate-700/30 bg-white dark:bg-slate-800/15 hover:bg-slate-50 dark:hover:bg-slate-800/30'
-                            }`}
-                          >
-                            {/* ── Compact Row ──────────────────────── */}
-                            <div className="flex items-center gap-2.5 px-3.5 py-[9px]">
-                              {/* Urgency strip — like alerts page */}
-                              <div className={`w-[4px] self-stretch rounded-full flex-shrink-0 ${
-                                urgencyState === 'overdue' ? 'bg-red-500' :
-                                urgencyState === 'critical' ? 'bg-amber-500' :
-                                urgencyState === 'soon' ? 'bg-amber-500/60' :
-                                'bg-slate-100 dark:bg-slate-700/30'
-                              }`}></div>
+                            {/* Select */}
+                            <button onClick={() => toggleSelectItem(decision.id)} className="flex-shrink-0">
+                              {isSelected
+                                ? <CheckSquare className="w-3.5 h-3.5 text-secondary" />
+                                : <Square className="w-3.5 h-3.5 text-slate-700 hover:text-slate-600 dark:text-slate-400 transition-colors" />}
+                            </button>
 
-                              {/* Checkbox */}
-                              <button onClick={() => toggleSelectItem(approval.id)} className="flex-shrink-0">
-                                {isSelected ? (
-                                  <CheckSquare className="w-3.5 h-3.5 text-secondary" />
-                                ) : (
-                                  <Square className="w-3.5 h-3.5 text-slate-700 hover:text-slate-600 dark:text-slate-400 transition-colors" />
-                                )}
-                              </button>
-
-                              {/* Type pill */}
-                              <span className={`px-1.5 py-px border rounded text-[10px] font-semibold flex-shrink-0 leading-tight ${
-                                approval.type === 'leave' ? 'bg-slate-50 dark:bg-slate-700/40 border-slate-600/50 text-slate-500' :
-                                approval.type === 'budget' ? 'bg-green-100 border-green-200 text-green-700 dark:bg-green-500/10 dark:border-green-500/20 dark:text-green-400' :
-                                approval.type === 'hiring' ? 'bg-slate-50 dark:bg-slate-700/40 border-slate-600/50 text-slate-500' :
-                                approval.type === 'overtime' ? 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
-                                approval.type === 'emergency' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
-                                approval.type === 'policy' ? 'bg-slate-400/10 border-slate-400/20 text-slate-500' :
-                                approval.type === 'mutual-aid' ? 'bg-cyan-500/10 border-cyan-500/20 text-cyan-400' :
-                                'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400'
-                              }`}>
-                                {approval.type === 'mutual-aid' ? 'Mutual Aid' :
-                                 approval.type === 'overtime' ? 'OT' :
-                                 approval.type.charAt(0).toUpperCase() + approval.type.slice(1)}
-                              </span>
-
-                              {/* Title */}
-                              <span className="text-[13px] font-bold flex-1 min-w-0 truncate text-primary">
-                                {approval.title} — {approval.details}
-                              </span>
-
-                              {/* Amount */}
-                              {approval.amount && (
-                                <span className="text-[11px] font-semibold text-green-600 dark:text-green-400 flex-shrink-0 font-mono">
-                                  ${approval.amount.toLocaleString()}
-                                </span>
-                              )}
-
-                              {/* Requestor */}
-                              <span className="hidden lg:block text-[10px] text-slate-500 flex-shrink-0 max-w-[140px] truncate">
-                                {approval.submittedBy.split(' (')[0]}
-                              </span>
-
-                              {/* Pending time */}
-                              <span className="text-[10px] text-slate-700 flex-shrink-0 font-mono">
-                                {getPendingTime(approval.daysAgo)}
-                              </span>
-
-                              {/* Deadline indicator */}
-                              {deadlineLabel && (
-                                <span className={`px-1.5 py-px border rounded text-[10px] font-bold flex-shrink-0 ${
-                                  urgencyState === 'overdue' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/15 dark:border-red-500/25 dark:text-red-400' :
-                                  urgencyState === 'critical' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
-                                  'bg-amber-500/8 border-amber-500/15 text-amber-700 dark:text-amber-400'
-                                }`}>
-                                  {deadlineLabel}
-                                </span>
-                              )}
-
-                              {/* Overdue pulse */}
-                              {urgencyState === 'overdue' && (
-                                <div className="w-1.5 h-1.5 rounded-full flex-shrink-0 animate-pulse bg-red-500"></div>
-                              )}
-
-                              {/* AI Recommendation — small bar */}
-                              {approval.aiRecommendation && (
-                                <span className={`hidden md:inline-flex items-center gap-1 px-1.5 py-px rounded text-[10px] font-semibold flex-shrink-0 ${
-                                  approval.aiRecommendation.decision === 'approve'
-                                    ? 'text-green-600 dark:text-green-400/80'
-                                    : 'text-red-700 dark:text-red-400/80'
-                                }`}>
-                                  <Sparkles className="w-2.5 h-2.5" />
-                                  {approval.aiRecommendation.decision === 'approve' ? 'Approve' : 'Deny'} ({approval.aiRecommendation.confidence}%)
-                                </span>
-                              )}
-
-                              {/* Approve / Deny */}
-                              <div className="flex items-center gap-1 flex-shrink-0 ml-1">
-                                <button
-                                  onClick={() => openApprovalModal(approval, 'approve')}
-                                  className="p-1 rounded hover:bg-green-500/15 transition-colors"
-                                  title="Approve"
-                                >
-                                  <ThumbsUp className="w-3.5 h-3.5 text-green-600 dark:text-green-400" />
-                                </button>
-                                <button
-                                  onClick={() => openApprovalModal(approval, 'deny')}
-                                  className="p-1 rounded hover:bg-red-500/15 transition-colors"
-                                  title="Deny"
-                                >
-                                  <XCircle className="w-3.5 h-3.5 text-red-700 dark:text-red-400" />
-                                </button>
-                                <button
-                                  onClick={() => toggleExpandCard(approval.id)}
-                                  className="p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-700/30 transition-colors"
-                                  title={isExpanded ? 'Collapse' : 'Expand'}
-                                >
-                                  {isExpanded ? <ChevronUp className="w-3.5 h-3.5 text-slate-500" /> : <ChevronDown className="w-3.5 h-3.5 text-slate-500" />}
-                                </button>
-                              </div>
+                            {/* Impact Score */}
+                            <div className={`px-1.5 py-px border rounded text-[10px] font-black font-mono flex-shrink-0 leading-tight ${getImpactScoreBg(decision.decisionImpactScore)} ${getImpactScoreColor(decision.decisionImpactScore)}`}>
+                              {decision.decisionImpactScore}
                             </div>
 
-                            {/* ── Expanded Details ──────────────────── */}
-                            {isExpanded && (
-                              <div className="px-3.5 pb-3 pt-1 ml-[26px] space-y-2.5">
-                                {/* Key context row */}
-                                <div className="flex items-center gap-3 text-[10px] text-secondary flex-wrap">
-                                  <span className="flex items-center gap-1">
-                                    <Building2 className="w-3 h-3" />
-                                    {approval.division}
-                                  </span>
-                                  {approval.submittedByTitle && (
-                                    <>
-                                      <span className="text-slate-700">·</span>
-                                      <span>{approval.submittedBy.split(' (')[0]} ({approval.submittedByTitle})</span>
-                                    </>
-                                  )}
-                                  {approval.leaveBalance && (
-                                    <>
-                                      <span className="text-slate-700">·</span>
-                                      <span>Leave balance: {approval.leaveBalance} hrs</span>
-                                    </>
-                                  )}
-                                  {approval.backgroundCleared && (
-                                    <>
-                                      <span className="text-slate-700">·</span>
-                                      <span className="text-green-600 dark:text-green-400">Background cleared</span>
-                                    </>
-                                  )}
-                                  {approval.vendor && (
-                                    <>
-                                      <span className="text-slate-700">·</span>
-                                      <span>Vendor: {approval.vendor}</span>
-                                    </>
-                                  )}
-                                  {approval.approvalChain && (
-                                    <>
-                                      <span className="text-slate-700">·</span>
-                                      <span>{approval.approvalChain}</span>
-                                    </>
-                                  )}
-                                </div>
+                            {/* Type pill */}
+                            <span className={`px-1.5 py-px border rounded text-[10px] font-semibold flex-shrink-0 leading-tight ${getTypePill(decision.type)}`}>
+                              {getTypeLabel(decision.type)}
+                            </span>
 
-                                {/* Justification */}
-                                <div className="bg-slate-50 dark:bg-slate-900/30 rounded p-2.5 border border-border dark:border-slate-700/30">
-                                  <p className="text-[10px] text-slate-500 font-semibold mb-1">Justification</p>
-                                  <p className="text-[11px] text-secondary leading-relaxed">{approval.justification}</p>
-                                </div>
+                            {/* Title + details */}
+                            <span className="text-[13px] font-bold flex-1 min-w-0 truncate text-primary">
+                              {decision.details}
+                            </span>
 
-                                {/* Impact Analysis */}
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                                  <div className="bg-green-500/[0.03] border border-green-500/10 rounded p-2.5">
-                                    <p className="text-[10px] font-bold text-green-600 dark:text-green-400 mb-1">IF APPROVED</p>
-                                    <p className="text-[10px] text-secondary leading-relaxed">{approval.impact.approved}</p>
+                            {/* Amount */}
+                            {decision.amount && (
+                              <span className="text-[11px] font-semibold text-green-600 dark:text-green-400 flex-shrink-0 font-mono">
+                                ${decision.amount.toLocaleString()}
+                              </span>
+                            )}
+
+                            {/* Submitter */}
+                            <span className="hidden lg:block text-[10px] text-slate-500 flex-shrink-0 max-w-[130px] truncate">
+                              {decision.submittedBy.split(' (')[0].split(' #')[0]}
+                            </span>
+
+                            {/* Age */}
+                            <span className="text-[10px] text-slate-700 flex-shrink-0 font-mono">
+                              {getPendingTime(decision.daysAgo)}
+                            </span>
+
+                            {/* Deadline */}
+                            {deadlineLabel && (
+                              <span className={`px-1.5 py-px border rounded text-[10px] font-bold flex-shrink-0 ${
+                                urgencyState === 'overdue' || urgencyState === 'critical'
+                                  ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400'
+                                  : 'bg-amber-500/8 border-amber-500/15 text-amber-700 dark:text-amber-400'
+                              }`}>
+                                {deadlineLabel}
+                              </span>
+                            )}
+
+                            {/* AI recommendation inline */}
+                            {ai && (
+                              <span className={`hidden md:inline-flex items-center gap-1 px-1.5 py-px rounded text-[10px] font-semibold flex-shrink-0 border ${
+                                ai.decision === 'approve'
+                                  ? 'bg-green-500/8 border-green-500/15 text-green-600 dark:text-green-400'
+                                  : 'bg-red-500/8 border-red-500/15 text-red-700 dark:text-red-400'
+                              }`}>
+                                <Sparkles className="w-2.5 h-2.5" />
+                                {ai.decision === 'approve' ? 'Approve' : 'Deny'} · {ai.confidence}%
+                              </span>
+                            )}
+
+                            {/* Action buttons */}
+                            <div className="flex items-center gap-1 flex-shrink-0 ml-1">
+                              <button
+                                onClick={() => openModal(decision, 'approve')}
+                                className="p-1 rounded hover:bg-green-500/15 transition-colors"
+                                title="Approve"
+                              >
+                                <ThumbsUp className="w-3.5 h-3.5 text-green-600 dark:text-green-400" />
+                              </button>
+                              <button
+                                onClick={() => openModal(decision, 'deny')}
+                                className="p-1 rounded hover:bg-red-500/15 transition-colors"
+                                title="Deny"
+                              >
+                                <XCircle className="w-3.5 h-3.5 text-red-700 dark:text-red-400" />
+                              </button>
+                              <button
+                                onClick={() => toggleExpand(decision.id)}
+                                className="p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-700/30 transition-colors"
+                              >
+                                {isExpanded ? <ChevronUp className="w-3.5 h-3.5 text-slate-500" /> : <ChevronDown className="w-3.5 h-3.5 text-slate-500" />}
+                              </button>
+                            </div>
+                          </div>
+
+                          {/* ── Expanded: Full Impact Analysis ── */}
+                          {isExpanded && (
+                            <div className="border-t border-border dark:border-slate-700/30 ml-[22px]">
+
+                              {/* AI Recommendation Panel */}
+                              <div className="px-3 pt-3 pb-2 border-b border-border dark:border-slate-700/20 bg-slate-900/[0.02] dark:bg-slate-900/30">
+                                <div className="flex items-start gap-2.5">
+                                  <div className="flex-shrink-0 mt-0.5">
+                                    <Sparkles className="w-3.5 h-3.5 text-violet-500 dark:text-violet-400" />
                                   </div>
-                                  <div className="bg-red-500/[0.03] border border-red-500/10 rounded p-2.5">
-                                    <p className="text-[10px] font-bold text-red-700 dark:text-red-400 mb-1">IF DENIED</p>
-                                    <p className="text-[10px] text-secondary leading-relaxed">{approval.impact.denied}</p>
-                                  </div>
-                                </div>
-
-                                {/* Budget impact (inline if exists) */}
-                                {approval.budgetImpact && (
-                                  <div className="flex items-center gap-4 text-[10px] text-secondary bg-slate-50 dark:bg-slate-900/20 rounded px-2.5 py-2 border border-border">
-                                    <span className="text-slate-500 font-semibold">Budget:</span>
-                                    <span>{approval.budgetImpact.category}</span>
-                                    {approval.budgetImpact.allocated && <span>Allocated ${approval.budgetImpact.allocated.toLocaleString()}</span>}
-                                    {approval.budgetImpact.spent && <span>Spent ${approval.budgetImpact.spent.toLocaleString()}</span>}
-                                    {approval.budgetImpact.percentUsed && (
-                                      <span className={
-                                        approval.budgetImpact.percentUsed >= 90 ? 'text-red-700 dark:text-red-400' :
-                                        approval.budgetImpact.percentUsed >= 75 ? 'text-amber-700 dark:text-amber-400' :
-                                        'text-green-600 dark:text-green-400'
-                                      }>{approval.budgetImpact.percentUsed}% used</span>
+                                  <div className="flex-1 min-w-0">
+                                    <div className="flex items-center gap-2 mb-1">
+                                      <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">AI Recommendation</span>
+                                      <span className={`px-1.5 py-px border rounded text-[10px] font-bold ${
+                                        ai.decision === 'approve'
+                                          ? 'bg-green-100 border-green-200 text-green-700 dark:bg-green-500/10 dark:border-green-500/20 dark:text-green-400'
+                                          : 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400'
+                                      }`}>
+                                        {ai.decision === 'approve' ? 'APPROVE' : 'DENY'}
+                                      </span>
+                                      <div className="flex items-center gap-1.5 ml-1">
+                                        <span className="text-[9px] text-slate-500 uppercase font-bold">Confidence</span>
+                                        <div className="w-20 bg-slate-200 dark:bg-slate-700/50 rounded-full h-1">
+                                          <div className={`h-1 rounded-full ${ai.confidence >= 90 ? 'bg-green-500' : ai.confidence >= 75 ? 'bg-amber-500' : 'bg-slate-400'}`} style={{ width: `${ai.confidence}%` }} />
+                                        </div>
+                                        <span className={`text-[10px] font-bold ${getConfidenceColor(ai.confidence)}`}>{ai.confidence}%</span>
+                                      </div>
+                                    </div>
+                                    <p className="text-[11px] text-secondary leading-snug">{ai.summary}</p>
+                                    {ai.urgencyNote && (
+                                      <p className="text-[10px] text-amber-700 dark:text-amber-400 mt-0.5 flex items-center gap-1">
+                                        <AlertTriangle className="w-2.5 h-2.5" />
+                                        {ai.urgencyNote}
+                                      </p>
+                                    )}
+                                    {ai.considerations && (
+                                      <p className="text-[10px] text-slate-500 mt-0.5">{ai.considerations}</p>
                                     )}
                                   </div>
-                                )}
+                                  {/* Impact score + submitter */}
+                                  <div className="flex-shrink-0 text-right">
+                                    <div className={`text-2xl font-black font-mono leading-none ${getImpactScoreColor(decision.decisionImpactScore)}`}>{decision.decisionImpactScore}</div>
+                                    <div className="text-[9px] text-slate-500 mt-0.5">Impact Score</div>
+                                    <div className="text-[9px] text-slate-500 mt-1">{decision.submittedBy.split(' (')[0].split(' #')[0]}</div>
+                                    <div className="text-[9px] text-slate-700">{decision.division}</div>
+                                  </div>
+                                </div>
+                              </div>
 
-                                {/* AI Analysis (expanded, still subdued) */}
-                                {approval.aiRecommendation && (
-                                  <div className="flex items-start gap-2 text-[10px] text-secondary">
-                                    <Sparkles className="w-3 h-3 text-slate-500 mt-0.5 flex-shrink-0" />
-                                    <div>
-                                      <span className="text-slate-500 font-semibold">AI Analysis:</span>{' '}
-                                      <span>{approval.aiRecommendation.reasoning}</span>
-                                      {approval.aiRecommendation.urgencyNote && (
-                                        <span className="text-amber-700 dark:text-amber-400 ml-1">⚠ {approval.aiRecommendation.urgencyNote}</span>
+                              {/* Justification */}
+                              <div className="px-3 py-2 border-b border-border dark:border-slate-700/20">
+                                <p className="text-[9px] font-bold text-slate-500 uppercase tracking-wider mb-1">Request Justification</p>
+                                <p className="text-[11px] text-secondary leading-relaxed">{decision.justification}</p>
+                                {decision.backgroundCleared && (
+                                  <p className="text-[10px] text-green-600 dark:text-green-400 mt-1 flex items-center gap-1">
+                                    <CheckCircle className="w-2.5 h-2.5" />
+                                    Background check cleared
+                                  </p>
+                                )}
+                                {decision.leaveBalance && (
+                                  <p className="text-[10px] text-slate-500 mt-1">Leave balance: {decision.leaveBalance} hrs accrued</p>
+                                )}
+                              </div>
+
+                              {/* 4-Dimension Impact Analysis */}
+                              <div className="border-b border-border dark:border-slate-700/20">
+                                <div className="px-3 pt-2 pb-1">
+                                  <p className="text-[9px] font-bold text-slate-500 uppercase tracking-wider">Decision Impact Analysis</p>
+                                </div>
+                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-px bg-slate-100 dark:bg-slate-700/20">
+                                  {[
+                                    { icon: DollarSign, label: 'Financial Impact', key: 'financialImpact', iconColor: 'text-green-600 dark:text-green-400' },
+                                    { icon: Shield, label: 'Compliance Impact', key: 'complianceImpact', iconColor: 'text-violet-600 dark:text-violet-400' },
+                                    { icon: Users, label: 'Staffing Impact', key: 'staffingImpact', iconColor: 'text-blue-600 dark:text-blue-400' },
+                                    { icon: Activity, label: 'Operational Impact', key: 'operationalImpact', iconColor: 'text-amber-600 dark:text-amber-400' },
+                                  ].map(({ icon: Icon, label, key, iconColor }) => (
+                                    <div key={key} className="bg-white dark:bg-slate-800/15 px-3 py-2.5">
+                                      <div className="flex items-center gap-1.5 mb-2">
+                                        <Icon className={`w-3 h-3 ${iconColor}`} />
+                                        <span className="text-[9px] font-bold text-slate-500 uppercase tracking-wider">{label}</span>
+                                      </div>
+                                      <div className="grid grid-cols-2 gap-2">
+                                        <div className="bg-green-500/[0.03] border border-green-500/10 rounded p-1.5">
+                                          <p className="text-[9px] font-bold text-green-600 dark:text-green-400 mb-0.5">IF APPROVED</p>
+                                          <p className="text-[10px] text-secondary leading-snug">{decision[key]?.approval}</p>
+                                        </div>
+                                        <div className="bg-red-500/[0.02] border border-red-500/10 rounded p-1.5">
+                                          <p className="text-[9px] font-bold text-red-700 dark:text-red-400 mb-0.5">IF DENIED</p>
+                                          <p className="text-[10px] text-secondary leading-snug">{decision[key]?.denial}</p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  ))}
+                                </div>
+
+                                {/* Budget position (when relevant) */}
+                                {decision.budgetImpact && (
+                                  <div className="px-3 py-2 bg-white dark:bg-slate-800/10 border-t border-border dark:border-slate-700/20">
+                                    <div className="flex items-center gap-4 text-[10px] flex-wrap">
+                                      <span className="text-slate-500 font-semibold">Budget Position:</span>
+                                      {decision.budgetImpact.allocated && (
+                                        <span className="text-secondary">Allocated: <span className="text-primary font-mono">${decision.budgetImpact.allocated.toLocaleString()}</span></span>
                                       )}
-                                      {approval.aiRecommendation.considerations && (
-                                        <span className="text-secondary ml-1">{approval.aiRecommendation.considerations}</span>
+                                      {decision.budgetImpact.spent && (
+                                        <span className="text-secondary">Spent: <span className="text-primary font-mono">${decision.budgetImpact.spent.toLocaleString()}</span></span>
+                                      )}
+                                      {decision.budgetImpact.percentUsed && (
+                                        <span className={decision.budgetImpact.percentUsed >= 90 ? 'text-red-700 dark:text-red-400 font-semibold' : decision.budgetImpact.percentUsed >= 75 ? 'text-amber-700 dark:text-amber-400' : 'text-green-600 dark:text-green-400'}>
+                                          {decision.budgetImpact.percentUsed}% used
+                                        </span>
+                                      )}
+                                      {decision.budgetImpact.grantOffset && (
+                                        <span className="text-green-600 dark:text-green-400">DOJ Grant offset: ${decision.budgetImpact.grantOffset.toLocaleString()} → Net: ${decision.budgetImpact.netCost?.toLocaleString()}</span>
+                                      )}
+                                      {decision.budgetImpact.remainingAfter && (
+                                        <span className={decision.budgetImpact.remainingAfter < 5000 ? 'text-red-700 dark:text-red-400 font-semibold' : 'text-secondary'}>
+                                          After approval: ${decision.budgetImpact.remainingAfter.toLocaleString()} remaining
+                                        </span>
                                       )}
                                     </div>
                                   </div>
                                 )}
+                              </div>
 
-                                {/* Documents */}
-                                {approval.documents && approval.documents.length > 0 && (
-                                  <div className="flex items-center gap-2 flex-wrap">
+                              {/* Documents + actions */}
+                              <div className="px-3 py-2.5">
+                                {decision.documents && decision.documents.length > 0 && (
+                                  <div className="flex items-center gap-2 flex-wrap mb-2.5">
                                     <FileCheck className="w-3 h-3 text-slate-700" />
-                                    {approval.documents.map((doc, idx) => (
-                                      <button
-                                        key={idx}
-                                        className="flex items-center gap-1 px-1.5 py-0.5 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-700/30 border border-border dark:border-slate-700/30 rounded text-[10px] text-secondary transition-colors"
-                                      >
+                                    {decision.documents.map((doc, idx) => (
+                                      <button key={idx} className="flex items-center gap-1 px-1.5 py-0.5 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-700/30 border border-border dark:border-slate-700/30 rounded text-[10px] text-secondary transition-colors">
                                         <FileText className="w-2.5 h-2.5" />
                                         {doc}
                                       </button>
                                     ))}
                                   </div>
                                 )}
-
-                                {/* Expanded action buttons */}
-                                <div className="flex items-center gap-2 pt-1">
+                                <div className="flex items-center gap-2 pt-1 border-t border-border">
                                   <button
-                                    onClick={() => openRequestInfoModal(approval)}
+                                    onClick={() => setRequestInfoModal(decision)}
                                     className="px-2 py-1 text-[10px] font-medium text-secondary hover:bg-slate-100 dark:hover:bg-slate-700/20 rounded transition-colors flex items-center gap-1"
                                   >
                                     <Info className="w-3 h-3" />
@@ -986,191 +1052,181 @@ export default function Approvals() {
                                   </button>
                                   <div className="flex-1" />
                                   <button
-                                    onClick={() => openApprovalModal(approval, 'approve')}
-                                    className="px-3 py-1.5 bg-green-500/10 border border-green-500/20 hover:bg-green-500/20 rounded text-[11px] font-semibold text-green-600 dark:text-green-400 transition-colors flex items-center gap-1.5"
+                                    onClick={() => openModal(decision, 'approve')}
+                                    className="px-4 py-1.5 bg-green-500/10 border border-green-500/20 hover:bg-green-500/20 rounded text-[11px] font-bold text-green-600 dark:text-green-400 transition-colors flex items-center gap-1.5"
                                   >
                                     <ThumbsUp className="w-3 h-3" />
                                     Approve
                                   </button>
                                   <button
-                                    onClick={() => openApprovalModal(approval, 'deny')}
-                                    className="px-3 py-1.5 bg-red-500/10 border border-red-500/20 hover:bg-red-500/20 rounded text-[11px] font-semibold text-red-700 dark:text-red-400 transition-colors flex items-center gap-1.5"
+                                    onClick={() => openModal(decision, 'deny')}
+                                    className="px-4 py-1.5 bg-red-500/10 border border-red-500/20 hover:bg-red-500/20 rounded text-[11px] font-bold text-red-700 dark:text-red-400 transition-colors flex items-center gap-1.5"
                                   >
                                     <XCircle className="w-3 h-3" />
                                     Deny
                                   </button>
                                 </div>
                               </div>
-                            )}
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </>
-                )}
-              </>
-            )}
-
-            {/* ════════════════════════════════════════════
-                DECISION LOG — Institutional audit record
-                ════════════════════════════════════════════ */}
-            {activeTab === 'decision-log' && (
-              <>
-                {/* Filters */}
-                <div className="mb-6 flex items-center gap-1.5 flex-wrap">
-                  {[
-                    { id: 'all', label: 'All', count: approvalHistory.length },
-                    { id: 'approved', label: 'Approved', count: approvalHistory.filter(h => h.decision === 'approved').length },
-                    { id: 'denied', label: 'Denied', count: approvalHistory.filter(h => h.decision === 'denied').length },
-                  ].map(opt => (
-                    <button
-                      key={opt.id}
-                      onClick={() => setLogFilter(opt.id)}
-                      className={`px-2.5 py-1 rounded text-[11px] font-medium border transition-all ${
-                        logFilter === opt.id
-                          ? 'bg-slate-200 dark:bg-slate-700/50 border-slate-300 dark:border-slate-600/50 text-primary'
-                          : 'bg-transparent border-slate-300 dark:border-slate-700/40 text-slate-500 hover:text-secondary hover:border-slate-400 dark:hover:border-slate-600/30'
-                      }`}
-                    >
-                      {opt.label}
-                      <span className={`ml-1 ${logFilter === opt.id ? 'text-slate-500' : 'text-slate-700'}`}>{opt.count}</span>
-                    </button>
-                  ))}
-                  <div className="flex-1" />
-                  <div className="flex-1 relative max-w-[240px]">
-                    <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-700" />
-                    <input
-                      type="text"
-                      placeholder="Search log..."
-                      className="w-full pl-8 pr-3 py-1 bg-surface border border-slate-300 dark:border-slate-700/40 rounded text-[11px] text-primary placeholder-slate-500 dark:placeholder-slate-600 focus:outline-none focus:border-slate-600/50"
-                    />
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
-                </div>
+                </>
+              )}
+            </>
+          )}
 
-                {/* Table */}
-                <div className="border border-border dark:border-slate-700/30 rounded overflow-hidden">
-                  <table className="w-full">
-                    <thead>
-                      <tr className="border-b border-border">
-                        <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Type</th>
-                        <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Title</th>
-                        <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Division</th>
-                        <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Amount</th>
-                        <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Decision</th>
-                        <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Decided By</th>
-                        <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Date</th>
-                        <th className="px-3 py-2 text-right text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Reason</th>
+          {/* ═══════════════════════════════════════════════
+              DECISION LOG
+              ═══════════════════════════════════════════════ */}
+          {activeTab === 'decision-log' && (
+            <>
+              <div className="mb-4 flex items-center gap-1.5 flex-wrap">
+                {[
+                  { id: 'all',      label: 'All',      count: decisionHistory.length },
+                  { id: 'approved', label: 'Approved', count: decisionHistory.filter(h => h.decision === 'approved').length },
+                  { id: 'denied',   label: 'Denied',   count: decisionHistory.filter(h => h.decision === 'denied').length },
+                ].map(opt => (
+                  <button
+                    key={opt.id}
+                    onClick={() => setLogFilter(opt.id)}
+                    className={`px-2.5 py-1 rounded text-[11px] font-medium border transition-all ${
+                      logFilter === opt.id
+                        ? 'bg-slate-200 dark:bg-slate-700/50 border-slate-300 dark:border-slate-600/50 text-primary'
+                        : 'bg-transparent border-slate-300 dark:border-slate-700/40 text-slate-500 hover:text-secondary'
+                    }`}
+                  >
+                    {opt.label}
+                    <span className={`ml-1 ${logFilter === opt.id ? 'text-slate-500' : 'text-slate-700'}`}>{opt.count}</span>
+                  </button>
+                ))}
+                <div className="flex-1" />
+                <div className="relative max-w-[240px]">
+                  <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-700" />
+                  <input
+                    type="text"
+                    placeholder="Search log..."
+                    className="w-full pl-8 pr-3 py-1 bg-surface border border-slate-300 dark:border-slate-700/40 rounded text-[11px] text-primary placeholder-slate-500 dark:placeholder-slate-600 focus:outline-none focus:border-slate-600/50"
+                  />
+                </div>
+              </div>
+
+              <div className="border border-border dark:border-slate-700/30 rounded overflow-hidden">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-border">
+                      <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Type</th>
+                      <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Decision</th>
+                      <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Division</th>
+                      <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Amount</th>
+                      <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Outcome</th>
+                      <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Decided By</th>
+                      <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Date</th>
+                      <th className="px-3 py-2 text-right text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Notes</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredHistory.map((item) => (
+                      <tr key={item.id} className="border-b border-slate-100 dark:border-slate-800/10 hover:bg-slate-50 dark:hover:bg-slate-800/15 transition-colors">
+                        <td className="px-3 py-2.5">
+                          <span className="text-[11px] text-secondary capitalize">{getTypeLabel(item.type)}</span>
+                        </td>
+                        <td className="px-3 py-2.5">
+                          <p className="text-[11px] font-semibold text-primary">{item.title}</p>
+                          <p className="text-[10px] text-slate-500">{item.submittedBy} · {item.details}</p>
+                        </td>
+                        <td className="px-3 py-2.5">
+                          <span className="text-[11px] text-secondary">{item.division}</span>
+                        </td>
+                        <td className="px-3 py-2.5">
+                          {item.amount
+                            ? <span className="text-[11px] font-mono text-green-600 dark:text-green-400">${item.amount.toLocaleString()}</span>
+                            : <span className="text-[11px] text-slate-700">—</span>
+                          }
+                        </td>
+                        <td className="px-3 py-2.5">
+                          <span className={`inline-flex items-center gap-1 px-1.5 py-px rounded text-[10px] font-bold border ${
+                            item.decision === 'approved'
+                              ? 'bg-green-100 border-green-200 text-green-700 dark:bg-green-500/10 dark:border-green-500/20 dark:text-green-400'
+                              : 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400'
+                          }`}>
+                            {item.decision === 'approved' ? <CheckCircle className="w-2.5 h-2.5" /> : <XCircle className="w-2.5 h-2.5" />}
+                            {item.decision === 'approved' ? 'Approved' : 'Denied'}
+                          </span>
+                        </td>
+                        <td className="px-3 py-2.5">
+                          <span className="text-[11px] text-secondary">{item.decidedBy}</span>
+                        </td>
+                        <td className="px-3 py-2.5">
+                          <span className="text-[10px] text-slate-500 font-mono">{new Date(item.decidedDate).toLocaleDateString()}</span>
+                        </td>
+                        <td className="px-3 py-2.5 text-right">
+                          <button
+                            onClick={() => setHistoryDetailModal(item)}
+                            className="text-[10px] text-secondary hover:text-primary transition-colors"
+                          >
+                            View
+                          </button>
+                        </td>
                       </tr>
-                    </thead>
-                    <tbody>
-                      {filteredHistory.map((item) => (
-                        <tr key={item.id} className="border-b border-slate-100 dark:border-slate-800/10 hover:bg-slate-50 dark:hover:bg-slate-50 dark:hover:bg-slate-800/15 transition-colors">
-                          <td className="px-3 py-2.5">
-                            <span className="text-[11px] text-secondary capitalize">{item.type}</span>
-                          </td>
-                          <td className="px-3 py-2.5">
-                            <p className="text-[11px] font-semibold text-primary">{item.title}</p>
-                            <p className="text-[10px] text-slate-500">{item.submittedBy} · {item.details}</p>
-                          </td>
-                          <td className="px-3 py-2.5">
-                            <span className="text-[11px] text-secondary">{item.division}</span>
-                          </td>
-                          <td className="px-3 py-2.5">
-                            {item.amount ? (
-                              <span className="text-[11px] font-mono text-green-600 dark:text-green-400">${item.amount.toLocaleString()}</span>
-                            ) : (
-                              <span className="text-[11px] text-slate-700">—</span>
-                            )}
-                          </td>
-                          <td className="px-3 py-2.5">
-                            <span className={`inline-flex items-center gap-1 px-1.5 py-px rounded text-[10px] font-bold border ${
-                              item.decision === 'approved'
-                                ? 'bg-green-100 border-green-200 text-green-700 dark:bg-green-500/10 dark:border-green-500/20 dark:text-green-400'
-                                : 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400'
-                            }`}>
-                              {item.decision === 'approved' ? <CheckCircle className="w-2.5 h-2.5" /> : <XCircle className="w-2.5 h-2.5" />}
-                              {item.decision === 'approved' ? 'Approved' : 'Denied'}
-                            </span>
-                          </td>
-                          <td className="px-3 py-2.5">
-                            <span className="text-[11px] text-secondary">{item.decidedBy}</span>
-                          </td>
-                          <td className="px-3 py-2.5">
-                            <span className="text-[10px] text-slate-500 font-mono">{new Date(item.decidedDate).toLocaleDateString()}</span>
-                          </td>
-                          <td className="px-3 py-2.5 text-right">
-                            <button
-                              onClick={() => setHistoryDetailModal(item)}
-                              className="text-[10px] text-secondary hover:text-secondary transition-colors"
-                            >
-                              View
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </>
-            )}
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </>
+          )}
 
-          </div>
+        </div>
       </div>
 
+      {/* ── Decision Modal ── */}
       {selectedApproval && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-            onClick={closeApprovalModal}
-          />
-          <div className="relative bg-white dark:bg-slate-900 border border-border rounded-2xl p-8 max-w-md w-full shadow-2xl">
-            <div className="flex items-start gap-4 mb-6">
-              <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                approvalAction === 'approve' ? 'bg-green-500/20' : 'bg-red-500/20'
-              }`}>
-                {approvalAction === 'approve' ? (
-                  <ThumbsUp className="w-6 h-6 text-green-600 dark:text-green-400" />
-                ) : (
-                  <XCircle className="w-6 h-6 text-red-700 dark:text-red-400" />
-                )}
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={closeModal} />
+          <div className="relative bg-white dark:bg-slate-900 border border-border rounded-2xl p-6 max-w-md w-full shadow-2xl">
+            <div className="flex items-start gap-4 mb-5">
+              <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${approvalAction === 'approve' ? 'bg-green-500/20' : 'bg-red-500/20'}`}>
+                {approvalAction === 'approve'
+                  ? <ThumbsUp className="w-5 h-5 text-green-600 dark:text-green-400" />
+                  : <XCircle className="w-5 h-5 text-red-700 dark:text-red-400" />}
               </div>
               <div className="flex-1">
-                <h3 className="text-xl font-bold text-primary mb-1">
-                  {approvalAction === 'approve' ? 'Approve' : 'Deny'} {selectedApproval.title}?
+                <h3 className="text-base font-bold text-primary mb-0.5">
+                  {approvalAction === 'approve' ? 'Approve' : 'Deny'}: {selectedApproval.title}
                 </h3>
-                <p className="text-sm text-secondary">
-                  {selectedApproval.submittedBy} • {selectedApproval.details}
-                </p>
+                <p className="text-[11px] text-secondary">{selectedApproval.details}</p>
+                <div className="flex items-center gap-2 mt-1.5">
+                  <span className={`text-[11px] font-bold font-mono ${getImpactScoreColor(selectedApproval.decisionImpactScore)}`}>
+                    Impact: {selectedApproval.decisionImpactScore}/100
+                  </span>
+                  <span className="text-slate-700">·</span>
+                  <span className={`text-[11px] ${getConfidenceColor(selectedApproval.aiRecommendation.confidence)}`}>
+                    AI {selectedApproval.aiRecommendation.decision === 'approve' ? 'recommends approval' : 'recommends denial'} ({selectedApproval.aiRecommendation.confidence}% confidence)
+                  </span>
+                </div>
               </div>
             </div>
-
-            <div className="mb-6">
-              <label className="block text-sm font-medium text-secondary mb-2">
-                {approvalAction === 'approve' ? 'Comments (optional)' : 'Reason for denial (required)'}
+            <div className="mb-4">
+              <label className="block text-[11px] font-semibold text-secondary mb-1.5">
+                {approvalAction === 'approve' ? 'Decision rationale (optional)' : 'Reason for denial (required)'}
               </label>
               <textarea
                 value={actionComment}
                 onChange={(e) => setActionComment(e.target.value)}
-                placeholder={approvalAction === 'approve' ? 'Add any comments...' : 'Please provide a reason...'}
-                rows={4}
-                className="w-full px-4 py-3 bg-surface border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 resize-none"
+                placeholder={approvalAction === 'approve' ? 'Add rationale for audit trail...' : 'Provide reason for denial...'}
+                rows={3}
+                className="w-full px-3 py-2 bg-surface border border-border rounded-lg text-primary text-xs placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 resize-none"
               />
             </div>
-
-            <div className="flex gap-3">
-              <button
-                onClick={closeApprovalModal}
-                className="flex-1 px-4 py-3 bg-surface hover:bg-slate-50 dark:hover:bg-slate-800/60 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-700 dark:text-white font-medium transition-all"
-              >
+            <div className="flex gap-2">
+              <button onClick={closeModal} className="flex-1 px-4 py-2.5 bg-surface hover:bg-slate-50 dark:hover:bg-slate-800/60 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-700 dark:text-white font-medium transition-all text-sm">
                 Cancel
               </button>
               <button
-                onClick={confirmApprovalAction}
-                className={`flex-1 px-4 py-3 rounded-xl text-white font-medium transition-all ${
-                  approvalAction === 'approve'
-                    ? 'bg-green-500 hover:bg-green-600'
-                    : 'bg-red-500 hover:bg-red-600'
-                }`}
+                onClick={confirmAction}
+                className={`flex-1 px-4 py-2.5 rounded-xl text-white font-medium transition-all text-sm ${approvalAction === 'approve' ? 'bg-green-500 hover:bg-green-600' : 'bg-red-500 hover:bg-red-600'}`}
               >
                 Confirm {approvalAction === 'approve' ? 'Approval' : 'Denial'}
               </button>
@@ -1179,130 +1235,84 @@ export default function Approvals() {
         </div>
       )}
 
+      {/* ── History Detail Modal ── */}
       {historyDetailModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-            onClick={() => setHistoryDetailModal(null)}
-          />
-          <div className="relative bg-white dark:bg-slate-900 border border-border rounded-2xl p-6 max-w-2xl w-full shadow-2xl max-h-[80vh] overflow-y-auto">
-            <div className="flex items-start justify-between mb-6">
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setHistoryDetailModal(null)} />
+          <div className="relative bg-white dark:bg-slate-900 border border-border rounded-2xl p-5 max-w-lg w-full shadow-2xl">
+            <div className="flex items-start justify-between mb-4">
               <div>
-                <h3 className="text-xl font-bold text-primary mb-1">{historyDetailModal.title}</h3>
-                <p className="text-sm text-secondary">{historyDetailModal.details}</p>
+                <h3 className="text-base font-bold text-primary mb-0.5">{historyDetailModal.title}</h3>
+                <p className="text-[11px] text-secondary">{historyDetailModal.details}</p>
               </div>
-              <button
-                onClick={() => setHistoryDetailModal(null)}
-                className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors"
-              >
-                <X className="w-5 h-5 text-secondary" />
+              <button onClick={() => setHistoryDetailModal(null)} className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors">
+                <X className="w-4 h-4 text-secondary" />
               </button>
             </div>
-
-            <div className="space-y-6">
-              <div className="grid grid-cols-2 gap-6">
-                <div className="bg-slate-50 dark:bg-slate-800/30 rounded-xl p-4 border border-border">
-                  <p className="text-xs text-secondary mb-1">Submitted By</p>
-                  <p className="text-sm font-medium text-primary">{historyDetailModal.submittedBy}</p>
+            <div className="grid grid-cols-2 gap-2 mb-4 text-[10px]">
+              <div className="bg-slate-50 dark:bg-slate-800/30 rounded-lg p-2.5 border border-border">
+                <p className="text-slate-500 mb-0.5">Submitted By</p>
+                <p className="font-medium text-primary">{historyDetailModal.submittedBy}</p>
+              </div>
+              <div className="bg-slate-50 dark:bg-slate-800/30 rounded-lg p-2.5 border border-border">
+                <p className="text-slate-500 mb-0.5">Division</p>
+                <p className="font-medium text-primary">{historyDetailModal.division}</p>
+              </div>
+              {historyDetailModal.amount && (
+                <div className="bg-slate-50 dark:bg-slate-800/30 rounded-lg p-2.5 border border-border">
+                  <p className="text-slate-500 mb-0.5">Amount</p>
+                  <p className="font-medium text-green-600 dark:text-green-400">${historyDetailModal.amount.toLocaleString()}</p>
                 </div>
-                <div className="bg-slate-50 dark:bg-slate-800/30 rounded-xl p-4 border border-border">
-                  <p className="text-xs text-secondary mb-1">Division</p>
-                  <p className="text-sm font-medium text-primary">{historyDetailModal.division}</p>
-                </div>
-                {historyDetailModal.amount && (
-                  <div className="bg-slate-50 dark:bg-slate-800/30 rounded-xl p-4 border border-border">
-                    <p className="text-xs text-secondary mb-1">Amount</p>
-                    <p className="text-sm font-medium text-green-600 dark:text-green-400">${historyDetailModal.amount.toLocaleString()}</p>
-                  </div>
-                )}
-                <div className="bg-slate-50 dark:bg-slate-800/30 rounded-xl p-4 border border-border">
-                  <p className="text-xs text-secondary mb-1">Submitted Date</p>
-                  <p className="text-sm font-medium text-primary">{new Date(historyDetailModal.submittedDate).toLocaleDateString()}</p>
+              )}
+              <div className="bg-slate-50 dark:bg-slate-800/30 rounded-lg p-2.5 border border-border">
+                <p className="text-slate-500 mb-0.5">Submitted</p>
+                <p className="font-medium text-primary">{new Date(historyDetailModal.submittedDate).toLocaleDateString()}</p>
+              </div>
+            </div>
+            <div className={`p-3 rounded-xl border ${historyDetailModal.decision === 'approved' ? 'bg-green-500/10 border-green-500/30' : 'bg-red-500/10 border-red-500/30'}`}>
+              <div className="flex items-center justify-between mb-2">
+                <span className={`inline-flex items-center gap-1.5 px-2 py-1 rounded text-[11px] font-bold ${historyDetailModal.decision === 'approved' ? 'text-green-600 dark:text-green-400' : 'text-red-700 dark:text-red-400'}`}>
+                  {historyDetailModal.decision === 'approved' ? <CheckCircle className="w-3.5 h-3.5" /> : <XCircle className="w-3.5 h-3.5" />}
+                  {historyDetailModal.decision.toUpperCase()}
+                </span>
+                <div className="text-right text-[10px]">
+                  <p className="text-secondary">{historyDetailModal.decidedBy}</p>
+                  <p className="text-slate-500">{new Date(historyDetailModal.decidedDate).toLocaleDateString()}</p>
                 </div>
               </div>
-
-              <div className={`p-4 rounded-xl border ${
-                historyDetailModal.decision === 'approved'
-                  ? 'bg-green-500/10 border-green-500/30'
-                  : 'bg-red-500/10 border-red-500/30'
-              }`}>
-                <div className="flex items-center justify-between mb-3">
-                  <span className={`inline-flex items-center gap-2 px-3 py-1 rounded text-sm font-bold ${
-                    historyDetailModal.decision === 'approved'
-                      ? 'bg-green-500/20 text-green-600 dark:text-green-400'
-                      : 'bg-red-500/20 text-red-700 dark:text-red-400'
-                  }`}>
-                    {historyDetailModal.decision === 'approved' ? <CheckCircle className="w-4 h-4" /> : <XCircle className="w-4 h-4" />}
-                    {historyDetailModal.decision.toUpperCase()}
-                  </span>
-                  <div className="text-right">
-                    <p className="text-sm text-secondary">{historyDetailModal.decidedBy}</p>
-                    <p className="text-xs text-slate-500">{new Date(historyDetailModal.decidedDate).toLocaleDateString()}</p>
-                  </div>
-                </div>
-                <div className="bg-slate-50 dark:bg-slate-900/50 rounded-lg p-3 border border-slate-200 dark:border-transparent">
-                  <p className="text-xs text-secondary mb-1">Decision Notes</p>
-                  <p className="text-sm text-slate-700 dark:text-slate-700 dark:text-slate-200">{historyDetailModal.decisionNotes}</p>
-                </div>
+              <div className="bg-slate-50 dark:bg-slate-900/50 rounded p-2.5 border border-slate-200 dark:border-transparent">
+                <p className="text-[10px] text-secondary">{historyDetailModal.decisionNotes}</p>
               </div>
             </div>
           </div>
         </div>
       )}
 
+      {/* ── Request Info Modal ── */}
       {requestInfoModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-            onClick={closeRequestInfoModal}
-          />
-          <div className="relative bg-white dark:bg-slate-900 border border-border rounded-2xl p-6 max-w-lg w-full shadow-2xl">
-            <div className="flex items-start gap-4 mb-6">
-              <div className="w-12 h-12 bg-slate-100 dark:bg-slate-700/60 rounded-xl flex items-center justify-center flex-shrink-0">
-                <Info className="w-6 h-6 text-secondary" />
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => { setRequestInfoModal(null); setInfoRequest(''); }} />
+          <div className="relative bg-white dark:bg-slate-900 border border-border rounded-2xl p-5 max-w-md w-full shadow-2xl">
+            <div className="flex items-start justify-between mb-4">
+              <div>
+                <h3 className="text-base font-bold text-primary mb-0.5">Request More Information</h3>
+                <p className="text-[11px] text-secondary">{requestInfoModal.submittedBy} · {requestInfoModal.title}</p>
               </div>
-              <div className="flex-1">
-                <h3 className="text-xl font-bold text-primary mb-1">Request More Information</h3>
-                <p className="text-sm text-secondary">
-                  {requestInfoModal.submittedBy} • {requestInfoModal.title}
-                </p>
-              </div>
-              <button
-                onClick={closeRequestInfoModal}
-                className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors"
-              >
-                <X className="w-5 h-5 text-secondary" />
+              <button onClick={() => { setRequestInfoModal(null); setInfoRequest(''); }} className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors">
+                <X className="w-4 h-4 text-secondary" />
               </button>
             </div>
-
-            <div className="mb-6">
-              <label className="block text-sm font-medium text-secondary mb-2">
-                What additional information do you need?
-              </label>
-              <textarea
-                value={infoRequest}
-                onChange={(e) => setInfoRequest(e.target.value)}
-                placeholder="Example: Please provide detailed cost breakdown and vendor comparison..."
-                rows={6}
-                className="w-full px-4 py-3 bg-surface border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500/50 resize-none"
-              />
-              <p className="text-xs text-slate-500 mt-2">
-                The requester will receive an email notification and can respond directly.
-              </p>
-            </div>
-
-            <div className="flex gap-3">
-              <button
-                onClick={closeRequestInfoModal}
-                className="flex-1 px-4 py-3 bg-surface hover:bg-slate-50 dark:hover:bg-slate-800/60 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-700 dark:text-white font-medium transition-all"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={sendInfoRequest}
-                className="flex-1 px-4 py-3 bg-blue-600 hover:bg-blue-700 rounded-xl text-white font-medium shadow-sm transition-all flex items-center justify-center gap-2"
-              >
-                <Send className="w-4 h-4" />
+            <textarea
+              value={infoRequest}
+              onChange={(e) => setInfoRequest(e.target.value)}
+              placeholder="What additional information do you need?"
+              rows={4}
+              className="w-full px-3 py-2 bg-surface border border-border rounded-lg text-primary text-sm placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500/50 resize-none mb-3"
+            />
+            <div className="flex gap-2">
+              <button onClick={() => { setRequestInfoModal(null); setInfoRequest(''); }} className="flex-1 px-3 py-2 text-xs font-medium text-slate-700 border border-slate-300 hover:bg-slate-50 rounded-lg transition-colors">Cancel</button>
+              <button onClick={sendInfoRequest} className="flex-1 px-3 py-2 text-xs font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors flex items-center justify-center gap-1.5">
+                <Send className="w-3.5 h-3.5" />
                 Send Request
               </button>
             </div>
@@ -1310,23 +1320,19 @@ export default function Approvals() {
         </div>
       )}
 
+      {/* ── Toast ── */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 animate-slide-up">
-          <div className={`px-6 py-4 rounded-xl border shadow-2xl flex items-center gap-3 ${
+        <div className="fixed bottom-6 right-6 z-50">
+          <div className={`px-4 py-3 rounded-xl border shadow-2xl flex items-center gap-2 ${
             toastMessage.type === 'success'
               ? 'bg-green-500/20 border-green-500/30 text-green-600 dark:text-green-400'
               : 'bg-red-500/20 border-red-500/30 text-red-700 dark:text-red-400'
           }`}>
-            {toastMessage.type === 'success' ? (
-              <CheckCircle className="w-5 h-5" />
-            ) : (
-              <AlertCircle className="w-5 h-5" />
-            )}
-            <p className="font-medium">{toastMessage.message}</p>
+            {toastMessage.type === 'success' ? <CheckCircle className="w-4 h-4" /> : <AlertCircle className="w-4 h-4" />}
+            <p className="text-[11px] font-medium">{toastMessage.message}</p>
           </div>
         </div>
       )}
-
     </DashboardLayout>
   );
 }
