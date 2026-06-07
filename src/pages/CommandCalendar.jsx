@@ -2,9 +2,12 @@ import React, { useState, useEffect } from 'react';
 import {
   ChevronLeft,
   ChevronRight,
-  Plus,
-  Filter,
-  Clock,
+  Sparkles,
+  ArrowRight,
+  TrendingUp,
+  TrendingDown,
+  Minus,
+  DollarSign,
   Shield,
   X,
   ExternalLink,
@@ -350,8 +353,9 @@ export default function CommandCalendar() {
   ];
 
   // ============================================================
-  // CONFLICT DETECTION — Simulated intelligence
-  // Detect overlapping events with shared personnel/resources
+  // AI CONFLICT RESOLUTION — predicted overlaps + recommended fixes
+  // Each conflict carries the cost of inaction and the AI's
+  // suggested resolution before it reaches the Decision Center.
   // ============================================================
   const conflicts = [
     {
@@ -359,21 +363,33 @@ export default function CommandCalendar() {
       title: 'USMS Inspection overlaps with Fleet Inspection Deadline',
       days: [10, 12],
       detail: 'Maintenance staff shared across generator test, fleet inspection, and federal audit',
-      severity: 'high'
+      severity: 'high',
+      impactIfUnresolved: 'Units 312/318 stay undeployable into the inspection window — patrol fleet drops by 2 units the same week USMS evaluates housing capacity.',
+      aiResolution: 'Move the Dec 12 generator load test to Dec 9. That frees Facilities and Fleet staff to close out unit inspections 48 hours before USMS arrives.',
+      recommendedOwner: 'Fleet Manager Anderson',
+      linkedModule: '/command/budget'
     },
     {
       id: 'conflict-002',
       title: 'Firearms Qualification removes 12 deputies during Use-of-Force Review',
       days: [13],
-      detail: '12 deputies at range + UoF review board — B-Shift already below minimum',
-      severity: 'high'
+      detail: '12 deputies at the range plus the UoF review board — B-Shift is already projected below minimum',
+      severity: 'high',
+      impactIfUnresolved: 'B-Shift coverage falls to roughly 71% for the day, forcing emergency overtime call-ins during an active internal-affairs proceeding.',
+      aiResolution: 'Split the firearms qualification into two half-day blocks (Dec 13 AM / Dec 18 PM) so no more than 6 deputies are off the floor at once.',
+      recommendedOwner: 'Training Sgt. Brooks',
+      linkedModule: '/command/personnel'
     },
     {
       id: 'conflict-003',
-      title: 'POST Certification + OT Budget Review on same day',
+      title: 'POST Certification deadline lands on the same day as the OT Budget Review',
       days: [20],
-      detail: 'Sheriff needed for OT budget review while POST certification deadline looms',
-      severity: 'medium'
+      detail: 'Sheriff Thompson is needed for the Q4 overtime review while the POST certification packet is due',
+      severity: 'medium',
+      impactIfUnresolved: 'A missed POST submission suspends 8 deputies from duty status — compounding the staffing gap the OT review is meant to resolve.',
+      aiResolution: 'Pre-stage the POST packet for IA Supervisor Williams to submit by 12:00, freeing the Sheriff to chair the OT review without a same-day conflict.',
+      recommendedOwner: 'IA Supervisor Williams',
+      linkedModule: '/command/risk'
     }
   ];
 
@@ -392,6 +408,103 @@ export default function CommandCalendar() {
     27: { below80: true, label: '12 deputies in DT recertification' }
   };
 
+  // ============================================================
+  // OPERATIONAL PRESSURE SCORE — composite forward-looking index
+  // Weighted blend of compliance load, staffing strain, conflict
+  // density, and budget exposure across the next 14 days.
+  // ============================================================
+  const PRESSURE_WEIGHTS = { compliance: 0.35, staffing: 0.30, conflicts: 0.20, budget: 0.15 };
+  const pressureBreakdown = [
+    { key: 'compliance', label: 'Compliance Deadline Load', value: 81, detail: '4 critical/high compliance deadlines converge inside the 14-day window' },
+    { key: 'staffing', label: 'Staffing Strain', value: 74, detail: 'Patrol coverage projected below minimum on 6 of the next 14 days' },
+    { key: 'conflicts', label: 'Schedule Conflict Density', value: 68, detail: '3 active conflicts detected — 2 rated high severity' },
+    { key: 'budget', label: 'Budget Exposure', value: 60, detail: 'OT spend running at 118% of projection; fleet overage pending review' }
+  ];
+  const pressureScore = Math.round(
+    pressureBreakdown.reduce((sum, b) => sum + b.value * PRESSURE_WEIGHTS[b.key], 0)
+  );
+  const getPressureLabel = (score) => {
+    if (score >= 80) return { text: 'Critical Pressure', classes: 'text-red-600 dark:text-red-400' };
+    if (score >= 65) return { text: 'Elevated Pressure', classes: 'text-amber-600 dark:text-amber-400' };
+    if (score >= 45) return { text: 'Moderate Pressure', classes: 'text-amber-600 dark:text-amber-400' };
+    return { text: 'Stable', classes: 'text-emerald-600 dark:text-emerald-400' };
+  };
+  const getBarColor = (value) => value >= 75 ? 'bg-red-500' : value >= 60 ? 'bg-amber-500' : 'bg-emerald-500';
+
+  // ============================================================
+  // FORWARD PROJECTIONS — staffing / compliance / budget
+  // Each panel forecasts where pressure is headed and what the
+  // AI recommends doing about it before it becomes a decision.
+  // ============================================================
+  const TrendIcon = ({ trend, size = 12 }) => {
+    if (trend === 'worsening') return <TrendingUp className="text-red-500" style={{ width: size, height: size }} />;
+    if (trend === 'improving') return <TrendingDown className="text-emerald-500" style={{ width: size, height: size }} />;
+    return <Minus className="text-slate-400" style={{ width: size, height: size }} />;
+  };
+
+  const projectionPanels = [
+    {
+      id: 'staffing',
+      title: 'Staffing Impact Projection',
+      icon: Users,
+      accent: 'amber',
+      headlineValue: '6 of 14 days',
+      headlineLabel: 'projected below minimum patrol coverage',
+      trend: 'worsening',
+      items: [
+        { window: 'Dec 13', detail: 'Firearms qualification pulls 12 deputies during the Use-of-Force Review — B-Shift falls to ~71% coverage', severity: 'high' },
+        { window: 'Dec 16–20', detail: 'CIT Training removes 8 deputies for a 5-day block, overlapping the POST certification deadline', severity: 'high' },
+        { window: 'Dec 24–27', detail: 'Holiday coverage begins while DT recertification pulls 12 more deputies — overtime need compounds', severity: 'medium' }
+      ],
+      aiNote: 'Stagger the CIT Training start to Dec 18 and pre-authorize holiday overtime now — that keeps coverage above the contractual minimum on every projected day.'
+    },
+    {
+      id: 'compliance',
+      title: 'Compliance Deadline Projection',
+      icon: Shield,
+      accent: 'red',
+      headlineValue: '4 deadlines',
+      headlineLabel: 'critical/high compliance items inside 14 days',
+      trend: 'worsening',
+      items: [
+        { window: 'Dec 12', detail: 'USMS Federal Housing Inspection — H2-Pod HVAC remediation still open', severity: 'critical' },
+        { window: 'Dec 14', detail: 'PREA Compliance Audit Prep — C-Pod camera coverage gap unresolved', severity: 'high' },
+        { window: 'Dec 20', detail: 'POST Certification deadline for 8 deputies — submission packet incomplete', severity: 'critical' }
+      ],
+      aiNote: 'Escalate the H2-Pod HVAC repair to an emergency work order — it is the single dependency blocking three downstream compliance milestones.'
+    },
+    {
+      id: 'budget',
+      title: 'Budget Impact Projection',
+      icon: DollarSign,
+      accent: 'amber',
+      headlineValue: '+$84K',
+      headlineLabel: 'projected overage across OT, fleet, and training lines',
+      trend: 'worsening',
+      items: [
+        { window: 'Q4 Close', detail: 'Overtime spend running at 118% of projection — $47K over budget heading into year-end reporting', severity: 'high' },
+        { window: 'Dec 10', detail: 'Fleet inspection rework on Units 312/318 plus mechanic overtime adds an estimated $12K', severity: 'medium' },
+        { window: 'Dec 22–31', detail: 'Holiday coverage and federal transport detail overtime projected to add $25K beyond the approved plan', severity: 'medium' }
+      ],
+      aiNote: 'Route the Q4 overtime variance to the Decision Center now — pre-approving a $30K contingency line prevents a January budget freeze.'
+    }
+  ];
+
+  const getProjectionAccentClasses = (accent) => {
+    switch (accent) {
+      case 'red': return { iconWrap: 'bg-red-500/10 border-red-500/20', icon: 'text-red-600 dark:text-red-400', value: 'text-red-600 dark:text-red-400' };
+      default: return { iconWrap: 'bg-amber-500/10 border-amber-500/20', icon: 'text-amber-600 dark:text-amber-400', value: 'text-amber-600 dark:text-amber-400' };
+    }
+  };
+
+  const getSeverityDotColor = (severity) => {
+    switch (severity) {
+      case 'critical': return 'bg-red-500';
+      case 'high': return 'bg-amber-500';
+      default: return 'bg-slate-400';
+    }
+  };
+
   // Category accent colors
   const getCategoryAccent = (category) => {
     switch (category) {
@@ -401,18 +514,6 @@ export default function CommandCalendar() {
       case 'investigations': return 'bg-slate-500';
       case 'training': case 'maintenance': return 'bg-emerald-500';
       default: return 'bg-slate-500';
-    }
-  };
-
-  const getCategoryLabel = (category) => {
-    switch (category) {
-      case 'compliance': return 'Compliance';
-      case 'staffing': return 'Staffing';
-      case 'operational': return 'Operational';
-      case 'investigations': return 'Investigations';
-      case 'training': return 'Training';
-      case 'maintenance': return 'Maintenance';
-      default: return category;
     }
   };
 
@@ -492,10 +593,6 @@ export default function CommandCalendar() {
     }
   };
 
-  // Risk stats
-  const upcomingCritical = calendarEvents.filter(e => e.severity === 'critical' && e.status !== 'completed');
-  const upcomingStaffing = calendarEvents.filter(e => e.category === 'staffing' && e.status !== 'completed');
-
   // High priority upcoming — strict filtering:
   // Within 14 days, escalating, compliance/staffing/inspection only
   // Sort: compliance risk → staffing impact → deadline proximity
@@ -519,6 +616,23 @@ export default function CommandCalendar() {
       return a.day - b.day;
     })
     .slice(0, 5);
+
+  // ============================================================
+  // UPCOMING CRITICAL EVENTS SUMMARY — 14-day forward counts
+  // ============================================================
+  const next14Days = calendarEvents.filter(e => e.status !== 'completed' && e.day >= startDay && e.day <= startDay + 14);
+  const criticalOrHighNext14 = next14Days.filter(e => e.severity === 'critical' || e.severity === 'high');
+  const complianceNext14 = next14Days.filter(e => e.category === 'compliance');
+  const staffingImpactNext14 = next14Days.filter(e => e.staffingImpact);
+  const summaryStats = [
+    { label: 'Critical / High — 14 Days', value: criticalOrHighNext14.length, icon: AlertTriangle, accent: 'red' },
+    { label: 'Compliance Deadlines', value: complianceNext14.length, icon: Shield, accent: 'red' },
+    { label: 'Staffing-Impact Events', value: staffingImpactNext14.length, icon: Users, accent: 'amber' },
+    { label: 'Active Conflicts Predicted', value: conflicts.length, icon: Zap, accent: 'amber' }
+  ];
+  const getSummaryStatClasses = (accent) => accent === 'red'
+    ? { wrap: 'bg-red-500/10 border-red-500/20', icon: 'text-red-600 dark:text-red-400' }
+    : { wrap: 'bg-amber-500/10 border-amber-500/20', icon: 'text-amber-600 dark:text-amber-400' };
 
   const prevMonth = () => {
     if (currentMonth === 0) { setCurrentMonth(11); setCurrentYear(y => y - 1); }
@@ -560,13 +674,13 @@ export default function CommandCalendar() {
         {/* Page Header */}
         <div className="mb-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           <div>
-            <h2 className="text-xl font-bold text-primary mb-1">Calendar & Timeline</h2>
+            <h2 className="text-xl font-bold text-primary mb-1">Operational Timeline</h2>
             <div className="flex items-center gap-2 text-[11px] text-slate-500">
               <span>{formatDate(currentTime)}</span>
               <span className="text-slate-700">·</span>
               <span>{formatTime(currentTime)} EST</span>
               <span className="text-slate-700">·</span>
-              <span>Operational pressure mapping and deadline intelligence</span>
+              <span>Forward-looking command planning — predicting operational conflicts before they occur</span>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -612,63 +726,226 @@ export default function CommandCalendar() {
         </div>
 
         {/* ================================================================
-            CONFLICT DETECTION BANNER
-            "Where does operational pressure stack?"
+            EXECUTIVE ATTENTION REQUIRED — AI summary banner
+            The bridge between Agency Risk Center (what's at risk) and
+            Decision Center (what command must decide)
             ================================================================ */}
-        {conflicts.length > 0 && (
-          <div className="mb-5 space-y-1.5">
-            {conflicts.map(conflict => (
-              <div
-                key={conflict.id}
-                className={`px-5 py-3 rounded-xl border flex items-start gap-3 ${
-                  conflict.severity === 'high'
-                    ? 'bg-amber-500/[0.05] border-amber-500/20'
-                    : 'bg-slate-50 dark:bg-slate-800/25 border-border dark:border-slate-700/30'
-                }`}
-              >
-                <Zap className={`w-4 h-4 mt-0.5 flex-shrink-0 ${conflict.severity === 'high' ? 'text-amber-700 dark:text-amber-400' : 'text-slate-500'}`} />
-                <div className="flex-1">
-                  <div className="flex items-center gap-2">
-                    <span className={`text-[13px] font-semibold ${conflict.severity === 'high' ? 'text-amber-700 dark:text-amber-400' : 'text-slate-500'}`}>
-                      Conflict Detected:
-                    </span>
-                    <span className="text-[13px] text-primary font-medium">{conflict.title}</span>
-                    <span className={`px-1.5 py-0.5 border rounded text-[10px] font-semibold ${
-                      conflict.severity === 'critical' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
-                      conflict.severity === 'high' ? 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
-                      'bg-slate-500/10 border-slate-500/20 text-slate-500'
-                    }`}>{conflict.severity === 'high' ? 'High' : conflict.severity === 'critical' ? 'Critical' : 'Moderate'}</span>
-                  </div>
-                  <p className="text-[11px] text-secondary mt-0.5">{conflict.detail}</p>
+        <div className="mb-6 bg-slate-900 dark:bg-slate-950 border border-slate-700/60 rounded-xl p-5 lg:p-6">
+          <div className="flex items-start gap-3 mb-4">
+            <div className="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center flex-shrink-0">
+              <Sparkles className="w-4 h-4 text-amber-400" />
+            </div>
+            <div>
+              <h3 className="text-sm font-semibold text-white">Executive Attention Required</h3>
+              <p className="text-[12px] text-slate-400 mt-0.5 max-w-3xl">
+                AI-predicted operational pressure points for the next 14 days — surfaced here, at the planning layer, before they harden into Agency Risk Center findings or land on the Decision Center docket.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-5">
+            <div>
+              <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Predicted Conflicts</span>
+              <p className="text-[13px] text-slate-200 mt-1.5 leading-relaxed">
+                3 scheduling conflicts detected — the most severe overlaps fleet readiness with the USMS federal inspection window (Dec 10–12).
+              </p>
+            </div>
+            <div>
+              <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Compliance Exposure</span>
+              <p className="text-[13px] text-slate-200 mt-1.5 leading-relaxed">
+                4 critical/high compliance deadlines converge inside 14 days, anchored to the unresolved H2-Pod HVAC issue feeding the Agency Risk Center.
+              </p>
+            </div>
+            <div>
+              <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Staffing &amp; Budget</span>
+              <p className="text-[13px] text-slate-200 mt-1.5 leading-relaxed">
+                Patrol coverage dips below minimum on 6 of the next 14 days; a projected $84K overage is queued for review in the Decision Center.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2.5 pt-4 border-t border-slate-700/40 flex-wrap">
+            <span className="text-[11px] text-slate-500 uppercase tracking-wider font-semibold">Command workflow:</span>
+            <button
+              onClick={() => navigate('/command/risk')}
+              className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/60 border border-slate-700/50 rounded-lg text-[12px] text-slate-300 hover:text-white hover:border-slate-600 transition-colors"
+            >
+              <Shield className="w-3 h-3" />
+              Agency Risk Center
+            </button>
+            <ArrowRight className="w-3.5 h-3.5 text-slate-600" />
+            <span className="flex items-center gap-1.5 px-2.5 py-1 bg-amber-500/10 border border-amber-500/30 rounded-lg text-[12px] font-semibold text-amber-400">
+              Operational Timeline
+            </span>
+            <ArrowRight className="w-3.5 h-3.5 text-slate-600" />
+            <button
+              onClick={() => navigate('/command/approvals')}
+              className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-800/60 border border-slate-700/50 rounded-lg text-[12px] text-slate-300 hover:text-white hover:border-slate-600 transition-colors"
+            >
+              Decision Center
+              <ArrowRight className="w-3 h-3" />
+            </button>
+          </div>
+        </div>
+
+        {/* ================================================================
+            OPERATIONAL PRESSURE SCORE
+            ================================================================ */}
+        <div className="mb-6 bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+          <div className="flex items-center justify-between mb-1">
+            <h3 className="text-[13px] font-semibold text-primary uppercase tracking-wide">Operational Pressure Score</h3>
+            <span className={`text-[11px] font-semibold ${getPressureLabel(pressureScore).classes}`}>{getPressureLabel(pressureScore).text}</span>
+          </div>
+          <p className="text-[11px] text-secondary mb-4 max-w-2xl">
+            Composite measure of compliance load, staffing strain, conflict density, and budget exposure across the next 14 days — the single number that tells command how much operational pressure is building.
+          </p>
+          <div className="flex items-end gap-2 mb-3">
+            <span className="text-4xl font-bold text-primary leading-none">{pressureScore}</span>
+            <span className="text-sm text-slate-500 mb-0.5">/ 100</span>
+          </div>
+          <div className="h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden mb-5">
+            <div className="h-full rounded-full bg-gradient-to-r from-emerald-500 via-amber-500 to-red-500" style={{ width: `${pressureScore}%` }}></div>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {pressureBreakdown.map(b => (
+              <div key={b.key} className="p-3 bg-slate-50 dark:bg-slate-800/20 border border-border dark:border-slate-700/20 rounded-lg">
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-[12px] font-medium text-primary">{b.label}</span>
+                  <span className="text-[12px] font-semibold text-primary">{b.value}</span>
                 </div>
-                <span className="text-[11px] text-slate-500 flex-shrink-0">{shortMonthAbbr} {conflict.days.join(', ')}</span>
+                <div className="h-1.5 bg-slate-200 dark:bg-slate-700/40 rounded-full overflow-hidden mb-1.5">
+                  <div className={`h-full rounded-full ${getBarColor(b.value)}`} style={{ width: `${b.value}%` }}></div>
+                </div>
+                <p className="text-[11px] text-secondary leading-relaxed">{b.detail}</p>
               </div>
             ))}
           </div>
-        )}
+        </div>
 
         {/* ================================================================
-            OPERATIONAL PRESSURE FORECAST — Next 7 Days
-            Predictive, not reactive
+            UPCOMING CRITICAL EVENTS SUMMARY
             ================================================================ */}
-        <div className="mb-4 px-4 py-2 bg-slate-50 dark:bg-slate-800/15 border border-border rounded-lg">
-          <div className="flex items-center gap-3">
-            <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider flex-shrink-0">7-Day Pressure</span>
-            <div className="h-3 w-px bg-slate-100 dark:bg-slate-700/25"></div>
-            <div className="flex items-center gap-4 flex-wrap">
-              <div className="flex items-center gap-1.5">
-                <span className="px-1.5 py-0.5 bg-red-500/10 border border-red-500/20 rounded text-[10px] font-semibold text-red-700 dark:text-red-400">Elevated</span>
-                <span className="text-[10px] text-slate-500">Compliance: Inspection / POST / PREA</span>
+        <div className="mb-6 grid grid-cols-2 lg:grid-cols-4 gap-3">
+          {summaryStats.map(stat => {
+            const StatIcon = stat.icon;
+            const classes = getSummaryStatClasses(stat.accent);
+            return (
+              <div key={stat.label} className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4 flex items-center gap-3">
+                <div className={`w-9 h-9 rounded-lg border flex items-center justify-center flex-shrink-0 ${classes.wrap}`}>
+                  <StatIcon className={`w-4 h-4 ${classes.icon}`} />
+                </div>
+                <div>
+                  <p className="text-xl font-bold text-primary leading-none">{stat.value}</p>
+                  <p className="text-[11px] text-secondary mt-1">{stat.label}</p>
+                </div>
               </div>
-              <div className="flex items-center gap-1.5">
-                <span className="px-1.5 py-0.5 bg-amber-500/10 border border-amber-500/20 rounded text-[10px] font-semibold text-amber-700 dark:text-amber-400">Moderate</span>
-                <span className="text-[10px] text-slate-500">Staffing: B-Shift + 12 at range</span>
+            );
+          })}
+        </div>
+
+        {/* ================================================================
+            AI CONFLICT RESOLUTION
+            Predicts where operational conflicts will occur and what
+            command should do about them before they materialize
+            ================================================================ */}
+        <div className="mb-6">
+          <div className="flex items-center gap-2 mb-3">
+            <Zap className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+            <h3 className="text-[13px] font-semibold text-primary uppercase tracking-wide">AI Conflict Resolution</h3>
+            <span className="text-[11px] text-slate-500">— {conflicts.length} conflicts predicted before they occur</span>
+          </div>
+          <div className="space-y-3">
+            {conflicts.map(conflict => (
+              <div key={conflict.id} className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4">
+                <div className="flex items-start justify-between gap-3 mb-3">
+                  <div className="flex items-start gap-2.5">
+                    <AlertTriangle className={`w-4 h-4 mt-0.5 flex-shrink-0 ${conflict.severity === 'high' ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500'}`} />
+                    <div>
+                      <p className="text-[13px] font-medium text-primary leading-tight">{conflict.title}</p>
+                      <p className="text-[11px] text-secondary mt-0.5">{conflict.detail}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-1.5 flex-shrink-0">
+                    <span className={`px-1.5 py-0.5 border rounded text-[10px] font-semibold ${
+                      conflict.severity === 'high' ? 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
+                      'bg-slate-500/10 border-slate-500/20 text-slate-500'
+                    }`}>{conflict.severity === 'high' ? 'High' : 'Moderate'}</span>
+                    <span className="text-[11px] text-slate-500">{shortMonthAbbr} {conflict.days.join(', ')}</span>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pl-6.5 sm:pl-[26px]">
+                  <div className="p-2.5 bg-red-500/[0.04] border border-red-500/15 rounded-lg">
+                    <span className="text-[10px] font-semibold text-red-700 dark:text-red-400 uppercase tracking-wider">If Left Unresolved</span>
+                    <p className="text-[11px] text-secondary mt-1 leading-relaxed">{conflict.impactIfUnresolved}</p>
+                  </div>
+                  <div className="p-2.5 bg-emerald-500/[0.04] border border-emerald-500/15 rounded-lg">
+                    <span className="text-[10px] font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider flex items-center gap-1">
+                      <Sparkles className="w-3 h-3" /> AI Recommended Resolution
+                    </span>
+                    <p className="text-[11px] text-secondary mt-1 leading-relaxed">{conflict.aiResolution}</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 mt-3 pl-6.5 sm:pl-[26px] text-[11px] text-slate-500">
+                  <span>Owner: <span className="text-secondary font-medium">{conflict.recommendedOwner}</span></span>
+                  <button
+                    onClick={() => navigate(conflict.linkedModule)}
+                    className="ml-auto flex items-center gap-1 text-amber-700 dark:text-amber-400 hover:text-amber-600 dark:hover:text-amber-300 transition-colors font-medium"
+                  >
+                    Send to Decision Center
+                    <ExternalLink className="w-3 h-3" />
+                  </button>
+                </div>
               </div>
-              <div className="flex items-center gap-1.5">
-                <span className="px-1.5 py-0.5 bg-emerald-500/10 border border-emerald-500/20 rounded text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">Low</span>
-                <span className="text-[10px] text-slate-500">Facility: HVAC contained to H2-Pod</span>
-              </div>
-            </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ================================================================
+            FORWARD PROJECTIONS — Staffing / Compliance / Budget
+            ================================================================ */}
+        <div className="mb-6">
+          <h3 className="text-[13px] font-semibold text-primary uppercase tracking-wide mb-3">Forward Projections — Next 30 Days</h3>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            {projectionPanels.map(panel => {
+              const PanelIcon = panel.icon;
+              const accentClasses = getProjectionAccentClasses(panel.accent);
+              return (
+                <div key={panel.id} className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4 flex flex-col">
+                  <div className="flex items-center gap-2.5 mb-3">
+                    <div className={`w-8 h-8 rounded-lg border flex items-center justify-center flex-shrink-0 ${accentClasses.iconWrap}`}>
+                      <PanelIcon className={`w-4 h-4 ${accentClasses.icon}`} />
+                    </div>
+                    <h4 className="text-[12px] font-semibold text-primary uppercase tracking-wide">{panel.title}</h4>
+                  </div>
+
+                  <div className="flex items-baseline gap-2 mb-1">
+                    <span className={`text-2xl font-bold leading-none ${accentClasses.value}`}>{panel.headlineValue}</span>
+                    <TrendIcon trend={panel.trend} size={14} />
+                  </div>
+                  <p className="text-[11px] text-secondary mb-3">{panel.headlineLabel}</p>
+
+                  <div className="space-y-2 mb-3 flex-1">
+                    {panel.items.map((item, idx) => (
+                      <div key={idx} className="flex items-start gap-2">
+                        <div className={`w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0 ${getSeverityDotColor(item.severity)}`}></div>
+                        <p className="text-[11px] text-secondary leading-relaxed">
+                          <span className="font-semibold text-primary">{item.window}:</span> {item.detail}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="pt-3 border-t border-border dark:border-slate-700/20">
+                    <span className="text-[10px] font-semibold text-amber-700 dark:text-amber-400 uppercase tracking-wider flex items-center gap-1">
+                      <Sparkles className="w-3 h-3" /> AI Recommendation
+                    </span>
+                    <p className="text-[11px] text-secondary mt-1 leading-relaxed">{panel.aiNote}</p>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
 
@@ -817,7 +1094,7 @@ export default function CommandCalendar() {
             </div>
 
             {/* ================================================================
-                HIGH PRIORITY UPCOMING — Upgraded with risk type, escalation, readiness
+                HIGH PRIORITY UPCOMING — risk type, escalation, readiness
                 ================================================================ */}
             <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
               <h3 className="text-[13px] font-semibold text-primary uppercase tracking-wide mb-4">High Priority Upcoming</h3>
