@@ -59,7 +59,7 @@ export default function SettingsPage() {
     { id: 'alerts', label: 'Command Alerts', icon: AlertCircle, badge: '3', route: '/command/alerts' },
     { id: 'approvals', label: 'Command Approvals', icon: CheckCircle, badge: '8', route: '/command/approvals' },
     { id: 'risk-compliance', label: 'Risk & Compliance', icon: ShieldCheck, route: '/command/risk' },
-    { id: 'staffing', label: 'Staffing & Readiness', icon: Users, hasSubmenu: true },
+    { id: 'staffing', label: 'Workforce Readiness', icon: Users, hasSubmenu: true },
     { id: 'custody', label: 'Custody Operations', icon: Building2, route: '/jail/dashboard' },
     { id: 'field-ops', label: 'Field Operations (Overview)', icon: Radio, route: '/patrol/cad' },
     { id: 'investigative', label: 'Investigative Oversight', icon: Target, route: '/investigations/cases' },
@@ -68,7 +68,7 @@ export default function SettingsPage() {
   ];
 
   const staffingSubmenu = [
-    { id: 'staffing-overview', label: 'Staffing Overview', route: '/command/personnel' },
+    { id: 'staffing-overview', label: 'Workforce Readiness', route: '/command/personnel' },
     { id: 'org-chart', label: 'Org Chart', route: '/command/orgchart' }
   ];
 

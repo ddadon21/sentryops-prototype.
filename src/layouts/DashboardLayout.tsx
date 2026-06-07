@@ -62,9 +62,9 @@ const defaultNavigation: NavItem[] = [
   { id: 'approvals',          label: 'Decision Center',          icon: CheckCircle,  badge: '8', route: '/command/approvals' },
   { id: 'calendar',           label: 'Operational Timeline',     icon: Calendar,     route: '/command/calendar' },
   { id: 'section-agency',     label: 'Agency Operations',        type: 'section' },
-  { id: 'staffing',           label: 'Staffing & Readiness',     icon: Users,        hasSubmenu: true, submenu: [
-    { id: 'staffing-overview', label: 'Staffing Overview', route: '/command/personnel' },
-    { id: 'org-chart',         label: 'Org Chart',         route: '/command/orgchart' },
+  { id: 'staffing',           label: 'Workforce Readiness',      icon: Users,        hasSubmenu: true, submenu: [
+    { id: 'staffing-overview', label: 'Workforce Readiness', route: '/command/personnel' },
+    { id: 'org-chart',         label: 'Org Chart',           route: '/command/orgchart' },
   ]},
   { id: 'detention-command',  label: 'Detention Command Center', icon: Shield,       route: '/jail/command' },
   { id: 'custody',            label: 'Custody Operations',       icon: Building2,    route: '/jail/custody' },

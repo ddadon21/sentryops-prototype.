@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Filter, Download, Mail, Phone, MapPin, AlertCircle, CheckCircle, Clock, ChevronRight, Bell, Users, Award, Calendar, TrendingUp, TrendingDown, MoreVertical, Eye, X, Sparkles, Plus, FileText, BarChart3, Shield, Activity, Star, Briefcase, Zap, Target, ArrowRight, AlertTriangle, Gauge, RefreshCw, Flag } from 'lucide-react';
+import { Search, Filter, Download, Mail, Phone, MapPin, AlertCircle, CheckCircle, Clock, ChevronRight, Bell, Users, Award, Calendar, TrendingUp, TrendingDown, MoreVertical, Eye, X, Sparkles, Plus, FileText, BarChart3, Shield, Activity, Star, Briefcase, Zap, Target, ArrowRight, AlertTriangle, Gauge, RefreshCw, Flag, UserCircle, GraduationCap, ExternalLink } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import DashboardLayout from '../layouts/DashboardLayout';
@@ -13,6 +13,10 @@ export default function PersonnelOverview() {
   const [fullProfileOpen, setFullProfileOpen] = useState(false);
   const [fullProfileData, setFullProfileData] = useState(null);
   const [collapsedGroups, setCollapsedGroups] = useState({});
+  const [scheduleTrainingOpen, setScheduleTrainingOpen] = useState(false);
+  const [scheduleTrainingTarget, setScheduleTrainingTarget] = useState(null);
+  const [scheduleTrainingConfirmed, setScheduleTrainingConfirmed] = useState(false);
+  const [actionedRecommendations, setActionedRecommendations] = useState({});
 
   const personnel = [
     {
@@ -383,11 +387,79 @@ export default function PersonnelOverview() {
     setFullProfileOpen(true);
   };
 
+  const openScheduleTraining = (person, certification = null) => {
+    setScheduleTrainingTarget({ person, certification });
+    setScheduleTrainingConfirmed(false);
+    setScheduleTrainingOpen(true);
+  };
+
+  const closeScheduleTraining = () => {
+    setScheduleTrainingOpen(false);
+    setScheduleTrainingConfirmed(false);
+  };
+
+  const handleRecommendationAction = (rec) => {
+    if (rec.actionType === 'training') {
+      openScheduleTraining(rec.person, rec.certification);
+    } else {
+      setActionedRecommendations(prev => ({ ...prev, [rec.id]: true }));
+    }
+  };
+
   const stats = {
     total: 170,
     onDuty: 127,
     expiring: 23,
     openPositions: 12
+  };
+
+  // ── AI Staffing Recommendations — recommended actions, ranked by operational impact ──
+  const aiStaffingRecommendations = [
+    {
+      id: 'rec-taylor-reassign',
+      icon: RefreshCw,
+      title: 'Move Deputy Taylor to Central Patrol',
+      rationale: 'Central Patrol is below minimum staffing. Taylor is fully certified on Night Shift with no scheduling conflicts.',
+      impacts: [
+        { label: 'Restores minimum staffing', tone: 'positive' },
+        { label: 'Coverage +8%', tone: 'positive' }
+      ],
+      person: personnel.find(p => p.id === 'P-2024-007'),
+      actionLabel: 'Reassign to Central Patrol',
+      actionType: 'reassign'
+    },
+    {
+      id: 'rec-smith-cpr',
+      icon: GraduationCap,
+      title: 'Schedule CPR Renewal for John Smith',
+      rationale: 'CPR/First Aid certification expires in 14 days. Scheduling now keeps Smith deployable with zero coverage disruption.',
+      impacts: [
+        { label: 'Prevents certification lapse', tone: 'caution' },
+        { label: 'No staffing impact', tone: 'neutral' }
+      ],
+      person: personnel.find(p => p.id === 'P-2024-001'),
+      certification: 'CPR/First Aid',
+      actionLabel: 'Schedule Training',
+      actionType: 'training'
+    },
+    {
+      id: 'rec-garcia-fto',
+      icon: Star,
+      title: 'Reassign Garcia as Field Training Officer',
+      rationale: 'Garcia holds a current FTO certification and a 4.6 performance rating — pairing him with incoming recruits closes the training gap fastest.',
+      impacts: [
+        { label: 'Reduces training backlog by 12%', tone: 'positive' }
+      ],
+      person: personnel.find(p => p.id === 'P-2024-011'),
+      actionLabel: 'Assign as FTO',
+      actionType: 'assign'
+    }
+  ];
+
+  const getImpactToneClasses = (tone) => {
+    if (tone === 'positive') return 'bg-emerald-500/10 border-emerald-500/20 text-emerald-700 dark:text-emerald-400';
+    if (tone === 'caution') return 'bg-amber-500/10 border-amber-500/20 text-amber-700 dark:text-amber-400';
+    return 'bg-slate-500/10 border-slate-500/20 text-secondary';
   };
 
   return (
@@ -401,8 +473,8 @@ export default function PersonnelOverview() {
                 <div className="mb-6">
                   <div className="flex items-center justify-between">
                     <div>
-                      <h2 className="text-xl font-bold text-primary mb-1">Staffing Overview</h2>
-                      <p className="text-[11px] text-slate-500">Operational workforce management + deployment readiness</p>
+                      <h2 className="text-xl font-bold text-primary mb-1">Workforce Readiness</h2>
+                      <p className="text-[11px] text-slate-500">Deployable personnel, certification risk &amp; readiness — agency workforce command center</p>
                     </div>
                     <div className="flex items-center gap-2">
                       <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-100/80 dark:bg-slate-800/30 border border-border rounded-lg text-[11px] text-secondary hover:text-primary transition-colors">
@@ -499,7 +571,7 @@ export default function PersonnelOverview() {
                     <button className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-slate-900 font-semibold rounded text-[11px] transition-colors">
                       <Plus className="w-3 h-3" />Add Personnel
                     </button>
-                    <button onClick={() => navigate(createPageUrl('TrainingCertifications'))} className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded text-[11px] font-medium transition-colors">
+                    <button onClick={() => openScheduleTraining(personnel.find(p => p.id === 'P-2024-001'), 'CPR/First Aid')} className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded text-[11px] font-medium transition-colors">
                       <Calendar className="w-3 h-3" />Schedule Training
                     </button>
                     <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded text-[11px] font-medium transition-colors">
@@ -511,6 +583,66 @@ export default function PersonnelOverview() {
                     <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded text-[11px] font-medium transition-colors">
                       <Download className="w-3 h-3" />Import Roster
                     </button>
+                  </div>
+                </div>
+
+                {/* ── AI Staffing Recommendations ─────────────── */}
+                <div className="mb-4 bg-slate-900 dark:bg-slate-950 border border-slate-700/60 rounded-xl p-4">
+                  <div className="flex items-center gap-2.5 mb-3">
+                    <div className="w-7 h-7 rounded-lg bg-amber-500/15 border border-amber-500/25 flex items-center justify-center flex-shrink-0">
+                      <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-bold text-white">AI Staffing Recommendations</h3>
+                      <p className="text-[10px] text-slate-400">Recommended actions, ranked by operational impact — not just problems, the moves that fix them</p>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+                    {aiStaffingRecommendations.map(rec => {
+                      const Icon = rec.icon;
+                      const actioned = !!actionedRecommendations[rec.id];
+                      return (
+                        <div key={rec.id} className="flex flex-col bg-slate-800/40 border border-slate-700/50 rounded-lg p-3.5">
+                          <div className="flex items-start gap-2.5 mb-2.5">
+                            <div className="w-7 h-7 rounded-lg bg-slate-700/50 flex items-center justify-center flex-shrink-0">
+                              <Icon className="w-3.5 h-3.5 text-amber-400" />
+                            </div>
+                            <div className="min-w-0">
+                              <p className="text-[12px] font-semibold text-white leading-snug">{rec.title}</p>
+                              <p className="text-[10px] text-slate-400 mt-1 leading-relaxed">{rec.rationale}</p>
+                            </div>
+                          </div>
+                          <div className="flex flex-wrap gap-1.5 mb-3">
+                            {rec.impacts.map((impact, idx) => (
+                              <span key={idx} className={`px-2 py-0.5 rounded-full border text-[9px] font-medium ${getImpactToneClasses(impact.tone)}`}>
+                                {impact.label}
+                              </span>
+                            ))}
+                          </div>
+                          <button
+                            onClick={() => handleRecommendationAction(rec)}
+                            disabled={actioned}
+                            className={`mt-auto w-full flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-semibold transition-colors ${
+                              actioned
+                                ? 'bg-emerald-500/15 border border-emerald-500/25 text-emerald-400 cursor-default'
+                                : 'bg-amber-500 hover:bg-amber-600 text-slate-900'
+                            }`}
+                          >
+                            {actioned ? (
+                              <>
+                                <CheckCircle className="w-3 h-3" />
+                                Action Queued
+                              </>
+                            ) : (
+                              <>
+                                {rec.actionLabel}
+                                <ArrowRight className="w-3 h-3" />
+                              </>
+                            )}
+                          </button>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
 
@@ -714,6 +846,7 @@ export default function PersonnelOverview() {
                                       <RefreshCw className="w-3.5 h-3.5" />
                                     </button>
                                     <button
+                                      onClick={() => openScheduleTraining(person, person.certifications.find(c => c.status === 'expiring' || c.status === 'expired')?.name || null)}
                                       className="p-1.5 text-slate-500 hover:text-green-600 dark:text-green-400 hover:bg-green-500/10 rounded transition-all"
                                       title="Schedule Training"
                                     >
@@ -817,7 +950,7 @@ export default function PersonnelOverview() {
                     <p className="text-[10px] text-secondary">Coverage drops to <span className="text-red-700 dark:text-red-400 font-bold">69%</span></p>
                     <p className="text-[10px] text-secondary">Training required within <span className="text-amber-700 dark:text-amber-400 font-bold">21 days</span></p>
                   </div>
-                  <button onClick={() => navigate(createPageUrl('TrainingCertifications'))} className="mt-2.5 w-full px-2.5 py-1.5 bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/20 text-amber-700 dark:text-amber-400 rounded text-[10px] font-semibold transition-colors">
+                  <button onClick={() => openScheduleTraining(personnel.find(p => p.id === 'P-2024-001'), 'CPR/First Aid')} className="mt-2.5 w-full px-2.5 py-1.5 bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/20 text-amber-700 dark:text-amber-400 rounded text-[10px] font-semibold transition-colors">
                     Schedule Training
                   </button>
                 </div>
@@ -948,6 +1081,128 @@ export default function PersonnelOverview() {
 
 
 
+
+      {/* Schedule Training Panel — pre-filled, never re-search the employee */}
+      {scheduleTrainingOpen && scheduleTrainingTarget?.person && (
+        <div className="fixed inset-0 z-50 flex justify-end">
+          <div
+            className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm"
+            onClick={closeScheduleTraining}
+          />
+          <div className="relative w-full max-w-[440px] bg-white dark:bg-slate-900 border-l border-border shadow-2xl overflow-y-auto">
+            <div className="sticky top-0 bg-slate-900/95 backdrop-blur-xl border-b border-border p-6 z-10">
+              <div className="flex items-start justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-xl bg-green-500/15 border border-green-500/25 flex items-center justify-center">
+                    <GraduationCap className="w-4 h-4 text-green-600 dark:text-green-400" />
+                  </div>
+                  <div>
+                    <h3 className="text-base font-semibold text-primary">Schedule Training</h3>
+                    <p className="text-[11px] text-secondary">Connected to HR &bull; Training Management</p>
+                  </div>
+                </div>
+                <button
+                  onClick={closeScheduleTraining}
+                  className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors"
+                >
+                  <X className="w-5 h-5 text-secondary" />
+                </button>
+              </div>
+            </div>
+
+            <div className="p-6 space-y-5">
+              {!scheduleTrainingConfirmed ? (
+                <>
+                  {/* Pre-filled employee — no search required */}
+                  <div>
+                    <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2">Employee</p>
+                    <div className="flex items-center gap-3 p-3 bg-slate-100/80 dark:bg-slate-800/30 border border-slate-700/50 rounded-xl">
+                      <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <span className="text-white text-xs font-medium">{scheduleTrainingTarget.person.photo}</span>
+                      </div>
+                      <div className="min-w-0">
+                        <p className="text-sm font-medium text-primary">{scheduleTrainingTarget.person.name}</p>
+                        <p className="text-xs text-secondary">{scheduleTrainingTarget.person.rank} &bull; Badge {scheduleTrainingTarget.person.badge} &bull; {scheduleTrainingTarget.person.division}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Pre-filled certification */}
+                  <div>
+                    <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2">Certification</p>
+                    <div className="flex items-center gap-2.5 p-3 bg-slate-100/80 dark:bg-slate-800/30 border border-slate-700/50 rounded-xl">
+                      <Award className="w-4 h-4 text-amber-700 dark:text-amber-400 flex-shrink-0" />
+                      <div className="min-w-0">
+                        <p className="text-sm text-primary">{scheduleTrainingTarget.certification || 'General Certification Renewal'}</p>
+                        {(() => {
+                          const cert = scheduleTrainingTarget.person.certifications?.find(c => c.name === scheduleTrainingTarget.certification);
+                          return cert ? <p className="text-xs text-secondary">Currently {cert.status} &bull; Expires {cert.expires}</p> : null;
+                        })()}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Session selector */}
+                  <div>
+                    <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2">Available Sessions</p>
+                    <div className="space-y-2">
+                      {[
+                        { date: 'Mon, Jun 15 — 08:00', location: 'Training Annex B', seats: '6 seats open' },
+                        { date: 'Wed, Jun 17 — 13:00', location: 'HQ Conference Room 2', seats: '3 seats open' },
+                        { date: 'Fri, Jun 19 — 09:30', location: 'Training Annex A', seats: '8 seats open' },
+                      ].map((session, idx) => (
+                        <label key={idx} className="flex items-center gap-2.5 p-3 bg-slate-100/80 dark:bg-slate-800/30 border border-slate-700/50 rounded-xl cursor-pointer hover:border-amber-500/40 transition-colors">
+                          <input type="radio" name="trainingSession" defaultChecked={idx === 0} className="accent-amber-500" />
+                          <div>
+                            <p className="text-sm text-primary font-medium">{session.date}</p>
+                            <p className="text-xs text-secondary">{session.location} &bull; {session.seats}</p>
+                          </div>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => setScheduleTrainingConfirmed(true)}
+                    className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-amber-500 hover:bg-amber-600 text-slate-900 font-semibold rounded-xl text-sm transition-colors"
+                  >
+                    <CheckCircle className="w-4 h-4" />
+                    Confirm &amp; Sync to HR
+                  </button>
+                  <p className="text-[10px] text-slate-500 text-center leading-relaxed">
+                    Schedules the session and syncs the record to HR &gt; Training Management — {scheduleTrainingTarget.person.name.split(' ')[0]} won&apos;t need to be searched again.
+                  </p>
+                </>
+              ) : (
+                <div className="text-center py-6">
+                  <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-green-500/15 border border-green-500/25 flex items-center justify-center">
+                    <CheckCircle className="w-7 h-7 text-green-600 dark:text-green-400" />
+                  </div>
+                  <h4 className="text-base font-semibold text-primary mb-1">Training Scheduled</h4>
+                  <p className="text-sm text-secondary mb-6">
+                    {scheduleTrainingTarget.person.name}&rsquo;s {scheduleTrainingTarget.certification || 'training'} session is scheduled and synced to HR &gt; Training Management.
+                  </p>
+                  <div className="space-y-2">
+                    <button
+                      onClick={() => navigate(createPageUrl('TrainingCertifications'), { state: { employeeId: scheduleTrainingTarget.person.id, employeeName: scheduleTrainingTarget.person.name, certification: scheduleTrainingTarget.certification } })}
+                      className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary hover:text-primary rounded-xl text-sm font-medium transition-colors"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                      View in HR &gt; Training Management
+                    </button>
+                    <button
+                      onClick={closeScheduleTraining}
+                      className="w-full px-4 py-2.5 text-secondary hover:text-primary text-sm font-medium transition-colors"
+                    >
+                      Done
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Full Personnel Profile Modal */}
       {fullProfileOpen && fullProfileData && (
@@ -1198,7 +1453,7 @@ export default function PersonnelOverview() {
                         <UserCircle className="w-4 h-4" />
                         <span>Edit Profile</span>
                       </button>
-                      <button className="w-full flex items-center gap-3 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors">
+                      <button onClick={() => { setFullProfileOpen(false); openScheduleTraining(fullProfileData, fullProfileData.certifications.find(c => c.status === 'expiring' || c.status === 'expired')?.name || null); }} className="w-full flex items-center gap-3 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors">
                         <Calendar className="w-4 h-4" />
                         <span>Schedule Training</span>
                       </button>
