@@ -326,7 +326,7 @@ export default function PersonnelOverview() {
 
   const getCertStatus = (certs) => {
     if (certs.some(c => c.status === 'expired')) return { label: 'Expired', color: 'red', icon: AlertCircle };
-    if (certs.some(c => c.status === 'expiring')) return { label: 'Expiring Soon', color: 'amber', icon: Clock };
+    if (certs.some(c => c.status === 'expiring')) return { label: 'Expiring Soon', color: 'orange', icon: Clock };
     return { label: 'Current', color: 'green', icon: CheckCircle };
   };
 
@@ -334,7 +334,7 @@ export default function PersonnelOverview() {
     const colors = {
       'on-duty': 'bg-green-500/20 border-green-500/30 text-green-600 dark:text-green-400',
       'off-duty': 'bg-slate-500/20 border-slate-500/30 text-slate-500',
-      'on-leave': 'bg-amber-500/20 border-amber-500/30 text-amber-700 dark:text-amber-400'
+      'on-leave': 'bg-orange-500/20 border-orange-500/30 text-orange-600 dark:text-orange-400'
     };
     return colors[status] || colors['off-duty'];
   };
@@ -344,14 +344,14 @@ export default function PersonnelOverview() {
     const hasExpiringCert = person.certifications.some(c => c.status === 'expiring');
     if (person.status === 'on-leave') return { label: 'Non-Deployable', color: 'red', icon: AlertTriangle, detail: 'On leave' };
     if (hasCriticalCert) return { label: 'Restricted', color: 'red', icon: AlertCircle, detail: 'Expired certification' };
-    if (hasExpiringCert) return { label: 'Cert Expiring', color: 'amber', icon: Clock, detail: 'Renewal required' };
+    if (hasExpiringCert) return { label: 'Cert Expiring', color: 'orange', icon: Clock, detail: 'Renewal required' };
     if (person.status === 'off-duty') return { label: 'Deployable', color: 'green', icon: CheckCircle, detail: 'Off-duty, available' };
     return { label: 'Deployable', color: 'green', icon: CheckCircle, detail: 'Full duty' };
   };
 
   const getCoverageConfig = (impact) => {
     if (impact === 'critical') return { label: 'Critical', color: 'text-red-700 dark:text-red-400', bg: 'bg-red-500/10 border-red-500/15' };
-    if (impact === 'watch') return { label: 'Watch', color: 'text-amber-700 dark:text-amber-400', bg: 'bg-amber-500/10 border-amber-500/15' };
+    if (impact === 'watch') return { label: 'Watch', color: 'text-orange-600 dark:text-orange-400', bg: 'bg-orange-500/10 border-orange-500/15' };
     return { label: 'Stable', color: 'text-green-600 dark:text-green-400', bg: 'bg-green-500/10 border-green-500/15' };
   };
 
@@ -363,12 +363,12 @@ export default function PersonnelOverview() {
     personnel.forEach(p => {
       const op = getOperationalStatus(p);
       if (op.color === 'red') nonDeployable.push(p);
-      else if (op.color === 'amber') certRisk.push(p);
+      else if (op.color === 'orange') certRisk.push(p);
       else deployable.push(p);
     });
     return [
       { key: 'deployable', label: 'Deployable Personnel', count: deployable.length, color: 'green', people: deployable },
-      { key: 'certRisk', label: 'Certification Risk', count: certRisk.length, color: 'amber', people: certRisk },
+      { key: 'certRisk', label: 'Certification Risk', count: certRisk.length, color: 'orange', people: certRisk },
       { key: 'nonDeployable', label: 'Non-Deployable', count: nonDeployable.length, color: 'red', people: nonDeployable },
     ].filter(g => g.people.length > 0);
   })();
@@ -458,7 +458,7 @@ export default function PersonnelOverview() {
 
   const getImpactToneClasses = (tone) => {
     if (tone === 'positive') return 'bg-emerald-500/10 border-emerald-500/20 text-emerald-700 dark:text-emerald-400';
-    if (tone === 'caution') return 'bg-amber-500/10 border-amber-500/20 text-amber-700 dark:text-amber-400';
+    if (tone === 'caution') return 'bg-orange-500/10 border-orange-500/20 text-orange-600 dark:text-orange-400';
     return 'bg-slate-500/10 border-slate-500/20 text-secondary';
   };
 
@@ -487,40 +487,40 @@ export default function PersonnelOverview() {
 
                 {/* ── Workforce Status Row (4 cards) ──────────── */}
                 <div className="grid grid-cols-4 gap-3 mb-4">
-                  {/* Workforce Health */}
-                  <div className="bg-surface border border-border rounded-xl shadow-sm dark:shadow-none p-3">
+                  {/* Workforce Health — composite score is healthy */}
+                  <div className="bg-slate-100/80 dark:bg-slate-800/30 border border-emerald-500/20 rounded-xl p-3">
                     <div className="flex items-center gap-2 mb-1.5">
-                      <Gauge className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400" />
+                      <Gauge className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                       <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Workforce Health</span>
                     </div>
                     <div className="flex items-baseline gap-1.5">
-                      <span className="text-2xl font-bold text-amber-700 dark:text-amber-400">87%</span>
+                      <span className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">87%</span>
                       <span className="text-[10px] text-slate-500">composite</span>
                     </div>
                     <p className="text-[9px] text-slate-700 mt-0.5">Staffing + compliance + retention</p>
                   </div>
 
-                  {/* Patrol Coverage */}
-                  <div className="bg-slate-100/80 dark:bg-slate-800/30 border border-amber-500/20 rounded-xl p-3">
+                  {/* Patrol Coverage — below optimal, needs attention */}
+                  <div className="bg-slate-100/80 dark:bg-slate-800/30 border border-orange-500/20 rounded-xl p-3">
                     <div className="flex items-center gap-2 mb-1.5">
-                      <Shield className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400" />
+                      <Shield className="w-3.5 h-3.5 text-orange-600 dark:text-orange-400" />
                       <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Patrol Coverage</span>
                     </div>
                     <div className="flex items-baseline gap-1.5">
-                      <span className="text-2xl font-bold text-amber-700 dark:text-amber-400">75%</span>
-                      <span className="text-[10px] text-amber-700 dark:text-amber-400/60">127/170</span>
+                      <span className="text-2xl font-bold text-orange-600 dark:text-orange-400">75%</span>
+                      <span className="text-[10px] text-orange-600 dark:text-orange-400/60">127/170</span>
                     </div>
-                    <p className="text-[9px] text-amber-700 dark:text-amber-400/70 mt-0.5">4 positions below optimal</p>
+                    <p className="text-[9px] text-orange-600 dark:text-orange-400/70 mt-0.5">4 positions below optimal</p>
                   </div>
 
-                  {/* Certification Compliance */}
-                  <div className="bg-slate-100/80 dark:bg-slate-800/30 border border-amber-500/20 rounded-xl p-3">
+                  {/* Certification Compliance — below target, needs attention */}
+                  <div className="bg-slate-100/80 dark:bg-slate-800/30 border border-orange-500/20 rounded-xl p-3">
                     <div className="flex items-center gap-2 mb-1.5">
-                      <Award className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400" />
+                      <Award className="w-3.5 h-3.5 text-orange-600 dark:text-orange-400" />
                       <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Cert Compliance</span>
                     </div>
                     <div className="flex items-baseline gap-1.5">
-                      <span className="text-2xl font-bold text-amber-700 dark:text-amber-400">86%</span>
+                      <span className="text-2xl font-bold text-orange-600 dark:text-orange-400">86%</span>
                       <span className="text-[10px] text-slate-500">target: 95%</span>
                     </div>
                     <p className="text-[9px] text-red-700 dark:text-red-400/70 mt-0.5">17 expiring within 30 days</p>
@@ -558,8 +558,8 @@ export default function PersonnelOverview() {
                   {aiInsightsVisible && (
                     <div className="mt-1 px-3 py-2.5 bg-slate-50 dark:bg-slate-800/15 border border-slate-100 dark:border-slate-700/10 rounded space-y-1.5">
                       <p className="text-[10px] text-red-700 dark:text-red-400">&bull; 17 certifications expire within 30 days. 6 are Patrol Deputies — if lapsed, coverage drops to 69%. Schedule training immediately.</p>
-                      <p className="text-[10px] text-amber-700 dark:text-amber-400">&bull; Patrol staffing at 75% (127/170). 4 open positions + 8 on leave. Central Patrol zone below minimum staffing.</p>
-                      <p className="text-[10px] text-amber-700 dark:text-amber-400">&bull; 12 open positions across divisions. Priority: 4 Patrol (critical), 3 Detention (high). Pipeline: 28 applicants, 42-day avg hire.</p>
+                      <p className="text-[10px] text-orange-600 dark:text-orange-400">&bull; Patrol staffing at 75% (127/170). 4 open positions + 8 on leave. Central Patrol zone below minimum staffing.</p>
+                      <p className="text-[10px] text-orange-600 dark:text-orange-400">&bull; 12 open positions across divisions. Priority: 4 Patrol (critical), 3 Detention (high). Pipeline: 28 applicants, 42-day avg hire.</p>
                       <p className="text-[10px] text-green-600 dark:text-green-400">&bull; Turnover 6.5% (industry avg 12%). Avg tenure 8.4 years. Workforce retention stable.</p>
                     </div>
                   )}
@@ -589,8 +589,8 @@ export default function PersonnelOverview() {
                 {/* ── AI Staffing Recommendations ─────────────── */}
                 <div className="mb-4 bg-slate-900 dark:bg-slate-950 border border-slate-700/60 rounded-xl p-4">
                   <div className="flex items-center gap-2.5 mb-3">
-                    <div className="w-7 h-7 rounded-lg bg-amber-500/15 border border-amber-500/25 flex items-center justify-center flex-shrink-0">
-                      <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                    <div className="w-7 h-7 rounded-lg bg-blue-500/15 border border-blue-500/25 flex items-center justify-center flex-shrink-0">
+                      <Sparkles className="w-3.5 h-3.5 text-blue-400" />
                     </div>
                     <div>
                       <h3 className="text-sm font-bold text-white">AI Staffing Recommendations</h3>
@@ -604,8 +604,8 @@ export default function PersonnelOverview() {
                       return (
                         <div key={rec.id} className="flex flex-col bg-slate-800/40 border border-slate-700/50 rounded-lg p-3.5">
                           <div className="flex items-start gap-2.5 mb-2.5">
-                            <div className="w-7 h-7 rounded-lg bg-slate-700/50 flex items-center justify-center flex-shrink-0">
-                              <Icon className="w-3.5 h-3.5 text-amber-400" />
+                            <div className="w-7 h-7 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0">
+                              <Icon className="w-3.5 h-3.5 text-blue-400" />
                             </div>
                             <div className="min-w-0">
                               <p className="text-[12px] font-semibold text-white leading-snug">{rec.title}</p>
@@ -720,15 +720,15 @@ export default function PersonnelOverview() {
                           onClick={() => toggleGroup(group.key)}
                           className={`w-full px-3 py-2 flex items-center gap-2 transition-colors ${
                             group.color === 'red' ? 'bg-red-500/[0.04] hover:bg-red-500/[0.07] border-b border-red-500/10' :
-                            group.color === 'amber' ? 'bg-amber-500/[0.03] hover:bg-amber-500/[0.06] border-b border-amber-500/10' :
+                            group.color === 'orange' ? 'bg-orange-500/[0.03] hover:bg-orange-500/[0.06] border-b border-orange-500/10' :
                             'bg-green-500/[0.02] hover:bg-green-500/[0.04] border-b border-green-500/10'
                           }`}
                         >
                           <div className={`w-2 h-2 rounded-full flex-shrink-0 ${
-                            group.color === 'red' ? 'bg-red-500' : group.color === 'amber' ? 'bg-amber-500' : 'bg-green-500'
+                            group.color === 'red' ? 'bg-red-500' : group.color === 'orange' ? 'bg-orange-500' : 'bg-green-500'
                           }`}></div>
                           <span className={`text-[11px] font-bold uppercase tracking-wider ${
-                            group.color === 'red' ? 'text-red-700 dark:text-red-400' : group.color === 'amber' ? 'text-amber-700 dark:text-amber-400' : 'text-green-600 dark:text-green-400'
+                            group.color === 'red' ? 'text-red-700 dark:text-red-400' : group.color === 'orange' ? 'text-orange-600 dark:text-orange-400' : 'text-green-600 dark:text-green-400'
                           }`}>{group.label}</span>
                           <span className="text-[10px] text-slate-500">({group.count})</span>
                           <ChevronRight className={`w-3 h-3 text-slate-700 ml-auto transition-transform ${isCollapsed ? '' : 'rotate-90'}`} />
@@ -758,7 +758,7 @@ export default function PersonnelOverview() {
                                   key={person.id}
                                   className={`grid grid-cols-[1fr_80px_100px_90px_1fr_1fr_90px] gap-1 px-3 py-3.5 items-start border-b border-border hover:bg-slate-50 dark:hover:bg-slate-50 dark:hover:bg-slate-800/15 transition-colors ${
                                     opStatus.color === 'red' ? 'bg-red-500/[0.02]' :
-                                    opStatus.color === 'amber' ? 'bg-amber-500/[0.01]' : ''
+                                    opStatus.color === 'orange' ? 'bg-orange-500/[0.01]' : ''
                                   }`}
                                 >
                                   {/* Personnel */}
@@ -768,13 +768,13 @@ export default function PersonnelOverview() {
                                   >
                                     <div className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 text-[11px] font-bold ${
                                       opStatus.color === 'red' ? 'bg-red-500/15 text-red-700 dark:text-red-400' :
-                                      opStatus.color === 'amber' ? 'bg-amber-500/15 text-amber-700 dark:text-amber-400' :
+                                      opStatus.color === 'orange' ? 'bg-orange-500/15 text-orange-600 dark:text-orange-400' :
                                       'bg-slate-50 dark:bg-slate-700/40 text-slate-500'
                                     }`}>
                                       {person.photo}
                                     </div>
                                     <div className="min-w-0">
-                                      <p className="text-[11px] font-semibold text-primary group-hover:text-amber-600 dark:text-amber-400 transition-colors truncate">{person.name}</p>
+                                      <p className="text-[11px] font-semibold text-amber-700 dark:text-amber-400 group-hover:text-amber-600 dark:group-hover:text-amber-300 transition-colors truncate">{person.name}</p>
                                       <p className="text-[10px] text-slate-500">{person.rank} &middot; <span className="font-mono">{person.badge}</span></p>
                                     </div>
                                   </div>
@@ -789,7 +789,7 @@ export default function PersonnelOverview() {
                                   <div className="pt-0.5">
                                     <div className={`inline-flex items-center gap-1 px-2 py-0.5 rounded border text-[9px] font-bold w-fit ${
                                       opStatus.color === 'red' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
-                                      opStatus.color === 'amber' ? 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
+                                      opStatus.color === 'orange' ? 'bg-orange-100 border-orange-200 text-orange-600 dark:bg-orange-500/10 dark:border-orange-500/20 dark:text-orange-400' :
                                       'bg-green-100 border-green-200 text-green-700 dark:bg-green-500/10 dark:border-green-500/20 dark:text-green-400'
                                     }`}>
                                       <OpIcon className="w-3 h-3" />
@@ -810,8 +810,8 @@ export default function PersonnelOverview() {
                                   <div className="pt-0.5">
                                     {person.risk ? (
                                       <div className="flex items-start gap-1">
-                                        <AlertTriangle className="w-3 h-3 text-amber-700 dark:text-amber-400 mt-0.5 flex-shrink-0" />
-                                        <p className="text-[10px] text-amber-700 dark:text-amber-400">{person.risk}</p>
+                                        <AlertTriangle className="w-3 h-3 text-orange-600 dark:text-orange-400 mt-0.5 flex-shrink-0" />
+                                        <p className="text-[10px] text-orange-600 dark:text-orange-400">{person.risk}</p>
                                       </div>
                                     ) : (
                                       <span className="text-[10px] text-slate-700">&mdash;</span>
@@ -884,9 +884,9 @@ export default function PersonnelOverview() {
                   </div>
                   <div className="space-y-2">
                     {[
-                      { division: 'Patrol', current: 64, required: 68, color: 'amber' },
+                      { division: 'Patrol', current: 64, required: 68, color: 'orange' },
                       { division: 'Investigations', current: 22, required: 24, color: 'green' },
-                      { division: 'Detention', current: 49, required: 52, color: 'amber' },
+                      { division: 'Detention', current: 49, required: 52, color: 'orange' },
                       { division: 'Dispatch', current: 24, required: 26, color: 'green' },
                     ].map((d, i) => (
                       <div key={i}>
@@ -898,7 +898,7 @@ export default function PersonnelOverview() {
                           <div
                             className={`h-full rounded-full ${
                               d.current / d.required >= 0.95 ? 'bg-green-500' :
-                              d.current / d.required >= 0.85 ? 'bg-amber-500' : 'bg-red-500'
+                              d.current / d.required >= 0.85 ? 'bg-orange-500' : 'bg-red-500'
                             }`}
                             style={{ width: `${(d.current / d.required) * 100}%` }}
                           ></div>
@@ -912,7 +912,7 @@ export default function PersonnelOverview() {
                   </div>
                   <div className="flex items-center justify-between text-[10px] mt-0.5">
                     <span className="text-slate-500">On leave:</span>
-                    <span className="text-amber-700 dark:text-amber-400">8</span>
+                    <span className="text-orange-600 dark:text-orange-400">8</span>
                   </div>
                   <div className="flex items-center justify-between text-[10px] mt-0.5">
                     <span className="text-slate-500">Off duty:</span>
@@ -921,13 +921,13 @@ export default function PersonnelOverview() {
                 </div>
 
                 {/* Widget 2: Certification Risk */}
-                <div className="bg-slate-50 dark:bg-slate-800/15 border border-amber-500/15 rounded p-3">
+                <div className="bg-slate-50 dark:bg-slate-800/15 border border-orange-500/15 rounded p-3">
                   <div className="flex items-center gap-2 mb-2">
-                    <AlertTriangle className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400" />
+                    <AlertTriangle className="w-3.5 h-3.5 text-orange-600 dark:text-orange-400" />
                     <span className="text-[11px] font-bold text-primary">Certification Risk</span>
                   </div>
                   <div className="flex items-baseline gap-1.5 mb-2">
-                    <span className="text-2xl font-bold text-amber-700 dark:text-amber-400">23</span>
+                    <span className="text-2xl font-bold text-orange-600 dark:text-orange-400">23</span>
                     <span className="text-[10px] text-slate-500">expiring</span>
                   </div>
                   <div className="space-y-1.5 text-[10px]">
@@ -937,7 +937,7 @@ export default function PersonnelOverview() {
                     </div>
                     <div className="flex justify-between">
                       <span className="text-secondary">Next 30 days:</span>
-                      <span className="text-amber-700 dark:text-amber-400 font-bold">12</span>
+                      <span className="text-orange-600 dark:text-orange-400 font-bold">12</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-secondary">Expired:</span>
@@ -948,7 +948,7 @@ export default function PersonnelOverview() {
                     <p className="text-[9px] font-bold text-red-700 dark:text-red-400 uppercase tracking-wider mb-1">Operational Impact</p>
                     <p className="text-[10px] text-secondary">6 Patrol Deputies affected</p>
                     <p className="text-[10px] text-secondary">Coverage drops to <span className="text-red-700 dark:text-red-400 font-bold">69%</span></p>
-                    <p className="text-[10px] text-secondary">Training required within <span className="text-amber-700 dark:text-amber-400 font-bold">21 days</span></p>
+                    <p className="text-[10px] text-secondary">Training required within <span className="text-orange-600 dark:text-orange-400 font-bold">21 days</span></p>
                   </div>
                   <button onClick={() => openScheduleTraining(personnel.find(p => p.id === 'P-2024-001'), 'CPR/First Aid')} className="mt-2.5 w-full px-2.5 py-1.5 bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/20 text-amber-700 dark:text-amber-400 rounded text-[10px] font-semibold transition-colors">
                     Schedule Training
@@ -1049,7 +1049,7 @@ export default function PersonnelOverview() {
                         {cert.status === 'current' ? (
                           <CheckCircle className="w-4 h-4 text-green-600 dark:text-green-400" />
                         ) : cert.status === 'expiring' ? (
-                          <Clock className="w-4 h-4 text-amber-700 dark:text-amber-400" />
+                          <Clock className="w-4 h-4 text-orange-600 dark:text-orange-400" />
                         ) : (
                           <AlertCircle className="w-4 h-4 text-red-700 dark:text-red-400" />
                         )}
@@ -1131,12 +1131,18 @@ export default function PersonnelOverview() {
                   <div>
                     <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2">Certification</p>
                     <div className="flex items-center gap-2.5 p-3 bg-slate-100/80 dark:bg-slate-800/30 border border-slate-700/50 rounded-xl">
-                      <Award className="w-4 h-4 text-amber-700 dark:text-amber-400 flex-shrink-0" />
+                      {(() => {
+                        const cert = scheduleTrainingTarget.person.certifications?.find(c => c.name === scheduleTrainingTarget.certification);
+                        const iconClass = cert?.status === 'expired' ? 'text-red-700 dark:text-red-400' : cert?.status === 'expiring' ? 'text-orange-600 dark:text-orange-400' : 'text-slate-500';
+                        return <Award className={`w-4 h-4 flex-shrink-0 ${iconClass}`} />;
+                      })()}
                       <div className="min-w-0">
                         <p className="text-sm text-primary">{scheduleTrainingTarget.certification || 'General Certification Renewal'}</p>
                         {(() => {
                           const cert = scheduleTrainingTarget.person.certifications?.find(c => c.name === scheduleTrainingTarget.certification);
-                          return cert ? <p className="text-xs text-secondary">Currently {cert.status} &bull; Expires {cert.expires}</p> : null;
+                          if (!cert) return null;
+                          const textClass = cert.status === 'expired' ? 'text-red-700 dark:text-red-400' : cert.status === 'expiring' ? 'text-orange-600 dark:text-orange-400' : 'text-secondary';
+                          return <p className={`text-xs ${textClass}`}>Currently {cert.status} &bull; Expires {cert.expires}</p>;
                         })()}
                       </div>
                     </div>
@@ -1326,7 +1332,7 @@ export default function PersonnelOverview() {
                       {fullProfileData.certifications.map((cert, idx) => (
                         <div key={idx} className={`p-4 rounded-lg border ${
                           cert.status === 'expired' ? 'bg-red-500/10 border-red-500/30' :
-                          cert.status === 'expiring' ? 'bg-amber-500/10 border-amber-500/30' :
+                          cert.status === 'expiring' ? 'bg-orange-500/10 border-orange-500/30' :
                           'bg-white dark:bg-slate-900/50 border-slate-700/50'
                         }`}>
                           <div className="flex items-start justify-between">
@@ -1334,7 +1340,7 @@ export default function PersonnelOverview() {
                               {cert.status === 'current' ? (
                                 <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400 mt-0.5" />
                               ) : cert.status === 'expiring' ? (
-                                <Clock className="w-5 h-5 text-amber-700 dark:text-amber-400 mt-0.5" />
+                                <Clock className="w-5 h-5 text-orange-600 dark:text-orange-400 mt-0.5" />
                               ) : (
                                 <AlertCircle className="w-5 h-5 text-red-700 dark:text-red-400 mt-0.5" />
                               )}
@@ -1348,7 +1354,7 @@ export default function PersonnelOverview() {
                               {cert.status === 'expired' ? (
                                 <span className="px-2 py-1 bg-red-500/20 border border-red-500/30 text-red-700 dark:text-red-400 text-xs rounded">Expired</span>
                               ) : cert.status === 'expiring' ? (
-                                <span className="px-2 py-1 bg-amber-500/20 border border-amber-500/30 text-amber-700 dark:text-amber-400 text-xs rounded">Expiring Soon</span>
+                                <span className="px-2 py-1 bg-orange-500/20 border border-orange-500/30 text-orange-600 dark:text-orange-400 text-xs rounded">Expiring Soon</span>
                               ) : (
                                 <span className="px-2 py-1 bg-green-500/20 border border-green-500/30 text-green-600 dark:text-green-400 text-xs rounded">Current</span>
                               )}
