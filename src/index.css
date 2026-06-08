@@ -8,6 +8,31 @@
    differ between them. No page-level overrides needed.
    ═══════════════════════════════════════════════════════════════ */
 
+/* ─────────────────────────────────────────────────────────────────
+   PLATFORM COLOR CONTRACT — the canonical meaning of every hue.
+   Every module (Command, HR, Patrol, Jail, Investigations, BI…)
+   should map to these five families. Don't introduce new hues for
+   states already covered here — reuse the family below instead.
+
+     GOLD   (amber-*)   → SentryOps brand / personnel identity / primary actions
+                           Use for: names, CTA buttons, AI "Sparkles" brand mark,
+                           ratings & achievement motifs. NOT for warnings —
+                           gold means "this is SentryOps", not "pay attention".
+     GREEN  (emerald/green-*) → healthy / compliant / deployable / on-track
+     ORANGE (orange-*)  → caution / watch / needs-attention (expiring, below
+                           target, restricted-soon). The "amber" of the 5-color
+                           system — kept visually distinct from brand gold so
+                           personnel names and CTAs never read as warnings.
+     RED    (red-*)     → critical / urgent / non-compliant / blocking
+     BLUE   (blue-*)    → informational / AI-insight / analysis / neutral data
+                           (Slate/gray doubles as the neutral/secondary text hue.)
+
+   Headers & primary copy → text-primary (white in dark mode). Secondary/meta
+   copy → text-secondary or text-muted. Never reuse brand gold as a body-text
+   color — it should stay reserved for identity and action so it keeps its
+   signal value.
+   ───────────────────────────────────────────────────────────────── */
+
 :root {
   /* ── Text ──────────────────────────────────────────────────── */
   --color-text-primary:   rgb(15 23 42);         /* #0F172A slate-900 */
@@ -27,8 +52,9 @@
   --color-primary:       rgb(37 99 235);          /* blue-600 */
   --color-primary-hover: rgb(29 78 216);          /* blue-700 */
   --color-success:       rgb(4 120 87);           /* emerald-700 */
-  --color-warning:       rgb(180 83 9);           /* amber-700 */
+  --color-warning:       rgb(194 65 12);          /* orange-700 — caution/watch, distinct from brand gold */
   --color-danger:        rgb(185 28 28);          /* red-700 */
+  --color-brand:         rgb(180 83 9);           /* amber-700 — SentryOps gold: identity & actions only */
 
   /* ── Shadows — soft layering, easy on the eyes ───────────── */
   --shadow-card:       0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.05);
@@ -58,8 +84,9 @@
   --color-primary:       rgb(59 130 246);   /* blue-500 — slightly brighter in dark */
   --color-primary-hover: rgb(37 99 235);    /* blue-600 */
   --color-success:       rgb(16 185 129);   /* emerald-500 */
-  --color-warning:       rgb(245 158 11);   /* amber-500 */
+  --color-warning:       rgb(251 146 60);   /* orange-400 — caution/watch, distinct from brand gold */
   --color-danger:        rgb(239 68 68);    /* red-500 */
+  --color-brand:         rgb(245 158 11);   /* amber-500 — SentryOps gold: identity & actions only */
 
   /* ── Shadows — richer in dark mode ───────────────────────── */
   --shadow-card:       0 4px 24px rgba(0,0,0,0.30), 0 1px 4px rgba(0,0,0,0.20);
@@ -169,7 +196,7 @@ html:not(.dark) [class*="rounded"][class*="border-l-red-6"] {
   border-left-color: #DC2626;
 }
 
-/* ── Warning — amber treatment ──────────────────────────────── */
+/* ── Brand / identity — gold treatment (names, ratings, CTAs) ─ */
 html:not(.dark) [class~="rounded-xl"][class*="border-amber-2"],
 html:not(.dark) [class~="rounded-lg"][class*="border-amber-2"],
 html:not(.dark) [class*="rounded"][class*="border-l-4"][class*="border-l-amber-"],
@@ -177,6 +204,18 @@ html:not(.dark) [class*="rounded"][class*="border-l-amber-5"] {
   background-color: #FFFBEB;
   box-shadow: 0 2px 12px rgba(180, 83, 9, 0.07), 0 1px 3px rgba(0,0,0,0.04);
   border-left-color: #D97706;
+}
+
+/* ── Caution / watch — orange treatment ─────────────────────── */
+/* The platform's "warning" hue: kept visually distinct from     */
+/* brand gold so cautions never compete with personnel & CTAs.   */
+html:not(.dark) [class~="rounded-xl"][class*="border-orange-2"],
+html:not(.dark) [class~="rounded-lg"][class*="border-orange-2"],
+html:not(.dark) [class*="rounded"][class*="border-l-4"][class*="border-l-orange-"],
+html:not(.dark) [class*="rounded"][class*="border-l-orange-5"] {
+  background-color: #FFF7ED;
+  box-shadow: 0 2px 12px rgba(194, 65, 12, 0.07), 0 1px 3px rgba(0,0,0,0.04);
+  border-left-color: #EA580C;
 }
 
 /* ── AI insight / analysis — blue tint ─────────────────────── */
@@ -193,7 +232,7 @@ html:not(.dark) [class~="rounded-xl"][class*="border-slate-3"] {
 }
 
 /* ── Status badge contrast enforcement ──────────────────────── */
-/* Amber/warning badges: strong dark text on amber-100 bg        */
+/* Brand/gold badges (identity, ratings): strong dark text on amber-100 bg */
 html:not(.dark) [class*="bg-amber-1"][class*="text-amber-"] {
   color: #92400E;
   font-weight: 600;
@@ -201,6 +240,11 @@ html:not(.dark) [class*="bg-amber-1"][class*="text-amber-"] {
 html:not(.dark) [class*="bg-yellow-1"][class*="text-yellow-"],
 html:not(.dark) [class*="bg-yellow-1"][class*="text-amber-"] {
   color: #92400E;
+  font-weight: 600;
+}
+/* Caution/warning badges: strong dark text on orange-100 bg, distinct from gold */
+html:not(.dark) [class*="bg-orange-1"][class*="text-orange-"] {
+  color: #9A3412;
   font-weight: 600;
 }
 /* Danger badges */
