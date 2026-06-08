@@ -1002,7 +1002,7 @@ export default function OrgChart() {
     if (!strength) return 'slate';
     const percentage = (strength.current / strength.authorized) * 100;
     if (percentage < 80) return 'red';
-    if (percentage < 95) return 'amber';
+    if (percentage < 95) return 'orange';
     return 'green';
   };
 
@@ -1024,9 +1024,9 @@ export default function OrgChart() {
       zoneBg: 'bg-red-900/40', zoneBorder: 'border-red-500/50', zoneConnector: 'bg-red-500/40'
     };
     return {
-      dot: 'bg-amber-400',   text: 'text-amber-700',   border: 'border-l-amber-500',
-      nodeBg: 'from-amber-900/20 to-slate-800/30',
-      zoneBg: 'bg-amber-900/30', zoneBorder: 'border-amber-500/45', zoneConnector: 'bg-amber-500/40'
+      dot: 'bg-orange-400',   text: 'text-orange-700',   border: 'border-l-orange-500',
+      nodeBg: 'from-orange-900/20 to-slate-800/30',
+      zoneBg: 'bg-orange-900/30', zoneBorder: 'border-orange-500/45', zoneConnector: 'bg-orange-500/40'
     };
   };
 
@@ -1035,12 +1035,12 @@ export default function OrgChart() {
     if (node.readinessStatus) {
       if (node.readinessStatus === 'green') return 'from-emerald-900/25 to-slate-800/30';
       if (node.readinessStatus === 'red')   return 'from-red-900/25 to-slate-800/30';
-      return 'from-amber-900/20 to-slate-800/30';
+      return 'from-orange-900/20 to-slate-800/30';
     }
     const pct = getStaffingPct(node.divisionStrength);
     if (pct !== null) {
       if (pct >= 95) return 'from-emerald-900/25 to-slate-800/30';
-      if (pct >= 80) return 'from-amber-900/20 to-slate-800/30';
+      if (pct >= 80) return 'from-orange-900/20 to-slate-800/30';
       return 'from-red-900/25 to-slate-800/30';
     }
     return 'from-slate-800/50 to-slate-800/30';
@@ -1140,15 +1140,15 @@ export default function OrgChart() {
                   <div className="flex items-center justify-center gap-3 text-[10px] flex-wrap">
                     <span className="text-secondary">{bm.personnel} personnel</span>
                     <span className="text-slate-700">·</span>
-                    <span className={pct >= 95 ? 'text-emerald-400' : pct >= 80 ? 'text-amber-700' : 'text-red-400'}>
+                    <span className={pct >= 95 ? 'text-emerald-400' : pct >= 80 ? 'text-orange-700' : 'text-red-400'}>
                       {pct}% staffed
                     </span>
                     {bm.vacancies > 0 && <><span className="text-slate-700">·</span><span className="text-red-400">{bm.vacancies} vacant</span></>}
-                    {bm.certRisk > 0 && <><span className="text-slate-700">·</span><span className="text-amber-700/80">{bm.certRisk} cert risk</span></>}
+                    {bm.certRisk > 0 && <><span className="text-slate-700">·</span><span className="text-orange-700/80">{bm.certRisk} cert risk</span></>}
                   </div>
                 )}
                 {bm && (
-                  <p className={`text-[10px] text-center mt-1 ${bm.leadershipLabel === 'Stable' ? 'text-emerald-400/70' : 'text-amber-700'}`}>
+                  <p className={`text-[10px] text-center mt-1 ${bm.leadershipLabel === 'Stable' ? 'text-emerald-400/70' : 'text-orange-700'}`}>
                     Leadership: {bm.leadershipLabel}
                   </p>
                 )}
@@ -1175,17 +1175,17 @@ export default function OrgChart() {
                 {(node.divisionStrength || dm) && (
                   <div className="flex items-center justify-center gap-2 text-[9px] mt-0.5 flex-wrap">
                     {node.divisionStrength && (
-                      <span className={sColor === 'green' ? 'text-emerald-400' : sColor === 'amber' ? 'text-amber-700' : 'text-red-400'}>
+                      <span className={sColor === 'green' ? 'text-emerald-400' : sColor === 'orange' ? 'text-orange-700' : 'text-red-400'}>
                         {node.divisionStrength.current}/{node.divisionStrength.authorized}
                       </span>
                     )}
                     {dm?.vacancies > 0 && <><span className="text-slate-700">·</span><span className="text-red-400">{dm.vacancies} vacant</span></>}
-                    {dm?.certRisk > 0 && <><span className="text-slate-700">·</span><span className="text-amber-700/80">{dm.certRisk} cert risk</span></>}
+                    {dm?.certRisk > 0 && <><span className="text-slate-700">·</span><span className="text-orange-700/80">{dm.certRisk} cert risk</span></>}
                   </div>
                 )}
                 {dm?.alert && (
                   <p className={`text-[9px] text-center mt-0.5 font-medium ${
-                    node.readinessStatus === 'red' ? 'text-red-400' : 'text-amber-700'
+                    node.readinessStatus === 'red' ? 'text-red-400' : 'text-orange-700'
                   }`}>⚠ {dm.alert}</p>
                 )}
               </div>
@@ -1212,7 +1212,7 @@ export default function OrgChart() {
               node.isVacant
                 ? 'bg-slate-50 dark:bg-slate-800/35 backdrop-blur-xl border-2 border-dashed border-red-500/40'
                 : node.actingFlag
-                  ? 'bg-gradient-to-br from-amber-900/35 to-slate-800/40 backdrop-blur-xl border-2 border-amber-500/60 shadow-amber-500/20'
+                  ? 'bg-gradient-to-br from-orange-900/35 to-slate-800/40 backdrop-blur-xl border-2 border-orange-500/60 shadow-orange-500/20'
                   : viewMode === 'operational'
                     ? `bg-gradient-to-br ${getHeatmapBg(node)} backdrop-blur-xl border border-l-4 ${node.readinessStatus ? getReadinessColors(node.readinessStatus).border : 'border-l-slate-700/50'}`
                     : 'bg-gradient-to-br from-slate-800/50 to-slate-800/30 backdrop-blur-xl border'
@@ -1220,7 +1220,7 @@ export default function OrgChart() {
               isHighlighted || isHovered
                 ? 'border-amber-500/60 scale-105 shadow-xl shadow-amber-500/10 ring-2 ring-amber-500/20'
                 : node.isVacant ? ''
-                : node.actingFlag ? 'ring-1 ring-amber-500/25 shadow-amber-500/15'
+                : node.actingFlag ? 'ring-1 ring-orange-500/25 shadow-orange-500/15'
                 : 'border-slate-700/50'
             } ${sizeClasses[size]}`}
             onMouseEnter={() => setHoveredNode(node.id)}
@@ -1232,13 +1232,13 @@ export default function OrgChart() {
               <div className={`absolute top-2 right-2 w-2 h-2 rounded-full ${
                 node.status === 'On Duty' ? 'bg-green-400' :
                 node.status === 'Off Duty' ? 'bg-slate-400' :
-                node.status === 'On Leave' ? 'bg-amber-400' : 'bg-slate-400'
+                node.status === 'On Leave' ? 'bg-orange-400' : 'bg-slate-400'
               }`} title={node.status} />
             )}
 
-            {/* Acting Flag Badge — glows amber to signal temporary command */}
+            {/* Acting Flag Badge — glows orange to signal temporary command */}
             {node.actingFlag && (
-              <div className="absolute -top-2.5 left-1/2 -translate-x-1/2 flex items-center gap-1 px-2 py-0.5 bg-amber-500 rounded-full text-[8px] font-bold text-white shadow-lg shadow-amber-500/30 whitespace-nowrap" title="Acting Supervisor — temporary assignment">
+              <div className="absolute -top-2.5 left-1/2 -translate-x-1/2 flex items-center gap-1 px-2 py-0.5 bg-orange-500 rounded-full text-[8px] font-bold text-white shadow-lg shadow-orange-500/30 whitespace-nowrap" title="Acting Supervisor — temporary assignment">
                 <AlertTriangle className="w-2.5 h-2.5" />
                 ACTING SUPERVISOR
               </div>
@@ -1246,7 +1246,7 @@ export default function OrgChart() {
 
             {/* Cert Alert Badge - Top Left (not for vacancies) */}
             {!node.isVacant && !node.actingFlag && node.certStatus === 'expiring' && (
-              <div className="absolute -top-2 -left-2 px-1.5 py-0.5 bg-amber-500 rounded text-[8px] font-bold text-white shadow-lg" title="Certification Expiring Soon">
+              <div className="absolute -top-2 -left-2 px-1.5 py-0.5 bg-orange-500 rounded text-[8px] font-bold text-white shadow-lg" title="Certification Expiring Soon">
                 CERT
               </div>
             )}
@@ -1259,7 +1259,7 @@ export default function OrgChart() {
             {node.divisionStrength && (
               <div className={`absolute -top-2 -right-2 px-2 py-1 rounded-lg text-[9px] font-bold shadow-lg ${
                 getStaffingColor(node.divisionStrength) === 'red' ? 'bg-red-500/90 text-white' :
-                getStaffingColor(node.divisionStrength) === 'amber' ? 'bg-amber-500/90 text-white' :
+                getStaffingColor(node.divisionStrength) === 'orange' ? 'bg-orange-500/90 text-white' :
                 'bg-green-500/90 text-white'
               }`}>
                 {node.divisionStrength.current}/{node.divisionStrength.authorized}
@@ -1284,7 +1284,7 @@ export default function OrgChart() {
                   {size !== 'xs' && (
                     <>
                       <div className={`text-slate-500 truncate ${size === 'lg' ? 'text-[10px]' : 'text-[9px]'}`}>{node.division}</div>
-                      <div className={`text-amber-700 ${size === 'lg' ? 'text-[10px]' : 'text-[9px]'}`}>
+                      <div className={`text-orange-700 ${size === 'lg' ? 'text-[10px]' : 'text-[9px]'}`}>
                         {node.daysVacant} days vacant
                       </div>
                       <div className={`text-secondary ${size === 'lg' ? 'text-[10px]' : 'text-[9px]'}`}>
@@ -1336,13 +1336,13 @@ export default function OrgChart() {
                           <span className={getReadinessColors(node.readinessStatus).text}>{node.readinessLabel}</span>
                         </div>
                       )}
-                      {/* Retirement signal — tiered: red <24mo / amber 24-60mo / green >60mo */}
+                      {/* Retirement signal — tiered: red <24mo / orange 24-60mo / green >60mo */}
                       {node.retirementMonths !== undefined && size === 'lg' && (
                         <div className={`flex items-center gap-1 mt-1 px-1.5 py-0.5 rounded border text-[9px] font-medium w-fit ${
                           node.retirementMonths === 0
                             ? 'bg-red-500/25 border-red-500/35 text-red-300'
                             : node.retirementMonths < 24
-                              ? 'bg-amber-500/20 border-amber-500/30 text-amber-300'
+                              ? 'bg-orange-500/20 border-orange-500/30 text-orange-300'
                               : node.retirementMonths <= 60
                                 ? 'bg-slate-50 dark:bg-slate-700/40 border-slate-600/50 text-slate-500'
                                 : 'bg-emerald-500/10 border-emerald-500/15 text-emerald-400/70'
@@ -1374,8 +1374,8 @@ export default function OrgChart() {
             {node.spanWarning && (size === 'lg' || size === 'md') && (
               <div className={`-mx-4 -mb-4 mt-2 px-2 py-1 rounded-b-xl flex items-center gap-1.5 text-[9px] font-semibold ${
                 node.spanWarning === 'high'
-                  ? 'bg-amber-500/25 text-amber-300'
-                  : 'bg-amber-500/15 text-amber-700/80'
+                  ? 'bg-orange-500/25 text-orange-300'
+                  : 'bg-orange-500/15 text-orange-700/80'
               }`}>
                 <AlertTriangle className="w-2.5 h-2.5 flex-shrink-0" />
                 <span>Span: {node.spanWarning === 'high' ? 'HIGH' : 'Elevated'} — {node.reports} direct reports</span>
@@ -1521,7 +1521,7 @@ export default function OrgChart() {
                         alert.type === 'critical'
                           ? 'bg-red-500/10 text-red-400 border-red-500/20 hover:bg-red-500/20'
                           : alert.type === 'warning'
-                            ? 'bg-amber-500/10 text-amber-700 border-amber-500/20 hover:bg-amber-500/20'
+                            ? 'bg-orange-500/10 text-orange-700 border-orange-500/20 hover:bg-orange-500/20'
                             : 'bg-slate-100 dark:bg-slate-700/25 text-secondary border-slate-700/50 hover:bg-slate-100 dark:hover:bg-slate-700/40'
                       }`}
                     >
@@ -1548,19 +1548,19 @@ export default function OrgChart() {
                       alert.type === 'critical'
                         ? 'bg-red-500/8 border-red-500/20 hover:bg-red-500/15'
                         : alert.type === 'warning'
-                          ? 'bg-amber-500/8 border-amber-500/15 hover:bg-amber-500/15'
+                          ? 'bg-orange-500/8 border-orange-500/15 hover:bg-orange-500/15'
                           : 'bg-slate-100/80 dark:bg-slate-800/30 border-slate-700/50 hover:bg-slate-100 dark:hover:bg-slate-800/50'
                     }`}
                   >
                     <span className={`text-[9px] font-bold uppercase tracking-wider pt-0.5 shrink-0 w-12 ${
-                      alert.type === 'critical' ? 'text-red-400' : alert.type === 'warning' ? 'text-amber-700' : 'text-slate-500'
+                      alert.type === 'critical' ? 'text-red-400' : alert.type === 'warning' ? 'text-orange-700' : 'text-slate-500'
                     }`}>{alert.type}</span>
                     <span className={`text-[11px] leading-snug ${
-                      alert.type === 'critical' ? 'text-red-200' : alert.type === 'warning' ? 'text-amber-200' : 'text-slate-500'
+                      alert.type === 'critical' ? 'text-red-200' : alert.type === 'warning' ? 'text-orange-200' : 'text-slate-500'
                     }`}>{alert.full}</span>
                     {alert.nodeId && (
                       <ArrowRight className={`w-3.5 h-3.5 shrink-0 mt-0.5 ml-auto ${
-                        alert.type === 'critical' ? 'text-red-500' : alert.type === 'warning' ? 'text-amber-700' : 'text-slate-700'
+                        alert.type === 'critical' ? 'text-red-500' : alert.type === 'warning' ? 'text-orange-700' : 'text-slate-700'
                       }`} />
                     )}
                   </button>
@@ -1762,7 +1762,7 @@ export default function OrgChart() {
                 <span className="text-secondary">Fully staffed</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <div className="w-2 h-2 rounded-full bg-amber-400"></div>
+                <div className="w-2 h-2 rounded-full bg-orange-400"></div>
                 <span className="text-secondary">At risk / acting</span>
               </div>
               <div className="flex items-center gap-1.5">
@@ -1776,7 +1776,7 @@ export default function OrgChart() {
                 <span className="text-secondary">95%+ staffed</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <div className="w-3 h-3 bg-amber-900/30 border border-l-2 border-amber-500 rounded"></div>
+                <div className="w-3 h-3 bg-orange-900/30 border border-l-2 border-orange-500 rounded"></div>
                 <span className="text-secondary">80–94%</span>
               </div>
               <div className="flex items-center gap-1.5">
@@ -1790,11 +1790,11 @@ export default function OrgChart() {
                 <span className="text-secondary">Vacant</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <div className="px-1 py-0.5 bg-amber-600 rounded text-[7px] font-bold text-white">ACT</div>
+                <div className="px-1 py-0.5 bg-orange-600 rounded text-[7px] font-bold text-white">ACT</div>
                 <span className="text-secondary">Acting supervisor</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <AlertTriangle className="w-3 h-3 text-amber-700" />
+                <AlertTriangle className="w-3 h-3 text-orange-700" />
                 <span className="text-secondary">Span of control alert</span>
               </div>
               <div className="flex items-center gap-1.5">
@@ -1900,7 +1900,7 @@ export default function OrgChart() {
                       <div
                         className={`h-full rounded-full ${
                           getStaffingColor(selectedNode.divisionStrength) === 'red' ? 'bg-red-500' :
-                          getStaffingColor(selectedNode.divisionStrength) === 'amber' ? 'bg-amber-500' : 'bg-green-500'
+                          getStaffingColor(selectedNode.divisionStrength) === 'orange' ? 'bg-orange-500' : 'bg-green-500'
                         }`}
                         style={{ width: `${Math.min((selectedNode.divisionStrength.current / selectedNode.divisionStrength.authorized) * 100, 100)}%` }}
                       />
@@ -1923,7 +1923,7 @@ export default function OrgChart() {
                         </div>
                         <div className="text-center">
                           <p className="text-[11px] text-secondary mb-0.5">Cert Risk</p>
-                          <p className={`text-base font-bold ${divisionMetrics[selectedNode.id].certRisk > 2 ? 'text-amber-700' : 'text-slate-500'}`}>
+                          <p className={`text-base font-bold ${divisionMetrics[selectedNode.id].certRisk > 2 ? 'text-orange-700' : 'text-slate-500'}`}>
                             {divisionMetrics[selectedNode.id].certRisk}
                           </p>
                         </div>
@@ -1933,8 +1933,8 @@ export default function OrgChart() {
                     {divisionMetrics[selectedNode.id]?.alert && (
                       <div className="pt-2 border-t border-border">
                         <div className="flex items-start gap-2 text-xs">
-                          <AlertTriangle className="w-3.5 h-3.5 text-amber-700 mt-0.5 flex-shrink-0" />
-                          <span className="text-amber-300">{divisionMetrics[selectedNode.id].alert}</span>
+                          <AlertTriangle className="w-3.5 h-3.5 text-orange-700 mt-0.5 flex-shrink-0" />
+                          <span className="text-orange-300">{divisionMetrics[selectedNode.id].alert}</span>
                         </div>
                       </div>
                     )}
@@ -1992,12 +1992,12 @@ export default function OrgChart() {
                     {selectedNode.retirementMonths !== undefined && (
                       <div className="flex items-start gap-3">
                         <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
-                          selectedNode.retirementMonths === 0 ? 'bg-amber-500/20 border border-amber-500/20' : 'bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50'
+                          selectedNode.retirementMonths === 0 ? 'bg-orange-500/20 border border-orange-500/20' : 'bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50'
                         }`}>
-                          <Clock className={`w-4 h-4 ${selectedNode.retirementMonths === 0 ? 'text-amber-700' : 'text-slate-500'}`} />
+                          <Clock className={`w-4 h-4 ${selectedNode.retirementMonths === 0 ? 'text-orange-700' : 'text-slate-500'}`} />
                         </div>
                         <div>
-                          <p className={`text-sm font-medium ${selectedNode.retirementMonths === 0 ? 'text-amber-700' : 'text-slate-500'}`}>
+                          <p className={`text-sm font-medium ${selectedNode.retirementMonths === 0 ? 'text-orange-700' : 'text-slate-500'}`}>
                             {selectedNode.retirementMonths === 0
                               ? 'Retirement eligible now'
                               : `Retirement eligible in ${selectedNode.retirementMonths} months`
@@ -2076,12 +2076,12 @@ export default function OrgChart() {
                   <h4 className="text-sm font-semibold text-primary mb-3">Span of Control</h4>
                   <div className={`rounded-xl p-4 border space-y-3 ${
                     selectedNode.spanWarning === 'high'
-                      ? 'bg-amber-500/10 border-amber-500/30'
-                      : 'bg-amber-500/5 border-amber-500/20'
+                      ? 'bg-orange-500/10 border-orange-500/30'
+                      : 'bg-orange-500/5 border-orange-500/20'
                   }`}>
                     <div className="flex items-center gap-2">
-                      <AlertTriangle className={`w-4 h-4 ${selectedNode.spanWarning === 'high' ? 'text-amber-700' : 'text-amber-700/70'}`} />
-                      <span className={`text-sm font-medium ${selectedNode.spanWarning === 'high' ? 'text-amber-700' : 'text-amber-700'}`}>
+                      <AlertTriangle className={`w-4 h-4 ${selectedNode.spanWarning === 'high' ? 'text-orange-700' : 'text-orange-700/70'}`} />
+                      <span className={`text-sm font-medium ${selectedNode.spanWarning === 'high' ? 'text-orange-700' : 'text-orange-700'}`}>
                         {selectedNode.reports} direct reports · Span of control {selectedNode.spanWarning === 'high' ? 'HIGH' : 'ELEVATED'}
                       </span>
                     </div>
@@ -2108,7 +2108,7 @@ export default function OrgChart() {
                     vacancyImpactData[selectedNode.id].riskLevel === 'critical'
                       ? 'bg-red-500/10 border-red-500/30'
                       : vacancyImpactData[selectedNode.id].riskLevel === 'high'
-                        ? 'bg-amber-500/10 border-amber-500/30'
+                        ? 'bg-orange-500/10 border-orange-500/30'
                         : 'bg-slate-100/80 dark:bg-slate-800/30 border-slate-700/50'
                   }`}>
                     <div className="flex items-center justify-between">
@@ -2117,7 +2117,7 @@ export default function OrgChart() {
                         vacancyImpactData[selectedNode.id].riskLevel === 'critical'
                           ? 'bg-red-500/20 text-red-400 border-red-500/30'
                           : vacancyImpactData[selectedNode.id].riskLevel === 'high'
-                            ? 'bg-amber-500/20 text-amber-700 border-amber-500/30'
+                            ? 'bg-orange-500/20 text-orange-700 border-orange-500/30'
                             : 'bg-slate-50 dark:bg-slate-700/40 text-secondary border-slate-600/30'
                       }`}>
                         {vacancyImpactData[selectedNode.id].riskLevel.toUpperCase()} RISK

@@ -141,10 +141,10 @@ const getPodColors = (pod: Pod) => {
     badge: 'bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/20',
   };
   if (pod.status === 'Near Capacity') return {
-    card: 'bg-amber-500/8 border-amber-500/30',
-    pct: 'text-amber-600 dark:text-amber-400',
-    bar: 'bg-amber-500',
-    badge: 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/20',
+    card: 'bg-orange-500/8 border-orange-500/30',
+    pct: 'text-orange-600 dark:text-orange-400',
+    bar: 'bg-orange-500',
+    badge: 'bg-orange-500/15 text-orange-600 dark:text-orange-400 border border-orange-500/20',
   };
   return {
     card: 'bg-slate-50 dark:bg-slate-800/35 border-slate-200 dark:border-slate-700/25',
@@ -165,8 +165,8 @@ const getMovementIcon = (type: Movement['type']) => {
 };
 
 const getMovementColors = (status: Movement['status']) => {
-  if (status === 'In Progress') return 'bg-amber-100 dark:bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-500/20';
-  if (status === 'Staging')     return 'bg-amber-100 dark:bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-500/20';
+  if (status === 'In Progress') return 'bg-orange-100 dark:bg-orange-500/15 text-orange-700 dark:text-orange-400 border border-orange-200 dark:border-orange-500/20';
+  if (status === 'Staging')     return 'bg-orange-100 dark:bg-orange-500/15 text-orange-700 dark:text-orange-400 border border-orange-200 dark:border-orange-500/20';
   if (status === 'Pending')     return 'bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40';
   return 'bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40';
 };
@@ -175,7 +175,7 @@ const getIncidentColors = (severity: Incident['severity'], status: Incident['sta
   const resolved = status === 'Resolved';
   if (resolved) return { row: 'opacity-60', badge: 'bg-slate-500/15 text-slate-700 dark:text-slate-400 border border-slate-500/20', sev: '' };
   if (severity === 'critical') return { row: '', badge: 'bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/20',    sev: 'text-red-600 dark:text-red-400' };
-  if (severity === 'high')     return { row: '', badge: 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/20', sev: 'text-amber-600 dark:text-amber-400' };
+  if (severity === 'high')     return { row: '', badge: 'bg-orange-500/15 text-orange-600 dark:text-orange-400 border border-orange-500/20', sev: 'text-orange-600 dark:text-orange-400' };
   return { row: '', badge: 'bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40', sev: 'text-slate-500' };
 };
 
@@ -206,8 +206,8 @@ const getMovementDecision = (mov: Movement): { risk: string | null; action: stri
 
 const getOfficerStatusColors = (status: Officer['status']) => {
   if (status === 'On Post')        return 'bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40';
-  if (status === 'Medical Escort') return 'bg-amber-100 dark:bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-500/20';
-  if (status === 'OT Pending')     return 'bg-amber-100 dark:bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-500/20';
+  if (status === 'Medical Escort') return 'bg-orange-100 dark:bg-orange-500/15 text-orange-700 dark:text-orange-400 border border-orange-200 dark:border-orange-500/20';
+  if (status === 'OT Pending')     return 'bg-orange-100 dark:bg-orange-500/15 text-orange-700 dark:text-orange-400 border border-orange-200 dark:border-orange-500/20';
   if (status === 'Transport')      return 'bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40';
   return 'bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40';
 };
@@ -402,13 +402,13 @@ export default function CustodyOperations() {
                 onClick={() => setShowStatusDetail(v => !v)}
                 className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border text-[12px] font-semibold transition-colors ${
                   systemStatus === 'Critical' ? 'bg-red-500/10 border-red-500/30 text-red-600 dark:text-red-400 hover:bg-red-500/15' :
-                  systemStatus === 'Strained' ? 'bg-amber-500/10 border-amber-500/30 text-amber-600 dark:text-amber-400 hover:bg-amber-500/15' :
+                  systemStatus === 'Strained' ? 'bg-orange-500/10 border-orange-500/30 text-orange-600 dark:text-orange-400 hover:bg-orange-500/15' :
                   'bg-emerald-500/10 border-emerald-500/30 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/15'
                 }`}
               >
                 <Circle className={`w-1.5 h-1.5 ${
                   systemStatus === 'Critical' ? 'fill-red-500 text-red-500' :
-                  systemStatus === 'Strained' ? 'fill-amber-400 text-amber-600 dark:text-amber-400' :
+                  systemStatus === 'Strained' ? 'fill-orange-400 text-orange-600 dark:text-orange-400' :
                   'fill-emerald-500 text-emerald-500'
                 }`} />
                 System: {systemStatus}
@@ -425,7 +425,7 @@ export default function CustodyOperations() {
                       const isIssue = factor.includes('violation') || factor.includes('uncovered') || factor.includes('unresolved') || factor.includes('required');
                       return (
                         <li key={i} className="flex items-start gap-2 text-[11px]">
-                          <span className={`mt-0.5 flex-shrink-0 font-bold ${isIssue ? 'text-amber-700' : 'text-emerald-600'}`}>{isIssue ? '—' : '✓'}</span>
+                          <span className={`mt-0.5 flex-shrink-0 font-bold ${isIssue ? 'text-orange-700' : 'text-emerald-600'}`}>{isIssue ? '—' : '✓'}</span>
                           <span className={isIssue ? 'text-slate-500' : 'text-slate-500'}>{factor}</span>
                         </li>
                       );
@@ -485,12 +485,12 @@ export default function CustodyOperations() {
               </div>
 
               {/* Staffing Risks */}
-              <div className={`rounded-xl border px-4 py-3 ${staffingRisks.length > 0 ? 'bg-amber-500/5 border-amber-500/20' : 'bg-slate-100 dark:bg-slate-800/20 border-slate-200 dark:border-slate-700/30'}`}>
+              <div className={`rounded-xl border px-4 py-3 ${staffingRisks.length > 0 ? 'bg-orange-500/5 border-orange-500/20' : 'bg-slate-100 dark:bg-slate-800/20 border-slate-200 dark:border-slate-700/30'}`}>
                 <div className="flex items-center gap-1.5 mb-2">
-                  <Users className={`w-3.5 h-3.5 ${staffingRisks.length > 0 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-700'}`} />
+                  <Users className={`w-3.5 h-3.5 ${staffingRisks.length > 0 ? 'text-orange-600 dark:text-orange-400' : 'text-slate-700'}`} />
                   <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Staffing Risk</p>
                   {staffingRisks.length > 0 && (
-                    <span className="text-[9px] px-1.5 py-0.5 bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/20 rounded-full font-bold ml-auto">{staffingRisks.length}</span>
+                    <span className="text-[9px] px-1.5 py-0.5 bg-orange-500/15 text-orange-600 dark:text-orange-400 border border-orange-500/20 rounded-full font-bold ml-auto">{staffingRisks.length}</span>
                   )}
                 </div>
                 {staffingRisks.length === 0 ? (
@@ -499,7 +499,7 @@ export default function CustodyOperations() {
                   <ul className="space-y-0.5">
                     {staffingRisks.map((r, i) => (
                       <li key={i} className="text-[11px] text-slate-700 dark:text-slate-300 flex items-start gap-1.5">
-                        <span className="text-amber-700 flex-shrink-0 mt-0.5">—</span>{r}
+                        <span className="text-orange-700 flex-shrink-0 mt-0.5">—</span>{r}
                       </li>
                     ))}
                   </ul>
@@ -507,12 +507,12 @@ export default function CustodyOperations() {
               </div>
 
               {/* Active Escalations */}
-              <div className={`rounded-xl border px-4 py-3 ${activeEscalations.length > 0 ? 'bg-amber-500/5 border-amber-500/20' : 'bg-slate-100 dark:bg-slate-800/20 border-slate-200 dark:border-slate-700/30'}`}>
+              <div className={`rounded-xl border px-4 py-3 ${activeEscalations.length > 0 ? 'bg-orange-500/5 border-orange-500/20' : 'bg-slate-100 dark:bg-slate-800/20 border-slate-200 dark:border-slate-700/30'}`}>
                 <div className="flex items-center gap-1.5 mb-2">
-                  <AlertTriangle className={`w-3.5 h-3.5 ${activeEscalations.length > 0 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-700'}`} />
+                  <AlertTriangle className={`w-3.5 h-3.5 ${activeEscalations.length > 0 ? 'text-orange-600 dark:text-orange-400' : 'text-slate-700'}`} />
                   <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Active Escalations</p>
                   {activeEscalations.length > 0 && (
-                    <span className="text-[9px] px-1.5 py-0.5 bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/20 rounded-full font-bold ml-auto">{activeEscalations.length}</span>
+                    <span className="text-[9px] px-1.5 py-0.5 bg-orange-500/15 text-orange-600 dark:text-orange-400 border border-orange-500/20 rounded-full font-bold ml-auto">{activeEscalations.length}</span>
                   )}
                 </div>
                 {activeEscalations.length === 0 ? (
@@ -521,7 +521,7 @@ export default function CustodyOperations() {
                   <ul className="space-y-0.5">
                     {activeEscalations.map((r, i) => (
                       <li key={i} className="text-[11px] text-slate-700 dark:text-slate-300 flex items-start gap-1.5">
-                        <span className="text-amber-700 flex-shrink-0 mt-0.5">—</span>{r}
+                        <span className="text-orange-700 flex-shrink-0 mt-0.5">—</span>{r}
                       </li>
                     ))}
                   </ul>
@@ -555,13 +555,13 @@ export default function CustodyOperations() {
                   <div key={issue.id}>
                     <div className="flex items-start gap-4 px-5 py-4">
                       {/* Severity strip */}
-                      <div className={`w-1 self-stretch rounded-full flex-shrink-0 ${issue.severity === 'critical' ? 'bg-red-500' : 'bg-amber-500'}`} />
+                      <div className={`w-1 self-stretch rounded-full flex-shrink-0 ${issue.severity === 'critical' ? 'bg-red-500' : 'bg-orange-500'}`} />
                       <div className="flex-1 min-w-0">
                         {/* Priority + title */}
                         <div className="flex items-center gap-2 mb-1">
                           <span className={`text-[9px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider ${
                             issue.priority === 'Immediate'     ? 'bg-red-500/20 text-red-600 dark:text-red-400 border border-red-500/30' :
-                            issue.priority === 'High Priority' ? 'bg-amber-500/20 text-amber-600 dark:text-amber-400 border border-amber-500/30' :
+                            issue.priority === 'High Priority' ? 'bg-orange-500/20 text-orange-600 dark:text-orange-400 border border-orange-500/30' :
                                                                  'bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40'
                           }`}>{issue.priority}</span>
                           <p className="text-[13px] font-semibold text-slate-900 dark:text-white">{issue.label}</p>
@@ -686,11 +686,11 @@ export default function CustodyOperations() {
                 </p>
                 <div className="flex items-center gap-1.5 mt-1.5">
                   <div className="flex-1 h-1 bg-white dark:bg-slate-700/50 rounded-full overflow-hidden">
-                    <div className={`h-full rounded-full ${staffPct < 93 ? 'bg-red-500' : staffPct < 100 ? 'bg-amber-400' : 'bg-slate-500'}`} style={{ width: `${staffPct}%` }} />
+                    <div className={`h-full rounded-full ${staffPct < 93 ? 'bg-red-500' : staffPct < 100 ? 'bg-orange-400' : 'bg-slate-500'}`} style={{ width: `${staffPct}%` }} />
                   </div>
-                  <span className={`text-[10px] ${staffPct < 93 ? 'text-red-600 dark:text-red-400' : staffPct < 100 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500'}`}>{staffPct}%</span>
+                  <span className={`text-[10px] ${staffPct < 93 ? 'text-red-600 dark:text-red-400' : staffPct < 100 ? 'text-orange-600 dark:text-orange-400' : 'text-slate-500'}`}>{staffPct}%</span>
                 </div>
-                {currentShift.note && <p className="text-[10px] text-amber-600 dark:text-amber-400 mt-1">⚠ {currentShift.note.split('—')[0].trim()}</p>}
+                {currentShift.note && <p className="text-[10px] text-orange-600 dark:text-orange-400 mt-1">⚠ {currentShift.note.split('—')[0].trim()}</p>}
               </div>
 
               <div>
@@ -701,13 +701,13 @@ export default function CustodyOperations() {
 
               <div>
                 <p className="text-[10px] text-slate-500 uppercase tracking-wide mb-1">Open Incidents</p>
-                <p className={`text-[20px] font-bold leading-none ${openIncidents > 0 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-900 dark:text-white'}`}>{openIncidents}</p>
+                <p className={`text-[20px] font-bold leading-none ${openIncidents > 0 ? 'text-orange-600 dark:text-orange-400' : 'text-slate-900 dark:text-white'}`}>{openIncidents}</p>
                 <p className="text-[10px] text-slate-500 mt-1">this shift</p>
               </div>
 
               <div>
                 <p className="text-[10px] text-slate-500 uppercase tracking-wide mb-1">Unassigned Pods</p>
-                <p className={`text-[20px] font-bold leading-none ${unassignedPods > 0 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-900 dark:text-white'}`}>{unassignedPods}</p>
+                <p className={`text-[20px] font-bold leading-none ${unassignedPods > 0 ? 'text-orange-600 dark:text-orange-400' : 'text-slate-900 dark:text-white'}`}>{unassignedPods}</p>
                 <p className="text-[10px] text-slate-500 mt-1">float coverage</p>
               </div>
             </div>
@@ -715,9 +715,9 @@ export default function CustodyOperations() {
             {/* Pending actions badge */}
             {currentShift.pendingActions > 0 && (
               <div className="flex-shrink-0">
-                <div className="flex items-center gap-2 px-3 py-2 bg-amber-500/10 border border-amber-500/20 rounded-lg">
-                  <Zap className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
-                  <span className="text-[12px] text-amber-300 font-medium">{currentShift.pendingActions} pending actions</span>
+                <div className="flex items-center gap-2 px-3 py-2 bg-orange-500/10 border border-orange-500/20 rounded-lg">
+                  <Zap className="w-3.5 h-3.5 text-orange-600 dark:text-orange-400" />
+                  <span className="text-[12px] text-orange-300 font-medium">{currentShift.pendingActions} pending actions</span>
                 </div>
               </div>
             )}
@@ -737,10 +737,10 @@ export default function CustodyOperations() {
             <div className="flex items-center gap-2">
               <div className="flex items-center gap-3 text-[10px] text-slate-500 mr-2">
                 <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-slate-500 inline-block" />Stable</span>
-                <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-amber-400 inline-block" />Near</span>
+                <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-orange-400 inline-block" />Near</span>
                 <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-red-500 inline-block" />Over</span>
                 <span className="text-slate-700">·</span>
-                <span className="flex items-center gap-0.5 text-amber-600 dark:text-amber-400 font-bold">↑</span><span className="text-slate-500">worsening</span>
+                <span className="flex items-center gap-0.5 text-orange-600 dark:text-orange-400 font-bold">↑</span><span className="text-slate-500">worsening</span>
                 <span className="flex items-center gap-0.5 text-emerald-500 font-bold">↓</span><span className="text-slate-500">improving</span>
               </div>
               <button className="flex items-center gap-1.5 text-[11px] text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 rounded-lg px-3 py-1.5 hover:bg-slate-700/60 transition-colors">
@@ -764,9 +764,9 @@ export default function CustodyOperations() {
                     <div className="flex items-start justify-between mb-1.5">
                       <span className="text-[11px] font-bold text-slate-900 dark:text-white">{pod.id}</span>
                       <div className="flex items-center gap-0.5">
-                        {pod.trend === 'up'     && <span className={`text-[10px] font-bold leading-none ${pod.status === 'Over Capacity' ? 'text-red-600 dark:text-red-400' : 'text-amber-600 dark:text-amber-400'}`}>↑</span>}
+                        {pod.trend === 'up'     && <span className={`text-[10px] font-bold leading-none ${pod.status === 'Over Capacity' ? 'text-red-600 dark:text-red-400' : 'text-orange-600 dark:text-orange-400'}`}>↑</span>}
                         {pod.trend === 'down'   && <span className="text-[10px] font-bold leading-none text-emerald-500">↓</span>}
-                        {pod.incidents > 0      && <span className="w-1.5 h-1.5 rounded-full bg-amber-400 mt-0.5" title="Active incident" />}
+                        {pod.incidents > 0      && <span className="w-1.5 h-1.5 rounded-full bg-orange-400 mt-0.5" title="Active incident" />}
                         {pod.activeMovements > 0 && <span className="w-1.5 h-1.5 rounded-full bg-slate-400 mt-0.5" title="Active movement" />}
                       </div>
                     </div>
@@ -798,11 +798,11 @@ export default function CustodyOperations() {
                     </div>
                     <p className="text-[11px] text-slate-700 dark:text-slate-400">
                       {pod.current} / {pod.capacity} beds occupied ({pct}%)
-                      {pod.notes && <span className="ml-2 text-amber-600 dark:text-amber-400">· {pod.notes}</span>}
+                      {pod.notes && <span className="ml-2 text-orange-600 dark:text-orange-400">· {pod.notes}</span>}
                     </p>
                     {pod.projection && (
                       <p className="text-[11px] mt-1 flex items-center gap-1.5">
-                        <span className={`font-bold ${pod.trend === 'up' ? (pod.status === 'Over Capacity' ? 'text-red-600 dark:text-red-400' : 'text-amber-600 dark:text-amber-400') : pod.trend === 'down' ? 'text-emerald-500' : 'text-slate-500'}`}>
+                        <span className={`font-bold ${pod.trend === 'up' ? (pod.status === 'Over Capacity' ? 'text-red-600 dark:text-red-400' : 'text-orange-600 dark:text-orange-400') : pod.trend === 'down' ? 'text-emerald-500' : 'text-slate-500'}`}>
                           {pod.trend === 'up' ? '↑' : pod.trend === 'down' ? '↓' : '→'}
                         </span>
                         <span className="text-slate-700 dark:text-slate-400">{pod.projection}</span>
@@ -838,10 +838,10 @@ export default function CustodyOperations() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {/* Officer assignment */}
-                  <div className={`border rounded-lg p-3 ${!pod.assignedOfficer ? 'bg-amber-500/5 border-amber-500/25' : 'bg-slate-100 dark:bg-slate-800/30 border-slate-700/40'}`}>
+                  <div className={`border rounded-lg p-3 ${!pod.assignedOfficer ? 'bg-orange-500/5 border-orange-500/25' : 'bg-slate-100 dark:bg-slate-800/30 border-slate-700/40'}`}>
                     <div className="flex items-center justify-between mb-2">
                       <p className="text-[10px] text-slate-500 uppercase tracking-wide">Assigned Officer</p>
-                      {!pod.assignedOfficer && <span className="text-[9px] px-1.5 py-0.5 bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/20 rounded font-semibold uppercase">At Risk</span>}
+                      {!pod.assignedOfficer && <span className="text-[9px] px-1.5 py-0.5 bg-orange-500/15 text-orange-600 dark:text-orange-400 border border-orange-500/20 rounded font-semibold uppercase">At Risk</span>}
                     </div>
                     {pod.assignedOfficer ? (
                       <div className="flex items-center justify-between">
@@ -855,7 +855,7 @@ export default function CustodyOperations() {
                       </div>
                     ) : (
                       <div className="flex items-center justify-between">
-                        <span className="text-[12px] text-amber-600 dark:text-amber-400">Float coverage only</span>
+                        <span className="text-[12px] text-orange-600 dark:text-orange-400">Float coverage only</span>
                         <button className="flex items-center gap-1 text-[10px] px-2 py-1 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white rounded-lg transition-colors">
                           <Plus className="w-3 h-3" /> Assign Now
                         </button>
@@ -943,7 +943,7 @@ export default function CustodyOperations() {
                       <p className="text-[11px] text-slate-700 dark:text-slate-400">{mov.type} · {mov.from} → {mov.to}</p>
                       <p className="text-[10px] text-slate-500 mt-0.5">{mov.escort} · Started {mov.startTime} · ETA {mov.eta}</p>
                       {isActive && decision.risk && (
-                        <p className="text-[10px] text-amber-600 dark:text-amber-400/80 mt-1">⚠ {decision.risk}</p>
+                        <p className="text-[10px] text-orange-600 dark:text-orange-400/80 mt-1">⚠ {decision.risk}</p>
                       )}
                       {isActive && decision.action && (
                         <p className="text-[10px] text-slate-700 dark:text-slate-400 mt-0.5">→ {decision.action}</p>
@@ -978,7 +978,7 @@ export default function CustodyOperations() {
                 <AlertOctagon className="w-4 h-4 text-slate-700 dark:text-slate-400" />
                 <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Incident & Discipline</span>
                 {openIncidents > 0 && (
-                  <span className="text-[10px] px-2 py-0.5 bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/20 rounded-full">
+                  <span className="text-[10px] px-2 py-0.5 bg-orange-500/15 text-orange-600 dark:text-orange-400 border border-orange-500/20 rounded-full">
                     {openIncidents} open
                   </span>
                 )}
@@ -1011,7 +1011,7 @@ export default function CustodyOperations() {
                             {inc.status !== 'Resolved' && (
                               <span className={`text-[9px] px-1.5 py-0.5 rounded font-semibold uppercase tracking-wide ${
                                 inc.severity === 'critical' ? 'bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/20' :
-                                inc.severity === 'high' ? 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/20' :
+                                inc.severity === 'high' ? 'bg-orange-500/15 text-orange-600 dark:text-orange-400 border border-orange-500/20' :
                                 'bg-slate-100 dark:bg-slate-700/30 text-slate-500 border border-slate-700/40'
                               }`}>
                                 {inc.severity === 'critical' || inc.severity === 'high' ? 'Action Required' : 'Review'}
@@ -1048,7 +1048,7 @@ export default function CustodyOperations() {
                                   <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold">Escalation Likelihood</p>
                                   <span className={`text-[8px] px-1.5 py-0.5 rounded font-bold uppercase ${
                                     escalation.level === 'High'   ? 'bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/20' :
-                                    escalation.level === 'Medium' ? 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/20' :
+                                    escalation.level === 'Medium' ? 'bg-orange-500/15 text-orange-600 dark:text-orange-400 border border-orange-500/20' :
                                                                     'bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40'
                                   }`}>{escalation.level}</span>
                                 </div>
@@ -1131,7 +1131,7 @@ export default function CustodyOperations() {
             <div className="flex items-center gap-2">
               <Users className="w-4 h-4 text-slate-700 dark:text-slate-400" />
               <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Officer Assignment Board</span>
-              <span className={`text-[10px] px-2 py-0.5 rounded-full ${staffPct < 93 ? 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/20' : 'bg-slate-50 dark:bg-slate-700/40 text-slate-500'}`}>
+              <span className={`text-[10px] px-2 py-0.5 rounded-full ${staffPct < 93 ? 'bg-orange-500/15 text-orange-600 dark:text-orange-400 border border-orange-500/20' : 'bg-slate-50 dark:bg-slate-700/40 text-slate-500'}`}>
                 {currentShift.present}/{currentShift.scheduled} on shift
               </span>
             </div>
@@ -1168,20 +1168,20 @@ export default function CustodyOperations() {
               // Coverage gap: officer is off-post and pod has no backup
               const hasCoverageGap = isOffPost && assignedPod && assignedPod.incidents > 0;
               return (
-                <div key={officer.badge} className={`grid grid-cols-12 items-center px-5 py-2.5 hover:bg-slate-700/10 transition-colors ${isHighHours ? 'bg-amber-500/[0.03]' : ''}`}>
+                <div key={officer.badge} className={`grid grid-cols-12 items-center px-5 py-2.5 hover:bg-slate-700/10 transition-colors ${isHighHours ? 'bg-orange-500/[0.03]' : ''}`}>
                   <div className="col-span-3">
                     <p className="text-[12px] font-medium text-slate-700 dark:text-slate-200">{officer.name}</p>
                     <p className="text-[10px] text-slate-500">#{officer.badge} · {officer.rank}</p>
                   </div>
                   <div className="col-span-3">
                     <p className="text-[12px] text-slate-700 dark:text-slate-300">{officer.assignment}</p>
-                    {isOffPost && <p className="text-[9px] text-amber-600 dark:text-amber-400 mt-0.5">Away from post</p>}
+                    {isOffPost && <p className="text-[9px] text-orange-600 dark:text-orange-400 mt-0.5">Away from post</p>}
                   </div>
                   {/* Risk Signals */}
                   <div className="col-span-2">
                     <div className="flex flex-wrap gap-1">
                       {isHighHours && (
-                        <span className="text-[9px] px-1.5 py-0.5 bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/20 rounded font-semibold uppercase tracking-wide" title="Officer at or over 8 hours — fatigue risk">
+                        <span className="text-[9px] px-1.5 py-0.5 bg-orange-500/15 text-orange-600 dark:text-orange-400 border border-orange-500/20 rounded font-semibold uppercase tracking-wide" title="Officer at or over 8 hours — fatigue risk">
                           Fatigue
                         </span>
                       )}
@@ -1191,7 +1191,7 @@ export default function CustodyOperations() {
                         </span>
                       )}
                       {isPriorityPost && (
-                        <span className="text-[9px] px-1.5 py-0.5 bg-slate-100 dark:bg-slate-700/30 text-amber-700/80 border border-amber-500/20 rounded font-semibold uppercase tracking-wide" title="Assigned to high-priority housing unit">
+                        <span className="text-[9px] px-1.5 py-0.5 bg-slate-100 dark:bg-slate-700/30 text-orange-700/80 border border-orange-500/20 rounded font-semibold uppercase tracking-wide" title="Assigned to high-priority housing unit">
                           Priority
                         </span>
                       )}
@@ -1203,10 +1203,10 @@ export default function CustodyOperations() {
                     </div>
                   </div>
                   <div className="col-span-1 text-center">
-                    <span className={`text-[12px] font-semibold ${isHighHours ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500'}`}>
+                    <span className={`text-[12px] font-semibold ${isHighHours ? 'text-orange-600 dark:text-orange-400' : 'text-slate-500'}`}>
                       {officer.hoursWorked}h
                     </span>
-                    {isHighHours && <p className="text-[8px] text-amber-600 dark:text-amber-400/70 leading-none">OT</p>}
+                    {isHighHours && <p className="text-[8px] text-orange-600 dark:text-orange-400/70 leading-none">OT</p>}
                   </div>
                   <div className="col-span-3 flex items-center justify-end gap-1.5">
                     <span className={`text-[10px] px-1.5 py-0.5 rounded-full flex-shrink-0 ${getOfficerStatusColors(officer.status)}`}>
@@ -1230,7 +1230,7 @@ export default function CustodyOperations() {
                 <p className="text-[10px] text-slate-500">#2176 · Deputy</p>
               </div>
               <div className="col-span-3">
-                <p className="text-[11px] text-amber-600 dark:text-amber-400">Post uncovered</p>
+                <p className="text-[11px] text-orange-600 dark:text-orange-400">Post uncovered</p>
                 <p className="text-[10px] text-slate-700">Float or OT required</p>
               </div>
               <div className="col-span-1 text-center">

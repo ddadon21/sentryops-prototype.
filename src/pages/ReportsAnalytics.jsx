@@ -14,6 +14,7 @@ const CARD_HEADER = 'flex items-center justify-between px-5 py-3.5 border-b bord
 const BADGE = (color) => {
   if (color === 'red')    return 'px-2 py-0.5 text-[10px] font-bold rounded border bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-400 border-red-200 dark:border-red-500/20';
   if (color === 'amber')  return 'px-2 py-0.5 text-[10px] font-bold rounded border bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-500/20';
+  if (color === 'orange') return 'px-2 py-0.5 text-[10px] font-bold rounded border bg-orange-100 dark:bg-orange-500/10 text-orange-700 dark:text-orange-400 border-orange-200 dark:border-orange-500/20';
   if (color === 'green')  return 'px-2 py-0.5 text-[10px] font-bold rounded border bg-emerald-100 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-500/20';
   if (color === 'blue')   return 'px-2 py-0.5 text-[10px] font-bold rounded border bg-blue-100 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-200 dark:border-blue-500/20';
   if (color === 'violet') return 'px-2 py-0.5 text-[10px] font-bold rounded border bg-violet-100 dark:bg-violet-500/10 text-violet-700 dark:text-violet-400 border-violet-200 dark:border-violet-500/20';
@@ -90,7 +91,7 @@ export default function PerformanceCompliance() {
   const divisionPerformance = [
     {
       name: 'Patrol Division', calls: 89234, responseTime: 7.8, clearanceRate: 45.2, staffing: 92, efficiency: 88,
-      health: 'At Risk', healthColor: 'amber',
+      health: 'At Risk', healthColor: 'orange',
       strength: 'Response time 0.2 min under 8-min target — highest call volume in department',
       watch: 'Clearance rate 4.8 pts below dept avg — resource shortage driving investigative delays',
     },
@@ -108,7 +109,7 @@ export default function PerformanceCompliance() {
     },
     {
       name: 'Support Services', calls: 12456, responseTime: 15.2, clearanceRate: 68.9, staffing: 89, efficiency: 85,
-      health: 'Watch', healthColor: 'amber',
+      health: 'Watch', healthColor: 'orange',
       strength: 'Clearance rate above department average, fleet utilization improving (+4%)',
       watch: 'Lowest staffing — 11% vacancy driving $588K annual OT exposure',
     },
@@ -165,25 +166,25 @@ export default function PerformanceCompliance() {
     change > 0 ? <ArrowUpRight className="w-4 h-4" /> : change < 0 ? <ArrowDownRight className="w-4 h-4" /> : null;
 
   const getUrgencyAccent = (u) =>
-    u === 'Critical' ? 'border-l-red-500' : u === 'High' ? 'border-l-amber-500' : 'border-l-slate-400 dark:border-l-slate-600';
+    u === 'Critical' ? 'border-l-red-500' : u === 'High' ? 'border-l-orange-500' : 'border-l-slate-400 dark:border-l-slate-600';
 
   const getUrgencyBadge = (u) =>
-    u === 'Critical' ? BADGE('red') : u === 'High' ? BADGE('amber') : BADGE('slate');
+    u === 'Critical' ? BADGE('red') : u === 'High' ? BADGE('orange') : BADGE('slate');
 
   const getActionBtnClass = (u) => {
     if (u === 'Critical') return 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-[11px] font-bold uppercase tracking-wide transition-colors bg-red-600 border border-red-700 text-white hover:bg-red-700';
-    if (u === 'High')     return 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-[11px] font-bold uppercase tracking-wide transition-colors bg-amber-500 border border-amber-600 text-white hover:bg-amber-600';
+    if (u === 'High')     return 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-[11px] font-bold uppercase tracking-wide transition-colors bg-orange-500 border border-orange-600 text-white hover:bg-orange-600';
     return 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-[11px] font-bold uppercase tracking-wide transition-colors bg-slate-700 border border-slate-800 text-white hover:bg-slate-800 dark:bg-slate-600 dark:border-slate-700 dark:hover:bg-slate-700';
   };
 
   const getComplianceBar = (s) =>
-    s === 'Compliant' ? 'bg-emerald-500' : s === 'At Risk' ? 'bg-red-500' : 'bg-amber-500';
+    s === 'Compliant' ? 'bg-emerald-500' : s === 'At Risk' ? 'bg-red-500' : 'bg-orange-500';
 
   const getCompliancePctColor = (s) =>
-    s === 'Compliant' ? 'text-emerald-600 dark:text-emerald-400' : s === 'At Risk' ? 'text-red-600 dark:text-red-400' : 'text-amber-700 dark:text-amber-400';
+    s === 'Compliant' ? 'text-emerald-600 dark:text-emerald-400' : s === 'At Risk' ? 'text-red-600 dark:text-red-400' : 'text-orange-700 dark:text-orange-400';
 
   const getComplianceBadge = (s) =>
-    s === 'Compliant' ? BADGE('green') : s === 'At Risk' ? BADGE('red') : BADGE('amber');
+    s === 'Compliant' ? BADGE('green') : s === 'At Risk' ? BADGE('red') : BADGE('orange');
 
   const showToast = (message, type = 'success') => {
     setToast({ message, type });
@@ -219,7 +220,7 @@ export default function PerformanceCompliance() {
               {pendingCount > 0 && (
                 <>
                   <span>·</span>
-                  <span className="text-amber-700 dark:text-amber-400 font-semibold">{pendingCount} decisions pending</span>
+                  <span className="text-orange-700 dark:text-orange-400 font-semibold">{pendingCount} decisions pending</span>
                 </>
               )}
               <span>·</span>
@@ -328,7 +329,7 @@ export default function PerformanceCompliance() {
             <div className="flex items-center gap-3 text-[11px]">
               <span className="text-emerald-600 dark:text-emerald-400 font-semibold">2 Compliant</span>
               <span className="text-red-600 dark:text-red-400 font-semibold">1 At Risk</span>
-              <span className="text-amber-700 dark:text-amber-400 font-semibold">1 Action Needed</span>
+              <span className="text-orange-700 dark:text-orange-400 font-semibold">1 Action Needed</span>
             </div>
           </div>
           <div className="p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
@@ -418,7 +419,7 @@ export default function PerformanceCompliance() {
                 <p className="text-[11px] text-slate-500 dark:text-slate-400 mb-3">All priorities combined</p>
                 <div className="flex justify-between text-xs mb-1.5">
                   <span className="text-slate-500 dark:text-slate-400">Target: {keyMetrics.responseTime.target} min</span>
-                  <span className="font-bold text-amber-700 dark:text-amber-400">0.4 min above</span>
+                  <span className="font-bold text-orange-700 dark:text-orange-400">0.4 min above</span>
                 </div>
                 <div className="w-full h-1.5 bg-slate-200 dark:bg-slate-700/50 rounded-full overflow-hidden mb-3">
                   <div className="h-full bg-emerald-500" style={{ width: '95%' }} />
@@ -442,14 +443,14 @@ export default function PerformanceCompliance() {
                 <p className="text-[11px] text-slate-500 dark:text-slate-400 mb-3">Cases closed vs total</p>
                 <div className="flex justify-between text-xs mb-1.5">
                   <span className="text-slate-500 dark:text-slate-400">Target: {keyMetrics.crimeClearanceRate.target}%</span>
-                  <span className="font-bold text-amber-700 dark:text-amber-400">1.5 pts below</span>
+                  <span className="font-bold text-orange-700 dark:text-orange-400">1.5 pts below</span>
                 </div>
                 <div className="w-full h-1.5 bg-slate-200 dark:bg-slate-700/50 rounded-full overflow-hidden mb-3">
                   <div className="h-full bg-purple-500" style={{ width: '97.9%' }} />
                 </div>
                 <div className="space-y-1.5 border-t border-slate-100 dark:border-slate-800/60 pt-3">
                   <div className="flex justify-between text-xs"><span className="text-slate-500 dark:text-slate-400">Violent crimes</span><span className="font-medium text-emerald-600 dark:text-emerald-400">82.1%</span></div>
-                  <div className="flex justify-between text-xs"><span className="text-slate-500 dark:text-slate-400">Property crimes</span><span className="font-medium text-amber-700 dark:text-amber-400">56.8%</span></div>
+                  <div className="flex justify-between text-xs"><span className="text-slate-500 dark:text-slate-400">Property crimes</span><span className="font-medium text-orange-700 dark:text-orange-400">56.8%</span></div>
                   <div className="flex justify-between text-xs"><span className="text-slate-500 dark:text-slate-400">YoY change</span><span className="font-medium text-emerald-600 dark:text-emerald-400 flex items-center gap-1"><ArrowUpRight className="w-3 h-3" />+3.8 pts</span></div>
                 </div>
               </div>
@@ -483,13 +484,13 @@ export default function PerformanceCompliance() {
                 <p className="text-[11px] text-slate-500 dark:text-slate-400 mb-3">{keyMetrics.staffing.current} / {keyMetrics.staffing.authorized} positions</p>
                 <div className="flex justify-between text-xs mb-1.5">
                   <span className="text-slate-500 dark:text-slate-400">Target: 95%</span>
-                  <span className="font-bold text-amber-700 dark:text-amber-400">-5 positions</span>
+                  <span className="font-bold text-orange-700 dark:text-orange-400">-5 positions</span>
                 </div>
                 <div className="w-full h-1.5 bg-slate-200 dark:bg-slate-700/50 rounded-full overflow-hidden mb-3">
                   <div className="h-full bg-blue-500" style={{ width: `${keyMetrics.staffing.percentage}%` }} />
                 </div>
                 <div className="space-y-1.5 border-t border-slate-100 dark:border-slate-800/60 pt-3">
-                  <div className="flex justify-between text-xs"><span className="text-slate-500 dark:text-slate-400">Vacancies</span><span className="font-medium text-amber-700 dark:text-amber-400">14 open positions</span></div>
+                  <div className="flex justify-between text-xs"><span className="text-slate-500 dark:text-slate-400">Vacancies</span><span className="font-medium text-orange-700 dark:text-orange-400">14 open positions</span></div>
                   <div className="flex justify-between text-xs"><span className="text-slate-500 dark:text-slate-400">Pipeline</span><span className="font-medium text-slate-700 dark:text-slate-300">12 candidates</span></div>
                   <div className="flex justify-between text-xs"><span className="text-slate-500 dark:text-slate-400">Vacancy OT cost</span><span className="font-medium text-red-600 dark:text-red-400">$588K/year</span></div>
                 </div>
@@ -570,9 +571,9 @@ export default function PerformanceCompliance() {
                         </div>
                         <div className="flex items-center gap-2">
                           <div className="flex-1 h-1 bg-slate-200 dark:bg-slate-700/50 rounded-full overflow-hidden">
-                            <div className={`h-full rounded-full ${month.clearance >= clrTarget ? 'bg-emerald-500' : 'bg-amber-500'}`} style={{ width: `${month.clearance}%` }} />
+                            <div className={`h-full rounded-full ${month.clearance >= clrTarget ? 'bg-emerald-500' : 'bg-orange-500'}`} style={{ width: `${month.clearance}%` }} />
                           </div>
-                          <span className={`text-[10px] font-bold w-24 text-right tabular-nums ${month.clearance >= clrTarget ? 'text-emerald-600 dark:text-emerald-400' : 'text-amber-700 dark:text-amber-400'}`}>
+                          <span className={`text-[10px] font-bold w-24 text-right tabular-nums ${month.clearance >= clrTarget ? 'text-emerald-600 dark:text-emerald-400' : 'text-orange-700 dark:text-orange-400'}`}>
                             {month.clearance}% clr
                           </span>
                         </div>
@@ -587,7 +588,7 @@ export default function PerformanceCompliance() {
                 <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-3">Seasonal Patterns</p>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                   {[
-                    { label: 'Summer Peak (Jun–Aug)', value: '14,782 calls/mo', sub: '+18% vs winter',    subColor: 'text-amber-700 dark:text-amber-400'  },
+                    { label: 'Summer Peak (Jun–Aug)', value: '14,782 calls/mo', sub: '+18% vs winter',    subColor: 'text-orange-700 dark:text-orange-400'  },
                     { label: 'Winter Low (Nov–Feb)',   value: '12,404 calls/mo', sub: 'Lowest volume',     subColor: 'text-emerald-600 dark:text-emerald-400' },
                     { label: 'YoY Total 2025',         value: '157,423 calls',  sub: '+5.0% vs 2024',     subColor: 'text-emerald-600 dark:text-emerald-400' },
                     { label: 'Best Clearance',         value: 'July — 69.5%',   sub: 'Peak performance',  subColor: 'text-emerald-600 dark:text-emerald-400' },
@@ -623,12 +624,12 @@ export default function PerformanceCompliance() {
                   <div className="flex items-center gap-3">
                     <div className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${
                       division.healthColor === 'green' ? 'bg-emerald-500' :
-                      division.healthColor === 'amber' ? 'bg-amber-500' : 'bg-red-500'
+                      division.healthColor === 'orange' ? 'bg-orange-500' : 'bg-red-500'
                     }`} />
                     <h4 className="text-sm font-bold text-slate-800 dark:text-slate-100">{division.name}</h4>
                     <span className={
                       division.healthColor === 'green' ? BADGE('green') :
-                      division.healthColor === 'amber' ? BADGE('amber') : BADGE('red')
+                      division.healthColor === 'orange' ? BADGE('orange') : BADGE('red')
                     }>{division.health}</span>
                   </div>
                   <div className="flex items-center gap-3">
@@ -638,7 +639,7 @@ export default function PerformanceCompliance() {
                         <circle cx="18" cy="18" r="14" fill="none"
                           className="stroke-slate-200 dark:stroke-slate-700/50" strokeWidth="3" />
                         <circle cx="18" cy="18" r="14" fill="none"
-                          className={division.efficiency >= 90 ? 'stroke-emerald-500' : division.efficiency >= 85 ? 'stroke-amber-500' : 'stroke-red-500'}
+                          className={division.efficiency >= 90 ? 'stroke-emerald-500' : division.efficiency >= 85 ? 'stroke-orange-500' : 'stroke-red-500'}
                           strokeWidth="3"
                           strokeDasharray={`${(division.efficiency / 100) * 87.96} 87.96`}
                           strokeLinecap="round" />
@@ -646,7 +647,7 @@ export default function PerformanceCompliance() {
                       <div className="absolute inset-0 flex items-center justify-center">
                         <span className={`text-[10px] font-bold ${
                           division.efficiency >= 90 ? 'text-emerald-600 dark:text-emerald-400' :
-                          division.efficiency >= 85 ? 'text-amber-700 dark:text-amber-400' : 'text-red-600 dark:text-red-400'
+                          division.efficiency >= 85 ? 'text-orange-700 dark:text-orange-400' : 'text-red-600 dark:text-red-400'
                         }`}>{division.efficiency}%</span>
                       </div>
                     </div>
@@ -654,7 +655,7 @@ export default function PerformanceCompliance() {
                       <p className="text-[9px] text-slate-500 dark:text-slate-400 uppercase tracking-wider">Efficiency</p>
                       <p className={`text-sm font-bold ${
                         division.efficiency >= 90 ? 'text-emerald-600 dark:text-emerald-400' :
-                        division.efficiency >= 85 ? 'text-amber-700 dark:text-amber-400' : 'text-red-600 dark:text-red-400'
+                        division.efficiency >= 85 ? 'text-orange-700 dark:text-orange-400' : 'text-red-600 dark:text-red-400'
                       }`}>{division.efficiency >= 90 ? 'Top Tier' : division.efficiency >= 85 ? 'On Target' : 'Below Target'}</p>
                     </div>
                   </div>
@@ -678,12 +679,12 @@ export default function PerformanceCompliance() {
                     {division.clearanceRate > 0 && (
                       <div>
                         <p className="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1">Clearance</p>
-                        <p className={`text-xl font-bold ${division.clearanceRate >= 70 ? 'text-emerald-600 dark:text-emerald-400' : division.clearanceRate >= 50 ? 'text-amber-700 dark:text-amber-400' : 'text-red-600 dark:text-red-400'}`}>{division.clearanceRate}%</p>
+                        <p className={`text-xl font-bold ${division.clearanceRate >= 70 ? 'text-emerald-600 dark:text-emerald-400' : division.clearanceRate >= 50 ? 'text-orange-700 dark:text-orange-400' : 'text-red-600 dark:text-red-400'}`}>{division.clearanceRate}%</p>
                       </div>
                     )}
                     <div>
                       <p className="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1">Staffing</p>
-                      <p className={`text-xl font-bold ${division.staffing >= 95 ? 'text-emerald-600 dark:text-emerald-400' : division.staffing >= 90 ? 'text-amber-700 dark:text-amber-400' : 'text-red-600 dark:text-red-400'}`}>{division.staffing}%</p>
+                      <p className={`text-xl font-bold ${division.staffing >= 95 ? 'text-emerald-600 dark:text-emerald-400' : division.staffing >= 90 ? 'text-orange-700 dark:text-orange-400' : 'text-red-600 dark:text-red-400'}`}>{division.staffing}%</p>
                     </div>
                     {division.inmates !== undefined && (
                       <>
@@ -708,10 +709,10 @@ export default function PerformanceCompliance() {
                         {division.strength}
                       </p>
                     </div>
-                    <div className="flex items-start gap-2 bg-amber-50 dark:bg-amber-500/5 border border-amber-100 dark:border-amber-500/15 rounded-lg px-3 py-2.5">
-                      <div className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 flex-shrink-0" />
+                    <div className="flex items-start gap-2 bg-orange-50 dark:bg-orange-500/5 border border-orange-100 dark:border-orange-500/15 rounded-lg px-3 py-2.5">
+                      <div className="w-1.5 h-1.5 rounded-full bg-orange-500 mt-1.5 flex-shrink-0" />
                       <p className="text-[11px] text-slate-700 dark:text-slate-300 leading-snug">
-                        <span className="font-bold text-amber-700 dark:text-amber-400">Watch: </span>
+                        <span className="font-bold text-orange-700 dark:text-orange-400">Watch: </span>
                         {division.watch}
                       </p>
                     </div>
@@ -760,12 +761,12 @@ export default function PerformanceCompliance() {
                         <div className="flex items-center gap-3">
                           <span className={`text-sm font-bold tabular-nums ${
                             stat.clearance >= 80 ? 'text-emerald-600 dark:text-emerald-400' :
-                            stat.clearance >= 65 ? 'text-amber-700 dark:text-amber-400' : 'text-red-600 dark:text-red-400'
+                            stat.clearance >= 65 ? 'text-orange-700 dark:text-orange-400' : 'text-red-600 dark:text-red-400'
                           }`}>{stat.clearance}%</span>
                           <div className="flex-1 h-1.5 bg-slate-200 dark:bg-slate-700/50 rounded-full overflow-hidden max-w-[80px]">
                             <div className={`h-full ${
                               stat.clearance >= 80 ? 'bg-emerald-500' :
-                              stat.clearance >= 65 ? 'bg-amber-500' : 'bg-red-500'
+                              stat.clearance >= 65 ? 'bg-orange-500' : 'bg-red-500'
                             }`} style={{ width: `${stat.clearance}%` }} />
                           </div>
                         </div>

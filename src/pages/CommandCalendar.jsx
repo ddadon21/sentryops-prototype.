@@ -425,11 +425,11 @@ export default function CommandCalendar() {
   );
   const getPressureLabel = (score) => {
     if (score >= 80) return { text: 'Critical Pressure', classes: 'text-red-600 dark:text-red-400' };
-    if (score >= 65) return { text: 'Elevated Pressure', classes: 'text-amber-600 dark:text-amber-400' };
-    if (score >= 45) return { text: 'Moderate Pressure', classes: 'text-amber-600 dark:text-amber-400' };
+    if (score >= 65) return { text: 'Elevated Pressure', classes: 'text-orange-600 dark:text-orange-400' };
+    if (score >= 45) return { text: 'Moderate Pressure', classes: 'text-orange-600 dark:text-orange-400' };
     return { text: 'Stable', classes: 'text-emerald-600 dark:text-emerald-400' };
   };
-  const getBarColor = (value) => value >= 75 ? 'bg-red-500' : value >= 60 ? 'bg-amber-500' : 'bg-emerald-500';
+  const getBarColor = (value) => value >= 75 ? 'bg-red-500' : value >= 60 ? 'bg-orange-500' : 'bg-emerald-500';
 
   // ============================================================
   // FORWARD PROJECTIONS — staffing / compliance / budget
@@ -447,7 +447,7 @@ export default function CommandCalendar() {
       id: 'staffing',
       title: 'Staffing Impact Projection',
       icon: Users,
-      accent: 'amber',
+      accent: 'orange',
       headlineValue: '6 of 14 days',
       headlineLabel: 'projected below minimum patrol coverage',
       trend: 'worsening',
@@ -477,7 +477,7 @@ export default function CommandCalendar() {
       id: 'budget',
       title: 'Budget Impact Projection',
       icon: DollarSign,
-      accent: 'amber',
+      accent: 'orange',
       headlineValue: '+$84K',
       headlineLabel: 'projected overage across OT, fleet, and training lines',
       trend: 'worsening',
@@ -493,14 +493,14 @@ export default function CommandCalendar() {
   const getProjectionAccentClasses = (accent) => {
     switch (accent) {
       case 'red': return { iconWrap: 'bg-red-500/10 border-red-500/20', icon: 'text-red-600 dark:text-red-400', value: 'text-red-600 dark:text-red-400' };
-      default: return { iconWrap: 'bg-amber-500/10 border-amber-500/20', icon: 'text-amber-600 dark:text-amber-400', value: 'text-amber-600 dark:text-amber-400' };
+      default: return { iconWrap: 'bg-orange-500/10 border-orange-500/20', icon: 'text-orange-600 dark:text-orange-400', value: 'text-orange-600 dark:text-orange-400' };
     }
   };
 
   const getSeverityDotColor = (severity) => {
     switch (severity) {
       case 'critical': return 'bg-red-500';
-      case 'high': return 'bg-amber-500';
+      case 'high': return 'bg-orange-500';
       default: return 'bg-slate-400';
     }
   };
@@ -509,7 +509,7 @@ export default function CommandCalendar() {
   const getCategoryAccent = (category) => {
     switch (category) {
       case 'compliance': return 'bg-red-500';
-      case 'staffing': return 'bg-amber-500';
+      case 'staffing': return 'bg-orange-500';
       case 'operational': return 'bg-slate-400';
       case 'investigations': return 'bg-slate-500';
       case 'training': case 'maintenance': return 'bg-emerald-500';
@@ -519,7 +519,7 @@ export default function CommandCalendar() {
 
   const getStatusBadge = (status) => {
     switch (status) {
-      case 'pending': return { text: 'Pending', classes: 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' };
+      case 'pending': return { text: 'Pending', classes: 'bg-orange-100 border-orange-200 text-orange-700 dark:bg-orange-500/10 dark:border-orange-500/20 dark:text-orange-400' };
       case 'in_progress': return { text: 'In Progress', classes: 'bg-emerald-100 border-emerald-200 text-emerald-700 dark:bg-emerald-500/10 dark:border-emerald-500/20 dark:text-emerald-400' };
       case 'completed': return { text: 'Completed', classes: 'bg-slate-500/10 border-slate-500/20 text-slate-500' };
       case 'overdue': return { text: 'Overdue', classes: 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' };
@@ -530,7 +530,7 @@ export default function CommandCalendar() {
   const getRiskTypeBadge = (category) => {
     switch (category) {
       case 'compliance': return { text: 'Compliance', classes: 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' };
-      case 'staffing': return { text: 'Staffing', classes: 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' };
+      case 'staffing': return { text: 'Staffing', classes: 'bg-orange-100 border-orange-200 text-orange-700 dark:bg-orange-500/10 dark:border-orange-500/20 dark:text-orange-400' };
       case 'operational': return { text: 'Operational', classes: 'bg-slate-500/10 border-slate-500/20 text-slate-500' };
       case 'training': return { text: 'Training', classes: 'bg-emerald-100 border-emerald-200 text-emerald-700 dark:bg-emerald-500/10 dark:border-emerald-500/20 dark:text-emerald-400' };
       case 'maintenance': return { text: 'Maintenance', classes: 'bg-emerald-100 border-emerald-200 text-emerald-700 dark:bg-emerald-500/10 dark:border-emerald-500/20 dark:text-emerald-400' };
@@ -580,8 +580,8 @@ export default function CommandCalendar() {
       );
       case 'medium': return (
         <div className="flex items-center gap-0.5">
-          <div className="w-1 h-1 rounded-full bg-amber-500"></div>
-          <div className="w-1 h-1 rounded-full bg-amber-500"></div>
+          <div className="w-1 h-1 rounded-full bg-orange-500"></div>
+          <div className="w-1 h-1 rounded-full bg-orange-500"></div>
         </div>
       );
       case 'light': return (
@@ -627,12 +627,12 @@ export default function CommandCalendar() {
   const summaryStats = [
     { label: 'Critical / High — 14 Days', value: criticalOrHighNext14.length, icon: AlertTriangle, accent: 'red' },
     { label: 'Compliance Deadlines', value: complianceNext14.length, icon: Shield, accent: 'red' },
-    { label: 'Staffing-Impact Events', value: staffingImpactNext14.length, icon: Users, accent: 'amber' },
-    { label: 'Active Conflicts Predicted', value: conflicts.length, icon: Zap, accent: 'amber' }
+    { label: 'Staffing-Impact Events', value: staffingImpactNext14.length, icon: Users, accent: 'orange' },
+    { label: 'Active Conflicts Predicted', value: conflicts.length, icon: Zap, accent: 'orange' }
   ];
   const getSummaryStatClasses = (accent) => accent === 'red'
     ? { wrap: 'bg-red-500/10 border-red-500/20', icon: 'text-red-600 dark:text-red-400' }
-    : { wrap: 'bg-amber-500/10 border-amber-500/20', icon: 'text-amber-600 dark:text-amber-400' };
+    : { wrap: 'bg-orange-500/10 border-orange-500/20', icon: 'text-orange-600 dark:text-orange-400' };
 
   const prevMonth = () => {
     if (currentMonth === 0) { setCurrentMonth(11); setCurrentYear(y => y - 1); }
@@ -689,7 +689,7 @@ export default function CommandCalendar() {
               onClick={() => setShowStaffingOverlay(!showStaffingOverlay)}
               className={`flex items-center gap-2 px-3 py-2 border rounded-lg text-[13px] font-medium transition-all ${
                 showStaffingOverlay
-                  ? 'bg-amber-500/10 border-amber-500/30 text-amber-700 dark:text-amber-400'
+                  ? 'bg-orange-500/10 border-orange-500/30 text-orange-700 dark:text-orange-400'
                   : 'bg-white dark:bg-slate-800/40 border-slate-300 dark:border-slate-700/40 text-secondary hover:text-slate-900 dark:hover:text-slate-300'
               }`}
             >
@@ -804,7 +804,7 @@ export default function CommandCalendar() {
             <span className="text-sm text-slate-500 mb-0.5">/ 100</span>
           </div>
           <div className="h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden mb-5">
-            <div className="h-full rounded-full bg-gradient-to-r from-emerald-500 via-amber-500 to-red-500" style={{ width: `${pressureScore}%` }}></div>
+            <div className="h-full rounded-full bg-gradient-to-r from-emerald-500 via-orange-500 to-red-500" style={{ width: `${pressureScore}%` }}></div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {pressureBreakdown.map(b => (
@@ -859,7 +859,7 @@ export default function CommandCalendar() {
               <div key={conflict.id} className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4">
                 <div className="flex items-start justify-between gap-3 mb-3">
                   <div className="flex items-start gap-2.5">
-                    <AlertTriangle className={`w-4 h-4 mt-0.5 flex-shrink-0 ${conflict.severity === 'high' ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500'}`} />
+                    <AlertTriangle className={`w-4 h-4 mt-0.5 flex-shrink-0 ${conflict.severity === 'high' ? 'text-orange-600 dark:text-orange-400' : 'text-slate-500'}`} />
                     <div>
                       <p className="text-[13px] font-medium text-primary leading-tight">{conflict.title}</p>
                       <p className="text-[11px] text-secondary mt-0.5">{conflict.detail}</p>
@@ -867,7 +867,7 @@ export default function CommandCalendar() {
                   </div>
                   <div className="flex items-center gap-1.5 flex-shrink-0">
                     <span className={`px-1.5 py-0.5 border rounded text-[10px] font-semibold ${
-                      conflict.severity === 'high' ? 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
+                      conflict.severity === 'high' ? 'bg-orange-100 border-orange-200 text-orange-700 dark:bg-orange-500/10 dark:border-orange-500/20 dark:text-orange-400' :
                       'bg-slate-500/10 border-slate-500/20 text-slate-500'
                     }`}>{conflict.severity === 'high' ? 'High' : 'Moderate'}</span>
                     <span className="text-[11px] text-slate-500">{shortMonthAbbr} {conflict.days.join(', ')}</span>
@@ -990,7 +990,7 @@ export default function CommandCalendar() {
                   if (isToday) {
                     bgClass = 'ring-2 ring-amber-500/40 bg-amber-500/[0.07] shadow-[0_0_12px_rgba(245,158,11,0.08)]';
                   } else if (staffingBelow80) {
-                    bgClass = 'bg-amber-500/[0.05] ring-1 ring-amber-500/15';
+                    bgClass = 'bg-orange-500/[0.05] ring-1 ring-orange-500/15';
                   } else if (density === 'heavy') {
                     bgClass = showRiskOverlay
                       ? 'bg-red-500/[0.08] ring-1 ring-red-500/25 shadow-[0_0_8px_rgba(239,68,68,0.06)]'
@@ -998,7 +998,7 @@ export default function CommandCalendar() {
                   } else if (density === 'medium') {
                     bgClass = showRiskOverlay
                       ? 'bg-red-500/[0.05] ring-1 ring-red-500/15'
-                      : 'bg-amber-500/[0.03]';
+                      : 'bg-orange-500/[0.03]';
                   }
 
                   return (
@@ -1014,7 +1014,7 @@ export default function CommandCalendar() {
                         </div>
                         <div className="flex items-center gap-1">
                           {showStaffingOverlay && staffingImpactDays[day] && (
-                            <Users className={`w-2.5 h-2.5 ${staffingBelow80 ? 'text-amber-700 dark:text-amber-400' : 'text-slate-500'}`} />
+                            <Users className={`w-2.5 h-2.5 ${staffingBelow80 ? 'text-orange-700 dark:text-orange-400' : 'text-slate-500'}`} />
                           )}
                           {showRiskOverlay && getDensityDots(density)}
                         </div>
@@ -1050,7 +1050,7 @@ export default function CommandCalendar() {
               <div className="flex items-center gap-4 mt-4 pt-3 border-t border-border dark:border-slate-700/20 flex-wrap">
                 {[
                   { color: 'bg-red-500', label: 'Compliance' },
-                  { color: 'bg-amber-500', label: 'Staffing' },
+                  { color: 'bg-orange-500', label: 'Staffing' },
                   { color: 'bg-slate-400', label: 'Operational' },
                   { color: 'bg-emerald-500', label: 'Training/Maint.' }
                 ].map(item => (
@@ -1068,8 +1068,8 @@ export default function CommandCalendar() {
                         <span className="text-[10px] text-slate-500">Low</span>
                       </div>
                       <div className="flex items-center gap-0.5">
-                        <div className="w-1 h-1 rounded-full bg-amber-500"></div>
-                        <div className="w-1 h-1 rounded-full bg-amber-500"></div>
+                        <div className="w-1 h-1 rounded-full bg-orange-500"></div>
+                        <div className="w-1 h-1 rounded-full bg-orange-500"></div>
                         <span className="text-[10px] text-slate-500 ml-0.5">Med</span>
                       </div>
                       <div className="flex items-center gap-0.5">
@@ -1085,8 +1085,8 @@ export default function CommandCalendar() {
                   <>
                     <div className="h-3 w-px bg-slate-100 dark:bg-slate-700/30"></div>
                     <div className="flex items-center gap-1.5">
-                      <Users className="w-2.5 h-2.5 text-amber-700 dark:text-amber-400" />
-                      <span className="text-[10px] text-amber-700 dark:text-amber-400/60">Staffing impacted</span>
+                      <Users className="w-2.5 h-2.5 text-orange-700 dark:text-orange-400" />
+                      <span className="text-[10px] text-orange-700 dark:text-orange-400/60">Staffing impacted</span>
                     </div>
                   </>
                 )}
@@ -1110,7 +1110,7 @@ export default function CommandCalendar() {
                       onClick={() => setSelectedEvent(event)}
                       className={`w-full rounded-lg border border-border border-l-[3px] ${
                         event.severity === 'critical' ? 'border-l-red-500/60' :
-                        event.severity === 'high' ? 'border-l-amber-500/50' :
+                        event.severity === 'high' ? 'border-l-orange-500/50' :
                         'border-l-slate-500/30'
                       } hover:bg-slate-50 dark:hover:bg-slate-50 dark:hover:bg-slate-800/20 transition-colors text-left`}
                     >
@@ -1125,7 +1125,7 @@ export default function CommandCalendar() {
                           </span>
                           <span className={`px-1.5 py-0.5 border rounded text-[10px] font-semibold ${
                             event.severity === 'critical' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
-                            event.severity === 'high' ? 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
+                            event.severity === 'high' ? 'bg-orange-100 border-orange-200 text-orange-700 dark:bg-orange-500/10 dark:border-orange-500/20 dark:text-orange-400' :
                             'bg-slate-500/10 border-slate-500/20 text-slate-500'
                           }`}>
                             {countdown}
@@ -1136,7 +1136,7 @@ export default function CommandCalendar() {
                             </span>
                           )}
                           {event.staffingImpact && (
-                            <span className="px-1.5 py-0.5 bg-amber-500/8 border border-amber-500/15 rounded text-[10px] font-medium text-amber-700 dark:text-amber-400/70">
+                            <span className="px-1.5 py-0.5 bg-orange-500/8 border border-orange-500/15 rounded text-[10px] font-medium text-orange-700 dark:text-orange-400/70">
                               <Users className="w-2.5 h-2.5 inline mr-0.5 -mt-0.5" />
                               {event.deputiesAffected ? `${event.deputiesAffected} deputies` : 'Staffing'}
                             </span>
@@ -1188,7 +1188,7 @@ export default function CommandCalendar() {
                         <div className="flex items-center justify-center gap-1 mt-0.5">
                           {d.isToday && <span className="text-[9px] text-amber-700/60 font-medium">TODAY</span>}
                           {showRiskOverlay && getDensityDots(density)}
-                          {hasStaffing && <Users className="w-2.5 h-2.5 text-amber-700 dark:text-amber-400/60" />}
+                          {hasStaffing && <Users className="w-2.5 h-2.5 text-orange-700 dark:text-orange-400/60" />}
                         </div>
                       </div>
                     );
@@ -1211,7 +1211,7 @@ export default function CommandCalendar() {
                             key={`${d.day}-${hour}`}
                             className={`min-h-[32px] py-1 px-1 ${
                               d.isToday ? 'bg-amber-500/[0.02]' : ''
-                            } ${hasStaffing && showStaffingOverlay ? 'bg-amber-500/[0.02]' : ''}`}
+                            } ${hasStaffing && showStaffingOverlay ? 'bg-orange-500/[0.02]' : ''}`}
                           >
                             {hourEvents.map(event => (
                               <button
@@ -1219,7 +1219,7 @@ export default function CommandCalendar() {
                                 onClick={() => setSelectedEvent(event)}
                                 className={`w-full flex items-center gap-1.5 px-2 py-1 rounded text-left transition-colors hover:bg-slate-100 dark:hover:bg-slate-700/30 ${
                                   event.severity === 'critical' ? 'bg-red-500/[0.06] border-l-2 border-l-red-500/40' :
-                                  event.severity === 'high' ? 'bg-amber-500/[0.06] border-l-2 border-l-amber-500/40' :
+                                  event.severity === 'high' ? 'bg-orange-500/[0.06] border-l-2 border-l-orange-500/40' :
                                   'bg-slate-100 dark:bg-slate-800/20 border-l-2 border-l-slate-500/30'
                                 }`}
                               >
@@ -1279,7 +1279,7 @@ export default function CommandCalendar() {
                     </span>
                     <span className={`px-1.5 py-0.5 border rounded text-[11px] font-medium ${
                       selectedEvent.severity === 'critical' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
-                      selectedEvent.severity === 'high' ? 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
+                      selectedEvent.severity === 'high' ? 'bg-orange-100 border-orange-200 text-orange-700 dark:bg-orange-500/10 dark:border-orange-500/20 dark:text-orange-400' :
                       'bg-slate-500/10 border-slate-500/20 text-slate-500'
                     }`}>
                       {selectedEvent.severity.toUpperCase()}
@@ -1313,8 +1313,8 @@ export default function CommandCalendar() {
                   </div>
                   {selectedEvent.staffingImpact && (
                     <div className="border-t border-border dark:border-slate-700/20 pt-3">
-                      <span className="text-[11px] font-semibold text-amber-700 dark:text-amber-400/80 uppercase tracking-wider">Staffing Impact</span>
-                      <p className="text-sm text-amber-700 dark:text-amber-400 mt-1">
+                      <span className="text-[11px] font-semibold text-orange-700 dark:text-orange-400/80 uppercase tracking-wider">Staffing Impact</span>
+                      <p className="text-sm text-orange-700 dark:text-orange-400 mt-1">
                         {selectedEvent.deputiesAffected ? `${selectedEvent.deputiesAffected} deputies removed from field duty` : 'Staffing coverage affected'}
                       </p>
                     </div>
