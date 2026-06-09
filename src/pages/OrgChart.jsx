@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Search, Filter, Download, ZoomIn, ZoomOut, ChevronRight, X, Users, Award, Mail, Phone, Shield, Home, DollarSign, AlertCircle, TrendingUp, CheckCircle, MessageCircle, Sparkles, Send, Maximize2, Minimize2, Move, ChevronDown, ChevronUp, UserPlus, Maximize, MoreVertical, MessageSquare, UserCog, FileText, Calendar, MapPin, Star, Building2, Lightbulb, Printer, Share2, Settings, Eye, Layers, Clock, RefreshCw, ArrowLeft, Expand, AlertTriangle, Activity, Zap, ArrowRight } from 'lucide-react';
+import { Search, Filter, Download, ZoomIn, ZoomOut, ChevronRight, X, Users, Award, Mail, Phone, Shield, Home, DollarSign, AlertCircle, TrendingUp, CheckCircle, MessageCircle, Sparkles, Send, Maximize2, Minimize2, Move, ChevronDown, ChevronUp, UserPlus, Maximize, MoreVertical, MessageSquare, UserCog, FileText, Calendar, MapPin, Star, Building2, Lightbulb, Printer, Share2, Settings, Eye, Layers, Clock, RefreshCw, ArrowLeft, Expand, AlertTriangle, Activity, Zap, ArrowRight, Briefcase, ShieldCheck, UserCheck, GraduationCap } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import DashboardLayout from '../layouts/DashboardLayout';
@@ -24,6 +24,13 @@ export default function OrgChart() {
   const [insightsExpanded, setInsightsExpanded] = useState(false);
   const chartContainerRef = useRef(null);
   const [touchDistance, setTouchDistance] = useState(0);
+
+  // Workflow state
+  const [workflowType, setWorkflowType] = useState(null); // 'hiring' | 'certRenewal' | 'succession' | 'actingPromotion' | 'spanReassign'
+  const [workflowNode, setWorkflowNode] = useState(null);
+  const [workflowStep, setWorkflowStep] = useState(1);
+  const [workflowDone, setWorkflowDone] = useState(false);
+  const [workflowSel, setWorkflowSel] = useState({});
 
   // Complete organizational data with full hierarchy
   const orgDataBase = [
@@ -988,14 +995,72 @@ export default function OrgChart() {
     setTimeout(() => setHighlightedNode(null), 5000);
   };
 
+  const openWorkflow = (type, node = null) => {
+    setWorkflowType(type);
+    setWorkflowNode(node);
+    setWorkflowStep(1);
+    setWorkflowDone(false);
+    setWorkflowSel({});
+  };
+  const closeWorkflow = () => {
+    setWorkflowType(null);
+    setWorkflowNode(null);
+    setWorkflowDone(false);
+  };
+
+  // Per-person certification records — key leadership personnel
+  const personCertifications = {
+    1: [
+      { name: 'Executive Command Certification', status: 'current', expires: 'Jan 2027' },
+      { name: 'Crisis Incident Management', status: 'current', expires: 'Sep 2025' },
+      { name: 'Advanced Leadership (PERF)', status: 'current', expires: 'Mar 2026' }
+    ],
+    2: [
+      { name: 'Law Enforcement Leadership', status: 'current', expires: 'Mar 2026' },
+      { name: 'Use of Force Instructor', status: 'expiring', expires: 'Feb 2025' },
+      { name: 'Crisis Negotiation', status: 'current', expires: 'Nov 2025' }
+    ],
+    3: [
+      { name: 'Administrative Command', status: 'current', expires: 'Jun 2026' },
+      { name: 'Budget & Fiscal Management', status: 'current', expires: 'Aug 2025' }
+    ],
+    4: [
+      { name: 'Operations Command', status: 'expiring', expires: 'Feb 2025' },
+      { name: 'Tactical Command', status: 'current', expires: 'Oct 2025' },
+      { name: 'Firearms Instructor', status: 'expired', expires: 'Nov 2024' }
+    ],
+    10: [
+      { name: 'Jail Administration', status: 'current', expires: 'May 2026' },
+      { name: 'ACA Standards Compliance', status: 'current', expires: 'Jul 2025' },
+      { name: 'Emergency Response Coordinator', status: 'current', expires: 'Dec 2025' }
+    ],
+    11: [
+      { name: 'Support Operations Management', status: 'current', expires: 'Apr 2026' },
+      { name: 'Grant Administration', status: 'current', expires: 'Sep 2025' }
+    ],
+    12: [
+      { name: 'Administrative Services Certification', status: 'current', expires: 'Jun 2026' },
+      { name: 'Records Management', status: 'expiring', expires: 'Mar 2025' }
+    ],
+    13: [
+      { name: 'Field Operations Command', status: 'current', expires: 'Aug 2025' },
+      { name: 'Patrol Tactics Instructor', status: 'current', expires: 'Dec 2025' },
+      { name: 'K-9 Handler Supervisor', status: 'current', expires: 'Jun 2025' }
+    ],
+    14: [
+      { name: 'Court Security Supervisor', status: 'current', expires: 'Jan 2026' },
+      { name: 'Federal Court Liaison', status: 'current', expires: 'Mar 2026' }
+    ],
+  };
+
   // Command radar alerts — drives the insight panel
   const commandAlerts = [
-    { type: 'critical', nodeId: 12, short: 'Admin Services leadership vacancy', full: 'Administrative Services Division has no permanent Major — leadership gap compounding existing vacancies.' },
-    { type: 'warning',  nodeId: 4,  short: '5 cert expirations pending',        full: 'Deputy Chief Webster cert expiring + 4 officers in Operations Bureau within 60 days.' },
-    { type: 'warning',  nodeId: 11, short: 'Patrol acting supervision active',  full: 'Support Operations Major Harris on acting basis — no permanent appointment made.' },
-    { type: 'insight',  nodeId: 13, short: 'Major Davis eligible for retirement', full: 'Field Operations Major Davis retirement-eligible now. Capt. Rodriguez on succession track.' },
-    { type: 'insight',  nodeId: 2,  short: 'Chief Deputy 24mo succession window', full: 'Chief Deputy Anderson retires in 24 months. Succession plan confirmed: Major Wilson / Major Davis.' },
-    { type: 'insight',  nodeId: null, short: 'Span of control elevated in Patrol', full: 'Sgt. Williams managing 12 direct reports — above recommended 8. Corporal role needed.' },
+    { type: 'critical', nodeId: 12, short: 'Admin Services leadership vacancy', full: 'Administrative Services Division has no permanent Major — leadership gap compounding existing vacancies.', workflowType: 'hiring', workflowLabel: 'Hire Request' },
+    { type: 'warning',  nodeId: 4,  short: '5 cert expirations pending',        full: 'Deputy Chief Webster cert expiring + 4 officers in Operations Bureau within 60 days.', workflowType: 'certRenewal', workflowLabel: 'Schedule Renewal' },
+    { type: 'warning',  nodeId: 11, short: 'Support Ops acting supervision',    full: 'Support Operations Major Harris on acting basis — no permanent appointment made.', workflowType: 'actingPromotion', workflowLabel: 'Promote Permanent' },
+    { type: 'insight',  nodeId: 13, short: 'Major Davis eligible for retirement', full: 'Field Operations Major Davis retirement-eligible now. Capt. Rodriguez on succession track.', workflowType: 'succession', workflowLabel: 'View Succession' },
+    { type: 'insight',  nodeId: 2,  short: 'Chief Deputy 24mo succession window', full: 'Chief Deputy Anderson retires in 24 months. Succession plan confirmed: Major Wilson / Major Davis.', workflowType: 'succession', workflowLabel: 'View Succession' },
+    { type: 'insight',  nodeId: null, short: 'Span of control elevated in Patrol', full: 'Cpl. Johnson managing 12 direct reports — above recommended 8. Corporal role or redistribution needed.', workflowType: 'spanReassign', workflowLabel: 'Reassign' },
   ];
 
   const getStaffingColor = (strength) => {
@@ -1541,29 +1606,44 @@ export default function OrgChart() {
               {insightsExpanded && (
               <div className="px-4 pb-3 pt-2.5 border-t border-border space-y-1.5">
                 {commandAlerts.map((alert, i) => (
-                  <button
+                  <div
                     key={i}
-                    onClick={() => { highlightNode(alert.nodeId); setInsightsExpanded(false); }}
-                    className={`w-full flex items-start gap-3 p-2.5 rounded-lg border text-left transition-all ${
+                    className={`w-full flex items-start gap-3 p-2.5 rounded-lg border ${
                       alert.type === 'critical'
-                        ? 'bg-red-500/8 border-red-500/20 hover:bg-red-500/15'
+                        ? 'bg-red-500/8 border-red-500/20'
                         : alert.type === 'warning'
-                          ? 'bg-orange-500/8 border-orange-500/15 hover:bg-orange-500/15'
-                          : 'bg-slate-100/80 dark:bg-slate-800/30 border-slate-700/50 hover:bg-slate-100 dark:hover:bg-slate-800/50'
+                          ? 'bg-orange-500/8 border-orange-500/15'
+                          : 'bg-slate-100/80 dark:bg-slate-800/30 border-slate-700/50'
                     }`}
                   >
                     <span className={`text-[9px] font-bold uppercase tracking-wider pt-0.5 shrink-0 w-12 ${
                       alert.type === 'critical' ? 'text-red-400' : alert.type === 'warning' ? 'text-orange-700' : 'text-slate-500'
                     }`}>{alert.type}</span>
-                    <span className={`text-[11px] leading-snug ${
+                    <button className={`flex-1 text-left text-[11px] leading-snug hover:opacity-80 transition-opacity ${
                       alert.type === 'critical' ? 'text-red-200' : alert.type === 'warning' ? 'text-orange-200' : 'text-slate-500'
-                    }`}>{alert.full}</span>
-                    {alert.nodeId && (
-                      <ArrowRight className={`w-3.5 h-3.5 shrink-0 mt-0.5 ml-auto ${
-                        alert.type === 'critical' ? 'text-red-500' : alert.type === 'warning' ? 'text-orange-700' : 'text-slate-700'
-                      }`} />
-                    )}
-                  </button>
+                    }`} onClick={() => { highlightNode(alert.nodeId); setInsightsExpanded(false); }}>{alert.full}</button>
+                    <div className="flex items-center gap-1.5 shrink-0 ml-1">
+                      {alert.nodeId && (
+                        <button onClick={() => { highlightNode(alert.nodeId); setInsightsExpanded(false); }} className="p-0.5 hover:opacity-70 transition-opacity">
+                          <ArrowRight className={`w-3 h-3 ${
+                            alert.type === 'critical' ? 'text-red-500' : alert.type === 'warning' ? 'text-orange-700' : 'text-slate-700'
+                          }`} />
+                        </button>
+                      )}
+                      {alert.workflowType && (
+                        <button
+                          onClick={() => { openWorkflow(alert.workflowType, allOrgData.find(n => n.id === alert.nodeId) || null); setInsightsExpanded(false); }}
+                          className={`text-[9px] px-2 py-0.5 rounded font-medium transition-colors whitespace-nowrap ${
+                            alert.type === 'critical' ? 'bg-red-500/20 text-red-400 hover:bg-red-500/30 border border-red-500/30' :
+                            alert.type === 'warning' ? 'bg-orange-500/20 text-orange-700 hover:bg-orange-500/30 border border-orange-500/30' :
+                            'bg-amber-500/20 text-amber-700 hover:bg-amber-500/30 border border-amber-500/30'
+                          }`}
+                        >
+                          {alert.workflowLabel}
+                        </button>
+                      )}
+                    </div>
+                  </div>
                 ))}
                 <div className="flex items-center justify-between pt-1 border-t border-border">
                   <span className="text-[10px] text-slate-700">Staffing: 95.5% · 8 open positions · Retention 93.8%</span>
@@ -1836,19 +1916,58 @@ export default function OrgChart() {
                 </button>
               </div>
 
-              <div className="grid grid-cols-3 gap-2">
-                <button className="px-3 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-xs font-medium transition-colors flex items-center justify-center gap-1">
-                  <Users className="w-3 h-3" />
-                  Profile
-                </button>
-                <button className="px-3 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-xs font-medium transition-colors flex items-center justify-center gap-1">
-                  <Mail className="w-3 h-3" />
-                  Message
-                </button>
-                <button className="px-3 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-xs font-medium transition-colors flex items-center justify-center gap-1">
-                  <UserPlus className="w-3 h-3" />
-                  Reassign
-                </button>
+              <div className="space-y-2">
+                <div className="grid grid-cols-3 gap-2">
+                  <button className="px-3 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-xs font-medium transition-colors flex items-center justify-center gap-1">
+                    <Users className="w-3 h-3" />
+                    Profile
+                  </button>
+                  <button className="px-3 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-xs font-medium transition-colors flex items-center justify-center gap-1">
+                    <Mail className="w-3 h-3" />
+                    Message
+                  </button>
+                  <button onClick={() => { highlightNode(selectedNode.id); }} className="px-3 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-xs font-medium transition-colors flex items-center justify-center gap-1">
+                    <Eye className="w-3 h-3" />
+                    Locate
+                  </button>
+                </div>
+                {/* Contextual workflow action buttons based on node flags */}
+                {selectedNode.isVacant && (
+                  <button onClick={() => openWorkflow('hiring', selectedNode)} className="w-full px-3 py-2 bg-red-500/15 hover:bg-red-500/25 border border-red-500/30 text-red-400 rounded-lg text-xs font-medium transition-colors flex items-center justify-center gap-1.5">
+                    <Briefcase className="w-3 h-3" />
+                    Launch Hiring Request
+                  </button>
+                )}
+                {(selectedNode.certStatus === 'expiring' || selectedNode.certStatus === 'expired') && !selectedNode.isVacant && (
+                  <button onClick={() => openWorkflow('certRenewal', selectedNode)} className="w-full px-3 py-2 bg-orange-500/15 hover:bg-orange-500/25 border border-orange-500/30 text-orange-700 rounded-lg text-xs font-medium transition-colors flex items-center justify-center gap-1.5">
+                    <GraduationCap className="w-3 h-3" />
+                    Schedule Certification Renewal
+                  </button>
+                )}
+                {selectedNode.retirementMonths !== undefined && !selectedNode.isVacant && (
+                  <button onClick={() => openWorkflow('succession', selectedNode)} className="w-full px-3 py-2 bg-slate-100/80 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-xs font-medium transition-colors flex items-center justify-center gap-1.5">
+                    <TrendingUp className="w-3 h-3" />
+                    View Succession Plan
+                  </button>
+                )}
+                {selectedNode.actingFlag && (
+                  <button onClick={() => openWorkflow('actingPromotion', selectedNode)} className="w-full px-3 py-2 bg-orange-500/15 hover:bg-orange-500/25 border border-orange-500/30 text-orange-700 rounded-lg text-xs font-medium transition-colors flex items-center justify-center gap-1.5">
+                    <UserCheck className="w-3 h-3" />
+                    Promote to Permanent Appointment
+                  </button>
+                )}
+                {selectedNode.spanWarning && (
+                  <button onClick={() => openWorkflow('spanReassign', selectedNode)} className="w-full px-3 py-2 bg-orange-500/15 hover:bg-orange-500/25 border border-orange-500/30 text-orange-700 rounded-lg text-xs font-medium transition-colors flex items-center justify-center gap-1.5">
+                    <Users className="w-3 h-3" />
+                    Reassign Supervisory Oversight
+                  </button>
+                )}
+                {selectedNode.promotionCandidates && !selectedNode.isVacant && !selectedNode.actingFlag && !selectedNode.retirementMonths && (
+                  <button onClick={() => openWorkflow('actingPromotion', selectedNode)} className="w-full px-3 py-2 bg-slate-100/80 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-xs font-medium transition-colors flex items-center justify-center gap-1.5">
+                    <ArrowRight className="w-3 h-3" />
+                    Promote Acting Supervisor
+                  </button>
+                )}
               </div>
             </div>
 
@@ -1884,6 +2003,47 @@ export default function OrgChart() {
                       <Phone className="w-4 h-4 text-secondary" />
                       <span>{selectedNode.phone}</span>
                     </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Certifications */}
+              {personCertifications[selectedNode.id] && (
+                <div>
+                  <h4 className="text-sm font-semibold text-primary mb-3 flex items-center gap-2">
+                    <ShieldCheck className="w-4 h-4 text-secondary" />
+                    Certifications
+                    {personCertifications[selectedNode.id].some(c => c.status !== 'current') && (
+                      <span className="text-[10px] px-1.5 py-0.5 bg-orange-500/20 border border-orange-500/30 text-orange-700 rounded font-medium">
+                        {personCertifications[selectedNode.id].filter(c => c.status !== 'current').length} at risk
+                      </span>
+                    )}
+                  </h4>
+                  <div className="space-y-2">
+                    {personCertifications[selectedNode.id].map((cert, idx) => (
+                      <div key={idx} className={`flex items-center justify-between p-2.5 rounded-lg border ${
+                        cert.status === 'expired' ? 'bg-red-500/10 border-red-500/30' :
+                        cert.status === 'expiring' ? 'bg-orange-500/10 border-orange-500/25' :
+                        'bg-slate-100/80 dark:bg-slate-800/30 border-slate-700/50'
+                      }`}>
+                        <div className="flex-1 min-w-0 mr-2">
+                          <p className="text-xs font-medium text-primary truncate">{cert.name}</p>
+                          <p className="text-[10px] text-secondary">Expires {cert.expires}</p>
+                        </div>
+                        <div className="flex items-center gap-2 shrink-0">
+                          <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded border ${
+                            cert.status === 'expired' ? 'bg-red-500/20 text-red-400 border-red-500/30' :
+                            cert.status === 'expiring' ? 'bg-orange-500/20 text-orange-700 border-orange-500/30' :
+                            'bg-emerald-500/20 text-emerald-400 border-emerald-500/30'
+                          }`}>{cert.status === 'expired' ? 'EXPIRED' : cert.status === 'expiring' ? 'EXPIRING' : 'CURRENT'}</span>
+                          {(cert.status === 'expiring' || cert.status === 'expired') && (
+                            <button onClick={() => openWorkflow('certRenewal', selectedNode)} className="text-[9px] px-1.5 py-0.5 bg-amber-500 hover:bg-amber-600 text-white rounded font-medium transition-colors">
+                              Renew
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               )}
@@ -2131,11 +2291,16 @@ export default function OrgChart() {
                         </p>
                       ))}
                     </div>
-                    <div className="pt-2 border-t border-border">
-                      <p className="text-xs text-secondary mb-1">Suggested action:</p>
-                      <p className="text-sm text-secondary font-medium">
-                        → {vacancyImpactData[selectedNode.id].suggestedAction}
-                      </p>
+                    <div className="pt-2 border-t border-border space-y-2">
+                      <p className="text-xs text-secondary">Suggested action:</p>
+                      <p className="text-xs text-emerald-300 font-medium">→ {vacancyImpactData[selectedNode.id].suggestedAction}</p>
+                      <button
+                        onClick={() => openWorkflow('actingPromotion', selectedNode)}
+                        className="w-full px-3 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-xs font-medium transition-colors flex items-center justify-center gap-1.5"
+                      >
+                        <UserCheck className="w-3 h-3" />
+                        Execute Succession Action
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -2206,12 +2371,540 @@ export default function OrgChart() {
                         <span className="text-sm text-secondary">Expected Fill Date</span>
                         <span className="text-sm font-medium text-primary">{selectedNode.expectedFill}</span>
                       </div>
-                      <button className="w-full mt-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors">
-                        View Applicants
-                      </button>
+                      <div className="space-y-2 mt-2">
+                        <button onClick={() => openWorkflow('hiring', selectedNode)} className="w-full px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-sm font-medium transition-colors flex items-center justify-center gap-1.5">
+                          <Briefcase className="w-4 h-4" />
+                          Launch Hiring Request
+                        </button>
+                        <button className="w-full px-4 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-sm font-medium transition-colors flex items-center justify-center gap-1.5">
+                          <Users className="w-4 h-4" />
+                          View Applicant Pipeline
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Workflow Modal: Hiring Request ── */}
+      {workflowType === 'hiring' && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm" onClick={closeWorkflow} />
+          <div className="relative w-full max-w-lg bg-white dark:bg-slate-900 border border-border rounded-2xl shadow-2xl overflow-hidden">
+            <div className="bg-slate-900/95 border-b border-border px-5 py-4 flex items-center justify-between">
+              <div>
+                <div className="flex items-center gap-2 mb-0.5">
+                  <Briefcase className="w-4 h-4 text-amber-700" />
+                  <h3 className="font-semibold text-primary text-sm">Launch Hiring Request</h3>
+                </div>
+                <p className="text-[11px] text-secondary">{workflowNode?.title || 'Open Position'} · {workflowNode?.division || '—'}</p>
+              </div>
+              <button onClick={closeWorkflow} className="p-1.5 hover:bg-slate-800/50 rounded-lg transition-colors"><X className="w-4 h-4 text-secondary" /></button>
+            </div>
+            {!workflowDone && (
+              <div className="flex items-center gap-1 px-5 pt-4 pb-1">
+                {[1,2].map(s => (
+                  <React.Fragment key={s}>
+                    <div className={`w-5 h-5 rounded-full text-[9px] font-bold flex items-center justify-center ${workflowStep >= s ? 'bg-amber-500 text-white' : 'bg-slate-700/40 text-secondary'}`}>{s}</div>
+                    {s < 2 && <div className={`flex-1 h-0.5 ${workflowStep > s ? 'bg-amber-500' : 'bg-slate-700/40'}`} />}
+                  </React.Fragment>
+                ))}
+                <span className="ml-3 text-[10px] text-secondary">{workflowStep === 1 ? 'Position Details' : 'Request Configuration'}</span>
+              </div>
+            )}
+            <div className="p-5 space-y-4 max-h-[60vh] overflow-y-auto">
+              {!workflowDone && workflowStep === 1 && (
+                <>
+                  <div className="bg-slate-800/30 border border-border rounded-xl p-4 space-y-2">
+                    {[['Position', workflowNode?.title || 'Deputy Sheriff'], ['Division', workflowNode?.division || '—'], ['Days Vacant', workflowNode?.daysVacant ? `${workflowNode.daysVacant} days` : '—'], ['Interim Coverage', workflowNode?.interimCoverage || 'None assigned']].map(([k, v]) => (
+                      <div key={k} className="flex justify-between text-xs"><span className="text-secondary">{k}</span><span className={`font-medium ${k === 'Days Vacant' && (workflowNode?.daysVacant || 0) > 30 ? 'text-red-400' : 'text-primary'}`}>{v}</span></div>
+                    ))}
+                  </div>
+                  <div className="space-y-2">
+                    <p className="text-xs font-medium text-secondary">Request Urgency</p>
+                    {['Critical — Fill within 14 days', 'High — Fill within 30 days', 'Standard — Normal hiring timeline'].map((level, i) => (
+                      <label key={i} onClick={() => setWorkflowSel(s => ({...s, urgency: i}))} className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-all ${workflowSel.urgency === i ? 'bg-amber-500/15 border-amber-500/40' : 'bg-slate-800/20 border-border hover:border-slate-600/50'}`}>
+                        <div className={`w-3 h-3 rounded-full border-2 flex-shrink-0 ${workflowSel.urgency === i ? 'border-amber-500 bg-amber-500' : 'border-slate-600'}`} />
+                        <span className="text-xs text-primary">{level}</span>
+                      </label>
+                    ))}
+                  </div>
+                </>
+              )}
+              {!workflowDone && workflowStep === 2 && (
+                <div className="space-y-3">
+                  <div className="px-3 py-2.5 bg-slate-800/30 border border-border rounded-lg text-xs text-primary">
+                    Target Fill: {workflowNode?.expectedFill || 'Mar 2025'} (current estimate)
+                  </div>
+                  <div className="space-y-2">
+                    <p className="text-xs font-medium text-secondary">Budget Source</p>
+                    {['Approved Operating Budget', 'Supplemental Request Required', 'Grant-Funded Position'].map((src, i) => (
+                      <label key={i} onClick={() => setWorkflowSel(s => ({...s, budget: i}))} className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-all ${workflowSel.budget === i ? 'bg-amber-500/15 border-amber-500/40' : 'bg-slate-800/20 border-border hover:border-slate-600/50'}`}>
+                        <div className={`w-3 h-3 rounded-full border-2 flex-shrink-0 ${workflowSel.budget === i ? 'border-amber-500 bg-amber-500' : 'border-slate-600'}`} />
+                        <span className="text-xs text-primary">{src}</span>
+                      </label>
+                    ))}
+                  </div>
+                  <label onClick={() => setWorkflowSel(s => ({...s, extendCoverage: !s.extendCoverage}))} className="flex items-center gap-3 p-3 bg-slate-800/20 border border-border rounded-xl cursor-pointer">
+                    <div className={`w-4 h-4 rounded border-2 flex-shrink-0 flex items-center justify-center ${workflowSel.extendCoverage ? 'border-amber-500 bg-amber-500' : 'border-slate-600'}`}>
+                      {workflowSel.extendCoverage && <CheckCircle className="w-2.5 h-2.5 text-white" />}
+                    </div>
+                    <span className="text-xs text-primary">Extend current interim coverage arrangement pending fill</span>
+                  </label>
+                </div>
+              )}
+              {workflowDone && (
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3 p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-xl">
+                    <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0" />
+                    <div>
+                      <p className="text-sm font-semibold text-emerald-400">Hiring Request Submitted</p>
+                      <p className="text-[11px] text-secondary">REQ-2025-{String(Math.floor(Math.random() * 900) + 100).padStart(3,'0')} · Processing initiated</p>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    {['Request routed to HR Director for approval', 'Budget office notified of funding need', 'Job requisition created in hiring portal', 'Vacancy posted to law enforcement boards', 'Interim coverage arrangement extended', 'Sheriff notified of critical vacancy status'].map((a, i) => (
+                      <div key={i} className="flex items-start gap-2 text-xs text-secondary">
+                        <CheckCircle className="w-3.5 h-3.5 text-emerald-400 mt-0.5 flex-shrink-0" /><span>{a}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+            <div className="border-t border-border px-5 py-3 flex items-center justify-between">
+              {!workflowDone ? (
+                <>
+                  <button onClick={workflowStep === 1 ? closeWorkflow : () => setWorkflowStep(s => s - 1)} className="px-3 py-1.5 text-xs text-secondary hover:text-primary transition-colors">{workflowStep === 1 ? 'Cancel' : '← Back'}</button>
+                  <button onClick={() => workflowStep < 2 ? setWorkflowStep(s => s + 1) : setWorkflowDone(true)} disabled={workflowStep === 1 && workflowSel.urgency === undefined} className="px-4 py-1.5 bg-amber-500 hover:bg-amber-600 disabled:opacity-50 disabled:cursor-not-allowed text-white text-xs font-medium rounded-lg transition-colors">
+                    {workflowStep < 2 ? 'Continue →' : 'Submit Request'}
+                  </button>
+                </>
+              ) : (
+                <button onClick={closeWorkflow} className="ml-auto px-4 py-1.5 bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/30 text-emerald-400 text-xs font-medium rounded-lg transition-colors">Done</button>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Workflow Modal: Certification Renewal ── */}
+      {workflowType === 'certRenewal' && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm" onClick={closeWorkflow} />
+          <div className="relative w-full max-w-lg bg-white dark:bg-slate-900 border border-border rounded-2xl shadow-2xl overflow-hidden">
+            <div className="bg-slate-900/95 border-b border-border px-5 py-4 flex items-center justify-between">
+              <div>
+                <div className="flex items-center gap-2 mb-0.5">
+                  <GraduationCap className="w-4 h-4 text-orange-700" />
+                  <h3 className="font-semibold text-primary text-sm">Schedule Certification Renewal</h3>
+                </div>
+                <p className="text-[11px] text-secondary">{workflowNode?.name || 'Officer'} · {workflowNode?.rank || '—'} · {workflowNode?.division || '—'}</p>
+              </div>
+              <button onClick={closeWorkflow} className="p-1.5 hover:bg-slate-800/50 rounded-lg transition-colors"><X className="w-4 h-4 text-secondary" /></button>
+            </div>
+            {!workflowDone && (
+              <div className="flex items-center gap-1 px-5 pt-4 pb-1">
+                {[1,2].map(s => (
+                  <React.Fragment key={s}>
+                    <div className={`w-5 h-5 rounded-full text-[9px] font-bold flex items-center justify-center ${workflowStep >= s ? 'bg-orange-500 text-white' : 'bg-slate-700/40 text-secondary'}`}>{s}</div>
+                    {s < 2 && <div className={`flex-1 h-0.5 ${workflowStep > s ? 'bg-orange-500' : 'bg-slate-700/40'}`} />}
+                  </React.Fragment>
+                ))}
+                <span className="ml-3 text-[10px] text-secondary">{workflowStep === 1 ? 'Select Certification' : 'Schedule & Provider'}</span>
+              </div>
+            )}
+            <div className="p-5 space-y-4 max-h-[60vh] overflow-y-auto">
+              {!workflowDone && workflowStep === 1 && (
+                <>
+                  <p className="text-xs font-medium text-secondary">Select certification to renew:</p>
+                  {(personCertifications[workflowNode?.id] || [
+                    { name: workflowNode?.certStatus === 'expired' ? 'Primary Certification (EXPIRED)' : 'Primary Certification (EXPIRING)', status: workflowNode?.certStatus || 'expiring', expires: 'Feb 2025' }
+                  ]).map((cert, i) => (
+                    <label key={i} onClick={() => setWorkflowSel(s => ({...s, cert: i}))} className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-all ${
+                      workflowSel.cert === i ? 'bg-orange-500/15 border-orange-500/40' :
+                      cert.status === 'expired' ? 'bg-red-500/8 border-red-500/20 hover:bg-red-500/12' :
+                      cert.status === 'expiring' ? 'bg-orange-500/8 border-orange-500/15 hover:bg-orange-500/12' :
+                      'bg-slate-800/20 border-border opacity-50 cursor-not-allowed'
+                    }`}>
+                      <div className={`w-3 h-3 rounded-full border-2 flex-shrink-0 ${workflowSel.cert === i ? 'border-orange-500 bg-orange-500' : 'border-slate-600'}`} />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-xs font-medium text-primary">{cert.name}</p>
+                        <p className="text-[10px] text-secondary">Expires {cert.expires}</p>
+                      </div>
+                      <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded border ${
+                        cert.status === 'expired' ? 'bg-red-500/20 text-red-400 border-red-500/30' :
+                        cert.status === 'expiring' ? 'bg-orange-500/20 text-orange-700 border-orange-500/30' :
+                        'bg-emerald-500/20 text-emerald-400 border-emerald-500/30'
+                      }`}>{cert.status.toUpperCase()}</span>
+                    </label>
+                  ))}
+                </>
+              )}
+              {!workflowDone && workflowStep === 2 && (
+                <div className="space-y-3">
+                  <div className="space-y-2">
+                    <p className="text-xs font-medium text-secondary">Training Format</p>
+                    {['In-Person (Recommended)', 'Online / Remote', 'Hybrid'].map((fmt, i) => (
+                      <label key={i} onClick={() => setWorkflowSel(s => ({...s, format: i}))} className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-all ${workflowSel.format === i ? 'bg-orange-500/15 border-orange-500/40' : 'bg-slate-800/20 border-border hover:border-slate-600/50'}`}>
+                        <div className={`w-3 h-3 rounded-full border-2 flex-shrink-0 ${workflowSel.format === i ? 'border-orange-500 bg-orange-500' : 'border-slate-600'}`} />
+                        <span className="text-xs text-primary">{fmt}</span>
+                      </label>
+                    ))}
+                  </div>
+                  <div className="space-y-2">
+                    <p className="text-xs font-medium text-secondary">Training Provider</p>
+                    {['State Law Enforcement Academy', 'Regional Training Consortium', 'Dept-Approved External Provider'].map((p, i) => (
+                      <label key={i} onClick={() => setWorkflowSel(s => ({...s, provider: i}))} className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-all ${workflowSel.provider === i ? 'bg-orange-500/15 border-orange-500/40' : 'bg-slate-800/20 border-border hover:border-slate-600/50'}`}>
+                        <div className={`w-3 h-3 rounded-full border-2 flex-shrink-0 ${workflowSel.provider === i ? 'border-orange-500 bg-orange-500' : 'border-slate-600'}`} />
+                        <span className="text-xs text-primary">{p}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {workflowDone && (
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3 p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-xl">
+                    <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0" />
+                    <div>
+                      <p className="text-sm font-semibold text-emerald-400">Certification Renewal Scheduled</p>
+                      <p className="text-[11px] text-secondary">Training calendar updated · Session booked</p>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    {['Training calendar updated with session dates', `${workflowNode?.name || 'Officer'} notified via department email`, 'Supervisor notification sent', 'HR certification record flagged for follow-up', 'Duty restriction lifted upon completion', 'Compliance dashboard updated'].map((a, i) => (
+                      <div key={i} className="flex items-start gap-2 text-xs text-secondary">
+                        <CheckCircle className="w-3.5 h-3.5 text-emerald-400 mt-0.5 flex-shrink-0" /><span>{a}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+            <div className="border-t border-border px-5 py-3 flex items-center justify-between">
+              {!workflowDone ? (
+                <>
+                  <button onClick={workflowStep === 1 ? closeWorkflow : () => setWorkflowStep(s => s - 1)} className="px-3 py-1.5 text-xs text-secondary hover:text-primary transition-colors">{workflowStep === 1 ? 'Cancel' : '← Back'}</button>
+                  <button onClick={() => workflowStep < 2 ? setWorkflowStep(s => s + 1) : setWorkflowDone(true)} disabled={workflowStep === 1 && workflowSel.cert === undefined} className="px-4 py-1.5 bg-orange-500 hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed text-white text-xs font-medium rounded-lg transition-colors">
+                    {workflowStep < 2 ? 'Continue →' : 'Schedule Renewal'}
+                  </button>
+                </>
+              ) : (
+                <button onClick={closeWorkflow} className="ml-auto px-4 py-1.5 bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/30 text-emerald-400 text-xs font-medium rounded-lg transition-colors">Done</button>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Workflow Modal: Succession Plan ── */}
+      {workflowType === 'succession' && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm" onClick={closeWorkflow} />
+          <div className="relative w-full max-w-lg bg-white dark:bg-slate-900 border border-border rounded-2xl shadow-2xl overflow-hidden">
+            <div className="bg-slate-900/95 border-b border-border px-5 py-4 flex items-center justify-between">
+              <div>
+                <div className="flex items-center gap-2 mb-0.5">
+                  <TrendingUp className="w-4 h-4 text-amber-700" />
+                  <h3 className="font-semibold text-primary text-sm">Succession Plan</h3>
+                </div>
+                <p className="text-[11px] text-secondary">{workflowNode?.name || '—'} · {workflowNode?.title || '—'}</p>
+              </div>
+              <button onClick={closeWorkflow} className="p-1.5 hover:bg-slate-800/50 rounded-lg transition-colors"><X className="w-4 h-4 text-secondary" /></button>
+            </div>
+            <div className="p-5 space-y-4 max-h-[65vh] overflow-y-auto">
+              {!workflowDone ? (
+                <>
+                  {/* Retirement timeline */}
+                  <div className={`p-4 rounded-xl border ${workflowNode?.retirementMonths === 0 ? 'bg-red-500/10 border-red-500/30' : 'bg-orange-500/10 border-orange-500/25'}`}>
+                    <div className="flex items-center gap-2 mb-2">
+                      <Clock className={`w-4 h-4 ${workflowNode?.retirementMonths === 0 ? 'text-red-400' : 'text-orange-700'}`} />
+                      <span className={`text-sm font-medium ${workflowNode?.retirementMonths === 0 ? 'text-red-400' : 'text-orange-700'}`}>
+                        {workflowNode?.retirementMonths === 0 ? 'Retirement-eligible NOW' : `Retirement eligible in ${workflowNode?.retirementMonths} months`}
+                      </span>
+                    </div>
+                    <p className="text-xs text-secondary">Succession window: {workflowNode?.retirementMonths === 0 ? 'Immediate' : 'Active planning required'}. Position: {workflowNode?.title}.</p>
+                  </div>
+
+                  {/* Succession candidates */}
+                  <div>
+                    <p className="text-xs font-medium text-secondary mb-2">Succession Candidates</p>
+                    <div className="space-y-2">
+                      {(workflowNode?.promotionCandidates || (workflowNode?.succession?.successors) || (workflowNode?.succession?.successor ? [workflowNode.succession.successor] : ['No candidate identified'])).map((candidate, i) => (
+                        <div key={i} className={`flex items-center gap-3 p-3 rounded-xl border ${i === 0 ? 'bg-emerald-500/10 border-emerald-500/25' : 'bg-slate-800/20 border-border'}`}>
+                          <div className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold ${i === 0 ? 'bg-emerald-500/20 text-emerald-400' : 'bg-slate-700/40 text-secondary'}`}>
+                            {i + 1}
+                          </div>
+                          <div className="flex-1">
+                            <p className="text-xs font-medium text-primary">{candidate}</p>
+                            <p className="text-[10px] text-secondary">{i === 0 ? 'Primary successor · Ready for promotion' : 'Backup candidate'}</p>
+                          </div>
+                          {i === 0 && <span className="text-[9px] px-1.5 py-0.5 bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded font-bold">PRIMARY</span>}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Vacancy impact preview */}
+                  {vacancyImpactData[workflowNode?.id] && (
+                    <div className="p-3 bg-slate-800/30 border border-border rounded-xl">
+                      <p className="text-xs font-medium text-secondary mb-2">Vacancy Risk If Not Addressed</p>
+                      <div className="space-y-1">
+                        {vacancyImpactData[workflowNode.id].impacts.slice(0, 2).map((impact, i) => (
+                          <p key={i} className="text-xs text-secondary flex items-start gap-2"><span className="text-slate-500 mt-0.5">•</span>{impact}</p>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="space-y-2 pt-1">
+                    <button onClick={() => { openWorkflow('actingPromotion', workflowNode); }} className="w-full px-4 py-2.5 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-xs font-medium transition-colors flex items-center justify-center gap-2">
+                      <UserCheck className="w-4 h-4" />
+                      Designate Acting Supervisor Now
+                    </button>
+                    <button onClick={() => setWorkflowDone(true)} className="w-full px-4 py-2.5 bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-xs font-medium transition-colors flex items-center justify-center gap-2">
+                      <FileText className="w-4 h-4" />
+                      Begin Formal Promotion Process
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3 p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-xl">
+                    <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0" />
+                    <div>
+                      <p className="text-sm font-semibold text-emerald-400">Succession Action Initiated</p>
+                      <p className="text-[11px] text-secondary">Formal promotion process started · HR notified</p>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    {['Succession plan activated in command record', 'HR Director notified to begin promotion review', 'Merit review board scheduling initiated', 'Civil service notification requirements filed', 'Sheriff briefed on transition timeline'].map((a, i) => (
+                      <div key={i} className="flex items-start gap-2 text-xs text-secondary">
+                        <CheckCircle className="w-3.5 h-3.5 text-emerald-400 mt-0.5 flex-shrink-0" /><span>{a}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+            {workflowDone && (
+              <div className="border-t border-border px-5 py-3 flex justify-end">
+                <button onClick={closeWorkflow} className="px-4 py-1.5 bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/30 text-emerald-400 text-xs font-medium rounded-lg transition-colors">Done</button>
+              </div>
+            )}
+            {!workflowDone && (
+              <div className="border-t border-border px-5 py-3">
+                <button onClick={closeWorkflow} className="text-xs text-secondary hover:text-primary transition-colors">Close</button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* ── Workflow Modal: Acting Promotion / Appoint Acting Supervisor ── */}
+      {workflowType === 'actingPromotion' && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm" onClick={closeWorkflow} />
+          <div className="relative w-full max-w-lg bg-white dark:bg-slate-900 border border-border rounded-2xl shadow-2xl overflow-hidden">
+            <div className="bg-slate-900/95 border-b border-border px-5 py-4 flex items-center justify-between">
+              <div>
+                <div className="flex items-center gap-2 mb-0.5">
+                  <UserCheck className="w-4 h-4 text-amber-700" />
+                  <h3 className="font-semibold text-primary text-sm">{workflowNode?.actingFlag ? 'Promote to Permanent Appointment' : 'Designate Acting Supervisor'}</h3>
+                </div>
+                <p className="text-[11px] text-secondary">{workflowNode?.title || workflowNode?.name || '—'} · {workflowNode?.division || '—'}</p>
+              </div>
+              <button onClick={closeWorkflow} className="p-1.5 hover:bg-slate-800/50 rounded-lg transition-colors"><X className="w-4 h-4 text-secondary" /></button>
+            </div>
+            {!workflowDone && (
+              <div className="flex items-center gap-1 px-5 pt-4 pb-1">
+                {[1,2].map(s => (
+                  <React.Fragment key={s}>
+                    <div className={`w-5 h-5 rounded-full text-[9px] font-bold flex items-center justify-center ${workflowStep >= s ? 'bg-amber-500 text-white' : 'bg-slate-700/40 text-secondary'}`}>{s}</div>
+                    {s < 2 && <div className={`flex-1 h-0.5 ${workflowStep > s ? 'bg-amber-500' : 'bg-slate-700/40'}`} />}
+                  </React.Fragment>
+                ))}
+                <span className="ml-3 text-[10px] text-secondary">{workflowStep === 1 ? 'Select Candidate' : 'Appointment Details'}</span>
+              </div>
+            )}
+            <div className="p-5 space-y-4 max-h-[60vh] overflow-y-auto">
+              {!workflowDone && workflowStep === 1 && (
+                <>
+                  <p className="text-xs font-medium text-secondary">Select promotion candidate:</p>
+                  <div className="space-y-2">
+                    {(workflowNode?.actingFlag
+                      ? [workflowNode.name]
+                      : (workflowNode?.promotionCandidates || (workflowNode?.succession?.successors) || (workflowNode?.succession?.successor ? [workflowNode.succession.successor] : ['No candidates on file']))
+                    ).map((candidate, i) => (
+                      <label key={i} onClick={() => setWorkflowSel(s => ({...s, candidate: i, candidateName: candidate}))} className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-all ${workflowSel.candidate === i ? 'bg-amber-500/15 border-amber-500/40' : 'bg-slate-800/20 border-border hover:border-slate-600/50'}`}>
+                        <div className={`w-3 h-3 rounded-full border-2 flex-shrink-0 ${workflowSel.candidate === i ? 'border-amber-500 bg-amber-500' : 'border-slate-600'}`} />
+                        <div className="flex-1">
+                          <p className="text-xs font-medium text-primary">{candidate}</p>
+                          <p className="text-[10px] text-secondary">{i === 0 ? 'Primary succession candidate' : 'Alternate candidate'}</p>
+                        </div>
+                        {i === 0 && <span className="text-[9px] px-1.5 py-0.5 bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded font-bold">READY</span>}
+                      </label>
+                    ))}
+                  </div>
+                </>
+              )}
+              {!workflowDone && workflowStep === 2 && (
+                <div className="space-y-3">
+                  <div className="bg-slate-800/30 border border-border rounded-xl p-3 text-xs space-y-1">
+                    <div className="flex justify-between"><span className="text-secondary">Candidate</span><span className="text-primary font-medium">{workflowSel.candidateName || 'Selected'}</span></div>
+                    <div className="flex justify-between"><span className="text-secondary">Position</span><span className="text-primary">{workflowNode?.title || '—'}</span></div>
+                    <div className="flex justify-between"><span className="text-secondary">Effective</span><span className="text-primary">Immediate upon approval</span></div>
+                  </div>
+                  <div className="space-y-2">
+                    <p className="text-xs font-medium text-secondary">Appointment Type</p>
+                    {['Acting — Temporary (90-day)', 'Acting — Extended (pending permanent fill)', 'Permanent Appointment'].map((type, i) => (
+                      <label key={i} onClick={() => setWorkflowSel(s => ({...s, apptType: i}))} className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-all ${workflowSel.apptType === i ? 'bg-amber-500/15 border-amber-500/40' : 'bg-slate-800/20 border-border hover:border-slate-600/50'}`}>
+                        <div className={`w-3 h-3 rounded-full border-2 flex-shrink-0 ${workflowSel.apptType === i ? 'border-amber-500 bg-amber-500' : 'border-slate-600'}`} />
+                        <span className="text-xs text-primary">{type}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {workflowDone && (
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3 p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-xl">
+                    <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0" />
+                    <div>
+                      <p className="text-sm font-semibold text-emerald-400">Appointment Recorded</p>
+                      <p className="text-[11px] text-secondary">{workflowSel.candidateName || 'Candidate'} · {workflowNode?.title || 'Position'}</p>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    {['Command structure updated in system', 'Personnel record amended', 'All shift commanders notified', 'HR processing initiated', 'Union notification sent per CBA', "Sheriff's approval routed for signature", 'Org chart update pending ratification'].map((a, i) => (
+                      <div key={i} className="flex items-start gap-2 text-xs text-secondary">
+                        <CheckCircle className="w-3.5 h-3.5 text-emerald-400 mt-0.5 flex-shrink-0" /><span>{a}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+            <div className="border-t border-border px-5 py-3 flex items-center justify-between">
+              {!workflowDone ? (
+                <>
+                  <button onClick={workflowStep === 1 ? closeWorkflow : () => setWorkflowStep(s => s - 1)} className="px-3 py-1.5 text-xs text-secondary hover:text-primary transition-colors">{workflowStep === 1 ? 'Cancel' : '← Back'}</button>
+                  <button onClick={() => workflowStep < 2 ? setWorkflowStep(s => s + 1) : setWorkflowDone(true)} disabled={workflowStep === 1 && workflowSel.candidate === undefined} className="px-4 py-1.5 bg-amber-500 hover:bg-amber-600 disabled:opacity-50 disabled:cursor-not-allowed text-white text-xs font-medium rounded-lg transition-colors">
+                    {workflowStep < 2 ? 'Continue →' : 'Confirm Appointment'}
+                  </button>
+                </>
+              ) : (
+                <button onClick={closeWorkflow} className="ml-auto px-4 py-1.5 bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/30 text-emerald-400 text-xs font-medium rounded-lg transition-colors">Done</button>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Workflow Modal: Span of Control Redistribution ── */}
+      {workflowType === 'spanReassign' && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm" onClick={closeWorkflow} />
+          <div className="relative w-full max-w-lg bg-white dark:bg-slate-900 border border-border rounded-2xl shadow-2xl overflow-hidden">
+            <div className="bg-slate-900/95 border-b border-border px-5 py-4 flex items-center justify-between">
+              <div>
+                <div className="flex items-center gap-2 mb-0.5">
+                  <Users className="w-4 h-4 text-orange-700" />
+                  <h3 className="font-semibold text-primary text-sm">Reassign Supervisory Oversight</h3>
+                </div>
+                <p className="text-[11px] text-secondary">{workflowNode?.name || 'Supervisor'} · {workflowNode?.reports || '—'} direct reports · Span {workflowNode?.spanWarning?.toUpperCase() || 'ELEVATED'}</p>
+              </div>
+              <button onClick={closeWorkflow} className="p-1.5 hover:bg-slate-800/50 rounded-lg transition-colors"><X className="w-4 h-4 text-secondary" /></button>
+            </div>
+            {!workflowDone && (
+              <div className="flex items-center gap-1 px-5 pt-4 pb-1">
+                {[1,2].map(s => (
+                  <React.Fragment key={s}>
+                    <div className={`w-5 h-5 rounded-full text-[9px] font-bold flex items-center justify-center ${workflowStep >= s ? 'bg-orange-500 text-white' : 'bg-slate-700/40 text-secondary'}`}>{s}</div>
+                    {s < 2 && <div className={`flex-1 h-0.5 ${workflowStep > s ? 'bg-orange-500' : 'bg-slate-700/40'}`} />}
+                  </React.Fragment>
+                ))}
+                <span className="ml-3 text-[10px] text-secondary">{workflowStep === 1 ? 'Resolution Approach' : 'Action Plan'}</span>
+              </div>
+            )}
+            <div className="p-5 space-y-4 max-h-[60vh] overflow-y-auto">
+              {!workflowDone && workflowStep === 1 && (
+                <>
+                  <div className={`p-3 rounded-xl border ${workflowNode?.spanWarning === 'high' ? 'bg-orange-500/10 border-orange-500/30' : 'bg-orange-500/8 border-orange-500/20'}`}>
+                    <div className="flex items-center gap-2 mb-1">
+                      <AlertTriangle className="w-4 h-4 text-orange-700" />
+                      <span className="text-xs font-medium text-orange-700">{workflowNode?.reports || 12} direct reports — recommended max 8–10</span>
+                    </div>
+                    {workflowNode?.spanRecommendation && <p className="text-xs text-secondary">{workflowNode.spanRecommendation}</p>}
+                  </div>
+                  <div className="space-y-2">
+                    <p className="text-xs font-medium text-secondary">Select resolution approach:</p>
+                    {['Create new Corporal / Supervisory role', 'Redistribute to existing supervisor', 'Transfer personnel to adjacent unit'].map((opt, i) => (
+                      <label key={i} onClick={() => setWorkflowSel(s => ({...s, approach: i}))} className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-all ${workflowSel.approach === i ? 'bg-orange-500/15 border-orange-500/40' : 'bg-slate-800/20 border-border hover:border-slate-600/50'}`}>
+                        <div className={`w-3 h-3 rounded-full border-2 flex-shrink-0 ${workflowSel.approach === i ? 'border-orange-500 bg-orange-500' : 'border-slate-600'}`} />
+                        <span className="text-xs text-primary">{opt}</span>
+                      </label>
+                    ))}
+                  </div>
+                </>
+              )}
+              {!workflowDone && workflowStep === 2 && (
+                <div className="space-y-3">
+                  <div className="bg-slate-800/30 border border-border rounded-xl p-3 text-xs space-y-1.5">
+                    <p className="font-medium text-primary">
+                      {workflowSel.approach === 0 ? 'New Supervisory Role' : workflowSel.approach === 1 ? 'Redistribute Reports' : 'Transfer Personnel'}
+                    </p>
+                    <p className="text-secondary">
+                      {workflowSel.approach === 0 ? 'A new Corporal or Sergeant position will be created and positioned to absorb excess direct reports.' :
+                       workflowSel.approach === 1 ? 'Excess reports will be redistributed to a peer supervisor at the same unit level.' :
+                       'Personnel will be formally transferred to an adjacent unit where capacity exists.'}
+                    </p>
+                  </div>
+                  <div className="space-y-2">
+                    <p className="text-xs font-medium text-secondary">Priority</p>
+                    {['Urgent — Submit for immediate approval', 'Standard — Next scheduled review cycle', 'Advisory — Flag for command awareness only'].map((p, i) => (
+                      <label key={i} onClick={() => setWorkflowSel(s => ({...s, priority: i}))} className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-all ${workflowSel.priority === i ? 'bg-orange-500/15 border-orange-500/40' : 'bg-slate-800/20 border-border hover:border-slate-600/50'}`}>
+                        <div className={`w-3 h-3 rounded-full border-2 flex-shrink-0 ${workflowSel.priority === i ? 'border-orange-500 bg-orange-500' : 'border-slate-600'}`} />
+                        <span className="text-xs text-primary">{p}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {workflowDone && (
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3 p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-xl">
+                    <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0" />
+                    <div>
+                      <p className="text-sm font-semibold text-emerald-400">Span-of-Control Action Submitted</p>
+                      <p className="text-[11px] text-secondary">Workforce review initiated · Command briefed</p>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    {['Span-of-control review submitted to Command', 'HR staffing analysis initiated', 'Division Major notified for scheduling review', 'Command briefing scheduled within 7 days', 'Org chart update pending approval', 'Compliance audit flag cleared pending action'].map((a, i) => (
+                      <div key={i} className="flex items-start gap-2 text-xs text-secondary">
+                        <CheckCircle className="w-3.5 h-3.5 text-emerald-400 mt-0.5 flex-shrink-0" /><span>{a}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+            <div className="border-t border-border px-5 py-3 flex items-center justify-between">
+              {!workflowDone ? (
+                <>
+                  <button onClick={workflowStep === 1 ? closeWorkflow : () => setWorkflowStep(s => s - 1)} className="px-3 py-1.5 text-xs text-secondary hover:text-primary transition-colors">{workflowStep === 1 ? 'Cancel' : '← Back'}</button>
+                  <button onClick={() => workflowStep < 2 ? setWorkflowStep(s => s + 1) : setWorkflowDone(true)} disabled={workflowStep === 1 && workflowSel.approach === undefined} className="px-4 py-1.5 bg-orange-500 hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed text-white text-xs font-medium rounded-lg transition-colors">
+                    {workflowStep < 2 ? 'Continue →' : 'Submit Action'}
+                  </button>
+                </>
+              ) : (
+                <button onClick={closeWorkflow} className="ml-auto px-4 py-1.5 bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/30 text-emerald-400 text-xs font-medium rounded-lg transition-colors">Done</button>
               )}
             </div>
           </div>
