@@ -3,6 +3,9 @@ import { Search, Filter, Download, Mail, Phone, MapPin, AlertCircle, CheckCircle
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import DashboardLayout from '../layouts/DashboardLayout';
+import ScheduleTrainingWorkflow from './workforce/ScheduleTrainingWorkflow';
+import CertificationReport from './workforce/CertificationReport';
+import WorkforceAnalytics from './workforce/WorkforceAnalytics';
 
 export default function PersonnelOverview() {
   const navigate = useNavigate();
@@ -15,7 +18,8 @@ export default function PersonnelOverview() {
   const [collapsedGroups, setCollapsedGroups] = useState({});
   const [scheduleTrainingOpen, setScheduleTrainingOpen] = useState(false);
   const [scheduleTrainingTarget, setScheduleTrainingTarget] = useState(null);
-  const [scheduleTrainingConfirmed, setScheduleTrainingConfirmed] = useState(false);
+  const [certReportOpen, setCertReportOpen] = useState(false);
+  const [workforceAnalyticsOpen, setWorkforceAnalyticsOpen] = useState(false);
   const [actionedRecommendations, setActionedRecommendations] = useState({});
 
   const personnel = [
@@ -387,15 +391,14 @@ export default function PersonnelOverview() {
     setFullProfileOpen(true);
   };
 
-  const openScheduleTraining = (person, certification = null) => {
-    setScheduleTrainingTarget({ person, certification });
-    setScheduleTrainingConfirmed(false);
+  const openScheduleTraining = (person = null, certification = null) => {
+    setScheduleTrainingTarget(person ? { person, certification } : null);
     setScheduleTrainingOpen(true);
   };
 
   const closeScheduleTraining = () => {
     setScheduleTrainingOpen(false);
-    setScheduleTrainingConfirmed(false);
+    setScheduleTrainingTarget(null);
   };
 
   const handleRecommendationAction = (rec) => {
@@ -574,10 +577,10 @@ export default function PersonnelOverview() {
                     <button onClick={() => openScheduleTraining(personnel.find(p => p.id === 'P-2024-001'), 'CPR/First Aid')} className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded text-[11px] font-medium transition-colors">
                       <Calendar className="w-3 h-3" />Schedule Training
                     </button>
-                    <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded text-[11px] font-medium transition-colors">
+                    <button onClick={() => setCertReportOpen(true)} className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded text-[11px] font-medium transition-colors">
                       <FileText className="w-3 h-3" />Certification Report
                     </button>
-                    <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded text-[11px] font-medium transition-colors">
+                    <button onClick={() => setWorkforceAnalyticsOpen(true)} className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded text-[11px] font-medium transition-colors">
                       <BarChart3 className="w-3 h-3" />Workforce Analytics
                     </button>
                     <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded text-[11px] font-medium transition-colors">
@@ -1082,8 +1085,27 @@ export default function PersonnelOverview() {
 
 
 
-      {/* Schedule Training Panel — pre-filled, never re-search the employee */}
-      {scheduleTrainingOpen && scheduleTrainingTarget?.person && (
+      {/* ── New workforce modals ── */}
+      <ScheduleTrainingWorkflow
+        isOpen={scheduleTrainingOpen}
+        onClose={closeScheduleTraining}
+        personnel={personnel}
+        preselectedPerson={scheduleTrainingTarget?.person ?? null}
+        preselectedCert={scheduleTrainingTarget?.certification ?? null}
+      />
+      <CertificationReport
+        isOpen={certReportOpen}
+        onClose={() => setCertReportOpen(false)}
+        personnel={personnel}
+        onScheduleTraining={(person, cert) => { setCertReportOpen(false); openScheduleTraining(person, cert); }}
+      />
+      <WorkforceAnalytics
+        isOpen={workforceAnalyticsOpen}
+        onClose={() => setWorkforceAnalyticsOpen(false)}
+      />
+
+      {/* Legacy panel block — replaced; keep sentinel comment only */}
+      {false && scheduleTrainingOpen && scheduleTrainingTarget?.person && (
         <div className="fixed inset-0 z-50 flex justify-end">
           <div
             className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm"
