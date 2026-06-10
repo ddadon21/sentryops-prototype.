@@ -5,7 +5,8 @@ import {
   Users, AlertTriangle, CheckCircle,
   Circle, ArrowRight, ChevronDown, ChevronUp,
   Truck, Heart, LogOut, ArrowLeftRight, AlertOctagon,
-  UserCheck, MapPin, Plus, PhoneCall, Lock, UserX
+  UserCheck, MapPin, Plus, PhoneCall, Lock, UserX,
+  Lightbulb, FileText, X, Award, Repeat, Search, Send
 } from 'lucide-react';
 
 // ── Types ──────────────────────────────────────────────────────
@@ -59,6 +60,9 @@ interface Officer {
   onPostSince: string;
   status: 'On Post' | 'Transport' | 'Break' | 'Medical Escort' | 'OT Pending';
   hoursWorked: number;
+  certifications: string[];
+  otEligible: boolean;
+  crossTrained: string[];
 }
 
 // ── Static Data ────────────────────────────────────────────────
@@ -110,20 +114,20 @@ const incidents: Incident[] = [
 ];
 
 const officers: Officer[] = [
-  { badge: '2041', name: 'Harris, K.',    rank: 'Deputy',    assignment: 'A-Pod',         postType: 'Pod',          onPostSince: '14:00', status: 'On Post',        hoursWorked: 1 },
-  { badge: '2088', name: 'White, S.',     rank: 'Deputy',    assignment: 'A2-Pod',        postType: 'Pod',          onPostSince: '14:00', status: 'On Post',        hoursWorked: 1 },
-  { badge: '2110', name: 'King, D.',      rank: 'Deputy',    assignment: 'B-Pod',         postType: 'Pod',          onPostSince: '14:00', status: 'On Post',        hoursWorked: 1 },
-  { badge: '2134', name: 'Scott, J.',     rank: 'Deputy',    assignment: 'B2-Pod',        postType: 'Pod',          onPostSince: '14:00', status: 'On Post',        hoursWorked: 1 },
-  { badge: '2156', name: 'Rivera, M.',    rank: 'Deputy',    assignment: 'C-Pod',         postType: 'Pod',          onPostSince: '14:00', status: 'On Post',        hoursWorked: 1 },
-  { badge: '2204', name: 'Carter, L.',    rank: 'Deputy',    assignment: 'D-Pod',         postType: 'Pod',          onPostSince: '14:00', status: 'On Post',        hoursWorked: 1 },
-  { badge: '2217', name: 'Lewis, T.',     rank: 'Deputy',    assignment: 'D2-Pod',        postType: 'Pod',          onPostSince: '14:00', status: 'On Post',        hoursWorked: 1 },
-  { badge: '2251', name: 'Martinez, R.',  rank: 'Deputy',    assignment: 'E-Pod',         postType: 'Medical',      onPostSince: '14:00', status: 'Medical Escort', hoursWorked: 9 },
-  { badge: '2289', name: 'Johnson, C.',   rank: 'Deputy',    assignment: 'E2-Pod',        postType: 'Pod',          onPostSince: '14:00', status: 'On Post',        hoursWorked: 1 },
-  { badge: '2301', name: 'Allen, P.',     rank: 'Deputy',    assignment: 'F-Pod / Intake',postType: 'Pod',          onPostSince: '14:00', status: 'On Post',        hoursWorked: 1 },
-  { badge: '2318', name: 'Young, A.',     rank: 'Deputy',    assignment: 'F2-Pod',        postType: 'Pod',          onPostSince: '14:00', status: 'On Post',        hoursWorked: 1 },
-  { badge: '2345', name: 'Clark, B.',     rank: 'Deputy',    assignment: 'H-Pod',         postType: 'Pod',          onPostSince: '14:00', status: 'On Post',        hoursWorked: 1 },
-  { badge: '2367', name: 'Robinson, E.',  rank: 'Deputy',    assignment: 'H2-Pod',        postType: 'Pod',          onPostSince: '14:00', status: 'On Post',        hoursWorked: 9 },
-  { badge: '2399', name: 'Hill, N.',      rank: 'Deputy',    assignment: 'G-Pod + Float', postType: 'Float',        onPostSince: '14:00', status: 'On Post',        hoursWorked: 1 },
+  { badge: '2041', name: 'Harris, K.',    rank: 'Deputy',    assignment: 'A-Pod',         postType: 'Pod',          onPostSince: '14:00', status: 'On Post',        hoursWorked: 1, certifications: ['Intake'],                              otEligible: true,  crossTrained: ['B-Pod (Max)'] },
+  { badge: '2088', name: 'White, S.',     rank: 'Deputy',    assignment: 'A2-Pod',        postType: 'Pod',          onPostSince: '14:00', status: 'On Post',        hoursWorked: 1, certifications: ['Crisis Intervention (CIT)'],           otEligible: true,  crossTrained: ['Mental Health'] },
+  { badge: '2110', name: 'King, D.',      rank: 'Deputy',    assignment: 'B-Pod',         postType: 'Pod',          onPostSince: '14:00', status: 'On Post',        hoursWorked: 1, certifications: ['Use of Force Instructor'],             otEligible: false, crossTrained: ['Disciplinary'] },
+  { badge: '2134', name: 'Scott, J.',     rank: 'Deputy',    assignment: 'B2-Pod',        postType: 'Pod',          onPostSince: '14:00', status: 'On Post',        hoursWorked: 1, certifications: ['Disciplinary Housing'],                otEligible: true,  crossTrained: ['Max Security'] },
+  { badge: '2156', name: 'Rivera, M.',    rank: 'Deputy',    assignment: 'C-Pod',         postType: 'Pod',          onPostSince: '14:00', status: 'On Post',        hoursWorked: 1, certifications: ['Field Training Officer (FTO)'],       otEligible: true,  crossTrained: ['Intake'] },
+  { badge: '2204', name: 'Carter, L.',    rank: 'Deputy',    assignment: 'D-Pod',         postType: 'Pod',          onPostSince: '14:00', status: 'On Post',        hoursWorked: 1, certifications: ['PREA Compliance'],                     otEligible: true,  crossTrained: ['D2-Pod (Female Max)'] },
+  { badge: '2217', name: 'Lewis, T.',     rank: 'Deputy',    assignment: 'D2-Pod',        postType: 'Pod',          onPostSince: '14:00', status: 'On Post',        hoursWorked: 1, certifications: ['Crisis Intervention (CIT)'],           otEligible: false, crossTrained: ['D-Pod (Female GP)'] },
+  { badge: '2251', name: 'Martinez, R.',  rank: 'Deputy',    assignment: 'E-Pod',         postType: 'Medical',      onPostSince: '14:00', status: 'Medical Escort', hoursWorked: 9, certifications: ['Medical Escort', 'CPR / First Responder'], otEligible: true,  crossTrained: ['Mental Health'] },
+  { badge: '2289', name: 'Johnson, C.',   rank: 'Deputy',    assignment: 'E2-Pod',        postType: 'Pod',          onPostSince: '14:00', status: 'On Post',        hoursWorked: 1, certifications: ['Intake', 'Medical Escort'],            otEligible: true,  crossTrained: ['Medical', 'Mental Health'] },
+  { badge: '2301', name: 'Allen, P.',     rank: 'Deputy',    assignment: 'F-Pod / Intake',postType: 'Pod',          onPostSince: '14:00', status: 'On Post',        hoursWorked: 1, certifications: ['Intake', 'Classification'],            otEligible: true,  crossTrained: ['Control Room'] },
+  { badge: '2318', name: 'Young, A.',     rank: 'Deputy',    assignment: 'F2-Pod',        postType: 'Pod',          onPostSince: '14:00', status: 'On Post',        hoursWorked: 1, certifications: ['Protective Custody Mgmt'],             otEligible: true,  crossTrained: ['Intake'] },
+  { badge: '2345', name: 'Clark, B.',     rank: 'Deputy',    assignment: 'H-Pod',         postType: 'Pod',          onPostSince: '14:00', status: 'On Post',        hoursWorked: 1, certifications: ['Federal Liaison'],                     otEligible: false, crossTrained: ['ICE Hold (H2)'] },
+  { badge: '2367', name: 'Robinson, E.',  rank: 'Deputy',    assignment: 'H2-Pod',        postType: 'Pod',          onPostSince: '14:00', status: 'On Post',        hoursWorked: 9, certifications: ['ICE Hold Procedures'],                 otEligible: true,  crossTrained: ['Federal Hold (H-Pod)'] },
+  { badge: '2399', name: 'Hill, N.',      rank: 'Deputy',    assignment: 'G-Pod + Float', postType: 'Float',        onPostSince: '14:00', status: 'On Post',        hoursWorked: 1, certifications: ['Float / Utility', 'Crisis Intervention (CIT)'], otEligible: true, crossTrained: ['Pre-Release', 'Intake', 'Mental Health'] },
 ];
 
 // ── Helpers ────────────────────────────────────────────────────
@@ -226,6 +230,9 @@ interface CriticalIssue {
 
 const PRIORITY_ORDER: Record<Priority, number> = { Immediate: 0, 'High Priority': 1, Monitor: 2 };
 
+type ActionPriority = 'Critical' | 'High' | 'Medium';
+const ACTION_PRIORITY_ORDER: Record<ActionPriority, number> = { Critical: 0, High: 1, Medium: 2 };
+
 const IMPACT_PREVIEWS: Record<string, string[]> = {
   'Redistribute Inmates': [
     'H2-Pod: 36 → 28 inmates · reduces to 87% capacity',
@@ -251,18 +258,33 @@ const IMPACT_PREVIEWS: Record<string, string[]> = {
     'Investigating officer and supervisor notified',
     'Duration: until incident resolved or cleared',
   ],
+  'Reassign Johnson': [
+    'Johnson (#2289): E2-Pod → Medical Escort (E-Pod) — certified Medical Escort, cross-trained Medical',
+    'Martinez (#2251): relieved after 9h on Medical Escort — fatigue risk cleared, returns to regular rotation',
+    'E2-Pod backfilled by Hill (#2399, Float) — cross-trained Mental Health, no coverage gap created',
+    'No new overtime required · cross-training utilization improved',
+  ],
 };
 
 export default function CustodyOperations() {
   const navigate = useNavigate();
   const [expandedPod, setExpandedPod] = useState<string | null>(null);
   const [expandedIncident, setExpandedIncident] = useState<number | null>(null);
+  const [expandedOfficer, setExpandedOfficer] = useState<string | null>(null);
   const [activePreview, setActivePreview] = useState<{ issueId: string; action: string } | null>(null);
+  const [showHandoff, setShowHandoff] = useState(false);
+  const [handoffSent, setHandoffSent] = useState(false);
+  const [supervisorNotes, setSupervisorNotes] = useState(
+    'H2-Pod over capacity — redistribution recommended before shift end. E2-Pod contraband sweep pending, intel report due 15:30. Officer Smith out sick — OT/backup still required for remainder of shift.'
+  );
 
   const staffPct = Math.round((currentShift.present / currentShift.scheduled) * 100);
   const openIncidents = incidents.filter(i => i.status !== 'Resolved').length;
+  const unresolvedIncidents = incidents.filter(i => i.status !== 'Resolved');
   const activeMovementCount = movements.filter(m => m.status === 'In Progress' || m.status === 'Staging').length;
+  const pendingMovements = movements.filter(m => m.status !== 'Completed');
   const overCapacityPods = pods.filter(p => p.status === 'Over Capacity');
+  const criticalPods = pods.filter(p => p.status === 'Over Capacity' || (p.status === 'Near Capacity' && p.incidents > 0));
 
   // ── Critical Issues with Priority + Impact ────────────────────
   const criticalIssues: CriticalIssue[] = [
@@ -348,6 +370,42 @@ export default function CustodyOperations() {
     }
   };
 
+  const scrollToSection = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  // ── AI Prioritized Actions — ranked across pods, incidents, staffing, movements ──
+  const prioritizedActions: { id: string; priority: ActionPriority; label: string; onClick: () => void }[] = [
+    ...criticalIssues.map(issue => ({
+      id: issue.id,
+      priority: (issue.severity === 'critical' ? 'Critical' : issue.severity === 'high' ? 'High' : 'Medium') as ActionPriority,
+      label: issue.label,
+      onClick: () => {
+        if (issue.id.startsWith('pod-')) {
+          setExpandedPod(issue.id.replace('pod-', ''));
+          scrollToSection('housing-section');
+        } else if (issue.id.startsWith('inc-')) {
+          setExpandedIncident(Number(issue.id.replace('inc-', '')));
+          scrollToSection('incident-section');
+        } else {
+          scrollToSection('officer-board');
+        }
+      },
+    })),
+    {
+      id: 'smith-post',
+      priority: 'High' as ActionPriority,
+      label: "Fill Officer Smith's Post — Float/OT coverage required",
+      onClick: () => scrollToSection('officer-board'),
+    },
+    {
+      id: 'medical-transport-delay',
+      priority: 'Medium' as ActionPriority,
+      label: 'Medical Transport Delay Risk — Baker, T. (E-Pod Medical)',
+      onClick: () => scrollToSection('movement-section'),
+    },
+  ].sort((a, b) => ACTION_PRIORITY_ORDER[a.priority] - ACTION_PRIORITY_ORDER[b.priority]);
+
   return (
     <DashboardLayout>
       <div className="p-6 space-y-5">
@@ -372,6 +430,71 @@ export default function CustodyOperations() {
               Command Center <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
+        </div>
+
+        {/* ── Shift Snapshot ─────────────────────────────────
+            Everything a commander needs in under 3 seconds. */}
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl px-5 py-3">
+          <div>
+            <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-0.5">Staffing</p>
+            <p className={`text-[16px] font-bold leading-none ${staffPct < 100 ? 'text-orange-600 dark:text-orange-400' : 'text-slate-900 dark:text-white'}`}>
+              {currentShift.present}/{currentShift.scheduled}
+            </p>
+          </div>
+          <div className="w-px h-8 bg-slate-200 dark:bg-slate-700/50" />
+          <div>
+            <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-0.5">Incidents</p>
+            <p className={`text-[16px] font-bold leading-none ${openIncidents > 0 ? 'text-orange-600 dark:text-orange-400' : 'text-slate-900 dark:text-white'}`}>
+              {openIncidents} Open
+            </p>
+          </div>
+          <div className="w-px h-8 bg-slate-200 dark:bg-slate-700/50" />
+          <div>
+            <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-0.5">Movements</p>
+            <p className="text-[16px] font-bold leading-none text-slate-900 dark:text-white">{activeMovementCount} Active</p>
+          </div>
+          <div className="w-px h-8 bg-slate-200 dark:bg-slate-700/50" />
+          <div>
+            <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-0.5">Critical Pods</p>
+            <p className={`text-[16px] font-bold leading-none ${criticalPods.length > 0 ? 'text-red-600 dark:text-red-400' : 'text-slate-900 dark:text-white'}`}>
+              {criticalPods.length > 0 ? criticalPods.map(p => p.id).join(', ') : 'None'}
+            </p>
+          </div>
+          <button
+            onClick={() => setShowHandoff(true)}
+            className="ml-auto flex items-center gap-1.5 text-[11px] text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 rounded-lg px-3 py-1.5 hover:bg-slate-700/60 transition-colors"
+          >
+            <FileText className="w-3.5 h-3.5" /> Generate Shift Handoff Report
+          </button>
+        </div>
+
+        {/* ── AI Prioritized Actions ─────────────────────────
+            Existing recommendations, ranked — where to spend attention first. */}
+        <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl px-5 py-3">
+          <div className="flex items-center gap-2 mb-1.5">
+            <Lightbulb className="w-4 h-4 text-slate-700 dark:text-slate-400" />
+            <span className="text-[13px] font-semibold text-slate-900 dark:text-white">AI Prioritized Actions</span>
+            <span className="text-[10px] text-slate-500">Ranked by operational risk · click to jump to detail</span>
+          </div>
+          <ol className="space-y-0.5">
+            {prioritizedActions.map((action, i) => (
+              <li key={action.id}>
+                <button
+                  onClick={action.onClick}
+                  className="w-full flex items-center gap-2.5 text-left px-2 py-1.5 rounded-lg hover:bg-slate-700/10 transition-colors group"
+                >
+                  <span className="text-[11px] font-bold text-slate-500 w-4 flex-shrink-0">{i + 1}.</span>
+                  <span className="flex-1 text-[12px] text-slate-700 dark:text-slate-200 truncate">{action.label}</span>
+                  <span className={`text-[9px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider flex-shrink-0 ${
+                    action.priority === 'Critical' ? 'bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/20' :
+                    action.priority === 'High'     ? 'bg-orange-500/15 text-orange-600 dark:text-orange-400 border border-orange-500/20' :
+                                                      'bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40'
+                  }`}>{action.priority}</span>
+                  <ArrowRight className="w-3 h-3 text-slate-500 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
+                </button>
+              </li>
+            ))}
+          </ol>
         </div>
 
         {/* ── Critical Operational Issues ──────────────────── */}
@@ -501,7 +624,7 @@ export default function CustodyOperations() {
         )}
 
         {/* ── Section 2: Housing Unit Management ──────────── */}
-        <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
+        <div id="housing-section" className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
           <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 dark:border-slate-700/40">
             <div className="flex items-center gap-2">
               <MapPin className="w-4 h-4 text-slate-700 dark:text-slate-400" />
@@ -684,7 +807,7 @@ export default function CustodyOperations() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
 
           {/* Inmate Movement Control */}
-          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
+          <div id="movement-section" className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
             <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 dark:border-slate-700/40">
               <div className="flex items-center gap-2">
                 <ArrowLeftRight className="w-4 h-4 text-slate-700 dark:text-slate-400" />
@@ -748,7 +871,7 @@ export default function CustodyOperations() {
           </div>
 
           {/* Incident & Discipline Tracking */}
-          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
+          <div id="incident-section" className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
             <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 dark:border-slate-700/40">
               <div className="flex items-center gap-2">
                 <AlertOctagon className="w-4 h-4 text-slate-700 dark:text-slate-400" />
@@ -902,7 +1025,7 @@ export default function CustodyOperations() {
         </div>
 
         {/* ── Section 4: Officer Assignment Board ──────────── */}
-        <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
+        <div id="officer-board" className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
           <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 dark:border-slate-700/40">
             <div className="flex items-center gap-2">
               <Users className="w-4 h-4 text-slate-700 dark:text-slate-400" />
@@ -924,6 +1047,54 @@ export default function CustodyOperations() {
             </div>
           </div>
 
+          {/* AI Staffing Recommendation — certifications + cross-training → reassignment */}
+          <div className="mx-5 mt-3 bg-white dark:bg-slate-800/60 border border-slate-700/50 rounded-lg px-3 py-2.5">
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 mb-1">
+                  <Lightbulb className="w-3.5 h-3.5 text-slate-700 dark:text-slate-400 flex-shrink-0" />
+                  <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold">AI Staffing Recommendation</p>
+                  <span className="text-[8px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">High confidence</span>
+                </div>
+                <p className="text-[11px] text-slate-700 dark:text-slate-200 leading-snug">
+                  <span className="font-semibold">Move Johnson (#2289) to Medical Escort</span> — Certified Intake & Medical Escort, cross-trained Medical, 1h on post. Relieves Martinez (#2251, 9h — fatigue risk). Backfill E2-Pod from Hill (#2399, Float, cross-trained Mental Health).
+                </p>
+              </div>
+              <button
+                onClick={() => togglePreview('staffing-ai', 'Reassign Johnson')}
+                className={`text-[11px] px-3 py-1.5 rounded-lg font-medium transition-colors whitespace-nowrap flex-shrink-0 ${
+                  activePreview?.issueId === 'staffing-ai' && activePreview?.action === 'Reassign Johnson'
+                    ? 'bg-slate-600/60 border border-slate-500/60 text-slate-900 dark:text-white'
+                    : 'bg-white dark:bg-slate-700/50 border border-slate-600/50 text-slate-700 dark:text-slate-300 hover:bg-slate-700/70'
+                }`}
+              >
+                Reassign Johnson
+                <span className="ml-1.5 text-[9px] opacity-50">{activePreview?.issueId === 'staffing-ai' && activePreview?.action === 'Reassign Johnson' ? '▲' : '▼'}</span>
+              </button>
+            </div>
+            {activePreview?.issueId === 'staffing-ai' && activePreview?.action === 'Reassign Johnson' && (
+              <div className="mt-3 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-700/60 rounded-lg p-3">
+                <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-2">Impact Preview — Reassign Johnson</p>
+                <ul className="space-y-1 mb-3">
+                  {IMPACT_PREVIEWS['Reassign Johnson'].map((line, i) => (
+                    <li key={i} className="flex items-start gap-2 text-[11px] text-slate-700 dark:text-slate-200">
+                      <span className="text-emerald-600 flex-shrink-0 mt-0.5">→</span>
+                      {line}
+                    </li>
+                  ))}
+                </ul>
+                <div className="flex items-center gap-2 pt-2 border-t border-slate-200 dark:border-slate-700/40">
+                  <button className="text-[11px] px-3 py-1.5 bg-white dark:bg-slate-700/60 border border-slate-600/60 text-slate-900 dark:text-white rounded-lg hover:bg-slate-700 transition-colors font-medium">
+                    Confirm — Reassign Johnson
+                  </button>
+                  <button onClick={() => setActivePreview(null)} className="text-[11px] text-slate-500 hover:text-slate-700 dark:text-slate-300 transition-colors px-2 py-1.5">
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+
           {/* Table header */}
           <div className="grid grid-cols-12 px-5 py-2 border-b border-slate-200 dark:border-slate-700/10 text-[10px] text-slate-500 uppercase tracking-wide">
             <span className="col-span-3">Officer</span>
@@ -943,11 +1114,22 @@ export default function CustodyOperations() {
               const isPriorityPost = assignedPod && (assignedPod.status !== 'Normal' || assignedPod.incidents > 0);
               // Coverage gap: officer is off-post and pod has no backup
               const hasCoverageGap = isOffPost && assignedPod && assignedPod.incidents > 0;
+              const isExpandedOfficer = expandedOfficer === officer.badge;
               return (
-                <div key={officer.badge} className={`grid grid-cols-12 items-center px-5 py-2.5 hover:bg-slate-700/10 transition-colors ${isHighHours ? 'bg-orange-500/[0.03]' : ''}`}>
-                  <div className="col-span-3">
-                    <p className="text-[12px] font-medium text-slate-700 dark:text-slate-200">{officer.name}</p>
-                    <p className="text-[10px] text-slate-500">#{officer.badge} · {officer.rank}</p>
+                <div key={officer.badge}>
+                <div className={`grid grid-cols-12 items-center px-5 py-2.5 hover:bg-slate-700/10 transition-colors ${isHighHours ? 'bg-orange-500/[0.03]' : ''}`}>
+                  <div className="col-span-3 flex items-center gap-1.5">
+                    <div className="min-w-0">
+                      <p className="text-[12px] font-medium text-slate-700 dark:text-slate-200">{officer.name}</p>
+                      <p className="text-[10px] text-slate-500">#{officer.badge} · {officer.rank}</p>
+                    </div>
+                    <button
+                      onClick={() => setExpandedOfficer(isExpandedOfficer ? null : officer.badge)}
+                      title="Certifications, OT eligibility & cross-training"
+                      className="ml-auto text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 flex-shrink-0"
+                    >
+                      {isExpandedOfficer ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+                    </button>
                   </div>
                   <div className="col-span-3">
                     <p className="text-[12px] text-slate-700 dark:text-slate-300">{officer.assignment}</p>
@@ -992,6 +1174,41 @@ export default function CustodyOperations() {
                       Reassign
                     </button>
                   </div>
+                </div>
+
+                {/* Certifications · OT eligibility · Cross-training */}
+                {isExpandedOfficer && (
+                  <div className="px-5 pb-2.5 pl-12">
+                    <div className="bg-slate-50 dark:bg-slate-900/30 border border-slate-700/40 rounded-lg p-3 flex flex-wrap items-start gap-x-6 gap-y-2">
+                      <div>
+                        <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1">Certifications</p>
+                        <div className="flex flex-wrap gap-1">
+                          {officer.certifications.map(cert => (
+                            <span key={cert} className="text-[10px] px-1.5 py-0.5 bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-300 border border-slate-700/40 rounded inline-flex items-center gap-1">
+                              <Award className="w-2.5 h-2.5" /> {cert}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                      <div>
+                        <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1">Cross-Trained For</p>
+                        <div className="flex flex-wrap gap-1">
+                          {officer.crossTrained.map(ct => (
+                            <span key={ct} className="text-[10px] px-1.5 py-0.5 bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-300 border border-slate-700/40 rounded inline-flex items-center gap-1">
+                              <Repeat className="w-2.5 h-2.5" /> {ct}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                      <div>
+                        <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1">Overtime</p>
+                        <span className={`text-[10px] px-1.5 py-0.5 rounded inline-flex items-center gap-1 ${officer.otEligible ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20' : 'bg-slate-100 dark:bg-slate-700/30 text-slate-500 border border-slate-700/40'}`}>
+                          {officer.otEligible && <CheckCircle className="w-2.5 h-2.5" />} {officer.otEligible ? 'Eligible' : 'Not Eligible'}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                )}
                 </div>
               );
             })}
@@ -1047,6 +1264,157 @@ export default function CustodyOperations() {
         </div>
 
       </div>
+
+      {/* ── Shift Handoff Report Modal ────────────────────── */}
+      {showHandoff && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-xl w-full max-w-2xl max-h-[85vh] overflow-y-auto">
+            {!handoffSent ? (
+              <>
+                <div className="flex items-start justify-between gap-4 px-5 py-4 border-b border-slate-200 dark:border-slate-700/40">
+                  <div className="flex items-center gap-2">
+                    <FileText className="w-4 h-4 text-slate-700 dark:text-slate-400" />
+                    <div>
+                      <h2 className="text-[14px] font-bold text-slate-900 dark:text-white">Shift Handoff Report</h2>
+                      <p className="text-[10px] text-slate-500">{currentShift.label} · {currentShift.window} · {currentShift.commander}</p>
+                    </div>
+                  </div>
+                  <button onClick={() => setShowHandoff(false)} className="text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 flex-shrink-0">
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+
+                <div className="p-5 space-y-4">
+                  {/* Open Incidents */}
+                  <div>
+                    <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1.5 flex items-center gap-1.5">
+                      <AlertOctagon className="w-3 h-3" /> Open Incidents ({unresolvedIncidents.length})
+                    </p>
+                    <ul className="space-y-1">
+                      {unresolvedIncidents.map(i => (
+                        <li key={i.id} className="flex items-start gap-2 text-[11px] text-slate-700 dark:text-slate-300">
+                          <span className="text-slate-700 mt-0.5 flex-shrink-0">—</span>
+                          {i.type} — {i.pod} ({i.time}) · {i.status} · reported by {i.reportingOfficer}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Unfinished Investigations */}
+                  <div>
+                    <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1.5 flex items-center gap-1.5">
+                      <Search className="w-3 h-3" /> Unfinished Investigations
+                    </p>
+                    <ul className="space-y-1">
+                      <li className="flex items-start gap-2 text-[11px] text-slate-700 dark:text-slate-300">
+                        <span className="text-slate-700 mt-0.5 flex-shrink-0">—</span>
+                        Contraband — E2-Pod: sweep + intel report due 15:30, investigative hold pending
+                      </li>
+                      <li className="flex items-start gap-2 text-[11px] text-slate-700 dark:text-slate-300">
+                        <span className="text-slate-700 mt-0.5 flex-shrink-0">—</span>
+                        Fight — A2-Pod: under review, supervisor sign-off required before close
+                      </li>
+                    </ul>
+                  </div>
+
+                  {/* Staffing Shortages */}
+                  <div>
+                    <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1.5 flex items-center gap-1.5">
+                      <Users className="w-3 h-3" /> Staffing Shortages
+                    </p>
+                    <ul className="space-y-1">
+                      <li className="flex items-start gap-2 text-[11px] text-slate-700 dark:text-slate-300">
+                        <span className="text-slate-700 mt-0.5 flex-shrink-0">—</span>
+                        {currentShift.present}/{currentShift.scheduled} present ({staffPct}%) · {currentShift.note}
+                      </li>
+                      <li className="flex items-start gap-2 text-[11px] text-slate-700 dark:text-slate-300">
+                        <span className="text-slate-700 mt-0.5 flex-shrink-0">—</span>
+                        Officer Smith (#2176) post uncovered — Float/OT required for remainder of shift
+                      </li>
+                    </ul>
+                  </div>
+
+                  {/* Pending Inmate Movements */}
+                  <div>
+                    <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1.5 flex items-center gap-1.5">
+                      <ArrowLeftRight className="w-3 h-3" /> Pending Inmate Movements ({pendingMovements.length})
+                    </p>
+                    <ul className="space-y-1">
+                      {pendingMovements.map(m => (
+                        <li key={m.id} className="flex items-start gap-2 text-[11px] text-slate-700 dark:text-slate-300">
+                          <span className="text-slate-700 mt-0.5 flex-shrink-0">—</span>
+                          {m.inmateName} {m.inmateId} · {m.type} · {m.from} → {m.to} · {m.status} · ETA {m.eta}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Medical Concerns */}
+                  <div>
+                    <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1.5 flex items-center gap-1.5">
+                      <Heart className="w-3 h-3" /> Medical Concerns
+                    </p>
+                    <ul className="space-y-1">
+                      <li className="flex items-start gap-2 text-[11px] text-slate-700 dark:text-slate-300">
+                        <span className="text-slate-700 mt-0.5 flex-shrink-0">—</span>
+                        E1-Pod: 3 isolation cases active, Near Capacity (44/48)
+                      </li>
+                      <li className="flex items-start gap-2 text-[11px] text-slate-700 dark:text-slate-300">
+                        <span className="text-slate-700 mt-0.5 flex-shrink-0">—</span>
+                        Martinez (#2251) on Medical Escort 9h — approaching fatigue threshold
+                      </li>
+                      <li className="flex items-start gap-2 text-[11px] text-slate-700 dark:text-slate-300">
+                        <span className="text-slate-700 mt-0.5 flex-shrink-0">—</span>
+                        Baker, T. (#39102) medical visit in progress — return pending, ETA 15:30
+                      </li>
+                    </ul>
+                  </div>
+
+                  {/* Supervisor Notes */}
+                  <div>
+                    <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1.5 flex items-center gap-1.5">
+                      <FileText className="w-3 h-3" /> Supervisor Notes
+                    </p>
+                    <textarea
+                      value={supervisorNotes}
+                      onChange={e => setSupervisorNotes(e.target.value)}
+                      rows={3}
+                      className="w-full text-[11px] text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-900/40 border border-slate-700/40 rounded-lg p-2.5 resize-none focus:outline-none focus:ring-1 focus:ring-slate-500/40"
+                    />
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-end gap-2 px-5 py-4 border-t border-slate-200 dark:border-slate-700/40">
+                  <button onClick={() => setShowHandoff(false)} className="text-[11px] text-slate-500 hover:text-slate-700 dark:text-slate-300 px-3 py-1.5">
+                    Cancel
+                  </button>
+                  <button onClick={() => setHandoffSent(true)} className="flex items-center gap-1.5 text-[12px] font-medium text-white bg-slate-700 hover:bg-slate-600 rounded-lg px-3.5 py-1.5 transition-colors">
+                    <Send className="w-3.5 h-3.5" /> Send to Next Shift Commander
+                  </button>
+                </div>
+              </>
+            ) : (
+              <div className="p-6 text-center">
+                <CheckCircle className="w-10 h-10 text-emerald-500 mx-auto mb-3" />
+                <h2 className="text-[14px] font-bold text-slate-900 dark:text-white mb-1">Handoff Report Sent</h2>
+                <p className="text-[11px] text-slate-500 mb-4">Delivered to incoming Watch Commander · C-Shift (22:00 – 06:00)</p>
+                <ul className="text-[11px] text-slate-700 dark:text-slate-300 text-left space-y-1.5 bg-slate-50 dark:bg-slate-900/30 border border-slate-700/40 rounded-lg p-3 mb-4">
+                  <li className="flex items-start gap-2"><CheckCircle className="w-3 h-3 text-emerald-500 mt-0.5 flex-shrink-0" /> {unresolvedIncidents.length} open incidents included</li>
+                  <li className="flex items-start gap-2"><CheckCircle className="w-3 h-3 text-emerald-500 mt-0.5 flex-shrink-0" /> {pendingMovements.length} pending movements included</li>
+                  <li className="flex items-start gap-2"><CheckCircle className="w-3 h-3 text-emerald-500 mt-0.5 flex-shrink-0" /> Staffing shortage flagged — Smith's post uncovered</li>
+                  <li className="flex items-start gap-2"><CheckCircle className="w-3 h-3 text-emerald-500 mt-0.5 flex-shrink-0" /> Supervisor notes attached</li>
+                </ul>
+                <button
+                  onClick={() => { setShowHandoff(false); setHandoffSent(false); }}
+                  className="text-[12px] font-medium text-white bg-slate-700 hover:bg-slate-600 rounded-lg px-4 py-1.5 transition-colors"
+                >
+                  Done
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </DashboardLayout>
   );
 }
