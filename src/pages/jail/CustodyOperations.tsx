@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DashboardLayout from '../../layouts/DashboardLayout';
 import {
-  Users, AlertTriangle, Shield, CheckCircle,
+  Users, AlertTriangle, CheckCircle,
   Circle, ArrowRight, ChevronDown, ChevronUp,
   Truck, Heart, LogOut, ArrowLeftRight, AlertOctagon,
-  UserCheck, MapPin, Plus, Zap, PhoneCall, Lock, UserX
+  UserCheck, MapPin, Plus, PhoneCall, Lock, UserX
 } from 'lucide-react';
 
 // ── Types ──────────────────────────────────────────────────────
@@ -67,14 +67,9 @@ const currentShift = {
   label: 'B-Shift',
   window: '14:00 – 22:00',
   commander: 'Sgt. D. Thompson',
-  badge: '1089',
   scheduled: 14,
   present: 13,
   note: 'Officer Smith — sick call 11:30 AM',
-  incidentsThisShift: 3,
-  activeMovements: 7,
-  pendingActions: 4,
-  shiftStart: '14:00',
 };
 
 const pods: Pod[] = [
@@ -263,41 +258,11 @@ export default function CustodyOperations() {
   const [expandedPod, setExpandedPod] = useState<string | null>(null);
   const [expandedIncident, setExpandedIncident] = useState<number | null>(null);
   const [activePreview, setActivePreview] = useState<{ issueId: string; action: string } | null>(null);
-  const [showStatusDetail, setShowStatusDetail] = useState(false);
 
   const staffPct = Math.round((currentShift.present / currentShift.scheduled) * 100);
-  const unassignedPods = pods.filter(p => !p.assignedOfficer).length;
   const openIncidents = incidents.filter(i => i.status !== 'Resolved').length;
   const activeMovementCount = movements.filter(m => m.status === 'In Progress' || m.status === 'Staging').length;
   const overCapacityPods = pods.filter(p => p.status === 'Over Capacity');
-  const nearCapacityPods = pods.filter(p => p.status === 'Near Capacity');
-
-  // ── System Status ─────────────────────────────────────────────
-  const systemStatus: 'Critical' | 'Strained' | 'Stable' = (() => {
-    const hasOpenCritical = incidents.some(i => i.status !== 'Resolved' && i.severity === 'critical');
-    if (overCapacityPods.length > 0 || hasOpenCritical) return 'Critical';
-    const hasOpenHigh = incidents.some(i => i.status !== 'Resolved' && i.severity === 'high');
-    if (hasOpenHigh || staffPct < 93 || nearCapacityPods.length > 2) return 'Strained';
-    return 'Stable';
-  })();
-
-  // ── System Status contributing factors ───────────────────────
-  const statusFactors: string[] = [
-    overCapacityPods.length > 0
-      ? `${overCapacityPods.length} pod(s) over rated capacity — ACA violation active`
-      : nearCapacityPods.length > 0
-      ? `${nearCapacityPods.length} pod(s) near capacity — one intake from violation`
-      : 'All housing units within rated capacity',
-    incidents.filter(i => i.status !== 'Resolved' && (i.severity === 'critical' || i.severity === 'high')).length > 0
-      ? `${incidents.filter(i => i.status !== 'Resolved' && (i.severity === 'critical' || i.severity === 'high')).length} high/critical incident(s) unresolved this shift`
-      : 'No high-severity open incidents',
-    staffPct < 100
-      ? `Staffing at ${staffPct}% — ${currentShift.scheduled - currentShift.present} post(s) uncovered`
-      : 'Full staffing complement on shift',
-    unassignedPods > 0
-      ? `${unassignedPods} pod(s) on float coverage — dedicated officer required`
-      : 'All pods have dedicated officer assignments',
-  ];
 
   // ── Critical Issues with Priority + Impact ────────────────────
   const criticalIssues: CriticalIssue[] = [
@@ -396,44 +361,6 @@ export default function CustodyOperations() {
             </p>
           </div>
           <div className="flex items-center gap-2">
-            {/* System Status — clickable to show contributing factors */}
-            <div className="relative">
-              <button
-                onClick={() => setShowStatusDetail(v => !v)}
-                className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border text-[12px] font-semibold transition-colors ${
-                  systemStatus === 'Critical' ? 'bg-red-500/10 border-red-500/30 text-red-600 dark:text-red-400 hover:bg-red-500/15' :
-                  systemStatus === 'Strained' ? 'bg-orange-500/10 border-orange-500/30 text-orange-600 dark:text-orange-400 hover:bg-orange-500/15' :
-                  'bg-emerald-500/10 border-emerald-500/30 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/15'
-                }`}
-              >
-                <Circle className={`w-1.5 h-1.5 ${
-                  systemStatus === 'Critical' ? 'fill-red-500 text-red-500' :
-                  systemStatus === 'Strained' ? 'fill-orange-400 text-orange-600 dark:text-orange-400' :
-                  'fill-emerald-500 text-emerald-500'
-                }`} />
-                System: {systemStatus}
-                <ChevronDown className={`w-3 h-3 transition-transform ${showStatusDetail ? 'rotate-180' : ''}`} />
-              </button>
-
-              {showStatusDetail && (
-                <div className="absolute right-0 top-full mt-1.5 z-50 min-w-[280px] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/60 rounded-xl shadow-xl overflow-hidden">
-                  <div className="px-4 py-2.5 border-b border-slate-200 dark:border-slate-700/40">
-                    <p className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Why System is {systemStatus}</p>
-                  </div>
-                  <ul className="p-3 space-y-1.5">
-                    {statusFactors.map((factor, i) => {
-                      const isIssue = factor.includes('violation') || factor.includes('uncovered') || factor.includes('unresolved') || factor.includes('required');
-                      return (
-                        <li key={i} className="flex items-start gap-2 text-[11px]">
-                          <span className={`mt-0.5 flex-shrink-0 font-bold ${isIssue ? 'text-orange-700' : 'text-emerald-600'}`}>{isIssue ? '—' : '✓'}</span>
-                          <span className={isIssue ? 'text-slate-500' : 'text-slate-500'}>{factor}</span>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              )}
-            </div>
             <div className="flex items-center gap-1.5 text-[11px] text-slate-500 bg-slate-100 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-lg px-3 py-1.5">
               <Circle className="w-1.5 h-1.5 fill-emerald-500 text-emerald-500" />
               Live
@@ -446,90 +373,6 @@ export default function CustodyOperations() {
             </button>
           </div>
         </div>
-
-        {/* ── Command Attention Needed ─────────────────────── */}
-        {(() => {
-          const complianceRisks = overCapacityPods.map(p => `${p.name} over capacity — ACA violation active`);
-          const staffingRisks = [
-            ...(staffPct < 100 ? [`${currentShift.scheduled - currentShift.present} post uncovered · ${currentShift.note.split('—')[0].trim()}`] : []),
-            ...(officers.filter(o => o.hoursWorked >= 8).length > 0 ? [`${officers.filter(o => o.hoursWorked >= 8).length} officer(s) at fatigue threshold (8h+)`] : []),
-          ];
-          const activeEscalations = incidents
-            .filter(i => i.status !== 'Resolved' && (i.severity === 'critical' || i.severity === 'high'))
-            .map(i => `${i.type} · ${i.pod} · ${i.status}`);
-
-          if (complianceRisks.length === 0 && staffingRisks.length === 0 && activeEscalations.length === 0) return null;
-
-          return (
-            <div className="grid grid-cols-3 gap-3">
-              {/* Compliance Risks */}
-              <div className={`rounded-xl border px-4 py-3 ${complianceRisks.length > 0 ? 'bg-red-500/5 border-red-500/25' : 'bg-slate-100 dark:bg-slate-800/20 border-slate-200 dark:border-slate-700/30'}`}>
-                <div className="flex items-center gap-1.5 mb-2">
-                  <AlertOctagon className={`w-3.5 h-3.5 ${complianceRisks.length > 0 ? 'text-red-600 dark:text-red-400' : 'text-slate-700'}`} />
-                  <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Compliance Risk</p>
-                  {complianceRisks.length > 0 && (
-                    <span className="text-[9px] px-1.5 py-0.5 bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/20 rounded-full font-bold ml-auto">{complianceRisks.length}</span>
-                  )}
-                </div>
-                {complianceRisks.length === 0 ? (
-                  <p className="text-[11px] text-slate-700">No active compliance violations</p>
-                ) : (
-                  <ul className="space-y-0.5">
-                    {complianceRisks.map((r, i) => (
-                      <li key={i} className="text-[11px] text-slate-700 dark:text-slate-300 flex items-start gap-1.5">
-                        <span className="text-red-500 flex-shrink-0 mt-0.5">—</span>{r}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-
-              {/* Staffing Risks */}
-              <div className={`rounded-xl border px-4 py-3 ${staffingRisks.length > 0 ? 'bg-orange-500/5 border-orange-500/20' : 'bg-slate-100 dark:bg-slate-800/20 border-slate-200 dark:border-slate-700/30'}`}>
-                <div className="flex items-center gap-1.5 mb-2">
-                  <Users className={`w-3.5 h-3.5 ${staffingRisks.length > 0 ? 'text-orange-600 dark:text-orange-400' : 'text-slate-700'}`} />
-                  <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Staffing Risk</p>
-                  {staffingRisks.length > 0 && (
-                    <span className="text-[9px] px-1.5 py-0.5 bg-orange-500/15 text-orange-600 dark:text-orange-400 border border-orange-500/20 rounded-full font-bold ml-auto">{staffingRisks.length}</span>
-                  )}
-                </div>
-                {staffingRisks.length === 0 ? (
-                  <p className="text-[11px] text-slate-700">Staffing within normal parameters</p>
-                ) : (
-                  <ul className="space-y-0.5">
-                    {staffingRisks.map((r, i) => (
-                      <li key={i} className="text-[11px] text-slate-700 dark:text-slate-300 flex items-start gap-1.5">
-                        <span className="text-orange-700 flex-shrink-0 mt-0.5">—</span>{r}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-
-              {/* Active Escalations */}
-              <div className={`rounded-xl border px-4 py-3 ${activeEscalations.length > 0 ? 'bg-orange-500/5 border-orange-500/20' : 'bg-slate-100 dark:bg-slate-800/20 border-slate-200 dark:border-slate-700/30'}`}>
-                <div className="flex items-center gap-1.5 mb-2">
-                  <AlertTriangle className={`w-3.5 h-3.5 ${activeEscalations.length > 0 ? 'text-orange-600 dark:text-orange-400' : 'text-slate-700'}`} />
-                  <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Active Escalations</p>
-                  {activeEscalations.length > 0 && (
-                    <span className="text-[9px] px-1.5 py-0.5 bg-orange-500/15 text-orange-600 dark:text-orange-400 border border-orange-500/20 rounded-full font-bold ml-auto">{activeEscalations.length}</span>
-                  )}
-                </div>
-                {activeEscalations.length === 0 ? (
-                  <p className="text-[11px] text-slate-700">No open high-severity incidents</p>
-                ) : (
-                  <ul className="space-y-0.5">
-                    {activeEscalations.map((r, i) => (
-                      <li key={i} className="text-[11px] text-slate-700 dark:text-slate-300 flex items-start gap-1.5">
-                        <span className="text-orange-700 flex-shrink-0 mt-0.5">—</span>{r}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            </div>
-          );
-        })()}
 
         {/* ── Critical Operational Issues ──────────────────── */}
         {criticalIssues.length > 0 && (
@@ -656,73 +499,6 @@ export default function CustodyOperations() {
             </div>
           </div>
         )}
-
-        {/* ── Section 1: Shift Operations Overview ─────────── */}
-        <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
-          <div className="flex flex-col lg:flex-row items-start lg:items-center gap-5">
-
-            {/* Shift identity */}
-            <div className="flex items-center gap-4 flex-shrink-0">
-              <div className="w-12 h-12 bg-slate-100 dark:bg-slate-700/30 border border-slate-700/40 rounded-xl flex items-center justify-center">
-                <Shield className="w-6 h-6 text-slate-700 dark:text-slate-400" />
-              </div>
-              <div>
-                <div className="flex items-center gap-2 mb-0.5">
-                  <span className="text-[18px] font-bold text-slate-900 dark:text-white">{currentShift.label}</span>
-                  <span className="text-[11px] px-2 py-0.5 bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-400 border border-slate-700/40 rounded-full">Active</span>
-                </div>
-                <p className="text-[12px] text-slate-700 dark:text-slate-400">{currentShift.window} &nbsp;·&nbsp; Commander: <span className="text-slate-900 dark:text-white font-medium">{currentShift.commander}</span> #{currentShift.badge}</p>
-              </div>
-            </div>
-
-            <div className="w-px h-10 bg-slate-50 dark:bg-slate-700/40 hidden lg:block flex-shrink-0" />
-
-            {/* Staffing */}
-            <div className="flex-1 grid grid-cols-2 sm:grid-cols-4 gap-4">
-              <div>
-                <p className="text-[10px] text-slate-500 uppercase tracking-wide mb-1">Staffing</p>
-                <p className="text-[20px] font-bold text-slate-900 dark:text-white leading-none">
-                  {currentShift.present}<span className="text-[13px] text-slate-500">/{currentShift.scheduled}</span>
-                </p>
-                <div className="flex items-center gap-1.5 mt-1.5">
-                  <div className="flex-1 h-1 bg-white dark:bg-slate-700/50 rounded-full overflow-hidden">
-                    <div className={`h-full rounded-full ${staffPct < 93 ? 'bg-red-500' : staffPct < 100 ? 'bg-orange-400' : 'bg-slate-500'}`} style={{ width: `${staffPct}%` }} />
-                  </div>
-                  <span className={`text-[10px] ${staffPct < 93 ? 'text-red-600 dark:text-red-400' : staffPct < 100 ? 'text-orange-600 dark:text-orange-400' : 'text-slate-500'}`}>{staffPct}%</span>
-                </div>
-                {currentShift.note && <p className="text-[10px] text-orange-600 dark:text-orange-400 mt-1">⚠ {currentShift.note.split('—')[0].trim()}</p>}
-              </div>
-
-              <div>
-                <p className="text-[10px] text-slate-500 uppercase tracking-wide mb-1">Active Movements</p>
-                <p className="text-[20px] font-bold text-slate-900 dark:text-white leading-none">{activeMovementCount}</p>
-                <p className="text-[10px] text-slate-500 mt-1">{movements.filter(m => m.status === 'Pending').length} pending</p>
-              </div>
-
-              <div>
-                <p className="text-[10px] text-slate-500 uppercase tracking-wide mb-1">Open Incidents</p>
-                <p className={`text-[20px] font-bold leading-none ${openIncidents > 0 ? 'text-orange-600 dark:text-orange-400' : 'text-slate-900 dark:text-white'}`}>{openIncidents}</p>
-                <p className="text-[10px] text-slate-500 mt-1">this shift</p>
-              </div>
-
-              <div>
-                <p className="text-[10px] text-slate-500 uppercase tracking-wide mb-1">Unassigned Pods</p>
-                <p className={`text-[20px] font-bold leading-none ${unassignedPods > 0 ? 'text-orange-600 dark:text-orange-400' : 'text-slate-900 dark:text-white'}`}>{unassignedPods}</p>
-                <p className="text-[10px] text-slate-500 mt-1">float coverage</p>
-              </div>
-            </div>
-
-            {/* Pending actions badge */}
-            {currentShift.pendingActions > 0 && (
-              <div className="flex-shrink-0">
-                <div className="flex items-center gap-2 px-3 py-2 bg-orange-500/10 border border-orange-500/20 rounded-lg">
-                  <Zap className="w-3.5 h-3.5 text-orange-600 dark:text-orange-400" />
-                  <span className="text-[12px] text-orange-300 font-medium">{currentShift.pendingActions} pending actions</span>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
 
         {/* ── Section 2: Housing Unit Management ──────────── */}
         <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
