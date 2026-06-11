@@ -6,9 +6,22 @@ import {
   Activity, Phone, Mail, FileText,
   Database, FileWarning, Microscope, Circle,
   AlertTriangle, Zap, TrendingUp, TrendingDown, ArrowRight,
-  UserCheck, Eye, ArrowUpRight, ShieldAlert
+  UserCheck, Eye, ArrowUpRight, ShieldAlert,
+  Dna, Target, Smartphone, Beaker, Fingerprint, Gavel, Building2
 } from 'lucide-react';
 import DashboardLayout from '../../layouts/DashboardLayout';
+
+type ProsecutorStatus = 'Ready for Charging' | 'Awaiting Evidence' | 'Awaiting Lab Results' | 'Awaiting Warrant' | 'Under Federal Review';
+
+interface EvidenceItem {
+  id: string;
+  description: string;
+  category: 'DNA' | 'Ballistics' | 'Digital Forensics' | 'Toxicology' | 'Latent Prints' | 'Records & Documents';
+  lab: string;
+  submittedDate: string;
+  eta: string;
+  status: 'Queued' | 'In Progress' | 'Complete' | 'Overdue';
+}
 
 interface Case {
   id: string;
@@ -31,6 +44,11 @@ interface Case {
   multiAgency?: boolean;
   notes: string;
   criticalReason?: string;
+  prosecutorStatus: ProsecutorStatus;
+  assignedADA?: string;
+  prosecutorNote: string;
+  chargeWindowRisk?: boolean;
+  evidenceItems: EvidenceItem[];
 }
 
 interface CommandAction {
@@ -103,7 +121,16 @@ const ActiveCasesDashboard = () => {
       nextAction: 'Ballistics results expected 12/08',
       deadline: '2024-12-15',
       criticalReason: 'Charge window closes in 14 hrs — ballistics overdue',
-      notes: 'Gang-related shooting. 2 suspects identified via surveillance. Witnesses cooperating. Ballistics analysis in progress at GBI lab.'
+      notes: 'Gang-related shooting. 2 suspects identified via surveillance. Witnesses cooperating. Ballistics analysis in progress at GBI lab.',
+      prosecutorStatus: 'Awaiting Lab Results',
+      assignedADA: 'ADA Patricia Coleman (Major Crimes)',
+      prosecutorNote: 'Charging packet drafted — pending GBI ballistics confirmation before filing.',
+      chargeWindowRisk: true,
+      evidenceItems: [
+        { id: 'EV-0847-1', description: 'Ballistics analysis — recovered shell casings', category: 'Ballistics', lab: 'GBI Crime Lab', submittedDate: '2024-11-29', eta: '2024-12-05', status: 'Overdue' },
+        { id: 'EV-0847-2', description: 'Cell phone extraction — suspect device', category: 'Digital Forensics', lab: 'County Digital Forensics Unit', submittedDate: '2024-12-01', eta: '2024-12-10', status: 'In Progress' },
+        { id: 'EV-0847-3', description: 'Toxicology panel — victim autopsy', category: 'Toxicology', lab: 'GBI Crime Lab', submittedDate: '2024-11-29', eta: '2024-12-09', status: 'In Progress' },
+      ],
     },
     {
       id: 'INV-2024-0923',
@@ -123,7 +150,13 @@ const ActiveCasesDashboard = () => {
       witnesses: 4,
       nextAction: 'DNA re-analysis with new technology',
       criticalReason: 'New DNA tech — time-sensitive re-test window before evidence degrades',
-      notes: 'Cold case reopened due to new DNA technology. Original evidence being re-tested. One person of interest identified.'
+      notes: 'Cold case reopened due to new DNA technology. Original evidence being re-tested. One person of interest identified.',
+      prosecutorStatus: 'Awaiting Lab Results',
+      prosecutorNote: 'Investigative phase — no charging decision pending DNA re-analysis results.',
+      chargeWindowRisk: false,
+      evidenceItems: [
+        { id: 'EV-0923-1', description: 'DNA re-analysis — archived crime scene samples', category: 'DNA', lab: 'GBI Crime Lab', submittedDate: '2024-11-18', eta: '2024-12-18', status: 'In Progress' },
+      ],
     },
     {
       id: 'INV-2024-1234',
@@ -145,7 +178,15 @@ const ActiveCasesDashboard = () => {
       deadline: '2024-12-20',
       multiAgency: true,
       criticalReason: 'Surveillance authorization expires EOD — Sheriff approval required',
-      notes: 'Multi-agency DEA task force. Identified major fentanyl distribution network. 30-day surveillance extension pending command approval. Estimated OT: $12K.'
+      notes: 'Multi-agency DEA task force. Identified major fentanyl distribution network. 30-day surveillance extension pending command approval. Estimated OT: $12K.',
+      prosecutorStatus: 'Under Federal Review',
+      assignedADA: 'AUSA Daniel Reyes (N.D. Ga.)',
+      prosecutorNote: 'AUSA reviewing wiretap intercepts for grand jury presentation — contingent on surveillance extension approval.',
+      chargeWindowRisk: false,
+      evidenceItems: [
+        { id: 'EV-1234-1', description: 'Wiretap recordings — Title III intercepts', category: 'Digital Forensics', lab: 'FBI Digital Evidence Lab', submittedDate: '2024-11-25', eta: '2024-12-15', status: 'In Progress' },
+        { id: 'EV-1234-2', description: 'Seized narcotics — field samples for chemistry analysis', category: 'Toxicology', lab: 'GBI Crime Lab', submittedDate: '2024-12-02', eta: '2024-12-14', status: 'Queued' },
+      ],
     },
     {
       id: 'INV-2024-1456',
@@ -166,7 +207,14 @@ const ActiveCasesDashboard = () => {
       nextAction: 'Search warrant hearing 12/06',
       deadline: '2024-12-06',
       criticalReason: 'Warrant hearing tomorrow — HAZMAT confirmation still pending',
-      notes: 'Suspected meth lab in residential neighborhood. Search warrant drafted. Hearing scheduled for 12/06. HAZMAT on standby.'
+      notes: 'Suspected meth lab in residential neighborhood. Search warrant drafted. Hearing scheduled for 12/06. HAZMAT on standby.',
+      prosecutorStatus: 'Awaiting Warrant',
+      assignedADA: 'ADA Patricia Coleman (Major Crimes)',
+      prosecutorNote: 'Search warrant hearing 12/06 — charges contingent on warrant approval and HAZMAT confirmation of lab contents.',
+      chargeWindowRisk: true,
+      evidenceItems: [
+        { id: 'EV-1456-1', description: 'Field test results — suspected meth precursors', category: 'Toxicology', lab: 'County Crime Lab', submittedDate: '2024-11-30', eta: '2024-12-04', status: 'Complete' },
+      ],
     },
     {
       id: 'INV-2024-1567',
@@ -186,7 +234,13 @@ const ActiveCasesDashboard = () => {
       witnesses: 3,
       nextAction: 'Surveillance review & suspect identification',
       criticalReason: 'Strong surveillance footage — ID window narrowing as suspects may relocate',
-      notes: '2 armed suspects. $2,400 cash taken. Excellent video surveillance. Suspects wore masks but distinctive clothing visible.'
+      notes: '2 armed suspects. $2,400 cash taken. Excellent video surveillance. Suspects wore masks but distinctive clothing visible.',
+      prosecutorStatus: 'Awaiting Evidence',
+      prosecutorNote: 'No charges can be filed until suspects are identified — surveillance review in progress.',
+      chargeWindowRisk: false,
+      evidenceItems: [
+        { id: 'EV-1567-1', description: 'Surveillance video — gas station + adjacent businesses', category: 'Digital Forensics', lab: 'County Digital Forensics Unit', submittedDate: '2024-12-02', eta: '2024-12-09', status: 'In Progress' },
+      ],
     },
     {
       id: 'INV-2024-1489',
@@ -207,7 +261,15 @@ const ActiveCasesDashboard = () => {
       nextAction: 'Pattern analysis & surveillance of target pharmacies',
       deadline: '2024-12-10',
       criticalReason: 'Escalating series — 4th incident likely within 72 hrs based on pattern',
-      notes: '3 pharmacy robberies - same MO. Targeting opioid pain medications. Suspects believed to be same 2 individuals. Surveillance on potential targets.'
+      notes: '3 pharmacy robberies - same MO. Targeting opioid pain medications. Suspects believed to be same 2 individuals. Surveillance on potential targets.',
+      prosecutorStatus: 'Awaiting Evidence',
+      assignedADA: 'ADA Marcus Webb (Property Crimes)',
+      prosecutorNote: 'ADA briefed on series — charging package pending latent print match and surveillance compilation across all 3 scenes.',
+      chargeWindowRisk: false,
+      evidenceItems: [
+        { id: 'EV-1489-1', description: 'Latent prints — pharmacy counters, all 3 scenes', category: 'Latent Prints', lab: 'County Crime Lab', submittedDate: '2024-11-22', eta: '2024-12-13', status: 'In Progress' },
+        { id: 'EV-1489-2', description: 'Surveillance footage compilation — 3 locations', category: 'Digital Forensics', lab: 'County Digital Forensics Unit', submittedDate: '2024-12-03', eta: '2024-12-16', status: 'Queued' },
+      ],
     },
     {
       id: 'INV-2024-1678',
@@ -228,7 +290,14 @@ const ActiveCasesDashboard = () => {
       nextAction: 'DNA results expected 12/12',
       deadline: '2024-12-12',
       criticalReason: 'Suspect known to victim — ongoing safety risk until arrest',
-      notes: 'Sexual assault case. Suspect known to victim. SANE exam completed. DNA submitted to GBI lab. Warrant ready pending lab confirmation.'
+      notes: 'Sexual assault case. Suspect known to victim. SANE exam completed. DNA submitted to GBI lab. Warrant ready pending lab confirmation.',
+      prosecutorStatus: 'Awaiting Lab Results',
+      assignedADA: 'ADA Patricia Coleman (SVU)',
+      prosecutorNote: 'Arrest warrant drafted and ready to file — held pending GBI DNA confirmation from SANE exam kit.',
+      chargeWindowRisk: false,
+      evidenceItems: [
+        { id: 'EV-1678-1', description: 'SANE exam kit — DNA analysis', category: 'DNA', lab: 'GBI Crime Lab', submittedDate: '2024-11-26', eta: '2024-12-11', status: 'Overdue' },
+      ],
     },
     {
       id: 'INV-2024-1712',
@@ -248,7 +317,13 @@ const ActiveCasesDashboard = () => {
       witnesses: 2,
       nextAction: 'Pawn shop monitoring for stolen items',
       criticalReason: 'Sophisticated entry method — repeat target risk at other electronics retailers',
-      notes: '$45K in electronics stolen. Cut through roof access. Sophisticated operation. Monitoring pawn shops and online marketplaces.'
+      notes: '$45K in electronics stolen. Cut through roof access. Sophisticated operation. Monitoring pawn shops and online marketplaces.',
+      prosecutorStatus: 'Awaiting Evidence',
+      prosecutorNote: 'Charging on hold pending recovered-property trace through pawn shop / marketplace monitoring.',
+      chargeWindowRisk: false,
+      evidenceItems: [
+        { id: 'EV-1712-1', description: 'Pawn shop & online marketplace transaction records', category: 'Records & Documents', lab: 'Financial Crimes Unit', submittedDate: '2024-12-01', eta: '2024-12-12', status: 'In Progress' },
+      ],
     },
     {
       id: 'INV-2024-1823',
@@ -269,7 +344,15 @@ const ActiveCasesDashboard = () => {
       nextAction: 'Federal charges being prepared',
       multiAgency: true,
       criticalReason: 'Federal charges pending — FBI coordination window time-sensitive',
-      notes: 'Large-scale identity theft operation. 47 victims identified. $380K in fraudulent charges. Working with FBI. Federal charges pending.'
+      notes: 'Large-scale identity theft operation. 47 victims identified. $380K in fraudulent charges. Working with FBI. Federal charges pending.',
+      prosecutorStatus: 'Under Federal Review',
+      assignedADA: 'AUSA Daniel Reyes / ADA Coleman (state coordination)',
+      prosecutorNote: 'Financial evidence package complete — AUSA finalizing federal vs. state charging strategy for 47-victim indictment.',
+      chargeWindowRisk: false,
+      evidenceItems: [
+        { id: 'EV-1823-1', description: 'Subpoenaed bank & financial records — 47 victims', category: 'Records & Documents', lab: 'Financial Crimes Unit', submittedDate: '2024-11-05', eta: '2024-11-30', status: 'Complete' },
+        { id: 'EV-1823-2', description: 'Digital evidence — seized laptops & drives', category: 'Digital Forensics', lab: 'FBI Digital Evidence Lab', submittedDate: '2024-11-20', eta: '2024-12-18', status: 'In Progress' },
+      ],
     },
     {
       id: 'INV-2024-1934',
@@ -290,7 +373,14 @@ const ActiveCasesDashboard = () => {
       nextAction: 'Warrant execution planned 12/06',
       deadline: '2024-12-06',
       criticalReason: 'Victim hospitalized — suspect at large, escalation risk',
-      notes: 'Domestic violence - severe injuries. Victim hospitalized. Suspect fled scene. Warrant approved. Execution planned for 12/06 AM.'
+      notes: 'Domestic violence - severe injuries. Victim hospitalized. Suspect fled scene. Warrant approved. Execution planned for 12/06 AM.',
+      prosecutorStatus: 'Ready for Charging',
+      assignedADA: 'ADA Marcus Webb',
+      prosecutorNote: 'Arrest warrant signed by judge — charges filed. Awaiting suspect apprehension to begin prosecution timeline.',
+      chargeWindowRisk: false,
+      evidenceItems: [
+        { id: 'EV-1934-1', description: 'Medical records & injury photographs', category: 'Records & Documents', lab: 'N/A — Hospital Records', submittedDate: '2024-12-03', eta: '2024-12-04', status: 'Complete' },
+      ],
     }
   ];
 
@@ -312,6 +402,37 @@ const ActiveCasesDashboard = () => {
     narcotics: cases.filter(c => c.type === 'Narcotics').length,
     multiAgency: cases.filter(c => c.multiAgency).length
   };
+
+  // ── Prosecutor Readiness — what's blocking charging on each case ──
+  const prosecutorBuckets: { status: ProsecutorStatus; label: string; cases: Case[] }[] = [
+    { status: 'Ready for Charging', label: 'Ready for Charging', cases: cases.filter(c => c.prosecutorStatus === 'Ready for Charging') },
+    { status: 'Awaiting Evidence', label: 'Awaiting Evidence', cases: cases.filter(c => c.prosecutorStatus === 'Awaiting Evidence') },
+    { status: 'Awaiting Lab Results', label: 'Awaiting Lab Results', cases: cases.filter(c => c.prosecutorStatus === 'Awaiting Lab Results') },
+    { status: 'Awaiting Warrant', label: 'Awaiting Warrant', cases: cases.filter(c => c.prosecutorStatus === 'Awaiting Warrant') },
+    { status: 'Under Federal Review', label: 'Under Federal Review', cases: cases.filter(c => c.prosecutorStatus === 'Under Federal Review') },
+  ];
+
+  const chargeWindowRiskCases = cases.filter(c => c.chargeWindowRisk);
+
+  // ── Evidence & Forensics Pipeline — case-linked lab/evidence tracking ──
+  const allEvidenceItems = cases.flatMap(c => c.evidenceItems.map(item => ({ ...item, caseId: c.id, caseNumber: c.caseNumber, caseTitle: c.title })));
+
+  const evidenceCategories: EvidenceItem['category'][] = ['DNA', 'Ballistics', 'Digital Forensics', 'Toxicology', 'Latent Prints', 'Records & Documents'];
+  const evidenceByCategory = evidenceCategories.map(category => {
+    const items = allEvidenceItems.filter(item => item.category === category);
+    return {
+      category,
+      total: items.length,
+      overdue: items.filter(item => item.status === 'Overdue').length,
+    };
+  });
+
+  const overdueEvidenceItems = allEvidenceItems.filter(item => item.status === 'Overdue');
+  const sortedEvidenceItems = [...allEvidenceItems].sort((a, b) => {
+    if (a.status === 'Overdue' && b.status !== 'Overdue') return -1;
+    if (b.status === 'Overdue' && a.status !== 'Overdue') return 1;
+    return 0;
+  });
 
   const commandActions: CommandAction[] = [
     {
@@ -366,6 +487,19 @@ const ActiveCasesDashboard = () => {
       shortTermOutcome: 'Interview continuity and testimony reliability improve.',
       result: 'Case momentum and victim safety confidence both increase.',
       rationale: 'Based on current victim risk profile and interview dependency.',
+      actionLabel: 'Approve'
+    },
+    {
+      id: 'cmd-5',
+      urgency: 'Normal',
+      state: 'Pending',
+      decision: 'Approve charge referral to ADA Webb — DV Assault #2024-1934 (warrant signed, evidence complete).',
+      ifIgnored: 'If ignored, signed charging paperwork sits idle while suspect remains at large.',
+      timeSensitivity: 'Target: next business day',
+      immediateImpact: 'ADA office receives complete charge referral and opens the court file.',
+      shortTermOutcome: 'Prosecution timeline starts on day one of custody — no lag after apprehension.',
+      result: 'Case moves to Court Pending the moment the suspect is taken into custody.',
+      rationale: 'Based on signed arrest warrant and a complete evidence package.',
       actionLabel: 'Approve'
     }
   ];
@@ -446,6 +580,55 @@ const ActiveCasesDashboard = () => {
         return 'bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-500/30';
       default:
         return 'bg-emerald-100 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-500/30';
+    }
+  };
+
+  const getProsecutorStatusStyles = (status: ProsecutorStatus) => {
+    switch (status) {
+      case 'Ready for Charging':
+        return 'bg-emerald-100 dark:bg-emerald-500/10 border-emerald-200 dark:border-emerald-500/25 text-emerald-700 dark:text-emerald-400';
+      case 'Awaiting Evidence':
+        return 'bg-blue-100 dark:bg-blue-500/10 border-blue-200 dark:border-blue-500/25 text-blue-700 dark:text-blue-400';
+      case 'Awaiting Lab Results':
+        return 'bg-amber-100 dark:bg-amber-500/10 border-amber-200 dark:border-amber-500/25 text-amber-700 dark:text-amber-400';
+      case 'Awaiting Warrant':
+        return 'bg-purple-100 dark:bg-purple-500/10 border-purple-200 dark:border-purple-500/25 text-purple-700 dark:text-purple-400';
+      default:
+        return 'bg-slate-200 dark:bg-slate-700/30 border-slate-300 dark:border-slate-600/30 text-slate-700 dark:text-slate-300';
+    }
+  };
+
+  const getProsecutorStatusIcon = (status: ProsecutorStatus) => {
+    switch (status) {
+      case 'Ready for Charging': return Gavel;
+      case 'Awaiting Evidence': return Search;
+      case 'Awaiting Lab Results': return FlaskConical;
+      case 'Awaiting Warrant': return Scale;
+      default: return Building2;
+    }
+  };
+
+  const getEvidenceStatusStyles = (status: EvidenceItem['status']) => {
+    switch (status) {
+      case 'Complete':
+        return 'bg-emerald-100 dark:bg-emerald-500/10 border-emerald-200 dark:border-emerald-500/25 text-emerald-700 dark:text-emerald-400';
+      case 'In Progress':
+        return 'bg-blue-100 dark:bg-blue-500/10 border-blue-200 dark:border-blue-500/25 text-blue-700 dark:text-blue-400';
+      case 'Overdue':
+        return 'bg-red-100 dark:bg-red-500/10 border-red-200 dark:border-red-500/25 text-red-700 dark:text-red-400';
+      default:
+        return 'bg-slate-200 dark:bg-slate-700/30 border-slate-300 dark:border-slate-600/30 text-slate-700 dark:text-slate-300';
+    }
+  };
+
+  const getEvidenceCategoryIcon = (category: EvidenceItem['category']) => {
+    switch (category) {
+      case 'DNA': return Dna;
+      case 'Ballistics': return Target;
+      case 'Digital Forensics': return Smartphone;
+      case 'Toxicology': return Beaker;
+      case 'Latent Prints': return Fingerprint;
+      default: return FileText;
     }
   };
 
@@ -815,6 +998,135 @@ const ActiveCasesDashboard = () => {
                 <span>75% target threshold</span>
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* Prosecutor Readiness */}
+        <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+          <div className="flex items-center justify-between mb-5">
+            <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Prosecutor Readiness</h3>
+            <span className="text-[11px] text-slate-500">{stats.total} cases · {chargeWindowRiskCases.length} at risk of missing charge window</span>
+          </div>
+
+          {/* Status buckets */}
+          <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-5">
+            {prosecutorBuckets.map(bucket => {
+              const Icon = getProsecutorStatusIcon(bucket.status);
+              return (
+                <div key={bucket.status} className={`rounded-lg border p-3 ${getProsecutorStatusStyles(bucket.status)}`}>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <Icon className="w-3.5 h-3.5" />
+                    <span className="text-xl font-bold">{bucket.cases.length}</span>
+                  </div>
+                  <p className="text-[10px] font-semibold uppercase tracking-wide">{bucket.label}</p>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* At risk of missing charge window — highlighted */}
+          {chargeWindowRiskCases.length > 0 && (
+            <div className="mb-4 space-y-1.5">
+              <p className="text-[10px] font-bold text-red-700 dark:text-red-400 uppercase tracking-widest flex items-center gap-1.5">
+                <AlertTriangle className="w-3 h-3" /> At Risk of Missing Charge Window
+              </p>
+              {chargeWindowRiskCases.map(c => (
+                <div
+                  key={c.id}
+                  onClick={() => setSelectedCase(c)}
+                  className="flex items-center justify-between gap-3 px-4 py-2.5 bg-red-500/5 border border-red-500/15 rounded-lg cursor-pointer hover:border-red-500/30 transition-colors"
+                >
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2 mb-0.5 flex-wrap">
+                      <span className="text-[13px] font-semibold text-slate-900 dark:text-white">{c.title}</span>
+                      <span className="text-[11px] text-slate-500">#{c.caseNumber}</span>
+                    </div>
+                    <p className="text-[11px] text-slate-600 dark:text-slate-300">{c.prosecutorNote}</p>
+                  </div>
+                  {c.deadline && (
+                    <span className="text-[11px] font-semibold text-red-700 dark:text-red-400 flex-shrink-0">Deadline: {c.deadline}</span>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Per-status case lists */}
+          <div className="space-y-3">
+            {prosecutorBuckets.filter(b => b.cases.length > 0).map(bucket => (
+              <div key={bucket.status}>
+                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">{bucket.label} ({bucket.cases.length})</p>
+                <div className="space-y-1.5">
+                  {bucket.cases.map(c => (
+                    <div
+                      key={c.id}
+                      onClick={() => setSelectedCase(c)}
+                      className="flex items-center justify-between gap-3 px-4 py-2 bg-slate-50 dark:bg-slate-900/20 rounded-lg border border-slate-200/80 dark:border-slate-700/30 cursor-pointer hover:border-slate-400/50 dark:hover:border-slate-500/50 transition-colors"
+                    >
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="text-[12px] font-semibold text-slate-900 dark:text-white">{c.title}</span>
+                          <span className="text-[11px] text-slate-500">#{c.caseNumber}</span>
+                          {c.assignedADA && <span className="text-[11px] text-slate-600 dark:text-slate-300">· {c.assignedADA}</span>}
+                        </div>
+                        <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">{c.prosecutorNote}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Evidence & Forensics Pipeline */}
+        <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+          <div className="flex items-center justify-between mb-5">
+            <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Evidence & Forensics Pipeline</h3>
+            <span className="text-[11px] text-slate-500">{allEvidenceItems.length} items in pipeline · {overdueEvidenceItems.length} overdue</span>
+          </div>
+
+          {/* Category backlog tiles */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-5">
+            {evidenceByCategory.map(cat => {
+              const Icon = getEvidenceCategoryIcon(cat.category);
+              return (
+                <div
+                  key={cat.category}
+                  className={`rounded-lg border p-3 ${cat.overdue > 0 ? 'bg-red-500/5 border-red-500/15' : 'bg-slate-50 dark:bg-slate-900/20 border-slate-200 dark:border-slate-700/30'}`}
+                >
+                  <div className="flex items-center justify-between mb-1.5">
+                    <Icon className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
+                    {cat.overdue > 0 && (
+                      <span className="px-1.5 py-0.5 rounded text-[9px] font-bold uppercase bg-red-100 dark:bg-red-500/15 text-red-700 dark:text-red-400">
+                        {cat.overdue} overdue
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-xl font-bold text-slate-900 dark:text-white">{cat.total}</p>
+                  <p className="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-wide">{cat.category}</p>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Evidence item queue — overdue first */}
+          <div className="space-y-1.5">
+            {sortedEvidenceItems.map(item => (
+              <div key={item.id} className="flex items-center justify-between gap-3 px-4 py-2.5 bg-slate-50 dark:bg-slate-900/20 rounded-lg border border-slate-200/80 dark:border-slate-700/30">
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-2 flex-wrap mb-0.5">
+                    <span className="text-[12px] font-semibold text-slate-900 dark:text-white">{item.description}</span>
+                    <span className={`px-1.5 py-0.5 rounded border text-[10px] font-semibold ${getEvidenceStatusStyles(item.status)}`}>{item.status}</span>
+                  </div>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">#{item.caseNumber} · {item.caseTitle} · {item.lab}</p>
+                </div>
+                <div className="text-right flex-shrink-0">
+                  <p className="text-[11px] text-slate-500">ETA</p>
+                  <p className={`text-[12px] font-semibold ${item.status === 'Overdue' ? 'text-red-700 dark:text-red-400' : 'text-slate-700 dark:text-slate-300'}`}>{item.eta}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
@@ -1335,6 +1647,40 @@ const ActiveCasesDashboard = () => {
                     <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Evidence</span><span className="text-slate-700 dark:text-slate-300">{selectedCase.evidence} collected</span></div>
                     <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Witnesses</span><span className="text-slate-700 dark:text-slate-300">{selectedCase.witnesses} interviewed</span></div>
                     <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Suspects</span><span className="text-slate-700 dark:text-slate-300">{selectedCase.suspects} identified</span></div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Prosecutor Readiness & Evidence Tracking */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+                <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+                  <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide mb-3">Prosecutor Readiness</h3>
+                  <div className="flex items-center justify-between gap-2 mb-2 flex-wrap">
+                    <span className={`px-2 py-1 rounded border text-[11px] font-semibold ${getProsecutorStatusStyles(selectedCase.prosecutorStatus)}`}>{selectedCase.prosecutorStatus}</span>
+                    {selectedCase.assignedADA && <span className="text-[11px] text-slate-600 dark:text-slate-300 text-right">{selectedCase.assignedADA}</span>}
+                  </div>
+                  <p className="text-[12px] text-slate-700 dark:text-slate-300">{selectedCase.prosecutorNote}</p>
+                  {selectedCase.chargeWindowRisk && (
+                    <p className="text-[11px] text-red-700 dark:text-red-400 font-semibold mt-2 flex items-center gap-1.5">
+                      <AlertTriangle className="w-3 h-3" /> At risk of missing charge window
+                    </p>
+                  )}
+                </div>
+                <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+                  <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide mb-3">Evidence & Lab Tracking</h3>
+                  <div className="space-y-2">
+                    {selectedCase.evidenceItems.map(item => (
+                      <div key={item.id} className="flex items-center justify-between gap-3 px-3 py-2 bg-slate-50 dark:bg-slate-900/20 rounded-lg border border-slate-200/80 dark:border-slate-700/30">
+                        <div className="min-w-0">
+                          <p className="text-[12px] font-medium text-slate-900 dark:text-white">{item.description}</p>
+                          <p className="text-[11px] text-slate-500 dark:text-slate-400">{item.category} · {item.lab}</p>
+                        </div>
+                        <div className="text-right flex-shrink-0">
+                          <span className={`px-1.5 py-0.5 rounded border text-[10px] font-semibold ${getEvidenceStatusStyles(item.status)}`}>{item.status}</span>
+                          <p className="text-[11px] text-slate-500 mt-0.5">ETA {item.eta}</p>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
