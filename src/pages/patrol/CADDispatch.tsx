@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import {
   Radio, MapPin, Users, Car, ArrowRight, Circle, Siren,
-  Timer, Phone, PhoneCall, Send, Megaphone, ChevronDown
+  Timer, Phone, PhoneCall, Send, Megaphone, ChevronDown,
+  Map, FileText, X, CheckCircle, Lightbulb, Eye, Clock, Award
 } from 'lucide-react';
 import DashboardLayout from '../../layouts/DashboardLayout';
 
@@ -44,6 +45,9 @@ interface PatrolUnit {
   lastActivity?: string;
   oosReason?: string;
   oosETA?: string;
+  certifications?: string[];
+  onOvertime?: boolean;
+  otReason?: string;
 }
 
 interface HoldingCall {
@@ -54,9 +58,26 @@ interface HoldingCall {
   priority: 'P1' | 'P2' | 'P3';
 }
 
+interface BOLO {
+  id: string;
+  type: string;
+  description: string;
+  zone: string;
+  issued: string;
+  priority: 'High' | 'Medium';
+}
+
+type ActionPriority = 'Critical' | 'High' | 'Medium';
+const ACTION_PRIORITY_ORDER: Record<ActionPriority, number> = { Critical: 0, High: 1, Medium: 2 };
+
 const CADDispatch = () => {
   const [selectedCall, setSelectedCall] = useState<string | null>(null);
   const [showPressureDetail, setShowPressureDetail] = useState(false);
+  const [showHandoff, setShowHandoff] = useState(false);
+  const [handoffSent, setHandoffSent] = useState(false);
+  const [supervisorNotes, setSupervisorNotes] = useState(
+    'P1 DV-Weapons (24-12847) still active — A-247/A-251 committed past shift change, OT authorized by Sgt. Mitchell. I-85 injury accident (24-12845) holding for tow — A-243/A-256 into OT, B-Shift relief requested. Review BOLO-1142 (stolen vehicle, East Sector) with incoming patrol — occupants reported armed.'
+  );
 
   // Active calls for service
   const activeCalls: ActiveCall[] = [
@@ -226,7 +247,9 @@ const CADDispatch = () => {
       speed: 45,
       direction: 'Northeast',
       eta: '2 min',
-      lastActivity: 'Dispatched to P1 call'
+      lastActivity: 'Dispatched to P1 call',
+      onOvertime: true,
+      otReason: 'Committed to P1 DV-Weapons scene at shift change — OT authorized by Sgt. Mitchell'
     },
     {
       id: '251',
@@ -240,7 +263,10 @@ const CADDispatch = () => {
       speed: 48,
       direction: 'East',
       eta: '3 min',
-      lastActivity: 'Backup to P1 call'
+      lastActivity: 'Backup to P1 call',
+      certifications: ['Crisis Intervention Team (CIT)', 'Less-Lethal Specialist'],
+      onOvertime: true,
+      otReason: 'Committed to P1 DV-Weapons scene at shift change — OT authorized by Sgt. Mitchell'
     },
     {
       id: '239',
@@ -262,7 +288,10 @@ const CADDispatch = () => {
       currentCall: '24-12845',
       location: 'I-85 NB @ SR 316',
       lastUpdate: '14:19',
-      lastActivity: 'Traffic control, awaiting tow'
+      lastActivity: 'Traffic control, awaiting tow',
+      certifications: ['Accident Reconstruction'],
+      onOvertime: true,
+      otReason: 'Holding for tow completion at I-85 accident — into OT, B-Shift relief requested'
     },
     {
       id: '256',
@@ -273,7 +302,9 @@ const CADDispatch = () => {
       currentCall: '24-12845',
       location: 'I-85 NB @ SR 316',
       lastUpdate: '14:20',
-      lastActivity: 'Report writing'
+      lastActivity: 'Report writing',
+      onOvertime: true,
+      otReason: 'Holding for tow completion at I-85 accident — into OT, B-Shift relief requested'
     },
     {
       id: '241',
@@ -329,7 +360,8 @@ const CADDispatch = () => {
       status: 'Available',
       location: 'Patrol Zone 3 - Lawrenceville',
       lastUpdate: '14:35',
-      lastActivity: 'Traffic stop completed 14:05'
+      lastActivity: 'Traffic stop completed 14:05',
+      certifications: ['K9 Handler', 'Accident Reconstruction']
     },
     {
       id: '238',
@@ -339,7 +371,8 @@ const CADDispatch = () => {
       status: 'Available',
       location: 'Patrol Zone 1 - Duluth',
       lastUpdate: '14:33',
-      lastActivity: 'Patrol'
+      lastActivity: 'Patrol',
+      certifications: ['Crisis Intervention Team (CIT)']
     },
     {
       id: '240',
@@ -349,7 +382,8 @@ const CADDispatch = () => {
       status: 'Available',
       location: 'Patrol Zone 4 - Norcross',
       lastUpdate: '14:31',
-      lastActivity: 'Patrol'
+      lastActivity: 'Patrol',
+      certifications: ['Field Training Officer']
     },
     {
       id: '235',
@@ -386,6 +420,34 @@ const CADDispatch = () => {
       oosReason: 'Equipment issue',
       oosETA: 'TBD',
       lastActivity: 'Radio malfunction'
+    }
+  ];
+
+  // Active BOLOs — fed into Shift Handoff and zone awareness
+  const activeBolos: BOLO[] = [
+    {
+      id: 'BOLO-1142',
+      type: 'Stolen Vehicle',
+      description: 'Silver Honda Accord, GA tag XYZ-1234 — occupants reported armed, fled scene of B&E',
+      zone: 'East Sector (Beat 4 — Lilburn)',
+      issued: '13:50',
+      priority: 'High'
+    },
+    {
+      id: 'BOLO-1141',
+      type: 'Wanted Subject',
+      description: 'White male, 30s, felony probation violation warrant — last seen on foot, gray hoodie',
+      zone: 'West Sector (Beat 2 — Duluth)',
+      issued: '12:40',
+      priority: 'Medium'
+    },
+    {
+      id: 'BOLO-1139',
+      type: 'Missing Person',
+      description: '16yo female, considered at-risk, last seen leaving residence on foot',
+      zone: 'North Sector (Beat 6 — Buford)',
+      issued: '11:15',
+      priority: 'High'
     }
   ];
 
@@ -485,6 +547,36 @@ const CADDispatch = () => {
     }] : []),
   ].slice(0, 3);
 
+  const scrollToSection = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  // Units committed past shift change — flagged for B-Shift relief
+  const otUnits = patrolUnits.filter(u => u.onOvertime);
+  const highBolos = activeBolos.filter(b => b.priority === 'High');
+
+  // ── AI Prioritized Actions — ranked across calls, OT exposure, and BOLOs ──
+  const prioritizedActions: { id: string; priority: ActionPriority; label: string; onClick: () => void }[] = [
+    ...immediateActions.map(a => ({
+      id: a.id,
+      priority: (a.urgency === 'critical' ? 'Critical' : 'High') as ActionPriority,
+      label: a.label,
+      onClick: () => scrollToSection(a.id === 'holding' ? 'unit-status-section' : 'calls-section'),
+    })),
+    ...(otUnits.length > 0 ? [{
+      id: 'ot-units',
+      priority: 'Medium' as ActionPriority,
+      label: `${otUnits.length} unit(s) into overtime — confirm B-Shift relief`,
+      onClick: () => scrollToSection('unit-status-section'),
+    }] : []),
+    ...highBolos.map(b => ({
+      id: b.id,
+      priority: 'High' as ActionPriority,
+      label: `${b.type} BOLO — ${b.zone}`,
+      onClick: () => scrollToSection('bolo-section'),
+    })),
+  ].sort((a, b) => ACTION_PRIORITY_ORDER[a.priority] - ACTION_PRIORITY_ORDER[b.priority]);
+
   return (
     <DashboardLayout>
       <div className="p-6 space-y-5">
@@ -553,6 +645,78 @@ const CADDispatch = () => {
               <Circle className="w-1.5 h-1.5 fill-emerald-500 text-emerald-500" /> Live
             </div>
           </div>
+        </div>
+
+        {/* ── Shift Snapshot ──────────────────────────────────
+            Everything a watch commander needs in under 3 seconds. */}
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl px-5 py-3">
+          <div>
+            <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-0.5">Units On Duty</p>
+            <p className="text-[16px] font-bold leading-none text-slate-900 dark:text-white">{patrolUnits.length}</p>
+          </div>
+          <div className="w-px h-8 bg-slate-200 dark:bg-slate-700/50" />
+          <div>
+            <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-0.5">Available</p>
+            <p className={`text-[16px] font-bold leading-none ${availablePct <= 25 ? 'text-red-600 dark:text-red-400' : availablePct < 50 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-900 dark:text-white'}`}>
+              {stats.unitsAvailable} ({availablePct}%)
+            </p>
+          </div>
+          <div className="w-px h-8 bg-slate-200 dark:bg-slate-700/50" />
+          <div>
+            <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-0.5">Active Calls</p>
+            <p className={`text-[16px] font-bold leading-none ${p1Active > 0 ? 'text-red-600 dark:text-red-400' : 'text-slate-900 dark:text-white'}`}>
+              {sortedActiveCalls.length} {p1Active > 0 && `(${p1Active} P1)`}
+            </p>
+          </div>
+          <div className="w-px h-8 bg-slate-200 dark:bg-slate-700/50" />
+          <div>
+            <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-0.5">On Overtime</p>
+            <p className={`text-[16px] font-bold leading-none ${otUnits.length > 0 ? 'text-orange-600 dark:text-orange-400' : 'text-slate-900 dark:text-white'}`}>
+              {otUnits.length}
+            </p>
+          </div>
+          <div className="w-px h-8 bg-slate-200 dark:bg-slate-700/50" />
+          <div>
+            <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-0.5">Active BOLOs</p>
+            <p className={`text-[16px] font-bold leading-none ${highBolos.length > 0 ? 'text-red-600 dark:text-red-400' : 'text-slate-900 dark:text-white'}`}>
+              {activeBolos.length}
+            </p>
+          </div>
+          <button
+            onClick={() => setShowHandoff(true)}
+            className="ml-auto flex items-center gap-1.5 text-[11px] text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-700/40 border border-slate-300 dark:border-slate-600/50 rounded-lg px-3 py-1.5 hover:bg-slate-100 dark:hover:bg-slate-700/60 transition-colors"
+          >
+            <FileText className="w-3.5 h-3.5" /> Generate Shift Handoff Report
+          </button>
+        </div>
+
+        {/* ── AI Prioritized Actions ──────────────────────────
+            Calls, OT exposure, and BOLOs ranked — where to look first. */}
+        <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl px-5 py-3">
+          <div className="flex items-center gap-2 mb-1.5">
+            <Lightbulb className="w-4 h-4 text-slate-700 dark:text-slate-400" />
+            <span className="text-[13px] font-semibold text-slate-900 dark:text-white">AI Prioritized Actions</span>
+            <span className="text-[10px] text-slate-500">Ranked by operational risk · click to jump to detail</span>
+          </div>
+          <ol className="space-y-0.5">
+            {prioritizedActions.map((action, i) => (
+              <li key={action.id}>
+                <button
+                  onClick={action.onClick}
+                  className="w-full flex items-center gap-2.5 text-left px-2 py-1.5 rounded-lg hover:bg-slate-700/10 transition-colors group"
+                >
+                  <span className="text-[11px] font-bold text-slate-500 w-4 flex-shrink-0">{i + 1}.</span>
+                  <span className="flex-1 text-[12px] text-slate-700 dark:text-slate-200 truncate">{action.label}</span>
+                  <span className={`text-[9px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider flex-shrink-0 ${
+                    action.priority === 'Critical' ? 'bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/20' :
+                    action.priority === 'High'     ? 'bg-orange-500/15 text-orange-600 dark:text-orange-400 border border-orange-500/20' :
+                                                      'bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40'
+                  }`}>{action.priority}</span>
+                  <ArrowRight className="w-3 h-3 text-slate-500 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
+                </button>
+              </li>
+            ))}
+          </ol>
         </div>
 
         {/* ── Immediate Command Actions ────────────────────── */}
@@ -684,7 +848,7 @@ const CADDispatch = () => {
         </div>
 
         {/* ── Active Calls for Service ──────────────────────── */}
-        <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
+        <div id="calls-section" className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
           <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 dark:border-slate-700/40">
             <div className="flex items-center gap-2">
               <Radio className="w-4 h-4 text-slate-700 dark:text-slate-400" />
@@ -924,6 +1088,41 @@ const CADDispatch = () => {
           </div>
         </div>
 
+        {/* ── Active BOLOs ─────────────────────────────────── */}
+        <div id="bolo-section" className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
+          <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 dark:border-slate-700/40">
+            <div className="flex items-center gap-2">
+              <Eye className="w-4 h-4 text-slate-700 dark:text-slate-400" />
+              <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Active BOLOs</span>
+              <span className="text-[10px] px-2 py-0.5 bg-slate-50 dark:bg-slate-700/40 text-slate-700 dark:text-slate-400 rounded-full">{activeBolos.length} active</span>
+            </div>
+            <button className="flex items-center gap-1.5 text-[11px] px-2.5 py-1 bg-slate-100 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 text-slate-700 dark:text-slate-400 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700/30 transition-colors">
+              <Map className="w-3 h-3" /> View Zone Map
+            </button>
+          </div>
+          <div className="divide-y divide-[#E5E7EB] dark:divide-slate-700/30">
+            {activeBolos.map(bolo => (
+              <div key={bolo.id} className="flex items-start gap-3 px-5 py-3">
+                <span className={`text-[9px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider flex-shrink-0 mt-0.5 ${
+                  bolo.priority === 'High'
+                    ? 'bg-[#DC2626] text-white border border-red-700'
+                    : 'bg-amber-100 text-[#92400E] border border-amber-300 dark:bg-amber-500/20 dark:text-amber-300 dark:border-amber-500/30'
+                }`}>{bolo.priority}</span>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-0.5">
+                    <span className="text-[12px] font-semibold text-slate-900 dark:text-white">{bolo.type}</span>
+                    <span className="text-[10px] text-[#6B7280] font-mono">{bolo.id}</span>
+                  </div>
+                  <p className="text-[11px] text-[#374151] dark:text-slate-300 leading-snug mb-1">{bolo.description}</p>
+                  <p className="text-[10px] text-[#6B7280] flex items-center gap-1">
+                    <MapPin className="w-3 h-3 flex-shrink-0" />{bolo.zone} · issued {bolo.issued}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* ── Calls Holding + Unit Status ──────────────────── */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
 
@@ -988,7 +1187,7 @@ const CADDispatch = () => {
           )}
 
           {/* Unit Status — right columns */}
-          <div className={`bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden ${holdingActive.length > 0 ? 'lg:col-span-2' : 'lg:col-span-3'}`}>
+          <div id="unit-status-section" className={`bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden ${holdingActive.length > 0 ? 'lg:col-span-2' : 'lg:col-span-3'}`}>
             <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 dark:border-slate-700/40">
               <div className="flex items-center gap-2">
                 <Car className="w-4 h-4 text-slate-700 dark:text-slate-400" />
@@ -1034,6 +1233,20 @@ const CADDispatch = () => {
                       </span>
                     </div>
                     <p className="text-[10px] text-slate-700 dark:text-slate-400 truncate mb-1" title={unit.officer}>{unit.officer}</p>
+                    {unit.onOvertime && (
+                      <div className="flex items-center gap-1 text-[9px] text-orange-600 dark:text-orange-400 font-semibold mb-1" title={unit.otReason}>
+                        <Clock className="w-2.5 h-2.5 flex-shrink-0" /> OT — B-Shift relief pending
+                      </div>
+                    )}
+                    {unit.certifications && unit.certifications.length > 0 && (
+                      <div className="flex flex-wrap gap-1 mb-1">
+                        {unit.certifications.map(cert => (
+                          <span key={cert} className="text-[9px] px-1 py-px bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40 rounded inline-flex items-center gap-1">
+                            <Award className="w-2.5 h-2.5" /> {cert}
+                          </span>
+                        ))}
+                      </div>
+                    )}
                     {unit.currentCall && (
                       <div className="flex items-center gap-1.5 mb-1">
                         <span className="text-[10px] text-[#6B7280]">Call:</span>
@@ -1073,6 +1286,147 @@ const CADDispatch = () => {
         </div>
 
       </div>
+
+      {/* ── Shift Handoff Report Modal ────────────────────── */}
+      {showHandoff && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-xl w-full max-w-2xl max-h-[85vh] overflow-y-auto">
+            {!handoffSent ? (
+              <>
+                <div className="flex items-start justify-between gap-4 px-5 py-4 border-b border-slate-200 dark:border-slate-700/40">
+                  <div className="flex items-center gap-2">
+                    <FileText className="w-4 h-4 text-slate-700 dark:text-slate-400" />
+                    <div>
+                      <h2 className="text-[14px] font-bold text-slate-900 dark:text-white">Shift Handoff Report</h2>
+                      <p className="text-[10px] text-slate-500">A-Shift · 06:00–14:00 · Sgt. Mitchell → B-Shift Watch Commander</p>
+                    </div>
+                  </div>
+                  <button onClick={() => setShowHandoff(false)} className="text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 flex-shrink-0">
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+
+                <div className="p-5 space-y-4">
+                  {/* Open Calls for Service */}
+                  <div>
+                    <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1.5 flex items-center gap-1.5">
+                      <Radio className="w-3 h-3" /> Open Calls for Service ({sortedActiveCalls.length})
+                    </p>
+                    <ul className="space-y-1">
+                      {sortedActiveCalls.map(c => (
+                        <li key={c.id} className="flex items-start gap-2 text-[11px] text-slate-700 dark:text-slate-300">
+                          <span className="text-slate-700 mt-0.5 flex-shrink-0">—</span>
+                          {c.priority} · {c.type} — {c.location} ({c.elapsed}) · {c.status} · units {c.assignedUnits.length > 0 ? c.assignedUnits.map(id => `A-${id}`).join(', ') : 'none assigned'}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Calls Holding */}
+                  <div>
+                    <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1.5 flex items-center gap-1.5">
+                      <Timer className="w-3 h-3" /> Calls Holding ({holdingCalls.length})
+                    </p>
+                    <ul className="space-y-1">
+                      {holdingCalls.map(c => (
+                        <li key={c.callNumber} className="flex items-start gap-2 text-[11px] text-slate-700 dark:text-slate-300">
+                          <span className="text-slate-700 mt-0.5 flex-shrink-0">—</span>
+                          {c.type} — {c.location} · holding {c.holdTime}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Units on Overtime */}
+                  <div>
+                    <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1.5 flex items-center gap-1.5">
+                      <Clock className="w-3 h-3" /> Units on Overtime — Pending B-Shift Relief ({otUnits.length})
+                    </p>
+                    <ul className="space-y-1">
+                      {otUnits.map(u => (
+                        <li key={u.id} className="flex items-start gap-2 text-[11px] text-slate-700 dark:text-slate-300">
+                          <span className="text-slate-700 mt-0.5 flex-shrink-0">—</span>
+                          {u.callSign} ({u.officer}) — {u.otReason}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Active BOLOs */}
+                  <div>
+                    <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1.5 flex items-center gap-1.5">
+                      <Eye className="w-3 h-3" /> Active BOLOs ({activeBolos.length})
+                    </p>
+                    <ul className="space-y-1">
+                      {activeBolos.map(b => (
+                        <li key={b.id} className="flex items-start gap-2 text-[11px] text-slate-700 dark:text-slate-300">
+                          <span className="text-slate-700 mt-0.5 flex-shrink-0">—</span>
+                          {b.priority} · {b.type} — {b.zone} · {b.description}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Units Returning to Service */}
+                  <div>
+                    <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1.5 flex items-center gap-1.5">
+                      <Car className="w-3 h-3" /> Units Returning to Service ({stats.unitsOutOfService})
+                    </p>
+                    <ul className="space-y-1">
+                      {patrolUnits.filter(u => u.status === 'Out of Service').map(u => (
+                        <li key={u.id} className="flex items-start gap-2 text-[11px] text-slate-700 dark:text-slate-300">
+                          <span className="text-slate-700 mt-0.5 flex-shrink-0">—</span>
+                          {u.callSign} ({u.officer}) — {u.oosReason}, back in {u.oosETA}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Supervisor Notes */}
+                  <div>
+                    <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1.5 flex items-center gap-1.5">
+                      <FileText className="w-3 h-3" /> Supervisor Notes
+                    </p>
+                    <textarea
+                      value={supervisorNotes}
+                      onChange={e => setSupervisorNotes(e.target.value)}
+                      rows={3}
+                      className="w-full text-[11px] text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/40 rounded-lg p-2.5 resize-none focus:outline-none focus:ring-1 focus:ring-slate-500/40"
+                    />
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-end gap-2 px-5 py-4 border-t border-slate-200 dark:border-slate-700/40">
+                  <button onClick={() => setShowHandoff(false)} className="text-[11px] text-slate-500 hover:text-slate-700 dark:text-slate-300 px-3 py-1.5">
+                    Cancel
+                  </button>
+                  <button onClick={() => setHandoffSent(true)} className="flex items-center gap-1.5 text-[12px] font-medium text-white bg-slate-700 hover:bg-slate-600 rounded-lg px-3.5 py-1.5 transition-colors">
+                    <Send className="w-3.5 h-3.5" /> Send to Next Shift Commander
+                  </button>
+                </div>
+              </>
+            ) : (
+              <div className="p-6 text-center">
+                <CheckCircle className="w-10 h-10 text-emerald-500 mx-auto mb-3" />
+                <h2 className="text-[14px] font-bold text-slate-900 dark:text-white mb-1">Handoff Report Sent</h2>
+                <p className="text-[11px] text-slate-500 mb-4">Delivered to incoming B-Shift Watch Commander · 14:00–22:00</p>
+                <ul className="text-[11px] text-slate-700 dark:text-slate-300 text-left space-y-1.5 bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-700/40 rounded-lg p-3 mb-4">
+                  <li className="flex items-start gap-2"><CheckCircle className="w-3 h-3 text-emerald-500 mt-0.5 flex-shrink-0" /> {sortedActiveCalls.length} open call(s) for service included</li>
+                  <li className="flex items-start gap-2"><CheckCircle className="w-3 h-3 text-emerald-500 mt-0.5 flex-shrink-0" /> {otUnits.length} unit(s) on overtime flagged for relief</li>
+                  <li className="flex items-start gap-2"><CheckCircle className="w-3 h-3 text-emerald-500 mt-0.5 flex-shrink-0" /> {activeBolos.length} active BOLO(s) included</li>
+                  <li className="flex items-start gap-2"><CheckCircle className="w-3 h-3 text-emerald-500 mt-0.5 flex-shrink-0" /> Supervisor notes attached</li>
+                </ul>
+                <button
+                  onClick={() => { setShowHandoff(false); setHandoffSent(false); }}
+                  className="text-[12px] font-medium text-white bg-slate-700 hover:bg-slate-600 rounded-lg px-4 py-1.5 transition-colors"
+                >
+                  Done
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </DashboardLayout>
   );
 };
