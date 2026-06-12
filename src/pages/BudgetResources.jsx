@@ -30,6 +30,7 @@ export default function BudgetResources() {
   ]);
   const [auditLogExpanded, setAuditLogExpanded] = useState(false);
   const [predictiveExpanded, setPredictiveExpanded] = useState(true);
+  const [healthBreakdownOpen, setHealthBreakdownOpen] = useState(false);
   const [toast, setToast] = useState(null); // { id, message, saving }
   const [flashSet, setFlashSet] = useState(new Set()); // element keys currently flashing
   const toastTimerRef = useRef(null);
@@ -260,6 +261,7 @@ export default function BudgetResources() {
     {
       id: 1,
       title: 'Reallocate Training Division surplus to Patrol',
+      headline: 'Reallocate Training Surplus → Reduces deficit by $300K',
       why: 'Patrol is trending $150K over budget with 61 days left. Without intervention it will close the FY in deficit — impacting next year\'s allocation request.',
       consequence: 'Moves $300K from Training\'s $600K surplus directly into Patrol. Training still closes with $300K buffer. Patrol returns to within budget.',
       impact: 300000, urgency: 'High', confidence: 92, confidenceLabel: 'High',
@@ -279,6 +281,7 @@ export default function BudgetResources() {
     {
       id: 2,
       title: 'Cap overtime to emergencies only — Nov & Dec',
+      headline: 'Overtime Controls → Prevents projected overrun growth',
       why: 'Overtime is at 92% utilization with two months remaining and on pace to exceed its allocation by $300K — the single largest controllable cost driver.',
       consequence: 'Hard cap saves $220K. All non-emergency OT requires supervisor sign-off. Patrol coverage maintained through existing scheduling.',
       impact: 220000, urgency: 'High', confidence: 88, confidenceLabel: 'High',
@@ -297,6 +300,7 @@ export default function BudgetResources() {
     {
       id: 3,
       title: 'Defer non-critical equipment purchases to FY 2025',
+      headline: 'Defer Non-Critical Purchases → Protects year-end reserve',
       why: 'Q4 equipment orders are discretionary and already budgeted in FY25. Executing them now accelerates spend with no operational advantage this year.',
       consequence: 'Defers $180K to next fiscal year. Safety and mission-critical equipment is excluded — reviewed item by item.',
       impact: 180000, urgency: 'Medium', confidence: 79, confidenceLabel: 'Medium',
@@ -314,6 +318,7 @@ export default function BudgetResources() {
     {
       id: 4,
       title: 'Freeze discretionary spend in Support Services',
+      headline: 'Freeze Support Services Spend → Protects $100K year-end buffer',
       why: 'Support Services has $315K available but $90K already committed, leaving only $225K of true buffer. Uncontrolled end-of-year spend is a common overage source.',
       consequence: 'Saves $100K. Freezes all non-PO\'d, non-essential purchases through Dec 31. No active contracts or services disrupted.',
       impact: 100000, urgency: 'Medium', confidence: 91, confidenceLabel: 'High',
@@ -331,6 +336,7 @@ export default function BudgetResources() {
     {
       id: 5,
       title: 'Delay 2 admin hires until January 2025',
+      headline: 'Delay Admin Hires → Preserves $85K in payroll buffer',
       why: 'Two admin positions are open but not operationally critical for Q4. Filling them now adds payroll that pushes the year-end total closer to the limit.',
       consequence: 'Saves $85K in Nov–Dec salary and benefits. Positions remain approved and will be filled on schedule in January.',
       impact: 85000, urgency: 'Low', confidence: 75, confidenceLabel: 'Medium',
@@ -398,6 +404,42 @@ export default function BudgetResources() {
   );
   const riskLabel = budgetRiskScore >= 75 ? 'Healthy' : budgetRiskScore >= 50 ? 'At Risk' : 'Critical';
   const riskColor = budgetRiskScore >= 75 ? 'green' : budgetRiskScore >= 50 ? 'amber' : 'red';
+
+  // Budget Health Score breakdown — same weighted sub-calculations as budgetRiskScore above, shown as earned/max points per factor
+  const healthFactors = [
+    {
+      label: 'Projected Overrun',
+      points: Math.round((isLiveOverBudget ? 0 : Math.max(0, 100 - (liveOverrun / 50000))) * 0.30),
+      max: 30,
+      description: isLiveOverBudget
+        ? `Projected to finish ${fmt(liveOverrun)} over budget — full point allocation lost while the projection remains over budget.`
+        : `Projection is ${fmt(Math.abs(liveOverrun))} under budget — no points lost in this category.`,
+    },
+    {
+      label: 'Spend Pace',
+      points: Math.round((fiscalYear.percentSpent > 90 ? 35 : fiscalYear.percentSpent > 85 ? 60 : 85) * 0.25),
+      max: 25,
+      description: fiscalYear.percentSpent > 90
+        ? `${fiscalYear.percentSpent}% of budget spent — pace is running well ahead of the fiscal year, a major risk driver.`
+        : fiscalYear.percentSpent > 85
+          ? `${fiscalYear.percentSpent}% of budget spent — pace is running slightly ahead of target.`
+          : `${fiscalYear.percentSpent}% of budget spent — on pace for the fiscal year.`,
+    },
+    {
+      label: 'Pending Commitments',
+      points: Math.round((pendingActions.length === 0 ? 100 : Math.max(0, 100 - pendingActions.length * 12)) * 0.25),
+      max: 25,
+      description: pendingActions.length === 0
+        ? 'All AI-recommended actions have been approved — no pending commitments holding back this score.'
+        : `${pendingActions.length} of ${recommendedActions.length} AI-recommended actions remain unapproved, worth ${fmt(pendingSavings)} in unrealized savings.`,
+    },
+    {
+      label: 'Available Reserves',
+      points: Math.round(((liveAvailable / BUDGET) > 0.1 ? 90 : (liveAvailable / BUDGET) > 0.05 ? 60 : 30) * 0.20),
+      max: 20,
+      description: `${fmt(liveAvailable)} available (${((liveAvailable / BUDGET) * 100).toFixed(1)}% of total budget) — ${(liveAvailable / BUDGET) > 0.1 ? 'above' : 'below'} the 10% healthy reserve threshold.`,
+    },
+  ];
 
   // Division heatmap
   const divisionHeatmap = [
@@ -633,9 +675,9 @@ export default function BudgetResources() {
                 </select>
                 <button
                   onClick={() => setVarianceReportOpen(true)}
-                  className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all"
+                  className={ghostBtn}
                 >
-                  <FileBarChart className="w-4 h-4" />
+                  <FileBarChart className="w-3.5 h-3.5" />
                   <span className="hidden sm:inline">Variance</span>
                 </button>
                 <button
@@ -647,37 +689,93 @@ export default function BudgetResources() {
                 </button>
                 <button
                   onClick={handleExportPDF}
-                  className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all"
+                  className={ghostBtn}
                 >
-                  <Download className="w-4 h-4" />
+                  <Download className="w-3.5 h-3.5" />
                   <span className="hidden sm:inline">Export</span>
                 </button>
               </div>
             </div>
 
-            {/* Forecast Status Banner — updates live */}
-            {isLiveOverBudget ? (
-              <div className="mb-5 flex items-center gap-3 px-4 py-3 bg-red-50 dark:bg-red-500/5 border border-red-200 dark:border-red-500/20 rounded-xl">
-                <ShieldAlert className="w-4 h-4 text-red-700 dark:text-red-400 flex-shrink-0" />
-                <div className="flex-1 text-sm">
-                  {appliedActionIds.size === 0
-                    ? <><span className="font-semibold text-red-700 dark:text-red-400">If no action is taken: </span><span className="text-slate-700 dark:text-slate-300">projected to exceed budget by <span className="font-semibold text-red-700 dark:text-red-400">{fmt(liveOverrun)}</span> by December 31.</span></>
-                    : <><span className="font-semibold text-amber-700 dark:text-amber-400">Still at risk: </span><span className="text-slate-700 dark:text-slate-300">{appliedActionIds.size} action{appliedActionIds.size > 1 ? 's' : ''} applied, saving <span className="font-semibold text-green-600 dark:text-green-400">{fmt(appliedSavings)}</span>. Projection is now <span className="font-semibold text-amber-700 dark:text-amber-400">{fmt(liveOverrun)} over budget</span>. {pendingActions.length} action{pendingActions.length > 1 ? 's' : ''} remaining.</span></>
-                  }
+            {/* Executive Brief — dominant first-screen summary */}
+            <div className={`mb-6 rounded-2xl border shadow-sm dark:shadow-none overflow-hidden ${isLiveOverBudget ? 'border-red-200 dark:border-red-500/20 bg-gradient-to-br from-red-50 via-white to-white dark:from-red-500/10 dark:via-slate-800/30 dark:to-slate-800/20' : 'border-green-200 dark:border-green-500/20 bg-gradient-to-br from-green-50 via-white to-white dark:from-green-500/10 dark:via-slate-800/30 dark:to-slate-800/20'}`}>
+              <div className="px-6 pt-5 pb-4 flex flex-col sm:flex-row sm:items-start gap-3">
+                <div className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 ${isLiveOverBudget ? 'bg-red-100 dark:bg-red-500/15' : 'bg-green-100 dark:bg-green-500/15'}`}>
+                  <ShieldAlert className={`w-5 h-5 ${isLiveOverBudget ? 'text-red-600 dark:text-red-400' : 'text-green-600 dark:text-green-400'}`} />
                 </div>
-                <button onClick={() => setActiveTab('forecast')} className="flex-shrink-0 text-xs font-semibold text-red-700 dark:text-red-400 hover:underline whitespace-nowrap">
-                  View Forecast →
+                <div className="flex-1 min-w-0">
+                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500 mb-1.5">Executive Brief</p>
+                  <p className="text-lg lg:text-xl font-bold leading-snug text-slate-900 dark:text-white">
+                    {isLiveOverBudget ? (
+                      <>You're projected to exceed budget by <span className="text-red-600 dark:text-red-400">{fmt(liveOverrun)}</span>. We identified <span className="text-green-600 dark:text-green-400">{fmt(pendingSavings)}</span> in savings. Approve {pendingActions.length === 1 ? 'this action' : 'these actions'} to reduce the risk.</>
+                    ) : pendingActions.length > 0 ? (
+                      <>You're tracking <span className="text-green-600 dark:text-green-400">{fmt(Math.abs(liveOverrun))} under budget</span>. {fmt(pendingSavings)} in additional savings is available across {pendingActions.length} recommended action{pendingActions.length > 1 ? 's' : ''}.</>
+                    ) : (
+                      <>You're tracking <span className="text-green-600 dark:text-green-400">{fmt(Math.abs(liveOverrun))} under budget</span> with all recommended actions applied. No further approvals required.</>
+                    )}
+                  </p>
+                </div>
+                {pendingActions.length > 0 && (
+                  <button onClick={() => setApplyAllModal(true)} className={`${primaryBtn} flex-shrink-0 self-start sm:self-center`}>
+                    <Zap className="w-3.5 h-3.5" /> Review &amp; Approve
+                  </button>
+                )}
+              </div>
+
+              {/* Dominant metrics */}
+              <div className="grid grid-cols-2 lg:grid-cols-4 border-t border-slate-200/70 dark:border-slate-700/30 divide-x divide-y lg:divide-y-0 divide-slate-200/70 dark:divide-slate-700/30">
+                <button onClick={() => setHealthBreakdownOpen(!healthBreakdownOpen)} className="text-left p-4 hover:bg-white/60 dark:hover:bg-slate-800/40 transition-colors">
+                  <p className="text-[10px] font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-1.5 flex items-center gap-1">
+                    Budget Health {healthBreakdownOpen ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+                  </p>
+                  <p className={`text-2xl lg:text-3xl font-black leading-none ${riskColor === 'green' ? 'text-green-600 dark:text-green-400' : riskColor === 'amber' ? 'text-amber-600 dark:text-amber-400' : 'text-red-600 dark:text-red-400'}`}>
+                    {budgetRiskScore}<span className="text-sm font-bold text-slate-400 dark:text-slate-500">/100</span>
+                  </p>
+                  <span className={`${BADGE(riskColor)} mt-1.5 inline-block`}>{riskLabel}</span>
                 </button>
-              </div>
-            ) : appliedActionIds.size > 0 ? (
-              <div className="mb-5 flex items-center gap-3 px-4 py-3 bg-green-50 dark:bg-green-500/5 border border-green-200 dark:border-green-500/20 rounded-xl">
-                <CheckCircle className="w-4 h-4 text-green-600 dark:text-green-400 flex-shrink-0" />
-                <div className="flex-1 text-sm">
-                  <span className="font-semibold text-green-700 dark:text-green-400">Overrun prevented. </span>
-                  <span className="text-slate-700 dark:text-slate-300">FY 2024 now projected at <span className="font-semibold text-green-700 dark:text-green-400">{fmt(liveProjection)}</span> — <span className="font-semibold text-green-700 dark:text-green-400">{fmt(Math.abs(liveOverrun))} under budget.</span></span>
+                <div className="p-4">
+                  <p className="text-[10px] font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-1.5">Current Overrun Risk</p>
+                  <p className={`text-2xl lg:text-3xl font-black leading-none ${isLiveOverBudget ? 'text-red-600 dark:text-red-400' : 'text-green-600 dark:text-green-400'}`}>
+                    {fmt(Math.abs(liveOverrun))}
+                  </p>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1.5">{isLiveOverBudget ? 'over budget at year-end' : 'under budget at year-end'}</p>
+                </div>
+                <div className="p-4">
+                  <p className="text-[10px] font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-1.5">Year-End Forecast</p>
+                  <p className="text-2xl lg:text-3xl font-black leading-none text-slate-900 dark:text-white">{fmt(liveProjection)}</p>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1.5">{((liveProjection / BUDGET) * 100).toFixed(1)}% of {fmt(BUDGET)} budget</p>
+                </div>
+                <div className="p-4">
+                  <p className="text-[10px] font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-1.5">Available Savings</p>
+                  <p className="text-2xl lg:text-3xl font-black leading-none text-green-600 dark:text-green-400">{fmt(pendingSavings)}</p>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1.5">{pendingActions.length} action{pendingActions.length !== 1 ? 's' : ''} pending approval</p>
                 </div>
               </div>
-            ) : null}
+
+              {/* Budget Health Score breakdown */}
+              {healthBreakdownOpen && (
+                <div className="border-t border-slate-200/70 dark:border-slate-700/30 px-6 py-4 bg-white/70 dark:bg-slate-900/30">
+                  <p className="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-3">Budget Health Score Breakdown — {budgetRiskScore}/100</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                    {healthFactors.map(f => (
+                      <div key={f.label} className="p-3 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/30 rounded-lg">
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="text-[12px] font-semibold text-slate-800 dark:text-slate-200">{f.label}</span>
+                          <span className={`text-[12px] font-black ${f.points === f.max ? 'text-green-600 dark:text-green-400' : f.points === 0 ? 'text-red-600 dark:text-red-400' : 'text-amber-600 dark:text-amber-400'}`}>{f.points}/{f.max}</span>
+                        </div>
+                        <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">{f.description}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Budget Summary */}
+            <div className="flex items-center gap-3 mb-3 mt-1">
+              <span className="text-[9px] font-black text-slate-300 dark:text-slate-600 uppercase tracking-[0.2em]">Budget Summary</span>
+              <div className="flex-1 h-px bg-slate-100 dark:bg-slate-800/80" />
+            </div>
 
             {/* KPI Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">              {/* Total Budget */}
@@ -840,10 +938,10 @@ export default function BudgetResources() {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-0.5 flex-wrap">
                         <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded flex-shrink-0 ${action.urgency === 'High' ? 'bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-400' : action.urgency === 'Medium' ? 'bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400' : 'bg-slate-100 dark:bg-slate-700/40 text-slate-600 dark:text-slate-400'}`}>{action.urgency}</span>
-                        <p className="text-[13px] font-semibold text-slate-800 dark:text-slate-200 truncate">{action.title}</p>
+                        <p className="text-[13px] font-semibold text-slate-800 dark:text-slate-200 truncate">{action.headline}</p>
                       </div>
                       <p className="text-[11px] text-slate-500 dark:text-slate-400">
-                        Save <span className="font-bold text-green-600 dark:text-green-400">{fmt(action.impact)}</span> · {action.riskLevel} risk · {action.confidence}% confidence
+                        <span className="font-bold text-green-600 dark:text-green-400">{fmt(action.impact)}</span> impact · {action.riskLevel} risk · {action.confidence}% confidence
                       </p>
                     </div>
                     <button
@@ -1021,7 +1119,7 @@ export default function BudgetResources() {
                               }`}>{action.urgency}</span>
                             )}
                             <span className={`text-[13px] font-semibold ${isApplied ? 'text-slate-400 dark:text-slate-500 line-through' : 'text-slate-800 dark:text-slate-200'}`}>
-                              {action.title}
+                              {isApplied ? action.title : action.headline}
                             </span>
                           </div>
                           {!isApplied && (
@@ -1157,7 +1255,7 @@ export default function BudgetResources() {
                             </div>
                             <p className="text-[11px] text-slate-500 dark:text-slate-400">{item.outcome}</p>
                           </div>
-                          <button onClick={() => setReallocationModal(true)} className={`flex-shrink-0 ${secondaryBtn}`}>Review</button>
+                          <button onClick={() => setReallocationModal(true)} className={`flex-shrink-0 ${ghostBtn}`}>Review</button>
                         </div>
                       );
                     })}
@@ -1301,14 +1399,18 @@ export default function BudgetResources() {
               )}
             </div>
 
-            {/* Deep Analytics */}
-            <div className="flex items-center gap-3 mb-4 mt-1">
-              <span className="text-[9px] font-black text-slate-300 dark:text-slate-600 uppercase tracking-[0.2em]">Deep Analytics</span>
-              <div className="flex-1 h-px bg-slate-100 dark:bg-slate-800/80" />
+            {/* Analytics Layer */}
+            <div className="mb-3 mt-2 flex items-center gap-3">
+              <div className="flex items-center gap-2">
+                <BarChart3 className="w-4 h-4 text-slate-400 dark:text-slate-500" />
+                <span className="text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">Analytics Layer</span>
+              </div>
+              <div className="flex-1 h-px bg-slate-200 dark:bg-slate-800" />
+              <span className="text-[11px] text-slate-400 dark:text-slate-500 hidden sm:inline">Drill-down intelligence — explore the data behind the brief</span>
             </div>
 
-            {/* Tabs */}
-            <div className="mb-6 flex gap-1 border-b border-border overflow-x-auto">
+            {/* Analytics Navigation */}
+            <div className="mb-6 p-1.5 bg-slate-100 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/30 rounded-xl flex gap-1 overflow-x-auto">
               {[
                 { id: 'overview', label: 'Overview', icon: PieChart },
                 { id: 'heatmap', label: 'Division Intel', icon: Target },
@@ -1320,15 +1422,14 @@ export default function BudgetResources() {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all relative ${
-                    activeTab === tab.id ? 'text-amber-700 dark:text-amber-400' : 'text-secondary hover:text-slate-300'
+                  className={`flex items-center gap-2 px-4 py-2.5 text-sm font-semibold rounded-lg transition-all whitespace-nowrap ${
+                    activeTab === tab.id
+                      ? 'bg-white dark:bg-slate-900 text-amber-700 dark:text-amber-400 shadow-sm'
+                      : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
                   }`}
                 >
                   <tab.icon className="w-4 h-4" />
                   {tab.label}
-                  {activeTab === tab.id && (
-                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500"></div>
-                  )}
                 </button>
               ))}
             </div>
@@ -1473,9 +1574,9 @@ export default function BudgetResources() {
 
                     {/* Action Buttons */}
                     <div className="flex flex-wrap gap-2 pt-2">
-                      <button className={secondaryBtn}>View Detailed Breakdown</button>
+                      <button className={ghostBtn}>View Detailed Breakdown</button>
                       <button onClick={() => setActiveTab('forecast')} className={secondaryBtn}>Adjust Forecast</button>
-                      <button onClick={() => setVarianceReportOpen(true)} className={secondaryBtn}>Variance Report</button>
+                      <button onClick={() => setVarianceReportOpen(true)} className={ghostBtn}>Variance Report</button>
                     </div>
                   </div>
                 </div>
@@ -1491,6 +1592,49 @@ export default function BudgetResources() {
                       <span className="px-1.5 py-0.5 bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-400 text-[11px] font-semibold rounded">1 Anomaly</span>
                     )}
                   </div>
+
+                  {/* Anomaly Decision Card */}
+                  {(() => {
+                    const anomalyMonth = monthlyTrend.find(m => m.variance);
+                    if (!anomalyMonth) return null;
+                    const totalVariance = anomalyMonth.variance.overtime + anomalyMonth.variance.hvac + anomalyMonth.variance.vehicles;
+                    const overBudget = anomalyMonth.spent - anomalyMonth.budget;
+                    const otAction = recommendedActions.find(a => a.id === 2);
+                    const otApplied = appliedActionIds.has(2);
+                    return (
+                      <div className="mb-4 p-4 bg-red-50 dark:bg-red-500/5 border border-red-200 dark:border-red-500/20 rounded-xl">
+                        <div className="flex items-center gap-2 mb-3">
+                          <AlertTriangle className="w-4 h-4 text-red-600 dark:text-red-400 flex-shrink-0" />
+                          <p className="text-[12px] font-bold text-red-700 dark:text-red-400 uppercase tracking-wide">{anomalyMonth.month} Spending Anomaly — {fmt(overBudget)} over plan</p>
+                        </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-[12px]">
+                          <div>
+                            <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1">Why It Increased</p>
+                            <p className="text-slate-700 dark:text-slate-300 leading-relaxed">{fmt(totalVariance)} in unplanned costs pushed {anomalyMonth.month} to {((anomalyMonth.spent / anomalyMonth.budget) * 100).toFixed(0)}% of its monthly budget.</p>
+                          </div>
+                          <div>
+                            <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1">Which Division</p>
+                            <p className="text-slate-700 dark:text-slate-300 leading-relaxed">Patrol Division overtime +{fmt(anomalyMonth.variance.overtime)} · Facilities emergency HVAC +{fmt(anomalyMonth.variance.hvac)} · Support Services vehicle repairs +{fmt(anomalyMonth.variance.vehicles)}</p>
+                          </div>
+                          <div>
+                            <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1">Financial Impact</p>
+                            <p className="text-slate-700 dark:text-slate-300 leading-relaxed">{fmt(overBudget)} over the monthly budget, contributing directly to the FY {fmt(liveOverrun)} projected overrun.</p>
+                          </div>
+                          <div>
+                            <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1">Recommended Action</p>
+                            {otApplied ? (
+                              <p className="text-green-600 dark:text-green-400 font-semibold leading-relaxed flex items-center gap-1"><CheckCircle className="w-3 h-3" /> Overtime controls already applied</p>
+                            ) : (
+                              <button onClick={() => setConfirmActionModal(otAction)} className="text-left text-red-700 dark:text-red-400 font-semibold leading-relaxed hover:underline">
+                                Overtime is the largest driver and recurs Nov–Dec. Apply OT controls to prevent {fmt(otAction?.impact || 0)} more →
+                              </button>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })()}
+
                   <div className="space-y-1.5">
                     {monthlyTrend.map((month, idx) => {
                       const percent = (month.spent / month.budget) * 100;
@@ -2312,7 +2456,7 @@ export default function BudgetResources() {
                       >
                         Compare
                       </button>
-                      <button className={secondaryBtn}>
+                      <button className={ghostBtn}>
                         Export
                       </button>
                     </div>
