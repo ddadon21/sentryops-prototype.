@@ -637,7 +637,7 @@ export default function BudgetResources() {
       <div className="p-5 lg:p-8">
         <div className="max-w-7xl mx-auto">
             {/* Enhanced Page Header with Fiscal Metrics */}
-            <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4 mb-6">
+            <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4 mb-4">
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-2">
                   <h2 className="text-2xl lg:text-3xl font-bold text-primary">Budget & Assets</h2>
@@ -697,73 +697,54 @@ export default function BudgetResources() {
               </div>
             </div>
 
-            {/* Executive Brief — dominant first-screen summary */}
-            <div className={`mb-6 rounded-2xl border shadow-sm dark:shadow-none overflow-hidden ${isLiveOverBudget ? 'border-red-200 dark:border-red-500/20 bg-gradient-to-br from-red-50 via-white to-white dark:from-red-500/10 dark:via-slate-800/30 dark:to-slate-800/20' : 'border-green-200 dark:border-green-500/20 bg-gradient-to-br from-green-50 via-white to-white dark:from-green-500/10 dark:via-slate-800/30 dark:to-slate-800/20'}`}>
-              <div className="px-6 pt-5 pb-4 flex flex-col sm:flex-row sm:items-start gap-3">
-                <div className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 ${isLiveOverBudget ? 'bg-red-100 dark:bg-red-500/15' : 'bg-green-100 dark:bg-green-500/15'}`}>
-                  <ShieldAlert className={`w-5 h-5 ${isLiveOverBudget ? 'text-red-600 dark:text-red-400' : 'text-green-600 dark:text-green-400'}`} />
+            {/* Executive Status Strip */}
+            <div className={`mb-4 rounded-xl border overflow-hidden ${isLiveOverBudget ? 'border-red-200 dark:border-red-500/20 bg-red-50/60 dark:bg-red-500/5' : 'border-green-200 dark:border-green-500/20 bg-green-50/60 dark:bg-green-500/5'}`}>
+              <div className="px-4 py-2.5 flex flex-wrap items-center gap-x-5 gap-y-2">
+                <div className="flex items-center gap-2">
+                  <ShieldAlert className={`w-4 h-4 flex-shrink-0 ${isLiveOverBudget ? 'text-red-600 dark:text-red-400' : 'text-green-600 dark:text-green-400'}`} />
+                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">Executive Status</span>
                 </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500 mb-1.5">Executive Brief</p>
-                  <p className="text-lg lg:text-xl font-bold leading-snug text-slate-900 dark:text-white">
-                    {isLiveOverBudget ? (
-                      <>You're projected to exceed budget by <span className="text-red-600 dark:text-red-400">{fmt(liveOverrun)}</span>. We identified <span className="text-green-600 dark:text-green-400">{fmt(pendingSavings)}</span> in savings. Approve {pendingActions.length === 1 ? 'this action' : 'these actions'} to reduce the risk.</>
-                    ) : pendingActions.length > 0 ? (
-                      <>You're tracking <span className="text-green-600 dark:text-green-400">{fmt(Math.abs(liveOverrun))} under budget</span>. {fmt(pendingSavings)} in additional savings is available across {pendingActions.length} recommended action{pendingActions.length > 1 ? 's' : ''}.</>
-                    ) : (
-                      <>You're tracking <span className="text-green-600 dark:text-green-400">{fmt(Math.abs(liveOverrun))} under budget</span> with all recommended actions applied. No further approvals required.</>
-                    )}
-                  </p>
+                <span className="hidden sm:inline-block w-px h-4 bg-slate-200 dark:bg-slate-700/40" />
+                <button onClick={() => setHealthBreakdownOpen(!healthBreakdownOpen)} className="flex items-center gap-1.5 hover:opacity-70 transition-opacity">
+                  <span className="text-xs text-slate-500 dark:text-slate-400">Budget Health:</span>
+                  <span className={`text-sm font-black ${riskColor === 'green' ? 'text-green-600 dark:text-green-400' : riskColor === 'amber' ? 'text-amber-600 dark:text-amber-400' : 'text-red-600 dark:text-red-400'}`}>{riskLabel}</span>
+                  <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500">{budgetRiskScore}/100</span>
+                  {healthBreakdownOpen ? <ChevronUp className="w-3 h-3 text-slate-400" /> : <ChevronDown className="w-3 h-3 text-slate-400" />}
+                </button>
+                <span className="w-px h-4 bg-slate-200 dark:bg-slate-700/40" />
+                <div className="flex items-center gap-1.5">
+                  <span className="text-xs text-slate-500 dark:text-slate-400">{isLiveOverBudget ? 'Projected Overrun:' : 'Projected Surplus:'}</span>
+                  <span className={`text-sm font-black ${isLiveOverBudget ? 'text-red-600 dark:text-red-400' : 'text-green-600 dark:text-green-400'}`}>{fmt(Math.abs(liveOverrun))}</span>
+                </div>
+                <span className="w-px h-4 bg-slate-200 dark:bg-slate-700/40" />
+                <div className="flex items-center gap-1.5">
+                  <span className="text-xs text-slate-500 dark:text-slate-400">Savings Available:</span>
+                  <span className="text-sm font-black text-green-600 dark:text-green-400">{fmt(pendingSavings)}</span>
+                </div>
+                <span className="w-px h-4 bg-slate-200 dark:bg-slate-700/40" />
+                <div className="flex items-center gap-1.5">
+                  <span className="text-xs text-slate-500 dark:text-slate-400">Recommended Actions:</span>
+                  <span className="text-sm font-black text-slate-900 dark:text-white">{pendingActions.length}</span>
                 </div>
                 {pendingActions.length > 0 && (
-                  <button onClick={() => setApplyAllModal(true)} className={`${primaryBtn} flex-shrink-0 self-start sm:self-center`}>
+                  <button onClick={() => setApplyAllModal(true)} className={`${primaryBtn} ml-auto`}>
                     <Zap className="w-3.5 h-3.5" /> Review &amp; Approve
                   </button>
                 )}
               </div>
 
-              {/* Dominant metrics */}
-              <div className="grid grid-cols-2 lg:grid-cols-4 border-t border-slate-200/70 dark:border-slate-700/30 divide-x divide-y lg:divide-y-0 divide-slate-200/70 dark:divide-slate-700/30">
-                <button onClick={() => setHealthBreakdownOpen(!healthBreakdownOpen)} className="text-left p-4 hover:bg-white/60 dark:hover:bg-slate-800/40 transition-colors">
-                  <p className="text-[10px] font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-1.5 flex items-center gap-1">
-                    Budget Health {healthBreakdownOpen ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
-                  </p>
-                  <p className={`text-2xl lg:text-3xl font-black leading-none ${riskColor === 'green' ? 'text-green-600 dark:text-green-400' : riskColor === 'amber' ? 'text-amber-600 dark:text-amber-400' : 'text-red-600 dark:text-red-400'}`}>
-                    {budgetRiskScore}<span className="text-sm font-bold text-slate-400 dark:text-slate-500">/100</span>
-                  </p>
-                  <span className={`${BADGE(riskColor)} mt-1.5 inline-block`}>{riskLabel}</span>
-                </button>
-                <div className="p-4">
-                  <p className="text-[10px] font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-1.5">Current Overrun Risk</p>
-                  <p className={`text-2xl lg:text-3xl font-black leading-none ${isLiveOverBudget ? 'text-red-600 dark:text-red-400' : 'text-green-600 dark:text-green-400'}`}>
-                    {fmt(Math.abs(liveOverrun))}
-                  </p>
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1.5">{isLiveOverBudget ? 'over budget at year-end' : 'under budget at year-end'}</p>
-                </div>
-                <div className="p-4">
-                  <p className="text-[10px] font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-1.5">Year-End Forecast</p>
-                  <p className="text-2xl lg:text-3xl font-black leading-none text-slate-900 dark:text-white">{fmt(liveProjection)}</p>
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1.5">{((liveProjection / BUDGET) * 100).toFixed(1)}% of {fmt(BUDGET)} budget</p>
-                </div>
-                <div className="p-4">
-                  <p className="text-[10px] font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-1.5">Available Savings</p>
-                  <p className="text-2xl lg:text-3xl font-black leading-none text-green-600 dark:text-green-400">{fmt(pendingSavings)}</p>
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1.5">{pendingActions.length} action{pendingActions.length !== 1 ? 's' : ''} pending approval</p>
-                </div>
-              </div>
-
               {/* Budget Health Score breakdown */}
               {healthBreakdownOpen && (
-                <div className="border-t border-slate-200/70 dark:border-slate-700/30 px-6 py-4 bg-white/70 dark:bg-slate-900/30">
-                  <p className="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-3">Budget Health Score Breakdown — {budgetRiskScore}/100</p>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                <div className="border-t border-slate-200/70 dark:border-slate-700/30 px-4 py-3 bg-white/70 dark:bg-slate-900/30">
+                  <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-2">Budget Health Score Breakdown — {budgetRiskScore}/100</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
                     {healthFactors.map(f => (
-                      <div key={f.label} className="p-3 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/30 rounded-lg">
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="text-[12px] font-semibold text-slate-800 dark:text-slate-200">{f.label}</span>
-                          <span className={`text-[12px] font-black ${f.points === f.max ? 'text-green-600 dark:text-green-400' : f.points === 0 ? 'text-red-600 dark:text-red-400' : 'text-amber-600 dark:text-amber-400'}`}>{f.points}/{f.max}</span>
+                      <div key={f.label} className="p-2.5 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/30 rounded-lg">
+                        <div className="flex items-center justify-between mb-0.5">
+                          <span className="text-[11px] font-semibold text-slate-800 dark:text-slate-200">{f.label}</span>
+                          <span className={`text-[11px] font-black ${f.points === f.max ? 'text-green-600 dark:text-green-400' : f.points === 0 ? 'text-red-600 dark:text-red-400' : 'text-amber-600 dark:text-amber-400'}`}>{f.points}/{f.max}</span>
                         </div>
-                        <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">{f.description}</p>
+                        <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-relaxed">{f.description}</p>
                       </div>
                     ))}
                   </div>
@@ -771,223 +752,19 @@ export default function BudgetResources() {
               )}
             </div>
 
-            {/* Budget Summary */}
-            <div className="flex items-center gap-3 mb-3 mt-1">
-              <span className="text-[9px] font-black text-slate-300 dark:text-slate-600 uppercase tracking-[0.2em]">Budget Summary</span>
-              <div className="flex-1 h-px bg-slate-100 dark:bg-slate-800/80" />
-            </div>
-
-            {/* KPI Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">              {/* Total Budget */}
-              <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Total Budget</span>
-                  <div className="w-8 h-8 bg-slate-100 dark:bg-slate-700/40 rounded-lg flex items-center justify-center">
-                    <Wallet className="w-4 h-4 text-slate-500 dark:text-slate-400" />
-                  </div>
-                </div>
-                <p className="text-3xl font-bold text-slate-900 dark:text-white mb-1">{fmt(fiscalYear.totalBudget)}</p>
-                <div className="space-y-1.5 border-t border-slate-200 dark:border-slate-700/30 pt-3 mt-3">
-                  <div className="flex justify-between text-xs">
-                    <span className="text-slate-500 dark:text-slate-400">Fiscal Year:</span>
-                    <span className="font-medium text-slate-700 dark:text-slate-300">{fiscalYear.year}</span>
-                  </div>
-                  <div className="flex justify-between text-xs">
-                    <span className="text-slate-500 dark:text-slate-400">Monthly Avg:</span>
-                    <span className="font-medium text-slate-700 dark:text-slate-300">$4.04M</span>
-                  </div>
-                  <div className="flex justify-between text-xs">
-                    <span className="text-slate-500 dark:text-slate-400">Daily Rate:</span>
-                    <span className="font-medium text-slate-700 dark:text-slate-300">$133K</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Spent */}
-              <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Spent</span>
-                  <div className="w-8 h-8 bg-slate-100 dark:bg-slate-700/40 rounded-lg flex items-center justify-center">
-                    <CircleDollarSign className="w-4 h-4 text-amber-600 dark:text-amber-400" />
-                  </div>
-                </div>
-                <p className="text-3xl font-bold text-slate-900 dark:text-white mb-1">{fmt(liveSpent)}</p>
-                <div className="mb-3">
-                  <div className="flex justify-between text-xs mb-1.5">
-                    <span className="text-slate-500 dark:text-slate-400">Budget utilization</span>
-                    <span className={`font-bold ${fiscalYear.percentSpent >= 90 ? 'text-red-700 dark:text-red-400' : 'text-amber-600 dark:text-amber-400'}`}>{fiscalYear.percentSpent}%</span>
-                  </div>
-                  <div className="w-full h-1.5 bg-slate-100 dark:bg-slate-700/50 rounded-full overflow-hidden">
-                    <div className={`h-full rounded-full ${fiscalYear.percentSpent >= 90 ? 'bg-red-500' : 'bg-amber-500'}`} style={{ width: `${fiscalYear.percentSpent}%` }} />
-                  </div>
-                </div>
-                <div className="space-y-1.5 border-t border-slate-200 dark:border-slate-700/30 pt-3">
-                  <div className="flex justify-between text-xs">
-                    <span className="text-slate-500 dark:text-slate-400">This month:</span>
-                    <span className="font-medium text-slate-700 dark:text-slate-300">$3.98M</span>
-                  </div>
-                  <div className="flex justify-between text-xs">
-                    <span className="text-slate-500 dark:text-slate-400">vs Last month:</span>
-                    <span className="font-medium text-amber-600 dark:text-amber-400 flex items-center gap-1">
-                      <ArrowUp className="w-3 h-3" />+2.1%
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Committed */}
-              <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Committed</span>
-                  <div className="w-8 h-8 bg-slate-100 dark:bg-slate-700/40 rounded-lg flex items-center justify-center">
-                    <Receipt className="w-4 h-4 text-slate-500 dark:text-slate-400" />
-                  </div>
-                </div>
-                <p className="text-3xl font-bold text-slate-900 dark:text-white mb-1">{fmt(liveCommitted)}</p>
-                <div className="mb-3">
-                  <div className="flex justify-between text-xs mb-1.5">
-                    <span className="text-slate-500 dark:text-slate-400">Of total budget</span>
-                    <span className="font-bold text-slate-600 dark:text-slate-300">{liveCommittedPct.toFixed(1)}%</span>
-                  </div>
-                  <div className="w-full h-1.5 bg-slate-100 dark:bg-slate-700/50 rounded-full overflow-hidden">
-                    <div className="h-full bg-amber-500 rounded-full" style={{ width: `${Math.min(liveCommittedPct, 100)}%` }} />
-                  </div>
-                </div>
-                <div className="space-y-1.5 border-t border-slate-200 dark:border-slate-700/30 pt-3">
-                  <div className="flex justify-between text-xs">
-                    <span className="text-slate-500 dark:text-slate-400">Pending POs:</span>
-                    <button
-                      onClick={() => setPendingPOsModal(true)}
-                      className="font-semibold text-amber-600 dark:text-amber-400 hover:underline"
-                    >
-                      {pendingPOs.length} orders / {fmt(pendingPOs.reduce((s, p) => s + p.amount, 0))}
-                    </button>
-                  </div>
-                  <div className="flex justify-between text-xs">
-                    <span className="text-slate-500 dark:text-slate-400">Largest:</span>
-                    <span className="font-medium text-slate-700 dark:text-slate-300">$420K (Fleet)</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Available */}
-              <div className={`bg-white dark:bg-slate-800/25 border rounded-xl shadow-sm dark:shadow-none p-5 transition-all duration-300 ${flashSet.has('available') ? 'border-green-400 dark:border-green-400 ring-2 ring-green-400/40' : 'border-slate-200 dark:border-slate-700/30'}`}>
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Available</span>
-                  <div className="w-8 h-8 bg-slate-100 dark:bg-slate-700/40 rounded-lg flex items-center justify-center">
-                    <PiggyBank className="w-4 h-4 text-green-600 dark:text-green-400" />
-                  </div>
-                </div>
-                <p className={`text-3xl font-bold mb-1 transition-colors ${flashSet.has('available') ? 'text-green-600 dark:text-green-400' : 'text-slate-900 dark:text-white'}`}>{fmt(liveAvailable)}</p>
-                <div className="mb-3">
-                  <div className="flex justify-between text-xs mb-1.5">
-                    <span className="text-slate-500 dark:text-slate-400">Remaining budget</span>
-                    <span className="font-bold text-green-600 dark:text-green-400">{((fiscalYear.available / fiscalYear.totalBudget) * 100).toFixed(1)}%</span>
-                  </div>
-                  <div className="w-full h-1.5 bg-slate-100 dark:bg-slate-700/50 rounded-full overflow-hidden">
-                    <div className="h-full bg-green-500 rounded-full" style={{ width: `${(fiscalYear.available / fiscalYear.totalBudget) * 100}%` }} />
-                  </div>
-                </div>
-                <div className="space-y-1.5 border-t border-slate-200 dark:border-slate-700/30 pt-3">
-                  <div className="flex justify-between text-xs">
-                    <span className="text-slate-500 dark:text-slate-400">Days remaining:</span>
-                    <span className="font-medium text-slate-700 dark:text-slate-300">61 days</span>
-                  </div>
-                  <div className="flex justify-between text-xs">
-                    <span className="text-slate-500 dark:text-slate-400">Per day budget:</span>
-                    <span className="font-medium text-green-600 dark:text-green-400">$57K/day</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="mb-5 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none overflow-hidden">
-              <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-100 dark:border-slate-800/60">
-                <div className="flex items-center gap-3">
-                  <Zap className="w-4 h-4 text-amber-500" />
-                  <span className="text-sm font-semibold text-slate-900 dark:text-white">AI Command Center</span>
-                  {isLiveOverBudget && (
-                    <span className={BADGE('red') + ' flex items-center gap-1'}>
-                      <ShieldAlert className="w-3 h-3" /> Overrun: {fmt(liveOverrun)}
-                    </span>
-                  )}
-                </div>
-                <div className={`flex items-center gap-2 px-3 py-1.5 rounded-lg ${
-                  riskColor === 'green' ? 'bg-green-100 dark:bg-green-500/10' :
-                  riskColor === 'amber' ? 'bg-amber-100 dark:bg-amber-500/10' :
-                  'bg-red-100 dark:bg-red-500/10'
-                }`}>
-                  <span className={`text-[11px] font-semibold ${riskColor === 'green' ? 'text-green-700 dark:text-green-400' : riskColor === 'amber' ? 'text-amber-700 dark:text-amber-400' : 'text-red-700 dark:text-red-400'}`}>Budget Health</span>
-                  <span className={`text-[20px] font-black leading-none ${riskColor === 'green' ? 'text-green-700 dark:text-green-400' : riskColor === 'amber' ? 'text-amber-700 dark:text-amber-400' : 'text-red-700 dark:text-red-400'}`}>{budgetRiskScore}</span>
-                  <span className={`text-[11px] ${riskColor === 'green' ? 'text-green-600 dark:text-green-400' : riskColor === 'amber' ? 'text-amber-600 dark:text-amber-400' : 'text-red-600 dark:text-red-400'}`}>/100</span>
-                </div>
-              </div>
-
-              <div className="px-5 pt-4 pb-2 space-y-2">
-                {pendingActions.length === 0 ? (
-                  <div className="flex items-center gap-3 p-4 bg-green-50 dark:bg-green-500/5 border border-green-200 dark:border-green-500/20 rounded-xl">
-                    <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
-                    <div>
-                      <p className="text-[13px] font-bold text-green-700 dark:text-green-400">All recommended actions applied.</p>
-                      <p className="text-[12px] text-slate-500 dark:text-slate-400">FY 2024 closing at {fmt(liveProjection)} — {fmt(Math.abs(liveOverrun))} under budget.</p>
-                    </div>
-                  </div>
-                ) : pendingActions.slice(0, 3).map((action, i) => (
-                  <div key={action.id} className="flex items-start gap-3 p-3 bg-slate-50 dark:bg-slate-800/30 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors">
-                    <span className="text-[11px] font-black text-slate-400 w-5 flex-shrink-0 mt-0.5">{i + 1}</span>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-0.5 flex-wrap">
-                        <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded flex-shrink-0 ${action.urgency === 'High' ? 'bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-400' : action.urgency === 'Medium' ? 'bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400' : 'bg-slate-100 dark:bg-slate-700/40 text-slate-600 dark:text-slate-400'}`}>{action.urgency}</span>
-                        <p className="text-[13px] font-semibold text-slate-800 dark:text-slate-200 truncate">{action.headline}</p>
-                      </div>
-                      <p className="text-[11px] text-slate-500 dark:text-slate-400">
-                        <span className="font-bold text-green-600 dark:text-green-400">{fmt(action.impact)}</span> impact · {action.riskLevel} risk · {action.confidence}% confidence
-                      </p>
-                    </div>
-                    <button
-                      onClick={() => setConfirmActionModal(action)}
-                      className="flex-shrink-0 px-3 py-1.5 bg-amber-500 hover:bg-amber-600 border border-amber-600 text-white text-xs font-bold uppercase tracking-wide rounded-lg transition-colors"
-                    >
-                      Apply
-                    </button>
-                  </div>
-                ))}
-              </div>
-
-              <div className="flex items-center justify-between px-5 py-3 border-t border-slate-200 dark:border-slate-700/30 mt-2">
-                <p className="text-[12px] text-slate-600 dark:text-slate-400">
-                  Apply all {pendingActions.length} actions →{' '}
-                  <span className={`font-bold ${projectionAfterAllPendingOverrun > 0 ? 'text-red-600 dark:text-red-400' : 'text-green-600 dark:text-green-400'}`}>
-                    {fmt(Math.abs(projectionAfterAllPendingOverrun))} {projectionAfterAllPendingOverrun > 0 ? 'over budget' : 'under budget'}
-                  </span>
-                </p>
-                {pendingActions.length > 0 && (
-                  <button onClick={() => setApplyAllModal(true)} className="text-[12px] font-bold text-amber-600 dark:text-amber-400 hover:underline flex items-center gap-1">
-                    Apply All {pendingActions.length} Actions <ArrowUpRight className="w-3.5 h-3.5" />
-                  </button>
-                )}
-              </div>
-            </div>
-
-            {/* Decision Center */}
-            <div className="flex items-center gap-3 mb-3 mt-1">
-              <span className="text-[9px] font-black text-slate-300 dark:text-slate-600 uppercase tracking-[0.2em]">Decision Center</span>
-              <div className="flex-1 h-px bg-slate-100 dark:bg-slate-800/80" />
-            </div>
-
             {/* Recommended Actions */}
             <div className="mb-4 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none overflow-hidden">
               <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-100 dark:border-slate-800/60">
                 <div className="flex items-center gap-2.5">
                   <Zap className="w-4 h-4 text-slate-400 dark:text-slate-500" />
-                  <span className="text-sm font-semibold text-slate-900 dark:text-white">Recommended Actions</span>
+                  <span className="text-sm font-semibold text-slate-900 dark:text-white">AI Recommended Actions</span>
                   <span className="text-[11px] text-slate-400 dark:text-slate-500 hidden sm:inline">{recommendedActions.length} actions · {fmt(totalActionSavings)} potential</span>
                 </div>
                 <span className={BADGE('amber')}>Action Required</span>
               </div>
 
               {/* Impact Summary */}
-              <div className="px-5 py-4 border-b border-slate-200 dark:border-slate-700/30 grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="px-5 py-3 border-b border-slate-200 dark:border-slate-700/30 grid grid-cols-1 sm:grid-cols-3 gap-3">
                 {/* Card 1: live projection */}
                 <div className={`p-3 border rounded-lg ${isLiveOverBudget ? 'bg-red-50 dark:bg-red-500/5 border-red-200 dark:border-red-500/20' : 'bg-green-50 dark:bg-green-500/5 border-green-200 dark:border-green-500/20'}`}>
                   <p className={`text-[10px] font-bold uppercase tracking-wide mb-1 ${isLiveOverBudget ? 'text-red-700 dark:text-red-400' : 'text-green-600 dark:text-green-400'}`}>
@@ -1217,8 +994,149 @@ export default function BudgetResources() {
               </div>
             </div>
 
+            {/* Budget Summary */}
+            <div className="flex items-center gap-3 mb-3 mt-1">
+              <span className="text-[9px] font-black text-slate-300 dark:text-slate-600 uppercase tracking-[0.2em]">Budget Summary</span>
+              <div className="flex-1 h-px bg-slate-100 dark:bg-slate-800/80" />
+            </div>
+
+            {/* KPI Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
+              {/* Total Budget */}
+              <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Total Budget</span>
+                  <div className="w-8 h-8 bg-slate-100 dark:bg-slate-700/40 rounded-lg flex items-center justify-center">
+                    <Wallet className="w-4 h-4 text-slate-500 dark:text-slate-400" />
+                  </div>
+                </div>
+                <p className="text-2xl font-bold text-slate-900 dark:text-white mb-1">{fmt(fiscalYear.totalBudget)}</p>
+                <div className="space-y-1 border-t border-slate-200 dark:border-slate-700/30 pt-2 mt-2">
+                  <div className="flex justify-between text-xs">
+                    <span className="text-slate-500 dark:text-slate-400">Fiscal Year:</span>
+                    <span className="font-medium text-slate-700 dark:text-slate-300">{fiscalYear.year}</span>
+                  </div>
+                  <div className="flex justify-between text-xs">
+                    <span className="text-slate-500 dark:text-slate-400">Monthly Avg:</span>
+                    <span className="font-medium text-slate-700 dark:text-slate-300">$4.04M</span>
+                  </div>
+                  <div className="flex justify-between text-xs">
+                    <span className="text-slate-500 dark:text-slate-400">Daily Rate:</span>
+                    <span className="font-medium text-slate-700 dark:text-slate-300">$133K</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Spent */}
+              <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Spent</span>
+                  <div className="w-8 h-8 bg-slate-100 dark:bg-slate-700/40 rounded-lg flex items-center justify-center">
+                    <CircleDollarSign className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+                  </div>
+                </div>
+                <p className="text-2xl font-bold text-slate-900 dark:text-white mb-1">{fmt(liveSpent)}</p>
+                <div className="mb-2">
+                  <div className="flex justify-between text-xs mb-1">
+                    <span className="text-slate-500 dark:text-slate-400">Budget utilization</span>
+                    <span className={`font-bold ${fiscalYear.percentSpent >= 90 ? 'text-red-700 dark:text-red-400' : 'text-amber-600 dark:text-amber-400'}`}>{fiscalYear.percentSpent}%</span>
+                  </div>
+                  <div className="w-full h-1.5 bg-slate-100 dark:bg-slate-700/50 rounded-full overflow-hidden">
+                    <div className={`h-full rounded-full ${fiscalYear.percentSpent >= 90 ? 'bg-red-500' : 'bg-amber-500'}`} style={{ width: `${fiscalYear.percentSpent}%` }} />
+                  </div>
+                </div>
+                <div className="space-y-1 border-t border-slate-200 dark:border-slate-700/30 pt-2">
+                  <div className="flex justify-between text-xs">
+                    <span className="text-slate-500 dark:text-slate-400">This month:</span>
+                    <span className="font-medium text-slate-700 dark:text-slate-300">$3.98M</span>
+                  </div>
+                  <div className="flex justify-between text-xs">
+                    <span className="text-slate-500 dark:text-slate-400">vs Last month:</span>
+                    <span className="font-medium text-amber-600 dark:text-amber-400 flex items-center gap-1">
+                      <ArrowUp className="w-3 h-3" />+2.1%
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Committed */}
+              <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Committed</span>
+                  <div className="w-8 h-8 bg-slate-100 dark:bg-slate-700/40 rounded-lg flex items-center justify-center">
+                    <Receipt className="w-4 h-4 text-slate-500 dark:text-slate-400" />
+                  </div>
+                </div>
+                <p className="text-2xl font-bold text-slate-900 dark:text-white mb-1">{fmt(liveCommitted)}</p>
+                <div className="mb-2">
+                  <div className="flex justify-between text-xs mb-1">
+                    <span className="text-slate-500 dark:text-slate-400">Of total budget</span>
+                    <span className="font-bold text-slate-600 dark:text-slate-300">{liveCommittedPct.toFixed(1)}%</span>
+                  </div>
+                  <div className="w-full h-1.5 bg-slate-100 dark:bg-slate-700/50 rounded-full overflow-hidden">
+                    <div className="h-full bg-amber-500 rounded-full" style={{ width: `${Math.min(liveCommittedPct, 100)}%` }} />
+                  </div>
+                </div>
+                <div className="space-y-1 border-t border-slate-200 dark:border-slate-700/30 pt-2">
+                  <div className="flex justify-between text-xs">
+                    <span className="text-slate-500 dark:text-slate-400">Pending POs:</span>
+                    <button
+                      onClick={() => setPendingPOsModal(true)}
+                      className="font-semibold text-amber-600 dark:text-amber-400 hover:underline"
+                    >
+                      {pendingPOs.length} orders / {fmt(pendingPOs.reduce((s, p) => s + p.amount, 0))}
+                    </button>
+                  </div>
+                  <div className="flex justify-between text-xs">
+                    <span className="text-slate-500 dark:text-slate-400">Largest:</span>
+                    <span className="font-medium text-slate-700 dark:text-slate-300">$420K (Fleet)</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Available */}
+              <div className={`bg-white dark:bg-slate-800/25 border rounded-xl shadow-sm dark:shadow-none p-4 transition-all duration-300 ${flashSet.has('available') ? 'border-green-400 dark:border-green-400 ring-2 ring-green-400/40' : 'border-slate-200 dark:border-slate-700/30'}`}>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Available</span>
+                  <div className="w-8 h-8 bg-slate-100 dark:bg-slate-700/40 rounded-lg flex items-center justify-center">
+                    <PiggyBank className="w-4 h-4 text-green-600 dark:text-green-400" />
+                  </div>
+                </div>
+                <p className={`text-2xl font-bold mb-1 transition-colors ${flashSet.has('available') ? 'text-green-600 dark:text-green-400' : 'text-slate-900 dark:text-white'}`}>{fmt(liveAvailable)}</p>
+                <div className="mb-2">
+                  <div className="flex justify-between text-xs mb-1">
+                    <span className="text-slate-500 dark:text-slate-400">Remaining budget</span>
+                    <span className="font-bold text-green-600 dark:text-green-400">{((fiscalYear.available / fiscalYear.totalBudget) * 100).toFixed(1)}%</span>
+                  </div>
+                  <div className="w-full h-1.5 bg-slate-100 dark:bg-slate-700/50 rounded-full overflow-hidden">
+                    <div className="h-full bg-green-500 rounded-full" style={{ width: `${(fiscalYear.available / fiscalYear.totalBudget) * 100}%` }} />
+                  </div>
+                </div>
+                <div className="space-y-1 border-t border-slate-200 dark:border-slate-700/30 pt-2">
+                  <div className="flex justify-between text-xs">
+                    <span className="text-slate-500 dark:text-slate-400">Days remaining:</span>
+                    <span className="font-medium text-slate-700 dark:text-slate-300">61 days</span>
+                  </div>
+                  <div className="flex justify-between text-xs">
+                    <span className="text-slate-500 dark:text-slate-400">Per day budget:</span>
+                    <span className="font-medium text-green-600 dark:text-green-400">$57K/day</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Analytics */}
+            <div className="mb-3 mt-1 flex items-center gap-3">
+              <div className="flex items-center gap-2">
+                <BarChart3 className="w-4 h-4 text-slate-400 dark:text-slate-500" />
+                <span className="text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">Analytics</span>
+              </div>
+              <div className="flex-1 h-px bg-slate-200 dark:bg-slate-800" />
+              <span className="text-[11px] text-slate-400 dark:text-slate-500 hidden sm:inline">Drill-down intelligence — explore the data behind the brief</span>
+            </div>
+
             {/* AI Budget Intelligence */}
-            <div className="mb-6 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none">
+            <div className="mb-3 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none">
               <button
                 onClick={() => setAiInsightsExpanded(!aiInsightsExpanded)}
                 className="w-full flex items-center justify-between px-5 py-3.5 text-left hover:bg-slate-50 dark:hover:bg-slate-800/10 transition-colors rounded-xl"
@@ -1273,7 +1191,7 @@ export default function BudgetResources() {
             </div>
 
             {/* Predictive Spike Forecast */}
-            <div className="mb-6 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none">
+            <div className="mb-3 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none">
               <button
                 onClick={() => setPredictiveExpanded(!predictiveExpanded)}
                 className="w-full flex items-center justify-between px-5 py-3.5 text-left hover:bg-slate-50 dark:hover:bg-slate-800/10 transition-colors rounded-xl"
@@ -1343,7 +1261,7 @@ export default function BudgetResources() {
             </div>
 
             {/* Audit Log */}
-            <div className="mb-6 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none">
+            <div className="mb-3 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none">
               <button
                 onClick={() => setAuditLogExpanded(!auditLogExpanded)}
                 className="w-full flex items-center justify-between px-5 py-3.5 text-left hover:bg-slate-50 dark:hover:bg-slate-800/10 transition-colors rounded-xl"
@@ -1399,18 +1317,8 @@ export default function BudgetResources() {
               )}
             </div>
 
-            {/* Analytics Layer */}
-            <div className="mb-3 mt-2 flex items-center gap-3">
-              <div className="flex items-center gap-2">
-                <BarChart3 className="w-4 h-4 text-slate-400 dark:text-slate-500" />
-                <span className="text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">Analytics Layer</span>
-              </div>
-              <div className="flex-1 h-px bg-slate-200 dark:bg-slate-800" />
-              <span className="text-[11px] text-slate-400 dark:text-slate-500 hidden sm:inline">Drill-down intelligence — explore the data behind the brief</span>
-            </div>
-
             {/* Analytics Navigation */}
-            <div className="mb-6 p-1.5 bg-slate-100 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/30 rounded-xl flex gap-1 overflow-x-auto">
+            <div className="mb-4 p-1 bg-slate-100 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/30 rounded-xl flex gap-1 overflow-x-auto">
               {[
                 { id: 'overview', label: 'Overview', icon: PieChart },
                 { id: 'heatmap', label: 'Division Intel', icon: Target },
@@ -1422,7 +1330,7 @@ export default function BudgetResources() {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-2 px-4 py-2.5 text-sm font-semibold rounded-lg transition-all whitespace-nowrap ${
+                  className={`flex items-center gap-2 px-3.5 py-2 text-sm font-semibold rounded-lg transition-all whitespace-nowrap ${
                     activeTab === tab.id
                       ? 'bg-white dark:bg-slate-900 text-amber-700 dark:text-amber-400 shadow-sm'
                       : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
