@@ -6,6 +6,7 @@ import {
   LogOut, Building2, Radio, Target, FileText, Layers, ChevronDown,
   Search, Bell, Settings, User, Circle, Calendar
 } from 'lucide-react';
+import { useActivity, type ActivitySeverity } from '../contexts/ActivityContext';
 
 // ── Shared types ──────────────────────────────────────────────
 
@@ -34,7 +35,7 @@ export interface ProfileConfig {
 }
 
 export interface NotificationItem {
-  id: number;
+  id: number | string;
   title: string;
   message: string;
   time: string;
@@ -58,6 +59,7 @@ const defaultNavigation: NavItem[] = [
   { id: 'executive-briefing', label: 'Executive Briefing',       icon: FileText,     route: '/command/brief' },
   { id: 'war-room',           label: 'Command War Room',         icon: Target,       route: '/command/warroom' },
   { id: 'decision-layer',     label: 'Agency Risk Center',       icon: Layers,       route: '/command/risk' },
+  { id: 'activity',           label: 'Agency Activity Feed',     icon: Bell,         route: '/activity' },
   { id: 'alerts',             label: 'Command Notifications Center', icon: AlertCircle,  badge: '7', route: '/command/alerts' },
   { id: 'approvals',          label: 'Decision Center',          icon: CheckCircle,  badge: '8', route: '/command/approvals' },
   { id: 'calendar',           label: 'Operational Timeline',     icon: Calendar,     route: '/command/calendar' },
@@ -91,6 +93,26 @@ const defaultNotifications: NotificationItem[] = [
   { id: 6, title: 'Leave request approved', message: 'Deputy Marcus Chen — Dec 15-22', time: '5 hours ago', category: 'system', read: true }
 ];
 
+// ── Helpers: merge live agency activity with any page-supplied static items ──
+
+function formatRelativeTime(iso: string): string {
+  const diffMs = Date.now() - new Date(iso).getTime();
+  const mins = Math.floor(diffMs / 60000);
+  if (mins < 1) return 'just now';
+  if (mins < 60) return `${mins} min ago`;
+  const hours = Math.floor(mins / 60);
+  if (hours < 24) return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+  const days = Math.floor(hours / 24);
+  return `${days} day${days > 1 ? 's' : ''} ago`;
+}
+
+const severityToCategory: Record<ActivitySeverity, NotificationItem['category']> = {
+  info: 'system',
+  success: 'system',
+  warning: 'reminder',
+  critical: 'assignment',
+};
+
 // ── Component ─────────────────────────────────────────────────
 
 export default function DashboardLayout({
@@ -103,6 +125,7 @@ export default function DashboardLayout({
 }: DashboardLayoutProps) {
   const navigate = useNavigate();
   const location = useLocation();
+  const { events, unreadCount, markRead, markAllRead } = useActivity();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(() => {
     const saved = localStorage.getItem('sidebarCollapsed');
@@ -130,6 +153,31 @@ export default function DashboardLayout({
     document.addEventListener('click', handleClickOutside);
     return () => document.removeEventListener('click', handleClickOutside);
   }, []);
+
+  // Merge live, cross-module agency events with any page-supplied static notifications.
+  const liveItems: (NotificationItem & { route?: string; isLive: boolean })[] = events
+    .slice(0, 15)
+    .map(e => ({
+      id: e.id,
+      title: e.title,
+      message: e.message,
+      time: formatRelativeTime(e.timestamp),
+      category: severityToCategory[e.severity],
+      read: e.read,
+      route: e.route,
+      isLive: true,
+    }));
+  const staticItems = notifications.map(n => ({ ...n, isLive: false as const }));
+  const mergedNotifications = [...liveItems, ...staticItems];
+  const totalUnread = unreadCount + staticItems.filter(n => !n.read).length;
+
+  const handleNotificationClick = (item: NotificationItem & { route?: string; isLive?: boolean }) => {
+    if (item.isLive) markRead(String(item.id));
+    if (item.route) {
+      navigate(item.route);
+      setNotificationsOpen(false);
+    }
+  };
 
   const handleNavigation = (item: NavItem) => {
     if (item.hasSubmenu) {
@@ -353,23 +401,32 @@ export default function DashboardLayout({
                   className="notifications-trigger p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg relative"
                 >
                   <Bell className="w-5 h-5 text-muted" />
-                  {notifications.some(n => !n.read) && (
+                  {totalUnread > 0 && (
                     <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                   )}
                 </button>
 
                 {notificationsOpen && (
                   <div className="notifications-dropdown absolute right-0 top-full mt-2 w-80 bg-surface-raised backdrop-blur-xl border border-border rounded-xl shadow-2xl z-50">
-                    <div className="p-4 border-b border-border">
-                      <div className="flex items-center justify-between">
+                    <div className="p-4 border-b border-border flex items-center justify-between">
+                      <div>
                         <h3 className="text-[13px] font-semibold text-primary">Notifications</h3>
-                        <span className="text-xs text-muted">{notifications.filter(n => !n.read).length} unread</span>
+                        <span className="text-xs text-muted">{totalUnread} unread</span>
                       </div>
+                      {unreadCount > 0 && (
+                        <button
+                          onClick={markAllRead}
+                          className="text-[11px] font-medium text-amber-600 dark:text-amber-400 hover:underline"
+                        >
+                          Mark all read
+                        </button>
+                      )}
                     </div>
                     <div className="max-h-96 overflow-y-auto">
-                      {notifications.map(notification => (
+                      {mergedNotifications.map(notification => (
                         <div
                           key={notification.id}
+                          onClick={() => handleNotificationClick(notification)}
                           className="p-4 border-b border-slate-100 dark:border-slate-800/30 hover:bg-slate-50 dark:hover:bg-slate-800/30 cursor-pointer transition-colors"
                         >
                           <div className="flex items-start gap-3">
@@ -386,8 +443,11 @@ export default function DashboardLayout({
                       ))}
                     </div>
                     <div className="p-3 border-t border-border">
-                      <button className="w-full text-center text-[13px] text-muted hover:text-slate-700 dark:hover:text-slate-300 font-medium">
-                        View All Notifications
+                      <button
+                        onClick={() => { setNotificationsOpen(false); navigate('/activity'); }}
+                        className="w-full text-center text-[13px] text-muted hover:text-slate-700 dark:hover:text-slate-300 font-medium"
+                      >
+                        View All Activity
                       </button>
                     </div>
                   </div>

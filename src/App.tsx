@@ -26,6 +26,9 @@ import UserProfile from './pages/UserProfile';
 // Command War Room
 import CommandWarRoom from './pages/CommandWarRoom';
 
+// Agency Activity Feed
+import ActivityFeed from './pages/ActivityFeed';
+
 // Jail Operations Module
 import JailDashboard from './pages/jail/JailDashboard';
 import DetentionCommandCenter from './pages/jail/DetentionCommandCenter';
@@ -103,6 +106,9 @@ function App() {
 
         {/* Command War Room */}
         <Route path="/command/warroom" element={<CommandWarRoom />} />
+
+        {/* Agency Activity Feed */}
+        <Route path="/activity" element={<ActivityFeed />} />
 
         {/* Jail Operations Module (standalone, no layout wrapper) */}
         <Route path="/jail/command" element={<DetentionCommandCenter />} />
