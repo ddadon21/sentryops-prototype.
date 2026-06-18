@@ -59,7 +59,6 @@ const defaultNavigation: NavItem[] = [
   { id: 'executive-briefing', label: 'Executive Briefing',       icon: FileText,     route: '/command/brief' },
   { id: 'war-room',           label: 'Command War Room',         icon: Target,       route: '/command/warroom' },
   { id: 'decision-layer',     label: 'Agency Risk Center',       icon: Layers,       route: '/command/risk' },
-  { id: 'activity',           label: 'Agency Activity Feed',     icon: Bell,         route: '/activity' },
   { id: 'alerts',             label: 'Command Notifications Center', icon: AlertCircle,  badge: '7', route: '/command/alerts' },
   { id: 'approvals',          label: 'Decision Center',          icon: CheckCircle,  badge: '8', route: '/command/approvals' },
   { id: 'calendar',           label: 'Operational Timeline',     icon: Calendar,     route: '/command/calendar' },
@@ -75,6 +74,7 @@ const defaultNavigation: NavItem[] = [
   { id: 'section-business',   label: 'Business & Compliance',    type: 'section' },
   { id: 'budget',             label: 'Budget & Assets',          icon: DollarSign,   route: '/command/budget' },
   { id: 'reports',            label: 'Performance & Compliance', icon: TrendingUp,   route: '/command/reports' },
+  { id: 'activity',           label: 'Activity Center',          icon: Bell,         route: '/activity' },
 ];
 
 const defaultProfile: ProfileConfig = {

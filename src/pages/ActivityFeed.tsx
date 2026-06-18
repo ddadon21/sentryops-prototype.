@@ -65,7 +65,7 @@ export default function ActivityFeed() {
 
           <div className="mb-4 flex items-start justify-between">
             <div>
-              <h2 className="text-xl font-bold text-primary mb-1">Agency Activity Feed</h2>
+              <h2 className="text-xl font-bold text-primary mb-1">Activity Center</h2>
               <div className="flex items-center gap-2 text-[11px] text-slate-500">
                 <Sparkles className="w-3 h-3 text-violet-400" />
                 <span>Live cross-module events from HR, Detention, Patrol, Investigations, Budget &amp; Compliance</span>
