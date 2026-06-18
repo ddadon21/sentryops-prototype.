@@ -366,19 +366,19 @@ export default function ReferenceChecks() {
               <button className="flex items-center gap-2 px-4 py-2.5 bg-amber-500 hover:bg-amber-600 text-white rounded-xl font-medium transition-colors text-sm">
                 <Plus className="w-4 h-4" />Add Reference
               </button>
-              <button className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded-xl font-medium transition-colors text-sm">
+              <button className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-zinc-900/40 hover:bg-slate-100 dark:hover:bg-zinc-900/60 border border-slate-700/50 text-secondary rounded-xl font-medium transition-colors text-sm">
                 <Calendar className="w-4 h-4" />Schedule Interview
               </button>
-              <button className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded-xl font-medium transition-colors text-sm">
+              <button className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-zinc-900/40 hover:bg-slate-100 dark:hover:bg-zinc-900/60 border border-slate-700/50 text-secondary rounded-xl font-medium transition-colors text-sm">
                 <Users className="w-4 h-4" />View All References
               </button>
-              <button className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded-xl font-medium transition-colors text-sm">
+              <button className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-zinc-900/40 hover:bg-slate-100 dark:hover:bg-zinc-900/60 border border-slate-700/50 text-secondary rounded-xl font-medium transition-colors text-sm">
                 <Download className="w-4 h-4" />Export Reference Report
               </button>
-              <button className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded-xl font-medium transition-colors text-sm">
+              <button className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-zinc-900/40 hover:bg-slate-100 dark:hover:bg-zinc-900/60 border border-slate-700/50 text-secondary rounded-xl font-medium transition-colors text-sm">
                 <Phone className="w-4 h-4" />Contact Pending
               </button>
-              <button className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded-xl font-medium transition-colors text-sm">
+              <button className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-zinc-900/40 hover:bg-slate-100 dark:hover:bg-zinc-900/60 border border-slate-700/50 text-secondary rounded-xl font-medium transition-colors text-sm">
                 <Printer className="w-4 h-4" />Print Reference Log
               </button>
             </div>
@@ -398,7 +398,7 @@ export default function ReferenceChecks() {
               </div>
 
               {/* Overall Status */}
-              <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 mb-4">
+              <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-4 mb-4">
                 <h5 className="text-sm font-semibold text-secondary mb-3">Overall Status</h5>
                 <div className="space-y-1.5 text-sm">
                   <div className="text-secondary">Total references required: <span className="text-primary font-medium">5</span> <span className="text-slate-500">(per policy: 3 personal, 2 employment)</span></div>
@@ -410,7 +410,7 @@ export default function ReferenceChecks() {
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-4">
                 {/* Completed Summary */}
-                <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4">
+                <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-4">
                   <h5 className="text-sm font-semibold text-green-400 mb-3 flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4" />Completed References (2)
                   </h5>
@@ -429,7 +429,7 @@ export default function ReferenceChecks() {
                 </div>
 
                 {/* Pending Summary */}
-                <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4">
+                <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-4">
                   <h5 className="text-sm font-semibold text-amber-700 mb-3 flex items-center gap-2">
                     <Clock className="w-4 h-4" />Pending References (2)
                   </h5>
@@ -449,7 +449,7 @@ export default function ReferenceChecks() {
               </div>
 
               {/* Outcomes */}
-              <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 mb-4">
+              <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-4 mb-4">
                 <h5 className="text-sm font-semibold text-secondary mb-3">Reference Check Outcomes</h5>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
                   <div className="flex items-center gap-2 text-green-400">
@@ -482,7 +482,7 @@ export default function ReferenceChecks() {
               </div>
 
               {/* Investigator Assessment */}
-              <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4">
+              <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-4">
                 <h5 className="text-sm font-semibold text-secondary mb-2">Investigator Assessment</h5>
                 <p className="text-sm text-secondary">
                   Two strong supervisor references completed (current and former). Both strongly positive with no concerns identified. Pending colleague reference (not critical — already have 2 supervisory refs). Need at least 1 additional personal reference to meet minimum requirements. Recommend contacting applicant for 1–2 additional personal references (non-LE contacts).
@@ -490,15 +490,15 @@ export default function ReferenceChecks() {
               </div>
 
               <div className="flex flex-wrap items-center gap-3 mt-4">
-                <button className="px-3 py-1.5 bg-white dark:bg-slate-800/60 hover:bg-slate-800/80 text-secondary rounded-lg text-xs font-medium transition-colors">View Completed References</button>
-                <button className="px-3 py-1.5 bg-white dark:bg-slate-800/60 hover:bg-slate-800/80 text-secondary rounded-lg text-xs font-medium transition-colors">Contact Pending References</button>
+                <button className="px-3 py-1.5 bg-white dark:bg-zinc-900/60 hover:bg-slate-800/80 text-secondary rounded-lg text-xs font-medium transition-colors">View Completed References</button>
+                <button className="px-3 py-1.5 bg-white dark:bg-zinc-900/60 hover:bg-slate-800/80 text-secondary rounded-lg text-xs font-medium transition-colors">Contact Pending References</button>
                 <button className="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 rounded-lg text-xs font-medium transition-colors">Request Additional References from Applicant</button>
               </div>
             </div>
 
             {/* Status Cards */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
+              <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
                 <div className="flex items-center justify-between mb-3">
                   <UserCheck className="w-8 h-8 text-blue-400" />
                   <span className="text-2xl font-bold text-primary">{references.length}</span>
@@ -512,7 +512,7 @@ export default function ReferenceChecks() {
                 </div>
               </div>
 
-              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
+              <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
                 <div className="flex items-center justify-between mb-3">
                   <CheckCircle className="w-8 h-8 text-green-400" />
                   <span className="text-2xl font-bold text-primary">{completedRefs.length}</span>
@@ -526,7 +526,7 @@ export default function ReferenceChecks() {
                 </div>
               </div>
 
-              <div className="bg-white dark:bg-slate-800/40 border border-amber-500/30 rounded-xl p-5">
+              <div className="bg-white dark:bg-zinc-900/40 border border-amber-500/30 rounded-xl p-5">
                 <div className="flex items-center justify-between mb-3">
                   <Clock className="w-8 h-8 text-amber-700" />
                   <span className="text-2xl font-bold text-primary">{pendingRefs.length}</span>
@@ -545,7 +545,7 @@ export default function ReferenceChecks() {
                 </div>
               </div>
 
-              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
+              <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
                 <div className="flex items-center justify-between mb-3">
                   <ClipboardList className="w-8 h-8 text-amber-700" />
                   <span className="text-lg font-bold text-primary">QUALITATIVE</span>
@@ -561,61 +561,61 @@ export default function ReferenceChecks() {
             </div>
 
             {/* Reference Actions */}
-            <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5 mb-6">
+            <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5 mb-6">
               <h3 className="text-sm font-semibold text-primary mb-4 flex items-center gap-2">
                 <Settings className="w-4 h-4 text-amber-700" />Reference Check Actions
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                <button className="flex items-start gap-3 p-3 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                <button className="flex items-start gap-3 p-3 bg-white dark:bg-zinc-950/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                   <Plus className="w-5 h-5 text-amber-700 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-sm font-medium text-primary">Add Reference</p>
                     <p className="text-xs text-slate-500 mt-0.5">Add new personal or professional reference</p>
                   </div>
                 </button>
-                <button className="flex items-start gap-3 p-3 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                <button className="flex items-start gap-3 p-3 bg-white dark:bg-zinc-950/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                   <Phone className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-sm font-medium text-primary">Contact Pending</p>
                     <p className="text-xs text-slate-500 mt-0.5">Call/email pending references</p>
                   </div>
                 </button>
-                <button className="flex items-start gap-3 p-3 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                <button className="flex items-start gap-3 p-3 bg-white dark:bg-zinc-950/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                   <Calendar className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-sm font-medium text-primary">Schedule Interview</p>
                     <p className="text-xs text-slate-500 mt-0.5">Schedule phone/in-person reference check</p>
                   </div>
                 </button>
-                <button className="flex items-start gap-3 p-3 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                <button className="flex items-start gap-3 p-3 bg-white dark:bg-zinc-950/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                   <ClipboardList className="w-5 h-5 text-cyan-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-sm font-medium text-primary">Interview Guide</p>
                     <p className="text-xs text-slate-500 mt-0.5">Standard reference check questions</p>
                   </div>
                 </button>
-                <button className="flex items-start gap-3 p-3 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                <button className="flex items-start gap-3 p-3 bg-white dark:bg-zinc-950/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                   <Mail className="w-5 h-5 text-purple-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-sm font-medium text-primary">Send Request Form</p>
                     <p className="text-xs text-slate-500 mt-0.5">Email reference request to contact</p>
                   </div>
                 </button>
-                <button className="flex items-start gap-3 p-3 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                <button className="flex items-start gap-3 p-3 bg-white dark:bg-zinc-950/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                   <Download className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-sm font-medium text-primary">Generate Report</p>
                     <p className="text-xs text-slate-500 mt-0.5">Export reference check summary</p>
                   </div>
                 </button>
-                <button className="flex items-start gap-3 p-3 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                <button className="flex items-start gap-3 p-3 bg-white dark:bg-zinc-950/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                   <FileText className="w-5 h-5 text-amber-700 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-sm font-medium text-primary">Add Interview Notes</p>
                     <p className="text-xs text-slate-500 mt-0.5">Document post-interview findings</p>
                   </div>
                 </button>
-                <button className="flex items-start gap-3 p-3 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                <button className="flex items-start gap-3 p-3 bg-white dark:bg-zinc-950/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                   <Search className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-sm font-medium text-primary">Search References</p>
@@ -626,7 +626,7 @@ export default function ReferenceChecks() {
             </div>
 
             {/* Tabs */}
-            <div className="flex items-center gap-1 mb-6 bg-slate-100/80 dark:bg-slate-800/30 rounded-xl p-1 overflow-x-auto">
+            <div className="flex items-center gap-1 mb-6 bg-slate-100/80 dark:bg-zinc-900/30 rounded-xl p-1 overflow-x-auto">
               {[
                 { id: 'pending', label: 'Pending', count: pendingRefs.length },
                 { id: 'completed', label: 'Completed', count: completedRefs.length },
@@ -639,12 +639,12 @@ export default function ReferenceChecks() {
                   className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all whitespace-nowrap ${
                     selectedView === tab.id
                       ? 'bg-amber-500 text-white shadow-lg'
-                      : 'text-secondary hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800/50'
+                      : 'text-secondary hover:text-primary hover:bg-slate-100 dark:hover:bg-zinc-900/50'
                   }`}
                 >
                   {tab.label}
                   <span className={`px-1.5 py-0.5 rounded text-xs ${
-                    selectedView === tab.id ? 'bg-white/20 text-primary' : 'bg-white dark:bg-slate-700/50 text-slate-500'
+                    selectedView === tab.id ? 'bg-white/20 text-primary' : 'bg-white dark:bg-zinc-800/50 text-slate-500'
                   }`}>{tab.count}</span>
                 </button>
               ))}
@@ -659,7 +659,7 @@ export default function ReferenceChecks() {
                 const isRequired = ref.status === 'Required';
 
                 return (
-                  <div key={ref.id} className={`bg-white dark:bg-slate-800/40 border rounded-xl overflow-hidden transition-all ${
+                  <div key={ref.id} className={`bg-white dark:bg-zinc-900/40 border rounded-xl overflow-hidden transition-all ${
                     isRequired ? 'border-red-500/30' : isPending ? 'border-amber-500/30' : 'border-slate-700/50 hover:border-amber-500/30'
                   }`}>
                     <div className="p-5">
@@ -684,7 +684,7 @@ export default function ReferenceChecks() {
 
                       {/* Contact Info (if available) */}
                       {ref.phone && (
-                        <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3 mb-4">
+                        <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3 mb-4">
                           <h4 className="text-xs font-semibold text-secondary mb-2 uppercase tracking-wider">Contact Information</h4>
                           <div className="flex flex-wrap gap-4 text-sm">
                             {ref.referenceName !== 'Additional Personal Reference' && (
@@ -700,7 +700,7 @@ export default function ReferenceChecks() {
 
                       {/* Relationship Details */}
                       {ref.relationshipDetail && (
-                        <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3 mb-4">
+                        <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3 mb-4">
                           <h4 className="text-xs font-semibold text-secondary mb-2 uppercase tracking-wider">Relationship to Applicant</h4>
                           <div className="text-sm space-y-1">
                             <p className="text-secondary">{ref.relationshipDetail}</p>
@@ -714,7 +714,7 @@ export default function ReferenceChecks() {
                       {isCompleted && ref.interview && (
                         <>
                           {/* Interview Details */}
-                          <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3 mb-4">
+                          <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3 mb-4">
                             <h4 className="text-xs font-semibold text-secondary mb-2 uppercase tracking-wider">Interview Details</h4>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
                               <div className="text-slate-500">Date: <span className="text-secondary">{ref.interview.date}</span></div>
@@ -797,7 +797,7 @@ export default function ReferenceChecks() {
                           {isExpanded && (
                             <div className="space-y-6">
                               {/* Disciplinary */}
-                              <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
+                              <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3">
                                 <h4 className="text-xs font-semibold text-secondary mb-2 uppercase tracking-wider">Disciplinary History (Per Reference)</h4>
                                 <div className="space-y-1 text-sm">
                                   <p className="text-secondary">Sustained complaints: <span className="text-secondary">{ref.disciplinary.sustainedComplaints}</span></p>
@@ -813,7 +813,7 @@ export default function ReferenceChecks() {
                               </div>
 
                               {/* Reason for Leaving / Rehire */}
-                              <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
+                              <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3">
                                 <h4 className="text-xs font-semibold text-secondary mb-2 uppercase tracking-wider">Reason for Leaving & Rehire Eligibility</h4>
                                 <div className="space-y-1.5 text-sm">
                                   <p className="text-secondary">Reason for leaving: <span className="text-secondary">{ref.reasonForLeaving}</span></p>
@@ -823,14 +823,14 @@ export default function ReferenceChecks() {
                               </div>
 
                               {/* Brady/Giglio */}
-                              <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
+                              <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3">
                                 <h4 className="text-xs font-semibold text-secondary mb-2 uppercase tracking-wider">Brady/Giglio Concerns</h4>
                                 <p className="text-sm text-green-400 font-medium">{ref.bradyGiglio}</p>
                                 <p className="text-xs text-slate-500 mt-0.5">{ref.bradyGiglioDetail}</p>
                               </div>
 
                               {/* Investigator Assessment */}
-                              <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
+                              <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3">
                                 <h4 className="text-xs font-semibold text-secondary mb-2 uppercase tracking-wider">Investigator Assessment</h4>
                                 <p className="text-sm text-secondary">{ref.investigatorAssessment}</p>
                               </div>
@@ -844,7 +844,7 @@ export default function ReferenceChecks() {
                         <>
                           {/* Contact Attempts */}
                           {ref.contactAttempts && ref.contactAttempts.length > 0 && (
-                            <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3 mb-4">
+                            <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3 mb-4">
                               <h4 className="text-xs font-semibold text-secondary mb-2 uppercase tracking-wider">Contact Attempts</h4>
                               <div className="space-y-3">
                                 {ref.contactAttempts.map((attempt, i) => (
@@ -875,7 +875,7 @@ export default function ReferenceChecks() {
 
                           {/* Planned Interview */}
                           {ref.plannedInterview && (
-                            <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3 mb-4">
+                            <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3 mb-4">
                               <h4 className="text-xs font-semibold text-secondary mb-2 uppercase tracking-wider">Interview Details (When Scheduled)</h4>
                               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
                                 <p className="text-secondary">Duration: <span className="text-secondary">{ref.plannedInterview.estimatedDuration}</span></p>
@@ -888,7 +888,7 @@ export default function ReferenceChecks() {
 
                           {/* Investigator Notes */}
                           {ref.investigatorNotes && (
-                            <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3 mb-4">
+                            <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3 mb-4">
                               <h4 className="text-xs font-semibold text-secondary mb-2 uppercase tracking-wider">Investigator Notes</h4>
                               <p className="text-sm text-secondary italic">"{ref.investigatorNotes}"</p>
                             </div>
@@ -929,7 +929,7 @@ export default function ReferenceChecks() {
 
                           {/* Investigator Notes */}
                           {ref.investigatorNotes && (
-                            <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3 mb-4">
+                            <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3 mb-4">
                               <h4 className="text-xs font-semibold text-secondary mb-2 uppercase tracking-wider">Investigator Notes</h4>
                               <p className="text-sm text-secondary italic">"{ref.investigatorNotes}"</p>
                             </div>
@@ -939,7 +939,7 @@ export default function ReferenceChecks() {
 
                       {/* Contact Log Tab Content */}
                       {selectedView === 'contactlog' && ref.contactAttempts && (
-                        <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3 mb-4">
+                        <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3 mb-4">
                           <h4 className="text-xs font-semibold text-secondary mb-2 uppercase tracking-wider">Contact Log for {ref.referenceName}</h4>
                           {ref.contactAttempts.map((attempt, i) => (
                             <div key={i} className="text-sm border-l-2 border-amber-500/30 pl-3 mb-2">
@@ -961,8 +961,8 @@ export default function ReferenceChecks() {
                           {isCompleted && (
                             <>
                               <button className="px-3 py-1.5 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 rounded-lg text-xs font-medium transition-colors">View Interview Notes</button>
-                              <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">Print Report</button>
-                              <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">View Case File</button>
+                              <button className="px-3 py-1.5 bg-white dark:bg-zinc-800/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">Print Report</button>
+                              <button className="px-3 py-1.5 bg-white dark:bg-zinc-800/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">View Case File</button>
                             </>
                           )}
                           {isPending && (
@@ -970,15 +970,15 @@ export default function ReferenceChecks() {
                               <button className="px-3 py-1.5 bg-green-500/10 hover:bg-green-500/20 text-green-400 rounded-lg text-xs font-medium transition-colors flex items-center gap-1"><Phone className="w-3 h-3" />Call Now</button>
                               <button className="px-3 py-1.5 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 rounded-lg text-xs font-medium transition-colors flex items-center gap-1"><Mail className="w-3 h-3" />Send Email</button>
                               <button className="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 rounded-lg text-xs font-medium transition-colors">Schedule Interview</button>
-                              <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">Log Contact Attempt</button>
+                              <button className="px-3 py-1.5 bg-white dark:bg-zinc-800/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">Log Contact Attempt</button>
                             </>
                           )}
                           {isRequired && (
                             <>
                               <button className="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 rounded-lg text-xs font-medium transition-colors flex items-center gap-1"><Mail className="w-3 h-3" />Email Applicant</button>
                               <button className="px-3 py-1.5 bg-green-500/10 hover:bg-green-500/20 text-green-400 rounded-lg text-xs font-medium transition-colors flex items-center gap-1"><Phone className="w-3 h-3" />Call Applicant</button>
-                              <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">Reference Request Form</button>
-                              <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">View Policy</button>
+                              <button className="px-3 py-1.5 bg-white dark:bg-zinc-800/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">Reference Request Form</button>
+                              <button className="px-3 py-1.5 bg-white dark:bg-zinc-800/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">View Policy</button>
                             </>
                           )}
                         </div>
@@ -991,19 +991,19 @@ export default function ReferenceChecks() {
 
             {/* Footer Actions */}
             <div className="flex items-center justify-between mt-6">
-              <button className="px-4 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded-xl text-sm font-medium transition-colors">Load More References</button>
+              <button className="px-4 py-2 bg-white dark:bg-zinc-900/40 hover:bg-slate-100 dark:hover:bg-zinc-900/60 border border-slate-700/50 text-secondary rounded-xl text-sm font-medium transition-colors">Load More References</button>
               <div className="flex items-center gap-3">
-                <button className="px-4 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded-xl text-sm font-medium transition-colors flex items-center gap-2">
+                <button className="px-4 py-2 bg-white dark:bg-zinc-900/40 hover:bg-slate-100 dark:hover:bg-zinc-900/60 border border-slate-700/50 text-secondary rounded-xl text-sm font-medium transition-colors flex items-center gap-2">
                   <Download className="w-4 h-4" />Export All References
                 </button>
-                <button className="px-4 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded-xl text-sm font-medium transition-colors flex items-center gap-2">
+                <button className="px-4 py-2 bg-white dark:bg-zinc-900/40 hover:bg-slate-100 dark:hover:bg-zinc-900/60 border border-slate-700/50 text-secondary rounded-xl text-sm font-medium transition-colors flex items-center gap-2">
                   <FileText className="w-4 h-4" />View Summary Report
                 </button>
               </div>
             </div>
 
             {/* Support & Resources Panel */}
-            <div className="mt-8 bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
+            <div className="mt-8 bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
               <h3 className="text-lg font-semibold text-primary mb-4 flex items-center gap-2">
                 <HelpCircle className="w-5 h-5 text-amber-700" />
                 Support & Resources
@@ -1013,19 +1013,19 @@ export default function ReferenceChecks() {
                 <div>
                   <h4 className="text-sm font-semibold text-secondary mb-3">Quick Actions</h4>
                   <div className="space-y-2">
-                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-zinc-950/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                       <Plus className="w-4 h-4 text-amber-700" />
                       <span className="text-sm text-secondary">Add New Reference</span>
                     </button>
-                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-zinc-950/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                       <Phone className="w-4 h-4 text-green-400" />
                       <span className="text-sm text-secondary">Contact Pending References</span>
                     </button>
-                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-zinc-950/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                       <Download className="w-4 h-4 text-blue-400" />
                       <span className="text-sm text-secondary">Export Reference Report</span>
                     </button>
-                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-zinc-950/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                       <ClipboardList className="w-4 h-4 text-cyan-400" />
                       <span className="text-sm text-secondary">View Interview Guide</span>
                     </button>
@@ -1036,19 +1036,19 @@ export default function ReferenceChecks() {
                 <div>
                   <h4 className="text-sm font-semibold text-secondary mb-3">Documentation</h4>
                   <div className="space-y-2">
-                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-zinc-950/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                       <BookOpen className="w-4 h-4 text-amber-700" />
                       <span className="text-sm text-secondary">Reference Check Procedures</span>
                     </button>
-                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-zinc-950/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                       <BookOpen className="w-4 h-4 text-amber-700" />
                       <span className="text-sm text-secondary">Standard Interview Questions</span>
                     </button>
-                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-zinc-950/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                       <BookOpen className="w-4 h-4 text-amber-700" />
                       <span className="text-sm text-secondary">Brady/Giglio Assessment Guide</span>
                     </button>
-                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-zinc-950/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                       <ExternalLink className="w-4 h-4 text-amber-700" />
                       <span className="text-sm text-secondary">POST Reference Requirements</span>
                     </button>
@@ -1059,28 +1059,28 @@ export default function ReferenceChecks() {
                 <div>
                   <h4 className="text-sm font-semibold text-secondary mb-3">Contact & Support</h4>
                   <div className="space-y-2">
-                    <div className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 rounded-lg">
+                    <div className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-zinc-950/40 rounded-lg">
                       <Phone className="w-4 h-4 text-secondary" />
                       <div>
                         <p className="text-sm text-secondary">BI Unit</p>
                         <p className="text-xs text-slate-500">Ext. 4520</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 rounded-lg">
+                    <div className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-zinc-950/40 rounded-lg">
                       <Mail className="w-4 h-4 text-secondary" />
                       <div>
                         <p className="text-sm text-secondary">BI Support</p>
                         <p className="text-xs text-slate-500">bi.support@gcso.gov</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 rounded-lg">
+                    <div className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-zinc-950/40 rounded-lg">
                       <Phone className="w-4 h-4 text-secondary" />
                       <div>
                         <p className="text-sm text-secondary">Legal / Brady-Giglio</p>
                         <p className="text-xs text-slate-500">Ext. 4550 (legal counsel)</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 rounded-lg">
+                    <div className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-zinc-950/40 rounded-lg">
                       <Phone className="w-4 h-4 text-secondary" />
                       <div>
                         <p className="text-sm text-secondary">POST Compliance</p>

@@ -229,7 +229,7 @@ export default function CommandDashboard() {
                   <span className="text-amber-700 dark:text-amber-400 font-semibold">{pendingActionCount} command decisions pending</span>
                 </div>
               </div>
-              <div className="flex items-center gap-1.5 px-2.5 py-1.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/30 rounded-lg flex-shrink-0">
+              <div className="flex items-center gap-1.5 px-2.5 py-1.5 bg-white dark:bg-zinc-900/40 border border-slate-200 dark:border-slate-700/30 rounded-lg flex-shrink-0">
                 <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
                 <span className="text-[11px] font-medium text-slate-600 dark:text-slate-300 hidden sm:inline">Systems Operational</span>
               </div>
@@ -239,7 +239,7 @@ export default function CommandDashboard() {
             <div className="grid grid-cols-2 xl:grid-cols-4 gap-3">
 
               {/* Agency Health Score */}
-              <div className="bg-white dark:bg-slate-800/30 border border-amber-200/60 dark:border-amber-500/20 border-l-[3px] border-l-amber-500 rounded-xl p-4 relative overflow-hidden">
+              <div className="bg-white dark:bg-zinc-900/30 border border-amber-200/60 dark:border-amber-500/20 border-l-[3px] border-l-amber-500 rounded-xl p-4 relative overflow-hidden">
                 <div className="absolute inset-0 bg-amber-500/[0.03] pointer-events-none" />
                 <p className="text-[9px] font-black uppercase tracking-[0.15em] text-amber-700 dark:text-amber-400 mb-3">Agency Health Score</p>
                 <div className="flex items-center gap-3">
@@ -252,7 +252,7 @@ export default function CommandDashboard() {
               </div>
 
               {/* Active Critical Risks */}
-              <div className="bg-white dark:bg-slate-800/30 border border-red-200/60 dark:border-red-500/20 border-l-[3px] border-l-red-500 rounded-xl p-4 relative overflow-hidden">
+              <div className="bg-white dark:bg-zinc-900/30 border border-red-200/60 dark:border-red-500/20 border-l-[3px] border-l-red-500 rounded-xl p-4 relative overflow-hidden">
                 <div className="absolute inset-0 bg-red-500/[0.03] pointer-events-none" />
                 <p className="text-[9px] font-black uppercase tracking-[0.15em] text-red-700 dark:text-red-400 mb-2">Active Critical Risks</p>
                 <p className="text-5xl font-black tabular-nums text-slate-900 dark:text-white leading-none mb-1">3</p>
@@ -261,7 +261,7 @@ export default function CommandDashboard() {
               </div>
 
               {/* Staffing Readiness */}
-              <div className="bg-white dark:bg-slate-800/30 border border-amber-200/60 dark:border-amber-500/20 border-l-[3px] border-l-amber-500 rounded-xl p-4 relative overflow-hidden">
+              <div className="bg-white dark:bg-zinc-900/30 border border-amber-200/60 dark:border-amber-500/20 border-l-[3px] border-l-amber-500 rounded-xl p-4 relative overflow-hidden">
                 <div className="absolute inset-0 bg-amber-500/[0.03] pointer-events-none" />
                 <p className="text-[9px] font-black uppercase tracking-[0.15em] text-amber-700 dark:text-amber-400 mb-2">Staffing Readiness</p>
                 <p className="text-5xl font-black tabular-nums text-slate-900 dark:text-white leading-none mb-1">92%</p>
@@ -270,7 +270,7 @@ export default function CommandDashboard() {
               </div>
 
               {/* Compliance Readiness */}
-              <div className="bg-white dark:bg-slate-800/30 border border-red-200/60 dark:border-red-500/20 border-l-[3px] border-l-red-500 rounded-xl p-4 relative overflow-hidden">
+              <div className="bg-white dark:bg-zinc-900/30 border border-red-200/60 dark:border-red-500/20 border-l-[3px] border-l-red-500 rounded-xl p-4 relative overflow-hidden">
                 <div className="absolute inset-0 bg-red-500/[0.03] pointer-events-none" />
                 <p className="text-[9px] font-black uppercase tracking-[0.15em] text-red-700 dark:text-red-400 mb-2">Compliance Readiness</p>
                 <p className="text-5xl font-black tabular-nums text-slate-900 dark:text-white leading-none mb-1">94%</p>
@@ -282,8 +282,8 @@ export default function CommandDashboard() {
           </div>
 
           {/* Right: AI Chief of Staff panel */}
-          <div className="bg-white dark:bg-slate-900/70 border border-slate-200 dark:border-slate-700/40 border-t-[3px] border-t-amber-500 rounded-xl overflow-hidden">
-            <div className="flex items-center gap-2.5 px-4 py-3 bg-slate-50 dark:bg-slate-800/40 border-b border-slate-200 dark:border-slate-700/40">
+          <div className="bg-white dark:bg-zinc-950/70 border border-slate-200 dark:border-slate-700/40 border-t-[3px] border-t-amber-500 rounded-xl overflow-hidden">
+            <div className="flex items-center gap-2.5 px-4 py-3 bg-slate-50 dark:bg-zinc-900/40 border-b border-slate-200 dark:border-slate-700/40">
               <div className="w-7 h-7 rounded-lg bg-amber-500/10 dark:bg-amber-500/15 border border-amber-500/25 flex items-center justify-center flex-shrink-0">
                 <Zap className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
               </div>
@@ -295,8 +295,8 @@ export default function CommandDashboard() {
 
             <div className="divide-y divide-slate-100 dark:divide-slate-800/40">
               {chiefOfStaffActions.map((item) => (
-                <div key={item.id} className="px-4 py-3 flex items-start gap-3 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
-                  <div className="w-5 h-5 rounded-full bg-slate-200 dark:bg-slate-700/60 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <div key={item.id} className="px-4 py-3 flex items-start gap-3 hover:bg-slate-50 dark:hover:bg-zinc-900/30 transition-colors">
+                  <div className="w-5 h-5 rounded-full bg-slate-200 dark:bg-zinc-800/60 flex items-center justify-center flex-shrink-0 mt-0.5">
                     <span className="text-[9px] font-black text-slate-700 dark:text-slate-200">{item.id}</span>
                   </div>
                   <div className="flex-1 min-w-0">
@@ -311,7 +311,7 @@ export default function CommandDashboard() {
               ))}
             </div>
 
-            <div className="flex items-center gap-2 px-4 py-2.5 bg-slate-50 dark:bg-slate-800/40 border-t border-slate-200 dark:border-slate-700/40">
+            <div className="flex items-center gap-2 px-4 py-2.5 bg-slate-50 dark:bg-zinc-900/40 border-t border-slate-200 dark:border-slate-700/40">
               <Clock className="w-3 h-3 text-slate-400" />
               <span className="text-[10px] text-slate-500">Est. review time: <span className="font-semibold text-slate-700 dark:text-slate-200">4 minutes</span></span>
             </div>
@@ -320,7 +320,7 @@ export default function CommandDashboard() {
         </div>
 
         {/* ── COMMAND ACTIONS ────────────────────────────────────────────────── */}
-        <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none overflow-hidden">
+        <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none overflow-hidden">
           <div className="flex items-center justify-between gap-3 px-5 py-3 border-b border-slate-200 dark:border-slate-700/30 bg-red-50/50 dark:bg-red-500/5">
             <div className="flex items-center gap-3">
               <span className="relative flex h-2 w-2">
@@ -344,7 +344,7 @@ export default function CommandDashboard() {
                   className={`rounded-lg border border-l-[3px] ${getUrgencyAccent(action.urgency)} p-4 transition-all ${
                     isActioned
                       ? 'bg-emerald-50/40 dark:bg-emerald-500/5 border-slate-200 dark:border-slate-700/20 opacity-70'
-                      : 'bg-slate-50 dark:bg-slate-900/30 border-slate-200 dark:border-slate-700/30'
+                      : 'bg-slate-50 dark:bg-zinc-950/30 border-slate-200 dark:border-slate-700/30'
                   }`}
                 >
                   <div className="flex items-start gap-4">
@@ -359,7 +359,7 @@ export default function CommandDashboard() {
                             {action.urgency}
                           </span>
                           {action.countdown && (
-                            <span className="flex items-center gap-1 px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-700/40 text-slate-700 dark:text-slate-200 text-[10px] font-semibold">
+                            <span className="flex items-center gap-1 px-2 py-0.5 rounded bg-slate-200 dark:bg-zinc-800/40 text-slate-700 dark:text-slate-200 text-[10px] font-semibold">
                               <Clock className="w-2.5 h-2.5" />{action.countdown}
                             </span>
                           )}
@@ -399,7 +399,7 @@ export default function CommandDashboard() {
                         <button onClick={() => handleCommandAction(action)} className={`px-3 py-1.5 border rounded text-[12px] font-bold transition-all ${getActionBtnClass(action.urgency)}`}>
                           {action.actionLabel}
                         </button>
-                        <button className="px-3 py-1.5 bg-transparent border border-slate-300 dark:border-slate-600/50 text-slate-700 dark:text-slate-200 rounded text-[12px] font-semibold hover:bg-slate-100 dark:hover:bg-slate-700/40 transition-all">
+                        <button className="px-3 py-1.5 bg-transparent border border-slate-300 dark:border-slate-600/50 text-slate-700 dark:text-slate-200 rounded text-[12px] font-semibold hover:bg-slate-100 dark:hover:bg-zinc-800/40 transition-all">
                           View
                         </button>
                       </div>
@@ -415,7 +415,7 @@ export default function CommandDashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-5">
 
           {/* Executive Intelligence Summary — always visible, AI briefing style */}
-          <div className="bg-white dark:bg-slate-800/25 border border-blue-200/50 dark:border-blue-500/20 border-l-[3px] border-l-blue-500 rounded-xl shadow-sm dark:shadow-none overflow-hidden">
+          <div className="bg-white dark:bg-zinc-900/25 border border-blue-200/50 dark:border-blue-500/20 border-l-[3px] border-l-blue-500 rounded-xl shadow-sm dark:shadow-none overflow-hidden">
             <div className="flex items-center justify-between px-5 py-3 bg-blue-50/40 dark:bg-blue-500/5 border-b border-blue-200/50 dark:border-blue-500/20">
               <div className="flex items-center gap-3">
                 <FileText className="w-4 h-4 text-blue-600 dark:text-blue-400" />
@@ -468,7 +468,7 @@ export default function CommandDashboard() {
           </div>
 
           {/* Cross-Module Operational Risk */}
-          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none overflow-hidden">
+          <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none overflow-hidden">
             <div className="flex items-center justify-between px-5 py-3 border-b border-slate-200 dark:border-slate-700/30">
               <div className="flex items-center gap-2.5">
                 <Activity className="w-4 h-4 text-slate-500 dark:text-slate-400" />
@@ -478,7 +478,7 @@ export default function CommandDashboard() {
             </div>
             <div className="p-4 space-y-3">
               {moduleRisks.map((mod) => (
-                <div key={mod.id} className="bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-700/30 rounded-lg p-3.5 space-y-2.5">
+                <div key={mod.id} className="bg-slate-50 dark:bg-zinc-950/30 border border-slate-200 dark:border-slate-700/30 rounded-lg p-3.5 space-y-2.5">
                   <div className="flex items-center justify-between gap-2">
                     <span className="text-[13px] font-semibold text-slate-900 dark:text-slate-100">{mod.module}</span>
                     <span className={`flex-shrink-0 inline-flex items-center px-1.5 py-0.5 rounded border text-[10px] font-bold uppercase tracking-wide ${getRiskBadge(mod.risk)}`}>
@@ -492,14 +492,14 @@ export default function CommandDashboard() {
                         {mod.utilization}%
                       </span>
                     </div>
-                    <div className="h-1 bg-slate-200 dark:bg-slate-700/50 rounded-full overflow-hidden">
+                    <div className="h-1 bg-slate-200 dark:bg-zinc-800/50 rounded-full overflow-hidden">
                       <div className={`h-full rounded-full ${getRiskBar(mod.risk)}`} style={{ width: `${Math.min(mod.utilization, 100)}%` }} />
                     </div>
                   </div>
                   <p className="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed">{mod.bottleneck}</p>
                   <button
                     onClick={() => mod.route && navigate(createPageUrl(mod.route))}
-                    className="w-full flex items-center justify-center gap-1 px-2.5 py-1.5 bg-slate-100 dark:bg-slate-700/30 border border-slate-300 dark:border-slate-600/40 text-slate-700 dark:text-slate-300 rounded text-[11px] font-semibold hover:bg-slate-200 dark:hover:bg-slate-700/50 transition-all"
+                    className="w-full flex items-center justify-center gap-1 px-2.5 py-1.5 bg-slate-100 dark:bg-zinc-800/30 border border-slate-300 dark:border-slate-600/40 text-slate-700 dark:text-slate-300 rounded text-[11px] font-semibold hover:bg-slate-200 dark:hover:bg-zinc-800/50 transition-all"
                   >
                     <ArrowRight className="w-3 h-3" />{mod.action}
                   </button>
@@ -514,7 +514,7 @@ export default function CommandDashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
 
           {/* Division Status */}
-          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none overflow-hidden">
+          <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none overflow-hidden">
             <div className="px-5 py-3 border-b border-slate-200 dark:border-slate-700/30">
               <span className="text-[11px] font-black text-slate-900 dark:text-white uppercase tracking-widest">Division Status</span>
             </div>
@@ -525,7 +525,7 @@ export default function CommandDashboard() {
                   onClick={() => div.route && navigate(createPageUrl(div.route))}
                   onMouseEnter={() => setHoveredDivision(idx)}
                   onMouseLeave={() => setHoveredDivision(null)}
-                  className="w-full bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-700/30 rounded-lg px-4 py-3 text-left hover:border-slate-400 dark:hover:border-slate-600/50 transition-colors relative"
+                  className="w-full bg-slate-50 dark:bg-zinc-950/30 border border-slate-200 dark:border-slate-700/30 rounded-lg px-4 py-3 text-left hover:border-slate-400 dark:hover:border-slate-600/50 transition-colors relative"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
@@ -538,7 +538,7 @@ export default function CommandDashboard() {
                     </div>
                   </div>
                   {hoveredDivision === idx && (
-                    <div className="absolute left-0 right-0 top-full mt-1 z-20 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700/50 rounded-lg p-3 shadow-xl">
+                    <div className="absolute left-0 right-0 top-full mt-1 z-20 bg-white dark:bg-zinc-900 border border-slate-200 dark:border-slate-700/50 rounded-lg p-3 shadow-xl">
                       {div.drill.split('\n').map((line, i) => (
                         <p key={i} className="text-[11px] text-slate-700 dark:text-slate-300 leading-relaxed">{line}</p>
                       ))}
@@ -550,7 +550,7 @@ export default function CommandDashboard() {
           </div>
 
           {/* Staffing + Compliance tabbed panel */}
-          <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none overflow-hidden">
+          <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none overflow-hidden">
             <div className="flex border-b border-slate-200 dark:border-slate-700/30">
               <button
                 onClick={() => setSecondaryTab('staffing')}
@@ -595,7 +595,7 @@ export default function CommandDashboard() {
                         </span>
                       </div>
                     </div>
-                    <div className="relative w-full h-1 bg-slate-200 dark:bg-slate-800/50 rounded-full overflow-visible">
+                    <div className="relative w-full h-1 bg-slate-200 dark:bg-zinc-900/50 rounded-full overflow-visible">
                       <div
                         className={`h-full rounded-full ${div.percentage >= 90 ? 'bg-emerald-500 dark:bg-emerald-500/40' : div.percentage >= div.minThreshold ? 'bg-amber-500 dark:bg-amber-500/40' : 'bg-red-500 dark:bg-red-500/40'}`}
                         style={{ width: `${Math.min(div.percentage, 100)}%` }}
@@ -632,7 +632,7 @@ export default function CommandDashboard() {
                           <span className="text-slate-500">{row.label}</span>
                           <span className={row.warn ? 'text-amber-700 dark:text-amber-400 font-medium' : 'text-slate-700 dark:text-slate-300'}>{row.value}</span>
                         </div>
-                        <div className="w-full h-1 bg-slate-200 dark:bg-slate-800/50 rounded-full overflow-hidden">
+                        <div className="w-full h-1 bg-slate-200 dark:bg-zinc-900/50 rounded-full overflow-hidden">
                           <div className={`h-full rounded-full ${row.color}`} style={{ width: `${row.pct}%` }} />
                         </div>
                       </div>
@@ -667,7 +667,7 @@ export default function CommandDashboard() {
         </div>
 
         {/* ── PENDING APPROVALS ──────────────────────────────────────────────── */}
-        <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none overflow-hidden">
+        <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none overflow-hidden">
           <div className="flex items-center justify-between px-5 py-3 border-b border-slate-200 dark:border-slate-700/30">
             <span className="text-[11px] font-black text-slate-900 dark:text-white uppercase tracking-widest">Pending Approvals</span>
             <button onClick={() => navigate(createPageUrl('Approvals'))} className="text-[11px] text-amber-700 dark:text-amber-400 hover:text-amber-800 dark:hover:text-amber-300 font-semibold">
@@ -680,7 +680,7 @@ export default function CommandDashboard() {
               return (
                 <div
                   key={item.id}
-                  className={`rounded-lg border border-slate-200 dark:border-slate-700/30 hover:bg-slate-50 dark:hover:bg-slate-800/35 transition-colors ${
+                  className={`rounded-lg border border-slate-200 dark:border-slate-700/30 hover:bg-slate-50 dark:hover:bg-zinc-900/35 transition-colors ${
                     item.tier === 'critical' ? 'border-l-4 border-l-red-500' :
                     item.tier === 'action' ? 'border-l-4 border-l-amber-500' : 'border-l-4 border-l-slate-300 dark:border-l-slate-600'
                   }`}
@@ -704,7 +704,7 @@ export default function CommandDashboard() {
                       <button onClick={(e) => openApprovalModal(item, 'approve', e)} className="px-3 py-1.5 text-[12px] font-semibold bg-blue-600 text-white hover:bg-blue-700 rounded-lg transition-colors">
                         Approve
                       </button>
-                      <button onClick={(e) => openApprovalModal(item, 'deny', e)} className="px-3 py-1.5 text-[12px] font-medium text-slate-600 dark:text-slate-300 border border-slate-300 dark:border-slate-700/50 hover:bg-slate-100 dark:hover:bg-slate-700/20 rounded-lg transition-colors">
+                      <button onClick={(e) => openApprovalModal(item, 'deny', e)} className="px-3 py-1.5 text-[12px] font-medium text-slate-600 dark:text-slate-300 border border-slate-300 dark:border-slate-700/50 hover:bg-slate-100 dark:hover:bg-zinc-800/20 rounded-lg transition-colors">
                         Escalate
                       </button>
                     </div>
@@ -726,7 +726,7 @@ export default function CommandDashboard() {
       {selectedApproval && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={closeApprovalModal} />
-          <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl p-8 max-w-md w-full shadow-2xl">
+          <div className="relative bg-white dark:bg-zinc-950 border border-slate-200 dark:border-slate-700/50 rounded-2xl p-8 max-w-md w-full shadow-2xl">
             <div className="flex items-start gap-3 mb-5">
               <div className={`w-10 h-10 rounded-lg flex items-center justify-center border ${approvalAction === 'approve' ? 'border-emerald-500/20' : 'border-red-500/20'}`}>
                 {approvalAction === 'approve'
@@ -749,11 +749,11 @@ export default function CommandDashboard() {
                 onChange={(e) => setActionComment(e.target.value)}
                 placeholder={approvalAction === 'approve' ? 'Add any comments...' : 'Please provide a reason...'}
                 rows={3}
-                className="w-full px-3.5 py-2.5 bg-slate-100 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-700/50 rounded-lg text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-600 focus:outline-none focus:border-slate-400 dark:focus:border-slate-600 resize-none text-sm"
+                className="w-full px-3.5 py-2.5 bg-slate-100 dark:bg-black/50 border border-slate-200 dark:border-slate-700/50 rounded-lg text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-600 focus:outline-none focus:border-slate-400 dark:focus:border-slate-600 resize-none text-sm"
               />
             </div>
             <div className="flex gap-3">
-              <button onClick={closeApprovalModal} className="flex-1 px-4 py-2.5 bg-slate-100 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-800/60 border border-slate-200 dark:border-slate-700/30 rounded-xl text-slate-900 dark:text-white text-sm font-medium transition-colors">
+              <button onClick={closeApprovalModal} className="flex-1 px-4 py-2.5 bg-slate-100 dark:bg-zinc-900/30 hover:bg-slate-200 dark:hover:bg-zinc-900/60 border border-slate-200 dark:border-slate-700/30 rounded-xl text-slate-900 dark:text-white text-sm font-medium transition-colors">
                 Cancel
               </button>
               <button onClick={confirmApprovalAction} className={`flex-1 px-4 py-2.5 rounded-xl text-white text-sm font-medium transition-colors ${approvalAction === 'approve' ? 'bg-emerald-600 hover:bg-emerald-700' : 'bg-red-600 hover:bg-red-700'}`}>

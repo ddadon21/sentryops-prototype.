@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import DashboardLayout from '../layouts/DashboardLayout';
 
 // ── Design system constants (matches BudgetResources) ─────────
-const CARD = 'bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl';
+const CARD = 'bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl';
 const CARD_HEADER = 'flex items-center justify-between px-5 py-3.5 border-b border-slate-100 dark:border-slate-800/60';
 const BADGE = (color) => {
   if (color === 'red')    return 'px-2 py-0.5 text-[10px] font-bold rounded border bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-400 border-red-200 dark:border-red-500/20';
@@ -20,10 +20,10 @@ const BADGE = (color) => {
   if (color === 'green')  return 'px-2 py-0.5 text-[10px] font-bold rounded border bg-emerald-100 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-500/20';
   if (color === 'blue')   return 'px-2 py-0.5 text-[10px] font-bold rounded border bg-blue-100 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-200 dark:border-blue-500/20';
   if (color === 'violet') return 'px-2 py-0.5 text-[10px] font-bold rounded border bg-violet-100 dark:bg-violet-500/10 text-violet-700 dark:text-violet-400 border-violet-200 dark:border-violet-500/20';
-  return 'px-2 py-0.5 text-[10px] font-bold rounded border bg-slate-100 dark:bg-slate-700/40 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-600/30';
+  return 'px-2 py-0.5 text-[10px] font-bold rounded border bg-slate-100 dark:bg-zinc-800/40 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-600/30';
 };
 const primaryBtn = 'inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-lg text-[11px] font-bold bg-amber-500 hover:bg-amber-600 text-white border border-amber-600/40 transition-colors';
-const secondaryBtn = 'inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-lg text-[11px] font-semibold bg-white dark:bg-slate-800/60 hover:bg-slate-50 dark:hover:bg-slate-700/60 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700/40 transition-colors';
+const secondaryBtn = 'inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-lg text-[11px] font-semibold bg-white dark:bg-zinc-900/60 hover:bg-slate-50 dark:hover:bg-zinc-800/60 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700/40 transition-colors';
 // AI insight callout — used wherever the model explains a metric, not just states it
 const AI_CALLOUT = 'flex items-start gap-2.5 p-3 bg-amber-50 dark:bg-amber-500/5 border border-amber-200 dark:border-amber-500/20 rounded-lg';
 
@@ -551,7 +551,7 @@ export default function PerformanceCompliance() {
   const getActionBtnClass = (u) => {
     if (u === 'Critical') return 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-[11px] font-bold uppercase tracking-wide transition-colors bg-red-600 border border-red-700 text-white hover:bg-red-700';
     if (u === 'High')     return 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-[11px] font-bold uppercase tracking-wide transition-colors bg-orange-500 border border-orange-600 text-white hover:bg-orange-600';
-    return 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-[11px] font-bold uppercase tracking-wide transition-colors bg-slate-700 border border-slate-800 text-white hover:bg-slate-800 dark:bg-slate-600 dark:border-slate-700 dark:hover:bg-slate-700';
+    return 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-[11px] font-bold uppercase tracking-wide transition-colors bg-slate-700 border border-slate-800 text-white hover:bg-slate-800 dark:bg-zinc-700 dark:border-slate-700 dark:hover:bg-zinc-800';
   };
 
   const getComplianceBar = (s) =>
@@ -653,7 +653,7 @@ export default function PerformanceCompliance() {
             <select
               value={timeRange}
               onChange={(e) => setTimeRange(e.target.value)}
-              className="px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/30 rounded-lg text-slate-700 dark:text-slate-300 text-sm focus:outline-none focus:border-amber-500/50"
+              className="px-3 py-2 bg-white dark:bg-zinc-900/40 border border-slate-200 dark:border-slate-700/30 rounded-lg text-slate-700 dark:text-slate-300 text-sm focus:outline-none focus:border-amber-500/50"
             >
               <option value="ytd">Year to Date</option>
               <option value="last30">Last 30 Days</option>
@@ -678,7 +678,7 @@ export default function PerformanceCompliance() {
         <div className={CARD + ' overflow-hidden'}>
           <div className="flex flex-col lg:flex-row lg:items-stretch">
             {/* Status block */}
-            <div className="lg:w-64 flex-shrink-0 bg-slate-800 dark:bg-slate-900/60 border-b lg:border-b-0 lg:border-r border-slate-700/40 p-5 flex flex-col justify-between gap-3">
+            <div className="lg:w-64 flex-shrink-0 bg-slate-800 dark:bg-zinc-950/60 border-b lg:border-b-0 lg:border-r border-slate-700/40 p-5 flex flex-col justify-between gap-3">
               <div>
                 <div className="flex items-center gap-2 mb-2.5">
                   <Brain className="w-4 h-4 text-amber-400" />
@@ -753,7 +753,7 @@ export default function PerformanceCompliance() {
                   className={`flex items-center gap-4 px-5 py-3 border-l-[3px] transition-colors ${getUrgencyAccent(action.urgency)} ${
                     isActioned
                       ? 'bg-emerald-50/30 dark:bg-emerald-500/5 opacity-60'
-                      : 'hover:bg-slate-50 dark:hover:bg-slate-900/20'
+                      : 'hover:bg-slate-50 dark:hover:bg-zinc-950/20'
                   }`}
                 >
                   {/* Status column */}
@@ -890,7 +890,7 @@ export default function PerformanceCompliance() {
                   <span className="text-slate-500 dark:text-slate-400">Target: {keyMetrics.responseTime.target} min</span>
                   <span className="font-bold text-orange-700 dark:text-orange-400">0.4 min above</span>
                 </div>
-                <div className="w-full h-1.5 bg-slate-200 dark:bg-slate-700/50 rounded-full overflow-hidden mb-3">
+                <div className="w-full h-1.5 bg-slate-200 dark:bg-zinc-800/50 rounded-full overflow-hidden mb-3">
                   <div className="h-full bg-emerald-500" style={{ width: '95%' }} />
                 </div>
                 <div className="space-y-1.5 border-t border-slate-100 dark:border-slate-800/60 pt-3">
@@ -939,7 +939,7 @@ export default function PerformanceCompliance() {
                   <span className="text-slate-500 dark:text-slate-400">Target: {keyMetrics.crimeClearanceRate.target}%</span>
                   <span className="font-bold text-orange-700 dark:text-orange-400">1.5 pts below</span>
                 </div>
-                <div className="w-full h-1.5 bg-slate-200 dark:bg-slate-700/50 rounded-full overflow-hidden mb-3">
+                <div className="w-full h-1.5 bg-slate-200 dark:bg-zinc-800/50 rounded-full overflow-hidden mb-3">
                   <div className="h-full bg-purple-500" style={{ width: '97.9%' }} />
                 </div>
                 <div className="space-y-1.5 border-t border-slate-100 dark:border-slate-800/60 pt-3">
@@ -988,7 +988,7 @@ export default function PerformanceCompliance() {
                   <span className="text-slate-500 dark:text-slate-400">Target: 95%</span>
                   <span className="font-bold text-orange-700 dark:text-orange-400">-5 positions</span>
                 </div>
-                <div className="w-full h-1.5 bg-slate-200 dark:bg-slate-700/50 rounded-full overflow-hidden mb-3">
+                <div className="w-full h-1.5 bg-slate-200 dark:bg-zinc-800/50 rounded-full overflow-hidden mb-3">
                   <div className="h-full bg-blue-500" style={{ width: `${keyMetrics.staffing.percentage}%` }} />
                 </div>
                 <div className="space-y-1.5 border-t border-slate-100 dark:border-slate-800/60 pt-3">
@@ -1037,7 +1037,7 @@ export default function PerformanceCompliance() {
                   <span className="text-slate-500 dark:text-slate-400">Target: &lt;10% of budget</span>
                   <span className="font-bold text-emerald-600 dark:text-emerald-400">8.9%</span>
                 </div>
-                <div className="w-full h-1.5 bg-slate-200 dark:bg-slate-700/50 rounded-full overflow-hidden mb-3">
+                <div className="w-full h-1.5 bg-slate-200 dark:bg-zinc-800/50 rounded-full overflow-hidden mb-3">
                   <div className="h-full bg-emerald-500" style={{ width: '89%' }} />
                 </div>
                 <div className="space-y-1.5 border-t border-slate-100 dark:border-slate-800/60 pt-3">
@@ -1104,7 +1104,7 @@ export default function PerformanceCompliance() {
         {activeTab === 'operations' && (
           <div className="space-y-4">
             {/* Intel header strip */}
-            <div className="flex items-start gap-3 px-4 py-3 bg-slate-800 dark:bg-slate-900/60 border border-slate-700/40 rounded-xl">
+            <div className="flex items-start gap-3 px-4 py-3 bg-slate-800 dark:bg-zinc-950/60 border border-slate-700/40 rounded-xl">
               <Activity className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
               <p className="text-[12px] text-slate-300 leading-snug">
                 <span className="font-bold text-amber-400">Division Intelligence:</span>{' '}
@@ -1233,7 +1233,7 @@ export default function PerformanceCompliance() {
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full">
-                  <thead className="bg-slate-50 dark:bg-slate-900/40 border-b border-slate-200 dark:border-slate-700/30">
+                  <thead className="bg-slate-50 dark:bg-zinc-950/40 border-b border-slate-200 dark:border-slate-700/30">
                     <tr>
                       {['Category', 'Incidents', 'YoY Change', 'Arrests', 'Clearance Rate'].map(h => (
                         <th key={h} className="px-5 py-3 text-left text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">{h}</th>
@@ -1242,7 +1242,7 @@ export default function PerformanceCompliance() {
                   </thead>
                   <tbody>
                     {crimeStats.map((stat, idx) => (
-                      <tr key={idx} className="border-b border-slate-100 dark:border-slate-800/30 hover:bg-slate-50 dark:hover:bg-slate-800/20 transition-colors">
+                      <tr key={idx} className="border-b border-slate-100 dark:border-slate-800/30 hover:bg-slate-50 dark:hover:bg-zinc-900/20 transition-colors">
                         <td className="px-5 py-3.5">
                           <p className="text-sm font-semibold text-slate-800 dark:text-slate-100">{stat.category}</p>
                         </td>
@@ -1264,7 +1264,7 @@ export default function PerformanceCompliance() {
                               stat.clearance >= 80 ? 'text-emerald-600 dark:text-emerald-400' :
                               stat.clearance >= 65 ? 'text-orange-700 dark:text-orange-400' : 'text-red-600 dark:text-red-400'
                             }`}>{stat.clearance}%</span>
-                            <div className="flex-1 h-1.5 bg-slate-200 dark:bg-slate-700/50 rounded-full overflow-hidden max-w-[80px]">
+                            <div className="flex-1 h-1.5 bg-slate-200 dark:bg-zinc-800/50 rounded-full overflow-hidden max-w-[80px]">
                               <div className={`h-full ${
                                 stat.clearance >= 80 ? 'bg-emerald-500' :
                                 stat.clearance >= 65 ? 'bg-orange-500' : 'bg-red-500'
@@ -1290,7 +1290,7 @@ export default function PerformanceCompliance() {
               </div>
               <div className="p-5 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
                 {crimeForecast.map((f, i) => (
-                  <div key={i} className="p-3 rounded-lg border border-slate-200 dark:border-slate-700/40 bg-slate-50 dark:bg-slate-900/30 text-center">
+                  <div key={i} className="p-3 rounded-lg border border-slate-200 dark:border-slate-700/40 bg-slate-50 dark:bg-zinc-950/30 text-center">
                     <p className="text-[11px] font-semibold text-slate-600 dark:text-slate-300 mb-2 leading-snug">{f.category}</p>
                     <div className={`flex items-center justify-center gap-1 ${getCrimeDirectionColor(f.direction)}`}>
                       {getCrimeDirectionIcon(f.direction)}
@@ -1469,7 +1469,7 @@ export default function PerformanceCompliance() {
                       className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-colors ${
                         isCurrent
                           ? 'bg-amber-50/60 dark:bg-amber-500/5 border border-amber-200/60 dark:border-amber-500/15'
-                          : 'hover:bg-slate-50 dark:hover:bg-slate-900/20'
+                          : 'hover:bg-slate-50 dark:hover:bg-zinc-950/20'
                       }`}
                     >
                       <div className="flex items-center gap-2 w-14 flex-shrink-0">
@@ -1478,13 +1478,13 @@ export default function PerformanceCompliance() {
                       </div>
                       <div className="flex-1 space-y-1">
                         <div className="flex items-center gap-2">
-                          <div className="flex-1 h-1 bg-slate-200 dark:bg-slate-700/50 rounded-full overflow-hidden">
+                          <div className="flex-1 h-1 bg-slate-200 dark:bg-zinc-800/50 rounded-full overflow-hidden">
                             <div className="h-full bg-blue-400 dark:bg-blue-500 rounded-full" style={{ width: `${callsPct}%` }} />
                           </div>
                           <span className="text-[10px] text-slate-500 dark:text-slate-400 w-24 text-right tabular-nums">{month.calls.toLocaleString()} calls</span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <div className="flex-1 h-1 bg-slate-200 dark:bg-slate-700/50 rounded-full overflow-hidden">
+                          <div className="flex-1 h-1 bg-slate-200 dark:bg-zinc-800/50 rounded-full overflow-hidden">
                             <div className={`h-full rounded-full ${month.clearance >= clrTarget ? 'bg-emerald-500' : 'bg-orange-500'}`} style={{ width: `${month.clearance}%` }} />
                           </div>
                           <span className={`text-[10px] font-bold w-24 text-right tabular-nums ${month.clearance >= clrTarget ? 'text-emerald-600 dark:text-emerald-400' : 'text-orange-700 dark:text-orange-400'}`}>
@@ -1506,7 +1506,7 @@ export default function PerformanceCompliance() {
               </div>
               <div className="p-5 grid grid-cols-2 md:grid-cols-4 gap-3">
                 {seasonalIntelligence.map((item, i) => (
-                  <div key={i} className="bg-slate-50 dark:bg-slate-900/30 rounded-lg p-3">
+                  <div key={i} className="bg-slate-50 dark:bg-zinc-950/30 rounded-lg p-3">
                     <p className="text-[10px] text-slate-500 dark:text-slate-400 mb-1.5 leading-tight">{item.label}</p>
                     <p className="text-xs font-bold text-slate-700 dark:text-slate-300 mb-0.5">{item.value}</p>
                     <p className={`text-[10px] font-semibold ${item.subColor}`}>{item.sub}</p>
@@ -1523,7 +1523,7 @@ export default function PerformanceCompliance() {
             {/* Liability Exposure Score */}
             <div className={CARD + ' overflow-hidden'}>
               <div className="flex flex-col lg:flex-row lg:items-stretch">
-                <div className="lg:w-72 flex-shrink-0 bg-slate-800 dark:bg-slate-900/60 border-b lg:border-b-0 lg:border-r border-slate-700/40 p-5 flex flex-col justify-between gap-4">
+                <div className="lg:w-72 flex-shrink-0 bg-slate-800 dark:bg-zinc-950/60 border-b lg:border-b-0 lg:border-r border-slate-700/40 p-5 flex flex-col justify-between gap-4">
                   <div>
                     <div className="flex items-center gap-2 mb-2.5">
                       <Scale className="w-4 h-4 text-amber-400" />
@@ -1572,7 +1572,7 @@ export default function PerformanceCompliance() {
                     </div>
                     <div className="flex items-center gap-3 mb-3">
                       <span className={`text-sm font-bold tabular-nums ${getCompliancePctColor(item.status)}`}>{item.pct}%</span>
-                      <div className="flex-1 h-1.5 bg-slate-200 dark:bg-slate-700/50 rounded-full overflow-hidden">
+                      <div className="flex-1 h-1.5 bg-slate-200 dark:bg-zinc-800/50 rounded-full overflow-hidden">
                         <div className={`h-full ${getComplianceBar(item.status)}`} style={{ width: `${item.pct}%` }} />
                       </div>
                       <span className="text-[11px] text-slate-500 dark:text-slate-400 whitespace-nowrap">{item.detail}</span>
@@ -1602,7 +1602,7 @@ export default function PerformanceCompliance() {
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full">
-                  <thead className="bg-slate-50 dark:bg-slate-900/40 border-b border-slate-200 dark:border-slate-700/30">
+                  <thead className="bg-slate-50 dark:bg-zinc-950/40 border-b border-slate-200 dark:border-slate-700/30">
                     <tr>
                       {['Finding', 'Owner', 'Due', 'Status', 'Severity'].map(h => (
                         <th key={h} className="px-5 py-3 text-left text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">{h}</th>
@@ -1611,7 +1611,7 @@ export default function PerformanceCompliance() {
                   </thead>
                   <tbody>
                     {correctiveActionPlans.map((cap) => (
-                      <tr key={cap.id} className="border-b border-slate-100 dark:border-slate-800/30 hover:bg-slate-50 dark:hover:bg-slate-800/20 transition-colors">
+                      <tr key={cap.id} className="border-b border-slate-100 dark:border-slate-800/30 hover:bg-slate-50 dark:hover:bg-zinc-900/20 transition-colors">
                         <td className="px-5 py-3.5">
                           <p className="text-sm font-medium text-slate-700 dark:text-slate-200">{cap.finding}</p>
                         </td>
@@ -1712,7 +1712,7 @@ export default function PerformanceCompliance() {
                           <p className="text-[12px] text-slate-600 dark:text-slate-300 leading-snug">{d.label}</p>
                           <span className="text-[12px] font-bold text-slate-700 dark:text-slate-200 whitespace-nowrap">${(d.amount / 1000).toFixed(0)}K</span>
                         </div>
-                        <div className="h-1.5 bg-slate-200 dark:bg-slate-700/50 rounded-full overflow-hidden">
+                        <div className="h-1.5 bg-slate-200 dark:bg-zinc-800/50 rounded-full overflow-hidden">
                           <div className="h-full bg-red-500 rounded-full" style={{ width: `${pct}%` }} />
                         </div>
                       </div>
@@ -1758,13 +1758,13 @@ export default function PerformanceCompliance() {
                 <input
                   type="text"
                   placeholder="Search reports by name or category..."
-                  className="w-full pl-11 pr-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/30 rounded-lg text-slate-700 dark:text-slate-300 placeholder-slate-400 text-sm focus:outline-none focus:border-amber-500/50"
+                  className="w-full pl-11 pr-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-slate-200 dark:border-slate-700/30 rounded-lg text-slate-700 dark:text-slate-300 placeholder-slate-400 text-sm focus:outline-none focus:border-amber-500/50"
                 />
               </div>
               <select
                 value={filterCategory}
                 onChange={(e) => setFilterCategory(e.target.value)}
-                className="px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/30 rounded-lg text-slate-700 dark:text-slate-300 text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer"
+                className="px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-slate-200 dark:border-slate-700/30 rounded-lg text-slate-700 dark:text-slate-300 text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer"
               >
                 <option value="all">All Categories</option>
                 <option value="Executive">Executive</option>

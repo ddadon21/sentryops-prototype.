@@ -62,10 +62,10 @@ export default function CertificationReport({ isOpen, onClose, personnel = [], o
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center p-4 pt-8 overflow-y-auto">
       <div className="fixed inset-0 bg-slate-950/85 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative w-full max-w-5xl bg-white dark:bg-slate-900 border border-border rounded-2xl shadow-2xl overflow-hidden mb-8">
+      <div className="relative w-full max-w-5xl bg-white dark:bg-zinc-950 border border-border rounded-2xl shadow-2xl overflow-hidden mb-8">
 
         {/* Header */}
-        <div className="bg-white dark:bg-slate-900 border-b border-border px-6 py-4">
+        <div className="bg-white dark:bg-zinc-950 border-b border-border px-6 py-4">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-xl bg-amber-500/15 border border-amber-500/25 flex items-center justify-center">
@@ -76,14 +76,14 @@ export default function CertificationReport({ isOpen, onClose, personnel = [], o
                 <p className="text-[10px] text-secondary">Agency-wide compliance &bull; Real-time certification risk assessment</p>
               </div>
             </div>
-            <button onClick={onClose} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors">
+            <button onClick={onClose} className="p-2 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors">
               <X className="w-5 h-5 text-secondary" />
             </button>
           </div>
           <div className="flex gap-1">
             {TABS.map(t => (
               <button key={t} onClick={() => setTab(t)}
-                className={`px-3 py-1.5 rounded-lg text-[11px] font-semibold transition-colors ${tab === t ? 'bg-amber-500/15 border border-amber-500/25 text-amber-600 dark:text-amber-400' : 'text-secondary hover:text-primary hover:bg-slate-100/80 dark:hover:bg-slate-800/30'}`}>
+                className={`px-3 py-1.5 rounded-lg text-[11px] font-semibold transition-colors ${tab === t ? 'bg-amber-500/15 border border-amber-500/25 text-amber-600 dark:text-amber-400' : 'text-secondary hover:text-primary hover:bg-slate-100/80 dark:hover:bg-zinc-900/30'}`}>
                 {t}
               </button>
             ))}
@@ -120,7 +120,7 @@ export default function CertificationReport({ isOpen, onClose, personnel = [], o
                   <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2.5">Certification Categories</p>
                   <div className="space-y-2">
                     {CERT_CATEGORIES.map(c => (
-                      <div key={c.name} className={`p-3 border rounded-xl ${c.compliant < 80 ? 'bg-red-500/5 border-red-500/20' : c.compliant < 90 ? 'bg-orange-500/5 border-orange-500/15' : 'bg-slate-100/50 dark:bg-slate-800/20 border-slate-700/30'}`}>
+                      <div key={c.name} className={`p-3 border rounded-xl ${c.compliant < 80 ? 'bg-red-500/5 border-red-500/20' : c.compliant < 90 ? 'bg-orange-500/5 border-orange-500/15' : 'bg-slate-100/50 dark:bg-zinc-900/20 border-slate-700/30'}`}>
                         <div className="flex items-center justify-between mb-1.5">
                           <span className="text-[12px] font-semibold text-primary">{c.name}</span>
                           <div className="flex items-center gap-2">
@@ -128,7 +128,7 @@ export default function CertificationReport({ isOpen, onClose, personnel = [], o
                             <span className={`text-[12px] font-bold ${c.compliant < 80 ? 'text-red-600 dark:text-red-400' : c.compliant < 90 ? 'text-orange-600 dark:text-orange-400' : 'text-green-600 dark:text-green-400'}`}>{c.compliant}%</span>
                           </div>
                         </div>
-                        <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-1.5">
+                        <div className="w-full bg-slate-200 dark:bg-zinc-800 rounded-full h-1.5">
                           <div className={`h-1.5 rounded-full ${c.compliant < 80 ? 'bg-red-500' : c.compliant < 90 ? 'bg-orange-500' : 'bg-green-500'}`} style={{ width: `${c.compliant}%` }} />
                         </div>
                         <p className="text-[10px] text-secondary mt-1">{Math.round(c.total * c.compliant / 100)}/{c.total} compliant &bull; {c.expiring60} expiring in 60 days</p>
@@ -159,7 +159,7 @@ export default function CertificationReport({ isOpen, onClose, personnel = [], o
                     <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2.5">Upcoming Required Recertifications</p>
                     <div className="space-y-1.5">
                       {UPCOMING_RECERTS.map(r => (
-                        <div key={r.cert} className={`flex items-center justify-between p-2.5 border rounded-lg ${r.urgency === 'high' ? 'bg-red-500/5 border-red-500/20' : r.urgency === 'medium' ? 'bg-orange-500/5 border-orange-500/15' : 'bg-slate-100/50 dark:bg-slate-800/20 border-slate-700/30'}`}>
+                        <div key={r.cert} className={`flex items-center justify-between p-2.5 border rounded-lg ${r.urgency === 'high' ? 'bg-red-500/5 border-red-500/20' : r.urgency === 'medium' ? 'bg-orange-500/5 border-orange-500/15' : 'bg-slate-100/50 dark:bg-zinc-900/20 border-slate-700/30'}`}>
                           <div>
                             <p className="text-[11px] font-semibold text-primary">{r.cert}</p>
                             <p className="text-[9px] text-secondary">{r.division}</p>
@@ -176,7 +176,7 @@ export default function CertificationReport({ isOpen, onClose, personnel = [], o
               </div>
 
               {/* AI insights */}
-              <div className="mb-5 p-4 bg-slate-900 dark:bg-slate-950 border border-slate-700/60 rounded-xl">
+              <div className="mb-5 p-4 bg-slate-900 dark:bg-black border border-slate-700/60 rounded-xl">
                 <div className="flex items-center gap-2 mb-3">
                   <Sparkles className="w-4 h-4 text-blue-400" />
                   <span className="text-sm font-bold text-white">AI Certification Intelligence</span>
@@ -205,13 +205,13 @@ export default function CertificationReport({ isOpen, onClose, personnel = [], o
                     className="flex items-center gap-1.5 px-4 py-2 bg-amber-500 hover:bg-amber-600 text-slate-900 font-semibold rounded-lg text-[11px] transition-colors">
                     <Calendar className="w-3.5 h-3.5" />Schedule Training
                   </button>
-                  <button className="flex items-center gap-1.5 px-4 py-2 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded-lg text-[11px] font-medium transition-colors">
+                  <button className="flex items-center gap-1.5 px-4 py-2 bg-slate-100/80 dark:bg-zinc-900/30 hover:bg-slate-200 dark:hover:bg-zinc-900/60 border border-slate-700/50 text-secondary rounded-lg text-[11px] font-medium transition-colors">
                     <Bell className="w-3.5 h-3.5" />Notify Supervisors
                   </button>
-                  <button className="flex items-center gap-1.5 px-4 py-2 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded-lg text-[11px] font-medium transition-colors">
+                  <button className="flex items-center gap-1.5 px-4 py-2 bg-slate-100/80 dark:bg-zinc-900/30 hover:bg-slate-200 dark:hover:bg-zinc-900/60 border border-slate-700/50 text-secondary rounded-lg text-[11px] font-medium transition-colors">
                     <FileText className="w-3.5 h-3.5" />Generate Compliance Report
                   </button>
-                  <button className="flex items-center gap-1.5 px-4 py-2 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded-lg text-[11px] font-medium transition-colors">
+                  <button className="flex items-center gap-1.5 px-4 py-2 bg-slate-100/80 dark:bg-zinc-900/30 hover:bg-slate-200 dark:hover:bg-zinc-900/60 border border-slate-700/50 text-secondary rounded-lg text-[11px] font-medium transition-colors">
                     <Download className="w-3.5 h-3.5" />Export Audit Documentation
                   </button>
                 </div>
@@ -321,7 +321,7 @@ export default function CertificationReport({ isOpen, onClose, personnel = [], o
                         <span className={`text-xl font-bold ${divColor(div.pct)}`}>{div.pct}%</span>
                       </div>
                     </div>
-                    <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2 mb-2">
+                    <div className="w-full bg-slate-200 dark:bg-zinc-800 rounded-full h-2 mb-2">
                       <div className={`h-2 rounded-full transition-all ${div.pct >= 95 ? 'bg-green-500' : div.pct >= 85 ? 'bg-orange-500' : 'bg-red-500'}`} style={{ width: `${div.pct}%` }} />
                     </div>
                     <div className="flex items-center justify-between">
@@ -371,7 +371,7 @@ export default function CertificationReport({ isOpen, onClose, personnel = [], o
                     ].map(({ period, pct }) => (
                       <div key={period} className="flex items-center gap-2">
                         <span className="text-[10px] text-secondary w-16">{period}</span>
-                        <div className="flex-1 bg-slate-200 dark:bg-slate-700 rounded-full h-1.5">
+                        <div className="flex-1 bg-slate-200 dark:bg-zinc-800 rounded-full h-1.5">
                           <div className="h-1.5 rounded-full bg-red-500 transition-all" style={{ width: `${pct}%` }} />
                         </div>
                         <span className="text-[10px] font-bold text-red-600 dark:text-red-400 w-8 text-right">{pct}%</span>
@@ -389,7 +389,7 @@ export default function CertificationReport({ isOpen, onClose, personnel = [], o
                     ].map(({ period, pct }) => (
                       <div key={period} className="flex items-center gap-2">
                         <span className="text-[10px] text-secondary w-16">{period}</span>
-                        <div className="flex-1 bg-slate-200 dark:bg-slate-700 rounded-full h-1.5">
+                        <div className="flex-1 bg-slate-200 dark:bg-zinc-800 rounded-full h-1.5">
                           <div className="h-1.5 rounded-full bg-red-400/60 transition-all" style={{ width: `${pct}%`, borderStyle: 'dashed' }} />
                         </div>
                         <span className="text-[10px] font-bold text-red-400 w-8 text-right">{pct}%</span>

@@ -92,7 +92,7 @@ export default function ActivityFeed() {
               onClick={() => setModuleFilter('all')}
               className={`px-2.5 py-1 rounded text-[11px] font-medium border transition-all ${
                 moduleFilter === 'all'
-                  ? 'bg-slate-200 dark:bg-slate-700/50 border-slate-300 dark:border-slate-600/50 text-primary'
+                  ? 'bg-slate-200 dark:bg-zinc-800/50 border-slate-300 dark:border-slate-600/50 text-primary'
                   : 'bg-transparent border-slate-300 dark:border-slate-700/40 text-slate-500 hover:text-secondary'
               }`}
             >
@@ -104,14 +104,14 @@ export default function ActivityFeed() {
                 onClick={() => setModuleFilter(mod)}
                 className={`px-2.5 py-1 rounded text-[11px] font-medium border transition-all ${
                   moduleFilter === mod
-                    ? 'bg-slate-200 dark:bg-slate-700/50 border-slate-300 dark:border-slate-600/50 text-primary'
+                    ? 'bg-slate-200 dark:bg-zinc-800/50 border-slate-300 dark:border-slate-600/50 text-primary'
                     : 'bg-transparent border-slate-300 dark:border-slate-700/40 text-slate-500 hover:text-secondary'
                 }`}
               >
                 {MODULE_LABELS[mod]}
               </button>
             ))}
-            <div className="w-px h-4 bg-slate-300 dark:bg-slate-700/40 mx-1" />
+            <div className="w-px h-4 bg-slate-300 dark:bg-zinc-800/40 mx-1" />
             {(['critical', 'warning', 'success', 'info'] as ActivitySeverity[]).map(sev => (
               <button
                 key={sev}
@@ -137,11 +137,11 @@ export default function ActivityFeed() {
                   onClick={() => handleEventClick(event.id, event.route)}
                   className={`flex items-start gap-3 px-3.5 py-2.5 rounded border transition-colors cursor-pointer ${
                     event.read
-                      ? 'border-border dark:border-slate-700/30 bg-white dark:bg-slate-800/15 opacity-70'
-                      : 'border-border dark:border-slate-700/30 bg-white dark:bg-slate-800/15 hover:bg-slate-50 dark:hover:bg-slate-800/30'
+                      ? 'border-border dark:border-slate-700/30 bg-white dark:bg-zinc-900/15 opacity-70'
+                      : 'border-border dark:border-slate-700/30 bg-white dark:bg-zinc-900/15 hover:bg-slate-50 dark:hover:bg-zinc-900/30'
                   }`}
                 >
-                  <div className={`w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0 ${event.read ? 'bg-slate-300 dark:bg-slate-600' : sev.dot}`} />
+                  <div className={`w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0 ${event.read ? 'bg-slate-300 dark:bg-zinc-700' : sev.dot}`} />
                   <Icon className={`w-3.5 h-3.5 mt-0.5 flex-shrink-0 ${sev.pill.split(' ').find(c => c.startsWith('text-'))}`} />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-0.5">

@@ -690,7 +690,7 @@ export default function CommandCalendar() {
               className={`flex items-center gap-2 px-3 py-2 border rounded-lg text-[13px] font-medium transition-all ${
                 showStaffingOverlay
                   ? 'bg-orange-500/10 border-orange-500/30 text-orange-700 dark:text-orange-400'
-                  : 'bg-white dark:bg-slate-800/40 border-slate-300 dark:border-slate-700/40 text-secondary hover:text-slate-900 dark:hover:text-slate-300'
+                  : 'bg-white dark:bg-zinc-900/40 border-slate-300 dark:border-slate-700/40 text-secondary hover:text-slate-900 dark:hover:text-slate-300'
               }`}
             >
               <Users className="w-4 h-4" />
@@ -702,22 +702,22 @@ export default function CommandCalendar() {
               className={`flex items-center gap-2 px-3 py-2 border rounded-lg text-[13px] font-medium transition-all ${
                 showRiskOverlay
                   ? 'bg-red-500/10 border-red-500/30 text-red-700 dark:text-red-400'
-                  : 'bg-white dark:bg-slate-800/40 border-slate-300 dark:border-slate-700/40 text-secondary hover:text-slate-900 dark:hover:text-slate-300'
+                  : 'bg-white dark:bg-zinc-900/40 border-slate-300 dark:border-slate-700/40 text-secondary hover:text-slate-900 dark:hover:text-slate-300'
               }`}
             >
               <Eye className="w-4 h-4" />
               Risk Overlay
             </button>
-            <div className="flex bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 rounded-lg overflow-hidden">
+            <div className="flex bg-white dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/40 rounded-lg overflow-hidden">
               <button
                 onClick={() => setViewMode('month')}
-                className={`px-3 py-2 text-[13px] font-medium transition-all ${viewMode === 'month' ? 'bg-slate-200 dark:bg-slate-700/50 text-primary' : 'text-secondary hover:text-slate-900 dark:hover:text-slate-300'}`}
+                className={`px-3 py-2 text-[13px] font-medium transition-all ${viewMode === 'month' ? 'bg-slate-200 dark:bg-zinc-800/50 text-primary' : 'text-secondary hover:text-slate-900 dark:hover:text-slate-300'}`}
               >
                 Month
               </button>
               <button
                 onClick={() => setViewMode('timeline')}
-                className={`px-3 py-2 text-[13px] font-medium transition-all ${viewMode === 'timeline' ? 'bg-slate-200 dark:bg-slate-700/50 text-primary' : 'text-secondary hover:text-slate-900 dark:hover:text-slate-300'}`}
+                className={`px-3 py-2 text-[13px] font-medium transition-all ${viewMode === 'timeline' ? 'bg-slate-200 dark:bg-zinc-800/50 text-primary' : 'text-secondary hover:text-slate-900 dark:hover:text-slate-300'}`}
               >
                 Timeline
               </button>
@@ -730,7 +730,7 @@ export default function CommandCalendar() {
             The bridge between Agency Risk Center (what's at risk) and
             Decision Center (what command must decide)
             ================================================================ */}
-        <div className="mb-6 bg-slate-900 dark:bg-slate-950 border border-slate-700/60 rounded-xl p-5 lg:p-6">
+        <div className="mb-6 bg-slate-900 dark:bg-black border border-slate-700/60 rounded-xl p-5 lg:p-6">
           <div className="flex items-start gap-3 mb-4">
             <div className="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center flex-shrink-0">
               <Sparkles className="w-4 h-4 text-amber-400" />
@@ -791,7 +791,7 @@ export default function CommandCalendar() {
         {/* ================================================================
             OPERATIONAL PRESSURE SCORE
             ================================================================ */}
-        <div className="mb-6 bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+        <div className="mb-6 bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
           <div className="flex items-center justify-between mb-1">
             <h3 className="text-[13px] font-semibold text-primary uppercase tracking-wide">Operational Pressure Score</h3>
             <span className={`text-[11px] font-semibold ${getPressureLabel(pressureScore).classes}`}>{getPressureLabel(pressureScore).text}</span>
@@ -803,17 +803,17 @@ export default function CommandCalendar() {
             <span className="text-4xl font-bold text-primary leading-none">{pressureScore}</span>
             <span className="text-sm text-slate-500 mb-0.5">/ 100</span>
           </div>
-          <div className="h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden mb-5">
+          <div className="h-2 bg-slate-100 dark:bg-zinc-900 rounded-full overflow-hidden mb-5">
             <div className="h-full rounded-full bg-gradient-to-r from-emerald-500 via-orange-500 to-red-500" style={{ width: `${pressureScore}%` }}></div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {pressureBreakdown.map(b => (
-              <div key={b.key} className="p-3 bg-slate-50 dark:bg-slate-800/20 border border-border dark:border-slate-700/20 rounded-lg">
+              <div key={b.key} className="p-3 bg-slate-50 dark:bg-zinc-900/20 border border-border dark:border-slate-700/20 rounded-lg">
                 <div className="flex items-center justify-between mb-1.5">
                   <span className="text-[12px] font-medium text-primary">{b.label}</span>
                   <span className="text-[12px] font-semibold text-primary">{b.value}</span>
                 </div>
-                <div className="h-1.5 bg-slate-200 dark:bg-slate-700/40 rounded-full overflow-hidden mb-1.5">
+                <div className="h-1.5 bg-slate-200 dark:bg-zinc-800/40 rounded-full overflow-hidden mb-1.5">
                   <div className={`h-full rounded-full ${getBarColor(b.value)}`} style={{ width: `${b.value}%` }}></div>
                 </div>
                 <p className="text-[11px] text-secondary leading-relaxed">{b.detail}</p>
@@ -830,7 +830,7 @@ export default function CommandCalendar() {
             const StatIcon = stat.icon;
             const classes = getSummaryStatClasses(stat.accent);
             return (
-              <div key={stat.label} className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4 flex items-center gap-3">
+              <div key={stat.label} className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4 flex items-center gap-3">
                 <div className={`w-9 h-9 rounded-lg border flex items-center justify-center flex-shrink-0 ${classes.wrap}`}>
                   <StatIcon className={`w-4 h-4 ${classes.icon}`} />
                 </div>
@@ -856,7 +856,7 @@ export default function CommandCalendar() {
           </div>
           <div className="space-y-3">
             {conflicts.map(conflict => (
-              <div key={conflict.id} className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4">
+              <div key={conflict.id} className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4">
                 <div className="flex items-start justify-between gap-3 mb-3">
                   <div className="flex items-start gap-2.5">
                     <AlertTriangle className={`w-4 h-4 mt-0.5 flex-shrink-0 ${conflict.severity === 'high' ? 'text-orange-600 dark:text-orange-400' : 'text-slate-500'}`} />
@@ -912,7 +912,7 @@ export default function CommandCalendar() {
               const PanelIcon = panel.icon;
               const accentClasses = getProjectionAccentClasses(panel.accent);
               return (
-                <div key={panel.id} className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4 flex flex-col">
+                <div key={panel.id} className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4 flex flex-col">
                   <div className="flex items-center gap-2.5 mb-3">
                     <div className={`w-8 h-8 rounded-lg border flex items-center justify-center flex-shrink-0 ${accentClasses.iconWrap}`}>
                       <PanelIcon className={`w-4 h-4 ${accentClasses.icon}`} />
@@ -954,14 +954,14 @@ export default function CommandCalendar() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-6">
 
             {/* Calendar Grid */}
-            <div className="lg:col-span-2 bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+            <div className="lg:col-span-2 bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
               {/* Month Navigation */}
               <div className="flex items-center justify-between mb-6">
-                <button onClick={prevMonth} className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-700/30 rounded-lg transition-colors">
+                <button onClick={prevMonth} className="p-1.5 hover:bg-slate-100 dark:hover:bg-zinc-800/30 rounded-lg transition-colors">
                   <ChevronLeft className="w-4 h-4 text-secondary" />
                 </button>
                 <h3 className="text-[13px] font-semibold text-primary uppercase tracking-wide">{monthName}</h3>
-                <button onClick={nextMonth} className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-700/30 rounded-lg transition-colors">
+                <button onClick={nextMonth} className="p-1.5 hover:bg-slate-100 dark:hover:bg-zinc-800/30 rounded-lg transition-colors">
                   <ChevronRight className="w-4 h-4 text-secondary" />
                 </button>
               </div>
@@ -978,7 +978,7 @@ export default function CommandCalendar() {
               {/* Calendar Grid */}
               <div className="grid grid-cols-7 gap-px">
                 {calendarDays.map((day, idx) => {
-                  if (day === null) return <div key={`empty-${idx}`} className="min-h-[85px] bg-slate-100 dark:bg-slate-900/10 rounded"></div>;
+                  if (day === null) return <div key={`empty-${idx}`} className="min-h-[85px] bg-slate-100 dark:bg-zinc-950/10 rounded"></div>;
                   const dayEvents = getEventsForDay(day);
                   const isToday = isCurrentMonth && day === today.getDate();
                   const density = getRiskDensity(day);
@@ -986,7 +986,7 @@ export default function CommandCalendar() {
                   const staffingBelow80 = hasStaffingImpact && staffingImpactDays[day].below80;
 
                   // Background: always-on heat glow by risk density, overlays intensify
-                  let bgClass = 'bg-white dark:bg-slate-900/20';
+                  let bgClass = 'bg-white dark:bg-zinc-950/20';
                   if (isToday) {
                     bgClass = 'ring-2 ring-amber-500/40 bg-amber-500/[0.07] shadow-[0_0_12px_rgba(245,158,11,0.08)]';
                   } else if (staffingBelow80) {
@@ -1004,7 +1004,7 @@ export default function CommandCalendar() {
                   return (
                     <div
                       key={day}
-                      className={`min-h-[85px] p-1.5 rounded transition-colors hover:bg-slate-100 dark:hover:bg-slate-800/30 ${bgClass}`}
+                      className={`min-h-[85px] p-1.5 rounded transition-colors hover:bg-slate-100 dark:hover:bg-zinc-900/30 ${bgClass}`}
                     >
                       {/* Day number + density dots */}
                       <div className="flex items-center justify-between">
@@ -1026,7 +1026,7 @@ export default function CommandCalendar() {
                           <button
                             key={event.id}
                             onClick={() => setSelectedEvent(event)}
-                            className="w-full flex items-center gap-1 px-1 py-0.5 rounded hover:bg-slate-100 dark:hover:bg-slate-700/30 transition-colors text-left group"
+                            className="w-full flex items-center gap-1 px-1 py-0.5 rounded hover:bg-slate-100 dark:hover:bg-zinc-800/30 transition-colors text-left group"
                           >
                             <div className={`w-0.5 h-3 rounded-full flex-shrink-0 ${getCategoryAccent(event.category)}`}></div>
                             <span className="text-[10px] text-secondary truncate group-hover:text-white transition-colors">{event.title}</span>
@@ -1061,7 +1061,7 @@ export default function CommandCalendar() {
                 ))}
                 {showRiskOverlay && (
                   <>
-                    <div className="h-3 w-px bg-slate-100 dark:bg-slate-700/30"></div>
+                    <div className="h-3 w-px bg-slate-100 dark:bg-zinc-800/30"></div>
                     <div className="flex items-center gap-3">
                       <div className="flex items-center gap-1">
                         <div className="w-1 h-1 rounded-full bg-slate-400"></div>
@@ -1083,7 +1083,7 @@ export default function CommandCalendar() {
                 )}
                 {showStaffingOverlay && (
                   <>
-                    <div className="h-3 w-px bg-slate-100 dark:bg-slate-700/30"></div>
+                    <div className="h-3 w-px bg-slate-100 dark:bg-zinc-800/30"></div>
                     <div className="flex items-center gap-1.5">
                       <Users className="w-2.5 h-2.5 text-orange-700 dark:text-orange-400" />
                       <span className="text-[10px] text-orange-700 dark:text-orange-400/60">Staffing impacted</span>
@@ -1096,7 +1096,7 @@ export default function CommandCalendar() {
             {/* ================================================================
                 HIGH PRIORITY UPCOMING — risk type, escalation, readiness
                 ================================================================ */}
-            <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+            <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
               <h3 className="text-[13px] font-semibold text-primary uppercase tracking-wide mb-4">High Priority Upcoming</h3>
 
               <div className="space-y-2">
@@ -1112,7 +1112,7 @@ export default function CommandCalendar() {
                         event.severity === 'critical' ? 'border-l-red-500/60' :
                         event.severity === 'high' ? 'border-l-orange-500/50' :
                         'border-l-slate-500/30'
-                      } hover:bg-slate-50 dark:hover:bg-slate-50 dark:hover:bg-slate-800/20 transition-colors text-left`}
+                      } hover:bg-slate-50 dark:hover:bg-slate-50 dark:hover:bg-zinc-900/20 transition-colors text-left`}
                     >
                       <div className="p-3">
                         {/* Title */}
@@ -1158,7 +1158,7 @@ export default function CommandCalendar() {
           </div>
         ) : (
           /* ===== TIMELINE VIEW ===== */
-          <div className="mb-6 bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+          <div className="mb-6 bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-[13px] font-semibold text-primary uppercase tracking-wide">Next 7 Days — Hour by Hour</h3>
               <span className="text-xs text-slate-500">{shortMonthAbbr} {timelineDays[0]?.day} – {shortMonthAbbr} {timelineDays[timelineDays.length - 1]?.day}, {currentYear}</span>
@@ -1217,10 +1217,10 @@ export default function CommandCalendar() {
                               <button
                                 key={event.id}
                                 onClick={() => setSelectedEvent(event)}
-                                className={`w-full flex items-center gap-1.5 px-2 py-1 rounded text-left transition-colors hover:bg-slate-100 dark:hover:bg-slate-700/30 ${
+                                className={`w-full flex items-center gap-1.5 px-2 py-1 rounded text-left transition-colors hover:bg-slate-100 dark:hover:bg-zinc-800/30 ${
                                   event.severity === 'critical' ? 'bg-red-500/[0.06] border-l-2 border-l-red-500/40' :
                                   event.severity === 'high' ? 'bg-orange-500/[0.06] border-l-2 border-l-orange-500/40' :
-                                  'bg-slate-100 dark:bg-slate-800/20 border-l-2 border-l-slate-500/30'
+                                  'bg-slate-100 dark:bg-zinc-900/20 border-l-2 border-l-slate-500/30'
                                 }`}
                               >
                                 <div className={`w-1 h-1 rounded-full flex-shrink-0 ${getCategoryAccent(event.category)}`}></div>
@@ -1239,7 +1239,7 @@ export default function CommandCalendar() {
         )}
 
         {/* Data Confidence Strip */}
-        <div className="mb-4 px-5 py-3 bg-slate-50 dark:bg-slate-800/10 border border-border dark:border-slate-800/30 rounded-lg">
+        <div className="mb-4 px-5 py-3 bg-slate-50 dark:bg-zinc-900/10 border border-border dark:border-slate-800/30 rounded-lg">
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
               <Shield className="w-3.5 h-3.5 text-slate-700" />
@@ -1253,7 +1253,7 @@ export default function CommandCalendar() {
                 </span>
               ))}
             </div>
-            <div className="h-3 w-px bg-slate-100 dark:bg-slate-700/30"></div>
+            <div className="h-3 w-px bg-slate-100 dark:bg-zinc-800/30"></div>
             <span className="text-[11px] text-slate-500">Last sync: 2m ago</span>
           </div>
         </div>
@@ -1265,7 +1265,7 @@ export default function CommandCalendar() {
       {selectedEvent && (
         <>
           <div className="fixed inset-0 bg-black/30 z-40" onClick={() => setSelectedEvent(null)} />
-          <div className="fixed right-0 top-0 bottom-0 w-full max-w-md bg-white dark:bg-slate-900 border-l border-border shadow-2xl z-50 overflow-y-auto">
+          <div className="fixed right-0 top-0 bottom-0 w-full max-w-md bg-white dark:bg-zinc-950 border-l border-border shadow-2xl z-50 overflow-y-auto">
             <div className="p-6">
               <div className="flex items-start justify-between mb-6">
                 <div className="flex-1">
@@ -1293,7 +1293,7 @@ export default function CommandCalendar() {
 
               <div className="space-y-5">
                 {selectedEvent.status !== 'completed' && (
-                  <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4">
+                  <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4">
                     <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Countdown</span>
                     <div className="mt-2 flex items-baseline gap-2">
                       <p className="text-2xl font-semibold text-primary">{getCountdown(selectedEvent.day)}</p>
@@ -1342,7 +1342,7 @@ export default function CommandCalendar() {
                   >
                     Open Module
                   </button>
-                  <button className="flex-1 px-3 py-2 text-xs font-medium text-secondary border border-border hover:bg-slate-100 dark:hover:bg-slate-700/20 rounded-lg transition-colors">
+                  <button className="flex-1 px-3 py-2 text-xs font-medium text-secondary border border-border hover:bg-slate-100 dark:hover:bg-zinc-800/20 rounded-lg transition-colors">
                     Edit Event
                   </button>
                 </div>

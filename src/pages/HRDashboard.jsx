@@ -362,7 +362,7 @@ export default function HRDashboard() {
             <h2 className="text-2xl lg:text-3xl font-bold text-primary mb-2">Human Resources Operations Center</h2>
             <p className="text-secondary mb-4">Gwinnett County Sheriff's Office • {currentDate} • {currentTime} EST</p>
 
-            <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4 mb-4">
+            <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4 mb-4">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
                 <div>
                   <p className="text-xs text-slate-500 mb-1">HR Director</p>
@@ -434,10 +434,10 @@ export default function HRDashboard() {
             </div>
 
             {/* POST Certifications */}
-            <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl mb-4 overflow-hidden">
+            <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl mb-4 overflow-hidden">
               <button
                 onClick={() => toggleSection('certifications')}
-                className="w-full p-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors"
+                className="w-full p-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-red-500/20 rounded-xl flex items-center justify-center">
@@ -457,7 +457,7 @@ export default function HRDashboard() {
                     <div key={cert.id} className={`p-4 rounded-xl ${
                       cert.status === 'critical' ? 'bg-red-500/10 border border-red-500/30' :
                       cert.status === 'attention' ? 'bg-amber-500/10 border border-amber-500/30' :
-                      'bg-white dark:bg-slate-900/40 border border-slate-700/50'
+                      'bg-white dark:bg-zinc-950/40 border border-slate-700/50'
                     }`}>
                       <div className="flex items-start justify-between mb-3">
                         <div>
@@ -502,13 +502,13 @@ export default function HRDashboard() {
                         )}
                       </div>
                       <div className="flex flex-wrap gap-2 mt-3 pt-3 border-t border-border">
-                        <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">
+                        <button className="px-3 py-1.5 bg-white dark:bg-zinc-800/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">
                           View Full Certification Record
                         </button>
-                        <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">
+                        <button className="px-3 py-1.5 bg-white dark:bg-zinc-800/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">
                           Contact Deputy
                         </button>
-                        <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
+                        <button className="px-3 py-1.5 bg-white dark:bg-zinc-800/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
                           <ExternalLink className="w-3 h-3" />
                           POST Portal
                         </button>
@@ -525,10 +525,10 @@ export default function HRDashboard() {
             </div>
 
             {/* New Hire Onboarding */}
-            <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl mb-4 overflow-hidden">
+            <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl mb-4 overflow-hidden">
               <button
                 onClick={() => toggleSection('onboarding')}
-                className="w-full p-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors"
+                className="w-full p-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-red-500/20 rounded-xl flex items-center justify-center">
@@ -545,7 +545,7 @@ export default function HRDashboard() {
               {expandedSections.onboarding && (
                 <div className="p-4 border-t border-border space-y-4">
                   {newHireOnboarding.map((hire) => (
-                    <div key={hire.id} className="bg-white dark:bg-slate-900/40 border border-border rounded-xl p-4">
+                    <div key={hire.id} className="bg-white dark:bg-zinc-950/40 border border-border rounded-xl p-4">
                       <div className="flex items-start justify-between mb-3">
                         <div>
                           <h5 className="text-sm font-semibold text-primary">{hire.name}</h5>
@@ -614,13 +614,13 @@ export default function HRDashboard() {
                           <Mail className="w-3 h-3" />
                           Send Document Reminder Email
                         </button>
-                        <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">
+                        <button className="px-3 py-1.5 bg-white dark:bg-zinc-800/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">
                           View Full Onboarding Checklist
                         </button>
-                        <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">
+                        <button className="px-3 py-1.5 bg-white dark:bg-zinc-800/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">
                           Contact New Hire
                         </button>
-                        <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
+                        <button className="px-3 py-1.5 bg-white dark:bg-zinc-800/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
                           <Printer className="w-3 h-3" />
                           Print I-9 Form
                         </button>
@@ -632,10 +632,10 @@ export default function HRDashboard() {
             </div>
 
             {/* FMLA Leave Requests */}
-            <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl mb-4 overflow-hidden">
+            <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl mb-4 overflow-hidden">
               <button
                 onClick={() => toggleSection('fmla')}
-                className="w-full p-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors"
+                className="w-full p-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-red-500/20 rounded-xl flex items-center justify-center">
@@ -653,7 +653,7 @@ export default function HRDashboard() {
                 <div className="p-4 border-t border-border space-y-4">
                   {fmlaRequests.map((request) => (
                     <div key={request.id} className={`p-4 rounded-xl ${
-                      request.status === 'overdue' ? 'bg-red-500/10 border border-red-500/30' : 'bg-white dark:bg-slate-900/40 border border-slate-700/50'
+                      request.status === 'overdue' ? 'bg-red-500/10 border border-red-500/30' : 'bg-white dark:bg-zinc-950/40 border border-slate-700/50'
                     }`}>
                       <div className="flex items-start justify-between mb-3">
                         <div>
@@ -692,7 +692,7 @@ export default function HRDashboard() {
                         </div>
                       </div>
 
-                      <div className="mb-4 p-3 bg-white dark:bg-slate-800/40 rounded-lg">
+                      <div className="mb-4 p-3 bg-white dark:bg-zinc-900/40 rounded-lg">
                         <p className="text-xs font-semibold text-secondary mb-2">FMLA ELIGIBILITY:</p>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-xs">
                           <div className="flex items-center gap-2">
@@ -747,13 +747,13 @@ export default function HRDashboard() {
                         <button className={`px-3 py-1.5 ${request.status === 'overdue' ? 'bg-red-500 hover:bg-red-600 text-white' : 'bg-green-500/20 hover:bg-green-500/30 text-green-600 dark:text-green-400'} rounded-lg text-xs font-medium transition-colors`}>
                           {request.status === 'overdue' ? '⚠️ APPROVE FMLA LEAVE' : 'APPROVE FMLA LEAVE'}
                         </button>
-                        <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">
+                        <button className="px-3 py-1.5 bg-white dark:bg-zinc-800/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">
                           Generate FMLA Forms
                         </button>
-                        <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">
+                        <button className="px-3 py-1.5 bg-white dark:bg-zinc-800/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">
                           View Medical Cert
                         </button>
-                        <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">
+                        <button className="px-3 py-1.5 bg-white dark:bg-zinc-800/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">
                           Email Employee
                         </button>
                       </div>
@@ -764,10 +764,10 @@ export default function HRDashboard() {
             </div>
 
             {/* Disciplinary Hearings */}
-            <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl mb-4 overflow-hidden">
+            <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl mb-4 overflow-hidden">
               <button
                 onClick={() => toggleSection('disciplinary')}
-                className="w-full p-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors"
+                className="w-full p-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-red-500/20 rounded-xl flex items-center justify-center">
@@ -784,7 +784,7 @@ export default function HRDashboard() {
               {expandedSections.disciplinary && (
                 <div className="p-4 border-t border-border space-y-4">
                   {disciplinaryHearings.map((hearing) => (
-                    <div key={hearing.id} className="bg-white dark:bg-slate-900/40 border border-border rounded-xl p-4">
+                    <div key={hearing.id} className="bg-white dark:bg-zinc-950/40 border border-border rounded-xl p-4">
                       <div className="flex items-start justify-between mb-3">
                         <div>
                           <h5 className="text-sm font-semibold text-primary">{hearing.employee} ({hearing.badge}) - {hearing.type}</h5>
@@ -861,7 +861,7 @@ export default function HRDashboard() {
                       )}
 
                       {hearing.possibleOutcomes && (
-                        <div className="mb-4 p-3 bg-white dark:bg-slate-800/40 rounded-lg">
+                        <div className="mb-4 p-3 bg-white dark:bg-zinc-900/40 rounded-lg">
                           <p className="text-xs font-semibold text-secondary mb-2">POSSIBLE OUTCOMES:</p>
                           <ul className="text-xs text-secondary space-y-1">
                             {hearing.possibleOutcomes.map((outcome, idx) => (
@@ -872,16 +872,16 @@ export default function HRDashboard() {
                       )}
 
                       <div className="flex flex-wrap gap-2">
-                        <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">
+                        <button className="px-3 py-1.5 bg-white dark:bg-zinc-800/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">
                           View Investigation Report
                         </button>
-                        <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">
+                        <button className="px-3 py-1.5 bg-white dark:bg-zinc-800/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">
                           View Policy
                         </button>
-                        <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">
+                        <button className="px-3 py-1.5 bg-white dark:bg-zinc-800/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">
                           Hearing Preparation
                         </button>
-                        <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">
+                        <button className="px-3 py-1.5 bg-white dark:bg-zinc-800/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">
                           Contact Employee
                         </button>
                       </div>
@@ -895,11 +895,11 @@ export default function HRDashboard() {
           {/* Personnel Operations & Compliance Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
             {/* Personnel Operations Summary */}
-            <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
+            <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
               <h3 className="text-lg font-semibold text-primary mb-4">PERSONNEL OPERATIONS SUMMARY</h3>
 
               <div className="space-y-6">
-                <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4">
+                <div className="bg-white dark:bg-zinc-950/40 rounded-xl p-4">
                   <h4 className="text-sm font-semibold text-amber-700 dark:text-amber-400 mb-3">AUTHORIZED POSITIONS & CURRENT STAFFING</h4>
                   <p className="text-2xl font-bold text-primary mb-2">178 <span className="text-sm font-normal text-secondary">Total Authorized</span></p>
 
@@ -927,7 +927,7 @@ export default function HRDashboard() {
                   </div>
                 </div>
 
-                <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4">
+                <div className="bg-white dark:bg-zinc-950/40 rounded-xl p-4">
                   <h4 className="text-sm font-semibold text-amber-700 dark:text-amber-400 mb-3">RECRUITMENT STATUS</h4>
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
@@ -960,10 +960,10 @@ export default function HRDashboard() {
                 </div>
 
                 <div className="flex flex-wrap gap-2">
-                  <button onClick={() => navigate(createPageUrl('EmployeeRecords'))} className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">
+                  <button onClick={() => navigate(createPageUrl('EmployeeRecords'))} className="px-3 py-1.5 bg-white dark:bg-zinc-800/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">
                     View Detailed Org Chart
                   </button>
-                  <button onClick={() => navigate(createPageUrl('JobPostings'))} className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">
+                  <button onClick={() => navigate(createPageUrl('JobPostings'))} className="px-3 py-1.5 bg-white dark:bg-zinc-800/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">
                     Recruitment Status
                   </button>
                 </div>
@@ -971,11 +971,11 @@ export default function HRDashboard() {
             </div>
 
             {/* Compliance Monitoring */}
-            <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
+            <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
               <h3 className="text-lg font-semibold text-primary mb-4">COMPLIANCE MONITORING - LEGAL REQUIREMENTS</h3>
 
               <div className="space-y-6">
-                <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4">
+                <div className="bg-white dark:bg-zinc-950/40 rounded-xl p-4">
                   <h4 className="text-sm font-semibold text-green-600 dark:text-green-400 mb-3">POST CERTIFICATION STATUS (Sworn Personnel)</h4>
                   <p className="text-xs text-secondary mb-2">Georgia POST Certification Compliance: 100% REQUIRED</p>
 
@@ -1037,10 +1037,10 @@ export default function HRDashboard() {
                 </div>
 
                 <div className="flex flex-wrap gap-2">
-                  <button onClick={() => navigate(createPageUrl('TrainingCertifications'))} className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">
+                  <button onClick={() => navigate(createPageUrl('TrainingCertifications'))} className="px-3 py-1.5 bg-white dark:bg-zinc-800/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">
                     View All POST Certifications
                   </button>
-                  <button onClick={() => navigate(createPageUrl('PerformanceReviews'))} className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">
+                  <button onClick={() => navigate(createPageUrl('PerformanceReviews'))} className="px-3 py-1.5 bg-white dark:bg-zinc-800/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">
                     View Overdue Evaluations
                   </button>
                 </div>
@@ -1049,11 +1049,11 @@ export default function HRDashboard() {
           </div>
 
           {/* Key HR Metrics */}
-          <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6 mb-6">
+          <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6 mb-6">
             <h3 className="text-lg font-semibold text-primary mb-4">KEY HR METRICS (Informational - Last 30 Days)</h3>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4">
+              <div className="bg-white dark:bg-zinc-950/40 rounded-xl p-4">
                 <h4 className="text-sm font-semibold text-secondary mb-3">STAFFING LEVELS</h4>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
@@ -1075,7 +1075,7 @@ export default function HRDashboard() {
                 </div>
               </div>
 
-              <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4">
+              <div className="bg-white dark:bg-zinc-950/40 rounded-xl p-4">
                 <h4 className="text-sm font-semibold text-secondary mb-3">RECRUITMENT</h4>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
@@ -1097,7 +1097,7 @@ export default function HRDashboard() {
                 </div>
               </div>
 
-              <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4">
+              <div className="bg-white dark:bg-zinc-950/40 rounded-xl p-4">
                 <h4 className="text-sm font-semibold text-secondary mb-3">RETENTION</h4>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
@@ -1119,7 +1119,7 @@ export default function HRDashboard() {
                 </div>
               </div>
 
-              <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4">
+              <div className="bg-white dark:bg-zinc-950/40 rounded-xl p-4">
                 <h4 className="text-sm font-semibold text-secondary mb-3">LEAVE MANAGEMENT</h4>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
@@ -1141,7 +1141,7 @@ export default function HRDashboard() {
                 </div>
               </div>
 
-              <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4">
+              <div className="bg-white dark:bg-zinc-950/40 rounded-xl p-4">
                 <h4 className="text-sm font-semibold text-secondary mb-3">TRAINING COMPLIANCE</h4>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
@@ -1163,7 +1163,7 @@ export default function HRDashboard() {
                 </div>
               </div>
 
-              <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4">
+              <div className="bg-white dark:bg-zinc-950/40 rounded-xl p-4">
                 <h4 className="text-sm font-semibold text-secondary mb-3">WORKERS' COMP</h4>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
@@ -1191,7 +1191,7 @@ export default function HRDashboard() {
                 <Download className="w-4 h-4" />
                 Export Metrics Report
               </button>
-              <button onClick={() => navigate(createPageUrl('HRReports'))} className="px-4 py-2 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-secondary rounded-lg text-sm font-medium transition-colors">
+              <button onClick={() => navigate(createPageUrl('HRReports'))} className="px-4 py-2 bg-white dark:bg-zinc-800/50 hover:bg-slate-700/70 text-secondary rounded-lg text-sm font-medium transition-colors">
                 View Detailed Analytics
               </button>
             </div>
@@ -1225,7 +1225,7 @@ export default function HRDashboard() {
                 <Sparkles className="w-4 h-4 text-primary" />
               </div>
               <div className="flex-1">
-                <div className="bg-white dark:bg-slate-800/60 p-3 rounded-xl">
+                <div className="bg-white dark:bg-zinc-900/60 p-3 rounded-xl">
                   <p className="text-sm text-slate-700 dark:text-slate-200">
                     Welcome to the HR Operations Center. I can help you with:
                   </p>
@@ -1245,7 +1245,7 @@ export default function HRDashboard() {
           </div>
           <div className="p-4 border-t border-border">
             <div className="flex items-center gap-2">
-              <input type="text" placeholder="Ask about HR compliance..." className="flex-1 px-4 py-2 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50" />
+              <input type="text" placeholder="Ask about HR compliance..." className="flex-1 px-4 py-2 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50" />
               <button className="w-10 h-10 bg-amber-500 rounded-xl flex items-center justify-center">
                 <Send className="w-5 h-5 text-primary" />
               </button>

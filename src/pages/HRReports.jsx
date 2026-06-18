@@ -435,7 +435,7 @@ export default function HRReports() {
             </div>
 
             {/* Info Bar */}
-            <div className="mb-6 bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
+            <div className="mb-6 bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-secondary">
                 <div className="flex items-center gap-2">
                   <Users className="w-3.5 h-3.5 text-slate-500" />
@@ -515,10 +515,10 @@ export default function HRReports() {
                     const isExpanded = expandedReports[report.id];
 
                     return (
-                      <div key={report.id} className="bg-white dark:bg-slate-800/40 border border-border rounded-xl overflow-hidden">
+                      <div key={report.id} className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl overflow-hidden">
                         <button
                           onClick={() => toggleReport(report.id)}
-                          className="w-full flex items-start gap-4 p-5 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors text-left"
+                          className="w-full flex items-start gap-4 p-5 hover:bg-slate-100 dark:hover:bg-zinc-900/50 transition-colors text-left"
                         >
                           <div className={`w-12 h-12 ${colors.bg} rounded-xl flex items-center justify-center flex-shrink-0`}>
                             <Icon className={`w-6 h-6 ${colors.icon}`} />
@@ -542,17 +542,17 @@ export default function HRReports() {
                         {isExpanded && (
                           <div className="px-5 pb-5 space-y-4">
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                              <div className="bg-white dark:bg-slate-900/40 border border-border rounded-xl p-3">
+                              <div className="bg-white dark:bg-zinc-950/40 border border-border rounded-xl p-3">
                                 <p className="text-xs text-slate-500 mb-1">Recipients</p>
                                 <p className="text-sm text-secondary">{report.recipients}</p>
                               </div>
-                              <div className="bg-white dark:bg-slate-900/40 border border-border rounded-xl p-3">
+                              <div className="bg-white dark:bg-zinc-950/40 border border-border rounded-xl p-3">
                                 <p className="text-xs text-slate-500 mb-1">Last Generated</p>
                                 <p className="text-sm text-secondary">{report.lastGenerated}</p>
                               </div>
                             </div>
 
-                            <div className="bg-white dark:bg-slate-900/40 border border-border rounded-xl p-4">
+                            <div className="bg-white dark:bg-zinc-950/40 border border-border rounded-xl p-4">
                               <h5 className="text-sm font-semibold text-primary mb-3">Report Includes:</h5>
                               <div className="space-y-1.5">
                                 {report.includes.map((item, idx) => (
@@ -571,7 +571,7 @@ export default function HRReports() {
                                   className={`px-4 py-2 rounded-xl font-medium transition-all text-sm flex items-center gap-2 ${
                                     idx === 0
                                       ? 'bg-amber-500 hover:bg-amber-400 text-white'
-                                      : 'bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-primary'
+                                      : 'bg-slate-50 dark:bg-zinc-800/40 hover:bg-slate-700/60 border border-slate-600/50 text-primary'
                                   }`}
                                 >
                                   {idx === 0 ? <FileBarChart className="w-4 h-4" /> : idx === 1 ? <Eye className="w-4 h-4" /> : <ExternalLink className="w-3.5 h-3.5" />}
@@ -608,10 +608,10 @@ export default function HRReports() {
                     const isExpanded = expandedReports[report.id];
 
                     return (
-                      <div key={report.id} className={`bg-white dark:bg-slate-800/40 border ${report.nextDueUrgent ? 'border-amber-500/30' : 'border-slate-700/50'} rounded-xl overflow-hidden`}>
+                      <div key={report.id} className={`bg-white dark:bg-zinc-900/40 border ${report.nextDueUrgent ? 'border-amber-500/30' : 'border-slate-700/50'} rounded-xl overflow-hidden`}>
                         <button
                           onClick={() => toggleReport(report.id)}
-                          className="w-full flex items-start gap-4 p-5 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors text-left"
+                          className="w-full flex items-start gap-4 p-5 hover:bg-slate-100 dark:hover:bg-zinc-900/50 transition-colors text-left"
                         >
                           <div className={`w-12 h-12 ${colors.bg} rounded-xl flex items-center justify-center flex-shrink-0`}>
                             <Icon className={`w-6 h-6 ${colors.icon}`} />
@@ -635,15 +635,15 @@ export default function HRReports() {
                         {isExpanded && (
                           <div className="px-5 pb-5 space-y-4">
                             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                              <div className="bg-white dark:bg-slate-900/40 border border-border rounded-xl p-3">
+                              <div className="bg-white dark:bg-zinc-950/40 border border-border rounded-xl p-3">
                                 <p className="text-xs text-slate-500 mb-1">Recipients</p>
                                 <p className="text-sm text-secondary">{report.recipients}</p>
                               </div>
-                              <div className="bg-white dark:bg-slate-900/40 border border-border rounded-xl p-3">
+                              <div className="bg-white dark:bg-zinc-950/40 border border-border rounded-xl p-3">
                                 <p className="text-xs text-slate-500 mb-1">Last Generated</p>
                                 <p className="text-sm text-secondary">{report.lastGenerated}</p>
                               </div>
-                              <div className={`bg-white dark:bg-slate-900/40 border ${report.nextDueUrgent ? 'border-amber-500/30' : 'border-border'} rounded-xl p-3`}>
+                              <div className={`bg-white dark:bg-zinc-950/40 border ${report.nextDueUrgent ? 'border-amber-500/30' : 'border-border'} rounded-xl p-3`}>
                                 <p className="text-xs text-slate-500 mb-1">Next Due</p>
                                 <p className={`text-sm font-medium ${report.nextDueUrgent ? 'text-amber-700' : 'text-slate-500'}`}>{report.nextDue}</p>
                               </div>
@@ -656,7 +656,7 @@ export default function HRReports() {
                               </div>
                             )}
 
-                            <div className="bg-white dark:bg-slate-900/40 border border-border rounded-xl p-4">
+                            <div className="bg-white dark:bg-zinc-950/40 border border-border rounded-xl p-4">
                               <h5 className="text-sm font-semibold text-primary mb-3">Report Includes:</h5>
                               <div className="space-y-1.5">
                                 {report.includes.map((item, idx) => (
@@ -675,7 +675,7 @@ export default function HRReports() {
                                   className={`px-4 py-2 rounded-xl font-medium transition-all text-sm flex items-center gap-2 ${
                                     idx === 0
                                       ? 'bg-amber-500 hover:bg-amber-400 text-white'
-                                      : 'bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-primary'
+                                      : 'bg-slate-50 dark:bg-zinc-800/40 hover:bg-slate-700/60 border border-slate-600/50 text-primary'
                                   }`}
                                 >
                                   {idx === 0 ? <FileBarChart className="w-4 h-4" /> : <ExternalLink className="w-3.5 h-3.5" />}
@@ -697,7 +697,7 @@ export default function HRReports() {
               <div className="mb-8">
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-white dark:bg-slate-700/50 rounded-lg flex items-center justify-center">
+                    <div className="w-8 h-8 bg-white dark:bg-zinc-800/50 rounded-lg flex items-center justify-center">
                       <FileText className="w-5 h-5 text-secondary" />
                     </div>
                     <div>
@@ -705,7 +705,7 @@ export default function HRReports() {
                       <p className="text-xs text-secondary">Completed reports available for download and review</p>
                     </div>
                   </div>
-                  <button className="flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-slate-800/40 border border-slate-700/50 rounded-lg text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all text-sm">
+                  <button className="flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-zinc-900/40 border border-slate-700/50 rounded-lg text-secondary hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-all text-sm">
                     <Download className="w-4 h-4" />
                     Export All
                   </button>
@@ -720,13 +720,13 @@ export default function HRReports() {
                       placeholder="Search reports..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 text-sm"
+                      className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 text-sm"
                     />
                   </div>
                   <select
                     value={filterType}
                     onChange={(e) => setFilterType(e.target.value)}
-                    className="px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-secondary focus:outline-none focus:border-amber-500/50 text-sm"
+                    className="px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-secondary focus:outline-none focus:border-amber-500/50 text-sm"
                   >
                     <option value="all">All Types</option>
                     <option value="Hiring">Hiring</option>
@@ -743,7 +743,7 @@ export default function HRReports() {
                     const isExpanded = expandedRecent[report.id];
 
                     return (
-                      <div key={report.id} className="bg-white dark:bg-slate-800/40 border border-border rounded-xl overflow-hidden">
+                      <div key={report.id} className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl overflow-hidden">
                         <div className="p-5">
                           <div className="flex items-start justify-between gap-4">
                             <div className="flex items-start gap-4 flex-1">
@@ -769,12 +769,12 @@ export default function HRReports() {
                               >
                                 View
                               </button>
-                              <button className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-700/50 rounded-lg transition-colors">
+                              <button className="p-1.5 hover:bg-slate-100 dark:hover:bg-zinc-800/50 rounded-lg transition-colors">
                                 <Download className="w-4 h-4 text-secondary" />
                               </button>
                               <button
                                 onClick={() => toggleRecent(report.id)}
-                                className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-700/50 rounded-lg transition-colors"
+                                className="p-1.5 hover:bg-slate-100 dark:hover:bg-zinc-800/50 rounded-lg transition-colors"
                               >
                                 {isExpanded ? <ChevronUp className="w-4 h-4 text-secondary" /> : <ChevronDown className="w-4 h-4 text-secondary" />}
                               </button>
@@ -784,7 +784,7 @@ export default function HRReports() {
 
                         {isExpanded && (
                           <div className="px-5 pb-5 border-t border-border dark:border-slate-700/30 pt-4 space-y-4">
-                            <div className="bg-white dark:bg-slate-900/40 border border-border rounded-xl p-4">
+                            <div className="bg-white dark:bg-zinc-950/40 border border-border rounded-xl p-4">
                               <h5 className="text-sm font-semibold text-primary mb-3">Report Summary</h5>
                               <div className="space-y-1.5">
                                 {report.summary.map((item, idx) => (
@@ -831,13 +831,13 @@ export default function HRReports() {
                               >
                                 <Eye className="w-4 h-4" /> View Full Report
                               </button>
-                              <button className="px-4 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-primary rounded-xl font-medium transition-all text-sm flex items-center gap-2">
+                              <button className="px-4 py-2 bg-slate-50 dark:bg-zinc-800/40 hover:bg-slate-700/60 border border-slate-600/50 text-primary rounded-xl font-medium transition-all text-sm flex items-center gap-2">
                                 <Download className="w-4 h-4" /> Download PDF
                               </button>
-                              <button className="px-4 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-primary rounded-xl font-medium transition-all text-sm flex items-center gap-2">
+                              <button className="px-4 py-2 bg-slate-50 dark:bg-zinc-800/40 hover:bg-slate-700/60 border border-slate-600/50 text-primary rounded-xl font-medium transition-all text-sm flex items-center gap-2">
                                 <Printer className="w-4 h-4" /> Print
                               </button>
-                              <button className="px-4 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded-xl font-medium transition-all text-sm flex items-center gap-2">
+                              <button className="px-4 py-2 bg-white dark:bg-zinc-900/40 hover:bg-slate-100 dark:hover:bg-zinc-900/60 border border-slate-700/50 text-secondary rounded-xl font-medium transition-all text-sm flex items-center gap-2">
                                 <ExternalLink className="w-4 h-4" /> Share with Sheriff
                               </button>
                             </div>
@@ -859,27 +859,27 @@ export default function HRReports() {
             )}
 
             {/* Report Compliance Reference */}
-            <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
+            <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
               <h4 className="text-sm font-semibold text-primary mb-3 flex items-center gap-2">
                 <Shield className="w-4 h-4 text-secondary" /> GCSO Report Compliance & Retention Requirements
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-3">
-                <div className="bg-white dark:bg-slate-900/40 border border-border rounded-lg p-3">
+                <div className="bg-white dark:bg-zinc-950/40 border border-border rounded-lg p-3">
                   <p className="text-xs text-slate-500 mb-1">Personnel Records</p>
                   <p className="text-sm text-primary font-medium">75 years</p>
                   <p className="text-xs text-secondary">GA Records Retention</p>
                 </div>
-                <div className="bg-white dark:bg-slate-900/40 border border-border rounded-lg p-3">
+                <div className="bg-white dark:bg-zinc-950/40 border border-border rounded-lg p-3">
                   <p className="text-xs text-slate-500 mb-1">POST Certifications</p>
                   <p className="text-sm text-primary font-medium">Permanent</p>
                   <p className="text-xs text-secondary">O.C.G.A. § 35-8-1</p>
                 </div>
-                <div className="bg-white dark:bg-slate-900/40 border border-border rounded-lg p-3">
+                <div className="bg-white dark:bg-zinc-950/40 border border-border rounded-lg p-3">
                   <p className="text-xs text-slate-500 mb-1">EEO-1 Reports</p>
                   <p className="text-sm text-primary font-medium">3 years</p>
                   <p className="text-xs text-secondary">Title VII, EEOC</p>
                 </div>
-                <div className="bg-white dark:bg-slate-900/40 border border-border rounded-lg p-3">
+                <div className="bg-white dark:bg-zinc-950/40 border border-border rounded-lg p-3">
                   <p className="text-xs text-slate-500 mb-1">FMLA Records</p>
                   <p className="text-sm text-primary font-medium">3 years</p>
                   <p className="text-xs text-secondary">29 CFR Part 825</p>
@@ -909,26 +909,26 @@ export default function HRReports() {
               <p className="text-xs text-secondary mt-1">GCSO Human Resources Division</p>
             </div>
             <div className="p-4 space-y-3">
-              <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
+              <div className="p-3 bg-white dark:bg-zinc-900/40 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-900/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-primary">HR Director</p>
                 <p className="text-xs text-secondary">Report authorization, confidential data access</p>
                 <p className="text-xs text-amber-700 mt-1">Ext. 4500</p>
               </div>
-              <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
+              <div className="p-3 bg-white dark:bg-zinc-900/40 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-900/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-primary">Report Administrator</p>
                 <p className="text-xs text-secondary">HR Specialist J. Martinez — report generation, data queries</p>
                 <p className="text-xs text-amber-700 mt-1">Ext. 4505</p>
               </div>
-              <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
+              <div className="p-3 bg-white dark:bg-zinc-900/40 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-900/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-primary">Training Division</p>
                 <p className="text-xs text-secondary">POST compliance data, certification reports</p>
                 <p className="text-xs text-amber-700 mt-1">Ext. 4521</p>
               </div>
-              <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
+              <div className="p-3 bg-white dark:bg-zinc-900/40 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-900/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-primary">County Budget Office</p>
                 <p className="text-xs text-secondary">Staffing reports, budget justification data</p>
               </div>
-              <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
+              <div className="p-3 bg-white dark:bg-zinc-900/40 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-900/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-primary">Open Records Requests</p>
                 <p className="text-xs text-secondary">GA Open Records Act (O.C.G.A. § 50-18-70)</p>
               </div>

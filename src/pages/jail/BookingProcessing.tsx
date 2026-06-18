@@ -165,15 +165,15 @@ const BookingProcessing = () => {
         <div className="mb-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg">
+              <div className="px-4 py-2 bg-white dark:bg-zinc-900 border border-slate-200 dark:border-slate-700 rounded-lg">
                 <div className="text-xs text-slate-700 dark:text-slate-400">In Process</div>
                 <div className="text-xl font-bold text-amber-700">{inProgressBookings.length}</div>
               </div>
-              <div className="px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg">
+              <div className="px-4 py-2 bg-white dark:bg-zinc-900 border border-slate-200 dark:border-slate-700 rounded-lg">
                 <div className="text-xs text-slate-700 dark:text-slate-400">Pending Intake</div>
                 <div className="text-xl font-bold text-slate-900 dark:text-white">{pendingBookings.length}</div>
               </div>
-              <div className="px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg">
+              <div className="px-4 py-2 bg-white dark:bg-zinc-900 border border-slate-200 dark:border-slate-700 rounded-lg">
                 <div className="text-xs text-slate-700 dark:text-slate-400">Today Total</div>
                 <div className="text-xl font-bold text-slate-900 dark:text-white">18</div>
               </div>
@@ -219,7 +219,7 @@ const BookingProcessing = () => {
         {activeTab === 'in-progress' && (
           <div className="space-y-6">
             {inProgressBookings.map((booking) => (
-              <div key={booking.id} className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-6">
+              <div key={booking.id} className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-slate-700 rounded-lg p-6">
                 {/* Header */}
                 <div className="flex items-start justify-between mb-6">
                   <div>
@@ -263,7 +263,7 @@ const BookingProcessing = () => {
                 </div>
 
                 {/* Arrest Information */}
-                <div className="bg-white dark:bg-slate-900/50 border border-slate-700 rounded-lg p-4 mb-6">
+                <div className="bg-white dark:bg-zinc-950/50 border border-slate-700 rounded-lg p-4 mb-6">
                   <h3 className="text-slate-900 dark:text-white font-semibold mb-3">Arrest Information</h3>
                   <div className="grid grid-cols-2 gap-4 text-sm">
                     <div>
@@ -350,7 +350,7 @@ const BookingProcessing = () => {
         {activeTab === 'pending' && (
           <div className="space-y-4">
             {pendingBookings.map((booking) => (
-              <div key={booking.id} className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-6">
+              <div key={booking.id} className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-slate-700 rounded-lg p-6">
                 <div className="flex items-start justify-between">
                   <div>
                     <div className="flex items-center gap-3 mb-3">
@@ -401,10 +401,10 @@ const BookingProcessing = () => {
         {activeTab === 'completed' && (
           <div className="space-y-4">
             {completedBookings.map((booking) => (
-              <div key={booking.id} className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-6">
+              <div key={booking.id} className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-slate-700 rounded-lg p-6">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-4">
-                    <div className="p-3 bg-white dark:bg-slate-700/60 rounded-lg">
+                    <div className="p-3 bg-white dark:bg-zinc-800/60 rounded-lg">
                       <CheckCircle className="w-6 h-6 text-emerald-400" />
                     </div>
                     <div>

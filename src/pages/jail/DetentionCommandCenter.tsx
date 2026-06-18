@@ -109,7 +109,7 @@ const criticalTasks = [
 const getPodColor = (pod: HousingPod) => {
   if (pod.status === 'Over Capacity') return { bg: 'bg-red-500/15 border-red-500/40', text: 'text-red-300', bar: 'bg-red-500' };
   if (pod.status === 'Near Capacity') return { bg: 'bg-amber-500/10 border-amber-500/30', text: 'text-amber-300', bar: 'bg-amber-500' };
-  return { bg: 'bg-slate-50 dark:bg-slate-800/35 border-slate-200 dark:border-slate-700/25', text: 'text-slate-500', bar: 'bg-slate-600/50' };
+  return { bg: 'bg-slate-50 dark:bg-zinc-900/35 border-slate-200 dark:border-slate-700/25', text: 'text-slate-500', bar: 'bg-slate-600/50' };
 };
 
 const getPct = (pod: HousingPod) => Math.round((pod.current / pod.capacity) * 100);
@@ -118,7 +118,7 @@ const getShiftColors = (shift: ShiftStatus) => {
   const pct = (shift.present / shift.scheduled) * 100;
   if (pct < 93) return { text: 'text-red-600 dark:text-red-400',   bg: 'bg-red-500/10 border-red-500/20',     dot: 'bg-red-400' };
   if (pct < 100) return { text: 'text-amber-600 dark:text-amber-400', bg: 'bg-amber-500/10 border-amber-500/20', dot: 'bg-amber-400' };
-  return { text: 'text-slate-500', bg: 'bg-slate-50 dark:bg-slate-800/35 border-slate-700/40', dot: 'bg-slate-500' };
+  return { text: 'text-slate-500', bg: 'bg-slate-50 dark:bg-zinc-900/35 border-slate-700/40', dot: 'bg-slate-500' };
 };
 
 const getRunStatus = (status: CourtRun['status']) => {
@@ -133,7 +133,7 @@ const getRunStatus = (status: CourtRun['status']) => {
 const getUrgencyColors = (u: string) => {
   if (u === 'critical') return 'border-l-2 border-red-500 bg-red-500/8 text-red-300';
   if (u === 'high') return 'border-l-2 border-amber-500 bg-amber-500/8 text-amber-300';
-  return 'border-l-2 border-slate-600/50 bg-slate-100 dark:bg-slate-800/30 text-slate-500';
+  return 'border-l-2 border-slate-600/50 bg-slate-100 dark:bg-zinc-900/30 text-slate-500';
 };
 
 // ── Component ─────────────────────────────────────────────────
@@ -205,7 +205,7 @@ export default function DetentionCommandCenter() {
   const readinessBadge = (r: string) => {
     if (r === 'Critical') return 'bg-red-100 dark:bg-red-500/15 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-500/25';
     if (r === 'Warning')  return 'bg-amber-100 dark:bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-500/25';
-    return 'bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40';
+    return 'bg-slate-100 dark:bg-zinc-800/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40';
   };
 
   return (
@@ -242,13 +242,13 @@ export default function DetentionCommandCenter() {
               <div className="flex items-center gap-2">
                 <span className={`text-2xl font-bold ${riskColor.text}`}>{riskScore}<span className="text-sm font-normal text-slate-500">/100</span></span>
                 <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold border ${riskColor.badge}`}>{riskLevel.toUpperCase()}</span>
-                <div className="w-20 h-1.5 bg-white dark:bg-slate-700/60 rounded-full overflow-hidden">
+                <div className="w-20 h-1.5 bg-white dark:bg-zinc-800/60 rounded-full overflow-hidden">
                   <div className={`h-full rounded-full ${riskColor.bar}`} style={{ width: `${riskScore}%` }} />
                 </div>
               </div>
             </div>
           </div>
-          <div className="hidden sm:block w-px h-10 bg-slate-200 dark:bg-slate-700/50 flex-shrink-0" />
+          <div className="hidden sm:block w-px h-10 bg-slate-200 dark:bg-zinc-800/50 flex-shrink-0" />
           <div className="grid grid-cols-3 sm:grid-cols-6 gap-x-5 gap-y-1.5 flex-1">
             {riskComponents.map(c => {
               const hi = c.score >= c.max * 0.8;
@@ -271,20 +271,20 @@ export default function DetentionCommandCenter() {
         {/* ── Row 1: Command Snapshot KPIs ───────────────── */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
           {/* Facility Capacity */}
-          <div className={`bg-slate-100 dark:bg-slate-800/30 border rounded-xl p-4 ${capacityPct >= 95 ? 'border-red-500/30' : capacityPct >= 85 ? 'border-amber-500/30' : 'border-slate-700/50'}`}>
+          <div className={`bg-slate-100 dark:bg-zinc-900/30 border rounded-xl p-4 ${capacityPct >= 95 ? 'border-red-500/30' : capacityPct >= 85 ? 'border-amber-500/30' : 'border-slate-700/50'}`}>
             <div className="flex items-center gap-1.5 mb-2">
               <Building2 className="w-3.5 h-3.5 text-slate-700 dark:text-slate-400" />
               <span className="text-[10px] text-slate-500 font-medium uppercase tracking-wide">Capacity</span>
             </div>
             <p className="text-xl font-bold text-slate-900 dark:text-white">{facilityMetrics.currentPopulation}<span className="text-sm text-slate-500">/{facilityMetrics.totalCapacity}</span></p>
             <p className={`text-[11px] font-semibold mt-0.5 ${capacityPct >= 95 ? 'text-red-600 dark:text-red-400' : capacityPct >= 85 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500'}`}>{capacityPct}% full</p>
-            <div className="w-full h-1 bg-white dark:bg-slate-700/50 rounded-full mt-1.5 overflow-hidden">
+            <div className="w-full h-1 bg-white dark:bg-zinc-800/50 rounded-full mt-1.5 overflow-hidden">
               <div className={`h-full rounded-full ${capacityPct >= 95 ? 'bg-red-500' : capacityPct >= 85 ? 'bg-amber-500' : 'bg-slate-500/60'}`} style={{ width: `${Math.min(capacityPct, 100)}%` }} />
             </div>
           </div>
 
           {/* Net Population Change */}
-          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
+          <div className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
             <div className="flex items-center gap-1.5 mb-2">
               <Activity className="w-3.5 h-3.5 text-slate-700 dark:text-slate-400" />
               <span className="text-[10px] text-slate-500 font-medium uppercase tracking-wide">Population</span>
@@ -298,7 +298,7 @@ export default function DetentionCommandCenter() {
           </div>
 
           {/* Staff Coverage */}
-          <div className={`bg-slate-100 dark:bg-slate-800/30 border rounded-xl p-4 ${staffReadiness === 'Critical' ? 'border-red-500/30' : staffReadiness === 'Warning' ? 'border-amber-500/30' : 'border-slate-700/50'}`}>
+          <div className={`bg-slate-100 dark:bg-zinc-900/30 border rounded-xl p-4 ${staffReadiness === 'Critical' ? 'border-red-500/30' : staffReadiness === 'Warning' ? 'border-amber-500/30' : 'border-slate-700/50'}`}>
             <div className="flex items-center gap-1.5 mb-2">
               <Users className="w-3.5 h-3.5 text-slate-700 dark:text-slate-400" />
               <span className="text-[10px] text-slate-500 font-medium uppercase tracking-wide">Staff</span>
@@ -309,7 +309,7 @@ export default function DetentionCommandCenter() {
           </div>
 
           {/* Active Alerts */}
-          <div className={`bg-slate-100 dark:bg-slate-800/30 border rounded-xl p-4 ${criticalCount > 0 ? 'border-red-500/30' : warningCount > 0 ? 'border-amber-500/30' : 'border-slate-700/50'}`}>
+          <div className={`bg-slate-100 dark:bg-zinc-900/30 border rounded-xl p-4 ${criticalCount > 0 ? 'border-red-500/30' : warningCount > 0 ? 'border-amber-500/30' : 'border-slate-700/50'}`}>
             <div className="flex items-center gap-1.5 mb-2">
               <AlertTriangle className="w-3.5 h-3.5 text-red-600 dark:text-red-400" />
               <span className="text-[10px] text-slate-500 font-medium uppercase tracking-wide">Alerts</span>
@@ -320,7 +320,7 @@ export default function DetentionCommandCenter() {
           </div>
 
           {/* Medical Unit */}
-          <div className={`bg-slate-100 dark:bg-slate-800/30 border rounded-xl p-4 ${medicalReadiness === 'Warning' ? 'border-amber-500/30' : 'border-slate-700/50'}`}>
+          <div className={`bg-slate-100 dark:bg-zinc-900/30 border rounded-xl p-4 ${medicalReadiness === 'Warning' ? 'border-amber-500/30' : 'border-slate-700/50'}`}>
             <div className="flex items-center gap-1.5 mb-2">
               <Hospital className="w-3.5 h-3.5 text-slate-700 dark:text-slate-400" />
               <span className="text-[10px] text-slate-500 font-medium uppercase tracking-wide">Medical</span>
@@ -331,7 +331,7 @@ export default function DetentionCommandCenter() {
           </div>
 
           {/* Court Transports */}
-          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
+          <div className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
             <div className="flex items-center gap-1.5 mb-2">
               <Truck className="w-3.5 h-3.5 text-slate-700 dark:text-slate-400" />
               <span className="text-[10px] text-slate-500 font-medium uppercase tracking-wide">Transports</span>
@@ -346,7 +346,7 @@ export default function DetentionCommandCenter() {
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-5">
 
           {/* Active Alerts */}
-          <div className="lg:col-span-2 bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
+          <div className="lg:col-span-2 bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <AlertOctagon className="w-4 h-4 text-red-600 dark:text-red-400" />
@@ -397,10 +397,10 @@ export default function DetentionCommandCenter() {
           </div>
 
           {/* AI Command Intelligence */}
-          <div className="lg:col-span-3 bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
+          <div className="lg:col-span-3 bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
-                <div className="w-7 h-7 bg-slate-100 dark:bg-slate-700/30 rounded-lg flex items-center justify-center">
+                <div className="w-7 h-7 bg-slate-100 dark:bg-zinc-800/30 rounded-lg flex items-center justify-center">
                   <Sparkles className="w-4 h-4 text-slate-700 dark:text-slate-400" />
                 </div>
                 <h3 className="text-sm font-semibold text-slate-900 dark:text-white">AI Command Intelligence</h3>
@@ -481,7 +481,7 @@ export default function DetentionCommandCenter() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
 
           {/* Housing Unit Map */}
-          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
+          <div className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <Shield className="w-4 h-4 text-slate-700 dark:text-slate-400" />
@@ -501,7 +501,7 @@ export default function DetentionCommandCenter() {
                   <div key={pod.id} className={`rounded-lg border p-1.5 cursor-default ${colors.bg}`} title={`${pod.name} — ${pod.type}\n${pod.current}/${pod.capacity} (${pct}%)\n${pod.notes || ''}`}>
                     <p className="text-[9px] font-bold text-slate-900 dark:text-white truncate">{pod.id}</p>
                     <p className={`text-[10px] font-semibold ${colors.text}`}>{pct}%</p>
-                    <div className="w-full h-0.5 bg-white dark:bg-slate-700/50 rounded-full mt-1 overflow-hidden">
+                    <div className="w-full h-0.5 bg-white dark:bg-zinc-800/50 rounded-full mt-1 overflow-hidden">
                       <div className={`h-full rounded-full ${colors.bar}`} style={{ width: `${Math.min(pct, 100)}%` }} />
                     </div>
                   </div>
@@ -515,7 +515,7 @@ export default function DetentionCommandCenter() {
           </div>
 
           {/* Staff Coverage */}
-          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
+          <div className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
             <div className="flex items-center gap-2 mb-3">
               <Users className="w-4 h-4 text-slate-700 dark:text-slate-400" />
               <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Staff Coverage</h3>
@@ -533,7 +533,7 @@ export default function DetentionCommandCenter() {
                       </div>
                       <span className={`text-[11px] font-bold ${colors.text}`}>{shift.present}/{shift.scheduled}</span>
                     </div>
-                    <div className="w-full h-1 bg-white dark:bg-slate-700/50 rounded-full overflow-hidden mb-1.5">
+                    <div className="w-full h-1 bg-white dark:bg-zinc-800/50 rounded-full overflow-hidden mb-1.5">
                       <div className={`h-full rounded-full ${pct < 93 ? 'bg-red-500' : pct < 100 ? 'bg-amber-500' : 'bg-emerald-500'}`} style={{ width: `${pct}%` }} />
                     </div>
                     <div className="flex items-center justify-between text-[10px]">
@@ -547,7 +547,7 @@ export default function DetentionCommandCenter() {
           </div>
 
           {/* Court Transport Schedule */}
-          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
+          <div className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
             <div className="flex items-center gap-2 mb-3">
               <Truck className="w-4 h-4 text-slate-700 dark:text-slate-400" />
               <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Court Transport Schedule</h3>
@@ -582,7 +582,7 @@ export default function DetentionCommandCenter() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
 
           {/* Population Trend */}
-          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
+          <div className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <TrendingUp className="w-4 h-4 text-slate-700 dark:text-slate-400" />
@@ -633,7 +633,7 @@ export default function DetentionCommandCenter() {
           </div>
 
           {/* Medical Monitoring */}
-          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
+          <div className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
             <div className="flex items-center gap-2 mb-3">
               <Heart className="w-4 h-4 text-pink-400" />
               <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Medical Monitoring</h3>
@@ -652,7 +652,7 @@ export default function DetentionCommandCenter() {
                       <span className={`text-[10px] font-semibold ${item.pct && item.pct >= 90 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500'}`}>{item.value}</span>
                     </div>
                     {item.pct !== null && (
-                      <div className="w-full h-1 bg-white dark:bg-slate-700/50 rounded-full overflow-hidden mb-0.5">
+                      <div className="w-full h-1 bg-white dark:bg-zinc-800/50 rounded-full overflow-hidden mb-0.5">
                         <div className={`h-full rounded-full ${item.pct >= 95 ? 'bg-red-500' : item.pct >= 85 ? 'bg-amber-500' : 'bg-emerald-500'}`} style={{ width: `${item.pct}%` }} />
                       </div>
                     )}
@@ -667,7 +667,7 @@ export default function DetentionCommandCenter() {
           </div>
 
           {/* Critical Tasks */}
-          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
+          <div className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
             <div className="flex items-center gap-2 mb-3">
               <Zap className="w-4 h-4 text-amber-600 dark:text-amber-400" />
               <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Command Actions</h3>
@@ -706,7 +706,7 @@ export default function DetentionCommandCenter() {
       {transferOpen && (
         <div className="fixed inset-0 z-50 flex items-start justify-center p-4 pt-10 overflow-y-auto">
           <div className="fixed inset-0 bg-slate-950/85 backdrop-blur-sm" onClick={() => { setTransferOpen(false); setTransferDone(false); }} />
-          <div className="relative w-full max-w-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/60 rounded-2xl shadow-2xl overflow-hidden mb-8">
+          <div className="relative w-full max-w-lg bg-white dark:bg-zinc-950 border border-slate-200 dark:border-slate-700/60 rounded-2xl shadow-2xl overflow-hidden mb-8">
             <div className="border-b border-slate-200 dark:border-slate-700/50 px-5 py-4 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-lg bg-red-500/15 border border-red-500/25 flex items-center justify-center">
@@ -717,7 +717,7 @@ export default function DetentionCommandCenter() {
                   <p className="text-[10px] text-slate-500">Housing reassignment · USMS coordination</p>
                 </div>
               </div>
-              <button onClick={() => { setTransferOpen(false); setTransferDone(false); }} className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors">
+              <button onClick={() => { setTransferOpen(false); setTransferDone(false); }} className="p-1.5 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors">
                 <X className="w-4 h-4 text-slate-500" />
               </button>
             </div>
@@ -761,7 +761,7 @@ export default function DetentionCommandCenter() {
                         timeline: 'Immediate · Interim',
                       },
                     ].map(opt => (
-                      <label key={opt.id} className={`block p-3 border rounded-xl cursor-pointer transition-all ${selectedTransfer === opt.id ? 'bg-amber-500/10 border-amber-500/30' : 'bg-slate-100/50 dark:bg-slate-800/20 border-slate-700/30 hover:border-slate-600/50'}`}>
+                      <label key={opt.id} className={`block p-3 border rounded-xl cursor-pointer transition-all ${selectedTransfer === opt.id ? 'bg-amber-500/10 border-amber-500/30' : 'bg-slate-100/50 dark:bg-zinc-900/20 border-slate-700/30 hover:border-slate-600/50'}`}>
                         <div className="flex items-start gap-3">
                           <input type="radio" name="transferOption" checked={selectedTransfer === opt.id} onChange={() => setSelectedTransfer(opt.id)} className="mt-1 accent-amber-500 flex-shrink-0" />
                           <div className="flex-1 min-w-0">
@@ -789,7 +789,7 @@ export default function DetentionCommandCenter() {
                   </div>
                   <h4 className="text-base font-bold text-slate-900 dark:text-white mb-1">Transfer Order Issued</h4>
                   <p className="text-sm text-slate-500 mb-4">Housing reassignment authorized and logged. Officers notified.</p>
-                  <div className="text-left p-3.5 bg-slate-100/80 dark:bg-slate-800/30 border border-slate-700/40 rounded-xl mb-4 space-y-1.5">
+                  <div className="text-left p-3.5 bg-slate-100/80 dark:bg-zinc-900/30 border border-slate-700/40 rounded-xl mb-4 space-y-1.5">
                     {['Transfer order created and logged', 'Classification officers notified', 'Housing records updated', 'Federal compliance flag cleared', 'Command calendar updated', 'Audit trail created'].map((a, i) => (
                       <div key={i} className="flex items-center gap-2 text-[11px] text-slate-900 dark:text-white">
                         <CheckCircle className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />{a}
@@ -808,7 +808,7 @@ export default function DetentionCommandCenter() {
       {otOpen && (
         <div className="fixed inset-0 z-50 flex items-start justify-center p-4 pt-10 overflow-y-auto">
           <div className="fixed inset-0 bg-slate-950/85 backdrop-blur-sm" onClick={() => { setOtOpen(false); setOtDone(false); }} />
-          <div className="relative w-full max-w-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/60 rounded-2xl shadow-2xl overflow-hidden mb-8">
+          <div className="relative w-full max-w-lg bg-white dark:bg-zinc-950 border border-slate-200 dark:border-slate-700/60 rounded-2xl shadow-2xl overflow-hidden mb-8">
             <div className="border-b border-slate-200 dark:border-slate-700/50 px-5 py-4 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-lg bg-amber-500/15 border border-amber-500/25 flex items-center justify-center">
@@ -819,7 +819,7 @@ export default function DetentionCommandCenter() {
                   <p className="text-[10px] text-slate-500">Staffing approval · Officer Smith sick call</p>
                 </div>
               </div>
-              <button onClick={() => { setOtOpen(false); setOtDone(false); }} className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors">
+              <button onClick={() => { setOtOpen(false); setOtDone(false); }} className="p-1.5 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors">
                 <X className="w-4 h-4 text-slate-500" />
               </button>
             </div>
@@ -863,7 +863,7 @@ export default function DetentionCommandCenter() {
                         note: 'Contingency option',
                       },
                     ].map(opt => (
-                      <label key={opt.id} className={`block p-3 border rounded-xl cursor-pointer transition-all ${selectedOt === opt.id ? 'bg-amber-500/10 border-amber-500/30' : 'bg-slate-100/50 dark:bg-slate-800/20 border-slate-700/30 hover:border-slate-600/50'}`}>
+                      <label key={opt.id} className={`block p-3 border rounded-xl cursor-pointer transition-all ${selectedOt === opt.id ? 'bg-amber-500/10 border-amber-500/30' : 'bg-slate-100/50 dark:bg-zinc-900/20 border-slate-700/30 hover:border-slate-600/50'}`}>
                         <div className="flex items-start gap-3">
                           <input type="radio" name="otOption" checked={selectedOt === opt.id} onChange={() => setSelectedOt(opt.id)} className="mt-1 accent-amber-500 flex-shrink-0" />
                           <div className="flex-1 min-w-0">
@@ -891,7 +891,7 @@ export default function DetentionCommandCenter() {
                   </div>
                   <h4 className="text-base font-bold text-slate-900 dark:text-white mb-1">Coverage Authorized</h4>
                   <p className="text-sm text-slate-500 mb-4">B-Shift OT authorization logged. Officer notified.</p>
-                  <div className="text-left p-3.5 bg-slate-100/80 dark:bg-slate-800/30 border border-slate-700/40 rounded-xl mb-4 space-y-1.5">
+                  <div className="text-left p-3.5 bg-slate-100/80 dark:bg-zinc-900/30 border border-slate-700/40 rounded-xl mb-4 space-y-1.5">
                     {['OT authorization logged to payroll system', 'Officer notified via radio and text', 'Sgt. Thompson (B-Shift supervisor) notified', 'Scheduling records updated', 'ACA compliance gap resolved', 'Audit trail created'].map((a, i) => (
                       <div key={i} className="flex items-center gap-2 text-[11px] text-slate-900 dark:text-white">
                         <CheckCircle className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />{a}
@@ -910,7 +910,7 @@ export default function DetentionCommandCenter() {
       {fleetOpen && (
         <div className="fixed inset-0 z-50 flex items-start justify-center p-4 pt-10 overflow-y-auto">
           <div className="fixed inset-0 bg-slate-950/85 backdrop-blur-sm" onClick={() => { setFleetOpen(false); setFleetDone(false); }} />
-          <div className="relative w-full max-w-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/60 rounded-2xl shadow-2xl overflow-hidden mb-8">
+          <div className="relative w-full max-w-lg bg-white dark:bg-zinc-950 border border-slate-200 dark:border-slate-700/60 rounded-2xl shadow-2xl overflow-hidden mb-8">
             <div className="border-b border-slate-200 dark:border-slate-700/50 px-5 py-4 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-lg bg-amber-500/15 border border-amber-500/25 flex items-center justify-center">
@@ -921,7 +921,7 @@ export default function DetentionCommandCenter() {
                   <p className="text-[10px] text-slate-500">Transport van request · Court operations</p>
                 </div>
               </div>
-              <button onClick={() => { setFleetOpen(false); setFleetDone(false); }} className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors">
+              <button onClick={() => { setFleetOpen(false); setFleetDone(false); }} className="p-1.5 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors">
                 <X className="w-4 h-4 text-slate-500" />
               </button>
             </div>
@@ -951,13 +951,13 @@ export default function DetentionCommandCenter() {
                         { label: 'Required By',     value: '06:00 — First run departure' },
                         { label: 'Return Time',     value: '17:00 est.' },
                       ].map(f => (
-                        <div key={f.label} className="p-2.5 bg-slate-100/80 dark:bg-slate-800/30 border border-slate-700/40 rounded-lg">
+                        <div key={f.label} className="p-2.5 bg-slate-100/80 dark:bg-zinc-900/30 border border-slate-700/40 rounded-lg">
                           <p className="text-[10px] text-slate-500 uppercase font-semibold mb-0.5">{f.label}</p>
                           <p className="text-[12px] font-semibold text-slate-900 dark:text-white">{f.value}</p>
                         </div>
                       ))}
                     </div>
-                    <div className="p-2.5 bg-slate-100/80 dark:bg-slate-800/30 border border-slate-700/40 rounded-lg">
+                    <div className="p-2.5 bg-slate-100/80 dark:bg-zinc-900/30 border border-slate-700/40 rounded-lg">
                       <p className="text-[10px] text-slate-500 uppercase font-semibold mb-1">Justification</p>
                       <p className="text-[12px] text-slate-900 dark:text-white">31 court transports scheduled for Dec 12. Current 4-van fleet capacity is insufficient. 1 additional van required for full coverage without schedule delays.</p>
                     </div>
@@ -979,7 +979,7 @@ export default function DetentionCommandCenter() {
                   </div>
                   <h4 className="text-base font-bold text-slate-900 dark:text-white mb-1">Fleet Request Submitted</h4>
                   <p className="text-sm text-slate-500 mb-4">Request routed to Fleet Management. Confirmation expected within 2 hours.</p>
-                  <div className="text-left p-3.5 bg-slate-100/80 dark:bg-slate-800/30 border border-slate-700/40 rounded-xl mb-4 space-y-1.5">
+                  <div className="text-left p-3.5 bg-slate-100/80 dark:bg-zinc-900/30 border border-slate-700/40 rounded-xl mb-4 space-y-1.5">
                     {['Fleet request submitted to Fleet Management', 'Transport Coordinator notified', 'Court schedule updated with contingency stagger', 'Request logged to command record', 'Follow-up reminder set for 20:00'].map((a, i) => (
                       <div key={i} className="flex items-center gap-2 text-[11px] text-slate-900 dark:text-white">
                         <CheckCircle className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />{a}
@@ -998,7 +998,7 @@ export default function DetentionCommandCenter() {
       {medReviewOpen && (
         <div className="fixed inset-0 z-50 flex items-start justify-center p-4 pt-10 overflow-y-auto">
           <div className="fixed inset-0 bg-slate-950/85 backdrop-blur-sm" onClick={() => { setMedReviewOpen(false); setMedReviewDone(false); }} />
-          <div className="relative w-full max-w-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/60 rounded-2xl shadow-2xl overflow-hidden mb-8">
+          <div className="relative w-full max-w-lg bg-white dark:bg-zinc-950 border border-slate-200 dark:border-slate-700/60 rounded-2xl shadow-2xl overflow-hidden mb-8">
             <div className="border-b border-slate-200 dark:border-slate-700/50 px-5 py-4 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 rounded-lg bg-amber-500/15 border border-amber-500/25 flex items-center justify-center">
@@ -1009,7 +1009,7 @@ export default function DetentionCommandCenter() {
                   <p className="text-[10px] text-slate-500">Medical command review · Dr. Chen</p>
                 </div>
               </div>
-              <button onClick={() => { setMedReviewOpen(false); setMedReviewDone(false); }} className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors">
+              <button onClick={() => { setMedReviewOpen(false); setMedReviewDone(false); }} className="p-1.5 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors">
                 <X className="w-4 h-4 text-slate-500" />
               </button>
             </div>
@@ -1041,14 +1041,14 @@ export default function DetentionCommandCenter() {
                         { item: 'Pending psych clearances (3 inmates)',    urgency: 'medium', note: 'Awaiting assessment' },
                         { item: 'Hospital guard rotation — Deputy Martinez', urgency: 'low',  note: 'Gwinnett Medical' },
                       ].map(({ item, urgency, note }) => (
-                        <div key={item} className={`flex items-center justify-between px-3 py-2 rounded-lg border text-[11px] ${urgency === 'high' ? 'bg-amber-500/8 border-amber-500/20' : urgency === 'medium' ? 'bg-slate-100/50 dark:bg-slate-800/20 border-slate-700/30' : 'bg-slate-100/50 dark:bg-slate-800/20 border-slate-700/30'}`}>
+                        <div key={item} className={`flex items-center justify-between px-3 py-2 rounded-lg border text-[11px] ${urgency === 'high' ? 'bg-amber-500/8 border-amber-500/20' : urgency === 'medium' ? 'bg-slate-100/50 dark:bg-zinc-900/20 border-slate-700/30' : 'bg-slate-100/50 dark:bg-zinc-900/20 border-slate-700/30'}`}>
                           <span className={urgency === 'high' ? 'text-amber-300' : 'text-slate-700 dark:text-slate-300'}>{item}</span>
                           <span className="text-[9px] text-slate-500 flex-shrink-0 ml-2">{note}</span>
                         </div>
                       ))}
                     </div>
                   </div>
-                  <div className="p-3 bg-slate-100/80 dark:bg-slate-800/30 border border-slate-700/40 rounded-xl mb-4">
+                  <div className="p-3 bg-slate-100/80 dark:bg-zinc-900/30 border border-slate-700/40 rounded-xl mb-4">
                     <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2">Meeting Details</p>
                     <div className="grid grid-cols-2 gap-2 text-[11px]">
                       <div className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5 text-slate-400" /><span className="text-slate-900 dark:text-white">Today — Dec 11, 2024</span></div>
@@ -1067,7 +1067,7 @@ export default function DetentionCommandCenter() {
                   </div>
                   <h4 className="text-base font-bold text-slate-900 dark:text-white mb-1">Medical Review Scheduled</h4>
                   <p className="text-sm text-slate-500 mb-4">Review confirmed for today at 16:00 — E-Pod Conference Room.</p>
-                  <div className="text-left p-3.5 bg-slate-100/80 dark:bg-slate-800/30 border border-slate-700/40 rounded-xl mb-4 space-y-1.5">
+                  <div className="text-left p-3.5 bg-slate-100/80 dark:bg-zinc-900/30 border border-slate-700/40 rounded-xl mb-4 space-y-1.5">
                     {['Review scheduled on Command Calendar', 'Dr. Chen notified and confirmed', 'RN Martinez notified', 'Agenda distributed to attendees', 'E-Pod status flagged for review', 'Audit trail created'].map((a, i) => (
                       <div key={i} className="flex items-center gap-2 text-[11px] text-slate-900 dark:text-white">
                         <CheckCircle className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />{a}

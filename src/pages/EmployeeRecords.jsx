@@ -476,32 +476,32 @@ export default function EmployeeRecords() {
 
             {/* Personnel Summary Cards */}
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-6">
-              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
+              <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
                 <p className="text-xs text-secondary mb-1">Total Personnel</p>
                 <p className="text-xl font-bold text-primary">{personnelStats.total}</p>
                 <p className="text-[10px] text-slate-500">{personnelStats.sworn} sworn / {personnelStats.civilian} civilian</p>
               </div>
-              <div className="bg-white dark:bg-slate-800/40 border border-green-500/30 rounded-xl p-4">
+              <div className="bg-white dark:bg-zinc-900/40 border border-green-500/30 rounded-xl p-4">
                 <p className="text-xs text-secondary mb-1">Active Duty</p>
                 <p className="text-xl font-bold text-green-400">{personnelStats.active}</p>
                 <p className="text-[10px] text-slate-500">Full duty personnel</p>
               </div>
-              <div className="bg-white dark:bg-slate-800/40 border border-amber-500/30 rounded-xl p-4">
+              <div className="bg-white dark:bg-zinc-900/40 border border-amber-500/30 rounded-xl p-4">
                 <p className="text-xs text-secondary mb-1">On Leave</p>
                 <p className="text-xl font-bold text-amber-700">{personnelStats.onLeave}</p>
                 <p className="text-[10px] text-slate-500">FMLA / Medical / Military</p>
               </div>
-              <div className="bg-white dark:bg-slate-800/40 border border-red-500/30 rounded-xl p-4">
+              <div className="bg-white dark:bg-zinc-900/40 border border-red-500/30 rounded-xl p-4">
                 <p className="text-xs text-secondary mb-1">Suspended</p>
                 <p className="text-xl font-bold text-red-400">{personnelStats.suspended}</p>
                 <p className="text-[10px] text-slate-500">Pending investigation</p>
               </div>
-              <div className="bg-white dark:bg-slate-800/40 border border-red-500/30 rounded-xl p-4">
+              <div className="bg-white dark:bg-zinc-900/40 border border-red-500/30 rounded-xl p-4">
                 <p className="text-xs text-secondary mb-1">Cert Issues</p>
                 <p className="text-xl font-bold text-red-400">1</p>
                 <p className="text-[10px] text-slate-500">Expired certification</p>
               </div>
-              <div className="bg-white dark:bg-slate-800/40 border border-amber-500/30 rounded-xl p-4">
+              <div className="bg-white dark:bg-zinc-900/40 border border-amber-500/30 rounded-xl p-4">
                 <p className="text-xs text-secondary mb-1">Expiring Soon</p>
                 <p className="text-xl font-bold text-amber-700">1</p>
                 <p className="text-[10px] text-slate-500">Within 30 days</p>
@@ -519,8 +519,8 @@ export default function EmployeeRecords() {
               </div>
 
               {/* Martinez - Expired Firearms */}
-              <div className="mb-4 bg-white dark:bg-slate-800/40 border border-red-500/30 rounded-xl overflow-hidden">
-                <button onClick={() => toggleIssue('martinez')} className="w-full px-5 py-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors">
+              <div className="mb-4 bg-white dark:bg-zinc-900/40 border border-red-500/30 rounded-xl overflow-hidden">
+                <button onClick={() => toggleIssue('martinez')} className="w-full px-5 py-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors">
                   <div className="flex items-center gap-3">
                     <Crosshair className="w-5 h-5 text-red-400" />
                     <div className="text-left">
@@ -585,7 +585,7 @@ export default function EmployeeRecords() {
                           { action: 'If fails: Remedial training + requalify Feb 19 make-up', date: '02/19/2026', completed: false },
                           { action: 'Supervisor counseling: Document failure to meet deadline', date: '02/2026', completed: false }
                         ].map((action, idx) => (
-                          <div key={idx} className="flex items-start gap-3 px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-900/30">
+                          <div key={idx} className="flex items-start gap-3 px-3 py-2 rounded-lg bg-slate-50 dark:bg-zinc-950/30">
                             {action.completed ? <CheckCircle2 className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" /> : <Circle className="w-4 h-4 text-slate-500 mt-0.5 flex-shrink-0" />}
                             <div className="flex-1">
                               <p className={`text-xs font-medium ${action.completed ? 'text-green-400' : 'text-primary'}`}>{action.action}</p>
@@ -597,7 +597,7 @@ export default function EmployeeRecords() {
                       </div>
                     </div>
 
-                    <div className="mt-4 bg-white dark:bg-slate-900/40 border border-border rounded-lg p-3">
+                    <div className="mt-4 bg-white dark:bg-zinc-950/40 border border-border rounded-lg p-3">
                       <h5 className="text-xs font-semibold text-secondary mb-2">Disciplinary Action (Pending):</h5>
                       <p className="text-xs text-secondary">Written counseling for missing annual qualification deadline (25 days overdue indicates lack of personal responsibility for tracking certification requirements). Documentation in personnel file per GCSO disciplinary policy.</p>
                     </div>
@@ -606,10 +606,10 @@ export default function EmployeeRecords() {
                       <button className="px-3 py-2 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 text-blue-400 rounded-lg text-xs font-medium transition-all flex items-center gap-2">
                         <Eye className="w-3.5 h-3.5" />View Full Personnel Record
                       </button>
-                      <button className="px-3 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-xs font-medium transition-all flex items-center gap-2">
+                      <button className="px-3 py-2 bg-slate-50 dark:bg-zinc-800/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-xs font-medium transition-all flex items-center gap-2">
                         <Crosshair className="w-3.5 h-3.5" />View Firearms History
                       </button>
-                      <button className="px-3 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-xs font-medium transition-all flex items-center gap-2">
+                      <button className="px-3 py-2 bg-slate-50 dark:bg-zinc-800/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-xs font-medium transition-all flex items-center gap-2">
                         <FileText className="w-3.5 h-3.5" />Document Counseling
                       </button>
                     </div>
@@ -618,8 +618,8 @@ export default function EmployeeRecords() {
               </div>
 
               {/* Chen - CIT Expiring */}
-              <div className="mb-4 bg-white dark:bg-slate-800/40 border border-amber-500/30 rounded-xl overflow-hidden">
-                <button onClick={() => toggleIssue('chen')} className="w-full px-5 py-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors">
+              <div className="mb-4 bg-white dark:bg-zinc-900/40 border border-amber-500/30 rounded-xl overflow-hidden">
+                <button onClick={() => toggleIssue('chen')} className="w-full px-5 py-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors">
                   <div className="flex items-center gap-3">
                     <ShieldAlert className="w-5 h-5 text-amber-700" />
                     <div className="text-left">
@@ -667,15 +667,15 @@ export default function EmployeeRecords() {
                     <div className="mt-4">
                       <h5 className="text-xs font-semibold text-amber-700 mb-3">Options:</h5>
                       <div className="space-y-2">
-                        <div className="flex items-start gap-3 px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-900/30">
+                        <div className="flex items-start gap-3 px-3 py-2 rounded-lg bg-slate-50 dark:bg-zinc-950/30">
                           <span className="text-xs text-amber-700 font-bold mt-0.5">1.</span>
                           <p className="text-xs text-secondary">Enroll in external CIT recertification course (check local LE training providers, NAMI Georgia)</p>
                         </div>
-                        <div className="flex items-start gap-3 px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-900/30">
+                        <div className="flex items-start gap-3 px-3 py-2 rounded-lg bg-slate-50 dark:bg-zinc-950/30">
                           <span className="text-xs text-amber-700 font-bold mt-0.5">2.</span>
                           <p className="text-xs text-secondary">Request Sheriff approval for special CIT recert class (requires min. 10 deputies, coordinate with Training Division)</p>
                         </div>
-                        <div className="flex items-start gap-3 px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-900/30">
+                        <div className="flex items-start gap-3 px-3 py-2 rounded-lg bg-slate-50 dark:bg-zinc-950/30">
                           <span className="text-xs text-amber-700 font-bold mt-0.5">3.</span>
                           <p className="text-xs text-secondary">Allow certification to lapse, remove from CIT roster, recertify in March 2026 class (10+ days without CIT coverage on C-Shift)</p>
                         </div>
@@ -690,7 +690,7 @@ export default function EmployeeRecords() {
                           { action: 'Training Division: Research external CIT recert options', completed: false },
                           { action: 'Decision by February 10: Enroll external course OR plan March recertification with coverage gap', completed: false }
                         ].map((item, idx) => (
-                          <div key={idx} className="flex items-start gap-3 px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-900/30">
+                          <div key={idx} className="flex items-start gap-3 px-3 py-2 rounded-lg bg-slate-50 dark:bg-zinc-950/30">
                             <Circle className="w-4 h-4 text-slate-500 mt-0.5 flex-shrink-0" />
                             <p className="text-xs text-primary">{item.action}</p>
                           </div>
@@ -702,10 +702,10 @@ export default function EmployeeRecords() {
                       <button className="px-3 py-2 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 text-blue-400 rounded-lg text-xs font-medium transition-all flex items-center gap-2">
                         <Eye className="w-3.5 h-3.5" />View CIT Certification
                       </button>
-                      <button className="px-3 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-xs font-medium transition-all flex items-center gap-2">
+                      <button className="px-3 py-2 bg-slate-50 dark:bg-zinc-800/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-xs font-medium transition-all flex items-center gap-2">
                         <Mail className="w-3.5 h-3.5" />Contact Deputy Chen
                       </button>
-                      <button className="px-3 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-xs font-medium transition-all flex items-center gap-2">
+                      <button className="px-3 py-2 bg-slate-50 dark:bg-zinc-800/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-xs font-medium transition-all flex items-center gap-2">
                         <Search className="w-3.5 h-3.5" />Research External CIT Courses
                       </button>
                     </div>
@@ -727,12 +727,12 @@ export default function EmployeeRecords() {
                       <p className="text-[10px] text-secondary">Real-time personnel analytics • Updated {new Date().toLocaleDateString()}</p>
                     </div>
                   </div>
-                  <button onClick={() => setAiInsightsVisible(false)} className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors">
+                  <button onClick={() => setAiInsightsVisible(false)} className="p-1.5 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors">
                     <X className="w-4 h-4 text-secondary" />
                   </button>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3 border border-border">
+                  <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3 border border-border">
                     <div className="flex items-center gap-2 mb-2">
                       <AlertTriangle className="w-4 h-4 text-red-400" />
                       <span className="text-xs font-semibold text-red-400">Certification Risk</span>
@@ -743,7 +743,7 @@ export default function EmployeeRecords() {
                       <span className="text-[10px] text-red-400">Immediate action required for both</span>
                     </div>
                   </div>
-                  <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3 border border-border">
+                  <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3 border border-border">
                     <div className="flex items-center gap-2 mb-2">
                       <Activity className="w-4 h-4 text-amber-700" />
                       <span className="text-xs font-semibold text-amber-700">Staffing Pressure</span>
@@ -754,7 +754,7 @@ export default function EmployeeRecords() {
                       <span className="text-[10px] text-amber-700">2 positions effectively offline</span>
                     </div>
                   </div>
-                  <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3 border border-border">
+                  <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3 border border-border">
                     <div className="flex items-center gap-2 mb-2">
                       <BarChart3 className="w-4 h-4 text-green-400" />
                       <span className="text-xs font-semibold text-green-400">Workforce Health</span>
@@ -786,7 +786,7 @@ export default function EmployeeRecords() {
                   <h3 className="text-lg font-bold text-primary">Personnel Directory</h3>
                   <span className="text-xs text-slate-500">Showing {filteredEmployees.length} of {personnelStats.total} total employees</span>
                 </div>
-                <div className="flex items-center gap-1 bg-white dark:bg-slate-800/40 border border-slate-700/50 rounded-lg p-1">
+                <div className="flex items-center gap-1 bg-white dark:bg-zinc-900/40 border border-slate-700/50 rounded-lg p-1">
                   <button
                     onClick={() => setViewMode('card')}
                     className={`p-2 rounded-md transition-all ${viewMode === 'card' ? 'bg-amber-500/20 text-amber-700' : 'text-secondary hover:text-slate-900 dark:hover:text-white'}`}
@@ -813,23 +813,23 @@ export default function EmployeeRecords() {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search by name, badge, position, department..."
-                    className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary text-sm placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
+                    className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-primary text-sm placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
                   />
                 </div>
-                <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} className="px-3 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer">
+                <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} className="px-3 py-2.5 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-primary text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer">
                   <option value="all">All Status</option>
                   <option value="active">Active</option>
                   <option value="on-leave">On Leave</option>
                   <option value="suspended">Suspended</option>
                 </select>
-                <select value={filterDepartment} onChange={(e) => setFilterDepartment(e.target.value)} className="px-3 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer">
+                <select value={filterDepartment} onChange={(e) => setFilterDepartment(e.target.value)} className="px-3 py-2.5 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-primary text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer">
                   <option value="all">All Divisions</option>
                   <option value="Patrol">Patrol Division</option>
                   <option value="Administrative">Administrative</option>
                   <option value="Human Resources">Human Resources</option>
                   <option value="Detention">Detention Center</option>
                 </select>
-                <select value={filterCertStatus} onChange={(e) => setFilterCertStatus(e.target.value)} className="px-3 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer">
+                <select value={filterCertStatus} onChange={(e) => setFilterCertStatus(e.target.value)} className="px-3 py-2.5 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-primary text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer">
                   <option value="all">All Cert Status</option>
                   <option value="compliant">Compliant</option>
                   <option value="expiring">Expiring</option>
@@ -839,8 +839,8 @@ export default function EmployeeRecords() {
 
               {/* Employee List View */}
               {viewMode === 'list' && (
-                <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl overflow-hidden">
-                  <div className="grid grid-cols-[1fr_120px_140px_120px_100px_80px] gap-2 px-5 py-3 bg-white dark:bg-slate-800/60 border-b border-border text-[10px] font-semibold text-secondary uppercase tracking-wider">
+                <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl overflow-hidden">
+                  <div className="grid grid-cols-[1fr_120px_140px_120px_100px_80px] gap-2 px-5 py-3 bg-white dark:bg-zinc-900/60 border-b border-border text-[10px] font-semibold text-secondary uppercase tracking-wider">
                     <span>Employee</span>
                     <span>Badge</span>
                     <span>Department</span>
@@ -851,7 +851,7 @@ export default function EmployeeRecords() {
                   {filteredEmployees.map(employee => {
                     const statusConfig = getStatusConfig(employee.status);
                     return (
-                      <div key={employee.id} className={`grid grid-cols-[1fr_120px_140px_120px_100px_80px] gap-2 px-5 py-3 items-center border-b border-border dark:border-slate-700/30 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors ${
+                      <div key={employee.id} className={`grid grid-cols-[1fr_120px_140px_120px_100px_80px] gap-2 px-5 py-3 items-center border-b border-border dark:border-slate-700/30 hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors ${
                         employee.certAlert === 'expired' ? 'bg-red-500/5' : employee.certAlert === 'expiring' ? 'bg-amber-500/5' : ''
                       }`}>
                         <div className="flex items-center gap-3 min-w-0">
@@ -906,7 +906,7 @@ export default function EmployeeRecords() {
                   const statusConfig = getStatusConfig(employee.status);
 
                   return (
-                    <div key={employee.id} className={`bg-white dark:bg-slate-800/40 border rounded-xl overflow-hidden ${
+                    <div key={employee.id} className={`bg-white dark:bg-zinc-900/40 border rounded-xl overflow-hidden ${
                       employee.certAlert === 'expired' ? 'border-red-500/30' :
                       employee.certAlert === 'expiring' ? 'border-amber-500/30' :
                       'border-slate-700/50'
@@ -927,7 +927,7 @@ export default function EmployeeRecords() {
                             <div className="flex-1 min-w-0">
                               <div className="flex items-center gap-2 mb-2 flex-wrap">
                                 <h4 className="text-lg font-semibold text-primary">{employee.name}</h4>
-                                <span className="px-2 py-0.5 bg-white dark:bg-slate-700/50 rounded text-xs text-secondary font-mono">{employee.badge}</span>
+                                <span className="px-2 py-0.5 bg-white dark:bg-zinc-800/50 rounded text-xs text-secondary font-mono">{employee.badge}</span>
                                 <span className={`px-2 py-0.5 rounded text-xs font-bold border ${statusConfig.bg} ${statusConfig.text} ${statusConfig.border}`}>
                                   {statusConfig.label}
                                 </span>
@@ -981,7 +981,7 @@ export default function EmployeeRecords() {
 
                               {/* POST Cert (sworn only) */}
                               {employee.postCert && (
-                                <div className="mt-3 p-2 bg-slate-50 dark:bg-slate-900/30 rounded-lg">
+                                <div className="mt-3 p-2 bg-slate-50 dark:bg-zinc-950/30 rounded-lg">
                                   <div className="flex items-center justify-between text-xs">
                                     <div className="flex items-center gap-2">
                                       <Shield className="w-3.5 h-3.5 text-blue-400" />
@@ -999,7 +999,7 @@ export default function EmployeeRecords() {
                                 {employee.certifications.map((cert, idx) => {
                                   const certConfig = getCertStatusConfig(cert.status);
                                   return (
-                                    <div key={idx} className={`px-3 py-2 rounded-lg border ${certConfig.border} ${cert.status === 'expired' ? 'bg-red-500/5' : cert.status === 'expiring' ? 'bg-amber-500/5' : 'bg-slate-50 dark:bg-slate-900/30'}`}>
+                                    <div key={idx} className={`px-3 py-2 rounded-lg border ${certConfig.border} ${cert.status === 'expired' ? 'bg-red-500/5' : cert.status === 'expiring' ? 'bg-amber-500/5' : 'bg-slate-50 dark:bg-zinc-950/30'}`}>
                                       <div className="flex items-center justify-between">
                                         <p className="text-[10px] font-medium text-secondary truncate flex-1">{cert.name}</p>
                                         <span className={`px-1.5 py-0.5 rounded text-[9px] font-bold ml-2 ${certConfig.bg} ${certConfig.text}`}>
@@ -1023,12 +1023,12 @@ export default function EmployeeRecords() {
 
                               {/* Performance & Disciplinary */}
                               <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-2">
-                                <div className="px-3 py-2 bg-slate-50 dark:bg-slate-900/30 rounded-lg">
+                                <div className="px-3 py-2 bg-slate-50 dark:bg-zinc-950/30 rounded-lg">
                                   <p className="text-[10px] text-slate-500 mb-1">Last Annual Evaluation</p>
                                   <p className="text-xs text-secondary">{employee.performance.lastEvaluation} - {employee.performance.rating}</p>
                                   <p className="text-[10px] text-slate-500 mt-0.5">Evaluator: {employee.performance.evaluator}</p>
                                 </div>
-                                <div className={`px-3 py-2 rounded-lg ${employee.disciplinary.status === 'clean' ? 'bg-slate-50 dark:bg-slate-900/30' : 'bg-red-500/5 border border-red-500/20'}`}>
+                                <div className={`px-3 py-2 rounded-lg ${employee.disciplinary.status === 'clean' ? 'bg-slate-50 dark:bg-zinc-950/30' : 'bg-red-500/5 border border-red-500/20'}`}>
                                   <p className="text-[10px] text-slate-500 mb-1">Disciplinary History</p>
                                   <p className={`text-xs ${employee.disciplinary.status === 'clean' ? 'text-green-400' : 'text-red-400'}`}>
                                     {employee.disciplinary.note}
@@ -1046,7 +1046,7 @@ export default function EmployeeRecords() {
                               <Eye className="w-4 h-4" />
                               Full Record
                             </button>
-                            <button className="px-4 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-sm font-medium transition-all flex items-center gap-2">
+                            <button className="px-4 py-2 bg-slate-50 dark:bg-zinc-800/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-sm font-medium transition-all flex items-center gap-2">
                               <Download className="w-4 h-4" />
                               Export
                             </button>
@@ -1064,14 +1064,14 @@ export default function EmployeeRecords() {
       {selectedEmployee && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setSelectedEmployee(null)} />
-          <div className="relative bg-white dark:bg-slate-900 border border-border rounded-2xl p-6 max-w-4xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
+          <div className="relative bg-white dark:bg-zinc-950 border border-border rounded-2xl p-6 max-w-4xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
             <div className="flex items-start justify-between mb-6">
               <div>
                 <h3 className="text-2xl font-bold text-primary mb-2">{selectedEmployee.name}</h3>
                 <p className="text-sm text-secondary">{selectedEmployee.position} • Badge {selectedEmployee.badge} • {selectedEmployee.department}</p>
                 {selectedEmployee.hireDate && <p className="text-xs text-slate-500 mt-1">Hire Date: {selectedEmployee.hireDate} ({selectedEmployee.yearsOfService})</p>}
               </div>
-              <button onClick={() => setSelectedEmployee(null)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors">
+              <button onClick={() => setSelectedEmployee(null)} className="p-2 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors">
                 <X className="w-5 h-5 text-secondary" />
               </button>
             </div>
@@ -1079,28 +1079,28 @@ export default function EmployeeRecords() {
             <div className="space-y-6">
               {/* Contact & Assignment */}
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                <div className="bg-white dark:bg-slate-800/40 rounded-xl p-3 border border-slate-700/50">
+                <div className="bg-white dark:bg-zinc-900/40 rounded-xl p-3 border border-slate-700/50">
                   <p className="text-[10px] text-slate-500 mb-1">Email</p>
                   <p className="text-xs text-secondary">{selectedEmployee.email}</p>
                 </div>
-                <div className="bg-white dark:bg-slate-800/40 rounded-xl p-3 border border-slate-700/50">
+                <div className="bg-white dark:bg-zinc-900/40 rounded-xl p-3 border border-slate-700/50">
                   <p className="text-[10px] text-slate-500 mb-1">Phone</p>
                   <p className="text-xs text-secondary">{selectedEmployee.phone}</p>
                 </div>
-                <div className="bg-white dark:bg-slate-800/40 rounded-xl p-3 border border-slate-700/50">
+                <div className="bg-white dark:bg-zinc-900/40 rounded-xl p-3 border border-slate-700/50">
                   <p className="text-[10px] text-slate-500 mb-1">Supervisor</p>
                   <p className="text-xs text-secondary">{selectedEmployee.supervisor}</p>
                 </div>
-                <div className="bg-white dark:bg-slate-800/40 rounded-xl p-3 border border-slate-700/50">
+                <div className="bg-white dark:bg-zinc-900/40 rounded-xl p-3 border border-slate-700/50">
                   <p className="text-[10px] text-slate-500 mb-1">Duty Status</p>
                   <p className={`text-xs ${selectedEmployee.dutyRestriction ? 'text-red-400' : 'text-green-400'}`}>{selectedEmployee.dutyStatus}</p>
                 </div>
-                <div className="bg-white dark:bg-slate-800/40 rounded-xl p-3 border border-slate-700/50">
+                <div className="bg-white dark:bg-zinc-900/40 rounded-xl p-3 border border-slate-700/50">
                   <p className="text-[10px] text-slate-500 mb-1">Assignment</p>
                   <p className="text-xs text-secondary">{selectedEmployee.assignment}</p>
                 </div>
                 {selectedEmployee.takeHomeVehicle && (
-                  <div className="bg-white dark:bg-slate-800/40 rounded-xl p-3 border border-slate-700/50">
+                  <div className="bg-white dark:bg-zinc-900/40 rounded-xl p-3 border border-slate-700/50">
                     <p className="text-[10px] text-slate-500 mb-1">Vehicle</p>
                     <p className="text-xs text-secondary">{selectedEmployee.takeHomeVehicle}</p>
                   </div>
@@ -1129,7 +1129,7 @@ export default function EmployeeRecords() {
                   {selectedEmployee.certifications.map((cert, idx) => {
                     const certConfig = getCertStatusConfig(cert.status);
                     return (
-                      <div key={idx} className={`p-3 rounded-lg border ${certConfig.border} ${cert.status === 'expired' ? 'bg-red-500/5' : cert.status === 'expiring' ? 'bg-amber-500/5' : 'bg-slate-100/80 dark:bg-slate-800/30'}`}>
+                      <div key={idx} className={`p-3 rounded-lg border ${certConfig.border} ${cert.status === 'expired' ? 'bg-red-500/5' : cert.status === 'expiring' ? 'bg-amber-500/5' : 'bg-slate-100/80 dark:bg-zinc-900/30'}`}>
                         <div className="flex items-center justify-between mb-1">
                           <p className="text-xs font-medium text-primary">{cert.name}</p>
                           <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${certConfig.bg} ${certConfig.text}`}>{certConfig.label}</span>
@@ -1149,7 +1149,7 @@ export default function EmployeeRecords() {
               </div>
 
               {/* Performance */}
-              <div className="bg-slate-100/80 dark:bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
+              <div className="bg-slate-100/80 dark:bg-zinc-900/30 rounded-xl p-4 border border-slate-700/50">
                 <h4 className="text-sm font-semibold text-primary mb-3">Performance Evaluations</h4>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3 text-xs">
                   <div><span className="text-slate-500">Last Evaluation:</span> <span className="text-secondary">{selectedEmployee.performance.lastEvaluation}</span></div>
@@ -1162,7 +1162,7 @@ export default function EmployeeRecords() {
               </div>
 
               {/* Personnel Summary */}
-              <div className="bg-slate-100/80 dark:bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
+              <div className="bg-slate-100/80 dark:bg-zinc-900/30 rounded-xl p-4 border border-slate-700/50">
                 <h4 className="text-sm font-semibold text-primary mb-3">Personnel File Summary</h4>
                 <div className="space-y-2 text-xs">
                   <div><span className="text-slate-500">Position Changes:</span> <span className="text-secondary">{selectedEmployee.personnelSummary.positionChanges}</span></div>
@@ -1185,8 +1185,8 @@ export default function EmployeeRecords() {
               <div className="flex gap-3 pt-4 border-t border-border">
                 <button className="flex-1 px-4 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-xl font-medium transition-all text-sm">Print Personnel File</button>
                 <button onClick={() => navigate(createPageUrl('PerformanceReviews'))} className="flex-1 px-4 py-3 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-400 rounded-xl font-medium transition-all text-sm">View Performance</button>
-                <button onClick={() => navigate(createPageUrl('TrainingCertifications'))} className="flex-1 px-4 py-3 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-primary rounded-xl font-medium transition-all text-sm">Training History</button>
-                <button onClick={() => setSelectedEmployee(null)} className="px-4 py-3 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded-xl font-medium transition-all text-sm">Close</button>
+                <button onClick={() => navigate(createPageUrl('TrainingCertifications'))} className="flex-1 px-4 py-3 bg-slate-50 dark:bg-zinc-800/40 hover:bg-slate-700/60 border border-slate-600/50 text-primary rounded-xl font-medium transition-all text-sm">Training History</button>
+                <button onClick={() => setSelectedEmployee(null)} className="px-4 py-3 bg-white dark:bg-zinc-900/40 hover:bg-slate-100 dark:hover:bg-zinc-900/60 border border-slate-700/50 text-secondary rounded-xl font-medium transition-all text-sm">Close</button>
               </div>
             </div>
           </div>
@@ -1209,26 +1209,26 @@ export default function EmployeeRecords() {
               <p className="text-xs text-secondary mt-1">GCSO Human Resources Division</p>
             </div>
             <div className="p-4 space-y-3">
-              <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
+              <div className="p-3 bg-white dark:bg-zinc-900/40 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-900/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-primary">HR Director</p>
                 <p className="text-xs text-secondary">Personnel file access, confidential records</p>
                 <p className="text-xs text-amber-700 mt-1">Ext. 4500</p>
               </div>
-              <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
+              <div className="p-3 bg-white dark:bg-zinc-900/40 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-900/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-primary">Records Custodian</p>
                 <p className="text-xs text-secondary">HR Specialist J. Martinez</p>
                 <p className="text-xs text-amber-700 mt-1">Ext. 4505</p>
               </div>
-              <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
+              <div className="p-3 bg-white dark:bg-zinc-900/40 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-900/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-primary">Training Division</p>
                 <p className="text-xs text-secondary">Sgt. R. Martinez - Certifications & Training</p>
                 <p className="text-xs text-amber-700 mt-1">Ext. 4521</p>
               </div>
-              <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
+              <div className="p-3 bg-white dark:bg-zinc-900/40 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-900/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-primary">Open Records Requests</p>
                 <p className="text-xs text-secondary">GA Open Records Act (O.C.G.A. 50-18-70)</p>
               </div>
-              <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
+              <div className="p-3 bg-white dark:bg-zinc-900/40 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-900/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-primary">GCSO Personnel Policies</p>
                 <p className="text-xs text-secondary">Personnel file management, retention schedule</p>
               </div>

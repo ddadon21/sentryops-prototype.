@@ -72,13 +72,13 @@
   --color-text-muted:     rgb(100 116 139);        /* slate-500 */
 
   /* ── Surface ──────────────────────────────────────────────── */
-  --color-surface:        rgba(15, 23, 42, 0.70);  /* slate-900/70 */
-  --color-surface-raised: rgba(15, 23, 42, 0.96);  /* slate-900/96 */
-  --color-surface-sunken: rgba(30, 41, 59, 0.50);  /* slate-800/50 */
+  --color-surface:        rgba(9, 9, 11, 0.70);    /* zinc-950/70 */
+  --color-surface-raised: rgba(9, 9, 11, 0.96);    /* zinc-950/96 */
+  --color-surface-sunken: rgba(24, 24, 27, 0.50);  /* zinc-900/50 */
 
   /* ── Borders ──────────────────────────────────────────────── */
-  --color-border:        rgba(51, 65, 85, 0.50);  /* slate-700/50 */
-  --color-border-subtle: rgba(51, 65, 85, 0.25);
+  --color-border:        rgba(63, 63, 70, 0.50);  /* zinc-700/50 */
+  --color-border-subtle: rgba(63, 63, 70, 0.25);
 
   /* ── Interactive ──────────────────────────────────────────── */
   --color-primary:       rgb(59 130 246);   /* blue-500 — slightly brighter in dark */
@@ -124,7 +124,7 @@
 
 @layer base {
   html, body {
-    @apply m-0 p-0 antialiased dark:bg-slate-950;
+    @apply m-0 p-0 antialiased dark:bg-black;
     transition: background-color 0.2s ease, color 0.2s ease;
   }
 

@@ -246,7 +246,7 @@ const MedicalManagement = () => {
       case 'Critical': return 'text-red-400 bg-red-500/20 border-red-500/30';
       case 'High': return 'text-orange-400 bg-orange-500/20 border-orange-500/30';
       case 'Medium': return 'text-orange-700 bg-orange-500/20 border-orange-500/30';
-      case 'Low': return 'text-slate-700 dark:text-slate-400 bg-slate-50 dark:bg-slate-700/40 border-slate-600/50';
+      case 'Low': return 'text-slate-700 dark:text-slate-400 bg-slate-50 dark:bg-zinc-800/40 border-slate-600/50';
       default: return 'text-slate-700 dark:text-slate-400 bg-slate-500/20 border-slate-500/30';
     }
   };
@@ -278,28 +278,28 @@ const MedicalManagement = () => {
 
         {/* Medical Stats */}
         <div className="grid grid-cols-4 gap-4 mb-6">
-          <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4">
+          <div className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-slate-700 rounded-lg p-4">
             <div className="flex items-center justify-between mb-2">
               <div className="text-sm text-slate-700 dark:text-slate-400">Total Under Medical Care</div>
               <Hospital className="w-5 h-5 text-slate-700 dark:text-slate-400" />
             </div>
             <div className="text-2xl font-bold text-slate-900 dark:text-white">{medicalStats.totalUnderCare}</div>
           </div>
-          <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4">
+          <div className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-slate-700 rounded-lg p-4">
             <div className="flex items-center justify-between mb-2">
               <div className="text-sm text-slate-700 dark:text-slate-400">Critical Cases</div>
               <AlertTriangle className="w-5 h-5 text-red-400" />
             </div>
             <div className="text-2xl font-bold text-red-400">{medicalStats.critical}</div>
           </div>
-          <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4">
+          <div className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-slate-700 rounded-lg p-4">
             <div className="flex items-center justify-between mb-2">
               <div className="text-sm text-slate-700 dark:text-slate-400">Active Medications</div>
               <Pill className="w-5 h-5 text-slate-700 dark:text-slate-400" />
             </div>
             <div className="text-2xl font-bold text-slate-900 dark:text-white">{medicalStats.activeMedications}</div>
           </div>
-          <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4">
+          <div className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-slate-700 rounded-lg p-4">
             <div className="flex items-center justify-between mb-2">
               <div className="text-sm text-slate-700 dark:text-slate-400">Sick Call Pending</div>
               <FileText className="w-5 h-5 text-orange-700" />
@@ -429,7 +429,7 @@ const MedicalManagement = () => {
                     </h4>
                     <div className="space-y-1">
                       {record.medications.map((med, idx) => (
-                        <div key={idx} className="text-sm text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900/50 border border-slate-700 rounded p-2">
+                        <div key={idx} className="text-sm text-slate-700 dark:text-slate-300 bg-white dark:bg-zinc-950/50 border border-slate-700 rounded p-2">
                           • {med}
                         </div>
                       ))}
@@ -457,11 +457,11 @@ const MedicalManagement = () => {
         {/* Medication Schedule */}
         {selectedTab === 'medications' && (
           <div className="space-y-4">
-            <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-6">
+            <div className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-slate-700 rounded-lg p-6">
               <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4">Today's Medication Rounds</h3>
               <div className="space-y-3">
                 {medicationSchedule.map((round, idx) => (
-                  <div key={idx} className="bg-white dark:bg-slate-900/50 border border-slate-700 rounded-lg p-4">
+                  <div key={idx} className="bg-white dark:bg-zinc-950/50 border border-slate-700 rounded-lg p-4">
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-4">
                         <div className="text-2xl font-bold text-slate-900 dark:text-white">{round.time}</div>
@@ -496,7 +496,7 @@ const MedicalManagement = () => {
                     </div>
                     {round.status === 'In Progress' && (
                       <div className="mt-3">
-                        <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2">
+                        <div className="w-full bg-slate-200 dark:bg-zinc-800 rounded-full h-2">
                           <div
                             className="bg-amber-500 h-2 rounded-full transition-all"
                             style={{ width: `${(round.administered / round.inmates) * 100}%` }}
@@ -515,7 +515,7 @@ const MedicalManagement = () => {
         {selectedTab === 'sick-call' && (
           <div className="space-y-4">
             {sickCallRequests.map((request, idx) => (
-              <div key={idx} className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-6">
+              <div key={idx} className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-slate-700 rounded-lg p-6">
                 <div className="flex items-start justify-between mb-3">
                   <div>
                     <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-1">{request.name}</h3>
@@ -529,7 +529,7 @@ const MedicalManagement = () => {
                     {request.priority}
                   </span>
                 </div>
-                <div className="bg-white dark:bg-slate-900/50 border border-slate-700 rounded-lg p-4 mb-3">
+                <div className="bg-white dark:bg-zinc-950/50 border border-slate-700 rounded-lg p-4 mb-3">
                   <div className="text-sm text-slate-700 dark:text-slate-400 mb-1">Complaint:</div>
                   <div className="text-slate-900 dark:text-white">{request.complaint}</div>
                 </div>
@@ -559,7 +559,7 @@ const MedicalManagement = () => {
         {selectedTab === 'all' && (
           <div className="space-y-4">
             {chronicCases.map((record, idx) => (
-              <div key={idx} className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-6">
+              <div key={idx} className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-slate-700 rounded-lg p-6">
                 <div className="flex items-start justify-between mb-3">
                   <div>
                     <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-1">{record.name}</h3>
@@ -570,13 +570,13 @@ const MedicalManagement = () => {
                   </div>
                   <span className={`px-3 py-1 rounded text-sm font-medium ${
                     record.status === 'Stable' ? 'bg-emerald-500/20 text-emerald-400' :
-                    record.status === 'Improving' ? 'bg-slate-50 dark:bg-slate-700/40 text-slate-500' :
+                    record.status === 'Improving' ? 'bg-slate-50 dark:bg-zinc-800/40 text-slate-500' :
                     'bg-orange-500/20 text-orange-700'
                   }`}>
                     {formatStatus(record.status)}
                   </span>
                 </div>
-                <div className="bg-white dark:bg-slate-800/60 border border-slate-700/50 rounded-lg p-4 mb-3">
+                <div className="bg-white dark:bg-zinc-900/60 border border-slate-700/50 rounded-lg p-4 mb-3">
                   <h4 className="text-slate-700 dark:text-slate-300 font-semibold mb-2">{record.condition}</h4>
                   <div className="space-y-1">
                     {record.medications.map((med, medIdx) => (

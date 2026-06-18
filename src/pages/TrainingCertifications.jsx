@@ -454,7 +454,7 @@ export default function TrainingCertifications() {
             {/* Mandatory Training Compliance Summary Cards */}
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-6">
               {Object.entries(mandatoryCompliance).map(([key, item]) => (
-                <div key={key} className={`bg-white dark:bg-slate-800/40 border rounded-xl p-4 ${
+                <div key={key} className={`bg-white dark:bg-zinc-900/40 border rounded-xl p-4 ${
                   item.status === 'critical' ? 'border-red-500/30' : item.status === 'warning' ? 'border-amber-500/30' : 'border-green-500/30'
                 }`}>
                   <p className="text-xs text-secondary mb-1 truncate">{item.label}</p>
@@ -462,7 +462,7 @@ export default function TrainingCertifications() {
                     item.status === 'critical' ? 'text-red-400' : item.status === 'warning' ? 'text-amber-700' : 'text-green-400'
                   }`}>{item.pct}</p>
                   <p className="text-xs text-slate-500">{item.compliant}/{item.total}</p>
-                  <div className="mt-2 w-full h-1.5 bg-white dark:bg-slate-700/50 rounded-full overflow-hidden">
+                  <div className="mt-2 w-full h-1.5 bg-white dark:bg-zinc-800/50 rounded-full overflow-hidden">
                     <div
                       className={`h-full rounded-full ${
                         item.status === 'critical' ? 'bg-red-500' : item.status === 'warning' ? 'bg-amber-500' : 'bg-green-500'
@@ -487,10 +487,10 @@ export default function TrainingCertifications() {
               </div>
 
               {/* Expired POST Certifications */}
-              <div className="mb-4 bg-white dark:bg-slate-800/40 border border-red-500/30 rounded-xl overflow-hidden">
+              <div className="mb-4 bg-white dark:bg-zinc-900/40 border border-red-500/30 rounded-xl overflow-hidden">
                 <button
                   onClick={() => toggleViolation('post')}
-                  className="w-full px-5 py-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors"
+                  className="w-full px-5 py-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors"
                 >
                   <div className="flex items-center gap-3">
                     <Shield className="w-5 h-5 text-red-400" />
@@ -539,10 +539,10 @@ export default function TrainingCertifications() {
               </div>
 
               {/* Overdue Firearms Qualifications */}
-              <div className="mb-4 bg-white dark:bg-slate-800/40 border border-red-500/30 rounded-xl overflow-hidden">
+              <div className="mb-4 bg-white dark:bg-zinc-900/40 border border-red-500/30 rounded-xl overflow-hidden">
                 <button
                   onClick={() => toggleViolation('firearms')}
-                  className="w-full px-5 py-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors"
+                  className="w-full px-5 py-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors"
                 >
                   <div className="flex items-center gap-3">
                     <Crosshair className="w-5 h-5 text-red-400" />
@@ -566,7 +566,7 @@ export default function TrainingCertifications() {
                           <h5 className="text-xs font-semibold text-secondary mb-2">{div.name} ({div.count}):</h5>
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                             {div.officers.map((officer, oidx) => (
-                              <div key={oidx} className="bg-white dark:bg-slate-900/40 border border-border rounded-lg px-3 py-2 flex items-center justify-between">
+                              <div key={oidx} className="bg-white dark:bg-zinc-950/40 border border-border rounded-lg px-3 py-2 flex items-center justify-between">
                                 <div>
                                   <p className="text-xs font-medium text-primary">{officer.name} <span className="text-slate-500">{officer.badge}</span></p>
                                 </div>
@@ -579,7 +579,7 @@ export default function TrainingCertifications() {
                     </div>
 
                     {/* Firearms Qualification Requirements */}
-                    <div className="mt-4 bg-white dark:bg-slate-900/40 border border-border rounded-lg p-4">
+                    <div className="mt-4 bg-white dark:bg-zinc-950/40 border border-border rounded-lg p-4">
                       <h5 className="text-xs font-semibold text-secondary mb-2">Firearms Qualification Requirements (GCSO Policy 4.12):</h5>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-secondary">
                         <div><span className="text-slate-500">Course of Fire:</span> Georgia POST Firearms Qualification Course</div>
@@ -597,7 +597,7 @@ export default function TrainingCertifications() {
                       </h5>
                       <div className="space-y-2">
                         {criticalViolations.overdueFirearms.correctiveActions.map((action, idx) => (
-                          <div key={idx} className="flex items-start gap-3 px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-900/30">
+                          <div key={idx} className="flex items-start gap-3 px-3 py-2 rounded-lg bg-slate-50 dark:bg-zinc-950/30">
                             {action.completed ? (
                               <CheckCircle2 className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
                             ) : (
@@ -617,7 +617,7 @@ export default function TrainingCertifications() {
                       </div>
                     </div>
 
-                    <div className="mt-4 p-3 bg-white dark:bg-slate-900/40 border border-border rounded-lg">
+                    <div className="mt-4 p-3 bg-white dark:bg-zinc-950/40 border border-border rounded-lg">
                       <div className="flex flex-wrap gap-x-6 gap-y-1 text-xs text-secondary">
                         <div><span className="text-slate-500">Responsible:</span> Training Division (Sgt. Martinez), Division Commanders</div>
                         <div><span className="text-slate-500">Deadline:</span> All qualifications complete by February 19, 2026</div>
@@ -625,15 +625,15 @@ export default function TrainingCertifications() {
                     </div>
 
                     <div className="mt-4 flex flex-wrap gap-2">
-                      <button className="px-3 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-xs font-medium transition-all flex items-center gap-2">
+                      <button className="px-3 py-2 bg-slate-50 dark:bg-zinc-800/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-xs font-medium transition-all flex items-center gap-2">
                         <Calendar className="w-3.5 h-3.5" />
                         View Range Schedule
                       </button>
-                      <button className="px-3 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-xs font-medium transition-all flex items-center gap-2">
+                      <button className="px-3 py-2 bg-slate-50 dark:bg-zinc-800/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-xs font-medium transition-all flex items-center gap-2">
                         <Printer className="w-3.5 h-3.5" />
                         Print Attendance Roster
                       </button>
-                      <button className="px-3 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-xs font-medium transition-all flex items-center gap-2">
+                      <button className="px-3 py-2 bg-slate-50 dark:bg-zinc-800/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-xs font-medium transition-all flex items-center gap-2">
                         <FileText className="w-3.5 h-3.5" />
                         View Firearms Policy 4.12
                       </button>
@@ -643,10 +643,10 @@ export default function TrainingCertifications() {
               </div>
 
               {/* Expired TASER Certifications */}
-              <div className="mb-4 bg-white dark:bg-slate-800/40 border border-red-500/30 rounded-xl overflow-hidden">
+              <div className="mb-4 bg-white dark:bg-zinc-900/40 border border-red-500/30 rounded-xl overflow-hidden">
                 <button
                   onClick={() => toggleViolation('taser')}
-                  className="w-full px-5 py-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors"
+                  className="w-full px-5 py-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors"
                 >
                   <div className="flex items-center gap-3">
                     <Zap className="w-5 h-5 text-red-400" />
@@ -703,17 +703,17 @@ export default function TrainingCertifications() {
                       </div>
                     </div>
 
-                    <div className="mt-4 p-3 bg-white dark:bg-slate-900/40 border border-border rounded-lg text-xs text-secondary">
+                    <div className="mt-4 p-3 bg-white dark:bg-zinc-950/40 border border-border rounded-lg text-xs text-secondary">
                       <p className="font-medium text-secondary mb-1">Supervisor Accountability:</p>
                       <p>Supervisors responsible for ensuring deputies track certification expiration dates and schedule renewals. Deputy personnel files should include certification tracker with upcoming expiration dates flagged 60-90 days in advance.</p>
                     </div>
 
                     <div className="mt-4 flex flex-wrap gap-2">
-                      <button className="px-3 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-xs font-medium transition-all flex items-center gap-2">
+                      <button className="px-3 py-2 bg-slate-50 dark:bg-zinc-800/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-xs font-medium transition-all flex items-center gap-2">
                         <FileText className="w-3.5 h-3.5" />
                         View TASER Policy 4.15
                       </button>
-                      <button className="px-3 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-xs font-medium transition-all flex items-center gap-2">
+                      <button className="px-3 py-2 bg-slate-50 dark:bg-zinc-800/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-xs font-medium transition-all flex items-center gap-2">
                         <Calendar className="w-3.5 h-3.5" />
                         Schedule Recertification
                       </button>
@@ -751,7 +751,7 @@ export default function TrainingCertifications() {
                     className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
                       activeCategory === filter.id
                         ? 'bg-amber-500 text-white'
-                        : 'bg-white dark:bg-slate-800/40 border border-slate-700/50 text-secondary hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800/60'
+                        : 'bg-white dark:bg-zinc-900/40 border border-slate-700/50 text-secondary hover:text-primary hover:bg-slate-100 dark:hover:bg-zinc-900/60'
                     }`}
                   >
                     {filter.label}
@@ -768,10 +768,10 @@ export default function TrainingCertifications() {
                     const isExpanded = expandedCategory[category.id];
 
                     return (
-                      <div key={category.id} className={`bg-white dark:bg-slate-800/40 border ${category.borderColor} rounded-xl overflow-hidden`}>
+                      <div key={category.id} className={`bg-white dark:bg-zinc-900/40 border ${category.borderColor} rounded-xl overflow-hidden`}>
                         <button
                           onClick={() => toggleCategory(category.id)}
-                          className="w-full px-5 py-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors"
+                          className="w-full px-5 py-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors"
                         >
                           <div className="flex items-center gap-3">
                             <div className={`w-10 h-10 ${category.bgColor} rounded-xl flex items-center justify-center`}>
@@ -798,7 +798,7 @@ export default function TrainingCertifications() {
                         {isExpanded && (
                           <div className="px-5 pb-5 border-t border-border dark:border-slate-700/30">
                             {/* Authority & Requirement */}
-                            <div className="mt-4 p-3 bg-white dark:bg-slate-900/40 border border-border rounded-lg">
+                            <div className="mt-4 p-3 bg-white dark:bg-zinc-950/40 border border-border rounded-lg">
                               <p className="text-[10px] text-slate-500 mb-1">Regulatory Authority: <span className="text-secondary">{category.authority}</span></p>
                               <p className="text-xs text-secondary mt-1">{category.requirement}</p>
                             </div>
@@ -878,7 +878,7 @@ export default function TrainingCertifications() {
 
                                   {/* Not Required */}
                                   {category.stats.notRequired > 0 && (
-                                    <div className="bg-slate-100 dark:bg-slate-700/20 border border-slate-600/30 rounded-lg p-3 mb-3">
+                                    <div className="bg-slate-100 dark:bg-zinc-800/20 border border-slate-600/30 rounded-lg p-3 mb-3">
                                       <p className="text-xs text-secondary">{category.stats.notRequired} {category.stats.notRequiredNote}</p>
                                     </div>
                                   )}
@@ -923,7 +923,7 @@ export default function TrainingCertifications() {
                                     <button className="mt-2 text-[10px] text-blue-400 hover:text-blue-300 underline">View Full List</button>
                                   </div>
                                   {category.upcoming.within90 && (
-                                    <div className="bg-slate-100 dark:bg-slate-700/20 border border-slate-600/30 rounded-lg p-3">
+                                    <div className="bg-slate-100 dark:bg-zinc-800/20 border border-slate-600/30 rounded-lg p-3">
                                       <div className="flex items-center gap-2">
                                         <Clock className="w-3.5 h-3.5 text-secondary" />
                                         <span className="text-xs font-medium text-secondary">61-90 days: {category.upcoming.within90.count}</span>
@@ -941,7 +941,7 @@ export default function TrainingCertifications() {
                                 <h5 className="text-xs font-semibold text-secondary mb-3">Qualification Breakdown by Weapon:</h5>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                                   {category.weaponBreakdown.map((weapon, idx) => (
-                                    <div key={idx} className="bg-white dark:bg-slate-900/40 border border-border rounded-lg px-3 py-2">
+                                    <div key={idx} className="bg-white dark:bg-zinc-950/40 border border-border rounded-lg px-3 py-2">
                                       <p className="text-xs text-secondary">{weapon.weapon}</p>
                                       <div className="flex items-center gap-2 mt-1">
                                         <span className="text-xs text-green-400 font-medium">{weapon.qualified} qualified</span>
@@ -959,7 +959,7 @@ export default function TrainingCertifications() {
                                 <h5 className="text-xs font-semibold text-secondary mb-3">Specialized Firearms Qualifications:</h5>
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
                                   {category.specializedQuals.map((spec, idx) => (
-                                    <div key={idx} className="bg-white dark:bg-slate-900/40 border border-border rounded-lg px-3 py-2">
+                                    <div key={idx} className="bg-white dark:bg-zinc-950/40 border border-border rounded-lg px-3 py-2">
                                       <p className="text-xs text-secondary">{spec.type}</p>
                                       <p className="text-xs text-green-400 mt-1">{spec.count} certified - {spec.status}</p>
                                     </div>
@@ -974,7 +974,7 @@ export default function TrainingCertifications() {
                                 <h5 className="text-xs font-semibold text-secondary mb-3">Upcoming Range Days (2026 Schedule):</h5>
                                 <div className="space-y-2">
                                   {category.rangeDays.map((day, idx) => (
-                                    <div key={idx} className="flex items-center justify-between bg-white dark:bg-slate-900/40 border border-border rounded-lg px-3 py-2">
+                                    <div key={idx} className="flex items-center justify-between bg-white dark:bg-zinc-950/40 border border-border rounded-lg px-3 py-2">
                                       <div className="flex items-center gap-3">
                                         <Calendar className="w-3.5 h-3.5 text-slate-500" />
                                         <span className="text-xs text-primary font-medium">{day.date}</span>
@@ -997,7 +997,7 @@ export default function TrainingCertifications() {
                                 <h5 className="text-xs font-semibold text-secondary mb-3">Scheduled Training Sessions:</h5>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                                   {category.scheduledSessions.map((session, idx) => (
-                                    <div key={idx} className="bg-white dark:bg-slate-900/40 border border-border rounded-lg px-3 py-2">
+                                    <div key={idx} className="bg-white dark:bg-zinc-950/40 border border-border rounded-lg px-3 py-2">
                                       <div className="flex items-center justify-between">
                                         <p className="text-xs text-primary font-medium">{session.date}</p>
                                         <span className={`px-2 py-0.5 rounded text-[10px] font-medium ${
@@ -1005,7 +1005,7 @@ export default function TrainingCertifications() {
                                         }`}>{formatStatus(session.status)}</span>
                                       </div>
                                       <p className="text-[10px] text-secondary mt-1">Enrolled: {session.enrolled}/{session.slots} slots</p>
-                                      <div className="mt-1 w-full h-1 bg-white dark:bg-slate-700/50 rounded-full overflow-hidden">
+                                      <div className="mt-1 w-full h-1 bg-white dark:bg-zinc-800/50 rounded-full overflow-hidden">
                                         <div className="h-full bg-blue-500 rounded-full" style={{ width: `${(session.enrolled / session.slots) * 100}%` }} />
                                       </div>
                                     </div>
@@ -1020,11 +1020,11 @@ export default function TrainingCertifications() {
                                 <Eye className="w-3.5 h-3.5" />
                                 View All Certifications
                               </button>
-                              <button className="px-3 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-xs font-medium transition-all flex items-center gap-2">
+                              <button className="px-3 py-2 bg-slate-50 dark:bg-zinc-800/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-xs font-medium transition-all flex items-center gap-2">
                                 <Calendar className="w-3.5 h-3.5" />
                                 Expiration Calendar
                               </button>
-                              <button className="px-3 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-xs font-medium transition-all flex items-center gap-2">
+                              <button className="px-3 py-2 bg-slate-50 dark:bg-zinc-800/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-xs font-medium transition-all flex items-center gap-2">
                                 <Download className="w-3.5 h-3.5" />
                                 Generate Report
                               </button>
@@ -1054,30 +1054,30 @@ export default function TrainingCertifications() {
               <p className="text-xs text-secondary mt-1">GCSO Training Division</p>
             </div>
             <div className="p-4 space-y-3">
-              <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
+              <div className="p-3 bg-white dark:bg-zinc-900/40 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-900/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-primary">Training Coordinator</p>
                 <p className="text-xs text-secondary">Sgt. R. Martinez (Training Division)</p>
                 <p className="text-xs text-amber-700 mt-1">Ext. 4521</p>
               </div>
-              <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
+              <div className="p-3 bg-white dark:bg-zinc-900/40 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-900/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-primary">Firearms Instructor</p>
                 <p className="text-xs text-secondary">Sgt. R. Martinez (Lead), Deputy K. Chen (Asst.)</p>
                 <p className="text-xs text-amber-700 mt-1">Range: Ext. 4530</p>
               </div>
-              <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
+              <div className="p-3 bg-white dark:bg-zinc-900/40 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-900/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-primary">DT Instructor</p>
                 <p className="text-xs text-secondary">Deputy M. Johnson</p>
                 <p className="text-xs text-amber-700 mt-1">Ext. 4525</p>
               </div>
-              <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
+              <div className="p-3 bg-white dark:bg-zinc-900/40 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-900/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-primary">GA POST Portal</p>
                 <p className="text-xs text-secondary">Georgia POST Council - Certification Renewal</p>
               </div>
-              <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
+              <div className="p-3 bg-white dark:bg-zinc-900/40 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-900/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-primary">GCSO Policies</p>
                 <p className="text-xs text-secondary">Policy 4.12 (Firearms), 4.15 (TASER), 3.14 (DT)</p>
               </div>
-              <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
+              <div className="p-3 bg-white dark:bg-zinc-900/40 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-900/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-primary">CJIS Security Policy</p>
                 <p className="text-xs text-secondary">FBI CJIS Security Policy v5.9.3</p>
               </div>

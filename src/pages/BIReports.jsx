@@ -808,7 +808,7 @@ export default function BIReports() {
 
             {/* Filter Tabs and Export */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
-              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl overflow-hidden">
+              <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl overflow-hidden">
                 <div className="flex">
                   {['all', 'cleared', 'cleared-with-notes', 'in-progress', 'review-required'].map((filter) => (
                     <button
@@ -839,7 +839,7 @@ export default function BIReports() {
                 return (
                   <div
                     key={report.id}
-                    className={`bg-slate-100/80 dark:bg-slate-800/30 border rounded-xl overflow-hidden transition-all ${
+                    className={`bg-slate-100/80 dark:bg-zinc-900/30 border rounded-xl overflow-hidden transition-all ${
                       report.status === 'Review Required' ? 'border-red-500/50' :
                       report.status === 'Cleared with Notes' ? 'border-amber-500/50' :
                       report.status === 'Cleared' ? 'border-emerald-500/30' :
@@ -848,7 +848,7 @@ export default function BIReports() {
                   >
                     {/* Card Header */}
                     <div
-                      className="p-4 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors"
+                      className="p-4 cursor-pointer hover:bg-slate-100 dark:hover:bg-zinc-900/50 transition-colors"
                       onClick={() => toggleExpand(report.id)}
                     >
                       <div className="flex items-start justify-between gap-4">
@@ -1009,7 +1009,7 @@ export default function BIReports() {
                             <h4 className="text-sm font-semibold text-primary mb-3 uppercase tracking-wide">Investigator Notes</h4>
                             <p className="text-sm text-secondary">{report.investigatorNotes}</p>
                             {report.preliminaryAssessment && (
-                              <div className="mt-3 p-3 bg-slate-100 dark:bg-slate-700/30 rounded-lg">
+                              <div className="mt-3 p-3 bg-slate-100 dark:bg-zinc-800/30 rounded-lg">
                                 <span className="text-xs text-slate-500 uppercase">Preliminary Assessment:</span>
                                 <p className="text-sm text-secondary">{report.preliminaryAssessment}</p>
                               </div>
@@ -1095,7 +1095,7 @@ export default function BIReports() {
 
                             {/* Risk Assessment */}
                             {report.riskLevel && (
-                              <div className="mb-4 p-3 bg-slate-100 dark:bg-slate-700/30 rounded-lg">
+                              <div className="mb-4 p-3 bg-slate-100 dark:bg-zinc-800/30 rounded-lg">
                                 <h5 className="text-xs font-semibold text-secondary uppercase mb-2">Risk Assessment</h5>
                                 <div className="flex items-start gap-3">
                                   {getRiskBadge(report.riskLevel)}
@@ -1105,7 +1105,7 @@ export default function BIReports() {
                             )}
 
                             {/* Recommendation */}
-                            <div className="p-6 bg-transparent dark:bg-slate-700/30 rounded-lg">
+                            <div className="p-6 bg-transparent dark:bg-zinc-800/30 rounded-lg">
                               <h5 className="text-xs font-semibold text-secondary uppercase mb-3">Recommendation</h5>
                               <div className={`inline-flex px-3 py-1.5 rounded-lg text-sm font-bold mb-3 ${
                                 report.assessment.recommendation.includes('APPROVED')
@@ -1158,15 +1158,15 @@ export default function BIReports() {
 
                         {/* Action Buttons */}
                         <div className="flex flex-wrap gap-3 pt-4 border-t border-border dark:border-slate-700/30">
-                          <button className="px-4 py-2 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 border border-slate-600/50 rounded-lg text-primary text-sm font-medium transition-colors flex items-center gap-2">
+                          <button className="px-4 py-2 bg-white dark:bg-zinc-800/50 hover:bg-slate-700/70 border border-slate-600/50 rounded-lg text-primary text-sm font-medium transition-colors flex items-center gap-2">
                             <Eye className="w-4 h-4" />
                             View Complete Investigation File
                           </button>
-                          <button className="px-4 py-2 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 border border-slate-600/50 rounded-lg text-primary text-sm font-medium transition-colors flex items-center gap-2">
+                          <button className="px-4 py-2 bg-white dark:bg-zinc-800/50 hover:bg-slate-700/70 border border-slate-600/50 rounded-lg text-primary text-sm font-medium transition-colors flex items-center gap-2">
                             <Download className="w-4 h-4" />
                             Download Full Report
                           </button>
-                          <button className="px-4 py-2 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 border border-slate-600/50 rounded-lg text-primary text-sm font-medium transition-colors flex items-center gap-2">
+                          <button className="px-4 py-2 bg-white dark:bg-zinc-800/50 hover:bg-slate-700/70 border border-slate-600/50 rounded-lg text-primary text-sm font-medium transition-colors flex items-center gap-2">
                             <Printer className="w-4 h-4" />
                             Print Report
                           </button>

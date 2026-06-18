@@ -459,12 +459,12 @@ export default function SubjectRecords() {
                   <p className="text-secondary">{caseInfo.applicantName} — {caseInfo.position} Application</p>
                 </div>
                 <div className="flex flex-wrap items-center gap-3 text-sm">
-                  <div className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 rounded-lg border border-slate-700/50">
+                  <div className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-zinc-900/40 rounded-lg border border-slate-700/50">
                     <FileText className="w-4 h-4 text-slate-500" />
                     <span className="text-secondary">Case:</span>
                     <span className="text-amber-700 font-medium">{caseInfo.caseId}</span>
                   </div>
-                  <div className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 rounded-lg border border-slate-700/50">
+                  <div className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-zinc-900/40 rounded-lg border border-slate-700/50">
                     <Clock className="w-4 h-4 text-slate-500" />
                     <span className="text-secondary">Stage:</span>
                     <span className="text-primary font-medium">{caseInfo.currentStage}</span>
@@ -516,7 +516,7 @@ export default function SubjectRecords() {
               </div>
 
               {/* Verification Progress */}
-              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
+              <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
                 <h4 className="text-base font-semibold text-primary mb-4 flex items-center gap-2">
                   <CheckCircle className="w-5 h-5 text-green-400" />
                   Verification Summary
@@ -575,7 +575,7 @@ export default function SubjectRecords() {
             )}
 
             {/* Applicant Header Card */}
-            <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6 mb-6">
+            <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6 mb-6">
               <div className="flex flex-col lg:flex-row items-start gap-6">
                 <div className="w-24 h-24 bg-gradient-to-br from-amber-500 to-amber-600 rounded-2xl flex items-center justify-center text-primary text-3xl font-bold flex-shrink-0">
                   RM
@@ -647,7 +647,7 @@ export default function SubjectRecords() {
                     <Download className="w-4 h-4" />
                     Export Records
                   </button>
-                  <button className="px-4 py-2 bg-white dark:bg-slate-700/50 hover:bg-slate-700 text-primary rounded-xl text-sm font-medium transition-colors flex items-center gap-2 border border-slate-600/50">
+                  <button className="px-4 py-2 bg-white dark:bg-zinc-800/50 hover:bg-slate-700 text-primary rounded-xl text-sm font-medium transition-colors flex items-center gap-2 border border-slate-600/50">
                     <Edit className="w-4 h-4" />
                     Edit Info
                   </button>
@@ -656,7 +656,7 @@ export default function SubjectRecords() {
             </div>
 
             {/* Tabs */}
-            <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl overflow-hidden">
+            <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl overflow-hidden">
               <div className="flex border-b border-border overflow-x-auto">
                 <button
                   onClick={() => setSelectedTab('personal')}
@@ -695,20 +695,20 @@ export default function SubjectRecords() {
                 {selectedTab === 'personal' && (
                   <div className="space-y-6">
                     {/* Identity Verification */}
-                    <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4">
+                    <div className="bg-white dark:bg-zinc-950/40 rounded-xl p-4">
                       <h4 className="text-sm font-semibold text-primary mb-4 flex items-center gap-2">
                         <User className="w-4 h-4 text-amber-700" />
                         Identity Information
                       </h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <div className="bg-white dark:bg-slate-800/40 rounded-lg p-3">
+                        <div className="bg-white dark:bg-zinc-900/40 rounded-lg p-3">
                           <div className="flex items-center justify-between mb-2">
                             <label className="text-xs text-slate-500">Full Legal Name</label>
                             {getVerificationIcon('verified')}
                           </div>
                           <p className="text-sm text-primary font-medium">{subjectData.personal.fullName}</p>
                         </div>
-                        <div className="bg-white dark:bg-slate-800/40 rounded-lg p-3">
+                        <div className="bg-white dark:bg-zinc-900/40 rounded-lg p-3">
                           <div className="flex items-center justify-between mb-2">
                             <label className="text-xs text-slate-500">Date of Birth</label>
                             {getVerificationIcon('verified')}
@@ -716,7 +716,7 @@ export default function SubjectRecords() {
                           <p className="text-sm text-primary font-medium">{subjectData.personal.dob}</p>
                           <p className="text-xs text-slate-500">Age: {subjectData.personal.age} years</p>
                         </div>
-                        <div className="bg-white dark:bg-slate-800/40 rounded-lg p-3">
+                        <div className="bg-white dark:bg-zinc-900/40 rounded-lg p-3">
                           <div className="flex items-center justify-between mb-2">
                             <label className="text-xs text-slate-500">SSN (Restricted Access)</label>
                             {getVerificationIcon('restricted')}
@@ -725,7 +725,7 @@ export default function SubjectRecords() {
                           <p className="text-xs text-green-400/70">{subjectData.personal.ssn.verificationMethod}</p>
                           <p className="text-xs text-slate-500">Verified: {subjectData.personal.ssn.verifiedDate}</p>
                         </div>
-                        <div className="bg-white dark:bg-slate-800/40 rounded-lg p-3">
+                        <div className="bg-white dark:bg-zinc-900/40 rounded-lg p-3">
                           <div className="flex items-center justify-between mb-2">
                             <label className="text-xs text-slate-500">Citizenship</label>
                             {getVerificationIcon('verified')}
@@ -733,7 +733,7 @@ export default function SubjectRecords() {
                           <p className="text-sm text-primary font-medium">{subjectData.personal.citizenship.status}</p>
                           <p className="text-xs text-green-400/70">{subjectData.personal.citizenship.verificationMethod}</p>
                         </div>
-                        <div className="bg-white dark:bg-slate-800/40 rounded-lg p-3">
+                        <div className="bg-white dark:bg-zinc-900/40 rounded-lg p-3">
                           <div className="flex items-center justify-between mb-2">
                             <label className="text-xs text-slate-500">Marital Status</label>
                             {getVerificationIcon('verified')}
@@ -744,13 +744,13 @@ export default function SubjectRecords() {
                     </div>
 
                     {/* Driver's License Details */}
-                    <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4">
+                    <div className="bg-white dark:bg-zinc-950/40 rounded-xl p-4">
                       <h4 className="text-sm font-semibold text-primary mb-4 flex items-center gap-2">
                         <FileText className="w-4 h-4 text-amber-700" />
                         Driver's License
                       </h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <div className="bg-white dark:bg-slate-800/40 rounded-lg p-3">
+                        <div className="bg-white dark:bg-zinc-900/40 rounded-lg p-3">
                           <div className="flex items-center justify-between mb-2">
                             <label className="text-xs text-slate-500">License Number</label>
                             {getVerificationIcon('verified')}
@@ -758,15 +758,15 @@ export default function SubjectRecords() {
                           <p className="text-sm text-primary font-medium">{subjectData.personal.driversLicense.number}</p>
                           <p className="text-xs text-slate-500">{subjectData.personal.driversLicense.state} - {subjectData.personal.driversLicense.class}</p>
                         </div>
-                        <div className="bg-white dark:bg-slate-800/40 rounded-lg p-3">
+                        <div className="bg-white dark:bg-zinc-900/40 rounded-lg p-3">
                           <label className="text-xs text-slate-500 block mb-2">Expiration</label>
                           <p className="text-sm text-primary font-medium">{subjectData.personal.driversLicense.expiration}</p>
                         </div>
-                        <div className="bg-white dark:bg-slate-800/40 rounded-lg p-3">
+                        <div className="bg-white dark:bg-zinc-900/40 rounded-lg p-3">
                           <label className="text-xs text-slate-500 block mb-2">Restrictions</label>
                           <p className="text-sm text-primary font-medium">{subjectData.personal.driversLicense.restrictions}</p>
                         </div>
-                        <div className="bg-white dark:bg-slate-800/40 rounded-lg p-3">
+                        <div className="bg-white dark:bg-zinc-900/40 rounded-lg p-3">
                           <label className="text-xs text-slate-500 block mb-2">Driving Record</label>
                           <p className="text-sm text-green-400 font-medium">{subjectData.personal.driversLicense.violations}</p>
                         </div>
@@ -777,13 +777,13 @@ export default function SubjectRecords() {
                     </div>
 
                     {/* Contact & Address */}
-                    <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4">
+                    <div className="bg-white dark:bg-zinc-950/40 rounded-xl p-4">
                       <h4 className="text-sm font-semibold text-primary mb-4 flex items-center gap-2">
                         <MapPin className="w-4 h-4 text-amber-700" />
                         Contact & Residence
                       </h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="bg-white dark:bg-slate-800/40 rounded-lg p-3">
+                        <div className="bg-white dark:bg-zinc-900/40 rounded-lg p-3">
                           <div className="flex items-center justify-between mb-2">
                             <label className="text-xs text-slate-500">Current Address</label>
                             {getVerificationIcon('verified')}
@@ -797,11 +797,11 @@ export default function SubjectRecords() {
                           </div>
                         </div>
                         <div className="space-y-3">
-                          <div className="bg-white dark:bg-slate-800/40 rounded-lg p-3">
+                          <div className="bg-white dark:bg-zinc-900/40 rounded-lg p-3">
                             <label className="text-xs text-slate-500 block mb-2">Phone</label>
                             <p className="text-sm text-primary font-medium">{subjectData.personal.phone}</p>
                           </div>
-                          <div className="bg-white dark:bg-slate-800/40 rounded-lg p-3">
+                          <div className="bg-white dark:bg-zinc-900/40 rounded-lg p-3">
                             <label className="text-xs text-slate-500 block mb-2">Email</label>
                             <p className="text-sm text-primary font-medium">{subjectData.personal.email}</p>
                           </div>
@@ -811,28 +811,28 @@ export default function SubjectRecords() {
 
                     {/* Military Service */}
                     {subjectData.personal.militaryService.served && (
-                      <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4">
+                      <div className="bg-white dark:bg-zinc-950/40 rounded-xl p-4">
                         <h4 className="text-sm font-semibold text-primary mb-4 flex items-center gap-2">
                           <Shield className="w-4 h-4 text-amber-700" />
                           Military Service
                         </h4>
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                          <div className="bg-white dark:bg-slate-800/40 rounded-lg p-3">
+                          <div className="bg-white dark:bg-zinc-900/40 rounded-lg p-3">
                             <div className="flex items-center justify-between mb-2">
                               <label className="text-xs text-slate-500">Branch</label>
                               {getVerificationIcon('verified')}
                             </div>
                             <p className="text-sm text-primary font-medium">{subjectData.personal.militaryService.branch}</p>
                           </div>
-                          <div className="bg-white dark:bg-slate-800/40 rounded-lg p-3">
+                          <div className="bg-white dark:bg-zinc-900/40 rounded-lg p-3">
                             <label className="text-xs text-slate-500 block mb-2">Rank at Discharge</label>
                             <p className="text-sm text-primary font-medium">{subjectData.personal.militaryService.rank}</p>
                           </div>
-                          <div className="bg-white dark:bg-slate-800/40 rounded-lg p-3">
+                          <div className="bg-white dark:bg-zinc-900/40 rounded-lg p-3">
                             <label className="text-xs text-slate-500 block mb-2">Service Years</label>
                             <p className="text-sm text-primary font-medium">{subjectData.personal.militaryService.serviceYears}</p>
                           </div>
-                          <div className="bg-white dark:bg-slate-800/40 rounded-lg p-3">
+                          <div className="bg-white dark:bg-zinc-900/40 rounded-lg p-3">
                             <label className="text-xs text-slate-500 block mb-2">Discharge Type</label>
                             <p className="text-sm text-green-400 font-medium">{subjectData.personal.militaryService.discharge}</p>
                           </div>
@@ -844,24 +844,24 @@ export default function SubjectRecords() {
                     )}
 
                     {/* Emergency Contact */}
-                    <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4">
+                    <div className="bg-white dark:bg-zinc-950/40 rounded-xl p-4">
                       <h4 className="text-sm font-semibold text-primary mb-4 flex items-center gap-2">
                         <Users className="w-4 h-4 text-amber-700" />
                         Emergency Contact
                       </h4>
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div className="bg-white dark:bg-slate-800/40 rounded-lg p-3">
+                        <div className="bg-white dark:bg-zinc-900/40 rounded-lg p-3">
                           <div className="flex items-center justify-between mb-2">
                             <label className="text-xs text-slate-500">Name</label>
                             {getVerificationIcon('verified')}
                           </div>
                           <p className="text-sm text-primary font-medium">{subjectData.personal.emergencyContact.name}</p>
                         </div>
-                        <div className="bg-white dark:bg-slate-800/40 rounded-lg p-3">
+                        <div className="bg-white dark:bg-zinc-900/40 rounded-lg p-3">
                           <label className="text-xs text-slate-500 block mb-2">Relationship</label>
                           <p className="text-sm text-primary font-medium">{subjectData.personal.emergencyContact.relationship}</p>
                         </div>
-                        <div className="bg-white dark:bg-slate-800/40 rounded-lg p-3">
+                        <div className="bg-white dark:bg-zinc-900/40 rounded-lg p-3">
                           <label className="text-xs text-slate-500 block mb-2">Phone</label>
                           <p className="text-sm text-primary font-medium">{subjectData.personal.emergencyContact.phone}</p>
                         </div>
@@ -874,7 +874,7 @@ export default function SubjectRecords() {
                 {selectedTab === 'employment' && (
                   <div className="space-y-6">
                     {subjectData.employment.map((job, idx) => (
-                      <div key={idx} className={`bg-white dark:bg-slate-900/40 rounded-xl p-4 ${job.isCurrentLEO ? 'border border-blue-500/30' : ''}`}>
+                      <div key={idx} className={`bg-white dark:bg-zinc-950/40 rounded-xl p-4 ${job.isCurrentLEO ? 'border border-blue-500/30' : ''}`}>
                         {/* LEO Status Banner */}
                         {job.isCurrentLEO && (
                           <div className="mb-4 bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
@@ -975,7 +975,7 @@ export default function SubjectRecords() {
                 {selectedTab === 'education' && (
                   <div className="space-y-6">
                     {subjectData.education.map((edu, idx) => (
-                      <div key={idx} className="bg-white dark:bg-slate-900/40 rounded-xl p-4">
+                      <div key={idx} className="bg-white dark:bg-zinc-950/40 rounded-xl p-4">
                         <div className="flex items-start justify-between mb-4">
                           <div>
                             <div className="flex items-center gap-2 mb-1">
@@ -1080,7 +1080,7 @@ export default function SubjectRecords() {
                     )}
 
                     {subjectData.certifications.map((cert, idx) => (
-                      <div key={idx} className={`bg-white dark:bg-slate-900/40 rounded-xl p-4 ${cert.status === 'critical' ? 'border-2 border-red-500/50' : cert.status === 'expiring_soon' ? 'border border-amber-500/30' : ''}`}>
+                      <div key={idx} className={`bg-white dark:bg-zinc-950/40 rounded-xl p-4 ${cert.status === 'critical' ? 'border-2 border-red-500/50' : cert.status === 'expiring_soon' ? 'border border-amber-500/30' : ''}`}>
                         {/* Critical Badge */}
                         {cert.status === 'critical' && (
                           <div className="mb-3 bg-red-500/20 rounded-lg p-2 flex items-center gap-2">
@@ -1124,7 +1124,7 @@ export default function SubjectRecords() {
 
                         {/* Notes */}
                         {cert.notes && (
-                          <div className={`p-3 rounded-lg ${cert.status === 'critical' ? 'bg-red-500/10' : 'bg-white dark:bg-slate-800/40'}`}>
+                          <div className={`p-3 rounded-lg ${cert.status === 'critical' ? 'bg-red-500/10' : 'bg-white dark:bg-zinc-900/40'}`}>
                             <p className={`text-sm ${cert.status === 'critical' ? 'text-red-300 font-medium' : 'text-slate-500'}`}>
                               {cert.notes}
                             </p>
@@ -1144,7 +1144,7 @@ export default function SubjectRecords() {
                 {selectedTab === 'references' && (
                   <div className="space-y-6">
                     {/* Reference Summary */}
-                    <div className="bg-white dark:bg-slate-800/60 rounded-xl p-4 mb-4">
+                    <div className="bg-white dark:bg-zinc-900/60 rounded-xl p-4 mb-4">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <Users className="w-5 h-5 text-amber-700" />
@@ -1157,7 +1157,7 @@ export default function SubjectRecords() {
                     </div>
 
                     {subjectData.references.map((ref, idx) => (
-                      <div key={idx} className={`bg-white dark:bg-slate-900/40 rounded-xl p-4 ${ref.isIAReview ? 'border-2 border-amber-500/50' : ''}`}>
+                      <div key={idx} className={`bg-white dark:bg-zinc-950/40 rounded-xl p-4 ${ref.isIAReview ? 'border-2 border-amber-500/50' : ''}`}>
                         {/* IA Review Special Banner */}
                         {ref.isIAReview && (
                           <div className="mb-4 bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
@@ -1213,7 +1213,7 @@ export default function SubjectRecords() {
 
                         {/* Interview Summary */}
                         {ref.summary && (
-                          <div className="bg-white dark:bg-slate-800/40 rounded-lg p-3 mb-4">
+                          <div className="bg-white dark:bg-zinc-900/40 rounded-lg p-3 mb-4">
                             <p className="text-xs text-slate-500 mb-2 font-medium">Interview Summary</p>
                             <p className="text-sm text-secondary">{ref.summary}</p>
                           </div>
@@ -1237,7 +1237,7 @@ export default function SubjectRecords() {
 
                         {/* Brady/Giglio Status */}
                         {ref.bradyGiglio && (
-                          <div className="bg-white dark:bg-slate-800/40 rounded-lg p-3 mb-4">
+                          <div className="bg-white dark:bg-zinc-900/40 rounded-lg p-3 mb-4">
                             <p className="text-xs text-slate-500 mb-1 font-medium">Brady/Giglio Credibility Assessment</p>
                             <p className="text-sm text-green-400">{ref.bradyGiglio}</p>
                           </div>
@@ -1253,7 +1253,7 @@ export default function SubjectRecords() {
 
                         {/* Notes */}
                         {ref.notes && (
-                          <div className={`p-3 rounded-lg ${ref.isMandatory ? 'bg-amber-500/10' : 'bg-white dark:bg-slate-800/40'}`}>
+                          <div className={`p-3 rounded-lg ${ref.isMandatory ? 'bg-amber-500/10' : 'bg-white dark:bg-zinc-900/40'}`}>
                             <p className="text-xs text-slate-500 mb-1">Notes</p>
                             <p className={`text-sm ${ref.isMandatory ? 'text-amber-300' : 'text-slate-500'}`}>
                               {ref.notes}

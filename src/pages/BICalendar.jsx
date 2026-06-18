@@ -306,24 +306,24 @@ export default function BICalendar() {
               <p className="text-xs text-slate-500">SLA deadlines · Interview scheduling · Case review dates · Investigator availability</p>
             </div>
             <div className="flex items-center gap-2">
-              <div className="flex bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/40 rounded-lg overflow-hidden">
+              <div className="flex bg-white dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/40 rounded-lg overflow-hidden">
                 <button
                   onClick={() => setViewMode('month')}
-                  className={`px-3 py-2 text-[13px] font-medium transition-all ${viewMode === 'month' ? 'bg-slate-200 dark:bg-slate-700/50 text-primary' : 'text-secondary'}`}
+                  className={`px-3 py-2 text-[13px] font-medium transition-all ${viewMode === 'month' ? 'bg-slate-200 dark:bg-zinc-800/50 text-primary' : 'text-secondary'}`}
                 >Month</button>
                 <button
                   onClick={() => setViewMode('timeline')}
-                  className={`px-3 py-2 text-[13px] font-medium transition-all ${viewMode === 'timeline' ? 'bg-slate-200 dark:bg-slate-700/50 text-primary' : 'text-secondary'}`}
+                  className={`px-3 py-2 text-[13px] font-medium transition-all ${viewMode === 'timeline' ? 'bg-slate-200 dark:bg-zinc-800/50 text-primary' : 'text-secondary'}`}
                 >Timeline</button>
               </div>
             </div>
           </div>
 
           {/* SLA Pressure Bar */}
-          <div className="mb-4 px-4 py-2 bg-slate-50 dark:bg-slate-800/15 border border-border rounded-lg">
+          <div className="mb-4 px-4 py-2 bg-slate-50 dark:bg-zinc-900/15 border border-border rounded-lg">
             <div className="flex items-center gap-3 flex-wrap">
               <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">SLA Pressure</span>
-              <div className="h-3 w-px bg-slate-200 dark:bg-slate-700/30"></div>
+              <div className="h-3 w-px bg-slate-200 dark:bg-zinc-800/30"></div>
               {[
                 { label: `${calendarEvents.filter(e => e.severity === 'critical' && e.status !== 'completed').length} Critical deadlines`, color: 'bg-red-500/10 border-red-500/20 text-red-700 dark:text-red-400' },
                 { label: `${calendarEvents.filter(e => e.category === 'interview').length} Interviews/References`, color: 'bg-amber-500/10 border-amber-500/20 text-amber-700 dark:text-amber-400' },
@@ -338,13 +338,13 @@ export default function BICalendar() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-6">
 
               {/* Calendar Grid */}
-              <div className="lg:col-span-2 bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl p-5">
+              <div className="lg:col-span-2 bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl p-5">
                 <div className="flex items-center justify-between mb-6">
-                  <button onClick={prevMonth} className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-700/30 rounded-lg transition-colors">
+                  <button onClick={prevMonth} className="p-1.5 hover:bg-slate-100 dark:hover:bg-zinc-800/30 rounded-lg transition-colors">
                     <ChevronLeft className="w-4 h-4 text-secondary" />
                   </button>
                   <h3 className="text-[13px] font-semibold text-primary uppercase tracking-wide">{monthName}</h3>
-                  <button onClick={nextMonth} className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-700/30 rounded-lg transition-colors">
+                  <button onClick={nextMonth} className="p-1.5 hover:bg-slate-100 dark:hover:bg-zinc-800/30 rounded-lg transition-colors">
                     <ChevronRight className="w-4 h-4 text-secondary" />
                   </button>
                 </div>
@@ -357,17 +357,17 @@ export default function BICalendar() {
 
                 <div className="grid grid-cols-7 gap-px">
                   {calendarDays.map((day, idx) => {
-                    if (day === null) return <div key={`e-${idx}`} className="min-h-[85px] bg-slate-100 dark:bg-slate-900/10 rounded" />;
+                    if (day === null) return <div key={`e-${idx}`} className="min-h-[85px] bg-slate-100 dark:bg-zinc-950/10 rounded" />;
                     const dayEvents = getEventsForDay(day);
                     const isToday = isCurrentMo && day === today.getDate();
                     const hasCritical = dayEvents.some(e => e.severity === 'critical');
                     const hasHigh = dayEvents.some(e => e.severity === 'high');
-                    let bg = 'bg-white dark:bg-slate-900/20';
+                    let bg = 'bg-white dark:bg-zinc-950/20';
                     if (isToday) bg = 'ring-2 ring-amber-500/40 bg-amber-500/[0.07]';
                     else if (hasCritical) bg = 'bg-red-500/[0.05] ring-1 ring-red-500/20';
                     else if (hasHigh) bg = 'bg-amber-500/[0.04]';
                     return (
-                      <div key={day} className={`min-h-[85px] p-1.5 rounded transition-colors hover:bg-slate-100 dark:hover:bg-slate-800/30 ${bg}`}>
+                      <div key={day} className={`min-h-[85px] p-1.5 rounded transition-colors hover:bg-slate-100 dark:hover:bg-zinc-900/30 ${bg}`}>
                         <div className="flex items-center gap-1 mb-1">
                           <span className={`text-[11px] font-semibold ${isToday ? 'text-amber-700 dark:text-amber-400' : 'text-slate-500'}`}>{day}</span>
                           {isToday && <span className="text-[9px] text-amber-700/60 font-medium uppercase">Today</span>}
@@ -377,7 +377,7 @@ export default function BICalendar() {
                             <button
                               key={ev.id}
                               onClick={() => setSelectedEvent(ev)}
-                              className="w-full flex items-center gap-1 px-1 py-0.5 rounded hover:bg-slate-100 dark:hover:bg-slate-700/30 transition-colors text-left group"
+                              className="w-full flex items-center gap-1 px-1 py-0.5 rounded hover:bg-slate-100 dark:hover:bg-zinc-800/30 transition-colors text-left group"
                             >
                               <div className={`w-0.5 h-3 rounded-full flex-shrink-0 ${getCategoryAccent(ev.category)}`} />
                               <span className="text-[10px] text-secondary truncate group-hover:text-white transition-colors">{ev.title}</span>
@@ -414,7 +414,7 @@ export default function BICalendar() {
               </div>
 
               {/* Upcoming Panel */}
-              <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl p-5">
+              <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl p-5">
                 <h3 className="text-[13px] font-semibold text-primary uppercase tracking-wide mb-4">Upcoming — 14 Days</h3>
                 <div className="space-y-2">
                   {upcomingDeadlines.length === 0 ? (
@@ -425,7 +425,7 @@ export default function BICalendar() {
                       onClick={() => setSelectedEvent(ev)}
                       className={`w-full rounded-lg border border-border border-l-[3px] ${
                         ev.severity === 'critical' ? 'border-l-red-500/60' : 'border-l-amber-500/50'
-                      } hover:bg-slate-50 dark:hover:bg-slate-800/20 transition-colors text-left`}
+                      } hover:bg-slate-50 dark:hover:bg-zinc-900/20 transition-colors text-left`}
                     >
                       <div className="p-3">
                         <p className="text-[13px] font-medium text-primary mb-1.5 leading-tight">{ev.title}</p>
@@ -450,7 +450,7 @@ export default function BICalendar() {
             </div>
           ) : (
             /* Timeline View */
-            <div className="mb-6 bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl p-5">
+            <div className="mb-6 bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl p-5">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-[13px] font-semibold text-primary uppercase tracking-wide">Next 7 Days — Hour by Hour</h3>
                 <span className="text-xs text-slate-500">
@@ -484,12 +484,12 @@ export default function BICalendar() {
                                 <button
                                   key={ev.id}
                                   onClick={() => setSelectedEvent(ev)}
-                                  className={`w-full flex items-center gap-1.5 px-2 py-1 rounded text-left transition-colors hover:bg-slate-100 dark:hover:bg-slate-700/30 ${
+                                  className={`w-full flex items-center gap-1.5 px-2 py-1 rounded text-left transition-colors hover:bg-slate-100 dark:hover:bg-zinc-800/30 ${
                                     ev.severity === 'critical'
                                       ? 'bg-red-500/[0.06] border-l-2 border-l-red-500/40'
                                       : ev.severity === 'high'
                                       ? 'bg-amber-500/[0.06] border-l-2 border-l-amber-500/40'
-                                      : 'bg-slate-100 dark:bg-slate-800/20 border-l-2 border-l-slate-500/30'
+                                      : 'bg-slate-100 dark:bg-zinc-900/20 border-l-2 border-l-slate-500/30'
                                   }`}
                                 >
                                   <div className={`w-1 h-1 rounded-full flex-shrink-0 ${getCategoryAccent(ev.category)}`} />
@@ -514,7 +514,7 @@ export default function BICalendar() {
       {selectedEvent && (
         <>
           <div className="fixed inset-0 bg-black/30 z-40" onClick={() => setSelectedEvent(null)} />
-          <div className="fixed right-0 top-0 bottom-0 w-full max-w-md bg-white dark:bg-slate-900 border-l border-border shadow-2xl z-50 overflow-y-auto">
+          <div className="fixed right-0 top-0 bottom-0 w-full max-w-md bg-white dark:bg-zinc-950 border-l border-border shadow-2xl z-50 overflow-y-auto">
             <div className="p-6">
               <div className="flex items-start justify-between mb-6">
                 <div className="flex-1">
@@ -544,7 +544,7 @@ export default function BICalendar() {
 
               <div className="space-y-4">
                 {selectedEvent.status !== 'completed' && (
-                  <div className="bg-slate-50 dark:bg-slate-800/25 border border-border rounded-xl p-4">
+                  <div className="bg-slate-50 dark:bg-zinc-900/25 border border-border rounded-xl p-4">
                     <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Countdown</span>
                     <div className="mt-2 flex items-baseline gap-2">
                       <p className="text-2xl font-semibold text-primary">{getCountdown(selectedEvent.day)}</p>
@@ -583,7 +583,7 @@ export default function BICalendar() {
                   >
                     Open Module
                   </button>
-                  <button className="flex-1 px-3 py-2 text-xs font-medium text-secondary border border-border hover:bg-slate-100 dark:hover:bg-slate-700/20 rounded-lg transition-colors">
+                  <button className="flex-1 px-3 py-2 text-xs font-medium text-secondary border border-border hover:bg-slate-100 dark:hover:bg-zinc-800/20 rounded-lg transition-colors">
                     Edit Event
                   </button>
                 </div>

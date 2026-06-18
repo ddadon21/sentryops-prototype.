@@ -191,14 +191,14 @@ export default function BackgroundsDashboard() {
             </div>
 
             <div className="flex items-center gap-2">
-              <button className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-700/40 text-secondary rounded-lg text-[13px] font-medium hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all">
+              <button className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-zinc-900/40 border border-slate-700/40 text-secondary rounded-lg text-[13px] font-medium hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-all">
                 <Download className="w-4 h-4" />
                 Export Report
               </button>
               <div className="relative filter-container">
                 <button
                   onClick={() => setFilterOpen(!filterOpen)}
-                  className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-700/40 text-secondary rounded-lg text-[13px] font-medium hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all"
+                  className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-zinc-900/40 border border-slate-700/40 text-secondary rounded-lg text-[13px] font-medium hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-all"
                 >
                   <Filter className="w-4 h-4" />
                   Filter
@@ -206,17 +206,17 @@ export default function BackgroundsDashboard() {
                 </button>
                 {filterOpen && (
                   <div className="absolute right-0 top-full mt-2 w-48 bg-surface-raised backdrop-blur-xl border border-border rounded-lg shadow-2xl z-50 py-1">
-                    <button className="w-full text-left px-4 py-2 text-[13px] text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/50">All Cases</button>
-                    <button className="w-full text-left px-4 py-2 text-[13px] text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/50">With Concerns</button>
-                    <button className="w-full text-left px-4 py-2 text-[13px] text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/50">Pending Review</button>
-                    <button className="w-full text-left px-4 py-2 text-[13px] text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/50">Overdue</button>
+                    <button className="w-full text-left px-4 py-2 text-[13px] text-secondary hover:bg-slate-100 dark:hover:bg-zinc-900/50">All Cases</button>
+                    <button className="w-full text-left px-4 py-2 text-[13px] text-secondary hover:bg-slate-100 dark:hover:bg-zinc-900/50">With Concerns</button>
+                    <button className="w-full text-left px-4 py-2 text-[13px] text-secondary hover:bg-slate-100 dark:hover:bg-zinc-900/50">Pending Review</button>
+                    <button className="w-full text-left px-4 py-2 text-[13px] text-secondary hover:bg-slate-100 dark:hover:bg-zinc-900/50">Overdue</button>
                   </div>
                 )}
               </div>
               <select
                 value={timeRange}
                 onChange={(e) => setTimeRange(e.target.value)}
-                className="px-4 py-2 bg-white dark:bg-slate-800/40 border border-slate-700/40 rounded-lg text-secondary text-[13px] focus:outline-none focus:border-slate-600"
+                className="px-4 py-2 bg-white dark:bg-zinc-900/40 border border-slate-700/40 rounded-lg text-secondary text-[13px] focus:outline-none focus:border-slate-600"
               >
                 <option value="week">This Week</option>
                 <option value="month">This Month</option>
@@ -227,7 +227,7 @@ export default function BackgroundsDashboard() {
           </div>
 
           {/* Adjudication Exposure Console */}
-          <div className="mb-8 flex items-center gap-6 px-5 py-3.5 bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl">
+          <div className="mb-8 flex items-center gap-6 px-5 py-3.5 bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl">
             <div className="flex items-center gap-2.5">
               <div className="w-1.5 h-1.5 bg-red-500 rounded-full"></div>
               <span className="text-[13px] font-semibold text-secondary">Cases Awaiting Sign-Off:</span>
@@ -253,7 +253,7 @@ export default function BackgroundsDashboard() {
 
           {/* Supervisor Review Required */}
           {supervisorReviewVisible && (
-            <div className="mb-8 bg-slate-100 dark:bg-slate-800/25 border border-border border-l-[3px] border-l-red-500/40 rounded-xl p-5">
+            <div className="mb-8 bg-slate-100 dark:bg-zinc-900/25 border border-border border-l-[3px] border-l-red-500/40 rounded-xl p-5">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-3">
                   <h4 className="text-[13px] font-semibold text-primary uppercase tracking-wide">Supervisor Review Required</h4>
@@ -277,7 +277,7 @@ export default function BackgroundsDashboard() {
 
               <div className="space-y-1">
                 {supervisorReviewCases.map(caseItem => (
-                  <div key={caseItem.id} className={`flex items-center gap-4 px-4 py-2.5 bg-slate-100 dark:bg-slate-900/20 rounded border-l-[3px] ${
+                  <div key={caseItem.id} className={`flex items-center gap-4 px-4 py-2.5 bg-slate-100 dark:bg-zinc-950/20 rounded border-l-[3px] ${
                     caseItem.severity === 'high' ? 'border-l-red-500/30' : 'border-l-amber-500/30'
                   }`}>
                     <div className="flex-1 min-w-0">
@@ -304,7 +304,7 @@ export default function BackgroundsDashboard() {
           )}
 
           {/* Investigation Status Summary */}
-          <div className="mb-8 bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+          <div className="mb-8 bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
             <div className="flex items-center justify-between mb-6">
               <h4 className="text-[13px] font-semibold text-primary uppercase tracking-wide">Investigation Status Summary</h4>
               <span className="text-xs text-slate-500">Last sync: 2 min ago</span>
@@ -376,7 +376,7 @@ export default function BackgroundsDashboard() {
 
           {/* Compliance Risk Indicator */}
           {metrics.slaBreachCases > 0 && (
-            <div className="mb-8 bg-slate-100 dark:bg-slate-800/25 border border-border border-l-[3px] border-l-amber-500/30 rounded-xl px-5 py-3">
+            <div className="mb-8 bg-slate-100 dark:bg-zinc-900/25 border border-border border-l-[3px] border-l-amber-500/30 rounded-xl px-5 py-3">
               <div className="flex items-center gap-3">
                 <div className="w-1.5 h-1.5 bg-amber-500 rounded-full flex-shrink-0"></div>
                 <div>
@@ -391,7 +391,7 @@ export default function BackgroundsDashboard() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
             <button
               onClick={() => navigate(createPageUrl('ActiveCases'))}
-              className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 hover:border-slate-600/40 transition-all text-left group"
+              className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 hover:border-slate-600/40 transition-all text-left group"
             >
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
@@ -419,7 +419,7 @@ export default function BackgroundsDashboard() {
 
             <button
               onClick={() => navigate(createPageUrl('CriminalHistoryReview'))}
-              className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 hover:border-slate-600/40 transition-all text-left group"
+              className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 hover:border-slate-600/40 transition-all text-left group"
             >
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
@@ -447,7 +447,7 @@ export default function BackgroundsDashboard() {
 
             <button
               onClick={() => navigate(createPageUrl('CaseClosure'))}
-              className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 hover:border-slate-600/40 transition-all text-left group"
+              className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 hover:border-slate-600/40 transition-all text-left group"
             >
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
@@ -475,7 +475,7 @@ export default function BackgroundsDashboard() {
 
             <button
               onClick={() => navigate(createPageUrl('BIReports'))}
-              className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 hover:border-slate-600/40 transition-all text-left group"
+              className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 hover:border-slate-600/40 transition-all text-left group"
             >
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
@@ -504,7 +504,7 @@ export default function BackgroundsDashboard() {
 
           {/* Secondary Metrics */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
-            <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+            <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
               <div className="flex items-center gap-2 mb-2">
                 <div className="w-1.5 h-1.5 bg-slate-500 rounded-full"></div>
                 <span className="text-xs text-slate-500 uppercase tracking-wide font-medium">Today</span>
@@ -514,7 +514,7 @@ export default function BackgroundsDashboard() {
               <p className="text-xs text-slate-500 mt-2">Next: 10:30 AM — Thompson ref #2</p>
             </div>
 
-            <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+            <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
               <div className="flex items-center gap-2 mb-2">
                 <div className="w-1.5 h-1.5 bg-amber-500 rounded-full"></div>
                 <span className="text-xs text-slate-500 uppercase tracking-wide font-medium">Pending</span>
@@ -524,7 +524,7 @@ export default function BackgroundsDashboard() {
               <p className="text-xs text-slate-500 mt-2">Avg response time: 2.3 days</p>
             </div>
 
-            <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+            <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
               <div className="flex items-center gap-2 mb-2">
                 <div className="w-1.5 h-1.5 bg-red-500 rounded-full"></div>
                 <span className="text-xs text-slate-500 uppercase tracking-wide font-medium">Overdue</span>
@@ -534,7 +534,7 @@ export default function BackgroundsDashboard() {
               <p className="text-xs text-slate-500 mt-2">Oldest: 4 days — Johnson refs</p>
             </div>
 
-            <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+            <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
               <div className="flex items-center gap-2 mb-2">
                 <div className="w-1.5 h-1.5 bg-slate-500 rounded-full"></div>
                 <span className="text-xs text-slate-500 uppercase tracking-wide font-medium">Queue</span>
@@ -547,7 +547,7 @@ export default function BackgroundsDashboard() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-8">
             {/* Investigation Pipeline */}
-            <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+            <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
               <div className="flex items-center justify-between mb-3">
                 <div>
                   <h3 className="text-[13px] font-semibold text-primary uppercase tracking-wide">Investigation Pipeline</h3>
@@ -572,7 +572,7 @@ export default function BackgroundsDashboard() {
                         </div>
                         <span className="text-[13px] font-semibold text-secondary">{stage.count}</span>
                       </div>
-                      <div className="w-full h-1.5 bg-slate-100 dark:bg-slate-700/30 rounded-full overflow-hidden relative">
+                      <div className="w-full h-1.5 bg-slate-100 dark:bg-zinc-800/30 rounded-full overflow-hidden relative">
                         <div
                           className={`h-full rounded-full transition-all ${isBreaching ? 'bg-red-500/40' : 'bg-slate-500/40'}`}
                           style={{ width: `${(stage.count / totalActive) * 100}%` }}
@@ -598,7 +598,7 @@ export default function BackgroundsDashboard() {
             </div>
 
             {/* Recent Activity */}
-            <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+            <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-[13px] font-semibold text-primary uppercase tracking-wide">Recent Activity</h3>
                 <span className="text-xs text-slate-500">Last 24 hours</span>
@@ -608,7 +608,7 @@ export default function BackgroundsDashboard() {
                   const statusDot = activity.type === 'flag' ? 'bg-red-500' :
                     activity.type === 'complete' ? 'bg-emerald-500' : 'bg-slate-600';
                   return (
-                    <div key={activity.id} className="flex items-start gap-3 px-4 py-2.5 bg-slate-100 dark:bg-slate-900/20 rounded hover:bg-slate-100 dark:hover:bg-slate-800/30 transition-all cursor-pointer">
+                    <div key={activity.id} className="flex items-start gap-3 px-4 py-2.5 bg-slate-100 dark:bg-zinc-950/20 rounded hover:bg-slate-100 dark:hover:bg-zinc-900/30 transition-all cursor-pointer">
                       <div className={`w-1.5 h-1.5 rounded-full mt-[7px] flex-shrink-0 ${statusDot}`}></div>
                       <div className="flex-1 min-w-0">
                         <p className="text-[13px] text-secondary leading-snug">{activity.message}</p>
@@ -628,7 +628,7 @@ export default function BackgroundsDashboard() {
           </div>
 
           {/* Priority Cases */}
-          <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 mb-8">
+          <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 mb-8">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-[13px] font-semibold text-primary uppercase tracking-wide">Priority Cases Requiring Action</h3>
               <button
@@ -640,7 +640,7 @@ export default function BackgroundsDashboard() {
             </div>
             <div className="space-y-1">
               {priorityCases.map(caseItem => (
-                <div key={caseItem.id} className="flex items-center gap-4 px-4 py-3 bg-slate-100 dark:bg-slate-900/20 rounded hover:bg-slate-100 dark:hover:bg-slate-800/30 transition-all cursor-pointer">
+                <div key={caseItem.id} className="flex items-center gap-4 px-4 py-3 bg-slate-100 dark:bg-zinc-950/20 rounded hover:bg-slate-100 dark:hover:bg-zinc-900/30 transition-all cursor-pointer">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-4">
                       <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${
@@ -666,7 +666,7 @@ export default function BackgroundsDashboard() {
           </div>
 
           {/* Upcoming Deadlines */}
-          <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 mb-8">
+          <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 mb-8">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-[13px] font-semibold text-primary uppercase tracking-wide">Upcoming Deadlines</h3>
               <span className="text-xs text-slate-500">Compliance and SLA-driven milestones</span>
@@ -690,7 +690,7 @@ export default function BackgroundsDashboard() {
                     <span className="text-[13px] font-semibold text-secondary uppercase tracking-wide">{groupConfig.label}</span>
                   </div>
                   {items.map(deadline => (
-                    <div key={deadline.id} className={`flex items-center gap-4 px-4 py-2.5 bg-slate-100 dark:bg-slate-900/20 rounded border-l-[3px] ${groupConfig.border} ml-3`}>
+                    <div key={deadline.id} className={`flex items-center gap-4 px-4 py-2.5 bg-slate-100 dark:bg-zinc-950/20 rounded border-l-[3px] ${groupConfig.border} ml-3`}>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-3">
                           <span className="text-[13px] font-medium text-primary">{deadline.subject}</span>
@@ -710,7 +710,7 @@ export default function BackgroundsDashboard() {
           </div>
 
           {/* Audit Log Footer */}
-          <div className="mb-4 px-5 py-3 bg-slate-50 dark:bg-slate-800/10 border border-border rounded-lg">
+          <div className="mb-4 px-5 py-3 bg-slate-50 dark:bg-zinc-900/10 border border-border rounded-lg">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Shield className="w-3.5 h-3.5 text-slate-700" />
@@ -730,7 +730,7 @@ export default function BackgroundsDashboard() {
       {/* Quick Help Button */}
       <button
         onClick={() => setChatOpen(!chatOpen)}
-        className="fixed bottom-6 right-6 w-14 h-14 bg-slate-600 dark:bg-slate-700 hover:bg-slate-500 dark:hover:bg-slate-600 rounded-full shadow-lg flex items-center justify-center transition-all z-40"
+        className="fixed bottom-6 right-6 w-14 h-14 bg-slate-600 dark:bg-zinc-800 hover:bg-slate-500 dark:hover:bg-zinc-700 rounded-full shadow-lg flex items-center justify-center transition-all z-40"
       >
         {chatOpen ? <X className="w-6 h-6 text-primary" /> : <MessageCircle className="w-6 h-6 text-secondary" />}
       </button>
@@ -739,7 +739,7 @@ export default function BackgroundsDashboard() {
         <div className="fixed bottom-24 right-6 w-full max-w-96 bg-surface-raised backdrop-blur-xl border border-border rounded-xl shadow-2xl flex flex-col z-40 mx-4 sm:mx-0">
           <div className="p-4 border-b border-border">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-slate-200 dark:bg-slate-700 rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 bg-slate-200 dark:bg-zinc-800 rounded-lg flex items-center justify-center">
                 <Shield className="w-5 h-5 text-secondary" />
               </div>
               <div>
@@ -749,28 +749,28 @@ export default function BackgroundsDashboard() {
             </div>
           </div>
           <div className="p-4 space-y-2">
-            <button className="w-full flex items-center gap-3 p-3 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-all text-left">
+            <button className="w-full flex items-center gap-3 p-3 bg-slate-100/80 dark:bg-zinc-900/30 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-all text-left">
               <FileText className="w-5 h-5 text-secondary" />
               <div>
                 <p className="text-[13px] text-primary font-medium">Investigation Guidelines</p>
                 <p className="text-xs text-slate-500">POST standards & procedures</p>
               </div>
             </button>
-            <button className="w-full flex items-center gap-3 p-3 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-all text-left">
+            <button className="w-full flex items-center gap-3 p-3 bg-slate-100/80 dark:bg-zinc-900/30 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-all text-left">
               <ClipboardCheck className="w-5 h-5 text-secondary" />
               <div>
                 <p className="text-[13px] text-primary font-medium">Adjudication Checklist</p>
                 <p className="text-xs text-slate-500">Review requirements</p>
               </div>
             </button>
-            <button className="w-full flex items-center gap-3 p-3 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-all text-left">
+            <button className="w-full flex items-center gap-3 p-3 bg-slate-100/80 dark:bg-zinc-900/30 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-all text-left">
               <Phone className="w-5 h-5 text-secondary" />
               <div>
                 <p className="text-[13px] text-primary font-medium">Contact IT Support</p>
                 <p className="text-xs text-slate-500">Technical assistance</p>
               </div>
             </button>
-            <button className="w-full flex items-center gap-3 p-3 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-all text-left">
+            <button className="w-full flex items-center gap-3 p-3 bg-slate-100/80 dark:bg-zinc-900/30 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-all text-left">
               <Scale className="w-5 h-5 text-secondary" />
               <div>
                 <p className="text-[13px] text-primary font-medium">Legal Reference</p>

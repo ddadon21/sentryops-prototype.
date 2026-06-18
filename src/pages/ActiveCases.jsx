@@ -365,7 +365,7 @@ export default function ActiveCases() {
             )}
 
             {/* Search and Filters */}
-            <div className="mb-6 bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4 lg:p-6">
+            <div className="mb-6 bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4 lg:p-6">
               <div className="flex items-center gap-2 mb-4">
                 <Filter className="w-5 h-5 text-secondary" />
                 <h3 className="text-sm font-semibold text-primary uppercase">Search Active Cases</h3>
@@ -381,7 +381,7 @@ export default function ActiveCases() {
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       placeholder="Search cases..."
-                      className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-slate-900/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
+                      className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-zinc-950/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
                     />
                   </div>
                 </div>
@@ -389,7 +389,7 @@ export default function ActiveCases() {
                   <select
                     value={filterStatus}
                     onChange={(e) => setFilterStatus(e.target.value)}
-                    className="w-full px-4 py-2.5 bg-white dark:bg-slate-900/40 border border-border rounded-xl text-primary focus:outline-none focus:border-amber-500/50 text-sm"
+                    className="w-full px-4 py-2.5 bg-white dark:bg-zinc-950/40 border border-border rounded-xl text-primary focus:outline-none focus:border-amber-500/50 text-sm"
                   >
                     <option value="all">All Status</option>
                     <option value="initial">Initial Review</option>
@@ -405,7 +405,7 @@ export default function ActiveCases() {
                   <select
                     value={filterPriority}
                     onChange={(e) => setFilterPriority(e.target.value)}
-                    className="w-full px-4 py-2.5 bg-white dark:bg-slate-900/40 border border-border rounded-xl text-primary focus:outline-none focus:border-amber-500/50 text-sm"
+                    className="w-full px-4 py-2.5 bg-white dark:bg-zinc-950/40 border border-border rounded-xl text-primary focus:outline-none focus:border-amber-500/50 text-sm"
                   >
                     <option value="all">All Priority</option>
                     <option value="high">High (deadline within 14 days)</option>
@@ -417,7 +417,7 @@ export default function ActiveCases() {
                   <select
                     value={filterInvestigator}
                     onChange={(e) => setFilterInvestigator(e.target.value)}
-                    className="w-full px-4 py-2.5 bg-white dark:bg-slate-900/40 border border-border rounded-xl text-primary focus:outline-none focus:border-amber-500/50 text-sm"
+                    className="w-full px-4 py-2.5 bg-white dark:bg-zinc-950/40 border border-border rounded-xl text-primary focus:outline-none focus:border-amber-500/50 text-sm"
                   >
                     <option value="all">All Investigators</option>
                     <option value="Brooks">Agent Brooks</option>
@@ -430,7 +430,7 @@ export default function ActiveCases() {
                   <select
                     value={filterPosition}
                     onChange={(e) => setFilterPosition(e.target.value)}
-                    className="w-full px-4 py-2.5 bg-white dark:bg-slate-900/40 border border-border rounded-xl text-primary focus:outline-none focus:border-amber-500/50 text-sm"
+                    className="w-full px-4 py-2.5 bg-white dark:bg-zinc-950/40 border border-border rounded-xl text-primary focus:outline-none focus:border-amber-500/50 text-sm"
                   >
                     <option value="all">All Positions</option>
                     <option value="Deputy Sheriff">Deputy Sheriff</option>
@@ -444,11 +444,11 @@ export default function ActiveCases() {
               <div className="mt-4 pt-4 border-t border-border dark:border-slate-700/30 flex items-center justify-between flex-wrap gap-3">
                 <p className="text-sm text-secondary">Showing: <span className="text-primary font-medium">{filteredCases.length} of {cases.length}</span> cases</p>
                 <div className="flex items-center gap-2">
-                  <button className="flex items-center gap-2 px-4 py-2 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-700/60 transition-all">
+                  <button className="flex items-center gap-2 px-4 py-2 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-700/60 transition-all">
                     <Download className="w-4 h-4" />
                     Export to Excel
                   </button>
-                  <button className="flex items-center gap-2 px-4 py-2 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-700/60 transition-all">
+                  <button className="flex items-center gap-2 px-4 py-2 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-700/60 transition-all">
                     <Printer className="w-4 h-4" />
                     Print Case List
                   </button>
@@ -484,7 +484,7 @@ export default function ActiveCases() {
                 return (
                   <div
                     key={case_item.id}
-                    className={`bg-white dark:bg-slate-800/40 border rounded-xl overflow-hidden transition-all ${
+                    className={`bg-white dark:bg-zinc-900/40 border rounded-xl overflow-hidden transition-all ${
                       case_item.priority === 'high' ? 'border-red-500/30' :
                       case_item.priority === 'on_hold' ? 'border-slate-600/50' : 'border-slate-700/50'
                     } hover:border-amber-500/30`}
@@ -557,7 +557,7 @@ export default function ActiveCases() {
                                 stage.status === 'in_progress' ? 'bg-amber-500/10 border-amber-500/20' :
                                 stage.status === 'partial' ? 'bg-blue-500/10 border-blue-500/20' :
                                 stage.status === 'blocked' ? 'bg-red-500/10 border-red-500/20' :
-                                'bg-white dark:bg-slate-800/50 border-border'
+                                'bg-white dark:bg-zinc-900/50 border-border'
                               }`}
                             >
                               <div className="flex items-center gap-2 mb-1">
@@ -600,7 +600,7 @@ export default function ActiveCases() {
                       )}
 
                       {case_item.holdReason && (
-                        <div className="p-3 bg-slate-100 dark:bg-slate-700/30 border border-slate-600/30 rounded-lg mb-4">
+                        <div className="p-3 bg-slate-100 dark:bg-zinc-800/30 border border-slate-600/30 rounded-lg mb-4">
                           <div className="flex items-center gap-2 mb-1">
                             <Hourglass className="w-4 h-4 text-secondary" />
                             <span className="text-xs font-semibold text-secondary uppercase">Hold Reason</span>
@@ -648,7 +648,7 @@ export default function ActiveCases() {
 
                       {/* Extended Timeline Reason */}
                       {case_item.extendedReason && (
-                        <div className="p-3 bg-slate-100 dark:bg-slate-700/30 border border-slate-600/30 rounded-lg mb-4">
+                        <div className="p-3 bg-slate-100 dark:bg-zinc-800/30 border border-slate-600/30 rounded-lg mb-4">
                           <div className="flex items-center gap-2 mb-1">
                             <Clock className="w-4 h-4 text-secondary" />
                             <span className="text-xs font-semibold text-secondary uppercase">Reason for Extended Timeline</span>
@@ -670,7 +670,7 @@ export default function ActiveCases() {
 
                       {/* Case Notes */}
                       {case_item.notes && (
-                        <div className="p-3 bg-slate-100 dark:bg-slate-700/30 border border-slate-600/30 rounded-lg mb-4">
+                        <div className="p-3 bg-slate-100 dark:bg-zinc-800/30 border border-slate-600/30 rounded-lg mb-4">
                           <div className="flex items-center gap-2 mb-1">
                             <FileText className="w-4 h-4 text-secondary" />
                             <span className="text-xs font-semibold text-secondary uppercase">Notes</span>
@@ -693,11 +693,11 @@ export default function ActiveCases() {
                           <Download className="w-4 h-4" />
                           {exportingId === case_item.rawId ? 'Generating…' : 'Export PDF'}
                         </button>
-                        <button className="flex items-center gap-2 px-4 py-2 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-700/60 transition-all">
+                        <button className="flex items-center gap-2 px-4 py-2 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-700/60 transition-all">
                           <Phone className="w-4 h-4" />
                           Contact Investigator
                         </button>
-                        <button className="flex items-center gap-2 px-4 py-2 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-700/60 transition-all">
+                        <button className="flex items-center gap-2 px-4 py-2 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-700/60 transition-all">
                           <Clock className="w-4 h-4" />
                           Case Timeline
                         </button>

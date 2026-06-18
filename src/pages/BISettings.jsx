@@ -256,7 +256,7 @@ export default function BISettings() {
               const showDivider = tab.tier !== prevTier;
               return (
                 <React.Fragment key={tab.id}>
-                  {showDivider && <div className="self-center mx-1 w-px h-5 bg-white dark:bg-slate-700/60" />}
+                  {showDivider && <div className="self-center mx-1 w-px h-5 bg-white dark:bg-zinc-800/60" />}
                   <button
                     onClick={() => setActiveSection(tab.id)}
                     className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all relative whitespace-nowrap ${
@@ -285,8 +285,8 @@ export default function BISettings() {
                   const Icon = getIntegrationIcon(integration.type);
                   const isExpanded = expandedIntegration === key;
                   return (
-                    <div key={key} className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden shadow-sm dark:shadow-none">
-                      <div onClick={() => setExpandedIntegration(isExpanded ? null : key)} className="p-6 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/20 transition-colors">
+                    <div key={key} className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden shadow-sm dark:shadow-none">
+                      <div onClick={() => setExpandedIntegration(isExpanded ? null : key)} className="p-6 cursor-pointer hover:bg-slate-50 dark:hover:bg-zinc-900/20 transition-colors">
                         <div className="flex items-center gap-4">
                           <div className={`w-12 h-12 ${getStatusBg(integration.status)} border ${getStatusBorder(integration.status)} rounded-xl flex items-center justify-center`}>
                             <Icon className={`w-6 h-6 ${getStatusColor(integration.status)}`} />
@@ -306,7 +306,7 @@ export default function BISettings() {
                               <span className="flex items-center gap-1"><RefreshCw className="w-3 h-3" />{integration.lastSync}</span>
                             </div>
                           </div>
-                          <button className="p-2 hover:bg-slate-200 dark:hover:bg-slate-700/40 rounded-lg transition-colors">
+                          <button className="p-2 hover:bg-slate-200 dark:hover:bg-zinc-800/40 rounded-lg transition-colors">
                             {isExpanded ? <ChevronUp className="w-5 h-5 text-muted" /> : <ChevronDown className="w-5 h-5 text-muted" />}
                           </button>
                         </div>
@@ -319,21 +319,21 @@ export default function BISettings() {
                               <div>
                                 <p className="text-xs font-medium text-muted mb-2">API Endpoint</p>
                                 <div className="flex items-center gap-2">
-                                  <code className="flex-1 text-xs text-blue-400 bg-slate-100 dark:bg-slate-900/50 px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700/50 overflow-x-auto">{integration.endpoint}</code>
-                                  <button onClick={() => handleCopyApiKey(integration.endpoint)} className="p-2 hover:bg-slate-200 dark:hover:bg-slate-700/40 rounded-lg transition-colors"><Copy className="w-4 h-4 text-muted" /></button>
+                                  <code className="flex-1 text-xs text-blue-400 bg-slate-100 dark:bg-zinc-950/50 px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700/50 overflow-x-auto">{integration.endpoint}</code>
+                                  <button onClick={() => handleCopyApiKey(integration.endpoint)} className="p-2 hover:bg-slate-200 dark:hover:bg-zinc-800/40 rounded-lg transition-colors"><Copy className="w-4 h-4 text-muted" /></button>
                                 </div>
                               </div>
                               <div><p className="text-xs font-medium text-muted mb-2">Authentication Method</p><p className="text-sm text-primary">{integration.authMethod}</p></div>
                               <div>
                                 <p className="text-xs font-medium text-muted mb-2">API Key</p>
                                 <div className="flex items-center gap-2">
-                                  <code className="flex-1 text-xs text-amber-700 bg-slate-100 dark:bg-slate-900/50 px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700/50">
+                                  <code className="flex-1 text-xs text-amber-700 bg-slate-100 dark:bg-zinc-950/50 px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700/50">
                                     {showApiKey[key] ? integration.apiKey : '••••••••••••••••••••'}
                                   </code>
-                                  <button onClick={() => setShowApiKey({...showApiKey, [key]: !showApiKey[key]})} className="p-2 hover:bg-slate-200 dark:hover:bg-slate-700/40 rounded-lg transition-colors">
+                                  <button onClick={() => setShowApiKey({...showApiKey, [key]: !showApiKey[key]})} className="p-2 hover:bg-slate-200 dark:hover:bg-zinc-800/40 rounded-lg transition-colors">
                                     {showApiKey[key] ? <EyeOff className="w-4 h-4 text-muted" /> : <Eye className="w-4 h-4 text-muted" />}
                                   </button>
-                                  <button onClick={() => handleCopyApiKey(integration.apiKey)} className="p-2 hover:bg-slate-200 dark:hover:bg-slate-700/40 rounded-lg transition-colors"><Copy className="w-4 h-4 text-muted" /></button>
+                                  <button onClick={() => handleCopyApiKey(integration.apiKey)} className="p-2 hover:bg-slate-200 dark:hover:bg-zinc-800/40 rounded-lg transition-colors"><Copy className="w-4 h-4 text-muted" /></button>
                                 </div>
                               </div>
                             </div>
@@ -343,7 +343,7 @@ export default function BISettings() {
                                 <p className="text-xs font-medium text-muted mb-2">Data Types</p>
                                 <div className="flex flex-wrap gap-2">
                                   {integration.dataTypes.map((type, i) => (
-                                    <span key={i} className="px-2 py-1 bg-slate-200 dark:bg-slate-700/40 border border-slate-300 dark:border-slate-600/50 rounded-md text-xs text-secondary">{type}</span>
+                                    <span key={i} className="px-2 py-1 bg-slate-200 dark:bg-zinc-800/40 border border-slate-300 dark:border-slate-600/50 rounded-md text-xs text-secondary">{type}</span>
                                   ))}
                                 </div>
                               </div>
@@ -351,7 +351,7 @@ export default function BISettings() {
                                 <div>
                                   <p className="text-xs font-medium text-muted mb-2">Monthly Requests</p>
                                   <p className="text-sm text-primary">{integration.monthlyRequests.toLocaleString()} / {integration.requestLimit.toLocaleString()}</p>
-                                  <div className="mt-2 h-2 bg-slate-200 dark:bg-slate-700/40 rounded-full overflow-hidden">
+                                  <div className="mt-2 h-2 bg-slate-200 dark:bg-zinc-800/40 rounded-full overflow-hidden">
                                     <div className="h-full bg-gradient-to-r from-blue-500 to-cyan-500" style={{width: `${(integration.monthlyRequests / integration.requestLimit) * 100}%`}}></div>
                                   </div>
                                 </div>
@@ -376,12 +376,12 @@ export default function BISettings() {
                             <div className="mt-6 pt-6 border-t border-border dark:border-slate-700/30">
                               <p className="text-xs font-medium text-muted mb-3">Live Metrics</p>
                               <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                                {integration.activeRequisitions && <div className="bg-slate-50 dark:bg-slate-900/50 border border-border rounded-xl p-4"><p className="text-xs text-muted mb-1">Active Requisitions</p><p className="text-sm font-semibold text-primary">{integration.activeRequisitions}</p></div>}
-                                {integration.pendingOnboarding && <div className="bg-slate-50 dark:bg-slate-900/50 border border-border rounded-xl p-4"><p className="text-xs text-muted mb-1">Pending Background Checks</p><p className="text-sm font-semibold text-amber-700">{integration.pendingOnboarding}</p></div>}
-                                {integration.currentInmates && <div className="bg-slate-50 dark:bg-slate-900/50 border border-border rounded-xl p-4"><p className="text-xs text-muted mb-1">Current Inmates</p><p className="text-sm font-semibold text-primary">{integration.currentInmates}/{integration.capacity}</p></div>}
-                                {integration.activeUsers && <div className="bg-slate-50 dark:bg-slate-900/50 border border-border rounded-xl p-4"><p className="text-xs text-muted mb-1">Active Investigators</p><p className="text-sm font-semibold text-primary">{integration.activeUsers}</p></div>}
-                                {integration.expiringSoon && <div className="bg-slate-50 dark:bg-slate-900/50 border border-border rounded-xl p-4"><p className="text-xs text-muted mb-1">Certs Expiring Soon</p><p className="text-sm font-semibold text-red-400">{integration.expiringSoon}</p></div>}
-                                {integration.activeWarrants && <div className="bg-slate-50 dark:bg-slate-900/50 border border-border rounded-xl p-4"><p className="text-xs text-muted mb-1">Active Warrants</p><p className="text-sm font-semibold text-amber-700">{integration.activeWarrants}</p></div>}
+                                {integration.activeRequisitions && <div className="bg-slate-50 dark:bg-zinc-950/50 border border-border rounded-xl p-4"><p className="text-xs text-muted mb-1">Active Requisitions</p><p className="text-sm font-semibold text-primary">{integration.activeRequisitions}</p></div>}
+                                {integration.pendingOnboarding && <div className="bg-slate-50 dark:bg-zinc-950/50 border border-border rounded-xl p-4"><p className="text-xs text-muted mb-1">Pending Background Checks</p><p className="text-sm font-semibold text-amber-700">{integration.pendingOnboarding}</p></div>}
+                                {integration.currentInmates && <div className="bg-slate-50 dark:bg-zinc-950/50 border border-border rounded-xl p-4"><p className="text-xs text-muted mb-1">Current Inmates</p><p className="text-sm font-semibold text-primary">{integration.currentInmates}/{integration.capacity}</p></div>}
+                                {integration.activeUsers && <div className="bg-slate-50 dark:bg-zinc-950/50 border border-border rounded-xl p-4"><p className="text-xs text-muted mb-1">Active Investigators</p><p className="text-sm font-semibold text-primary">{integration.activeUsers}</p></div>}
+                                {integration.expiringSoon && <div className="bg-slate-50 dark:bg-zinc-950/50 border border-border rounded-xl p-4"><p className="text-xs text-muted mb-1">Certs Expiring Soon</p><p className="text-sm font-semibold text-red-400">{integration.expiringSoon}</p></div>}
+                                {integration.activeWarrants && <div className="bg-slate-50 dark:bg-zinc-950/50 border border-border rounded-xl p-4"><p className="text-xs text-muted mb-1">Active Warrants</p><p className="text-sm font-semibold text-amber-700">{integration.activeWarrants}</p></div>}
                               </div>
                             </div>
                           )}
@@ -389,8 +389,8 @@ export default function BISettings() {
                             <button onClick={() => handleTestConnection(key)} disabled={testingConnection === key} className="flex items-center gap-2 px-4 py-2 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded-xl text-sm font-medium hover:bg-blue-500/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
                               {testingConnection === key ? <><RefreshCw className="w-4 h-4 animate-spin" />Testing...</> : <><Wifi className="w-4 h-4" />Test Connection</>}
                             </button>
-                            <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-700/40 border border-slate-300 dark:border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700/60 transition-all"><RefreshCw className="w-4 h-4" />Sync Now</button>
-                            <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-700/40 border border-slate-300 dark:border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700/60 transition-all"><Shield className="w-4 h-4" />Configure</button>
+                            <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-zinc-800/40 border border-slate-300 dark:border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-200 dark:hover:bg-zinc-800/60 transition-all"><RefreshCw className="w-4 h-4" />Sync Now</button>
+                            <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-zinc-800/40 border border-slate-300 dark:border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-200 dark:hover:bg-zinc-800/60 transition-all"><Shield className="w-4 h-4" />Configure</button>
                           </div>
                         </div>
                       )}
@@ -403,7 +403,7 @@ export default function BISettings() {
             {/* Security */}
             {activeSection === 'security' && (
               <div className="space-y-6">
-                <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6">
+                <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6">
                   <div className="flex items-center justify-between mb-1">
                     <h3 className="text-sm font-semibold text-primary">Authentication & Access</h3>
                     <span className="text-[10px] text-slate-500">Last updated: Dec 9, 2025 11:42 AM</span>
@@ -430,7 +430,7 @@ export default function BISettings() {
                     ))}
                     <div>
                       <label className="block text-sm font-medium text-secondary mb-2">Session Timeout (minutes)</label>
-                      <select value={securitySettings.sessionTimeout} onChange={(e) => setSecuritySettings({...securitySettings, sessionTimeout: e.target.value})} className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50 transition-colors">
+                      <select value={securitySettings.sessionTimeout} onChange={(e) => setSecuritySettings({...securitySettings, sessionTimeout: e.target.value})} className="w-full px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50 transition-colors">
                         <option value="15">15 minutes</option>
                         <option value="30">30 minutes</option>
                         <option value="60">1 hour</option>
@@ -440,7 +440,7 @@ export default function BISettings() {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-secondary mb-2">Password Expiry (days)</label>
-                      <select value={securitySettings.passwordExpiry} onChange={(e) => setSecuritySettings({...securitySettings, passwordExpiry: e.target.value})} className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50 transition-colors">
+                      <select value={securitySettings.passwordExpiry} onChange={(e) => setSecuritySettings({...securitySettings, passwordExpiry: e.target.value})} className="w-full px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50 transition-colors">
                         <option value="30">30 days</option>
                         <option value="60">60 days</option>
                         <option value="90">90 days (CJIS Recommended)</option>
@@ -465,10 +465,10 @@ export default function BISettings() {
                     </div>
                   </div>
                 </div>
-                <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6">
+                <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6">
                   <h3 className="text-sm font-semibold text-primary mb-6">Active Sessions</h3>
                   <div className="space-y-3">
-                    <div className="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800/30 border border-border dark:border-slate-700/30 rounded-xl">
+                    <div className="flex items-center gap-4 p-4 bg-slate-50 dark:bg-zinc-900/30 border border-border dark:border-slate-700/30 rounded-xl">
                       <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center"><Monitor className="w-5 h-5 text-green-400" /></div>
                       <div className="flex-1">
                         <p className="text-sm font-medium text-primary">Chrome on Windows • Current Session</p>
@@ -477,7 +477,7 @@ export default function BISettings() {
                       </div>
                       <div className="px-3 py-1.5 bg-green-500/20 border border-green-500/30 rounded-lg"><span className="text-xs font-medium text-green-400">Active</span></div>
                     </div>
-                    <div className="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800/30 border border-border dark:border-slate-700/30 rounded-xl">
+                    <div className="flex items-center gap-4 p-4 bg-slate-50 dark:bg-zinc-900/30 border border-border dark:border-slate-700/30 rounded-xl">
                       <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center"><Monitor className="w-5 h-5 text-blue-400" /></div>
                       <div className="flex-1">
                         <p className="text-sm font-medium text-primary">Chrome on MacBook • Investigator Workstation</p>
@@ -488,13 +488,13 @@ export default function BISettings() {
                     </div>
                   </div>
                 </div>
-                <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6">
+                <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6">
                   <h3 className="text-sm font-semibold text-primary mb-4">Change Password</h3>
                   <div className="space-y-6">
                     {['Current Password', 'New Password', 'Confirm New Password'].map((label, i) => (
                       <div key={i}>
                         <label className="block text-sm font-medium text-secondary mb-2">{label}</label>
-                        <input type="password" className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-primary placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors" placeholder={`Enter ${label.toLowerCase()}`} />
+                        <input type="password" className="w-full px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-primary placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors" placeholder={`Enter ${label.toLowerCase()}`} />
                       </div>
                     ))}
                     <button className="flex items-center gap-2 px-4 py-2 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded-xl text-sm font-medium hover:bg-blue-500/30 transition-all"><Key className="w-4 h-4" />Update Password</button>
@@ -505,7 +505,7 @@ export default function BISettings() {
 
             {/* Audit & Compliance */}
             {activeSection === 'audit' && (
-              <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6">
+              <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6">
                 <div className="flex items-center justify-between mb-6">
                   <div>
                     <h3 className="text-sm font-semibold text-primary">Audit & Compliance Trail</h3>
@@ -522,7 +522,7 @@ export default function BISettings() {
                     { Icon: AlertTriangle, bg: 'bg-amber-500/20', iconColor: 'text-amber-700', title: 'SLA Warning Logged', tag: 'Compliance', tagBg: 'bg-amber-500/20', tagBorder: 'border-amber-500/30', tagText: 'text-amber-700', desc: 'BI-0000007 Ramirez hit day 12 — supervisor notified per SLA policy', meta: ['Case: BI-0000007', 'Day 12 of 18', '8 hours ago'] },
                     { Icon: FileCheck, bg: 'bg-slate-500/20', iconColor: 'text-slate-400', title: 'Adjudication Submitted', tag: 'BI Action', tagBg: 'bg-blue-500/20', tagBorder: 'border-blue-500/30', tagText: 'text-blue-400', desc: 'Case BI-0000003 Martinez submitted for final adjudication review', meta: ['Case: BI-0000003', 'Stage: Final Review', '12 hours ago'] },
                   ].map((event, i) => (
-                    <div key={i} className="flex items-start gap-4 p-4 bg-slate-50 dark:bg-slate-800/30 border border-border dark:border-slate-700/30 rounded-xl">
+                    <div key={i} className="flex items-start gap-4 p-4 bg-slate-50 dark:bg-zinc-900/30 border border-border dark:border-slate-700/30 rounded-xl">
                       <div className={`w-10 h-10 ${event.bg} rounded-xl flex items-center justify-center flex-shrink-0`}><event.Icon className={`w-5 h-5 ${event.iconColor}`} /></div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
@@ -538,7 +538,7 @@ export default function BISettings() {
                   ))}
                 </div>
                 <div className="mt-6 flex justify-center">
-                  <button className="px-4 py-2 bg-slate-100 dark:bg-slate-700/40 border border-slate-300 dark:border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700/60 transition-all">Load More</button>
+                  <button className="px-4 py-2 bg-slate-100 dark:bg-zinc-800/40 border border-slate-300 dark:border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-200 dark:hover:bg-zinc-800/60 transition-all">Load More</button>
                 </div>
               </div>
             )}
@@ -546,7 +546,7 @@ export default function BISettings() {
             {/* Backup & Retention */}
             {activeSection === 'data' && (
               <div className="space-y-6">
-                <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6">
+                <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6">
                   <div className="flex items-center justify-between mb-1">
                     <h3 className="text-sm font-semibold text-primary">Data Export</h3>
                     <span className="text-[10px] text-slate-500">Last updated: {new Date().toLocaleDateString()} 02:00 AM</span>
@@ -559,7 +559,7 @@ export default function BISettings() {
                       { Icon: Shield, color: 'purple', label: 'GCIC/NCIC Query Logs', desc: 'CJIS-required query log export', fmt: 'Export JSON' },
                       { Icon: FileCheck, color: 'amber', label: 'Audit Trail', desc: 'Export full BI operations audit log', fmt: 'Export CSV' },
                     ].map((item, i) => (
-                      <div key={i} className="p-4 bg-slate-50 dark:bg-slate-800/30 border border-border dark:border-slate-700/30 rounded-xl">
+                      <div key={i} className="p-4 bg-slate-50 dark:bg-zinc-900/30 border border-border dark:border-slate-700/30 rounded-xl">
                         <div className="flex items-center justify-between mb-3">
                           <div className="flex items-center gap-3">
                             <div className={`w-10 h-10 bg-${item.color}-500/20 rounded-xl flex items-center justify-center`}><item.Icon className={`w-5 h-5 text-${item.color}-400`} /></div>
@@ -571,17 +571,17 @@ export default function BISettings() {
                     ))}
                   </div>
                 </div>
-                <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6">
+                <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6">
                   <h3 className="text-sm font-semibold text-primary mb-6">Backup & Restore</h3>
                   <div className="space-y-6">
-                    <div className="p-4 bg-slate-50 dark:bg-slate-800/30 border border-border dark:border-slate-700/30 rounded-xl">
+                    <div className="p-4 bg-slate-50 dark:bg-zinc-900/30 border border-border dark:border-slate-700/30 rounded-xl">
                       <div className="flex items-center justify-between mb-3">
                         <div><h4 className="text-sm font-medium text-primary mb-1">Last Backup</h4><p className="text-xs text-muted">Today at 2:00 AM EST</p></div>
                         <div className="flex items-center gap-2 px-3 py-1.5 bg-green-500/20 border border-green-500/30 rounded-lg"><CheckCircle2 className="w-4 h-4 text-green-400" /><span className="text-xs font-medium text-green-400">Successful</span></div>
                       </div>
                       <div className="flex gap-3 mt-4">
                         <button className="flex items-center gap-2 px-4 py-2 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded-xl text-sm font-medium hover:bg-blue-500/30 transition-all"><Download className="w-4 h-4" />Download Backup</button>
-                        <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-700/40 border border-slate-300 dark:border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700/60 transition-all"><RefreshCw className="w-4 h-4" />Create New Backup</button>
+                        <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-zinc-800/40 border border-slate-300 dark:border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-200 dark:hover:bg-zinc-800/60 transition-all"><RefreshCw className="w-4 h-4" />Create New Backup</button>
                       </div>
                     </div>
                     <div className="p-4 bg-amber-500/10 border border-amber-500/20 rounded-xl">
@@ -592,7 +592,7 @@ export default function BISettings() {
                     </div>
                   </div>
                 </div>
-                <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6">
+                <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6">
                   <h3 className="text-sm font-semibold text-primary mb-6">Data Retention</h3>
                   <div className="space-y-6">
                     {[
@@ -603,7 +603,7 @@ export default function BISettings() {
                     ].map((item, i) => (
                       <div key={i}>
                         <label className="block text-sm font-medium text-secondary mb-2">{item.label}</label>
-                        <select className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50 transition-colors">
+                        <select className="w-full px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50 transition-colors">
                           {item.opts.map(([val, label]) => <option key={val} value={val}>{label}</option>)}
                         </select>
                       </div>
@@ -616,7 +616,7 @@ export default function BISettings() {
             {/* Profile */}
             {activeSection === 'profile' && (
               <>
-                <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6">
+                <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6">
                   <div className="flex items-center justify-between mb-1">
                     <h3 className="text-sm font-semibold text-primary">Profile Information</h3>
                     <span className="text-[10px] text-slate-500">Last updated: Dec 11, 2025 09:14 AM</span>
@@ -637,12 +637,12 @@ export default function BISettings() {
                       <div key={f.field}>
                         <label className="block text-sm font-medium text-secondary mb-2">{f.label}</label>
                         <input type={f.type} value={profileSettings[f.field]} disabled={!f.editable} onChange={(e) => f.editable && setProfileSettings({...profileSettings, [f.field]: e.target.value})}
-                          className={`w-full px-4 py-2.5 border rounded-xl text-primary focus:outline-none transition-colors ${f.editable ? 'bg-white dark:bg-slate-800/40 border-slate-300 dark:border-slate-700/50 focus:border-amber-500/50' : 'bg-slate-100 dark:bg-slate-800/20 border-border text-muted cursor-not-allowed'}`} />
+                          className={`w-full px-4 py-2.5 border rounded-xl text-primary focus:outline-none transition-colors ${f.editable ? 'bg-white dark:bg-zinc-900/40 border-slate-300 dark:border-slate-700/50 focus:border-amber-500/50' : 'bg-slate-100 dark:bg-zinc-900/20 border-border text-muted cursor-not-allowed'}`} />
                       </div>
                     ))}
                   </div>
                 </div>
-                <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
+                <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
                   <h3 className="text-lg font-semibold text-primary mb-4">Profile Photo</h3>
                   <div className="flex items-center gap-6">
                     <div className="w-24 h-24 bg-gradient-to-br from-amber-500 to-amber-600 rounded-full flex items-center justify-center"><span className="text-primary text-3xl font-bold">MW</span></div>
@@ -650,7 +650,7 @@ export default function BISettings() {
                       <p className="text-sm text-secondary mb-3">Update your profile photo. Recommended size: 400x400px</p>
                       <div className="flex gap-3">
                         <button className="flex items-center gap-2 px-4 py-2 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded-xl text-sm font-medium hover:bg-blue-500/30 transition-all"><Camera className="w-4 h-4" />Upload Photo</button>
-                        <button className="px-4 py-2 bg-slate-100 dark:bg-slate-700/40 border border-slate-300 dark:border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700/60 transition-all">Remove</button>
+                        <button className="px-4 py-2 bg-slate-100 dark:bg-zinc-800/40 border border-slate-300 dark:border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-200 dark:hover:bg-zinc-800/60 transition-all">Remove</button>
                       </div>
                     </div>
                   </div>
@@ -660,7 +660,7 @@ export default function BISettings() {
 
             {/* Notifications */}
             {activeSection === 'notifications' && (
-              <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6">
+              <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6">
                 <div className="flex items-center justify-between mb-1">
                   <h3 className="text-sm font-semibold text-primary">Operational Alert Preferences</h3>
                   <span className="text-[10px] text-slate-500">Last updated: Dec 11, 2025 09:14 AM</span>
@@ -687,7 +687,7 @@ export default function BISettings() {
 
             {/* Display */}
             {activeSection === 'display' && (
-              <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6">
+              <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6">
                 <div className="flex items-center justify-between mb-1">
                   <h3 className="text-sm font-semibold text-primary">Display Preferences</h3>
                   <span className="text-[10px] text-slate-500">Last updated: Dec 10, 2025 02:30 PM</span>
@@ -698,7 +698,7 @@ export default function BISettings() {
                     <label className="block text-sm font-medium text-secondary mb-3">Theme</label>
                     <div className="grid grid-cols-3 gap-3">
                       {[{ value: 'dark', label: 'Dark', Icon: Moon }, { value: 'light', label: 'Light', Icon: Sun }, { value: 'auto', label: 'Auto', Icon: Monitor }].map(t => (
-                        <button key={t.value} onClick={() => setTheme(t.value)} className={`p-4 rounded-xl border-2 transition-all ${activeTheme === t.value ? 'border-amber-500 bg-amber-100 dark:bg-slate-800/60' : 'border-border bg-white dark:bg-slate-800/20 hover:bg-slate-50 dark:hover:bg-slate-800/40'}`}>
+                        <button key={t.value} onClick={() => setTheme(t.value)} className={`p-4 rounded-xl border-2 transition-all ${activeTheme === t.value ? 'border-amber-500 bg-amber-100 dark:bg-zinc-900/60' : 'border-border bg-white dark:bg-zinc-900/20 hover:bg-slate-50 dark:hover:bg-zinc-900/40'}`}>
                           <t.Icon className="w-6 h-6 text-secondary mb-2" />
                           <p className="text-sm font-medium text-slate-800 dark:text-white">{t.label}</p>
                         </button>
@@ -707,7 +707,7 @@ export default function BISettings() {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-secondary mb-2">Timezone</label>
-                    <select value={displaySettings.timezone} onChange={(e) => setDisplaySettings({...displaySettings, timezone: e.target.value})} className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50 transition-colors">
+                    <select value={displaySettings.timezone} onChange={(e) => setDisplaySettings({...displaySettings, timezone: e.target.value})} className="w-full px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50 transition-colors">
                       <option value="America/New_York">Eastern Time (ET)</option>
                       <option value="America/Chicago">Central Time (CT)</option>
                       <option value="America/Denver">Mountain Time (MT)</option>
@@ -716,7 +716,7 @@ export default function BISettings() {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-secondary mb-2">Date Format</label>
-                    <select value={displaySettings.dateFormat} onChange={(e) => setDisplaySettings({...displaySettings, dateFormat: e.target.value})} className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50 transition-colors">
+                    <select value={displaySettings.dateFormat} onChange={(e) => setDisplaySettings({...displaySettings, dateFormat: e.target.value})} className="w-full px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50 transition-colors">
                       <option value="MM/DD/YYYY">MM/DD/YYYY</option>
                       <option value="DD/MM/YYYY">DD/MM/YYYY</option>
                       <option value="YYYY-MM-DD">YYYY-MM-DD</option>
@@ -724,7 +724,7 @@ export default function BISettings() {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-secondary mb-2">Dashboard Density</label>
-                    <select value={displaySettings.density} onChange={(e) => setDisplaySettings({...displaySettings, density: e.target.value})} className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50 transition-colors">
+                    <select value={displaySettings.density} onChange={(e) => setDisplaySettings({...displaySettings, density: e.target.value})} className="w-full px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50 transition-colors">
                       <option value="compact">Compact</option>
                       <option value="comfortable">Comfortable</option>
                       <option value="spacious">Spacious</option>
@@ -736,13 +736,13 @@ export default function BISettings() {
           </div>
 
           {/* Save Changes Footer */}
-          <div className="mt-8 flex items-center justify-between p-5 bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none">
+          <div className="mt-8 flex items-center justify-between p-5 bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none">
             <div>
               <p className="text-sm font-medium text-primary">Unsaved Changes</p>
               <p className="text-xs text-muted mt-1">Save your changes to apply the new settings</p>
             </div>
             <div className="flex gap-3">
-              <button className="px-6 py-2.5 bg-slate-100 dark:bg-slate-700/40 border border-slate-300 dark:border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700/60 transition-all">Reset</button>
+              <button className="px-6 py-2.5 bg-slate-100 dark:bg-zinc-800/40 border border-slate-300 dark:border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-200 dark:hover:bg-zinc-800/60 transition-all">Reset</button>
               <button onClick={handleSaveSettings} className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 rounded-xl text-primary text-sm font-medium shadow-lg shadow-amber-500/20 transition-all"><Save className="w-4 h-4" />Save Changes</button>
             </div>
           </div>

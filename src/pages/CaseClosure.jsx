@@ -325,7 +325,7 @@ export default function CaseClosure() {
             <p className="text-secondary mb-1">Final investigation review and case disposition for hiring decision</p>
             <p className="text-sm text-slate-500 mb-4">Current date: {currentDate}</p>
 
-            <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4 mb-4">
+            <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4 mb-4">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
                 <div>
                   <p className="text-xs text-slate-500 mb-1">BI Supervisor</p>
@@ -366,11 +366,11 @@ export default function CaseClosure() {
                   <Download className="w-4 h-4" />
                   Download Complete Report
                 </button>
-                <button className="px-4 py-2 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-secondary rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
+                <button className="px-4 py-2 bg-white dark:bg-zinc-800/50 hover:bg-slate-700/70 text-secondary rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
                   <Archive className="w-4 h-4" />
                   Archive Case
                 </button>
-                <button className="px-4 py-2 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-secondary rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
+                <button className="px-4 py-2 bg-white dark:bg-zinc-800/50 hover:bg-slate-700/70 text-secondary rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
                   <Printer className="w-4 h-4" />
                   Print Case Summary
                 </button>
@@ -379,7 +379,7 @@ export default function CaseClosure() {
           </div>
 
           {/* Case Disposition Summary */}
-          <div className="mb-6 bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
+          <div className="mb-6 bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 bg-purple-500/20 rounded-xl flex items-center justify-center">
                 <ClipboardCheck className="w-6 h-6 text-purple-400" />
@@ -392,7 +392,7 @@ export default function CaseClosure() {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Case Information */}
-              <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4">
+              <div className="bg-white dark:bg-zinc-950/40 rounded-xl p-4">
                 <h4 className="text-sm font-semibold text-purple-400 mb-3">CASE INFORMATION</h4>
                 <div className="space-y-2 text-sm">
                   <div className="flex items-start gap-2">
@@ -444,7 +444,7 @@ export default function CaseClosure() {
               </div>
 
               {/* Investigation Status */}
-              <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4">
+              <div className="bg-white dark:bg-zinc-950/40 rounded-xl p-4">
                 <h4 className="text-sm font-semibold text-purple-400 mb-3">INVESTIGATION STATUS</h4>
                 <div className="space-y-2 text-sm mb-4">
                   <div className="flex items-center gap-2">
@@ -496,19 +496,19 @@ export default function CaseClosure() {
             </div>
 
             <div className="flex flex-wrap gap-2 mt-4">
-              <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
+              <button className="px-3 py-1.5 bg-white dark:bg-zinc-800/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
                 <FileSearch className="w-3 h-3" />
                 View Complete Investigation File
               </button>
-              <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
+              <button className="px-3 py-1.5 bg-white dark:bg-zinc-800/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
                 <Eye className="w-3 h-3" />
                 Review All Evidence
               </button>
-              <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
+              <button className="px-3 py-1.5 bg-white dark:bg-zinc-800/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
                 <History className="w-3 h-3" />
                 View Investigation Timeline
               </button>
-              <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
+              <button className="px-3 py-1.5 bg-white dark:bg-zinc-800/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
                 <FileText className="w-3 h-3" />
                 Generate Final Report
               </button>
@@ -518,12 +518,12 @@ export default function CaseClosure() {
           {/* Main Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
             {/* Case Overview */}
-            <div className="lg:col-span-2 bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
+            <div className="lg:col-span-2 bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
               <h3 className="text-lg font-semibold text-primary mb-1">CASE OVERVIEW - {caseData.subject.toUpperCase()}</h3>
               <p className="text-sm text-purple-400 mb-4">Case ID: {caseData.caseId}</p>
 
               {/* Applicant Information */}
-              <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4 mb-4">
+              <div className="bg-white dark:bg-zinc-950/40 rounded-xl p-4 mb-4">
                 <h4 className="text-sm font-semibold text-secondary mb-3">APPLICANT INFORMATION</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
                   <div className="flex items-start gap-2">
@@ -555,7 +555,7 @@ export default function CaseClosure() {
               </div>
 
               {/* Investigation Timeline */}
-              <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4 mb-4">
+              <div className="bg-white dark:bg-zinc-950/40 rounded-xl p-4 mb-4">
                 <h4 className="text-sm font-semibold text-secondary mb-3">INVESTIGATION TIMELINE</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
                   <div className="flex items-start gap-2">
@@ -587,7 +587,7 @@ export default function CaseClosure() {
               </div>
 
               {/* Investigation Team */}
-              <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4 mb-4">
+              <div className="bg-white dark:bg-zinc-950/40 rounded-xl p-4 mb-4">
                 <h4 className="text-sm font-semibold text-secondary mb-3">INVESTIGATION TEAM</h4>
                 <div className="space-y-2 text-sm">
                   <div className="flex items-start gap-2">
@@ -609,7 +609,7 @@ export default function CaseClosure() {
               </div>
 
               {/* Investigation Status */}
-              <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4 mb-4">
+              <div className="bg-white dark:bg-zinc-950/40 rounded-xl p-4 mb-4">
                 <div className="flex items-center gap-2 mb-3">
                   <h4 className="text-sm font-semibold text-secondary">INVESTIGATION STATUS:</h4>
                   <span className="px-2 py-0.5 bg-green-500/10 text-green-400 rounded text-xs font-medium">✓ COMPLETE</span>
@@ -681,7 +681,7 @@ export default function CaseClosure() {
 
             {/* Sidebar - Case Disposition Actions */}
             <div className="space-y-6">
-              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
+              <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
                 <h4 className="text-sm font-semibold text-primary mb-4">CASE DISPOSITION ACTIONS</h4>
 
                 <p className="text-xs text-secondary mb-3">PRIMARY ACTIONS (Select Final Disposition):</p>
@@ -719,23 +719,23 @@ export default function CaseClosure() {
                 <div className="border-t border-border pt-4 mb-4">
                   <p className="text-xs text-secondary mb-3">CASE MANAGEMENT ACTIONS:</p>
                   <div className="space-y-2">
-                    <button className="w-full px-3 py-2 bg-slate-100 dark:bg-slate-700/30 hover:bg-slate-100 dark:hover:bg-slate-700/50 text-secondary rounded-lg text-xs font-medium transition-colors flex items-center gap-2">
+                    <button className="w-full px-3 py-2 bg-slate-100 dark:bg-zinc-800/30 hover:bg-slate-100 dark:hover:bg-zinc-800/50 text-secondary rounded-lg text-xs font-medium transition-colors flex items-center gap-2">
                       <Download className="w-3 h-3" />
                       Download Complete Report (PDF)
                     </button>
-                    <button className="w-full px-3 py-2 bg-slate-100 dark:bg-slate-700/30 hover:bg-slate-100 dark:hover:bg-slate-700/50 text-secondary rounded-lg text-xs font-medium transition-colors flex items-center gap-2">
+                    <button className="w-full px-3 py-2 bg-slate-100 dark:bg-zinc-800/30 hover:bg-slate-100 dark:hover:bg-zinc-800/50 text-secondary rounded-lg text-xs font-medium transition-colors flex items-center gap-2">
                       <Archive className="w-3 h-3" />
                       Archive Case (after disposition)
                     </button>
-                    <button className="w-full px-3 py-2 bg-slate-100 dark:bg-slate-700/30 hover:bg-slate-100 dark:hover:bg-slate-700/50 text-secondary rounded-lg text-xs font-medium transition-colors flex items-center gap-2">
+                    <button className="w-full px-3 py-2 bg-slate-100 dark:bg-zinc-800/30 hover:bg-slate-100 dark:hover:bg-zinc-800/50 text-secondary rounded-lg text-xs font-medium transition-colors flex items-center gap-2">
                       <Printer className="w-3 h-3" />
                       Print Case Summary
                     </button>
-                    <button className="w-full px-3 py-2 bg-slate-100 dark:bg-slate-700/30 hover:bg-slate-100 dark:hover:bg-slate-700/50 text-secondary rounded-lg text-xs font-medium transition-colors flex items-center gap-2">
+                    <button className="w-full px-3 py-2 bg-slate-100 dark:bg-zinc-800/30 hover:bg-slate-100 dark:hover:bg-zinc-800/50 text-secondary rounded-lg text-xs font-medium transition-colors flex items-center gap-2">
                       <Mail className="w-3 h-3" />
                       Send to Hiring Authority
                     </button>
-                    <button className="w-full px-3 py-2 bg-slate-100 dark:bg-slate-700/30 hover:bg-slate-100 dark:hover:bg-slate-700/50 text-secondary rounded-lg text-xs font-medium transition-colors flex items-center gap-2">
+                    <button className="w-full px-3 py-2 bg-slate-100 dark:bg-zinc-800/30 hover:bg-slate-100 dark:hover:bg-zinc-800/50 text-secondary rounded-lg text-xs font-medium transition-colors flex items-center gap-2">
                       <Clock className="w-3 h-3" />
                       Request Additional Time
                     </button>
@@ -776,7 +776,7 @@ export default function CaseClosure() {
           </div>
 
           {/* Investigation Sections Checklist */}
-          <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6 mb-6">
+          <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6 mb-6">
             <h3 className="text-lg font-semibold text-primary mb-4">INVESTIGATION SECTIONS - COMPLETION STATUS</h3>
 
             <div className="space-y-3">
@@ -784,10 +784,10 @@ export default function CaseClosure() {
                 const Icon = section.icon;
                 const isExpanded = expandedSections[section.id];
                 return (
-                  <div key={section.id} className="bg-white dark:bg-slate-900/40 rounded-xl overflow-hidden">
+                  <div key={section.id} className="bg-white dark:bg-zinc-950/40 rounded-xl overflow-hidden">
                     <button
                       onClick={() => toggleSection(section.id)}
-                      className="w-full p-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-slate-800/30 transition-colors"
+                      className="w-full p-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-zinc-900/30 transition-colors"
                     >
                       <div className="flex items-center gap-3">
                         <CheckCircle className="w-5 h-5 text-green-400" />
@@ -826,7 +826,7 @@ export default function CaseClosure() {
                         </div>
                         <div className="flex flex-wrap gap-2 mt-3 pt-3 border-t border-border">
                           {section.actions.map((action, idx) => (
-                            <button key={idx} className="px-2 py-1 bg-slate-100 dark:bg-slate-700/30 hover:bg-slate-100 dark:hover:bg-slate-700/50 text-secondary hover:text-secondary rounded text-xs transition-colors">
+                            <button key={idx} className="px-2 py-1 bg-slate-100 dark:bg-zinc-800/30 hover:bg-slate-100 dark:hover:bg-zinc-800/50 text-secondary hover:text-secondary rounded text-xs transition-colors">
                               {action}
                             </button>
                           ))}
@@ -892,7 +892,7 @@ export default function CaseClosure() {
           </div>
 
           {/* Investigator Assessment & Key Findings */}
-          <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6 mb-6">
+          <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6 mb-6">
             <div className="flex items-center justify-between mb-6">
               <div>
                 <h3 className="text-lg font-semibold text-primary">INVESTIGATOR ASSESSMENT & KEY FINDINGS</h3>
@@ -901,7 +901,7 @@ export default function CaseClosure() {
             </div>
 
             {/* Overall Assessment */}
-            <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4 mb-4">
+            <div className="bg-white dark:bg-zinc-950/40 rounded-xl p-4 mb-4">
               <h4 className="text-sm font-semibold text-purple-400 mb-3">OVERALL ASSESSMENT</h4>
               <p className="text-sm text-secondary leading-relaxed">
                 Applicant is a currently-employed sworn law enforcement officer seeking lateral transfer from Metro Atlanta Police Department.
@@ -913,7 +913,7 @@ export default function CaseClosure() {
             </div>
 
             {/* Strengths */}
-            <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4 mb-4">
+            <div className="bg-white dark:bg-zinc-950/40 rounded-xl p-4 mb-4">
               <h4 className="text-sm font-semibold text-green-400 mb-3 border-b border-green-500/20 pb-2">STRENGTHS IDENTIFIED</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
@@ -969,7 +969,7 @@ export default function CaseClosure() {
             </div>
 
             {/* Minor Concerns */}
-            <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4 mb-4">
+            <div className="bg-white dark:bg-zinc-950/40 rounded-xl p-4 mb-4">
               <h4 className="text-sm font-semibold text-amber-700 mb-3 border-b border-amber-500/20 pb-2">MINOR CONCERNS (NON-DISQUALIFYING)</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
@@ -994,7 +994,7 @@ export default function CaseClosure() {
             </div>
 
             {/* Mitigating Factors */}
-            <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4 mb-4">
+            <div className="bg-white dark:bg-zinc-950/40 rounded-xl p-4 mb-4">
               <h4 className="text-sm font-semibold text-blue-400 mb-3 border-b border-blue-500/20 pb-2">MITIGATING FACTORS & CONTEXT</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
@@ -1029,7 +1029,7 @@ export default function CaseClosure() {
 
             {/* Standards Compliance */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-              <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4">
+              <div className="bg-white dark:bg-zinc-950/40 rounded-xl p-4">
                 <h4 className="text-sm font-semibold text-purple-400 mb-3">POST STANDARDS COMPLIANCE</h4>
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 text-xs">
@@ -1058,7 +1058,7 @@ export default function CaseClosure() {
                   </div>
                 </div>
               </div>
-              <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4">
+              <div className="bg-white dark:bg-zinc-950/40 rounded-xl p-4">
                 <h4 className="text-sm font-semibold text-purple-400 mb-3">AGENCY POLICY STANDARDS COMPLIANCE</h4>
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 text-xs">
@@ -1121,7 +1121,7 @@ export default function CaseClosure() {
             </div>
 
             {/* Supervisor Concurrence */}
-            <div className="bg-white dark:bg-slate-900/40 rounded-xl p-4">
+            <div className="bg-white dark:bg-zinc-950/40 rounded-xl p-4">
               <h4 className="text-sm font-semibold text-purple-400 mb-3">SUPERVISOR CONCURRENCE</h4>
               <p className="text-xs text-secondary leading-relaxed mb-3">
                 I have reviewed the complete background investigation file for Robert Martinez ({caseData.caseId}) and concur with the investigator's
@@ -1137,7 +1137,7 @@ export default function CaseClosure() {
           </div>
 
           {/* Final Disposition Form */}
-          <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
+          <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
             <h3 className="text-lg font-semibold text-primary mb-2">FINAL CASE DISPOSITION</h3>
             <p className="text-sm text-secondary mb-6">To be completed by Hiring Authority</p>
 
@@ -1145,7 +1145,7 @@ export default function CaseClosure() {
             <div className="mb-6">
               <p className="text-sm font-medium text-secondary mb-3">SELECT FINAL DISPOSITION:</p>
               <div className="space-y-3">
-                <label className={`flex items-start gap-3 p-4 rounded-xl border cursor-pointer transition-colors ${selectedDisposition === 'approve' ? 'bg-green-500/10 border-green-500/30' : 'bg-white dark:bg-slate-900/40 border-slate-700/50 hover:border-slate-600/50'}`}>
+                <label className={`flex items-start gap-3 p-4 rounded-xl border cursor-pointer transition-colors ${selectedDisposition === 'approve' ? 'bg-green-500/10 border-green-500/30' : 'bg-white dark:bg-zinc-950/40 border-slate-700/50 hover:border-slate-600/50'}`}>
                   <input
                     type="radio"
                     name="disposition"
@@ -1161,7 +1161,7 @@ export default function CaseClosure() {
                   </div>
                 </label>
 
-                <label className={`flex items-start gap-3 p-4 rounded-xl border cursor-pointer transition-colors ${selectedDisposition === 'reject' ? 'bg-red-500/10 border-red-500/30' : 'bg-white dark:bg-slate-900/40 border-slate-700/50 hover:border-slate-600/50'}`}>
+                <label className={`flex items-start gap-3 p-4 rounded-xl border cursor-pointer transition-colors ${selectedDisposition === 'reject' ? 'bg-red-500/10 border-red-500/30' : 'bg-white dark:bg-zinc-950/40 border-slate-700/50 hover:border-slate-600/50'}`}>
                   <input
                     type="radio"
                     name="disposition"
@@ -1177,7 +1177,7 @@ export default function CaseClosure() {
                   </div>
                 </label>
 
-                <label className={`flex items-start gap-3 p-4 rounded-xl border cursor-pointer transition-colors ${selectedDisposition === 'return' ? 'bg-amber-500/10 border-amber-500/30' : 'bg-white dark:bg-slate-900/40 border-slate-700/50 hover:border-slate-600/50'}`}>
+                <label className={`flex items-start gap-3 p-4 rounded-xl border cursor-pointer transition-colors ${selectedDisposition === 'return' ? 'bg-amber-500/10 border-amber-500/30' : 'bg-white dark:bg-zinc-950/40 border-slate-700/50 hover:border-slate-600/50'}`}>
                   <input
                     type="radio"
                     name="disposition"
@@ -1232,7 +1232,7 @@ export default function CaseClosure() {
                       type="text"
                       value={rejectDetails}
                       onChange={(e) => setRejectDetails(e.target.value)}
-                      className="w-full px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-700/50 rounded-lg text-primary text-sm placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-red-500/50"
+                      className="w-full px-3 py-2 bg-white dark:bg-zinc-900/40 border border-slate-700/50 rounded-lg text-primary text-sm placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-red-500/50"
                       placeholder="Enter specific concern..."
                     />
                   </div>
@@ -1248,20 +1248,20 @@ export default function CaseClosure() {
                 value={dispositionRationale}
                 onChange={(e) => setDispositionRationale(e.target.value)}
                 rows={4}
-                className="w-full px-4 py-3 bg-white dark:bg-slate-900/40 border border-border rounded-xl text-primary text-sm placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-purple-500/50 resize-none"
+                className="w-full px-4 py-3 bg-white dark:bg-zinc-950/40 border border-border rounded-xl text-primary text-sm placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-purple-500/50 resize-none"
                 placeholder="Enter detailed rationale for this disposition decision..."
               />
             </div>
 
             {/* Hiring Authority Approval */}
-            <div className="mb-6 p-4 bg-white dark:bg-slate-900/40 rounded-xl">
+            <div className="mb-6 p-4 bg-white dark:bg-zinc-950/40 rounded-xl">
               <p className="text-sm font-medium text-secondary mb-3">HIRING AUTHORITY APPROVAL:</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="text-xs text-secondary mb-1 block">Name:</label>
                   <input
                     type="text"
-                    className="w-full px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-700/50 rounded-lg text-primary text-sm placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-purple-500/50"
+                    className="w-full px-3 py-2 bg-white dark:bg-zinc-900/40 border border-slate-700/50 rounded-lg text-primary text-sm placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-purple-500/50"
                     placeholder="Enter name..."
                   />
                 </div>
@@ -1269,7 +1269,7 @@ export default function CaseClosure() {
                   <label className="text-xs text-secondary mb-1 block">Title:</label>
                   <input
                     type="text"
-                    className="w-full px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-700/50 rounded-lg text-primary text-sm placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-purple-500/50"
+                    className="w-full px-3 py-2 bg-white dark:bg-zinc-900/40 border border-slate-700/50 rounded-lg text-primary text-sm placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-purple-500/50"
                     placeholder="Enter title..."
                   />
                 </div>
@@ -1277,14 +1277,14 @@ export default function CaseClosure() {
                   <label className="text-xs text-secondary mb-1 block">Date:</label>
                   <input
                     type="date"
-                    className="w-full px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-700/50 rounded-lg text-primary text-sm focus:outline-none focus:border-purple-500/50"
+                    className="w-full px-3 py-2 bg-white dark:bg-zinc-900/40 border border-slate-700/50 rounded-lg text-primary text-sm focus:outline-none focus:border-purple-500/50"
                   />
                 </div>
                 <div>
                   <label className="text-xs text-secondary mb-1 block">Digital Signature:</label>
                   <input
                     type="text"
-                    className="w-full px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-700/50 rounded-lg text-primary text-sm placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-purple-500/50"
+                    className="w-full px-3 py-2 bg-white dark:bg-zinc-900/40 border border-slate-700/50 rounded-lg text-primary text-sm placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-purple-500/50"
                     placeholder="Type name to sign..."
                   />
                 </div>
@@ -1296,10 +1296,10 @@ export default function CaseClosure() {
               <button className="px-6 py-2.5 bg-purple-500 hover:bg-purple-600 text-white rounded-xl text-sm font-medium transition-colors">
                 Submit Final Disposition
               </button>
-              <button className="px-6 py-2.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-secondary rounded-xl text-sm font-medium transition-colors">
+              <button className="px-6 py-2.5 bg-white dark:bg-zinc-800/50 hover:bg-slate-700/70 text-secondary rounded-xl text-sm font-medium transition-colors">
                 Save Draft
               </button>
-              <button className="px-6 py-2.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-secondary rounded-xl text-sm font-medium transition-colors">
+              <button className="px-6 py-2.5 bg-white dark:bg-zinc-800/50 hover:bg-slate-700/70 text-secondary rounded-xl text-sm font-medium transition-colors">
                 Cancel
               </button>
             </div>

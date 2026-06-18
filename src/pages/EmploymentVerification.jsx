@@ -622,9 +622,9 @@ export default function EmploymentVerification() {
 
             {/* Statistics Grid */}
             <div className="grid grid-cols-5 gap-4">
-              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
+              <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-slate-100 dark:bg-slate-800 rounded-lg">
+                  <div className="p-2 bg-slate-100 dark:bg-zinc-900 rounded-lg">
                     <Briefcase className="w-5 h-5 text-secondary" />
                   </div>
                   <div>
@@ -633,7 +633,7 @@ export default function EmploymentVerification() {
                   </div>
                 </div>
               </div>
-              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
+              <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-green-500/10 rounded-lg">
                     <CheckCircle2 className="w-5 h-5 text-green-400" />
@@ -644,7 +644,7 @@ export default function EmploymentVerification() {
                   </div>
                 </div>
               </div>
-              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
+              <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-amber-500/10 rounded-lg">
                     <Shield className="w-5 h-5 text-amber-700" />
@@ -655,7 +655,7 @@ export default function EmploymentVerification() {
                   </div>
                 </div>
               </div>
-              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
+              <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-blue-500/10 rounded-lg">
                     <BadgeCheck className="w-5 h-5 text-blue-400" />
@@ -666,9 +666,9 @@ export default function EmploymentVerification() {
                   </div>
                 </div>
               </div>
-              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
+              <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-slate-100 dark:bg-slate-800 rounded-lg">
+                  <div className="p-2 bg-slate-100 dark:bg-zinc-900 rounded-lg">
                     <Calendar className="w-5 h-5 text-secondary" />
                   </div>
                   <div>
@@ -680,13 +680,13 @@ export default function EmploymentVerification() {
             </div>
 
             {/* Employment Timeline Visualization */}
-            <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
+            <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
               <h3 className="text-primary font-medium mb-4 flex items-center gap-2">
                 <History className="w-5 h-5 text-amber-700" />
                 Employment Timeline
               </h3>
               <div className="relative">
-                <div className="h-8 bg-slate-200 dark:bg-slate-800 rounded-lg overflow-hidden flex">
+                <div className="h-8 bg-slate-200 dark:bg-zinc-900 rounded-lg overflow-hidden flex">
                   {employmentRecords.slice().reverse().map((record, index) => {
                     const startYear = new Date(record.startDate).getFullYear();
                     const endYear = record.endDate === 'Present' ? 2024 : new Date(record.endDate).getFullYear();
@@ -771,7 +771,7 @@ export default function EmploymentVerification() {
                       placeholder="Search employers..."
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
-                      className="pl-10 pr-4 py-2 bg-white dark:bg-slate-800 border border-border rounded-lg text-primary text-sm placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
+                      className="pl-10 pr-4 py-2 bg-white dark:bg-zinc-900 border border-border rounded-lg text-primary text-sm placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
                     />
                   </div>
                 </div>
@@ -781,7 +781,7 @@ export default function EmploymentVerification() {
                   {filteredRecords.map(record => (
                     <div
                       key={record.id}
-                      className={`bg-white dark:bg-slate-800/40 border rounded-xl overflow-hidden ${
+                      className={`bg-white dark:bg-zinc-900/40 border rounded-xl overflow-hidden ${
                         record.isLateralTransfer
                           ? 'border-blue-500/30'
                           : 'border-slate-700/50'
@@ -797,7 +797,7 @@ export default function EmploymentVerification() {
                             <div className={`p-3 rounded-xl ${
                               record.isSwornLE
                                 ? 'bg-amber-500/10'
-                                : 'bg-slate-200 dark:bg-slate-800'
+                                : 'bg-slate-200 dark:bg-zinc-900'
                             }`}>
                               {record.isSwornLE ? (
                                 <Shield className="w-6 h-6 text-amber-700" />
@@ -843,7 +843,7 @@ export default function EmploymentVerification() {
                         <div className="border-t border-border p-4 space-y-4">
                           {/* Verification Details */}
                           <div className="grid grid-cols-2 gap-6">
-                            <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
+                            <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3">
                               <h4 className="text-secondary text-xs font-medium mb-2">VERIFICATION METHOD</h4>
                               <p className="text-primary text-sm">{record.verificationMethod}</p>
                               {record.verificationDate && (
@@ -853,7 +853,7 @@ export default function EmploymentVerification() {
                               )}
                             </div>
                             {record.internalAffairs.required && (
-                              <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
+                              <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3">
                                 <h4 className="text-secondary text-xs font-medium mb-2 flex items-center gap-1">
                                   <Flag className="w-3 h-3 text-amber-700" />
                                   INTERNAL AFFAIRS STATUS
@@ -872,7 +872,7 @@ export default function EmploymentVerification() {
 
                           {/* HR Contact */}
                           {record.hrContact && (
-                            <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
+                            <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3">
                               <h4 className="text-secondary text-xs font-medium mb-2">HR CONTACT</h4>
                               <div className="flex items-center justify-between">
                                 <div>
@@ -902,7 +902,7 @@ export default function EmploymentVerification() {
 
                           {/* Supervisor Contact */}
                           {record.supervisorContact && (
-                            <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
+                            <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3">
                               <h4 className="text-secondary text-xs font-medium mb-2">SUPERVISOR CONTACT</h4>
                               <div className="flex items-center justify-between">
                                 <div>
@@ -962,7 +962,7 @@ export default function EmploymentVerification() {
 
                           {/* Performance & Disciplinary Grid */}
                           <div className="grid grid-cols-2 gap-6">
-                            <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
+                            <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3">
                               <h4 className="text-secondary text-xs font-medium mb-2 flex items-center gap-1">
                                 <TrendingUp className="w-3 h-3" />
                                 PERFORMANCE
@@ -999,7 +999,7 @@ export default function EmploymentVerification() {
                               </div>
                             </div>
 
-                            <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
+                            <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3">
                               <h4 className="text-secondary text-xs font-medium mb-2 flex items-center gap-1">
                                 <ClipboardList className="w-3 h-3" />
                                 DISCIPLINARY
@@ -1029,17 +1029,17 @@ export default function EmploymentVerification() {
 
                           {/* Salary & Employment End */}
                           <div className="grid grid-cols-3 gap-4">
-                            <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
+                            <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3">
                               <h4 className="text-secondary text-xs font-medium mb-1">STARTING SALARY</h4>
                               <p className="text-primary text-sm">{record.salary.starting}</p>
                             </div>
-                            <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
+                            <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3">
                               <h4 className="text-secondary text-xs font-medium mb-1">
                                 {record.isCurrent ? 'CURRENT SALARY' : 'ENDING SALARY'}
                               </h4>
                               <p className="text-primary text-sm">{record.salary.current || record.salary.ending}</p>
                             </div>
-                            <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
+                            <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3">
                               <h4 className="text-secondary text-xs font-medium mb-1">REHIRE ELIGIBLE</h4>
                               <p className={`text-sm ${
                                 record.eligibleForRehire === 'Yes' || record.eligibleForRehire === 'Yes - Recommended'
@@ -1054,14 +1054,14 @@ export default function EmploymentVerification() {
                           </div>
 
                           {/* Reason for Leaving */}
-                          <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
+                          <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3">
                             <h4 className="text-secondary text-xs font-medium mb-1">REASON FOR LEAVING</h4>
                             <p className="text-primary text-sm">{record.reasonForLeaving}</p>
                           </div>
 
                           {/* Verification Timeline */}
                           {record.timeline && record.timeline.length > 0 && (
-                            <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
+                            <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3">
                               <h4 className="text-secondary text-xs font-medium mb-3">VERIFICATION TIMELINE</h4>
                               <div className="space-y-2">
                                 {record.timeline.map((event, index) => (
@@ -1077,7 +1077,7 @@ export default function EmploymentVerification() {
 
                           {/* Notes */}
                           {record.notes && (
-                            <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
+                            <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3">
                               <h4 className="text-secondary text-xs font-medium mb-1">INVESTIGATOR NOTES</h4>
                               <p className="text-secondary text-sm">{record.notes}</p>
                             </div>
@@ -1092,7 +1092,7 @@ export default function EmploymentVerification() {
               {/* Sidebar */}
               <div className="space-y-6">
                 {/* Internal Affairs Requirement Panel */}
-                <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
+                <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
                   <h3 className="text-primary font-medium mb-4 flex items-center gap-2">
                     <Shield className="w-5 h-5 text-amber-700" />
                     Internal Affairs Requirements
@@ -1100,7 +1100,7 @@ export default function EmploymentVerification() {
 
                   <div className="space-y-3">
                     {employmentRecords.filter(r => r.internalAffairs.required).map(record => (
-                      <div key={record.id} className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
+                      <div key={record.id} className="bg-white dark:bg-zinc-950/40 rounded-lg p-3">
                         <div className="flex items-center justify-between mb-2">
                           <span className="text-primary text-sm font-medium">
                             {record.employer.length > 25 ? record.employer.substring(0, 25) + '...' : record.employer}
@@ -1134,7 +1134,7 @@ export default function EmploymentVerification() {
                 </div>
 
                 {/* Verification Summary */}
-                <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
+                <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
                   <h3 className="text-primary font-medium mb-4 flex items-center gap-2">
                     <FileCheck className="w-5 h-5 text-amber-700" />
                     Verification Summary
@@ -1180,14 +1180,14 @@ export default function EmploymentVerification() {
                 </div>
 
                 {/* Support & Resources */}
-                <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
+                <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
                   <h3 className="text-primary font-medium mb-4 flex items-center gap-2">
                     <HelpCircle className="w-5 h-5 text-amber-700" />
                     Support & Resources
                   </h3>
 
                   <div className="space-y-2">
-                    <a href="#" className="flex items-center gap-3 p-3 bg-white dark:bg-slate-900/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors">
+                    <a href="#" className="flex items-center gap-3 p-3 bg-white dark:bg-zinc-950/40 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors">
                       <BookOpen className="w-4 h-4 text-secondary" />
                       <div>
                         <p className="text-primary text-sm">POST Regulations Guide</p>
@@ -1196,7 +1196,7 @@ export default function EmploymentVerification() {
                       <ExternalLink className="w-4 h-4 text-slate-500 ml-auto" />
                     </a>
 
-                    <a href="#" className="flex items-center gap-3 p-3 bg-white dark:bg-slate-900/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors">
+                    <a href="#" className="flex items-center gap-3 p-3 bg-white dark:bg-zinc-950/40 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors">
                       <FileText className="w-4 h-4 text-secondary" />
                       <div>
                         <p className="text-primary text-sm">IA Request Templates</p>
@@ -1205,7 +1205,7 @@ export default function EmploymentVerification() {
                       <ExternalLink className="w-4 h-4 text-slate-500 ml-auto" />
                     </a>
 
-                    <a href="#" className="flex items-center gap-3 p-3 bg-white dark:bg-slate-900/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors">
+                    <a href="#" className="flex items-center gap-3 p-3 bg-white dark:bg-zinc-950/40 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors">
                       <PhoneCall className="w-4 h-4 text-secondary" />
                       <div>
                         <p className="text-primary text-sm">Verification Hotline</p>
@@ -1214,7 +1214,7 @@ export default function EmploymentVerification() {
                       <ExternalLink className="w-4 h-4 text-slate-500 ml-auto" />
                     </a>
 
-                    <a href="#" className="flex items-center gap-3 p-3 bg-white dark:bg-slate-900/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors">
+                    <a href="#" className="flex items-center gap-3 p-3 bg-white dark:bg-zinc-950/40 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors">
                       <Scale className="w-4 h-4 text-secondary" />
                       <div>
                         <p className="text-primary text-sm">Lateral Transfer Policy</p>
@@ -1226,7 +1226,7 @@ export default function EmploymentVerification() {
                 </div>
 
                 {/* Audit Trail */}
-                <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
+                <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
                   <h3 className="text-primary font-medium mb-4 flex items-center gap-2">
                     <History className="w-5 h-5 text-amber-700" />
                     Recent Activity

@@ -394,25 +394,25 @@ export default function CriminalHistoryReview() {
 
             {/* Statistics Grid */}
             <div className="grid grid-cols-4 gap-4">
-              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
+              <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-slate-800 rounded-lg"><Shield className="w-5 h-5 text-secondary" /></div>
                   <div><p className="text-2xl font-semibold text-primary">{stats.total}</p><p className="text-slate-500 text-sm">Total Checks</p></div>
                 </div>
               </div>
-              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
+              <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-green-500/10 rounded-lg"><CheckCircle2 className="w-5 h-5 text-green-400" /></div>
                   <div><p className="text-2xl font-semibold text-primary">{stats.clear}</p><p className="text-slate-500 text-sm">Clear - No Disqualifiers</p></div>
                 </div>
               </div>
-              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
+              <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-amber-500/10 rounded-lg"><AlertTriangle className="w-5 h-5 text-amber-700" /></div>
                   <div><p className="text-2xl font-semibold text-primary">{stats.review}</p><p className="text-slate-500 text-sm">Review Required</p></div>
                 </div>
               </div>
-              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
+              <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-blue-500/10 rounded-lg"><Clock className="w-5 h-5 text-blue-400" /></div>
                   <div><p className="text-2xl font-semibold text-primary">{stats.inProgress}</p><p className="text-slate-500 text-sm">In Progress</p></div>
@@ -421,7 +421,7 @@ export default function CriminalHistoryReview() {
             </div>
 
             {/* Standard Protocol */}
-            <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
+            <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
               <h3 className="text-primary font-medium mb-3 flex items-center gap-2"><ClipboardList className="w-5 h-5 text-amber-700" />Standard Background Check Protocol</h3>
               <div className="grid grid-cols-4 gap-4 text-sm">
                 <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-green-400" /><span className="text-secondary">GCIC (Georgia Crime Information)</span></div>
@@ -447,7 +447,7 @@ export default function CriminalHistoryReview() {
 
                 <div className="space-y-6">
                   {filteredChecks.map(check => (
-                    <div key={check.id} className={`bg-white dark:bg-slate-800/40 border rounded-xl overflow-hidden ${check.status === 'Review Required' ? 'border-amber-500/30' : check.status === 'In Progress' ? 'border-blue-500/30' : 'border-slate-700/50'}`}>
+                    <div key={check.id} className={`bg-white dark:bg-zinc-900/40 border rounded-xl overflow-hidden ${check.status === 'Review Required' ? 'border-amber-500/30' : check.status === 'In Progress' ? 'border-blue-500/30' : 'border-slate-700/50'}`}>
                       <div className="p-4 cursor-pointer" onClick={() => setExpandedCheck(expandedCheck === check.id ? null : check.id)}>
                         <div className="flex items-start justify-between">
                           <div className="flex items-start gap-4">
@@ -470,7 +470,7 @@ export default function CriminalHistoryReview() {
 
                       {expandedCheck === check.id && (
                         <div className="border-t border-border p-4 space-y-4">
-                          <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
+                          <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3">
                             <h4 className="text-secondary text-xs font-medium mb-2">BACKGROUND CHECK SUMMARY</h4>
                             <div className="grid grid-cols-2 gap-2 text-sm">
                               <div className="flex justify-between"><span className="text-slate-500">Check date:</span><span className="text-primary">{formatDate(check.checkDate)}</span></div>
@@ -480,7 +480,7 @@ export default function CriminalHistoryReview() {
                             </div>
                           </div>
 
-                          <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
+                          <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3">
                             <h4 className="text-secondary text-xs font-medium mb-3 flex items-center gap-2">
                               {check.status === 'Clear' && <CheckCircle2 className="w-4 h-4 text-green-400" />}
                               {check.status === 'Review Required' && <AlertTriangle className="w-4 h-4 text-amber-700" />}
@@ -519,14 +519,14 @@ export default function CriminalHistoryReview() {
                                     <div><span className="text-slate-500">Disposition:</span><span className="text-green-400 ml-2">{arrest.disposition}</span></div>
                                     <div><span className="text-slate-500">Age at time:</span><span className="text-primary ml-2">{arrest.subjectAge} years old</span></div>
                                   </div>
-                                  <div className="bg-white dark:bg-slate-900/40 rounded p-2 mt-2"><p className="text-secondary text-xs"><span className="text-slate-500">Context:</span> {arrest.context}. {arrest.incidentDetails}. No violence: {arrest.violence ? 'No' : 'Yes'}. No injuries: {arrest.injuries ? 'No' : 'Yes'}. Time since incident: {arrest.timeSinceIncident}.</p></div>
+                                  <div className="bg-white dark:bg-zinc-950/40 rounded p-2 mt-2"><p className="text-secondary text-xs"><span className="text-slate-500">Context:</span> {arrest.context}. {arrest.incidentDetails}. No violence: {arrest.violence ? 'No' : 'Yes'}. No injuries: {arrest.injuries ? 'No' : 'Yes'}. Time since incident: {arrest.timeSinceIncident}.</p></div>
                                 </div>
                               ))}
                             </div>
                           )}
 
                           {check.traffic && check.traffic.violations && check.traffic.violations.length > 0 && (
-                            <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
+                            <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3">
                               <h4 className="text-secondary text-xs font-medium mb-2 flex items-center gap-2"><Car className="w-4 h-4" />TRAFFIC HISTORY (Last 7 Years)</h4>
                               <div className="space-y-1">{check.traffic.violations.map((violation, idx) => <div key={idx} className="flex items-center justify-between text-sm"><span className="text-secondary">{violation.type}</span><span className="text-slate-500">{violation.date}</span><span className="text-secondary">{violation.details}</span></div>)}</div>
                               <div className="mt-2 pt-2 border-t border-border grid grid-cols-2 gap-2 text-xs">
@@ -568,19 +568,19 @@ export default function CriminalHistoryReview() {
                           )}
 
                           {check.nextActions && (
-                            <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
+                            <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3">
                               <h4 className="text-secondary text-xs font-medium mb-2">NEXT ACTIONS</h4>
                               <div className="space-y-2">{check.nextActions.map((action, idx) => <div key={idx} className="flex items-center justify-between text-sm"><span className="text-secondary">{action.action}</span><span className="text-blue-400 text-xs">{action.expected}</span></div>)}</div>
                             </div>
                           )}
 
-                          <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
+                          <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3">
                             <h4 className="text-secondary text-xs font-medium mb-2">INVESTIGATOR ASSESSMENT</h4>
                             <p className="text-secondary text-sm">{check.investigatorAssessment}</p>
                             {check.investigatorRecommendation && <p className="text-green-400 text-sm mt-2">Recommendation: <span className="font-medium">{check.investigatorRecommendation}</span></p>}
                           </div>
 
-                          <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
+                          <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3">
                             <h4 className="text-secondary text-xs font-medium mb-2 flex items-center gap-2"><Lock className="w-3 h-3 text-red-400" />CJIS ACCESS LOG</h4>
                             <div className="space-y-1">{check.cjisAccessLog.map((log, idx) => <div key={idx} className="flex items-center gap-3 text-xs"><span className="text-slate-500 w-24">{log.date}</span><span className="text-secondary flex-1">{log.action}</span><span className="text-slate-500">{log.by}</span></div>)}</div>
                             <p className="text-red-400/60 text-xs mt-2">Protected under 28 CFR Part 20. Unauthorized disclosure is a federal crime.</p>
@@ -600,7 +600,7 @@ export default function CriminalHistoryReview() {
 
               {/* Sidebar */}
               <div className="space-y-6">
-                <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
+                <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
                   <h3 className="text-primary font-medium mb-4 flex items-center gap-2"><Shield className="w-5 h-5 text-amber-700" />Check Status Summary</h3>
                   <div className="space-y-3">
                     <div className="bg-green-500/5 border border-green-500/20 rounded-lg p-3">
@@ -618,7 +618,7 @@ export default function CriminalHistoryReview() {
                   </div>
                 </div>
 
-                <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
+                <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
                   <h3 className="text-primary font-medium mb-4 flex items-center gap-2"><Lock className="w-5 h-5 text-red-400" />CJIS Compliance</h3>
                   <div className="space-y-3 text-sm">
                     <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-green-400" /><span className="text-secondary">Access logging enabled</span></div>
@@ -629,17 +629,17 @@ export default function CriminalHistoryReview() {
                   <div className="mt-4 pt-4 border-t border-border"><button className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-slate-700 text-secondary rounded-lg text-sm hover:bg-slate-600 transition-colors"><History className="w-4 h-4" />View CJIS Audit Log</button></div>
                 </div>
 
-                <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
+                <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
                   <h3 className="text-primary font-medium mb-4 flex items-center gap-2"><HelpCircle className="w-5 h-5 text-amber-700" />Support & Resources</h3>
                   <div className="space-y-2">
-                    <a href="#" className="flex items-center gap-3 p-3 bg-white dark:bg-slate-900/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors"><BookOpen className="w-4 h-4 text-secondary" /><div><p className="text-primary text-sm">POST Disqualifier Guide</p><p className="text-slate-500 text-xs">Georgia POST standards</p></div><ExternalLink className="w-4 h-4 text-slate-500 ml-auto" /></a>
-                    <a href="#" className="flex items-center gap-3 p-3 bg-white dark:bg-slate-900/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors"><Lock className="w-4 h-4 text-secondary" /><div><p className="text-primary text-sm">CJIS Security Policy</p><p className="text-slate-500 text-xs">28 CFR Part 20</p></div><ExternalLink className="w-4 h-4 text-slate-500 ml-auto" /></a>
-                    <a href="#" className="flex items-center gap-3 p-3 bg-white dark:bg-slate-900/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors"><PhoneCall className="w-4 h-4 text-secondary" /><div><p className="text-primary text-sm">Contact GCIC</p><p className="text-slate-500 text-xs">Georgia Crime Information Center</p></div><ExternalLink className="w-4 h-4 text-slate-500 ml-auto" /></a>
-                    <a href="#" className="flex items-center gap-3 p-3 bg-white dark:bg-slate-900/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors"><Gavel className="w-4 h-4 text-secondary" /><div><p className="text-primary text-sm">Agency Policy Manual</p><p className="text-slate-500 text-xs">Criminal history standards</p></div><ExternalLink className="w-4 h-4 text-slate-500 ml-auto" /></a>
+                    <a href="#" className="flex items-center gap-3 p-3 bg-white dark:bg-zinc-950/40 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors"><BookOpen className="w-4 h-4 text-secondary" /><div><p className="text-primary text-sm">POST Disqualifier Guide</p><p className="text-slate-500 text-xs">Georgia POST standards</p></div><ExternalLink className="w-4 h-4 text-slate-500 ml-auto" /></a>
+                    <a href="#" className="flex items-center gap-3 p-3 bg-white dark:bg-zinc-950/40 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors"><Lock className="w-4 h-4 text-secondary" /><div><p className="text-primary text-sm">CJIS Security Policy</p><p className="text-slate-500 text-xs">28 CFR Part 20</p></div><ExternalLink className="w-4 h-4 text-slate-500 ml-auto" /></a>
+                    <a href="#" className="flex items-center gap-3 p-3 bg-white dark:bg-zinc-950/40 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors"><PhoneCall className="w-4 h-4 text-secondary" /><div><p className="text-primary text-sm">Contact GCIC</p><p className="text-slate-500 text-xs">Georgia Crime Information Center</p></div><ExternalLink className="w-4 h-4 text-slate-500 ml-auto" /></a>
+                    <a href="#" className="flex items-center gap-3 p-3 bg-white dark:bg-zinc-950/40 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors"><Gavel className="w-4 h-4 text-secondary" /><div><p className="text-primary text-sm">Agency Policy Manual</p><p className="text-slate-500 text-xs">Criminal history standards</p></div><ExternalLink className="w-4 h-4 text-slate-500 ml-auto" /></a>
                   </div>
                 </div>
 
-                <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
+                <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
                   <h3 className="text-primary font-medium mb-4 flex items-center gap-2"><History className="w-5 h-5 text-amber-700" />Recent Activity</h3>
                   <div className="space-y-3">
                     {[{ action: 'Check initiated', subject: 'Maria Rodriguez', date: '2024-11-01', by: 'Agent Brooks' }, { action: 'Flagged for review', subject: 'James Wilson', date: '2024-10-22', by: 'Agent Brooks' }, { action: 'Check completed - Clear', subject: 'Sarah Chen', date: '2024-10-20', by: 'Inv. Davis' }, { action: 'Check completed - Clear', subject: 'Robert Martinez', date: '2024-10-18', by: 'Agent Brooks' }].map((activity, index) => (

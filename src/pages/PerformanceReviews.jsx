@@ -362,7 +362,7 @@ export default function PerformanceReviews() {
             </div>
 
             {/* Info Bar */}
-            <div className="mb-6 bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
+            <div className="mb-6 bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-secondary">
                 <div className="flex items-center gap-2">
                   <Users className="w-3.5 h-3.5 text-slate-500" />
@@ -422,12 +422,12 @@ export default function PerformanceReviews() {
                   <div className="px-5 pb-5 space-y-5">
                     {/* Evaluation Details */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                      <div className="bg-white dark:bg-slate-900/60 border border-border rounded-xl p-4">
+                      <div className="bg-white dark:bg-zinc-950/60 border border-border rounded-xl p-4">
                         <p className="text-xs text-slate-500 mb-1">Review Period</p>
                         <p className="text-primary font-medium">{overdueReview.reviewPeriod}</p>
                         <p className="text-xs text-secondary">{overdueReview.periodDates}</p>
                       </div>
-                      <div className="bg-white dark:bg-slate-900/60 border border-border rounded-xl p-4">
+                      <div className="bg-white dark:bg-zinc-950/60 border border-border rounded-xl p-4">
                         <p className="text-xs text-slate-500 mb-1">Evaluation Deadline</p>
                         <p className="text-primary font-medium">{overdueReview.deadline}</p>
                         <p className="text-xs text-secondary">GCSO Policy - 30 days after review period end</p>
@@ -440,7 +440,7 @@ export default function PerformanceReviews() {
                     </div>
 
                     {/* Assigned Supervisor */}
-                    <div className="bg-white dark:bg-slate-900/60 border border-border rounded-xl p-4">
+                    <div className="bg-white dark:bg-zinc-950/60 border border-border rounded-xl p-4">
                       <h4 className="text-sm font-semibold text-primary mb-3 flex items-center gap-2">
                         <Users className="w-4 h-4 text-secondary" /> Assigned Supervisor
                       </h4>
@@ -448,8 +448,8 @@ export default function PerformanceReviews() {
                       <div className="space-y-2">
                         <p className="text-xs text-slate-500 font-medium mb-2">ESCALATION TIMELINE:</p>
                         {overdueReview.escalationHistory.map((item, idx) => (
-                          <div key={idx} className={`flex items-start gap-3 p-2 rounded-lg ${item.icon === 'current' ? 'bg-red-500/10 border border-red-500/20' : 'bg-slate-100/80 dark:bg-slate-800/30'}`}>
-                            <div className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${item.icon === 'current' ? 'bg-red-500/30' : 'bg-white dark:bg-slate-700/50'}`}>
+                          <div key={idx} className={`flex items-start gap-3 p-2 rounded-lg ${item.icon === 'current' ? 'bg-red-500/10 border border-red-500/20' : 'bg-slate-100/80 dark:bg-zinc-900/30'}`}>
+                            <div className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${item.icon === 'current' ? 'bg-red-500/30' : 'bg-white dark:bg-zinc-800/50'}`}>
                               {item.icon === 'current' ? <AlertCircle className="w-3.5 h-3.5 text-red-400" /> : <CheckCircle className="w-3.5 h-3.5 text-secondary" />}
                             </div>
                             <div>
@@ -462,7 +462,7 @@ export default function PerformanceReviews() {
                     </div>
 
                     {/* Impact on Employee */}
-                    <div className="bg-white dark:bg-slate-900/60 border border-amber-500/20 rounded-xl p-4">
+                    <div className="bg-white dark:bg-zinc-950/60 border border-amber-500/20 rounded-xl p-4">
                       <h4 className="text-sm font-semibold text-amber-700 mb-3 flex items-center gap-2">
                         <AlertTriangle className="w-4 h-4" /> Impact on Employee — {overdueReview.employee}
                       </h4>
@@ -485,13 +485,13 @@ export default function PerformanceReviews() {
                     </div>
 
                     {/* Required Immediate Actions */}
-                    <div className="bg-white dark:bg-slate-900/60 border border-red-500/20 rounded-xl p-4">
+                    <div className="bg-white dark:bg-zinc-950/60 border border-red-500/20 rounded-xl p-4">
                       <h4 className="text-sm font-semibold text-red-400 mb-3 flex items-center gap-2">
                         <AlertCircle className="w-4 h-4" /> REQUIRED IMMEDIATE ACTIONS
                       </h4>
                       <div className="space-y-2">
                         {overdueReview.requiredActions.map((action, idx) => (
-                          <div key={idx} className="flex items-start gap-3 p-2 bg-slate-100/80 dark:bg-slate-800/30 rounded-lg">
+                          <div key={idx} className="flex items-start gap-3 p-2 bg-slate-100/80 dark:bg-zinc-900/30 rounded-lg">
                             <Square className="w-4 h-4 text-slate-500 mt-0.5 flex-shrink-0" />
                             <p className="text-sm text-secondary">{action}</p>
                           </div>
@@ -504,7 +504,7 @@ export default function PerformanceReviews() {
                     </div>
 
                     {/* Supervisor Accountability */}
-                    <div className="bg-white dark:bg-slate-900/60 border border-border rounded-xl p-4">
+                    <div className="bg-white dark:bg-zinc-950/60 border border-border rounded-xl p-4">
                       <h4 className="text-sm font-semibold text-primary mb-2 flex items-center gap-2">
                         <Shield className="w-4 h-4 text-secondary" /> Supervisor Accountability — Major R. Wilson
                       </h4>
@@ -523,15 +523,15 @@ export default function PerformanceReviews() {
                       <button className="px-4 py-2.5 bg-amber-500 hover:bg-amber-400 rounded-xl text-white font-medium transition-all text-sm flex items-center gap-2">
                         <Calendar className="w-4 h-4" /> Schedule HR/Wilson Meeting
                       </button>
-                      <button className="px-4 py-2.5 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-primary rounded-xl font-medium transition-all text-sm flex items-center gap-2">
+                      <button className="px-4 py-2.5 bg-slate-50 dark:bg-zinc-800/40 hover:bg-slate-700/60 border border-slate-600/50 text-primary rounded-xl font-medium transition-all text-sm flex items-center gap-2">
                         <FileText className="w-4 h-4" /> Document Supervisor Counseling
                       </button>
-                      <button className="px-4 py-2.5 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-primary rounded-xl font-medium transition-all text-sm flex items-center gap-2">
+                      <button className="px-4 py-2.5 bg-slate-50 dark:bg-zinc-800/40 hover:bg-slate-700/60 border border-slate-600/50 text-primary rounded-xl font-medium transition-all text-sm flex items-center gap-2">
                         <Clock className="w-4 h-4" /> Set 7-Day Deadline
                       </button>
                       <button
                         onClick={() => setSelectedReview(overdueReview)}
-                        className="px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded-xl font-medium transition-all text-sm flex items-center gap-2"
+                        className="px-4 py-2.5 bg-white dark:bg-zinc-900/40 hover:bg-slate-100 dark:hover:bg-zinc-900/60 border border-slate-700/50 text-secondary rounded-xl font-medium transition-all text-sm flex items-center gap-2"
                       >
                         <Eye className="w-4 h-4" /> View Personnel File
                       </button>
@@ -543,7 +543,7 @@ export default function PerformanceReviews() {
 
             {/* Status Summary Cards (3 cards - no avg rating) */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
+              <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
                 <div className="flex items-center justify-between mb-3">
                   <div className="w-10 h-10 bg-amber-500/20 rounded-xl flex items-center justify-center">
                     <Clock className="w-5 h-5 text-amber-700" />
@@ -554,7 +554,7 @@ export default function PerformanceReviews() {
                 <p className="text-xs text-slate-500">2 awaiting supervisor review • 1 self-assessment just submitted</p>
               </div>
 
-              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
+              <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
                 <div className="flex items-center justify-between mb-3">
                   <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center">
                     <CheckCircle className="w-5 h-5 text-green-400" />
@@ -565,7 +565,7 @@ export default function PerformanceReviews() {
                 <p className="text-xs text-slate-500">All completed ahead of Jan 31, 2025 deadline</p>
               </div>
 
-              <div className="bg-white dark:bg-slate-800/40 border border-red-500/30 rounded-xl p-5">
+              <div className="bg-white dark:bg-zinc-900/40 border border-red-500/30 rounded-xl p-5">
                 <div className="flex items-center justify-between mb-3">
                   <div className="w-10 h-10 bg-red-500/20 rounded-xl flex items-center justify-center">
                     <AlertCircle className="w-5 h-5 text-red-400" />
@@ -586,13 +586,13 @@ export default function PerformanceReviews() {
                   placeholder="Search by name, badge, or department..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 text-sm"
+                  className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 text-sm"
                 />
               </div>
               <select
                 value={filterDivision}
                 onChange={(e) => setFilterDivision(e.target.value)}
-                className="px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-secondary focus:outline-none focus:border-amber-500/50 text-sm"
+                className="px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-secondary focus:outline-none focus:border-amber-500/50 text-sm"
               >
                 <option value="all">All Divisions</option>
                 <option value="Patrol Division">Patrol Division</option>
@@ -618,7 +618,7 @@ export default function PerformanceReviews() {
                 >
                   {tab.label}
                   <span className={`px-2 py-0.5 rounded-full text-xs ${
-                    activeTab === tab.id ? 'bg-amber-500/20 text-amber-700' : 'bg-white dark:bg-slate-700/50 text-slate-500'
+                    activeTab === tab.id ? 'bg-amber-500/20 text-amber-700' : 'bg-white dark:bg-zinc-800/50 text-slate-500'
                   }`}>{tab.count}</span>
                   {activeTab === tab.id && (
                     <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500"></div>
@@ -634,7 +634,7 @@ export default function PerformanceReviews() {
                 const isExpanded = expandedCards[review.id];
 
                 return (
-                  <div key={review.id} className="bg-white dark:bg-slate-800/40 border border-border rounded-xl overflow-hidden hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-all">
+                  <div key={review.id} className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl overflow-hidden hover:bg-slate-100 dark:hover:bg-zinc-900/50 transition-all">
                     {/* Card Header */}
                     <div className="p-5">
                       <div className="flex items-start justify-between gap-4">
@@ -646,7 +646,7 @@ export default function PerformanceReviews() {
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-3 mb-2 flex-wrap">
                               <h3 className="text-lg font-semibold text-primary">{review.employee}</h3>
-                              <span className="px-2 py-1 bg-white dark:bg-slate-700/50 rounded text-xs text-secondary font-mono">#{review.badge}</span>
+                              <span className="px-2 py-1 bg-white dark:bg-zinc-800/50 rounded text-xs text-secondary font-mono">#{review.badge}</span>
                               <span className={`px-3 py-1 rounded-full text-xs font-bold border ${statusConfig.bg} ${statusConfig.text} ${statusConfig.border}`}>
                                 {statusConfig.label}
                               </span>
@@ -679,7 +679,7 @@ export default function PerformanceReviews() {
                                 <span className="text-xs text-slate-500">Evaluation Progress</span>
                                 <span className="text-xs text-secondary font-medium">{review.progress}%</span>
                               </div>
-                              <div className="w-full h-2 bg-white dark:bg-slate-700/50 rounded-full overflow-hidden">
+                              <div className="w-full h-2 bg-white dark:bg-zinc-800/50 rounded-full overflow-hidden">
                                 <div
                                   className={`h-full rounded-full transition-all ${review.status === 'completed' ? 'bg-green-500' : 'bg-amber-500'}`}
                                   style={{ width: `${review.progress}%` }}
@@ -716,13 +716,13 @@ export default function PerformanceReviews() {
                         <div className="flex items-center gap-2">
                           <button
                             onClick={() => setSelectedReview(review)}
-                            className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700/50 rounded-lg transition-colors"
+                            className="p-2 hover:bg-slate-100 dark:hover:bg-zinc-800/50 rounded-lg transition-colors"
                           >
                             <Eye className="w-5 h-5 text-secondary" />
                           </button>
                           <button
                             onClick={() => toggleCardExpanded(review.id)}
-                            className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700/50 rounded-lg transition-colors"
+                            className="p-2 hover:bg-slate-100 dark:hover:bg-zinc-800/50 rounded-lg transition-colors"
                           >
                             {isExpanded ? <ChevronUp className="w-5 h-5 text-secondary" /> : <ChevronDown className="w-5 h-5 text-secondary" />}
                           </button>
@@ -734,7 +734,7 @@ export default function PerformanceReviews() {
                     {isExpanded && (
                       <div className="px-5 pb-5 border-t border-border dark:border-slate-700/30 pt-4 space-y-4">
                         {/* Self-Assessment Details */}
-                        <div className="bg-white dark:bg-slate-900/40 border border-border rounded-xl p-4">
+                        <div className="bg-white dark:bg-zinc-950/40 border border-border rounded-xl p-4">
                           <h4 className="text-sm font-semibold text-primary mb-3 flex items-center gap-2">
                             <CheckCircle className="w-4 h-4 text-green-400" /> Step 1: Employee Self-Assessment
                           </h4>
@@ -771,7 +771,7 @@ export default function PerformanceReviews() {
                         </div>
 
                         {/* Supervisor Review Details */}
-                        <div className="bg-white dark:bg-slate-900/40 border border-border rounded-xl p-4">
+                        <div className="bg-white dark:bg-zinc-950/40 border border-border rounded-xl p-4">
                           <h4 className="text-sm font-semibold text-primary mb-3 flex items-center gap-2">
                             {getStepIcon(review.supervisorReview.status)} Step 2: Supervisor Review & Rating
                           </h4>
@@ -835,7 +835,7 @@ export default function PerformanceReviews() {
                             <p className="text-xs text-green-400 mt-3">{review.completionNote}</p>
                           </div>
                         ) : (
-                          <div className="bg-white dark:bg-slate-900/40 border border-border rounded-xl p-4">
+                          <div className="bg-white dark:bg-zinc-950/40 border border-border rounded-xl p-4">
                             <h4 className="text-sm font-semibold text-primary mb-3">Steps 3-5: Pending</h4>
                             <div className="space-y-2 text-xs">
                               <div className="flex items-center gap-2">
@@ -862,7 +862,7 @@ export default function PerformanceReviews() {
 
                         {/* Evaluation Categories Reference */}
                         {review.status === 'completed' ? (
-                          <div className="bg-white dark:bg-slate-900/40 border border-border rounded-xl p-4">
+                          <div className="bg-white dark:bg-zinc-950/40 border border-border rounded-xl p-4">
                             <div className="flex items-center gap-2 mb-2">
                               <Shield className="w-4 h-4 text-amber-700" />
                               <p className="text-sm text-amber-700 font-medium">Evaluation Ratings — Confidential</p>
@@ -870,7 +870,7 @@ export default function PerformanceReviews() {
                             <p className="text-xs text-secondary">Performance ratings for {review.employee} are confidential personnel records. Access restricted to: employee, reviewing supervisor ({review.supervisor}), HR Director, command staff, and Sheriff Taylor.</p>
                           </div>
                         ) : (
-                          <div className="bg-white dark:bg-slate-900/40 border border-border rounded-xl p-4">
+                          <div className="bg-white dark:bg-zinc-950/40 border border-border rounded-xl p-4">
                             <h4 className="text-sm font-semibold text-primary mb-3">GCSO Evaluation Categories (Pending Supervisor Rating)</h4>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
                               {evaluationCategories.map((cat, idx) => (
@@ -891,27 +891,27 @@ export default function PerformanceReviews() {
                               <button className="px-4 py-2 bg-amber-500 hover:bg-amber-400 rounded-xl text-white font-medium transition-all text-sm flex items-center gap-2">
                                 <Bell className="w-4 h-4" /> Remind Supervisor
                               </button>
-                              <button className="px-4 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-primary rounded-xl font-medium transition-all text-sm flex items-center gap-2">
+                              <button className="px-4 py-2 bg-slate-50 dark:bg-zinc-800/40 hover:bg-slate-700/60 border border-slate-600/50 text-primary rounded-xl font-medium transition-all text-sm flex items-center gap-2">
                                 <Clock className="w-4 h-4" /> Set Deadline
                               </button>
-                              <button className="px-4 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-primary rounded-xl font-medium transition-all text-sm flex items-center gap-2">
+                              <button className="px-4 py-2 bg-slate-50 dark:bg-zinc-800/40 hover:bg-slate-700/60 border border-slate-600/50 text-primary rounded-xl font-medium transition-all text-sm flex items-center gap-2">
                                 <Eye className="w-4 h-4" /> View Self-Assessment
                               </button>
                             </>
                           )}
                           {review.status === 'completed' && (
                             <>
-                              <button className="px-4 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-primary rounded-xl font-medium transition-all text-sm flex items-center gap-2">
+                              <button className="px-4 py-2 bg-slate-50 dark:bg-zinc-800/40 hover:bg-slate-700/60 border border-slate-600/50 text-primary rounded-xl font-medium transition-all text-sm flex items-center gap-2">
                                 <Download className="w-4 h-4" /> Download PDF
                               </button>
-                              <button className="px-4 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-primary rounded-xl font-medium transition-all text-sm flex items-center gap-2">
+                              <button className="px-4 py-2 bg-slate-50 dark:bg-zinc-800/40 hover:bg-slate-700/60 border border-slate-600/50 text-primary rounded-xl font-medium transition-all text-sm flex items-center gap-2">
                                 <Printer className="w-4 h-4" /> Print
                               </button>
                             </>
                           )}
                           <button
                             onClick={() => setSelectedReview(review)}
-                            className="px-4 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded-xl font-medium transition-all text-sm flex items-center gap-2"
+                            className="px-4 py-2 bg-white dark:bg-zinc-900/40 hover:bg-slate-100 dark:hover:bg-zinc-900/60 border border-slate-700/50 text-secondary rounded-xl font-medium transition-all text-sm flex items-center gap-2"
                           >
                             <ExternalLink className="w-4 h-4" /> Full Details
                           </button>
@@ -932,13 +932,13 @@ export default function PerformanceReviews() {
             </div>
 
             {/* Rating Scale Reference */}
-            <div className="mt-8 bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
+            <div className="mt-8 bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
               <h4 className="text-sm font-semibold text-primary mb-3 flex items-center gap-2">
                 <ClipboardCheck className="w-4 h-4 text-secondary" /> GCSO Performance Evaluation Rating Scale Reference
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-5 gap-3">
                 {ratingScale.map(rating => (
-                  <div key={rating.score} className="bg-white dark:bg-slate-900/40 border border-border rounded-lg p-3 text-center">
+                  <div key={rating.score} className="bg-white dark:bg-zinc-950/40 border border-border rounded-lg p-3 text-center">
                     <p className="text-xl font-bold text-primary mb-1">{rating.score}</p>
                     <p className="text-xs text-secondary">{rating.label}</p>
                   </div>
@@ -969,26 +969,26 @@ export default function PerformanceReviews() {
               <p className="text-xs text-secondary mt-1">GCSO Human Resources Division</p>
             </div>
             <div className="p-4 space-y-3">
-              <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
+              <div className="p-3 bg-white dark:bg-zinc-900/40 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-900/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-primary">HR Director</p>
                 <p className="text-xs text-secondary">Evaluation policy, confidential records access</p>
                 <p className="text-xs text-amber-700 mt-1">Ext. 4500</p>
               </div>
-              <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
+              <div className="p-3 bg-white dark:bg-zinc-900/40 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-900/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-primary">Evaluation Coordinator</p>
                 <p className="text-xs text-secondary">HR Specialist J. Martinez — scheduling, deadlines</p>
                 <p className="text-xs text-amber-700 mt-1">Ext. 4505</p>
               </div>
-              <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
+              <div className="p-3 bg-white dark:bg-zinc-900/40 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-900/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-primary">Training Division</p>
                 <p className="text-xs text-secondary">Professional development, certification tracking</p>
                 <p className="text-xs text-amber-700 mt-1">Ext. 4521</p>
               </div>
-              <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
+              <div className="p-3 bg-white dark:bg-zinc-900/40 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-900/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-primary">GCSO Evaluation Policy</p>
                 <p className="text-xs text-secondary">Policy 6.01 — Performance Evaluations</p>
               </div>
-              <div className="p-3 bg-white dark:bg-slate-800/40 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 cursor-pointer transition-colors">
+              <div className="p-3 bg-white dark:bg-zinc-900/40 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-900/60 cursor-pointer transition-colors">
                 <p className="text-sm font-medium text-primary">Georgia POST Requirements</p>
                 <p className="text-xs text-secondary">Peace Officer Standards & Training</p>
               </div>

@@ -639,7 +639,7 @@ export default function SettingsPage() {
                 return (
                   <React.Fragment key={tab.id}>
                     {showDivider && (
-                      <div className="self-center mx-1 w-px h-5 bg-white dark:bg-slate-700/60" />
+                      <div className="self-center mx-1 w-px h-5 bg-white dark:bg-zinc-800/60" />
                     )}
                     <button
                       onClick={() => setActiveSection(tab.id)}
@@ -663,7 +663,7 @@ export default function SettingsPage() {
               {/* Profile Settings */}
               {activeSection === 'profile' && (
                 <>
-                  <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
+                  <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                     <div className="flex items-center justify-between mb-1">
                       <h3 className="text-sm font-semibold text-primary">Profile Information</h3>
                       <span className="text-[10px] text-slate-500">Last updated: Dec 11, 2025 09:14 AM</span>
@@ -679,7 +679,7 @@ export default function SettingsPage() {
                           type="text"
                           value={profileSettings.fullName}
                           onChange={(e) => setProfileSettings({...profileSettings, fullName: e.target.value})}
-                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
+                          className="w-full px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
                         />
                       </div>
                       <div>
@@ -688,7 +688,7 @@ export default function SettingsPage() {
                           type="email"
                           value={profileSettings.email}
                           onChange={(e) => setProfileSettings({...profileSettings, email: e.target.value})}
-                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
+                          className="w-full px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
                         />
                       </div>
                       <div>
@@ -697,7 +697,7 @@ export default function SettingsPage() {
                           type="text"
                           value={profileSettings.badge}
                           onChange={(e) => setProfileSettings({...profileSettings, badge: e.target.value})}
-                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
+                          className="w-full px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
                         />
                       </div>
                       <div>
@@ -706,7 +706,7 @@ export default function SettingsPage() {
                           type="tel"
                           value={profileSettings.phone}
                           onChange={(e) => setProfileSettings({...profileSettings, phone: e.target.value})}
-                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
+                          className="w-full px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
                         />
                       </div>
                       <div>
@@ -715,7 +715,7 @@ export default function SettingsPage() {
                           type="text"
                           value={profileSettings.department}
                           disabled
-                          className="w-full px-4 py-2.5 bg-slate-100 dark:bg-slate-800/20 border border-border rounded-xl text-muted cursor-not-allowed"
+                          className="w-full px-4 py-2.5 bg-slate-100 dark:bg-zinc-900/20 border border-border rounded-xl text-muted cursor-not-allowed"
                         />
                       </div>
                       <div>
@@ -724,7 +724,7 @@ export default function SettingsPage() {
                           type="text"
                           value={profileSettings.position}
                           disabled
-                          className="w-full px-4 py-2.5 bg-slate-100 dark:bg-slate-800/20 border border-border rounded-xl text-muted cursor-not-allowed"
+                          className="w-full px-4 py-2.5 bg-slate-100 dark:bg-zinc-900/20 border border-border rounded-xl text-muted cursor-not-allowed"
                         />
                       </div>
                       <div>
@@ -733,7 +733,7 @@ export default function SettingsPage() {
                           type="text"
                           value={profileSettings.division}
                           disabled
-                          className="w-full px-4 py-2.5 bg-slate-100 dark:bg-slate-800/20 border border-border rounded-xl text-muted cursor-not-allowed"
+                          className="w-full px-4 py-2.5 bg-slate-100 dark:bg-zinc-900/20 border border-border rounded-xl text-muted cursor-not-allowed"
                         />
                       </div>
                       <div>
@@ -742,7 +742,7 @@ export default function SettingsPage() {
                           type="text"
                           value={profileSettings.hireDate}
                           disabled
-                          className="w-full px-4 py-2.5 bg-slate-100 dark:bg-slate-800/20 border border-border rounded-xl text-muted cursor-not-allowed"
+                          className="w-full px-4 py-2.5 bg-slate-100 dark:bg-zinc-900/20 border border-border rounded-xl text-muted cursor-not-allowed"
                         />
                       </div>
                       <div>
@@ -751,14 +751,14 @@ export default function SettingsPage() {
                           type="text"
                           value={profileSettings.certificationExpiry}
                           disabled
-                          className="w-full px-4 py-2.5 bg-slate-100 dark:bg-slate-800/20 border border-border rounded-xl text-muted cursor-not-allowed"
+                          className="w-full px-4 py-2.5 bg-slate-100 dark:bg-zinc-900/20 border border-border rounded-xl text-muted cursor-not-allowed"
                         />
                       </div>
                     </div>
                   </div>
 
                   {/* Profile Photo */}
-                  <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
+                  <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                     <h3 className="text-lg font-semibold text-primary mb-4">Profile Photo</h3>
                     <div className="flex items-center gap-6">
                       <div className="w-24 h-24 bg-gradient-to-br from-amber-500 to-amber-600 rounded-full flex items-center justify-center">
@@ -771,7 +771,7 @@ export default function SettingsPage() {
                             <Upload className="w-4 h-4" />
                             Upload Photo
                           </button>
-                          <button className="px-4 py-2 bg-slate-100 dark:bg-slate-700/40 border border-slate-300 dark:border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700/60 transition-all">
+                          <button className="px-4 py-2 bg-slate-100 dark:bg-zinc-800/40 border border-slate-300 dark:border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-200 dark:hover:bg-zinc-800/60 transition-all">
                             Remove
                           </button>
                         </div>
@@ -783,7 +783,7 @@ export default function SettingsPage() {
 
               {/* Notifications Settings */}
               {activeSection === 'notifications' && (
-                <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
+                <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                   <div className="flex items-center justify-between mb-1">
                     <h3 className="text-sm font-semibold text-primary">Operational Alert Preferences</h3>
                     <span className="text-[10px] text-slate-500">Last updated: Dec 11, 2025 09:14 AM</span>
@@ -816,7 +816,7 @@ export default function SettingsPage() {
 
               {/* Display Settings */}
               {activeSection === 'display' && (
-                <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
+                <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                   <div className="flex items-center justify-between mb-1">
                     <h3 className="text-sm font-semibold text-primary">Display Preferences</h3>
                     <span className="text-[10px] text-slate-500">Last updated: Dec 10, 2025 02:30 PM</span>
@@ -834,7 +834,7 @@ export default function SettingsPage() {
                           <button
                             key={t.value}
                             onClick={() => setTheme(t.value)}
-                            className={`p-4 rounded-xl border-2 transition-all ${activeTheme === t.value ? 'border-amber-500 bg-amber-100 dark:bg-slate-800/60' : 'border-border bg-white dark:bg-slate-800/20 hover:bg-slate-50 dark:hover:bg-slate-800/40'}`}
+                            className={`p-4 rounded-xl border-2 transition-all ${activeTheme === t.value ? 'border-amber-500 bg-amber-100 dark:bg-zinc-900/60' : 'border-border bg-white dark:bg-zinc-900/20 hover:bg-slate-50 dark:hover:bg-zinc-900/40'}`}
                           >
                             <t.Icon className="w-6 h-6 text-secondary mb-2" />
                             <p className="text-sm font-medium text-slate-800 dark:text-white">{t.label}</p>
@@ -847,7 +847,7 @@ export default function SettingsPage() {
                       <select
                         value={displaySettings.timezone}
                         onChange={(e) => setDisplaySettings({...displaySettings, timezone: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50 transition-colors"
+                        className="w-full px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50 transition-colors"
                       >
                         <option value="America/New_York">Eastern Time (ET)</option>
                         <option value="America/Chicago">Central Time (CT)</option>
@@ -860,7 +860,7 @@ export default function SettingsPage() {
                       <select
                         value={displaySettings.dateFormat}
                         onChange={(e) => setDisplaySettings({...displaySettings, dateFormat: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50 transition-colors"
+                        className="w-full px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50 transition-colors"
                       >
                         <option value="MM/DD/YYYY">MM/DD/YYYY (12/11/2025)</option>
                         <option value="DD/MM/YYYY">DD/MM/YYYY (11/12/2025)</option>
@@ -872,7 +872,7 @@ export default function SettingsPage() {
                       <select
                         value={displaySettings.density}
                         onChange={(e) => setDisplaySettings({...displaySettings, density: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50 transition-colors"
+                        className="w-full px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50 transition-colors"
                       >
                         <option value="compact">Compact</option>
                         <option value="comfortable">Comfortable</option>
@@ -886,7 +886,7 @@ export default function SettingsPage() {
               {/* Security Settings */}
               {activeSection === 'security' && (
                 <div className="space-y-6">
-                  <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
+                  <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                     <div className="flex items-center justify-between mb-1">
                       <h3 className="text-sm font-semibold text-primary">Authentication & Access</h3>
                       <span className="text-[10px] text-slate-500">Last updated: Dec 9, 2025 11:42 AM</span>
@@ -913,7 +913,7 @@ export default function SettingsPage() {
                         <select
                           value={securitySettings.sessionTimeout}
                           onChange={(e) => setSecuritySettings({...securitySettings, sessionTimeout: e.target.value})}
-                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50 transition-colors"
+                          className="w-full px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50 transition-colors"
                         >
                           <option value="15">15 minutes</option>
                           <option value="30">30 minutes</option>
@@ -939,7 +939,7 @@ export default function SettingsPage() {
                         <select
                           value={securitySettings.passwordExpiry}
                           onChange={(e) => setSecuritySettings({...securitySettings, passwordExpiry: e.target.value})}
-                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50 transition-colors"
+                          className="w-full px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50 transition-colors"
                         >
                           <option value="30">30 days</option>
                           <option value="60">60 days</option>
@@ -993,10 +993,10 @@ export default function SettingsPage() {
                     </div>
                   </div>
 
-                  <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
+                  <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                     <h3 className="text-sm font-semibold text-primary mb-6">Active Sessions</h3>
                     <div className="space-y-3">
-                      <div className="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800/30 border border-border dark:border-slate-700/30 rounded-xl">
+                      <div className="flex items-center gap-4 p-4 bg-slate-50 dark:bg-zinc-900/30 border border-border dark:border-slate-700/30 rounded-xl">
                         <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center">
                           <Monitor className="w-5 h-5 text-green-400" />
                         </div>
@@ -1009,7 +1009,7 @@ export default function SettingsPage() {
                           <span className="text-xs font-medium text-green-400">Active</span>
                         </div>
                       </div>
-                      <div className="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800/30 border border-border dark:border-slate-700/30 rounded-xl">
+                      <div className="flex items-center gap-4 p-4 bg-slate-50 dark:bg-zinc-900/30 border border-border dark:border-slate-700/30 rounded-xl">
                         <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center">
                           <Smartphone className="w-5 h-5 text-blue-400" />
                         </div>
@@ -1025,14 +1025,14 @@ export default function SettingsPage() {
                     </div>
                   </div>
 
-                  <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
+                  <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                     <h3 className="text-sm font-semibold text-primary mb-4">Change Password</h3>
                     <div className="space-y-6">
                       <div>
                         <label className="block text-sm font-medium text-secondary mb-2">Current Password</label>
                         <input
                           type="password"
-                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
+                          className="w-full px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
                           placeholder="Enter current password"
                         />
                       </div>
@@ -1040,7 +1040,7 @@ export default function SettingsPage() {
                         <label className="block text-sm font-medium text-secondary mb-2">New Password</label>
                         <input
                           type="password"
-                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
+                          className="w-full px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
                           placeholder="Enter new password"
                         />
                       </div>
@@ -1048,7 +1048,7 @@ export default function SettingsPage() {
                         <label className="block text-sm font-medium text-secondary mb-2">Confirm New Password</label>
                         <input
                           type="password"
-                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
+                          className="w-full px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
                           placeholder="Confirm new password"
                         />
                       </div>
@@ -1072,10 +1072,10 @@ export default function SettingsPage() {
                     const Icon = getIntegrationIcon(integration.type);
                     const isExpanded = expandedIntegration === key;
                     return (
-                      <div key={key} className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden shadow-sm dark:shadow-none">
+                      <div key={key} className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden shadow-sm dark:shadow-none">
                         <div
                           onClick={() => setExpandedIntegration(isExpanded ? null : key)}
-                          className="p-6 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-50 dark:hover:bg-slate-800/20 transition-colors"
+                          className="p-6 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-50 dark:hover:bg-zinc-900/20 transition-colors"
                         >
                           <div className="flex items-center gap-4">
                             <div className={`w-12 h-12 ${getStatusBg(integration.status)} border ${getStatusBorder(integration.status)} rounded-xl flex items-center justify-center`}>
@@ -1107,7 +1107,7 @@ export default function SettingsPage() {
                                 </span>
                               </div>
                             </div>
-                            <button className="p-2 hover:bg-slate-200 dark:hover:bg-slate-700/40 rounded-lg transition-colors">
+                            <button className="p-2 hover:bg-slate-200 dark:hover:bg-zinc-800/40 rounded-lg transition-colors">
                               {isExpanded ? <ChevronUp className="w-5 h-5 text-muted" /> : <ChevronDown className="w-5 h-5 text-muted" />}
                             </button>
                           </div>
@@ -1124,10 +1124,10 @@ export default function SettingsPage() {
                                 <div>
                                   <p className="text-xs font-medium text-muted mb-2">API Endpoint</p>
                                   <div className="flex items-center gap-2">
-                                    <code className="flex-1 text-xs text-blue-400 bg-slate-100 dark:bg-slate-900/50 px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700/50 overflow-x-auto">{integration.endpoint}</code>
+                                    <code className="flex-1 text-xs text-blue-400 bg-slate-100 dark:bg-zinc-950/50 px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700/50 overflow-x-auto">{integration.endpoint}</code>
                                     <button
                                       onClick={() => handleCopyApiKey(integration.endpoint)}
-                                      className="p-2 hover:bg-slate-200 dark:hover:bg-slate-700/40 rounded-lg transition-colors"
+                                      className="p-2 hover:bg-slate-200 dark:hover:bg-zinc-800/40 rounded-lg transition-colors"
                                       title="Copy endpoint"
                                     >
                                       <Copy className="w-4 h-4 text-muted" />
@@ -1141,19 +1141,19 @@ export default function SettingsPage() {
                                 <div>
                                   <p className="text-xs font-medium text-muted mb-2">API Key</p>
                                   <div className="flex items-center gap-2">
-                                    <code className="flex-1 text-xs text-amber-700 bg-slate-100 dark:bg-slate-900/50 px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700/50">
+                                    <code className="flex-1 text-xs text-amber-700 bg-slate-100 dark:bg-zinc-950/50 px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700/50">
                                       {showApiKey[key] ? integration.apiKey : '••••••••••••••••••••'}
                                     </code>
                                     <button
                                       onClick={() => setShowApiKey({...showApiKey, [key]: !showApiKey[key]})}
-                                      className="p-2 hover:bg-slate-200 dark:hover:bg-slate-700/40 rounded-lg transition-colors"
+                                      className="p-2 hover:bg-slate-200 dark:hover:bg-zinc-800/40 rounded-lg transition-colors"
                                       title={showApiKey[key] ? 'Hide' : 'Show'}
                                     >
                                       {showApiKey[key] ? <EyeOff className="w-4 h-4 text-muted" /> : <Eye className="w-4 h-4 text-muted" />}
                                     </button>
                                     <button
                                       onClick={() => handleCopyApiKey(integration.apiKey)}
-                                      className="p-2 hover:bg-slate-200 dark:hover:bg-slate-700/40 rounded-lg transition-colors"
+                                      className="p-2 hover:bg-slate-200 dark:hover:bg-zinc-800/40 rounded-lg transition-colors"
                                       title="Copy API key"
                                     >
                                       <Copy className="w-4 h-4 text-muted" />
@@ -1171,7 +1171,7 @@ export default function SettingsPage() {
                                   <p className="text-xs font-medium text-muted mb-2">Data Types</p>
                                   <div className="flex flex-wrap gap-2">
                                     {integration.dataTypes.map((type, idx) => (
-                                      <span key={idx} className="px-2 py-1 bg-slate-200 dark:bg-slate-700/40 border border-slate-300 dark:border-slate-600/50 rounded-md text-xs text-secondary">
+                                      <span key={idx} className="px-2 py-1 bg-slate-200 dark:bg-zinc-800/40 border border-slate-300 dark:border-slate-600/50 rounded-md text-xs text-secondary">
                                         {type}
                                       </span>
                                     ))}
@@ -1181,7 +1181,7 @@ export default function SettingsPage() {
                                   <div>
                                     <p className="text-xs font-medium text-muted mb-2">Monthly Requests</p>
                                     <p className="text-sm text-primary">{integration.monthlyRequests.toLocaleString()} / {integration.requestLimit.toLocaleString()}</p>
-                                    <div className="mt-2 h-2 bg-slate-200 dark:bg-slate-700/40 rounded-full overflow-hidden">
+                                    <div className="mt-2 h-2 bg-slate-200 dark:bg-zinc-800/40 rounded-full overflow-hidden">
                                       <div
                                         className="h-full bg-gradient-to-r from-blue-500 to-cyan-500"
                                         style={{width: `${(integration.monthlyRequests / integration.requestLimit) * 100}%`}}
@@ -1215,109 +1215,109 @@ export default function SettingsPage() {
                                 <p className="text-xs font-medium text-muted mb-3">Live Metrics</p>
                                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                                   {integration.storage && (
-                                    <div className="bg-slate-50 dark:bg-slate-900/50 border border-border rounded-xl p-4">
+                                    <div className="bg-slate-50 dark:bg-zinc-950/50 border border-border rounded-xl p-4">
                                       <p className="text-xs text-muted mb-1">Storage</p>
                                       <p className="text-sm font-semibold text-primary">{integration.storage}</p>
                                     </div>
                                   )}
                                   {integration.devicesActive !== undefined && (
-                                    <div className="bg-slate-50 dark:bg-slate-900/50 border border-border rounded-xl p-4">
+                                    <div className="bg-slate-50 dark:bg-zinc-950/50 border border-border rounded-xl p-4">
                                       <p className="text-xs text-muted mb-1">Devices</p>
                                       <p className="text-sm font-semibold text-primary">{integration.devicesActive}/{integration.devicesTotal}</p>
                                     </div>
                                   )}
                                   {integration.currentInmates !== undefined && (
-                                    <div className="bg-slate-50 dark:bg-slate-900/50 border border-border rounded-xl p-4">
+                                    <div className="bg-slate-50 dark:bg-zinc-950/50 border border-border rounded-xl p-4">
                                       <p className="text-xs text-muted mb-1">Inmates</p>
                                       <p className="text-sm font-semibold text-primary">{integration.currentInmates}/{integration.capacity}</p>
                                     </div>
                                   )}
                                   {integration.callsToday && (
-                                    <div className="bg-slate-50 dark:bg-slate-900/50 border border-border rounded-xl p-4">
+                                    <div className="bg-slate-50 dark:bg-zinc-950/50 border border-border rounded-xl p-4">
                                       <p className="text-xs text-muted mb-1">Calls Today</p>
                                       <p className="text-sm font-semibold text-primary">{integration.callsToday}</p>
                                     </div>
                                   )}
                                   {integration.ordersToday && (
-                                    <div className="bg-slate-50 dark:bg-slate-900/50 border border-border rounded-xl p-4">
+                                    <div className="bg-slate-50 dark:bg-zinc-950/50 border border-border rounded-xl p-4">
                                       <p className="text-xs text-muted mb-1">Orders Today</p>
                                       <p className="text-sm font-semibold text-primary">{integration.ordersToday}</p>
                                     </div>
                                   )}
                                   {integration.employees && (
-                                    <div className="bg-slate-50 dark:bg-slate-900/50 border border-border rounded-xl p-4">
+                                    <div className="bg-slate-50 dark:bg-zinc-950/50 border border-border rounded-xl p-4">
                                       <p className="text-xs text-muted mb-1">Employees</p>
                                       <p className="text-sm font-semibold text-primary">{integration.employees}</p>
                                     </div>
                                   )}
                                   {integration.expiringSoon && (
-                                    <div className="bg-slate-50 dark:bg-slate-900/50 border border-border rounded-xl p-4">
+                                    <div className="bg-slate-50 dark:bg-zinc-950/50 border border-border rounded-xl p-4">
                                       <p className="text-xs text-muted mb-1">Expiring Soon</p>
                                       <p className="text-sm font-semibold text-amber-700">{integration.expiringSoon}</p>
                                     </div>
                                   )}
                                   {integration.pendingAcknowledgments && (
-                                    <div className="bg-slate-50 dark:bg-slate-900/50 border border-border rounded-xl p-4">
+                                    <div className="bg-slate-50 dark:bg-zinc-950/50 border border-border rounded-xl p-4">
                                       <p className="text-xs text-muted mb-1">Pending</p>
                                       <p className="text-sm font-semibold text-amber-700">{integration.pendingAcknowledgments}</p>
                                     </div>
                                   )}
                                   {integration.policyUpdates && (
-                                    <div className="bg-slate-50 dark:bg-slate-900/50 border border-border rounded-xl p-4">
+                                    <div className="bg-slate-50 dark:bg-zinc-950/50 border border-border rounded-xl p-4">
                                       <p className="text-xs text-muted mb-1">Policy Updates</p>
                                       <p className="text-sm font-semibold text-blue-400">{integration.policyUpdates}</p>
                                     </div>
                                   )}
                                   {integration.pendingApprovals && (
-                                    <div className="bg-slate-50 dark:bg-slate-900/50 border border-border rounded-xl p-4">
+                                    <div className="bg-slate-50 dark:bg-zinc-950/50 border border-border rounded-xl p-4">
                                       <p className="text-xs text-muted mb-1">Pending Approvals</p>
                                       <p className="text-sm font-semibold text-amber-700">{integration.pendingApprovals}</p>
                                     </div>
                                   )}
                                   {integration.vehiclesInService !== undefined && (
-                                    <div className="bg-slate-50 dark:bg-slate-900/50 border border-border rounded-xl p-4">
+                                    <div className="bg-slate-50 dark:bg-zinc-950/50 border border-border rounded-xl p-4">
                                       <p className="text-xs text-muted mb-1">Vehicles</p>
                                       <p className="text-sm font-semibold text-primary">{integration.vehiclesInService} active, {integration.vehiclesInMaintenance} maintenance</p>
                                     </div>
                                   )}
                                   {integration.monthlySpend && (
-                                    <div className="bg-slate-50 dark:bg-slate-900/50 border border-border rounded-xl p-4">
+                                    <div className="bg-slate-50 dark:bg-zinc-950/50 border border-border rounded-xl p-4">
                                       <p className="text-xs text-muted mb-1">Monthly Spend</p>
                                       <p className="text-sm font-semibold text-primary">{integration.monthlySpend}</p>
                                     </div>
                                   )}
                                   {integration.activeUsers && (
-                                    <div className="bg-slate-50 dark:bg-slate-900/50 border border-border rounded-xl p-4">
+                                    <div className="bg-slate-50 dark:bg-zinc-950/50 border border-border rounded-xl p-4">
                                       <p className="text-xs text-muted mb-1">Active Users</p>
                                       <p className="text-sm font-semibold text-primary">{integration.activeUsers}</p>
                                     </div>
                                   )}
                                   {integration.unitsOnline && (
-                                    <div className="bg-slate-50 dark:bg-slate-900/50 border border-border rounded-xl p-4">
+                                    <div className="bg-slate-50 dark:bg-zinc-950/50 border border-border rounded-xl p-4">
                                       <p className="text-xs text-muted mb-1">Units Online</p>
                                       <p className="text-sm font-semibold text-green-400">{integration.unitsOnline}</p>
                                     </div>
                                   )}
                                   {integration.contacts && (
-                                    <div className="bg-slate-50 dark:bg-slate-900/50 border border-border rounded-xl p-4">
+                                    <div className="bg-slate-50 dark:bg-zinc-950/50 border border-border rounded-xl p-4">
                                       <p className="text-xs text-muted mb-1">Contacts</p>
                                       <p className="text-sm font-semibold text-primary">{integration.contacts.toLocaleString()}</p>
                                     </div>
                                   )}
                                   {integration.readsToday && (
-                                    <div className="bg-slate-50 dark:bg-slate-900/50 border border-border rounded-xl p-4">
+                                    <div className="bg-slate-50 dark:bg-zinc-950/50 border border-border rounded-xl p-4">
                                       <p className="text-xs text-muted mb-1">Reads Today</p>
                                       <p className="text-sm font-semibold text-primary">{integration.readsToday.toLocaleString()}</p>
                                     </div>
                                   )}
                                   {integration.hotlistMatches !== undefined && (
-                                    <div className="bg-slate-50 dark:bg-slate-900/50 border border-border rounded-xl p-4">
+                                    <div className="bg-slate-50 dark:bg-zinc-950/50 border border-border rounded-xl p-4">
                                       <p className="text-xs text-muted mb-1">Hotlist Matches</p>
                                       <p className="text-sm font-semibold text-red-400">{integration.hotlistMatches}</p>
                                     </div>
                                   )}
                                   {integration.deploymentsMonth && (
-                                    <div className="bg-slate-50 dark:bg-slate-900/50 border border-border rounded-xl p-4">
+                                    <div className="bg-slate-50 dark:bg-zinc-950/50 border border-border rounded-xl p-4">
                                       <p className="text-xs text-muted mb-1">Deployments (Month)</p>
                                       <p className="text-sm font-semibold text-primary">{integration.deploymentsMonth}</p>
                                     </div>
@@ -1344,11 +1344,11 @@ export default function SettingsPage() {
                                   </>
                                 )}
                               </button>
-                              <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-700/40 border border-slate-300 dark:border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700/60 transition-all">
+                              <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-zinc-800/40 border border-slate-300 dark:border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-200 dark:hover:bg-zinc-800/60 transition-all">
                                 <RefreshCw className="w-4 h-4" />
                                 Sync Now
                               </button>
-                              <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-700/40 border border-slate-300 dark:border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700/60 transition-all">
+                              <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-zinc-800/40 border border-slate-300 dark:border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-200 dark:hover:bg-zinc-800/60 transition-all">
                                 <Settings className="w-4 h-4" />
                                 Configure
                               </button>
@@ -1365,14 +1365,14 @@ export default function SettingsPage() {
               {/* Backup & Retention */}
               {activeSection === 'data' && (
                 <div className="space-y-6">
-                  <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
+                  <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                     <div className="flex items-center justify-between mb-1">
                       <h3 className="text-sm font-semibold text-primary">Data Export</h3>
                       <span className="text-[10px] text-slate-500">Last updated: Dec 11, 2025 02:00 AM</span>
                     </div>
                     <p className="text-xs text-slate-500 mb-6">Export personnel records, reports, integration logs, and audit trails.</p>
                     <div className="space-y-6">
-                      <div className="p-4 bg-slate-50 dark:bg-slate-800/30 border border-border dark:border-slate-700/30 rounded-xl">
+                      <div className="p-4 bg-slate-50 dark:bg-zinc-900/30 border border-border dark:border-slate-700/30 rounded-xl">
                         <div className="flex items-center justify-between mb-3">
                           <div className="flex items-center gap-3">
                             <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center">
@@ -1389,7 +1389,7 @@ export default function SettingsPage() {
                           </button>
                         </div>
                       </div>
-                      <div className="p-4 bg-slate-50 dark:bg-slate-800/30 border border-border dark:border-slate-700/30 rounded-xl">
+                      <div className="p-4 bg-slate-50 dark:bg-zinc-900/30 border border-border dark:border-slate-700/30 rounded-xl">
                         <div className="flex items-center justify-between mb-3">
                           <div className="flex items-center gap-3">
                             <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center">
@@ -1406,7 +1406,7 @@ export default function SettingsPage() {
                           </button>
                         </div>
                       </div>
-                      <div className="p-4 bg-slate-50 dark:bg-slate-800/30 border border-border dark:border-slate-700/30 rounded-xl">
+                      <div className="p-4 bg-slate-50 dark:bg-zinc-900/30 border border-border dark:border-slate-700/30 rounded-xl">
                         <div className="flex items-center justify-between mb-3">
                           <div className="flex items-center gap-3">
                             <div className="w-10 h-10 bg-purple-500/20 rounded-xl flex items-center justify-center">
@@ -1423,7 +1423,7 @@ export default function SettingsPage() {
                           </button>
                         </div>
                       </div>
-                      <div className="p-4 bg-slate-50 dark:bg-slate-800/30 border border-border dark:border-slate-700/30 rounded-xl">
+                      <div className="p-4 bg-slate-50 dark:bg-zinc-900/30 border border-border dark:border-slate-700/30 rounded-xl">
                         <div className="flex items-center justify-between mb-3">
                           <div className="flex items-center gap-3">
                             <div className="w-10 h-10 bg-amber-500/20 rounded-xl flex items-center justify-center">
@@ -1443,10 +1443,10 @@ export default function SettingsPage() {
                     </div>
                   </div>
 
-                  <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
+                  <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                     <h3 className="text-sm font-semibold text-primary mb-6">Backup & Restore</h3>
                     <div className="space-y-6">
-                      <div className="p-4 bg-slate-50 dark:bg-slate-800/30 border border-border dark:border-slate-700/30 rounded-xl">
+                      <div className="p-4 bg-slate-50 dark:bg-zinc-900/30 border border-border dark:border-slate-700/30 rounded-xl">
                         <div className="flex items-center justify-between mb-3">
                           <div>
                             <h4 className="text-sm font-medium text-primary mb-1">Last Backup</h4>
@@ -1462,7 +1462,7 @@ export default function SettingsPage() {
                             <Download className="w-4 h-4" />
                             Download Backup
                           </button>
-                          <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-700/40 border border-slate-300 dark:border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700/60 transition-all">
+                          <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-zinc-800/40 border border-slate-300 dark:border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-200 dark:hover:bg-zinc-800/60 transition-all">
                             <RefreshCw className="w-4 h-4" />
                             Create New Backup
                           </button>
@@ -1480,13 +1480,13 @@ export default function SettingsPage() {
                     </div>
                   </div>
 
-                  <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
+                  <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                     <h3 className="text-sm font-semibold text-primary mb-6">Data Retention</h3>
                     <div className="space-y-6">
                       <div>
                         <label className="block text-sm font-medium text-secondary mb-2">Audit Log Retention</label>
                         <select
-                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50 transition-colors"
+                          className="w-full px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50 transition-colors"
                         >
                           <option value="90">90 days</option>
                           <option value="180">180 days</option>
@@ -1498,7 +1498,7 @@ export default function SettingsPage() {
                       <div>
                         <label className="block text-sm font-medium text-secondary mb-2">Integration Logs Retention</label>
                         <select
-                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50 transition-colors"
+                          className="w-full px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50 transition-colors"
                         >
                           <option value="30">30 days (Recommended)</option>
                           <option value="60">60 days</option>
@@ -1509,7 +1509,7 @@ export default function SettingsPage() {
                       <div>
                         <label className="block text-sm font-medium text-secondary mb-2">Personnel Records Retention</label>
                         <select
-                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50 transition-colors"
+                          className="w-full px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50 transition-colors"
                         >
                           <option value="1825">5 years</option>
                           <option value="3650">10 years (Recommended)</option>
@@ -1536,7 +1536,7 @@ export default function SettingsPage() {
                   </div>
 
                   {/* API Management */}
-                  <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
+                  <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                     <div className="flex items-center justify-between mb-1">
                       <h3 className="text-sm font-semibold text-primary">API Management</h3>
                       <span className="text-[10px] text-slate-500">Last updated: Dec 11, 2025 08:22 AM</span>
@@ -1552,19 +1552,19 @@ export default function SettingsPage() {
                     <div className="space-y-3 mb-6">
                       {apiKeys.map(apiKey => (
                         <div key={apiKey.id} className="flex items-center gap-4 p-4 border border-border rounded-lg">
-                          <div className={`w-10 h-10 ${apiKey.status === 'active' ? 'bg-green-500/20' : 'bg-slate-50 dark:bg-slate-700/40'} rounded-xl flex items-center justify-center`}>
+                          <div className={`w-10 h-10 ${apiKey.status === 'active' ? 'bg-green-500/20' : 'bg-slate-50 dark:bg-zinc-800/40'} rounded-xl flex items-center justify-center`}>
                             <Key className={`w-5 h-5 ${apiKey.status === 'active' ? 'text-green-400' : 'text-slate-500'}`} />
                           </div>
                           <div className="flex-1 min-w-0">
                             <p className="text-sm font-medium text-primary">{apiKey.name}</p>
                             <div className="flex items-center gap-2 mt-1">
-                              <code className="text-xs text-amber-700 dark:text-amber-400 bg-slate-100 dark:bg-slate-900/50 px-2 py-1 rounded border border-slate-300 dark:border-slate-700/50">
+                              <code className="text-xs text-amber-700 dark:text-amber-400 bg-slate-100 dark:bg-zinc-950/50 px-2 py-1 rounded border border-slate-300 dark:border-slate-700/50">
                                 {showApiKey[`api_${apiKey.id}`] ? apiKey.key : '\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022'}
                               </code>
-                              <button onClick={() => setShowApiKey({...showApiKey, [`api_${apiKey.id}`]: !showApiKey[`api_${apiKey.id}`]})} className="p-1 hover:bg-slate-200 dark:hover:bg-slate-700/40 rounded transition-colors">
+                              <button onClick={() => setShowApiKey({...showApiKey, [`api_${apiKey.id}`]: !showApiKey[`api_${apiKey.id}`]})} className="p-1 hover:bg-slate-200 dark:hover:bg-zinc-800/40 rounded transition-colors">
                                 {showApiKey[`api_${apiKey.id}`] ? <EyeOff className="w-3 h-3 text-muted" /> : <Eye className="w-3 h-3 text-muted" />}
                               </button>
-                              <button onClick={() => handleCopyApiKey(apiKey.key)} className="p-1 hover:bg-slate-200 dark:hover:bg-slate-700/40 rounded transition-colors">
+                              <button onClick={() => handleCopyApiKey(apiKey.key)} className="p-1 hover:bg-slate-200 dark:hover:bg-zinc-800/40 rounded transition-colors">
                                 <Copy className="w-3 h-3 text-muted" />
                               </button>
                             </div>
@@ -1575,10 +1575,10 @@ export default function SettingsPage() {
                             </div>
                           </div>
                           <div className="flex items-center gap-2">
-                            <div className={`px-3 py-1.5 ${apiKey.status === 'active' ? 'bg-green-500/20 border-green-500/30' : 'bg-slate-50 dark:bg-slate-700/40 border-slate-600/50'} border rounded-lg`}>
+                            <div className={`px-3 py-1.5 ${apiKey.status === 'active' ? 'bg-green-500/20 border-green-500/30' : 'bg-slate-50 dark:bg-zinc-800/40 border-slate-600/50'} border rounded-lg`}>
                               <span className={`text-xs font-medium ${apiKey.status === 'active' ? 'text-green-400' : 'text-muted'}`}>{apiKey.status === 'active' ? 'Active' : 'Inactive'}</span>
                             </div>
-                            <button className="p-2 hover:bg-slate-200 dark:hover:bg-slate-700/40 rounded-lg transition-colors"><Edit3 className="w-4 h-4 text-muted" /></button>
+                            <button className="p-2 hover:bg-slate-200 dark:hover:bg-zinc-800/40 rounded-lg transition-colors"><Edit3 className="w-4 h-4 text-muted" /></button>
                             <button className="p-2 hover:bg-red-500/20 rounded-lg transition-colors"><Trash2 className="w-4 h-4 text-red-400" /></button>
                           </div>
                         </div>
@@ -1592,7 +1592,7 @@ export default function SettingsPage() {
                         { icon: Clock, color: 'text-amber-700', label: 'Avg Response', value: '187ms', sub: '-23ms vs last month', subColor: 'text-green-400' },
                         { icon: Zap, color: 'text-purple-400', label: 'Peak RPS', value: '1,247', sub: 'requests/second', subColor: 'text-muted' },
                       ].map((s, i) => (
-                        <div key={i} className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4 shadow-sm dark:shadow-none">
+                        <div key={i} className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4 shadow-sm dark:shadow-none">
                           <div className="flex items-center gap-2 mb-2">
                             <s.icon className={`w-4 h-4 ${s.color}`} />
                             <p className="text-[10px] font-medium text-muted">{s.label}</p>
@@ -1606,7 +1606,7 @@ export default function SettingsPage() {
                     <select
                       value={securitySettings.apiRateLimit}
                       onChange={(e) => setSecuritySettings({...securitySettings, apiRateLimit: e.target.value})}
-                      className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50 transition-colors"
+                      className="w-full px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50 transition-colors"
                     >
                       <option value="100">100 requests/hour (Basic)</option>
                       <option value="500">500 requests/hour (Standard)</option>
@@ -1617,7 +1617,7 @@ export default function SettingsPage() {
                   </div>
 
                   {/* System Health */}
-                  <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
+                  <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                     <div className="flex items-center justify-between mb-1">
                       <h3 className="text-sm font-semibold text-primary">System Health</h3>
                       <span className="text-[10px] text-slate-500">Last updated: Dec 11, 2025 09:15 AM</span>
@@ -1630,14 +1630,14 @@ export default function SettingsPage() {
                         { icon: Database, color: 'amber', label: 'Storage Used', value: '42%', pct: 42 },
                         { icon: Activity, color: 'purple', label: 'Active Connections', value: '234' },
                       ].map((m, i) => (
-                        <div key={i} className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4 shadow-sm dark:shadow-none">
+                        <div key={i} className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4 shadow-sm dark:shadow-none">
                           <div className="flex items-center gap-2 mb-2">
                             <m.icon className={`w-4 h-4 text-${m.color}-400`} />
                             <p className="text-[10px] font-medium text-muted">{m.label}</p>
                           </div>
                           <p className="text-xl font-bold text-primary">{m.value}</p>
                           {m.pct !== undefined && (
-                            <div className="mt-2 h-1.5 bg-slate-200 dark:bg-slate-700/40 rounded-full overflow-hidden">
+                            <div className="mt-2 h-1.5 bg-slate-200 dark:bg-zinc-800/40 rounded-full overflow-hidden">
                               <div className={`h-full bg-${m.color}-500`} style={{width: `${m.pct}%`}}></div>
                             </div>
                           )}
@@ -1663,7 +1663,7 @@ export default function SettingsPage() {
                   </div>
 
                   {/* DevOps / Infrastructure Controls */}
-                  <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
+                  <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                     <div className="flex items-center justify-between mb-1">
                       <h3 className="text-sm font-semibold text-primary">DevOps / Infrastructure Controls</h3>
                       <span className="text-[10px] text-slate-500">Last action: Dec 10, 2025 02:00 AM</span>
@@ -1675,7 +1675,7 @@ export default function SettingsPage() {
                         { icon: Database, color: 'amber', title: 'Optimize Database', desc: 'Run database optimization and vacuum tasks' },
                         { icon: Download, color: 'green', title: 'Check for Updates', desc: 'Check for system and dependency updates' },
                       ].map((action, i) => (
-                        <button key={i} className="w-full flex items-center justify-between p-4 border border-border dark:border-slate-700/20 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-all">
+                        <button key={i} className="w-full flex items-center justify-between p-4 border border-border dark:border-slate-700/20 rounded-lg hover:bg-slate-50 dark:hover:bg-zinc-900/30 transition-all">
                           <div className="flex items-center gap-3">
                             <div className={`w-10 h-10 bg-${action.color}-500/20 rounded-xl flex items-center justify-center`}>
                               <action.icon className={`w-5 h-5 text-${action.color}-400`} />
@@ -1695,7 +1695,7 @@ export default function SettingsPage() {
 
               {/* Audit & Compliance */}
               {activeSection === 'audit' && (
-                <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
+                <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                   <div className="flex items-center justify-between mb-6">
                     <div>
                       <h3 className="text-sm font-semibold text-primary">Audit & Compliance Trail</h3>
@@ -1708,7 +1708,7 @@ export default function SettingsPage() {
                   </div>
 
                   <div className="space-y-3">
-                    <div className="flex items-start gap-4 p-4 bg-slate-50 dark:bg-slate-800/30 border border-border dark:border-slate-700/30 rounded-xl">
+                    <div className="flex items-start gap-4 p-4 bg-slate-50 dark:bg-zinc-900/30 border border-border dark:border-slate-700/30 rounded-xl">
                       <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
                         <CheckCircle2 className="w-5 h-5 text-green-400" />
                       </div>
@@ -1726,7 +1726,7 @@ export default function SettingsPage() {
                       </div>
                     </div>
 
-                    <div className="flex items-start gap-4 p-4 bg-slate-50 dark:bg-slate-800/30 border border-border dark:border-slate-700/30 rounded-xl">
+                    <div className="flex items-start gap-4 p-4 bg-slate-50 dark:bg-zinc-900/30 border border-border dark:border-slate-700/30 rounded-xl">
                       <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
                         <Lock className="w-5 h-5 text-blue-400" />
                       </div>
@@ -1744,7 +1744,7 @@ export default function SettingsPage() {
                       </div>
                     </div>
 
-                    <div className="flex items-start gap-4 p-4 bg-slate-50 dark:bg-slate-800/30 border border-border dark:border-slate-700/30 rounded-xl">
+                    <div className="flex items-start gap-4 p-4 bg-slate-50 dark:bg-zinc-900/30 border border-border dark:border-slate-700/30 rounded-xl">
                       <div className="w-10 h-10 bg-purple-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
                         <RefreshCw className="w-5 h-5 text-purple-400" />
                       </div>
@@ -1762,7 +1762,7 @@ export default function SettingsPage() {
                       </div>
                     </div>
 
-                    <div className="flex items-start gap-4 p-4 bg-slate-50 dark:bg-slate-800/30 border border-border dark:border-slate-700/30 rounded-xl">
+                    <div className="flex items-start gap-4 p-4 bg-slate-50 dark:bg-zinc-900/30 border border-border dark:border-slate-700/30 rounded-xl">
                       <div className="w-10 h-10 bg-amber-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
                         <Key className="w-5 h-5 text-amber-700" />
                       </div>
@@ -1780,7 +1780,7 @@ export default function SettingsPage() {
                       </div>
                     </div>
 
-                    <div className="flex items-start gap-4 p-4 bg-slate-50 dark:bg-slate-800/30 border border-border dark:border-slate-700/30 rounded-xl">
+                    <div className="flex items-start gap-4 p-4 bg-slate-50 dark:bg-zinc-900/30 border border-border dark:border-slate-700/30 rounded-xl">
                       <div className="w-10 h-10 bg-red-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
                         <AlertTriangle className="w-5 h-5 text-red-400" />
                       </div>
@@ -1798,7 +1798,7 @@ export default function SettingsPage() {
                       </div>
                     </div>
 
-                    <div className="flex items-start gap-4 p-4 bg-slate-50 dark:bg-slate-800/30 border border-border dark:border-slate-700/30 rounded-xl">
+                    <div className="flex items-start gap-4 p-4 bg-slate-50 dark:bg-zinc-900/30 border border-border dark:border-slate-700/30 rounded-xl">
                       <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
                         <Database className="w-5 h-5 text-green-400" />
                       </div>
@@ -1818,7 +1818,7 @@ export default function SettingsPage() {
                   </div>
 
                   <div className="mt-6 flex justify-center">
-                    <button className="px-4 py-2 bg-slate-100 dark:bg-slate-700/40 border border-slate-300 dark:border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700/60 transition-all">
+                    <button className="px-4 py-2 bg-slate-100 dark:bg-zinc-800/40 border border-slate-300 dark:border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-200 dark:hover:bg-zinc-800/60 transition-all">
                       Load More
                     </button>
                   </div>
@@ -1827,13 +1827,13 @@ export default function SettingsPage() {
             </div>
 
             {/* Save Changes Button */}
-            <div className="mt-8 flex items-center justify-between p-5 bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none">
+            <div className="mt-8 flex items-center justify-between p-5 bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none">
               <div>
                 <p className="text-sm font-medium text-primary">Unsaved Changes</p>
                 <p className="text-xs text-muted mt-1">Save your changes to apply the new settings</p>
               </div>
               <div className="flex gap-3">
-                <button className="px-6 py-2.5 bg-slate-100 dark:bg-slate-700/40 border border-slate-300 dark:border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700/60 transition-all">
+                <button className="px-6 py-2.5 bg-slate-100 dark:bg-zinc-800/40 border border-slate-300 dark:border-slate-600/50 text-secondary rounded-xl text-sm font-medium hover:bg-slate-200 dark:hover:bg-zinc-800/60 transition-all">
                   Reset
                 </button>
                 <button

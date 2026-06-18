@@ -498,7 +498,7 @@ export default function RiskCompliance() {
       approved: { bg: 'bg-green-500/10', border: 'border-green-500/20', text: 'text-green-600 dark:text-green-400', label: 'APPROVED', icon: CheckCircle },
       denied: { bg: 'bg-red-500/10', border: 'border-red-500/20', text: 'text-red-700 dark:text-red-400', label: 'DENIED', icon: X },
       escalated: { bg: 'bg-amber-500/10', border: 'border-amber-500/20', text: 'text-amber-700 dark:text-amber-400', label: 'ESCALATED', icon: ArrowRight },
-      deferred: { bg: 'bg-slate-100 dark:bg-slate-700/20', border: 'border-slate-600/20', text: 'text-slate-500', label: 'DEFERRED', icon: Clock },
+      deferred: { bg: 'bg-slate-100 dark:bg-zinc-800/20', border: 'border-slate-600/20', text: 'text-slate-500', label: 'DEFERRED', icon: Clock },
     };
     return configs[decision] || configs.deferred;
   };
@@ -552,7 +552,7 @@ export default function RiskCompliance() {
           </div>
 
           {/* ── AI Risk Assessment ─────────────────────────── */}
-          <div className="mb-4 bg-slate-900 dark:bg-slate-950 border border-slate-700/60 rounded-xl overflow-hidden">
+          <div className="mb-4 bg-slate-900 dark:bg-black border border-slate-700/60 rounded-xl overflow-hidden">
             <div className="px-4 py-3 border-b border-slate-700/50 flex items-center gap-2">
               <Sparkles className="w-3.5 h-3.5 text-violet-400" />
               <span className="text-[11px] font-bold text-white uppercase tracking-wider">AI Risk Assessment</span>
@@ -560,7 +560,7 @@ export default function RiskCompliance() {
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-px bg-slate-700/30">
               {/* Key Threats */}
-              <div className="px-4 py-3 bg-slate-900 dark:bg-slate-950">
+              <div className="px-4 py-3 bg-slate-900 dark:bg-black">
                 <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-2.5">Key Threats</p>
                 <div className="space-y-2">
                   <div className="flex items-start gap-2">
@@ -578,7 +578,7 @@ export default function RiskCompliance() {
                 </div>
               </div>
               {/* Financial Exposure */}
-              <div className="px-4 py-3 bg-slate-900 dark:bg-slate-950">
+              <div className="px-4 py-3 bg-slate-900 dark:bg-black">
                 <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-2.5">Financial Exposure</p>
                 <div className="space-y-1.5">
                   {[
@@ -596,7 +596,7 @@ export default function RiskCompliance() {
                 </div>
               </div>
               {/* Staffing & Accreditation + Trend */}
-              <div className="px-4 py-3 bg-slate-900 dark:bg-slate-950">
+              <div className="px-4 py-3 bg-slate-900 dark:bg-black">
                 <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-2.5">Staffing & Accreditation</p>
                 <div className="space-y-1.5 mb-3">
                   <div className="flex justify-between text-[10px]">
@@ -640,7 +640,7 @@ export default function RiskCompliance() {
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-3 mb-4">
 
             {/* Agency Risk Score */}
-            <div className="lg:col-span-2 bg-white dark:bg-slate-800/35 border border-border dark:border-slate-700/30 rounded-xl p-4">
+            <div className="lg:col-span-2 bg-white dark:bg-zinc-900/35 border border-border dark:border-slate-700/30 rounded-xl p-4">
               <div className="flex items-center gap-2 mb-3">
                 <Gauge className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400" />
                 <span className="text-[12px] font-bold text-primary">Agency Risk Score</span>
@@ -661,7 +661,7 @@ export default function RiskCompliance() {
                     }`}>{opiLevel} Risk</span>
                     <span className="text-[10px] text-slate-500">{opiScore < 25 ? 'Low' : opiScore < 50 ? 'Moderate' : opiScore < 75 ? 'High' : 'Critical'}</span>
                   </div>
-                  <div className="w-full bg-slate-200 dark:bg-slate-700/50 rounded-full h-2.5 mb-1">
+                  <div className="w-full bg-slate-200 dark:bg-zinc-800/50 rounded-full h-2.5 mb-1">
                     <div className={`h-2.5 rounded-full transition-all ${opiBarColor}`} style={{ width: `${opiScore}%` }} />
                   </div>
                   <div className="flex justify-between text-[9px] text-slate-500">
@@ -688,7 +688,7 @@ export default function RiskCompliance() {
             </div>
 
             {/* Risk Heat Map */}
-            <div className="lg:col-span-3 bg-white dark:bg-slate-800/35 border border-border dark:border-slate-700/30 rounded-xl p-4">
+            <div className="lg:col-span-3 bg-white dark:bg-zinc-900/35 border border-border dark:border-slate-700/30 rounded-xl p-4">
               <div className="flex items-center gap-2 mb-3">
                 <BarChart2 className="w-3.5 h-3.5 text-secondary" />
                 <span className="text-[12px] font-bold text-primary">Risk Heat Map by Category</span>
@@ -708,7 +708,7 @@ export default function RiskCompliance() {
                           {cat.score}
                         </span>
                       </div>
-                      <div className="w-full bg-slate-200 dark:bg-slate-700/50 rounded-full h-1 mb-1.5">
+                      <div className="w-full bg-slate-200 dark:bg-zinc-800/50 rounded-full h-1 mb-1.5">
                         <div className={`h-1 rounded-full ${heat.bar}`} style={{ width: `${cat.score}%` }} />
                       </div>
                       <div className="flex items-center justify-between">
@@ -735,7 +735,7 @@ export default function RiskCompliance() {
               {topThreats.map((threat) => {
                 const styles = getThreatSeverityStyles(threat.severity);
                 return (
-                  <div key={threat.rank} className="bg-white dark:bg-slate-800/20 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden">
+                  <div key={threat.rank} className="bg-white dark:bg-zinc-900/20 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden">
                     <div className="flex items-start gap-3 p-3">
                       {/* Rank badge */}
                       <div className={`w-6 h-6 ${styles.rank} rounded-full flex items-center justify-center flex-shrink-0 mt-0.5`}>
@@ -745,7 +745,7 @@ export default function RiskCompliance() {
                         <div className="flex items-center gap-2 mb-1">
                           <span className="text-[13px] font-bold text-primary">{threat.title}</span>
                           <span className={`px-1.5 py-px border rounded text-[9px] font-bold uppercase ${styles.pill}`}>{threat.severity}</span>
-                          <span className="text-[9px] text-slate-500 px-1.5 py-px bg-slate-100 dark:bg-slate-700/30 rounded border border-slate-200 dark:border-slate-700/40">{threat.category}</span>
+                          <span className="text-[9px] text-slate-500 px-1.5 py-px bg-slate-100 dark:bg-zinc-800/30 rounded border border-slate-200 dark:border-slate-700/40">{threat.category}</span>
                           <span className={`text-[10px] font-bold ml-auto flex-shrink-0 ${threat.trend === 'up' ? 'text-red-700 dark:text-red-400' : 'text-green-600 dark:text-green-400'}`}>
                             {threat.trend === 'up' ? '↑ Escalating' : '→ Stable'} · {threat.daysLeft}d left
                           </span>
@@ -761,14 +761,14 @@ export default function RiskCompliance() {
                             <p className="text-[9px] font-bold text-amber-700 dark:text-amber-400 uppercase mb-0.5">Staffing</p>
                             <p className="text-[10px] text-secondary">{threat.staffingExposure}</p>
                           </div>
-                          <div className="bg-slate-100 dark:bg-slate-700/20 border border-slate-200 dark:border-slate-700/30 rounded p-1.5">
+                          <div className="bg-slate-100 dark:bg-zinc-800/20 border border-slate-200 dark:border-slate-700/30 rounded p-1.5">
                             <p className="text-[9px] font-bold text-slate-500 uppercase mb-0.5">Accreditation</p>
                             <p className="text-[10px] text-secondary">{threat.accreditationExposure}</p>
                           </div>
                         </div>
 
                         {/* AI Recommendation */}
-                        <div className="flex items-start gap-1.5 bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/30 rounded px-2.5 py-1.5">
+                        <div className="flex items-start gap-1.5 bg-slate-50 dark:bg-zinc-950/40 border border-slate-200 dark:border-slate-700/30 rounded px-2.5 py-1.5">
                           <Sparkles className="w-3 h-3 text-violet-500 dark:text-violet-400 flex-shrink-0 mt-0.5" />
                           <p className="text-[10px] text-secondary leading-snug">{threat.aiRec}</p>
                         </div>
@@ -791,7 +791,7 @@ export default function RiskCompliance() {
               <p className="text-[10px] text-slate-500 mt-0.5 ml-[22px]">Projected system state if POST, Training, and Equipment issues remain unresolved through Jan 8, 2025</p>
             </div>
 
-            <div className="grid grid-cols-5 gap-px bg-slate-50 dark:bg-slate-800/10">
+            <div className="grid grid-cols-5 gap-px bg-slate-50 dark:bg-zinc-900/10">
               {[
                 { label: 'Overall Compliance', current: '94.7%', projected: '89.2%', direction: 'down', severity: 'critical' },
                 { label: 'Insurance Risk Score', current: 'Moderate', projected: 'High', direction: 'up', severity: 'critical' },
@@ -799,7 +799,7 @@ export default function RiskCompliance() {
                 { label: 'Agency Risk Status', current: 'Amber', projected: 'Red', direction: 'up', severity: 'critical' },
                 { label: 'Budget Reallocation', current: '$0', projected: '$168K', direction: 'up', severity: 'warning' },
               ].map((metric, idx) => (
-                <div key={idx} className="px-3 py-2.5 bg-slate-50 dark:bg-slate-900/30">
+                <div key={idx} className="px-3 py-2.5 bg-slate-50 dark:bg-zinc-950/30">
                   <p className="text-[9px] font-semibold text-slate-500 uppercase tracking-wider mb-1">{metric.label}</p>
                   <div className="flex items-center gap-1.5">
                     <span className="text-[11px] text-slate-500 line-through">{metric.current}</span>
@@ -814,8 +814,8 @@ export default function RiskCompliance() {
               ))}
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-px bg-slate-50 dark:bg-slate-800/10">
-              <div className="px-3 py-2.5 bg-slate-100 dark:bg-slate-900/20">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-px bg-slate-50 dark:bg-zinc-900/10">
+              <div className="px-3 py-2.5 bg-slate-100 dark:bg-zinc-950/20">
                 <p className="text-[10px] font-bold text-red-700 dark:text-red-400 mb-1.5">POST Certification Cascade</p>
                 <div className="space-y-1">
                   <p className="text-[10px] text-secondary">Trigger: 2 certifications expire Jan 31</p>
@@ -825,7 +825,7 @@ export default function RiskCompliance() {
                   <p className="text-[10px] text-red-700 dark:text-red-400/80 pl-6">→ POST inspection exposure: documented finding</p>
                 </div>
               </div>
-              <div className="px-3 py-2.5 bg-slate-100 dark:bg-slate-900/20">
+              <div className="px-3 py-2.5 bg-slate-100 dark:bg-zinc-950/20">
                 <p className="text-[10px] font-bold text-red-700 dark:text-red-400 mb-1.5">Equipment Compliance Cascade</p>
                 <div className="space-y-1">
                   <p className="text-[10px] text-secondary">Trigger: 68 body cams EOL Dec 31 + 9 fleet overdue</p>
@@ -835,7 +835,7 @@ export default function RiskCompliance() {
                   <p className="text-[10px] text-red-700 dark:text-red-400/80 pl-6">→ Insurance carrier action: agency flagged</p>
                 </div>
               </div>
-              <div className="px-3 py-2.5 bg-slate-100 dark:bg-slate-900/20">
+              <div className="px-3 py-2.5 bg-slate-100 dark:bg-zinc-950/20">
                 <p className="text-[10px] font-bold text-amber-700 dark:text-amber-400 mb-1.5">ACA Accreditation Cascade</p>
                 <div className="space-y-1">
                   <p className="text-[10px] text-secondary">Trigger: Readiness 62%, 2 documentation findings open</p>
@@ -847,7 +847,7 @@ export default function RiskCompliance() {
               </div>
             </div>
 
-            <div className="px-3 py-2.5 bg-white dark:bg-slate-900/40 border-t border-red-500/10">
+            <div className="px-3 py-2.5 bg-white dark:bg-zinc-950/40 border-t border-red-500/10">
               <p className="text-[10px] font-bold text-primary mb-1.5">Cross-System Ripple</p>
               <div className="grid grid-cols-2 lg:grid-cols-5 gap-2">
                 {[
@@ -887,7 +887,7 @@ export default function RiskCompliance() {
                       onClick={() => setRiskFilter(opt.id)}
                       className={`px-2 py-0.5 rounded text-[10px] font-medium border transition-all ${
                         riskFilter === opt.id
-                          ? 'bg-slate-200 dark:bg-slate-700/50 border-slate-300 dark:border-slate-600/50 text-primary'
+                          ? 'bg-slate-200 dark:bg-zinc-800/50 border-slate-300 dark:border-slate-600/50 text-primary'
                           : 'bg-transparent border-slate-300 dark:border-slate-700/40 text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
                       }`}
                     >
@@ -901,7 +901,7 @@ export default function RiskCompliance() {
                 {filteredRisks.map((risk) => {
                   const isExpanded = expandedRisks.includes(risk.id);
                   return (
-                    <div key={risk.id} className="rounded border border-border dark:border-slate-700/30 bg-white dark:bg-slate-800/15 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+                    <div key={risk.id} className="rounded border border-border dark:border-slate-700/30 bg-white dark:bg-zinc-900/15 hover:bg-slate-50 dark:hover:bg-zinc-900/30 transition-colors">
                       <div className="flex items-center gap-2.5 px-3.5 py-[9px]">
                         <div className={`w-[4px] self-stretch rounded-full flex-shrink-0 ${risk.severity === 'critical' ? 'bg-red-500' : risk.severity === 'medium' ? 'bg-amber-500' : 'bg-slate-500'}`}></div>
                         <span className={`px-1.5 py-px border rounded text-[10px] font-bold flex-shrink-0 uppercase leading-tight ${
@@ -914,7 +914,7 @@ export default function RiskCompliance() {
                             <span key={i} className={`px-1 py-px rounded text-[9px] font-semibold border ${
                               tag.includes('Liability') || tag.includes('Safety') ? 'bg-red-500/8 border-red-500/15 text-red-700 dark:text-red-400/90' :
                               tag.includes('Compliance') || tag.includes('Integrity') ? 'bg-amber-500/8 border-amber-500/15 text-amber-700 dark:text-amber-400/90' :
-                              'bg-slate-100 dark:bg-slate-700/30 border-slate-700/40 text-slate-500'
+                              'bg-slate-100 dark:bg-zinc-800/30 border-slate-700/40 text-slate-500'
                             }`}>{tag}</span>
                           ))}
                         </span>
@@ -925,7 +925,7 @@ export default function RiskCompliance() {
                         <span className={`px-1.5 py-px border rounded text-[10px] font-bold flex-shrink-0 ${
                           risk.dueUrgency === 'critical' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
                           risk.dueUrgency === 'soon' ? 'bg-amber-500/8 border-amber-500/15 text-amber-700 dark:text-amber-400' :
-                          'bg-slate-100 dark:bg-slate-700/30 border-slate-700/40 text-slate-500'
+                          'bg-slate-100 dark:bg-zinc-800/30 border-slate-700/40 text-slate-500'
                         }`}>{risk.daysLeft}d left</span>
                         {risk.linkedApproval && (
                           <span className={`hidden md:inline-flex items-center gap-1 px-1.5 py-px rounded text-[10px] font-semibold flex-shrink-0 ${
@@ -935,7 +935,7 @@ export default function RiskCompliance() {
                             {risk.linkedApproval.status === 'pending' ? 'Approval pending' : 'Approved'}
                           </span>
                         )}
-                        <button onClick={() => toggleRiskExpand(risk.id)} className="p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-700/30 transition-colors flex-shrink-0">
+                        <button onClick={() => toggleRiskExpand(risk.id)} className="p-1 rounded hover:bg-slate-100 dark:hover:bg-zinc-800/30 transition-colors flex-shrink-0">
                           {isExpanded ? <ChevronUp className="w-3.5 h-3.5 text-slate-500" /> : <ChevronDown className="w-3.5 h-3.5 text-slate-500" />}
                         </button>
                       </div>
@@ -948,7 +948,7 @@ export default function RiskCompliance() {
                             <span className="text-slate-700">&middot;</span>
                             <span>Due: <span className="text-primary font-medium">{risk.due}</span></span>
                           </div>
-                          <div className="bg-slate-50 dark:bg-slate-900/30 rounded border border-border dark:border-slate-700/30 px-2.5 py-1.5">
+                          <div className="bg-slate-50 dark:bg-zinc-950/30 rounded border border-border dark:border-slate-700/30 px-2.5 py-1.5">
                             <p className="text-[10px] text-slate-500 font-semibold mb-0.5">Status</p>
                             <p className="text-[11px] text-secondary">{risk.status}</p>
                           </div>
@@ -1018,7 +1018,7 @@ export default function RiskCompliance() {
                   {upcomingAudits.map((audit) => {
                     const warning = getReadinessWarning(audit.readiness, audit.daysOut);
                     return (
-                      <div key={audit.id} className="bg-white dark:bg-slate-800/15 border border-border dark:border-slate-700/30 rounded-lg p-2.5">
+                      <div key={audit.id} className="bg-white dark:bg-zinc-900/15 border border-border dark:border-slate-700/30 rounded-lg p-2.5">
                         <div className="flex items-start justify-between mb-1">
                           <div>
                             <p className="text-[11px] font-bold text-primary">{audit.agency}</p>
@@ -1030,7 +1030,7 @@ export default function RiskCompliance() {
                           </div>
                         </div>
                         <div className="flex items-center gap-2">
-                          <div className="flex-1 bg-slate-200 dark:bg-slate-700/50 rounded-full h-1">
+                          <div className="flex-1 bg-slate-200 dark:bg-zinc-800/50 rounded-full h-1">
                             <div className={`h-1 rounded-full ${getReadinessColor(audit.readiness, audit.daysOut).includes('red') ? 'bg-red-500' : getReadinessColor(audit.readiness, audit.daysOut).includes('amber') ? 'bg-amber-500' : 'bg-green-500'}`} style={{ width: `${audit.readiness}%` }} />
                           </div>
                           <span className={`text-[10px] font-bold ${getReadinessColor(audit.readiness, audit.daysOut)}`}>{audit.readiness}%</span>
@@ -1055,7 +1055,7 @@ export default function RiskCompliance() {
                   {policyCompliance.map((policy, idx) => {
                     const breached = policy.rate < policy.threshold;
                     return (
-                      <div key={idx} className={`bg-white dark:bg-slate-800/15 border rounded-lg p-2.5 ${breached ? 'border-red-500/20' : 'border-border dark:border-slate-700/30'}`}>
+                      <div key={idx} className={`bg-white dark:bg-zinc-900/15 border rounded-lg p-2.5 ${breached ? 'border-red-500/20' : 'border-border dark:border-slate-700/30'}`}>
                         <div className="flex items-center justify-between mb-1">
                           <span className="text-[11px] font-bold text-primary">{policy.name}</span>
                           <div className="flex items-center gap-1.5">
@@ -1065,7 +1065,7 @@ export default function RiskCompliance() {
                             </span>
                           </div>
                         </div>
-                        <div className="w-full bg-slate-200 dark:bg-slate-700/50 rounded-full h-1 mb-1">
+                        <div className="w-full bg-slate-200 dark:bg-zinc-800/50 rounded-full h-1 mb-1">
                           <div className={`h-1 rounded-full ${policy.rate >= policy.threshold ? 'bg-green-500' : policy.rate >= policy.threshold - 5 ? 'bg-amber-500' : 'bg-red-500'}`} style={{ width: `${policy.rate}%` }} />
                         </div>
                         <p className="text-[9px] text-slate-500">{policy.detail}</p>
@@ -1097,7 +1097,7 @@ export default function RiskCompliance() {
                     const logEntry = actionLog.find(l => l.approvalId === action.approvalId);
                     const decisionConfig = logEntry ? getDecisionConfig(logEntry.decision) : null;
                     return (
-                      <div key={action.approvalId} className={`flex items-center gap-3 px-3 py-2.5 rounded-lg border transition-all ${isLogged ? `${decisionConfig.bg} ${decisionConfig.border}` : 'bg-white dark:bg-slate-900/40 border-amber-500/15 hover:border-amber-500/30'}`}>
+                      <div key={action.approvalId} className={`flex items-center gap-3 px-3 py-2.5 rounded-lg border transition-all ${isLogged ? `${decisionConfig.bg} ${decisionConfig.border}` : 'bg-white dark:bg-zinc-950/40 border-amber-500/15 hover:border-amber-500/30'}`}>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 mb-0.5">
                             <span className={`px-1.5 py-px rounded text-[9px] font-bold border ${action.severity === 'critical' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' : 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400'}`}>{action.severity.toUpperCase()}</span>
@@ -1151,7 +1151,7 @@ export default function RiskCompliance() {
                     {actionLog.slice(0, 5).map(entry => {
                       const cfg = getDecisionConfig(entry.decision);
                       return (
-                        <div key={entry.id} className="flex items-center gap-2 text-[10px] px-2 py-1.5 rounded bg-slate-50 dark:bg-slate-900/30">
+                        <div key={entry.id} className="flex items-center gap-2 text-[10px] px-2 py-1.5 rounded bg-slate-50 dark:bg-zinc-950/30">
                           <cfg.icon className={`w-3 h-3 flex-shrink-0 ${cfg.text}`} />
                           <span className={`font-bold ${cfg.text} w-[72px]`}>{cfg.label}</span>
                           <span className="text-primary font-medium flex-1 truncate">{entry.approvalTitle}</span>
@@ -1189,7 +1189,7 @@ export default function RiskCompliance() {
                 </thead>
                 <tbody>
                   {complianceStandards.map((std) => (
-                    <tr key={std.id} className="border-b border-border hover:bg-slate-50 dark:hover:bg-slate-800/15 transition-colors">
+                    <tr key={std.id} className="border-b border-border hover:bg-slate-50 dark:hover:bg-zinc-900/15 transition-colors">
                       <td className="px-3 py-2">
                         <span className="text-[11px] font-semibold text-primary">{std.name}</span>
                       </td>
@@ -1207,7 +1207,7 @@ export default function RiskCompliance() {
                         <span className={`px-1.5 py-px rounded text-[9px] font-bold uppercase border ${
                           std.exposure === 'high' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
                           std.exposure === 'moderate' ? 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400' :
-                          'bg-slate-100 dark:bg-slate-700/30 border-slate-700/40 text-slate-500'
+                          'bg-slate-100 dark:bg-zinc-800/30 border-slate-700/40 text-slate-500'
                         }`}>{std.exposure}</span>
                       </td>
                       <td className="px-3 py-2">
@@ -1239,8 +1239,8 @@ export default function RiskCompliance() {
       {approvalModal && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={closeApprovalModal} />
-          <div className="relative bg-white dark:bg-slate-900 border border-border rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden">
-            <div className="px-5 py-4 border-b border-border bg-slate-100/80 dark:bg-slate-800/30">
+          <div className="relative bg-white dark:bg-zinc-950 border border-border rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden">
+            <div className="px-5 py-4 border-b border-border bg-slate-100/80 dark:bg-zinc-900/30">
               <div className="flex items-start justify-between">
                 <div>
                   <div className="flex items-center gap-2 mb-1">
@@ -1249,7 +1249,7 @@ export default function RiskCompliance() {
                   </div>
                   <p className="text-[10px] text-slate-500">Decision will be logged with timestamp, actor, and risk context</p>
                 </div>
-                <button onClick={closeApprovalModal} className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors">
+                <button onClick={closeApprovalModal} className="p-1.5 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors">
                   <X className="w-4 h-4 text-secondary" />
                 </button>
               </div>
@@ -1258,7 +1258,7 @@ export default function RiskCompliance() {
             {!approvalDecision ? (
               <>
                 <div className="px-5 py-4 space-y-4">
-                  <div className="bg-slate-100/80 dark:bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
+                  <div className="bg-slate-100/80 dark:bg-zinc-900/30 rounded-xl p-4 border border-slate-700/50">
                     <div className="flex items-center gap-2 mb-2">
                       <span className={`px-1.5 py-px rounded text-[9px] font-bold border ${approvalModal.severity === 'critical' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' : 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400'}`}>{approvalModal.severity.toUpperCase()}</span>
                       <span className="text-sm font-semibold text-slate-900 dark:text-primary">{approvalModal.title}</span>
@@ -1273,7 +1273,7 @@ export default function RiskCompliance() {
                     </div>
                   </div>
 
-                  <div className="bg-slate-50 dark:bg-slate-800/35 rounded-lg p-3 border border-slate-700/40">
+                  <div className="bg-slate-50 dark:bg-zinc-900/35 rounded-lg p-3 border border-slate-700/40">
                     <p className="text-[9px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Decision Context Snapshot</p>
                     <div className="grid grid-cols-3 gap-2 text-[10px]">
                       <div className="text-center">
@@ -1297,13 +1297,13 @@ export default function RiskCompliance() {
                       value={approvalNote}
                       onChange={(e) => setApprovalNote(e.target.value)}
                       placeholder="Enter justification for this decision..."
-                      className="w-full px-3 py-2.5 bg-slate-100/80 dark:bg-slate-800/30 border border-slate-700/50 rounded-lg text-primary text-xs placeholder-slate-600 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 resize-none"
+                      className="w-full px-3 py-2.5 bg-slate-100/80 dark:bg-zinc-900/30 border border-slate-700/50 rounded-lg text-primary text-xs placeholder-slate-600 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 resize-none"
                       rows={3}
                     />
                   </div>
                 </div>
 
-                <div className="px-5 py-4 border-t border-border bg-slate-50 dark:bg-slate-800/35">
+                <div className="px-5 py-4 border-t border-border bg-slate-50 dark:bg-zinc-900/35">
                   <p className="text-[9px] text-slate-700 mb-3 flex items-center gap-1.5">
                     <UserCheck className="w-3 h-3" />
                     Authorizing Official: <span className="text-primary font-semibold">Sheriff K. Conway</span> — decision is final and logged
@@ -1321,7 +1321,7 @@ export default function RiskCompliance() {
                       <ArrowRight className="w-3.5 h-3.5 mx-auto mb-1" />
                       Escalate
                     </button>
-                    <button onClick={() => handleApprovalAction('deferred')} disabled={!approvalNote.trim()} className="px-3 py-2.5 bg-slate-100 dark:bg-slate-700/30 hover:bg-slate-100 dark:hover:bg-slate-700/50 border border-slate-600/30 text-secondary rounded-lg text-[11px] font-bold transition-all disabled:opacity-30 disabled:cursor-not-allowed">
+                    <button onClick={() => handleApprovalAction('deferred')} disabled={!approvalNote.trim()} className="px-3 py-2.5 bg-slate-100 dark:bg-zinc-800/30 hover:bg-slate-100 dark:hover:bg-zinc-800/50 border border-slate-600/30 text-secondary rounded-lg text-[11px] font-bold transition-all disabled:opacity-30 disabled:cursor-not-allowed">
                       <Clock className="w-3.5 h-3.5 mx-auto mb-1" />
                       Defer
                     </button>
@@ -1345,7 +1345,7 @@ export default function RiskCompliance() {
                     );
                   })()}
                 </div>
-                <div className="bg-slate-100/80 dark:bg-slate-800/30 rounded-lg p-3 border border-slate-700/50 space-y-2 text-[10px]">
+                <div className="bg-slate-100/80 dark:bg-zinc-900/30 rounded-lg p-3 border border-slate-700/50 space-y-2 text-[10px]">
                   <div className="flex justify-between"><span className="text-slate-500">Decision ID</span><span className="text-primary font-mono">{approvalDecision.entry.id}</span></div>
                   <div className="flex justify-between"><span className="text-slate-500">Timestamp</span><span className="text-primary font-mono">{approvalDecision.entry.displayTime}</span></div>
                   <div className="flex justify-between"><span className="text-slate-500">Authorized By</span><span className="text-primary">{approvalDecision.entry.actor} ({approvalDecision.entry.role})</span></div>
@@ -1358,13 +1358,13 @@ export default function RiskCompliance() {
                     </div>
                   )}
                 </div>
-                <div className="mt-4 p-2.5 bg-slate-100/80 dark:bg-slate-800/30 border border-slate-700/40 rounded-lg">
+                <div className="mt-4 p-2.5 bg-slate-100/80 dark:bg-zinc-900/30 border border-slate-700/40 rounded-lg">
                   <p className="text-[9px] text-secondary flex items-center gap-1.5">
                     <CircleDot className="w-3 h-3" />
                     This decision has been recorded to the audit trail and will persist across sessions.
                   </p>
                 </div>
-                <button onClick={closeApprovalModal} className="mt-4 w-full px-4 py-2.5 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-800/60 border border-slate-300 dark:border-slate-700/50 text-slate-700 dark:text-white rounded-xl text-sm font-medium transition-all">
+                <button onClick={closeApprovalModal} className="mt-4 w-full px-4 py-2.5 bg-slate-100/80 dark:bg-zinc-900/30 hover:bg-slate-200 dark:hover:bg-zinc-900/60 border border-slate-300 dark:border-slate-700/50 text-slate-700 dark:text-white rounded-xl text-sm font-medium transition-all">
                   Close
                 </button>
               </div>

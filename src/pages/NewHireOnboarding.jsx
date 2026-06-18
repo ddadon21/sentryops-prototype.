@@ -482,7 +482,7 @@ export default function NewHireOnboarding() {
 
             {/* Summary Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
+              <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
                 <div className="flex items-center justify-between mb-3">
                   <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center">
                     <UserPlus className="w-5 h-5 text-blue-400" />
@@ -493,7 +493,7 @@ export default function NewHireOnboarding() {
                 <p className="text-xs text-slate-500 mt-1">In onboarding process</p>
               </div>
 
-              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
+              <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
                 <div className="flex items-center justify-between mb-3">
                   <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center">
                     <CheckCircle className="w-5 h-5 text-green-400" />
@@ -504,7 +504,7 @@ export default function NewHireOnboarding() {
                 <p className="text-xs text-slate-500 mt-1">This month (FTO complete)</p>
               </div>
 
-              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
+              <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
                 <div className="flex items-center justify-between mb-3">
                   <div className="w-10 h-10 bg-amber-500/20 rounded-xl flex items-center justify-center">
                     <GraduationCap className="w-5 h-5 text-amber-700" />
@@ -515,7 +515,7 @@ export default function NewHireOnboarding() {
                 <p className="text-xs text-slate-500 mt-1">Sworn personnel training</p>
               </div>
 
-              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
+              <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
                 <div className="flex items-center justify-between mb-3">
                   <div className="w-10 h-10 bg-red-500/20 rounded-xl flex items-center justify-center">
                     <AlertTriangle className="w-5 h-5 text-red-400" />
@@ -546,7 +546,7 @@ export default function NewHireOnboarding() {
                   >
                     {tab.label}
                     <span className={`px-2 py-0.5 rounded-full text-xs ${
-                      activeTab === tab.id ? 'bg-amber-500/20 text-amber-700' : 'bg-white dark:bg-slate-700/50 text-slate-500'
+                      activeTab === tab.id ? 'bg-amber-500/20 text-amber-700' : 'bg-white dark:bg-zinc-800/50 text-slate-500'
                     }`}>{tab.count}</span>
                     {activeTab === tab.id && (
                       <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500"></div>
@@ -560,7 +560,7 @@ export default function NewHireOnboarding() {
                 <select
                   value={filterPositionType}
                   onChange={(e) => setFilterPositionType(e.target.value)}
-                  className="px-3 py-1.5 bg-white dark:bg-slate-800/40 border border-slate-700/50 rounded-lg text-sm text-primary focus:outline-none focus:border-amber-500/50"
+                  className="px-3 py-1.5 bg-white dark:bg-zinc-900/40 border border-slate-700/50 rounded-lg text-sm text-primary focus:outline-none focus:border-amber-500/50"
                 >
                   <option value="all">All Positions ({positionCounts.all})</option>
                   <option value="sworn">Sworn Personnel ({positionCounts.sworn})</option>
@@ -579,7 +579,7 @@ export default function NewHireOnboarding() {
                 return (
                   <div
                     key={hire.id}
-                    className="bg-white dark:bg-slate-800/40 border border-border rounded-xl overflow-hidden"
+                    className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl overflow-hidden"
                   >
                     {/* Header */}
                     <div className="p-5 border-b border-border dark:border-slate-700/30">
@@ -649,7 +649,7 @@ export default function NewHireOnboarding() {
                             <p className="text-sm text-secondary">Critical Path Progress</p>
                             <p className="text-2xl font-bold text-primary">{overallProgress}%</p>
                           </div>
-                          <div className="w-32 h-2 bg-white dark:bg-slate-700/50 rounded-full overflow-hidden">
+                          <div className="w-32 h-2 bg-white dark:bg-zinc-800/50 rounded-full overflow-hidden">
                             <div
                               className={`h-full transition-all ${
                                 overallProgress === 100 ? 'bg-green-500' :
@@ -665,7 +665,7 @@ export default function NewHireOnboarding() {
 
                     {/* Hire Classification */}
                     {hire.hireClassification && (
-                      <div className="px-5 py-3 bg-slate-50 dark:bg-slate-900/30 border-b border-border dark:border-slate-700/30">
+                      <div className="px-5 py-3 bg-slate-50 dark:bg-zinc-950/30 border-b border-border dark:border-slate-700/30">
                         <div className="flex flex-wrap gap-4 text-xs">
                           <div>
                             <span className="text-slate-500">Classification:</span>
@@ -732,7 +732,7 @@ export default function NewHireOnboarding() {
                                 className={`flex-1 p-2 rounded-lg text-center ${
                                   phase.status === 'completed' ? 'bg-green-500/20 border border-green-500/30' :
                                   phase.status === 'in-progress' ? 'bg-blue-500/20 border border-blue-500/30' :
-                                  'bg-slate-100 dark:bg-slate-700/30 border border-slate-600/30'
+                                  'bg-slate-100 dark:bg-zinc-800/30 border border-slate-600/30'
                                 }`}
                               >
                                 <p className={`text-xs font-medium ${
@@ -774,7 +774,7 @@ export default function NewHireOnboarding() {
                                   ? 'bg-green-500/10 border-green-500/30 hover:bg-green-500/20'
                                   : data.completed > 0
                                     ? 'bg-blue-500/10 border-blue-500/30 hover:bg-blue-500/20'
-                                    : 'bg-slate-100 dark:bg-slate-700/30 border-slate-600/30 hover:bg-slate-100 dark:hover:bg-slate-700/50'
+                                    : 'bg-slate-100 dark:bg-zinc-800/30 border-slate-600/30 hover:bg-slate-100 dark:hover:bg-zinc-800/50'
                               }`}
                             >
                               <div className="flex items-center justify-between mb-1">
@@ -814,7 +814,7 @@ export default function NewHireOnboarding() {
                       };
 
                       return (
-                        <div key={sectionKey} className="px-5 py-4 bg-slate-50 dark:bg-slate-900/30 border-b border-border dark:border-slate-700/30">
+                        <div key={sectionKey} className="px-5 py-4 bg-slate-50 dark:bg-zinc-950/30 border-b border-border dark:border-slate-700/30">
                           <h4 className="text-sm font-semibold text-secondary mb-3">{sectionLabels[sectionKey]}</h4>
                           <div className="space-y-2">
                             {tasks.map(task => (
@@ -825,7 +825,7 @@ export default function NewHireOnboarding() {
                                     ? 'bg-green-500/5 border-green-500/20'
                                     : task.status === 'overdue'
                                       ? 'bg-red-500/5 border-red-500/20'
-                                      : 'bg-slate-100/80 dark:bg-slate-800/30 border-border'
+                                      : 'bg-slate-100/80 dark:bg-zinc-900/30 border-border'
                                 }`}
                               >
                                 <div className="flex items-start gap-3">
@@ -883,7 +883,7 @@ export default function NewHireOnboarding() {
                               className={`p-3 rounded-lg border ${
                                 action.status === 'overdue' ? 'bg-red-500/10 border-red-500/30' :
                                 action.status === 'due-tomorrow' ? 'bg-amber-500/10 border-amber-500/30' :
-                                'bg-slate-100/80 dark:bg-slate-800/30 border-border'
+                                'bg-slate-100/80 dark:bg-zinc-900/30 border-border'
                               }`}
                             >
                               <p className={`text-sm font-medium ${
@@ -943,12 +943,12 @@ export default function NewHireOnboarding() {
                           View FTO Evaluations
                         </button>
                       )}
-                      <button className="px-4 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-sm font-medium transition-all flex items-center gap-2">
+                      <button className="px-4 py-2 bg-slate-50 dark:bg-zinc-800/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-sm font-medium transition-all flex items-center gap-2">
                         <Download className="w-4 h-4" />
                         Export Checklist
                       </button>
                       {hire.status !== 'completed' && (
-                        <button className="px-4 py-2 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-sm font-medium transition-all flex items-center gap-2">
+                        <button className="px-4 py-2 bg-slate-50 dark:bg-zinc-800/40 hover:bg-slate-700/60 border border-slate-600/50 text-secondary rounded-lg text-sm font-medium transition-all flex items-center gap-2">
                           <Mail className="w-4 h-4" />
                           Send Reminder
                         </button>
@@ -967,7 +967,7 @@ export default function NewHireOnboarding() {
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={() => setSelectedNewHire(null)}
           />
-          <div className="relative bg-white dark:bg-slate-900 border border-border rounded-2xl p-6 max-w-4xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
+          <div className="relative bg-white dark:bg-zinc-950 border border-border rounded-2xl p-6 max-w-4xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
             <div className="flex items-start justify-between mb-6">
               <div>
                 <h3 className="text-2xl font-bold text-primary mb-2">{selectedNewHire.name}</h3>
@@ -978,14 +978,14 @@ export default function NewHireOnboarding() {
               </div>
               <button
                 onClick={() => setSelectedNewHire(null)}
-                className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors"
+                className="p-2 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors"
               >
                 <X className="w-5 h-5 text-secondary" />
               </button>
             </div>
 
             {/* Personnel Details */}
-            <div className="grid grid-cols-2 gap-6 mb-6 p-4 bg-slate-100/80 dark:bg-slate-800/30 rounded-xl">
+            <div className="grid grid-cols-2 gap-6 mb-6 p-4 bg-slate-100/80 dark:bg-zinc-900/30 rounded-xl">
               <div>
                 <p className="text-xs text-slate-500 mb-1">Email</p>
                 <p className="text-sm text-secondary">{selectedNewHire.email}</p>
@@ -1018,7 +1018,7 @@ export default function NewHireOnboarding() {
 
             {/* Classification */}
             {selectedNewHire.hireClassification && (
-              <div className="mb-6 p-4 bg-slate-100/80 dark:bg-slate-800/30 rounded-xl">
+              <div className="mb-6 p-4 bg-slate-100/80 dark:bg-zinc-900/30 rounded-xl">
                 <h4 className="text-sm font-semibold text-secondary mb-3">Hire Classification</h4>
                 <div className="grid grid-cols-2 gap-3 text-xs">
                   <div>
@@ -1082,7 +1082,7 @@ export default function NewHireOnboarding() {
                         className={`p-3 rounded-lg ${
                           phase.status === 'completed' ? 'bg-green-500/10' :
                           phase.status === 'in-progress' ? 'bg-blue-500/10' :
-                          'bg-slate-100/80 dark:bg-slate-800/30'
+                          'bg-slate-100/80 dark:bg-zinc-900/30'
                         }`}
                       >
                         <div className="flex items-center justify-between">
@@ -1099,7 +1099,7 @@ export default function NewHireOnboarding() {
                           <span className={`px-2 py-1 rounded text-xs font-medium ${
                             phase.status === 'completed' ? 'bg-green-500/20 text-green-400' :
                             phase.status === 'in-progress' ? 'bg-blue-500/20 text-blue-400' :
-                            'bg-white dark:bg-slate-700/50 text-slate-500'
+                            'bg-white dark:bg-zinc-800/50 text-slate-500'
                           }`}>
                             {phase.status.toUpperCase().replace('-', ' ')}
                           </span>
@@ -1131,7 +1131,7 @@ export default function NewHireOnboarding() {
                     <div
                       key={key}
                       className={`p-3 rounded-lg text-center ${
-                        isComplete ? 'bg-green-500/20' : value.completed > 0 ? 'bg-blue-500/20' : 'bg-slate-100 dark:bg-slate-700/30'
+                        isComplete ? 'bg-green-500/20' : value.completed > 0 ? 'bg-blue-500/20' : 'bg-slate-100 dark:bg-zinc-800/30'
                       }`}
                     >
                       <p className="text-xs text-secondary">{labels[key]}</p>
@@ -1150,12 +1150,12 @@ export default function NewHireOnboarding() {
               <button className="flex-1 px-4 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-xl font-medium transition-all">
                 Print Full Checklist
               </button>
-              <button className="flex-1 px-4 py-3 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 text-primary rounded-xl font-medium transition-all">
+              <button className="flex-1 px-4 py-3 bg-slate-50 dark:bg-zinc-800/40 hover:bg-slate-700/60 border border-slate-600/50 text-primary rounded-xl font-medium transition-all">
                 View Personnel File
               </button>
               <button
                 onClick={() => setSelectedNewHire(null)}
-                className="px-4 py-3 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded-xl font-medium transition-all"
+                className="px-4 py-3 bg-white dark:bg-zinc-900/40 hover:bg-slate-100 dark:hover:bg-zinc-900/60 border border-slate-700/50 text-secondary rounded-xl font-medium transition-all"
               >
                 Close
               </button>

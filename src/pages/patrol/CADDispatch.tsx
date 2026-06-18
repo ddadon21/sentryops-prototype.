@@ -457,9 +457,9 @@ const CADDispatch = () => {
       case 'Dispatched':    return 'bg-blue-100 text-blue-800 dark:bg-blue-500/20 dark:text-blue-400';
       case 'En Route':      return 'bg-amber-100 text-amber-800 dark:bg-amber-500/20 dark:text-amber-400';
       case 'On Scene':      return 'bg-purple-100 text-purple-800 dark:bg-purple-500/20 dark:text-purple-400';
-      case 'Out of Service': return 'bg-gray-100 text-gray-600 dark:bg-slate-500/20 dark:text-slate-400';
+      case 'Out of Service': return 'bg-gray-100 text-gray-600 dark:bg-zinc-600/20 dark:text-slate-400';
       case 'Holding':       return 'bg-red-100 text-red-800 dark:bg-red-500/20 dark:text-red-400';
-      default:              return 'bg-gray-100 text-gray-600 dark:bg-slate-500/20 dark:text-slate-400';
+      default:              return 'bg-gray-100 text-gray-600 dark:bg-zinc-600/20 dark:text-slate-400';
     }
   };
 
@@ -617,7 +617,7 @@ const CADDispatch = () => {
                 <ChevronDown className={`w-3 h-3 transition-transform ${showPressureDetail ? 'rotate-180' : ''}`} />
               </button>
               {showPressureDetail && (
-                <div className="absolute right-0 top-full mt-1.5 z-50 min-w-[280px] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/60 rounded-xl shadow-xl overflow-hidden">
+                <div className="absolute right-0 top-full mt-1.5 z-50 min-w-[280px] bg-white dark:bg-zinc-950 border border-slate-200 dark:border-slate-700/60 rounded-xl shadow-xl overflow-hidden">
                   <div className="px-4 py-2.5 border-b border-slate-200 dark:border-slate-700/40">
                     <p className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Why Pressure is {operationalPressure}</p>
                   </div>
@@ -638,10 +638,10 @@ const CADDispatch = () => {
             <button className="flex items-center gap-1.5 px-3 py-1.5 bg-red-500/10 border border-red-500/25 text-red-600 dark:text-red-400 rounded-lg text-[12px] font-medium hover:bg-red-500/15 transition-colors">
               <PhoneCall className="w-3.5 h-3.5" /> New Call
             </button>
-            <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-lg text-[12px] text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700/30 transition-all">
+            <button className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-lg text-[12px] text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-zinc-800/30 transition-all">
               <Megaphone className="w-3.5 h-3.5" /> Broadcast
             </button>
-            <div className="flex items-center gap-1.5 text-[11px] text-slate-500 bg-slate-100 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-lg px-3 py-1.5">
+            <div className="flex items-center gap-1.5 text-[11px] text-slate-500 bg-slate-100 dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-lg px-3 py-1.5">
               <Circle className="w-1.5 h-1.5 fill-emerald-500 text-emerald-500" /> Live
             </div>
           </div>
@@ -649,33 +649,33 @@ const CADDispatch = () => {
 
         {/* ── Shift Snapshot ──────────────────────────────────
             Everything a watch commander needs in under 3 seconds. */}
-        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl px-5 py-3">
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl px-5 py-3">
           <div>
             <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-0.5">Units On Duty</p>
             <p className="text-[16px] font-bold leading-none text-slate-900 dark:text-white">{patrolUnits.length}</p>
           </div>
-          <div className="w-px h-8 bg-slate-200 dark:bg-slate-700/50" />
+          <div className="w-px h-8 bg-slate-200 dark:bg-zinc-800/50" />
           <div>
             <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-0.5">Available</p>
             <p className={`text-[16px] font-bold leading-none ${availablePct <= 25 ? 'text-red-600 dark:text-red-400' : availablePct < 50 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-900 dark:text-white'}`}>
               {stats.unitsAvailable} ({availablePct}%)
             </p>
           </div>
-          <div className="w-px h-8 bg-slate-200 dark:bg-slate-700/50" />
+          <div className="w-px h-8 bg-slate-200 dark:bg-zinc-800/50" />
           <div>
             <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-0.5">Active Calls</p>
             <p className={`text-[16px] font-bold leading-none ${p1Active > 0 ? 'text-red-600 dark:text-red-400' : 'text-slate-900 dark:text-white'}`}>
               {sortedActiveCalls.length} {p1Active > 0 && `(${p1Active} P1)`}
             </p>
           </div>
-          <div className="w-px h-8 bg-slate-200 dark:bg-slate-700/50" />
+          <div className="w-px h-8 bg-slate-200 dark:bg-zinc-800/50" />
           <div>
             <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-0.5">On Overtime</p>
             <p className={`text-[16px] font-bold leading-none ${otUnits.length > 0 ? 'text-orange-600 dark:text-orange-400' : 'text-slate-900 dark:text-white'}`}>
               {otUnits.length}
             </p>
           </div>
-          <div className="w-px h-8 bg-slate-200 dark:bg-slate-700/50" />
+          <div className="w-px h-8 bg-slate-200 dark:bg-zinc-800/50" />
           <div>
             <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-0.5">Active BOLOs</p>
             <p className={`text-[16px] font-bold leading-none ${highBolos.length > 0 ? 'text-red-600 dark:text-red-400' : 'text-slate-900 dark:text-white'}`}>
@@ -684,7 +684,7 @@ const CADDispatch = () => {
           </div>
           <button
             onClick={() => setShowHandoff(true)}
-            className="ml-auto flex items-center gap-1.5 text-[11px] text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-700/40 border border-slate-300 dark:border-slate-600/50 rounded-lg px-3 py-1.5 hover:bg-slate-100 dark:hover:bg-slate-700/60 transition-colors"
+            className="ml-auto flex items-center gap-1.5 text-[11px] text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-zinc-800/40 border border-slate-300 dark:border-slate-600/50 rounded-lg px-3 py-1.5 hover:bg-slate-100 dark:hover:bg-zinc-800/60 transition-colors"
           >
             <FileText className="w-3.5 h-3.5" /> Generate Shift Handoff Report
           </button>
@@ -692,7 +692,7 @@ const CADDispatch = () => {
 
         {/* ── AI Prioritized Actions ──────────────────────────
             Calls, OT exposure, and BOLOs ranked — where to look first. */}
-        <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl px-5 py-3">
+        <div className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl px-5 py-3">
           <div className="flex items-center gap-2 mb-1.5">
             <Lightbulb className="w-4 h-4 text-slate-700 dark:text-slate-400" />
             <span className="text-[13px] font-semibold text-slate-900 dark:text-white">AI Prioritized Actions</span>
@@ -710,7 +710,7 @@ const CADDispatch = () => {
                   <span className={`text-[9px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider flex-shrink-0 ${
                     action.priority === 'Critical' ? 'bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/20' :
                     action.priority === 'High'     ? 'bg-orange-500/15 text-orange-600 dark:text-orange-400 border border-orange-500/20' :
-                                                      'bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40'
+                                                      'bg-slate-100 dark:bg-zinc-800/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40'
                   }`}>{action.priority}</span>
                   <ArrowRight className="w-3 h-3 text-slate-500 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </button>
@@ -744,7 +744,7 @@ const CADDispatch = () => {
                       }`}>{item.urgency === 'critical' ? 'Critical' : 'High Priority'}</span>
                       <p className="text-[13px] font-semibold text-[#111827] dark:text-white">{item.label}</p>
                     </div>
-                    <div className="bg-white dark:bg-slate-900/50 border border-red-200 dark:border-slate-700/40 rounded-lg px-3 py-2">
+                    <div className="bg-white dark:bg-zinc-950/50 border border-red-200 dark:border-slate-700/40 rounded-lg px-3 py-2">
                       <p className="text-[9px] text-[#6B7280] dark:text-slate-500 uppercase tracking-wider font-semibold mb-0.5">Recommended Action</p>
                       <p className="text-[11px] text-[#374151] dark:text-slate-200 leading-snug">{item.action}</p>
                     </div>
@@ -753,7 +753,7 @@ const CADDispatch = () => {
                     <button className={`text-[11px] px-3 py-1.5 rounded-lg font-medium transition-colors whitespace-nowrap ${
                       item.urgency === 'critical'
                         ? 'bg-[#DC2626] border border-red-700 text-white hover:bg-red-700'
-                        : 'bg-white dark:bg-slate-700/50 border border-[#E5E7EB] dark:border-slate-600/50 text-[#374151] dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-700/70'
+                        : 'bg-white dark:bg-zinc-800/50 border border-[#E5E7EB] dark:border-slate-600/50 text-[#374151] dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-zinc-800/70'
                     }`}>{item.urgency === 'critical' ? 'Execute Now' : 'Acknowledge'}</button>
                   </div>
                 </div>
@@ -765,7 +765,7 @@ const CADDispatch = () => {
         {/* ── Command Attention Needed ─────────────────────── */}
         <div className="grid grid-cols-3 gap-3">
           {/* P1 Emergencies */}
-          <div className={`rounded-xl border-l-4 border px-4 py-3 ${p1Active > 0 ? 'bg-[#FEF2F2] border-l-[#DC2626] border-red-200 dark:bg-red-500/5 dark:border-l-red-500 dark:border-red-500/25' : 'bg-white dark:bg-slate-800/20 border-l-[#E5E7EB] border-[#E5E7EB] dark:border-l-slate-700/30 dark:border-slate-700/30'}`}>
+          <div className={`rounded-xl border-l-4 border px-4 py-3 ${p1Active > 0 ? 'bg-[#FEF2F2] border-l-[#DC2626] border-red-200 dark:bg-red-500/5 dark:border-l-red-500 dark:border-red-500/25' : 'bg-white dark:bg-zinc-900/20 border-l-[#E5E7EB] border-[#E5E7EB] dark:border-l-slate-700/30 dark:border-slate-700/30'}`}>
             <div className="flex items-center gap-1.5 mb-2">
               <Siren className={`w-3.5 h-3.5 ${p1Active > 0 ? 'text-[#991B1B] dark:text-red-400' : 'text-[#6B7280]'}`} />
               <p className="text-[10px] font-bold uppercase tracking-wider text-[#6B7280]">P1 Emergencies</p>
@@ -792,7 +792,7 @@ const CADDispatch = () => {
               ? 'bg-[#FEF2F2] border-l-[#DC2626] border-red-200 dark:bg-red-500/5 dark:border-l-red-500 dark:border-red-500/25'
               : availablePct < 50
               ? 'bg-[#FEF3C7] border-l-amber-500 border-amber-200 dark:bg-amber-500/5 dark:border-l-amber-500 dark:border-amber-500/20'
-              : 'bg-white dark:bg-slate-800/20 border-l-[#E5E7EB] border-[#E5E7EB] dark:border-l-slate-700/30 dark:border-slate-700/30'}`}>
+              : 'bg-white dark:bg-zinc-900/20 border-l-[#E5E7EB] border-[#E5E7EB] dark:border-l-slate-700/30 dark:border-slate-700/30'}`}>
             <div className="flex items-center gap-1.5 mb-2">
               <Users className={`w-3.5 h-3.5 ${availablePct <= 30 ? 'text-[#991B1B] dark:text-red-400' : availablePct < 50 ? 'text-[#92400E] dark:text-amber-400' : 'text-[#6B7280]'}`} />
               <p className="text-[10px] font-bold uppercase tracking-wider text-[#6B7280]">Unit Coverage</p>
@@ -824,7 +824,7 @@ const CADDispatch = () => {
           <div className={`rounded-xl border-l-4 border px-4 py-3 ${
             holdingCalls.length > 0
               ? 'bg-[#FEF3C7] border-l-amber-500 border-amber-200 dark:bg-amber-500/5 dark:border-l-amber-500 dark:border-amber-500/20'
-              : 'bg-white dark:bg-slate-800/20 border-l-[#E5E7EB] border-[#E5E7EB] dark:border-l-slate-700/30 dark:border-slate-700/30'}`}>
+              : 'bg-white dark:bg-zinc-900/20 border-l-[#E5E7EB] border-[#E5E7EB] dark:border-l-slate-700/30 dark:border-slate-700/30'}`}>
             <div className="flex items-center gap-1.5 mb-2">
               <Timer className={`w-3.5 h-3.5 ${holdingCalls.length > 0 ? 'text-[#92400E] dark:text-amber-400' : 'text-[#6B7280]'}`} />
               <p className="text-[10px] font-bold uppercase tracking-wider text-[#6B7280]">Calls Holding</p>
@@ -848,12 +848,12 @@ const CADDispatch = () => {
         </div>
 
         {/* ── Active Calls for Service ──────────────────────── */}
-        <div id="calls-section" className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
+        <div id="calls-section" className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
           <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 dark:border-slate-700/40">
             <div className="flex items-center gap-2">
               <Radio className="w-4 h-4 text-slate-700 dark:text-slate-400" />
               <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Active Calls for Service</span>
-              <span className="text-[10px] px-2 py-0.5 bg-slate-50 dark:bg-slate-700/40 text-slate-700 dark:text-slate-400 rounded-full">
+              <span className="text-[10px] px-2 py-0.5 bg-slate-50 dark:bg-zinc-800/40 text-slate-700 dark:text-slate-400 rounded-full">
                 {sortedActiveCalls.filter(c => c.priority === 'P1').length} P1
                 · {sortedActiveCalls.filter(c => c.priority === 'P2').length} P2
                 · {sortedActiveCalls.filter(c => c.priority === 'P3').length} P3
@@ -877,7 +877,7 @@ const CADDispatch = () => {
                     className={`flex items-start gap-4 px-5 py-4 cursor-pointer transition-colors ${
                       call.priority === 'P1' ? 'bg-[#FEF2F2] hover:bg-red-100 dark:bg-red-950/20 dark:hover:bg-red-950/30' :
                       call.priority === 'P2' ? 'bg-white hover:bg-amber-50 dark:bg-transparent dark:hover:bg-amber-950/10' :
-                      'bg-white hover:bg-gray-50 dark:bg-transparent dark:hover:bg-slate-700/10'
+                      'bg-white hover:bg-gray-50 dark:bg-transparent dark:hover:bg-zinc-800/10'
                     }`}
                     onClick={() => setSelectedCall(isExpanded ? null : call.id)}
                   >
@@ -930,7 +930,7 @@ const CADDispatch = () => {
                         <div className={`rounded-lg px-3 py-2 mb-2.5 ${
                           call.priority === 'P1'
                             ? 'bg-red-100 border border-red-300 dark:bg-red-950/40 dark:border-red-500/15'
-                            : 'bg-gray-50 border border-[#E5E7EB] dark:bg-slate-900/50 dark:border-slate-700/40'
+                            : 'bg-gray-50 border border-[#E5E7EB] dark:bg-zinc-950/50 dark:border-slate-700/40'
                         }`}>
                           <div className="grid grid-cols-2 gap-x-4">
                             {risk.delayRisk && (
@@ -945,7 +945,7 @@ const CADDispatch = () => {
                                 <span className={`text-[9px] px-1.5 py-0.5 rounded font-bold uppercase ${
                                   risk.escalation === 'High'   ? 'bg-[#DC2626] text-white border border-red-700 dark:bg-red-500/20 dark:text-red-400 dark:border-red-500/30' :
                                   risk.escalation === 'Medium' ? 'bg-amber-100 text-[#92400E] border border-amber-300 dark:bg-amber-500/20 dark:text-amber-300 dark:border-amber-500/30' :
-                                  'bg-gray-100 text-[#374151] border border-gray-300 dark:bg-slate-700/40 dark:text-slate-400 dark:border-slate-700/50'
+                                  'bg-gray-100 text-[#374151] border border-gray-300 dark:bg-zinc-800/40 dark:text-slate-400 dark:border-slate-700/50'
                                 }`}>{risk.escalation}</span>
                                 <p className="text-[10px] text-[#374151] dark:text-slate-400 leading-snug">{risk.escalationText}</p>
                               </div>
@@ -976,7 +976,7 @@ const CADDispatch = () => {
                     {/* Recommended actions column */}
                     {(call.priority === 'P1' || call.priority === 'P2') && (
                       <div className="flex flex-col gap-1.5 flex-shrink-0 w-[160px]">
-                        <div className="bg-gray-50 dark:bg-slate-900/60 border border-[#E5E7EB] dark:border-slate-700/50 rounded-lg px-2.5 py-2">
+                        <div className="bg-gray-50 dark:bg-zinc-950/60 border border-[#E5E7EB] dark:border-slate-700/50 rounded-lg px-2.5 py-2">
                           <p className="text-[9px] text-[#6B7280] uppercase tracking-wider font-semibold mb-1">Action</p>
                           <p className="text-[11px] text-[#374151] dark:text-slate-200 leading-snug">
                             {call.priority === 'P1' && call.type.includes('Domestic') ? 'Stage additional unit — await scene clear before entry' :
@@ -992,7 +992,7 @@ const CADDispatch = () => {
                             Request Backup
                           </button>
                         )}
-                        <button className="text-[11px] px-2.5 py-1.5 bg-white dark:bg-slate-700/50 border border-slate-600/50 text-slate-700 dark:text-slate-300 hover:bg-slate-700/70 rounded-lg transition-colors">
+                        <button className="text-[11px] px-2.5 py-1.5 bg-white dark:bg-zinc-800/50 border border-slate-600/50 text-slate-700 dark:text-slate-300 hover:bg-slate-700/70 rounded-lg transition-colors">
                           Update Status
                         </button>
                       </div>
@@ -1001,7 +1001,7 @@ const CADDispatch = () => {
 
                   {/* Expanded detail */}
                   {isExpanded && (
-                    <div className="mx-5 mb-4 bg-gray-50 dark:bg-slate-900/60 border border-[#E5E7EB] dark:border-slate-700/50 rounded-lg p-4">
+                    <div className="mx-5 mb-4 bg-gray-50 dark:bg-zinc-950/60 border border-[#E5E7EB] dark:border-slate-700/50 rounded-lg p-4">
                       <div className="grid grid-cols-2 gap-4 mb-3">
                         <div>
                           <p className="text-[9px] text-[#6B7280] uppercase tracking-wider font-semibold mb-1">Call Information</p>
@@ -1017,7 +1017,7 @@ const CADDispatch = () => {
                           <p className="text-[9px] text-[#6B7280] uppercase tracking-wider font-semibold mb-1">Assigned Units</p>
                           <div className="space-y-1.5">
                             {unitDetails.map((u, i) => (
-                              <div key={i} className="flex items-center justify-between text-[11px] bg-white dark:bg-slate-800/50 border border-[#E5E7EB] dark:border-transparent rounded px-2 py-1">
+                              <div key={i} className="flex items-center justify-between text-[11px] bg-white dark:bg-zinc-900/50 border border-[#E5E7EB] dark:border-transparent rounded px-2 py-1">
                                 <span className="text-blue-800 dark:text-blue-400 font-medium">{u!.callSign}</span>
                                 <span className="text-[#374151] dark:text-slate-400">{u!.officer}</span>
                                 <span className={`text-[9px] px-1.5 py-0.5 rounded ${getStatusColor(u!.status)}`}>{u!.status}</span>
@@ -1030,7 +1030,7 @@ const CADDispatch = () => {
                         </div>
                       </div>
                       {call.notes && (
-                        <div className="bg-white dark:bg-slate-800/40 border border-[#E5E7EB] dark:border-slate-700/40 rounded-lg px-3 py-2 mb-3">
+                        <div className="bg-white dark:bg-zinc-900/40 border border-[#E5E7EB] dark:border-slate-700/40 rounded-lg px-3 py-2 mb-3">
                           <p className="text-[9px] text-[#6B7280] uppercase tracking-wider font-semibold mb-1">Notes</p>
                           <p className="text-[11px] text-[#374151] dark:text-slate-300 leading-relaxed">{call.notes}</p>
                         </div>
@@ -1039,7 +1039,7 @@ const CADDispatch = () => {
                         <button className="text-[11px] px-3 py-1.5 bg-blue-100 border border-blue-300 text-blue-800 dark:bg-blue-500/15 dark:border-blue-500/25 dark:text-blue-400 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-500/25 transition-colors font-medium">
                           Assign Units
                         </button>
-                        <button className="text-[11px] px-3 py-1.5 bg-white dark:bg-slate-700/60 border border-[#E5E7EB] dark:border-slate-600/60 text-[#374151] dark:text-slate-300 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors font-medium">
+                        <button className="text-[11px] px-3 py-1.5 bg-white dark:bg-zinc-800/60 border border-[#E5E7EB] dark:border-slate-600/60 text-[#374151] dark:text-slate-300 rounded-lg hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors font-medium">
                           Update Status
                         </button>
                         <button className="text-[11px] px-3 py-1.5 bg-emerald-100 border border-emerald-300 text-emerald-800 dark:bg-emerald-500/15 dark:border-emerald-500/25 dark:text-emerald-400 rounded-lg hover:bg-emerald-200 dark:hover:bg-emerald-500/25 transition-colors font-medium">
@@ -1058,7 +1058,7 @@ const CADDispatch = () => {
         </div>
 
         {/* ── Predictive Signals ───────────────────────────── */}
-        <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl px-5 py-4">
+        <div className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl px-5 py-4">
           <p className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold mb-3">Predictive Signals — Next 60 Min</p>
           <div className="grid grid-cols-3 gap-5">
             <div>
@@ -1089,14 +1089,14 @@ const CADDispatch = () => {
         </div>
 
         {/* ── Active BOLOs ─────────────────────────────────── */}
-        <div id="bolo-section" className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
+        <div id="bolo-section" className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
           <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 dark:border-slate-700/40">
             <div className="flex items-center gap-2">
               <Eye className="w-4 h-4 text-slate-700 dark:text-slate-400" />
               <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Active BOLOs</span>
-              <span className="text-[10px] px-2 py-0.5 bg-slate-50 dark:bg-slate-700/40 text-slate-700 dark:text-slate-400 rounded-full">{activeBolos.length} active</span>
+              <span className="text-[10px] px-2 py-0.5 bg-slate-50 dark:bg-zinc-800/40 text-slate-700 dark:text-slate-400 rounded-full">{activeBolos.length} active</span>
             </div>
-            <button className="flex items-center gap-1.5 text-[11px] px-2.5 py-1 bg-slate-100 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 text-slate-700 dark:text-slate-400 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700/30 transition-colors">
+            <button className="flex items-center gap-1.5 text-[11px] px-2.5 py-1 bg-slate-100 dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 text-slate-700 dark:text-slate-400 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-800/30 transition-colors">
               <Map className="w-3 h-3" /> View Zone Map
             </button>
           </div>
@@ -1128,7 +1128,7 @@ const CADDispatch = () => {
 
           {/* Calls Holding — left column */}
           {holdingActive.length > 0 && (
-            <div className="bg-white dark:bg-slate-800/30 border-l-4 border-l-amber-500 border border-amber-200 dark:border-amber-500/20 rounded-xl overflow-hidden">
+            <div className="bg-white dark:bg-zinc-900/30 border-l-4 border-l-amber-500 border border-amber-200 dark:border-amber-500/20 rounded-xl overflow-hidden">
               <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 dark:border-slate-700/40">
                 <div className="flex items-center gap-2">
                   <Timer className="w-4 h-4 text-amber-600 dark:text-amber-400" />
@@ -1152,7 +1152,7 @@ const CADDispatch = () => {
                         <p className="text-[11px] text-[#374151] dark:text-slate-400 flex items-center gap-1 mb-2">
                           <MapPin className="w-3 h-3 text-[#6B7280]" />{call.location}
                         </p>
-                        <div className="bg-[#FEF3C7] dark:bg-slate-900/50 border border-amber-200 dark:border-slate-700/40 rounded-lg px-3 py-2">
+                        <div className="bg-[#FEF3C7] dark:bg-zinc-950/50 border border-amber-200 dark:border-slate-700/40 rounded-lg px-3 py-2">
                           <p className="text-[9px] text-[#92400E] dark:text-slate-500 uppercase tracking-wider font-semibold mb-1">Risk if Not Handled</p>
                           <p className="text-[11px] text-[#92400E] dark:text-amber-200 font-semibold leading-snug">
                             {idx === 0 ? 'Fire lane blocked — liability if emergency access needed' : 'Property unclaimed — chain-of-custody risk beyond 2 hrs'}
@@ -1160,7 +1160,7 @@ const CADDispatch = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="bg-emerald-50 dark:bg-slate-900/50 border border-emerald-200 dark:border-emerald-500/15 rounded-lg px-3 py-2.5">
+                    <div className="bg-emerald-50 dark:bg-zinc-950/50 border border-emerald-200 dark:border-emerald-500/15 rounded-lg px-3 py-2.5">
                       <p className="text-[9px] text-[#6B7280] dark:text-slate-500 uppercase tracking-wider font-semibold mb-1.5">Recommended Assignment</p>
                       <div className="flex items-start justify-between gap-3">
                         <div className="flex-1 min-w-0">
@@ -1187,12 +1187,12 @@ const CADDispatch = () => {
           )}
 
           {/* Unit Status — right columns */}
-          <div id="unit-status-section" className={`bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden ${holdingActive.length > 0 ? 'lg:col-span-2' : 'lg:col-span-3'}`}>
+          <div id="unit-status-section" className={`bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden ${holdingActive.length > 0 ? 'lg:col-span-2' : 'lg:col-span-3'}`}>
             <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 dark:border-slate-700/40">
               <div className="flex items-center gap-2">
                 <Car className="w-4 h-4 text-slate-700 dark:text-slate-400" />
                 <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Unit Status</span>
-                <span className="text-[10px] px-2 py-0.5 bg-slate-50 dark:bg-slate-700/40 text-slate-700 dark:text-slate-400 rounded-full">
+                <span className="text-[10px] px-2 py-0.5 bg-slate-50 dark:bg-zinc-800/40 text-slate-700 dark:text-slate-400 rounded-full">
                   {stats.unitsAvailable} available · {stats.unitsDeployed} deployed · {stats.unitsOutOfService} OOS
                 </span>
               </div>
@@ -1202,7 +1202,7 @@ const CADDispatch = () => {
                 <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-purple-400 inline-block" />On Scene</span>
               </div>
             </div>
-            <div className={`grid gap-px bg-slate-100 dark:bg-slate-700/20 ${holdingActive.length > 0 ? 'grid-cols-2 md:grid-cols-3' : 'grid-cols-2 md:grid-cols-4 lg:grid-cols-5'}`}>
+            <div className={`grid gap-px bg-slate-100 dark:bg-zinc-800/20 ${holdingActive.length > 0 ? 'grid-cols-2 md:grid-cols-3' : 'grid-cols-2 md:grid-cols-4 lg:grid-cols-5'}`}>
               {patrolUnits.map(unit => {
                 const assignedCall = unit.currentCall ? activeCalls.find(c => c.callNumber === unit.currentCall) : null;
                 const isReassign = isReassignCandidate(unit);
@@ -1214,7 +1214,7 @@ const CADDispatch = () => {
                       unit.status === 'En Route'       ? 'bg-amber-500/5' :
                       unit.status === 'On Scene'       ? 'bg-purple-500/5' :
                       unit.status === 'Dispatched'     ? 'bg-blue-500/5' :
-                      'bg-slate-100 dark:bg-slate-900/20'
+                      'bg-slate-100 dark:bg-zinc-950/20'
                     }`}
                   >
                     <div className="flex items-center justify-between mb-1.5">
@@ -1224,7 +1224,7 @@ const CADDispatch = () => {
                           unit.status === 'En Route'   ? 'bg-amber-500/20 text-amber-600 dark:text-amber-400' :
                           unit.status === 'On Scene'   ? 'bg-purple-500/20 text-purple-400' :
                           unit.status === 'Dispatched' ? 'bg-blue-500/20 text-blue-400' :
-                          'bg-slate-200 dark:bg-slate-700 text-slate-500'
+                          'bg-slate-200 dark:bg-zinc-800 text-slate-500'
                         }`}>{unit.callSign.split('-')[1]}</div>
                         <span className="text-[12px] font-bold text-slate-900 dark:text-white">{unit.callSign}</span>
                       </div>
@@ -1241,7 +1241,7 @@ const CADDispatch = () => {
                     {unit.certifications && unit.certifications.length > 0 && (
                       <div className="flex flex-wrap gap-1 mb-1">
                         {unit.certifications.map(cert => (
-                          <span key={cert} className="text-[9px] px-1 py-px bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40 rounded inline-flex items-center gap-1">
+                          <span key={cert} className="text-[9px] px-1 py-px bg-slate-100 dark:bg-zinc-800/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40 rounded inline-flex items-center gap-1">
                             <Award className="w-2.5 h-2.5" /> {cert}
                           </span>
                         ))}
@@ -1273,7 +1273,7 @@ const CADDispatch = () => {
                         <button className="flex-1 text-[10px] px-2 py-1 bg-blue-100 border border-blue-300 text-blue-800 dark:bg-blue-500/15 dark:border-blue-500/20 dark:text-blue-400 rounded font-medium hover:bg-blue-200 dark:hover:bg-blue-500/25 transition-colors flex items-center justify-center gap-1">
                           <Send className="w-2.5 h-2.5" /> Assign
                         </button>
-                        <button className="text-[10px] px-2 py-1 bg-white dark:bg-slate-700/40 border border-[#E5E7EB] dark:border-slate-600/40 text-[#374151] dark:text-slate-400 rounded hover:bg-gray-100 dark:hover:bg-slate-700/60 transition-colors">
+                        <button className="text-[10px] px-2 py-1 bg-white dark:bg-zinc-800/40 border border-[#E5E7EB] dark:border-slate-600/40 text-[#374151] dark:text-slate-400 rounded hover:bg-gray-100 dark:hover:bg-zinc-800/60 transition-colors">
                           <Phone className="w-2.5 h-2.5" />
                         </button>
                       </div>
@@ -1290,7 +1290,7 @@ const CADDispatch = () => {
       {/* ── Shift Handoff Report Modal ────────────────────── */}
       {showHandoff && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-xl w-full max-w-2xl max-h-[85vh] overflow-y-auto">
+          <div className="bg-white dark:bg-zinc-950 border border-slate-200 dark:border-slate-700/50 rounded-xl w-full max-w-2xl max-h-[85vh] overflow-y-auto">
             {!handoffSent ? (
               <>
                 <div className="flex items-start justify-between gap-4 px-5 py-4 border-b border-slate-200 dark:border-slate-700/40">
@@ -1391,7 +1391,7 @@ const CADDispatch = () => {
                       value={supervisorNotes}
                       onChange={e => setSupervisorNotes(e.target.value)}
                       rows={3}
-                      className="w-full text-[11px] text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/40 rounded-lg p-2.5 resize-none focus:outline-none focus:ring-1 focus:ring-slate-500/40"
+                      className="w-full text-[11px] text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-zinc-950/40 border border-slate-200 dark:border-slate-700/40 rounded-lg p-2.5 resize-none focus:outline-none focus:ring-1 focus:ring-slate-500/40"
                     />
                   </div>
                 </div>
@@ -1410,7 +1410,7 @@ const CADDispatch = () => {
                 <CheckCircle className="w-10 h-10 text-emerald-500 mx-auto mb-3" />
                 <h2 className="text-[14px] font-bold text-slate-900 dark:text-white mb-1">Handoff Report Sent</h2>
                 <p className="text-[11px] text-slate-500 mb-4">Delivered to incoming B-Shift Watch Commander · 14:00–22:00</p>
-                <ul className="text-[11px] text-slate-700 dark:text-slate-300 text-left space-y-1.5 bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-700/40 rounded-lg p-3 mb-4">
+                <ul className="text-[11px] text-slate-700 dark:text-slate-300 text-left space-y-1.5 bg-slate-50 dark:bg-zinc-950/30 border border-slate-200 dark:border-slate-700/40 rounded-lg p-3 mb-4">
                   <li className="flex items-start gap-2"><CheckCircle className="w-3 h-3 text-emerald-500 mt-0.5 flex-shrink-0" /> {sortedActiveCalls.length} open call(s) for service included</li>
                   <li className="flex items-start gap-2"><CheckCircle className="w-3 h-3 text-emerald-500 mt-0.5 flex-shrink-0" /> {otUnits.length} unit(s) on overtime flagged for relief</li>
                   <li className="flex items-start gap-2"><CheckCircle className="w-3 h-3 text-emerald-500 mt-0.5 flex-shrink-0" /> {activeBolos.length} active BOLO(s) included</li>

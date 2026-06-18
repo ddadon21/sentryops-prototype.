@@ -210,9 +210,9 @@ export default function HRSettings() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F5F7FA] dark:bg-gradient-to-br dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 flex">
+    <div className="min-h-screen bg-[#F5F7FA] dark:bg-gradient-to-br dark:from-black dark:via-zinc-950 dark:to-black flex">
       {/* Sidebar */}
-      <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-black/[0.06] dark:border-slate-800/50 bg-white dark:bg-slate-900/30 shadow-[var(--shadow-sidebar)] dark:shadow-none flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
+      <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-black/[0.06] dark:border-slate-800/50 bg-white dark:bg-zinc-950/30 shadow-[var(--shadow-sidebar)] dark:shadow-none flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
         <div className="p-4 border-b border-border flex items-center justify-between">
           {!sidebarCollapsed && (
             <div className="flex items-center gap-2">
@@ -225,7 +225,7 @@ export default function HRSettings() {
           )}
           <button
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-            className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors hidden lg:block"
+            className="p-2 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors hidden lg:block"
           >
             {sidebarCollapsed ? <ChevronRight className="w-5 h-5 text-secondary" /> : <ChevronLeft className="w-5 h-5 text-secondary" />}
           </button>
@@ -240,7 +240,7 @@ export default function HRSettings() {
                 key={item.id}
                 onClick={() => handleNavigation(item)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                  isActive ? 'bg-amber-500 text-primary shadow-lg shadow-amber-500/20' : 'text-secondary hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-slate-900 dark:hover:text-white'
+                  isActive ? 'bg-amber-500 text-primary shadow-lg shadow-amber-500/20' : 'text-secondary hover:bg-slate-50 dark:hover:bg-zinc-900/50 hover:text-slate-900 dark:hover:text-slate-900 dark:hover:text-white'
                 } ${sidebarCollapsed ? 'justify-center' : ''}`}
                 title={sidebarCollapsed ? item.label : ''}
               >
@@ -263,7 +263,7 @@ export default function HRSettings() {
           <div className="p-4">
             <button
               onClick={() => setLogoutConfirmOpen(true)}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/40 hover:text-slate-800 dark:hover:text-secondary dark:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-secondary hover:bg-slate-100 dark:hover:bg-zinc-900/40 hover:text-slate-800 dark:hover:text-secondary dark:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
               title={sidebarCollapsed ? 'Sign Out' : ''}
             >
               <LogOut className="w-5 h-5 flex-shrink-0" />
@@ -288,9 +288,9 @@ export default function HRSettings() {
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={() => setLogoutConfirmOpen(false)}
           />
-          <div className="relative bg-white dark:bg-slate-900 border border-border rounded-2xl p-6 max-w-sm w-full shadow-2xl">
+          <div className="relative bg-white dark:bg-zinc-950 border border-border rounded-2xl p-6 max-w-sm w-full shadow-2xl">
             <div className="flex items-center gap-4 mb-4">
-              <div className="w-12 h-12 bg-slate-100 dark:bg-slate-800/60 rounded-xl flex items-center justify-center">
+              <div className="w-12 h-12 bg-slate-100 dark:bg-zinc-900/60 rounded-xl flex items-center justify-center">
                 <LogOut className="w-6 h-6 text-secondary" />
               </div>
               <div>
@@ -301,13 +301,13 @@ export default function HRSettings() {
             <div className="flex gap-3 mt-6">
               <button
                 onClick={() => setLogoutConfirmOpen(false)}
-                className="flex-1 px-4 py-2.5 bg-slate-100 dark:bg-slate-800/40 hover:bg-slate-200 dark:hover:bg-slate-800/60 border border-border rounded-xl text-primary font-medium transition-all"
+                className="flex-1 px-4 py-2.5 bg-slate-100 dark:bg-zinc-900/40 hover:bg-slate-200 dark:hover:bg-zinc-900/60 border border-border rounded-xl text-primary font-medium transition-all"
               >
                 Cancel
               </button>
               <button
                 onClick={handleLogout}
-                className="flex-1 px-4 py-2.5 bg-slate-50 dark:bg-slate-700/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-primary font-medium transition-all"
+                className="flex-1 px-4 py-2.5 bg-slate-50 dark:bg-zinc-800/40 hover:bg-slate-700/60 border border-slate-600/50 rounded-xl text-primary font-medium transition-all"
               >
                 Sign Out
               </button>
@@ -317,12 +317,12 @@ export default function HRSettings() {
       )}
 
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="border-b border-black/[0.06] dark:border-slate-800/50 backdrop-blur-md bg-[#F8FAFC]/90 dark:bg-slate-900/30 shadow-[var(--shadow-nav)] dark:shadow-none">
+        <header className="border-b border-black/[0.06] dark:border-slate-800/50 backdrop-blur-md bg-[#F8FAFC]/90 dark:bg-zinc-950/30 shadow-[var(--shadow-nav)] dark:shadow-none">
           <div className="px-4 lg:px-6 py-4 flex items-center justify-between gap-4">
             <div className="flex items-center gap-4 flex-1 min-w-0">
               <button
                 onClick={() => setSidebarOpen(!sidebarOpen)}
-                className="lg:hidden p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg"
+                className="lg:hidden p-2 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg"
               >
                 <Menu className="w-5 h-5 text-secondary" />
               </button>
@@ -341,7 +341,7 @@ export default function HRSettings() {
               <div className="relative">
                 <button
                   onClick={() => setNotificationsOpen(!notificationsOpen)}
-                  className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg relative"
+                  className="p-2 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg relative"
                 >
                   <Bell className="w-5 h-5 text-secondary" />
                   <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
@@ -354,7 +354,7 @@ export default function HRSettings() {
                     </div>
                     <div className="max-h-96 overflow-y-auto">
                       {notifications.map(notification => (
-                        <div key={notification.id} className={`p-4 border-b border-slate-100 dark:border-border hover:bg-slate-50 dark:hover:bg-slate-800/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
+                        <div key={notification.id} className={`p-4 border-b border-slate-100 dark:border-border hover:bg-slate-50 dark:hover:bg-zinc-900/30 cursor-pointer transition-colors ${notification.urgent ? 'bg-amber-500/5' : ''}`}>
                           <div className="flex items-start gap-3">
                             <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${notification.urgent ? 'bg-amber-400' : 'bg-blue-400'}`}></div>
                             <div className="flex-1 min-w-0">
@@ -373,12 +373,12 @@ export default function HRSettings() {
                 )}
               </div>
 
-              <div className="h-8 w-px bg-white dark:bg-slate-700/50"></div>
+              <div className="h-8 w-px bg-white dark:bg-zinc-800/50"></div>
 
               <div className="relative profile-menu-container">
                 <button
                   onClick={() => setProfileMenuOpen(!profileMenuOpen)}
-                  className="flex items-center gap-3 p-1.5 pr-3 hover:bg-white dark:bg-slate-800/50 rounded-xl transition-colors"
+                  className="flex items-center gap-3 p-1.5 pr-3 hover:bg-white dark:bg-zinc-900/50 rounded-xl transition-colors"
                 >
                   <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
                     <span className="text-primary text-sm font-bold">HR</span>
@@ -397,13 +397,13 @@ export default function HRSettings() {
                       <p className="text-xs text-secondary">{profileSettings.email}</p>
                     </div>
                     <div className="py-1">
-                      <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors">
+                      <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-secondary hover:bg-slate-100 dark:hover:bg-zinc-900/50 transition-colors">
                         <User className="w-4 h-4" />
                         View Profile
                       </button>
                       <button
                         onClick={() => setActiveSection('profile')}
-                        className="w-full flex items-center gap-3 px-4 py-2 text-sm text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors"
+                        className="w-full flex items-center gap-3 px-4 py-2 text-sm text-secondary hover:bg-slate-100 dark:hover:bg-zinc-900/50 transition-colors"
                       >
                         <Settings className="w-4 h-4" />
                         Settings
@@ -412,7 +412,7 @@ export default function HRSettings() {
                     <div className="border-t border-border py-1">
                       <button
                         onClick={() => setLogoutConfirmOpen(true)}
-                        className="w-full flex items-center gap-3 px-4 py-2 text-sm text-red-700 dark:text-red-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors"
+                        className="w-full flex items-center gap-3 px-4 py-2 text-sm text-red-700 dark:text-red-400 hover:bg-slate-100 dark:hover:bg-zinc-900/50 transition-colors"
                       >
                         <LogOut className="w-4 h-4" />
                         Sign Out
@@ -491,7 +491,7 @@ export default function HRSettings() {
             <div className="space-y-6">
               {/* Profile Settings */}
               {activeSection === 'profile' && (
-                <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
+                <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
                   <div className="flex items-center justify-between mb-6">
                     <h3 className="text-lg font-semibold text-primary">Profile Information</h3>
                     <div className="flex items-center gap-2 px-3 py-1.5 bg-green-500/20 border border-green-500/30 rounded-lg">
@@ -523,7 +523,7 @@ export default function HRSettings() {
                         type="text"
                         value={profileSettings.fullName}
                         onChange={(e) => setProfileSettings({...profileSettings, fullName: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
+                        className="w-full px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
                       />
                     </div>
                     <div>
@@ -532,7 +532,7 @@ export default function HRSettings() {
                         type="email"
                         value={profileSettings.email}
                         onChange={(e) => setProfileSettings({...profileSettings, email: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
+                        className="w-full px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
                       />
                     </div>
                     <div>
@@ -541,7 +541,7 @@ export default function HRSettings() {
                         type="text"
                         value={profileSettings.employeeId}
                         disabled
-                        className="w-full px-4 py-2.5 bg-slate-100 dark:bg-slate-800/20 border border-slate-700/50 rounded-xl text-secondary cursor-not-allowed"
+                        className="w-full px-4 py-2.5 bg-slate-100 dark:bg-zinc-900/20 border border-slate-700/50 rounded-xl text-secondary cursor-not-allowed"
                       />
                     </div>
                     <div>
@@ -550,7 +550,7 @@ export default function HRSettings() {
                         type="tel"
                         value={profileSettings.phone}
                         onChange={(e) => setProfileSettings({...profileSettings, phone: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
+                        className="w-full px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
                       />
                     </div>
                     <div>
@@ -559,7 +559,7 @@ export default function HRSettings() {
                         type="text"
                         value={profileSettings.department}
                         disabled
-                        className="w-full px-4 py-2.5 bg-slate-100 dark:bg-slate-800/20 border border-slate-700/50 rounded-xl text-secondary cursor-not-allowed"
+                        className="w-full px-4 py-2.5 bg-slate-100 dark:bg-zinc-900/20 border border-slate-700/50 rounded-xl text-secondary cursor-not-allowed"
                       />
                     </div>
                     <div>
@@ -568,7 +568,7 @@ export default function HRSettings() {
                         type="text"
                         value={profileSettings.position}
                         disabled
-                        className="w-full px-4 py-2.5 bg-slate-100 dark:bg-slate-800/20 border border-slate-700/50 rounded-xl text-secondary cursor-not-allowed"
+                        className="w-full px-4 py-2.5 bg-slate-100 dark:bg-zinc-900/20 border border-slate-700/50 rounded-xl text-secondary cursor-not-allowed"
                       />
                     </div>
                     <div>
@@ -577,7 +577,7 @@ export default function HRSettings() {
                         type="text"
                         value={new Date(profileSettings.hireDate).toLocaleDateString()}
                         disabled
-                        className="w-full px-4 py-2.5 bg-slate-100 dark:bg-slate-800/20 border border-slate-700/50 rounded-xl text-secondary cursor-not-allowed"
+                        className="w-full px-4 py-2.5 bg-slate-100 dark:bg-zinc-900/20 border border-slate-700/50 rounded-xl text-secondary cursor-not-allowed"
                       />
                     </div>
                     <div>
@@ -586,7 +586,7 @@ export default function HRSettings() {
                         type="text"
                         value={profileSettings.certifications}
                         onChange={(e) => setProfileSettings({...profileSettings, certifications: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
+                        className="w-full px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50 transition-colors"
                       />
                     </div>
                   </div>
@@ -605,7 +605,7 @@ export default function HRSettings() {
 
               {/* Notification Settings */}
               {activeSection === 'notifications' && (
-                <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
+                <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
                   <h3 className="text-lg font-semibold text-primary mb-6">Notification Preferences</h3>
 
                   <div className="space-y-6">
@@ -619,9 +619,9 @@ export default function HRSettings() {
                         ].map(item => {
                           const Icon = item.icon;
                           return (
-                            <div key={item.key} className="flex items-center justify-between p-4 bg-white dark:bg-slate-800/40 border border-border rounded-xl">
+                            <div key={item.key} className="flex items-center justify-between p-4 bg-white dark:bg-zinc-900/40 border border-border rounded-xl">
                               <div className="flex items-center gap-4">
-                                <div className="w-10 h-10 bg-white dark:bg-slate-700/50 rounded-xl flex items-center justify-center">
+                                <div className="w-10 h-10 bg-white dark:bg-zinc-800/50 rounded-xl flex items-center justify-center">
                                   <Icon className="w-5 h-5 text-secondary" />
                                 </div>
                                 <div>
@@ -654,7 +654,7 @@ export default function HRSettings() {
                           { key: 'timeOffRequests', label: 'Time Off Requests', desc: 'Leave request notifications' },
                           { key: 'policyUpdates', label: 'Policy Updates', desc: 'New policies and changes' }
                         ].map(item => (
-                          <div key={item.key} className="flex items-center justify-between p-4 bg-white dark:bg-slate-800/40 border border-border rounded-xl">
+                          <div key={item.key} className="flex items-center justify-between p-4 bg-white dark:bg-zinc-900/40 border border-border rounded-xl">
                             <div>
                               <p className="text-primary font-medium">{item.label}</p>
                               <p className="text-xs text-secondary">{item.desc}</p>
@@ -685,7 +685,7 @@ export default function HRSettings() {
 
               {/* Display Settings */}
               {activeSection === 'display' && (
-                <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
+                <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
                   <h3 className="text-lg font-semibold text-primary mb-6">Display & Appearance</h3>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -695,7 +695,7 @@ export default function HRSettings() {
                         <button
                           onClick={() => setDisplaySettings({...displaySettings, theme: 'dark'})}
                           className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl border transition-all ${
-                            displaySettings.theme === 'dark' ? 'bg-amber-500/20 border-amber-500/50 text-amber-700 dark:text-amber-400' : 'bg-white dark:bg-slate-800/40 border-slate-700/50 text-slate-500'
+                            displaySettings.theme === 'dark' ? 'bg-amber-500/20 border-amber-500/50 text-amber-700 dark:text-amber-400' : 'bg-white dark:bg-zinc-900/40 border-slate-700/50 text-slate-500'
                           }`}
                         >
                           <Moon className="w-5 h-5" />
@@ -704,7 +704,7 @@ export default function HRSettings() {
                         <button
                           onClick={() => setDisplaySettings({...displaySettings, theme: 'light'})}
                           className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl border transition-all ${
-                            displaySettings.theme === 'light' ? 'bg-amber-500/20 border-amber-500/50 text-amber-700 dark:text-amber-400' : 'bg-white dark:bg-slate-800/40 border-slate-700/50 text-slate-500'
+                            displaySettings.theme === 'light' ? 'bg-amber-500/20 border-amber-500/50 text-amber-700 dark:text-amber-400' : 'bg-white dark:bg-zinc-900/40 border-slate-700/50 text-slate-500'
                           }`}
                         >
                           <Sun className="w-5 h-5" />
@@ -718,7 +718,7 @@ export default function HRSettings() {
                       <select
                         value={displaySettings.dateFormat}
                         onChange={(e) => setDisplaySettings({...displaySettings, dateFormat: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50"
+                        className="w-full px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50"
                       >
                         <option value="MM/DD/YYYY">MM/DD/YYYY</option>
                         <option value="DD/MM/YYYY">DD/MM/YYYY</option>
@@ -731,7 +731,7 @@ export default function HRSettings() {
                       <select
                         value={displaySettings.timeFormat}
                         onChange={(e) => setDisplaySettings({...displaySettings, timeFormat: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50"
+                        className="w-full px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50"
                       >
                         <option value="12h">12-hour</option>
                         <option value="24h">24-hour</option>
@@ -743,7 +743,7 @@ export default function HRSettings() {
                       <select
                         value={displaySettings.timezone}
                         onChange={(e) => setDisplaySettings({...displaySettings, timezone: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50"
+                        className="w-full px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50"
                       >
                         <option value="America/New_York">Eastern Time (ET)</option>
                         <option value="America/Chicago">Central Time (CT)</option>
@@ -757,7 +757,7 @@ export default function HRSettings() {
                       <select
                         value={displaySettings.density}
                         onChange={(e) => setDisplaySettings({...displaySettings, density: e.target.value})}
-                        className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50"
+                        className="w-full px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50"
                       >
                         <option value="compact">Compact</option>
                         <option value="comfortable">Comfortable</option>
@@ -765,7 +765,7 @@ export default function HRSettings() {
                       </select>
                     </div>
 
-                    <div className="flex items-center justify-between p-4 bg-white dark:bg-slate-800/40 border border-border rounded-xl">
+                    <div className="flex items-center justify-between p-4 bg-white dark:bg-zinc-900/40 border border-border rounded-xl">
                       <div>
                         <p className="text-primary font-medium">Animations</p>
                         <p className="text-sm text-secondary">Enable UI animations</p>
@@ -794,11 +794,11 @@ export default function HRSettings() {
               {/* Security Settings */}
               {activeSection === 'security' && (
                 <div className="space-y-6">
-                  <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
+                  <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
                     <h3 className="text-lg font-semibold text-primary mb-6">Security Settings</h3>
 
                     <div className="space-y-6">
-                      <div className="flex items-center justify-between p-4 bg-white dark:bg-slate-800/40 border border-border rounded-xl">
+                      <div className="flex items-center justify-between p-4 bg-white dark:bg-zinc-900/40 border border-border rounded-xl">
                         <div className="flex items-center gap-4">
                           <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center">
                             <Lock className="w-5 h-5 text-green-600 dark:text-green-400" />
@@ -821,9 +821,9 @@ export default function HRSettings() {
                         </div>
                       </div>
 
-                      <div className="flex items-center justify-between p-4 bg-white dark:bg-slate-800/40 border border-border rounded-xl">
+                      <div className="flex items-center justify-between p-4 bg-white dark:bg-zinc-900/40 border border-border rounded-xl">
                         <div className="flex items-center gap-4">
-                          <div className="w-10 h-10 bg-white dark:bg-slate-700/50 rounded-xl flex items-center justify-center">
+                          <div className="w-10 h-10 bg-white dark:bg-zinc-800/50 rounded-xl flex items-center justify-center">
                             <Clock className="w-5 h-5 text-secondary" />
                           </div>
                           <div>
@@ -834,7 +834,7 @@ export default function HRSettings() {
                         <select
                           value={securitySettings.sessionTimeout}
                           onChange={(e) => setSecuritySettings({...securitySettings, sessionTimeout: e.target.value})}
-                          className="px-4 py-2 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50"
+                          className="px-4 py-2 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-slate-900 dark:text-primary focus:outline-none focus:border-amber-500/50"
                         >
                           <option value="15">15 minutes</option>
                           <option value="30">30 minutes</option>
@@ -843,9 +843,9 @@ export default function HRSettings() {
                         </select>
                       </div>
 
-                      <div className="flex items-center justify-between p-4 bg-white dark:bg-slate-800/40 border border-border rounded-xl">
+                      <div className="flex items-center justify-between p-4 bg-white dark:bg-zinc-900/40 border border-border rounded-xl">
                         <div className="flex items-center gap-4">
-                          <div className="w-10 h-10 bg-white dark:bg-slate-700/50 rounded-xl flex items-center justify-center">
+                          <div className="w-10 h-10 bg-white dark:bg-zinc-800/50 rounded-xl flex items-center justify-center">
                             <Bell className="w-5 h-5 text-secondary" />
                           </div>
                           <div>
@@ -861,9 +861,9 @@ export default function HRSettings() {
                         </button>
                       </div>
 
-                      <div className="flex items-center justify-between p-4 bg-white dark:bg-slate-800/40 border border-border rounded-xl">
+                      <div className="flex items-center justify-between p-4 bg-white dark:bg-zinc-900/40 border border-border rounded-xl">
                         <div className="flex items-center gap-4">
-                          <div className="w-10 h-10 bg-white dark:bg-slate-700/50 rounded-xl flex items-center justify-center">
+                          <div className="w-10 h-10 bg-white dark:bg-zinc-800/50 rounded-xl flex items-center justify-center">
                             <Activity className="w-5 h-5 text-secondary" />
                           </div>
                           <div>
@@ -881,7 +881,7 @@ export default function HRSettings() {
                     </div>
                   </div>
 
-                  <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
+                  <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
                     <h3 className="text-lg font-semibold text-primary mb-4">Change Password</h3>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <div>
@@ -889,7 +889,7 @@ export default function HRSettings() {
                         <input
                           type="password"
                           placeholder="••••••••"
-                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
+                          className="w-full px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
                         />
                       </div>
                       <div>
@@ -897,7 +897,7 @@ export default function HRSettings() {
                         <input
                           type="password"
                           placeholder="••••••••"
-                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
+                          className="w-full px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
                         />
                       </div>
                       <div>
@@ -905,7 +905,7 @@ export default function HRSettings() {
                         <input
                           type="password"
                           placeholder="••••••••"
-                          className="w-full px-4 py-2.5 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
+                          className="w-full px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
                         />
                       </div>
                     </div>
@@ -922,13 +922,13 @@ export default function HRSettings() {
               {/* Integrations */}
               {activeSection === 'integrations' && (
                 <div className="space-y-6">
-                  <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
+                  <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
                     <div className="flex items-center justify-between mb-6">
                       <div>
                         <h3 className="text-lg font-semibold text-primary">HR System Integrations</h3>
                         <p className="text-sm text-secondary">Connected systems and data sources</p>
                       </div>
-                      <button className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 border border-slate-600/50 rounded-xl text-secondary transition-all">
+                      <button className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-zinc-800/50 hover:bg-slate-700/70 border border-slate-600/50 rounded-xl text-secondary transition-all">
                         <RefreshCw className="w-4 h-4" />
                         Sync All
                       </button>
@@ -936,11 +936,11 @@ export default function HRSettings() {
 
                     <div className="space-y-6">
                       {Object.entries(integrations).map(([key, integration]) => (
-                        <div key={key} className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
+                        <div key={key} className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
                           <div className="flex items-start justify-between">
                             <div className="flex items-start gap-4">
                               <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                                integration.status === 'connected' ? 'bg-green-500/20' : 'bg-white dark:bg-slate-700/50'
+                                integration.status === 'connected' ? 'bg-green-500/20' : 'bg-white dark:bg-zinc-800/50'
                               }`}>
                                 <Database className={`w-6 h-6 ${
                                   integration.status === 'connected' ? 'text-green-600 dark:text-green-400' : 'text-slate-500'
@@ -975,7 +975,7 @@ export default function HRSettings() {
 
                                 <div className="flex flex-wrap gap-2 mt-3">
                                   {integration.dataTypes.map((type, idx) => (
-                                    <span key={idx} className="px-2 py-1 bg-white dark:bg-slate-700/50 rounded text-xs text-secondary">
+                                    <span key={idx} className="px-2 py-1 bg-white dark:bg-zinc-800/50 rounded text-xs text-secondary">
                                       {type}
                                     </span>
                                   ))}
@@ -983,12 +983,12 @@ export default function HRSettings() {
 
                                 <div className="mt-4 flex items-center gap-2">
                                   <span className="text-xs text-slate-500">API Key:</span>
-                                  <code className="px-2 py-1 bg-white dark:bg-slate-900/50 rounded text-xs text-secondary font-mono">
+                                  <code className="px-2 py-1 bg-white dark:bg-zinc-950/50 rounded text-xs text-secondary font-mono">
                                     {showApiKey[key] ? integration.apiKey : '••••••••••••••••'}
                                   </code>
                                   <button
                                     onClick={() => toggleApiKeyVisibility(key)}
-                                    className="p-1 hover:bg-slate-100 dark:hover:bg-slate-700/50 rounded transition-colors"
+                                    className="p-1 hover:bg-slate-100 dark:hover:bg-zinc-800/50 rounded transition-colors"
                                   >
                                     {showApiKey[key] ? (
                                       <EyeOff className="w-3 h-3 text-secondary" />
@@ -1006,14 +1006,14 @@ export default function HRSettings() {
                                 <p className="text-sm text-primary font-medium">
                                   {integration.monthlyRequests.toLocaleString()} / {integration.requestLimit.toLocaleString()}
                                 </p>
-                                <div className="w-24 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full mt-1">
+                                <div className="w-24 h-1.5 bg-slate-200 dark:bg-zinc-800 rounded-full mt-1">
                                   <div
                                     className="h-full bg-amber-500 rounded-full"
                                     style={{ width: `${(integration.monthlyRequests / integration.requestLimit) * 100}%` }}
                                   ></div>
                                 </div>
                               </div>
-                              <button className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700/50 rounded-lg transition-colors">
+                              <button className="p-2 hover:bg-slate-100 dark:hover:bg-zinc-800/50 rounded-lg transition-colors">
                                 <Settings className="w-4 h-4 text-secondary" />
                               </button>
                             </div>
@@ -1056,7 +1056,7 @@ export default function HRSettings() {
                 <Sparkles className="w-4 h-4 text-primary" />
               </div>
               <div className="flex-1">
-                <div className="bg-white dark:bg-slate-800/60 p-3 rounded-xl">
+                <div className="bg-white dark:bg-zinc-900/60 p-3 rounded-xl">
                   <p className="text-sm text-slate-700 dark:text-slate-200">Hi! I can help you configure your HR settings, manage integrations, set up notifications, and troubleshoot connectivity issues. What do you need help with?</p>
                 </div>
               </div>
@@ -1064,7 +1064,7 @@ export default function HRSettings() {
           </div>
           <div className="p-4 border-t border-border">
             <div className="flex items-center gap-2">
-              <input type="text" placeholder="Ask about settings..." className="flex-1 px-4 py-2 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500/50" />
+              <input type="text" placeholder="Ask about settings..." className="flex-1 px-4 py-2 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500/50" />
               <button className="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center">
                 <Send className="w-5 h-5 text-primary" />
               </button>

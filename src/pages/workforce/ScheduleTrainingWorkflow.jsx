@@ -116,10 +116,10 @@ export default function ScheduleTrainingWorkflow({
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center p-4 pt-10 overflow-y-auto">
       <div className="fixed inset-0 bg-slate-950/85 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative w-full max-w-3xl bg-white dark:bg-slate-900 border border-border rounded-2xl shadow-2xl overflow-hidden mb-8">
+      <div className="relative w-full max-w-3xl bg-white dark:bg-zinc-950 border border-border rounded-2xl shadow-2xl overflow-hidden mb-8">
 
         {/* Header */}
-        <div className="bg-white dark:bg-slate-900 border-b border-border px-6 py-4">
+        <div className="bg-white dark:bg-zinc-950 border-b border-border px-6 py-4">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-xl bg-green-500/15 border border-green-500/25 flex items-center justify-center">
@@ -130,7 +130,7 @@ export default function ScheduleTrainingWorkflow({
                 <p className="text-[10px] text-secondary">Command Workflow &bull; HR Training Management</p>
               </div>
             </div>
-            <button onClick={onClose} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors">
+            <button onClick={onClose} className="p-2 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors">
               <X className="w-5 h-5 text-secondary" />
             </button>
           </div>
@@ -142,7 +142,7 @@ export default function ScheduleTrainingWorkflow({
                 const active = step === n;
                 return (
                   <React.Fragment key={n}>
-                    <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-semibold border transition-all ${done ? 'bg-green-500/15 border-green-500/25 text-green-600 dark:text-green-400' : active ? 'bg-amber-500/15 border-amber-500/25 text-amber-600 dark:text-amber-400' : 'bg-slate-100/80 dark:bg-slate-800/30 border-slate-700/40 text-slate-500'}`}>
+                    <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-semibold border transition-all ${done ? 'bg-green-500/15 border-green-500/25 text-green-600 dark:text-green-400' : active ? 'bg-amber-500/15 border-amber-500/25 text-amber-600 dark:text-amber-400' : 'bg-slate-100/80 dark:bg-zinc-900/30 border-slate-700/40 text-slate-500'}`}>
                       {done ? <CheckCircle className="w-3 h-3" /> : <span className="w-3 h-3 text-center leading-3">{n}</span>}
                       {label}
                     </div>
@@ -164,10 +164,10 @@ export default function ScheduleTrainingWorkflow({
                 <div className="relative flex-1">
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400" />
                   <input type="text" placeholder="Search name, badge, or division…" value={searchQuery} onChange={e => setSearchQuery(e.target.value)}
-                    className="w-full pl-8 pr-3 py-2 bg-slate-100/80 dark:bg-slate-800/30 border border-slate-700/50 rounded-lg text-[12px] text-primary placeholder:text-slate-400 focus:outline-none focus:border-amber-500/50" />
+                    className="w-full pl-8 pr-3 py-2 bg-slate-100/80 dark:bg-zinc-900/30 border border-slate-700/50 rounded-lg text-[12px] text-primary placeholder:text-slate-400 focus:outline-none focus:border-amber-500/50" />
                 </div>
                 <button onClick={() => setFilterCertRisk(v => !v)}
-                  className={`flex items-center gap-1.5 px-3 py-2 rounded-lg border text-[11px] font-medium transition-colors whitespace-nowrap ${filterCertRisk ? 'bg-orange-500/15 border-orange-500/30 text-orange-600 dark:text-orange-400' : 'bg-slate-100/80 dark:bg-slate-800/30 border-slate-700/50 text-secondary'}`}>
+                  className={`flex items-center gap-1.5 px-3 py-2 rounded-lg border text-[11px] font-medium transition-colors whitespace-nowrap ${filterCertRisk ? 'bg-orange-500/15 border-orange-500/30 text-orange-600 dark:text-orange-400' : 'bg-slate-100/80 dark:bg-zinc-900/30 border-slate-700/50 text-secondary'}`}>
                   <AlertTriangle className="w-3 h-3" />Cert Risk Only
                 </button>
               </div>
@@ -177,7 +177,7 @@ export default function ScheduleTrainingWorkflow({
                   const isSelected = selectedIds.includes(p.id);
                   const riskCerts = p.certifications.filter(c => c.status === 'expired' || c.status === 'expiring');
                   return (
-                    <label key={p.id} className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-all ${isSelected ? 'bg-amber-500/10 border-amber-500/30' : hasCertRisk ? 'bg-orange-500/5 border-orange-500/20 hover:border-orange-500/40' : 'bg-slate-100/50 dark:bg-slate-800/20 border-slate-700/30 hover:border-slate-600/50'}`}>
+                    <label key={p.id} className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-all ${isSelected ? 'bg-amber-500/10 border-amber-500/30' : hasCertRisk ? 'bg-orange-500/5 border-orange-500/20 hover:border-orange-500/40' : 'bg-slate-100/50 dark:bg-zinc-900/20 border-slate-700/30 hover:border-slate-600/50'}`}>
                       <input type="checkbox" checked={isSelected} onChange={() => toggleEmp(p.id)} className="accent-amber-500 w-4 h-4 flex-shrink-0" />
                       <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center flex-shrink-0">
                         <span className="text-white text-[10px] font-semibold">{p.photo}</span>
@@ -211,11 +211,11 @@ export default function ScheduleTrainingWorkflow({
           {/* ── STEP 2: Training Details ── */}
           {step === 2 && (
             <div>
-              <div className="mb-4 p-3 bg-slate-100/80 dark:bg-slate-800/30 border border-slate-700/40 rounded-xl">
+              <div className="mb-4 p-3 bg-slate-100/80 dark:bg-zinc-900/30 border border-slate-700/40 rounded-xl">
                 <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2">Scheduling For</p>
                 <div className="flex flex-wrap gap-2">
                   {selectedPeople.map(p => (
-                    <span key={p.id} className="px-2 py-1 bg-white dark:bg-slate-800 border border-slate-700/40 rounded-lg text-[11px] font-medium">
+                    <span key={p.id} className="px-2 py-1 bg-white dark:bg-zinc-900 border border-slate-700/40 rounded-lg text-[11px] font-medium">
                       <span className="text-amber-600 dark:text-amber-400">{p.name}</span>
                       <span className="text-slate-400"> &bull; {p.division}</span>
                     </span>
@@ -227,7 +227,7 @@ export default function ScheduleTrainingWorkflow({
                 <div className="col-span-2">
                   <label className="block text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Certification / Training Type</label>
                   <select value={config.certType} onChange={e => setConfig(c => ({ ...c, certType: e.target.value }))}
-                    className="w-full px-3 py-2 bg-slate-100/80 dark:bg-slate-800/30 border border-slate-700/50 rounded-lg text-[12px] text-primary focus:outline-none focus:border-amber-500/50">
+                    className="w-full px-3 py-2 bg-slate-100/80 dark:bg-zinc-900/30 border border-slate-700/50 rounded-lg text-[12px] text-primary focus:outline-none focus:border-amber-500/50">
                     <option value="">Select certification type…</option>
                     {CERT_TYPES.map(ct => <option key={ct} value={ct}>{ct}</option>)}
                   </select>
@@ -235,7 +235,7 @@ export default function ScheduleTrainingWorkflow({
                 <div>
                   <label className="block text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Date</label>
                   <select value={config.date} onChange={e => setConfig(c => ({ ...c, date: e.target.value }))}
-                    className="w-full px-3 py-2 bg-slate-100/80 dark:bg-slate-800/30 border border-slate-700/50 rounded-lg text-[12px] text-primary focus:outline-none focus:border-amber-500/50">
+                    className="w-full px-3 py-2 bg-slate-100/80 dark:bg-zinc-900/30 border border-slate-700/50 rounded-lg text-[12px] text-primary focus:outline-none focus:border-amber-500/50">
                     <option value="">Select date…</option>
                     {FUTURE_DATES.map(d => <option key={d} value={d}>{d}</option>)}
                   </select>
@@ -243,28 +243,28 @@ export default function ScheduleTrainingWorkflow({
                 <div>
                   <label className="block text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Start Time</label>
                   <select value={config.time} onChange={e => setConfig(c => ({ ...c, time: e.target.value }))}
-                    className="w-full px-3 py-2 bg-slate-100/80 dark:bg-slate-800/30 border border-slate-700/50 rounded-lg text-[12px] text-primary focus:outline-none focus:border-amber-500/50">
+                    className="w-full px-3 py-2 bg-slate-100/80 dark:bg-zinc-900/30 border border-slate-700/50 rounded-lg text-[12px] text-primary focus:outline-none focus:border-amber-500/50">
                     {TIME_SLOTS.map(t => <option key={t} value={t}>{t}</option>)}
                   </select>
                 </div>
                 <div>
                   <label className="block text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Duration</label>
                   <select value={config.duration} onChange={e => setConfig(c => ({ ...c, duration: e.target.value }))}
-                    className="w-full px-3 py-2 bg-slate-100/80 dark:bg-slate-800/30 border border-slate-700/50 rounded-lg text-[12px] text-primary focus:outline-none focus:border-amber-500/50">
+                    className="w-full px-3 py-2 bg-slate-100/80 dark:bg-zinc-900/30 border border-slate-700/50 rounded-lg text-[12px] text-primary focus:outline-none focus:border-amber-500/50">
                     {DURATIONS.map(d => <option key={d} value={d}>{d}</option>)}
                   </select>
                 </div>
                 <div>
                   <label className="block text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Capacity</label>
                   <select value={config.capacity} onChange={e => setConfig(c => ({ ...c, capacity: Number(e.target.value) }))}
-                    className="w-full px-3 py-2 bg-slate-100/80 dark:bg-slate-800/30 border border-slate-700/50 rounded-lg text-[12px] text-primary focus:outline-none focus:border-amber-500/50">
+                    className="w-full px-3 py-2 bg-slate-100/80 dark:bg-zinc-900/30 border border-slate-700/50 rounded-lg text-[12px] text-primary focus:outline-none focus:border-amber-500/50">
                     {[4, 6, 8, 10, 12, 16, 20, 24].map(n => <option key={n} value={n}>{n} participants</option>)}
                   </select>
                 </div>
                 <div>
                   <label className="block text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Location</label>
                   <select value={config.location} onChange={e => setConfig(c => ({ ...c, location: e.target.value }))}
-                    className="w-full px-3 py-2 bg-slate-100/80 dark:bg-slate-800/30 border border-slate-700/50 rounded-lg text-[12px] text-primary focus:outline-none focus:border-amber-500/50">
+                    className="w-full px-3 py-2 bg-slate-100/80 dark:bg-zinc-900/30 border border-slate-700/50 rounded-lg text-[12px] text-primary focus:outline-none focus:border-amber-500/50">
                     <option value="">Select location…</option>
                     {LOCATIONS.map(l => <option key={l} value={l}>{l}</option>)}
                   </select>
@@ -272,7 +272,7 @@ export default function ScheduleTrainingWorkflow({
                 <div>
                   <label className="block text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Instructor</label>
                   <select value={config.instructor} onChange={e => setConfig(c => ({ ...c, instructor: e.target.value }))}
-                    className="w-full px-3 py-2 bg-slate-100/80 dark:bg-slate-800/30 border border-slate-700/50 rounded-lg text-[12px] text-primary focus:outline-none focus:border-amber-500/50">
+                    className="w-full px-3 py-2 bg-slate-100/80 dark:bg-zinc-900/30 border border-slate-700/50 rounded-lg text-[12px] text-primary focus:outline-none focus:border-amber-500/50">
                     <option value="">Select instructor…</option>
                     {INSTRUCTORS.map(i => <option key={i} value={i}>{i}</option>)}
                   </select>
@@ -311,17 +311,17 @@ export default function ScheduleTrainingWorkflow({
               )}
 
               <div className="grid grid-cols-3 gap-3 mb-4">
-                <div className="p-3 bg-slate-100/80 dark:bg-slate-800/30 border border-slate-700/40 rounded-xl text-center">
+                <div className="p-3 bg-slate-100/80 dark:bg-zinc-900/30 border border-slate-700/40 rounded-xl text-center">
                   <p className="text-[10px] text-slate-500 uppercase font-semibold tracking-wider mb-1">In Training</p>
                   <p className="text-2xl font-bold text-primary">{selectedPeople.length}</p>
                   <p className="text-[10px] text-secondary">personnel</p>
                 </div>
-                <div className={`p-3 border rounded-xl text-center ${impact.complianceGains > 0 ? 'bg-green-500/10 border-green-500/25' : 'bg-slate-100/80 dark:bg-slate-800/30 border-slate-700/40'}`}>
+                <div className={`p-3 border rounded-xl text-center ${impact.complianceGains > 0 ? 'bg-green-500/10 border-green-500/25' : 'bg-slate-100/80 dark:bg-zinc-900/30 border-slate-700/40'}`}>
                   <p className="text-[10px] text-slate-500 uppercase font-semibold tracking-wider mb-1">Compliance Gain</p>
                   <p className={`text-2xl font-bold ${impact.complianceGains > 0 ? 'text-green-600 dark:text-green-400' : 'text-primary'}`}>+{impact.complianceGains}</p>
                   <p className="text-[10px] text-secondary">cert risks resolved</p>
                 </div>
-                <div className={`p-3 border rounded-xl text-center ${impact.otNeeded > 0 ? 'bg-orange-500/10 border-orange-500/25' : 'bg-slate-100/80 dark:bg-slate-800/30 border-slate-700/40'}`}>
+                <div className={`p-3 border rounded-xl text-center ${impact.otNeeded > 0 ? 'bg-orange-500/10 border-orange-500/25' : 'bg-slate-100/80 dark:bg-zinc-900/30 border-slate-700/40'}`}>
                   <p className="text-[10px] text-slate-500 uppercase font-semibold tracking-wider mb-1">OT Required</p>
                   <p className={`text-2xl font-bold ${impact.otNeeded > 0 ? 'text-orange-600 dark:text-orange-400' : 'text-primary'}`}>{impact.otNeeded}</p>
                   <p className="text-[10px] text-secondary">backfill positions</p>
@@ -332,7 +332,7 @@ export default function ScheduleTrainingWorkflow({
                 <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2">Division Coverage During Training Window</p>
                 <div className="space-y-2">
                   {impact.divImpacts.map(d => (
-                    <div key={d.division} className={`p-3 border rounded-xl ${d.violation ? 'bg-red-500/5 border-red-500/20' : 'bg-slate-100/50 dark:bg-slate-800/20 border-slate-700/30'}`}>
+                    <div key={d.division} className={`p-3 border rounded-xl ${d.violation ? 'bg-red-500/5 border-red-500/20' : 'bg-slate-100/50 dark:bg-zinc-900/20 border-slate-700/30'}`}>
                       <div className="flex items-center justify-between mb-1.5">
                         <div className="flex items-center gap-2">
                           {d.violation
@@ -343,7 +343,7 @@ export default function ScheduleTrainingWorkflow({
                         </div>
                         <span className={`text-[12px] font-bold ${d.violation ? 'text-red-600 dark:text-red-400' : 'text-primary'}`}>{d.during}/{d.total} available ({d.pct}%)</span>
                       </div>
-                      <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-1.5 mb-1">
+                      <div className="w-full bg-slate-200 dark:bg-zinc-800 rounded-full h-1.5 mb-1">
                         <div className={`h-1.5 rounded-full ${d.violation ? 'bg-red-500' : d.pct < 88 ? 'bg-orange-500' : 'bg-green-500'}`} style={{ width: `${d.pct}%` }} />
                       </div>
                       <p className="text-[10px] text-secondary">Minimum required: {d.minimum} &bull; {d.training} scheduled for training</p>
@@ -391,7 +391,7 @@ export default function ScheduleTrainingWorkflow({
               {!confirmed ? (
                 <>
                   <p className="text-[11px] text-secondary mb-4">Review the training details. On confirmation, all actions below execute automatically.</p>
-                  <div className="p-4 bg-slate-100/80 dark:bg-slate-800/30 border border-slate-700/40 rounded-xl mb-4 space-y-2.5">
+                  <div className="p-4 bg-slate-100/80 dark:bg-zinc-900/30 border border-slate-700/40 rounded-xl mb-4 space-y-2.5">
                     {[
                       ['Certification', config.certType],
                       ['Date & Time', `${config.date} • ${config.time}`],
@@ -409,7 +409,7 @@ export default function ScheduleTrainingWorkflow({
                       <span className="text-[12px] text-secondary">Personnel ({selectedPeople.length})</span>
                       <div className="flex flex-wrap gap-1.5 mt-1.5">
                         {selectedPeople.map(p => (
-                          <span key={p.id} className="px-2 py-0.5 bg-white dark:bg-slate-800 border border-slate-700/40 rounded text-[11px] font-semibold text-amber-600 dark:text-amber-400">{p.name}</span>
+                          <span key={p.id} className="px-2 py-0.5 bg-white dark:bg-zinc-900 border border-slate-700/40 rounded text-[11px] font-semibold text-amber-600 dark:text-amber-400">{p.name}</span>
                         ))}
                       </div>
                     </div>
@@ -435,7 +435,7 @@ export default function ScheduleTrainingWorkflow({
                   </div>
                   <h4 className="text-lg font-bold text-primary mb-1">Training Scheduled</h4>
                   <p className="text-sm text-secondary mb-5">{config.certType} training confirmed for {selectedPeople.length} employee{selectedPeople.length > 1 ? 's' : ''} on {config.date}.</p>
-                  <div className="text-left mb-5 p-4 bg-slate-100/80 dark:bg-slate-800/30 border border-slate-700/40 rounded-xl">
+                  <div className="text-left mb-5 p-4 bg-slate-100/80 dark:bg-zinc-900/30 border border-slate-700/40 rounded-xl">
                     <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2.5">Completed Actions</p>
                     <div className="space-y-1.5">
                       {POST_ACTIONS.map((a, i) => (
@@ -447,7 +447,7 @@ export default function ScheduleTrainingWorkflow({
                   </div>
                   <div className="space-y-2">
                     <button onClick={() => navigate(createPageUrl('TrainingCertifications'))}
-                      className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary hover:text-primary rounded-xl text-sm font-medium transition-colors">
+                      className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-slate-100/80 dark:bg-zinc-900/30 hover:bg-slate-200 dark:hover:bg-zinc-900/60 border border-slate-700/50 text-secondary hover:text-primary rounded-xl text-sm font-medium transition-colors">
                       <ExternalLink className="w-4 h-4" />View in HR &bull; Training Management
                     </button>
                     <button onClick={onClose} className="w-full px-4 py-2.5 text-secondary hover:text-primary text-sm font-medium transition-colors">Done</button>

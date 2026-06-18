@@ -115,10 +115,10 @@ export default function WorkforceAnalytics({ isOpen, onClose }) {
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center p-4 pt-8 overflow-y-auto">
       <div className="fixed inset-0 bg-slate-950/85 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative w-full max-w-5xl bg-white dark:bg-slate-900 border border-border rounded-2xl shadow-2xl overflow-hidden mb-8">
+      <div className="relative w-full max-w-5xl bg-white dark:bg-zinc-950 border border-border rounded-2xl shadow-2xl overflow-hidden mb-8">
 
         {/* Header */}
-        <div className="bg-white dark:bg-slate-900 border-b border-border px-6 py-4">
+        <div className="bg-white dark:bg-zinc-950 border-b border-border px-6 py-4">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-xl bg-blue-500/15 border border-blue-500/25 flex items-center justify-center">
@@ -129,14 +129,14 @@ export default function WorkforceAnalytics({ isOpen, onClose }) {
                 <p className="text-[10px] text-secondary">Staffing health, predictive analytics &amp; command forecasts</p>
               </div>
             </div>
-            <button onClick={onClose} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors">
+            <button onClick={onClose} className="p-2 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors">
               <X className="w-5 h-5 text-secondary" />
             </button>
           </div>
           <div className="flex gap-1">
             {TABS.map(t => (
               <button key={t} onClick={() => setTab(t)}
-                className={`px-3 py-1.5 rounded-lg text-[11px] font-semibold transition-colors ${tab === t ? 'bg-blue-500/15 border border-blue-500/25 text-blue-600 dark:text-blue-400' : 'text-secondary hover:text-primary hover:bg-slate-100/80 dark:hover:bg-slate-800/30'}`}>
+                className={`px-3 py-1.5 rounded-lg text-[11px] font-semibold transition-colors ${tab === t ? 'bg-blue-500/15 border border-blue-500/25 text-blue-600 dark:text-blue-400' : 'text-secondary hover:text-primary hover:bg-slate-100/80 dark:hover:bg-zinc-900/30'}`}>
                 {t}
               </button>
             ))}
@@ -155,7 +155,7 @@ export default function WorkforceAnalytics({ isOpen, onClose }) {
                   { label: 'Open Positions',        value: '12',   sub: '4 Patrol critical',       color: 'red' },
                   { label: 'Workforce Readiness',   value: '87',   sub: 'Score out of 100',        color: 'orange' },
                 ].map(({ label, value, sub, color }) => (
-                  <div key={label} className={`p-3 border rounded-xl ${color === 'green' ? 'bg-green-500/10 border-green-500/20' : color === 'red' ? 'bg-red-500/10 border-red-500/20' : color === 'orange' ? 'bg-orange-500/10 border-orange-500/20' : 'bg-slate-100/80 dark:bg-slate-800/30 border-slate-700/40'}`}>
+                  <div key={label} className={`p-3 border rounded-xl ${color === 'green' ? 'bg-green-500/10 border-green-500/20' : color === 'red' ? 'bg-red-500/10 border-red-500/20' : color === 'orange' ? 'bg-orange-500/10 border-orange-500/20' : 'bg-slate-100/80 dark:bg-zinc-900/30 border-slate-700/40'}`}>
                     <p className="text-[10px] text-slate-500 uppercase font-semibold tracking-wider mb-1">{label}</p>
                     <p className={`text-2xl font-bold ${color === 'green' ? 'text-green-600 dark:text-green-400' : color === 'red' ? 'text-red-600 dark:text-red-400' : color === 'orange' ? 'text-orange-600 dark:text-orange-400' : 'text-primary'}`}>{value}</p>
                     <p className="text-[10px] text-secondary">{sub}</p>
@@ -177,7 +177,7 @@ export default function WorkforceAnalytics({ isOpen, onClose }) {
                           </div>
                           <span className={`text-[12px] font-bold ${covText(d.pct)}`}>{d.pct}% ({d.filled}/{d.authorized})</span>
                         </div>
-                        <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-1.5">
+                        <div className="w-full bg-slate-200 dark:bg-zinc-800 rounded-full h-1.5">
                           <div className={`h-1.5 rounded-full ${covBar(d.pct)}`} style={{ width: `${d.pct}%` }} />
                         </div>
                       </div>
@@ -196,7 +196,7 @@ export default function WorkforceAnalytics({ isOpen, onClose }) {
                         { label: 'On Duty Today',     value: '127/158',  color: 'green' },
                         { label: 'Avg Time-to-Hire',  value: '42 days',  color: 'neutral' },
                       ].map(({ label, value, color }) => (
-                        <div key={label} className={`p-3 border rounded-xl ${color === 'green' ? 'bg-green-500/10 border-green-500/20' : color === 'orange' ? 'bg-orange-500/10 border-orange-500/20' : 'bg-slate-100/80 dark:bg-slate-800/30 border-slate-700/40'}`}>
+                        <div key={label} className={`p-3 border rounded-xl ${color === 'green' ? 'bg-green-500/10 border-green-500/20' : color === 'orange' ? 'bg-orange-500/10 border-orange-500/20' : 'bg-slate-100/80 dark:bg-zinc-900/30 border-slate-700/40'}`}>
                           <p className={`text-[14px] font-bold ${color === 'green' ? 'text-green-600 dark:text-green-400' : color === 'orange' ? 'text-orange-600 dark:text-orange-400' : 'text-primary'}`}>{value}</p>
                           <p className="text-[9px] text-secondary mt-0.5">{label}</p>
                         </div>
@@ -262,7 +262,7 @@ export default function WorkforceAnalytics({ isOpen, onClose }) {
           {/* ── FORECASTS ── */}
           {tab === 'Forecasts' && (
             <div>
-              <div className="flex items-center gap-2 mb-4 p-3 bg-slate-900 dark:bg-slate-950 border border-slate-700/60 rounded-xl">
+              <div className="flex items-center gap-2 mb-4 p-3 bg-slate-900 dark:bg-black border border-slate-700/60 rounded-xl">
                 <Sparkles className="w-4 h-4 text-blue-400 flex-shrink-0" />
                 <p className="text-[11px] text-slate-300">AI predictive analysis based on current staffing, open positions, hiring pipeline velocity, and historical turnover patterns.</p>
               </div>
@@ -290,7 +290,7 @@ export default function WorkforceAnalytics({ isOpen, onClose }) {
               </div>
 
               {/* Shortage predictions */}
-              <div className="p-4 bg-slate-900 dark:bg-slate-950 border border-slate-700/60 rounded-xl">
+              <div className="p-4 bg-slate-900 dark:bg-black border border-slate-700/60 rounded-xl">
                 <div className="flex items-center gap-2 mb-3">
                   <Sparkles className="w-4 h-4 text-blue-400" />
                   <span className="text-sm font-bold text-white">AI Staffing Shortage Predictions</span>
@@ -323,7 +323,7 @@ export default function WorkforceAnalytics({ isOpen, onClose }) {
                   { label: 'Offers Extended',   value: '3',  color: 'green' },
                   { label: 'Open Requisitions', value: '12', color: 'red' },
                 ].map(({ label, value, color }) => (
-                  <div key={label} className={`p-3 border rounded-xl ${color === 'blue' ? 'bg-blue-500/10 border-blue-500/20' : color === 'green' ? 'bg-green-500/10 border-green-500/20' : color === 'red' ? 'bg-red-500/10 border-red-500/20' : 'bg-slate-100/80 dark:bg-slate-800/30 border-slate-700/40'}`}>
+                  <div key={label} className={`p-3 border rounded-xl ${color === 'blue' ? 'bg-blue-500/10 border-blue-500/20' : color === 'green' ? 'bg-green-500/10 border-green-500/20' : color === 'red' ? 'bg-red-500/10 border-red-500/20' : 'bg-slate-100/80 dark:bg-zinc-900/30 border-slate-700/40'}`}>
                     <p className={`text-2xl font-bold ${color === 'blue' ? 'text-blue-600 dark:text-blue-400' : color === 'green' ? 'text-green-600 dark:text-green-400' : color === 'red' ? 'text-red-600 dark:text-red-400' : 'text-primary'}`}>{value}</p>
                     <p className="text-[10px] text-secondary mt-0.5">{label}</p>
                   </div>
@@ -337,12 +337,12 @@ export default function WorkforceAnalytics({ isOpen, onClose }) {
                   <div className="space-y-2">
                     {HIRING_PIPELINE.map(stage => (
                       <div key={stage.stage} className="flex items-center gap-3">
-                        <div className="flex-1 p-2.5 bg-slate-100/80 dark:bg-slate-800/30 border border-slate-700/40 rounded-lg">
+                        <div className="flex-1 p-2.5 bg-slate-100/80 dark:bg-zinc-900/30 border border-slate-700/40 rounded-lg">
                           <div className="flex items-center justify-between mb-1">
                             <span className="text-[11px] font-medium text-primary">{stage.stage}</span>
                             <span className={`text-[13px] font-bold ${stage.color === 'green' ? 'text-green-600 dark:text-green-400' : stage.color === 'orange' ? 'text-orange-600 dark:text-orange-400' : 'text-blue-600 dark:text-blue-400'}`}>{stage.count}</span>
                           </div>
-                          <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-1">
+                          <div className="w-full bg-slate-200 dark:bg-zinc-800 rounded-full h-1">
                             <div className={`h-1 rounded-full ${stage.color === 'green' ? 'bg-green-500' : stage.color === 'orange' ? 'bg-orange-500' : 'bg-blue-500'}`} style={{ width: `${(stage.count / 28) * 100}%` }} />
                           </div>
                         </div>
@@ -356,7 +356,7 @@ export default function WorkforceAnalytics({ isOpen, onClose }) {
                   <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2.5">Open Requisitions by Priority</p>
                   <div className="space-y-2">
                     {OPEN_POSITIONS.map(pos => (
-                      <div key={pos.title} className={`flex items-center gap-3 p-3 border rounded-xl ${pos.priority === 'critical' ? 'bg-red-500/5 border-red-500/20' : pos.priority === 'high' ? 'bg-orange-500/5 border-orange-500/15' : 'bg-slate-100/50 dark:bg-slate-800/20 border-slate-700/30'}`}>
+                      <div key={pos.title} className={`flex items-center gap-3 p-3 border rounded-xl ${pos.priority === 'critical' ? 'bg-red-500/5 border-red-500/20' : pos.priority === 'high' ? 'bg-orange-500/5 border-orange-500/15' : 'bg-slate-100/50 dark:bg-zinc-900/20 border-slate-700/30'}`}>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2">
                             <span className="text-[12px] font-semibold text-primary">{pos.title}</span>
@@ -392,7 +392,7 @@ export default function WorkforceAnalytics({ isOpen, onClose }) {
           {/* ── AI ACTIONS ── */}
           {tab === 'AI Actions' && (
             <div>
-              <div className="flex items-center gap-2 mb-4 p-3 bg-slate-900 dark:bg-slate-950 border border-slate-700/60 rounded-xl">
+              <div className="flex items-center gap-2 mb-4 p-3 bg-slate-900 dark:bg-black border border-slate-700/60 rounded-xl">
                 <Sparkles className="w-4 h-4 text-blue-400 flex-shrink-0" />
                 <p className="text-[11px] text-slate-300">AI-recommended command actions ranked by operational impact. Each action includes one-click execution or package generation.</p>
               </div>
@@ -438,7 +438,7 @@ export default function WorkforceAnalytics({ isOpen, onClose }) {
                         </div>
                         <p className="text-[11px] text-secondary leading-relaxed">{item.detail}</p>
                       </div>
-                      <button className={`flex-shrink-0 flex items-center gap-1.5 px-3 py-2 font-semibold rounded-lg text-[11px] transition-colors ${item.priority <= 2 ? 'bg-amber-500 hover:bg-amber-600 text-slate-900' : 'bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary'}`}>
+                      <button className={`flex-shrink-0 flex items-center gap-1.5 px-3 py-2 font-semibold rounded-lg text-[11px] transition-colors ${item.priority <= 2 ? 'bg-amber-500 hover:bg-amber-600 text-slate-900' : 'bg-slate-100/80 dark:bg-zinc-900/30 hover:bg-slate-200 dark:hover:bg-zinc-900/60 border border-slate-700/50 text-secondary'}`}>
                         {item.action} <ArrowRight className="w-3 h-3" />
                       </button>
                     </div>

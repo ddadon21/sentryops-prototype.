@@ -381,11 +381,11 @@ export default function InterviewScheduling() {
                     <Plus className="w-4 h-4" />
                     Schedule Interview
                   </button>
-                  <button className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded-xl text-sm font-medium transition-colors">
+                  <button className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-zinc-900/40 hover:bg-slate-100 dark:hover:bg-zinc-900/60 border border-slate-700/50 text-secondary rounded-xl text-sm font-medium transition-colors">
                     <Calendar className="w-4 h-4" />
                     View Calendar
                   </button>
-                  <button className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded-xl text-sm font-medium transition-colors">
+                  <button className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-zinc-900/40 hover:bg-slate-100 dark:hover:bg-zinc-900/60 border border-slate-700/50 text-secondary rounded-xl text-sm font-medium transition-colors">
                     <Printer className="w-4 h-4" />
                     Print Schedule
                   </button>
@@ -409,7 +409,7 @@ export default function InterviewScheduling() {
             {/* Scheduling Overview */}
             <div className="mb-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* This Week's Schedule */}
-              <div className="lg:col-span-2 bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
+              <div className="lg:col-span-2 bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
                 <div className="flex items-start gap-4">
                   <div className="w-10 h-10 bg-amber-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
                     <Calendar className="w-6 h-6 text-amber-700" />
@@ -468,7 +468,7 @@ export default function InterviewScheduling() {
               </div>
 
               {/* Investigator Workload */}
-              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
+              <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
                 <h4 className="text-sm font-semibold text-primary mb-4 flex items-center gap-2">
                   <Users className="w-4 h-4 text-amber-700" />
                   Investigator Workload
@@ -518,7 +518,7 @@ export default function InterviewScheduling() {
             {/* Status Summary Cards */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
               {/* Upcoming Interviews */}
-              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
+              <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
                 <div className="flex items-center justify-between mb-3">
                   <Calendar className="w-8 h-8 text-blue-400" />
                   <span className="text-2xl font-bold text-primary">{upcomingInterviews.length}</span>
@@ -538,7 +538,7 @@ export default function InterviewScheduling() {
               </div>
 
               {/* Today's Interviews */}
-              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
+              <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
                 <div className="flex items-center justify-between mb-3">
                   <Clock className="w-8 h-8 text-green-400" />
                   <span className="text-2xl font-bold text-primary">1</span>
@@ -552,7 +552,7 @@ export default function InterviewScheduling() {
               </div>
 
               {/* Pending Confirmation */}
-              <div className="bg-white dark:bg-slate-800/40 border border-amber-500/30 rounded-xl p-5">
+              <div className="bg-white dark:bg-zinc-900/40 border border-amber-500/30 rounded-xl p-5">
                 <div className="flex items-center justify-between mb-3">
                   <AlertCircle className="w-8 h-8 text-amber-700" />
                   <span className="text-2xl font-bold text-amber-700">{pendingConfirmation.length}</span>
@@ -568,7 +568,7 @@ export default function InterviewScheduling() {
               </div>
 
               {/* Completed This Month */}
-              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
+              <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
                 <div className="flex items-center justify-between mb-3">
                   <CheckCircle className="w-8 h-8 text-green-400" />
                   <span className="text-2xl font-bold text-primary">{completedInterviews.length}</span>
@@ -589,26 +589,26 @@ export default function InterviewScheduling() {
             </div>
 
             {/* Quick Actions */}
-            <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4 mb-6">
+            <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4 mb-6">
               <h4 className="text-sm font-semibold text-primary mb-3">Quick Actions</h4>
               <div className="flex flex-wrap gap-3">
                 <button className="flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-sm font-medium transition-colors">
                   <Plus className="w-4 h-4" />
                   Schedule New Interview
                 </button>
-                <button className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-700/50 hover:bg-slate-700 border border-slate-600/50 text-secondary rounded-xl text-sm font-medium transition-colors">
+                <button className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-zinc-800/50 hover:bg-slate-700 border border-slate-600/50 text-secondary rounded-xl text-sm font-medium transition-colors">
                   <Phone className="w-4 h-4" />
                   Confirm Pending
                 </button>
-                <button className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-700/50 hover:bg-slate-700 border border-slate-600/50 text-secondary rounded-xl text-sm font-medium transition-colors">
+                <button className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-zinc-800/50 hover:bg-slate-700 border border-slate-600/50 text-secondary rounded-xl text-sm font-medium transition-colors">
                   <CheckCircle className="w-4 h-4" />
                   Mark Complete
                 </button>
-                <button className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-700/50 hover:bg-slate-700 border border-slate-600/50 text-secondary rounded-xl text-sm font-medium transition-colors">
+                <button className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-zinc-800/50 hover:bg-slate-700 border border-slate-600/50 text-secondary rounded-xl text-sm font-medium transition-colors">
                   <Download className="w-4 h-4" />
                   Export Schedule
                 </button>
-                <button className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-700/50 hover:bg-slate-700 border border-slate-600/50 text-secondary rounded-xl text-sm font-medium transition-colors">
+                <button className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-zinc-800/50 hover:bg-slate-700 border border-slate-600/50 text-secondary rounded-xl text-sm font-medium transition-colors">
                   <Bell className="w-4 h-4" />
                   Set Reminder
                 </button>
@@ -616,7 +616,7 @@ export default function InterviewScheduling() {
             </div>
 
             {/* View Tabs */}
-            <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl overflow-hidden mb-6">
+            <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl overflow-hidden mb-6">
               <div className="flex border-b border-border overflow-x-auto">
                 <button
                   onClick={() => setSelectedView('upcoming')}
@@ -651,7 +651,7 @@ export default function InterviewScheduling() {
                 <div className="flex items-center justify-between mb-2">
                   <h3 className="text-sm font-medium text-secondary">Upcoming Interviews (Next 7 Days)</h3>
                   <div className="flex items-center gap-2">
-                    <button className="flex items-center gap-1 px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700 border border-slate-600/50 rounded-lg text-xs text-secondary">
+                    <button className="flex items-center gap-1 px-3 py-1.5 bg-white dark:bg-zinc-800/50 hover:bg-slate-700 border border-slate-600/50 rounded-lg text-xs text-secondary">
                       <Filter className="w-3 h-3" />
                       Filter
                     </button>
@@ -659,7 +659,7 @@ export default function InterviewScheduling() {
                 </div>
 
                 {upcomingInterviews.map((interview) => (
-                  <div key={interview.id} className={`bg-white dark:bg-slate-800/40 border rounded-xl p-5 ${interview.confirmationStatus === 'pending' ? 'border-amber-500/30' : 'border-slate-700/50'}`}>
+                  <div key={interview.id} className={`bg-white dark:bg-zinc-900/40 border rounded-xl p-5 ${interview.confirmationStatus === 'pending' ? 'border-amber-500/30' : 'border-slate-700/50'}`}>
                     {/* Header */}
                     <div className="flex items-start justify-between mb-4">
                       <div>
@@ -685,7 +685,7 @@ export default function InterviewScheduling() {
                     </div>
 
                     {/* Schedule Details */}
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4 p-3 bg-white dark:bg-slate-900/40 rounded-lg">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4 p-3 bg-white dark:bg-zinc-950/40 rounded-lg">
                       <div>
                         <p className="text-xs text-slate-500 mb-1">Date</p>
                         <p className="text-sm text-primary flex items-center gap-1">
@@ -769,7 +769,7 @@ export default function InterviewScheduling() {
 
                     {/* Preparation Notes */}
                     {interview.preparationNotes && (
-                      <div className="mb-4 p-3 bg-white dark:bg-slate-900/40 rounded-lg">
+                      <div className="mb-4 p-3 bg-white dark:bg-zinc-950/40 rounded-lg">
                         <p className="text-xs text-slate-500 mb-2 font-medium">Preparation Notes</p>
                         <ul className="space-y-1">
                           {interview.preparationNotes.map((note, idx) => (
@@ -784,7 +784,7 @@ export default function InterviewScheduling() {
 
                     {/* Reference/Employer Info */}
                     {interview.referenceInfo && (
-                      <div className="mb-4 p-3 bg-white dark:bg-slate-900/40 rounded-lg">
+                      <div className="mb-4 p-3 bg-white dark:bg-zinc-950/40 rounded-lg">
                         <p className="text-xs text-slate-500 mb-2 font-medium">Reference Information</p>
                         <div className="grid grid-cols-2 gap-2 text-sm">
                           <div>
@@ -824,10 +824,10 @@ export default function InterviewScheduling() {
                         )}
                       </div>
                       <div className="flex items-center gap-2">
-                        <button className="p-2 bg-white dark:bg-slate-700/50 hover:bg-slate-700 rounded-lg transition-colors" title="Edit">
+                        <button className="p-2 bg-white dark:bg-zinc-800/50 hover:bg-slate-700 rounded-lg transition-colors" title="Edit">
                           <Edit className="w-4 h-4 text-secondary" />
                         </button>
-                        <button className="p-2 bg-white dark:bg-slate-700/50 hover:bg-slate-700 rounded-lg transition-colors" title="Cancel">
+                        <button className="p-2 bg-white dark:bg-zinc-800/50 hover:bg-slate-700 rounded-lg transition-colors" title="Cancel">
                           <Trash2 className="w-4 h-4 text-secondary" />
                         </button>
                         {interview.confirmationStatus === 'pending' && (
@@ -854,14 +854,14 @@ export default function InterviewScheduling() {
                 </div>
 
                 {pendingConfirmation.length === 0 ? (
-                  <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-8 text-center">
+                  <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-8 text-center">
                     <CheckCircle2 className="w-12 h-12 text-green-400 mx-auto mb-3" />
                     <p className="text-secondary font-medium">All interviews confirmed!</p>
                     <p className="text-sm text-slate-500 mt-1">No pending confirmations at this time.</p>
                   </div>
                 ) : (
                   pendingConfirmation.map((interview) => (
-                    <div key={interview.id} className="bg-white dark:bg-slate-800/40 border border-amber-500/30 rounded-xl p-5">
+                    <div key={interview.id} className="bg-white dark:bg-zinc-900/40 border border-amber-500/30 rounded-xl p-5">
                       {/* Same structure as upcoming, but only for pending */}
                       <div className="flex items-start justify-between mb-4">
                         <div>
@@ -893,11 +893,11 @@ export default function InterviewScheduling() {
                           <Phone className="w-4 h-4" />
                           Call Now
                         </button>
-                        <button className="px-4 py-2 bg-white dark:bg-slate-700/50 hover:bg-slate-700 text-secondary rounded-xl text-sm font-medium transition-colors flex items-center gap-2">
+                        <button className="px-4 py-2 bg-white dark:bg-zinc-800/50 hover:bg-slate-700 text-secondary rounded-xl text-sm font-medium transition-colors flex items-center gap-2">
                           <Mail className="w-4 h-4" />
                           Send Email
                         </button>
-                        <button className="px-4 py-2 bg-white dark:bg-slate-700/50 hover:bg-slate-700 text-secondary rounded-xl text-sm font-medium transition-colors">
+                        <button className="px-4 py-2 bg-white dark:bg-zinc-800/50 hover:bg-slate-700 text-secondary rounded-xl text-sm font-medium transition-colors">
                           Reschedule
                         </button>
                       </div>
@@ -913,11 +913,11 @@ export default function InterviewScheduling() {
                 <div className="flex items-center justify-between mb-2">
                   <h3 className="text-sm font-medium text-secondary">Completed Interviews (January 2025)</h3>
                   <div className="flex items-center gap-2">
-                    <button className="flex items-center gap-1 px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700 border border-slate-600/50 rounded-lg text-xs text-secondary">
+                    <button className="flex items-center gap-1 px-3 py-1.5 bg-white dark:bg-zinc-800/50 hover:bg-slate-700 border border-slate-600/50 rounded-lg text-xs text-secondary">
                       <Filter className="w-3 h-3" />
                       Filter
                     </button>
-                    <button className="flex items-center gap-1 px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700 border border-slate-600/50 rounded-lg text-xs text-secondary">
+                    <button className="flex items-center gap-1 px-3 py-1.5 bg-white dark:bg-zinc-800/50 hover:bg-slate-700 border border-slate-600/50 rounded-lg text-xs text-secondary">
                       <Download className="w-3 h-3" />
                       Export
                     </button>
@@ -925,7 +925,7 @@ export default function InterviewScheduling() {
                 </div>
 
                 {completedInterviews.map((interview) => (
-                  <div key={interview.id} className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
+                  <div key={interview.id} className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
                     {/* Header */}
                     <div className="flex items-start justify-between mb-4">
                       <div>
@@ -946,7 +946,7 @@ export default function InterviewScheduling() {
                     </div>
 
                     {/* Schedule Info */}
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4 p-3 bg-white dark:bg-slate-900/40 rounded-lg">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4 p-3 bg-white dark:bg-zinc-950/40 rounded-lg">
                       <div>
                         <p className="text-xs text-slate-500 mb-1">Scheduled</p>
                         <p className="text-sm text-secondary">{interview.scheduledDate}</p>
@@ -1001,7 +1001,7 @@ export default function InterviewScheduling() {
 
                     {/* Summary */}
                     {interview.summary && (
-                      <div className="mb-4 p-3 bg-white dark:bg-slate-900/40 rounded-lg">
+                      <div className="mb-4 p-3 bg-white dark:bg-zinc-950/40 rounded-lg">
                         <p className="text-xs text-slate-500 mb-2 font-medium">Interview Notes Summary</p>
                         <p className="text-sm text-secondary italic">"{interview.summary}"</p>
                       </div>
@@ -1013,7 +1013,7 @@ export default function InterviewScheduling() {
                         <p className="text-xs text-slate-500 mb-2 font-medium">Topics Covered</p>
                         <div className="flex flex-wrap gap-2">
                           {interview.topicsCovered.map((topic, idx) => (
-                            <span key={idx} className="px-2 py-1 bg-white dark:bg-slate-700/50 rounded-lg text-xs text-secondary flex items-center gap-1">
+                            <span key={idx} className="px-2 py-1 bg-white dark:bg-zinc-800/50 rounded-lg text-xs text-secondary flex items-center gap-1">
                               <CheckCircle2 className="w-3 h-3 text-green-400" />
                               {topic}
                             </span>
@@ -1025,7 +1025,7 @@ export default function InterviewScheduling() {
                     {/* Documents & Follow-up */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                       {interview.documentsGenerated && (
-                        <div className="p-3 bg-white dark:bg-slate-900/40 rounded-lg">
+                        <div className="p-3 bg-white dark:bg-zinc-950/40 rounded-lg">
                           <p className="text-xs text-slate-500 mb-2 font-medium">Documents Generated</p>
                           <ul className="space-y-1">
                             {interview.documentsGenerated.map((doc, idx) => (
@@ -1039,7 +1039,7 @@ export default function InterviewScheduling() {
                       )}
 
                       {interview.followUpActions && (
-                        <div className="p-3 bg-white dark:bg-slate-900/40 rounded-lg">
+                        <div className="p-3 bg-white dark:bg-zinc-950/40 rounded-lg">
                           <p className="text-xs text-slate-500 mb-2 font-medium">Follow-up Actions</p>
                           <ul className="space-y-1">
                             {interview.followUpActions.map((action, idx) => (
@@ -1059,11 +1059,11 @@ export default function InterviewScheduling() {
 
                     {/* Action Buttons */}
                     <div className="flex items-center justify-end pt-4 border-t border-border dark:border-slate-700/30 gap-2">
-                      <button className="px-3 py-2 bg-white dark:bg-slate-700/50 hover:bg-slate-700 text-secondary rounded-xl text-xs font-medium transition-colors flex items-center gap-1">
+                      <button className="px-3 py-2 bg-white dark:bg-zinc-800/50 hover:bg-slate-700 text-secondary rounded-xl text-xs font-medium transition-colors flex items-center gap-1">
                         <FileText className="w-3.5 h-3.5" />
                         View Complete Notes
                       </button>
-                      <button className="px-3 py-2 bg-white dark:bg-slate-700/50 hover:bg-slate-700 text-secondary rounded-xl text-xs font-medium transition-colors flex items-center gap-1">
+                      <button className="px-3 py-2 bg-white dark:bg-zinc-800/50 hover:bg-slate-700 text-secondary rounded-xl text-xs font-medium transition-colors flex items-center gap-1">
                         <Printer className="w-3.5 h-3.5" />
                         Print Report
                       </button>
@@ -1082,16 +1082,16 @@ export default function InterviewScheduling() {
                 <div className="flex items-center justify-between mb-2">
                   <h3 className="text-sm font-medium text-secondary">All Interviews</h3>
                   <div className="flex items-center gap-2">
-                    <button className="flex items-center gap-1 px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700 border border-slate-600/50 rounded-lg text-xs text-secondary">
+                    <button className="flex items-center gap-1 px-3 py-1.5 bg-white dark:bg-zinc-800/50 hover:bg-slate-700 border border-slate-600/50 rounded-lg text-xs text-secondary">
                       <Filter className="w-3 h-3" />
                       Filter
                     </button>
                   </div>
                 </div>
 
-                <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl overflow-hidden">
+                <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl overflow-hidden">
                   <table className="w-full">
-                    <thead className="bg-slate-50 dark:bg-slate-900/60">
+                    <thead className="bg-slate-50 dark:bg-zinc-950/60">
                       <tr>
                         <th className="text-left text-xs font-medium text-secondary p-4">Subject/Reference</th>
                         <th className="text-left text-xs font-medium text-secondary p-4">Case ID</th>
@@ -1104,7 +1104,7 @@ export default function InterviewScheduling() {
                     </thead>
                     <tbody className="divide-y divide-slate-700/30">
                       {[...upcomingInterviews, ...completedInterviews].map((interview) => (
-                        <tr key={interview.id} className="hover:bg-slate-100 dark:hover:bg-slate-800/30">
+                        <tr key={interview.id} className="hover:bg-slate-100 dark:hover:bg-zinc-900/30">
                           <td className="p-4 text-sm text-primary">{interview.subject}</td>
                           <td className="p-4 text-sm text-amber-700">{interview.caseId}</td>
                           <td className="p-4 text-sm text-secondary">{interview.type}</td>
@@ -1116,7 +1116,7 @@ export default function InterviewScheduling() {
                           </td>
                           <td className="p-4 text-sm text-secondary">{interview.investigator}</td>
                           <td className="p-4 text-right">
-                            <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700 text-secondary rounded-lg text-xs font-medium transition-colors">
+                            <button className="px-3 py-1.5 bg-white dark:bg-zinc-800/50 hover:bg-slate-700 text-secondary rounded-lg text-xs font-medium transition-colors">
                               View
                             </button>
                           </td>

@@ -395,11 +395,11 @@ const JailDashboard = () => {
 
           {/* Quick Actions Bar */}
           <div className="flex flex-wrap items-center gap-2">
-            <button className="flex items-center gap-2 px-3 py-2 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium hover:bg-slate-700/60 transition-all" title="Start new inmate intake process">
+            <button className="flex items-center gap-2 px-3 py-2 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium hover:bg-slate-700/60 transition-all" title="Start new inmate intake process">
               <UserPlus className="w-4 h-4" />
               New Booking
             </button>
-            <button className="flex items-center gap-2 px-3 py-2 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium hover:bg-slate-700/60 transition-all" title="Process scheduled release or early discharge">
+            <button className="flex items-center gap-2 px-3 py-2 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium hover:bg-slate-700/60 transition-all" title="Process scheduled release or early discharge">
               <UserCheck className="w-4 h-4" />
               Process Release
             </button>
@@ -411,11 +411,11 @@ const JailDashboard = () => {
               <Heart className="w-4 h-4" />
               Medical Emergency
             </button>
-            <button className="flex items-center gap-2 px-3 py-2 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium hover:bg-slate-700/60 transition-all" title="Generate facility operations report">
+            <button className="flex items-center gap-2 px-3 py-2 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium hover:bg-slate-700/60 transition-all" title="Generate facility operations report">
               <FileText className="w-4 h-4" />
               Daily Report
             </button>
-            <button className="flex items-center gap-2 px-3 py-2 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium hover:bg-slate-700/60 transition-all" title="Search by name, booking #, or DOC number">
+            <button className="flex items-center gap-2 px-3 py-2 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium hover:bg-slate-700/60 transition-all" title="Search by name, booking #, or DOC number">
               <Search className="w-4 h-4" />
               Search Inmate
             </button>
@@ -424,9 +424,9 @@ const JailDashboard = () => {
 
         {/* AI Insights Banner */}
         {aiInsightsVisible && (
-          <div className="mb-6 bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
+          <div className="mb-6 bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 bg-white dark:bg-slate-700/60 rounded-xl flex items-center justify-center flex-shrink-0">
+              <div className="w-10 h-10 bg-white dark:bg-zinc-800/60 rounded-xl flex items-center justify-center flex-shrink-0">
                 <Sparkles className="w-6 h-6 text-slate-700 dark:text-slate-400" />
               </div>
               <div className="flex-1">
@@ -544,9 +544,9 @@ const JailDashboard = () => {
         {/* Enhanced Key Metrics */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           {/* Facility Capacity Card - Enhanced */}
-          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
+          <div className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
             <div className="flex items-center justify-between mb-4">
-              <div className="p-3 bg-white dark:bg-slate-700/60 rounded-lg">
+              <div className="p-3 bg-white dark:bg-zinc-800/60 rounded-lg">
                 <Building2 className="w-6 h-6 text-slate-700 dark:text-slate-400" />
               </div>
               <div className={`text-3xl font-bold ${getCapacityColor(facilityMetrics.percentFull)}`}>
@@ -600,9 +600,9 @@ const JailDashboard = () => {
           </div>
 
           {/* Today's Activity Card - Enhanced */}
-          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
+          <div className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
             <div className="flex items-center justify-between mb-4">
-              <div className="p-3 bg-white dark:bg-slate-700/60 rounded-lg">
+              <div className="p-3 bg-white dark:bg-zinc-800/60 rounded-lg">
                 <Activity className="w-6 h-6 text-slate-700 dark:text-slate-400" />
               </div>
               <div className="flex items-center gap-1">
@@ -653,7 +653,7 @@ const JailDashboard = () => {
           </div>
 
           {/* Court Transports Card - Enhanced */}
-          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
+          <div className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
             <div className="flex items-center justify-between mb-4">
               <div className="p-3 bg-orange-500/20 rounded-lg">
                 <Calendar className="w-6 h-6 text-orange-600 dark:text-orange-400" />
@@ -690,9 +690,9 @@ const JailDashboard = () => {
           </div>
 
           {/* Average Length of Stay Card - Enhanced */}
-          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
+          <div className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
             <div className="flex items-center justify-between mb-4">
-              <div className="p-3 bg-white dark:bg-slate-700/60 rounded-lg">
+              <div className="p-3 bg-white dark:bg-zinc-800/60 rounded-lg">
                 <Clock className="w-6 h-6 text-slate-700 dark:text-slate-400" />
               </div>
               <div className="text-3xl font-bold text-slate-900 dark:text-white">{facilityMetrics.averageLength}</div>
@@ -730,7 +730,7 @@ const JailDashboard = () => {
         </div>
 
         {/* Population Trend Chart */}
-        <div className="mb-6 bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
+        <div className="mb-6 bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
           <div className="flex items-center justify-between mb-4">
             <div>
               <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
@@ -791,7 +791,7 @@ const JailDashboard = () => {
                 </div>
               </div>
             </div>
-            <div className="bg-white dark:bg-slate-800/60 border border-slate-700/50 rounded-lg p-3">
+            <div className="bg-white dark:bg-zinc-900/60 border border-slate-700/50 rounded-lg p-3">
               <div className="text-sm">
                 <span className="text-slate-700 dark:text-slate-400">7-Day Forecast:</span>{' '}
                 <span className="text-slate-700 dark:text-slate-300 font-bold">840-850 inmates</span>
@@ -822,7 +822,7 @@ const JailDashboard = () => {
                 <div className="space-y-3">
                   {/* Alert 1: H2-Pod Over Capacity */}
                   {visibleAlerts.find(a => a.id === 1)?.visible && (
-                    <div className="bg-white dark:bg-slate-900/50 border border-red-500/30 rounded-lg p-4">
+                    <div className="bg-white dark:bg-zinc-950/50 border border-red-500/30 rounded-lg p-4">
                       <div className="flex items-start justify-between gap-3 mb-3">
                         <div className="flex items-start gap-2 flex-1">
                           <Circle className="w-3 h-3 fill-red-500 text-red-500 mt-1 flex-shrink-0" />
@@ -851,18 +851,18 @@ const JailDashboard = () => {
                           <Clock className="w-3 h-3" />
                           Federal audit: Dec 12-14 (3 days away)
                         </div>
-                        <div className="mt-2 p-2 bg-white dark:bg-slate-800/60 border border-slate-700/50 rounded text-slate-700 dark:text-slate-300">
+                        <div className="mt-2 p-2 bg-white dark:bg-zinc-900/60 border border-slate-700/50 rounded text-slate-700 dark:text-slate-300">
                           <strong>Recommended:</strong> Relocate Martinez and Rodriguez (lowest security risk) to E-Pod beds 45, 46 (currently vacant)
                         </div>
                       </div>
                       <div className="flex flex-wrap gap-2 mt-3 ml-5">
-                        <button className="px-3 py-1.5 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded text-xs hover:bg-slate-700/60">
+                        <button className="px-3 py-1.5 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded text-xs hover:bg-slate-700/60">
                           Relocate 2 Inmates to E-Pod
                         </button>
-                        <button className="px-3 py-1.5 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded text-xs hover:bg-slate-700/60">
+                        <button className="px-3 py-1.5 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded text-xs hover:bg-slate-700/60">
                           Request Bond Review
                         </button>
-                        <button className="px-3 py-1.5 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded text-xs hover:bg-slate-700/60">
+                        <button className="px-3 py-1.5 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded text-xs hover:bg-slate-700/60">
                           View Full Pod Status
                         </button>
                       </div>
@@ -871,7 +871,7 @@ const JailDashboard = () => {
 
                   {/* Alert 2: E-Pod Medical Housing */}
                   {visibleAlerts.find(a => a.id === 2)?.visible && (
-                    <div className="bg-white dark:bg-slate-900/50 border border-orange-500/30 rounded-lg p-4">
+                    <div className="bg-white dark:bg-zinc-950/50 border border-orange-500/30 rounded-lg p-4">
                       <div className="flex items-start justify-between gap-3 mb-3">
                         <div className="flex items-start gap-2 flex-1">
                           <Circle className="w-3 h-3 fill-orange-500 text-orange-700 mt-1 flex-shrink-0" />
@@ -904,13 +904,13 @@ const JailDashboard = () => {
                         </div>
                       </div>
                       <div className="flex flex-wrap gap-2 mt-3 ml-5">
-                        <button className="px-3 py-1.5 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded text-xs hover:bg-slate-700/60">
+                        <button className="px-3 py-1.5 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded text-xs hover:bg-slate-700/60">
                           View Medical Dashboard
                         </button>
-                        <button className="px-3 py-1.5 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded text-xs hover:bg-slate-700/60">
+                        <button className="px-3 py-1.5 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded text-xs hover:bg-slate-700/60">
                           Discharge Review
                         </button>
-                        <button className="px-3 py-1.5 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded text-xs hover:bg-slate-700/60">
+                        <button className="px-3 py-1.5 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded text-xs hover:bg-slate-700/60">
                           Contact Dr. Anderson
                         </button>
                       </div>
@@ -919,7 +919,7 @@ const JailDashboard = () => {
 
                   {/* Alert 3: B-Shift Staffing */}
                   {visibleAlerts.find(a => a.id === 3)?.visible && (
-                    <div className="bg-white dark:bg-slate-900/50 border border-orange-500/30 rounded-lg p-4">
+                    <div className="bg-white dark:bg-zinc-950/50 border border-orange-500/30 rounded-lg p-4">
                       <div className="flex items-start justify-between gap-3 mb-3">
                         <div className="flex items-start gap-2 flex-1">
                           <Circle className="w-3 h-3 fill-orange-500 text-orange-700 mt-1 flex-shrink-0" />
@@ -955,10 +955,10 @@ const JailDashboard = () => {
                         <button className="px-3 py-1.5 bg-green-500/20 border border-green-500/30 text-green-600 dark:text-green-400 rounded text-xs hover:bg-green-500/30">
                           Approve 8-Hr OT ($416 cost)
                         </button>
-                        <button className="px-3 py-1.5 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded text-xs hover:bg-slate-700/60">
+                        <button className="px-3 py-1.5 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded text-xs hover:bg-slate-700/60">
                           Reassign from A-Shift
                         </button>
-                        <button className="px-3 py-1.5 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded text-xs hover:bg-slate-700/60">
+                        <button className="px-3 py-1.5 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded text-xs hover:bg-slate-700/60">
                           Accept Temp Variance
                         </button>
                       </div>
@@ -982,7 +982,7 @@ const JailDashboard = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Due Today */}
-            <div className="bg-white dark:bg-slate-900/50 border border-red-500/20 rounded-lg p-4">
+            <div className="bg-white dark:bg-zinc-950/50 border border-red-500/20 rounded-lg p-4">
               <div className="flex items-center gap-2 mb-3">
                 <Clock className="w-4 h-4 text-red-600 dark:text-red-400" />
                 <h3 className="text-sm font-semibold text-red-600 dark:text-red-400">DUE TODAY (4 tasks)</h3>
@@ -1031,7 +1031,7 @@ const JailDashboard = () => {
             </div>
 
             {/* Overdue */}
-            <div className="bg-white dark:bg-slate-900/50 border border-red-500/30 rounded-lg p-4">
+            <div className="bg-white dark:bg-zinc-950/50 border border-red-500/30 rounded-lg p-4">
               <div className="flex items-center gap-2 mb-3">
                 <AlertCircle className="w-4 h-4 text-red-600 dark:text-red-400" />
                 <h3 className="text-sm font-semibold text-red-600 dark:text-red-400">OVERDUE (3 tasks)</h3>
@@ -1053,7 +1053,7 @@ const JailDashboard = () => {
             </div>
 
             {/* Upcoming */}
-            <div className="bg-white dark:bg-slate-900/50 border border-slate-700/50 rounded-lg p-4">
+            <div className="bg-white dark:bg-zinc-950/50 border border-slate-700/50 rounded-lg p-4">
               <div className="flex items-center gap-2 mb-3">
                 <CalendarClock className="w-4 h-4 text-slate-700 dark:text-slate-400" />
                 <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300">UPCOMING (Next 24-48 hours)</h3>
@@ -1098,13 +1098,13 @@ const JailDashboard = () => {
           </div>
 
           <div className="mt-4 flex gap-2">
-            <button className="px-4 py-2 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-sm hover:bg-slate-700/60">
+            <button className="px-4 py-2 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-sm hover:bg-slate-700/60">
               View Full Task Calendar
             </button>
-            <button className="px-4 py-2 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-sm hover:bg-slate-700/60">
+            <button className="px-4 py-2 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-sm hover:bg-slate-700/60">
               Assign New Task
             </button>
-            <button className="px-4 py-2 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-sm hover:bg-slate-700/60">
+            <button className="px-4 py-2 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-sm hover:bg-slate-700/60">
               Mark Complete
             </button>
           </div>
@@ -1113,7 +1113,7 @@ const JailDashboard = () => {
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
           {/* Housing Units Status - Enhanced with Clickable Pods */}
-          <div className="lg:col-span-2 bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
+          <div className="lg:col-span-2 bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
                 <Bed className="w-5 h-5 text-orange-600 dark:text-orange-400" />
@@ -1130,7 +1130,7 @@ const JailDashboard = () => {
               {housingUnits.map((unit) => (
                 <div
                   key={unit.id}
-                  className="bg-white dark:bg-slate-900/50 border border-slate-700 rounded-lg p-4 hover:border-slate-600 transition-colors cursor-pointer"
+                  className="bg-white dark:bg-zinc-950/50 border border-slate-700 rounded-lg p-4 hover:border-slate-600 transition-colors cursor-pointer"
                   onClick={() => setSelectedPod(unit)}
                 >
                   <div className="flex items-center justify-between mb-2">
@@ -1162,7 +1162,7 @@ const JailDashboard = () => {
                     </div>
                   )}
                   <div className="mt-2">
-                    <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2">
+                    <div className="w-full bg-slate-200 dark:bg-zinc-800 rounded-full h-2">
                       <div
                         className={`h-2 rounded-full transition-all ${
                           (unit.current / unit.capacity) * 100 >= 95 ? 'bg-red-500' :
@@ -1181,7 +1181,7 @@ const JailDashboard = () => {
           {/* Right Column */}
           <div className="space-y-6">
             {/* Enhanced Classification Breakdown */}
-            <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
+            <div className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
               <div className="flex items-center gap-2 mb-1">
                 <Shield className="w-5 h-5 text-slate-700 dark:text-slate-400" />
                 <h2 className="text-xl font-bold text-slate-900 dark:text-white">Inmate Classification</h2>
@@ -1258,7 +1258,7 @@ const JailDashboard = () => {
                 </div>
 
                 {/* Protective Custody */}
-                <div className="p-3 bg-white dark:bg-slate-800/60 border border-slate-700/50 rounded-lg">
+                <div className="p-3 bg-white dark:bg-zinc-900/60 border border-slate-700/50 rounded-lg">
                   <div className="flex justify-between text-sm mb-1">
                     <span className="text-slate-700 dark:text-slate-300 font-medium flex items-center gap-1">
                       <Shield className="w-3 h-3" />
@@ -1278,7 +1278,7 @@ const JailDashboard = () => {
                 </div>
 
                 {/* Medical Housing */}
-                <div className="p-3 bg-white dark:bg-slate-800/60 border border-slate-700/50 rounded-lg">
+                <div className="p-3 bg-white dark:bg-zinc-900/60 border border-slate-700/50 rounded-lg">
                   <div className="flex justify-between text-sm mb-1">
                     <span className="text-slate-700 dark:text-slate-300 font-medium flex items-center gap-1">
                       <Hospital className="w-3 h-3" />
@@ -1351,7 +1351,7 @@ const JailDashboard = () => {
                   <button className="flex-1 px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-xs font-medium">
                     View Classification Manual
                   </button>
-                  <button className="flex-1 px-3 py-2 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg transition-colors text-xs font-medium hover:bg-slate-700/60">
+                  <button className="flex-1 px-3 py-2 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg transition-colors text-xs font-medium hover:bg-slate-700/60">
                     Reclassification Requests (3)
                   </button>
                 </div>
@@ -1359,7 +1359,7 @@ const JailDashboard = () => {
             </div>
 
             {/* Enhanced Medical Alerts */}
-            <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
+            <div className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
               <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                 <Heart className="w-5 h-5 text-red-600 dark:text-red-400" />
                 Medical Alerts
@@ -1381,7 +1381,7 @@ const JailDashboard = () => {
                     <div>├─ Seizure meds: 2 inmates - every 8 hours</div>
                     <div>└─ HIV meds: 1 inmate - strict 12-hour schedule</div>
                   </div>
-                  <div className="p-2 bg-white dark:bg-slate-900/50 rounded text-xs mb-2">
+                  <div className="p-2 bg-white dark:bg-zinc-950/50 rounded text-xs mb-2">
                     <div className="text-orange-600 dark:text-orange-400 flex items-center gap-1">
                       <Clock className="w-3 h-3" />
                       <span className="font-medium">Next Medication Round: 1800 hrs (18 min from now)</span>
@@ -1437,22 +1437,22 @@ const JailDashboard = () => {
                   </div>
                   <p className="text-xs text-slate-700 dark:text-slate-300 mb-2">4 inmates on active suicide prevention protocol (24/7)</p>
                   <div className="text-xs space-y-2 mb-2">
-                    <div className="p-2 bg-white dark:bg-slate-900/50 rounded">
+                    <div className="p-2 bg-white dark:bg-zinc-950/50 rounded">
                       <div className="text-slate-900 dark:text-white">1. Anderson, Michael (#18423)</div>
                       <div className="text-slate-700 dark:text-slate-400">E-Pod Cell 12 | Since Dec 11, 2200 hrs (20 hours)</div>
                       <div className="text-slate-500">Reason: Suicidal ideation at booking | Status: Stable</div>
                     </div>
-                    <div className="p-2 bg-white dark:bg-slate-900/50 rounded">
+                    <div className="p-2 bg-white dark:bg-zinc-950/50 rounded">
                       <div className="text-slate-900 dark:text-white">2. Martinez, David (#17956)</div>
                       <div className="text-slate-700 dark:text-slate-400">E-Pod Cell 14 | Since Dec 9 (3 days, 4 hours)</div>
                       <div className="text-slate-500">Reason: Previous attempt | Status: Improving</div>
                     </div>
-                    <div className="p-2 bg-white dark:bg-slate-900/50 rounded">
+                    <div className="p-2 bg-white dark:bg-zinc-950/50 rounded">
                       <div className="text-slate-900 dark:text-white">3. Johnson, Sarah (#18501)</div>
                       <div className="text-slate-700 dark:text-slate-400">E-Pod Cell 16 | Since Dec 11, 0800 hrs (34 hours)</div>
                       <div className="text-slate-500">Reason: Intent expressed | Status: No longer expressing</div>
                     </div>
-                    <div className="p-2 bg-white dark:bg-slate-900/50 rounded">
+                    <div className="p-2 bg-white dark:bg-zinc-950/50 rounded">
                       <div className="text-slate-900 dark:text-white">4. Chen, Robert (#18145)</div>
                       <div className="text-slate-700 dark:text-slate-400">E-Pod Cell 18 | Since Dec 10 (2 days, 2 hours)</div>
                       <div className="text-slate-500">Reason: Hearing voices | Status: Responding to meds</div>
@@ -1474,7 +1474,7 @@ const JailDashboard = () => {
                 </div>
 
                 {/* Infectious Disease */}
-                <div className="bg-white dark:bg-slate-900/50 border border-slate-700 rounded-lg p-4">
+                <div className="bg-white dark:bg-zinc-950/50 border border-slate-700 rounded-lg p-4">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-slate-900 dark:text-white font-medium text-sm">Infectious Disease</span>
                     <span className="font-bold text-lg text-slate-900 dark:text-white">3</span>
@@ -1488,7 +1488,7 @@ const JailDashboard = () => {
                 </div>
 
                 {/* Wheelchair/ADA */}
-                <div className="bg-white dark:bg-slate-900/50 border border-slate-700 rounded-lg p-4">
+                <div className="bg-white dark:bg-zinc-950/50 border border-slate-700 rounded-lg p-4">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-slate-900 dark:text-white font-medium text-sm">Wheelchair/ADA</span>
                     <span className="font-bold text-lg text-slate-900 dark:text-white">11</span>
@@ -1514,7 +1514,7 @@ const JailDashboard = () => {
         {/* Enhanced Recent Bookings & Incidents */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           {/* Enhanced Recent Bookings */}
-          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
+          <div className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
                 <UserCheck className="w-5 h-5 text-slate-700 dark:text-slate-400" />
@@ -1529,7 +1529,7 @@ const JailDashboard = () => {
             </div>
             <div className="space-y-4">
               {recentBookings.slice(0, 3).map((booking) => (
-                <div key={booking.id} className="bg-white dark:bg-slate-900/50 border border-slate-700 rounded-lg p-4 hover:border-slate-600 transition-colors">
+                <div key={booking.id} className="bg-white dark:bg-zinc-950/50 border border-slate-700 rounded-lg p-4 hover:border-slate-600 transition-colors">
                   <div className="flex items-start justify-between mb-3">
                     <div>
                       <div className="text-slate-900 dark:text-white font-semibold">{booking.name}</div>
@@ -1557,7 +1557,7 @@ const JailDashboard = () => {
 
                   {/* Status Timeline */}
                   {booking.classification && (
-                    <div className="mb-3 p-2 bg-white dark:bg-slate-800/50 rounded text-xs space-y-1">
+                    <div className="mb-3 p-2 bg-white dark:bg-zinc-900/50 rounded text-xs space-y-1">
                       <div className="flex items-center gap-2">
                         <CheckCircle className="w-3 h-3 text-green-600 dark:text-green-400" />
                         <span className="text-slate-700 dark:text-slate-300">Fingerprints & Photo: Complete</span>
@@ -1605,10 +1605,10 @@ const JailDashboard = () => {
                   {/* Actions */}
                   {booking.status === 'Processing' && (
                     <div className="flex gap-2 mt-3">
-                      <button className="flex-1 px-2 py-1 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded text-xs hover:bg-slate-700/60">
+                      <button className="flex-1 px-2 py-1 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded text-xs hover:bg-slate-700/60">
                         View Full Record
                       </button>
-                      <button className="flex-1 px-2 py-1 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded text-xs hover:bg-slate-700/60">
+                      <button className="flex-1 px-2 py-1 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded text-xs hover:bg-slate-700/60">
                         Assign Housing
                       </button>
                     </div>
@@ -1619,7 +1619,7 @@ const JailDashboard = () => {
           </div>
 
           {/* Enhanced Recent Incidents */}
-          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
+          <div className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
                 <AlertTriangle className="w-5 h-5 text-red-600 dark:text-red-400" />
@@ -1634,13 +1634,13 @@ const JailDashboard = () => {
             </div>
             <div className="space-y-4">
               {recentIncidents.slice(0, 3).map((incident) => (
-                <div key={incident.id} className="bg-white dark:bg-slate-900/50 border border-slate-700 rounded-lg p-4 hover:border-slate-600 transition-colors">
+                <div key={incident.id} className="bg-white dark:bg-zinc-950/50 border border-slate-700 rounded-lg p-4 hover:border-slate-600 transition-colors">
                   <div className="flex items-start justify-between mb-2">
                     <div className="flex items-center gap-2">
                       <div className={`px-2 py-1 rounded text-xs font-bold ${
                         incident.severity === 'High' ? 'bg-red-500/20 text-red-600 dark:text-red-400' :
                         incident.severity === 'Medium' ? 'bg-orange-500/20 text-orange-600 dark:text-orange-400' :
-                        'bg-slate-50 dark:bg-slate-700/40 text-slate-500'
+                        'bg-slate-50 dark:bg-zinc-800/40 text-slate-500'
                       }`}>
                         {incident.severity.toUpperCase()}
                       </div>
@@ -1680,8 +1680,8 @@ const JailDashboard = () => {
                     <span className={`px-2 py-1 rounded text-xs font-medium ${
                       incident.status === 'Resolved' ? 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400' :
                       incident.status === 'Under Review' ? 'bg-orange-500/20 text-orange-600 dark:text-orange-400' :
-                      incident.status === 'Transported' ? 'bg-slate-50 dark:bg-slate-700/40 text-slate-500' :
-                      'bg-slate-50 dark:bg-slate-700/40 text-slate-500'
+                      incident.status === 'Transported' ? 'bg-slate-50 dark:bg-zinc-800/40 text-slate-500' :
+                      'bg-slate-50 dark:bg-zinc-800/40 text-slate-500'
                     }`}>
                       {formatStatus(incident.status)}
                     </span>
@@ -1697,11 +1697,11 @@ const JailDashboard = () => {
 
                   {/* Actions */}
                   <div className="flex gap-2 mt-3">
-                    <button className="flex-1 px-2 py-1 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded text-xs hover:bg-slate-700/60">
+                    <button className="flex-1 px-2 py-1 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded text-xs hover:bg-slate-700/60">
                       View Report
                     </button>
                     {incident.status === 'Under Review' && (
-                      <button className="flex-1 px-2 py-1 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded text-xs hover:bg-slate-700/60">
+                      <button className="flex-1 px-2 py-1 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded text-xs hover:bg-slate-700/60">
                         Review Footage
                       </button>
                     )}
@@ -1715,7 +1715,7 @@ const JailDashboard = () => {
         {/* Enhanced Court Schedule & Staff Coverage */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           {/* Enhanced Court Schedule */}
-          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
+          <div className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
                 <Scale className="w-5 h-5 text-slate-700 dark:text-slate-400" />
@@ -1725,12 +1725,12 @@ const JailDashboard = () => {
             </div>
             <div className="space-y-3">
               {courtSchedule.map((court, idx) => (
-                <div key={idx} className="bg-white dark:bg-slate-900/50 border border-slate-700 rounded-lg p-4">
+                <div key={idx} className="bg-white dark:bg-zinc-950/50 border border-slate-700 rounded-lg p-4">
                   <div className="flex items-center justify-between mb-3">
                     <div className="text-slate-900 dark:text-white font-semibold">{court.court}</div>
                     <span className={`px-2 py-1 rounded text-xs font-medium ${
                       court.status === 'Completed' ? 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400' :
-                      court.status === 'En Route' ? 'bg-slate-50 dark:bg-slate-700/40 text-slate-500' :
+                      court.status === 'En Route' ? 'bg-slate-50 dark:bg-zinc-800/40 text-slate-500' :
                       court.status === 'Staging' ? 'bg-orange-500/20 text-orange-600 dark:text-orange-400' :
                       'bg-slate-500/20 text-slate-500'
                     }`}>
@@ -1778,10 +1778,10 @@ const JailDashboard = () => {
                   {/* Actions for active transports */}
                   {court.status === 'En Route' && (
                     <div className="flex gap-2 mt-3">
-                      <button className="flex-1 px-2 py-1 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded text-xs hover:bg-slate-700/60">
+                      <button className="flex-1 px-2 py-1 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded text-xs hover:bg-slate-700/60">
                         Track Vehicle
                       </button>
-                      <button className="flex-1 px-2 py-1 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded text-xs hover:bg-slate-700/60">
+                      <button className="flex-1 px-2 py-1 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded text-xs hover:bg-slate-700/60">
                         Contact Deputy
                       </button>
                     </div>
@@ -1800,14 +1800,14 @@ const JailDashboard = () => {
           </div>
 
           {/* Enhanced Staff Coverage */}
-          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
+          <div className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
             <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
               <Users className="w-5 h-5 text-slate-700 dark:text-slate-400" />
               Staff Coverage
             </h2>
             <div className="space-y-3">
               {/* A-Shift */}
-              <div className="bg-white dark:bg-slate-900/50 border border-slate-700 rounded-lg p-4">
+              <div className="bg-white dark:bg-zinc-950/50 border border-slate-700 rounded-lg p-4">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-slate-900 dark:text-white font-semibold">A-Shift (06:00-14:00)</span>
                   <div className="flex items-center gap-2">
@@ -1829,7 +1829,7 @@ const JailDashboard = () => {
               </div>
 
               {/* B-Shift with Issue */}
-              <div className="bg-white dark:bg-slate-900/50 border border-orange-500/20 rounded-lg p-4">
+              <div className="bg-white dark:bg-zinc-950/50 border border-orange-500/20 rounded-lg p-4">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-slate-900 dark:text-white font-semibold">B-Shift (14:00-22:00)</span>
                   <div className="flex items-center gap-2">
@@ -1857,14 +1857,14 @@ const JailDashboard = () => {
                   <button className="flex-1 px-2 py-1 bg-green-500/20 border border-green-500/30 text-green-600 dark:text-green-400 rounded text-xs hover:bg-green-500/30">
                     Approve 8HR OT
                   </button>
-                  <button className="flex-1 px-2 py-1 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded text-xs hover:bg-slate-700/60">
+                  <button className="flex-1 px-2 py-1 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded text-xs hover:bg-slate-700/60">
                     Reassign Staff
                   </button>
                 </div>
               </div>
 
               {/* C-Shift */}
-              <div className="bg-white dark:bg-slate-900/50 border border-slate-700 rounded-lg p-4">
+              <div className="bg-white dark:bg-zinc-950/50 border border-slate-700 rounded-lg p-4">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-slate-900 dark:text-white font-semibold">C-Shift (22:00-06:00)</span>
                   <div className="flex items-center gap-2">
@@ -1880,7 +1880,7 @@ const JailDashboard = () => {
 
               {/* Medical & Kitchen Staff */}
               <div className="grid grid-cols-2 gap-3">
-                <div className="bg-white dark:bg-slate-900/50 border border-slate-700 rounded-lg p-4">
+                <div className="bg-white dark:bg-zinc-950/50 border border-slate-700 rounded-lg p-4">
                   <div className="text-sm text-slate-700 dark:text-slate-400 mb-2">Medical Staff</div>
                   <div className="flex items-center gap-2 mb-2">
                     <div className="w-2 h-2 bg-green-500 rounded-full"></div>
@@ -1892,7 +1892,7 @@ const JailDashboard = () => {
                   </div>
                 </div>
 
-                <div className="bg-white dark:bg-slate-900/50 border border-orange-500/20 rounded-lg p-4">
+                <div className="bg-white dark:bg-zinc-950/50 border border-orange-500/20 rounded-lg p-4">
                   <div className="text-sm text-slate-700 dark:text-slate-400 mb-2">Kitchen Staff</div>
                   <div className="flex items-center gap-2 mb-2">
                     <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
@@ -1902,7 +1902,7 @@ const JailDashboard = () => {
                     <AlertTriangle className="w-3 h-3" />
                     <span>{staffCoverage.kitchen.posts}</span>
                   </div>
-                  <button className="mt-2 w-full px-2 py-1 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded text-xs hover:bg-slate-700/60">
+                  <button className="mt-2 w-full px-2 py-1 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 rounded text-xs hover:bg-slate-700/60">
                     Post Job
                   </button>
                 </div>
@@ -1914,14 +1914,14 @@ const JailDashboard = () => {
         {/* Inmate Programs & Services + Visitation Statistics */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           {/* Inmate Programs & Services */}
-          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
+          <div className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
             <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5 text-slate-700 dark:text-slate-400" />
               Inmate Programs & Services
             </h2>
             <div className="space-y-4">
               {/* Educational Programs */}
-              <div className="bg-white dark:bg-slate-900/50 border border-slate-700 rounded-lg p-4">
+              <div className="bg-white dark:bg-zinc-950/50 border border-slate-700 rounded-lg p-4">
                 <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Educational Programs</h3>
                 <div className="text-xs text-slate-700 dark:text-slate-400 space-y-1">
                   <div className="flex justify-between">
@@ -1940,7 +1940,7 @@ const JailDashboard = () => {
               </div>
 
               {/* Work Programs */}
-              <div className="bg-white dark:bg-slate-900/50 border border-slate-700 rounded-lg p-4">
+              <div className="bg-white dark:bg-zinc-950/50 border border-slate-700 rounded-lg p-4">
                 <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Work Programs</h3>
                 <div className="text-xs text-slate-700 dark:text-slate-400 space-y-1">
                   <div className="flex justify-between">
@@ -1963,7 +1963,7 @@ const JailDashboard = () => {
               </div>
 
               {/* Treatment Programs */}
-              <div className="bg-white dark:bg-slate-900/50 border border-slate-700 rounded-lg p-4">
+              <div className="bg-white dark:bg-zinc-950/50 border border-slate-700 rounded-lg p-4">
                 <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Treatment Programs</h3>
                 <div className="text-xs text-slate-700 dark:text-slate-400 space-y-1">
                   <div className="flex justify-between">
@@ -1982,7 +1982,7 @@ const JailDashboard = () => {
               </div>
 
               {/* Religious Services */}
-              <div className="bg-white dark:bg-slate-900/50 border border-slate-700 rounded-lg p-4">
+              <div className="bg-white dark:bg-zinc-950/50 border border-slate-700 rounded-lg p-4">
                 <h3 className="text-sm font-semibold text-orange-600 dark:text-orange-400 mb-2">Religious Services</h3>
                 <div className="text-xs text-slate-700 dark:text-slate-400 space-y-1">
                   <div className="flex justify-between">
@@ -2003,14 +2003,14 @@ const JailDashboard = () => {
           </div>
 
           {/* Visitation Statistics */}
-          <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
+          <div className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
             <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
               <Users className="w-5 h-5 text-slate-700 dark:text-slate-400" />
               Visitation Today
             </h2>
             <div className="space-y-4">
               {/* In-Person Visits */}
-              <div className="bg-white dark:bg-slate-900/50 border border-slate-700 rounded-lg p-4">
+              <div className="bg-white dark:bg-zinc-950/50 border border-slate-700 rounded-lg p-4">
                 <div className="flex items-center justify-between mb-2">
                   <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300">In-Person Visits</h3>
                   <span className="text-xl font-bold text-slate-900 dark:text-white">23</span>
@@ -2029,7 +2029,7 @@ const JailDashboard = () => {
               </div>
 
               {/* Video Visits */}
-              <div className="bg-white dark:bg-slate-900/50 border border-slate-700 rounded-lg p-4">
+              <div className="bg-white dark:bg-zinc-950/50 border border-slate-700 rounded-lg p-4">
                 <div className="flex items-center justify-between mb-2">
                   <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300">Video Visits</h3>
                   <span className="text-xl font-bold text-slate-900 dark:text-white">47</span>
@@ -2052,7 +2052,7 @@ const JailDashboard = () => {
               </div>
 
               {/* Attorney Visits */}
-              <div className="bg-white dark:bg-slate-900/50 border border-slate-700 rounded-lg p-4">
+              <div className="bg-white dark:bg-zinc-950/50 border border-slate-700 rounded-lg p-4">
                 <div className="flex items-center justify-between mb-2">
                   <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300">Attorney Visits</h3>
                   <span className="text-xl font-bold text-slate-900 dark:text-white">8</span>
@@ -2071,7 +2071,7 @@ const JailDashboard = () => {
               </div>
 
               {/* Weekly Summary */}
-              <div className="bg-white dark:bg-slate-800/60 border border-slate-700/50 rounded-lg p-4">
+              <div className="bg-white dark:bg-zinc-900/60 border border-slate-700/50 rounded-lg p-4">
                 <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-2">Weekly Summary</h3>
                 <div className="text-xs text-slate-700 dark:text-slate-400 space-y-1">
                   <div className="flex justify-between">
@@ -2089,14 +2089,14 @@ const JailDashboard = () => {
         </div>
 
         {/* Enhanced Services Status */}
-        <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
+        <div className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-5">
           <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
             <Activity className="w-5 h-5 text-slate-700 dark:text-slate-400" />
             Facility Services Status
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {servicesStatus.map((service, idx) => (
-              <div key={idx} className="bg-white dark:bg-slate-900/50 border border-slate-700 rounded-lg p-4">
+              <div key={idx} className="bg-white dark:bg-zinc-950/50 border border-slate-700 rounded-lg p-4">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
                     {service.service === 'Video Visitation' && <Video className="w-4 h-4 text-slate-700 dark:text-slate-400" />}
@@ -2219,7 +2219,7 @@ const JailDashboard = () => {
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={() => setSelectedPod(null)}
           />
-          <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl p-6 max-w-2xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
+          <div className="relative bg-white dark:bg-zinc-950 border border-slate-200 dark:border-slate-700/50 rounded-2xl p-6 max-w-2xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
             <div className="flex items-start justify-between mb-6">
               <div>
                 <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">{selectedPod.name}</h3>
@@ -2235,19 +2235,19 @@ const JailDashboard = () => {
 
             {/* Capacity Overview */}
             <div className="grid grid-cols-3 gap-4 mb-6">
-              <div className="bg-white dark:bg-slate-800/50 border border-slate-700 rounded-lg p-4">
+              <div className="bg-white dark:bg-zinc-900/50 border border-slate-700 rounded-lg p-4">
                 <div className="text-sm text-slate-700 dark:text-slate-400 mb-1">Capacity</div>
                 <div className={`text-2xl font-bold ${getCapacityColor((selectedPod.current / selectedPod.capacity) * 100)}`}>
                   {selectedPod.current}/{selectedPod.capacity}
                 </div>
               </div>
-              <div className="bg-white dark:bg-slate-800/50 border border-slate-700 rounded-lg p-4">
+              <div className="bg-white dark:bg-zinc-900/50 border border-slate-700 rounded-lg p-4">
                 <div className="text-sm text-slate-700 dark:text-slate-400 mb-1">Occupancy</div>
                 <div className={`text-2xl font-bold ${getCapacityColor((selectedPod.current / selectedPod.capacity) * 100)}`}>
                   {Math.round((selectedPod.current / selectedPod.capacity) * 100)}%
                 </div>
               </div>
-              <div className="bg-white dark:bg-slate-800/50 border border-slate-700 rounded-lg p-4">
+              <div className="bg-white dark:bg-zinc-900/50 border border-slate-700 rounded-lg p-4">
                 <div className="text-sm text-slate-700 dark:text-slate-400 mb-1">Status</div>
                 <span className={`px-2 py-1 rounded text-xs font-medium ${getStatusColor(selectedPod.status)}`}>
                   {formatStatus(selectedPod.status)}
@@ -2256,7 +2256,7 @@ const JailDashboard = () => {
             </div>
 
             {/* Staff Assigned */}
-            <div className="bg-white dark:bg-slate-800/50 border border-slate-700 rounded-lg p-4 mb-4">
+            <div className="bg-white dark:bg-zinc-900/50 border border-slate-700 rounded-lg p-4 mb-4">
               <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Staff Assigned</h4>
               <div className="grid grid-cols-2 gap-3 text-sm">
                 <div>
@@ -2268,7 +2268,7 @@ const JailDashboard = () => {
             </div>
 
             {/* Recent Activity */}
-            <div className="bg-white dark:bg-slate-800/50 border border-slate-700 rounded-lg p-4 mb-4">
+            <div className="bg-white dark:bg-zinc-900/50 border border-slate-700 rounded-lg p-4 mb-4">
               <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">Recent Activity</h4>
               <div className="space-y-2 text-sm">
                 <div className="flex items-center justify-between">

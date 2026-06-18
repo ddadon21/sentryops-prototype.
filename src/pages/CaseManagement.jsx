@@ -222,14 +222,14 @@ export default function CaseManagement() {
               <div className="flex items-center gap-3 mb-4">
                 <button
                   onClick={() => navigate(createPageUrl('ActiveCases'))}
-                  className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors"
+                  className="p-2 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors"
                 >
                   <ArrowLeft className="w-5 h-5 text-secondary" />
                 </button>
                 <div className="flex-1">
                   <div className="flex items-center gap-3 flex-wrap">
                     <h2 className="text-2xl lg:text-3xl font-bold text-primary">{caseDetails.subject}</h2>
-                    <span className="px-3 py-1 bg-white dark:bg-slate-700/50 rounded-lg text-sm font-mono text-secondary">{caseDetails.id}</span>
+                    <span className="px-3 py-1 bg-white dark:bg-zinc-800/50 rounded-lg text-sm font-mono text-secondary">{caseDetails.id}</span>
                     <span className={`px-3 py-1 rounded-lg text-xs font-semibold uppercase tracking-wide ${
                       caseDetails.priority === 'high' ? 'bg-red-500/20 text-red-400 border border-red-500/30' : 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
                     }`}>
@@ -253,13 +253,13 @@ export default function CaseManagement() {
             </div>
 
             {/* Investigation Status Summary (replaced AI Insights) */}
-            <div className="mb-6 bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
+            <div className="mb-6 bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
               <div className="flex items-center justify-between mb-6">
                 <h4 className="text-base font-semibold text-primary">Investigation Status Summary</h4>
                 <span className="text-xs text-slate-500">Last updated: {caseDetails.activityHistory[0]?.date}</span>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4">
+                <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-4">
                   <p className="text-xs text-slate-500 uppercase tracking-wide mb-2">Current Stage</p>
                   <div className="flex items-center gap-2">
                     <Clock className="w-5 h-5 text-amber-700 animate-pulse" />
@@ -269,7 +269,7 @@ export default function CaseManagement() {
                     {caseDetails.stages.find(s => s.name === caseDetails.currentStage)?.detail}
                   </p>
                 </div>
-                <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4">
+                <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-4">
                   <p className="text-xs text-slate-500 uppercase tracking-wide mb-2">Next Required Action</p>
                   <p className="text-sm text-amber-700 font-medium">{caseDetails.nextAction}</p>
                   {caseDetails.blockers && (
@@ -279,7 +279,7 @@ export default function CaseManagement() {
                     </p>
                   )}
                 </div>
-                <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4">
+                <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-4">
                   <p className="text-xs text-slate-500 uppercase tracking-wide mb-2">Timeline Status</p>
                   <div className="space-y-1">
                     <div className="flex justify-between text-sm">
@@ -298,7 +298,7 @@ export default function CaseManagement() {
 
             {/* Case Details and Investigation Stages */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-              <div className="lg:col-span-2 bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
+              <div className="lg:col-span-2 bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
                 {/* Case Information */}
                 <div className="flex items-start justify-between mb-6">
                   <div>
@@ -323,10 +323,10 @@ export default function CaseManagement() {
                     </div>
                   </div>
                   <div className="flex gap-2">
-                    <button className="p-2 bg-white dark:bg-slate-700/50 hover:bg-slate-700 rounded-lg transition-colors" title="Edit Case">
+                    <button className="p-2 bg-white dark:bg-zinc-800/50 hover:bg-slate-700 rounded-lg transition-colors" title="Edit Case">
                       <Edit className="w-5 h-5 text-secondary" />
                     </button>
-                    <button className="p-2 bg-white dark:bg-slate-700/50 hover:bg-slate-700 rounded-lg transition-colors" title="Share Case">
+                    <button className="p-2 bg-white dark:bg-zinc-800/50 hover:bg-slate-700 rounded-lg transition-colors" title="Share Case">
                       <Share2 className="w-5 h-5 text-secondary" />
                     </button>
                   </div>
@@ -352,7 +352,7 @@ export default function CaseManagement() {
                         stage.status === 'in_progress' ? 'bg-amber-500/5 border border-amber-500/20' :
                         stage.status === 'partial' ? 'bg-blue-500/5 border border-blue-500/20' :
                         stage.status === 'blocked' ? 'bg-red-500/5 border border-red-500/20' :
-                        'bg-white dark:bg-slate-900/40 border border-border'
+                        'bg-white dark:bg-zinc-950/40 border border-border'
                       }`}>
                         <div className="flex items-start justify-between">
                           <div className="flex items-start gap-3">
@@ -390,7 +390,7 @@ export default function CaseManagement() {
                             stage.status === 'in_progress' ? 'bg-amber-500/20 text-amber-700' :
                             stage.status === 'partial' ? 'bg-blue-500/20 text-blue-400' :
                             stage.status === 'blocked' ? 'bg-red-500/20 text-red-400' :
-                            'bg-white dark:bg-slate-700/50 text-slate-500'
+                            'bg-white dark:bg-zinc-800/50 text-slate-500'
                           }`}>
                             {stage.status === 'completed' ? 'COMPLETED' :
                              stage.status === 'in_progress' ? 'IN PROGRESS' :
@@ -408,7 +408,7 @@ export default function CaseManagement() {
               {/* Sidebar */}
               <div className="space-y-6">
                 {/* Quick Actions - Grouped */}
-                <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
+                <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
                   <h4 className="text-sm font-semibold text-primary mb-4">Quick Actions</h4>
 
                   {/* Documentation Actions */}
@@ -445,15 +445,15 @@ export default function CaseManagement() {
                   <div>
                     <p className="text-xs text-slate-500 uppercase tracking-wide mb-2">Case Management</p>
                     <div className="space-y-2">
-                      <button className="w-full px-4 py-2 bg-white dark:bg-slate-700/50 hover:bg-slate-700 text-secondary rounded-xl text-sm font-medium transition-colors flex items-center justify-center gap-2">
+                      <button className="w-full px-4 py-2 bg-white dark:bg-zinc-800/50 hover:bg-slate-700 text-secondary rounded-xl text-sm font-medium transition-colors flex items-center justify-center gap-2">
                         <Flag className="w-4 h-4" />
                         Request Supervisor Review
                       </button>
-                      <button className="w-full px-4 py-2 bg-white dark:bg-slate-700/50 hover:bg-slate-700 text-secondary rounded-xl text-sm font-medium transition-colors flex items-center justify-center gap-2">
+                      <button className="w-full px-4 py-2 bg-white dark:bg-zinc-800/50 hover:bg-slate-700 text-secondary rounded-xl text-sm font-medium transition-colors flex items-center justify-center gap-2">
                         <Download className="w-4 h-4" />
                         Export Case File
                       </button>
-                      <button className="w-full px-4 py-2 bg-white dark:bg-slate-700/50 hover:bg-slate-700 text-secondary rounded-xl text-sm font-medium transition-colors flex items-center justify-center gap-2">
+                      <button className="w-full px-4 py-2 bg-white dark:bg-zinc-800/50 hover:bg-slate-700 text-secondary rounded-xl text-sm font-medium transition-colors flex items-center justify-center gap-2">
                         <Archive className="w-4 h-4" />
                         Close Case
                       </button>
@@ -462,7 +462,7 @@ export default function CaseManagement() {
                 </div>
 
                 {/* Assigned Investigator */}
-                <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
+                <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
                   <h4 className="text-sm font-semibold text-primary mb-4">Assigned Investigator</h4>
                   <div className="flex items-center gap-3 mb-4">
                     <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center font-bold text-primary">MB</div>
@@ -502,7 +502,7 @@ export default function CaseManagement() {
             </div>
 
             {/* Tabs */}
-            <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl overflow-hidden">
+            <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl overflow-hidden">
               <div className="flex border-b border-border overflow-x-auto">
                 <button
                   onClick={() => setSelectedTab('overview')}
@@ -540,7 +540,7 @@ export default function CaseManagement() {
                         <User className="w-4 h-4 text-secondary" />
                         Applicant Information
                       </h5>
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-white dark:bg-slate-900/40 rounded-lg p-4">
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-white dark:bg-zinc-950/40 rounded-lg p-4">
                         <div>
                           <p className="text-xs text-slate-500 mb-1">Full Name</p>
                           <p className="text-sm text-primary">{caseDetails.subject}</p>
@@ -566,7 +566,7 @@ export default function CaseManagement() {
                         <FileCheck className="w-4 h-4 text-secondary" />
                         Investigation Summary
                       </h5>
-                      <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4">
+                      <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-4">
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
                           <div className="text-center">
                             <p className="text-2xl font-bold text-green-400">
@@ -630,7 +630,7 @@ export default function CaseManagement() {
                         <Clock className="w-4 h-4 text-secondary" />
                         Timeline Overview
                       </h5>
-                      <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4">
+                      <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-4">
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                           <div>
                             <p className="text-xs text-slate-500 mb-1">Case Opened</p>
@@ -666,7 +666,7 @@ export default function CaseManagement() {
                     </div>
                     <div className="space-y-3">
                       {caseDetails.documents.map((doc, idx) => (
-                        <div key={idx} className="flex items-center justify-between p-4 bg-white dark:bg-slate-900/40 rounded-lg hover:bg-slate-900/60 transition-colors">
+                        <div key={idx} className="flex items-center justify-between p-4 bg-white dark:bg-zinc-950/40 rounded-lg hover:bg-slate-900/60 transition-colors">
                           <div className="flex items-center gap-3">
                             <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
                               doc.status === 'verified' ? 'bg-green-500/10' : 'bg-amber-500/10'
@@ -686,7 +686,7 @@ export default function CaseManagement() {
                             </div>
                           </div>
                           <div className="flex items-center gap-2">
-                            <button className="px-3 py-1 bg-white dark:bg-slate-700/50 hover:bg-slate-700 text-secondary rounded-lg text-xs font-medium transition-colors">
+                            <button className="px-3 py-1 bg-white dark:bg-zinc-800/50 hover:bg-slate-700 text-secondary rounded-lg text-xs font-medium transition-colors">
                               Download
                             </button>
                             <button className="px-3 py-1 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 rounded-lg text-xs font-medium transition-colors">
@@ -711,12 +711,12 @@ export default function CaseManagement() {
                     </div>
                     <div className="space-y-6">
                       {caseDetails.notes.map((note, idx) => (
-                        <div key={idx} className="p-4 bg-white dark:bg-slate-900/40 rounded-lg border-l-4 border-amber-500/50">
+                        <div key={idx} className="p-4 bg-white dark:bg-zinc-950/40 rounded-lg border-l-4 border-amber-500/50">
                           <div className="flex items-center justify-between mb-2">
                             <div className="flex items-center gap-2">
                               <span className="text-sm font-medium text-primary">{note.author}</span>
                               <span className="text-xs text-slate-500">{note.authorBadge}</span>
-                              <span className="px-2 py-0.5 bg-white dark:bg-slate-700/50 rounded text-xs text-secondary">{note.category}</span>
+                              <span className="px-2 py-0.5 bg-white dark:bg-zinc-800/50 rounded text-xs text-secondary">{note.category}</span>
                             </div>
                             <span className="text-xs text-slate-500">{note.date}</span>
                           </div>
@@ -732,14 +732,14 @@ export default function CaseManagement() {
                   <div>
                     <div className="flex items-center justify-between mb-6">
                       <p className="text-sm text-secondary">Complete audit trail for case {caseDetails.id}</p>
-                      <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700 text-secondary rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
+                      <button className="px-3 py-1.5 bg-white dark:bg-zinc-800/50 hover:bg-slate-700 text-secondary rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
                         <Download className="w-3 h-3" />
                         Export Log
                       </button>
                     </div>
                     <div className="relative">
                       {/* Timeline line */}
-                      <div className="absolute left-4 top-2 bottom-2 w-px bg-white dark:bg-slate-700/50"></div>
+                      <div className="absolute left-4 top-2 bottom-2 w-px bg-white dark:bg-zinc-800/50"></div>
 
                       <div className="space-y-6">
                         {caseDetails.activityHistory.map((activity, idx) => (
@@ -748,7 +748,7 @@ export default function CaseManagement() {
                               activity.action === 'Stage completed' ? 'bg-green-500/20' :
                               activity.action === 'Case opened' ? 'bg-amber-500/20' :
                               activity.action === 'Document uploaded' ? 'bg-blue-500/20' :
-                              'bg-white dark:bg-slate-700/50'
+                              'bg-white dark:bg-zinc-800/50'
                             }`}>
                               {activity.action === 'Stage completed' && <CheckCircle2 className="w-4 h-4 text-green-400" />}
                               {activity.action === 'Case opened' && <FolderOpen className="w-4 h-4 text-amber-700" />}

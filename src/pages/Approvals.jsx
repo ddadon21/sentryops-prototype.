@@ -374,11 +374,11 @@ const getTypePill = (type) => ({
   'overtime':   'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400',
   'budget':     'bg-green-100 border-green-200 text-green-700 dark:bg-green-500/10 dark:border-green-500/20 dark:text-green-400',
   'emergency':  'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400',
-  'hiring':     'bg-slate-100 dark:bg-slate-700/40 border-slate-300 dark:border-slate-600/50 text-slate-500',
+  'hiring':     'bg-slate-100 dark:bg-zinc-800/40 border-slate-300 dark:border-slate-600/50 text-slate-500',
   'equipment':  'bg-violet-100 border-violet-200 text-violet-700 dark:bg-violet-500/10 dark:border-violet-500/20 dark:text-violet-400',
   'policy':     'bg-slate-400/10 border-slate-400/20 text-slate-500',
   'mutual-aid': 'bg-cyan-500/10 border-cyan-500/20 text-cyan-600 dark:text-cyan-400',
-  'leave':      'bg-slate-100 dark:bg-slate-700/40 border-slate-300 dark:border-slate-600/50 text-slate-500',
+  'leave':      'bg-slate-100 dark:bg-zinc-800/40 border-slate-300 dark:border-slate-600/50 text-slate-500',
 }[type] || 'bg-slate-100 border-slate-300 text-slate-500');
 
 const getImpactScoreColor = (score) => {
@@ -392,7 +392,7 @@ const getImpactScoreBg = (score) => {
   if (score >= 85) return 'bg-red-500/8 border-red-500/20';
   if (score >= 65) return 'bg-amber-500/8 border-amber-500/15';
   if (score >= 40) return 'bg-amber-500/5 border-amber-500/10';
-  return 'bg-slate-100 dark:bg-slate-700/20 border-slate-200 dark:border-slate-700/30';
+  return 'bg-slate-100 dark:bg-zinc-800/20 border-slate-200 dark:border-slate-700/30';
 };
 
 const getConfidenceColor = (confidence) => {
@@ -599,7 +599,7 @@ export default function Approvals() {
 
           {/* ── AI Executive Decision Summary ─────────────── */}
           {activeTab === 'pending' && (
-            <div className="mb-4 bg-slate-900 dark:bg-slate-950 border border-slate-700/60 rounded-xl overflow-hidden">
+            <div className="mb-4 bg-slate-900 dark:bg-black border border-slate-700/60 rounded-xl overflow-hidden">
               <div className="px-4 py-2.5 border-b border-slate-700/50 flex items-center gap-2">
                 <Sparkles className="w-3.5 h-3.5 text-violet-400" />
                 <span className="text-[11px] font-bold text-white uppercase tracking-wider">AI Executive Decision Summary</span>
@@ -631,7 +631,7 @@ export default function Approvals() {
                   { label: 'Critical Decisions', value: criticalCount, sub: 'Impact score ≥ 85', color: 'text-red-400' },
                   { label: 'Risk If All Denied', value: '$1.2M+', sub: 'Federal contract + compliance', color: 'text-amber-400' },
                 ].map((stat, i) => (
-                  <div key={i} className="px-4 py-2.5 bg-slate-900 dark:bg-slate-950">
+                  <div key={i} className="px-4 py-2.5 bg-slate-900 dark:bg-black">
                     <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1">{stat.label}</p>
                     <p className={`text-2xl font-black leading-none mb-0.5 ${stat.color}`}>{stat.value}</p>
                     <p className="text-[9px] text-slate-500">{stat.sub}</p>
@@ -699,7 +699,7 @@ export default function Approvals() {
               >
                 {tab.label}
                 {tab.count !== null && (
-                  <span className={`px-1 py-px rounded text-[10px] ${activeTab === tab.id ? 'bg-amber-500/15 text-amber-700 dark:text-amber-400' : 'bg-slate-200 dark:bg-slate-800/50 text-slate-700 dark:text-slate-500'}`}>
+                  <span className={`px-1 py-px rounded text-[10px] ${activeTab === tab.id ? 'bg-amber-500/15 text-amber-700 dark:text-amber-400' : 'bg-slate-200 dark:bg-zinc-900/50 text-slate-700 dark:text-slate-500'}`}>
                     {tab.count}
                   </span>
                 )}
@@ -732,7 +732,7 @@ export default function Approvals() {
                     onClick={() => setFilterType(opt.id)}
                     className={`px-2.5 py-1 rounded text-[11px] font-medium border transition-all ${
                       filterType === opt.id
-                        ? 'bg-slate-200 dark:bg-slate-700/50 border-slate-300 dark:border-slate-600/50 text-primary'
+                        ? 'bg-slate-200 dark:bg-zinc-800/50 border-slate-300 dark:border-slate-600/50 text-primary'
                         : 'bg-transparent border-slate-300 dark:border-slate-700/40 text-slate-500 hover:text-secondary'
                     }`}
                   >
@@ -751,7 +751,7 @@ export default function Approvals() {
                     <button
                       key={s.id}
                       onClick={() => setSortBy(s.id)}
-                      className={`px-2 py-0.5 rounded text-[10px] font-medium transition-all ${sortBy === s.id ? 'bg-slate-200 dark:bg-slate-700/50 text-primary' : 'text-slate-700 hover:text-secondary'}`}
+                      className={`px-2 py-0.5 rounded text-[10px] font-medium transition-all ${sortBy === s.id ? 'bg-slate-200 dark:bg-zinc-800/50 text-primary' : 'text-slate-700 hover:text-secondary'}`}
                     >
                       {s.label}
                     </button>
@@ -761,7 +761,7 @@ export default function Approvals() {
 
               {/* Bulk toolbar */}
               {selectedItems.length > 0 && (
-                <div className="mb-3 flex items-center gap-2 px-3 py-2 bg-slate-50 dark:bg-slate-800/35 border border-border rounded">
+                <div className="mb-3 flex items-center gap-2 px-3 py-2 bg-slate-50 dark:bg-zinc-900/35 border border-border rounded">
                   <CheckSquare className="w-3.5 h-3.5 text-secondary" />
                   <span className="text-[11px] font-semibold text-primary">{selectedItems.length} selected</span>
                   <div className="flex-1" />
@@ -804,7 +804,7 @@ export default function Approvals() {
                           className={`rounded border transition-colors ${
                             isSelected
                               ? 'border-slate-600/40 bg-slate-700/[0.1]'
-                              : 'border-border dark:border-slate-700/30 bg-white dark:bg-slate-800/15 hover:bg-slate-50 dark:hover:bg-slate-800/30'
+                              : 'border-border dark:border-slate-700/30 bg-white dark:bg-zinc-900/15 hover:bg-slate-50 dark:hover:bg-zinc-900/30'
                           }`}
                         >
                           {/* ── Compact Row ── */}
@@ -815,7 +815,7 @@ export default function Approvals() {
                               urgencyState === 'critical' ? 'bg-amber-500' :
                               urgencyState === 'soon' ? 'bg-amber-400/60' :
                               decision.decisionImpactScore >= 85 ? 'bg-red-400/50' :
-                              'bg-slate-200 dark:bg-slate-700/30'
+                              'bg-slate-200 dark:bg-zinc-800/30'
                             }`} />
 
                             {/* Select */}
@@ -898,7 +898,7 @@ export default function Approvals() {
                               </button>
                               <button
                                 onClick={() => toggleExpand(decision.id)}
-                                className="p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-700/30 transition-colors"
+                                className="p-1 rounded hover:bg-slate-100 dark:hover:bg-zinc-800/30 transition-colors"
                               >
                                 {isExpanded ? <ChevronUp className="w-3.5 h-3.5 text-slate-500" /> : <ChevronDown className="w-3.5 h-3.5 text-slate-500" />}
                               </button>
@@ -910,7 +910,7 @@ export default function Approvals() {
                             <div className="border-t border-border dark:border-slate-700/30 ml-[22px]">
 
                               {/* AI Recommendation Panel */}
-                              <div className="px-3 pt-3 pb-2 border-b border-border dark:border-slate-700/20 bg-slate-900/[0.02] dark:bg-slate-900/30">
+                              <div className="px-3 pt-3 pb-2 border-b border-border dark:border-slate-700/20 bg-slate-900/[0.02] dark:bg-zinc-950/30">
                                 <div className="flex items-start gap-2.5">
                                   <div className="flex-shrink-0 mt-0.5">
                                     <Sparkles className="w-3.5 h-3.5 text-violet-500 dark:text-violet-400" />
@@ -927,7 +927,7 @@ export default function Approvals() {
                                       </span>
                                       <div className="flex items-center gap-1.5 ml-1">
                                         <span className="text-[9px] text-slate-500 uppercase font-bold">Confidence</span>
-                                        <div className="w-20 bg-slate-200 dark:bg-slate-700/50 rounded-full h-1">
+                                        <div className="w-20 bg-slate-200 dark:bg-zinc-800/50 rounded-full h-1">
                                           <div className={`h-1 rounded-full ${ai.confidence >= 90 ? 'bg-green-500' : ai.confidence >= 75 ? 'bg-amber-500' : 'bg-slate-400'}`} style={{ width: `${ai.confidence}%` }} />
                                         </div>
                                         <span className={`text-[10px] font-bold ${getConfidenceColor(ai.confidence)}`}>{ai.confidence}%</span>
@@ -974,14 +974,14 @@ export default function Approvals() {
                                 <div className="px-3 pt-2 pb-1">
                                   <p className="text-[9px] font-bold text-slate-500 uppercase tracking-wider">Decision Impact Analysis</p>
                                 </div>
-                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-px bg-slate-100 dark:bg-slate-700/20">
+                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-px bg-slate-100 dark:bg-zinc-800/20">
                                   {[
                                     { icon: DollarSign, label: 'Financial Impact', key: 'financialImpact', iconColor: 'text-green-600 dark:text-green-400' },
                                     { icon: Shield, label: 'Compliance Impact', key: 'complianceImpact', iconColor: 'text-violet-600 dark:text-violet-400' },
                                     { icon: Users, label: 'Staffing Impact', key: 'staffingImpact', iconColor: 'text-blue-600 dark:text-blue-400' },
                                     { icon: Activity, label: 'Operational Impact', key: 'operationalImpact', iconColor: 'text-amber-600 dark:text-amber-400' },
                                   ].map(({ icon: Icon, label, key, iconColor }) => (
-                                    <div key={key} className="bg-white dark:bg-slate-800/15 px-3 py-2.5">
+                                    <div key={key} className="bg-white dark:bg-zinc-900/15 px-3 py-2.5">
                                       <div className="flex items-center gap-1.5 mb-2">
                                         <Icon className={`w-3 h-3 ${iconColor}`} />
                                         <span className="text-[9px] font-bold text-slate-500 uppercase tracking-wider">{label}</span>
@@ -1002,7 +1002,7 @@ export default function Approvals() {
 
                                 {/* Budget position (when relevant) */}
                                 {decision.budgetImpact && (
-                                  <div className="px-3 py-2 bg-white dark:bg-slate-800/10 border-t border-border dark:border-slate-700/20">
+                                  <div className="px-3 py-2 bg-white dark:bg-zinc-900/10 border-t border-border dark:border-slate-700/20">
                                     <div className="flex items-center gap-4 text-[10px] flex-wrap">
                                       <span className="text-slate-500 font-semibold">Budget Position:</span>
                                       {decision.budgetImpact.allocated && (
@@ -1035,7 +1035,7 @@ export default function Approvals() {
                                   <div className="flex items-center gap-2 flex-wrap mb-2.5">
                                     <FileCheck className="w-3 h-3 text-slate-700" />
                                     {decision.documents.map((doc, idx) => (
-                                      <button key={idx} className="flex items-center gap-1 px-1.5 py-0.5 bg-slate-100/80 dark:bg-slate-800/30 hover:bg-slate-200 dark:hover:bg-slate-700/30 border border-border dark:border-slate-700/30 rounded text-[10px] text-secondary transition-colors">
+                                      <button key={idx} className="flex items-center gap-1 px-1.5 py-0.5 bg-slate-100/80 dark:bg-zinc-900/30 hover:bg-slate-200 dark:hover:bg-zinc-800/30 border border-border dark:border-slate-700/30 rounded text-[10px] text-secondary transition-colors">
                                         <FileText className="w-2.5 h-2.5" />
                                         {doc}
                                       </button>
@@ -1045,7 +1045,7 @@ export default function Approvals() {
                                 <div className="flex items-center gap-2 pt-1 border-t border-border">
                                   <button
                                     onClick={() => setRequestInfoModal(decision)}
-                                    className="px-2 py-1 text-[10px] font-medium text-secondary hover:bg-slate-100 dark:hover:bg-slate-700/20 rounded transition-colors flex items-center gap-1"
+                                    className="px-2 py-1 text-[10px] font-medium text-secondary hover:bg-slate-100 dark:hover:bg-zinc-800/20 rounded transition-colors flex items-center gap-1"
                                   >
                                     <Info className="w-3 h-3" />
                                     Request Info
@@ -1094,7 +1094,7 @@ export default function Approvals() {
                     onClick={() => setLogFilter(opt.id)}
                     className={`px-2.5 py-1 rounded text-[11px] font-medium border transition-all ${
                       logFilter === opt.id
-                        ? 'bg-slate-200 dark:bg-slate-700/50 border-slate-300 dark:border-slate-600/50 text-primary'
+                        ? 'bg-slate-200 dark:bg-zinc-800/50 border-slate-300 dark:border-slate-600/50 text-primary'
                         : 'bg-transparent border-slate-300 dark:border-slate-700/40 text-slate-500 hover:text-secondary'
                     }`}
                   >
@@ -1129,7 +1129,7 @@ export default function Approvals() {
                   </thead>
                   <tbody>
                     {filteredHistory.map((item) => (
-                      <tr key={item.id} className="border-b border-slate-100 dark:border-slate-800/10 hover:bg-slate-50 dark:hover:bg-slate-800/15 transition-colors">
+                      <tr key={item.id} className="border-b border-slate-100 dark:border-slate-800/10 hover:bg-slate-50 dark:hover:bg-zinc-900/15 transition-colors">
                         <td className="px-3 py-2.5">
                           <span className="text-[11px] text-secondary capitalize">{getTypeLabel(item.type)}</span>
                         </td>
@@ -1185,7 +1185,7 @@ export default function Approvals() {
       {selectedApproval && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={closeModal} />
-          <div className="relative bg-white dark:bg-slate-900 border border-border rounded-2xl p-6 max-w-md w-full shadow-2xl">
+          <div className="relative bg-white dark:bg-zinc-950 border border-border rounded-2xl p-6 max-w-md w-full shadow-2xl">
             <div className="flex items-start gap-4 mb-5">
               <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${approvalAction === 'approve' ? 'bg-green-500/20' : 'bg-red-500/20'}`}>
                 {approvalAction === 'approve'
@@ -1221,7 +1221,7 @@ export default function Approvals() {
               />
             </div>
             <div className="flex gap-2">
-              <button onClick={closeModal} className="flex-1 px-4 py-2.5 bg-surface hover:bg-slate-50 dark:hover:bg-slate-800/60 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-700 dark:text-white font-medium transition-all text-sm">
+              <button onClick={closeModal} className="flex-1 px-4 py-2.5 bg-surface hover:bg-slate-50 dark:hover:bg-zinc-900/60 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-700 dark:text-white font-medium transition-all text-sm">
                 Cancel
               </button>
               <button
@@ -1239,32 +1239,32 @@ export default function Approvals() {
       {historyDetailModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setHistoryDetailModal(null)} />
-          <div className="relative bg-white dark:bg-slate-900 border border-border rounded-2xl p-5 max-w-lg w-full shadow-2xl">
+          <div className="relative bg-white dark:bg-zinc-950 border border-border rounded-2xl p-5 max-w-lg w-full shadow-2xl">
             <div className="flex items-start justify-between mb-4">
               <div>
                 <h3 className="text-base font-bold text-primary mb-0.5">{historyDetailModal.title}</h3>
                 <p className="text-[11px] text-secondary">{historyDetailModal.details}</p>
               </div>
-              <button onClick={() => setHistoryDetailModal(null)} className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors">
+              <button onClick={() => setHistoryDetailModal(null)} className="p-1.5 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors">
                 <X className="w-4 h-4 text-secondary" />
               </button>
             </div>
             <div className="grid grid-cols-2 gap-2 mb-4 text-[10px]">
-              <div className="bg-slate-50 dark:bg-slate-800/30 rounded-lg p-2.5 border border-border">
+              <div className="bg-slate-50 dark:bg-zinc-900/30 rounded-lg p-2.5 border border-border">
                 <p className="text-slate-500 mb-0.5">Submitted By</p>
                 <p className="font-medium text-primary">{historyDetailModal.submittedBy}</p>
               </div>
-              <div className="bg-slate-50 dark:bg-slate-800/30 rounded-lg p-2.5 border border-border">
+              <div className="bg-slate-50 dark:bg-zinc-900/30 rounded-lg p-2.5 border border-border">
                 <p className="text-slate-500 mb-0.5">Division</p>
                 <p className="font-medium text-primary">{historyDetailModal.division}</p>
               </div>
               {historyDetailModal.amount && (
-                <div className="bg-slate-50 dark:bg-slate-800/30 rounded-lg p-2.5 border border-border">
+                <div className="bg-slate-50 dark:bg-zinc-900/30 rounded-lg p-2.5 border border-border">
                   <p className="text-slate-500 mb-0.5">Amount</p>
                   <p className="font-medium text-green-600 dark:text-green-400">${historyDetailModal.amount.toLocaleString()}</p>
                 </div>
               )}
-              <div className="bg-slate-50 dark:bg-slate-800/30 rounded-lg p-2.5 border border-border">
+              <div className="bg-slate-50 dark:bg-zinc-900/30 rounded-lg p-2.5 border border-border">
                 <p className="text-slate-500 mb-0.5">Submitted</p>
                 <p className="font-medium text-primary">{new Date(historyDetailModal.submittedDate).toLocaleDateString()}</p>
               </div>
@@ -1280,7 +1280,7 @@ export default function Approvals() {
                   <p className="text-slate-500">{new Date(historyDetailModal.decidedDate).toLocaleDateString()}</p>
                 </div>
               </div>
-              <div className="bg-slate-50 dark:bg-slate-900/50 rounded p-2.5 border border-slate-200 dark:border-transparent">
+              <div className="bg-slate-50 dark:bg-zinc-950/50 rounded p-2.5 border border-slate-200 dark:border-transparent">
                 <p className="text-[10px] text-secondary">{historyDetailModal.decisionNotes}</p>
               </div>
             </div>
@@ -1292,13 +1292,13 @@ export default function Approvals() {
       {requestInfoModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => { setRequestInfoModal(null); setInfoRequest(''); }} />
-          <div className="relative bg-white dark:bg-slate-900 border border-border rounded-2xl p-5 max-w-md w-full shadow-2xl">
+          <div className="relative bg-white dark:bg-zinc-950 border border-border rounded-2xl p-5 max-w-md w-full shadow-2xl">
             <div className="flex items-start justify-between mb-4">
               <div>
                 <h3 className="text-base font-bold text-primary mb-0.5">Request More Information</h3>
                 <p className="text-[11px] text-secondary">{requestInfoModal.submittedBy} · {requestInfoModal.title}</p>
               </div>
-              <button onClick={() => { setRequestInfoModal(null); setInfoRequest(''); }} className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors">
+              <button onClick={() => { setRequestInfoModal(null); setInfoRequest(''); }} className="p-1.5 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors">
                 <X className="w-4 h-4 text-secondary" />
               </button>
             </div>

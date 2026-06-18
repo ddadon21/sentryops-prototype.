@@ -196,20 +196,20 @@ export default function DailyCommandBrief() {
               </p>
             </div>
             <div className="flex items-center gap-2">
-              <button onClick={() => window.print()} className="flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-slate-800/40 border border-border dark:border-slate-700/40 text-secondary rounded-lg text-[12px] hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-all">
+              <button onClick={() => window.print()} className="flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-zinc-900/40 border border-border dark:border-slate-700/40 text-secondary rounded-lg text-[12px] hover:bg-slate-50 dark:hover:bg-zinc-900/60 transition-all">
                 <Printer className="w-3.5 h-3.5" />Print
               </button>
-              <button className="flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-slate-800/40 border border-border dark:border-slate-700/40 text-secondary rounded-lg text-[12px] hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-all">
+              <button className="flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-zinc-900/40 border border-border dark:border-slate-700/40 text-secondary rounded-lg text-[12px] hover:bg-slate-50 dark:hover:bg-zinc-900/60 transition-all">
                 <Download className="w-3.5 h-3.5" />PDF
               </button>
-              <button onClick={handleRefresh} disabled={isRefreshing} className="flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-slate-800/40 border border-border dark:border-slate-700/40 text-secondary rounded-lg text-[12px] hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-all disabled:opacity-50">
+              <button onClick={handleRefresh} disabled={isRefreshing} className="flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-zinc-900/40 border border-border dark:border-slate-700/40 text-secondary rounded-lg text-[12px] hover:bg-slate-50 dark:hover:bg-zinc-900/60 transition-all disabled:opacity-50">
                 <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin' : ''}`} />Refresh
               </button>
             </div>
           </div>
 
           {/* ── AI Executive Summary ────────────────────────── */}
-          <div className="bg-slate-900 dark:bg-slate-950/70 border border-slate-700/50 rounded-xl overflow-hidden">
+          <div className="bg-slate-900 dark:bg-black/70 border border-slate-700/50 rounded-xl overflow-hidden">
             <div className="flex items-center gap-2 px-5 py-3 border-b border-slate-700/40">
               <Sparkles className="w-4 h-4 text-slate-400" />
               <span className="text-[12px] font-semibold text-slate-300 uppercase tracking-wider">AI Executive Summary</span>
@@ -289,7 +289,7 @@ export default function DailyCommandBrief() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
 
             {/* What Changed Since Yesterday */}
-            <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden">
+            <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden">
               <div className="flex items-center gap-2 px-5 py-3 border-b border-border dark:border-slate-700/20">
                 <TrendingUp className="w-4 h-4 text-secondary" />
                 <span className="text-[13px] font-semibold text-primary">What Changed Since Yesterday</span>
@@ -312,7 +312,7 @@ export default function DailyCommandBrief() {
             </div>
 
             {/* Today's Schedule */}
-            <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden">
+            <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden">
               <div className="flex items-center justify-between px-5 py-3 border-b border-border dark:border-slate-700/20">
                 <div className="flex items-center gap-2">
                   <Calendar className="w-4 h-4 text-secondary" />
@@ -343,7 +343,7 @@ export default function DailyCommandBrief() {
           </div>
 
           {/* ── Command Decisions Today ─────────────────────── */}
-          <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden">
+          <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden">
             <div className="flex items-center justify-between px-5 py-3 border-b border-border dark:border-slate-700/20">
               <div className="flex items-center gap-2">
                 <Zap className="w-4 h-4 text-red-700 dark:text-red-400" />
@@ -357,7 +357,7 @@ export default function DailyCommandBrief() {
                 const isExpanded = expandedDecision === item.id;
                 return (
                   <div key={item.id} className={`rounded-xl border ${item.severity === 'critical' ? 'border-red-500/20 bg-red-500/[0.02]' : 'border-border dark:border-slate-700/30'}`}>
-                    <div className="p-3.5 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/20 transition-colors rounded-xl" onClick={() => setExpandedDecision(isExpanded ? null : item.id)}>
+                    <div className="p-3.5 cursor-pointer hover:bg-slate-50 dark:hover:bg-zinc-900/20 transition-colors rounded-xl" onClick={() => setExpandedDecision(isExpanded ? null : item.id)}>
                       <div className="flex items-start gap-3 mb-2">
                         <div className={`w-1 self-stretch rounded-full flex-shrink-0 mt-0.5 ${item.severity === 'critical' ? 'bg-red-500' : 'bg-amber-500'}`} />
                         <p className="text-[13px] font-semibold text-primary flex-1">{item.title}</p>
@@ -374,7 +374,7 @@ export default function DailyCommandBrief() {
                         <span className="text-red-700 dark:text-red-400">If delayed → {item.consequence}</span>
                       </div>
                       {/* AI recommendation always visible */}
-                      <div className="ml-4 mt-2 flex gap-2 items-start bg-slate-50 dark:bg-slate-800/30 rounded-lg px-3 py-2">
+                      <div className="ml-4 mt-2 flex gap-2 items-start bg-slate-50 dark:bg-zinc-900/30 rounded-lg px-3 py-2">
                         <Sparkles className="w-3 h-3 text-slate-400 flex-shrink-0 mt-0.5" />
                         <p className="text-[11px] text-secondary leading-snug">{item.aiRec}</p>
                       </div>
@@ -394,7 +394,7 @@ export default function DailyCommandBrief() {
                               ))}
                             </div>
                           </div>
-                          <button onClick={(e) => { e.stopPropagation(); setContactModal(item.owner); }} className="px-3 py-1.5 text-[12px] font-medium text-secondary border border-border hover:bg-slate-100 dark:hover:bg-slate-700/20 rounded-lg transition-colors flex-shrink-0">
+                          <button onClick={(e) => { e.stopPropagation(); setContactModal(item.owner); }} className="px-3 py-1.5 text-[12px] font-medium text-secondary border border-border hover:bg-slate-100 dark:hover:bg-zinc-800/20 rounded-lg transition-colors flex-shrink-0">
                             Contact Owner
                           </button>
                         </div>
@@ -407,7 +407,7 @@ export default function DailyCommandBrief() {
           </div>
 
           {/* ── Upcoming Strategic Deadlines ───────────────── */}
-          <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden">
+          <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden">
             <div className="flex items-center gap-2 px-5 py-3 border-b border-border dark:border-slate-700/20">
               <Target className="w-4 h-4 text-secondary" />
               <span className="text-[13px] font-semibold text-primary uppercase tracking-wide">Upcoming Strategic Deadlines</span>
@@ -431,7 +431,7 @@ export default function DailyCommandBrief() {
                                 <span className="text-slate-500">Readiness</span>
                                 <span className={rc.pct}>{item.readiness}%</span>
                               </div>
-                              <div className="w-full h-1 bg-slate-100 dark:bg-slate-700/40 rounded-full overflow-hidden">
+                              <div className="w-full h-1 bg-slate-100 dark:bg-zinc-800/40 rounded-full overflow-hidden">
                                 <div className={`h-full rounded-full ${rc.bar}`} style={{ width: `${item.readiness}%` }} />
                               </div>
                             </div>
@@ -453,7 +453,7 @@ export default function DailyCommandBrief() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
 
             {/* Escalating Risk 72h */}
-            <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden">
+            <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden">
               <div className="flex items-center gap-2 px-5 py-3 border-b border-border dark:border-slate-700/20">
                 <AlertTriangle className="w-4 h-4 text-amber-700 dark:text-amber-400" />
                 <span className="text-[13px] font-semibold text-primary">Escalating Risk — Next 72 Hours</span>
@@ -461,7 +461,7 @@ export default function DailyCommandBrief() {
               </div>
               <div className="divide-y divide-slate-700/10">
                 {escalatingRisks.map((r) => (
-                  <div key={r.id} className="px-5 py-3 hover:bg-slate-50 dark:hover:bg-slate-700/10 transition-colors">
+                  <div key={r.id} className="px-5 py-3 hover:bg-slate-50 dark:hover:bg-zinc-800/10 transition-colors">
                     <div className="flex items-start gap-2 mb-1.5">
                       <div className={`w-0.5 self-stretch rounded-full flex-shrink-0 ${r.severity === 'critical' ? 'bg-red-500' : r.severity === 'high' ? 'bg-amber-500' : 'bg-blue-400'}`} />
                       <div className="flex-1 min-w-0">
@@ -483,7 +483,7 @@ export default function DailyCommandBrief() {
             </div>
 
             {/* On Duty Today */}
-            <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden">
+            <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden">
               <div className="flex items-center gap-2 px-5 py-3 border-b border-border dark:border-slate-700/20">
                 <Users className="w-4 h-4 text-secondary" />
                 <span className="text-[13px] font-semibold text-primary">Command Staff On Duty</span>
@@ -522,7 +522,7 @@ export default function DailyCommandBrief() {
                 </div>
               </div>
               {/* Footer */}
-              <div className="px-5 py-3 border-t border-border dark:border-slate-700/20 bg-slate-50 dark:bg-slate-800/10 flex items-center gap-2">
+              <div className="px-5 py-3 border-t border-border dark:border-slate-700/20 bg-slate-50 dark:bg-zinc-900/10 flex items-center gap-2">
                 <Shield className="w-3 h-3 text-slate-500" />
                 <span className="text-[10px] text-slate-500">Brief auto-generated {aiSummary.generatedAt} EST daily. Refresh for live updates.</span>
               </div>
@@ -536,7 +536,7 @@ export default function DailyCommandBrief() {
       {contactModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setContactModal(null)} />
-          <div className="relative bg-white dark:bg-slate-900 border border-border rounded-2xl p-6 max-w-sm w-full shadow-2xl">
+          <div className="relative bg-white dark:bg-zinc-950 border border-border rounded-2xl p-6 max-w-sm w-full shadow-2xl">
             <div className="flex items-start justify-between gap-3 mb-5">
               <div>
                 <h3 className="text-base font-semibold text-primary mb-0.5">{contactModal.name}</h3>
@@ -553,7 +553,7 @@ export default function DailyCommandBrief() {
             </div>
             <div className="flex gap-3 mt-6">
               <button className="flex-1 px-4 py-2.5 text-xs font-medium text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/10 rounded-xl transition-colors">Call Cell</button>
-              {contactModal.radio && <button className="flex-1 px-4 py-2.5 text-xs font-medium text-secondary border border-border hover:bg-slate-100 dark:hover:bg-slate-700/20 rounded-xl transition-colors">Radio Contact</button>}
+              {contactModal.radio && <button className="flex-1 px-4 py-2.5 text-xs font-medium text-secondary border border-border hover:bg-slate-100 dark:hover:bg-zinc-800/20 rounded-xl transition-colors">Radio Contact</button>}
             </div>
           </div>
         </div>

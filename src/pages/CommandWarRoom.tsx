@@ -135,26 +135,26 @@ const alerts: CommandAlert[] = [
 function getDivisionColors(status: DivisionReadiness['status']) {
   if (status === 'Critical') return { badge: 'bg-red-500/15 text-red-700 dark:text-red-400 border border-red-500/25',       dot: 'bg-red-500' };
   if (status === 'Reduced')  return { badge: 'bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/25', dot: 'bg-amber-400' };
-  return { badge: 'bg-slate-100 dark:bg-slate-700/30 text-secondary border border-border', dot: 'bg-slate-400' };
+  return { badge: 'bg-slate-100 dark:bg-zinc-800/30 text-secondary border border-border', dot: 'bg-slate-400' };
 }
 
 function getCertColors(severity: CertAlert['severity']) {
   if (severity === 'critical') return { row: 'border-l-2 border-l-red-500/70',   badge: 'bg-red-500/15 text-red-700 dark:text-red-400 border border-red-500/20',    days: 'text-red-700 dark:text-red-400 font-bold' };
   if (severity === 'warning')  return { row: 'border-l-2 border-l-amber-500/60', badge: 'bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/20', days: 'text-amber-700 dark:text-amber-400 font-semibold' };
-  return { row: '', badge: 'bg-slate-100 dark:bg-slate-700/30 text-secondary border border-border', days: 'text-slate-500' };
+  return { row: '', badge: 'bg-slate-100 dark:bg-zinc-800/30 text-secondary border border-border', days: 'text-slate-500' };
 }
 
 function getDeploymentStatusColors(status: Deployment['status']) {
   if (status === 'Active')   return 'bg-emerald-100 dark:bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/20';
   if (status === 'En Route') return 'bg-blue-100 dark:bg-blue-500/15 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-500/20';
   if (status === 'Staged')   return 'bg-amber-100 dark:bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-500/20';
-  return 'bg-slate-100 dark:bg-slate-500/15 text-secondary border border-slate-200 dark:border-slate-500/20';
+  return 'bg-slate-100 dark:bg-zinc-600/15 text-secondary border border-slate-200 dark:border-slate-500/20';
 }
 
 function getAlertColors(severity: CommandAlert['severity']) {
   if (severity === 'critical') return { border: 'border-l-red-500',   icon: 'text-red-700 dark:text-red-400',     label: 'bg-red-500/15 text-red-700 dark:text-red-400 border border-red-500/20' };
   if (severity === 'warning')  return { border: 'border-l-amber-500', icon: 'text-amber-700 dark:text-amber-400', label: 'bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/20' };
-  return { border: 'border-l-slate-300 dark:border-l-slate-700', icon: 'text-slate-500', label: 'bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-500 border border-border' };
+  return { border: 'border-l-slate-300 dark:border-l-slate-700', icon: 'text-slate-500', label: 'bg-slate-100 dark:bg-zinc-800/30 text-slate-700 dark:text-slate-500 border border-border' };
 }
 
 // ── Sub-components ─────────────────────────────────────────────
@@ -174,7 +174,7 @@ function ShiftHealthBar() {
   ];
 
   return (
-    <div className="bg-slate-900 dark:bg-slate-950/80 border border-slate-700/50 rounded-xl px-5 py-3.5">
+    <div className="bg-slate-900 dark:bg-black/80 border border-slate-700/50 rounded-xl px-5 py-3.5">
       <div className="flex items-center gap-5 flex-wrap">
         {/* Score */}
         <div className="flex items-center gap-3 min-w-fit">
@@ -238,7 +238,7 @@ function LiveOpsMap({ beats: bs }: { beats: PatrolBeat[] }) {
   ];
 
   return (
-    <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden flex flex-col">
+    <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden flex flex-col">
       <div className="flex items-center justify-between px-5 py-3 border-b border-border dark:border-slate-700/20">
         <div className="flex items-center gap-2">
           <Layers className="w-4 h-4 text-secondary" />
@@ -266,7 +266,7 @@ function LiveOpsMap({ beats: bs }: { beats: PatrolBeat[] }) {
           {grid.map((row, ri) => (
             <div key={ri} className="grid grid-cols-3 gap-1.5">
               {row.map((beat, ci) => {
-                if (!beat) return <div key={ci} className="rounded-lg border border-transparent bg-slate-50 dark:bg-slate-800/10" />;
+                if (!beat) return <div key={ci} className="rounded-lg border border-transparent bg-slate-50 dark:bg-zinc-900/10" />;
                 return (
                   <div key={beat.id} className={`rounded-lg border p-2 ${cellBg(beat.status)} relative`}>
                     <div className="flex items-center justify-between mb-0.5">
@@ -312,7 +312,7 @@ function OperationalPriorities() {
   ];
 
   return (
-    <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden flex flex-col">
+    <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden flex flex-col">
       <div className="flex items-center gap-2 px-5 py-3 border-b border-border dark:border-slate-700/20">
         <Target className="w-4 h-4 text-secondary" />
         <span className="text-[13px] font-semibold text-primary">Operational Priorities</span>
@@ -324,7 +324,7 @@ function OperationalPriorities() {
         {items.map((item, i) => {
           const Icon = item.icon;
           return (
-            <div key={i} className={`flex gap-3 px-4 py-2.5 border-l-2 ${i < 2 ? 'border-l-red-500/70' : 'border-l-amber-500/50'} hover:bg-slate-50 dark:hover:bg-slate-700/10 transition-colors`}>
+            <div key={i} className={`flex gap-3 px-4 py-2.5 border-l-2 ${i < 2 ? 'border-l-red-500/70' : 'border-l-amber-500/50'} hover:bg-slate-50 dark:hover:bg-zinc-800/10 transition-colors`}>
               <Icon className={`w-3.5 h-3.5 mt-0.5 flex-shrink-0 ${item.color}`} />
               <div className="flex-1 min-w-0">
                 <p className="text-[11.5px] font-medium text-primary leading-tight">{item.label}</p>
@@ -362,7 +362,7 @@ function AIOperationsAdvisor() {
   const levelColor = (l: string) => l === 'high' ? 'bg-red-500' : l === 'medium' ? 'bg-amber-400' : 'bg-blue-400';
 
   return (
-    <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden flex flex-col">
+    <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden flex flex-col">
       <div className="flex items-center gap-2 px-5 py-3 border-b border-border dark:border-slate-700/20">
         <Brain className="w-4 h-4 text-secondary" />
         <span className="text-[13px] font-semibold text-primary">AI Operations Advisor</span>
@@ -390,7 +390,7 @@ function AIOperationsAdvisor() {
             {actions.map((a, i) => {
               const Icon = a.icon;
               return (
-                <div key={i} className={`flex items-start gap-2 rounded-lg p-2 ${a.urgency === 'now' ? 'bg-red-500/8 border border-red-500/20' : 'bg-slate-50 dark:bg-slate-700/20 border border-border dark:border-slate-700/20'}`}>
+                <div key={i} className={`flex items-start gap-2 rounded-lg p-2 ${a.urgency === 'now' ? 'bg-red-500/8 border border-red-500/20' : 'bg-slate-50 dark:bg-zinc-800/20 border border-border dark:border-slate-700/20'}`}>
                   <Icon className={`w-3 h-3 mt-0.5 flex-shrink-0 ${a.urgency === 'now' ? 'text-red-700 dark:text-red-400' : 'text-secondary'}`} />
                   <div>
                     <p className="text-[11px] font-medium text-primary">{a.label}</p>
@@ -423,7 +423,7 @@ function AIOperationsAdvisor() {
             <span>If top 3 actions taken:</span>
             <span className="text-emerald-600 dark:text-emerald-400 font-semibold">+11% shift health</span>
           </div>
-          <div className="mt-1 w-full h-1.5 bg-slate-100 dark:bg-slate-700/40 rounded-full overflow-hidden">
+          <div className="mt-1 w-full h-1.5 bg-slate-100 dark:bg-zinc-800/40 rounded-full overflow-hidden">
             <div className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-emerald-400" style={{ width: '91%' }} />
           </div>
           <div className="flex justify-between text-[9px] text-slate-500 mt-0.5">
@@ -486,7 +486,7 @@ export default function CommandWarRoom() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
 
           {/* Enhanced Patrol Beat Coverage */}
-          <div className="lg:col-span-5 bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden">
+          <div className="lg:col-span-5 bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden">
             <div className="flex items-center justify-between px-5 py-3 border-b border-border dark:border-slate-700/20">
               <div className="flex items-center gap-2">
                 <Radio className="w-4 h-4 text-secondary" />
@@ -555,7 +555,7 @@ export default function CommandWarRoom() {
             </div>
 
             {/* AI recommendations */}
-            <div className="border-t border-border dark:border-slate-700/20 p-4 bg-slate-50 dark:bg-slate-800/10 space-y-1.5">
+            <div className="border-t border-border dark:border-slate-700/20 p-4 bg-slate-50 dark:bg-zinc-900/10 space-y-1.5">
               <p className="text-[10px] uppercase tracking-widest text-slate-500 mb-2">AI Reassignment Recommendations</p>
               {aiPatrolRecs.map((rec, i) => (
                 <div key={i} className="flex gap-2 items-start">
@@ -567,7 +567,7 @@ export default function CommandWarRoom() {
           </div>
 
           {/* Staffing Readiness by Division */}
-          <div className="lg:col-span-7 bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden">
+          <div className="lg:col-span-7 bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden">
             <div className="flex items-center justify-between px-5 py-3 border-b border-border dark:border-slate-700/20">
               <div className="flex items-center gap-2">
                 <Users className="w-4 h-4 text-secondary" />
@@ -593,7 +593,7 @@ export default function CommandWarRoom() {
                 const colors = getDivisionColors(div.status);
                 const pct = Math.round((div.onDuty / div.filled) * 100);
                 return (
-                  <div key={div.name} className="grid grid-cols-12 items-center px-5 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/10 transition-colors">
+                  <div key={div.name} className="grid grid-cols-12 items-center px-5 py-2 hover:bg-slate-50 dark:hover:bg-zinc-800/10 transition-colors">
                     <div className="col-span-4">
                       <p className="text-[12px] font-medium text-slate-900 dark:text-slate-200 leading-tight">{div.name}</p>
                       <p className="text-[10px] text-slate-500">{div.bureau}{div.actingSupervisor && <span className="ml-1 text-amber-700 dark:text-amber-400">⚡ Acting</span>}</p>
@@ -604,7 +604,7 @@ export default function CommandWarRoom() {
                     <div className="col-span-2 text-center">
                       <div className="flex flex-col items-center gap-0.5">
                         <span className="text-[11.5px] text-secondary">{div.onDuty}</span>
-                        <div className="w-12 h-1 bg-slate-200 dark:bg-slate-700/50 rounded-full overflow-hidden">
+                        <div className="w-12 h-1 bg-slate-200 dark:bg-zinc-800/50 rounded-full overflow-hidden">
                           <div className={`h-full rounded-full ${pct >= 70 ? 'bg-emerald-500' : pct >= 55 ? 'bg-amber-400' : 'bg-red-500'}`} style={{ width: `${pct}%` }} />
                         </div>
                       </div>
@@ -631,7 +631,7 @@ export default function CommandWarRoom() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
 
           {/* Certification Risk */}
-          <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden">
+          <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden">
             <div className="flex items-center justify-between px-5 py-3 border-b border-border dark:border-slate-700/20">
               <div className="flex items-center gap-2">
                 <Award className="w-4 h-4 text-secondary" />
@@ -646,7 +646,7 @@ export default function CommandWarRoom() {
               {certAlerts.map((cert) => {
                 const colors = getCertColors(cert.severity);
                 return (
-                  <div key={cert.badge} className={`flex items-center gap-3 px-5 py-2 ${colors.row} hover:bg-slate-50 dark:hover:bg-slate-700/10 transition-colors`}>
+                  <div key={cert.badge} className={`flex items-center gap-3 px-5 py-2 ${colors.row} hover:bg-slate-50 dark:hover:bg-zinc-800/10 transition-colors`}>
                     <div className="flex-1 min-w-0">
                       <p className="text-[11.5px] font-medium text-slate-900 dark:text-slate-200">{cert.deputy}</p>
                       <p className="text-[10px] text-slate-500 truncate">{cert.cert}</p>
@@ -660,12 +660,12 @@ export default function CommandWarRoom() {
           </div>
 
           {/* Active Deployments */}
-          <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden">
+          <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden">
             <div className="flex items-center justify-between px-5 py-3 border-b border-border dark:border-slate-700/20">
               <div className="flex items-center gap-2">
                 <Target className="w-4 h-4 text-secondary" />
                 <span className="text-[13px] font-semibold text-primary">Active Deployments</span>
-                <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-700/30 text-secondary border border-border">
+                <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-slate-100 dark:bg-zinc-800/30 text-secondary border border-border">
                   {deployments.reduce((s, d) => s + d.personnel, 0)} dep.
                 </span>
               </div>
@@ -675,8 +675,8 @@ export default function CommandWarRoom() {
             </div>
             <div className="divide-y divide-slate-700/10">
               {deployments.map((dep) => (
-                <div key={dep.name} className="flex items-center gap-3 px-5 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/10 transition-colors">
-                  <div className="w-6 h-6 bg-slate-100 dark:bg-slate-700/40 rounded-md flex items-center justify-center flex-shrink-0">
+                <div key={dep.name} className="flex items-center gap-3 px-5 py-2 hover:bg-slate-50 dark:hover:bg-zinc-800/10 transition-colors">
+                  <div className="w-6 h-6 bg-slate-100 dark:bg-zinc-800/40 rounded-md flex items-center justify-center flex-shrink-0">
                     <span className="text-[10px] font-bold text-secondary">{dep.personnel}</span>
                   </div>
                   <div className="flex-1 min-w-0">
@@ -690,7 +690,7 @@ export default function CommandWarRoom() {
           </div>
 
           {/* Command Alert Feed */}
-          <div className="bg-white dark:bg-slate-800/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden">
+          <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden">
             <div className="flex items-center justify-between px-5 py-3 border-b border-border dark:border-slate-700/20">
               <div className="flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4 text-secondary" />
@@ -708,7 +708,7 @@ export default function CommandWarRoom() {
                 const colors = getAlertColors(alert.severity);
                 const Icon = alert.severity === 'critical' ? AlertOctagon : alert.severity === 'warning' ? AlertTriangle : Activity;
                 return (
-                  <div key={alert.id} className={`flex gap-3 px-5 py-2.5 border-l-2 ${colors.border} hover:bg-slate-50 dark:hover:bg-slate-700/10 transition-colors cursor-pointer`}>
+                  <div key={alert.id} className={`flex gap-3 px-5 py-2.5 border-l-2 ${colors.border} hover:bg-slate-50 dark:hover:bg-zinc-800/10 transition-colors cursor-pointer`}>
                     <Icon className={`w-3.5 h-3.5 mt-0.5 flex-shrink-0 ${colors.icon}`} />
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between gap-1 mb-0.5">

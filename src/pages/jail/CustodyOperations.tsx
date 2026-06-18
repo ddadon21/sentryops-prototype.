@@ -146,10 +146,10 @@ const getPodColors = (pod: Pod) => {
     badge: 'bg-orange-500/15 text-orange-600 dark:text-orange-400 border border-orange-500/20',
   };
   return {
-    card: 'bg-slate-50 dark:bg-slate-800/35 border-slate-200 dark:border-slate-700/25',
+    card: 'bg-slate-50 dark:bg-zinc-900/35 border-slate-200 dark:border-slate-700/25',
     pct: 'text-slate-500',
     bar: 'bg-slate-600/50',
-    badge: 'bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40',
+    badge: 'bg-slate-100 dark:bg-zinc-800/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40',
   };
 };
 
@@ -166,8 +166,8 @@ const getMovementIcon = (type: Movement['type']) => {
 const getMovementColors = (status: Movement['status']) => {
   if (status === 'In Progress') return 'bg-orange-100 dark:bg-orange-500/15 text-orange-700 dark:text-orange-400 border border-orange-200 dark:border-orange-500/20';
   if (status === 'Staging')     return 'bg-orange-100 dark:bg-orange-500/15 text-orange-700 dark:text-orange-400 border border-orange-200 dark:border-orange-500/20';
-  if (status === 'Pending')     return 'bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40';
-  return 'bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40';
+  if (status === 'Pending')     return 'bg-slate-100 dark:bg-zinc-800/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40';
+  return 'bg-slate-100 dark:bg-zinc-800/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40';
 };
 
 const getIncidentColors = (severity: Incident['severity'], status: Incident['status']) => {
@@ -175,7 +175,7 @@ const getIncidentColors = (severity: Incident['severity'], status: Incident['sta
   if (resolved) return { row: 'opacity-60', badge: 'bg-slate-500/15 text-slate-700 dark:text-slate-400 border border-slate-500/20', sev: '' };
   if (severity === 'critical') return { row: '', badge: 'bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/20',    sev: 'text-red-600 dark:text-red-400' };
   if (severity === 'high')     return { row: '', badge: 'bg-orange-500/15 text-orange-600 dark:text-orange-400 border border-orange-500/20', sev: 'text-orange-600 dark:text-orange-400' };
-  return { row: '', badge: 'bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40', sev: 'text-slate-500' };
+  return { row: '', badge: 'bg-slate-100 dark:bg-zinc-800/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40', sev: 'text-slate-500' };
 };
 
 const getIncidentIcon = (type: Incident['type']) => {
@@ -204,11 +204,11 @@ const getMovementDecision = (mov: Movement): { risk: string | null; action: stri
 };
 
 const getOfficerStatusColors = (status: Officer['status']) => {
-  if (status === 'On Post')        return 'bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40';
+  if (status === 'On Post')        return 'bg-slate-100 dark:bg-zinc-800/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40';
   if (status === 'Medical Escort') return 'bg-orange-100 dark:bg-orange-500/15 text-orange-700 dark:text-orange-400 border border-orange-200 dark:border-orange-500/20';
   if (status === 'OT Pending')     return 'bg-orange-100 dark:bg-orange-500/15 text-orange-700 dark:text-orange-400 border border-orange-200 dark:border-orange-500/20';
-  if (status === 'Transport')      return 'bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40';
-  return 'bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40';
+  if (status === 'Transport')      return 'bg-slate-100 dark:bg-zinc-800/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40';
+  return 'bg-slate-100 dark:bg-zinc-800/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40';
 };
 
 // ── Component ──────────────────────────────────────────────────
@@ -419,13 +419,13 @@ export default function CustodyOperations() {
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1.5 text-[11px] text-slate-500 bg-slate-100 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-lg px-3 py-1.5">
+            <div className="flex items-center gap-1.5 text-[11px] text-slate-500 bg-slate-100 dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-lg px-3 py-1.5">
               <Circle className="w-1.5 h-1.5 fill-emerald-500 text-emerald-500" />
               Live
             </div>
             <button
               onClick={() => navigate('/jail/command')}
-              className="flex items-center gap-2 px-3 py-1.5 bg-slate-100 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-lg text-[12px] text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-700/30 transition-all"
+              className="flex items-center gap-2 px-3 py-1.5 bg-slate-100 dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-lg text-[12px] text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-zinc-800/30 transition-all"
             >
               Command Center <ArrowRight className="w-3.5 h-3.5" />
             </button>
@@ -434,26 +434,26 @@ export default function CustodyOperations() {
 
         {/* ── Shift Snapshot ─────────────────────────────────
             Everything a commander needs in under 3 seconds. */}
-        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl px-5 py-3">
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl px-5 py-3">
           <div>
             <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-0.5">Staffing</p>
             <p className={`text-[16px] font-bold leading-none ${staffPct < 100 ? 'text-orange-600 dark:text-orange-400' : 'text-slate-900 dark:text-white'}`}>
               {currentShift.present}/{currentShift.scheduled}
             </p>
           </div>
-          <div className="w-px h-8 bg-slate-200 dark:bg-slate-700/50" />
+          <div className="w-px h-8 bg-slate-200 dark:bg-zinc-800/50" />
           <div>
             <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-0.5">Incidents</p>
             <p className={`text-[16px] font-bold leading-none ${openIncidents > 0 ? 'text-orange-600 dark:text-orange-400' : 'text-slate-900 dark:text-white'}`}>
               {openIncidents} Open
             </p>
           </div>
-          <div className="w-px h-8 bg-slate-200 dark:bg-slate-700/50" />
+          <div className="w-px h-8 bg-slate-200 dark:bg-zinc-800/50" />
           <div>
             <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-0.5">Movements</p>
             <p className="text-[16px] font-bold leading-none text-slate-900 dark:text-white">{activeMovementCount} Active</p>
           </div>
-          <div className="w-px h-8 bg-slate-200 dark:bg-slate-700/50" />
+          <div className="w-px h-8 bg-slate-200 dark:bg-zinc-800/50" />
           <div>
             <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-0.5">Critical Pods</p>
             <p className={`text-[16px] font-bold leading-none ${criticalPods.length > 0 ? 'text-red-600 dark:text-red-400' : 'text-slate-900 dark:text-white'}`}>
@@ -462,7 +462,7 @@ export default function CustodyOperations() {
           </div>
           <button
             onClick={() => setShowHandoff(true)}
-            className="ml-auto flex items-center gap-1.5 text-[11px] text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 rounded-lg px-3 py-1.5 hover:bg-slate-700/60 transition-colors"
+            className="ml-auto flex items-center gap-1.5 text-[11px] text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 rounded-lg px-3 py-1.5 hover:bg-slate-700/60 transition-colors"
           >
             <FileText className="w-3.5 h-3.5" /> Generate Shift Handoff Report
           </button>
@@ -470,7 +470,7 @@ export default function CustodyOperations() {
 
         {/* ── AI Prioritized Actions ─────────────────────────
             Existing recommendations, ranked — where to spend attention first. */}
-        <div className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl px-5 py-3">
+        <div className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl px-5 py-3">
           <div className="flex items-center gap-2 mb-1.5">
             <Lightbulb className="w-4 h-4 text-slate-700 dark:text-slate-400" />
             <span className="text-[13px] font-semibold text-slate-900 dark:text-white">AI Prioritized Actions</span>
@@ -488,7 +488,7 @@ export default function CustodyOperations() {
                   <span className={`text-[9px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider flex-shrink-0 ${
                     action.priority === 'Critical' ? 'bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/20' :
                     action.priority === 'High'     ? 'bg-orange-500/15 text-orange-600 dark:text-orange-400 border border-orange-500/20' :
-                                                      'bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40'
+                                                      'bg-slate-100 dark:bg-zinc-800/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40'
                   }`}>{action.priority}</span>
                   <ArrowRight className="w-3 h-3 text-slate-500 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </button>
@@ -528,14 +528,14 @@ export default function CustodyOperations() {
                           <span className={`text-[9px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider ${
                             issue.priority === 'Immediate'     ? 'bg-red-500/20 text-red-600 dark:text-red-400 border border-red-500/30' :
                             issue.priority === 'High Priority' ? 'bg-orange-500/20 text-orange-600 dark:text-orange-400 border border-orange-500/30' :
-                                                                 'bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40'
+                                                                 'bg-slate-100 dark:bg-zinc-800/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40'
                           }`}>{issue.priority}</span>
                           <p className="text-[13px] font-semibold text-slate-900 dark:text-white">{issue.label}</p>
                         </div>
                         <p className="text-[11px] text-slate-700 dark:text-slate-400 mb-2.5">{issue.detail}</p>
 
                         {/* Operational Impact */}
-                        <div className="bg-white dark:bg-slate-900/50 border border-slate-700/40 rounded-lg px-3 py-2.5">
+                        <div className="bg-white dark:bg-zinc-950/50 border border-slate-700/40 rounded-lg px-3 py-2.5">
                           <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1.5">Operational Impact — if no action taken</p>
                           <ul className="space-y-1">
                             {issue.impact.map((line, i) => (
@@ -550,13 +550,13 @@ export default function CustodyOperations() {
 
                       {/* Recommended action + buttons */}
                       <div className="flex flex-col gap-2 flex-shrink-0 max-w-[210px]">
-                        <div className="bg-white dark:bg-slate-800/60 border border-slate-700/50 rounded-lg px-2.5 py-2">
+                        <div className="bg-white dark:bg-zinc-900/60 border border-slate-700/50 rounded-lg px-2.5 py-2">
                           <div className="flex items-center justify-between mb-1">
                             <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold">Recommended</p>
                             <span className={`text-[8px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider ${
                               issue.confidence === 'High'
                                 ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20'
-                                : 'bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40'
+                                : 'bg-slate-100 dark:bg-zinc-800/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40'
                             }`}>{issue.confidence} confidence</span>
                           </div>
                           <p className="text-[11px] text-slate-700 dark:text-slate-200 leading-snug mb-1.5">{issue.recommendation}</p>
@@ -580,7 +580,7 @@ export default function CustodyOperations() {
                                       : 'bg-red-500/15 border border-red-500/25 text-red-600 dark:text-red-400 hover:bg-red-500/25'
                                     : isActive
                                       ? 'bg-slate-600/60 border border-slate-500/60 text-slate-900 dark:text-white'
-                                      : 'bg-white dark:bg-slate-700/50 border border-slate-600/50 text-slate-700 dark:text-slate-300 hover:bg-slate-700/70'
+                                      : 'bg-white dark:bg-zinc-800/50 border border-slate-600/50 text-slate-700 dark:text-slate-300 hover:bg-slate-700/70'
                                 }`}
                               >
                                 {action}
@@ -596,7 +596,7 @@ export default function CustodyOperations() {
 
                     {/* Impact Preview — inline */}
                     {preview && (
-                      <div className="mx-5 mb-4 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-700/60 rounded-lg p-3">
+                      <div className="mx-5 mb-4 bg-slate-50 dark:bg-zinc-950/70 border border-slate-200 dark:border-slate-700/60 rounded-lg p-3">
                         <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-2">Impact Preview — {activePreview!.action}</p>
                         <ul className="space-y-1 mb-3">
                           {preview.map((line, i) => (
@@ -607,7 +607,7 @@ export default function CustodyOperations() {
                           ))}
                         </ul>
                         <div className="flex items-center gap-2 pt-2 border-t border-slate-200 dark:border-slate-700/40">
-                          <button className="text-[11px] px-3 py-1.5 bg-white dark:bg-slate-700/60 border border-slate-600/60 text-slate-900 dark:text-white rounded-lg hover:bg-slate-700 transition-colors font-medium">
+                          <button className="text-[11px] px-3 py-1.5 bg-white dark:bg-zinc-800/60 border border-slate-600/60 text-slate-900 dark:text-white rounded-lg hover:bg-slate-700 transition-colors font-medium">
                             Confirm — {activePreview!.action}
                           </button>
                           <button onClick={() => setActivePreview(null)} className="text-[11px] text-slate-500 hover:text-slate-700 dark:text-slate-300 transition-colors px-2 py-1.5">
@@ -624,12 +624,12 @@ export default function CustodyOperations() {
         )}
 
         {/* ── Section 2: Housing Unit Management ──────────── */}
-        <div id="housing-section" className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
+        <div id="housing-section" className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
           <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 dark:border-slate-700/40">
             <div className="flex items-center gap-2">
               <MapPin className="w-4 h-4 text-slate-700 dark:text-slate-400" />
               <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Housing Unit Management</span>
-              <span className="text-[10px] px-2 py-0.5 bg-slate-50 dark:bg-slate-700/40 text-slate-700 dark:text-slate-400 rounded-full">
+              <span className="text-[10px] px-2 py-0.5 bg-slate-50 dark:bg-zinc-800/40 text-slate-700 dark:text-slate-400 rounded-full">
                 {pods.filter(p => p.status === 'Over Capacity').length} over · {pods.filter(p => p.status === 'Near Capacity').length} near · {pods.filter(p => p.status === 'Normal').length} stable
               </span>
             </div>
@@ -642,7 +642,7 @@ export default function CustodyOperations() {
                 <span className="flex items-center gap-0.5 text-orange-600 dark:text-orange-400 font-bold">↑</span><span className="text-slate-500">worsening</span>
                 <span className="flex items-center gap-0.5 text-emerald-500 font-bold">↓</span><span className="text-slate-500">improving</span>
               </div>
-              <button className="flex items-center gap-1.5 text-[11px] text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 rounded-lg px-3 py-1.5 hover:bg-slate-700/60 transition-colors">
+              <button className="flex items-center gap-1.5 text-[11px] text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 rounded-lg px-3 py-1.5 hover:bg-slate-700/60 transition-colors">
                 <ArrowLeftRight className="w-3.5 h-3.5" /> Redistribute Inmates
               </button>
             </div>
@@ -671,7 +671,7 @@ export default function CustodyOperations() {
                     </div>
                     <p className={`text-[13px] font-bold ${colors.pct}`}>{pct}%</p>
                     <p className="text-[9px] text-slate-500 mt-0.5">{pod.current}/{pod.capacity}</p>
-                    <div className="w-full h-0.5 bg-white dark:bg-slate-700/50 rounded-full mt-1.5 overflow-hidden">
+                    <div className="w-full h-0.5 bg-white dark:bg-zinc-800/50 rounded-full mt-1.5 overflow-hidden">
                       <div className={`h-full rounded-full ${colors.bar}`} style={{ width: `${Math.min(pct, 100)}%` }} />
                     </div>
                     <p className="text-[9px] text-slate-500 mt-1.5 truncate">{pod.assignedOfficer ? pod.assignedOfficer.replace('Dep. ', '') : '—'}</p>
@@ -687,7 +687,7 @@ export default function CustodyOperations() {
             const colors = getPodColors(pod);
             const pct = Math.round((pod.current / pod.capacity) * 100);
             return (
-              <div className="mx-4 mb-4 bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
+              <div className="mx-4 mb-4 bg-white dark:bg-zinc-950/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
                 <div className="flex items-start justify-between gap-4 mb-4">
                   <div>
                     <div className="flex items-center gap-2 mb-1">
@@ -713,7 +713,7 @@ export default function CustodyOperations() {
 
                 {/* Operational Impact — only shown when there's a problem */}
                 {(pod.status !== 'Normal' || !pod.assignedOfficer || pod.incidents > 0) && (
-                  <div className="bg-white dark:bg-slate-900/50 border border-slate-700/40 rounded-lg px-3 py-2.5 mb-3">
+                  <div className="bg-white dark:bg-zinc-950/50 border border-slate-700/40 rounded-lg px-3 py-2.5 mb-3">
                     <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1.5">Operational Impact — if no action taken</p>
                     <ul className="space-y-0.5">
                       {pod.status === 'Over Capacity' && (
@@ -737,7 +737,7 @@ export default function CustodyOperations() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {/* Officer assignment */}
-                  <div className={`border rounded-lg p-3 ${!pod.assignedOfficer ? 'bg-orange-500/5 border-orange-500/25' : 'bg-slate-100 dark:bg-slate-800/30 border-slate-700/40'}`}>
+                  <div className={`border rounded-lg p-3 ${!pod.assignedOfficer ? 'bg-orange-500/5 border-orange-500/25' : 'bg-slate-100 dark:bg-zinc-900/30 border-slate-700/40'}`}>
                     <div className="flex items-center justify-between mb-2">
                       <p className="text-[10px] text-slate-500 uppercase tracking-wide">Assigned Officer</p>
                       {!pod.assignedOfficer && <span className="text-[9px] px-1.5 py-0.5 bg-orange-500/15 text-orange-600 dark:text-orange-400 border border-orange-500/20 rounded font-semibold uppercase">At Risk</span>}
@@ -748,14 +748,14 @@ export default function CustodyOperations() {
                           <UserCheck className="w-3.5 h-3.5 text-slate-700 dark:text-slate-400" />
                           <span className="text-[12px] font-medium text-slate-900 dark:text-white">{pod.assignedOfficer}</span>
                         </div>
-                        <button className="text-[10px] px-2 py-1 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white rounded-lg transition-colors">
+                        <button className="text-[10px] px-2 py-1 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white rounded-lg transition-colors">
                           Reassign
                         </button>
                       </div>
                     ) : (
                       <div className="flex items-center justify-between">
                         <span className="text-[12px] text-orange-600 dark:text-orange-400">Float coverage only</span>
-                        <button className="flex items-center gap-1 text-[10px] px-2 py-1 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white rounded-lg transition-colors">
+                        <button className="flex items-center gap-1 text-[10px] px-2 py-1 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white rounded-lg transition-colors">
                           <Plus className="w-3 h-3" /> Assign Now
                         </button>
                       </div>
@@ -763,7 +763,7 @@ export default function CustodyOperations() {
                   </div>
 
                   {/* Active movements for this pod */}
-                  <div className="bg-slate-100 dark:bg-slate-800/30 border border-slate-700/40 rounded-lg p-3">
+                  <div className="bg-slate-100 dark:bg-zinc-900/30 border border-slate-700/40 rounded-lg p-3">
                     <p className="text-[10px] text-slate-500 uppercase tracking-wide mb-2">Pod Movements ({pod.activeMovements})</p>
                     {pod.activeMovements === 0 ? (
                       <p className="text-[11px] text-slate-700">No active movements</p>
@@ -775,16 +775,16 @@ export default function CustodyOperations() {
                   </div>
 
                   {/* Actions */}
-                  <div className="bg-slate-100 dark:bg-slate-800/30 border border-slate-700/40 rounded-lg p-3">
+                  <div className="bg-slate-100 dark:bg-zinc-900/30 border border-slate-700/40 rounded-lg p-3">
                     <p className="text-[10px] text-slate-500 uppercase tracking-wide mb-2">Actions</p>
                     <div className="space-y-1.5">
-                      <button className="w-full flex items-center gap-2 text-[11px] text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white px-2.5 py-1.5 bg-slate-100 dark:bg-slate-700/30 border border-slate-700/40 rounded-lg transition-colors">
+                      <button className="w-full flex items-center gap-2 text-[11px] text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white px-2.5 py-1.5 bg-slate-100 dark:bg-zinc-800/30 border border-slate-700/40 rounded-lg transition-colors">
                         <ArrowLeftRight className="w-3 h-3" /> Redistribute Inmates
                       </button>
-                      <button className="w-full flex items-center gap-2 text-[11px] text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white px-2.5 py-1.5 bg-slate-100 dark:bg-slate-700/30 border border-slate-700/40 rounded-lg transition-colors">
+                      <button className="w-full flex items-center gap-2 text-[11px] text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white px-2.5 py-1.5 bg-slate-100 dark:bg-zinc-800/30 border border-slate-700/40 rounded-lg transition-colors">
                         <Lock className="w-3 h-3" /> Lock Unit
                       </button>
-                      <button className="w-full flex items-center gap-2 text-[11px] text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white px-2.5 py-1.5 bg-slate-100 dark:bg-slate-700/30 border border-slate-700/40 rounded-lg transition-colors">
+                      <button className="w-full flex items-center gap-2 text-[11px] text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white px-2.5 py-1.5 bg-slate-100 dark:bg-zinc-800/30 border border-slate-700/40 rounded-lg transition-colors">
                         <AlertTriangle className="w-3 h-3" /> Log Incident
                       </button>
                     </div>
@@ -807,12 +807,12 @@ export default function CustodyOperations() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
 
           {/* Inmate Movement Control */}
-          <div id="movement-section" className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
+          <div id="movement-section" className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
             <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 dark:border-slate-700/40">
               <div className="flex items-center gap-2">
                 <ArrowLeftRight className="w-4 h-4 text-slate-700 dark:text-slate-400" />
                 <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Inmate Movement Control</span>
-                <span className="text-[10px] px-2 py-0.5 bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-400 border border-slate-700/40 rounded-full">
+                <span className="text-[10px] px-2 py-0.5 bg-slate-100 dark:bg-zinc-800/30 text-slate-700 dark:text-slate-400 border border-slate-700/40 rounded-full">
                   {activeMovementCount} active
                 </span>
               </div>
@@ -831,7 +831,7 @@ export default function CustodyOperations() {
                 const decision = getMovementDecision(mov);
                 return (
                   <div key={mov.id} className="flex items-start gap-3 px-5 py-3 hover:bg-slate-700/10 transition-colors">
-                    <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5 bg-slate-100 dark:bg-slate-700/30">
+                    <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5 bg-slate-100 dark:bg-zinc-800/30">
                       <Icon className="w-3.5 h-3.5 text-slate-700 dark:text-slate-400" />
                     </div>
                     <div className="flex-1 min-w-0">
@@ -850,10 +850,10 @@ export default function CustodyOperations() {
                     </div>
                     {isActive && (
                       <div className="flex flex-col gap-1 flex-shrink-0">
-                        <button className="text-[10px] px-2 py-1 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white rounded transition-colors whitespace-nowrap">
+                        <button className="text-[10px] px-2 py-1 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white rounded transition-colors whitespace-nowrap">
                           Delay
                         </button>
-                        <button className="text-[10px] px-2 py-1 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white rounded transition-colors whitespace-nowrap">
+                        <button className="text-[10px] px-2 py-1 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white rounded transition-colors whitespace-nowrap">
                           Re-route
                         </button>
                       </div>
@@ -871,7 +871,7 @@ export default function CustodyOperations() {
           </div>
 
           {/* Incident & Discipline Tracking */}
-          <div id="incident-section" className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
+          <div id="incident-section" className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
             <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 dark:border-slate-700/40">
               <div className="flex items-center gap-2">
                 <AlertOctagon className="w-4 h-4 text-slate-700 dark:text-slate-400" />
@@ -911,7 +911,7 @@ export default function CustodyOperations() {
                               <span className={`text-[9px] px-1.5 py-0.5 rounded font-semibold uppercase tracking-wide ${
                                 inc.severity === 'critical' ? 'bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/20' :
                                 inc.severity === 'high' ? 'bg-orange-500/15 text-orange-600 dark:text-orange-400 border border-orange-500/20' :
-                                'bg-slate-100 dark:bg-slate-700/30 text-slate-500 border border-slate-700/40'
+                                'bg-slate-100 dark:bg-zinc-800/30 text-slate-500 border border-slate-700/40'
                               }`}>
                                 {inc.severity === 'critical' || inc.severity === 'high' ? 'Action Required' : 'Review'}
                               </span>
@@ -928,7 +928,7 @@ export default function CustodyOperations() {
                     {isExpanded && (
                       <div className="px-5 pb-3 pl-12 space-y-2">
                         {/* Description */}
-                        <p className="text-[11px] text-slate-700 dark:text-slate-300 leading-relaxed bg-slate-50 dark:bg-slate-900/30 rounded-lg p-3 border border-slate-700/40">
+                        <p className="text-[11px] text-slate-700 dark:text-slate-300 leading-relaxed bg-slate-50 dark:bg-zinc-950/30 rounded-lg p-3 border border-slate-700/40">
                           {inc.description}
                         </p>
 
@@ -942,18 +942,18 @@ export default function CustodyOperations() {
                               : { level: 'Low', text: 'Unlikely to escalate if documented and closed this shift', action: 'Supervisor sign-off required — close before 22:00' };
                           return (
                             <div className="flex items-stretch gap-2">
-                              <div className="flex-1 bg-white dark:bg-slate-900/50 border border-slate-700/40 rounded-lg px-3 py-2">
+                              <div className="flex-1 bg-white dark:bg-zinc-950/50 border border-slate-700/40 rounded-lg px-3 py-2">
                                 <div className="flex items-center gap-1.5 mb-1">
                                   <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold">Escalation Likelihood</p>
                                   <span className={`text-[8px] px-1.5 py-0.5 rounded font-bold uppercase ${
                                     escalation.level === 'High'   ? 'bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/20' :
                                     escalation.level === 'Medium' ? 'bg-orange-500/15 text-orange-600 dark:text-orange-400 border border-orange-500/20' :
-                                                                    'bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40'
+                                                                    'bg-slate-100 dark:bg-zinc-800/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40'
                                   }`}>{escalation.level}</span>
                                 </div>
                                 <p className="text-[11px] text-slate-700 dark:text-slate-300 leading-snug">{escalation.text}</p>
                               </div>
-                              <div className="flex-1 bg-white dark:bg-slate-900/50 border border-slate-700/40 rounded-lg px-3 py-2">
+                              <div className="flex-1 bg-white dark:bg-zinc-950/50 border border-slate-700/40 rounded-lg px-3 py-2">
                                 <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1">Recommended Action</p>
                                 <p className="text-[11px] text-slate-700 dark:text-slate-200 leading-snug">{escalation.action}</p>
                               </div>
@@ -963,7 +963,7 @@ export default function CustodyOperations() {
 
                         {/* Operational Impact — only for open incidents */}
                         {inc.status !== 'Resolved' && (
-                          <div className="bg-white dark:bg-slate-900/50 border border-slate-700/40 rounded-lg px-3 py-2.5">
+                          <div className="bg-white dark:bg-zinc-950/50 border border-slate-700/40 rounded-lg px-3 py-2.5">
                             <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1.5">Operational Impact — if no action taken</p>
                             <ul className="space-y-0.5">
                               {inc.type === 'Fight' && (
@@ -994,18 +994,18 @@ export default function CustodyOperations() {
                           )}
                           {inc.status !== 'Resolved' && (
                             <>
-                              <button className="text-[10px] px-2.5 py-1.5 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white rounded-lg transition-colors">
+                              <button className="text-[10px] px-2.5 py-1.5 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white rounded-lg transition-colors">
                                 Assign Supervisor
                               </button>
-                              <button className="text-[10px] px-2.5 py-1.5 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white rounded-lg transition-colors">
+                              <button className="text-[10px] px-2.5 py-1.5 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white rounded-lg transition-colors">
                                 Lock Unit
                               </button>
-                              <button className="text-[10px] px-2.5 py-1.5 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white rounded-lg transition-colors">
+                              <button className="text-[10px] px-2.5 py-1.5 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white rounded-lg transition-colors">
                                 Mark Resolved
                               </button>
                             </>
                           )}
-                          <button className="text-[10px] px-2.5 py-1.5 bg-slate-100 dark:bg-slate-700/30 border border-slate-700/40 text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-lg transition-colors">
+                          <button className="text-[10px] px-2.5 py-1.5 bg-slate-100 dark:bg-zinc-800/30 border border-slate-700/40 text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-lg transition-colors">
                             View Report
                           </button>
                         </div>
@@ -1025,30 +1025,30 @@ export default function CustodyOperations() {
         </div>
 
         {/* ── Section 4: Officer Assignment Board ──────────── */}
-        <div id="officer-board" className="bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
+        <div id="officer-board" className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
           <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 dark:border-slate-700/40">
             <div className="flex items-center gap-2">
               <Users className="w-4 h-4 text-slate-700 dark:text-slate-400" />
               <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Officer Assignment Board</span>
-              <span className={`text-[10px] px-2 py-0.5 rounded-full ${staffPct < 93 ? 'bg-orange-500/15 text-orange-600 dark:text-orange-400 border border-orange-500/20' : 'bg-slate-50 dark:bg-slate-700/40 text-slate-500'}`}>
+              <span className={`text-[10px] px-2 py-0.5 rounded-full ${staffPct < 93 ? 'bg-orange-500/15 text-orange-600 dark:text-orange-400 border border-orange-500/20' : 'bg-slate-50 dark:bg-zinc-800/40 text-slate-500'}`}>
                 {currentShift.present}/{currentShift.scheduled} on shift
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <button className="flex items-center gap-1.5 text-[11px] text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 rounded-lg px-3 py-1.5 hover:bg-slate-700/60 transition-colors">
+              <button className="flex items-center gap-1.5 text-[11px] text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 rounded-lg px-3 py-1.5 hover:bg-slate-700/60 transition-colors">
                 <PhoneCall className="w-3.5 h-3.5" /> Call Backup
               </button>
-              <button className="flex items-center gap-1.5 text-[11px] text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 rounded-lg px-3 py-1.5 hover:bg-slate-700/60 transition-colors">
+              <button className="flex items-center gap-1.5 text-[11px] text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 rounded-lg px-3 py-1.5 hover:bg-slate-700/60 transition-colors">
                 <Plus className="w-3.5 h-3.5" /> Approve OT
               </button>
-              <button className="flex items-center gap-1.5 text-[11px] text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 rounded-lg px-3 py-1.5 hover:bg-slate-700/60 transition-colors">
+              <button className="flex items-center gap-1.5 text-[11px] text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 rounded-lg px-3 py-1.5 hover:bg-slate-700/60 transition-colors">
                 <ArrowLeftRight className="w-3.5 h-3.5" /> Bulk Reassign
               </button>
             </div>
           </div>
 
           {/* AI Staffing Recommendation — certifications + cross-training → reassignment */}
-          <div className="mx-5 mt-3 bg-white dark:bg-slate-800/60 border border-slate-700/50 rounded-lg px-3 py-2.5">
+          <div className="mx-5 mt-3 bg-white dark:bg-zinc-900/60 border border-slate-700/50 rounded-lg px-3 py-2.5">
             <div className="flex items-start justify-between gap-3">
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1">
@@ -1065,7 +1065,7 @@ export default function CustodyOperations() {
                 className={`text-[11px] px-3 py-1.5 rounded-lg font-medium transition-colors whitespace-nowrap flex-shrink-0 ${
                   activePreview?.issueId === 'staffing-ai' && activePreview?.action === 'Reassign Johnson'
                     ? 'bg-slate-600/60 border border-slate-500/60 text-slate-900 dark:text-white'
-                    : 'bg-white dark:bg-slate-700/50 border border-slate-600/50 text-slate-700 dark:text-slate-300 hover:bg-slate-700/70'
+                    : 'bg-white dark:bg-zinc-800/50 border border-slate-600/50 text-slate-700 dark:text-slate-300 hover:bg-slate-700/70'
                 }`}
               >
                 Reassign Johnson
@@ -1073,7 +1073,7 @@ export default function CustodyOperations() {
               </button>
             </div>
             {activePreview?.issueId === 'staffing-ai' && activePreview?.action === 'Reassign Johnson' && (
-              <div className="mt-3 bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-700/60 rounded-lg p-3">
+              <div className="mt-3 bg-slate-50 dark:bg-zinc-950/70 border border-slate-200 dark:border-slate-700/60 rounded-lg p-3">
                 <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-2">Impact Preview — Reassign Johnson</p>
                 <ul className="space-y-1 mb-3">
                   {IMPACT_PREVIEWS['Reassign Johnson'].map((line, i) => (
@@ -1084,7 +1084,7 @@ export default function CustodyOperations() {
                   ))}
                 </ul>
                 <div className="flex items-center gap-2 pt-2 border-t border-slate-200 dark:border-slate-700/40">
-                  <button className="text-[11px] px-3 py-1.5 bg-white dark:bg-slate-700/60 border border-slate-600/60 text-slate-900 dark:text-white rounded-lg hover:bg-slate-700 transition-colors font-medium">
+                  <button className="text-[11px] px-3 py-1.5 bg-white dark:bg-zinc-800/60 border border-slate-600/60 text-slate-900 dark:text-white rounded-lg hover:bg-slate-700 transition-colors font-medium">
                     Confirm — Reassign Johnson
                   </button>
                   <button onClick={() => setActivePreview(null)} className="text-[11px] text-slate-500 hover:text-slate-700 dark:text-slate-300 transition-colors px-2 py-1.5">
@@ -1144,12 +1144,12 @@ export default function CustodyOperations() {
                         </span>
                       )}
                       {!isHighHours && isFatigueRisk && (
-                        <span className="text-[9px] px-1.5 py-0.5 bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-400 border border-slate-700/40 rounded font-semibold uppercase tracking-wide" title="Approaching 8-hour threshold">
+                        <span className="text-[9px] px-1.5 py-0.5 bg-slate-100 dark:bg-zinc-800/30 text-slate-700 dark:text-slate-400 border border-slate-700/40 rounded font-semibold uppercase tracking-wide" title="Approaching 8-hour threshold">
                           6h+
                         </span>
                       )}
                       {isPriorityPost && (
-                        <span className="text-[9px] px-1.5 py-0.5 bg-slate-100 dark:bg-slate-700/30 text-orange-700/80 border border-orange-500/20 rounded font-semibold uppercase tracking-wide" title="Assigned to high-priority housing unit">
+                        <span className="text-[9px] px-1.5 py-0.5 bg-slate-100 dark:bg-zinc-800/30 text-orange-700/80 border border-orange-500/20 rounded font-semibold uppercase tracking-wide" title="Assigned to high-priority housing unit">
                           Priority
                         </span>
                       )}
@@ -1170,7 +1170,7 @@ export default function CustodyOperations() {
                     <span className={`text-[10px] px-1.5 py-0.5 rounded-full flex-shrink-0 ${getOfficerStatusColors(officer.status)}`}>
                       {officer.status}
                     </span>
-                    <button className="text-[10px] px-2 py-1 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded transition-colors flex-shrink-0">
+                    <button className="text-[10px] px-2 py-1 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded transition-colors flex-shrink-0">
                       Reassign
                     </button>
                   </div>
@@ -1179,12 +1179,12 @@ export default function CustodyOperations() {
                 {/* Certifications · OT eligibility · Cross-training */}
                 {isExpandedOfficer && (
                   <div className="px-5 pb-2.5 pl-12">
-                    <div className="bg-slate-50 dark:bg-slate-900/30 border border-slate-700/40 rounded-lg p-3 flex flex-wrap items-start gap-x-6 gap-y-2">
+                    <div className="bg-slate-50 dark:bg-zinc-950/30 border border-slate-700/40 rounded-lg p-3 flex flex-wrap items-start gap-x-6 gap-y-2">
                       <div>
                         <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1">Certifications</p>
                         <div className="flex flex-wrap gap-1">
                           {officer.certifications.map(cert => (
-                            <span key={cert} className="text-[10px] px-1.5 py-0.5 bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-300 border border-slate-700/40 rounded inline-flex items-center gap-1">
+                            <span key={cert} className="text-[10px] px-1.5 py-0.5 bg-slate-100 dark:bg-zinc-800/30 text-slate-700 dark:text-slate-300 border border-slate-700/40 rounded inline-flex items-center gap-1">
                               <Award className="w-2.5 h-2.5" /> {cert}
                             </span>
                           ))}
@@ -1194,7 +1194,7 @@ export default function CustodyOperations() {
                         <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1">Cross-Trained For</p>
                         <div className="flex flex-wrap gap-1">
                           {officer.crossTrained.map(ct => (
-                            <span key={ct} className="text-[10px] px-1.5 py-0.5 bg-slate-100 dark:bg-slate-700/30 text-slate-700 dark:text-slate-300 border border-slate-700/40 rounded inline-flex items-center gap-1">
+                            <span key={ct} className="text-[10px] px-1.5 py-0.5 bg-slate-100 dark:bg-zinc-800/30 text-slate-700 dark:text-slate-300 border border-slate-700/40 rounded inline-flex items-center gap-1">
                               <Repeat className="w-2.5 h-2.5" /> {ct}
                             </span>
                           ))}
@@ -1202,7 +1202,7 @@ export default function CustodyOperations() {
                       </div>
                       <div>
                         <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1">Overtime</p>
-                        <span className={`text-[10px] px-1.5 py-0.5 rounded inline-flex items-center gap-1 ${officer.otEligible ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20' : 'bg-slate-100 dark:bg-slate-700/30 text-slate-500 border border-slate-700/40'}`}>
+                        <span className={`text-[10px] px-1.5 py-0.5 rounded inline-flex items-center gap-1 ${officer.otEligible ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20' : 'bg-slate-100 dark:bg-zinc-800/30 text-slate-500 border border-slate-700/40'}`}>
                           {officer.otEligible && <CheckCircle className="w-2.5 h-2.5" />} {officer.otEligible ? 'Eligible' : 'Not Eligible'}
                         </span>
                       </div>
@@ -1237,10 +1237,10 @@ export default function CustodyOperations() {
               </div>
               <div className="col-span-3 flex items-center justify-end gap-1.5">
                 <span className="text-[10px] px-1.5 py-0.5 bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/20 rounded-full flex-shrink-0">Sick Call</span>
-                <button className="text-[10px] px-2 py-1 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white rounded transition-colors flex-shrink-0">
+                <button className="text-[10px] px-2 py-1 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white rounded transition-colors flex-shrink-0">
                   Approve OT
                 </button>
-                <button className="text-[10px] px-2 py-1 bg-slate-50 dark:bg-slate-700/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white rounded transition-colors flex-shrink-0">
+                <button className="text-[10px] px-2 py-1 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white rounded transition-colors flex-shrink-0">
                   Call Backup
                 </button>
               </div>
@@ -1268,7 +1268,7 @@ export default function CustodyOperations() {
       {/* ── Shift Handoff Report Modal ────────────────────── */}
       {showHandoff && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-xl w-full max-w-2xl max-h-[85vh] overflow-y-auto">
+          <div className="bg-white dark:bg-zinc-950 border border-slate-200 dark:border-slate-700/50 rounded-xl w-full max-w-2xl max-h-[85vh] overflow-y-auto">
             {!handoffSent ? (
               <>
                 <div className="flex items-start justify-between gap-4 px-5 py-4 border-b border-slate-200 dark:border-slate-700/40">
@@ -1379,7 +1379,7 @@ export default function CustodyOperations() {
                       value={supervisorNotes}
                       onChange={e => setSupervisorNotes(e.target.value)}
                       rows={3}
-                      className="w-full text-[11px] text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-900/40 border border-slate-700/40 rounded-lg p-2.5 resize-none focus:outline-none focus:ring-1 focus:ring-slate-500/40"
+                      className="w-full text-[11px] text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-zinc-950/40 border border-slate-700/40 rounded-lg p-2.5 resize-none focus:outline-none focus:ring-1 focus:ring-slate-500/40"
                     />
                   </div>
                 </div>
@@ -1398,7 +1398,7 @@ export default function CustodyOperations() {
                 <CheckCircle className="w-10 h-10 text-emerald-500 mx-auto mb-3" />
                 <h2 className="text-[14px] font-bold text-slate-900 dark:text-white mb-1">Handoff Report Sent</h2>
                 <p className="text-[11px] text-slate-500 mb-4">Delivered to incoming Watch Commander · C-Shift (22:00 – 06:00)</p>
-                <ul className="text-[11px] text-slate-700 dark:text-slate-300 text-left space-y-1.5 bg-slate-50 dark:bg-slate-900/30 border border-slate-700/40 rounded-lg p-3 mb-4">
+                <ul className="text-[11px] text-slate-700 dark:text-slate-300 text-left space-y-1.5 bg-slate-50 dark:bg-zinc-950/30 border border-slate-700/40 rounded-lg p-3 mb-4">
                   <li className="flex items-start gap-2"><CheckCircle className="w-3 h-3 text-emerald-500 mt-0.5 flex-shrink-0" /> {unresolvedIncidents.length} open incidents included</li>
                   <li className="flex items-start gap-2"><CheckCircle className="w-3 h-3 text-emerald-500 mt-0.5 flex-shrink-0" /> {pendingMovements.length} pending movements included</li>
                   <li className="flex items-start gap-2"><CheckCircle className="w-3 h-3 text-emerald-500 mt-0.5 flex-shrink-0" /> Staffing shortage flagged — Smith's post uncovered</li>

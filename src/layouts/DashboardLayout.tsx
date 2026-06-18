@@ -206,9 +206,9 @@ export default function DashboardLayout({
   };
 
   return (
-    <div className="min-h-screen bg-[#F5F7FA] dark:bg-gradient-to-br dark:from-slate-950 dark:via-[#0d1424] dark:to-slate-950 flex">
+    <div className="min-h-screen bg-[#F5F7FA] dark:bg-black flex">
       {/* ── Sidebar ──────────────────────────────────────── */}
-      <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-black/[0.06] dark:border-slate-800/30 bg-white dark:bg-slate-900/60 shadow-[var(--shadow-sidebar)] dark:shadow-none flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
+      <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-black/[0.06] dark:border-slate-800/30 bg-white dark:bg-zinc-950/60 shadow-[var(--shadow-sidebar)] dark:shadow-none flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
         {/* Logo */}
         <div className="p-4 border-b border-border flex items-center justify-between">
           {!sidebarCollapsed && (
@@ -222,7 +222,7 @@ export default function DashboardLayout({
           )}
           <button
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-            className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors hidden lg:block"
+            className="p-2 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors hidden lg:block"
           >
             {sidebarCollapsed ? <ChevronRight className="w-5 h-5 text-muted" /> : <ChevronLeft className="w-5 h-5 text-muted" />}
           </button>
@@ -250,8 +250,8 @@ export default function DashboardLayout({
                   onClick={() => handleNavigation(item)}
                   className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all ${
                     isActive
-                      ? 'bg-amber-100 dark:bg-slate-700/40 text-primary border-l-4 border-l-amber-500 font-semibold'
-                      : 'text-secondary hover:bg-slate-50 dark:hover:bg-slate-800/30 hover:text-slate-900 dark:hover:text-slate-300'
+                      ? 'bg-amber-100 dark:bg-zinc-800/40 text-primary border-l-4 border-l-amber-500 font-semibold'
+                      : 'text-secondary hover:bg-slate-50 dark:hover:bg-zinc-900/30 hover:text-slate-900 dark:hover:text-slate-300'
                   } ${sidebarCollapsed ? 'justify-center' : ''}`}
                   title={sidebarCollapsed ? item.label : ''}
                 >
@@ -281,7 +281,7 @@ export default function DashboardLayout({
                           key={sub.id}
                           onClick={() => handleSubmenuNavigation(sub.route)}
                           className={`w-full flex items-center gap-3 px-4 py-2 rounded-lg transition-all text-[13px] ${
-                            isSubActive ? 'bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400' : 'text-slate-700 dark:text-slate-500 hover:bg-slate-200 dark:hover:bg-slate-800/30 hover:text-slate-900 dark:hover:text-slate-300'
+                            isSubActive ? 'bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400' : 'text-slate-700 dark:text-slate-500 hover:bg-slate-200 dark:hover:bg-zinc-900/30 hover:text-slate-900 dark:hover:text-slate-300'
                           }`}
                         >
                           <div className="w-1.5 h-1.5 rounded-full bg-current"></div>
@@ -306,7 +306,7 @@ export default function DashboardLayout({
           <div className="p-4">
             <button
               onClick={() => setLogoutConfirmOpen(true)}
-              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all text-secondary hover:bg-slate-200 dark:hover:bg-slate-800/30 hover:text-slate-900 dark:hover:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
+              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all text-secondary hover:bg-slate-200 dark:hover:bg-zinc-900/30 hover:text-slate-900 dark:hover:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
               title={sidebarCollapsed ? 'Sign Out' : ''}
             >
               <LogOut className="w-[18px] h-[18px] flex-shrink-0" />
@@ -333,9 +333,9 @@ export default function DashboardLayout({
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={() => setLogoutConfirmOpen(false)}
           />
-          <div className="relative bg-white dark:bg-slate-900 border border-border rounded-xl p-6 max-w-sm w-full shadow-2xl">
+          <div className="relative bg-white dark:bg-zinc-950 border border-border rounded-xl p-6 max-w-sm w-full shadow-2xl">
             <div className="flex items-center gap-4 mb-4">
-              <div className="w-12 h-12 bg-slate-100 dark:bg-slate-800/60 rounded-xl flex items-center justify-center">
+              <div className="w-12 h-12 bg-slate-100 dark:bg-zinc-900/60 rounded-xl flex items-center justify-center">
                 <LogOut className="w-6 h-6 text-muted" />
               </div>
               <div>
@@ -346,7 +346,7 @@ export default function DashboardLayout({
             <div className="flex gap-3 mt-6">
               <button
                 onClick={() => setLogoutConfirmOpen(false)}
-                className="flex-1 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-50 dark:hover:bg-slate-800/60 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-700 dark:text-white font-medium transition-all"
+                className="flex-1 px-4 py-2.5 bg-white dark:bg-zinc-900/40 hover:bg-slate-50 dark:hover:bg-zinc-900/60 border border-slate-300 dark:border-slate-700/50 rounded-xl text-slate-700 dark:text-white font-medium transition-all"
               >
                 Cancel
               </button>
@@ -364,13 +364,13 @@ export default function DashboardLayout({
       {/* ── Main Content Area ──────────────────────────── */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Header */}
-        <header className="border-b border-black/[0.06] dark:border-slate-800/50 backdrop-blur-md bg-[#F8FAFC]/90 dark:bg-slate-900/60 sticky top-0 z-30 shadow-[var(--shadow-nav)] dark:shadow-none">
+        <header className="border-b border-black/[0.06] dark:border-slate-800/50 backdrop-blur-md bg-[#F8FAFC]/90 dark:bg-zinc-950/60 sticky top-0 z-30 shadow-[var(--shadow-nav)] dark:shadow-none">
           <div className="px-4 lg:px-6 py-4 flex items-center justify-between gap-4">
             {/* Left: mobile menu + compact search */}
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setSidebarOpen(!sidebarOpen)}
-                className="lg:hidden p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg"
+                className="lg:hidden p-2 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg"
               >
                 <Menu className="w-5 h-5 text-muted" />
               </button>
@@ -379,7 +379,7 @@ export default function DashboardLayout({
                 <input
                   type="text"
                   placeholder="Quick search…"
-                  className="w-full pl-9 pr-3 py-1.5 bg-white dark:bg-slate-800/40 border border-black/[0.08] dark:border-slate-700/40 rounded-lg text-[12px] text-primary placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-300 dark:focus:border-slate-600 shadow-[0_1px_2px_rgba(0,0,0,0.04)] dark:shadow-none"
+                  className="w-full pl-9 pr-3 py-1.5 bg-white dark:bg-zinc-900/40 border border-black/[0.08] dark:border-slate-700/40 rounded-lg text-[12px] text-primary placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-300 dark:focus:border-slate-600 shadow-[0_1px_2px_rgba(0,0,0,0.04)] dark:shadow-none"
                 />
               </div>
             </div>
@@ -392,13 +392,13 @@ export default function DashboardLayout({
                 <span>Sync Healthy</span>
                 <span className="text-slate-500 dark:text-slate-600">· 2m ago</span>
               </div>
-              <div className="h-6 w-px bg-slate-200 dark:bg-slate-700/30 hidden lg:block"></div>
+              <div className="h-6 w-px bg-slate-200 dark:bg-zinc-800/30 hidden lg:block"></div>
 
               {/* Notifications */}
               <div className="relative">
                 <button
                   onClick={() => setNotificationsOpen(!notificationsOpen)}
-                  className="notifications-trigger p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg relative"
+                  className="notifications-trigger p-2 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg relative"
                 >
                   <Bell className="w-5 h-5 text-muted" />
                   {totalUnread > 0 && (
@@ -427,11 +427,11 @@ export default function DashboardLayout({
                         <div
                           key={notification.id}
                           onClick={() => handleNotificationClick(notification)}
-                          className="p-4 border-b border-slate-100 dark:border-slate-800/30 hover:bg-slate-50 dark:hover:bg-slate-800/30 cursor-pointer transition-colors"
+                          className="p-4 border-b border-slate-100 dark:border-slate-800/30 hover:bg-slate-50 dark:hover:bg-zinc-900/30 cursor-pointer transition-colors"
                         >
                           <div className="flex items-start gap-3">
                             <div className={`w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0 ${
-                              notification.read ? 'bg-slate-300 dark:bg-slate-600' : 'bg-slate-500 dark:bg-slate-400'
+                              notification.read ? 'bg-slate-300 dark:bg-zinc-700' : 'bg-slate-500 dark:bg-zinc-500'
                             }`}></div>
                             <div className="flex-1 min-w-0">
                               <p className="text-[13px] font-medium text-primary mb-1">{notification.title}</p>
@@ -454,13 +454,13 @@ export default function DashboardLayout({
                 )}
               </div>
 
-              <div className="h-8 w-px bg-slate-200 dark:bg-slate-700/50 hidden sm:block"></div>
+              <div className="h-8 w-px bg-slate-200 dark:bg-zinc-800/50 hidden sm:block"></div>
 
               {/* Profile */}
               <div className="relative">
                 <button
                   onClick={() => setProfileMenuOpen(!profileMenuOpen)}
-                  className="profile-trigger flex items-center gap-3 p-1.5 pr-3 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors"
+                  className="profile-trigger flex items-center gap-3 p-1.5 pr-3 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors"
                 >
                   <div className="w-8 h-8 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full flex items-center justify-center shadow-sm">
                     <span className="text-white text-[13px] font-bold">{profile.initials}</span>
@@ -481,7 +481,7 @@ export default function DashboardLayout({
                     <div className="py-1">
                       <button
                         onClick={() => { setProfileMenuOpen(false); navigate('/command/profile'); }}
-                        className="w-full flex items-center gap-3 px-4 py-2 text-[13px] text-secondary hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
+                        className="w-full flex items-center gap-3 px-4 py-2 text-[13px] text-secondary hover:bg-slate-50 dark:hover:bg-zinc-900/50 transition-colors"
                       >
                         <User className="w-4 h-4" />
                         View Profile
@@ -491,7 +491,7 @@ export default function DashboardLayout({
                           setProfileMenuOpen(false);
                           navigate(settingsRoute);
                         }}
-                        className="w-full flex items-center gap-3 px-4 py-2 text-[13px] text-secondary hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
+                        className="w-full flex items-center gap-3 px-4 py-2 text-[13px] text-secondary hover:bg-slate-50 dark:hover:bg-zinc-900/50 transition-colors"
                       >
                         <Settings className="w-4 h-4" />
                         Settings
@@ -503,7 +503,7 @@ export default function DashboardLayout({
                           setProfileMenuOpen(false);
                           setLogoutConfirmOpen(true);
                         }}
-                        className="w-full flex items-center gap-3 px-4 py-2 text-[13px] text-muted hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
+                        className="w-full flex items-center gap-3 px-4 py-2 text-[13px] text-muted hover:bg-slate-50 dark:hover:bg-zinc-900/50 transition-colors"
                       >
                         <LogOut className="w-4 h-4" />
                         Sign Out

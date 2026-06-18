@@ -238,16 +238,16 @@ export default function BudgetResources() {
   const overBudgetProjection = fiscalYear.projectedYearEnd - fiscalYear.totalBudget;
   const isOverBudgetProjection = overBudgetProjection > 0;
   const primaryBtn = 'inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold bg-amber-500 hover:bg-amber-600 text-white border border-amber-600/40 transition-colors';
-  const secondaryBtn = 'inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold bg-white dark:bg-slate-800/60 hover:bg-slate-50 dark:hover:bg-slate-700/60 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700/40 transition-colors';
+  const secondaryBtn = 'inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold bg-white dark:bg-zinc-900/60 hover:bg-slate-50 dark:hover:bg-zinc-800/60 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700/40 transition-colors';
   const ghostBtn = 'inline-flex items-center gap-1 text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors';
-  const CARD = 'bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl';
+  const CARD = 'bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl';
   const CARD_HEADER = 'flex items-center justify-between px-5 py-3.5 border-b border-slate-100 dark:border-slate-800/60';
   const BADGE = (color) => {
     if (color === 'red') return 'px-2 py-0.5 text-[10px] font-bold rounded bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-400';
     if (color === 'amber') return 'px-2 py-0.5 text-[10px] font-bold rounded bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400';
     if (color === 'green') return 'px-2 py-0.5 text-[10px] font-bold rounded bg-green-100 dark:bg-green-500/10 text-green-700 dark:text-green-400';
     if (color === 'violet') return 'px-2 py-0.5 text-[10px] font-bold rounded bg-violet-100 dark:bg-violet-500/10 text-violet-700 dark:text-violet-400';
-    return 'px-2 py-0.5 text-[10px] font-bold rounded bg-slate-100 dark:bg-slate-700/40 text-slate-600 dark:text-slate-400';
+    return 'px-2 py-0.5 text-[10px] font-bold rounded bg-slate-100 dark:bg-zinc-800/40 text-slate-600 dark:text-slate-400';
   };
 
   const fmt = (v) => {
@@ -613,22 +613,22 @@ export default function BudgetResources() {
   return (
     <DashboardLayout>
       {/* Sticky Command Strip */}
-      <div className="sticky top-0 z-30 px-5 lg:px-8 py-2 bg-white/95 dark:bg-slate-950/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-700/40">
+      <div className="sticky top-0 z-30 px-5 lg:px-8 py-2 bg-white/95 dark:bg-black/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-700/40">
         <div className="max-w-7xl mx-auto flex items-center gap-3 text-[11px] flex-wrap">
           <span className="font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Budget Status</span>
-          <span className="w-px h-3.5 bg-slate-200 dark:bg-slate-700" />
+          <span className="w-px h-3.5 bg-slate-200 dark:bg-zinc-800" />
           <span className="text-slate-500 dark:text-slate-400">Health:</span>
           <span className={`font-black text-[14px] ${riskColor === 'green' ? 'text-green-600 dark:text-green-400' : riskColor === 'amber' ? 'text-amber-600 dark:text-amber-400' : 'text-red-600 dark:text-red-400'}`}>{budgetRiskScore}/100</span>
           <span className={`px-1.5 py-0.5 text-[10px] font-bold rounded ${riskColor === 'green' ? 'bg-green-100 dark:bg-green-500/10 text-green-700 dark:text-green-400' : riskColor === 'amber' ? 'bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400' : 'bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-400'}`}>{riskLabel}</span>
-          <span className="w-px h-3.5 bg-slate-200 dark:bg-slate-700" />
+          <span className="w-px h-3.5 bg-slate-200 dark:bg-zinc-800" />
           <span className="text-slate-500 dark:text-slate-400">Forecast:</span>
           <span className={`font-bold ${isLiveOverBudget ? 'text-red-600 dark:text-red-400' : 'text-green-600 dark:text-green-400'}`}>
             {isLiveOverBudget ? fmt(liveOverrun) + ' Over' : fmt(Math.abs(liveOverrun)) + ' Under'}
           </span>
-          <span className="w-px h-3.5 bg-slate-200 dark:bg-slate-700" />
+          <span className="w-px h-3.5 bg-slate-200 dark:bg-zinc-800" />
           <span className="text-slate-500 dark:text-slate-400">Actions Pending:</span>
           <span className={`font-bold ${pendingActions.length > 0 ? 'text-amber-600 dark:text-amber-400' : 'text-green-600 dark:text-green-400'}`}>{pendingActions.length}</span>
-          <span className="w-px h-3.5 bg-slate-200 dark:bg-slate-700" />
+          <span className="w-px h-3.5 bg-slate-200 dark:bg-zinc-800" />
           <span className="text-slate-500 dark:text-slate-400">Savings Available:</span>
           <span className="font-bold text-green-600 dark:text-green-400">{fmt(pendingSavings)}</span>
           <span className="ml-auto text-slate-400 dark:text-slate-500 hidden sm:inline">FY 2024 · 61 days remaining</span>
@@ -641,7 +641,7 @@ export default function BudgetResources() {
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-2">
                   <h2 className="text-2xl lg:text-3xl font-bold text-primary">Budget & Assets</h2>
-                  <div className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-100 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/40 rounded-lg">
+                  <div className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-100 dark:bg-zinc-900/40 border border-slate-200 dark:border-slate-700/40 rounded-lg">
                     <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
                     <span className="text-xs font-bold text-green-600 dark:text-green-400">FISCAL ACTIVE</span>
                   </div>
@@ -667,7 +667,7 @@ export default function BudgetResources() {
                 <select
                   value={timeRange}
                   onChange={(e) => setTimeRange(e.target.value)}
-                  className="px-4 py-2 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary text-sm focus:outline-none focus:border-amber-500/50"
+                  className="px-4 py-2 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-primary text-sm focus:outline-none focus:border-amber-500/50"
                 >
                   <option value="ytd">Year to Date</option>
                   <option value="q4">Q4 2024</option>
@@ -682,7 +682,7 @@ export default function BudgetResources() {
                 </button>
                 <button
                   onClick={() => setReallocationModal(true)}
-                  className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-secondary hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all"
+                  className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-secondary hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-all"
                 >
                   <RefreshCw className="w-4 h-4" />
                   <span className="hidden sm:inline">Reallocate</span>
@@ -704,24 +704,24 @@ export default function BudgetResources() {
                   <ShieldAlert className={`w-4 h-4 flex-shrink-0 ${isLiveOverBudget ? 'text-red-600 dark:text-red-400' : 'text-green-600 dark:text-green-400'}`} />
                   <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">Executive Status</span>
                 </div>
-                <span className="hidden sm:inline-block w-px h-4 bg-slate-200 dark:bg-slate-700/40" />
+                <span className="hidden sm:inline-block w-px h-4 bg-slate-200 dark:bg-zinc-800/40" />
                 <button onClick={() => setHealthBreakdownOpen(!healthBreakdownOpen)} className="flex items-center gap-1.5 hover:opacity-70 transition-opacity">
                   <span className="text-xs text-slate-500 dark:text-slate-400">Budget Health:</span>
                   <span className={`text-sm font-black ${riskColor === 'green' ? 'text-green-600 dark:text-green-400' : riskColor === 'amber' ? 'text-amber-600 dark:text-amber-400' : 'text-red-600 dark:text-red-400'}`}>{riskLabel}</span>
                   <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500">{budgetRiskScore}/100</span>
                   {healthBreakdownOpen ? <ChevronUp className="w-3 h-3 text-slate-400" /> : <ChevronDown className="w-3 h-3 text-slate-400" />}
                 </button>
-                <span className="w-px h-4 bg-slate-200 dark:bg-slate-700/40" />
+                <span className="w-px h-4 bg-slate-200 dark:bg-zinc-800/40" />
                 <div className="flex items-center gap-1.5">
                   <span className="text-xs text-slate-500 dark:text-slate-400">{isLiveOverBudget ? 'Projected Overrun:' : 'Projected Surplus:'}</span>
                   <span className={`text-sm font-black ${isLiveOverBudget ? 'text-red-600 dark:text-red-400' : 'text-green-600 dark:text-green-400'}`}>{fmt(Math.abs(liveOverrun))}</span>
                 </div>
-                <span className="w-px h-4 bg-slate-200 dark:bg-slate-700/40" />
+                <span className="w-px h-4 bg-slate-200 dark:bg-zinc-800/40" />
                 <div className="flex items-center gap-1.5">
                   <span className="text-xs text-slate-500 dark:text-slate-400">Savings Available:</span>
                   <span className="text-sm font-black text-green-600 dark:text-green-400">{fmt(pendingSavings)}</span>
                 </div>
-                <span className="w-px h-4 bg-slate-200 dark:bg-slate-700/40" />
+                <span className="w-px h-4 bg-slate-200 dark:bg-zinc-800/40" />
                 <div className="flex items-center gap-1.5">
                   <span className="text-xs text-slate-500 dark:text-slate-400">Recommended Actions:</span>
                   <span className="text-sm font-black text-slate-900 dark:text-white">{pendingActions.length}</span>
@@ -735,11 +735,11 @@ export default function BudgetResources() {
 
               {/* Budget Health Score breakdown */}
               {healthBreakdownOpen && (
-                <div className="border-t border-slate-200/70 dark:border-slate-700/30 px-4 py-3 bg-white/70 dark:bg-slate-900/30">
+                <div className="border-t border-slate-200/70 dark:border-slate-700/30 px-4 py-3 bg-white/70 dark:bg-zinc-950/30">
                   <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-2">Budget Health Score Breakdown — {budgetRiskScore}/100</p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
                     {healthFactors.map(f => (
-                      <div key={f.label} className="p-2.5 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/30 rounded-lg">
+                      <div key={f.label} className="p-2.5 bg-slate-50 dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/30 rounded-lg">
                         <div className="flex items-center justify-between mb-0.5">
                           <span className="text-[11px] font-semibold text-slate-800 dark:text-slate-200">{f.label}</span>
                           <span className={`text-[11px] font-black ${f.points === f.max ? 'text-green-600 dark:text-green-400' : f.points === 0 ? 'text-red-600 dark:text-red-400' : 'text-amber-600 dark:text-amber-400'}`}>{f.points}/{f.max}</span>
@@ -753,7 +753,7 @@ export default function BudgetResources() {
             </div>
 
             {/* Recommended Actions */}
-            <div className="mb-4 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none overflow-hidden">
+            <div className="mb-4 bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none overflow-hidden">
               <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-100 dark:border-slate-800/60">
                 <div className="flex items-center gap-2.5">
                   <Zap className="w-4 h-4 text-slate-400 dark:text-slate-500" />
@@ -782,7 +782,7 @@ export default function BudgetResources() {
                   </p>
                 </div>
                 {/* Card 2: after all pending applied */}
-                <div className={`p-3 border rounded-lg ${pendingActions.length === 0 ? 'bg-slate-50 dark:bg-slate-800/30 border-slate-200 dark:border-slate-700/30' : 'bg-green-50 dark:bg-green-500/5 border-green-200 dark:border-green-500/20'}`}>
+                <div className={`p-3 border rounded-lg ${pendingActions.length === 0 ? 'bg-slate-50 dark:bg-zinc-900/30 border-slate-200 dark:border-slate-700/30' : 'bg-green-50 dark:bg-green-500/5 border-green-200 dark:border-green-500/20'}`}>
                   <p className={`text-[10px] font-bold uppercase tracking-wide mb-1 ${pendingActions.length === 0 ? 'text-slate-600 dark:text-slate-400' : 'text-green-600 dark:text-green-400'}`}>
                     {pendingActions.length === 0 ? 'All Actions Applied' : `After ${pendingActions.length} Remaining Applied`}
                   </p>
@@ -797,7 +797,7 @@ export default function BudgetResources() {
                   </p>
                 </div>
                 {/* Card 3: savings applied / remaining */}
-                <div className="p-3 bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/30 rounded-lg">
+                <div className="p-3 bg-slate-50 dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/30 rounded-lg">
                   <p className="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wide mb-1">Savings Applied</p>
                   <p className="text-xl font-bold text-slate-900 dark:text-white">{fmt(appliedSavings)}</p>
                   <p className="text-[11px] text-slate-500 dark:text-slate-400">
@@ -839,7 +839,7 @@ export default function BudgetResources() {
                     className={`px-2.5 py-1 text-[11px] font-semibold rounded-lg transition-colors ${
                       actionFilter === f.id
                         ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900'
-                        : 'bg-slate-100 dark:bg-slate-700/40 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700/60'
+                        : 'bg-slate-100 dark:bg-zinc-800/40 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-zinc-800/60'
                     }`}
                   >
                     {f.label}
@@ -848,7 +848,7 @@ export default function BudgetResources() {
                     )}
                   </button>
                 ))}
-                <span className="w-px h-4 bg-slate-200 dark:bg-slate-700/40 mx-1" />
+                <span className="w-px h-4 bg-slate-200 dark:bg-zinc-800/40 mx-1" />
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wide mr-1">Sort:</span>
                 {[
                   { id: 'impact', label: 'Highest Savings' },
@@ -861,7 +861,7 @@ export default function BudgetResources() {
                     className={`px-2.5 py-1 text-[11px] font-semibold rounded-lg transition-colors ${
                       actionSort === s.id
                         ? 'bg-amber-500 text-white border border-amber-600/30'
-                        : 'bg-slate-100 dark:bg-slate-700/40 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700/60'
+                        : 'bg-slate-100 dark:bg-zinc-800/40 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-zinc-800/60'
                     }`}
                   >
                     {s.label}
@@ -877,7 +877,7 @@ export default function BudgetResources() {
                   const isApplied = appliedActionIds.has(action.id);
                   const isExpanded = expandedActionId === action.id;
                   return (
-                    <div key={action.id} className={`px-5 py-3 transition-colors ${isApplied ? 'bg-green-50/60 dark:bg-green-500/5' : 'hover:bg-slate-50 dark:hover:bg-slate-800/10'}`}>
+                    <div key={action.id} className={`px-5 py-3 transition-colors ${isApplied ? 'bg-green-50/60 dark:bg-green-500/5' : 'hover:bg-slate-50 dark:hover:bg-zinc-900/10'}`}>
                       <div className="flex items-start gap-3">
                         <span className={`text-[11px] font-bold w-4 flex-shrink-0 tabular-nums mt-0.5 ${isApplied ? 'text-green-500 dark:text-green-400' : 'text-slate-400'}`}>
                           {isApplied ? '✓' : idx + 1}
@@ -892,7 +892,7 @@ export default function BudgetResources() {
                               <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded flex-shrink-0 ${
                                 action.urgency === 'High' ? 'bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-400' :
                                 action.urgency === 'Medium' ? 'bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400' :
-                                'bg-slate-100 dark:bg-slate-700/40 text-slate-600 dark:text-slate-400'
+                                'bg-slate-100 dark:bg-zinc-800/40 text-slate-600 dark:text-slate-400'
                               }`}>{action.urgency}</span>
                             )}
                             <span className={`text-[13px] font-semibold ${isApplied ? 'text-slate-400 dark:text-slate-500 line-through' : 'text-slate-800 dark:text-slate-200'}`}>
@@ -975,7 +975,7 @@ export default function BudgetResources() {
                   );
                 })}
               </div>
-              <div className={`px-5 py-3 border-t border-slate-200 dark:border-slate-700/30 flex items-center justify-between gap-3 ${appliedActionIds.size === recommendedActions.length ? 'bg-green-50 dark:bg-green-500/5' : 'bg-slate-50 dark:bg-slate-900/20'}`}>
+              <div className={`px-5 py-3 border-t border-slate-200 dark:border-slate-700/30 flex items-center justify-between gap-3 ${appliedActionIds.size === recommendedActions.length ? 'bg-green-50 dark:bg-green-500/5' : 'bg-slate-50 dark:bg-zinc-950/20'}`}>
                 <div className="text-[11px] text-slate-500 dark:text-slate-400 min-w-0">
                   {appliedActionIds.size > 0
                     ? <><span className="font-semibold text-green-600 dark:text-green-400">{appliedActionIds.size} applied</span> · {fmt(appliedSavings)} saved{pendingActions.length > 0 && <> · <span className="font-semibold text-slate-600 dark:text-slate-300">{pendingActions.length} pending</span> ({fmt(pendingSavings)} more available)</>}</>
@@ -997,16 +997,16 @@ export default function BudgetResources() {
             {/* Budget Summary */}
             <div className="flex items-center gap-3 mb-3 mt-1">
               <span className="text-[9px] font-black text-slate-300 dark:text-slate-600 uppercase tracking-[0.2em]">Budget Summary</span>
-              <div className="flex-1 h-px bg-slate-100 dark:bg-slate-800/80" />
+              <div className="flex-1 h-px bg-slate-100 dark:bg-zinc-900/80" />
             </div>
 
             {/* KPI Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
               {/* Total Budget */}
-              <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4">
+              <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Total Budget</span>
-                  <div className="w-8 h-8 bg-slate-100 dark:bg-slate-700/40 rounded-lg flex items-center justify-center">
+                  <div className="w-8 h-8 bg-slate-100 dark:bg-zinc-800/40 rounded-lg flex items-center justify-center">
                     <Wallet className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                   </div>
                 </div>
@@ -1028,10 +1028,10 @@ export default function BudgetResources() {
               </div>
 
               {/* Spent */}
-              <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4">
+              <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Spent</span>
-                  <div className="w-8 h-8 bg-slate-100 dark:bg-slate-700/40 rounded-lg flex items-center justify-center">
+                  <div className="w-8 h-8 bg-slate-100 dark:bg-zinc-800/40 rounded-lg flex items-center justify-center">
                     <CircleDollarSign className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                   </div>
                 </div>
@@ -1041,7 +1041,7 @@ export default function BudgetResources() {
                     <span className="text-slate-500 dark:text-slate-400">Budget utilization</span>
                     <span className={`font-bold ${fiscalYear.percentSpent >= 90 ? 'text-red-700 dark:text-red-400' : 'text-amber-600 dark:text-amber-400'}`}>{fiscalYear.percentSpent}%</span>
                   </div>
-                  <div className="w-full h-1.5 bg-slate-100 dark:bg-slate-700/50 rounded-full overflow-hidden">
+                  <div className="w-full h-1.5 bg-slate-100 dark:bg-zinc-800/50 rounded-full overflow-hidden">
                     <div className={`h-full rounded-full ${fiscalYear.percentSpent >= 90 ? 'bg-red-500' : 'bg-amber-500'}`} style={{ width: `${fiscalYear.percentSpent}%` }} />
                   </div>
                 </div>
@@ -1060,10 +1060,10 @@ export default function BudgetResources() {
               </div>
 
               {/* Committed */}
-              <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4">
+              <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Committed</span>
-                  <div className="w-8 h-8 bg-slate-100 dark:bg-slate-700/40 rounded-lg flex items-center justify-center">
+                  <div className="w-8 h-8 bg-slate-100 dark:bg-zinc-800/40 rounded-lg flex items-center justify-center">
                     <Receipt className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                   </div>
                 </div>
@@ -1073,7 +1073,7 @@ export default function BudgetResources() {
                     <span className="text-slate-500 dark:text-slate-400">Of total budget</span>
                     <span className="font-bold text-slate-600 dark:text-slate-300">{liveCommittedPct.toFixed(1)}%</span>
                   </div>
-                  <div className="w-full h-1.5 bg-slate-100 dark:bg-slate-700/50 rounded-full overflow-hidden">
+                  <div className="w-full h-1.5 bg-slate-100 dark:bg-zinc-800/50 rounded-full overflow-hidden">
                     <div className="h-full bg-amber-500 rounded-full" style={{ width: `${Math.min(liveCommittedPct, 100)}%` }} />
                   </div>
                 </div>
@@ -1095,10 +1095,10 @@ export default function BudgetResources() {
               </div>
 
               {/* Available */}
-              <div className={`bg-white dark:bg-slate-800/25 border rounded-xl shadow-sm dark:shadow-none p-4 transition-all duration-300 ${flashSet.has('available') ? 'border-green-400 dark:border-green-400 ring-2 ring-green-400/40' : 'border-slate-200 dark:border-slate-700/30'}`}>
+              <div className={`bg-white dark:bg-zinc-900/25 border rounded-xl shadow-sm dark:shadow-none p-4 transition-all duration-300 ${flashSet.has('available') ? 'border-green-400 dark:border-green-400 ring-2 ring-green-400/40' : 'border-slate-200 dark:border-slate-700/30'}`}>
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Available</span>
-                  <div className="w-8 h-8 bg-slate-100 dark:bg-slate-700/40 rounded-lg flex items-center justify-center">
+                  <div className="w-8 h-8 bg-slate-100 dark:bg-zinc-800/40 rounded-lg flex items-center justify-center">
                     <PiggyBank className="w-4 h-4 text-green-600 dark:text-green-400" />
                   </div>
                 </div>
@@ -1108,7 +1108,7 @@ export default function BudgetResources() {
                     <span className="text-slate-500 dark:text-slate-400">Remaining budget</span>
                     <span className="font-bold text-green-600 dark:text-green-400">{((fiscalYear.available / fiscalYear.totalBudget) * 100).toFixed(1)}%</span>
                   </div>
-                  <div className="w-full h-1.5 bg-slate-100 dark:bg-slate-700/50 rounded-full overflow-hidden">
+                  <div className="w-full h-1.5 bg-slate-100 dark:bg-zinc-800/50 rounded-full overflow-hidden">
                     <div className="h-full bg-green-500 rounded-full" style={{ width: `${(fiscalYear.available / fiscalYear.totalBudget) * 100}%` }} />
                   </div>
                 </div>
@@ -1131,15 +1131,15 @@ export default function BudgetResources() {
                 <BarChart3 className="w-4 h-4 text-slate-400 dark:text-slate-500" />
                 <span className="text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">Analytics</span>
               </div>
-              <div className="flex-1 h-px bg-slate-200 dark:bg-slate-800" />
+              <div className="flex-1 h-px bg-slate-200 dark:bg-zinc-900" />
               <span className="text-[11px] text-slate-400 dark:text-slate-500 hidden sm:inline">Drill-down intelligence — explore the data behind the brief</span>
             </div>
 
             {/* AI Budget Intelligence */}
-            <div className="mb-3 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none">
+            <div className="mb-3 bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none">
               <button
                 onClick={() => setAiInsightsExpanded(!aiInsightsExpanded)}
-                className="w-full flex items-center justify-between px-5 py-3.5 text-left hover:bg-slate-50 dark:hover:bg-slate-800/10 transition-colors rounded-xl"
+                className="w-full flex items-center justify-between px-5 py-3.5 text-left hover:bg-slate-50 dark:hover:bg-zinc-900/10 transition-colors rounded-xl"
               >
                 <div className="flex items-center gap-2.5">
                   <Bot className="w-4 h-4 text-slate-400 dark:text-slate-500" />
@@ -1159,11 +1159,11 @@ export default function BudgetResources() {
                       { rank: 1, urgency: 'Critical', urgencyColor: 'text-red-700 dark:text-red-400', urgencyBg: 'bg-red-100 dark:bg-red-500/10', icon: ShieldAlert, action: 'Patrol Division discretionary spend exceeds budget by $150K — halt non-essential purchasing', outcome: 'Prevents overrun · saves up to $170K before year-end' },
                       { rank: 2, urgency: 'High', urgencyColor: 'text-amber-700 dark:text-amber-400', urgencyBg: 'bg-amber-100 dark:bg-amber-500/10', icon: RefreshCw, action: 'Move $150K from Training surplus into Patrol to cover shortfall', outcome: 'Resolves Patrol gap · releases $350K as buffer' },
                       { rank: 3, urgency: 'High', urgencyColor: 'text-amber-700 dark:text-amber-400', urgencyBg: 'bg-amber-100 dark:bg-amber-500/10', icon: TrendingDown, action: 'Reduce discretionary spending 15% across all divisions for Nov–Dec', outcome: 'Saves ~$500K · brings year-end forecast to 100%' },
-                      { rank: 4, urgency: 'Medium', urgencyColor: 'text-slate-600 dark:text-slate-400', urgencyBg: 'bg-slate-100 dark:bg-slate-700/40', icon: Clock, action: 'Defer 3 pending approvals totalling $170K until December budget review', outcome: 'Maintains 6.9% unallocated buffer if deferred' },
+                      { rank: 4, urgency: 'Medium', urgencyColor: 'text-slate-600 dark:text-slate-400', urgencyBg: 'bg-slate-100 dark:bg-zinc-800/40', icon: Clock, action: 'Defer 3 pending approvals totalling $170K until December budget review', outcome: 'Maintains 6.9% unallocated buffer if deferred' },
                     ].map(item => {
                       const Icon = item.icon;
                       return (
-                        <div key={item.rank} className="flex items-center gap-3 px-5 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800/10 transition-colors">
+                        <div key={item.rank} className="flex items-center gap-3 px-5 py-2.5 hover:bg-slate-50 dark:hover:bg-zinc-900/10 transition-colors">
                           <span className="text-[11px] font-bold text-slate-300 dark:text-slate-600 w-4 flex-shrink-0 tabular-nums">{item.rank}</span>
                           <Icon className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500 flex-shrink-0" />
                           <div className="flex-1 min-w-0">
@@ -1191,10 +1191,10 @@ export default function BudgetResources() {
             </div>
 
             {/* Predictive Spike Forecast */}
-            <div className="mb-3 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none">
+            <div className="mb-3 bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none">
               <button
                 onClick={() => setPredictiveExpanded(!predictiveExpanded)}
-                className="w-full flex items-center justify-between px-5 py-3.5 text-left hover:bg-slate-50 dark:hover:bg-slate-800/10 transition-colors rounded-xl"
+                className="w-full flex items-center justify-between px-5 py-3.5 text-left hover:bg-slate-50 dark:hover:bg-zinc-900/10 transition-colors rounded-xl"
               >
                 <div className="flex items-center gap-2.5">
                   <Activity className="w-4 h-4 text-slate-400 dark:text-slate-500" />
@@ -1221,12 +1221,12 @@ export default function BudgetResources() {
                       { window: 'Dec 15–31, 2024', daysOut: 46, risk: 'Medium', driver: 'Year-end discretionary rush — est. $95K spike', amount: 95000, mitigated: true, mitigationAction: 'Action #4: Support Services freeze covers this' },
                       { window: 'Q1 FY2025 Carry-overs', daysOut: 63, risk: 'Low', driver: '$240K committed converting to spend — already planned', amount: 240000, mitigated: false, mitigationAction: null },
                     ].map((spike) => (
-                      <div key={spike.window} className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-slate-50 dark:bg-slate-800/30 border border-slate-100 dark:border-slate-700/20">
+                      <div key={spike.window} className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-slate-50 dark:bg-zinc-900/30 border border-slate-100 dark:border-slate-700/20">
                         <div className="w-10 text-center flex-shrink-0">
                           <p className="text-[17px] font-black text-slate-700 dark:text-slate-300 leading-none">{spike.daysOut}</p>
                           <p className="text-[9px] text-slate-400 uppercase tracking-wide">days</p>
                         </div>
-                        <div className="w-px h-8 bg-slate-200 dark:bg-slate-700/40 flex-shrink-0" />
+                        <div className="w-px h-8 bg-slate-200 dark:bg-zinc-800/40 flex-shrink-0" />
                         <span className={`flex-shrink-0 ${BADGE(spike.risk === 'High' ? 'red' : spike.risk === 'Medium' ? 'amber' : '')}`}>
                           {spike.risk}
                         </span>
@@ -1261,10 +1261,10 @@ export default function BudgetResources() {
             </div>
 
             {/* Audit Log */}
-            <div className="mb-3 bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none">
+            <div className="mb-3 bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none">
               <button
                 onClick={() => setAuditLogExpanded(!auditLogExpanded)}
-                className="w-full flex items-center justify-between px-5 py-3.5 text-left hover:bg-slate-50 dark:hover:bg-slate-800/10 transition-colors rounded-xl"
+                className="w-full flex items-center justify-between px-5 py-3.5 text-left hover:bg-slate-50 dark:hover:bg-zinc-900/10 transition-colors rounded-xl"
               >
                 <div className="flex items-center gap-2.5">
                   <FileText className="w-4 h-4 text-slate-400 dark:text-slate-500" />
@@ -1318,7 +1318,7 @@ export default function BudgetResources() {
             </div>
 
             {/* Analytics Navigation */}
-            <div className="mb-4 p-1 bg-slate-100 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/30 rounded-xl flex gap-1 overflow-x-auto">
+            <div className="mb-4 p-1 bg-slate-100 dark:bg-zinc-900/40 border border-slate-200 dark:border-slate-700/30 rounded-xl flex gap-1 overflow-x-auto">
               {[
                 { id: 'overview', label: 'Overview', icon: PieChart },
                 { id: 'heatmap', label: 'Division Intel', icon: Target },
@@ -1332,7 +1332,7 @@ export default function BudgetResources() {
                   onClick={() => setActiveTab(tab.id)}
                   className={`flex items-center gap-2 px-3.5 py-2 text-sm font-semibold rounded-lg transition-all whitespace-nowrap ${
                     activeTab === tab.id
-                      ? 'bg-white dark:bg-slate-900 text-amber-700 dark:text-amber-400 shadow-sm'
+                      ? 'bg-white dark:bg-zinc-950 text-amber-700 dark:text-amber-400 shadow-sm'
                       : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
                   }`}
                 >
@@ -1346,7 +1346,7 @@ export default function BudgetResources() {
             {activeTab === 'overview' && (
               <div className="space-y-6">
                 {/* Enhanced Fiscal Year Progress */}
-                <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
+                <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
                   <div className="flex items-center gap-2 mb-4">
                     <PieChart className="w-5 h-5 text-blue-400" />
                     <h3 className="text-lg font-semibold text-primary">Fiscal Year Progress (FY 2024)</h3>
@@ -1359,7 +1359,7 @@ export default function BudgetResources() {
                         <span className="text-sm font-semibold text-secondary">TOTAL EXPENDITURES:</span>
                         <span className="text-sm font-bold text-primary">{fmt(fiscalYear.spent)} / {fmt(fiscalYear.totalBudget)} ({fiscalYear.percentSpent}%)</span>
                       </div>
-                      <div className="w-full h-3 bg-white dark:bg-slate-700/50 rounded-full overflow-hidden">
+                      <div className="w-full h-3 bg-white dark:bg-zinc-800/50 rounded-full overflow-hidden">
                         <div className={`h-full transition-all ${
                           getPercentColor(fiscalYear.percentSpent) === 'red' ? 'bg-red-500' :
                           getPercentColor(fiscalYear.percentSpent) === 'amber' ? 'bg-amber-500' : 'bg-green-500'
@@ -1368,7 +1368,7 @@ export default function BudgetResources() {
                     </div>
 
                     {/* Breakdown */}
-                    <div className="bg-white dark:bg-slate-900/50 rounded-lg p-4 border border-border">
+                    <div className="bg-white dark:bg-zinc-950/50 rounded-lg p-4 border border-border">
                       <h4 className="text-xs font-bold text-secondary mb-3">BREAKDOWN:</h4>
                       <div className="grid grid-cols-3 gap-4">
                         <div>
@@ -1408,7 +1408,7 @@ export default function BudgetResources() {
                     </div>
 
                     {/* Burn Rate */}
-                    <div className="bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-700/20 rounded-lg p-4">
+                    <div className="bg-slate-50 dark:bg-zinc-950/30 border border-slate-200 dark:border-slate-700/20 rounded-lg p-4">
                       <div className="flex items-center gap-2 mb-3">
                         <Clock className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                         <h4 className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wide">Burn Rate</h4>
@@ -1434,7 +1434,7 @@ export default function BudgetResources() {
                     </div>
 
                     {/* Year-End Forecast */}
-                    <div className="bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-700/20 rounded-lg p-4">
+                    <div className="bg-slate-50 dark:bg-zinc-950/30 border border-slate-200 dark:border-slate-700/20 rounded-lg p-4">
                       <div className="flex items-center gap-2 mb-3">
                         <TrendingUp className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                         <h4 className="text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wide">Year-End Forecast</h4>
@@ -1456,7 +1456,7 @@ export default function BudgetResources() {
                     </div>
 
                     {/* Comparison to Last Year */}
-                    <div className="bg-white dark:bg-slate-900/50 border border-border rounded-lg p-4">
+                    <div className="bg-white dark:bg-zinc-950/50 border border-border rounded-lg p-4">
                       <div className="flex items-center gap-2 mb-3">
                         <RefreshCw className="w-4 h-4 text-secondary" />
                         <h4 className="text-xs font-bold text-secondary">COMPARISON TO LAST YEAR (FY 2023):</h4>
@@ -1490,7 +1490,7 @@ export default function BudgetResources() {
                 </div>
 
                 {/* Monthly Spending Trend */}
-                <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+                <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
                   <div className="flex items-center justify-between mb-4">
                     <div>
                       <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Monthly Spending</h3>
@@ -1555,7 +1555,7 @@ export default function BudgetResources() {
                           className={`cursor-pointer rounded-lg px-2 py-2 -mx-2 transition-colors ${
                             isAnomaly
                               ? 'bg-red-50 dark:bg-red-500/5 hover:bg-red-100 dark:hover:bg-red-500/10 border border-red-200 dark:border-red-500/15'
-                              : 'hover:bg-slate-50 dark:hover:bg-slate-700/20'
+                              : 'hover:bg-slate-50 dark:hover:bg-zinc-800/20'
                           }`}
                           onClick={() => setMonthDetailModal(month)}
                         >
@@ -1581,7 +1581,7 @@ export default function BudgetResources() {
                               }`}>{percent.toFixed(0)}%</span>
                             </div>
                           </div>
-                          <div className="w-full h-2.5 bg-slate-100 dark:bg-slate-700/50 rounded-full overflow-hidden">
+                          <div className="w-full h-2.5 bg-slate-100 dark:bg-zinc-800/50 rounded-full overflow-hidden">
                             <div className={`h-full rounded-full ${
                               percent > 100 || isAnomaly ? 'bg-red-500' : percent > 95 ? 'bg-amber-500' : 'bg-amber-500'
                             }`} style={{ width: `${Math.min(percent, 100)}%` }} />
@@ -1602,7 +1602,7 @@ export default function BudgetResources() {
             {/* DIVISION INTELLIGENCE HEATMAP TAB */}
             {activeTab === 'heatmap' && (
               <div className="space-y-5">
-                <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none overflow-hidden">
+                <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none overflow-hidden">
                   <div className="flex items-center justify-between px-5 py-4 border-b border-slate-200 dark:border-slate-700/30">
                     <div className="flex items-center gap-3">
                       <Target className="w-4 h-4 text-slate-500 dark:text-slate-400" />
@@ -1613,7 +1613,7 @@ export default function BudgetResources() {
                   <div className="overflow-x-auto">
                     <table className="w-full">
                       <thead>
-                        <tr className="border-b border-slate-200 dark:border-slate-700/30 bg-slate-50 dark:bg-slate-800/30">
+                        <tr className="border-b border-slate-200 dark:border-slate-700/30 bg-slate-50 dark:bg-zinc-900/30">
                           <th className="text-left px-5 py-3 text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Division</th>
                           <th className="text-center px-4 py-3 text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Status</th>
                           <th className="text-right px-4 py-3 text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Budget Used</th>
@@ -1626,7 +1626,7 @@ export default function BudgetResources() {
                           <React.Fragment key={div.name}>
                             <tr
                               onClick={() => setSelectedDivision(selectedDivision === div.name ? null : div.name)}
-                              className="cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/10 transition-colors"
+                              className="cursor-pointer hover:bg-slate-50 dark:hover:bg-zinc-900/10 transition-colors"
                             >
                               <td className="px-5 py-4 font-semibold text-[13px] text-slate-800 dark:text-slate-200">
                                 <div className="flex items-center gap-2">
@@ -1647,7 +1647,7 @@ export default function BudgetResources() {
                               </td>
                               <td className="px-4 py-4 text-right">
                                 <div className="flex items-center justify-end gap-2">
-                                  <div className="w-20 h-1.5 bg-slate-100 dark:bg-slate-700/50 rounded-full overflow-hidden">
+                                  <div className="w-20 h-1.5 bg-slate-100 dark:bg-zinc-800/50 rounded-full overflow-hidden">
                                     <div className={`h-full rounded-full transition-all ${
                                       div.spend >= 90 ? 'bg-red-500' : div.spend >= 84 ? 'bg-amber-500' : 'bg-green-500'
                                     }`} style={{ width: `${div.spend}%` }} />
@@ -1667,7 +1667,7 @@ export default function BudgetResources() {
                               </td>
                             </tr>
                             {selectedDivision === div.name && (
-                              <tr className="bg-slate-50 dark:bg-slate-800/20">
+                              <tr className="bg-slate-50 dark:bg-zinc-900/20">
                                 <td colSpan={5} className="px-5 py-4">
                                   <div className="space-y-2">
                                     <p className="text-[12px] font-semibold text-slate-700 dark:text-slate-300">Driver: <span className="font-normal text-slate-600 dark:text-slate-400">{div.driver}</span></p>
@@ -1699,7 +1699,7 @@ export default function BudgetResources() {
             {/* SIMULATION MODE TAB */}
             {activeTab === 'simulation' && (
               <div className="space-y-5">
-                <div className="bg-white dark:bg-slate-800/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+                <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
                   <div className="flex items-center gap-3 mb-5">
                     <Activity className="w-4 h-4 text-violet-500 dark:text-violet-400" />
                     <span className="text-sm font-semibold text-slate-900 dark:text-white">Budget Scenario Simulator</span>
@@ -1708,7 +1708,7 @@ export default function BudgetResources() {
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
                     {/* Overtime */}
-                    <div className="p-4 bg-slate-50 dark:bg-slate-800/30 rounded-xl">
+                    <div className="p-4 bg-slate-50 dark:bg-zinc-900/30 rounded-xl">
                       <label className="block text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-3">
                         Overtime Reduction
                       </label>
@@ -1727,19 +1727,19 @@ export default function BudgetResources() {
                     </div>
 
                     {/* Hiring freezes */}
-                    <div className="p-4 bg-slate-50 dark:bg-slate-800/30 rounded-xl">
+                    <div className="p-4 bg-slate-50 dark:bg-zinc-900/30 rounded-xl">
                       <label className="block text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-3">
                         Hiring Freezes
                       </label>
                       <div className="flex items-center justify-center gap-4 mb-2">
                         <button
                           onClick={() => setSimHires(Math.max(0, simHires - 1))}
-                          className="w-9 h-9 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg text-slate-700 dark:text-slate-300 font-black text-lg flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors"
+                          className="w-9 h-9 bg-white dark:bg-zinc-800 border border-slate-200 dark:border-slate-600 rounded-lg text-slate-700 dark:text-slate-300 font-black text-lg flex items-center justify-center hover:bg-slate-100 dark:hover:bg-zinc-700 transition-colors"
                         >−</button>
                         <span className="text-2xl font-black text-slate-800 dark:text-slate-200 w-8 text-center">{simHires}</span>
                         <button
                           onClick={() => setSimHires(Math.min(10, simHires + 1))}
-                          className="w-9 h-9 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg text-slate-700 dark:text-slate-300 font-black text-lg flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors"
+                          className="w-9 h-9 bg-white dark:bg-zinc-800 border border-slate-200 dark:border-slate-600 rounded-lg text-slate-700 dark:text-slate-300 font-black text-lg flex items-center justify-center hover:bg-slate-100 dark:hover:bg-zinc-700 transition-colors"
                         >+</button>
                       </div>
                       <p className={`text-[11px] text-center font-semibold ${simHires > 0 ? 'text-green-600 dark:text-green-400' : 'text-slate-400'}`}>
@@ -1748,7 +1748,7 @@ export default function BudgetResources() {
                     </div>
 
                     {/* Fleet delay */}
-                    <div className="p-4 bg-slate-50 dark:bg-slate-800/30 rounded-xl">
+                    <div className="p-4 bg-slate-50 dark:bg-zinc-900/30 rounded-xl">
                       <label className="block text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-3">
                         Fleet Procurement Delay
                       </label>
@@ -1800,7 +1800,7 @@ export default function BudgetResources() {
                   const TrendIcon = trendIcon;
 
                   return (
-                    <div key={division.id} className="bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/40 rounded-xl overflow-hidden">
+                    <div key={division.id} className="bg-white dark:bg-zinc-900/40 border border-slate-200 dark:border-slate-700/40 rounded-xl overflow-hidden">
                       <div className="p-5">
                         <div className="flex items-center justify-between mb-6">
                           <div className="flex-1">
@@ -1864,7 +1864,7 @@ export default function BudgetResources() {
                           </div>
                           <button
                             onClick={() => toggleCategory(division.id)}
-                            className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700/50 rounded-lg transition-colors"
+                            className="p-2 hover:bg-slate-100 dark:hover:bg-zinc-800/50 rounded-lg transition-colors"
                           >
                             {isExpanded ? <ChevronUp className="w-5 h-5 text-secondary" /> : <ChevronDown className="w-5 h-5 text-secondary" />}
                           </button>
@@ -1878,7 +1878,7 @@ export default function BudgetResources() {
                               getPercentColor(division.percentSpent) === 'amber' ? 'text-amber-700 dark:text-amber-400' : 'text-green-600 dark:text-green-400'
                             }`}>{division.percentSpent.toFixed(1)}%</span>
                           </div>
-                          <div className="w-full h-3 bg-white dark:bg-slate-700/50 rounded-full overflow-hidden">
+                          <div className="w-full h-3 bg-white dark:bg-zinc-800/50 rounded-full overflow-hidden">
                             <div className={`h-full ${
                               getPercentColor(division.percentSpent) === 'red' ? 'bg-red-500' :
                               getPercentColor(division.percentSpent) === 'amber' ? 'bg-amber-500' : 'bg-green-500'
@@ -1887,15 +1887,15 @@ export default function BudgetResources() {
                         </div>
 
                         <div className="grid grid-cols-3 gap-3 mb-4">
-                          <div className="bg-white dark:bg-slate-900/50 rounded-lg p-3">
+                          <div className="bg-white dark:bg-zinc-950/50 rounded-lg p-3">
                             <p className="text-xs text-secondary mb-1">Spent</p>
                             <p className="text-sm font-bold text-amber-700 dark:text-amber-400">{fmt(division.spent)}</p>
                           </div>
-                          <div className="bg-white dark:bg-slate-900/50 rounded-lg p-3">
+                          <div className="bg-white dark:bg-zinc-950/50 rounded-lg p-3">
                             <p className="text-xs text-secondary mb-1">Committed</p>
                             <p className="text-sm font-bold text-purple-400">{fmt(division.committed)}</p>
                           </div>
-                          <div className="bg-white dark:bg-slate-900/50 rounded-lg p-3">
+                          <div className="bg-white dark:bg-zinc-950/50 rounded-lg p-3">
                             <p className="text-xs text-secondary mb-1">Available</p>
                             <p className="text-sm font-bold text-green-600 dark:text-green-400">{fmt(division.available)}</p>
                           </div>
@@ -1916,7 +1916,7 @@ export default function BudgetResources() {
                       </div>
 
                       {isExpanded && (
-                        <div className="border-t border-border p-5 bg-slate-50 dark:bg-slate-900/30">
+                        <div className="border-t border-border p-5 bg-slate-50 dark:bg-zinc-950/30">
                           <h4 className="text-sm font-semibold text-primary mb-3">Budget Categories</h4>
                           <div className="space-y-3">
                             {division.categories.map((cat, idx) => (
@@ -1930,7 +1930,7 @@ export default function BudgetResources() {
                                     }`}>{cat.percent.toFixed(1)}%</span>
                                   </div>
                                 </div>
-                                <div className="w-full h-2 bg-white dark:bg-slate-700/50 rounded-full overflow-hidden">
+                                <div className="w-full h-2 bg-white dark:bg-zinc-800/50 rounded-full overflow-hidden">
                                   <div className={`h-full ${
                                     cat.percent >= 95 ? 'bg-red-500' : cat.percent >= 85 ? 'bg-amber-500' : 'bg-green-500'
                                   }`} style={{ width: `${cat.percent}%` }} />
@@ -1950,7 +1950,7 @@ export default function BudgetResources() {
             {activeTab === 'resources' && (
               <div className="space-y-6">
                 {/* Personnel Breakdown */}
-                <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
+                <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
                   <div className="flex items-center gap-3 mb-6">
                     <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center">
                       <Users className="w-5 h-5 text-blue-400" />
@@ -1962,21 +1962,21 @@ export default function BudgetResources() {
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                    <div className="bg-white dark:bg-slate-900/50 rounded-lg p-4 border border-border">
+                    <div className="bg-white dark:bg-zinc-950/50 rounded-lg p-4 border border-border">
                       <p className="text-xs text-secondary mb-1">Spent YTD</p>
                       <p className="text-2xl font-bold text-primary">$32.8M</p>
                       <div className="flex items-center gap-1 mt-1">
                         <span className="text-xs font-semibold text-amber-700 dark:text-amber-400">85% spent</span>
                       </div>
                     </div>
-                    <div className="bg-white dark:bg-slate-900/50 rounded-lg p-4 border border-border">
+                    <div className="bg-white dark:bg-zinc-950/50 rounded-lg p-4 border border-border">
                       <p className="text-xs text-secondary mb-1">Remaining</p>
                       <p className="text-2xl font-bold text-green-600 dark:text-green-400">$5.7M</p>
                       <div className="flex items-center gap-1 mt-1">
                         <span className="text-xs text-slate-500">15% remaining</span>
                       </div>
                     </div>
-                    <div className="bg-white dark:bg-slate-900/50 rounded-lg p-4 border border-slate-200 dark:border-slate-700/30">
+                    <div className="bg-white dark:bg-zinc-950/50 rounded-lg p-4 border border-slate-200 dark:border-slate-700/30">
                       <p className="text-xs text-slate-500 dark:text-slate-400 mb-1">Burn Rate</p>
                       <p className="text-2xl font-bold text-slate-900 dark:text-white">$3.3M</p>
                       <div className="flex items-center gap-1 mt-1">
@@ -1986,7 +1986,7 @@ export default function BudgetResources() {
                   </div>
 
                   <div className="space-y-3">
-                    <div className="bg-white dark:bg-slate-900/50 rounded-lg p-4 border border-border">
+                    <div className="bg-white dark:bg-zinc-950/50 rounded-lg p-4 border border-border">
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-sm font-semibold text-primary">• Salaries:</span>
                         <div className="text-right">
@@ -1994,12 +1994,12 @@ export default function BudgetResources() {
                           <p className="text-xs text-green-600 dark:text-green-400">87% spent</p>
                         </div>
                       </div>
-                      <div className="w-full h-2 bg-white dark:bg-slate-700/50 rounded-full overflow-hidden">
+                      <div className="w-full h-2 bg-white dark:bg-zinc-800/50 rounded-full overflow-hidden">
                         <div className="h-full bg-green-500" style={{ width: '87%' }} />
                       </div>
                     </div>
 
-                    <div className="bg-white dark:bg-slate-900/50 rounded-lg p-4 border border-border">
+                    <div className="bg-white dark:bg-zinc-950/50 rounded-lg p-4 border border-border">
                       <div className="flex items-center justify-between mb-2">
                         <div className="flex items-center gap-2">
                           <span className="text-sm font-semibold text-primary">• Overtime:</span>
@@ -2012,7 +2012,7 @@ export default function BudgetResources() {
                           <p className="text-xs text-red-700 dark:text-red-400">92% spent</p>
                         </div>
                       </div>
-                      <div className="w-full h-2 bg-white dark:bg-slate-700/50 rounded-full overflow-hidden">
+                      <div className="w-full h-2 bg-white dark:bg-zinc-800/50 rounded-full overflow-hidden">
                         <div className="h-full bg-red-500" style={{ width: '92%' }} />
                       </div>
                       <div className="mt-3 pt-3 border-t border-border dark:border-slate-700/30">
@@ -2047,7 +2047,7 @@ export default function BudgetResources() {
                       </div>
                     </div>
 
-                    <div className="bg-white dark:bg-slate-900/50 rounded-lg p-4 border border-border">
+                    <div className="bg-white dark:bg-zinc-950/50 rounded-lg p-4 border border-border">
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-sm font-semibold text-primary">• Benefits:</span>
                         <div className="text-right">
@@ -2055,14 +2055,14 @@ export default function BudgetResources() {
                           <p className="text-xs text-green-600 dark:text-green-400">83% spent</p>
                         </div>
                       </div>
-                      <div className="w-full h-2 bg-white dark:bg-slate-700/50 rounded-full overflow-hidden">
+                      <div className="w-full h-2 bg-white dark:bg-zinc-800/50 rounded-full overflow-hidden">
                         <div className="h-full bg-green-500" style={{ width: '83%' }} />
                       </div>
                     </div>
                   </div>
                 </div>
                 {/* Vehicles */}
-                <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
+                <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
                   <div className="flex items-center gap-3 mb-6">
                     <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center">
                       <Truck className="w-5 h-5 text-blue-400" />
@@ -2074,27 +2074,27 @@ export default function BudgetResources() {
                   </div>
 
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                    <div className="bg-white dark:bg-slate-900/50 rounded-lg p-4">
+                    <div className="bg-white dark:bg-zinc-950/50 rounded-lg p-4">
                       <p className="text-xs text-secondary mb-1">Patrol</p>
                       <p className="text-2xl font-bold text-primary">{resources.vehicles.patrol}</p>
                     </div>
-                    <div className="bg-white dark:bg-slate-900/50 rounded-lg p-4">
+                    <div className="bg-white dark:bg-zinc-950/50 rounded-lg p-4">
                       <p className="text-xs text-secondary mb-1">Investigation</p>
                       <p className="text-2xl font-bold text-primary">{resources.vehicles.investigation}</p>
                     </div>
-                    <div className="bg-white dark:bg-slate-900/50 rounded-lg p-4">
+                    <div className="bg-white dark:bg-zinc-950/50 rounded-lg p-4">
                       <p className="text-xs text-secondary mb-1">Support</p>
                       <p className="text-2xl font-bold text-primary">{resources.vehicles.support}</p>
                     </div>
-                    <div className="bg-white dark:bg-slate-900/50 rounded-lg p-4">
+                    <div className="bg-white dark:bg-zinc-950/50 rounded-lg p-4">
                       <p className="text-xs text-secondary mb-1">Administration</p>
                       <p className="text-2xl font-bold text-primary">{resources.vehicles.administration}</p>
                     </div>
-                    <div className="bg-white dark:bg-slate-900/50 rounded-lg p-4">
+                    <div className="bg-white dark:bg-zinc-950/50 rounded-lg p-4">
                       <p className="text-xs text-secondary mb-1">In Maintenance</p>
                       <p className="text-2xl font-bold text-amber-700 dark:text-amber-400">{resources.vehicles.maintenance}</p>
                     </div>
-                    <div className="bg-white dark:bg-slate-900/50 rounded-lg p-4">
+                    <div className="bg-white dark:bg-zinc-950/50 rounded-lg p-4">
                       <p className="text-xs text-secondary mb-1">Needs Replacement</p>
                       <p className="text-2xl font-bold text-red-700 dark:text-red-400">{resources.vehicles.replacement}</p>
                     </div>
@@ -2102,7 +2102,7 @@ export default function BudgetResources() {
                 </div>
 
                 {/* Facilities */}
-                <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
+                <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
                   <div className="flex items-center gap-3 mb-6">
                     <div className="w-10 h-10 bg-purple-500/20 rounded-xl flex items-center justify-center">
                       <Building2 className="w-5 h-5 text-purple-400" />
@@ -2114,19 +2114,19 @@ export default function BudgetResources() {
                   </div>
 
                   <div className="space-y-3">
-                    <div className="flex items-center justify-between p-3 bg-white dark:bg-slate-900/50 rounded-lg">
+                    <div className="flex items-center justify-between p-3 bg-white dark:bg-zinc-950/50 rounded-lg">
                       <span className="text-sm text-secondary">Main Headquarters</span>
                       <span className="text-sm font-medium text-primary">{resources.facilities.main}</span>
                     </div>
-                    <div className="flex items-center justify-between p-3 bg-white dark:bg-slate-900/50 rounded-lg">
+                    <div className="flex items-center justify-between p-3 bg-white dark:bg-zinc-950/50 rounded-lg">
                       <span className="text-sm text-secondary">Detention Center</span>
                       <span className="text-sm font-medium text-primary">{resources.facilities.detention}</span>
                     </div>
-                    <div className="flex items-center justify-between p-3 bg-white dark:bg-slate-900/50 rounded-lg">
+                    <div className="flex items-center justify-between p-3 bg-white dark:bg-zinc-950/50 rounded-lg">
                       <span className="text-sm text-secondary">Substations</span>
                       <span className="text-sm font-medium text-primary">{resources.facilities.substations} locations</span>
                     </div>
-                    <div className="flex items-center justify-between p-3 bg-white dark:bg-slate-900/50 rounded-lg">
+                    <div className="flex items-center justify-between p-3 bg-white dark:bg-zinc-950/50 rounded-lg">
                       <span className="text-sm text-secondary">Training Facility</span>
                       <span className="text-sm font-medium text-primary">{resources.facilities.trainingFacility} facility</span>
                     </div>
@@ -2134,7 +2134,7 @@ export default function BudgetResources() {
                 </div>
 
                 {/* Equipment */}
-                <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
+                <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
                   <div className="flex items-center gap-3 mb-6">
                     <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center">
                       <Wrench className="w-5 h-5 text-green-600 dark:text-green-400" />
@@ -2157,7 +2157,7 @@ export default function BudgetResources() {
                             </span>
                           </div>
                         </div>
-                        <div className="w-full h-2 bg-white dark:bg-slate-700/50 rounded-full overflow-hidden">
+                        <div className="w-full h-2 bg-white dark:bg-zinc-800/50 rounded-full overflow-hidden">
                           <div className={`h-full ${value.needsReplacement === 0 ? 'bg-green-500' : value.needsReplacement > 50 ? 'bg-red-500' : 'bg-amber-500'}`}
                             style={{ width: `${((value.total - value.needsReplacement) / value.total) * 100}%` }} />
                         </div>
@@ -2171,7 +2171,7 @@ export default function BudgetResources() {
             {/* ENHANCED FORECAST TAB */}
             {activeTab === 'forecast' && (
               <div className="space-y-6">
-                <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
+                <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
                   <div className="flex items-center gap-2 mb-6">
                     <LineChart className="w-5 h-5 text-purple-400" />
                     <h3 className="text-lg font-semibold text-primary">BUDGET FORECAST</h3>
@@ -2206,7 +2206,7 @@ export default function BudgetResources() {
                   </div>
 
                   {/* Current Trajectory */}
-                  <div className="mb-6 bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
+                  <div className="mb-6 bg-slate-50 dark:bg-zinc-950/30 border border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
                     <div className="flex items-center justify-between mb-6">
                     <h4 className="text-sm font-bold text-slate-800 dark:text-slate-200">CURRENT TRAJECTORY:</h4>
                       <TrendingUp className="w-5 h-5 text-blue-500" />
@@ -2224,7 +2224,7 @@ export default function BudgetResources() {
                     <h4 className="text-sm font-bold text-primary">SCENARIOS:</h4>
 
                     {/* Scenario 1 - Current Pace */}
-                    <div className="bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
+                    <div className="bg-slate-50 dark:bg-zinc-950/30 border border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
                       <div className="flex items-center gap-2 mb-3">
                         <AlertCircle className="w-5 h-5 text-red-700 dark:text-red-400" />
                         <h5 className="text-sm font-bold text-red-700 dark:text-red-400">SCENARIO 1: Current Pace (Do Nothing)</h5>
@@ -2250,7 +2250,7 @@ export default function BudgetResources() {
                     </div>
 
                     {/* Scenario 2 - Cost Controls */}
-                    <div className="bg-slate-50 dark:bg-slate-900/30 border border-green-500/40 rounded-xl p-5">
+                    <div className="bg-slate-50 dark:bg-zinc-950/30 border border-green-500/40 rounded-xl p-5">
                       <div className="flex items-center gap-2 mb-3">
                         <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400" />
                         <h5 className="text-sm font-bold text-green-600 dark:text-green-400 flex items-center gap-2">SCENARIO 2: Cost Controls (15% Reduction) <span className="px-1.5 py-0.5 rounded border border-green-500/40 text-[10px]">RECOMMENDED</span></h5>
@@ -2276,7 +2276,7 @@ export default function BudgetResources() {
                     </div>
 
                     {/* Scenario 3 - Aggressive Controls */}
-                    <div className="bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
+                    <div className="bg-slate-50 dark:bg-zinc-950/30 border border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
                       <div className="flex items-center gap-2 mb-3">
                         <TrendingDown className="w-5 h-5 text-blue-400" />
                         <h5 className="text-sm font-bold text-blue-400">SCENARIO 3: Aggressive Controls (25% Reduction)</h5>
@@ -2303,7 +2303,7 @@ export default function BudgetResources() {
                   </div>
 
                   {/* Recommended Actions for Scenario 2 */}
-                  <div className="bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
+                  <div className="bg-slate-50 dark:bg-zinc-950/30 border border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
                     <div className="flex items-center gap-2 mb-4">
                       <Zap className="w-5 h-5 text-purple-400" />
                       <h5 className="text-sm font-bold text-slate-800 dark:text-slate-200">RECOMMENDED ACTIONS (Scenario 2):</h5>
@@ -2329,13 +2329,13 @@ export default function BudgetResources() {
                   </div>
 
                   {/* Reallocation Opportunities */}
-                  <div className="mt-6 bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
+                  <div className="mt-6 bg-slate-50 dark:bg-zinc-950/30 border border-slate-200 dark:border-slate-700/30 rounded-xl p-5">
                     <div className="flex items-center gap-2 mb-4">
                       <RefreshCw className="w-5 h-5 text-green-600 dark:text-green-400" />
                       <h5 className="text-sm font-bold text-slate-800 dark:text-slate-200">REALLOCATION OPPORTUNITIES:</h5>
                     </div>
                     <div className="space-y-3 text-sm">
-                      <div className="bg-white dark:bg-slate-900/50 rounded-lg p-3 border border-border">
+                      <div className="bg-white dark:bg-zinc-950/50 rounded-lg p-3 border border-border">
                         <p className="text-secondary mb-2">• <span className="font-bold text-primary">Training Division</span> surplus: <span className="font-bold text-green-600 dark:text-green-400">$600K</span></p>
                         <div className="pl-4 space-y-1 text-xs text-secondary">
                           <p>→ Move $300K to Patrol (cover OT)</p>
@@ -2343,7 +2343,7 @@ export default function BudgetResources() {
                           <p>→ Keep $100K buffer</p>
                         </div>
                       </div>
-                      <div className="bg-white dark:bg-slate-900/50 rounded-lg p-3 border border-border">
+                      <div className="bg-white dark:bg-zinc-950/50 rounded-lg p-3 border border-border">
                         <p className="text-secondary mb-2">• <span className="font-bold text-primary">Investigations</span> under budget: <span className="font-bold text-green-600 dark:text-green-400">$200K</span></p>
                         <div className="pl-4 space-y-1 text-xs text-secondary">
                           <p>→ Move $150K to Support Services (IT needs)</p>
@@ -2385,14 +2385,14 @@ export default function BudgetResources() {
         return (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
             <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setConfirmActionModal(null)} />
-            <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl max-w-lg w-full shadow-2xl max-h-[92vh] flex flex-col overflow-hidden">
+            <div className="relative bg-white dark:bg-zinc-950 border border-slate-200 dark:border-slate-700/50 rounded-2xl max-w-lg w-full shadow-2xl max-h-[92vh] flex flex-col overflow-hidden">
               {/* Header */}
               <div className="flex items-start justify-between px-6 pt-5 pb-4 border-b border-slate-200 dark:border-slate-700/30">
                 <div>
                   <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1">Confirm Action</p>
                   <h3 className="text-base font-bold text-slate-900 dark:text-white leading-snug">{confirmActionModal.title}</h3>
                 </div>
-                <button onClick={() => setConfirmActionModal(null)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors flex-shrink-0 ml-3">
+                <button onClick={() => setConfirmActionModal(null)} className="p-2 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors flex-shrink-0 ml-3">
                   <X className="w-5 h-5 text-slate-500" />
                 </button>
               </div>
@@ -2478,7 +2478,7 @@ export default function BudgetResources() {
                         -{fmt(confirmActionModal.impact)} impact
                       </span>
                     </div>
-                    <div className="relative w-full h-4 bg-slate-100 dark:bg-slate-800/50 rounded-full overflow-hidden">
+                    <div className="relative w-full h-4 bg-slate-100 dark:bg-zinc-900/50 rounded-full overflow-hidden">
                       <div
                         className="absolute inset-y-0 left-0 bg-red-400/40 dark:bg-red-500/30 rounded-full transition-all"
                         style={{ width: `${Math.min((_beforeProjection / BUDGET) * 100, 110)}%` }}
@@ -2487,7 +2487,7 @@ export default function BudgetResources() {
                         className={`absolute inset-y-0 left-0 rounded-full transition-all ${_afterOverrun > 0 ? 'bg-amber-500' : 'bg-green-500'}`}
                         style={{ width: `${Math.min((_afterProjection / BUDGET) * 100, 100)}%` }}
                       />
-                      <div className="absolute inset-y-0 right-0 w-0.5 bg-slate-400 dark:bg-slate-500" />
+                      <div className="absolute inset-y-0 right-0 w-0.5 bg-slate-400 dark:bg-zinc-600" />
                     </div>
                     <div className="flex justify-between text-[10px] text-slate-400 mt-1">
                       <span>$0</span>
@@ -2497,7 +2497,7 @@ export default function BudgetResources() {
 
                   {/* Confidence + Risk */}
                   <div className="flex items-center gap-3 pt-1">
-                    <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-100 dark:bg-slate-800/40 rounded-lg">
+                    <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-100 dark:bg-zinc-900/40 rounded-lg">
                       <span className="text-[11px] text-slate-500 dark:text-slate-400">Confidence:</span>
                       <span className="text-[12px] font-bold text-blue-600 dark:text-blue-400">{confirmActionModal.confidence}%</span>
                     </div>
@@ -2525,7 +2525,7 @@ export default function BudgetResources() {
                   <div className="border border-slate-200 dark:border-slate-700/30 rounded-xl overflow-hidden">
                     <table className="w-full text-[12px]">
                       <thead>
-                        <tr className="bg-slate-50 dark:bg-slate-800/40 border-b border-slate-200 dark:border-slate-700/30">
+                        <tr className="bg-slate-50 dark:bg-zinc-900/40 border-b border-slate-200 dark:border-slate-700/30">
                           <th className="text-left px-3 py-2 font-bold text-slate-500 dark:text-slate-400">Account</th>
                           <th className="text-right px-3 py-2 font-bold text-slate-500 dark:text-slate-400">Before</th>
                           <th className="text-right px-3 py-2 font-bold text-slate-500 dark:text-slate-400">After</th>
@@ -2550,7 +2550,7 @@ export default function BudgetResources() {
               </div>
 
               {/* Footer */}
-              <div className="flex gap-2 px-6 py-4 border-t border-slate-200 dark:border-slate-700/30 bg-white dark:bg-slate-900">
+              <div className="flex gap-2 px-6 py-4 border-t border-slate-200 dark:border-slate-700/30 bg-white dark:bg-zinc-950">
                 <button onClick={() => setConfirmActionModal(null)} className={`flex-1 ${secondaryBtn}`}>Cancel</button>
                 <button
                   onClick={() => applyAction(confirmActionModal)}
@@ -2577,7 +2577,7 @@ export default function BudgetResources() {
         return (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
             <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setApplyAllModal(false)} />
-            <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl max-w-lg w-full shadow-2xl max-h-[92vh] flex flex-col overflow-hidden">
+            <div className="relative bg-white dark:bg-zinc-950 border border-slate-200 dark:border-slate-700/50 rounded-2xl max-w-lg w-full shadow-2xl max-h-[92vh] flex flex-col overflow-hidden">
               {/* Header */}
               <div className="px-6 pt-6 pb-4 border-b border-slate-200 dark:border-slate-700/30">
                 <div className="flex items-start justify-between mb-3">
@@ -2587,14 +2587,14 @@ export default function BudgetResources() {
                     </h3>
                     <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">Toggle actions on or off, then confirm</p>
                   </div>
-                  <button onClick={() => setApplyAllModal(false)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors">
+                  <button onClick={() => setApplyAllModal(false)} className="p-2 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors">
                     <X className="w-5 h-5 text-slate-500" />
                   </button>
                 </div>
                 {/* Live decision summary */}
                 <div className={`p-3 rounded-xl border text-[12px] font-medium ${
                   selectedInModal.length === 0
-                    ? 'bg-slate-50 dark:bg-slate-800/30 border-slate-200 dark:border-slate-700/30 text-slate-400'
+                    ? 'bg-slate-50 dark:bg-zinc-900/30 border-slate-200 dark:border-slate-700/30 text-slate-400'
                     : newOverrunAfterSelected <= 0
                     ? 'bg-green-50 dark:bg-green-500/5 border-green-200 dark:border-green-500/20 text-slate-700 dark:text-slate-300'
                     : 'bg-amber-50 dark:bg-amber-500/5 border-amber-200 dark:border-amber-500/20 text-slate-700 dark:text-slate-300'
@@ -2624,7 +2624,7 @@ export default function BudgetResources() {
                       className={`flex items-start gap-3 p-3 rounded-xl border cursor-pointer transition-all ${
                         isSelected
                           ? 'bg-blue-50 dark:bg-blue-500/5 border-blue-200 dark:border-blue-500/25'
-                          : 'bg-slate-50 dark:bg-slate-800/20 border-slate-200 dark:border-slate-700/30 opacity-50'
+                          : 'bg-slate-50 dark:bg-zinc-900/20 border-slate-200 dark:border-slate-700/30 opacity-50'
                       }`}
                       onClick={() => {
                         const next = new Set(selectedActions);
@@ -2643,7 +2643,7 @@ export default function BudgetResources() {
                           <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
                             action.urgency === 'High' ? 'bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-400' :
                             action.urgency === 'Medium' ? 'bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400' :
-                            'bg-slate-100 dark:bg-slate-700/40 text-slate-600 dark:text-slate-400'
+                            'bg-slate-100 dark:bg-zinc-800/40 text-slate-600 dark:text-slate-400'
                           }`}>{action.urgency}</span>
                           <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
                             action.riskLevel === 'Low' ? 'bg-green-100 dark:bg-green-500/10 text-green-700 dark:text-green-400' :
@@ -2659,7 +2659,7 @@ export default function BudgetResources() {
               </div>
 
               {/* Footer */}
-              <div className="px-6 py-4 border-t border-slate-200 dark:border-slate-700/30 bg-white dark:bg-slate-900">
+              <div className="px-6 py-4 border-t border-slate-200 dark:border-slate-700/30 bg-white dark:bg-zinc-950">
                 {pendingInModal.length > 0 && (
                   <div className="flex items-center justify-between mb-3 text-[12px]">
                     <span className="text-slate-500 dark:text-slate-400">
@@ -2714,7 +2714,7 @@ export default function BudgetResources() {
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={() => setMonthDetailModal(null)}
           />
-          <div className="relative bg-white dark:bg-slate-900 border border-border rounded-2xl max-w-3xl w-full shadow-2xl max-h-[90vh] flex flex-col overflow-hidden">
+          <div className="relative bg-white dark:bg-zinc-950 border border-border rounded-2xl max-w-3xl w-full shadow-2xl max-h-[90vh] flex flex-col overflow-hidden">
             <div className="p-6 overflow-y-auto">
             {(() => {
               const _idx = monthlyTrend.findIndex(m => m.month === monthDetailModal.month);
@@ -2757,7 +2757,7 @@ export default function BudgetResources() {
                     </div>
                     <button
                       onClick={() => setMonthDetailModal(null)}
-                      className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-lg transition-colors"
+                      className="p-2 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors"
                     >
                       <X className="w-5 h-5 text-secondary" />
                     </button>
@@ -2783,7 +2783,7 @@ export default function BudgetResources() {
               <h4 className="text-lg font-semibold text-primary mb-4">BY CATEGORY:</h4>
               <div className="space-y-6">
                 {/* Personnel */}
-                <div className="bg-white dark:bg-slate-800/40 rounded-xl p-4 border border-slate-700/50">
+                <div className="bg-white dark:bg-zinc-900/40 rounded-xl p-4 border border-slate-700/50">
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
                       <Users className="w-5 h-5 text-blue-400" />
@@ -2814,7 +2814,7 @@ export default function BudgetResources() {
                 </div>
 
                 {/* Operations */}
-                <div className="bg-white dark:bg-slate-800/40 rounded-xl p-4 border border-slate-700/50">
+                <div className="bg-white dark:bg-zinc-900/40 rounded-xl p-4 border border-slate-700/50">
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
                       <Wrench className="w-5 h-5 text-green-600 dark:text-green-400" />
@@ -2846,7 +2846,7 @@ export default function BudgetResources() {
                 </div>
 
                 {/* Training */}
-                <div className="bg-white dark:bg-slate-800/40 rounded-xl p-4 border border-slate-700/50">
+                <div className="bg-white dark:bg-zinc-900/40 rounded-xl p-4 border border-slate-700/50">
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
                       <Target className="w-5 h-5 text-purple-400" />
@@ -2874,7 +2874,7 @@ export default function BudgetResources() {
                 </div>
 
                 {/* Equipment/Capital */}
-                <div className="bg-white dark:bg-slate-800/40 rounded-xl p-4 border border-slate-700/50">
+                <div className="bg-white dark:bg-zinc-900/40 rounded-xl p-4 border border-slate-700/50">
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
                       <Package className="w-5 h-5 text-amber-700 dark:text-amber-400" />
@@ -2918,7 +2918,7 @@ export default function BudgetResources() {
             )}
 
             </div>
-            <div className="sticky bottom-0 p-4 border-t border-border bg-white dark:bg-slate-900 flex items-center justify-end gap-2">
+            <div className="sticky bottom-0 p-4 border-t border-border bg-white dark:bg-zinc-950 flex items-center justify-end gap-2">
               <button className={secondaryBtn}>Compare to Previous</button>
               <button className={primaryBtn} onClick={handleExportPDF}><Download className="w-3.5 h-3.5" /> Export Report</button>
             </div>
@@ -2930,7 +2930,7 @@ export default function BudgetResources() {
       {pendingPOsModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setPendingPOsModal(false)} />
-          <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700/50 rounded-2xl max-w-2xl w-full shadow-2xl max-h-[90vh] flex flex-col overflow-hidden">
+          <div className="relative bg-white dark:bg-zinc-950 border border-slate-200 dark:border-slate-700/50 rounded-2xl max-w-2xl w-full shadow-2xl max-h-[90vh] flex flex-col overflow-hidden">
             <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-slate-200 dark:border-slate-700/30">
               <div>
                 <h3 className="text-lg font-bold text-slate-900 dark:text-white">Pending Purchase Orders</h3>
@@ -2938,7 +2938,7 @@ export default function BudgetResources() {
                   {pendingPOs.length} orders · {fmt(pendingPOs.reduce((s, p) => s + p.amount, 0))} committed · Approve to move to Spent, Deny to return to Available
                 </p>
               </div>
-              <button onClick={() => setPendingPOsModal(false)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors">
+              <button onClick={() => setPendingPOsModal(false)} className="p-2 hover:bg-slate-100 dark:hover:bg-zinc-900 rounded-lg transition-colors">
                 <X className="w-5 h-5 text-slate-500" />
               </button>
             </div>
@@ -2950,13 +2950,13 @@ export default function BudgetResources() {
                   <p className="text-xs text-slate-500 mt-1">Actions have been logged to the Decision Audit Log.</p>
                 </div>
               ) : pendingPOs.map(po => (
-                <div key={po.id} className="flex items-start gap-4 px-6 py-4 hover:bg-slate-50 dark:hover:bg-slate-800/10 transition-colors">
+                <div key={po.id} className="flex items-start gap-4 px-6 py-4 hover:bg-slate-50 dark:hover:bg-zinc-900/10 transition-colors">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-0.5 flex-wrap">
                       <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded flex-shrink-0 ${
                         po.priority === 'High' ? 'bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-400' :
                         po.priority === 'Medium' ? 'bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400' :
-                        'bg-slate-100 dark:bg-slate-700/40 text-slate-500 dark:text-slate-400'
+                        'bg-slate-100 dark:bg-zinc-800/40 text-slate-500 dark:text-slate-400'
                       }`}>{po.priority}</span>
                       <span className="text-[13px] font-semibold text-slate-800 dark:text-slate-200 truncate">{po.vendor}</span>
                       <span className="text-[11px] text-slate-400 dark:text-slate-500 flex-shrink-0">{po.id}</span>
@@ -2988,13 +2988,13 @@ export default function BudgetResources() {
                 </div>
               ))}
             </div>
-            <div className="px-6 py-4 border-t border-slate-200 dark:border-slate-700/30 bg-slate-50 dark:bg-slate-900/50 flex items-center justify-between">
+            <div className="px-6 py-4 border-t border-slate-200 dark:border-slate-700/30 bg-slate-50 dark:bg-zinc-950/50 flex items-center justify-between">
               <span className="text-[11px] text-slate-500 dark:text-slate-400">
                 {pendingPOs.length > 0
                   ? <>{pendingPOs.length} orders pending · <span className="font-semibold text-slate-700 dark:text-slate-300">{fmt(pendingPOs.reduce((s, p) => s + p.amount, 0))}</span> committed</>
                   : 'All orders resolved'}
               </span>
-              <button onClick={() => setPendingPOsModal(false)} className="px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700/40 text-slate-700 dark:text-slate-300 text-sm font-semibold rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors">
+              <button onClick={() => setPendingPOsModal(false)} className="px-4 py-2 bg-white dark:bg-zinc-900 border border-slate-200 dark:border-slate-700/40 text-slate-700 dark:text-slate-300 text-sm font-semibold rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-800/50 transition-colors">
                 Close
               </button>
             </div>
@@ -3006,7 +3006,7 @@ export default function BudgetResources() {
       {toast && (
         <div
           key={toast.id}
-          className="fixed bottom-24 right-6 z-50 flex items-center gap-3 px-4 py-3 bg-slate-900 dark:bg-slate-800 border border-green-500/30 rounded-xl shadow-2xl max-w-sm fade-in-up"
+          className="fixed bottom-24 right-6 z-50 flex items-center gap-3 px-4 py-3 bg-slate-900 dark:bg-zinc-900 border border-green-500/30 rounded-xl shadow-2xl max-w-sm fade-in-up"
         >
           <div className="w-8 h-8 bg-green-500/15 rounded-lg flex items-center justify-center flex-shrink-0">
             <CheckCircle className="w-4 h-4 text-green-400" />
@@ -3048,7 +3048,7 @@ export default function BudgetResources() {
                 <Sparkles className="w-4 h-4 text-primary" />
               </div>
               <div className="flex-1">
-                <div className="bg-white dark:bg-slate-800/60 p-3 rounded-xl">
+                <div className="bg-white dark:bg-zinc-900/60 p-3 rounded-xl">
                   <p className="text-sm text-slate-700 dark:text-slate-200">Hi! I can help you analyze budget trends, forecast spending, identify cost savings, compare divisions, and answer questions about fiscal management. What would you like to know?</p>
                 </div>
               </div>
@@ -3056,7 +3056,7 @@ export default function BudgetResources() {
           </div>
           <div className="p-4 border-t border-border">
             <div className="flex items-center gap-2">
-              <input type="text" placeholder="Ask about budget..." className="flex-1 px-4 py-2 bg-white dark:bg-slate-800/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500/50" />
+              <input type="text" placeholder="Ask about budget..." className="flex-1 px-4 py-2 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500/50" />
               <button className="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center">
                 <Send className="w-5 h-5 text-primary" />
               </button>

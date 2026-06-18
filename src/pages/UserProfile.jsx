@@ -123,7 +123,7 @@ export default function UserProfile() {
                   {!editing ? (
                     <button
                       onClick={() => setEditing(true)}
-                      className="flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 text-secondary hover:bg-slate-50 dark:hover:bg-slate-800/60 rounded-lg text-sm font-medium transition-all"
+                      className="flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/50 text-secondary hover:bg-slate-50 dark:hover:bg-zinc-900/60 rounded-lg text-sm font-medium transition-all"
                     >
                       <Edit3 className="w-3.5 h-3.5" />
                       Edit Profile
@@ -132,7 +132,7 @@ export default function UserProfile() {
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => setEditing(false)}
-                        className="flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 text-secondary hover:bg-slate-50 rounded-lg text-sm font-medium transition-all"
+                        className="flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/50 text-secondary hover:bg-slate-50 rounded-lg text-sm font-medium transition-all"
                       >
                         <X className="w-3.5 h-3.5" />
                         Cancel
@@ -166,10 +166,10 @@ export default function UserProfile() {
                             type="text"
                             value={form[field.key]}
                             onChange={e => setForm(prev => ({ ...prev, [field.key]: e.target.value }))}
-                            className="w-full px-3 py-2 bg-white dark:bg-slate-800/40 border border-slate-300 dark:border-slate-700/50 rounded-lg text-sm text-primary focus:outline-none focus:border-blue-400 dark:focus:border-blue-500/50 transition-colors"
+                            className="w-full px-3 py-2 bg-white dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/50 rounded-lg text-sm text-primary focus:outline-none focus:border-blue-400 dark:focus:border-blue-500/50 transition-colors"
                           />
                         ) : (
-                          <div className="flex items-center gap-2.5 px-3 py-2 bg-slate-50 dark:bg-slate-800/20 border border-border rounded-lg">
+                          <div className="flex items-center gap-2.5 px-3 py-2 bg-slate-50 dark:bg-zinc-900/20 border border-border rounded-lg">
                             <Icon className="w-4 h-4 text-slate-500 flex-shrink-0" />
                             <span className="text-sm text-primary">{form[field.key]}</span>
                           </div>
@@ -187,7 +187,7 @@ export default function UserProfile() {
                 </div>
                 <div className="divide-y divide-slate-100 dark:divide-slate-700/30">
                   {activityLog.map((entry, i) => (
-                    <div key={i} className="flex items-start gap-3 px-6 py-3.5 hover:bg-slate-50 dark:hover:bg-slate-800/20 transition-colors">
+                    <div key={i} className="flex items-start gap-3 px-6 py-3.5 hover:bg-slate-50 dark:hover:bg-zinc-900/20 transition-colors">
                       <div className={`w-2 h-2 rounded-full mt-1.5 flex-shrink-0 ${
                         entry.type === 'approval' ? 'bg-emerald-500' :
                         entry.type === 'review' ? 'bg-blue-500' : 'bg-amber-500'

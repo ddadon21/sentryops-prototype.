@@ -541,23 +541,23 @@ export default function EvidenceTracking() {
                 <Upload className="w-4 h-4" />
                 Upload Evidence
               </button>
-              <button className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded-xl font-medium transition-colors text-sm">
+              <button className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-zinc-900/40 hover:bg-slate-100 dark:hover:bg-zinc-900/60 border border-slate-700/50 text-secondary rounded-xl font-medium transition-colors text-sm">
                 <Search className="w-4 h-4" />
                 Search Evidence
               </button>
-              <button className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded-xl font-medium transition-colors text-sm">
+              <button className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-zinc-900/40 hover:bg-slate-100 dark:hover:bg-zinc-900/60 border border-slate-700/50 text-secondary rounded-xl font-medium transition-colors text-sm">
                 <Download className="w-4 h-4" />
                 Export Chain of Custody
               </button>
-              <button className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded-xl font-medium transition-colors text-sm">
+              <button className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-zinc-900/40 hover:bg-slate-100 dark:hover:bg-zinc-900/60 border border-slate-700/50 text-secondary rounded-xl font-medium transition-colors text-sm">
                 <Printer className="w-4 h-4" />
                 Print Evidence Log
               </button>
-              <button className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded-xl font-medium transition-colors text-sm">
+              <button className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-zinc-900/40 hover:bg-slate-100 dark:hover:bg-zinc-900/60 border border-slate-700/50 text-secondary rounded-xl font-medium transition-colors text-sm">
                 <Eye className="w-4 h-4" />
                 Audit Trail
               </button>
-              <button className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded-xl font-medium transition-colors text-sm">
+              <button className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-zinc-900/40 hover:bg-slate-100 dark:hover:bg-zinc-900/60 border border-slate-700/50 text-secondary rounded-xl font-medium transition-colors text-sm">
                 <Archive className="w-4 h-4" />
                 Storage Management
               </button>
@@ -579,7 +579,7 @@ export default function EvidenceTracking() {
 
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-4">
                 {/* By Status */}
-                <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4">
+                <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-4">
                   <h5 className="text-sm font-semibold text-secondary mb-3 flex items-center gap-2">
                     <Circle className="w-3 h-3 text-amber-700" />By Status
                   </h5>
@@ -600,7 +600,7 @@ export default function EvidenceTracking() {
                 </div>
 
                 {/* By Type */}
-                <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4">
+                <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-4">
                   <h5 className="text-sm font-semibold text-secondary mb-3 flex items-center gap-2">
                     <Tag className="w-3 h-3 text-amber-700" />By Type
                   </h5>
@@ -621,7 +621,7 @@ export default function EvidenceTracking() {
                 </div>
 
                 {/* By Case */}
-                <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4">
+                <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-4">
                   <h5 className="text-sm font-semibold text-secondary mb-3 flex items-center gap-2">
                     <FolderOpen className="w-3 h-3 text-amber-700" />By Case
                   </h5>
@@ -639,7 +639,7 @@ export default function EvidenceTracking() {
               </div>
 
               {/* Chain of Custody Status */}
-              <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 mb-4">
+              <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-4 mb-4">
                 <h5 className="text-sm font-semibold text-secondary mb-3 flex items-center gap-2">
                   <ShieldCheck className="w-4 h-4 text-green-400" />Chain of Custody Status
                 </h5>
@@ -692,7 +692,7 @@ export default function EvidenceTracking() {
               </div>
 
               {/* Storage Information */}
-              <div className="bg-white dark:bg-slate-900/40 rounded-lg p-4 mt-4">
+              <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-4 mt-4">
                 <h5 className="text-sm font-semibold text-secondary mb-3 flex items-center gap-2">
                   <MapPin className="w-4 h-4 text-secondary" />Storage Information
                 </h5>
@@ -705,8 +705,8 @@ export default function EvidenceTracking() {
               </div>
 
               <div className="flex flex-wrap items-center gap-3 mt-4">
-                <button className="px-3 py-1.5 bg-white dark:bg-slate-800/60 hover:bg-slate-800/80 text-secondary rounded-lg text-xs font-medium transition-colors">View Complete Inventory</button>
-                <button className="px-3 py-1.5 bg-white dark:bg-slate-800/60 hover:bg-slate-800/80 text-secondary rounded-lg text-xs font-medium transition-colors flex items-center gap-1.5">
+                <button className="px-3 py-1.5 bg-white dark:bg-zinc-900/60 hover:bg-slate-800/80 text-secondary rounded-lg text-xs font-medium transition-colors">View Complete Inventory</button>
+                <button className="px-3 py-1.5 bg-white dark:bg-zinc-900/60 hover:bg-slate-800/80 text-secondary rounded-lg text-xs font-medium transition-colors flex items-center gap-1.5">
                   <RefreshCw className="w-3 h-3" />Run Integrity Check
                 </button>
                 <button className="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 rounded-lg text-xs font-medium transition-colors">Request Supervisor Review</button>
@@ -715,7 +715,7 @@ export default function EvidenceTracking() {
 
             {/* Status Cards */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
+              <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
                 <div className="flex items-center justify-between mb-3">
                   <FileCheck className="w-8 h-8 text-blue-400" />
                   <span className="text-2xl font-bold text-primary">{evidenceItems.length}</span>
@@ -729,7 +729,7 @@ export default function EvidenceTracking() {
                 </div>
               </div>
 
-              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
+              <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
                 <div className="flex items-center justify-between mb-3">
                   <CheckCircle className="w-8 h-8 text-green-400" />
                   <span className="text-2xl font-bold text-primary">{evidenceItems.filter(e => e.status === 'Verified').length}</span>
@@ -744,7 +744,7 @@ export default function EvidenceTracking() {
                 </div>
               </div>
 
-              <div className="bg-white dark:bg-slate-800/40 border border-amber-500/30 rounded-xl p-5">
+              <div className="bg-white dark:bg-zinc-900/40 border border-amber-500/30 rounded-xl p-5">
                 <div className="flex items-center justify-between mb-3">
                   <Clock className="w-8 h-8 text-amber-700" />
                   <span className="text-2xl font-bold text-primary">{evidenceItems.filter(e => e.status === 'Pending Review' || e.status === 'Under Review').length}</span>
@@ -763,7 +763,7 @@ export default function EvidenceTracking() {
                 </div>
               </div>
 
-              <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
+              <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
                 <div className="flex items-center justify-between mb-3">
                   <Archive className="w-8 h-8 text-secondary" />
                   <span className="text-2xl font-bold text-primary">{evidenceItems.filter(e => e.status === 'Archived').length}</span>
@@ -778,62 +778,62 @@ export default function EvidenceTracking() {
             </div>
 
             {/* Evidence Management Actions */}
-            <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5 mb-6">
+            <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5 mb-6">
               <h3 className="text-sm font-semibold text-primary mb-4 flex items-center gap-2">
                 <Settings className="w-4 h-4 text-amber-700" />
                 Evidence Management Actions
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                <button className="flex items-start gap-3 p-3 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                <button className="flex items-start gap-3 p-3 bg-white dark:bg-zinc-950/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                   <Upload className="w-5 h-5 text-amber-700 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-sm font-medium text-primary">Upload Evidence</p>
                     <p className="text-xs text-slate-500 mt-0.5">Upload document, report, or recording</p>
                   </div>
                 </button>
-                <button className="flex items-start gap-3 p-3 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                <button className="flex items-start gap-3 p-3 bg-white dark:bg-zinc-950/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                   <RefreshCw className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-sm font-medium text-primary">Verify Integrity</p>
                     <p className="text-xs text-slate-500 mt-0.5">Run checksum verification on all files</p>
                   </div>
                 </button>
-                <button className="flex items-start gap-3 p-3 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                <button className="flex items-start gap-3 p-3 bg-white dark:bg-zinc-950/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                   <FileText className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-sm font-medium text-primary">Evidence Inventory Report</p>
                     <p className="text-xs text-slate-500 mt-0.5">Generate complete inventory (all cases)</p>
                   </div>
                 </button>
-                <button className="flex items-start gap-3 p-3 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                <button className="flex items-start gap-3 p-3 bg-white dark:bg-zinc-950/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                   <Lock className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-sm font-medium text-primary">Request Restricted Access</p>
                     <p className="text-xs text-slate-500 mt-0.5">CJIS records, confidential reports</p>
                   </div>
                 </button>
-                <button className="flex items-start gap-3 p-3 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                <button className="flex items-start gap-3 p-3 bg-white dark:bg-zinc-950/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                   <Download className="w-5 h-5 text-cyan-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-sm font-medium text-primary">Export Chain of Custody</p>
                     <p className="text-xs text-slate-500 mt-0.5">Court-ready report (watermarked PDF)</p>
                   </div>
                 </button>
-                <button className="flex items-start gap-3 p-3 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                <button className="flex items-start gap-3 p-3 bg-white dark:bg-zinc-950/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                   <Eye className="w-5 h-5 text-purple-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-sm font-medium text-primary">Audit Trail</p>
                     <p className="text-xs text-slate-500 mt-0.5">Complete access log (who, what, when)</p>
                   </div>
                 </button>
-                <button className="flex items-start gap-3 p-3 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                <button className="flex items-start gap-3 p-3 bg-white dark:bg-zinc-950/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                   <Archive className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-sm font-medium text-primary">Archive Evidence</p>
                     <p className="text-xs text-slate-500 mt-0.5">Move to archive (closed cases)</p>
                   </div>
                 </button>
-                <button className="flex items-start gap-3 p-3 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                <button className="flex items-start gap-3 p-3 bg-white dark:bg-zinc-950/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                   <Printer className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-sm font-medium text-primary">Print Evidence Log</p>
@@ -844,7 +844,7 @@ export default function EvidenceTracking() {
             </div>
 
             {/* Integrity Verification Status */}
-            <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5 mb-6">
+            <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5 mb-6">
               <h3 className="text-sm font-semibold text-primary mb-4 flex items-center gap-2">
                 <ShieldCheck className="w-4 h-4 text-green-400" />
                 File Integrity Verification
@@ -874,7 +874,7 @@ export default function EvidenceTracking() {
             </div>
 
             {/* Tabs */}
-            <div className="flex items-center gap-1 mb-4 bg-slate-100/80 dark:bg-slate-800/30 rounded-xl p-1 overflow-x-auto">
+            <div className="flex items-center gap-1 mb-4 bg-slate-100/80 dark:bg-zinc-900/30 rounded-xl p-1 overflow-x-auto">
               {[
                 { id: 'all', label: 'All Evidence', count: evidenceItems.length },
                 { id: 'pending', label: 'Pending Review', count: evidenceItems.filter(e => e.status === 'Pending Review' || e.status === 'Under Review').length },
@@ -887,19 +887,19 @@ export default function EvidenceTracking() {
                   className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all whitespace-nowrap ${
                     activeTab === tab.id
                       ? 'bg-amber-500 text-white shadow-lg'
-                      : 'text-secondary hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800/50'
+                      : 'text-secondary hover:text-primary hover:bg-slate-100 dark:hover:bg-zinc-900/50'
                   }`}
                 >
                   {tab.label}
                   <span className={`px-1.5 py-0.5 rounded text-xs ${
-                    activeTab === tab.id ? 'bg-white/20 text-primary' : 'bg-white dark:bg-slate-700/50 text-slate-500'
+                    activeTab === tab.id ? 'bg-white/20 text-primary' : 'bg-white dark:bg-zinc-800/50 text-slate-500'
                   }`}>{tab.count}</span>
                 </button>
               ))}
             </div>
 
             {/* Filter & Search */}
-            <div className="bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4 mb-6">
+            <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4 mb-6">
               <div className="flex flex-col lg:flex-row lg:items-center gap-4">
                 <div className="flex items-center gap-2 flex-wrap flex-1">
                   <Tag className="w-4 h-4 text-secondary" />
@@ -911,7 +911,7 @@ export default function EvidenceTracking() {
                       className={`px-3 py-1 rounded-lg text-xs font-medium transition-all ${
                         filterCategory === cat
                           ? 'bg-amber-500 text-white'
-                          : 'bg-white dark:bg-slate-700/50 text-secondary hover:bg-slate-700'
+                          : 'bg-white dark:bg-zinc-800/50 text-secondary hover:bg-slate-700'
                       }`}
                     >
                       {cat === 'all' ? `All (${getCategoryCount('all')})` : `${cat} (${getCategoryCount(cat)})`}
@@ -928,7 +928,7 @@ export default function EvidenceTracking() {
                       className={`px-3 py-1 rounded-lg text-xs font-medium transition-all ${
                         filterStatus === status
                           ? 'bg-amber-500 text-white'
-                          : 'bg-white dark:bg-slate-700/50 text-secondary hover:bg-slate-700'
+                          : 'bg-white dark:bg-zinc-800/50 text-secondary hover:bg-slate-700'
                       }`}
                     >
                       {status === 'all' ? `All (${getStatusCount('all')})` : `${status} (${getStatusCount(status)})`}
@@ -940,9 +940,9 @@ export default function EvidenceTracking() {
                 <p className="text-sm text-slate-500">Showing {filteredEvidence.length} items (filtered by case BI-2024-145)</p>
                 <div className="flex items-center gap-2 text-xs text-slate-500">
                   <span>Sort by:</span>
-                  <button className="px-2 py-1 bg-white dark:bg-slate-700/50 rounded text-secondary hover:bg-slate-700">Upload Date</button>
-                  <button className="px-2 py-1 bg-slate-100 dark:bg-slate-700/30 rounded text-slate-500 hover:bg-slate-700">Type</button>
-                  <button className="px-2 py-1 bg-slate-100 dark:bg-slate-700/30 rounded text-slate-500 hover:bg-slate-700">Size</button>
+                  <button className="px-2 py-1 bg-white dark:bg-zinc-800/50 rounded text-secondary hover:bg-slate-700">Upload Date</button>
+                  <button className="px-2 py-1 bg-slate-100 dark:bg-zinc-800/30 rounded text-slate-500 hover:bg-slate-700">Type</button>
+                  <button className="px-2 py-1 bg-slate-100 dark:bg-zinc-800/30 rounded text-slate-500 hover:bg-slate-700">Size</button>
                 </div>
               </div>
             </div>
@@ -952,7 +952,7 @@ export default function EvidenceTracking() {
               {filteredEvidence.map((item) => {
                 const isExpanded = expandedEvidence === item.id;
                 return (
-                  <div key={item.id} className="bg-white dark:bg-slate-800/40 border border-border rounded-xl overflow-hidden hover:border-amber-500/30 transition-all">
+                  <div key={item.id} className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl overflow-hidden hover:border-amber-500/30 transition-all">
                     {/* Evidence Card Header */}
                     <div className="p-5">
                       <div className="flex items-start justify-between mb-4">
@@ -981,7 +981,7 @@ export default function EvidenceTracking() {
                       </div>
 
                       {/* File Information */}
-                      <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3 mb-4">
+                      <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3 mb-4">
                         <h4 className="text-xs font-semibold text-secondary mb-2 uppercase tracking-wider">File Information</h4>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 text-sm">
                           <div className="text-slate-500">File: <span className="text-secondary font-mono text-xs">{item.fileName}</span></div>
@@ -992,7 +992,7 @@ export default function EvidenceTracking() {
                       </div>
 
                       {/* Upload Information */}
-                      <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3 mb-4">
+                      <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3 mb-4">
                         <h4 className="text-xs font-semibold text-secondary mb-2 uppercase tracking-wider">Upload Information</h4>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
                           <div className="text-slate-500">Uploaded by: <span className="text-secondary">{item.uploadInfo.uploadedBy}</span></div>
@@ -1011,7 +1011,7 @@ export default function EvidenceTracking() {
                       </div>
 
                       {/* Status & Verification */}
-                      <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3 mb-4">
+                      <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3 mb-4">
                         <h4 className="text-xs font-semibold text-secondary mb-2 uppercase tracking-wider">
                           {item.verification.verified ? 'Verification Status' : 'Review Status'}
                         </h4>
@@ -1050,7 +1050,7 @@ export default function EvidenceTracking() {
                       </div>
 
                       {/* Access Level */}
-                      <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3 mb-4">
+                      <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3 mb-4">
                         <h4 className="text-xs font-semibold text-secondary mb-2 uppercase tracking-wider">Access Level</h4>
                         <div className="text-sm space-y-1">
                           <div className="text-slate-500">Accessible by: <span className="text-secondary">{item.accessibleBy}</span></div>
@@ -1087,7 +1087,7 @@ export default function EvidenceTracking() {
                         <div className="mt-3 space-y-4">
                           {/* Contents */}
                           {(item.contents || item.verificationContents || item.reportContents) && (
-                            <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
+                            <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3">
                               <h4 className="text-xs font-semibold text-secondary mb-2 uppercase tracking-wider">
                                 {item.category === 'Employment' ? 'Verification Contents' : item.category === 'Financial' ? 'Report Contents' : 'Contents'}
                               </h4>
@@ -1104,7 +1104,7 @@ export default function EvidenceTracking() {
 
                           {/* Investigator Assessment (Criminal History) */}
                           {item.investigatorAssessment && (
-                            <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
+                            <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3">
                               <h4 className="text-xs font-semibold text-secondary mb-2 uppercase tracking-wider">Investigator Assessment</h4>
                               <ul className="space-y-1.5">
                                 {item.investigatorAssessment.map((assessment, i) => (
@@ -1119,7 +1119,7 @@ export default function EvidenceTracking() {
 
                           {/* Investigator Analysis (Financial) */}
                           {item.investigatorAnalysis && (
-                            <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
+                            <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3">
                               <h4 className="text-xs font-semibold text-secondary mb-2 uppercase tracking-wider">Investigator Analysis</h4>
                               <ul className="space-y-1.5">
                                 {item.investigatorAnalysis.map((analysis, i) => (
@@ -1134,7 +1134,7 @@ export default function EvidenceTracking() {
 
                           {/* Recording Details (Interview) */}
                           {item.recordingDetails && (
-                            <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
+                            <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3">
                               <h4 className="text-xs font-semibold text-secondary mb-2 uppercase tracking-wider">Recording Details</h4>
                               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
                                 <div className="text-slate-500">Interview date: <span className="text-secondary">{item.recordingDetails.interviewDate}</span></div>
@@ -1149,7 +1149,7 @@ export default function EvidenceTracking() {
 
                           {/* Transcript (Interview) */}
                           {item.transcript && (
-                            <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
+                            <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3">
                               <h4 className="text-xs font-semibold text-secondary mb-2 uppercase tracking-wider">Transcript Available</h4>
                               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
                                 <div className="text-slate-500">Written transcript: <span className="text-secondary">{item.transcript.pageCount}</span></div>
@@ -1161,7 +1161,7 @@ export default function EvidenceTracking() {
 
                           {/* Topics Covered (Interview) */}
                           {item.topicsCovered && (
-                            <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
+                            <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3">
                               <h4 className="text-xs font-semibold text-secondary mb-2 uppercase tracking-wider">Interview Topics Covered</h4>
                               <ul className="space-y-1.5">
                                 {item.topicsCovered.map((topic, i) => (
@@ -1175,7 +1175,7 @@ export default function EvidenceTracking() {
                           )}
 
                           {/* Chain of Custody */}
-                          <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
+                          <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3">
                             <h4 className="text-xs font-semibold text-secondary mb-2 uppercase tracking-wider">
                               Chain of Custody (Last {item.chainOfCustody.length} accesses)
                             </h4>
@@ -1197,7 +1197,7 @@ export default function EvidenceTracking() {
                           </div>
 
                           {/* Retention */}
-                          <div className="bg-white dark:bg-slate-900/40 rounded-lg p-3">
+                          <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3">
                             <h4 className="text-xs font-semibold text-secondary mb-2 uppercase tracking-wider">Retention</h4>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
                               <div className="text-slate-500">Retention period: <span className="text-secondary">{item.retention.period}</span></div>
@@ -1240,10 +1240,10 @@ export default function EvidenceTracking() {
                           <button className="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 rounded-lg text-xs font-medium transition-colors">
                             Chain of Custody
                           </button>
-                          <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
+                          <button className="px-3 py-1.5 bg-white dark:bg-zinc-800/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
                             <RefreshCw className="w-3 h-3" />Verify Integrity
                           </button>
-                          <button className="px-3 py-1.5 bg-white dark:bg-slate-700/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">
+                          <button className="px-3 py-1.5 bg-white dark:bg-zinc-800/50 hover:bg-slate-700/70 text-secondary rounded-lg text-xs font-medium transition-colors">
                             Print
                           </button>
                           {(item.status === 'Pending Review' || item.status === 'Under Review') && (
@@ -1261,21 +1261,21 @@ export default function EvidenceTracking() {
 
             {/* Load More / Export */}
             <div className="flex items-center justify-between mt-6">
-              <button className="px-4 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded-xl text-sm font-medium transition-colors">
+              <button className="px-4 py-2 bg-white dark:bg-zinc-900/40 hover:bg-slate-100 dark:hover:bg-zinc-900/60 border border-slate-700/50 text-secondary rounded-xl text-sm font-medium transition-colors">
                 Load More Evidence
               </button>
               <div className="flex items-center gap-3">
-                <button className="px-4 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded-xl text-sm font-medium transition-colors flex items-center gap-2">
+                <button className="px-4 py-2 bg-white dark:bg-zinc-900/40 hover:bg-slate-100 dark:hover:bg-zinc-900/60 border border-slate-700/50 text-secondary rounded-xl text-sm font-medium transition-colors flex items-center gap-2">
                   <Filter className="w-4 h-4" />Filter Evidence
                 </button>
-                <button className="px-4 py-2 bg-white dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-slate-700/50 text-secondary rounded-xl text-sm font-medium transition-colors flex items-center gap-2">
+                <button className="px-4 py-2 bg-white dark:bg-zinc-900/40 hover:bg-slate-100 dark:hover:bg-zinc-900/60 border border-slate-700/50 text-secondary rounded-xl text-sm font-medium transition-colors flex items-center gap-2">
                   <Download className="w-4 h-4" />Export All Chain of Custody
                 </button>
               </div>
             </div>
 
             {/* Support & Resources Panel */}
-            <div className="mt-8 bg-white dark:bg-slate-800/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
+            <div className="mt-8 bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6">
               <h3 className="text-lg font-semibold text-primary mb-4 flex items-center gap-2">
                 <HelpCircle className="w-5 h-5 text-amber-700" />
                 Support & Resources
@@ -1285,19 +1285,19 @@ export default function EvidenceTracking() {
                 <div>
                   <h4 className="text-sm font-semibold text-secondary mb-3">Quick Actions</h4>
                   <div className="space-y-2">
-                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-zinc-950/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                       <Upload className="w-4 h-4 text-amber-700" />
                       <span className="text-sm text-secondary">Upload New Evidence</span>
                     </button>
-                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-zinc-950/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                       <RefreshCw className="w-4 h-4 text-green-400" />
                       <span className="text-sm text-secondary">Run Integrity Verification</span>
                     </button>
-                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-zinc-950/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                       <Download className="w-4 h-4 text-blue-400" />
                       <span className="text-sm text-secondary">Export Chain of Custody Report</span>
                     </button>
-                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-zinc-950/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                       <Eye className="w-4 h-4 text-purple-400" />
                       <span className="text-sm text-secondary">View Full Audit Trail</span>
                     </button>
@@ -1308,23 +1308,23 @@ export default function EvidenceTracking() {
                 <div>
                   <h4 className="text-sm font-semibold text-secondary mb-3">Documentation</h4>
                   <div className="space-y-2">
-                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-zinc-950/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                       <BookOpen className="w-4 h-4 text-amber-700" />
                       <span className="text-sm text-secondary">Evidence Handling Procedures</span>
                     </button>
-                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-zinc-950/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                       <BookOpen className="w-4 h-4 text-amber-700" />
                       <span className="text-sm text-secondary">Chain of Custody Standards</span>
                     </button>
-                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-zinc-950/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                       <BookOpen className="w-4 h-4 text-amber-700" />
                       <span className="text-sm text-secondary">CJIS Compliance Guidelines</span>
                     </button>
-                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-zinc-950/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                       <BookOpen className="w-4 h-4 text-amber-700" />
                       <span className="text-sm text-secondary">FCRA Requirements Reference</span>
                     </button>
-                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
+                    <button className="w-full flex items-center gap-2 px-3 py-2 bg-white dark:bg-zinc-950/40 hover:bg-slate-900/60 rounded-lg transition-colors text-left">
                       <ExternalLink className="w-4 h-4 text-amber-700" />
                       <span className="text-sm text-secondary">POST Evidence Retention Policy</span>
                     </button>
@@ -1335,28 +1335,28 @@ export default function EvidenceTracking() {
                 <div>
                   <h4 className="text-sm font-semibold text-secondary mb-3">Contact & Support</h4>
                   <div className="space-y-2">
-                    <div className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 rounded-lg">
+                    <div className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-zinc-950/40 rounded-lg">
                       <Phone className="w-4 h-4 text-secondary" />
                       <div>
                         <p className="text-sm text-secondary">BI Unit</p>
                         <p className="text-xs text-slate-500">Ext. 4520</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 rounded-lg">
+                    <div className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-zinc-950/40 rounded-lg">
                       <Mail className="w-4 h-4 text-secondary" />
                       <div>
                         <p className="text-sm text-secondary">Evidence Support</p>
                         <p className="text-xs text-slate-500">evidence@gcso.gov</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 rounded-lg">
+                    <div className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-zinc-950/40 rounded-lg">
                       <Phone className="w-4 h-4 text-secondary" />
                       <div>
                         <p className="text-sm text-secondary">CJIS Help Desk</p>
                         <p className="text-xs text-slate-500">Ext. 4600 (24/7)</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-slate-900/40 rounded-lg">
+                    <div className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-zinc-950/40 rounded-lg">
                       <Phone className="w-4 h-4 text-secondary" />
                       <div>
                         <p className="text-sm text-secondary">IT Security</p>
