@@ -65,10 +65,10 @@ export default function ActivityFeed() {
 
           <div className="p-4 pb-3 flex items-start justify-between">
             <div>
-              <h2 className="text-xl font-bold text-primary mb-1">Activity Center</h2>
+              <h2 className="text-xl font-bold text-primary mb-1">Activity Log</h2>
               <div className="flex items-center gap-2 text-[11px] text-slate-500">
                 <Sparkles className="w-3 h-3 text-violet-400" />
-                <span>Live cross-module events</span>
+                <span>Searchable history of agency-wide events</span>
                 {unreadCount > 0 && (
                   <>
                     <span className="text-slate-700">·</span>

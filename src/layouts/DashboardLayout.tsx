@@ -7,6 +7,7 @@ import {
   Search, Bell, Settings, User, Circle, Calendar
 } from 'lucide-react';
 import { useActivity, type ActivitySeverity } from '../contexts/ActivityContext';
+import LiveEventPopups from '../components/LiveEventPopups';
 
 // ── Shared types ──────────────────────────────────────────────
 
@@ -74,7 +75,7 @@ const defaultNavigation: NavItem[] = [
   { id: 'section-business',   label: 'Business & Compliance',    type: 'section' },
   { id: 'budget',             label: 'Budget & Assets',          icon: DollarSign,   route: '/command/budget' },
   { id: 'reports',            label: 'Performance & Compliance', icon: TrendingUp,   route: '/command/reports' },
-  { id: 'activity',           label: 'Activity Center',          icon: Bell,         route: '/activity' },
+  { id: 'activity',           label: 'Activity Log',             icon: Bell,         route: '/activity' },
 ];
 
 const defaultProfile: ProfileConfig = {
@@ -410,7 +411,7 @@ export default function DashboardLayout({
                   <div className="notifications-dropdown absolute right-0 top-full mt-2 w-80 bg-surface-raised backdrop-blur-xl border border-border rounded-xl shadow-2xl z-50">
                     <div className="p-4 border-b border-border flex items-center justify-between">
                       <div>
-                        <h3 className="text-[13px] font-semibold text-primary">Notifications</h3>
+                        <h3 className="text-[13px] font-semibold text-primary">Notification Center</h3>
                         <span className="text-xs text-muted">{totalUnread} unread</span>
                       </div>
                       {unreadCount > 0 && (
@@ -447,7 +448,7 @@ export default function DashboardLayout({
                         onClick={() => { setNotificationsOpen(false); navigate('/activity'); }}
                         className="w-full text-center text-[13px] text-muted hover:text-slate-700 dark:hover:text-slate-300 font-medium"
                       >
-                        View All Activity
+                        View Activity Log
                       </button>
                     </div>
                   </div>
@@ -521,6 +522,9 @@ export default function DashboardLayout({
           {children}
         </main>
       </div>
+
+      {/* Live agency event pop-ups (Activity Center) — bottom-left */}
+      <LiveEventPopups />
     </div>
   );
 }
