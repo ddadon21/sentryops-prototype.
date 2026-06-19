@@ -74,7 +74,7 @@ const SEED_EVENTS: ActivityEvent[] = [
 ];
 
 // Simulated agency-wide events, popped live every few minutes for demo purposes.
-const SYNTHETIC_EVENTS: Omit<ActivityEvent, 'id' | 'timestamp' | 'read'>[] = [
+export const SYNTHETIC_EVENTS: Omit<ActivityEvent, 'id' | 'timestamp' | 'read'>[] = [
   {
     module: 'patrol',
     title: 'Patrol staffing updated',
@@ -117,7 +117,7 @@ const SYNTHETIC_EVENTS: Omit<ActivityEvent, 'id' | 'timestamp' | 'read'>[] = [
   },
 ];
 
-const SYNTHETIC_EVENT_INTERVAL_MS = 5 * 60 * 1000;
+export const SYNTHETIC_EVENT_INTERVAL_MS = 5 * 60 * 1000;
 
 function loadEvents(): ActivityEvent[] {
   try {
@@ -150,19 +150,6 @@ export function ActivityProvider({ children }: { children: React.ReactNode }) {
     setEvents(prev => [newEvent, ...prev]);
     return newEvent;
   }, []);
-
-  // Live agency activity simulation — pops the first event right at login,
-  // then a new one every 5 minutes for the rest of the session.
-  useEffect(() => {
-    let i = 0;
-    const fire = () => {
-      addEvent(SYNTHETIC_EVENTS[i % SYNTHETIC_EVENTS.length]);
-      i += 1;
-    };
-    fire();
-    const interval = setInterval(fire, SYNTHETIC_EVENT_INTERVAL_MS);
-    return () => clearInterval(interval);
-  }, [addEvent]);
 
   const markRead = useCallback((id: string) => {
     setEvents(prev => prev.map(e => (e.id === id ? { ...e, read: true } : e)));
