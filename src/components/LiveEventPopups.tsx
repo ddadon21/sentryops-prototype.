@@ -1,13 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CheckCircle, AlertTriangle, Info, XCircle, X } from 'lucide-react';
-import {
-  useActivity,
-  SYNTHETIC_EVENTS,
-  SYNTHETIC_EVENT_INTERVAL_MS,
-  type ActivityEvent,
-  type ActivitySeverity,
-} from '../contexts/ActivityContext';
+import { useActivity, type ActivityEvent, type ActivitySeverity } from '../contexts/ActivityContext';
 
 const SEVERITY_ICON: Record<ActivitySeverity, typeof Info> = {
   info: Info,
@@ -33,24 +27,11 @@ interface LiveEventPopupsProps {
 // Agency Activity Center — live pop-ups for cross-module events, sliding
 // out from behind the sidebar's bottom-left edge as they happen.
 export default function LiveEventPopups({ sidebarCollapsed }: LiveEventPopupsProps) {
-  const { events, addEvent, markRead } = useActivity();
+  const { events, markRead } = useActivity();
   const navigate = useNavigate();
   const [toasts, setToasts] = useState<ActivityEvent[]>([]);
   const [enteringIds, setEnteringIds] = useState<Set<string>>(new Set());
   const seenIds = useRef<Set<string> | null>(null);
-
-  // Live agency activity simulation — pops the first event right when the
-  // dashboard mounts (login), then a new one every 5 minutes thereafter.
-  useEffect(() => {
-    let i = 0;
-    const fire = () => {
-      addEvent(SYNTHETIC_EVENTS[i % SYNTHETIC_EVENTS.length]);
-      i += 1;
-    };
-    fire();
-    const interval = setInterval(fire, SYNTHETIC_EVENT_INTERVAL_MS);
-    return () => clearInterval(interval);
-  }, [addEvent]);
 
   useEffect(() => {
     if (seenIds.current === null) {
