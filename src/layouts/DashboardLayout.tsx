@@ -4,7 +4,7 @@ import {
   Home, Users, CheckCircle, DollarSign, TrendingUp,
   AlertCircle, Shield, ChevronLeft, ChevronRight, Menu,
   LogOut, Building2, Radio, Target, FileText, Layers, ChevronDown,
-  Search, Bell, Settings, User, Circle, Calendar
+  Search, Bell, Settings, User, Circle, Calendar, History
 } from 'lucide-react';
 import { useActivity, type ActivitySeverity } from '../contexts/ActivityContext';
 import LiveEventPopups from '../components/LiveEventPopups';
@@ -75,7 +75,6 @@ const defaultNavigation: NavItem[] = [
   { id: 'section-business',   label: 'Business & Compliance',    type: 'section' },
   { id: 'budget',             label: 'Budget & Assets',          icon: DollarSign,   route: '/command/budget' },
   { id: 'reports',            label: 'Performance & Compliance', icon: TrendingUp,   route: '/command/reports' },
-  { id: 'activity',           label: 'Activity Log',             icon: Bell,         route: '/activity' },
 ];
 
 const defaultProfile: ProfileConfig = {
@@ -481,6 +480,13 @@ export default function DashboardLayout({
                     </div>
                     <div className="py-1">
                       <button
+                        onClick={() => { setProfileMenuOpen(false); navigate('/activity'); }}
+                        className="w-full flex items-center gap-3 px-4 py-2 text-[13px] text-secondary hover:bg-slate-50 dark:hover:bg-zinc-900/50 transition-colors"
+                      >
+                        <History className="w-4 h-4" />
+                        Activity Log
+                      </button>
+                      <button
                         onClick={() => { setProfileMenuOpen(false); navigate('/command/profile'); }}
                         className="w-full flex items-center gap-3 px-4 py-2 text-[13px] text-secondary hover:bg-slate-50 dark:hover:bg-zinc-900/50 transition-colors"
                       >
@@ -524,7 +530,7 @@ export default function DashboardLayout({
       </div>
 
       {/* Live agency event pop-ups (Activity Center) — bottom-left */}
-      <LiveEventPopups />
+      <LiveEventPopups sidebarCollapsed={sidebarCollapsed} />
     </div>
   );
 }

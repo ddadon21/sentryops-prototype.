@@ -20,11 +20,17 @@ const SEVERITY_STYLE: Record<ActivitySeverity, { border: string; icon: string }>
 const TOAST_LIFETIME_MS = 7000;
 const MAX_VISIBLE = 4;
 
-// Agency Activity Center — live pop-ups for cross-module events as they happen.
-export default function LiveEventPopups() {
+interface LiveEventPopupsProps {
+  sidebarCollapsed: boolean;
+}
+
+// Agency Activity Center — live pop-ups for cross-module events, sliding
+// out from behind the sidebar's bottom-left edge as they happen.
+export default function LiveEventPopups({ sidebarCollapsed }: LiveEventPopupsProps) {
   const { events, markRead } = useActivity();
   const navigate = useNavigate();
   const [toasts, setToasts] = useState<ActivityEvent[]>([]);
+  const [enteringIds, setEnteringIds] = useState<Set<string>>(new Set());
   const seenIds = useRef<Set<string> | null>(null);
 
   useEffect(() => {
@@ -38,10 +44,26 @@ export default function LiveEventPopups() {
 
     fresh.forEach(e => seenIds.current!.add(e.id));
     setToasts(prev => [...fresh, ...prev].slice(0, MAX_VISIBLE));
+    setEnteringIds(prev => {
+      const next = new Set(prev);
+      fresh.forEach(e => next.add(e.id));
+      return next;
+    });
+
+    // Flip off the "entering" state a beat after mount so the transition
+    // from off-screen (behind the sidebar) to resting position animates.
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setEnteringIds(prev => {
+          const next = new Set(prev);
+          fresh.forEach(e => next.delete(e.id));
+          return next;
+        });
+      });
+    });
+
     fresh.forEach(e => {
-      setTimeout(() => {
-        setToasts(prev => prev.filter(t => t.id !== e.id));
-      }, TOAST_LIFETIME_MS);
+      setTimeout(() => dismiss(e.id), TOAST_LIFETIME_MS);
     });
   }, [events]);
 
@@ -56,15 +78,22 @@ export default function LiveEventPopups() {
   if (toasts.length === 0) return null;
 
   return (
-    <div className="fixed bottom-5 left-5 z-[100] flex flex-col-reverse gap-2 w-80 max-w-[calc(100vw-2.5rem)]">
+    <div
+      className={`fixed bottom-5 z-40 flex flex-col-reverse gap-2 w-80 max-w-[calc(100vw-2.5rem)] left-5 ${
+        sidebarCollapsed ? 'lg:left-24' : 'lg:left-[280px]'
+      }`}
+    >
       {toasts.map(event => {
         const Icon = SEVERITY_ICON[event.severity];
         const style = SEVERITY_STYLE[event.severity];
+        const entering = enteringIds.has(event.id);
         return (
           <div
             key={event.id}
             onClick={() => handleClick(event)}
-            className={`flex items-start gap-2.5 p-3 rounded-lg border border-border border-l-[3px] ${style.border} bg-surface-raised backdrop-blur-xl shadow-2xl cursor-pointer transition-transform hover:-translate-y-0.5`}
+            className={`flex items-start gap-2.5 p-3 rounded-lg border border-border border-l-[3px] ${style.border} bg-surface-raised backdrop-blur-xl shadow-2xl cursor-pointer transition-all duration-500 ease-out ${
+              entering ? 'opacity-0 -translate-x-[220px]' : 'opacity-100 translate-x-0 hover:-translate-y-0.5'
+            }`}
           >
             <Icon className={`w-4 h-4 mt-0.5 flex-shrink-0 ${style.icon}`} />
             <div className="flex-1 min-w-0">
