@@ -5,7 +5,7 @@ import DashboardLayout from '../layouts/DashboardLayout';
 export default function UserProfile() {
   const [editing, setEditing] = useState(false);
   const [saved, setSaved] = useState(false);
-  const [form, setForm] = useState({
+  const [profile, setProfile] = useState({
     name: 'Sheriff Thompson',
     email: 'sheriff.thompson@gwinnettcounty.com',
     phone: '(770) 513-5100',
@@ -16,8 +16,21 @@ export default function UserProfile() {
     badgeNumber: 'S-001',
     startDate: 'January 4, 2021',
   });
+  // Draft copy edited while in editing mode — only committed to `profile` on Save,
+  // so Cancel can discard it and the page reverts to the last saved values.
+  const [form, setForm] = useState(profile);
+
+  const handleEdit = () => {
+    setForm(profile);
+    setEditing(true);
+  };
+
+  const handleCancel = () => {
+    setEditing(false);
+  };
 
   const handleSave = () => {
+    setProfile(form);
     setSaved(true);
     setEditing(false);
     setTimeout(() => setSaved(false), 3000);
@@ -71,25 +84,25 @@ export default function UserProfile() {
                     <Camera className="w-4 h-4 text-white" />
                   </button>
                 </div>
-                <p className="text-lg font-bold text-primary">{form.name}</p>
-                <p className="text-sm text-slate-600 dark:text-slate-400 mb-1">{form.title}</p>
+                <p className="text-lg font-bold text-primary">{profile.name}</p>
+                <p className="text-sm text-slate-600 dark:text-slate-400 mb-1">{profile.title}</p>
                 <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-amber-100 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 text-amber-700 dark:text-amber-400 rounded-full text-xs font-semibold">
                   <Shield className="w-3 h-3" />
-                  {form.role}
+                  {profile.role}
                 </span>
 
                 <div className="mt-5 pt-5 border-t border-slate-100 dark:border-slate-700/40 w-full space-y-2 text-left">
                   <div className="flex items-center gap-2.5 text-sm text-secondary">
                     <Award className="w-4 h-4 text-slate-500 flex-shrink-0" />
-                    <span>Badge #{form.badgeNumber}</span>
+                    <span>Badge #{profile.badgeNumber}</span>
                   </div>
                   <div className="flex items-center gap-2.5 text-sm text-secondary">
                     <MapPin className="w-4 h-4 text-slate-500 flex-shrink-0" />
-                    <span className="truncate">{form.location}</span>
+                    <span className="truncate">{profile.location}</span>
                   </div>
                   <div className="flex items-center gap-2.5 text-sm text-secondary">
                     <Calendar className="w-4 h-4 text-slate-500 flex-shrink-0" />
-                    <span>Since {form.startDate}</span>
+                    <span>Since {profile.startDate}</span>
                   </div>
                 </div>
               </div>
@@ -122,7 +135,7 @@ export default function UserProfile() {
                   <h2 className="text-sm font-semibold text-primary">Account Information</h2>
                   {!editing ? (
                     <button
-                      onClick={() => setEditing(true)}
+                      onClick={handleEdit}
                       className="flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/50 text-secondary hover:bg-slate-50 dark:hover:bg-zinc-900/60 rounded-lg text-sm font-medium transition-all"
                     >
                       <Edit3 className="w-3.5 h-3.5" />
@@ -131,7 +144,7 @@ export default function UserProfile() {
                   ) : (
                     <div className="flex items-center gap-2">
                       <button
-                        onClick={() => setEditing(false)}
+                        onClick={handleCancel}
                         className="flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/50 text-secondary hover:bg-slate-50 rounded-lg text-sm font-medium transition-all"
                       >
                         <X className="w-3.5 h-3.5" />
@@ -171,7 +184,7 @@ export default function UserProfile() {
                         ) : (
                           <div className="flex items-center gap-2.5 px-3 py-2 bg-slate-50 dark:bg-zinc-900/20 border border-border rounded-lg min-w-0">
                             <Icon className="w-4 h-4 text-slate-500 flex-shrink-0" />
-                            <span className="text-sm text-primary truncate" title={form[field.key]}>{form[field.key]}</span>
+                            <span className="text-sm text-primary truncate" title={profile[field.key]}>{profile[field.key]}</span>
                           </div>
                         )}
                       </div>
