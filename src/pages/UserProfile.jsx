@@ -169,9 +169,9 @@ export default function UserProfile() {
                             className="w-full px-3 py-2 bg-white dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/50 rounded-lg text-sm text-primary focus:outline-none focus:border-blue-400 dark:focus:border-blue-500/50 transition-colors"
                           />
                         ) : (
-                          <div className="flex items-center gap-2.5 px-3 py-2 bg-slate-50 dark:bg-zinc-900/20 border border-border rounded-lg">
+                          <div className="flex items-center gap-2.5 px-3 py-2 bg-slate-50 dark:bg-zinc-900/20 border border-border rounded-lg min-w-0">
                             <Icon className="w-4 h-4 text-slate-500 flex-shrink-0" />
-                            <span className="text-sm text-primary">{form[field.key]}</span>
+                            <span className="text-sm text-primary truncate" title={form[field.key]}>{form[field.key]}</span>
                           </div>
                         )}
                       </div>
