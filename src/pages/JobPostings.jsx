@@ -81,13 +81,14 @@ export default function JobPostings() {
   };
 
   return (
-    <DashboardLayout navigation={hrNavigation} profile={hrProfile} notifications={hrNotifications} settingsRoute="/hr/settings">
+    <DashboardLayout navigation={hrNavigation} profile={hrProfile} notifications={hrNotifications} settingsRoute="/hr/settings" profileRoute="/hr/profile" activityRoute="/hr/activity" activityModuleFilter="hr">
       <div className="p-4 lg:p-6 min-h-full">
           <div className="max-w-7xl mx-auto space-y-6">
 
             {/* Section Title */}
-            <div className="border-b border-border pb-4">
-              <h2 className="text-lg font-bold text-primary tracking-wide">ACTIVE JOB POSTINGS - GWINNETT COUNTY SHERIFF'S OFFICE</h2>
+            <div>
+              <h2 className="text-2xl lg:text-3xl font-bold text-primary mb-1">Job Postings</h2>
+              <p className="text-secondary">Gwinnett County Sheriff's Office • Active Recruiting Postings</p>
             </div>
 
             {/* Deputy Sheriff I/II Posting */}

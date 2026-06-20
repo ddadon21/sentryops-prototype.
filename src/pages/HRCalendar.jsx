@@ -1,42 +1,8 @@
 import React, { useState } from 'react';
-import {
-  ChevronLeft, ChevronRight, X, ExternalLink,
-  Users, GraduationCap, FileCheck, Award, LayoutDashboard,
-  Briefcase, UserPlus, TrendingUp, FileText, Calendar,
-  ClipboardCheck
-} from 'lucide-react';
+import { ChevronLeft, ChevronRight, X, ExternalLink } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import DashboardLayout from '../layouts/DashboardLayout';
-
-const hrNavigation = [
-  { id: 'hr-dashboard',           label: 'HR Dashboard',            icon: Users,          route: '/hr/dashboard' },
-  { id: 'job-postings',           label: 'Job Postings',            icon: Briefcase,       route: '/hr/jobs' },
-  { id: 'applicant-tracking',     label: 'Applicant Tracking',      icon: UserPlus,        route: '/hr/applicants' },
-  { id: 'hiring-pipeline',        label: 'Hiring Pipeline',         icon: TrendingUp,      route: '/hr/pipeline' },
-  { id: 'onboarding',             label: 'New Hire Onboarding',     icon: FileCheck,       route: '/hr/onboarding' },
-  { id: 'training-certifications',label: 'Training & Certifications',icon: GraduationCap,  route: '/hr/training' },
-  { id: 'employee-records',       label: 'Employee Records',        icon: FileText,        route: '/hr/records' },
-  { id: 'time-off',               label: 'Time Off Management',     icon: Calendar,        route: '/hr/timeoff' },
-  { id: 'performance',            label: 'Performance Reviews',     icon: Award,           route: '/hr/reviews' },
-  { id: 'compliance',             label: 'HR Compliance',           icon: ClipboardCheck,  route: '/hr/compliance' },
-  { id: 'hr-reports',             label: 'HR Reports',              icon: LayoutDashboard, route: '/hr/reports' },
-  { id: 'hr-calendar',            label: 'HR Calendar',             icon: Calendar,        route: '/hr/calendar' },
-];
-
-const hrProfile = {
-  name: 'HR Director',
-  role: 'Human Resources',
-  email: 'hr.director@gcso.gov',
-  initials: 'HR',
-};
-
-const hrNotifications = [
-  { id: 1, title: 'POST Cert Critical', message: 'Sgt. Thompson — cert expires in 7 days, training not scheduled', time: '30 min ago', urgent: true },
-  { id: 2, title: 'FMLA Deadline Today', message: 'Deputy Chen FMLA designation notice due by 17:00', time: '1 hour ago', urgent: true },
-  { id: 3, title: 'Performance Reviews Overdue', message: 'Q2 Patrol Division — 8 evaluations past due', time: '2 hours ago', urgent: true },
-  { id: 4, title: 'Job Posting Closes Today', message: 'Detective Sergeant position closes at 23:59', time: '3 hours ago', urgent: false },
-  { id: 5, title: 'Benefits Enrollment Reminder', message: 'April new hire enrollment window closes Friday', time: '1 day ago', urgent: false },
-];
+import { hrNavigation, hrProfile, hrNotifications } from '../config/hrConfig';
 
 export default function HRCalendar() {
   const navigate = useNavigate();
@@ -317,6 +283,9 @@ export default function HRCalendar() {
       profile={hrProfile}
       notifications={hrNotifications}
       settingsRoute="/hr/settings"
+      profileRoute="/hr/profile"
+      activityRoute="/hr/activity"
+      activityModuleFilter="hr"
     >
       <div className="p-6 lg:p-8 min-h-full">
         <div className="max-w-7xl mx-auto">
@@ -324,8 +293,8 @@ export default function HRCalendar() {
           {/* Header */}
           <div className="mb-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
             <div>
-              <h2 className="text-xl font-bold text-primary mb-1">HR Calendar</h2>
-              <p className="text-xs text-slate-500">Onboarding dates · POST certification deadlines · FMLA returns · Performance review cycles · Job posting windows</p>
+              <h2 className="text-2xl lg:text-3xl font-bold text-primary mb-1">HR Calendar</h2>
+              <p className="text-secondary">Onboarding dates · POST certification deadlines · FMLA returns · Performance review cycles · Job posting windows</p>
             </div>
             <div className="flex items-center gap-2">
               <div className="flex bg-white dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/40 rounded-lg overflow-hidden">

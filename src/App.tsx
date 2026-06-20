@@ -59,6 +59,8 @@ import ComplianceManagement from './pages/ComplianceManagement';
 import HRCalendar from './pages/HRCalendar';
 import HRReports from './pages/HRReports';
 import HRSettings from './pages/HRSettings';
+import HRProfile from './pages/HRProfile';
+import HRActivityFeed from './pages/HRActivityFeed';
 
 // Background Investigations Module
 import BICalendar from './pages/BICalendar';
@@ -140,6 +142,8 @@ function App() {
         <Route path="/hr/calendar" element={<HRCalendar />} />
         <Route path="/hr/reports" element={<HRReports />} />
         <Route path="/hr/settings" element={<HRSettings />} />
+        <Route path="/hr/profile" element={<HRProfile />} />
+        <Route path="/hr/activity" element={<HRActivityFeed />} />
 
         {/* Background Investigations Module (standalone, no layout wrapper - each page has its own sidebar) */}
         <Route path="/bi/dashboard" element={<BackgroundsDashboard />} />

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Search, History, Zap, ArrowRight } from 'lucide-react';
 import {
   searchCommandIndex,
@@ -20,8 +20,19 @@ type FlatItem =
   | { kind: 'action'; value: typeof quickActions[number] }
   | { kind: 'result'; value: CommandEntry };
 
+// Maps a route prefix to the command-index group that should be boosted to
+// the top of results when searching from within that module.
+const MODULE_CONTEXT_GROUPS: { prefix: string; group: string }[] = [
+  { prefix: '/hr', group: 'Human Resources' },
+  { prefix: '/jail', group: 'Detention Operations' },
+  { prefix: '/patrol', group: 'Patrol Operations' },
+  { prefix: '/investigations', group: 'Investigations' },
+  { prefix: '/bi', group: 'Background Investigations' },
+];
+
 export default function CommandPalette({ open, initialQuery = '', onClose }: CommandPaletteProps) {
   const navigate = useNavigate();
+  const location = useLocation();
   const inputRef = useRef<HTMLInputElement>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [query, setQuery] = useState(initialQuery);
@@ -37,7 +48,12 @@ export default function CommandPalette({ open, initialQuery = '', onClose }: Com
     }
   }, [open, initialQuery]);
 
-  const results = useMemo(() => searchCommandIndex(query), [query]);
+  const contextGroup = useMemo(
+    () => MODULE_CONTEXT_GROUPS.find(m => location.pathname.startsWith(m.prefix))?.group,
+    [location.pathname]
+  );
+
+  const results = useMemo(() => searchCommandIndex(query, contextGroup), [query, contextGroup]);
 
   const groupedResults = useMemo(() => {
     const groups: { group: string; items: CommandEntry[] }[] = [];

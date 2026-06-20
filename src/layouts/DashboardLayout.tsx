@@ -6,7 +6,7 @@ import {
   LogOut, Building2, Radio, Target, FileText, Layers, ChevronDown,
   Search, Bell, Settings, User, Circle, Calendar, History
 } from 'lucide-react';
-import { useActivity, type ActivitySeverity } from '../contexts/ActivityContext';
+import { useActivity, type ActivitySeverity, type ActivityModule } from '../contexts/ActivityContext';
 import LiveEventPopups from '../components/LiveEventPopups';
 import CommandPalette from '../components/CommandPalette';
 
@@ -55,6 +55,9 @@ interface DashboardLayoutProps {
   settingsRoute?: string;
   orgLabel?: string;
   systemStatus?: SystemStatus;
+  profileRoute?: string;
+  activityRoute?: string;
+  activityModuleFilter?: ActivityModule | ActivityModule[];
 }
 
 // Status dot color — reflects platform health at a glance, before the user
@@ -137,11 +140,19 @@ export default function DashboardLayout({
   notifications = defaultNotifications,
   settingsRoute = '/command/settings',
   orgLabel = 'Gwinnett County Sheriff\'s Office',
-  systemStatus = 'operational'
+  systemStatus = 'operational',
+  profileRoute = '/command/profile',
+  activityRoute = '/activity',
+  activityModuleFilter
 }: DashboardLayoutProps) {
   const navigate = useNavigate();
   const location = useLocation();
-  const { events, unreadCount, markRead, markAllRead } = useActivity();
+  const { events: allEvents, unreadCount: allUnreadCount, markRead, markAllRead } = useActivity();
+  const moduleFilterList = activityModuleFilter
+    ? (Array.isArray(activityModuleFilter) ? activityModuleFilter : [activityModuleFilter])
+    : null;
+  const events = moduleFilterList ? allEvents.filter(e => moduleFilterList.includes(e.module)) : allEvents;
+  const unreadCount = moduleFilterList ? events.filter(e => !e.read).length : allUnreadCount;
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(() => {
     const saved = localStorage.getItem('sidebarCollapsed');
@@ -499,7 +510,7 @@ export default function DashboardLayout({
                     </div>
                     <div className="p-3 border-t border-border">
                       <button
-                        onClick={() => { setNotificationsOpen(false); navigate('/activity'); }}
+                        onClick={() => { setNotificationsOpen(false); navigate(activityRoute); }}
                         className="w-full text-center text-[13px] text-muted hover:text-slate-700 dark:hover:text-slate-300 font-medium"
                       >
                         View Activity Log
@@ -535,14 +546,14 @@ export default function DashboardLayout({
                     </div>
                     <div className="py-1">
                       <button
-                        onClick={() => { setProfileMenuOpen(false); navigate('/activity'); }}
+                        onClick={() => { setProfileMenuOpen(false); navigate(activityRoute); }}
                         className="w-full flex items-center gap-3 px-4 py-2 text-[13px] text-secondary hover:bg-slate-50 dark:hover:bg-zinc-900/50 transition-colors"
                       >
                         <History className="w-4 h-4" />
                         Activity Log
                       </button>
                       <button
-                        onClick={() => { setProfileMenuOpen(false); navigate('/command/profile'); }}
+                        onClick={() => { setProfileMenuOpen(false); navigate(profileRoute); }}
                         className="w-full flex items-center gap-3 px-4 py-2 text-[13px] text-secondary hover:bg-slate-50 dark:hover:bg-zinc-900/50 transition-colors"
                       >
                         <User className="w-4 h-4" />
@@ -585,7 +596,7 @@ export default function DashboardLayout({
       </div>
 
       {/* Live agency event pop-ups (Activity Center) — bottom-left */}
-      <LiveEventPopups sidebarCollapsed={sidebarCollapsed} />
+      <LiveEventPopups sidebarCollapsed={sidebarCollapsed} moduleFilter={activityModuleFilter} />
 
       {/* Command Palette */}
       <CommandPalette

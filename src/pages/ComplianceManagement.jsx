@@ -538,7 +538,7 @@ export default function ComplianceManagement() {
   const attentionAreas = complianceAreas.filter(a => a.status === 'needs-attention').length;
 
   return (
-    <DashboardLayout navigation={hrNavigation} profile={hrProfile} notifications={hrNotifications} settingsRoute="/hr/settings">
+    <DashboardLayout navigation={hrNavigation} profile={hrProfile} notifications={hrNotifications} settingsRoute="/hr/settings" profileRoute="/hr/profile" activityRoute="/hr/activity" activityModuleFilter="hr">
       <div className="p-4 lg:p-6 min-h-full">
           <div className="max-w-7xl mx-auto">
             {/* GCSO Header */}

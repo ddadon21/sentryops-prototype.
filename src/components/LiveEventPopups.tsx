@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CheckCircle, AlertTriangle, Info, XCircle, X } from 'lucide-react';
-import { useActivity, type ActivityEvent, type ActivitySeverity } from '../contexts/ActivityContext';
+import { useActivity, type ActivityEvent, type ActivityModule, type ActivitySeverity } from '../contexts/ActivityContext';
 
 const SEVERITY_ICON: Record<ActivitySeverity, typeof Info> = {
   info: Info,
@@ -22,13 +22,16 @@ const MAX_VISIBLE = 4;
 
 interface LiveEventPopupsProps {
   sidebarCollapsed: boolean;
+  moduleFilter?: ActivityModule | ActivityModule[];
 }
 
 // Agency Activity Center — live pop-ups for cross-module events, sliding
 // out from behind the sidebar's bottom-left edge as they happen.
-export default function LiveEventPopups({ sidebarCollapsed }: LiveEventPopupsProps) {
-  const { events, markRead } = useActivity();
+export default function LiveEventPopups({ sidebarCollapsed, moduleFilter }: LiveEventPopupsProps) {
+  const { events: allEvents, markRead } = useActivity();
   const navigate = useNavigate();
+  const filterList = moduleFilter ? (Array.isArray(moduleFilter) ? moduleFilter : [moduleFilter]) : null;
+  const events = filterList ? allEvents.filter(e => filterList.includes(e.module)) : allEvents;
   const [toasts, setToasts] = useState<ActivityEvent[]>([]);
   const [enteringIds, setEnteringIds] = useState<Set<string>>(new Set());
   const seenIds = useRef<Set<string> | null>(null);

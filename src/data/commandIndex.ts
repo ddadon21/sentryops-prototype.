@@ -63,15 +63,15 @@ export const commandIndex: CommandEntry[] = [
 
   // ── Human Resources ──────────────────────────────────────────
   { id: 'hr-dashboard', label: 'HR Dashboard', group: 'Human Resources', route: '/hr/dashboard', keywords: ['hr', 'human resources', 'overview'] },
-  { id: 'hr-jobs', label: 'Job Postings', group: 'Human Resources', route: '/hr/jobs', keywords: ['jobs', 'postings', 'recruiting'] },
+  { id: 'hr-jobs', label: 'Job Postings', group: 'Human Resources', route: '/hr/jobs', keywords: ['jobs', 'postings', 'recruiting', 'vacancy', 'open positions'] },
   { id: 'hr-applicants', label: 'Applicant Tracking', group: 'Human Resources', route: '/hr/applicants', keywords: ['applicants', 'recruiting', 'candidates'] },
-  { id: 'hr-pipeline', label: 'Hiring Pipeline', group: 'Human Resources', route: '/hr/pipeline', keywords: ['hiring', 'pipeline', 'recruiting', 'vacancies'] },
+  { id: 'hr-pipeline', label: 'Hiring Pipeline', group: 'Human Resources', route: '/hr/pipeline', keywords: ['hiring', 'pipeline', 'recruiting', 'vacancies', 'vacancy', 'hiring approvals', 'workforce planning', 'staffing shortages'] },
   { id: 'hr-onboarding', label: 'New Hire Onboarding', group: 'Human Resources', route: '/hr/onboarding', keywords: ['onboarding', 'new hire'] },
-  { id: 'hr-records', label: 'Employee Records', group: 'Human Resources', route: '/hr/records', keywords: ['employees', 'records', 'personnel files'] },
-  { id: 'hr-timeoff', label: 'Time Off Management', group: 'Human Resources', route: '/hr/timeoff', keywords: ['time off', 'leave', 'pto', 'scheduling'] },
+  { id: 'hr-records', label: 'Employee Records', group: 'Human Resources', route: '/hr/records', keywords: ['employees', 'records', 'personnel files', 'employee profile', 'position history'] },
+  { id: 'hr-timeoff', label: 'Time Off Management', group: 'Human Resources', route: '/hr/timeoff', keywords: ['time off', 'leave', 'leave requests', 'pto', 'scheduling'] },
   { id: 'hr-reviews', label: 'Performance Reviews', group: 'Human Resources', route: '/hr/reviews', keywords: ['performance', 'reviews', 'evaluations'] },
-  { id: 'hr-training', label: 'Training & Certifications', group: 'Human Resources', route: '/hr/training', keywords: ['training', 'certifications', 'qualifications'] },
-  { id: 'hr-compliance', label: 'Compliance Management', group: 'Human Resources', route: '/hr/compliance', keywords: ['compliance', 'policies'] },
+  { id: 'hr-training', label: 'Training & Certifications', group: 'Human Resources', route: '/hr/training', keywords: ['training', 'certifications', 'qualifications', 'academy', 'annual compliance', 'required courses', 'expiring credentials'] },
+  { id: 'hr-compliance', label: 'Compliance Management', group: 'Human Resources', route: '/hr/compliance', keywords: ['compliance', 'policies', 'internal affairs', 'ia records'] },
   { id: 'hr-calendar', label: 'HR Calendar', group: 'Human Resources', route: '/hr/calendar', keywords: ['calendar', 'schedule'] },
   { id: 'hr-reports', label: 'HR Reports', group: 'Human Resources', route: '/hr/reports', keywords: ['reports', 'hr analytics'] },
   { id: 'hr-settings', label: 'HR Settings', group: 'Human Resources', route: '/hr/settings', keywords: ['settings'] },
@@ -124,7 +124,12 @@ export function addRecentSearch(query: string) {
   localStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(updated));
 }
 
-export function searchCommandIndex(query: string): CommandEntry[] {
+// When searching from inside a module (e.g. the HR Module), results from that
+// module's group should always rank above agency-wide results, without hiding
+// the rest of the platform from the search.
+const CONTEXT_BOOST = 1000;
+
+export function searchCommandIndex(query: string, contextGroup?: string): CommandEntry[] {
   const q = query.trim().toLowerCase();
   if (!q) return [];
 
@@ -142,6 +147,10 @@ export function searchCommandIndex(query: string): CommandEntry[] {
       else if (keywords.some(k => k.toLowerCase().startsWith(q))) score = 45;
       else if (keywords.some(k => k.toLowerCase().includes(q))) score = 35;
       else if (group.includes(q)) score = 20;
+
+      if (score > 0 && contextGroup && entry.group === contextGroup) {
+        score += CONTEXT_BOOST;
+      }
 
       return { entry, score };
     })

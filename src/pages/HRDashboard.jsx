@@ -355,7 +355,7 @@ export default function HRDashboard() {
   };
 
   return (
-    <DashboardLayout navigation={hrNavigation} profile={hrProfile} notifications={hrNotifications} settingsRoute="/hr/settings">
+    <DashboardLayout navigation={hrNavigation} profile={hrProfile} notifications={hrNotifications} settingsRoute="/hr/settings" profileRoute="/hr/profile" activityRoute="/hr/activity" activityModuleFilter="hr">
       <div className="p-4 lg:p-6 min-h-full">
           {/* Page Header */}
           <div className="mb-6">

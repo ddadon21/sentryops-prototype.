@@ -86,13 +86,14 @@ export default function ApplicantTracking() {
   };
 
   return (
-    <DashboardLayout navigation={hrNavigation} profile={hrProfile} notifications={hrNotifications} settingsRoute="/hr/settings">
+    <DashboardLayout navigation={hrNavigation} profile={hrProfile} notifications={hrNotifications} settingsRoute="/hr/settings" profileRoute="/hr/profile" activityRoute="/hr/activity" activityModuleFilter="hr">
       <div className="p-4 lg:p-6 min-h-full">
           <div className="max-w-7xl mx-auto">
 
             {/* Section Title */}
-            <div className="border-b border-border pb-4 mb-6">
-              <h2 className="text-lg font-bold text-primary tracking-wide">APPLICANT PIPELINE - GWINNETT COUNTY SHERIFF'S OFFICE</h2>
+            <div className="mb-6">
+              <h2 className="text-2xl lg:text-3xl font-bold text-primary mb-1">Applicant Pipeline</h2>
+              <p className="text-secondary">Gwinnett County Sheriff's Office • Recruiting & Applicant Tracking</p>
             </div>
 
             {/* Status Tabs */}

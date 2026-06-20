@@ -20,10 +20,10 @@ export const hrNavigation = [
 ];
 
 export const hrProfile = {
-  name: 'HR Director',
-  role: 'Human Resources',
-  email: 'hr.director@gcso.gov',
-  initials: 'HD'
+  name: 'Patricia Henderson',
+  role: 'HR Director',
+  email: 'patricia.henderson@gwinnettcounty.gov',
+  initials: 'PH'
 };
 
 export const hrNotifications = [
