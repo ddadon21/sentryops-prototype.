@@ -522,10 +522,10 @@ export default function RiskCompliance() {
 
           {/* ── Page Header ────────────────────────────────── */}
           <div className="mb-5">
-            <div className="flex items-center justify-between">
-              <div>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3">
+              <div className="min-w-0">
                 <h2 className="text-xl font-bold text-primary mb-1">Agency Risk Center</h2>
-                <div className="flex items-center gap-2 text-[11px] text-slate-500">
+                <div className="flex items-center gap-2 text-[11px] text-slate-500 flex-wrap">
                   <span>Executive risk management</span>
                   <span className="text-slate-700">&middot;</span>
                   <span>{openRisks.length} open risks</span>
@@ -539,7 +539,7 @@ export default function RiskCompliance() {
                   <span className="text-slate-500">{pendingApprovalCount} decisions pending</span>
                 </div>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap flex-shrink-0">
                 <span className={`px-2.5 py-1 bg-green-500/8 border border-green-500/15 rounded text-[10px] font-semibold ${overallCompliance >= 90 ? 'text-green-600 dark:text-green-400' : 'text-amber-700 dark:text-amber-400'}`}>
                   {overallCompliance}% Compliant
                 </span>
@@ -742,17 +742,17 @@ export default function RiskCompliance() {
                         <span className="text-[10px] font-black text-white">{threat.rank}</span>
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className="text-[13px] font-bold text-primary">{threat.title}</span>
-                          <span className={`px-1.5 py-px border rounded text-[9px] font-bold uppercase ${styles.pill}`}>{threat.severity}</span>
-                          <span className="text-[9px] text-slate-500 px-1.5 py-px bg-slate-100 dark:bg-zinc-800/30 rounded border border-slate-200 dark:border-slate-700/40">{threat.category}</span>
-                          <span className={`text-[10px] font-bold ml-auto flex-shrink-0 ${threat.trend === 'up' ? 'text-red-700 dark:text-red-400' : 'text-green-600 dark:text-green-400'}`}>
+                        <div className="flex items-center gap-2 mb-1 flex-wrap">
+                          <span className="text-[13px] font-bold text-primary break-words min-w-0">{threat.title}</span>
+                          <span className={`px-1.5 py-px border rounded text-[9px] font-bold uppercase flex-shrink-0 ${styles.pill}`}>{threat.severity}</span>
+                          <span className="text-[9px] text-slate-500 px-1.5 py-px bg-slate-100 dark:bg-zinc-800/30 rounded border border-slate-200 dark:border-slate-700/40 flex-shrink-0">{threat.category}</span>
+                          <span className={`text-[10px] font-bold sm:ml-auto flex-shrink-0 ${threat.trend === 'up' ? 'text-red-700 dark:text-red-400' : 'text-green-600 dark:text-green-400'}`}>
                             {threat.trend === 'up' ? '↑ Escalating' : '→ Stable'} · {threat.daysLeft}d left
                           </span>
                         </div>
 
                         {/* Exposure grid */}
-                        <div className="grid grid-cols-3 gap-2 mb-2">
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2">
                           <div className="bg-red-500/5 border border-red-500/10 rounded p-1.5">
                             <p className="text-[9px] font-bold text-red-700 dark:text-red-400 uppercase mb-0.5">Financial</p>
                             <p className="text-[10px] text-secondary">{threat.financialExposure}</p>
@@ -791,7 +791,7 @@ export default function RiskCompliance() {
               <p className="text-[10px] text-slate-500 mt-0.5 ml-[22px]">Projected system state if POST, Training, and Equipment issues remain unresolved through Jan 8, 2025</p>
             </div>
 
-            <div className="grid grid-cols-5 gap-px bg-slate-50 dark:bg-zinc-900/10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-px bg-slate-50 dark:bg-zinc-900/10">
               {[
                 { label: 'Overall Compliance', current: '94.7%', projected: '89.2%', direction: 'down', severity: 'critical' },
                 { label: 'Insurance Risk Score', current: 'Moderate', projected: 'High', direction: 'up', severity: 'critical' },
@@ -870,12 +870,12 @@ export default function RiskCompliance() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-4">
             {/* Open Risk Items — 2/3 width */}
             <div className="lg:col-span-2">
-              <div className="flex items-center gap-2 mb-2 px-1">
+              <div className="flex items-center gap-2 mb-2 px-1 flex-wrap">
                 <AlertTriangle className="w-3.5 h-3.5 text-red-700 dark:text-red-400" />
                 <span className="text-[12px] font-bold text-slate-900 dark:text-primary">Open Risk Items</span>
                 <span className="px-1.5 py-px bg-red-500/10 border border-red-500/20 rounded text-[10px] font-bold text-red-700 dark:text-red-400">{openRisks.length}</span>
-                <div className="flex-1" />
-                <div className="flex items-center gap-1">
+                <div className="hidden sm:block flex-1" />
+                <div className="flex items-center gap-1 flex-wrap">
                   {[
                     { id: 'all', label: 'All', count: openRisks.length },
                     { id: 'critical', label: 'Critical', count: criticalCount },
@@ -902,7 +902,7 @@ export default function RiskCompliance() {
                   const isExpanded = expandedRisks.includes(risk.id);
                   return (
                     <div key={risk.id} className="rounded border border-border dark:border-slate-700/30 bg-white dark:bg-zinc-900/15 hover:bg-slate-50 dark:hover:bg-zinc-900/30 transition-colors">
-                      <div className="flex items-center gap-2.5 px-3.5 py-[9px]">
+                      <div className="flex items-center gap-2.5 px-3.5 py-[9px] flex-wrap sm:flex-nowrap">
                         <div className={`w-[4px] self-stretch rounded-full flex-shrink-0 ${risk.severity === 'critical' ? 'bg-red-500' : risk.severity === 'medium' ? 'bg-amber-500' : 'bg-slate-500'}`}></div>
                         <span className={`px-1.5 py-px border rounded text-[10px] font-bold flex-shrink-0 uppercase leading-tight ${
                           risk.severity === 'critical' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
@@ -918,7 +918,7 @@ export default function RiskCompliance() {
                             }`}>{tag}</span>
                           ))}
                         </span>
-                        <span className="text-[13px] font-bold flex-1 min-w-0 truncate text-primary">{risk.title}</span>
+                        <span className="text-[13px] font-bold flex-1 min-w-0 basis-full sm:basis-auto break-words text-primary order-first sm:order-none w-full sm:w-auto">{risk.title}</span>
                         <span className={`text-[9px] font-bold flex-shrink-0 ${risk.trend === 'up' ? 'text-red-700 dark:text-red-400' : 'text-slate-500'}`}>
                           {risk.trend === 'up' ? '↑' : '→'}
                         </span>
@@ -973,7 +973,7 @@ export default function RiskCompliance() {
                             const statusCfg = isLogged ? getDecisionConfig(logEntry.decision) : null;
                             return (
                               <div
-                                className={`flex items-center gap-2 px-2.5 py-1.5 rounded border text-[10px] ${
+                                className={`flex items-center gap-2 flex-wrap px-2.5 py-1.5 rounded border text-[10px] ${
                                   isLogged ? `${statusCfg.bg} ${statusCfg.border}` :
                                   risk.linkedApproval.status === 'approved' ? 'bg-green-500/[0.03] border-green-500/15 text-green-600 dark:text-green-400' :
                                   'bg-amber-500/[0.03] border-amber-500/15 text-amber-700 dark:text-amber-400 cursor-pointer hover:bg-amber-500/[0.06]'
@@ -1097,14 +1097,14 @@ export default function RiskCompliance() {
                     const logEntry = actionLog.find(l => l.approvalId === action.approvalId);
                     const decisionConfig = logEntry ? getDecisionConfig(logEntry.decision) : null;
                     return (
-                      <div key={action.approvalId} className={`flex items-center gap-3 px-3 py-2.5 rounded-lg border transition-all ${isLogged ? `${decisionConfig.bg} ${decisionConfig.border}` : 'bg-white dark:bg-zinc-950/40 border-amber-500/15 hover:border-amber-500/30'}`}>
+                      <div key={action.approvalId} className={`flex flex-col sm:flex-row sm:items-center gap-3 px-3 py-2.5 rounded-lg border transition-all ${isLogged ? `${decisionConfig.bg} ${decisionConfig.border}` : 'bg-white dark:bg-zinc-950/40 border-amber-500/15 hover:border-amber-500/30'}`}>
                         <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 mb-0.5">
-                            <span className={`px-1.5 py-px rounded text-[9px] font-bold border ${action.severity === 'critical' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' : 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400'}`}>{action.severity.toUpperCase()}</span>
-                            <span className="text-[11px] font-semibold text-primary truncate">{action.title}</span>
-                            <span className="text-[10px] font-mono text-secondary">${action.amount.toLocaleString()}</span>
+                          <div className="flex items-center gap-2 mb-0.5 flex-wrap">
+                            <span className={`px-1.5 py-px rounded text-[9px] font-bold border flex-shrink-0 ${action.severity === 'critical' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' : 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400'}`}>{action.severity.toUpperCase()}</span>
+                            <span className="text-[11px] font-semibold text-primary break-words min-w-0">{action.title}</span>
+                            <span className="text-[10px] font-mono text-secondary flex-shrink-0">${action.amount.toLocaleString()}</span>
                           </div>
-                          <div className="flex items-center gap-2 text-[10px] text-slate-500">
+                          <div className="flex items-center gap-2 text-[10px] text-slate-500 flex-wrap">
                             <span>Risk: {action.riskTitle}</span>
                             <span className="text-slate-700">&middot;</span>
                             <span>{action.daysLeft}d remaining</span>
@@ -1113,7 +1113,7 @@ export default function RiskCompliance() {
                           </div>
                         </div>
                         {isLogged ? (
-                          <div className="flex items-center gap-2 flex-shrink-0">
+                          <div className="flex items-center gap-2 flex-wrap flex-shrink-0">
                             <div className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded ${decisionConfig.bg} ${decisionConfig.border} border`}>
                               <decisionConfig.icon className={`w-3 h-3 ${decisionConfig.text}`} />
                               <span className={`text-[10px] font-bold ${decisionConfig.text}`}>{decisionConfig.label}</span>
@@ -1123,7 +1123,7 @@ export default function RiskCompliance() {
                         ) : (
                           <button
                             onClick={() => setApprovalModal(action)}
-                            className="flex items-center gap-1.5 px-3 py-2 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/30 hover:border-amber-500/50 text-amber-700 dark:text-amber-400 rounded-lg text-[11px] font-bold transition-all flex-shrink-0"
+                            className="flex items-center justify-center gap-1.5 px-3 py-2 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/30 hover:border-amber-500/50 text-amber-700 dark:text-amber-400 rounded-lg text-[11px] font-bold transition-all flex-shrink-0 w-full sm:w-auto"
                           >
                             <Lock className="w-3 h-3" />
                             Review & Decide
@@ -1151,14 +1151,14 @@ export default function RiskCompliance() {
                     {actionLog.slice(0, 5).map(entry => {
                       const cfg = getDecisionConfig(entry.decision);
                       return (
-                        <div key={entry.id} className="flex items-center gap-2 text-[10px] px-2 py-1.5 rounded bg-slate-50 dark:bg-zinc-950/30">
+                        <div key={entry.id} className="flex items-center gap-2 flex-wrap text-[10px] px-2 py-1.5 rounded bg-slate-50 dark:bg-zinc-950/30">
                           <cfg.icon className={`w-3 h-3 flex-shrink-0 ${cfg.text}`} />
-                          <span className={`font-bold ${cfg.text} w-[72px]`}>{cfg.label}</span>
-                          <span className="text-primary font-medium flex-1 truncate">{entry.approvalTitle}</span>
-                          <span className="text-slate-500 font-mono">${entry.amount.toLocaleString()}</span>
-                          <span className="text-slate-700">{entry.actor}</span>
-                          <span className="text-slate-700 font-mono text-[9px]">{entry.displayTime}</span>
-                          <span className="text-slate-700 font-mono text-[9px]">Risk:{entry.opiAtDecision}</span>
+                          <span className={`font-bold ${cfg.text} w-[72px] flex-shrink-0`}>{cfg.label}</span>
+                          <span className="text-primary font-medium flex-1 min-w-[100px] truncate">{entry.approvalTitle}</span>
+                          <span className="text-slate-500 font-mono flex-shrink-0">${entry.amount.toLocaleString()}</span>
+                          <span className="text-slate-700 flex-shrink-0">{entry.actor}</span>
+                          <span className="text-slate-700 font-mono text-[9px] flex-shrink-0">{entry.displayTime}</span>
+                          <span className="text-slate-700 font-mono text-[9px] flex-shrink-0">Risk:{entry.opiAtDecision}</span>
                         </div>
                       );
                     })}

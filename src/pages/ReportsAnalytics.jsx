@@ -649,11 +649,11 @@ export default function PerformanceCompliance() {
               <span className="text-red-700 dark:text-red-400 font-semibold">1 compliance deadline in 48 hrs</span>
             </div>
           </div>
-          <div className="flex items-center gap-2 flex-wrap">
+          <div className="flex items-center gap-2 flex-wrap w-full lg:w-auto">
             <select
               value={timeRange}
               onChange={(e) => setTimeRange(e.target.value)}
-              className="px-3 py-2 bg-white dark:bg-zinc-900/40 border border-slate-200 dark:border-slate-700/30 rounded-lg text-slate-700 dark:text-slate-300 text-sm focus:outline-none focus:border-amber-500/50"
+              className="px-3 py-2 bg-white dark:bg-zinc-900/40 border border-slate-200 dark:border-slate-700/30 rounded-lg text-slate-700 dark:text-slate-300 text-sm focus:outline-none focus:border-amber-500/50 w-full sm:w-auto"
             >
               <option value="ytd">Year to Date</option>
               <option value="last30">Last 30 Days</option>
@@ -731,15 +731,15 @@ export default function PerformanceCompliance() {
 
         {/* ── Command Decisions Required ───────────── */}
         <div className={CARD}>
-          <div className={CARD_HEADER}>
-            <div className="flex items-center gap-3">
-              <span className="relative flex h-2 w-2">
+          <div className={CARD_HEADER + ' flex-col sm:flex-row sm:items-center gap-2 sm:gap-0'}>
+            <div className="flex items-center gap-3 min-w-0">
+              <span className="relative flex h-2 w-2 flex-shrink-0">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
               </span>
-              <span className="text-[11px] font-bold text-slate-700 dark:text-slate-200 uppercase tracking-widest">Command Decisions Required</span>
+              <span className="text-[11px] font-bold text-slate-700 dark:text-slate-200 uppercase tracking-widest break-words">Command Decisions Required</span>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-shrink-0">
               {criticalCount > 0 && <span className={BADGE('red')}>{criticalCount} Critical</span>}
               <span className="text-[11px] text-slate-500 dark:text-slate-400">{pendingCount} pending</span>
             </div>
@@ -750,14 +750,14 @@ export default function PerformanceCompliance() {
               return (
                 <div
                   key={action.id}
-                  className={`flex items-center gap-4 px-5 py-3 border-l-[3px] transition-colors ${getUrgencyAccent(action.urgency)} ${
+                  className={`flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 px-5 py-3 border-l-[3px] transition-colors ${getUrgencyAccent(action.urgency)} ${
                     isActioned
                       ? 'bg-emerald-50/30 dark:bg-emerald-500/5 opacity-60'
                       : 'hover:bg-slate-50 dark:hover:bg-zinc-950/20'
                   }`}
                 >
                   {/* Status column */}
-                  <div className="flex flex-col items-start gap-1 flex-shrink-0 w-[90px]">
+                  <div className="flex flex-row sm:flex-col items-center sm:items-start gap-2 sm:gap-1 flex-shrink-0 sm:w-[90px]">
                     {isActioned ? (
                       <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 text-emerald-700 dark:text-emerald-400 text-[10px] font-bold">
                         <CheckCircle className="w-3 h-3" /> Done
@@ -774,11 +774,11 @@ export default function PerformanceCompliance() {
 
                   {/* Content */}
                   <div className="flex-1 min-w-0">
-                    <p className={`text-[13px] font-semibold leading-snug ${isActioned ? 'text-slate-400 dark:text-slate-500 line-through' : 'text-slate-800 dark:text-slate-100'}`}>
+                    <p className={`text-[13px] font-semibold leading-snug break-words ${isActioned ? 'text-slate-400 dark:text-slate-500 line-through' : 'text-slate-800 dark:text-slate-100'}`}>
                       {action.decision}
                     </p>
                     {!isActioned && (
-                      <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 leading-tight">
+                      <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 leading-tight break-words">
                         <span className="font-semibold text-slate-600 dark:text-slate-400">Risk: </span>{action.ifIgnored}
                       </p>
                     )}
@@ -786,7 +786,7 @@ export default function PerformanceCompliance() {
 
                   {/* Buttons */}
                   {!isActioned && (
-                    <div className="flex items-center gap-2 flex-shrink-0">
+                    <div className="flex items-center gap-2 flex-shrink-0 flex-wrap">
                       <button onClick={() => handleReportAction(action)} className={getActionBtnClass(action.urgency)}>
                         {action.actionLabel}
                       </button>
@@ -1136,15 +1136,15 @@ export default function PerformanceCompliance() {
             {divisionPerformance.map((division, idx) => (
               <div key={idx} className={CARD + ' overflow-hidden'}>
                 {/* Division header */}
-                <div className={CARD_HEADER}>
-                  <div className="flex items-center gap-3">
+                <div className={CARD_HEADER + ' flex-col sm:flex-row sm:items-center gap-2 sm:gap-0'}>
+                  <div className="flex items-center gap-3 min-w-0">
                     <div className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${
                       division.riskLevel === 'Low' ? 'bg-emerald-500' :
                       division.riskLevel === 'High' || division.riskLevel === 'Critical' ? 'bg-red-500' : 'bg-orange-500'
                     }`} />
-                    <h4 className="text-sm font-bold text-slate-800 dark:text-slate-100">{division.name}</h4>
+                    <h4 className="text-sm font-bold text-slate-800 dark:text-slate-100 break-words">{division.name}</h4>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-shrink-0">
                     <span className="text-[9px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Risk Level</span>
                     <span className={getRiskLevelBadge(division.riskLevel)}>{division.riskLevel}</span>
                   </div>
@@ -1362,9 +1362,9 @@ export default function PerformanceCompliance() {
               <div className="p-5 space-y-3">
                 {commandRecommendations.map((rec, i) => (
                   <div key={i} className="p-4 rounded-lg border border-slate-200 dark:border-slate-700/40">
-                    <div className="flex items-center justify-between gap-3 mb-2">
-                      <p className="text-sm font-semibold text-slate-800 dark:text-slate-100">{rec.title}</p>
-                      <span className={getRiskLevelBadge(rec.severity)}>{rec.severity}</span>
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3 mb-2">
+                      <p className="text-sm font-semibold text-slate-800 dark:text-slate-100 min-w-0 break-words">{rec.title}</p>
+                      <span className={getRiskLevelBadge(rec.severity) + ' flex-shrink-0 self-start sm:self-auto'}>{rec.severity}</span>
                     </div>
                     <ul className="space-y-1">
                       {rec.actions.map((a, j) => (

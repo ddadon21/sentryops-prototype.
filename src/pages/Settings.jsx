@@ -607,17 +607,17 @@ export default function SettingsPage() {
 
             {/* System Status Banner */}
             <div className="mb-6 bg-gradient-to-r from-green-500/10 to-emerald-500/5 border border-green-500/20 rounded-xl p-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                <div className="flex items-center gap-4 min-w-0">
+                  <div className="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
                     <CheckCircle2 className="w-6 h-6 text-green-400" />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <h4 className="text-base font-semibold text-primary">All Systems Operational</h4>
-                    <p className="text-sm text-secondary">14 integrations active, 1 in planning • 99.97% average uptime • Last sync: 1 min ago</p>
+                    <p className="text-sm text-secondary break-words">14 integrations active, 1 in planning • 99.97% average uptime • Last sync: 1 min ago</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-2 px-4 py-2 bg-green-500/20 border border-green-500/30 rounded-lg">
+                <div className="flex items-center gap-2 px-4 py-2 bg-green-500/20 border border-green-500/30 rounded-lg flex-shrink-0 self-start sm:self-auto">
                   <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
                   <span className="text-sm font-semibold text-green-400 uppercase">Live</span>
                 </div>
@@ -664,9 +664,9 @@ export default function SettingsPage() {
               {activeSection === 'profile' && (
                 <>
                   <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
-                    <div className="flex items-center justify-between mb-1">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-1">
                       <h3 className="text-sm font-semibold text-primary">Profile Information</h3>
-                      <span className="text-[10px] text-slate-500">Last updated: Dec 11, 2025 09:14 AM</span>
+                      <span className="text-[10px] text-slate-500 flex-shrink-0">Last updated: Dec 11, 2025 09:14 AM</span>
                     </div>
                     <div className="flex items-center gap-2 mb-6">
                       <div className="w-2 h-2 bg-green-400 rounded-full"></div>
@@ -784,9 +784,9 @@ export default function SettingsPage() {
               {/* Notifications Settings */}
               {activeSection === 'notifications' && (
                 <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
-                  <div className="flex items-center justify-between mb-1">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-1">
                     <h3 className="text-sm font-semibold text-primary">Operational Alert Preferences</h3>
-                    <span className="text-[10px] text-slate-500">Last updated: Dec 11, 2025 09:14 AM</span>
+                    <span className="text-[10px] text-slate-500 flex-shrink-0">Last updated: Dec 11, 2025 09:14 AM</span>
                   </div>
                   <p className="text-xs text-slate-500 mb-6">Only critical operational events are surfaced here. Cosmetic and low-priority alerts have been removed.</p>
                   <div className="space-y-6">
@@ -817,9 +817,9 @@ export default function SettingsPage() {
               {/* Display Settings */}
               {activeSection === 'display' && (
                 <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
-                  <div className="flex items-center justify-between mb-1">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-1">
                     <h3 className="text-sm font-semibold text-primary">Display Preferences</h3>
-                    <span className="text-[10px] text-slate-500">Last updated: Dec 10, 2025 02:30 PM</span>
+                    <span className="text-[10px] text-slate-500 flex-shrink-0">Last updated: Dec 10, 2025 02:30 PM</span>
                   </div>
                   <p className="text-xs text-slate-500 mb-6">Theme, timezone, date format, and dashboard density.</p>
                   <div className="space-y-5">

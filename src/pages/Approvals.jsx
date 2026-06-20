@@ -572,10 +572,10 @@ export default function Approvals() {
 
           {/* ── Page Header ─────────────────────────────────── */}
           <div className="mb-4">
-            <div className="flex items-center justify-between">
-              <div>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3">
+              <div className="min-w-0">
                 <h2 className="text-xl font-bold text-primary mb-1">Decision Center</h2>
-                <div className="flex items-center gap-2 text-[11px] text-slate-500">
+                <div className="flex items-center gap-2 text-[11px] text-slate-500 flex-wrap">
                   <span>Executive command decisions</span>
                   <span className="text-slate-700">·</span>
                   <span>{decisionsList.length} pending</span>
@@ -583,7 +583,7 @@ export default function Approvals() {
                   {criticalCount > 0 && <><span className="text-slate-700">·</span><span className="text-red-700 dark:text-red-400 font-semibold">{criticalCount} critical impact</span></>}
                 </div>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap flex-shrink-0">
                 <span className="px-2.5 py-1 bg-green-500/8 border border-green-500/15 rounded text-[10px] font-semibold text-green-600 dark:text-green-400">
                   FY24 Budget: $550K remaining
                 </span>
@@ -600,10 +600,10 @@ export default function Approvals() {
           {/* ── AI Executive Decision Summary ─────────────── */}
           {activeTab === 'pending' && (
             <div className="mb-4 bg-slate-900 dark:bg-black border border-slate-700/60 rounded-xl overflow-hidden">
-              <div className="px-4 py-2.5 border-b border-slate-700/50 flex items-center gap-2">
-                <Sparkles className="w-3.5 h-3.5 text-violet-400" />
+              <div className="px-4 py-2.5 border-b border-slate-700/50 flex items-center gap-2 flex-wrap">
+                <Sparkles className="w-3.5 h-3.5 text-violet-400 flex-shrink-0" />
                 <span className="text-[11px] font-bold text-white uppercase tracking-wider">AI Executive Decision Summary</span>
-                <div className="ml-auto flex items-center gap-4 text-[10px]">
+                <div className="sm:ml-auto flex items-center gap-4 text-[10px] flex-wrap">
                   <div className="flex items-center gap-1.5 text-slate-300">
                     <span className="font-mono font-bold text-white">{decisionsList.length}</span>
                     <span className="text-slate-400">pending</span>
@@ -624,7 +624,7 @@ export default function Approvals() {
               </div>
 
               {/* 4-stat strip */}
-              <div className="grid grid-cols-4 gap-px bg-slate-700/30">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-slate-700/30">
                 {[
                   { label: 'Pending Decisions', value: decisionsList.length, sub: `${urgentCount} need decision today`, color: 'text-white' },
                   { label: 'Total Dollar Value', value: `$${pendingAmount.toLocaleString()}`, sub: 'Across all pending items', color: 'text-green-400' },
@@ -642,14 +642,14 @@ export default function Approvals() {
               {/* Top decisions needing attention */}
               <div className="divide-y divide-slate-700/40">
                 {topDecisions.map((d, i) => (
-                  <div key={d.id} className="flex items-start gap-3 px-4 py-2.5">
+                  <div key={d.id} className="flex flex-col sm:flex-row items-start gap-2 sm:gap-3 px-4 py-2.5">
                     <div className="flex items-center gap-2 flex-shrink-0 mt-0.5">
                       <span className="text-[9px] font-black text-slate-500 w-3">{i + 1}</span>
                       <div className={`text-[11px] font-black font-mono ${getImpactScoreColor(d.decisionImpactScore)}`}>{d.decisionImpactScore}</div>
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-0.5">
-                        <span className="text-[11px] font-semibold text-white">{d.title}</span>
+                    <div className="flex-1 min-w-0 w-full">
+                      <div className="flex items-center gap-2 mb-0.5 flex-wrap">
+                        <span className="text-[11px] font-semibold text-white break-words">{d.title}</span>
                         {d.amount && <span className="text-[10px] font-mono text-green-400">${d.amount.toLocaleString()}</span>}
                         {d.deadlineHrs != null && d.deadlineHrs <= 24 && (
                           <span className="text-[9px] font-bold text-red-400 bg-red-500/10 border border-red-500/20 px-1 py-px rounded">{getDeadlineLabel(d)}</span>
@@ -664,7 +664,7 @@ export default function Approvals() {
                         <p className="text-[9px] text-amber-400 mt-0.5">⚠ {d.aiRecommendation.urgencyNote}</p>
                       )}
                     </div>
-                    <div className="flex gap-1.5 flex-shrink-0">
+                    <div className="flex gap-1.5 flex-shrink-0 self-end sm:self-auto">
                       <button
                         onClick={() => openModal(d, 'approve')}
                         className="px-2 py-1 bg-green-500/15 hover:bg-green-500/25 border border-green-500/20 rounded text-[10px] font-bold text-green-400 transition-colors"
@@ -807,7 +807,7 @@ export default function Approvals() {
                               : 'border-border dark:border-slate-700/30 bg-white dark:bg-zinc-900/15 hover:bg-slate-50 dark:hover:bg-zinc-900/30'
                           }`}
                         >
-                          {/* ── Compact Row ── */}
+                          {/* ── Compact Row: Tier 1 (always-visible essentials) ── */}
                           <div className="flex items-center gap-2.5 px-3.5 py-[9px]">
                             {/* Urgency strip */}
                             <div className={`w-[4px] self-stretch rounded-full flex-shrink-0 ${
@@ -826,7 +826,7 @@ export default function Approvals() {
                             </button>
 
                             {/* Impact Score */}
-                            <div className={`px-1.5 py-px border rounded text-[10px] font-black font-mono flex-shrink-0 leading-tight ${getImpactScoreBg(decision.decisionImpactScore)} ${getImpactScoreColor(decision.decisionImpactScore)}`}>
+                            <div className={`hidden sm:block px-1.5 py-px border rounded text-[10px] font-black font-mono flex-shrink-0 leading-tight ${getImpactScoreBg(decision.decisionImpactScore)} ${getImpactScoreColor(decision.decisionImpactScore)}`}>
                               {decision.decisionImpactScore}
                             </div>
 
@@ -840,9 +840,9 @@ export default function Approvals() {
                               {decision.details}
                             </span>
 
-                            {/* Amount */}
+                            {/* Amount — desktop only on tier 1, shown in tier 2 on mobile */}
                             {decision.amount && (
-                              <span className="text-[11px] font-semibold text-green-600 dark:text-green-400 flex-shrink-0 font-mono">
+                              <span className="hidden sm:inline text-[11px] font-semibold text-green-600 dark:text-green-400 flex-shrink-0 font-mono">
                                 ${decision.amount.toLocaleString()}
                               </span>
                             )}
@@ -853,13 +853,13 @@ export default function Approvals() {
                             </span>
 
                             {/* Age */}
-                            <span className="text-[10px] text-slate-700 flex-shrink-0 font-mono">
+                            <span className="hidden sm:inline text-[10px] text-slate-700 flex-shrink-0 font-mono">
                               {getPendingTime(decision.daysAgo)}
                             </span>
 
                             {/* Deadline */}
                             {deadlineLabel && (
-                              <span className={`px-1.5 py-px border rounded text-[10px] font-bold flex-shrink-0 ${
+                              <span className={`hidden sm:inline px-1.5 py-px border rounded text-[10px] font-bold flex-shrink-0 ${
                                 urgencyState === 'overdue' || urgencyState === 'critical'
                                   ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400'
                                   : 'bg-amber-500/8 border-amber-500/15 text-amber-700 dark:text-amber-400'
@@ -905,6 +905,30 @@ export default function Approvals() {
                             </div>
                           </div>
 
+                          {/* ── Compact Row: Tier 2 (mobile-only secondary meta) ── */}
+                          <div className="flex sm:hidden items-center gap-2 px-3.5 pb-[9px] pl-[34px] flex-wrap">
+                            <div className={`px-1.5 py-px border rounded text-[10px] font-black font-mono leading-tight ${getImpactScoreBg(decision.decisionImpactScore)} ${getImpactScoreColor(decision.decisionImpactScore)}`}>
+                              {decision.decisionImpactScore}
+                            </div>
+                            {decision.amount && (
+                              <span className="text-[11px] font-semibold text-green-600 dark:text-green-400 font-mono">
+                                ${decision.amount.toLocaleString()}
+                              </span>
+                            )}
+                            <span className="text-[10px] text-slate-700 font-mono">
+                              {getPendingTime(decision.daysAgo)}
+                            </span>
+                            {deadlineLabel && (
+                              <span className={`px-1.5 py-px border rounded text-[10px] font-bold ${
+                                urgencyState === 'overdue' || urgencyState === 'critical'
+                                  ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400'
+                                  : 'bg-amber-500/8 border-amber-500/15 text-amber-700 dark:text-amber-400'
+                              }`}>
+                                {deadlineLabel}
+                              </span>
+                            )}
+                          </div>
+
                           {/* ── Expanded: Full Impact Analysis ── */}
                           {isExpanded && (
                             <div className="border-t border-border dark:border-slate-700/30 ml-[22px]">
@@ -916,7 +940,7 @@ export default function Approvals() {
                                     <Sparkles className="w-3.5 h-3.5 text-violet-500 dark:text-violet-400" />
                                   </div>
                                   <div className="flex-1 min-w-0">
-                                    <div className="flex items-center gap-2 mb-1">
+                                    <div className="flex items-center gap-2 mb-1 flex-wrap">
                                       <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">AI Recommendation</span>
                                       <span className={`px-1.5 py-px border rounded text-[10px] font-bold ${
                                         ai.decision === 'approve'

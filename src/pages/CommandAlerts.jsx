@@ -396,7 +396,7 @@ export default function CommandAlerts() {
             <div className="flex items-start justify-between">
               <div>
                 <h2 className="text-xl font-bold text-primary mb-1">Command Notifications Center</h2>
-                <div className="flex items-center gap-2 text-[11px] text-slate-500">
+                <div className="flex items-center flex-wrap gap-x-2 gap-y-1 text-[11px] text-slate-500">
                   <span>{formatDate(currentTime)}</span>
                   <span className="text-slate-700">·</span>
                   <span>{formatTime(currentTime)} EST</span>
@@ -427,10 +427,12 @@ export default function CommandAlerts() {
 
           {/* ── AI Command Attention Required ─────────────── */}
           <div className="mb-4 bg-slate-900 dark:bg-black border border-slate-700/60 rounded-xl overflow-hidden">
-            <div className="px-4 py-2.5 border-b border-slate-700/50 flex items-center gap-2">
-              <Sparkles className="w-3.5 h-3.5 text-violet-400" />
-              <span className="text-[11px] font-bold text-white uppercase tracking-wider">AI Command Attention Required</span>
-              <div className="ml-auto flex items-center gap-2 text-[10px]">
+            <div className="px-4 py-2.5 border-b border-slate-700/50 flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-2">
+              <div className="flex items-center gap-2">
+                <Sparkles className="w-3.5 h-3.5 text-violet-400" />
+                <span className="text-[11px] font-bold text-white uppercase tracking-wider">AI Command Attention Required</span>
+              </div>
+              <div className="sm:ml-auto flex items-center gap-2 text-[10px] flex-wrap">
                 <span className="text-slate-400">{attentionAlerts.length} items needing command decision</span>
                 {worseningCount > 0 && (
                   <span className="flex items-center gap-1 text-red-400">
@@ -509,7 +511,7 @@ export default function CommandAlerts() {
                   }`}
                 >
                   {/* ── Compact Row ── */}
-                  <div className="flex items-center gap-2.5 px-3.5 py-[9px]">
+                  <div className="flex items-center flex-wrap sm:flex-nowrap gap-2.5 px-3.5 py-[9px]">
                     <div className={`w-[4px] self-stretch rounded-full flex-shrink-0 ${sev.strip}`} />
 
                     {/* Impact Score */}
@@ -521,7 +523,7 @@ export default function CommandAlerts() {
                       {sev.label}
                     </span>
 
-                    <span className={`text-[13px] font-bold flex-1 min-w-0 truncate ${isResolved ? 'text-slate-500' : 'text-primary'}`}>
+                    <span className={`text-[13px] font-bold min-w-0 sm:flex-1 basis-full sm:basis-auto order-1 sm:order-none truncate ${isResolved ? 'text-slate-500' : 'text-primary'}`}>
                       {alert.title}
                     </span>
 

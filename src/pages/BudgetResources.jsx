@@ -663,7 +663,7 @@ export default function BudgetResources() {
               </div>
 
               {/* Actions */}
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
                 <select
                   value={timeRange}
                   onChange={(e) => setTimeRange(e.target.value)}
@@ -754,13 +754,13 @@ export default function BudgetResources() {
 
             {/* Recommended Actions */}
             <div className="mb-4 bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none overflow-hidden">
-              <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-100 dark:border-slate-800/60">
-                <div className="flex items-center gap-2.5">
-                  <Zap className="w-4 h-4 text-slate-400 dark:text-slate-500" />
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 px-5 py-3.5 border-b border-slate-100 dark:border-slate-800/60">
+                <div className="flex items-center gap-2.5 min-w-0 flex-wrap">
+                  <Zap className="w-4 h-4 text-slate-400 dark:text-slate-500 flex-shrink-0" />
                   <span className="text-sm font-semibold text-slate-900 dark:text-white">AI Recommended Actions</span>
                   <span className="text-[11px] text-slate-400 dark:text-slate-500 hidden sm:inline">{recommendedActions.length} actions · {fmt(totalActionSavings)} potential</span>
                 </div>
-                <span className={BADGE('amber')}>Action Required</span>
+                <span className={`${BADGE('amber')} self-start sm:self-auto flex-shrink-0`}>Action Required</span>
               </div>
 
               {/* Impact Summary */}
@@ -878,11 +878,11 @@ export default function BudgetResources() {
                   const isExpanded = expandedActionId === action.id;
                   return (
                     <div key={action.id} className={`px-5 py-3 transition-colors ${isApplied ? 'bg-green-50/60 dark:bg-green-500/5' : 'hover:bg-slate-50 dark:hover:bg-zinc-900/10'}`}>
-                      <div className="flex items-start gap-3">
-                        <span className={`text-[11px] font-bold w-4 flex-shrink-0 tabular-nums mt-0.5 ${isApplied ? 'text-green-500 dark:text-green-400' : 'text-slate-400'}`}>
+                      <div className="flex flex-col sm:flex-row items-start gap-3">
+                        <span className={`text-[11px] font-bold w-4 flex-shrink-0 tabular-nums mt-0.5 hidden sm:inline-block ${isApplied ? 'text-green-500 dark:text-green-400' : 'text-slate-400'}`}>
                           {isApplied ? '✓' : idx + 1}
                         </span>
-                        <div className="flex-1 min-w-0">
+                        <div className="flex-1 min-w-0 w-full">
                           <div className="flex items-center gap-2 mb-1 flex-wrap">
                             {isApplied ? (
                               <span className="inline-flex items-center gap-1 px-1.5 py-0.5 bg-green-100 dark:bg-green-500/15 text-green-700 dark:text-green-400 text-[10px] font-bold rounded">

@@ -347,8 +347,8 @@ export default function CommandDashboard() {
                       : 'bg-slate-50 dark:bg-zinc-950/30 border-slate-200 dark:border-slate-700/30'
                   }`}
                 >
-                  <div className="flex items-start gap-4">
-                    <div className="flex flex-col gap-2 items-start flex-shrink-0">
+                  <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-4">
+                    <div className="flex flex-row sm:flex-col gap-2 items-start flex-wrap sm:flex-shrink-0">
                       {isActioned ? (
                         <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded border bg-emerald-100 dark:bg-emerald-500/10 border-emerald-200 dark:border-emerald-500/20 text-emerald-700 dark:text-emerald-400 text-[10px] font-bold uppercase tracking-wide">
                           <CheckCircle className="w-3 h-3" /> Actioned
@@ -367,7 +367,7 @@ export default function CommandDashboard() {
                       )}
                     </div>
 
-                    <div className="flex-1 min-w-0 space-y-1.5">
+                    <div className="flex-1 min-w-0 space-y-1.5 w-full sm:w-auto">
                       <p className={`text-[14px] font-bold leading-5 ${isActioned ? 'text-slate-500 dark:text-slate-400 line-through' : 'text-slate-900 dark:text-slate-100'}`}>
                         Decision required: {action.decision}
                       </p>
@@ -395,7 +395,7 @@ export default function CommandDashboard() {
                     </div>
 
                     {!isActioned && (
-                      <div className="flex items-center gap-2 flex-shrink-0">
+                      <div className="flex items-center gap-2 flex-wrap sm:flex-shrink-0">
                         <button onClick={() => handleCommandAction(action)} className={`px-3 py-1.5 border rounded text-[12px] font-bold transition-all ${getActionBtnClass(action.urgency)}`}>
                           {action.actionLabel}
                         </button>
@@ -685,9 +685,9 @@ export default function CommandDashboard() {
                     item.tier === 'action' ? 'border-l-4 border-l-amber-500' : 'border-l-4 border-l-slate-300 dark:border-l-slate-600'
                   }`}
                 >
-                  <div className="flex items-center gap-4 p-3">
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 p-3">
+                    <div className="flex-1 min-w-0 w-full sm:w-auto">
+                      <div className="flex items-center gap-2 mb-1 flex-wrap">
                         <p className="text-[13px] font-semibold text-slate-900 dark:text-white">{item.type}</p>
                         {badge && <span className={`px-1.5 py-0.5 border rounded text-[10px] font-bold ${badge.classes}`}>{badge.text}</span>}
                         <span className="text-[10px] text-slate-500">{getTimePending(item.timePendingMinutes)} ago</span>
@@ -700,7 +700,7 @@ export default function CommandDashboard() {
                         {item.impact && <><span className="text-slate-400">·</span><span className={item.tier === 'critical' ? 'text-red-700 dark:text-red-400' : item.tier === 'action' ? 'text-amber-700 dark:text-amber-400' : 'text-slate-500'}>{item.impact}</span></>}
                       </div>
                     </div>
-                    <div className="flex items-center gap-2 flex-shrink-0">
+                    <div className="flex items-center gap-2 flex-wrap sm:flex-shrink-0">
                       <button onClick={(e) => openApprovalModal(item, 'approve', e)} className="px-3 py-1.5 text-[12px] font-semibold bg-blue-600 text-white hover:bg-blue-700 rounded-lg transition-colors">
                         Approve
                       </button>

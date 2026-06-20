@@ -269,7 +269,7 @@ export default function DailyCommandBrief() {
           </div>
 
           {/* ── Executive Priority Scorecard ───────────────── */}
-          <div className="grid grid-cols-5 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
             {scorecard.map((s) => {
               const Icon = s.icon;
               return (
@@ -360,7 +360,7 @@ export default function DailyCommandBrief() {
                     <div className="p-3.5 cursor-pointer hover:bg-slate-50 dark:hover:bg-zinc-900/20 transition-colors rounded-xl" onClick={() => setExpandedDecision(isExpanded ? null : item.id)}>
                       <div className="flex items-start gap-3 mb-2">
                         <div className={`w-1 self-stretch rounded-full flex-shrink-0 mt-0.5 ${item.severity === 'critical' ? 'bg-red-500' : 'bg-amber-500'}`} />
-                        <p className="text-[13px] font-semibold text-primary flex-1">{item.title}</p>
+                        <p className="text-[13px] font-semibold text-primary flex-1 min-w-0">{item.title}</p>
                         <span className={`text-[10px] px-1.5 py-0.5 border rounded font-semibold flex-shrink-0 ${getStatusBadge(item.status)}`}>{item.status.toUpperCase()}</span>
                         {isExpanded ? <ChevronUp className="w-4 h-4 text-slate-500 flex-shrink-0" /> : <ChevronDown className="w-4 h-4 text-slate-500 flex-shrink-0" />}
                       </div>
@@ -382,8 +382,8 @@ export default function DailyCommandBrief() {
 
                     {isExpanded && (
                       <div className="px-5 pb-3.5 pt-2 border-t border-border dark:border-slate-700/20">
-                        <div className="flex items-start gap-8">
-                          <div className="flex-1">
+                        <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-8">
+                          <div className="flex-1 min-w-0 w-full sm:w-auto">
                             <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest mb-1.5">Event Timeline</p>
                             <div className="space-y-1">
                               {item.timeline.map((entry, idx) => (
@@ -412,7 +412,7 @@ export default function DailyCommandBrief() {
               <Target className="w-4 h-4 text-secondary" />
               <span className="text-[13px] font-semibold text-primary uppercase tracking-wide">Upcoming Strategic Deadlines</span>
             </div>
-            <div className="grid grid-cols-4 divide-x divide-border dark:divide-slate-700/30">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 divide-x-0 sm:divide-x divide-border dark:divide-slate-700/30">
               {Object.entries(strategicDeadlines).map(([horizon, items]) => (
                 <div key={horizon} className="p-4">
                   <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">{horizon}</p>
