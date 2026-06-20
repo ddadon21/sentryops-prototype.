@@ -11,3 +11,6 @@ export { default as OperationalQueueCard } from './OperationalQueueCard';
 export { default as ExecutiveIntelligence } from './ExecutiveIntelligence';
 export { default as QuickActions } from './QuickActions';
 export { default as SupportingMetricCard } from './SupportingMetricCard';
+export { default as StatusPill } from './StatusPill';
+export { default as SectionHeader } from './SectionHeader';
+export { default as JobCard } from './JobCard';

@@ -49,6 +49,7 @@ import ActiveCasesDashboard from './pages/investigations/ActiveCasesDashboard';
 import HRDashboard from './pages/HRDashboard';
 import ApplicantTracking from './pages/ApplicantTracking';
 import JobPostings from './pages/JobPostings';
+import JobWorkspace from './pages/JobWorkspace';
 import HiringPipeline from './pages/HiringPipeline';
 import NewHireOnboarding from './pages/NewHireOnboarding';
 import EmployeeRecords from './pages/EmployeeRecords';
@@ -131,6 +132,7 @@ function App() {
         {/* HR Module (standalone, no layout wrapper - each page has its own sidebar) */}
         <Route path="/hr/dashboard" element={<HRDashboard />} />
         <Route path="/hr/jobs" element={<JobPostings />} />
+        <Route path="/hr/jobs/:jobId" element={<JobWorkspace />} />
         <Route path="/hr/applicants" element={<ApplicantTracking />} />
         <Route path="/hr/pipeline" element={<HiringPipeline />} />
         <Route path="/hr/onboarding" element={<NewHireOnboarding />} />
