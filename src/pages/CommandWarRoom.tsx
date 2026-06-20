@@ -239,14 +239,14 @@ function LiveOpsMap({ beats: bs }: { beats: PatrolBeat[] }) {
 
   return (
     <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden flex flex-col">
-      <div className="flex items-center justify-between px-5 py-3 border-b border-border dark:border-slate-700/20">
-        <div className="flex items-center gap-2">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 px-5 py-3 border-b border-border dark:border-slate-700/20">
+        <div className="flex items-center gap-2 flex-wrap">
           <Layers className="w-4 h-4 text-secondary" />
           <span className="text-[13px] font-semibold text-primary">Live Operations Map</span>
           <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-red-500/15 text-red-700 dark:text-red-400 border border-red-500/20">1 Uncovered</span>
           <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/20">2 Thin</span>
         </div>
-        <div className="flex items-center gap-3 text-[9px] text-slate-500">
+        <div className="flex items-center gap-3 text-[9px] text-slate-500 flex-wrap">
           <span className="flex items-center gap-1"><span className="w-2 h-2 rounded bg-emerald-500/20 border border-emerald-500/40 inline-block" />Covered</span>
           <span className="flex items-center gap-1"><span className="w-2 h-2 rounded bg-amber-500/15 border border-amber-500/40 inline-block" />Thin</span>
           <span className="flex items-center gap-1"><span className="w-2 h-2 rounded bg-red-500/25 border border-red-500/55 inline-block" />Uncovered</span>
@@ -459,10 +459,10 @@ export default function CommandWarRoom() {
       <div className="p-5 space-y-4">
 
         {/* ── Page Header ────────────────────────────────── */}
-        <div className="flex items-start justify-between gap-4">
-          <div>
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-4">
+          <div className="min-w-0">
             <h1 className="text-xl font-bold text-primary mb-0.5">Command War Room</h1>
-            <p className="text-[11px] text-slate-500">Full-agency readiness cockpit · Gwinnett County Sheriff's Office</p>
+            <p className="text-[11px] text-slate-500 break-words">Full-agency readiness cockpit · Gwinnett County Sheriff's Office</p>
           </div>
         </div>
 
@@ -487,12 +487,12 @@ export default function CommandWarRoom() {
 
           {/* Enhanced Patrol Beat Coverage */}
           <div className="lg:col-span-5 bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden">
-            <div className="flex items-center justify-between px-5 py-3 border-b border-border dark:border-slate-700/20">
-              <div className="flex items-center gap-2">
-                <Radio className="w-4 h-4 text-secondary" />
+            <div className="flex items-center justify-between gap-2 px-5 py-3 border-b border-border dark:border-slate-700/20">
+              <div className="flex items-center gap-2 min-w-0">
+                <Radio className="w-4 h-4 text-secondary flex-shrink-0" />
                 <span className="text-[13px] font-semibold text-primary">Patrol Beat Coverage</span>
               </div>
-              <button onClick={() => navigate('/patrol/cad')} className="flex items-center gap-1 text-[11px] text-slate-500 hover:text-secondary transition-colors">
+              <button onClick={() => navigate('/patrol/cad')} className="flex items-center gap-1 text-[11px] text-slate-500 hover:text-secondary transition-colors flex-shrink-0">
                 CAD <ChevronRight className="w-3.5 h-3.5" />
               </button>
             </div>
@@ -579,50 +579,54 @@ export default function CommandWarRoom() {
             </div>
 
             {/* Table header */}
-            <div className="grid grid-cols-12 px-5 py-1.5 border-b border-border text-[10px] text-slate-500 uppercase tracking-wide">
-              <span className="col-span-4">Division</span>
-              <span className="col-span-2 text-center">Auth/Filled</span>
-              <span className="col-span-2 text-center">On-Duty</span>
-              <span className="col-span-1 text-center">Vac</span>
-              <span className="col-span-1 text-center">Cert↑</span>
-              <span className="col-span-2 text-right">Status</span>
-            </div>
+            <div className="overflow-x-auto">
+              <div className="min-w-[480px]">
+                <div className="grid grid-cols-12 px-5 py-1.5 border-b border-border text-[10px] text-slate-500 uppercase tracking-wide">
+                  <span className="col-span-4">Division</span>
+                  <span className="col-span-2 text-center">Auth/Filled</span>
+                  <span className="col-span-2 text-center">On-Duty</span>
+                  <span className="col-span-1 text-center">Vac</span>
+                  <span className="col-span-1 text-center">Cert↑</span>
+                  <span className="col-span-2 text-right">Status</span>
+                </div>
 
-            <div className="divide-y divide-slate-700/10 overflow-y-auto max-h-[calc(100%-6rem)]">
-              {divisions.map((div) => {
-                const colors = getDivisionColors(div.status);
-                const pct = Math.round((div.onDuty / div.filled) * 100);
-                return (
-                  <div key={div.name} className="grid grid-cols-12 items-center px-5 py-2 hover:bg-slate-50 dark:hover:bg-zinc-800/10 transition-colors">
-                    <div className="col-span-4">
-                      <p className="text-[12px] font-medium text-slate-900 dark:text-slate-200 leading-tight">{div.name}</p>
-                      <p className="text-[10px] text-slate-500">{div.bureau}{div.actingSupervisor && <span className="ml-1 text-amber-700 dark:text-amber-400">⚡ Acting</span>}</p>
-                    </div>
-                    <div className="col-span-2 text-center">
-                      <span className="text-[11.5px] text-secondary">{div.authorized}/{div.filled}</span>
-                    </div>
-                    <div className="col-span-2 text-center">
-                      <div className="flex flex-col items-center gap-0.5">
-                        <span className="text-[11.5px] text-secondary">{div.onDuty}</span>
-                        <div className="w-12 h-1 bg-slate-200 dark:bg-zinc-800/50 rounded-full overflow-hidden">
-                          <div className={`h-full rounded-full ${pct >= 70 ? 'bg-emerald-500' : pct >= 55 ? 'bg-amber-400' : 'bg-red-500'}`} style={{ width: `${pct}%` }} />
+                <div className="divide-y divide-slate-700/10 overflow-y-auto max-h-[calc(100%-6rem)]">
+                  {divisions.map((div) => {
+                    const colors = getDivisionColors(div.status);
+                    const pct = Math.round((div.onDuty / div.filled) * 100);
+                    return (
+                      <div key={div.name} className="grid grid-cols-12 items-center px-5 py-2 hover:bg-slate-50 dark:hover:bg-zinc-800/10 transition-colors">
+                        <div className="col-span-4">
+                          <p className="text-[12px] font-medium text-slate-900 dark:text-slate-200 leading-tight">{div.name}</p>
+                          <p className="text-[10px] text-slate-500">{div.bureau}{div.actingSupervisor && <span className="ml-1 text-amber-700 dark:text-amber-400">⚡ Acting</span>}</p>
+                        </div>
+                        <div className="col-span-2 text-center">
+                          <span className="text-[11.5px] text-secondary">{div.authorized}/{div.filled}</span>
+                        </div>
+                        <div className="col-span-2 text-center">
+                          <div className="flex flex-col items-center gap-0.5">
+                            <span className="text-[11.5px] text-secondary">{div.onDuty}</span>
+                            <div className="w-12 h-1 bg-slate-200 dark:bg-zinc-800/50 rounded-full overflow-hidden">
+                              <div className={`h-full rounded-full ${pct >= 70 ? 'bg-emerald-500' : pct >= 55 ? 'bg-amber-400' : 'bg-red-500'}`} style={{ width: `${pct}%` }} />
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-span-1 text-center">
+                          <span className={`text-[11.5px] ${div.vacancies > 4 ? 'text-amber-700 dark:text-amber-400' : 'text-slate-500'}`}>{div.vacancies}</span>
+                        </div>
+                        <div className="col-span-1 text-center">
+                          <span className={`text-[11.5px] ${div.certRisk > 3 ? 'text-red-700 dark:text-red-400' : div.certRisk > 1 ? 'text-amber-700 dark:text-amber-400' : 'text-slate-500'}`}>
+                            {div.certRisk > 0 ? div.certRisk : '—'}
+                          </span>
+                        </div>
+                        <div className="col-span-2 text-right">
+                          <span className={`text-[10px] px-2 py-0.5 rounded-full ${colors.badge}`}>{div.status}</span>
                         </div>
                       </div>
-                    </div>
-                    <div className="col-span-1 text-center">
-                      <span className={`text-[11.5px] ${div.vacancies > 4 ? 'text-amber-700 dark:text-amber-400' : 'text-slate-500'}`}>{div.vacancies}</span>
-                    </div>
-                    <div className="col-span-1 text-center">
-                      <span className={`text-[11.5px] ${div.certRisk > 3 ? 'text-red-700 dark:text-red-400' : div.certRisk > 1 ? 'text-amber-700 dark:text-amber-400' : 'text-slate-500'}`}>
-                        {div.certRisk > 0 ? div.certRisk : '—'}
-                      </span>
-                    </div>
-                    <div className="col-span-2 text-right">
-                      <span className={`text-[10px] px-2 py-0.5 rounded-full ${colors.badge}`}>{div.status}</span>
-                    </div>
-                  </div>
-                );
-              })}
+                    );
+                  })}
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -632,13 +636,13 @@ export default function CommandWarRoom() {
 
           {/* Certification Risk */}
           <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden">
-            <div className="flex items-center justify-between px-5 py-3 border-b border-border dark:border-slate-700/20">
-              <div className="flex items-center gap-2">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 px-5 py-3 border-b border-border dark:border-slate-700/20">
+              <div className="flex items-center gap-2 flex-wrap">
                 <Award className="w-4 h-4 text-secondary" />
                 <span className="text-[13px] font-semibold text-primary">Certification Risk</span>
                 <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-red-500/15 text-red-700 dark:text-red-400 border border-red-500/20">2 Critical</span>
               </div>
-              <button onClick={() => navigate('/hr/training')} className="flex items-center gap-1 text-[11px] text-slate-500 hover:text-secondary transition-colors">
+              <button onClick={() => navigate('/hr/training')} className="flex items-center gap-1 text-[11px] text-slate-500 hover:text-secondary transition-colors self-start sm:self-auto">
                 Training <ChevronRight className="w-3.5 h-3.5" />
               </button>
             </div>
@@ -661,15 +665,15 @@ export default function CommandWarRoom() {
 
           {/* Active Deployments */}
           <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden">
-            <div className="flex items-center justify-between px-5 py-3 border-b border-border dark:border-slate-700/20">
-              <div className="flex items-center gap-2">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 px-5 py-3 border-b border-border dark:border-slate-700/20">
+              <div className="flex items-center gap-2 flex-wrap">
                 <Target className="w-4 h-4 text-secondary" />
                 <span className="text-[13px] font-semibold text-primary">Active Deployments</span>
                 <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-slate-100 dark:bg-zinc-800/30 text-secondary border border-border">
                   {deployments.reduce((s, d) => s + d.personnel, 0)} dep.
                 </span>
               </div>
-              <button onClick={() => navigate('/command/personnel')} className="flex items-center gap-1 text-[11px] text-slate-500 hover:text-secondary transition-colors">
+              <button onClick={() => navigate('/command/personnel')} className="flex items-center gap-1 text-[11px] text-slate-500 hover:text-secondary transition-colors self-start sm:self-auto">
                 Staffing <ChevronRight className="w-3.5 h-3.5" />
               </button>
             </div>
@@ -691,15 +695,15 @@ export default function CommandWarRoom() {
 
           {/* Command Alert Feed */}
           <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden">
-            <div className="flex items-center justify-between px-5 py-3 border-b border-border dark:border-slate-700/20">
-              <div className="flex items-center gap-2">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 px-5 py-3 border-b border-border dark:border-slate-700/20">
+              <div className="flex items-center gap-2 flex-wrap">
                 <AlertTriangle className="w-4 h-4 text-secondary" />
                 <span className="text-[13px] font-semibold text-primary">Command Alerts</span>
                 <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-red-500/15 text-red-700 dark:text-red-400 border border-red-500/20">
                   {commandSnapshot.criticalAlerts} Critical
                 </span>
               </div>
-              <button onClick={() => navigate('/command/alerts')} className="flex items-center gap-1 text-[11px] text-slate-500 hover:text-secondary transition-colors">
+              <button onClick={() => navigate('/command/alerts')} className="flex items-center gap-1 text-[11px] text-slate-500 hover:text-secondary transition-colors self-start sm:self-auto">
                 All <ChevronRight className="w-3.5 h-3.5" />
               </button>
             </div>

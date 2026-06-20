@@ -797,14 +797,14 @@ export default function SettingsPage() {
                       { key: 'complianceAlerts', title: 'Sync Delays', desc: 'Alert when integration sync exceeds expected response window' },
                       { key: 'budgetAlerts', title: 'Critical System Events', desc: 'Service outages, certificate expiry, and threshold breaches' },
                     ].map((item, idx, arr) => (
-                      <div key={item.key} className={`flex items-center justify-between py-3 ${idx < arr.length - 1 ? 'border-b border-border dark:border-slate-700/20' : ''}`}>
-                        <div className="flex-1">
-                          <h4 className="text-sm font-medium text-primary">{item.title}</h4>
-                          <p className="text-xs text-muted mt-1">{item.desc}</p>
+                      <div key={item.key} className={`flex items-center justify-between gap-4 py-3 ${idx < arr.length - 1 ? 'border-b border-border dark:border-slate-700/20' : ''}`}>
+                        <div className="min-w-0 flex-1">
+                          <h4 className="text-sm font-medium text-primary break-words">{item.title}</h4>
+                          <p className="text-xs text-muted mt-1 break-words">{item.desc}</p>
                         </div>
                         <button
                           onClick={() => setNotificationSettings({...notificationSettings, [item.key]: !notificationSettings[item.key]})}
-                          className={`relative w-12 h-6 rounded-full transition-colors ${notificationSettings[item.key] ? 'bg-green-500' : 'bg-slate-600'}`}
+                          className={`relative w-12 h-6 rounded-full transition-colors flex-shrink-0 ${notificationSettings[item.key] ? 'bg-green-500' : 'bg-slate-600'}`}
                         >
                           <div className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform ${notificationSettings[item.key] ? 'translate-x-6' : 'translate-x-0'}`}></div>
                         </button>
@@ -887,18 +887,18 @@ export default function SettingsPage() {
               {activeSection === 'security' && (
                 <div className="space-y-6">
                   <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
-                    <div className="flex items-center justify-between mb-1">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-1">
                       <h3 className="text-sm font-semibold text-primary">Authentication & Access</h3>
-                      <span className="text-[10px] text-slate-500">Last updated: Dec 9, 2025 11:42 AM</span>
+                      <span className="text-[10px] text-slate-500 flex-shrink-0">Last updated: Dec 9, 2025 11:42 AM</span>
                     </div>
                     <p className="text-xs text-slate-500 mb-6">Multi-factor authentication, session management, and access controls.</p>
                     <div className="space-y-6">
-                      <div className="flex items-center justify-between py-3 border-b border-border dark:border-slate-700/30">
-                        <div className="flex-1">
-                          <h4 className="text-sm font-medium text-primary">Two-Factor Authentication</h4>
-                          <p className="text-xs text-muted mt-1">Require 2FA for account access</p>
+                      <div className="flex items-center justify-between gap-4 py-3 border-b border-border dark:border-slate-700/30">
+                        <div className="min-w-0 flex-1">
+                          <h4 className="text-sm font-medium text-primary break-words">Two-Factor Authentication</h4>
+                          <p className="text-xs text-muted mt-1 break-words">Require 2FA for account access</p>
                         </div>
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-3 flex-shrink-0">
                           <span className="text-xs font-medium text-green-400">Enabled</span>
                           <button
                             onClick={() => setSecuritySettings({...securitySettings, twoFactorAuth: !securitySettings.twoFactorAuth})}
@@ -922,14 +922,14 @@ export default function SettingsPage() {
                           <option value="480">8 hours</option>
                         </select>
                       </div>
-                      <div className="flex items-center justify-between py-3 border-b border-border dark:border-slate-700/30">
-                        <div className="flex-1">
-                          <h4 className="text-sm font-medium text-primary">Login Notifications</h4>
-                          <p className="text-xs text-muted mt-1">Notify on new device login</p>
+                      <div className="flex items-center justify-between gap-4 py-3 border-b border-border dark:border-slate-700/30">
+                        <div className="min-w-0 flex-1">
+                          <h4 className="text-sm font-medium text-primary break-words">Login Notifications</h4>
+                          <p className="text-xs text-muted mt-1 break-words">Notify on new device login</p>
                         </div>
                         <button
                           onClick={() => setSecuritySettings({...securitySettings, loginNotifications: !securitySettings.loginNotifications})}
-                          className={`relative w-12 h-6 rounded-full transition-colors ${securitySettings.loginNotifications ? 'bg-green-500' : 'bg-slate-600'}`}
+                          className={`relative w-12 h-6 rounded-full transition-colors flex-shrink-0 ${securitySettings.loginNotifications ? 'bg-green-500' : 'bg-slate-600'}`}
                         >
                           <div className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform ${securitySettings.loginNotifications ? 'translate-x-6' : 'translate-x-0'}`}></div>
                         </button>
@@ -948,24 +948,24 @@ export default function SettingsPage() {
                           <option value="never">Never</option>
                         </select>
                       </div>
-                      <div className="flex items-center justify-between py-3 border-b border-border dark:border-slate-700/30">
-                        <div className="flex-1">
-                          <h4 className="text-sm font-medium text-primary">IP Whitelist</h4>
-                          <p className="text-xs text-muted mt-1">Restrict access to approved IPs</p>
+                      <div className="flex items-center justify-between gap-4 py-3 border-b border-border dark:border-slate-700/30">
+                        <div className="min-w-0 flex-1">
+                          <h4 className="text-sm font-medium text-primary break-words">IP Whitelist</h4>
+                          <p className="text-xs text-muted mt-1 break-words">Restrict access to approved IPs</p>
                         </div>
                         <button
                           onClick={() => setSecuritySettings({...securitySettings, ipWhitelist: !securitySettings.ipWhitelist})}
-                          className={`relative w-12 h-6 rounded-full transition-colors ${securitySettings.ipWhitelist ? 'bg-green-500' : 'bg-slate-600'}`}
+                          className={`relative w-12 h-6 rounded-full transition-colors flex-shrink-0 ${securitySettings.ipWhitelist ? 'bg-green-500' : 'bg-slate-600'}`}
                         >
                           <div className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform ${securitySettings.ipWhitelist ? 'translate-x-6' : 'translate-x-0'}`}></div>
                         </button>
                       </div>
-                      <div className="flex items-center justify-between py-3 border-b border-border dark:border-slate-700/30">
-                        <div className="flex-1">
-                          <h4 className="text-sm font-medium text-primary">Audit Logging</h4>
-                          <p className="text-xs text-muted mt-1">Track all user actions</p>
+                      <div className="flex items-center justify-between gap-4 py-3 border-b border-border dark:border-slate-700/30">
+                        <div className="min-w-0 flex-1">
+                          <h4 className="text-sm font-medium text-primary break-words">Audit Logging</h4>
+                          <p className="text-xs text-muted mt-1 break-words">Track all user actions</p>
                         </div>
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-3 flex-shrink-0">
                           <span className="text-xs font-medium text-green-400">Required</span>
                           <button
                             disabled
@@ -975,12 +975,12 @@ export default function SettingsPage() {
                           </button>
                         </div>
                       </div>
-                      <div className="flex items-center justify-between py-3">
-                        <div className="flex-1">
-                          <h4 className="text-sm font-medium text-primary">SSO Integration</h4>
-                          <p className="text-xs text-muted mt-1">Single Sign-On with County AD</p>
+                      <div className="flex items-center justify-between gap-4 py-3">
+                        <div className="min-w-0 flex-1">
+                          <h4 className="text-sm font-medium text-primary break-words">SSO Integration</h4>
+                          <p className="text-xs text-muted mt-1 break-words">Single Sign-On with County AD</p>
                         </div>
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-3 flex-shrink-0">
                           <span className="text-xs font-medium text-green-400">Active</span>
                           <button
                             onClick={() => setSecuritySettings({...securitySettings, ssoEnabled: !securitySettings.ssoEnabled})}
@@ -996,29 +996,29 @@ export default function SettingsPage() {
                   <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
                     <h3 className="text-sm font-semibold text-primary mb-6">Active Sessions</h3>
                     <div className="space-y-3">
-                      <div className="flex items-center gap-4 p-4 bg-slate-50 dark:bg-zinc-900/30 border border-border dark:border-slate-700/30 rounded-xl">
-                        <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center">
+                      <div className="flex items-center flex-wrap gap-4 p-4 bg-slate-50 dark:bg-zinc-900/30 border border-border dark:border-slate-700/30 rounded-xl">
+                        <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
                           <Monitor className="w-5 h-5 text-green-400" />
                         </div>
-                        <div className="flex-1">
-                          <p className="text-sm font-medium text-primary">Chrome on Windows • Current Session</p>
-                          <p className="text-xs text-muted">Gwinnett County Sheriff HQ • 172.16.45.102</p>
+                        <div className="min-w-0 flex-1">
+                          <p className="text-sm font-medium text-primary break-words">Chrome on Windows • Current Session</p>
+                          <p className="text-xs text-muted break-words">Gwinnett County Sheriff HQ • 172.16.45.102</p>
                           <p className="text-xs text-slate-500 mt-1">Last active: Just now</p>
                         </div>
-                        <div className="px-3 py-1.5 bg-green-500/20 border border-green-500/30 rounded-lg">
+                        <div className="px-3 py-1.5 bg-green-500/20 border border-green-500/30 rounded-lg flex-shrink-0">
                           <span className="text-xs font-medium text-green-400">Active</span>
                         </div>
                       </div>
-                      <div className="flex items-center gap-4 p-4 bg-slate-50 dark:bg-zinc-900/30 border border-border dark:border-slate-700/30 rounded-xl">
-                        <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center">
+                      <div className="flex items-center flex-wrap gap-4 p-4 bg-slate-50 dark:bg-zinc-900/30 border border-border dark:border-slate-700/30 rounded-xl">
+                        <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
                           <Smartphone className="w-5 h-5 text-blue-400" />
                         </div>
-                        <div className="flex-1">
-                          <p className="text-sm font-medium text-primary">Mobile App • iPhone 14 Pro</p>
-                          <p className="text-xs text-muted">Patrol Unit 203 • Mobile Network</p>
+                        <div className="min-w-0 flex-1">
+                          <p className="text-sm font-medium text-primary break-words">Mobile App • iPhone 14 Pro</p>
+                          <p className="text-xs text-muted break-words">Patrol Unit 203 • Mobile Network</p>
                           <p className="text-xs text-slate-500 mt-1">Last active: 45 min ago</p>
                         </div>
-                        <button className="px-3 py-1.5 bg-red-500/20 border border-red-500/30 text-red-400 rounded-lg text-xs font-medium hover:bg-red-500/30 transition-all">
+                        <button className="px-3 py-1.5 bg-red-500/20 border border-red-500/30 text-red-400 rounded-lg text-xs font-medium hover:bg-red-500/30 transition-all flex-shrink-0">
                           Revoke
                         </button>
                       </div>
@@ -1064,9 +1064,9 @@ export default function SettingsPage() {
               {/* Integrations Settings */}
               {activeSection === 'integrations' && (
                 <div className="space-y-6">
-                  <div className="flex items-center justify-between mb-1">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-1">
                     <h3 className="text-sm font-semibold text-primary">System Integrations</h3>
-                    <span className="text-[10px] text-slate-500">Last updated: Dec 11, 2025 09:01 AM</span>
+                    <span className="text-[10px] text-slate-500 flex-shrink-0">Last updated: Dec 11, 2025 09:01 AM</span>
                   </div>
                   {Object.entries(integrations).map(([key, integration]) => {
                     const Icon = getIntegrationIcon(integration.type);
@@ -1078,21 +1078,21 @@ export default function SettingsPage() {
                           className="p-6 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-50 dark:hover:bg-zinc-900/20 transition-colors"
                         >
                           <div className="flex items-center gap-4">
-                            <div className={`w-12 h-12 ${getStatusBg(integration.status)} border ${getStatusBorder(integration.status)} rounded-xl flex items-center justify-center`}>
+                            <div className={`w-12 h-12 ${getStatusBg(integration.status)} border ${getStatusBorder(integration.status)} rounded-xl flex items-center justify-center flex-shrink-0`}>
                               <Icon className={`w-6 h-6 ${getStatusColor(integration.status)}`} />
                             </div>
                             <div className="flex-1 min-w-0">
-                              <div className="flex items-center gap-3 mb-1">
-                                <h4 className="text-base font-semibold text-primary">{integration.name}</h4>
-                                <div className={`flex items-center gap-1.5 px-2 py-1 ${getStatusBg(integration.status)} border ${getStatusBorder(integration.status)} rounded-md`}>
+                              <div className="flex items-center flex-wrap gap-2 sm:gap-3 mb-1">
+                                <h4 className="text-base font-semibold text-primary break-words">{integration.name}</h4>
+                                <div className={`flex items-center gap-1.5 px-2 py-1 ${getStatusBg(integration.status)} border ${getStatusBorder(integration.status)} rounded-md flex-shrink-0`}>
                                   <div className={`w-1.5 h-1.5 ${integration.status === 'connected' ? 'bg-green-400' : 'bg-red-400'} rounded-full`}></div>
                                   <span className={`text-xs font-medium ${getStatusColor(integration.status)}`}>
                                     {integration.status === 'connected' ? 'Connected' : 'Disconnected'}
                                   </span>
                                 </div>
-                                <span className="text-xs text-muted">{integration.version}</span>
+                                <span className="text-xs text-muted flex-shrink-0">{integration.version}</span>
                               </div>
-                              <div className="flex items-center gap-4 text-xs text-muted">
+                              <div className="flex items-center flex-wrap gap-x-4 gap-y-1 text-xs text-muted">
                                 <span className="flex items-center gap-1">
                                   <Activity className="w-3 h-3" />
                                   {integration.uptime}% uptime
@@ -1107,7 +1107,7 @@ export default function SettingsPage() {
                                 </span>
                               </div>
                             </div>
-                            <button className="p-2 hover:bg-slate-200 dark:hover:bg-zinc-800/40 rounded-lg transition-colors">
+                            <button className="p-2 hover:bg-slate-200 dark:hover:bg-zinc-800/40 rounded-lg transition-colors flex-shrink-0">
                               {isExpanded ? <ChevronUp className="w-5 h-5 text-muted" /> : <ChevronDown className="w-5 h-5 text-muted" />}
                             </button>
                           </div>
@@ -1366,75 +1366,75 @@ export default function SettingsPage() {
               {activeSection === 'data' && (
                 <div className="space-y-6">
                   <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
-                    <div className="flex items-center justify-between mb-1">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-1">
                       <h3 className="text-sm font-semibold text-primary">Data Export</h3>
-                      <span className="text-[10px] text-slate-500">Last updated: Dec 11, 2025 02:00 AM</span>
+                      <span className="text-[10px] text-slate-500 flex-shrink-0">Last updated: Dec 11, 2025 02:00 AM</span>
                     </div>
                     <p className="text-xs text-slate-500 mb-6">Export personnel records, reports, integration logs, and audit trails.</p>
                     <div className="space-y-6">
                       <div className="p-4 bg-slate-50 dark:bg-zinc-900/30 border border-border dark:border-slate-700/30 rounded-xl">
-                        <div className="flex items-center justify-between mb-3">
-                          <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3">
+                          <div className="flex items-center gap-3 min-w-0">
+                            <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
                               <Database className="w-5 h-5 text-blue-400" />
                             </div>
-                            <div>
+                            <div className="min-w-0">
                               <h4 className="text-sm font-medium text-primary">Personnel Records</h4>
                               <p className="text-xs text-muted">Export all personnel data</p>
                             </div>
                           </div>
-                          <button className="flex items-center gap-2 px-4 py-2 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded-xl text-sm font-medium hover:bg-blue-500/30 transition-all">
+                          <button className="flex items-center gap-2 px-4 py-2 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded-xl text-sm font-medium hover:bg-blue-500/30 transition-all flex-shrink-0 self-start sm:self-auto">
                             <Download className="w-4 h-4" />
                             Export CSV
                           </button>
                         </div>
                       </div>
                       <div className="p-4 bg-slate-50 dark:bg-zinc-900/30 border border-border dark:border-slate-700/30 rounded-xl">
-                        <div className="flex items-center justify-between mb-3">
-                          <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3">
+                          <div className="flex items-center gap-3 min-w-0">
+                            <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
                               <FileText className="w-5 h-5 text-green-400" />
                             </div>
-                            <div>
+                            <div className="min-w-0">
                               <h4 className="text-sm font-medium text-primary">Reports & Analytics</h4>
                               <p className="text-xs text-muted">Export all generated reports</p>
                             </div>
                           </div>
-                          <button className="flex items-center gap-2 px-4 py-2 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded-xl text-sm font-medium hover:bg-blue-500/30 transition-all">
+                          <button className="flex items-center gap-2 px-4 py-2 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded-xl text-sm font-medium hover:bg-blue-500/30 transition-all flex-shrink-0 self-start sm:self-auto">
                             <Download className="w-4 h-4" />
                             Export PDF
                           </button>
                         </div>
                       </div>
                       <div className="p-4 bg-slate-50 dark:bg-zinc-900/30 border border-border dark:border-slate-700/30 rounded-xl">
-                        <div className="flex items-center justify-between mb-3">
-                          <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 bg-purple-500/20 rounded-xl flex items-center justify-center">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3">
+                          <div className="flex items-center gap-3 min-w-0">
+                            <div className="w-10 h-10 bg-purple-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
                               <FileJson className="w-5 h-5 text-purple-400" />
                             </div>
-                            <div>
+                            <div className="min-w-0">
                               <h4 className="text-sm font-medium text-primary">Integration Logs</h4>
                               <p className="text-xs text-muted">Export API sync logs</p>
                             </div>
                           </div>
-                          <button className="flex items-center gap-2 px-4 py-2 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded-xl text-sm font-medium hover:bg-blue-500/30 transition-all">
+                          <button className="flex items-center gap-2 px-4 py-2 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded-xl text-sm font-medium hover:bg-blue-500/30 transition-all flex-shrink-0 self-start sm:self-auto">
                             <Download className="w-4 h-4" />
                             Export JSON
                           </button>
                         </div>
                       </div>
                       <div className="p-4 bg-slate-50 dark:bg-zinc-900/30 border border-border dark:border-slate-700/30 rounded-xl">
-                        <div className="flex items-center justify-between mb-3">
-                          <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 bg-amber-500/20 rounded-xl flex items-center justify-center">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3">
+                          <div className="flex items-center gap-3 min-w-0">
+                            <div className="w-10 h-10 bg-amber-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
                               <Shield className="w-5 h-5 text-amber-700" />
                             </div>
-                            <div>
+                            <div className="min-w-0">
                               <h4 className="text-sm font-medium text-primary">Audit Trail</h4>
                               <p className="text-xs text-muted">Export security audit logs</p>
                             </div>
                           </div>
-                          <button className="flex items-center gap-2 px-4 py-2 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded-xl text-sm font-medium hover:bg-blue-500/30 transition-all">
+                          <button className="flex items-center gap-2 px-4 py-2 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded-xl text-sm font-medium hover:bg-blue-500/30 transition-all flex-shrink-0 self-start sm:self-auto">
                             <Download className="w-4 h-4" />
                             Export CSV
                           </button>
@@ -1447,17 +1447,17 @@ export default function SettingsPage() {
                     <h3 className="text-sm font-semibold text-primary mb-6">Backup & Restore</h3>
                     <div className="space-y-6">
                       <div className="p-4 bg-slate-50 dark:bg-zinc-900/30 border border-border dark:border-slate-700/30 rounded-xl">
-                        <div className="flex items-center justify-between mb-3">
-                          <div>
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3">
+                          <div className="min-w-0">
                             <h4 className="text-sm font-medium text-primary mb-1">Last Backup</h4>
                             <p className="text-xs text-muted">December 11, 2025 at 2:00 AM EST</p>
                           </div>
-                          <div className="flex items-center gap-2 px-3 py-1.5 bg-green-500/20 border border-green-500/30 rounded-lg">
+                          <div className="flex items-center gap-2 px-3 py-1.5 bg-green-500/20 border border-green-500/30 rounded-lg flex-shrink-0 self-start sm:self-auto">
                             <CheckCircle2 className="w-4 h-4 text-green-400" />
                             <span className="text-xs font-medium text-green-400">Successful</span>
                           </div>
                         </div>
-                        <div className="flex gap-3 mt-4">
+                        <div className="flex flex-wrap gap-3 mt-4">
                           <button className="flex items-center gap-2 px-4 py-2 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded-xl text-sm font-medium hover:bg-blue-500/30 transition-all">
                             <Download className="w-4 h-4" />
                             Download Backup
@@ -1537,9 +1537,9 @@ export default function SettingsPage() {
 
                   {/* API Management */}
                   <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
-                    <div className="flex items-center justify-between mb-1">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-1">
                       <h3 className="text-sm font-semibold text-primary">API Management</h3>
-                      <span className="text-[10px] text-slate-500">Last updated: Dec 11, 2025 08:22 AM</span>
+                      <span className="text-[10px] text-slate-500 flex-shrink-0">Last updated: Dec 11, 2025 08:22 AM</span>
                     </div>
                     <p className="text-xs text-slate-500 mb-6">API keys, usage statistics, and rate limiting configuration.</p>
                     <div className="flex items-center justify-between mb-6">
@@ -1618,9 +1618,9 @@ export default function SettingsPage() {
 
                   {/* System Health */}
                   <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
-                    <div className="flex items-center justify-between mb-1">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-1">
                       <h3 className="text-sm font-semibold text-primary">System Health</h3>
-                      <span className="text-[10px] text-slate-500">Last updated: Dec 11, 2025 09:15 AM</span>
+                      <span className="text-[10px] text-slate-500 flex-shrink-0">Last updated: Dec 11, 2025 09:15 AM</span>
                     </div>
                     <p className="text-xs text-slate-500 mb-6">Infrastructure metrics, version monitoring, and resource utilization.</p>
                     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
@@ -1664,9 +1664,9 @@ export default function SettingsPage() {
 
                   {/* DevOps / Infrastructure Controls */}
                   <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
-                    <div className="flex items-center justify-between mb-1">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-1">
                       <h3 className="text-sm font-semibold text-primary">DevOps / Infrastructure Controls</h3>
-                      <span className="text-[10px] text-slate-500">Last action: Dec 10, 2025 02:00 AM</span>
+                      <span className="text-[10px] text-slate-500 flex-shrink-0">Last action: Dec 10, 2025 02:00 AM</span>
                     </div>
                     <p className="text-xs text-slate-500 mb-6">Cache clearing, database optimization, and version monitoring.</p>
                     <div className="space-y-3">
@@ -1696,12 +1696,12 @@ export default function SettingsPage() {
               {/* Audit & Compliance */}
               {activeSection === 'audit' && (
                 <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6 shadow-sm dark:shadow-none">
-                  <div className="flex items-center justify-between mb-6">
-                    <div>
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
+                    <div className="min-w-0">
                       <h3 className="text-sm font-semibold text-primary">Audit & Compliance Trail</h3>
-                      <p className="text-xs text-slate-500 mt-1">Recent security, compliance, and system events. All changes are logged.</p>
+                      <p className="text-xs text-slate-500 mt-1 break-words">Recent security, compliance, and system events. All changes are logged.</p>
                     </div>
-                    <button className="flex items-center gap-2 px-4 py-2 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded-xl text-sm font-medium hover:bg-blue-500/30 transition-all">
+                    <button className="flex items-center gap-2 px-4 py-2 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded-xl text-sm font-medium hover:bg-blue-500/30 transition-all flex-shrink-0 self-start sm:self-auto">
                       <Download className="w-4 h-4" />
                       Export Logs
                     </button>

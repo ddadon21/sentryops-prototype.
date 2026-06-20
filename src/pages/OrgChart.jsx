@@ -1898,19 +1898,19 @@ export default function OrgChart() {
           />
           <div className="relative w-full max-w-[480px] bg-white dark:bg-zinc-950 border-l border-border shadow-2xl overflow-y-auto">
             <div className="sticky top-0 bg-slate-900/95 backdrop-blur-xl border-b border-border p-6 z-10">
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
+              <div className="flex items-start justify-between mb-4 gap-2">
+                <div className="flex items-center gap-3 min-w-0 flex-1">
+                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center flex-shrink-0">
                     <span className="text-primary font-medium">{selectedNode.photo}</span>
                   </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-primary">{selectedNode.name}</h3>
-                    <p className="text-sm text-secondary">{selectedNode.title}</p>
+                  <div className="min-w-0 flex-1">
+                    <h3 className="text-lg font-semibold text-primary break-words">{selectedNode.name}</h3>
+                    <p className="text-sm text-secondary break-words">{selectedNode.title}</p>
                   </div>
                 </div>
                 <button
                   onClick={() => setDrawerOpen(false)}
-                  className="p-2 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors"
+                  className="p-2 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors flex-shrink-0"
                 >
                   <X className="w-5 h-5 text-secondary" />
                 </button>
@@ -2395,15 +2395,15 @@ export default function OrgChart() {
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm" onClick={closeWorkflow} />
           <div className="relative w-full max-w-lg bg-white dark:bg-zinc-950 border border-border rounded-2xl shadow-2xl overflow-hidden">
-            <div className="bg-slate-900/95 border-b border-border px-5 py-4 flex items-center justify-between">
-              <div>
+            <div className="bg-slate-900/95 border-b border-border px-5 py-4 flex items-center justify-between gap-2">
+              <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2 mb-0.5">
-                  <Briefcase className="w-4 h-4 text-amber-700" />
-                  <h3 className="font-semibold text-primary text-sm">Launch Hiring Request</h3>
+                  <Briefcase className="w-4 h-4 text-amber-700 flex-shrink-0" />
+                  <h3 className="font-semibold text-primary text-sm break-words">Launch Hiring Request</h3>
                 </div>
-                <p className="text-[11px] text-secondary">{workflowNode?.title || 'Open Position'} · {workflowNode?.division || '—'}</p>
+                <p className="text-[11px] text-secondary break-words">{workflowNode?.title || 'Open Position'} · {workflowNode?.division || '—'}</p>
               </div>
-              <button onClick={closeWorkflow} className="p-1.5 hover:bg-slate-800/50 rounded-lg transition-colors"><X className="w-4 h-4 text-secondary" /></button>
+              <button onClick={closeWorkflow} className="p-1.5 hover:bg-slate-800/50 rounded-lg transition-colors flex-shrink-0"><X className="w-4 h-4 text-secondary" /></button>
             </div>
             {!workflowDone && (
               <div className="flex items-center gap-1 px-5 pt-4 pb-1">
@@ -2497,15 +2497,15 @@ export default function OrgChart() {
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm" onClick={closeWorkflow} />
           <div className="relative w-full max-w-lg bg-white dark:bg-zinc-950 border border-border rounded-2xl shadow-2xl overflow-hidden">
-            <div className="bg-slate-900/95 border-b border-border px-5 py-4 flex items-center justify-between">
-              <div>
+            <div className="bg-slate-900/95 border-b border-border px-5 py-4 flex items-center justify-between gap-2">
+              <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2 mb-0.5">
-                  <GraduationCap className="w-4 h-4 text-orange-700" />
-                  <h3 className="font-semibold text-primary text-sm">Schedule Certification Renewal</h3>
+                  <GraduationCap className="w-4 h-4 text-orange-700 flex-shrink-0" />
+                  <h3 className="font-semibold text-primary text-sm break-words">Schedule Certification Renewal</h3>
                 </div>
-                <p className="text-[11px] text-secondary">{workflowNode?.name || 'Officer'} · {workflowNode?.rank || '—'} · {workflowNode?.division || '—'}</p>
+                <p className="text-[11px] text-secondary break-words">{workflowNode?.name || 'Officer'} · {workflowNode?.rank || '—'} · {workflowNode?.division || '—'}</p>
               </div>
-              <button onClick={closeWorkflow} className="p-1.5 hover:bg-slate-800/50 rounded-lg transition-colors"><X className="w-4 h-4 text-secondary" /></button>
+              <button onClick={closeWorkflow} className="p-1.5 hover:bg-slate-800/50 rounded-lg transition-colors flex-shrink-0"><X className="w-4 h-4 text-secondary" /></button>
             </div>
             {!workflowDone && (
               <div className="flex items-center gap-1 px-5 pt-4 pb-1">
@@ -2607,15 +2607,15 @@ export default function OrgChart() {
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm" onClick={closeWorkflow} />
           <div className="relative w-full max-w-lg bg-white dark:bg-zinc-950 border border-border rounded-2xl shadow-2xl overflow-hidden">
-            <div className="bg-slate-900/95 border-b border-border px-5 py-4 flex items-center justify-between">
-              <div>
+            <div className="bg-slate-900/95 border-b border-border px-5 py-4 flex items-center justify-between gap-2">
+              <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2 mb-0.5">
-                  <TrendingUp className="w-4 h-4 text-amber-700" />
-                  <h3 className="font-semibold text-primary text-sm">Succession Plan</h3>
+                  <TrendingUp className="w-4 h-4 text-amber-700 flex-shrink-0" />
+                  <h3 className="font-semibold text-primary text-sm break-words">Succession Plan</h3>
                 </div>
-                <p className="text-[11px] text-secondary">{workflowNode?.name || '—'} · {workflowNode?.title || '—'}</p>
+                <p className="text-[11px] text-secondary break-words">{workflowNode?.name || '—'} · {workflowNode?.title || '—'}</p>
               </div>
-              <button onClick={closeWorkflow} className="p-1.5 hover:bg-slate-800/50 rounded-lg transition-colors"><X className="w-4 h-4 text-secondary" /></button>
+              <button onClick={closeWorkflow} className="p-1.5 hover:bg-slate-800/50 rounded-lg transition-colors flex-shrink-0"><X className="w-4 h-4 text-secondary" /></button>
             </div>
             <div className="p-5 space-y-4 max-h-[65vh] overflow-y-auto">
               {!workflowDone ? (
@@ -2711,15 +2711,15 @@ export default function OrgChart() {
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm" onClick={closeWorkflow} />
           <div className="relative w-full max-w-lg bg-white dark:bg-zinc-950 border border-border rounded-2xl shadow-2xl overflow-hidden">
-            <div className="bg-slate-900/95 border-b border-border px-5 py-4 flex items-center justify-between">
-              <div>
+            <div className="bg-slate-900/95 border-b border-border px-5 py-4 flex items-center justify-between gap-2">
+              <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2 mb-0.5">
-                  <UserCheck className="w-4 h-4 text-amber-700" />
-                  <h3 className="font-semibold text-primary text-sm">{workflowNode?.actingFlag ? 'Promote to Permanent Appointment' : 'Designate Acting Supervisor'}</h3>
+                  <UserCheck className="w-4 h-4 text-amber-700 flex-shrink-0" />
+                  <h3 className="font-semibold text-primary text-sm break-words">{workflowNode?.actingFlag ? 'Promote to Permanent Appointment' : 'Designate Acting Supervisor'}</h3>
                 </div>
-                <p className="text-[11px] text-secondary">{workflowNode?.title || workflowNode?.name || '—'} · {workflowNode?.division || '—'}</p>
+                <p className="text-[11px] text-secondary break-words">{workflowNode?.title || workflowNode?.name || '—'} · {workflowNode?.division || '—'}</p>
               </div>
-              <button onClick={closeWorkflow} className="p-1.5 hover:bg-slate-800/50 rounded-lg transition-colors"><X className="w-4 h-4 text-secondary" /></button>
+              <button onClick={closeWorkflow} className="p-1.5 hover:bg-slate-800/50 rounded-lg transition-colors flex-shrink-0"><X className="w-4 h-4 text-secondary" /></button>
             </div>
             {!workflowDone && (
               <div className="flex items-center gap-1 px-5 pt-4 pb-1">
@@ -2811,15 +2811,15 @@ export default function OrgChart() {
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm" onClick={closeWorkflow} />
           <div className="relative w-full max-w-lg bg-white dark:bg-zinc-950 border border-border rounded-2xl shadow-2xl overflow-hidden">
-            <div className="bg-slate-900/95 border-b border-border px-5 py-4 flex items-center justify-between">
-              <div>
+            <div className="bg-slate-900/95 border-b border-border px-5 py-4 flex items-center justify-between gap-2">
+              <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2 mb-0.5">
-                  <Users className="w-4 h-4 text-orange-700" />
-                  <h3 className="font-semibold text-primary text-sm">Reassign Supervisory Oversight</h3>
+                  <Users className="w-4 h-4 text-orange-700 flex-shrink-0" />
+                  <h3 className="font-semibold text-primary text-sm break-words">Reassign Supervisory Oversight</h3>
                 </div>
-                <p className="text-[11px] text-secondary">{workflowNode?.name || 'Supervisor'} · {workflowNode?.reports || '—'} direct reports · Span {workflowNode?.spanWarning?.toUpperCase() || 'ELEVATED'}</p>
+                <p className="text-[11px] text-secondary break-words">{workflowNode?.name || 'Supervisor'} · {workflowNode?.reports || '—'} direct reports · Span {workflowNode?.spanWarning?.toUpperCase() || 'ELEVATED'}</p>
               </div>
-              <button onClick={closeWorkflow} className="p-1.5 hover:bg-slate-800/50 rounded-lg transition-colors"><X className="w-4 h-4 text-secondary" /></button>
+              <button onClick={closeWorkflow} className="p-1.5 hover:bg-slate-800/50 rounded-lg transition-colors flex-shrink-0"><X className="w-4 h-4 text-secondary" /></button>
             </div>
             {!workflowDone && (
               <div className="flex items-center gap-1 px-5 pt-4 pb-1">
@@ -2919,15 +2919,15 @@ export default function OrgChart() {
       </button>
 
       {chatOpen && (
-        <div className="fixed bottom-24 right-6 w-96 h-[500px] bg-surface-raised backdrop-blur-xl border border-border rounded-xl shadow-2xl flex flex-col z-40">
-          <div className="p-4 border-b border-border flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
+        <div className="fixed bottom-24 right-6 left-6 sm:left-auto w-auto sm:w-96 h-[500px] bg-surface-raised backdrop-blur-xl border border-border rounded-xl shadow-2xl flex flex-col z-40">
+          <div className="p-4 border-b border-border flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2 min-w-0 flex-1">
+              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
                 <Sparkles className="w-4 h-4 text-primary" />
               </div>
-              <h3 className="text-lg font-semibold text-primary">Org Chart AI Assistant</h3>
+              <h3 className="text-lg font-semibold text-primary break-words">Org Chart AI Assistant</h3>
             </div>
-            <button onClick={() => setChatOpen(false)} className="p-1 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors">
+            <button onClick={() => setChatOpen(false)} className="p-1 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors flex-shrink-0">
               <X className="w-5 h-5 text-secondary" />
             </button>
           </div>

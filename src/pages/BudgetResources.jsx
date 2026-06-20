@@ -727,7 +727,7 @@ export default function BudgetResources() {
                   <span className="text-sm font-black text-slate-900 dark:text-white">{pendingActions.length}</span>
                 </div>
                 {pendingActions.length > 0 && (
-                  <button onClick={() => setApplyAllModal(true)} className={`${primaryBtn} ml-auto`}>
+                  <button onClick={() => setApplyAllModal(true)} className={`${primaryBtn} w-full sm:w-auto sm:ml-auto`}>
                     <Zap className="w-3.5 h-3.5" /> Review &amp; Approve
                   </button>
                 )}
@@ -878,11 +878,11 @@ export default function BudgetResources() {
                   const isExpanded = expandedActionId === action.id;
                   return (
                     <div key={action.id} className={`px-5 py-3 transition-colors ${isApplied ? 'bg-green-50/60 dark:bg-green-500/5' : 'hover:bg-slate-50 dark:hover:bg-zinc-900/10'}`}>
-                      <div className="flex flex-col sm:flex-row items-start gap-3">
-                        <span className={`text-[11px] font-bold w-4 flex-shrink-0 tabular-nums mt-0.5 hidden sm:inline-block ${isApplied ? 'text-green-500 dark:text-green-400' : 'text-slate-400'}`}>
+                      <div className="flex items-start gap-3">
+                        <span className={`text-[11px] font-bold w-4 flex-shrink-0 tabular-nums mt-0.5 ${isApplied ? 'text-green-500 dark:text-green-400' : 'text-slate-400'}`}>
                           {isApplied ? '✓' : idx + 1}
                         </span>
-                        <div className="flex-1 min-w-0 w-full">
+                        <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 mb-1 flex-wrap">
                             {isApplied ? (
                               <span className="inline-flex items-center gap-1 px-1.5 py-0.5 bg-green-100 dark:bg-green-500/15 text-green-700 dark:text-green-400 text-[10px] font-bold rounded">
@@ -949,7 +949,7 @@ export default function BudgetResources() {
                             </div>
                           )}
                         </div>
-                        <div className="flex items-center gap-3 flex-shrink-0 mt-0.5">
+                        <div className="flex items-center gap-3 flex-wrap flex-shrink-0 mt-0.5 w-full sm:w-auto justify-end">
                           {!isApplied && (
                             <div className="text-right hidden sm:block">
                               <p className="text-[13px] font-bold text-green-600 dark:text-green-400">{fmt(action.impact)}</p>
@@ -975,7 +975,7 @@ export default function BudgetResources() {
                   );
                 })}
               </div>
-              <div className={`px-5 py-3 border-t border-slate-200 dark:border-slate-700/30 flex items-center justify-between gap-3 ${appliedActionIds.size === recommendedActions.length ? 'bg-green-50 dark:bg-green-500/5' : 'bg-slate-50 dark:bg-zinc-950/20'}`}>
+              <div className={`px-5 py-3 border-t border-slate-200 dark:border-slate-700/30 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 ${appliedActionIds.size === recommendedActions.length ? 'bg-green-50 dark:bg-green-500/5' : 'bg-slate-50 dark:bg-zinc-950/20'}`}>
                 <div className="text-[11px] text-slate-500 dark:text-slate-400 min-w-0">
                   {appliedActionIds.size > 0
                     ? <><span className="font-semibold text-green-600 dark:text-green-400">{appliedActionIds.size} applied</span> · {fmt(appliedSavings)} saved{pendingActions.length > 0 && <> · <span className="font-semibold text-slate-600 dark:text-slate-300">{pendingActions.length} pending</span> ({fmt(pendingSavings)} more available)</>}</>
@@ -985,7 +985,7 @@ export default function BudgetResources() {
                 {pendingActions.length > 0 && (
                   <button
                     onClick={() => setApplyAllModal(true)}
-                    className="flex-shrink-0 flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-600 border border-amber-600 text-white text-sm font-bold uppercase tracking-wide rounded-lg transition-colors"
+                    className="flex-shrink-0 flex items-center justify-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-600 border border-amber-600 text-white text-sm font-bold uppercase tracking-wide rounded-lg transition-colors"
                   >
                     <Zap className="w-3.5 h-3.5" />
                     {appliedActionIds.size > 0 ? `Apply Remaining ${pendingActions.length}` : 'Apply All'} — {fmt(pendingSavings)}
@@ -1178,7 +1178,7 @@ export default function BudgetResources() {
                       );
                     })}
                   </div>
-                  <div className="px-5 py-3 border-t border-slate-100 dark:border-slate-800/60 flex items-center justify-between">
+                  <div className="px-5 py-3 border-t border-slate-100 dark:border-slate-800/60 flex items-center justify-between gap-2 flex-wrap">
                     <button onClick={() => setActiveTab('forecast')} className={ghostBtn}>
                       <LineChart className="w-3.5 h-3.5" /> View Full Forecast
                     </button>
@@ -1221,20 +1221,20 @@ export default function BudgetResources() {
                       { window: 'Dec 15–31, 2024', daysOut: 46, risk: 'Medium', driver: 'Year-end discretionary rush — est. $95K spike', amount: 95000, mitigated: true, mitigationAction: 'Action #4: Support Services freeze covers this' },
                       { window: 'Q1 FY2025 Carry-overs', daysOut: 63, risk: 'Low', driver: '$240K committed converting to spend — already planned', amount: 240000, mitigated: false, mitigationAction: null },
                     ].map((spike) => (
-                      <div key={spike.window} className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-slate-50 dark:bg-zinc-900/30 border border-slate-100 dark:border-slate-700/20">
+                      <div key={spike.window} className="flex flex-wrap sm:flex-nowrap items-center gap-3 px-3 py-2.5 rounded-lg bg-slate-50 dark:bg-zinc-900/30 border border-slate-100 dark:border-slate-700/20">
                         <div className="w-10 text-center flex-shrink-0">
                           <p className="text-[17px] font-black text-slate-700 dark:text-slate-300 leading-none">{spike.daysOut}</p>
                           <p className="text-[9px] text-slate-400 uppercase tracking-wide">days</p>
                         </div>
-                        <div className="w-px h-8 bg-slate-200 dark:bg-zinc-800/40 flex-shrink-0" />
+                        <div className="hidden sm:block w-px h-8 bg-slate-200 dark:bg-zinc-800/40 flex-shrink-0" />
                         <span className={`flex-shrink-0 ${BADGE(spike.risk === 'High' ? 'red' : spike.risk === 'Medium' ? 'amber' : '')}`}>
                           {spike.risk}
                         </span>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-[12px] font-semibold text-slate-800 dark:text-slate-200 truncate">{spike.window}</p>
-                          <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate">{spike.driver}</p>
+                        <div className="flex-1 min-w-0 basis-full sm:basis-auto order-1 sm:order-none">
+                          <p className="text-[12px] font-semibold text-slate-800 dark:text-slate-200 break-words">{spike.window}</p>
+                          <p className="text-[11px] text-slate-500 dark:text-slate-400 break-words">{spike.driver}</p>
                         </div>
-                        <div className="flex-shrink-0 flex items-center gap-2">
+                        <div className="flex-shrink-0 flex items-center gap-2 ml-auto sm:ml-0">
                           {spike.mitigated ? (
                             <span className="flex items-center gap-1 text-[10px] font-semibold text-green-600 dark:text-green-400">
                               <CheckCircle className="w-3 h-3" /> Mitigated
@@ -1250,7 +1250,7 @@ export default function BudgetResources() {
                     ))}
                     </div>
                   </div>
-                  <div className="px-5 py-3 border-t border-slate-100 dark:border-slate-800/60 flex items-center justify-between">
+                  <div className="px-5 py-3 border-t border-slate-100 dark:border-slate-800/60 flex items-center justify-between gap-2 flex-wrap">
                     <span className="text-[11px] text-slate-500 dark:text-slate-400">2 of 3 spikes mitigated · Total exposure: $515K</span>
                     <button onClick={() => setActiveTab('forecast')} className={ghostBtn}>
                       Full Forecast <ArrowUpRight className="w-3.5 h-3.5" />
@@ -1283,19 +1283,19 @@ export default function BudgetResources() {
                   ) : (
                     <div className="divide-y divide-slate-100 dark:divide-slate-800/60">
                       {auditLog.map((entry) => (
-                        <div key={entry.id} className="px-5 py-2.5 flex items-center gap-3">
-                          <BadgeCheck className="w-4 h-4 text-green-500 dark:text-green-400 flex-shrink-0" />
+                        <div key={entry.id} className="px-5 py-2.5 flex items-start gap-3">
+                          <BadgeCheck className="w-4 h-4 text-green-500 dark:text-green-400 flex-shrink-0 mt-0.5" />
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 flex-wrap">
-                              <span className="text-[12px] font-semibold text-slate-800 dark:text-slate-200">{entry.actionTitle}</span>
+                              <span className="text-[12px] font-semibold text-slate-800 dark:text-slate-200 break-words">{entry.actionTitle}</span>
                               <span className={BADGE(entry.riskLevel === 'Low' ? 'green' : entry.riskLevel === 'Medium' ? 'amber' : 'red')}>{entry.riskLevel}</span>
                             </div>
-                            <div className="flex items-center gap-2 text-[10px] text-slate-400 dark:text-slate-500 mt-0.5">
+                            <div className="flex items-center gap-2 text-[10px] text-slate-400 dark:text-slate-500 mt-0.5 flex-wrap">
                               <span className="font-medium">{entry.appliedBy}</span>
                               <span>·</span>
                               <span>{fmtAuditDate(entry.appliedAt)}</span>
                               <span>·</span>
-                              <span className="truncate">{entry.note}</span>
+                              <span className="break-words">{entry.note}</span>
                             </div>
                           </div>
                           {entry.savings > 0 && (
@@ -1802,10 +1802,10 @@ export default function BudgetResources() {
                   return (
                     <div key={division.id} className="bg-white dark:bg-zinc-900/40 border border-slate-200 dark:border-slate-700/40 rounded-xl overflow-hidden">
                       <div className="p-5">
-                        <div className="flex items-center justify-between mb-6">
-                          <div className="flex-1">
-                            <div className="flex items-center gap-3 mb-2">
-                              <h3 className="text-lg font-semibold text-primary">{division.name}</h3>
+                        <div className="flex items-start justify-between gap-3 mb-6">
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-3 mb-2 flex-wrap">
+                              <h3 className="text-lg font-semibold text-primary break-words">{division.name}</h3>
 
                               {/* Status Badge */}
                               {statusColor === 'red' && (
@@ -1837,7 +1837,7 @@ export default function BudgetResources() {
                             </p>
 
                             {/* Trend Indicator */}
-                            <div className="flex items-center gap-2 text-xs">
+                            <div className="flex items-center gap-2 text-xs flex-wrap">
                               <span className="text-slate-500">Trend:</span>
                               {division.variance < -100000 && (
                                 <span className="text-red-700 dark:text-red-400 font-semibold flex items-center gap-1">
@@ -1921,9 +1921,9 @@ export default function BudgetResources() {
                           <div className="space-y-3">
                             {division.categories.map((cat, idx) => (
                               <div key={idx}>
-                                <div className="flex items-center justify-between mb-2">
-                                  <span className="text-sm text-secondary">{cat.name}</span>
-                                  <div className="flex items-center gap-3">
+                                <div className="flex items-center justify-between gap-2 mb-2 flex-wrap">
+                                  <span className="text-sm text-secondary min-w-0 break-words">{cat.name}</span>
+                                  <div className="flex items-center gap-3 flex-shrink-0">
                                     <span className="text-sm text-secondary">{fmt(cat.spent)} / {fmt(cat.budget)}</span>
                                     <span className={`text-sm font-bold ${
                                       cat.percent >= 95 ? 'text-red-700 dark:text-red-400' : cat.percent >= 85 ? 'text-amber-700 dark:text-amber-400' : 'text-green-600 dark:text-green-400'
@@ -2114,21 +2114,21 @@ export default function BudgetResources() {
                   </div>
 
                   <div className="space-y-3">
-                    <div className="flex items-center justify-between p-3 bg-white dark:bg-zinc-950/50 rounded-lg">
-                      <span className="text-sm text-secondary">Main Headquarters</span>
-                      <span className="text-sm font-medium text-primary">{resources.facilities.main}</span>
+                    <div className="flex items-center justify-between gap-3 p-3 bg-white dark:bg-zinc-950/50 rounded-lg flex-wrap sm:flex-nowrap">
+                      <span className="text-sm text-secondary flex-shrink-0">Main Headquarters</span>
+                      <span className="text-sm font-medium text-primary text-right break-words min-w-0">{resources.facilities.main}</span>
                     </div>
-                    <div className="flex items-center justify-between p-3 bg-white dark:bg-zinc-950/50 rounded-lg">
-                      <span className="text-sm text-secondary">Detention Center</span>
-                      <span className="text-sm font-medium text-primary">{resources.facilities.detention}</span>
+                    <div className="flex items-center justify-between gap-3 p-3 bg-white dark:bg-zinc-950/50 rounded-lg flex-wrap sm:flex-nowrap">
+                      <span className="text-sm text-secondary flex-shrink-0">Detention Center</span>
+                      <span className="text-sm font-medium text-primary text-right break-words min-w-0">{resources.facilities.detention}</span>
                     </div>
-                    <div className="flex items-center justify-between p-3 bg-white dark:bg-zinc-950/50 rounded-lg">
-                      <span className="text-sm text-secondary">Substations</span>
-                      <span className="text-sm font-medium text-primary">{resources.facilities.substations} locations</span>
+                    <div className="flex items-center justify-between gap-3 p-3 bg-white dark:bg-zinc-950/50 rounded-lg flex-wrap sm:flex-nowrap">
+                      <span className="text-sm text-secondary flex-shrink-0">Substations</span>
+                      <span className="text-sm font-medium text-primary text-right break-words min-w-0">{resources.facilities.substations} locations</span>
                     </div>
-                    <div className="flex items-center justify-between p-3 bg-white dark:bg-zinc-950/50 rounded-lg">
-                      <span className="text-sm text-secondary">Training Facility</span>
-                      <span className="text-sm font-medium text-primary">{resources.facilities.trainingFacility} facility</span>
+                    <div className="flex items-center justify-between gap-3 p-3 bg-white dark:bg-zinc-950/50 rounded-lg flex-wrap sm:flex-nowrap">
+                      <span className="text-sm text-secondary flex-shrink-0">Training Facility</span>
+                      <span className="text-sm font-medium text-primary text-right break-words min-w-0">{resources.facilities.trainingFacility} facility</span>
                     </div>
                   </div>
                 </div>
@@ -2148,9 +2148,9 @@ export default function BudgetResources() {
                   <div className="space-y-6">
                     {Object.entries(resources.equipment).map(([key, value]) => (
                       <div key={key}>
-                        <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center justify-between gap-2 mb-2 flex-wrap">
                           <span className="text-sm text-secondary capitalize">{key.replace(/([A-Z])/g, ' $1').trim()}</span>
-                          <div className="flex items-center gap-3">
+                          <div className="flex items-center gap-3 flex-wrap">
                             <span className="text-sm text-secondary">Total: {value.total}</span>
                             <span className={`text-sm font-bold ${value.needsReplacement === 0 ? 'text-green-600 dark:text-green-400' : value.needsReplacement > 50 ? 'text-red-700 dark:text-red-400' : 'text-amber-700 dark:text-amber-400'}`}>
                               Replace: {value.needsReplacement}
@@ -2251,9 +2251,9 @@ export default function BudgetResources() {
 
                     {/* Scenario 2 - Cost Controls */}
                     <div className="bg-slate-50 dark:bg-zinc-950/30 border border-green-500/40 rounded-xl p-5">
-                      <div className="flex items-center gap-2 mb-3">
-                        <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400" />
-                        <h5 className="text-sm font-bold text-green-600 dark:text-green-400 flex items-center gap-2">SCENARIO 2: Cost Controls (15% Reduction) <span className="px-1.5 py-0.5 rounded border border-green-500/40 text-[10px]">RECOMMENDED</span></h5>
+                      <div className="flex items-start gap-2 mb-3">
+                        <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
+                        <h5 className="text-sm font-bold text-green-600 dark:text-green-400 flex items-center gap-2 flex-wrap">SCENARIO 2: Cost Controls (15% Reduction) <span className="px-1.5 py-0.5 rounded border border-green-500/40 text-[10px] flex-shrink-0">RECOMMENDED</span></h5>
                       </div>
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs mb-3">
                         <div>

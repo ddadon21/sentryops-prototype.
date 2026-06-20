@@ -618,7 +618,7 @@ export default function RiskCompliance() {
                 </div>
                 <div className="pt-2 border-t border-slate-700/50">
                   <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Trend Direction</p>
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 flex-wrap">
                     <div className="flex items-center gap-1 text-[10px] text-red-400">
                       <TrendingUp className="w-3 h-3" />
                       <span>Equipment ↑16%</span>
@@ -699,12 +699,12 @@ export default function RiskCompliance() {
                   const CatIcon = cat.icon;
                   return (
                     <div key={cat.id} className={`rounded-lg border p-2.5 ${heat.bg}`}>
-                      <div className="flex items-center justify-between mb-1.5">
-                        <div className="flex items-center gap-1.5">
-                          <CatIcon className={`w-3 h-3 ${heat.label}`} />
-                          <span className="text-[10px] font-bold text-primary">{cat.label}</span>
+                      <div className="flex items-center justify-between gap-1 mb-1.5">
+                        <div className="flex items-center gap-1.5 min-w-0">
+                          <CatIcon className={`w-3 h-3 flex-shrink-0 ${heat.label}`} />
+                          <span className="text-[10px] font-bold text-primary break-words min-w-0">{cat.label}</span>
                         </div>
-                        <span className={`px-1 py-px rounded border text-[9px] font-bold ${heat.badge}`}>
+                        <span className={`px-1 py-px rounded border text-[9px] font-bold flex-shrink-0 ${heat.badge}`}>
                           {cat.score}
                         </span>
                       </div>
@@ -1175,8 +1175,8 @@ export default function RiskCompliance() {
               <span className="text-[12px] font-bold text-primary">Regulatory Standards</span>
               <span className="text-[10px] text-slate-700">Reference</span>
             </div>
-            <div className="border border-border rounded-xl overflow-hidden">
-              <table className="w-full">
+            <div className="border border-border rounded-xl overflow-x-auto">
+              <table className="w-full min-w-[640px]">
                 <thead>
                   <tr className="border-b border-border">
                     <th className="px-3 py-2 text-left text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Standard</th>

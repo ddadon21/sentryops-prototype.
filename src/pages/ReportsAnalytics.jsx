@@ -1424,9 +1424,9 @@ export default function PerformanceCompliance() {
               <div className="p-5 grid grid-cols-1 md:grid-cols-2 gap-3">
                 {anomalyDetections.map((a, i) => (
                   <div key={i} className="p-4 rounded-lg border border-slate-200 dark:border-slate-700/40">
-                    <div className="flex items-center justify-between gap-3 mb-1.5">
-                      <p className="text-sm font-semibold text-slate-800 dark:text-slate-100">{a.title}</p>
-                      <span className={getRiskLevelBadge(a.severity)}>{a.severity}</span>
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3 mb-1.5">
+                      <p className="text-sm font-semibold text-slate-800 dark:text-slate-100 min-w-0 break-words">{a.title}</p>
+                      <span className={getRiskLevelBadge(a.severity) + ' flex-shrink-0 self-start sm:self-auto'}>{a.severity}</span>
                     </div>
                     <p className="text-[12px] font-bold text-slate-600 dark:text-slate-300 mb-1.5">{a.metric}</p>
                     <p className="text-[12px] text-slate-500 dark:text-slate-400 leading-snug">{a.detail}</p>
@@ -1437,13 +1437,13 @@ export default function PerformanceCompliance() {
 
             {/* Monthly Trends */}
             <div className={CARD}>
-              <div className={CARD_HEADER}>
-                <div className="flex items-center gap-2">
-                  <TrendingUp className="w-4 h-4 text-blue-500 dark:text-blue-400" />
-                  <span className="text-[11px] font-bold text-slate-700 dark:text-slate-200 uppercase tracking-widest">Monthly Performance Trends</span>
+              <div className={CARD_HEADER + ' flex-col sm:flex-row sm:items-center gap-2 sm:gap-0'}>
+                <div className="flex items-center gap-2 flex-wrap min-w-0">
+                  <TrendingUp className="w-4 h-4 text-blue-500 dark:text-blue-400 flex-shrink-0" />
+                  <span className="text-[11px] font-bold text-slate-700 dark:text-slate-200 uppercase tracking-widest break-words">Monthly Performance Trends</span>
                   <span className="text-[11px] text-slate-400 dark:text-slate-500">· Rolling 10 months</span>
                 </div>
-                <div className="flex items-center gap-3 text-[10px] text-slate-400 dark:text-slate-500">
+                <div className="flex items-center gap-3 text-[10px] text-slate-400 dark:text-slate-500 flex-shrink-0">
                   <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-blue-400 inline-block" /> Call volume</span>
                   <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" /> Clearance %</span>
                 </div>
@@ -1466,33 +1466,34 @@ export default function PerformanceCompliance() {
                   return (
                     <div
                       key={idx}
-                      className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-colors ${
+                      className={`flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-3 rounded-lg px-3 py-2 transition-colors ${
                         isCurrent
                           ? 'bg-amber-50/60 dark:bg-amber-500/5 border border-amber-200/60 dark:border-amber-500/15'
                           : 'hover:bg-slate-50 dark:hover:bg-zinc-950/20'
                       }`}
                     >
-                      <div className="flex items-center gap-2 w-14 flex-shrink-0">
-                        <span className="text-[12px] font-bold text-slate-700 dark:text-slate-300 w-7">{month.month}</span>
+                      <div className="flex items-center justify-between sm:justify-start gap-2 sm:w-14 flex-shrink-0">
+                        <span className="text-[12px] font-bold text-slate-700 dark:text-slate-300 sm:w-7">{month.month}</span>
                         {isCurrent && <span className="text-[9px] font-bold text-amber-700 dark:text-amber-400 bg-amber-100 dark:bg-amber-500/20 px-1 py-0.5 rounded">NOW</span>}
+                        <span className="text-[10px] text-slate-400 dark:text-slate-500 sm:hidden tabular-nums">{month.arrests.toLocaleString()} arr</span>
                       </div>
-                      <div className="flex-1 space-y-1">
+                      <div className="flex-1 space-y-1 min-w-0">
                         <div className="flex items-center gap-2">
                           <div className="flex-1 h-1 bg-slate-200 dark:bg-zinc-800/50 rounded-full overflow-hidden">
                             <div className="h-full bg-blue-400 dark:bg-blue-500 rounded-full" style={{ width: `${callsPct}%` }} />
                           </div>
-                          <span className="text-[10px] text-slate-500 dark:text-slate-400 w-24 text-right tabular-nums">{month.calls.toLocaleString()} calls</span>
+                          <span className="text-[10px] text-slate-500 dark:text-slate-400 w-20 sm:w-24 text-right tabular-nums flex-shrink-0">{month.calls.toLocaleString()} calls</span>
                         </div>
                         <div className="flex items-center gap-2">
                           <div className="flex-1 h-1 bg-slate-200 dark:bg-zinc-800/50 rounded-full overflow-hidden">
                             <div className={`h-full rounded-full ${month.clearance >= clrTarget ? 'bg-emerald-500' : 'bg-orange-500'}`} style={{ width: `${month.clearance}%` }} />
                           </div>
-                          <span className={`text-[10px] font-bold w-24 text-right tabular-nums ${month.clearance >= clrTarget ? 'text-emerald-600 dark:text-emerald-400' : 'text-orange-700 dark:text-orange-400'}`}>
+                          <span className={`text-[10px] font-bold w-20 sm:w-24 text-right tabular-nums flex-shrink-0 ${month.clearance >= clrTarget ? 'text-emerald-600 dark:text-emerald-400' : 'text-orange-700 dark:text-orange-400'}`}>
                             {month.clearance}% clr
                           </span>
                         </div>
                       </div>
-                      <span className="text-[10px] text-slate-400 dark:text-slate-500 flex-shrink-0 w-16 text-right tabular-nums">{month.arrests.toLocaleString()} arr</span>
+                      <span className="hidden sm:inline text-[10px] text-slate-400 dark:text-slate-500 flex-shrink-0 w-16 text-right tabular-nums">{month.arrests.toLocaleString()} arr</span>
                     </div>
                   );
                 })}
@@ -1563,19 +1564,19 @@ export default function PerformanceCompliance() {
               <div className="divide-y divide-slate-100 dark:divide-slate-800/60">
                 {complianceItems.map((item, i) => (
                   <div key={i} className="p-5">
-                    <div className="flex items-start justify-between gap-3 mb-2.5">
-                      <div>
-                        <p className="text-sm font-bold text-slate-800 dark:text-slate-100">{item.label}</p>
-                        <p className="text-[11px] text-slate-500 dark:text-slate-400">{item.area} · Next review: {item.nextReview}</p>
+                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-3 mb-2.5">
+                      <div className="min-w-0">
+                        <p className="text-sm font-bold text-slate-800 dark:text-slate-100 break-words">{item.label}</p>
+                        <p className="text-[11px] text-slate-500 dark:text-slate-400 break-words">{item.area} · Next review: {item.nextReview}</p>
                       </div>
-                      <span className={getComplianceBadge(item.status)}>{item.status}</span>
+                      <span className={getComplianceBadge(item.status) + ' flex-shrink-0 self-start'}>{item.status}</span>
                     </div>
-                    <div className="flex items-center gap-3 mb-3">
+                    <div className="flex flex-wrap sm:flex-nowrap items-center gap-3 mb-3">
                       <span className={`text-sm font-bold tabular-nums ${getCompliancePctColor(item.status)}`}>{item.pct}%</span>
-                      <div className="flex-1 h-1.5 bg-slate-200 dark:bg-zinc-800/50 rounded-full overflow-hidden">
+                      <div className="flex-1 min-w-[80px] h-1.5 bg-slate-200 dark:bg-zinc-800/50 rounded-full overflow-hidden">
                         <div className={`h-full ${getComplianceBar(item.status)}`} style={{ width: `${item.pct}%` }} />
                       </div>
-                      <span className="text-[11px] text-slate-500 dark:text-slate-400 whitespace-nowrap">{item.detail}</span>
+                      <span className="text-[11px] text-slate-500 dark:text-slate-400 break-words">{item.detail}</span>
                     </div>
                     <div className={AI_CALLOUT}>
                       <Brain className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
@@ -1697,11 +1698,11 @@ export default function PerformanceCompliance() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <div className={CARD + ' overflow-hidden'}>
                 <div className={CARD_HEADER}>
-                  <div className="flex items-center gap-2">
-                    <DollarSign className="w-4 h-4 text-amber-500 dark:text-amber-400" />
-                    <span className="text-[11px] font-bold text-slate-700 dark:text-slate-200 uppercase tracking-widest">Financial Exposure</span>
+                  <div className="flex items-center gap-2 min-w-0">
+                    <DollarSign className="w-4 h-4 text-amber-500 dark:text-amber-400 flex-shrink-0" />
+                    <span className="text-[11px] font-bold text-slate-700 dark:text-slate-200 uppercase tracking-widest break-words">Financial Exposure</span>
                   </div>
-                  <span className="text-sm font-bold text-red-600 dark:text-red-400">${(financialExposure.total / 1000000).toFixed(2)}M</span>
+                  <span className="text-sm font-bold text-red-600 dark:text-red-400 flex-shrink-0">${(financialExposure.total / 1000000).toFixed(2)}M</span>
                 </div>
                 <div className="p-5 space-y-3">
                   {financialExposure.drivers.map((d, i) => {
@@ -1709,8 +1710,8 @@ export default function PerformanceCompliance() {
                     return (
                       <div key={i}>
                         <div className="flex items-center justify-between gap-2 mb-1">
-                          <p className="text-[12px] text-slate-600 dark:text-slate-300 leading-snug">{d.label}</p>
-                          <span className="text-[12px] font-bold text-slate-700 dark:text-slate-200 whitespace-nowrap">${(d.amount / 1000).toFixed(0)}K</span>
+                          <p className="text-[12px] text-slate-600 dark:text-slate-300 leading-snug min-w-0 break-words">{d.label}</p>
+                          <span className="text-[12px] font-bold text-slate-700 dark:text-slate-200 whitespace-nowrap flex-shrink-0">${(d.amount / 1000).toFixed(0)}K</span>
                         </div>
                         <div className="h-1.5 bg-slate-200 dark:bg-zinc-800/50 rounded-full overflow-hidden">
                           <div className="h-full bg-red-500 rounded-full" style={{ width: `${pct}%` }} />
@@ -1752,7 +1753,7 @@ export default function PerformanceCompliance() {
         {activeTab === 'reports' && (
           <div className="space-y-4">
             {/* Search + filter */}
-            <div className="flex items-center gap-3">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
               <div className="flex-1 relative">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
                 <input
@@ -1764,7 +1765,7 @@ export default function PerformanceCompliance() {
               <select
                 value={filterCategory}
                 onChange={(e) => setFilterCategory(e.target.value)}
-                className="px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-slate-200 dark:border-slate-700/30 rounded-lg text-slate-700 dark:text-slate-300 text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer"
+                className="px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-slate-200 dark:border-slate-700/30 rounded-lg text-slate-700 dark:text-slate-300 text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer w-full sm:w-auto"
               >
                 <option value="all">All Categories</option>
                 <option value="Executive">Executive</option>
@@ -1790,9 +1791,9 @@ export default function PerformanceCompliance() {
                       </div>
                       <div className="flex-1 min-w-0">
                         {/* Title row */}
-                        <div className="flex items-start justify-between gap-2 mb-1.5">
-                          <h4 className="text-[13px] font-bold text-slate-800 dark:text-slate-100 leading-tight">{report.name}</h4>
-                          <div className="flex items-center gap-1.5 flex-shrink-0">
+                        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-1.5">
+                          <h4 className="text-[13px] font-bold text-slate-800 dark:text-slate-100 leading-tight min-w-0 break-words">{report.name}</h4>
+                          <div className="flex items-center gap-1.5 flex-wrap flex-shrink-0">
                             <span className={getImportanceBadge(report.importance)}>{report.importance}</span>
                             <span className={BADGE(cat.badge)}>{report.category}</span>
                             {report.scheduled && <span className={BADGE('green')}>Auto</span>}
@@ -1800,10 +1801,10 @@ export default function PerformanceCompliance() {
                         </div>
 
                         {/* Description */}
-                        <p className="text-[11px] text-slate-500 dark:text-slate-400 mb-3 leading-snug">{report.description}</p>
+                        <p className="text-[11px] text-slate-500 dark:text-slate-400 mb-3 leading-snug break-words">{report.description}</p>
 
                         {/* Metadata row */}
-                        <div className="flex items-center gap-4 text-[10px] text-slate-400 dark:text-slate-500 mb-3">
+                        <div className="flex items-center gap-4 flex-wrap text-[10px] text-slate-400 dark:text-slate-500 mb-3">
                           <span className="flex items-center gap-1"><Calendar className="w-3 h-3" />{report.frequency}</span>
                           <span className="flex items-center gap-1"><FileText className="w-3 h-3" />{report.pages}p</span>
                           <span className="flex items-center gap-1"><Eye className="w-3 h-3" />{report.views}</span>
@@ -1811,11 +1812,11 @@ export default function PerformanceCompliance() {
                         </div>
 
                         {/* Footer row */}
-                        <div className="flex items-center justify-between gap-2">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                           <span className="text-[10px] text-slate-400 dark:text-slate-500 flex-shrink-0">
                             Generated {report.lastGenerated}
                           </span>
-                          <div className="flex items-center gap-2 flex-wrap justify-end">
+                          <div className="flex items-center gap-2 flex-wrap sm:justify-end">
                             <button onClick={() => toggleSummary(report.id)} className={secondaryBtn}>
                               <Sparkles className="w-3 h-3" /> {expandedSummaries.has(report.id) ? 'Hide Summary' : 'Generate Summary'}
                               {expandedSummaries.has(report.id) ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
@@ -1890,14 +1891,14 @@ export default function PerformanceCompliance() {
 
       {/* Toast notification */}
       {toast && (
-        <div className={`fixed bottom-6 right-6 z-50 flex items-center gap-3 px-4 py-3 rounded-xl shadow-lg border text-sm font-medium ${
+        <div className={`fixed bottom-6 right-6 left-6 sm:left-auto z-50 flex items-center gap-3 px-4 py-3 rounded-xl shadow-lg border text-sm font-medium ${
           toast.type === 'success'
             ? 'bg-emerald-50 dark:bg-emerald-900/30 border-emerald-200 dark:border-emerald-500/30 text-emerald-800 dark:text-emerald-300'
             : 'bg-red-50 dark:bg-red-900/30 border-red-200 dark:border-red-500/30 text-red-800 dark:text-red-300'
         }`}>
           <CheckCircle className="w-4 h-4 flex-shrink-0" />
-          {toast.message}
-          <button onClick={() => setToast(null)} className="ml-1 opacity-60 hover:opacity-100">
+          <span className="min-w-0 break-words">{toast.message}</span>
+          <button onClick={() => setToast(null)} className="ml-1 opacity-60 hover:opacity-100 flex-shrink-0">
             <X className="w-4 h-4" />
           </button>
         </div>

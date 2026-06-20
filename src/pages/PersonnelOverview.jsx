@@ -474,12 +474,12 @@ export default function PersonnelOverview() {
             <div className="flex-1 min-w-0">
                 {/* ── Page Header ─────────────────────────────── */}
                 <div className="mb-6">
-                  <div className="flex items-center justify-between">
-                    <div>
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3">
+                    <div className="min-w-0">
                       <h2 className="text-xl font-bold text-primary mb-1">Workforce Readiness</h2>
-                      <p className="text-[11px] text-slate-500">Deployable personnel, certification risk &amp; readiness — agency workforce command center</p>
+                      <p className="text-[11px] text-slate-500 break-words">Deployable personnel, certification risk &amp; readiness — agency workforce command center</p>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-shrink-0">
                       <button className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-100/80 dark:bg-zinc-900/30 border border-border rounded-lg text-[11px] text-secondary hover:text-primary transition-colors">
                         <Download className="w-3 h-3" />
                         Staffing Report
@@ -489,7 +489,7 @@ export default function PersonnelOverview() {
                 </div>
 
                 {/* ── Workforce Status Row (4 cards) ──────────── */}
-                <div className="grid grid-cols-4 gap-3 mb-4">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
                   {/* Workforce Health — composite score is healthy */}
                   <div className="bg-slate-100/80 dark:bg-zinc-900/30 border border-emerald-500/20 rounded-xl p-3">
                     <div className="flex items-center gap-2 mb-1.5">
@@ -551,7 +551,7 @@ export default function PersonnelOverview() {
                     className="w-full flex items-center gap-2 px-3 py-2 bg-slate-50 dark:bg-zinc-900/35 border border-border dark:border-slate-700/30 rounded hover:bg-slate-100 dark:hover:bg-zinc-900/30 transition-colors"
                   >
                     <Sparkles className="w-3 h-3 text-slate-500" />
-                    <span className="text-[11px] text-secondary flex-1 text-left">
+                    <span className="text-[11px] text-secondary flex-1 min-w-0 text-left break-words">
                       17 certs expiring 30d. Patrol at 75% (4 below optimal). 12 open positions — Central Patrol at risk. Turnover 6.5% (below avg).
                     </span>
                     <span className="text-[10px] text-slate-700 flex-shrink-0">{aiInsightsVisible ? 'Less' : 'Details'}</span>
@@ -595,9 +595,9 @@ export default function PersonnelOverview() {
                     <div className="w-7 h-7 rounded-lg bg-blue-500/15 border border-blue-500/25 flex items-center justify-center flex-shrink-0">
                       <Sparkles className="w-3.5 h-3.5 text-blue-400" />
                     </div>
-                    <div>
+                    <div className="min-w-0 flex-1">
                       <h3 className="text-sm font-bold text-white">AI Staffing Recommendations</h3>
-                      <p className="text-[10px] text-slate-400">Recommended actions, ranked by operational impact — not just problems, the moves that fix them</p>
+                      <p className="text-[10px] text-slate-400 break-words">Recommended actions, ranked by operational impact — not just problems, the moves that fix them</p>
                     </div>
                   </div>
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
@@ -610,9 +610,9 @@ export default function PersonnelOverview() {
                             <div className="w-7 h-7 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0">
                               <Icon className="w-3.5 h-3.5 text-blue-400" />
                             </div>
-                            <div className="min-w-0">
-                              <p className="text-[12px] font-semibold text-white leading-snug">{rec.title}</p>
-                              <p className="text-[10px] text-slate-400 mt-1 leading-relaxed">{rec.rationale}</p>
+                            <div className="min-w-0 flex-1">
+                              <p className="text-[12px] font-semibold text-white leading-snug break-words">{rec.title}</p>
+                              <p className="text-[10px] text-slate-400 mt-1 leading-relaxed break-words">{rec.rationale}</p>
                             </div>
                           </div>
                           <div className="flex flex-wrap gap-1.5 mb-3">
@@ -650,8 +650,8 @@ export default function PersonnelOverview() {
                 </div>
 
                 {/* ── Table Toolbar ──────────────────────────── */}
-                <div className="mb-2 flex items-center gap-2">
-                  <div className="flex-1 relative">
+                <div className="mb-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                  <div className="flex-1 relative min-w-0">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-500" />
                     <input
                       type="text"
@@ -659,15 +659,17 @@ export default function PersonnelOverview() {
                       className="w-full pl-9 pr-3 py-2 bg-slate-100/80 dark:bg-zinc-900/30 border border-border rounded text-[11px] text-primary placeholder-slate-600 focus:outline-none focus:border-amber-500/40 transition-all"
                     />
                   </div>
-                  <button
-                    onClick={() => setFiltersOpen(!filtersOpen)}
-                    className="flex items-center gap-1.5 px-3 py-2 bg-slate-100/80 dark:bg-zinc-900/30 border border-border rounded text-[11px] text-secondary hover:text-primary transition-colors"
-                  >
-                    <Filter className="w-3 h-3" />Filters
-                  </button>
-                  <button className="flex items-center gap-1.5 px-3 py-2 bg-slate-100/80 dark:bg-zinc-900/30 border border-border rounded text-[11px] text-secondary hover:text-primary transition-colors">
-                    <Download className="w-3 h-3" />Export
-                  </button>
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    <button
+                      onClick={() => setFiltersOpen(!filtersOpen)}
+                      className="flex items-center gap-1.5 px-3 py-2 bg-slate-100/80 dark:bg-zinc-900/30 border border-border rounded text-[11px] text-secondary hover:text-primary transition-colors"
+                    >
+                      <Filter className="w-3 h-3" />Filters
+                    </button>
+                    <button className="flex items-center gap-1.5 px-3 py-2 bg-slate-100/80 dark:bg-zinc-900/30 border border-border rounded text-[11px] text-secondary hover:text-primary transition-colors">
+                      <Download className="w-3 h-3" />Export
+                    </button>
+                  </div>
                 </div>
 
                 {filtersOpen && (
@@ -676,7 +678,7 @@ export default function PersonnelOverview() {
                       <span className="text-[10px] font-semibold text-secondary uppercase tracking-wider">Filters</span>
                       <button className="text-[10px] text-amber-700 dark:text-amber-400 hover:text-amber-300">Clear</button>
                     </div>
-                    <div className="grid grid-cols-4 gap-3">
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                       <select className="px-2.5 py-1.5 bg-white dark:bg-zinc-950/40 border border-slate-700/50 rounded text-[11px] text-primary focus:outline-none focus:border-amber-500/40">
                         <option>All Divisions</option>
                         <option>Patrol</option>
@@ -739,8 +741,8 @@ export default function PersonnelOverview() {
 
                         {!isCollapsed && (
                           <>
-                            {/* Column Headers */}
-                            <div className="grid grid-cols-[1fr_80px_100px_90px_1fr_1fr_90px] gap-1 px-3 py-1.5 bg-slate-50 dark:bg-zinc-950/30 border-b border-border text-[9px] font-semibold text-slate-500 uppercase tracking-wider">
+                            {/* Column Headers — desktop only; mobile rows are stacked cards instead */}
+                            <div className="hidden lg:grid grid-cols-[1fr_80px_100px_90px_1fr_1fr_90px] gap-1 px-3 py-1.5 bg-slate-50 dark:bg-zinc-950/30 border-b border-border text-[9px] font-semibold text-slate-500 uppercase tracking-wider">
                               <span>Personnel</span>
                               <span>Division</span>
                               <span>Deployability</span>
@@ -759,7 +761,7 @@ export default function PersonnelOverview() {
                               return (
                                 <div
                                   key={person.id}
-                                  className={`grid grid-cols-[1fr_80px_100px_90px_1fr_1fr_90px] gap-1 px-3 py-3.5 items-start border-b border-border hover:bg-slate-50 dark:hover:bg-slate-50 dark:hover:bg-zinc-900/15 transition-colors ${
+                                  className={`flex flex-col gap-2 lg:grid lg:grid-cols-[1fr_80px_100px_90px_1fr_1fr_90px] lg:gap-1 lg:items-start px-3 py-3.5 border-b border-border hover:bg-slate-50 dark:hover:bg-slate-50 dark:hover:bg-zinc-900/15 transition-colors ${
                                     opStatus.color === 'red' ? 'bg-red-500/[0.02]' :
                                     opStatus.color === 'orange' ? 'bg-orange-500/[0.01]' : ''
                                   }`}
@@ -776,37 +778,40 @@ export default function PersonnelOverview() {
                                     }`}>
                                       {person.photo}
                                     </div>
-                                    <div className="min-w-0">
-                                      <p className="text-[11px] font-semibold text-amber-700 dark:text-amber-400 group-hover:text-amber-600 dark:group-hover:text-amber-300 transition-colors truncate">{person.name}</p>
+                                    <div className="min-w-0 flex-1">
+                                      <p className="text-[11px] font-semibold text-amber-700 dark:text-amber-400 group-hover:text-amber-600 dark:group-hover:text-amber-300 transition-colors break-words lg:truncate">{person.name}</p>
                                       <p className="text-[10px] text-slate-500">{person.rank} &middot; <span className="font-mono">{person.badge}</span></p>
                                     </div>
                                   </div>
 
-                                  {/* Division */}
-                                  <div className="pt-0.5">
-                                    <p className="text-[10px] text-secondary">{person.division}</p>
-                                    <p className="text-[9px] text-slate-700">{person.shift}</p>
-                                  </div>
-
-                                  {/* Deployability */}
-                                  <div className="pt-0.5">
-                                    <div className={`inline-flex items-center gap-1 px-2 py-0.5 rounded border text-[9px] font-bold w-fit ${
-                                      opStatus.color === 'red' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
-                                      opStatus.color === 'orange' ? 'bg-orange-100 border-orange-200 text-orange-600 dark:bg-orange-500/10 dark:border-orange-500/20 dark:text-orange-400' :
-                                      'bg-green-100 border-green-200 text-green-700 dark:bg-green-500/10 dark:border-green-500/20 dark:text-green-400'
-                                    }`}>
-                                      <OpIcon className="w-3 h-3" />
-                                      {opStatus.label}
+                                  {/* Division + Deployability + Coverage — grouped on mobile, separate columns on desktop */}
+                                  <div className="flex items-start gap-3 flex-wrap lg:contents">
+                                    {/* Division */}
+                                    <div className="pt-0.5">
+                                      <p className="text-[10px] text-secondary">{person.division}</p>
+                                      <p className="text-[9px] text-slate-700">{person.shift}</p>
                                     </div>
-                                    {/* Restriction reason for non-deployable/restricted */}
-                                    {person.restrictionReason && (
-                                      <p className="text-[9px] text-red-700 dark:text-red-400/70 mt-0.5">{person.restrictionReason}</p>
-                                    )}
-                                  </div>
 
-                                  {/* Coverage Impact */}
-                                  <div className="pt-1">
-                                    <span className={`text-[10px] font-bold ${covConfig.color}`}>{covConfig.label}</span>
+                                    {/* Deployability */}
+                                    <div className="pt-0.5">
+                                      <div className={`inline-flex items-center gap-1 px-2 py-0.5 rounded border text-[9px] font-bold w-fit ${
+                                        opStatus.color === 'red' ? 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400' :
+                                        opStatus.color === 'orange' ? 'bg-orange-100 border-orange-200 text-orange-600 dark:bg-orange-500/10 dark:border-orange-500/20 dark:text-orange-400' :
+                                        'bg-green-100 border-green-200 text-green-700 dark:bg-green-500/10 dark:border-green-500/20 dark:text-green-400'
+                                      }`}>
+                                        <OpIcon className="w-3 h-3" />
+                                        {opStatus.label}
+                                      </div>
+                                      {/* Restriction reason for non-deployable/restricted */}
+                                      {person.restrictionReason && (
+                                        <p className="text-[9px] text-red-700 dark:text-red-400/70 mt-0.5">{person.restrictionReason}</p>
+                                      )}
+                                    </div>
+
+                                    {/* Coverage Impact */}
+                                    <div className="pt-1">
+                                      <span className={`text-[10px] font-bold ${covConfig.color}`}>{covConfig.label}</span>
+                                    </div>
                                   </div>
 
                                   {/* Risk */}
@@ -814,7 +819,7 @@ export default function PersonnelOverview() {
                                     {person.risk ? (
                                       <div className="flex items-start gap-1">
                                         <AlertTriangle className="w-3 h-3 text-orange-600 dark:text-orange-400 mt-0.5 flex-shrink-0" />
-                                        <p className="text-[10px] text-orange-600 dark:text-orange-400">{person.risk}</p>
+                                        <p className="text-[10px] text-orange-600 dark:text-orange-400 break-words min-w-0">{person.risk}</p>
                                       </div>
                                     ) : (
                                       <span className="text-[10px] text-slate-700">&mdash;</span>
@@ -826,7 +831,7 @@ export default function PersonnelOverview() {
                                     {person.aiInsight ? (
                                       <div className="flex items-start gap-1">
                                         <ArrowRight className="w-3 h-3 text-secondary mt-0.5 flex-shrink-0" />
-                                        <p className="text-[10px] text-secondary font-medium">{person.aiInsight}</p>
+                                        <p className="text-[10px] text-secondary font-medium break-words min-w-0">{person.aiInsight}</p>
                                       </div>
                                     ) : (
                                       <span className="text-[10px] text-slate-700">&mdash;</span>
@@ -834,7 +839,7 @@ export default function PersonnelOverview() {
                                   </div>
 
                                   {/* Quick Actions */}
-                                  <div className="flex items-center justify-end gap-0.5 pt-0.5">
+                                  <div className="flex items-center justify-start lg:justify-end gap-0.5 pt-0.5">
                                     <button
                                       onClick={() => openQuickPeek(person)}
                                       className="p-1.5 text-slate-500 hover:text-amber-600 dark:text-amber-400 hover:bg-amber-500/10 rounded transition-all"
@@ -972,19 +977,19 @@ export default function PersonnelOverview() {
           />
           <div className="relative w-full max-w-[480px] bg-white dark:bg-zinc-950 border-l border-border shadow-2xl overflow-y-auto">
             <div className="sticky top-0 bg-slate-900/95 backdrop-blur-xl border-b border-border p-6 z-10">
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
+              <div className="flex items-start justify-between gap-3 mb-4">
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center flex-shrink-0">
                     <span className="text-primary font-medium">{peekData.photo}</span>
                   </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-primary">{peekData.name}</h3>
+                  <div className="min-w-0">
+                    <h3 className="text-lg font-semibold text-primary break-words">{peekData.name}</h3>
                     <p className="text-sm text-secondary">{peekData.rank}</p>
                   </div>
                 </div>
                 <button
                   onClick={() => setQuickPeekOpen(false)}
-                  className="p-2 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors"
+                  className="p-2 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors flex-shrink-0"
                 >
                   <X className="w-5 h-5 text-secondary" />
                 </button>
@@ -1242,14 +1247,14 @@ export default function PersonnelOverview() {
           <div className="relative w-full max-w-5xl bg-white dark:bg-zinc-950 border border-border rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto">
             {/* Header */}
             <div className="sticky top-0 bg-slate-900/95 backdrop-blur-xl border-b border-border p-6 z-10">
-              <div className="flex items-start justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex items-center gap-4 min-w-0">
+                  <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center flex-shrink-0">
                     <span className="text-primary text-xl font-bold">{fullProfileData.photo}</span>
                   </div>
-                  <div>
-                    <h2 className="text-2xl font-bold text-primary mb-1">{fullProfileData.name}</h2>
-                    <div className="flex items-center gap-3 text-sm text-secondary">
+                  <div className="min-w-0">
+                    <h2 className="text-2xl font-bold text-primary mb-1 break-words">{fullProfileData.name}</h2>
+                    <div className="flex items-center gap-3 text-sm text-secondary flex-wrap">
                       <span>{fullProfileData.rank}</span>
                       <span>•</span>
                       <span className="font-mono">{fullProfileData.badge}</span>
@@ -1275,7 +1280,7 @@ export default function PersonnelOverview() {
                   {/* Status & Quick Info */}
                   <div className="bg-surface border border-border rounded-xl shadow-sm dark:shadow-none p-5">
                     <h3 className="text-lg font-bold text-primary mb-4">Status & Information</h3>
-                    <div className="grid grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                       <div>
                         <p className="text-xs text-secondary mb-1">Current Status</p>
                         <div className={`inline-flex items-center gap-2 px-3 py-1.5 border rounded-lg text-sm font-medium ${getStatusColor(fullProfileData.status)}`}>
