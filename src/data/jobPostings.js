@@ -25,6 +25,15 @@ export const jobPostings = [
       'Avg time-to-hire 127 days, slower than peer agencies',
     ],
 
+    executiveSummary: {
+      health: 'High Risk',
+      probability: 62,
+      primaryIssue: 'Starting pay is 12.8% below Gwinnett County Police, narrowing the qualified applicant pool for patrol positions.',
+      recommendation: 'Approve a starting-salary increase toward $54,000 and proceed with the February 06 oral boards as scheduled.',
+      deadline: 'Within 10 days, before oral board offers expire.',
+      expectedResult: 'Closing the pay gap is projected to raise conversion rate from 14.7% toward the 20-25% target and cut time-to-hire below 100 days.',
+    },
+
     overview: {
       postedDate: 'October 14, 2024',
       timelineNote: 'CONTINUOUS RECRUITMENT (open until filled)',
@@ -62,11 +71,12 @@ export const jobPostings = [
     ],
 
     pipeline: [
-      { stage: 'Applications', pct: 100, detail: '23 received', color: 'bg-blue-500' },
-      { stage: 'Initial Screening', pct: 74, detail: '17 passed · 6 disqualified', color: 'bg-green-500' },
-      { stage: 'Oral Board', pct: 53, detail: '9 completed · 8 scheduled (Feb 06)', color: 'bg-amber-500' },
-      { stage: 'Background', pct: 39, detail: '5 in progress · 4 cleared · 2 disqualified', color: 'bg-purple-500' },
-      { stage: 'Final Offers', pct: 13, detail: '3 extended · 2 accepted · 1 pending', color: 'bg-green-400' },
+      { stage: 'Applied', count: 23, detail: '23 received' },
+      { stage: 'Phone Screen', count: 17, detail: '17 passed · 6 disqualified' },
+      { stage: 'Interview', count: 9, detail: '9 oral boards completed/scheduled' },
+      { stage: 'Background', count: 5, detail: '5 in progress · 2 disqualified' },
+      { stage: 'Conditional Offer', count: 3, detail: '3 extended · 1 pending' },
+      { stage: 'Hired', count: 2, detail: '2 accepted' },
     ],
 
     interview: {
@@ -84,11 +94,15 @@ export const jobPostings = [
       { agency: 'Cobb County Sheriff', salary: '$49,800 starting', delta: '+3.8% vs GCSO', tone: 'warning' },
       { agency: 'DeKalb County Sheriff', salary: '$46,200 starting', delta: '-3.8% vs GCSO', tone: 'success' },
     ],
-    salaryAnalysis: {
-      range: '$48,000 - $63,000 annually',
-      verdict: 'Below market rate vs. comparable metro Atlanta law-enforcement agencies',
-      gapPct: '12.8%',
-      note: 'Closing the gap with Gwinnett County Police would require raising starting pay to roughly $54,000.',
+    financialImpact: {
+      currentSalary: '$48,000 - $63,000',
+      recommendedSalary: '$54,000 - $66,000',
+      marketAverage: '$54,120 (Gwinnett County Police)',
+      competitivePosition: 'Below Market',
+      gaugePct: 35,
+      costIncrease: '+$6,000/yr per hire (≈$48,000/yr across 8 vacancies)',
+      costOfVacancy: '$612,000/yr in overtime backfill for 8 vacant patrol positions',
+      roi: 'Closing the pay gap is projected to reduce time-to-hire from 127 to under 100 days and cut overtime backfill costs.',
     },
 
     recommendations: [
@@ -99,15 +113,13 @@ export const jobPostings = [
       { tone: 'warning', text: 'Evaluate adding 3rd background investigator to reduce time-to-hire (currently 127 days avg)' },
     ],
 
-    history: [
-      { date: 'October 14, 2024', event: 'Posting opened — continuous recruitment' },
-      { date: 'January 15, 2026', event: '23rd application received' },
-      { date: 'February 06, 2026', event: 'Oral board interviews scheduled (8 candidates)' },
+    recruitmentTimeline: [
+      { label: 'Posting Created', date: 'October 14, 2024', status: 'done' },
+      { label: 'Applications Begin', date: 'October 14, 2024', status: 'done' },
+      { label: 'Current Status', date: 'January 15, 2026 — 23 applications, oral boards scheduled', status: 'current' },
+      { label: 'Posting Closes', date: 'Continuous recruitment (open until filled)', status: 'upcoming' },
+      { label: 'Expected Fill Date', date: '~April 2026 (estimated)', status: 'upcoming' },
     ],
-    budgetImpact: {
-      annualCostRange: '$384,000 - $504,000',
-      note: '8 vacancies × $48,000-$63,000 starting band, before benefits load.',
-    },
   },
 
   {
@@ -131,6 +143,15 @@ export const jobPostings = [
       'Only 1 new external application in the last 2 weeks',
     ],
 
+    executiveSummary: {
+      health: 'High Risk',
+      probability: 70,
+      primaryIssue: 'Applicant pool is thin for 2 openings and skews heavily internal, which would reduce patrol coverage if filled.',
+      recommendation: 'Proceed with the February 11 command interview panel and begin direct external recruitment outreach in parallel.',
+      deadline: 'Within 7 days, before the posting expires February 28.',
+      expectedResult: 'Outreach is projected to add 3-5 qualified external applicants before the posting closes, reducing reliance on internal transfers.',
+    },
+
     overview: {
       postedDate: 'October 15, 2024',
       timelineNote: 'EXTENDED TO: February 28, 2026',
@@ -152,6 +173,15 @@ export const jobPostings = [
       { value: 89, label: 'Job Posting Views' },
       { value: '13.5%', label: 'Conversion Rate', tone: 'warning' },
       { value: 110, label: 'Days Open' },
+    ],
+
+    pipeline: [
+      { stage: 'Applied', count: 12, detail: '7 internal · 5 external' },
+      { stage: 'Phone Screen', count: 10, detail: '10 passed initial review' },
+      { stage: 'Interview', count: 9, detail: '9 qualified, panel scheduled Feb 11' },
+      { stage: 'Background', count: 0, detail: 'Pending panel outcome' },
+      { stage: 'Conditional Offer', count: 0, detail: 'Pending panel outcome' },
+      { stage: 'Hired', count: 0, detail: 'Pending panel outcome' },
     ],
 
     applicantBreakdown: {
@@ -186,15 +216,24 @@ export const jobPostings = [
       { tone: 'warning', text: 'Direct recruitment outreach to expand the external applicant pool before next cycle' },
     ],
 
-    history: [
-      { date: 'October 15, 2024', event: 'Posting opened' },
-      { date: 'January 2026', event: 'Posting extended to February 28, 2026' },
-      { date: 'February 11, 2026', event: 'Command interview panel scheduled' },
-    ],
-    budgetImpact: {
-      annualCostRange: '$110,000 - $136,000',
-      note: '2 vacancies × $55,000-$68,000 starting band, before benefits load.',
+    financialImpact: {
+      currentSalary: '$55,000 - $68,000',
+      recommendedSalary: '$55,000 - $68,000 (no change recommended)',
+      marketAverage: '$58,000',
+      competitivePosition: 'At Market',
+      gaugePct: 55,
+      costIncrease: '$0 — salary is competitive, no increase recommended',
+      costOfVacancy: '$9,200/yr in IA case backlog and overtime for existing investigators (2 vacancies)',
+      roi: 'No salary action needed here; the ROI lever is faster external sourcing, not pay.',
     },
+
+    recruitmentTimeline: [
+      { label: 'Posting Created', date: 'October 15, 2024', status: 'done' },
+      { label: 'Applications Begin', date: 'October 15, 2024', status: 'done' },
+      { label: 'Current Status', date: 'January 2026 — posting extended, 12 applications, panel scheduled', status: 'current' },
+      { label: 'Posting Closes', date: 'February 28, 2026', status: 'upcoming' },
+      { label: 'Expected Fill Date', date: '~March 2026 (estimated)', status: 'upcoming' },
+    ],
   },
 
   {
@@ -218,6 +257,15 @@ export const jobPostings = [
       'Gwinnett County Police pays $54K for comparable shift work',
     ],
 
+    executiveSummary: {
+      health: 'Critical',
+      probability: 25,
+      primaryIssue: 'Starting pay trails both GCSO Patrol and Gwinnett County Police, and applicant velocity is far below normal for detention roles.',
+      recommendation: 'Increase salary to $45,000-47,000 to match Fulton/Cobb County and add a $2,000-3,000 sign-on bonus.',
+      deadline: 'Within 14 days, before the March 31 posting expiration.',
+      expectedResult: 'Matching peer-agency pay is projected to raise applications from 8 to 20-25 over the next recruitment cycle.',
+    },
+
     overview: {
       postedDate: 'October 27, 2024',
       timelineNote: 'EXTENDED TO: March 31, 2026',
@@ -226,6 +274,15 @@ export const jobPostings = [
       workLocation: 'Gwinnett County Detention Center',
       positions: ['1 vacancy'],
     },
+
+    pipeline: [
+      { stage: 'Applied', count: 8, detail: '8 received' },
+      { stage: 'Phone Screen', count: 5, detail: '5 passed initial review' },
+      { stage: 'Interview', count: 3, detail: '3 interviewed' },
+      { stage: 'Background', count: 1, detail: '1 in progress' },
+      { stage: 'Conditional Offer', count: 0, detail: 'None yet' },
+      { stage: 'Hired', count: 0, detail: 'None yet' },
+    ],
 
     metrics: [
       { value: 8, label: 'Total Applications' },
@@ -240,11 +297,15 @@ export const jobPostings = [
       { agency: 'Cobb County Sheriff', salary: '$43,500 starting', delta: '+3.6% vs GCSO', tone: 'warning' },
       { agency: 'DeKalb County Sheriff', salary: '$40,000 starting', delta: '-4.8% vs GCSO', tone: 'success' },
     ],
-    salaryAnalysis: {
-      range: '$42,000 - $52,000 annually',
-      verdict: 'Below Fulton/Cobb for comparable detention work',
-      gapPct: '7.1%',
-      note: 'Raising to $45K-47K would match Fulton/Cobb starting pay.',
+    financialImpact: {
+      currentSalary: '$42,000 - $52,000',
+      recommendedSalary: '$45,000 - $50,000',
+      marketAverage: '$45,800 (Fulton/Cobb avg)',
+      competitivePosition: 'Below Market',
+      gaugePct: 25,
+      costIncrease: '+$3,000/yr per hire plus a $2,000-3,000 one-time sign-on bonus',
+      costOfVacancy: '$31,000/yr in mandatory overtime backfill for 1 vacant detention post',
+      roi: 'The salary increase is projected to pay for itself within one year through reduced overtime backfill alone.',
     },
 
     recommendations: [
@@ -253,14 +314,13 @@ export const jobPostings = [
       { tone: 'warning', text: 'Expand recruitment: criminal justice colleges, military veteran outreach' },
     ],
 
-    history: [
-      { date: 'October 27, 2024', event: 'Posting opened' },
-      { date: 'January 2026', event: 'Posting extended to March 31, 2026' },
+    recruitmentTimeline: [
+      { label: 'Posting Created', date: 'October 27, 2024', status: 'done' },
+      { label: 'Applications Begin', date: 'October 27, 2024', status: 'done' },
+      { label: 'Current Status', date: 'January 2026 — only 8 applications in 98 days', status: 'current' },
+      { label: 'Posting Closes', date: 'March 31, 2026', status: 'upcoming' },
+      { label: 'Expected Fill Date', date: 'Unlikely before June 2026 without action', status: 'upcoming' },
     ],
-    budgetImpact: {
-      annualCostRange: '$42,000 - $52,000',
-      note: '1 vacancy × $42,000-$52,000 starting band, before benefits load.',
-    },
   },
 
   {
@@ -285,6 +345,15 @@ export const jobPostings = [
       'Salary is 9.5-15.6% below comparable county/private-sector roles',
     ],
 
+    executiveSummary: {
+      health: 'Critical',
+      probability: 18,
+      primaryIssue: 'Salary is below the local market and applicant volume is critically low.',
+      recommendation: 'Increase salary band to $42,000-50,000 and extend the posting by 30 days.',
+      deadline: 'Within 5 days, before the posting closes February 11.',
+      expectedResult: 'Projected applicant pool increases from 4 to approximately 15-20 qualified candidates.',
+    },
+
     overview: {
       postedDate: 'October 31, 2024',
       timelineNote: 'CLOSES: February 11, 2026 (9 DAYS)',
@@ -293,6 +362,15 @@ export const jobPostings = [
       workLocation: 'GCSO Headquarters',
       positions: ['1 vacancy'],
     },
+
+    pipeline: [
+      { stage: 'Applied', count: 4, detail: '4 received' },
+      { stage: 'Phone Screen', count: 3, detail: '3 passed initial review' },
+      { stage: 'Interview', count: 3, detail: '3 candidates (insufficient pool)' },
+      { stage: 'Background', count: 0, detail: 'Not started — pool too small' },
+      { stage: 'Conditional Offer', count: 0, detail: 'None yet' },
+      { stage: 'Hired', count: 0, detail: 'None yet' },
+    ],
 
     metrics: [
       { value: 4, label: 'Total Applications', tone: 'critical' },
@@ -314,11 +392,15 @@ export const jobPostings = [
       { agency: 'Private Sector (Gwinnett area)', salary: '$42,000 - $52,000', delta: 'GCSO pays 10.5-15.6% less', tone: 'critical' },
       { agency: "Other Sheriff's Offices", salary: '$37,000 - $48,000', delta: 'GCSO competitive with peers', tone: 'success' },
     ],
-    salaryAnalysis: {
-      range: '$38,000 - $45,000 annually',
-      verdict: 'Below every comparable benchmark except peer Sheriff\'s Offices',
-      gapPct: '9.5-15.6%',
-      note: 'Raising to $42K-50K would close the gap with county departments and private sector.',
+    financialImpact: {
+      currentSalary: '$38,000 - $45,000',
+      recommendedSalary: '$42,000 - $50,000',
+      marketAverage: '$46,000',
+      competitivePosition: 'Below Market',
+      gaugePct: 18,
+      costIncrease: '+$4,000-5,000/yr per hire',
+      costOfVacancy: '$18,500/yr in admin overtime and temp-staffing costs while vacant',
+      roi: 'Closing the gap is projected to increase qualified applicant volume 3-4x, reducing time-to-fill and temp-staffing costs.',
     },
 
     recommendations: [
@@ -330,14 +412,13 @@ export const jobPostings = [
     ],
     doNotProceedNote: 'DO NOT proceed with interviews of only 3 candidates — insufficient pool (need 8-12 minimum)',
 
-    history: [
-      { date: 'October 31, 2024', event: 'Posting opened' },
-      { date: 'February 11, 2026', event: 'Posting set to close — applicant pool still critically low' },
+    recruitmentTimeline: [
+      { label: 'Posting Created', date: 'October 31, 2024', status: 'done' },
+      { label: 'Applications Begin', date: 'October 31, 2024', status: 'done' },
+      { label: 'Current Status', date: 'January 2026 — only 4 applications, critically low pool', status: 'current' },
+      { label: 'Posting Closes', date: 'February 11, 2026 (9 days)', status: 'upcoming' },
+      { label: 'Expected Fill Date', date: 'At risk — unlikely to fill without extension', status: 'upcoming' },
     ],
-    budgetImpact: {
-      annualCostRange: '$38,000 - $45,000',
-      note: '1 vacancy × $38,000-$45,000 starting band, before benefits load.',
-    },
   },
 ];
 

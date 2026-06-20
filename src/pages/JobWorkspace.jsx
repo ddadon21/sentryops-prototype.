@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import {
-  ArrowLeft, Calendar, DollarSign, FileText, Users, TrendingUp, MessageCircle,
+  ArrowLeft, Calendar, DollarSign, FileText, TrendingUp, MessageCircle,
   X, Send, Sparkles, MapPin, Briefcase, Clock, AlertTriangle
 } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import DashboardLayout from '../layouts/DashboardLayout';
 import { hrNavigation, hrProfile, hrNotifications } from '../config/hrConfig';
-import { SectionHeader, StatusPill } from '../components/dashboard';
+import {
+  SectionHeader, StatusPill, ExecutiveDecisionSummary, PipelineFlow,
+  MarketGauge, MilestoneTimeline
+} from '../components/dashboard';
 import { getJobPosting } from '../data/jobPostings';
 
 const TONE_TEXT = {
@@ -81,6 +84,9 @@ export default function JobWorkspace() {
           </div>
         )}
 
+        {/* Executive Decision Summary — the single most important card */}
+        <ExecutiveDecisionSummary summary={job.executiveSummary} />
+
         {/* Executive Metrics */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
           {job.metrics.map((m, i) => (
@@ -92,173 +98,158 @@ export default function JobWorkspace() {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-
-          {/* Overview */}
+        {/* Applicant Pipeline */}
+        {job.pipeline && (
           <Card>
-            <SectionHeader icon={FileText} title="Overview" />
-            <div className="space-y-2 text-sm">
-              <div className="flex justify-between gap-3"><span className="text-secondary">Posted</span><span className="text-primary font-medium">{job.overview.postedDate}</span></div>
-              <div className="flex justify-between gap-3"><span className="text-secondary">Timeline</span><span className="text-primary font-medium text-right">{job.overview.timelineNote}</span></div>
-              <div className="flex justify-between gap-3"><span className="text-secondary">Salary Range</span><span className="text-primary font-medium">{job.overview.salaryRange}</span></div>
-              {job.overview.shiftDifferential && (
-                <div className="flex justify-between gap-3"><span className="text-secondary">Shift Differential</span><span className="text-primary font-medium">{job.overview.shiftDifferential}</span></div>
-              )}
-              <div className="flex justify-between gap-3"><span className="text-secondary">Classification</span><span className="text-primary font-medium text-right">{job.overview.classification}</span></div>
-              <div className="flex justify-between gap-3"><span className="text-secondary">Work Location</span><span className="text-primary font-medium text-right">{job.overview.workLocation}</span></div>
-            </div>
-            {job.overview.qualifications && (
-              <div className="mt-4 pt-4 border-t border-border">
-                <p className="text-xs font-bold text-secondary uppercase tracking-wide mb-2">Minimum Qualifications</p>
-                <ul className="text-sm text-secondary space-y-1">
-                  {job.overview.qualifications.map((q, i) => <li key={i}>• {q}</li>)}
-                </ul>
+            <SectionHeader icon={TrendingUp} title="Applicant Pipeline" />
+            <PipelineFlow stages={job.pipeline} />
+          </Card>
+        )}
+
+        {/* Financial Impact — merged Salary Analysis + Budget Impact */}
+        {job.financialImpact && (
+          <Card>
+            <SectionHeader icon={DollarSign} title="Financial Impact" />
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+              <div className="space-y-3 text-sm">
+                <div className="flex justify-between gap-3"><span className="text-secondary">Current Salary</span><span className="text-primary font-medium">{job.financialImpact.currentSalary}</span></div>
+                <div className="flex justify-between gap-3"><span className="text-secondary">Recommended Salary</span><span className="text-primary font-medium text-right">{job.financialImpact.recommendedSalary}</span></div>
+                <div className="flex justify-between gap-3"><span className="text-secondary">Market Average</span><span className="text-primary font-medium text-right">{job.financialImpact.marketAverage}</span></div>
+                <MarketGauge pct={job.financialImpact.gaugePct} position={job.financialImpact.competitivePosition} />
               </div>
+              <div className="space-y-3 text-sm border-t lg:border-t-0 lg:border-l border-border pt-4 lg:pt-0 lg:pl-5">
+                <div>
+                  <p className="text-xs font-bold text-secondary uppercase tracking-wide">Estimated Cost Increase</p>
+                  <p className="text-primary font-medium mt-0.5">{job.financialImpact.costIncrease}</p>
+                </div>
+                <div>
+                  <p className="text-xs font-bold text-secondary uppercase tracking-wide">Cost of Leaving Position Vacant</p>
+                  <p className="text-red-700 dark:text-red-400 font-medium mt-0.5">{job.financialImpact.costOfVacancy}</p>
+                </div>
+                <div>
+                  <p className="text-xs font-bold text-secondary uppercase tracking-wide">ROI of Increasing Salary</p>
+                  <p className="text-secondary mt-0.5">{job.financialImpact.roi}</p>
+                </div>
+              </div>
+            </div>
+          </Card>
+        )}
+
+        {/* Root Cause Analysis */}
+        {job.rootCause && (
+          <Card>
+            <SectionHeader icon={AlertTriangle} title="Root Cause Analysis" />
+            <ul className="text-sm text-secondary space-y-2">
+              {job.rootCause.map((r, i) => <li key={i}>• {r}</li>)}
+            </ul>
+          </Card>
+        )}
+
+        {/* AI Recommendations */}
+        <Card>
+          <SectionHeader icon={Sparkles} title="AI Recommendations" />
+          <div className="space-y-2">
+            {job.recommendations.map((r, i) => (
+              <div key={i} className={`text-sm px-3 py-2 rounded-lg border ${TONE_BG[r.tone] || TONE_BG.warning}`}>
+                <span className={TONE_TEXT[r.tone] || 'text-primary'}>{r.text}</span>
+              </div>
+            ))}
+          </div>
+          {job.doNotProceedNote && (
+            <p className="text-sm text-red-700 dark:text-red-400 font-bold mt-3 pt-3 border-t border-border">{job.doNotProceedNote}</p>
+          )}
+        </Card>
+
+        {/* Supporting Information */}
+        <div>
+          <SectionHeader title="Supporting Information" />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+
+            {/* Overview */}
+            <Card>
+              <SectionHeader icon={FileText} title="Overview" />
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between gap-3"><span className="text-secondary">Posted</span><span className="text-primary font-medium">{job.overview.postedDate}</span></div>
+                <div className="flex justify-between gap-3"><span className="text-secondary">Timeline</span><span className="text-primary font-medium text-right">{job.overview.timelineNote}</span></div>
+                <div className="flex justify-between gap-3"><span className="text-secondary">Salary Range</span><span className="text-primary font-medium">{job.overview.salaryRange}</span></div>
+                {job.overview.shiftDifferential && (
+                  <div className="flex justify-between gap-3"><span className="text-secondary">Shift Differential</span><span className="text-primary font-medium">{job.overview.shiftDifferential}</span></div>
+                )}
+                <div className="flex justify-between gap-3"><span className="text-secondary">Classification</span><span className="text-primary font-medium text-right">{job.overview.classification}</span></div>
+                <div className="flex justify-between gap-3"><span className="text-secondary">Work Location</span><span className="text-primary font-medium text-right">{job.overview.workLocation}</span></div>
+              </div>
+              {job.overview.qualifications && (
+                <div className="mt-4 pt-4 border-t border-border">
+                  <p className="text-xs font-bold text-secondary uppercase tracking-wide mb-2">Minimum Qualifications</p>
+                  <ul className="text-sm text-secondary space-y-1">
+                    {job.overview.qualifications.map((q, i) => <li key={i}>• {q}</li>)}
+                  </ul>
+                </div>
+              )}
+              {job.overview.benefits && (
+                <div className="mt-4 pt-4 border-t border-border">
+                  <p className="text-xs font-bold text-secondary uppercase tracking-wide mb-2">Benefits</p>
+                  <div className="space-y-1.5">
+                    {job.overview.benefits.map((b, i) => (
+                      <div key={i} className="flex justify-between gap-3 text-sm">
+                        <span className="text-secondary">{b.label}</span>
+                        <span className="text-primary font-medium text-right">{b.detail}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </Card>
+
+            {/* Interview Schedule */}
+            {job.interview && (
+              <Card>
+                <SectionHeader icon={Calendar} title="Interview Schedule" />
+                <p className="text-sm font-bold text-primary">{job.interview.title}</p>
+                <p className="text-sm text-secondary mt-1">{job.interview.date}</p>
+                <p className="text-sm text-secondary">{job.interview.location}</p>
+                {job.interview.panel && <p className="text-sm text-secondary mt-2">Panel: {job.interview.panel}</p>}
+                <p className="text-sm text-primary font-medium mt-2 flex items-center gap-1.5"><Clock className="w-3.5 h-3.5" />{job.interview.candidates}</p>
+              </Card>
             )}
-            {job.overview.benefits && (
-              <div className="mt-4 pt-4 border-t border-border">
-                <p className="text-xs font-bold text-secondary uppercase tracking-wide mb-2">Benefits</p>
-                <div className="space-y-1.5">
-                  {job.overview.benefits.map((b, i) => (
-                    <div key={i} className="flex justify-between gap-3 text-sm">
-                      <span className="text-secondary">{b.label}</span>
-                      <span className="text-primary font-medium text-right">{b.detail}</span>
+
+            {/* Competitive Analysis */}
+            {job.competitive && (
+              <Card>
+                <SectionHeader icon={TrendingUp} title="Competitive Analysis" />
+                <div className="space-y-2">
+                  {job.competitive.map((c, i) => (
+                    <div key={i} className="flex items-center justify-between gap-3 text-sm py-1.5 border-b border-border last:border-0">
+                      <span className="text-secondary">{c.agency}</span>
+                      <div className="text-right">
+                        <p className="text-primary font-medium">{c.salary}</p>
+                        <p className={`text-xs ${TONE_TEXT[c.tone] || 'text-secondary'}`}>{c.delta}</p>
+                      </div>
                     </div>
                   ))}
                 </div>
-              </div>
+              </Card>
             )}
-          </Card>
 
-          {/* Applicant Pipeline */}
-          <Card>
-            <SectionHeader icon={TrendingUp} title="Applicant Pipeline" />
-            {job.pipeline ? (
-              <div className="space-y-3">
-                {job.pipeline.map((stage, i) => (
-                  <div key={i}>
-                    <div className="flex justify-between text-sm mb-1">
-                      <span className="text-primary font-medium">{stage.stage}</span>
-                      <span className="text-secondary">{stage.detail}</span>
-                    </div>
-                    <div className="w-full h-2 bg-slate-100 dark:bg-zinc-800 rounded-full overflow-hidden">
-                      <div className={`h-full ${stage.color}`} style={{ width: `${stage.pct}%` }} />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : job.applicantBreakdown ? (
-              <div className="grid grid-cols-1 gap-4 text-sm">
-                <div>
-                  <p className="text-xs font-bold text-secondary uppercase tracking-wide mb-2">Internal ({job.applicantBreakdown.internal.length})</p>
-                  <ul className="text-secondary space-y-1">{job.applicantBreakdown.internal.map((p, i) => <li key={i}>• {p}</li>)}</ul>
-                </div>
-                <div>
-                  <p className="text-xs font-bold text-secondary uppercase tracking-wide mb-2">External ({job.applicantBreakdown.external.length})</p>
-                  <ul className="text-secondary space-y-1">{job.applicantBreakdown.external.map((p, i) => <li key={i}>• {p}</li>)}</ul>
-                </div>
-              </div>
-            ) : (
-              <p className="text-sm text-secondary">{job.applicants} applicants in the pool — no detailed stage breakdown recorded yet.</p>
+            {/* Recruitment Timeline */}
+            {job.recruitmentTimeline && (
+              <Card>
+                <SectionHeader icon={Clock} title="Recruitment Timeline" />
+                <MilestoneTimeline milestones={job.recruitmentTimeline} />
+              </Card>
             )}
-          </Card>
 
-          {/* Interview Schedule */}
-          {job.interview && (
+            {/* Documents */}
             <Card>
-              <SectionHeader icon={Calendar} title="Interview Schedule" />
-              <p className="text-sm font-bold text-primary">{job.interview.title}</p>
-              <p className="text-sm text-secondary mt-1">{job.interview.date}</p>
-              <p className="text-sm text-secondary">{job.interview.location}</p>
-              {job.interview.panel && <p className="text-sm text-secondary mt-2">Panel: {job.interview.panel}</p>}
-              <p className="text-sm text-primary font-medium mt-2 flex items-center gap-1.5"><Clock className="w-3.5 h-3.5" />{job.interview.candidates}</p>
-            </Card>
-          )}
-
-          {/* Competitive Analysis */}
-          {job.competitive && (
-            <Card>
-              <SectionHeader icon={TrendingUp} title="Competitive Analysis" />
-              <div className="space-y-2">
-                {job.competitive.map((c, i) => (
-                  <div key={i} className="flex items-center justify-between gap-3 text-sm py-1.5 border-b border-border last:border-0">
-                    <span className="text-secondary">{c.agency}</span>
-                    <div className="text-right">
-                      <p className="text-primary font-medium">{c.salary}</p>
-                      <p className={`text-xs ${TONE_TEXT[c.tone] || 'text-secondary'}`}>{c.delta}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </Card>
-          )}
-
-          {/* Salary Analysis */}
-          {job.salaryAnalysis && (
-            <Card>
-              <SectionHeader icon={DollarSign} title="Salary Analysis" />
-              <p className="text-sm text-secondary">Range</p>
-              <p className="text-lg font-bold text-primary">{job.salaryAnalysis.range}</p>
-              <p className="text-sm text-amber-700 dark:text-amber-400 font-medium mt-2">{job.salaryAnalysis.verdict}</p>
-              <p className="text-sm text-secondary mt-2">{job.salaryAnalysis.note}</p>
-            </Card>
-          )}
-
-          {/* Root Cause Analysis */}
-          {job.rootCause && (
-            <Card>
-              <SectionHeader icon={AlertTriangle} title="Root Cause Analysis" />
-              <ul className="text-sm text-secondary space-y-2">
-                {job.rootCause.map((r, i) => <li key={i}>• {r}</li>)}
+              <SectionHeader icon={FileText} title="Documents" />
+              <ul className="text-sm text-secondary space-y-1.5">
+                <li className="flex items-center gap-2"><FileText className="w-3.5 h-3.5" />Job Description — {job.title}.pdf</li>
+                <li className="flex items-center gap-2"><FileText className="w-3.5 h-3.5" />Posting Approval Memo.pdf</li>
+                <li className="flex items-center gap-2"><FileText className="w-3.5 h-3.5" />Salary Survey — Comparable Agencies.xlsx</li>
               </ul>
             </Card>
-          )}
 
-          {/* AI Recommendations */}
-          <Card>
-            <SectionHeader icon={Sparkles} title="AI Recommendations" />
-            <div className="space-y-2">
-              {job.recommendations.map((r, i) => (
-                <div key={i} className={`text-sm px-3 py-2 rounded-lg border ${TONE_BG[r.tone] || TONE_BG.warning}`}>
-                  <span className={TONE_TEXT[r.tone] || 'text-primary'}>{r.text}</span>
-                </div>
-              ))}
-            </div>
-            {job.doNotProceedNote && (
-              <p className="text-sm text-red-700 dark:text-red-400 font-bold mt-3 pt-3 border-t border-border">{job.doNotProceedNote}</p>
-            )}
-          </Card>
-
-          {/* Hiring History */}
-          <Card>
-            <SectionHeader icon={Clock} title="Hiring History" />
-            <div className="space-y-2">
-              {job.history.map((h, i) => (
-                <div key={i} className="flex gap-3 text-sm">
-                  <span className="text-secondary whitespace-nowrap">{h.date}</span>
-                  <span className="text-primary">{h.event}</span>
-                </div>
-              ))}
-            </div>
-          </Card>
-
-          {/* Budget Impact */}
-          <Card>
-            <SectionHeader icon={DollarSign} title="Budget Impact" />
-            <p className="text-lg font-bold text-primary">{job.budgetImpact.annualCostRange}</p>
-            <p className="text-sm text-secondary mt-1">{job.budgetImpact.note}</p>
-          </Card>
-
-          {/* Documents */}
-          <Card>
-            <SectionHeader icon={FileText} title="Documents" />
-            <ul className="text-sm text-secondary space-y-1.5">
-              <li className="flex items-center gap-2"><FileText className="w-3.5 h-3.5" />Job Description — {job.title}.pdf</li>
-              <li className="flex items-center gap-2"><FileText className="w-3.5 h-3.5" />Posting Approval Memo.pdf</li>
-              <li className="flex items-center gap-2"><FileText className="w-3.5 h-3.5" />Salary Survey — Comparable Agencies.xlsx</li>
-            </ul>
-          </Card>
-
+          </div>
         </div>
       </div>
 

@@ -14,3 +14,7 @@ export { default as SupportingMetricCard } from './SupportingMetricCard';
 export { default as StatusPill } from './StatusPill';
 export { default as SectionHeader } from './SectionHeader';
 export { default as JobCard } from './JobCard';
+export { default as ExecutiveDecisionSummary } from './ExecutiveDecisionSummary';
+export { default as PipelineFlow } from './PipelineFlow';
+export { default as MarketGauge } from './MarketGauge';
+export { default as MilestoneTimeline } from './MilestoneTimeline';
