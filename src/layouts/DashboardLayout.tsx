@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { useActivity, type ActivitySeverity } from '../contexts/ActivityContext';
 import LiveEventPopups from '../components/LiveEventPopups';
+import CommandPalette from '../components/CommandPalette';
 
 // ── Shared types ──────────────────────────────────────────────
 
@@ -44,6 +45,8 @@ export interface NotificationItem {
   read?: boolean;
 }
 
+export type SystemStatus = 'operational' | 'warning' | 'critical' | 'maintenance';
+
 interface DashboardLayoutProps {
   children: React.ReactNode;
   navigation?: NavItem[];
@@ -51,7 +54,19 @@ interface DashboardLayoutProps {
   notifications?: NotificationItem[];
   settingsRoute?: string;
   orgLabel?: string;
+  systemStatus?: SystemStatus;
 }
+
+// Status dot color — reflects platform health at a glance, before the user
+// has even opened a page. Defaults to green (all systems operational).
+const systemStatusColor: Record<SystemStatus, string> = {
+  operational: '#22C55E',
+  warning: '#F59E0B',
+  critical: '#EF4444',
+  maintenance: '#3B82F6',
+};
+
+const isMac = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform ?? navigator.userAgent);
 
 // ── Default config (Command module) ───────────────────────────
 
@@ -121,7 +136,8 @@ export default function DashboardLayout({
   profile = defaultProfile,
   notifications = defaultNotifications,
   settingsRoute = '/command/settings',
-  orgLabel = 'Gwinnett County Sheriff\'s Office'
+  orgLabel = 'Gwinnett County Sheriff\'s Office',
+  systemStatus = 'operational'
 }: DashboardLayoutProps) {
   const navigate = useNavigate();
   const location = useLocation();
@@ -135,10 +151,37 @@ export default function DashboardLayout({
   const [expandedSubmenu, setExpandedSubmenu] = useState<string | null>(null);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+  const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
+  const [commandPaletteInitialQuery, setCommandPaletteInitialQuery] = useState('');
 
   useEffect(() => {
     localStorage.setItem('sidebarCollapsed', sidebarCollapsed.toString());
   }, [sidebarCollapsed]);
+
+  const openCommandPalette = (initialQuery = '') => {
+    setCommandPaletteInitialQuery(initialQuery);
+    setCommandPaletteOpen(true);
+  };
+
+  useEffect(() => {
+    const handleGlobalKeyDown = (event: KeyboardEvent) => {
+      const isCmdK = (event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k';
+      if (isCmdK) {
+        event.preventDefault();
+        openCommandPalette();
+      }
+    };
+    document.addEventListener('keydown', handleGlobalKeyDown);
+    return () => document.removeEventListener('keydown', handleGlobalKeyDown);
+  }, []);
+
+  const handleSearchInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key.length === 1 && !event.metaKey && !event.ctrlKey && !event.altKey) {
+      event.preventDefault();
+      (event.target as HTMLInputElement).blur();
+      openCommandPalette(event.key);
+    }
+  };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -374,13 +417,25 @@ export default function DashboardLayout({
               >
                 <Menu className="w-5 h-5 text-muted" />
               </button>
-              <div className="w-44 relative hidden sm:block">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted" />
+              <div className="w-56 relative hidden sm:block">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted pointer-events-none" />
+                <span
+                  className="absolute left-[30px] top-1/2 -translate-y-1/2 w-[7px] h-[7px] rounded-full pointer-events-none"
+                  style={{ backgroundColor: systemStatusColor[systemStatus], boxShadow: `0 0 0 2px ${systemStatusColor[systemStatus]}22` }}
+                  title={`Platform status: ${systemStatus}`}
+                />
                 <input
                   type="text"
-                  placeholder="Quick search…"
-                  className="w-full pl-9 pr-3 py-1.5 bg-white dark:bg-zinc-900/40 border border-black/[0.08] dark:border-slate-700/40 rounded-lg text-[12px] text-primary placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-300 dark:focus:border-slate-600 shadow-[0_1px_2px_rgba(0,0,0,0.04)] dark:shadow-none"
+                  readOnly
+                  placeholder="Search SentryOps…"
+                  onClick={() => openCommandPalette()}
+                  onFocus={() => openCommandPalette()}
+                  onKeyDown={handleSearchInputKeyDown}
+                  className="w-full pl-[46px] pr-12 py-1.5 bg-white dark:bg-zinc-900/40 border border-black/[0.08] dark:border-slate-700/40 rounded-lg text-[12px] text-primary placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-300 dark:focus:border-slate-600 shadow-[0_1px_2px_rgba(0,0,0,0.04)] dark:shadow-none cursor-pointer"
                 />
+                <kbd className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-medium text-muted pointer-events-none">
+                  {isMac ? '⌘K' : 'Ctrl K'}
+                </kbd>
               </div>
             </div>
 
@@ -531,6 +586,13 @@ export default function DashboardLayout({
 
       {/* Live agency event pop-ups (Activity Center) — bottom-left */}
       <LiveEventPopups sidebarCollapsed={sidebarCollapsed} />
+
+      {/* Command Palette */}
+      <CommandPalette
+        open={commandPaletteOpen}
+        initialQuery={commandPaletteInitialQuery}
+        onClose={() => setCommandPaletteOpen(false)}
+      />
     </div>
   );
 }
