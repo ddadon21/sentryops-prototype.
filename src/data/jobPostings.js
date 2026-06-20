@@ -79,6 +79,32 @@ export const jobPostings = [
       { stage: 'Hired', count: 2, detail: '2 accepted' },
     ],
 
+    applicantList: [
+      { id: 'r-okafor', name: 'Recruit R. Okafor', appliedDate: 'Nov 18, 2024', source: 'Indeed.com', stage: 'Hired', aiScore: 91, qualifications: ['POST Certified', '2 yrs military police experience', 'Clean driving record'], backgroundStatus: 'Cleared', offerStatus: 'Accepted', notes: [{ date: 'Jan 09, 2026', author: 'HR Director', text: 'Accepted offer, academy intake scheduled.' }] },
+      { id: 'd-foster', name: 'D. Foster', appliedDate: 'Dec 02, 2024', source: 'GCSO Careers Site', stage: 'Hired', aiScore: 88, qualifications: ['POST Certified', 'Prior Cobb County PD (2 yrs)'], backgroundStatus: 'Cleared', offerStatus: 'Accepted', notes: [{ date: 'Jan 12, 2026', author: 'HR Director', text: 'Start date confirmed for Feb cohort.' }] },
+      { id: 'j-wilson', name: 'J. Wilson', appliedDate: 'Dec 10, 2024', source: 'Referral', stage: 'Conditional Offer', aiScore: 86, qualifications: ['POST Certified', 'EMT-Basic certification'], backgroundStatus: 'Cleared', offerStatus: 'Pending', notes: [{ date: 'Jan 29, 2026', author: 'HR Director', text: 'Offer extended — acceptance deadline 02/05. Needs follow-up.' }] },
+      { id: 'm-alvarez', name: 'M. Alvarez', appliedDate: 'Nov 22, 2024', source: 'Indeed.com', stage: 'Background', aiScore: 79, qualifications: ['Academy eligible', 'High school diploma'], backgroundStatus: 'In Progress', offerStatus: 'None', notes: [{ date: 'Jan 20, 2026', author: 'Background Investigator', text: 'Reference checks in progress, no concerns so far.' }] },
+      { id: 'c-bennett', name: 'C. Bennett', appliedDate: 'Dec 05, 2024', source: 'LinkedIn', stage: 'Background', aiScore: 81, qualifications: ['POST Certified', "Bachelor's in Criminal Justice"], backgroundStatus: 'In Progress', offerStatus: 'None', notes: [] },
+      { id: 's-rourke', name: 'S. Rourke', appliedDate: 'Dec 14, 2024', source: 'Indeed.com', stage: 'Background', aiScore: 74, qualifications: ['Academy eligible', '1 yr loss-prevention security'], backgroundStatus: 'In Progress', offerStatus: 'None', notes: [] },
+      { id: 'b-nguyen', name: 'B. Nguyen', appliedDate: 'Nov 30, 2024', source: 'Indeed.com', stage: 'Disqualified', aiScore: 52, qualifications: ['Academy eligible'], backgroundStatus: 'Disqualified', offerStatus: 'None', notes: [{ date: 'Jan 18, 2026', author: 'Background Investigator', text: 'Disqualified — undisclosed credit judgment found in background check.' }] },
+      { id: 't-hargrove', name: 'T. Hargrove', appliedDate: 'Dec 08, 2024', source: 'GCSO Careers Site', stage: 'Disqualified', aiScore: 48, qualifications: ['Academy eligible'], backgroundStatus: 'Disqualified', offerStatus: 'None', notes: [{ date: 'Jan 21, 2026', author: 'Background Investigator', text: 'Disqualified — failed polygraph.' }] },
+      { id: 'a-prentiss', name: 'A. Prentiss', appliedDate: 'Dec 18, 2024', source: 'Indeed.com', stage: 'Interview', aiScore: 83, qualifications: ['POST Certified', '3 yrs corrections experience'], backgroundStatus: 'Not Started', offerStatus: 'None', notes: [{ date: 'Jan 25, 2026', author: 'HR Director', text: 'Scheduled for Feb 06 oral board.' }] },
+      { id: 'k-delgado', name: 'K. Delgado', appliedDate: 'Dec 20, 2024', source: 'Referral', stage: 'Interview', aiScore: 80, qualifications: ['Academy eligible', "Associate's in Criminal Justice"], backgroundStatus: 'Not Started', offerStatus: 'None', notes: [{ date: 'Jan 25, 2026', author: 'HR Director', text: 'Scheduled for Feb 06 oral board.' }] },
+      { id: 'e-mercer', name: 'E. Mercer', appliedDate: 'Dec 27, 2024', source: 'LinkedIn', stage: 'Interview', aiScore: 77, qualifications: ['POST Certified', 'Prior Forsyth County reserve deputy'], backgroundStatus: 'Not Started', offerStatus: 'None', notes: [{ date: 'Jan 25, 2026', author: 'HR Director', text: 'Scheduled for Feb 06 oral board.' }] },
+      { id: 'p-quintero', name: 'P. Quintero', appliedDate: 'Jan 02, 2025', source: 'Indeed.com', stage: 'Interview', aiScore: 75, qualifications: ['Academy eligible'], backgroundStatus: 'Not Started', offerStatus: 'None', notes: [{ date: 'Jan 25, 2026', author: 'HR Director', text: 'Scheduled for Feb 06 oral board.' }] },
+      { id: 'l-stratton', name: 'L. Stratton', appliedDate: 'Jan 06, 2025', source: 'GCSO Careers Site', stage: 'Interview', aiScore: 73, qualifications: ['Academy eligible', '4 yrs U.S. Army MP'], backgroundStatus: 'Not Started', offerStatus: 'None', notes: [{ date: 'Jan 25, 2026', author: 'HR Director', text: 'Scheduled for Feb 06 oral board.' }] },
+      { id: 'h-rivas', name: 'H. Rivas', appliedDate: 'Jan 09, 2025', source: 'Indeed.com', stage: 'Interview', aiScore: 71, qualifications: ['Academy eligible'], backgroundStatus: 'Not Started', offerStatus: 'None', notes: [{ date: 'Jan 25, 2026', author: 'HR Director', text: 'Scheduled for Feb 06 oral board.' }] },
+      { id: 'n-castillo', name: 'N. Castillo', appliedDate: 'Jan 11, 2025', source: 'Referral', stage: 'Interview', aiScore: 69, qualifications: ['Academy eligible'], backgroundStatus: 'Not Started', offerStatus: 'None', notes: [{ date: 'Jan 25, 2026', author: 'HR Director', text: 'Scheduled for Feb 06 oral board.' }] },
+      { id: 'o-whitfield', name: 'O. Whitfield', appliedDate: 'Jan 12, 2025', source: 'Indeed.com', stage: 'Interview', aiScore: 68, qualifications: ['Academy eligible'], backgroundStatus: 'Not Started', offerStatus: 'None', notes: [{ date: 'Jan 25, 2026', author: 'HR Director', text: 'Scheduled for Feb 06 oral board.' }] },
+      { id: 'w-pham', name: 'W. Pham', appliedDate: 'Jan 13, 2025', source: 'Indeed.com', stage: 'Phone Screen', aiScore: 64, qualifications: ['Academy eligible'], backgroundStatus: 'Not Started', offerStatus: 'None', notes: [{ date: 'Jan 28, 2026', author: 'HR Director', text: 'Passed phone screen, awaiting next oral board cohort.' }] },
+      { id: 'g-tolliver-1', name: 'G. Tolliver', appliedDate: 'Nov 25, 2024', source: 'Indeed.com', stage: 'Disqualified', aiScore: 41, qualifications: [], backgroundStatus: 'Not Started', offerStatus: 'None', notes: [{ date: 'Dec 10, 2024', author: 'HR Director', text: 'Disqualified at phone screen — did not meet minimum requirements.' }] },
+      { id: 'f-decker', name: 'F. Decker', appliedDate: 'Nov 28, 2024', source: 'LinkedIn', stage: 'Disqualified', aiScore: 38, qualifications: [], backgroundStatus: 'Not Started', offerStatus: 'None', notes: [{ date: 'Dec 12, 2024', author: 'HR Director', text: 'Disqualified at phone screen — failed to meet age requirement.' }] },
+      { id: 'r-conley', name: 'R. Conley', appliedDate: 'Dec 01, 2024', source: 'Indeed.com', stage: 'Disqualified', aiScore: 35, qualifications: [], backgroundStatus: 'Not Started', offerStatus: 'None', notes: [{ date: 'Dec 14, 2024', author: 'HR Director', text: 'Disqualified at phone screen — withdrew application.' }] },
+      { id: 'j-abara', name: 'J. Abara', appliedDate: 'Dec 03, 2024', source: 'GCSO Careers Site', stage: 'Disqualified', aiScore: 33, qualifications: [], backgroundStatus: 'Not Started', offerStatus: 'None', notes: [{ date: 'Dec 16, 2024', author: 'HR Director', text: 'Disqualified at phone screen — criminal history disclosure.' }] },
+      { id: 's-okonkwo', name: 'S. Okonkwo', appliedDate: 'Dec 06, 2024', source: 'Indeed.com', stage: 'Disqualified', aiScore: 30, qualifications: [], backgroundStatus: 'Not Started', offerStatus: 'None', notes: [{ date: 'Dec 18, 2024', author: 'HR Director', text: 'Disqualified at phone screen — driving record.' }] },
+      { id: 'v-marsh', name: 'V. Marsh', appliedDate: 'Dec 09, 2024', source: 'Referral', stage: 'Disqualified', aiScore: 28, qualifications: [], backgroundStatus: 'Not Started', offerStatus: 'None', notes: [{ date: 'Dec 20, 2024', author: 'HR Director', text: 'Disqualified at phone screen — incomplete application.' }] },
+    ],
+
     interview: {
       title: 'Oral Board Interviews',
       date: 'February 06, 2026',
@@ -203,6 +229,21 @@ export const jobPostings = [
       ],
     },
 
+    applicantList: [
+      { id: 'm-johnson', name: 'Cpl. M. Johnson', appliedDate: 'Oct 22, 2024', source: 'Internal Transfer', stage: 'Interview', aiScore: 84, qualifications: ['Patrol Division (6 yrs GCSO)', 'POST Certified'], backgroundStatus: 'Not Started', offerStatus: 'None', internal: true, notes: [{ date: 'Jan 28, 2026', author: 'HR Director', text: 'Scheduled for Feb 11 command panel.' }] },
+      { id: 'r-williams', name: 'Deputy R. Williams', appliedDate: 'Oct 24, 2024', source: 'Internal Transfer', stage: 'Interview', aiScore: 87, qualifications: ['Criminal Investigations (5 yrs)', 'POST Certified'], backgroundStatus: 'Not Started', offerStatus: 'None', internal: true, notes: [{ date: 'Jan 28, 2026', author: 'HR Director', text: 'Scheduled for Feb 11 command panel.' }] },
+      { id: 'k-thompson', name: 'Deputy K. Thompson', appliedDate: 'Oct 29, 2024', source: 'Internal Transfer', stage: 'Interview', aiScore: 75, qualifications: ['Patrol Division (4 yrs)', 'POST Certified'], backgroundStatus: 'Not Started', offerStatus: 'None', internal: true, notes: [{ date: 'Jan 28, 2026', author: 'HR Director', text: 'Scheduled for Feb 11 command panel.' }] },
+      { id: 'l-martinez', name: 'Sgt. L. Martinez', appliedDate: 'Nov 02, 2024', source: 'Internal Transfer', stage: 'Interview', aiScore: 89, qualifications: ['Court Services (8 yrs)', 'POST Certified'], backgroundStatus: 'Not Started', offerStatus: 'None', internal: true, notes: [{ date: 'Jan 28, 2026', author: 'HR Director', text: 'Scheduled for Feb 11 command panel.' }] },
+      { id: 'j-chen', name: 'Deputy J. Chen', appliedDate: 'Nov 05, 2024', source: 'Internal Transfer', stage: 'Interview', aiScore: 72, qualifications: ['Patrol Division (3.5 yrs)', 'POST Certified'], backgroundStatus: 'Not Started', offerStatus: 'None', internal: true, notes: [{ date: 'Jan 28, 2026', author: 'HR Director', text: 'Scheduled for Feb 11 command panel.' }] },
+      { id: 's-anderson', name: 'Deputy S. Anderson', appliedDate: 'Nov 08, 2024', source: 'Internal Transfer', stage: 'Disqualified', aiScore: 58, qualifications: ['Detention Center (4 yrs)'], backgroundStatus: 'Not Started', offerStatus: 'None', internal: true, notes: [{ date: 'Jan 10, 2026', author: 'HR Director', text: 'Disqualified — lacks required 3+ yrs sworn law enforcement experience.' }] },
+      { id: 't-wilson-bi', name: 'Deputy T. Wilson', appliedDate: 'Nov 10, 2024', source: 'Internal Transfer', stage: 'Disqualified', aiScore: 55, qualifications: ['Training Division (7 yrs)'], backgroundStatus: 'Not Started', offerStatus: 'None', internal: true, notes: [{ date: 'Jan 11, 2026', author: 'HR Director', text: 'Disqualified — withdrew to remain in Training Division.' }] },
+      { id: 'k-davis', name: 'Deputy K. Davis', appliedDate: 'Nov 14, 2024', source: 'Referral', stage: 'Interview', aiScore: 81, qualifications: ['DeKalb County Sheriff (5 yrs)', 'POST Certified'], backgroundStatus: 'Not Started', offerStatus: 'None', internal: false, notes: [{ date: 'Jan 28, 2026', author: 'HR Director', text: 'Scheduled for Feb 11 command panel.' }] },
+      { id: 'm-brown', name: 'Detective M. Brown', appliedDate: 'Nov 19, 2024', source: 'LinkedIn', stage: 'Interview', aiScore: 90, qualifications: ['Clayton County Police (6 yrs)', 'POST Certified'], backgroundStatus: 'Not Started', offerStatus: 'None', internal: false, notes: [{ date: 'Jan 28, 2026', author: 'HR Director', text: 'Scheduled for Feb 11 command panel.' }] },
+      { id: 'r-garcia', name: 'Investigator R. Garcia', appliedDate: 'Nov 27, 2024', source: 'Indeed.com', stage: 'Interview', aiScore: 78, qualifications: ['Cobb County Sheriff (4 yrs)', 'POST Certified'], backgroundStatus: 'Not Started', offerStatus: 'None', internal: false, notes: [{ date: 'Jan 28, 2026', author: 'HR Director', text: 'Scheduled for Feb 11 command panel.' }] },
+      { id: 'l-robinson', name: 'Deputy L. Robinson', appliedDate: 'Dec 03, 2024', source: 'Indeed.com', stage: 'Interview', aiScore: 70, qualifications: ['Forsyth County Sheriff (3.5 yrs)', 'POST Certified'], backgroundStatus: 'Not Started', offerStatus: 'None', internal: false, notes: [{ date: 'Jan 28, 2026', author: 'HR Director', text: 'Scheduled for Feb 11 command panel.' }] },
+      { id: 'j-peterson', name: 'Sgt. J. Peterson', appliedDate: 'Jan 02, 2025', source: 'Referral', stage: 'Disqualified', aiScore: 60, qualifications: ['Barrow County Sheriff (7 yrs)'], backgroundStatus: 'Not Started', offerStatus: 'None', internal: false, notes: [{ date: 'Jan 22, 2026', author: 'HR Director', text: 'Disqualified at phone screen — relocation requirement not met.' }] },
+    ],
+
     interview: {
       title: 'Command Interview Panel',
       date: 'February 11, 2026 · 10:00 AM - 3:00 PM',
@@ -282,6 +323,17 @@ export const jobPostings = [
       { stage: 'Background', count: 1, detail: '1 in progress' },
       { stage: 'Conditional Offer', count: 0, detail: 'None yet' },
       { stage: 'Hired', count: 0, detail: 'None yet' },
+    ],
+
+    applicantList: [
+      { id: 'c-osei', name: 'C. Osei', appliedDate: 'Oct 30, 2024', source: 'Indeed.com', stage: 'Background', aiScore: 76, qualifications: ['HS diploma', '2 yrs private security'], backgroundStatus: 'In Progress', offerStatus: 'None', notes: [{ date: 'Jan 22, 2026', author: 'Background Investigator', text: 'Background check in progress, no issues so far.' }] },
+      { id: 'd-mabry', name: 'D. Mabry', appliedDate: 'Nov 06, 2024', source: 'GCSO Careers Site', stage: 'Interview', aiScore: 70, qualifications: ['HS diploma', '1 yr corrections (county jail)'], backgroundStatus: 'Not Started', offerStatus: 'None', notes: [{ date: 'Jan 20, 2026', author: 'HR Director', text: 'Interviewed — decision pending.' }] },
+      { id: 'r-pace', name: 'R. Pace', appliedDate: 'Nov 19, 2024', source: 'Indeed.com', stage: 'Interview', aiScore: 66, qualifications: ['HS diploma'], backgroundStatus: 'Not Started', offerStatus: 'None', notes: [{ date: 'Jan 20, 2026', author: 'HR Director', text: 'Interviewed — decision pending.' }] },
+      { id: 'l-asante', name: 'L. Asante', appliedDate: 'Dec 02, 2024', source: 'Indeed.com', stage: 'Phone Screen', aiScore: 60, qualifications: ['HS diploma'], backgroundStatus: 'Not Started', offerStatus: 'None', notes: [{ date: 'Dec 18, 2024', author: 'HR Director', text: 'Passed phone screen, awaiting interview scheduling.' }] },
+      { id: 'g-medina', name: 'G. Medina', appliedDate: 'Dec 09, 2024', source: 'Referral', stage: 'Phone Screen', aiScore: 58, qualifications: ['HS diploma'], backgroundStatus: 'Not Started', offerStatus: 'None', notes: [{ date: 'Dec 22, 2024', author: 'HR Director', text: 'Passed phone screen, awaiting interview scheduling.' }] },
+      { id: 'b-overby', name: 'B. Overby', appliedDate: 'Dec 15, 2024', source: 'Indeed.com', stage: 'Disqualified', aiScore: 35, qualifications: [], backgroundStatus: 'Not Started', offerStatus: 'None', notes: [{ date: 'Dec 28, 2024', author: 'HR Director', text: 'Disqualified at phone screen — did not meet age requirement.' }] },
+      { id: 'k-burrell', name: 'K. Burrell', appliedDate: 'Dec 21, 2024', source: 'Indeed.com', stage: 'Disqualified', aiScore: 30, qualifications: [], backgroundStatus: 'Not Started', offerStatus: 'None', notes: [{ date: 'Jan 03, 2026', author: 'HR Director', text: 'Disqualified at phone screen — withdrew application.' }] },
+      { id: 'p-saldana', name: 'P. Saldana', appliedDate: 'Jan 04, 2025', source: 'GCSO Careers Site', stage: 'Disqualified', aiScore: 28, qualifications: [], backgroundStatus: 'Not Started', offerStatus: 'None', notes: [{ date: 'Jan 15, 2026', author: 'HR Director', text: 'Disqualified at phone screen — incomplete application.' }] },
     ],
 
     metrics: [
@@ -372,6 +424,13 @@ export const jobPostings = [
       { stage: 'Hired', count: 0, detail: 'None yet' },
     ],
 
+    applicantList: [
+      { id: 't-isaacs', name: 'T. Isaacs', appliedDate: 'Nov 04, 2024', source: 'Indeed.com', stage: 'Interview', aiScore: 74, qualifications: ['HS diploma', '3 yrs administrative support'], backgroundStatus: 'Not Started', offerStatus: 'None', notes: [{ date: 'Jan 24, 2026', author: 'HR Director', text: 'Interviewed — strong candidate, decision pending insufficient pool concerns.' }] },
+      { id: 'm-dunbar', name: 'M. Dunbar', appliedDate: 'Nov 21, 2024', source: 'GCSO Careers Site', stage: 'Interview', aiScore: 68, qualifications: ['HS diploma', '2 yrs office administration'], backgroundStatus: 'Not Started', offerStatus: 'None', notes: [{ date: 'Jan 24, 2026', author: 'HR Director', text: 'Interviewed — decision pending.' }] },
+      { id: 'j-everhart', name: 'J. Everhart', appliedDate: 'Dec 08, 2024', source: 'Indeed.com', stage: 'Interview', aiScore: 61, qualifications: ['HS diploma'], backgroundStatus: 'Not Started', offerStatus: 'None', notes: [{ date: 'Jan 24, 2026', author: 'HR Director', text: 'Interviewed — decision pending.' }] },
+      { id: 'c-whitlock', name: 'C. Whitlock', appliedDate: 'Dec 19, 2024', source: 'Indeed.com', stage: 'Disqualified', aiScore: 32, qualifications: [], backgroundStatus: 'Not Started', offerStatus: 'None', notes: [{ date: 'Jan 02, 2026', author: 'HR Director', text: 'Disqualified at phone screen — did not meet minimum experience requirement.' }] },
+    ],
+
     metrics: [
       { value: 4, label: 'Total Applications', tone: 'critical' },
       { value: 45, label: 'Job Posting Views', tone: 'critical' },
@@ -425,3 +484,12 @@ export const jobPostings = [
 export function getJobPosting(id) {
   return jobPostings.find(j => j.id === id);
 }
+
+export function getApplicant(jobId, applicantId) {
+  const job = getJobPosting(jobId);
+  if (!job) return null;
+  const applicant = (job.applicantList || []).find(a => a.id === applicantId);
+  return applicant ? { ...applicant, job } : null;
+}
+
+export const STAGE_ORDER = ['Applied', 'Phone Screen', 'Interview', 'Background', 'Conditional Offer', 'Hired'];

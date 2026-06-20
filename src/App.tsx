@@ -50,6 +50,8 @@ import HRDashboard from './pages/HRDashboard';
 import ApplicantTracking from './pages/ApplicantTracking';
 import JobPostings from './pages/JobPostings';
 import JobWorkspace from './pages/JobWorkspace';
+import ApplicantWorkspace from './pages/ApplicantWorkspace';
+import ApplicantProfile from './pages/ApplicantProfile';
 import HiringPipeline from './pages/HiringPipeline';
 import NewHireOnboarding from './pages/NewHireOnboarding';
 import EmployeeRecords from './pages/EmployeeRecords';
@@ -133,6 +135,8 @@ function App() {
         <Route path="/hr/dashboard" element={<HRDashboard />} />
         <Route path="/hr/jobs" element={<JobPostings />} />
         <Route path="/hr/jobs/:jobId" element={<JobWorkspace />} />
+        <Route path="/hr/jobs/:jobId/applicants" element={<ApplicantWorkspace />} />
+        <Route path="/hr/jobs/:jobId/applicants/:applicantId" element={<ApplicantProfile />} />
         <Route path="/hr/applicants" element={<ApplicantTracking />} />
         <Route path="/hr/pipeline" element={<HiringPipeline />} />
         <Route path="/hr/onboarding" element={<NewHireOnboarding />} />

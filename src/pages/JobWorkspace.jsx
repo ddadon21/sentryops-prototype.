@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import {
   ArrowLeft, Calendar, DollarSign, FileText, TrendingUp, MessageCircle,
-  X, Send, Sparkles, MapPin, Briefcase, Clock, AlertTriangle
+  X, Send, Sparkles, MapPin, Briefcase, Clock, AlertTriangle, Pencil,
+  Users, ChevronRight, UserPlus, XCircle, Copy, Download,
+  Share2, FileBarChart, CheckCircle
 } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import DashboardLayout from '../layouts/DashboardLayout';
 import { hrNavigation, hrProfile, hrNotifications } from '../config/hrConfig';
 import {
-  SectionHeader, StatusPill, ExecutiveDecisionSummary, PipelineFlow,
-  MarketGauge, MilestoneTimeline
+  SectionHeader, StatusPill, StagePill, ExecutiveDecisionSummary, PipelineFlow,
+  MarketGauge, MilestoneTimeline, QuickActions
 } from '../components/dashboard';
 import { getJobPosting } from '../data/jobPostings';
 
@@ -37,7 +39,17 @@ export default function JobWorkspace() {
   const navigate = useNavigate();
   const { jobId } = useParams();
   const [chatOpen, setChatOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
+  const [toast, setToast] = useState(null);
   const job = getJobPosting(jobId);
+  const [overrides, setOverrides] = useState(null);
+  const effectiveOverview = overrides ? { ...job?.overview, ...overrides } : job?.overview;
+
+  const showToast = (message) => {
+    setToast(message);
+    setTimeout(() => setToast(null), 3000);
+  };
+
 
   if (!job) {
     return (
@@ -69,9 +81,14 @@ export default function JobWorkspace() {
               <MapPin className="w-3.5 h-3.5 ml-2" />{job.location}
             </p>
           </div>
-          <button className="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-white text-sm font-bold rounded-lg whitespace-nowrap">
-            {job.primaryAction?.label}
-          </button>
+          <div className="flex items-center gap-2 flex-wrap">
+            <button onClick={() => setEditOpen(true)} className="px-3 py-2 bg-white dark:bg-zinc-900/60 border border-border hover:bg-slate-50 dark:hover:bg-zinc-800/60 text-primary text-sm font-bold rounded-lg whitespace-nowrap flex items-center gap-1.5">
+              <Pencil className="w-3.5 h-3.5" /> Edit Posting
+            </button>
+            <button className="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-white text-sm font-bold rounded-lg whitespace-nowrap">
+              {job.primaryAction?.label}
+            </button>
+          </div>
         </div>
 
         {job.competitiveAlert && (
@@ -83,6 +100,20 @@ export default function JobWorkspace() {
             </div>
           </div>
         )}
+
+        {/* Quick Actions — common operations close to the object being managed */}
+        <Card>
+          <SectionHeader title="Quick Actions" />
+          <QuickActions actions={[
+            { icon: UserPlus, label: 'Add Applicant', onClick: () => showToast('Add Applicant form would open here.') },
+            { icon: Pencil, label: 'Edit Posting', onClick: () => setEditOpen(true) },
+            { icon: XCircle, label: 'Close Posting', onClick: () => showToast('Posting closed to new applicants.') },
+            { icon: Copy, label: 'Duplicate Posting', onClick: () => showToast('Posting duplicated as a new draft.') },
+            { icon: Download, label: 'Export Applicant Report', onClick: () => showToast('Applicant report export started — check Downloads.') },
+            { icon: Share2, label: 'Share Posting', onClick: () => showToast('Shareable posting link copied to clipboard.') },
+            { icon: FileBarChart, label: 'Generate Hiring Report', onClick: () => showToast('Hiring report generation started.') },
+          ]} />
+        </Card>
 
         {/* Executive Decision Summary — the single most important card */}
         <ExecutiveDecisionSummary summary={job.executiveSummary} />
@@ -103,6 +134,36 @@ export default function JobWorkspace() {
           <Card>
             <SectionHeader icon={TrendingUp} title="Applicant Pipeline" />
             <PipelineFlow stages={job.pipeline} />
+          </Card>
+        )}
+
+        {/* Applicants */}
+        {job.applicantList && job.applicantList.length > 0 && (
+          <Card>
+            <SectionHeader
+              icon={Users}
+              title={`Applicants (${job.applicantList.length})`}
+              action={
+                <button onClick={() => navigate(`/hr/jobs/${job.id}/applicants`)} className="text-xs font-bold text-amber-600 dark:text-amber-400 hover:text-amber-500 flex items-center gap-1">
+                  View All Applicants <ChevronRight className="w-3.5 h-3.5" />
+                </button>
+              }
+            />
+            <div className="divide-y divide-border">
+              {job.applicantList.slice(0, 5).map(a => (
+                <button
+                  key={a.id}
+                  onClick={() => navigate(`/hr/jobs/${job.id}/applicants/${a.id}`)}
+                  className="w-full flex items-center justify-between gap-3 py-2.5 text-left hover:bg-slate-50 dark:hover:bg-zinc-800/40 -mx-2 px-2 rounded-lg transition-colors"
+                >
+                  <div>
+                    <p className="text-sm font-bold text-primary">{a.name}</p>
+                    <p className="text-xs text-secondary">Applied {a.appliedDate}</p>
+                  </div>
+                  <StagePill stage={a.stage} />
+                </button>
+              ))}
+            </div>
           </Card>
         )}
 
@@ -169,14 +230,14 @@ export default function JobWorkspace() {
             <Card>
               <SectionHeader icon={FileText} title="Overview" />
               <div className="space-y-2 text-sm">
-                <div className="flex justify-between gap-3"><span className="text-secondary">Posted</span><span className="text-primary font-medium">{job.overview.postedDate}</span></div>
-                <div className="flex justify-between gap-3"><span className="text-secondary">Timeline</span><span className="text-primary font-medium text-right">{job.overview.timelineNote}</span></div>
-                <div className="flex justify-between gap-3"><span className="text-secondary">Salary Range</span><span className="text-primary font-medium">{job.overview.salaryRange}</span></div>
-                {job.overview.shiftDifferential && (
-                  <div className="flex justify-between gap-3"><span className="text-secondary">Shift Differential</span><span className="text-primary font-medium">{job.overview.shiftDifferential}</span></div>
+                <div className="flex justify-between gap-3"><span className="text-secondary">Posted</span><span className="text-primary font-medium">{effectiveOverview.postedDate}</span></div>
+                <div className="flex justify-between gap-3"><span className="text-secondary">Timeline</span><span className="text-primary font-medium text-right">{effectiveOverview.timelineNote}</span></div>
+                <div className="flex justify-between gap-3"><span className="text-secondary">Salary Range</span><span className="text-primary font-medium">{effectiveOverview.salaryRange}</span></div>
+                {effectiveOverview.shiftDifferential && (
+                  <div className="flex justify-between gap-3"><span className="text-secondary">Shift Differential</span><span className="text-primary font-medium">{effectiveOverview.shiftDifferential}</span></div>
                 )}
-                <div className="flex justify-between gap-3"><span className="text-secondary">Classification</span><span className="text-primary font-medium text-right">{job.overview.classification}</span></div>
-                <div className="flex justify-between gap-3"><span className="text-secondary">Work Location</span><span className="text-primary font-medium text-right">{job.overview.workLocation}</span></div>
+                <div className="flex justify-between gap-3"><span className="text-secondary">Classification</span><span className="text-primary font-medium text-right">{effectiveOverview.classification}</span></div>
+                <div className="flex justify-between gap-3"><span className="text-secondary">Work Location</span><span className="text-primary font-medium text-right">{effectiveOverview.workLocation}</span></div>
               </div>
               {job.overview.qualifications && (
                 <div className="mt-4 pt-4 border-t border-border">
@@ -296,6 +357,78 @@ export default function JobWorkspace() {
           </div>
         </div>
       )}
+
+      {/* Edit Posting Modal */}
+      {editOpen && (
+        <EditPostingModal
+          overview={effectiveOverview}
+          status={job.status}
+          onClose={() => setEditOpen(false)}
+          onSave={(values) => {
+            setOverrides(values);
+            setEditOpen(false);
+            showToast('Posting updated.');
+          }}
+        />
+      )}
+
+      {/* Toast */}
+      {toast && (
+        <div className="fixed top-20 right-6 z-50">
+          <div className="px-4 py-3 rounded-xl border shadow-2xl flex items-center gap-2 bg-green-500/20 border-green-500/30 text-green-600 dark:text-green-400">
+            <CheckCircle className="w-4 h-4" />
+            <p className="text-[11px] font-medium">{toast}</p>
+          </div>
+        </div>
+      )}
     </DashboardLayout>
+  );
+}
+
+function EditPostingModal({ overview, status, onClose, onSave }) {
+  const [form, setForm] = useState({
+    salaryRange: overview.salaryRange || '',
+    timelineNote: overview.timelineNote || '',
+    classification: overview.classification || '',
+    status: status || 'Active',
+  });
+
+  return (
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={onClose}>
+      <div className="bg-white dark:bg-zinc-900 border border-border rounded-2xl shadow-2xl w-full max-w-md p-5" onClick={e => e.stopPropagation()}>
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-sm font-black text-primary uppercase tracking-wide">Edit Posting</h3>
+          <button onClick={onClose} className="text-secondary hover:text-primary"><X className="w-4 h-4" /></button>
+        </div>
+        <div className="space-y-3">
+          <div>
+            <label className="text-xs font-bold text-secondary uppercase tracking-wide">Salary Range</label>
+            <input value={form.salaryRange} onChange={e => setForm({ ...form, salaryRange: e.target.value })} className="w-full mt-1 px-3 py-2 bg-slate-50 dark:bg-zinc-950/40 border border-border rounded-lg text-sm text-primary focus:outline-none focus:border-blue-500/50" />
+          </div>
+          <div>
+            <label className="text-xs font-bold text-secondary uppercase tracking-wide">Closing Date / Timeline</label>
+            <input value={form.timelineNote} onChange={e => setForm({ ...form, timelineNote: e.target.value })} className="w-full mt-1 px-3 py-2 bg-slate-50 dark:bg-zinc-950/40 border border-border rounded-lg text-sm text-primary focus:outline-none focus:border-blue-500/50" />
+          </div>
+          <div>
+            <label className="text-xs font-bold text-secondary uppercase tracking-wide">Classification / Schedule</label>
+            <input value={form.classification} onChange={e => setForm({ ...form, classification: e.target.value })} className="w-full mt-1 px-3 py-2 bg-slate-50 dark:bg-zinc-950/40 border border-border rounded-lg text-sm text-primary focus:outline-none focus:border-blue-500/50" />
+          </div>
+          <div>
+            <label className="text-xs font-bold text-secondary uppercase tracking-wide">Status</label>
+            <select value={form.status} onChange={e => setForm({ ...form, status: e.target.value })} className="w-full mt-1 px-3 py-2 bg-slate-50 dark:bg-zinc-950/40 border border-border rounded-lg text-sm text-primary focus:outline-none focus:border-blue-500/50">
+              <option>Active</option>
+              <option>Paused</option>
+              <option>Closed</option>
+              <option>Published</option>
+              <option>Unpublished</option>
+            </select>
+          </div>
+        </div>
+        <div className="flex gap-2 mt-5">
+          <button onClick={onClose} className="flex-1 px-4 py-2 border border-border rounded-lg text-sm font-bold text-secondary hover:bg-slate-50 dark:hover:bg-zinc-800/60">Cancel</button>
+          <button onClick={() => onSave(form)} className="flex-1 px-4 py-2 bg-amber-500 hover:bg-amber-400 rounded-lg text-sm font-bold text-white">Save Changes</button>
+        </div>
+      </div>
+    </div>
   );
 }
