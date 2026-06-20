@@ -673,17 +673,17 @@ export default function CommandCalendar() {
 
         {/* Page Header */}
         <div className="mb-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-          <div>
+          <div className="min-w-0">
             <h2 className="text-xl font-bold text-primary mb-1">Operational Timeline</h2>
-            <div className="flex items-center gap-2 text-[11px] text-slate-500">
+            <div className="flex items-center gap-2 text-[11px] text-slate-500 flex-wrap">
               <span>{formatDate(currentTime)}</span>
               <span className="text-slate-700">·</span>
               <span>{formatTime(currentTime)} EST</span>
               <span className="text-slate-700">·</span>
-              <span>Forward-looking command planning — predicting operational conflicts before they occur</span>
+              <span className="break-words">Forward-looking command planning — predicting operational conflicts before they occur</span>
             </div>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
             {/* Staffing Impact Toggle */}
             <button
               onClick={() => setShowStaffingOverlay(!showStaffingOverlay)}
@@ -792,7 +792,7 @@ export default function CommandCalendar() {
             OPERATIONAL PRESSURE SCORE
             ================================================================ */}
         <div className="mb-6 bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
-          <div className="flex items-center justify-between mb-1">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-1">
             <h3 className="text-[13px] font-semibold text-primary uppercase tracking-wide">Operational Pressure Score</h3>
             <span className={`text-[11px] font-semibold ${getPressureLabel(pressureScore).classes}`}>{getPressureLabel(pressureScore).text}</span>
           </div>
@@ -834,9 +834,9 @@ export default function CommandCalendar() {
                 <div className={`w-9 h-9 rounded-lg border flex items-center justify-center flex-shrink-0 ${classes.wrap}`}>
                   <StatIcon className={`w-4 h-4 ${classes.icon}`} />
                 </div>
-                <div>
+                <div className="min-w-0">
                   <p className="text-xl font-bold text-primary leading-none">{stat.value}</p>
-                  <p className="text-[11px] text-secondary mt-1">{stat.label}</p>
+                  <p className="text-[11px] text-secondary mt-1 break-words">{stat.label}</p>
                 </div>
               </div>
             );
@@ -857,15 +857,15 @@ export default function CommandCalendar() {
           <div className="space-y-3">
             {conflicts.map(conflict => (
               <div key={conflict.id} className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4">
-                <div className="flex items-start justify-between gap-3 mb-3">
-                  <div className="flex items-start gap-2.5">
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-3 mb-3">
+                  <div className="flex items-start gap-2.5 min-w-0">
                     <AlertTriangle className={`w-4 h-4 mt-0.5 flex-shrink-0 ${conflict.severity === 'high' ? 'text-orange-600 dark:text-orange-400' : 'text-slate-500'}`} />
-                    <div>
-                      <p className="text-[13px] font-medium text-primary leading-tight">{conflict.title}</p>
-                      <p className="text-[11px] text-secondary mt-0.5">{conflict.detail}</p>
+                    <div className="min-w-0">
+                      <p className="text-[13px] font-medium text-primary leading-tight break-words">{conflict.title}</p>
+                      <p className="text-[11px] text-secondary mt-0.5 break-words">{conflict.detail}</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-1.5 flex-shrink-0">
+                  <div className="flex items-center gap-1.5 flex-shrink-0 pl-6.5 sm:pl-0">
                     <span className={`px-1.5 py-0.5 border rounded text-[10px] font-semibold ${
                       conflict.severity === 'high' ? 'bg-orange-100 border-orange-200 text-orange-700 dark:bg-orange-500/10 dark:border-orange-500/20 dark:text-orange-400' :
                       'bg-slate-500/10 border-slate-500/20 text-slate-500'
@@ -887,7 +887,7 @@ export default function CommandCalendar() {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 mt-3 pl-6.5 sm:pl-[26px] text-[11px] text-slate-500">
+                <div className="flex items-center gap-2 mt-3 pl-6.5 sm:pl-[26px] text-[11px] text-slate-500 flex-wrap">
                   <span>Owner: <span className="text-secondary font-medium">{conflict.recommendedOwner}</span></span>
                   <button
                     onClick={() => navigate(conflict.linkedModule)}
@@ -1144,8 +1144,8 @@ export default function CommandCalendar() {
                         </div>
 
                         {/* Metadata */}
-                        <div className="flex items-center gap-2 text-[11px]">
-                          <span className="text-slate-500">{event.assignedTo}</span>
+                        <div className="flex items-center gap-2 text-[11px] flex-wrap">
+                          <span className="text-slate-500 break-words">{event.assignedTo}</span>
                           <span className="text-slate-700">·</span>
                           <span className="text-slate-500">Dec {event.day} · {event.time}</span>
                         </div>
@@ -1159,7 +1159,7 @@ export default function CommandCalendar() {
         ) : (
           /* ===== TIMELINE VIEW ===== */
           <div className="mb-6 bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
-            <div className="flex items-center justify-between mb-6">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-6">
               <h3 className="text-[13px] font-semibold text-primary uppercase tracking-wide">Next 7 Days — Hour by Hour</h3>
               <span className="text-xs text-slate-500">{shortMonthAbbr} {timelineDays[0]?.day} – {shortMonthAbbr} {timelineDays[timelineDays.length - 1]?.day}, {currentYear}</span>
             </div>
@@ -1240,12 +1240,12 @@ export default function CommandCalendar() {
 
         {/* Data Confidence Strip */}
         <div className="mb-4 px-5 py-3 bg-slate-50 dark:bg-zinc-900/10 border border-border dark:border-slate-800/30 rounded-lg">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 flex-wrap">
             <div className="flex items-center gap-2">
               <Shield className="w-3.5 h-3.5 text-slate-700" />
               <span className="text-xs text-slate-700">Calendar synced from</span>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               {['Compliance', 'Staffing', 'Approvals', 'Facilities', 'Investigations'].map(mod => (
                 <span key={mod} className="flex items-center gap-1 text-[11px] text-slate-500">
                   <div className="w-1 h-1 rounded-full bg-emerald-500/60"></div>
@@ -1253,7 +1253,7 @@ export default function CommandCalendar() {
                 </span>
               ))}
             </div>
-            <div className="h-3 w-px bg-slate-100 dark:bg-zinc-800/30"></div>
+            <div className="h-3 w-px bg-slate-100 dark:bg-zinc-800/30 hidden sm:block"></div>
             <span className="text-[11px] text-slate-500">Last sync: 2m ago</span>
           </div>
         </div>
@@ -1267,9 +1267,9 @@ export default function CommandCalendar() {
           <div className="fixed inset-0 bg-black/30 z-40" onClick={() => setSelectedEvent(null)} />
           <div className="fixed right-0 top-0 bottom-0 w-full max-w-md bg-white dark:bg-zinc-950 border-l border-border shadow-2xl z-50 overflow-y-auto">
             <div className="p-6">
-              <div className="flex items-start justify-between mb-6">
-                <div className="flex-1">
-                  <h3 className="text-base font-semibold text-primary mb-2">{selectedEvent.title}</h3>
+              <div className="flex items-start justify-between gap-3 mb-6">
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-base font-semibold text-primary mb-2 break-words">{selectedEvent.title}</h3>
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className={`px-1.5 py-0.5 border rounded text-[11px] font-medium ${getStatusBadge(selectedEvent.status).classes}`}>
                       {getStatusBadge(selectedEvent.status).text}
@@ -1286,7 +1286,7 @@ export default function CommandCalendar() {
                     </span>
                   </div>
                 </div>
-                <button onClick={() => setSelectedEvent(null)} className="text-secondary hover:text-white transition-colors">
+                <button onClick={() => setSelectedEvent(null)} className="text-secondary hover:text-white transition-colors flex-shrink-0">
                   <X className="w-5 h-5" />
                 </button>
               </div>

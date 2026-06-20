@@ -568,12 +568,12 @@ export default function CommandWarRoom() {
 
           {/* Staffing Readiness by Division */}
           <div className="lg:col-span-7 bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden">
-            <div className="flex items-center justify-between px-5 py-3 border-b border-border dark:border-slate-700/20">
-              <div className="flex items-center gap-2">
-                <Users className="w-4 h-4 text-secondary" />
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 px-5 py-3 border-b border-border dark:border-slate-700/20">
+              <div className="flex items-center gap-2 min-w-0">
+                <Users className="w-4 h-4 text-secondary flex-shrink-0" />
                 <span className="text-[13px] font-semibold text-primary">Staffing Readiness by Division</span>
               </div>
-              <button onClick={() => navigate('/command/personnel')} className="flex items-center gap-1 text-[11px] text-slate-500 hover:text-secondary transition-colors">
+              <button onClick={() => navigate('/command/personnel')} className="flex items-center gap-1 text-[11px] text-slate-500 hover:text-secondary transition-colors self-start sm:self-auto">
                 Full View <ChevronRight className="w-3.5 h-3.5" />
               </button>
             </div>

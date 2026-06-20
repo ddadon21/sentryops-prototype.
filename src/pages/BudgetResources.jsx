@@ -2351,7 +2351,7 @@ export default function BudgetResources() {
                         </div>
                       </div>
                     </div>
-                    <div className="mt-4 flex gap-2">
+                    <div className="mt-4 flex gap-2 flex-wrap">
                       <button
                         onClick={() => setReallocationModal(true)}
                         className={`${primaryBtn} bg-blue-600 text-white border border-blue-700 hover:bg-blue-700`}
@@ -2388,9 +2388,9 @@ export default function BudgetResources() {
             <div className="relative bg-white dark:bg-zinc-950 border border-slate-200 dark:border-slate-700/50 rounded-2xl max-w-lg w-full shadow-2xl max-h-[92vh] flex flex-col overflow-hidden">
               {/* Header */}
               <div className="flex items-start justify-between px-6 pt-5 pb-4 border-b border-slate-200 dark:border-slate-700/30">
-                <div>
+                <div className="min-w-0 flex-1">
                   <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1">Confirm Action</p>
-                  <h3 className="text-base font-bold text-slate-900 dark:text-white leading-snug">{confirmActionModal.title}</h3>
+                  <h3 className="text-base font-bold text-slate-900 dark:text-white leading-snug break-words">{confirmActionModal.title}</h3>
                 </div>
                 <button onClick={() => setConfirmActionModal(null)} className="p-2 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors flex-shrink-0 ml-3">
                   <X className="w-5 h-5 text-slate-500" />
@@ -2430,9 +2430,9 @@ export default function BudgetResources() {
                         <span className="text-slate-700 dark:text-slate-300">Affect the following budget areas:</span>
                         <div className="mt-2 space-y-1 pl-0.5">
                           {confirmActionModal.affectedAreas.map((a, i) => (
-                            <div key={i} className="flex items-center justify-between text-[12px] py-0.5">
-                              <span className="text-slate-600 dark:text-slate-400">{a.area}</span>
-                              <span className={`font-bold tabular-nums ${a.delta > 0 ? 'text-green-600 dark:text-green-400' : 'text-red-500 dark:text-red-400'}`}>
+                            <div key={i} className="flex items-center justify-between gap-3 text-[12px] py-0.5">
+                              <span className="text-slate-600 dark:text-slate-400 min-w-0 break-words">{a.area}</span>
+                              <span className={`font-bold tabular-nums flex-shrink-0 ${a.delta > 0 ? 'text-green-600 dark:text-green-400' : 'text-red-500 dark:text-red-400'}`}>
                                 {a.delta > 0 ? '+' : ''}{fmt(a.delta)}
                               </span>
                             </div>
@@ -2522,8 +2522,8 @@ export default function BudgetResources() {
                 {/* Exact budget changes */}
                 <div className="px-6 pb-5 border-t border-slate-100 dark:border-slate-800/50">
                   <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wide mt-4 mb-2">Exact Budget Changes</p>
-                  <div className="border border-slate-200 dark:border-slate-700/30 rounded-xl overflow-hidden">
-                    <table className="w-full text-[12px]">
+                  <div className="border border-slate-200 dark:border-slate-700/30 rounded-xl overflow-hidden overflow-x-auto">
+                    <table className="w-full text-[12px] min-w-[480px]">
                       <thead>
                         <tr className="bg-slate-50 dark:bg-zinc-900/40 border-b border-slate-200 dark:border-slate-700/30">
                           <th className="text-left px-3 py-2 font-bold text-slate-500 dark:text-slate-400">Account</th>
@@ -2580,14 +2580,14 @@ export default function BudgetResources() {
             <div className="relative bg-white dark:bg-zinc-950 border border-slate-200 dark:border-slate-700/50 rounded-2xl max-w-lg w-full shadow-2xl max-h-[92vh] flex flex-col overflow-hidden">
               {/* Header */}
               <div className="px-6 pt-6 pb-4 border-b border-slate-200 dark:border-slate-700/30">
-                <div className="flex items-start justify-between mb-3">
-                  <div>
-                    <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                <div className="flex items-start justify-between gap-3 mb-3">
+                  <div className="min-w-0 flex-1">
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-white break-words">
                       {appliedActionIds.size > 0 ? `Apply Remaining ${pendingInModal.length} Actions` : 'Apply Recommended Actions'}
                     </h3>
                     <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">Toggle actions on or off, then confirm</p>
                   </div>
-                  <button onClick={() => setApplyAllModal(false)} className="p-2 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors">
+                  <button onClick={() => setApplyAllModal(false)} className="p-2 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors flex-shrink-0">
                     <X className="w-5 h-5 text-slate-500" />
                   </button>
                 </div>
@@ -2743,9 +2743,9 @@ export default function BudgetResources() {
               };
               return (
                 <>
-                  <div className="flex items-start justify-between mb-4">
-                    <div>
-                      <h3 className="text-2xl font-bold text-primary mb-1">{monthDetailModal.month} 2024 Detailed Breakdown</h3>
+                  <div className="flex items-start justify-between gap-3 mb-4">
+                    <div className="min-w-0 flex-1">
+                      <h3 className="text-2xl font-bold text-primary mb-1 break-words">{monthDetailModal.month} 2024 Detailed Breakdown</h3>
                       <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-secondary">
                         <span>Total Spent: <span className="font-bold text-primary">{fmt(monthDetailModal.spent)}</span> ({((monthDetailModal.spent / monthDetailModal.budget) * 100).toFixed(0)}% of target)</span>
                         {_delta !== null && (
@@ -2757,7 +2757,7 @@ export default function BudgetResources() {
                     </div>
                     <button
                       onClick={() => setMonthDetailModal(null)}
-                      className="p-2 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors"
+                      className="p-2 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors flex-shrink-0"
                     >
                       <X className="w-5 h-5 text-secondary" />
                     </button>
@@ -2909,16 +2909,16 @@ export default function BudgetResources() {
                   <p>• Unplanned vehicle repairs (+{fmt(monthDetailModal.variance.vehicles)})</p>
                 </div>
                 <div className="mt-4 pt-4 border-t border-red-500/20">
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between gap-2 flex-wrap">
                     <span className="text-sm font-semibold text-secondary">VARIANCE:</span>
-                    <span className="text-lg font-bold text-red-700 dark:text-red-400">+{fmt(monthDetailModal.spent - monthDetailModal.budget)} over monthly target</span>
+                    <span className="text-lg font-bold text-red-700 dark:text-red-400 text-right">+{fmt(monthDetailModal.spent - monthDetailModal.budget)} over monthly target</span>
                   </div>
                 </div>
               </div>
             )}
 
             </div>
-            <div className="sticky bottom-0 p-4 border-t border-border bg-white dark:bg-zinc-950 flex items-center justify-end gap-2">
+            <div className="sticky bottom-0 p-4 border-t border-border bg-white dark:bg-zinc-950 flex items-center justify-end gap-2 flex-wrap">
               <button className={secondaryBtn}>Compare to Previous</button>
               <button className={primaryBtn} onClick={handleExportPDF}><Download className="w-3.5 h-3.5" /> Export Report</button>
             </div>
@@ -2931,14 +2931,14 @@ export default function BudgetResources() {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setPendingPOsModal(false)} />
           <div className="relative bg-white dark:bg-zinc-950 border border-slate-200 dark:border-slate-700/50 rounded-2xl max-w-2xl w-full shadow-2xl max-h-[90vh] flex flex-col overflow-hidden">
-            <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-slate-200 dark:border-slate-700/30">
-              <div>
+            <div className="flex items-start justify-between gap-3 px-6 pt-6 pb-4 border-b border-slate-200 dark:border-slate-700/30">
+              <div className="min-w-0 flex-1">
                 <h3 className="text-lg font-bold text-slate-900 dark:text-white">Pending Purchase Orders</h3>
                 <p className="text-[12px] text-slate-500 dark:text-slate-400 mt-0.5">
                   {pendingPOs.length} orders · {fmt(pendingPOs.reduce((s, p) => s + p.amount, 0))} committed · Approve to move to Spent, Deny to return to Available
                 </p>
               </div>
-              <button onClick={() => setPendingPOsModal(false)} className="p-2 hover:bg-slate-100 dark:hover:bg-zinc-900 rounded-lg transition-colors">
+              <button onClick={() => setPendingPOsModal(false)} className="p-2 hover:bg-slate-100 dark:hover:bg-zinc-900 rounded-lg transition-colors flex-shrink-0">
                 <X className="w-5 h-5 text-slate-500" />
               </button>
             </div>

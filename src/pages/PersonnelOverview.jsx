@@ -1323,7 +1323,7 @@ export default function PersonnelOverview() {
                       <Activity className="w-5 h-5 text-secondary" />
                       Activity Statistics (Last 30 Days)
                     </h3>
-                    <div className="grid grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                       <div className="text-center p-4 bg-white dark:bg-zinc-950/50 rounded-lg">
                         <p className="text-2xl font-bold text-primary">142</p>
                         <p className="text-xs text-secondary mt-1">Calls for Service</p>
@@ -1337,7 +1337,7 @@ export default function PersonnelOverview() {
                         <p className="text-xs text-secondary mt-1">Arrests Made</p>
                       </div>
                     </div>
-                    <div className="grid grid-cols-2 gap-6 mt-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-4">
                       <div className="text-center p-4 bg-white dark:bg-zinc-950/50 rounded-lg">
                         <p className="text-xl font-bold text-primary">8.5 hrs</p>
                         <p className="text-xs text-secondary mt-1">Avg Response Time</p>
@@ -1362,22 +1362,22 @@ export default function PersonnelOverview() {
                           cert.status === 'expiring' ? 'bg-orange-500/10 border-orange-500/30' :
                           'bg-white dark:bg-zinc-950/50 border-slate-700/50'
                         }`}>
-                          <div className="flex items-start justify-between">
-                            <div className="flex items-start gap-3">
+                          <div className="flex items-start justify-between gap-2 flex-wrap">
+                            <div className="flex items-start gap-3 min-w-0 flex-1">
                               {cert.status === 'current' ? (
-                                <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400 mt-0.5" />
+                                <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
                               ) : cert.status === 'expiring' ? (
-                                <Clock className="w-5 h-5 text-orange-600 dark:text-orange-400 mt-0.5" />
+                                <Clock className="w-5 h-5 text-orange-600 dark:text-orange-400 mt-0.5 flex-shrink-0" />
                               ) : (
-                                <AlertCircle className="w-5 h-5 text-red-700 dark:text-red-400 mt-0.5" />
+                                <AlertCircle className="w-5 h-5 text-red-700 dark:text-red-400 mt-0.5 flex-shrink-0" />
                               )}
-                              <div>
-                                <p className="text-sm font-semibold text-primary">{cert.name}</p>
+                              <div className="min-w-0">
+                                <p className="text-sm font-semibold text-primary break-words">{cert.name}</p>
                                 <p className="text-xs text-secondary mt-1">Expires: {cert.expires}</p>
                                 <p className="text-xs text-slate-500 mt-1">Last renewed: {new Date(cert.expires).getFullYear() - 2}-{new Date(cert.expires).getMonth() + 1}-{new Date(cert.expires).getDate()}</p>
                               </div>
                             </div>
-                            <div>
+                            <div className="flex-shrink-0">
                               {cert.status === 'expired' ? (
                                 <span className="px-2 py-1 bg-red-500/20 border border-red-500/30 text-red-700 dark:text-red-400 text-xs rounded">Expired</span>
                               ) : cert.status === 'expiring' ? (
