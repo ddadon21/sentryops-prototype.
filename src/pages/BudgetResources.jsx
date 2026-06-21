@@ -2950,19 +2950,19 @@ export default function BudgetResources() {
                   <p className="text-xs text-slate-500 mt-1">Actions have been logged to the Decision Audit Log.</p>
                 </div>
               ) : pendingPOs.map(po => (
-                <div key={po.id} className="flex items-start gap-4 px-6 py-4 hover:bg-slate-50 dark:hover:bg-zinc-900/10 transition-colors">
-                  <div className="flex-1 min-w-0">
+                <div key={po.id} className="flex flex-col sm:flex-row items-start gap-3 sm:gap-4 px-6 py-4 hover:bg-slate-50 dark:hover:bg-zinc-900/10 transition-colors">
+                  <div className="flex-1 min-w-0 w-full">
                     <div className="flex items-center gap-2 mb-0.5 flex-wrap">
                       <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded flex-shrink-0 ${
                         po.priority === 'High' ? 'bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-400' :
                         po.priority === 'Medium' ? 'bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400' :
                         'bg-slate-100 dark:bg-zinc-800/40 text-slate-500 dark:text-slate-400'
                       }`}>{po.priority}</span>
-                      <span className="text-[13px] font-semibold text-slate-800 dark:text-slate-200 truncate">{po.vendor}</span>
+                      <span className="text-[13px] font-semibold text-slate-800 dark:text-slate-200 break-words min-w-0">{po.vendor}</span>
                       <span className="text-[11px] text-slate-400 dark:text-slate-500 flex-shrink-0">{po.id}</span>
                     </div>
                     <p className="text-[12px] text-slate-600 dark:text-slate-400 mb-1">{po.description}</p>
-                    <div className="flex items-center gap-3 text-[11px] text-slate-400 dark:text-slate-500">
+                    <div className="flex items-center gap-3 text-[11px] text-slate-400 dark:text-slate-500 flex-wrap">
                       <span>{po.division}</span>
                       <span>·</span>
                       <span>{po.category}</span>
@@ -2970,7 +2970,7 @@ export default function BudgetResources() {
                       <span>Submitted {po.submitted}</span>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2 flex-shrink-0">
+                  <div className="flex items-center gap-2 flex-shrink-0 flex-wrap w-full sm:w-auto">
                     <span className="text-[14px] font-bold text-slate-800 dark:text-slate-200 tabular-nums">{fmt(po.amount)}</span>
                     <button
                       onClick={() => approvePO(po)}
