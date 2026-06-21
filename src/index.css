@@ -124,7 +124,11 @@
 
 @layer base {
   html, body {
-    @apply m-0 p-0 antialiased dark:bg-black overflow-x-hidden;
+    @apply m-0 p-0 antialiased dark:bg-black;
+    /* clip (not hidden) — hidden makes html/body a scroll container, which
+       breaks position: sticky headers on mobile Safari/Chrome; clip just
+       trims overflow without creating a scrolling box. */
+    overflow-x: clip;
     transition: background-color 0.2s ease, color 0.2s ease;
   }
 
