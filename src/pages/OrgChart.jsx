@@ -1735,6 +1735,7 @@ export default function OrgChart() {
 
             <div
               ref={chartContainerRef}
+              data-swipe-ignore
               className="flex-1 min-h-[500px] lg:min-h-[650px] bg-slate-50 dark:bg-zinc-900/35 border border-slate-700/50 rounded-xl relative touch-none"
               style={{
                 cursor: isPanning ? 'grabbing' : 'grab',

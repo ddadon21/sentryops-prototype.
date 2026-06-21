@@ -9,6 +9,7 @@ import {
 import { useActivity, type ActivitySeverity, type ActivityModule } from '../contexts/ActivityContext';
 import LiveEventPopups from '../components/LiveEventPopups';
 import CommandPalette from '../components/CommandPalette';
+import { useSwipePageNav } from '../hooks/useSwipePageNav';
 
 // ── Shared types ──────────────────────────────────────────────
 
@@ -251,6 +252,8 @@ export default function DashboardLayout({
     navigate('/signin');
   };
 
+  const { containerRef: swipeContainerRef } = useSwipePageNav(navigation);
+
   const isNavActive = (item: NavItem): boolean => {
     if (item.route) return location.pathname === item.route;
     if (item.hasSubmenu && item.submenu) {
@@ -473,7 +476,7 @@ export default function DashboardLayout({
                 </button>
 
                 {notificationsOpen && (
-                  <div className="notifications-dropdown absolute right-0 top-full mt-2 w-80 bg-surface-raised backdrop-blur-xl border border-border rounded-xl shadow-2xl z-50">
+                  <div data-swipe-ignore className="notifications-dropdown absolute right-0 top-full mt-2 w-80 bg-surface-raised backdrop-blur-xl border border-border rounded-xl shadow-2xl z-50">
                     <div className="p-4 border-b border-border flex items-center justify-between">
                       <div>
                         <h3 className="text-[13px] font-semibold text-primary">Notification Center</h3>
@@ -539,7 +542,7 @@ export default function DashboardLayout({
                 </button>
 
                 {profileMenuOpen && (
-                  <div className="profile-dropdown absolute right-0 top-full mt-2 w-56 bg-surface-raised backdrop-blur-xl border border-border rounded-xl shadow-2xl z-50 py-2">
+                  <div data-swipe-ignore className="profile-dropdown absolute right-0 top-full mt-2 w-56 bg-surface-raised backdrop-blur-xl border border-border rounded-xl shadow-2xl z-50 py-2">
                     <div className="px-4 py-3 border-b border-slate-100 dark:border-slate-700/50">
                       <p className="text-[13px] font-medium text-primary">{profile.name}</p>
                       <p className="text-xs text-muted">{profile.email}</p>
@@ -590,8 +593,10 @@ export default function DashboardLayout({
         </header>
 
         {/* Page Content */}
-        <main className="flex-1 overflow-y-auto">
-          {children}
+        <main className="flex-1 overflow-y-auto overflow-x-hidden">
+          <div ref={swipeContainerRef} className="min-h-full touch-pan-y" style={{ willChange: 'transform' }}>
+            {children}
+          </div>
         </main>
       </div>
 
