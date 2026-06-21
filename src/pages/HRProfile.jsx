@@ -102,13 +102,13 @@ export default function HRProfile() {
         <div className="max-w-5xl mx-auto">
 
           {/* Page Header */}
-          <div className="mb-8 pb-6 border-b border-border flex items-center justify-between">
-            <div>
-              <p className="text-3xl font-bold text-primary mb-0.5">HR Executive Profile</p>
+          <div className="mb-8 pb-6 border-b border-border flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div className="min-w-0">
+              <p className="text-3xl font-bold text-primary mb-0.5 break-words">HR Executive Profile</p>
               <p className="text-base text-muted">Manage your account information and HR preferences</p>
             </div>
             {saved && (
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-emerald-100 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 rounded-lg">
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-emerald-100 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 rounded-lg flex-shrink-0">
                 <CheckCircle className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                 <span className="text-sm font-medium text-emerald-700 dark:text-emerald-400">Profile saved</span>
               </div>
@@ -193,18 +193,18 @@ export default function HRProfile() {
             <div className="lg:col-span-2 space-y-6">
               {/* Position / Department / Contact Information */}
               <div className="bg-surface border border-border rounded-xl shadow-sm dark:shadow-none">
-                <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 dark:border-slate-700/40">
-                  <h2 className="text-sm font-semibold text-primary">Position &amp; Contact Information</h2>
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 px-6 py-4 border-b border-slate-100 dark:border-slate-700/40">
+                  <h2 className="text-sm font-semibold text-primary min-w-0 break-words">Position &amp; Contact Information</h2>
                   {!editing ? (
                     <button
                       onClick={handleEdit}
-                      className="flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/50 text-secondary hover:bg-slate-50 dark:hover:bg-zinc-900/60 rounded-lg text-sm font-medium transition-all"
+                      className="flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/50 text-secondary hover:bg-slate-50 dark:hover:bg-zinc-900/60 rounded-lg text-sm font-medium transition-all flex-shrink-0 self-start sm:self-auto"
                     >
                       <Edit3 className="w-3.5 h-3.5" />
                       Edit Profile
                     </button>
                   ) : (
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-shrink-0">
                       <button
                         onClick={handleCancel}
                         className="flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/50 text-secondary hover:bg-slate-50 rounded-lg text-sm font-medium transition-all"

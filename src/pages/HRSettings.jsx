@@ -167,17 +167,17 @@ export default function HRSettings() {
           )}
 
           <div className="mb-6 bg-gradient-to-r from-emerald-50 to-emerald-100 dark:from-emerald-950/20 dark:to-emerald-900/20 border border-emerald-200 dark:border-emerald-800/30 rounded-xl p-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-emerald-100 dark:bg-emerald-500/20 rounded-xl flex items-center justify-center">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <div className="flex items-center gap-4 min-w-0">
+                <div className="w-12 h-12 bg-emerald-100 dark:bg-emerald-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
                   <CheckCircle2 className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
                 </div>
-                <div>
-                  <h4 className="text-base font-semibold text-primary">All HR Systems Operational</h4>
-                  <p className="text-sm text-secondary">5 integrations active · 99.92% average uptime · Last sync: 5 min ago</p>
+                <div className="min-w-0">
+                  <h4 className="text-base font-semibold text-primary break-words">All HR Systems Operational</h4>
+                  <p className="text-sm text-secondary break-words">5 integrations active · 99.92% average uptime · Last sync: 5 min ago</p>
                 </div>
               </div>
-              <div className="flex items-center gap-2 px-4 py-2 bg-emerald-100 dark:bg-emerald-500/20 border border-emerald-200 dark:border-emerald-500/30 rounded-lg">
+              <div className="flex items-center gap-2 px-4 py-2 bg-emerald-100 dark:bg-emerald-500/20 border border-emerald-200 dark:border-emerald-500/30 rounded-lg self-start sm:self-auto flex-shrink-0">
                 <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
                 <span className="text-sm font-semibold text-emerald-700 dark:text-emerald-400 uppercase">Live</span>
               </div>
@@ -213,16 +213,16 @@ export default function HRSettings() {
           <div className="space-y-6">
             {activeSection === 'profile' && (
               <div className="bg-surface border border-border rounded-xl shadow-sm dark:shadow-none p-6">
-                <div className="flex items-center justify-between mb-6">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-6">
                   <h3 className="text-lg font-semibold text-primary">Profile Information</h3>
-                  <div className="flex items-center gap-2 px-3 py-1.5 bg-emerald-100 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 rounded-lg">
+                  <div className="flex items-center gap-2 px-3 py-1.5 bg-emerald-100 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 rounded-lg self-start flex-shrink-0">
                     <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
                     <span className="text-xs font-medium text-emerald-700 dark:text-emerald-400">Verified Account</span>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-6 mb-8">
-                  <div className="relative">
+                <div className="flex flex-col sm:flex-row items-center sm:items-center gap-6 mb-8 text-center sm:text-left">
+                  <div className="relative flex-shrink-0">
                     <div className="w-24 h-24 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full flex items-center justify-center">
                       <span className="text-white text-2xl font-bold">{hrProfileConfig.initials}</span>
                     </div>
@@ -230,10 +230,10 @@ export default function HRSettings() {
                       <Camera className="w-4 h-4 text-white" />
                     </button>
                   </div>
-                  <div>
-                    <h4 className="text-xl font-semibold text-primary">{profileSettings.fullName}</h4>
-                    <p className="text-secondary">{profileSettings.position}</p>
-                    <p className="text-sm text-muted">{profileSettings.department}</p>
+                  <div className="min-w-0">
+                    <h4 className="text-xl font-semibold text-primary break-words">{profileSettings.fullName}</h4>
+                    <p className="text-secondary break-words">{profileSettings.position}</p>
+                    <p className="text-sm text-muted break-words">{profileSettings.department}</p>
                   </div>
                 </div>
 
@@ -339,19 +339,19 @@ export default function HRSettings() {
                       ].map(item => {
                         const Icon = item.icon;
                         return (
-                          <div key={item.key} className="flex items-center justify-between p-4 bg-white dark:bg-zinc-900/40 border border-border rounded-xl">
-                            <div className="flex items-center gap-4">
-                              <div className="w-10 h-10 bg-slate-100 dark:bg-zinc-800/50 rounded-xl flex items-center justify-center">
+                          <div key={item.key} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-4 bg-white dark:bg-zinc-900/40 border border-border rounded-xl">
+                            <div className="flex items-center gap-4 min-w-0">
+                              <div className="w-10 h-10 bg-slate-100 dark:bg-zinc-800/50 rounded-xl flex items-center justify-center flex-shrink-0">
                                 <Icon className="w-5 h-5 text-secondary" />
                               </div>
-                              <div>
-                                <p className="text-primary font-medium">{item.label}</p>
-                                <p className="text-sm text-secondary">{item.desc}</p>
+                              <div className="min-w-0">
+                                <p className="text-primary font-medium break-words">{item.label}</p>
+                                <p className="text-sm text-secondary break-words">{item.desc}</p>
                               </div>
                             </div>
                             <button
                               onClick={() => setNotificationSettings({ ...notificationSettings, [item.key]: !notificationSettings[item.key] })}
-                              className={`w-12 h-6 rounded-full transition-colors ${notificationSettings[item.key] ? 'bg-amber-500' : 'bg-slate-300 dark:bg-slate-600'}`}
+                              className={`w-12 h-6 rounded-full transition-colors flex-shrink-0 self-start sm:self-auto ${notificationSettings[item.key] ? 'bg-amber-500' : 'bg-slate-300 dark:bg-slate-600'}`}
                             >
                               <div className={`w-5 h-5 bg-white rounded-full transition-transform ${notificationSettings[item.key] ? 'translate-x-6' : 'translate-x-0.5'}`}></div>
                             </button>
@@ -374,14 +374,14 @@ export default function HRSettings() {
                         { key: 'timeOffRequests', label: 'Time Off Requests', desc: 'Leave request notifications' },
                         { key: 'policyUpdates', label: 'Policy Updates', desc: 'New policies and changes' }
                       ].map(item => (
-                        <div key={item.key} className="flex items-center justify-between p-4 bg-white dark:bg-zinc-900/40 border border-border rounded-xl">
-                          <div>
-                            <p className="text-primary font-medium">{item.label}</p>
-                            <p className="text-xs text-secondary">{item.desc}</p>
+                        <div key={item.key} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-4 bg-white dark:bg-zinc-900/40 border border-border rounded-xl">
+                          <div className="min-w-0">
+                            <p className="text-primary font-medium break-words">{item.label}</p>
+                            <p className="text-xs text-secondary break-words">{item.desc}</p>
                           </div>
                           <button
                             onClick={() => setNotificationSettings({ ...notificationSettings, [item.key]: !notificationSettings[item.key] })}
-                            className={`w-12 h-6 rounded-full transition-colors ${notificationSettings[item.key] ? 'bg-amber-500' : 'bg-slate-300 dark:bg-slate-600'}`}
+                            className={`w-12 h-6 rounded-full transition-colors flex-shrink-0 self-start sm:self-auto ${notificationSettings[item.key] ? 'bg-amber-500' : 'bg-slate-300 dark:bg-slate-600'}`}
                           >
                             <div className={`w-5 h-5 bg-white rounded-full transition-transform ${notificationSettings[item.key] ? 'translate-x-6' : 'translate-x-0.5'}`}></div>
                           </button>
@@ -484,14 +484,14 @@ export default function HRSettings() {
                     </select>
                   </div>
 
-                  <div className="flex items-center justify-between p-4 bg-white dark:bg-zinc-900/40 border border-border rounded-xl">
-                    <div>
-                      <p className="text-primary font-medium">Animations</p>
-                      <p className="text-sm text-secondary">Enable UI animations</p>
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-4 bg-white dark:bg-zinc-900/40 border border-border rounded-xl">
+                    <div className="min-w-0">
+                      <p className="text-primary font-medium break-words">Animations</p>
+                      <p className="text-sm text-secondary break-words">Enable UI animations</p>
                     </div>
                     <button
                       onClick={() => setDisplaySettings({ ...displaySettings, animations: !displaySettings.animations })}
-                      className={`w-12 h-6 rounded-full transition-colors ${displaySettings.animations ? 'bg-amber-500' : 'bg-slate-300 dark:bg-slate-600'}`}
+                      className={`w-12 h-6 rounded-full transition-colors flex-shrink-0 self-start sm:self-auto ${displaySettings.animations ? 'bg-amber-500' : 'bg-slate-300 dark:bg-slate-600'}`}
                     >
                       <div className={`w-5 h-5 bg-white rounded-full transition-transform ${displaySettings.animations ? 'translate-x-6' : 'translate-x-0.5'}`}></div>
                     </button>
@@ -516,17 +516,17 @@ export default function HRSettings() {
                   <h3 className="text-lg font-semibold text-primary mb-6">Security Settings</h3>
 
                   <div className="space-y-3">
-                    <div className="flex items-center justify-between p-4 bg-white dark:bg-zinc-900/40 border border-border rounded-xl">
-                      <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 bg-emerald-100 dark:bg-emerald-500/20 rounded-xl flex items-center justify-center">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-4 bg-white dark:bg-zinc-900/40 border border-border rounded-xl">
+                      <div className="flex items-center gap-4 min-w-0">
+                        <div className="w-10 h-10 bg-emerald-100 dark:bg-emerald-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
                           <Lock className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
                         </div>
-                        <div>
-                          <p className="text-primary font-medium">Two-Factor Authentication</p>
-                          <p className="text-sm text-secondary">Add an extra layer of security</p>
+                        <div className="min-w-0">
+                          <p className="text-primary font-medium break-words">Two-Factor Authentication</p>
+                          <p className="text-sm text-secondary break-words">Add an extra layer of security</p>
                         </div>
                       </div>
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-3 flex-shrink-0 self-start sm:self-auto">
                         {securitySettings.twoFactorAuth && (
                           <span className="px-2 py-1 bg-emerald-100 dark:bg-emerald-500/20 border border-emerald-200 dark:border-emerald-500/30 rounded text-xs text-emerald-700 dark:text-emerald-400 font-medium">Enabled</span>
                         )}
@@ -539,20 +539,20 @@ export default function HRSettings() {
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between p-4 bg-white dark:bg-zinc-900/40 border border-border rounded-xl">
-                      <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 bg-slate-100 dark:bg-zinc-800/50 rounded-xl flex items-center justify-center">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-4 bg-white dark:bg-zinc-900/40 border border-border rounded-xl">
+                      <div className="flex items-center gap-4 min-w-0">
+                        <div className="w-10 h-10 bg-slate-100 dark:bg-zinc-800/50 rounded-xl flex items-center justify-center flex-shrink-0">
                           <Clock className="w-5 h-5 text-secondary" />
                         </div>
-                        <div>
-                          <p className="text-primary font-medium">Session Timeout</p>
-                          <p className="text-sm text-secondary">Auto-logout after inactivity</p>
+                        <div className="min-w-0">
+                          <p className="text-primary font-medium break-words">Session Timeout</p>
+                          <p className="text-sm text-secondary break-words">Auto-logout after inactivity</p>
                         </div>
                       </div>
                       <select
                         value={securitySettings.sessionTimeout}
                         onChange={(e) => setSecuritySettings({ ...securitySettings, sessionTimeout: e.target.value })}
-                        className="px-4 py-2 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-primary focus:outline-none focus:border-amber-500/50"
+                        className="px-4 py-2 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-primary focus:outline-none focus:border-amber-500/50 flex-shrink-0 w-full sm:w-auto"
                       >
                         <option value="15">15 minutes</option>
                         <option value="30">30 minutes</option>
@@ -561,37 +561,37 @@ export default function HRSettings() {
                       </select>
                     </div>
 
-                    <div className="flex items-center justify-between p-4 bg-white dark:bg-zinc-900/40 border border-border rounded-xl">
-                      <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 bg-slate-100 dark:bg-zinc-800/50 rounded-xl flex items-center justify-center">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-4 bg-white dark:bg-zinc-900/40 border border-border rounded-xl">
+                      <div className="flex items-center gap-4 min-w-0">
+                        <div className="w-10 h-10 bg-slate-100 dark:bg-zinc-800/50 rounded-xl flex items-center justify-center flex-shrink-0">
                           <Bell className="w-5 h-5 text-secondary" />
                         </div>
-                        <div>
-                          <p className="text-primary font-medium">Login Notifications</p>
-                          <p className="text-sm text-secondary">Get alerted for new sign-ins</p>
+                        <div className="min-w-0">
+                          <p className="text-primary font-medium break-words">Login Notifications</p>
+                          <p className="text-sm text-secondary break-words">Get alerted for new sign-ins</p>
                         </div>
                       </div>
                       <button
                         onClick={() => setSecuritySettings({ ...securitySettings, loginNotifications: !securitySettings.loginNotifications })}
-                        className={`w-12 h-6 rounded-full transition-colors ${securitySettings.loginNotifications ? 'bg-amber-500' : 'bg-slate-300 dark:bg-slate-600'}`}
+                        className={`w-12 h-6 rounded-full transition-colors flex-shrink-0 self-start sm:self-auto ${securitySettings.loginNotifications ? 'bg-amber-500' : 'bg-slate-300 dark:bg-slate-600'}`}
                       >
                         <div className={`w-5 h-5 bg-white rounded-full transition-transform ${securitySettings.loginNotifications ? 'translate-x-6' : 'translate-x-0.5'}`}></div>
                       </button>
                     </div>
 
-                    <div className="flex items-center justify-between p-4 bg-white dark:bg-zinc-900/40 border border-border rounded-xl">
-                      <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 bg-slate-100 dark:bg-zinc-800/50 rounded-xl flex items-center justify-center">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-4 bg-white dark:bg-zinc-900/40 border border-border rounded-xl">
+                      <div className="flex items-center gap-4 min-w-0">
+                        <div className="w-10 h-10 bg-slate-100 dark:bg-zinc-800/50 rounded-xl flex items-center justify-center flex-shrink-0">
                           <Activity className="w-5 h-5 text-secondary" />
                         </div>
-                        <div>
-                          <p className="text-primary font-medium">Audit Logging</p>
-                          <p className="text-sm text-secondary">Track all account activity</p>
+                        <div className="min-w-0">
+                          <p className="text-primary font-medium break-words">Audit Logging</p>
+                          <p className="text-sm text-secondary break-words">Track all account activity</p>
                         </div>
                       </div>
                       <button
                         onClick={() => setSecuritySettings({ ...securitySettings, auditLogging: !securitySettings.auditLogging })}
-                        className={`w-12 h-6 rounded-full transition-colors ${securitySettings.auditLogging ? 'bg-amber-500' : 'bg-slate-300 dark:bg-slate-600'}`}
+                        className={`w-12 h-6 rounded-full transition-colors flex-shrink-0 self-start sm:self-auto ${securitySettings.auditLogging ? 'bg-amber-500' : 'bg-slate-300 dark:bg-slate-600'}`}
                       >
                         <div className={`w-5 h-5 bg-white rounded-full transition-transform ${securitySettings.auditLogging ? 'translate-x-6' : 'translate-x-0.5'}`}></div>
                       </button>

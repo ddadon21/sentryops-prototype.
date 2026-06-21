@@ -547,12 +547,12 @@ export default function EmploymentVerification() {
       <div className="p-5 lg:p-8 space-y-8 min-h-full">
           <div className="space-y-6">
             {/* Page Header */}
-            <div className="flex items-center justify-between">
-              <div>
-                <h1 className="text-2xl font-semibold text-primary">Employment Verification</h1>
-                <p className="text-secondary mt-1">Marcus Thompson — Case #2024-0892</p>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <div className="min-w-0">
+                <h1 className="text-2xl font-semibold text-primary break-words">Employment Verification</h1>
+                <p className="text-secondary mt-1 break-words">Marcus Thompson — Case #2024-0892</p>
               </div>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 flex-wrap">
                 <button className="flex items-center gap-2 px-4 py-2 bg-slate-800 text-secondary rounded-lg hover:bg-slate-700 transition-colors">
                   <Download className="w-4 h-4" />
                   Export Report
@@ -567,19 +567,19 @@ export default function EmploymentVerification() {
             {/* POST Requirement Notice */}
             <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-4">
               <div className="flex items-start gap-3">
-                <div className="p-2 bg-amber-500/20 rounded-lg">
+                <div className="p-2 bg-amber-500/20 rounded-lg flex-shrink-0">
                   <Scale className="w-5 h-5 text-amber-700" />
                 </div>
-                <div className="flex-1">
-                  <h3 className="text-amber-700 font-medium">POST Employment History Requirement</h3>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-amber-700 font-medium break-words">POST Employment History Requirement</h3>
                   <p className="text-secondary text-sm mt-1">
                     California POST requires verification of all employment for the past 10 years.
                     Current documentation covers <span className="text-amber-700 font-medium">14 years</span> of
                     employment history (2010-Present), exceeding the minimum requirement.
                   </p>
-                  <div className="flex items-center gap-4 mt-3 text-xs">
+                  <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-3 text-xs">
                     <span className="text-slate-500">POST Reg. 1953(f)(1)</span>
-                    <span className="text-slate-700">•</span>
+                    <span className="text-slate-700 hidden sm:inline">•</span>
                     <span className="text-green-400 flex items-center gap-1">
                       <CheckCircle2 className="w-3 h-3" />
                       Requirement Met
@@ -593,12 +593,12 @@ export default function EmploymentVerification() {
             {stats.lateralTransfer > 0 && (
               <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4">
                 <div className="flex items-start gap-3">
-                  <div className="p-2 bg-blue-500/20 rounded-lg">
+                  <div className="p-2 bg-blue-500/20 rounded-lg flex-shrink-0">
                     <BadgeCheck className="w-5 h-5 text-blue-400" />
                   </div>
-                  <div className="flex-1">
-                    <h3 className="text-blue-400 font-medium flex items-center gap-2">
-                      Lateral Transfer Candidate
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-blue-400 font-medium flex flex-wrap items-center gap-2">
+                      <span className="break-words">Lateral Transfer Candidate</span>
                       <span className="px-2 py-0.5 bg-blue-500/20 text-blue-300 rounded text-xs">CURRENT SWORN LE</span>
                     </h3>
                     <p className="text-secondary text-sm mt-1">
@@ -606,13 +606,13 @@ export default function EmploymentVerification() {
                       processing requires <span className="text-blue-400 font-medium">mandatory Internal Affairs clearance</span> from
                       current employer before conditional offer can be extended.
                     </p>
-                    <div className="flex items-center gap-4 mt-3">
+                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-3">
                       <div className="flex items-center gap-2 text-sm">
                         <Clock className="w-4 h-4 text-amber-700" />
                         <span className="text-secondary">IA Request Status:</span>
                         <span className="text-amber-700 font-medium">Pending Response</span>
                       </div>
-                      <span className="text-slate-700">•</span>
+                      <span className="text-slate-700 hidden sm:inline">•</span>
                       <span className="text-slate-500 text-sm">Expected: Feb 1, 2024</span>
                     </div>
                   </div>
@@ -621,7 +621,7 @@ export default function EmploymentVerification() {
             )}
 
             {/* Statistics Grid */}
-            <div className="grid grid-cols-5 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
               <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-slate-100 dark:bg-zinc-900 rounded-lg">
@@ -739,12 +739,12 @@ export default function EmploymentVerification() {
             </div>
 
             {/* Main Content Grid */}
-            <div className="grid grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Employment Records List */}
-              <div className="col-span-2 space-y-4">
+              <div className="lg:col-span-2 space-y-4">
                 {/* Tabs and Search */}
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                  <div className="flex items-center gap-2 flex-wrap">
                     {[
                       { id: 'all', label: 'All Employers', count: stats.total },
                       { id: 'verified', label: 'Verified', count: stats.verified },
@@ -764,14 +764,14 @@ export default function EmploymentVerification() {
                       </button>
                     ))}
                   </div>
-                  <div className="relative">
+                  <div className="relative w-full sm:w-auto">
                     <Search className="w-4 h-4 text-slate-500 absolute left-3 top-1/2 transform -translate-y-1/2" />
                     <input
                       type="text"
                       placeholder="Search employers..."
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
-                      className="pl-10 pr-4 py-2 bg-white dark:bg-zinc-900 border border-border rounded-lg text-primary text-sm placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
+                      className="w-full sm:w-auto pl-10 pr-4 py-2 bg-white dark:bg-zinc-900 border border-border rounded-lg text-primary text-sm placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
                     />
                   </div>
                 </div>
@@ -792,9 +792,9 @@ export default function EmploymentVerification() {
                         className="p-4 cursor-pointer"
                         onClick={() => setExpandedEmployer(expandedEmployer === record.id ? null : record.id)}
                       >
-                        <div className="flex items-start justify-between">
-                          <div className="flex items-start gap-4">
-                            <div className={`p-3 rounded-xl ${
+                        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+                          <div className="flex items-start gap-4 min-w-0">
+                            <div className={`p-3 rounded-xl flex-shrink-0 ${
                               record.isSwornLE
                                 ? 'bg-amber-500/10'
                                 : 'bg-slate-200 dark:bg-zinc-900'
@@ -805,20 +805,20 @@ export default function EmploymentVerification() {
                                 <Building2 className="w-6 h-6 text-secondary" />
                               )}
                             </div>
-                            <div>
-                              <div className="flex items-center gap-2">
-                                <h3 className="text-primary font-medium">{record.employer}</h3>
+                            <div className="min-w-0 flex-1">
+                              <div className="flex items-center gap-2 flex-wrap">
+                                <h3 className="text-primary font-medium break-words">{record.employer}</h3>
                                 {record.isCurrent && (
                                   <span className="px-2 py-0.5 bg-green-500/10 text-green-400 rounded text-xs">Current</span>
                                 )}
                               </div>
                               <p className="text-secondary text-sm mt-0.5">{record.position}</p>
-                              <div className="flex items-center gap-3 mt-2 text-xs text-slate-500">
+                              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-2 text-xs text-slate-500">
                                 <span className="flex items-center gap-1">
                                   <MapPin className="w-3 h-3" />
                                   {record.location}
                                 </span>
-                                <span>•</span>
+                                <span className="hidden sm:inline">•</span>
                                 <span className="flex items-center gap-1">
                                   <Calendar className="w-3 h-3" />
                                   {formatDate(record.startDate)} — {record.endDate === 'Present' ? 'Present' : formatDate(record.endDate)}
@@ -826,7 +826,7 @@ export default function EmploymentVerification() {
                               </div>
                             </div>
                           </div>
-                          <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-2 flex-wrap flex-shrink-0">
                             {getEmploymentTypeBadge(record)}
                             {getVerificationStatusBadge(record.verificationStatus)}
                             {expandedEmployer === record.id ? (
@@ -842,7 +842,7 @@ export default function EmploymentVerification() {
                       {expandedEmployer === record.id && (
                         <div className="border-t border-border p-4 space-y-4">
                           {/* Verification Details */}
-                          <div className="grid grid-cols-2 gap-6">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3">
                               <h4 className="text-secondary text-xs font-medium mb-2">VERIFICATION METHOD</h4>
                               <p className="text-primary text-sm">{record.verificationMethod}</p>
@@ -874,12 +874,12 @@ export default function EmploymentVerification() {
                           {record.hrContact && (
                             <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3">
                               <h4 className="text-secondary text-xs font-medium mb-2">HR CONTACT</h4>
-                              <div className="flex items-center justify-between">
-                                <div>
-                                  <p className="text-primary text-sm">{record.hrContact.name}</p>
+                              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                                <div className="min-w-0">
+                                  <p className="text-primary text-sm break-words">{record.hrContact.name}</p>
                                   <p className="text-slate-500 text-xs">{record.hrContact.title}</p>
                                 </div>
-                                <div className="flex items-center gap-3 text-sm">
+                                <div className="flex flex-wrap items-center gap-3 text-sm">
                                   {record.hrContact.phone && (
                                     <span className="text-secondary flex items-center gap-1">
                                       <Phone className="w-3 h-3" />
@@ -887,7 +887,7 @@ export default function EmploymentVerification() {
                                     </span>
                                   )}
                                   {record.hrContact.email && (
-                                    <span className="text-secondary flex items-center gap-1">
+                                    <span className="text-secondary flex items-center gap-1 break-words">
                                       <Mail className="w-3 h-3" />
                                       {record.hrContact.email}
                                     </span>

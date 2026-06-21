@@ -967,25 +967,25 @@ export default function NewHireOnboarding() {
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={() => setSelectedNewHire(null)}
           />
-          <div className="relative bg-white dark:bg-zinc-950 border border-border rounded-2xl p-6 max-w-4xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
-            <div className="flex items-start justify-between mb-6">
-              <div>
-                <h3 className="text-2xl font-bold text-primary mb-2">{selectedNewHire.name}</h3>
-                <p className="text-sm text-secondary">{selectedNewHire.position} • {selectedNewHire.department}</p>
+          <div className="relative bg-white dark:bg-zinc-950 border border-border rounded-2xl p-4 sm:p-6 max-w-4xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2 sm:gap-4 mb-6">
+              <div className="min-w-0 flex-1">
+                <h3 className="text-2xl font-bold text-primary mb-2 break-words">{selectedNewHire.name}</h3>
+                <p className="text-sm text-secondary break-words">{selectedNewHire.position} • {selectedNewHire.department}</p>
                 {selectedNewHire.hireAuthority && (
-                  <p className="text-xs text-slate-500 mt-1">{selectedNewHire.hireAuthority}</p>
+                  <p className="text-xs text-slate-500 mt-1 break-words">{selectedNewHire.hireAuthority}</p>
                 )}
               </div>
               <button
                 onClick={() => setSelectedNewHire(null)}
-                className="p-2 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors"
+                className="p-2 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors flex-shrink-0 self-end sm:self-auto"
               >
                 <X className="w-5 h-5 text-secondary" />
               </button>
             </div>
 
             {/* Personnel Details */}
-            <div className="grid grid-cols-2 gap-6 mb-6 p-4 bg-slate-100/80 dark:bg-zinc-900/30 rounded-xl">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 p-4 bg-slate-100/80 dark:bg-zinc-900/30 rounded-xl">
               <div>
                 <p className="text-xs text-slate-500 mb-1">Email</p>
                 <p className="text-sm text-secondary">{selectedNewHire.email}</p>
@@ -1020,7 +1020,7 @@ export default function NewHireOnboarding() {
             {selectedNewHire.hireClassification && (
               <div className="mb-6 p-4 bg-slate-100/80 dark:bg-zinc-900/30 rounded-xl">
                 <h4 className="text-sm font-semibold text-secondary mb-3">Hire Classification</h4>
-                <div className="grid grid-cols-2 gap-3 text-xs">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                   <div>
                     <span className="text-slate-500">Type:</span>
                     <span className="ml-1 text-secondary">{selectedNewHire.hireClassification.type}</span>
@@ -1043,7 +1043,7 @@ export default function NewHireOnboarding() {
                       </div>
                     </>
                   )}
-                  <div className="col-span-2">
+                  <div className="sm:col-span-2">
                     <span className="text-slate-500">Starting Salary:</span>
                     <span className="ml-1 text-secondary">{selectedNewHire.hireClassification.startingSalary}</span>
                   </div>
@@ -1055,7 +1055,7 @@ export default function NewHireOnboarding() {
             {selectedNewHire.ftoProgram?.enrolled && (
               <div className="mb-6 p-4 bg-amber-500/10 border border-amber-500/20 rounded-xl">
                 <h4 className="text-sm font-semibold text-amber-700 mb-3">FTO Program Details</h4>
-                <div className="grid grid-cols-2 gap-3 text-xs mb-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs mb-4">
                   <div>
                     <span className="text-slate-500">FTO:</span>
                     <span className="ml-1 text-secondary">{selectedNewHire.ftoProgram.fto}</span>
@@ -1115,7 +1115,7 @@ export default function NewHireOnboarding() {
             {/* Quick Progress Summary */}
             <div className="mb-6">
               <h4 className="text-sm font-semibold text-secondary mb-3">Onboarding Progress Summary</h4>
-              <div className="grid grid-cols-5 gap-2">
+              <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
                 {Object.entries(selectedNewHire.completionSummary).map(([key, value]) => {
                   if (value.total === 0) return null;
                   const labels = {
@@ -1146,7 +1146,7 @@ export default function NewHireOnboarding() {
               </div>
             </div>
 
-            <div className="flex gap-3 pt-4 border-t border-border">
+            <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-border">
               <button className="flex-1 px-4 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-xl font-medium transition-all">
                 Print Full Checklist
               </button>

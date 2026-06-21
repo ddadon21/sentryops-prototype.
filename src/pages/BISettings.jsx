@@ -225,17 +225,17 @@ export default function BISettings() {
 
           {/* System Status Banner */}
           <div className="mb-6 bg-gradient-to-r from-green-500/10 to-emerald-500/5 border border-green-500/20 rounded-xl p-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <div className="flex items-center gap-4 min-w-0">
+                <div className="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
                   <CheckCircle2 className="w-6 h-6 text-green-400" />
                 </div>
-                <div>
+                <div className="min-w-0 flex-1">
                   <h4 className="text-base font-semibold text-primary">All Systems Operational</h4>
-                  <p className="text-sm text-secondary">6 integrations active • 99.93% average uptime • Last sync: 1 min ago</p>
+                  <p className="text-sm text-secondary break-words">6 integrations active • 99.93% average uptime • Last sync: 1 min ago</p>
                 </div>
               </div>
-              <div className="flex items-center gap-2 px-4 py-2 bg-green-500/20 border border-green-500/30 rounded-lg">
+              <div className="flex items-center gap-2 px-4 py-2 bg-green-500/20 border border-green-500/30 rounded-lg self-start sm:self-auto flex-shrink-0">
                 <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
                 <span className="text-sm font-semibold text-green-400 uppercase">Live</span>
               </div>
@@ -277,7 +277,7 @@ export default function BISettings() {
             {/* Integrations */}
             {activeSection === 'integrations' && (
               <div className="space-y-6">
-                <div className="flex items-center justify-between mb-1">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-1">
                   <h3 className="text-sm font-semibold text-primary">BI System Integrations</h3>
                   <span className="text-[10px] text-slate-500">Last updated: {new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
                 </div>
@@ -288,25 +288,25 @@ export default function BISettings() {
                     <div key={key} className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl overflow-hidden shadow-sm dark:shadow-none">
                       <div onClick={() => setExpandedIntegration(isExpanded ? null : key)} className="p-6 cursor-pointer hover:bg-slate-50 dark:hover:bg-zinc-900/20 transition-colors">
                         <div className="flex items-center gap-4">
-                          <div className={`w-12 h-12 ${getStatusBg(integration.status)} border ${getStatusBorder(integration.status)} rounded-xl flex items-center justify-center`}>
+                          <div className={`w-12 h-12 ${getStatusBg(integration.status)} border ${getStatusBorder(integration.status)} rounded-xl flex items-center justify-center flex-shrink-0`}>
                             <Icon className={`w-6 h-6 ${getStatusColor(integration.status)}`} />
                           </div>
                           <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-3 mb-1">
-                              <h4 className="text-base font-semibold text-primary">{integration.name}</h4>
+                            <div className="flex items-center gap-3 mb-1 flex-wrap">
+                              <h4 className="text-base font-semibold text-primary break-words">{integration.name}</h4>
                               <div className={`flex items-center gap-1.5 px-2 py-1 ${getStatusBg(integration.status)} border ${getStatusBorder(integration.status)} rounded-md`}>
                                 <div className={`w-1.5 h-1.5 ${integration.status === 'connected' ? 'bg-green-400' : 'bg-red-400'} rounded-full`}></div>
                                 <span className={`text-xs font-medium ${getStatusColor(integration.status)}`}>{integration.status === 'connected' ? 'Connected' : 'Disconnected'}</span>
                               </div>
                               <span className="text-xs text-muted">{integration.version}</span>
                             </div>
-                            <div className="flex items-center gap-4 text-xs text-muted">
+                            <div className="flex items-center gap-4 text-xs text-muted flex-wrap">
                               <span className="flex items-center gap-1"><Activity className="w-3 h-3" />{integration.uptime}% uptime</span>
                               <span className="flex items-center gap-1"><Clock className="w-3 h-3" />{integration.avgResponseTime}</span>
                               <span className="flex items-center gap-1"><RefreshCw className="w-3 h-3" />{integration.lastSync}</span>
                             </div>
                           </div>
-                          <button className="p-2 hover:bg-slate-200 dark:hover:bg-zinc-800/40 rounded-lg transition-colors">
+                          <button className="p-2 hover:bg-slate-200 dark:hover:bg-zinc-800/40 rounded-lg transition-colors flex-shrink-0">
                             {isExpanded ? <ChevronUp className="w-5 h-5 text-muted" /> : <ChevronDown className="w-5 h-5 text-muted" />}
                           </button>
                         </div>
@@ -385,7 +385,7 @@ export default function BISettings() {
                               </div>
                             </div>
                           )}
-                          <div className="mt-6 flex items-center gap-3">
+                          <div className="mt-6 flex items-center gap-3 flex-wrap">
                             <button onClick={() => handleTestConnection(key)} disabled={testingConnection === key} className="flex items-center gap-2 px-4 py-2 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded-xl text-sm font-medium hover:bg-blue-500/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
                               {testingConnection === key ? <><RefreshCw className="w-4 h-4 animate-spin" />Testing...</> : <><Wifi className="w-4 h-4" />Test Connection</>}
                             </button>
@@ -404,7 +404,7 @@ export default function BISettings() {
             {activeSection === 'security' && (
               <div className="space-y-6">
                 <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6">
-                  <div className="flex items-center justify-between mb-1">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-1">
                     <h3 className="text-sm font-semibold text-primary">Authentication & Access</h3>
                     <span className="text-[10px] text-slate-500">Last updated: Dec 9, 2025 11:42 AM</span>
                   </div>
@@ -415,14 +415,14 @@ export default function BISettings() {
                       { key: 'loginNotifications', label: 'Login Notifications', desc: 'Notify on new device login' },
                       { key: 'ipWhitelist', label: 'IP Whitelist', desc: 'Restrict GCIC/NCIC access to approved IPs' },
                     ].map((item) => (
-                      <div key={item.key} className="flex items-center justify-between py-3 border-b border-border dark:border-slate-700/30">
-                        <div className="flex-1">
+                      <div key={item.key} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 py-3 border-b border-border dark:border-slate-700/30">
+                        <div className="flex-1 min-w-0">
                           <h4 className="text-sm font-medium text-primary">{item.label}</h4>
                           <p className="text-xs text-muted mt-1">{item.desc}</p>
                         </div>
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-3 flex-shrink-0">
                           {item.extra && <span className="text-xs font-medium text-green-400">{item.extra}</span>}
-                          <button onClick={() => setSecuritySettings({...securitySettings, [item.key]: !securitySettings[item.key]})} className={`relative w-12 h-6 rounded-full transition-colors ${securitySettings[item.key] ? 'bg-green-500' : 'bg-slate-600'}`}>
+                          <button onClick={() => setSecuritySettings({...securitySettings, [item.key]: !securitySettings[item.key]})} className={`relative w-12 h-6 rounded-full transition-colors flex-shrink-0 ${securitySettings[item.key] ? 'bg-green-500' : 'bg-slate-600'}`}>
                             <div className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform ${securitySettings[item.key] ? 'translate-x-6' : 'translate-x-0'}`}></div>
                           </button>
                         </div>
@@ -447,18 +447,18 @@ export default function BISettings() {
                         <option value="180">180 days</option>
                       </select>
                     </div>
-                    <div className="flex items-center justify-between py-3 border-b border-border dark:border-slate-700/30">
-                      <div className="flex-1"><h4 className="text-sm font-medium text-primary">Audit Logging</h4><p className="text-xs text-muted mt-1">CJIS mandated — all GCIC/NCIC queries are logged</p></div>
-                      <div className="flex items-center gap-3">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 py-3 border-b border-border dark:border-slate-700/30">
+                      <div className="flex-1 min-w-0"><h4 className="text-sm font-medium text-primary">Audit Logging</h4><p className="text-xs text-muted mt-1">CJIS mandated — all GCIC/NCIC queries are logged</p></div>
+                      <div className="flex items-center gap-3 flex-shrink-0">
                         <span className="text-xs font-medium text-green-400">CJIS Required</span>
-                        <button disabled className="relative w-12 h-6 rounded-full bg-green-500 cursor-not-allowed opacity-75"><div className="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full translate-x-6"></div></button>
+                        <button disabled className="relative w-12 h-6 rounded-full bg-green-500 cursor-not-allowed opacity-75 flex-shrink-0"><div className="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full translate-x-6"></div></button>
                       </div>
                     </div>
-                    <div className="flex items-center justify-between py-3">
-                      <div className="flex-1"><h4 className="text-sm font-medium text-primary">SSO Integration</h4><p className="text-xs text-muted mt-1">Single Sign-On with County AD</p></div>
-                      <div className="flex items-center gap-3">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 py-3">
+                      <div className="flex-1 min-w-0"><h4 className="text-sm font-medium text-primary">SSO Integration</h4><p className="text-xs text-muted mt-1">Single Sign-On with County AD</p></div>
+                      <div className="flex items-center gap-3 flex-shrink-0">
                         <span className="text-xs font-medium text-green-400">Active</span>
-                        <button onClick={() => setSecuritySettings({...securitySettings, ssoEnabled: !securitySettings.ssoEnabled})} className={`relative w-12 h-6 rounded-full transition-colors ${securitySettings.ssoEnabled ? 'bg-green-500' : 'bg-slate-600'}`}>
+                        <button onClick={() => setSecuritySettings({...securitySettings, ssoEnabled: !securitySettings.ssoEnabled})} className={`relative w-12 h-6 rounded-full transition-colors flex-shrink-0 ${securitySettings.ssoEnabled ? 'bg-green-500' : 'bg-slate-600'}`}>
                           <div className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform ${securitySettings.ssoEnabled ? 'translate-x-6' : 'translate-x-0'}`}></div>
                         </button>
                       </div>
@@ -468,23 +468,27 @@ export default function BISettings() {
                 <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6">
                   <h3 className="text-sm font-semibold text-primary mb-6">Active Sessions</h3>
                   <div className="space-y-3">
-                    <div className="flex items-center gap-4 p-4 bg-slate-50 dark:bg-zinc-900/30 border border-border dark:border-slate-700/30 rounded-xl">
-                      <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center"><Monitor className="w-5 h-5 text-green-400" /></div>
-                      <div className="flex-1">
-                        <p className="text-sm font-medium text-primary">Chrome on Windows • Current Session</p>
-                        <p className="text-xs text-muted">BI Investigations Unit • 172.16.45.120</p>
-                        <p className="text-xs text-slate-500 mt-1">Last active: Just now</p>
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-4 p-4 bg-slate-50 dark:bg-zinc-900/30 border border-border dark:border-slate-700/30 rounded-xl">
+                      <div className="flex items-center gap-4 min-w-0 flex-1">
+                        <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center flex-shrink-0"><Monitor className="w-5 h-5 text-green-400" /></div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-primary break-words">Chrome on Windows • Current Session</p>
+                          <p className="text-xs text-muted break-words">BI Investigations Unit • 172.16.45.120</p>
+                          <p className="text-xs text-slate-500 mt-1">Last active: Just now</p>
+                        </div>
                       </div>
-                      <div className="px-3 py-1.5 bg-green-500/20 border border-green-500/30 rounded-lg"><span className="text-xs font-medium text-green-400">Active</span></div>
+                      <div className="px-3 py-1.5 bg-green-500/20 border border-green-500/30 rounded-lg flex-shrink-0 self-start sm:self-auto"><span className="text-xs font-medium text-green-400">Active</span></div>
                     </div>
-                    <div className="flex items-center gap-4 p-4 bg-slate-50 dark:bg-zinc-900/30 border border-border dark:border-slate-700/30 rounded-xl">
-                      <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center"><Monitor className="w-5 h-5 text-blue-400" /></div>
-                      <div className="flex-1">
-                        <p className="text-sm font-medium text-primary">Chrome on MacBook • Investigator Workstation</p>
-                        <p className="text-xs text-muted">BI Office • 172.16.45.122</p>
-                        <p className="text-xs text-slate-500 mt-1">Last active: 2 hours ago</p>
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-4 p-4 bg-slate-50 dark:bg-zinc-900/30 border border-border dark:border-slate-700/30 rounded-xl">
+                      <div className="flex items-center gap-4 min-w-0 flex-1">
+                        <div className="w-10 h-10 bg-blue-500/20 rounded-xl flex items-center justify-center flex-shrink-0"><Monitor className="w-5 h-5 text-blue-400" /></div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-primary break-words">Chrome on MacBook • Investigator Workstation</p>
+                          <p className="text-xs text-muted break-words">BI Office • 172.16.45.122</p>
+                          <p className="text-xs text-slate-500 mt-1">Last active: 2 hours ago</p>
+                        </div>
                       </div>
-                      <button className="px-3 py-1.5 bg-red-500/20 border border-red-500/30 text-red-400 rounded-lg text-xs font-medium hover:bg-red-500/30 transition-all">Revoke</button>
+                      <button className="px-3 py-1.5 bg-red-500/20 border border-red-500/30 text-red-400 rounded-lg text-xs font-medium hover:bg-red-500/30 transition-all flex-shrink-0 self-start sm:self-auto">Revoke</button>
                     </div>
                   </div>
                 </div>
@@ -506,12 +510,12 @@ export default function BISettings() {
             {/* Audit & Compliance */}
             {activeSection === 'audit' && (
               <div className="bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6">
-                <div className="flex items-center justify-between mb-6">
-                  <div>
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
+                  <div className="min-w-0 flex-1">
                     <h3 className="text-sm font-semibold text-primary">Audit & Compliance Trail</h3>
                     <p className="text-xs text-slate-500 mt-1">Recent BI actions, GCIC queries, and system events. All changes are logged per CJIS requirements.</p>
                   </div>
-                  <button className="flex items-center gap-2 px-4 py-2 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded-xl text-sm font-medium hover:bg-blue-500/30 transition-all"><Download className="w-4 h-4" />Export Logs</button>
+                  <button className="flex items-center gap-2 px-4 py-2 bg-blue-500/20 border border-blue-500/30 text-blue-400 rounded-xl text-sm font-medium hover:bg-blue-500/30 transition-all flex-shrink-0 self-start sm:self-auto"><Download className="w-4 h-4" />Export Logs</button>
                 </div>
                 <div className="space-y-3">
                   {[

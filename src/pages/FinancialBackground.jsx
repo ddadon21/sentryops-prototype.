@@ -641,9 +641,9 @@ export default function FinancialBackground() {
                     className="p-5 cursor-pointer hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors"
                     onClick={() => setExpandedReport(isExpanded ? null : report.id)}
                   >
-                    <div className="flex items-start justify-between">
-                      <div className="flex items-start gap-4">
-                        <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
+                    <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+                      <div className="flex items-start gap-4 min-w-0">
+                        <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${
                           report.statusCategory === 'excellent' ? 'bg-green-500/20' :
                           report.statusCategory === 'acceptable' ? 'bg-blue-500/20' : 'bg-amber-500/20'
                         }`}>
@@ -651,8 +651,8 @@ export default function FinancialBackground() {
                            report.statusCategory === 'acceptable' ? <CheckCircle2 className="w-6 h-6 text-blue-400" /> :
                            <AlertCircle className="w-6 h-6 text-amber-700" />}
                         </div>
-                        <div>
-                          <div className="flex items-center gap-2 mb-1">
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center gap-2 mb-1 flex-wrap">
                             <span className={`text-xs font-medium px-2 py-0.5 rounded ${
                               report.statusCategory === 'excellent' ? 'bg-green-500/20 text-green-400' :
                               report.statusCategory === 'acceptable' ? 'bg-blue-500/20 text-blue-400' : 'bg-amber-500/20 text-amber-700'
@@ -663,12 +663,12 @@ export default function FinancialBackground() {
                               <Lock className="w-3 h-3" /> FCRA Protected
                             </span>
                           </div>
-                          <h3 className="text-lg font-semibold text-primary">{report.subject}</h3>
-                          <p className="text-sm text-purple-400">{report.caseId} - {report.position}</p>
+                          <h3 className="text-lg font-semibold text-primary break-words">{report.subject}</h3>
+                          <p className="text-sm text-purple-400 break-words">{report.caseId} - {report.position}</p>
                         </div>
                       </div>
-                      <div className="flex items-center gap-4">
-                        <div className="text-right">
+                      <div className="flex items-center gap-4 flex-shrink-0 sm:self-start">
+                        <div className="sm:text-right">
                           <p className="text-3xl font-bold text-primary">{report.creditScore.score}</p>
                           <p className="text-xs text-slate-500">Credit Score ({report.creditScore.range})</p>
                           <p className={`text-xs ${report.creditScore.exceedsBy > 50 ? 'text-green-400' : 'text-amber-700'}`}>
@@ -1012,9 +1012,9 @@ export default function FinancialBackground() {
                           <p className="text-xs text-slate-500 mb-2">Access Log:</p>
                           <div className="space-y-1">
                             {report.fcraAccessLog.map((log, idx) => (
-                              <div key={idx} className="text-xs flex items-center gap-2 text-secondary">
+                              <div key={idx} className="text-xs flex flex-wrap items-center gap-x-2 gap-y-0.5 text-secondary">
                                 <span className="text-slate-500">{log.date}</span>
-                                <span>-</span>
+                                <span className="hidden sm:inline">-</span>
                                 <span>{log.action}</span>
                                 <span className="text-slate-500">by {log.by}</span>
                               </div>

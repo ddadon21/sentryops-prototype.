@@ -402,7 +402,7 @@ export default function InvestigationTimeline() {
                   <div className="text-xs text-slate-500 hidden md:block">
                     {formatTime(currentTime)} • {formatDate(currentTime)}
                   </div>
-                  <div className="flex items-center gap-3">
+                  <div className="flex flex-wrap items-center gap-3">
                     <div className="relative">
                       <button
                         onClick={() => setFilterOpen(!filterOpen)}
@@ -432,9 +432,9 @@ export default function InvestigationTimeline() {
 
             {/* Case Progress Summary (replaced Timeline Analysis) */}
             <div className="mb-6 bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
-              <div className="flex items-center justify-between mb-6">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4 mb-6">
                 <h4 className="text-base font-semibold text-primary">Case Progress Summary</h4>
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                   <button className="px-3 py-1.5 bg-white dark:bg-zinc-800/50 hover:bg-slate-700 text-secondary rounded-lg text-xs font-medium transition-colors">
                     View Detailed Status
                   </button>
@@ -554,12 +554,12 @@ export default function InvestigationTimeline() {
                         stage.status === 'in_progress' ? 'bg-amber-500/5 border border-amber-500/20' :
                         'bg-white dark:bg-zinc-950/40 border border-border'
                       }`}>
-                        <div className="flex items-start justify-between mb-2">
-                          <div>
-                            <h4 className="text-sm font-semibold text-primary">{stage.name}</h4>
+                        <div className="flex items-start justify-between gap-2 mb-2">
+                          <div className="min-w-0 flex-1">
+                            <h4 className="text-sm font-semibold text-primary break-words">{stage.name}</h4>
                             <p className="text-xs text-slate-500 mt-0.5">{stage.date}</p>
                           </div>
-                          <span className={`px-2 py-1 rounded text-xs font-medium whitespace-nowrap ${
+                          <span className={`px-2 py-1 rounded text-xs font-medium whitespace-nowrap flex-shrink-0 ${
                             stage.status === 'completed' ? 'bg-green-500/20 text-green-400' :
                             stage.status === 'in_progress' ? 'bg-amber-500/20 text-amber-700' :
                             'bg-white dark:bg-zinc-800/50 text-slate-500'
@@ -597,9 +597,9 @@ export default function InvestigationTimeline() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Timeline Events */}
               <div className="lg:col-span-2 space-y-4">
-                <div className="flex items-center justify-between mb-6">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4 mb-6">
                   <h3 className="text-lg font-semibold text-primary">Chronological Activity Log</h3>
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap items-center gap-2">
                     <button className="px-3 py-1.5 bg-white dark:bg-zinc-800/50 hover:bg-slate-700 text-secondary rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
                       <Download className="w-3 h-3" />
                       Export Timeline
@@ -631,12 +631,12 @@ export default function InvestigationTimeline() {
                         </div>
 
                         <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5 hover:border-amber-500/30 transition-colors">
-                          <div className="flex items-start justify-between mb-3">
-                            <div>
-                              <h4 className="text-sm font-semibold text-primary">{event.title}</h4>
-                              <p className="text-xs text-slate-500">{event.actor}</p>
+                          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 sm:gap-3 mb-3">
+                            <div className="min-w-0 flex-1">
+                              <h4 className="text-sm font-semibold text-primary break-words">{event.title}</h4>
+                              <p className="text-xs text-slate-500 break-words">{event.actor}</p>
                             </div>
-                            <div className="text-right">
+                            <div className="sm:text-right flex-shrink-0">
                               <p className="text-xs font-medium text-secondary">{event.date}</p>
                               <p className="text-xs text-slate-500">{event.time}</p>
                             </div>

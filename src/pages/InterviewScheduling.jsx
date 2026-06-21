@@ -648,7 +648,7 @@ export default function InterviewScheduling() {
             {/* Upcoming Interviews */}
             {selectedView === 'upcoming' && (
               <div className="space-y-6">
-                <div className="flex items-center justify-between mb-2">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
                   <h3 className="text-sm font-medium text-secondary">Upcoming Interviews (Next 7 Days)</h3>
                   <div className="flex items-center gap-2">
                     <button className="flex items-center gap-1 px-3 py-1.5 bg-white dark:bg-zinc-800/50 hover:bg-slate-700 border border-slate-600/50 rounded-lg text-xs text-secondary">
@@ -661,10 +661,10 @@ export default function InterviewScheduling() {
                 {upcomingInterviews.map((interview) => (
                   <div key={interview.id} className={`bg-white dark:bg-zinc-900/40 border rounded-xl p-5 ${interview.confirmationStatus === 'pending' ? 'border-amber-500/30' : 'border-slate-700/50'}`}>
                     {/* Header */}
-                    <div className="flex items-start justify-between mb-4">
-                      <div>
-                        <div className="flex items-center gap-3 mb-1">
-                          <h3 className="text-lg font-semibold text-primary">{interview.subject}</h3>
+                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-4">
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-3 mb-1 flex-wrap">
+                          <h3 className="text-lg font-semibold text-primary break-words">{interview.subject}</h3>
                           {interview.dateShort === 'Today' && (
                             <span className="px-2 py-0.5 bg-amber-500/20 text-amber-700 rounded text-xs font-bold">TODAY</span>
                           )}
@@ -681,7 +681,7 @@ export default function InterviewScheduling() {
                           <p className="text-xs text-slate-500 mt-1">Verification for: {interview.employerFor}</p>
                         )}
                       </div>
-                      {getConfirmationBadge(interview.confirmationStatus)}
+                      <div className="flex-shrink-0">{getConfirmationBadge(interview.confirmationStatus)}</div>
                     </div>
 
                     {/* Schedule Details */}
@@ -808,22 +808,22 @@ export default function InterviewScheduling() {
                     )}
 
                     {/* Action Buttons */}
-                    <div className="flex items-center justify-between pt-4 border-t border-border dark:border-slate-700/30">
-                      <div className="flex items-center gap-4 text-xs text-slate-500">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-4 border-t border-border dark:border-slate-700/30">
+                      <div className="flex flex-wrap items-center gap-4 text-xs text-slate-500 min-w-0">
                         {interview.contactEmail && (
-                          <span className="flex items-center gap-1">
-                            <Mail className="w-3.5 h-3.5" />
+                          <span className="flex items-center gap-1 break-words">
+                            <Mail className="w-3.5 h-3.5 flex-shrink-0" />
                             {interview.contactEmail}
                           </span>
                         )}
                         {interview.contactPhone && (
                           <span className="flex items-center gap-1">
-                            <Phone className="w-3.5 h-3.5" />
+                            <Phone className="w-3.5 h-3.5 flex-shrink-0" />
                             {interview.contactPhone}
                           </span>
                         )}
                       </div>
-                      <div className="flex items-center gap-2">
+                      <div className="flex flex-wrap items-center gap-2">
                         <button className="p-2 bg-white dark:bg-zinc-800/50 hover:bg-slate-700 rounded-lg transition-colors" title="Edit">
                           <Edit className="w-4 h-4 text-secondary" />
                         </button>
@@ -863,12 +863,12 @@ export default function InterviewScheduling() {
                   pendingConfirmation.map((interview) => (
                     <div key={interview.id} className="bg-white dark:bg-zinc-900/40 border border-amber-500/30 rounded-xl p-5">
                       {/* Same structure as upcoming, but only for pending */}
-                      <div className="flex items-start justify-between mb-4">
-                        <div>
-                          <h3 className="text-lg font-semibold text-primary mb-1">{interview.subject}</h3>
+                      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-4">
+                        <div className="min-w-0 flex-1">
+                          <h3 className="text-lg font-semibold text-primary mb-1 break-words">{interview.subject}</h3>
                           <p className="text-sm text-amber-700">Case: {interview.caseId} • {interview.type}</p>
                         </div>
-                        {getConfirmationBadge('pending')}
+                        <div className="flex-shrink-0">{getConfirmationBadge('pending')}</div>
                       </div>
 
                       <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg mb-4">
@@ -888,7 +888,7 @@ export default function InterviewScheduling() {
                         <p className="text-xs text-amber-300 font-medium mt-2">Next action: {interview.nextAction}</p>
                       </div>
 
-                      <div className="flex items-center justify-end gap-2">
+                      <div className="flex flex-wrap items-center justify-end gap-2">
                         <button className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-sm font-medium transition-colors flex items-center gap-2">
                           <Phone className="w-4 h-4" />
                           Call Now
@@ -910,7 +910,7 @@ export default function InterviewScheduling() {
             {/* Completed Interviews */}
             {selectedView === 'completed' && (
               <div className="space-y-6">
-                <div className="flex items-center justify-between mb-2">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
                   <h3 className="text-sm font-medium text-secondary">Completed Interviews (January 2025)</h3>
                   <div className="flex items-center gap-2">
                     <button className="flex items-center gap-1 px-3 py-1.5 bg-white dark:bg-zinc-800/50 hover:bg-slate-700 border border-slate-600/50 rounded-lg text-xs text-secondary">
@@ -927,11 +927,11 @@ export default function InterviewScheduling() {
                 {completedInterviews.map((interview) => (
                   <div key={interview.id} className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-5">
                     {/* Header */}
-                    <div className="flex items-start justify-between mb-4">
-                      <div>
+                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-4">
+                      <div className="min-w-0 flex-1">
                         <div className="flex items-center gap-2 mb-1">
-                          <CheckCircle2 className="w-5 h-5 text-green-400" />
-                          <h3 className="text-lg font-semibold text-primary">{interview.subject}</h3>
+                          <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0" />
+                          <h3 className="text-lg font-semibold text-primary break-words">{interview.subject}</h3>
                         </div>
                         <p className="text-sm text-amber-700">Case: {interview.caseId}</p>
                         <p className="text-sm text-secondary">{interview.type} — {interview.typeDetail}</p>
@@ -942,7 +942,7 @@ export default function InterviewScheduling() {
                           <p className="text-xs text-slate-500 mt-1">Position: {interview.applicantFor}</p>
                         )}
                       </div>
-                      {getConfirmationBadge('completed')}
+                      <div className="flex-shrink-0">{getConfirmationBadge('completed')}</div>
                     </div>
 
                     {/* Schedule Info */}
@@ -1089,8 +1089,8 @@ export default function InterviewScheduling() {
                   </div>
                 </div>
 
-                <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl overflow-hidden">
-                  <table className="w-full">
+                <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl overflow-x-auto">
+                  <table className="w-full min-w-[640px]">
                     <thead className="bg-slate-50 dark:bg-zinc-950/60">
                       <tr>
                         <th className="text-left text-xs font-medium text-secondary p-4">Subject/Reference</th>

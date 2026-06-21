@@ -664,19 +664,19 @@ export default function ReferenceChecks() {
                   }`}>
                     <div className="p-5">
                       {/* Card Header */}
-                      <div className="flex items-start justify-between mb-4">
-                        <div className="flex-1">
-                          <div className="flex items-center gap-3 mb-1">
-                            <h3 className="text-lg font-semibold text-primary">{ref.referenceName}</h3>
+                      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-4">
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center gap-3 mb-1 flex-wrap">
+                            <h3 className="text-lg font-semibold text-primary break-words">{ref.referenceName}</h3>
                             {getRefStatusBadge(ref.status)}
                           </div>
                           <p className="text-sm text-amber-700 mb-1">{ref.relationship}</p>
                           {ref.organization && (
-                            <p className="text-sm text-secondary mb-1">{ref.rankPosition ? `${ref.rankPosition} — ` : ''}{ref.organization}</p>
+                            <p className="text-sm text-secondary mb-1 break-words">{ref.rankPosition ? `${ref.rankPosition} — ` : ''}{ref.organization}</p>
                           )}
-                          <p className="text-sm text-slate-500">Reference for: {ref.subject} (Case {ref.caseId}) — {ref.positionApplied}</p>
+                          <p className="text-sm text-slate-500 break-words">Reference for: {ref.subject} (Case {ref.caseId}) — {ref.positionApplied}</p>
                         </div>
-                        <div className="flex flex-col items-end gap-2">
+                        <div className="flex flex-row sm:flex-col items-start sm:items-end gap-2 flex-wrap flex-shrink-0">
                           {getRefTypeBadge(ref.referenceType)}
                           {isCompleted && ref.outcome && getOutcomeBadge(ref.outcome)}
                         </div>
@@ -953,8 +953,8 @@ export default function ReferenceChecks() {
                       )}
 
                       {/* Action Buttons */}
-                      <div className="flex items-center justify-between pt-4 border-t border-border dark:border-slate-700/30 mt-2">
-                        <div className="text-sm text-secondary">
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-4 border-t border-border dark:border-slate-700/30 mt-2">
+                        <div className="text-sm text-secondary min-w-0 break-words">
                           Case: <span className="text-primary font-medium">{ref.caseId}</span> — {ref.subject}
                         </div>
                         <div className="flex items-center gap-2 flex-wrap">
@@ -990,9 +990,9 @@ export default function ReferenceChecks() {
             </div>
 
             {/* Footer Actions */}
-            <div className="flex items-center justify-between mt-6">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mt-6">
               <button className="px-4 py-2 bg-white dark:bg-zinc-900/40 hover:bg-slate-100 dark:hover:bg-zinc-900/60 border border-slate-700/50 text-secondary rounded-xl text-sm font-medium transition-colors">Load More References</button>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 flex-wrap">
                 <button className="px-4 py-2 bg-white dark:bg-zinc-900/40 hover:bg-slate-100 dark:hover:bg-zinc-900/60 border border-slate-700/50 text-secondary rounded-xl text-sm font-medium transition-colors flex items-center gap-2">
                   <Download className="w-4 h-4" />Export All References
                 </button>

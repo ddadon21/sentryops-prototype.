@@ -165,21 +165,21 @@ export default function ApplicantTracking() {
               <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl overflow-hidden">
                 <button
                   onClick={() => toggleApplicant('marcus')}
-                  className="w-full p-5 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors"
+                  className="w-full p-5 flex items-center justify-between gap-3 hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors"
                 >
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-purple-500/20 rounded-full flex items-center justify-center">
+                  <div className="flex items-center gap-4 min-w-0 flex-1">
+                    <div className="w-12 h-12 bg-purple-500/20 rounded-full flex items-center justify-center flex-shrink-0">
                       <User className="w-6 h-6 text-purple-400" />
                     </div>
-                    <div className="text-left">
+                    <div className="text-left min-w-0 flex-1">
                       <div className="flex items-center gap-3 flex-wrap">
-                        <h3 className="text-lg font-bold text-primary">MARCUS JOHNSON</h3>
+                        <h3 className="text-lg font-bold text-primary break-words">MARCUS JOHNSON</h3>
                         <span className="px-2 py-1 bg-purple-500/20 border border-purple-500/30 rounded text-xs text-purple-400 font-bold">SCREENING</span>
                       </div>
-                      <p className="text-sm text-secondary">Deputy Sheriff (Patrol Division) • Ref: 2026-APP-0142</p>
+                      <p className="text-sm text-secondary break-words">Deputy Sheriff (Patrol Division) • Ref: 2026-APP-0142</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-4 flex-shrink-0">
                     <div className="text-right hidden md:block">
                       <p className="text-sm text-primary font-medium">Applied: Oct 12, 2024</p>
                       <p className="text-xs text-amber-700">Interview Scheduled: Feb 06</p>
@@ -191,22 +191,22 @@ export default function ApplicantTracking() {
                 {expandedApplicant === 'marcus' && (
                   <div className="px-5 pb-5 space-y-5 border-t border-border">
                     {/* Contact Info */}
-                    <div className="pt-5 grid grid-cols-2 md:grid-cols-4 gap-4">
-                      <div className="flex items-center gap-2 text-sm">
-                        <Mail className="w-4 h-4 text-slate-500" />
-                        <span className="text-secondary">marcus.johnson@email.com</span>
+                    <div className="pt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                      <div className="flex items-center gap-2 text-sm min-w-0">
+                        <Mail className="w-4 h-4 text-slate-500 flex-shrink-0" />
+                        <span className="text-secondary break-words">marcus.johnson@email.com</span>
                       </div>
-                      <div className="flex items-center gap-2 text-sm">
-                        <Phone className="w-4 h-4 text-slate-500" />
-                        <span className="text-secondary">(555) 234-5678</span>
+                      <div className="flex items-center gap-2 text-sm min-w-0">
+                        <Phone className="w-4 h-4 text-slate-500 flex-shrink-0" />
+                        <span className="text-secondary break-words">(555) 234-5678</span>
                       </div>
-                      <div className="flex items-center gap-2 text-sm">
-                        <MapPin className="w-4 h-4 text-slate-500" />
-                        <span className="text-secondary">Lawrenceville, GA 30046</span>
+                      <div className="flex items-center gap-2 text-sm min-w-0">
+                        <MapPin className="w-4 h-4 text-slate-500 flex-shrink-0" />
+                        <span className="text-secondary break-words">Lawrenceville, GA 30046</span>
                       </div>
-                      <div className="flex items-center gap-2 text-sm">
-                        <Calendar className="w-4 h-4 text-slate-500" />
-                        <span className="text-secondary">Applied: Oct 12, 2024 (113 days)</span>
+                      <div className="flex items-center gap-2 text-sm min-w-0">
+                        <Calendar className="w-4 h-4 text-slate-500 flex-shrink-0" />
+                        <span className="text-secondary break-words">Applied: Oct 12, 2024 (113 days)</span>
                       </div>
                     </div>
 
@@ -347,22 +347,22 @@ export default function ApplicantTracking() {
               <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl overflow-hidden">
                 <button
                   onClick={() => toggleApplicant('sarah')}
-                  className="w-full p-5 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors"
+                  className="w-full p-5 flex items-center justify-between gap-3 hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors"
                 >
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-amber-500/20 rounded-full flex items-center justify-center">
+                  <div className="flex items-center gap-4 min-w-0 flex-1">
+                    <div className="w-12 h-12 bg-amber-500/20 rounded-full flex items-center justify-center flex-shrink-0">
                       <User className="w-6 h-6 text-amber-700" />
                     </div>
-                    <div className="text-left">
+                    <div className="text-left min-w-0 flex-1">
                       <div className="flex items-center gap-3 flex-wrap">
-                        <h3 className="text-lg font-bold text-primary">SARAH CHEN</h3>
+                        <h3 className="text-lg font-bold text-primary break-words">SARAH CHEN</h3>
                         <span className="px-2 py-1 bg-amber-500/20 border border-amber-500/30 rounded text-xs text-amber-700 font-bold">INTERVIEW COMPLETED</span>
                         <span className="px-2 py-1 bg-green-500/20 border border-green-500/30 rounded text-xs text-green-400 font-bold">TOP CANDIDATE</span>
                       </div>
-                      <p className="text-sm text-secondary">Background Investigator (HR/IA) • Ref: 2026-APP-0087</p>
+                      <p className="text-sm text-secondary break-words">Background Investigator (HR/IA) • Ref: 2026-APP-0087</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-4 flex-shrink-0">
                     <div className="text-right hidden md:block">
                       <p className="text-sm text-primary font-medium">Interview Score: 144/150 (96%)</p>
                       <p className="text-xs text-green-400">Ranked #1 - Awaiting Sheriff Approval</p>
@@ -374,22 +374,22 @@ export default function ApplicantTracking() {
                 {expandedApplicant === 'sarah' && (
                   <div className="px-5 pb-5 space-y-5 border-t border-border">
                     {/* Contact Info */}
-                    <div className="pt-5 grid grid-cols-2 md:grid-cols-4 gap-4">
-                      <div className="flex items-center gap-2 text-sm">
-                        <Mail className="w-4 h-4 text-slate-500" />
-                        <span className="text-secondary">sarah.chen@email.com</span>
+                    <div className="pt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                      <div className="flex items-center gap-2 text-sm min-w-0">
+                        <Mail className="w-4 h-4 text-slate-500 flex-shrink-0" />
+                        <span className="text-secondary break-words">sarah.chen@email.com</span>
                       </div>
-                      <div className="flex items-center gap-2 text-sm">
-                        <Phone className="w-4 h-4 text-slate-500" />
-                        <span className="text-secondary">(555) 345-6789</span>
+                      <div className="flex items-center gap-2 text-sm min-w-0">
+                        <Phone className="w-4 h-4 text-slate-500 flex-shrink-0" />
+                        <span className="text-secondary break-words">(555) 345-6789</span>
                       </div>
-                      <div className="flex items-center gap-2 text-sm">
-                        <MapPin className="w-4 h-4 text-slate-500" />
-                        <span className="text-secondary">Duluth, GA 30096</span>
+                      <div className="flex items-center gap-2 text-sm min-w-0">
+                        <MapPin className="w-4 h-4 text-slate-500 flex-shrink-0" />
+                        <span className="text-secondary break-words">Duluth, GA 30096</span>
                       </div>
-                      <div className="flex items-center gap-2 text-sm">
-                        <Calendar className="w-4 h-4 text-slate-500" />
-                        <span className="text-secondary">Applied: Oct 27, 2024 (98 days)</span>
+                      <div className="flex items-center gap-2 text-sm min-w-0">
+                        <Calendar className="w-4 h-4 text-slate-500 flex-shrink-0" />
+                        <span className="text-secondary break-words">Applied: Oct 27, 2024 (98 days)</span>
                       </div>
                     </div>
 
@@ -505,21 +505,21 @@ export default function ApplicantTracking() {
               <div className="bg-white dark:bg-zinc-900/40 border border-green-500/30 rounded-xl overflow-hidden">
                 <button
                   onClick={() => toggleApplicant('robert')}
-                  className="w-full p-5 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors"
+                  className="w-full p-5 flex items-center justify-between gap-3 hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors"
                 >
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center">
+                  <div className="flex items-center gap-4 min-w-0 flex-1">
+                    <div className="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center flex-shrink-0">
                       <User className="w-6 h-6 text-green-400" />
                     </div>
-                    <div className="text-left">
+                    <div className="text-left min-w-0 flex-1">
                       <div className="flex items-center gap-3 flex-wrap">
-                        <h3 className="text-lg font-bold text-primary">ROBERT MARTINEZ</h3>
+                        <h3 className="text-lg font-bold text-primary break-words">ROBERT MARTINEZ</h3>
                         <span className="px-2 py-1 bg-green-500/20 border border-green-500/30 rounded text-xs text-green-400 font-bold">OFFER ACCEPTED</span>
                       </div>
-                      <p className="text-sm text-secondary">Deputy Sheriff (Patrol Division) • Ref: 2026-APP-0124</p>
+                      <p className="text-sm text-secondary break-words">Deputy Sheriff (Patrol Division) • Ref: 2026-APP-0124</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-4 flex-shrink-0">
                     <div className="text-right hidden md:block">
                       <p className="text-sm text-green-400 font-medium">Start Date: March 03, 2026</p>
                       <p className="text-xs text-secondary">Lateral from Clayton County Sheriff</p>
@@ -655,21 +655,21 @@ export default function ApplicantTracking() {
               <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl overflow-hidden">
                 <button
                   onClick={() => toggleApplicant('david')}
-                  className="w-full p-5 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors"
+                  className="w-full p-5 flex items-center justify-between gap-3 hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors"
                 >
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-cyan-500/20 rounded-full flex items-center justify-center">
+                  <div className="flex items-center gap-4 min-w-0 flex-1">
+                    <div className="w-12 h-12 bg-cyan-500/20 rounded-full flex items-center justify-center flex-shrink-0">
                       <User className="w-6 h-6 text-cyan-400" />
                     </div>
-                    <div className="text-left">
+                    <div className="text-left min-w-0 flex-1">
                       <div className="flex items-center gap-3 flex-wrap">
-                        <h3 className="text-lg font-bold text-primary">DAVID BROWN</h3>
+                        <h3 className="text-lg font-bold text-primary break-words">DAVID BROWN</h3>
                         <span className="px-2 py-1 bg-cyan-500/20 border border-cyan-500/30 rounded text-xs text-cyan-400 font-bold">BACKGROUND CHECK</span>
                       </div>
-                      <p className="text-sm text-secondary">Deputy Sheriff (Patrol Division) • Ref: 2026-APP-0178</p>
+                      <p className="text-sm text-secondary break-words">Deputy Sheriff (Patrol Division) • Ref: 2026-APP-0178</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-4 flex-shrink-0">
                     <div className="text-right hidden md:block">
                       <p className="text-sm text-primary font-medium">67 days in progress</p>
                       <p className="text-xs text-cyan-400">Investigator: Cpl. J. Adams</p>
@@ -805,21 +805,21 @@ export default function ApplicantTracking() {
               <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl overflow-hidden">
                 <button
                   onClick={() => toggleApplicant('lisa')}
-                  className="w-full p-5 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors"
+                  className="w-full p-5 flex items-center justify-between gap-3 hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors"
                 >
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center">
+                  <div className="flex items-center gap-4 min-w-0 flex-1">
+                    <div className="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center flex-shrink-0">
                       <User className="w-6 h-6 text-blue-400" />
                     </div>
-                    <div className="text-left">
+                    <div className="text-left min-w-0 flex-1">
                       <div className="flex items-center gap-3 flex-wrap">
-                        <h3 className="text-lg font-bold text-primary">LISA WILLIAMS</h3>
+                        <h3 className="text-lg font-bold text-primary break-words">LISA WILLIAMS</h3>
                         <span className="px-2 py-1 bg-blue-500/20 border border-blue-500/30 rounded text-xs text-blue-400 font-bold">NEW</span>
                       </div>
-                      <p className="text-sm text-secondary">Detention Officer • Ref: 2026-APP-0201</p>
+                      <p className="text-sm text-secondary break-words">Detention Officer • Ref: 2026-APP-0201</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-4 flex-shrink-0">
                     <div className="text-right hidden md:block">
                       <p className="text-sm text-primary font-medium">Applied: Nov 01, 2024</p>
                       <p className="text-xs text-amber-700">Pending Initial Screening</p>
@@ -886,21 +886,21 @@ export default function ApplicantTracking() {
               <div className="bg-white dark:bg-zinc-900/40 border border-red-500/30 rounded-xl overflow-hidden">
                 <button
                   onClick={() => toggleApplicant('michael')}
-                  className="w-full p-5 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors"
+                  className="w-full p-5 flex items-center justify-between gap-3 hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors"
                 >
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-red-500/20 rounded-full flex items-center justify-center">
+                  <div className="flex items-center gap-4 min-w-0 flex-1">
+                    <div className="w-12 h-12 bg-red-500/20 rounded-full flex items-center justify-center flex-shrink-0">
                       <User className="w-6 h-6 text-red-400" />
                     </div>
-                    <div className="text-left">
+                    <div className="text-left min-w-0 flex-1">
                       <div className="flex items-center gap-3 flex-wrap">
-                        <h3 className="text-lg font-bold text-primary">MICHAEL DAVIS</h3>
+                        <h3 className="text-lg font-bold text-primary break-words">MICHAEL DAVIS</h3>
                         <span className="px-2 py-1 bg-red-500/20 border border-red-500/30 rounded text-xs text-red-400 font-bold">DISQUALIFIED</span>
                       </div>
-                      <p className="text-sm text-secondary">Deputy Sheriff • Ref: 2026-APP-0156</p>
+                      <p className="text-sm text-secondary break-words">Deputy Sheriff • Ref: 2026-APP-0156</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-4 flex-shrink-0">
                     <div className="text-right hidden md:block">
                       <p className="text-sm text-red-400 font-medium">Did not meet POST requirements</p>
                       <p className="text-xs text-secondary">Disqualified: 10/31/2024</p>

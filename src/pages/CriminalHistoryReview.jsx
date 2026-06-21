@@ -361,15 +361,15 @@ export default function CriminalHistoryReview() {
       notifications={biNotifications}
       settingsRoute="/bi/settings"
     >
-      <div className="p-5 lg:p-8 space-y-8 min-h-full">
+      <div className="p-4 sm:p-5 lg:p-8 space-y-8 min-h-full">
           <div className="space-y-6">
             {/* Page Header */}
-            <div className="flex items-center justify-between">
-              <div>
-                <h1 className="text-2xl font-semibold text-primary">Criminal History Review</h1>
-                <p className="text-secondary mt-1">Comprehensive criminal background checks - GCIC, FBI, State, County, Federal</p>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <div className="min-w-0 flex-1">
+                <h1 className="text-2xl font-semibold text-primary break-words">Criminal History Review</h1>
+                <p className="text-secondary mt-1 break-words">Comprehensive criminal background checks - GCIC, FBI, State, County, Federal</p>
               </div>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 flex-wrap">
                 <button className="flex items-center gap-2 px-4 py-2 bg-slate-800 text-secondary rounded-lg hover:bg-slate-700 transition-colors"><History className="w-4 h-4" />CJIS Audit Log</button>
                 <button className="flex items-center gap-2 px-4 py-2 bg-slate-800 text-secondary rounded-lg hover:bg-slate-700 transition-colors"><Download className="w-4 h-4" />Export Report</button>
                 <button className="flex items-center gap-2 px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-500 transition-colors"><Plus className="w-4 h-4" />Request New Check</button>
@@ -379,11 +379,11 @@ export default function CriminalHistoryReview() {
             {/* CJIS Restricted Access Warning */}
             <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-4">
               <div className="flex items-start gap-3">
-                <div className="p-2 bg-red-500/20 rounded-lg"><Lock className="w-5 h-5 text-red-400" /></div>
-                <div className="flex-1">
-                  <h3 className="text-red-400 font-medium flex items-center gap-2">CJIS RESTRICTED ACCESS<span className="px-2 py-0.5 bg-red-500/20 text-red-300 rounded text-xs">Criminal Justice Information System</span></h3>
-                  <p className="text-secondary text-sm mt-1">All access to criminal history records is logged and auditable per <span className="text-red-400 font-medium">28 CFR Part 20</span>. Unauthorized disclosure is a federal crime. Access restricted to authorized law enforcement personnel only.</p>
-                  <div className="flex items-center gap-4 mt-3 text-xs">
+                <div className="p-2 bg-red-500/20 rounded-lg flex-shrink-0"><Lock className="w-5 h-5 text-red-400" /></div>
+                <div className="min-w-0 flex-1">
+                  <h3 className="text-red-400 font-medium flex items-center gap-2 flex-wrap">CJIS RESTRICTED ACCESS<span className="px-2 py-0.5 bg-red-500/20 text-red-300 rounded text-xs">Criminal Justice Information System</span></h3>
+                  <p className="text-secondary text-sm mt-1 break-words">All access to criminal history records is logged and auditable per <span className="text-red-400 font-medium">28 CFR Part 20</span>. Unauthorized disclosure is a federal crime. Access restricted to authorized law enforcement personnel only.</p>
+                  <div className="flex items-center gap-4 mt-3 text-xs flex-wrap">
                     <span className="text-slate-500">Active Investigator: Agent Brooks (BI-107)</span>
                     <span className="text-slate-700">•</span>
                     <span className="text-slate-500">Monday, January 27, 2026 at 11:11 PM EST</span>
@@ -393,7 +393,7 @@ export default function CriminalHistoryReview() {
             </div>
 
             {/* Statistics Grid */}
-            <div className="grid grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-slate-800 rounded-lg"><Shield className="w-5 h-5 text-secondary" /></div>
@@ -423,7 +423,7 @@ export default function CriminalHistoryReview() {
             {/* Standard Protocol */}
             <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-4">
               <h3 className="text-primary font-medium mb-3 flex items-center gap-2"><ClipboardList className="w-5 h-5 text-amber-700" />Standard Background Check Protocol</h3>
-              <div className="grid grid-cols-4 gap-4 text-sm">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
                 <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-green-400" /><span className="text-secondary">GCIC (Georgia Crime Information)</span></div>
                 <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-green-400" /><span className="text-secondary">FBI NCIC (National Crime)</span></div>
                 <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-green-400" /><span className="text-secondary">State Repositories (All 50)</span></div>
@@ -436,10 +436,10 @@ export default function CriminalHistoryReview() {
             </div>
 
             {/* Main Content Grid */}
-            <div className="grid grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Criminal Check Cards */}
-              <div className="col-span-2 space-y-4">
-                <div className="flex items-center gap-2">
+              <div className="lg:col-span-2 space-y-4">
+                <div className="flex items-center gap-2 flex-wrap">
                   {[{ id: 'all', label: 'All Checks', count: stats.total }, { id: 'clear', label: 'Clear', count: stats.clear }, { id: 'review', label: 'Review Required', count: stats.review }, { id: 'progress', label: 'In Progress', count: stats.inProgress }].map(tab => (
                     <button key={tab.id} onClick={() => setActiveTab(tab.id)} className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${activeTab === tab.id ? 'bg-amber-500/10 text-amber-700' : 'text-secondary hover:text-secondary hover:bg-slate-800'}`}>{tab.label} ({tab.count})</button>
                   ))}

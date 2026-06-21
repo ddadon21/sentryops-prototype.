@@ -478,8 +478,8 @@ export default function TrainingCertifications() {
             {/* CRITICAL VIOLATIONS  */}
             {/* ==================== */}
             <div className="mb-8">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-8 h-8 bg-red-500/20 rounded-lg flex items-center justify-center">
+              <div className="flex flex-wrap items-center gap-3 mb-4">
+                <div className="w-8 h-8 bg-red-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
                   <AlertTriangle className="w-5 h-5 text-red-400" />
                 </div>
                 <h3 className="text-lg font-bold text-primary">Critical Training Compliance Violations</h3>
@@ -490,16 +490,16 @@ export default function TrainingCertifications() {
               <div className="mb-4 bg-white dark:bg-zinc-900/40 border border-red-500/30 rounded-xl overflow-hidden">
                 <button
                   onClick={() => toggleViolation('post')}
-                  className="w-full px-5 py-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors"
+                  className="w-full px-5 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors"
                 >
-                  <div className="flex items-center gap-3">
-                    <Shield className="w-5 h-5 text-red-400" />
-                    <div className="text-left">
-                      <h4 className="text-sm font-semibold text-red-400">Expired POST Certifications - {criticalViolations.expiredPost.count} Deputies</h4>
-                      <p className="text-xs text-secondary mt-0.5">Both removed from sworn duties, renewals in progress</p>
+                  <div className="flex items-center gap-3 min-w-0">
+                    <Shield className="w-5 h-5 text-red-400 flex-shrink-0" />
+                    <div className="text-left min-w-0 flex-1">
+                      <h4 className="text-sm font-semibold text-red-400 break-words">Expired POST Certifications - {criticalViolations.expiredPost.count} Deputies</h4>
+                      <p className="text-xs text-secondary mt-0.5 break-words">Both removed from sworn duties, renewals in progress</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-shrink-0 sm:ml-3">
                     <span className="px-2 py-1 bg-red-500/20 border border-red-500/40 rounded text-xs text-red-400 font-bold">EXPIRED</span>
                     {expandedViolation.post ? <ChevronUp className="w-4 h-4 text-secondary" /> : <ChevronDown className="w-4 h-4 text-secondary" />}
                   </div>
@@ -542,16 +542,16 @@ export default function TrainingCertifications() {
               <div className="mb-4 bg-white dark:bg-zinc-900/40 border border-red-500/30 rounded-xl overflow-hidden">
                 <button
                   onClick={() => toggleViolation('firearms')}
-                  className="w-full px-5 py-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors"
+                  className="w-full px-5 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors"
                 >
-                  <div className="flex items-center gap-3">
-                    <Crosshair className="w-5 h-5 text-red-400" />
-                    <div className="text-left">
-                      <h4 className="text-sm font-semibold text-red-400">Overdue Firearms Qualifications - {criticalViolations.overdueFirearms.count} Officers ({criticalViolations.overdueFirearms.daysOverdue} Days Overdue)</h4>
-                      <p className="text-xs text-secondary mt-0.5">GCSO Policy 4.12 | Deadline: {criticalViolations.overdueFirearms.deadline} | Grace expired {criticalViolations.overdueFirearms.graceExpired}</p>
+                  <div className="flex items-center gap-3 min-w-0">
+                    <Crosshair className="w-5 h-5 text-red-400 flex-shrink-0" />
+                    <div className="text-left min-w-0 flex-1">
+                      <h4 className="text-sm font-semibold text-red-400 break-words">Overdue Firearms Qualifications - {criticalViolations.overdueFirearms.count} Officers ({criticalViolations.overdueFirearms.daysOverdue} Days Overdue)</h4>
+                      <p className="text-xs text-secondary mt-0.5 break-words">GCSO Policy 4.12 | Deadline: {criticalViolations.overdueFirearms.deadline} | Grace expired {criticalViolations.overdueFirearms.graceExpired}</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-shrink-0 sm:ml-3">
                     <span className="px-2 py-1 bg-red-500/20 border border-red-500/40 rounded text-xs text-red-400 font-bold">OVERDUE</span>
                     {expandedViolation.firearms ? <ChevronUp className="w-4 h-4 text-secondary" /> : <ChevronDown className="w-4 h-4 text-secondary" />}
                   </div>
@@ -566,11 +566,11 @@ export default function TrainingCertifications() {
                           <h5 className="text-xs font-semibold text-secondary mb-2">{div.name} ({div.count}):</h5>
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                             {div.officers.map((officer, oidx) => (
-                              <div key={oidx} className="bg-white dark:bg-zinc-950/40 border border-border rounded-lg px-3 py-2 flex items-center justify-between">
-                                <div>
-                                  <p className="text-xs font-medium text-primary">{officer.name} <span className="text-slate-500">{officer.badge}</span></p>
+                              <div key={oidx} className="bg-white dark:bg-zinc-950/40 border border-border rounded-lg px-3 py-2 flex items-center justify-between gap-2 flex-wrap">
+                                <div className="min-w-0">
+                                  <p className="text-xs font-medium text-primary break-words">{officer.name} <span className="text-slate-500">{officer.badge}</span></p>
                                 </div>
-                                <p className="text-[10px] text-slate-500">Last qual: {officer.lastQual}</p>
+                                <p className="text-[10px] text-slate-500 flex-shrink-0">Last qual: {officer.lastQual}</p>
                               </div>
                             ))}
                           </div>
@@ -646,16 +646,16 @@ export default function TrainingCertifications() {
               <div className="mb-4 bg-white dark:bg-zinc-900/40 border border-red-500/30 rounded-xl overflow-hidden">
                 <button
                   onClick={() => toggleViolation('taser')}
-                  className="w-full px-5 py-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors"
+                  className="w-full px-5 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors"
                 >
-                  <div className="flex items-center gap-3">
-                    <Zap className="w-5 h-5 text-red-400" />
-                    <div className="text-left">
-                      <h4 className="text-sm font-semibold text-red-400">Expired TASER Certifications - {criticalViolations.expiredTaser.count} Deputies</h4>
-                      <p className="text-xs text-secondary mt-0.5">GCSO Policy 4.15 | Deputies cannot carry TASER without current certification</p>
+                  <div className="flex items-center gap-3 min-w-0">
+                    <Zap className="w-5 h-5 text-red-400 flex-shrink-0" />
+                    <div className="text-left min-w-0 flex-1">
+                      <h4 className="text-sm font-semibold text-red-400 break-words">Expired TASER Certifications - {criticalViolations.expiredTaser.count} Deputies</h4>
+                      <p className="text-xs text-secondary mt-0.5 break-words">GCSO Policy 4.15 | Deputies cannot carry TASER without current certification</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-shrink-0 sm:ml-3">
                     <span className="px-2 py-1 bg-red-500/20 border border-red-500/40 rounded text-xs text-red-400 font-bold">EXPIRED</span>
                     {expandedViolation.taser ? <ChevronUp className="w-4 h-4 text-secondary" /> : <ChevronDown className="w-4 h-4 text-secondary" />}
                   </div>
@@ -771,18 +771,18 @@ export default function TrainingCertifications() {
                       <div key={category.id} className={`bg-white dark:bg-zinc-900/40 border ${category.borderColor} rounded-xl overflow-hidden`}>
                         <button
                           onClick={() => toggleCategory(category.id)}
-                          className="w-full px-5 py-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors"
+                          className="w-full px-5 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors"
                         >
-                          <div className="flex items-center gap-3">
-                            <div className={`w-10 h-10 ${category.bgColor} rounded-xl flex items-center justify-center`}>
+                          <div className="flex items-center gap-3 min-w-0">
+                            <div className={`w-10 h-10 ${category.bgColor} rounded-xl flex items-center justify-center flex-shrink-0`}>
                               <CategoryIcon className={`w-5 h-5 ${category.iconColor}`} />
                             </div>
-                            <div className="text-left">
-                              <h4 className="text-sm font-semibold text-primary">{category.name}</h4>
+                            <div className="text-left min-w-0 flex-1">
+                              <h4 className="text-sm font-semibold text-primary break-words">{category.name}</h4>
                               <p className="text-xs text-slate-500 mt-0.5">{category.totalPersonnel} {category.personnelType}</p>
                             </div>
                           </div>
-                          <div className="flex items-center gap-3">
+                          <div className="flex items-center gap-3 flex-shrink-0 self-end sm:self-auto">
                             <div className="text-right hidden sm:block">
                               <p className={`text-lg font-bold ${
                                 category.stats.certifiedPct === '100%' ? 'text-green-400' :
@@ -974,13 +974,13 @@ export default function TrainingCertifications() {
                                 <h5 className="text-xs font-semibold text-secondary mb-3">Upcoming Range Days (2026 Schedule):</h5>
                                 <div className="space-y-2">
                                   {category.rangeDays.map((day, idx) => (
-                                    <div key={idx} className="flex items-center justify-between bg-white dark:bg-zinc-950/40 border border-border rounded-lg px-3 py-2">
-                                      <div className="flex items-center gap-3">
-                                        <Calendar className="w-3.5 h-3.5 text-slate-500" />
+                                    <div key={idx} className="flex items-center justify-between gap-2 flex-wrap bg-white dark:bg-zinc-950/40 border border-border rounded-lg px-3 py-2">
+                                      <div className="flex items-center gap-3 min-w-0 flex-wrap">
+                                        <Calendar className="w-3.5 h-3.5 text-slate-500 flex-shrink-0" />
                                         <span className="text-xs text-primary font-medium">{day.date}</span>
-                                        <span className="text-xs text-secondary">{day.purpose}</span>
+                                        <span className="text-xs text-secondary break-words">{day.purpose}</span>
                                       </div>
-                                      <span className={`px-2 py-0.5 rounded text-[10px] font-medium ${
+                                      <span className={`px-2 py-0.5 rounded text-[10px] font-medium flex-shrink-0 ${
                                         day.status === 'scheduled' ? 'bg-green-500/20 text-green-400' :
                                         day.status === 'tentative' ? 'bg-amber-500/20 text-amber-700' :
                                         'bg-blue-500/20 text-blue-400'
@@ -1048,7 +1048,7 @@ export default function TrainingCertifications() {
         </button>
 
         {supportOpen && (
-          <div className="absolute bottom-16 right-0 w-80 bg-surface-raised backdrop-blur-xl border border-border rounded-2xl shadow-2xl overflow-hidden">
+          <div className="absolute bottom-16 right-0 w-[calc(100vw-3rem)] max-w-80 bg-surface-raised backdrop-blur-xl border border-border rounded-2xl shadow-2xl overflow-hidden">
             <div className="p-4 border-b border-border">
               <h3 className="text-sm font-semibold text-primary">Training Resources & Support</h3>
               <p className="text-xs text-secondary mt-1">GCSO Training Division</p>

@@ -72,14 +72,14 @@ export default function ApplicantProfile() {
         </div>
 
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div className="min-w-0">
             <div className="flex items-center gap-3 flex-wrap mb-1">
-              <h1 className="text-2xl lg:text-3xl font-bold text-primary">{applicant.name}</h1>
+              <h1 className="text-2xl lg:text-3xl font-bold text-primary break-words">{applicant.name}</h1>
               <StagePill stage={stage} />
             </div>
-            <p className="text-secondary flex items-center gap-1.5 text-sm">
-              <Briefcase className="w-3.5 h-3.5" />Applying for {job.title}
-              <span className="ml-2">· Applied {applicant.appliedDate} via {applicant.source}</span>
+            <p className="text-secondary flex items-center flex-wrap gap-1.5 text-sm">
+              <span className="flex items-center gap-1.5"><Briefcase className="w-3.5 h-3.5 flex-shrink-0" />Applying for {job.title}</span>
+              <span>· Applied {applicant.appliedDate} via {applicant.source}</span>
             </p>
           </div>
           <div className="flex items-center gap-2 flex-wrap">
@@ -97,21 +97,21 @@ export default function ApplicantProfile() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
           <Card className="text-center">
             <p className="text-2xl font-black tabular-nums text-primary">{applicant.aiScore}</p>
             <p className="text-xs text-secondary mt-1">AI Match Score</p>
           </Card>
           <Card className="text-center">
-            <p className="text-2xl font-black tabular-nums text-primary">{stage}</p>
+            <p className="text-2xl font-black tabular-nums text-primary break-words">{stage}</p>
             <p className="text-xs text-secondary mt-1">Current Stage</p>
           </Card>
           <Card className="text-center">
-            <p className="text-2xl font-black tabular-nums text-primary">{applicant.backgroundStatus || 'Not Started'}</p>
+            <p className="text-2xl font-black tabular-nums text-primary break-words">{applicant.backgroundStatus || 'Not Started'}</p>
             <p className="text-xs text-secondary mt-1">Background Check</p>
           </Card>
           <Card className="text-center">
-            <p className="text-2xl font-black tabular-nums text-primary">{applicant.offerStatus || 'None'}</p>
+            <p className="text-2xl font-black tabular-nums text-primary break-words">{applicant.offerStatus || 'None'}</p>
             <p className="text-xs text-secondary mt-1">Offer Status</p>
           </Card>
         </div>

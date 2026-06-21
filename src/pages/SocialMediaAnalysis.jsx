@@ -659,9 +659,9 @@ export default function SocialMediaAnalysis() {
                     className="p-5 cursor-pointer hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors"
                     onClick={() => setExpandedReport(isExpanded ? null : report.id)}
                   >
-                    <div className="flex items-start justify-between">
-                      <div className="flex items-start gap-4">
-                        <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
+                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+                      <div className="flex items-start gap-4 min-w-0">
+                        <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${
                           report.statusCategory === 'clear' ? 'bg-green-500/20' :
                           report.statusCategory === 'review' ? 'bg-amber-500/20' : 'bg-blue-500/20'
                         }`}>
@@ -669,8 +669,8 @@ export default function SocialMediaAnalysis() {
                            report.statusCategory === 'review' ? <AlertCircle className="w-6 h-6 text-amber-700" /> :
                            <Clock className="w-6 h-6 text-blue-400" />}
                         </div>
-                        <div>
-                          <div className="flex items-center gap-2 mb-1">
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center gap-2 mb-1 flex-wrap">
                             <span className={`text-xs font-medium px-2 py-0.5 rounded ${
                               report.statusCategory === 'clear' ? 'bg-green-500/20 text-green-400' :
                               report.statusCategory === 'review' ? 'bg-amber-500/20 text-amber-700' : 'bg-blue-500/20 text-blue-400'
@@ -681,11 +681,11 @@ export default function SocialMediaAnalysis() {
                               <Globe className="w-3 h-3" /> Public Info Only
                             </span>
                           </div>
-                          <h3 className="text-lg font-semibold text-primary">{report.subject}</h3>
-                          <p className="text-sm text-purple-400">{report.caseId} - {report.position}</p>
+                          <h3 className="text-lg font-semibold text-primary break-words">{report.subject}</h3>
+                          <p className="text-sm text-purple-400 break-words">{report.caseId} - {report.position}</p>
                         </div>
                       </div>
-                      <div className="flex items-center gap-4">
+                      <div className="flex items-center gap-4 flex-shrink-0 sm:justify-end">
                         <div className="text-right">
                           <p className="text-2xl font-bold text-primary">{report.totalPostsReviewed}</p>
                           <p className="text-xs text-slate-500">Posts Reviewed</p>
@@ -718,7 +718,7 @@ export default function SocialMediaAnalysis() {
                           <FileText className="w-4 h-4 text-purple-400" />
                           Social Media Review Summary
                         </h4>
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                           <div>
                             <span className="text-slate-500">Review date:</span>
                             <span className="text-secondary ml-2">{new Date(report.reviewDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
@@ -828,14 +828,14 @@ export default function SocialMediaAnalysis() {
                           <div className="space-y-3">
                             {report.flaggedContent.map((flagged, idx) => (
                               <div key={idx} className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
-                                <div className="flex items-start justify-between mb-2">
-                                  <div>
+                                <div className="flex flex-wrap items-start justify-between gap-2 mb-2">
+                                  <div className="min-w-0">
                                     <span className="text-sm font-medium text-amber-700">Flagged Post #{flagged.id}</span>
                                     <span className="text-xs text-slate-500 ml-2">({flagged.platform}, {flagged.date})</span>
                                   </div>
-                                  <span className="text-xs px-2 py-0.5 bg-amber-500/20 text-amber-300 rounded">{flagged.yearsAgo} years ago</span>
+                                  <span className="text-xs px-2 py-0.5 bg-amber-500/20 text-amber-300 rounded flex-shrink-0">{flagged.yearsAgo} years ago</span>
                                 </div>
-                                <div className="grid grid-cols-2 gap-2 text-xs mb-2">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs mb-2">
                                   <div>
                                     <span className="text-slate-500">Age at time:</span>
                                     <span className="text-secondary ml-1">{flagged.ageAtTime} years old</span>
@@ -859,7 +859,7 @@ export default function SocialMediaAnalysis() {
                                 <History className="w-4 h-4 text-blue-400" />
                                 Time Context (Important)
                               </h5>
-                              <div className="grid grid-cols-2 gap-2 text-xs">
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                                 <div>
                                   <span className="text-slate-500">Flagged posts age:</span>
                                   <span className="text-secondary ml-1">{report.timeContext.flaggedPostsAge}</span>
@@ -930,10 +930,10 @@ export default function SocialMediaAnalysis() {
                             <ShieldAlert className="w-4 h-4 text-purple-400" />
                             Professional Boundaries Assessment
                           </h4>
-                          <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
                             {Object.entries(report.professionalBoundaries).filter(([key]) => !key.includes('Issues')).map(([key, value]) => (
                               <div key={key} className={`flex items-center gap-2 text-sm p-2 rounded-lg ${value ? 'bg-green-500/5' : 'bg-amber-500/5'}`}>
-                                {value ? <CheckCircle className="w-4 h-4 text-green-500" /> : <AlertCircle className="w-4 h-4 text-amber-700" />}
+                                {value ? <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" /> : <AlertCircle className="w-4 h-4 text-amber-700 flex-shrink-0" />}
                                 <span className={value ? 'text-green-400' : 'text-amber-700'}>
                                   {key === 'maintainsAppropriate' && 'Appropriate boundaries'}
                                   {key === 'noDisparaging' && 'No disparaging comments'}

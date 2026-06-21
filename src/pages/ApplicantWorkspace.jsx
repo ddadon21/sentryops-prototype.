@@ -64,11 +64,11 @@ export default function ApplicantWorkspace() {
         </button>
 
         <div>
-          <h1 className="text-2xl lg:text-3xl font-bold text-primary">Applicants — {job.title}</h1>
-          <p className="text-secondary flex items-center gap-1.5 text-sm mt-1">
-            <Briefcase className="w-3.5 h-3.5" />{job.division}
-            <MapPin className="w-3.5 h-3.5 ml-2" />{job.location}
-            <span className="ml-2">· {applicants.length} total applicants</span>
+          <h1 className="text-2xl lg:text-3xl font-bold text-primary break-words">Applicants — {job.title}</h1>
+          <p className="text-secondary flex items-center flex-wrap gap-1.5 text-sm mt-1">
+            <span className="flex items-center gap-1.5"><Briefcase className="w-3.5 h-3.5 flex-shrink-0" />{job.division}</span>
+            <span className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5 flex-shrink-0" />{job.location}</span>
+            <span>· {applicants.length} total applicants</span>
           </p>
         </div>
 
@@ -106,16 +106,16 @@ export default function ApplicantWorkspace() {
                 onClick={() => navigate(`/hr/jobs/${job.id}/applicants/${a.id}`)}
                 className="w-full flex items-center justify-between gap-4 py-3 text-left hover:bg-slate-50 dark:hover:bg-zinc-800/40 -mx-2 px-2 rounded-lg transition-colors"
               >
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 min-w-0 flex-1">
                   <div className="w-9 h-9 rounded-full bg-blue-500/10 text-blue-700 dark:text-blue-400 flex items-center justify-center text-xs font-black flex-shrink-0">
                     {a.name.split(' ').map(p => p[0]).join('').slice(0, 2).toUpperCase()}
                   </div>
-                  <div>
-                    <p className="text-sm font-bold text-primary">{a.name}</p>
-                    <p className="text-xs text-secondary">Applied {a.appliedDate} · {a.source}{a.internal ? ' · Internal' : ''}</p>
+                  <div className="min-w-0">
+                    <p className="text-sm font-bold text-primary break-words">{a.name}</p>
+                    <p className="text-xs text-secondary break-words">Applied {a.appliedDate} · {a.source}{a.internal ? ' · Internal' : ''}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 flex-shrink-0">
                   <div className="text-right hidden sm:block">
                     <p className="text-xs text-secondary">AI Score</p>
                     <p className="text-sm font-bold text-primary tabular-nums">{a.aiScore}</p>

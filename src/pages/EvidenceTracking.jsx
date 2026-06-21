@@ -569,9 +569,9 @@ export default function EvidenceTracking() {
                 <div className="w-10 h-10 bg-amber-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
                   <FileCheck className="w-6 h-6 text-amber-700" />
                 </div>
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-1">
-                    <h4 className="text-base font-semibold text-primary">Evidence Management Summary</h4>
+                <div className="flex-1 min-w-0">
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-1">
+                    <h4 className="text-base font-semibold text-primary break-words">Evidence Management Summary</h4>
                     <span className="text-xs text-slate-500">As of {currentDateTime.date} at {currentDateTime.time}</span>
                   </div>
                 </div>
@@ -936,9 +936,9 @@ export default function EvidenceTracking() {
                   ))}
                 </div>
               </div>
-              <div className="flex items-center justify-between mt-3 pt-3 border-t border-border dark:border-slate-700/30">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mt-3 pt-3 border-t border-border dark:border-slate-700/30">
                 <p className="text-sm text-slate-500">Showing {filteredEvidence.length} items (filtered by case BI-2024-145)</p>
-                <div className="flex items-center gap-2 text-xs text-slate-500">
+                <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500">
                   <span>Sort by:</span>
                   <button className="px-2 py-1 bg-white dark:bg-zinc-800/50 rounded text-secondary hover:bg-slate-700">Upload Date</button>
                   <button className="px-2 py-1 bg-slate-100 dark:bg-zinc-800/30 rounded text-slate-500 hover:bg-slate-700">Type</button>
@@ -955,20 +955,20 @@ export default function EvidenceTracking() {
                   <div key={item.id} className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl overflow-hidden hover:border-amber-500/30 transition-all">
                     {/* Evidence Card Header */}
                     <div className="p-5">
-                      <div className="flex items-start justify-between mb-4">
-                        <div className="flex items-start gap-4 flex-1">
+                      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-4">
+                        <div className="flex items-start gap-4 flex-1 min-w-0">
                           <div className="w-12 h-12 bg-gradient-to-br from-amber-500/20 to-amber-600/10 rounded-xl flex items-center justify-center flex-shrink-0">
                             {getEvidenceTypeIcon(item.category)}
                           </div>
                           <div className="flex-1 min-w-0">
-                            <h3 className="text-lg font-semibold text-primary mb-1">{item.name}</h3>
-                            <p className="text-sm text-amber-700 mb-2">
+                            <h3 className="text-lg font-semibold text-primary mb-1 break-words">{item.name}</h3>
+                            <p className="text-sm text-amber-700 mb-2 break-words">
                               Evidence ID: {item.id} | Case ID: {item.caseId}
                             </p>
                             <p className="text-sm text-slate-500 mb-1">Subject: <span className="text-secondary">{item.subject}</span></p>
                           </div>
                         </div>
-                        <div className="flex flex-col items-end gap-2">
+                        <div className="flex sm:flex-col flex-wrap items-start sm:items-end gap-2 flex-shrink-0">
                           {getStatusBadge(item.status)}
                           {getAccessBadge(item.accessLevel, item.legalBasis)}
                         </div>
@@ -1220,8 +1220,8 @@ export default function EvidenceTracking() {
                       )}
 
                       {/* Action Buttons */}
-                      <div className="flex items-center justify-between pt-4 border-t border-border dark:border-slate-700/30 mt-4">
-                        <div className="text-sm text-secondary">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-4 border-t border-border dark:border-slate-700/30 mt-4">
+                        <div className="text-sm text-secondary min-w-0">
                           Subject: <span className="text-primary font-medium">{item.subject}</span>
                         </div>
                         <div className="flex items-center gap-2 flex-wrap">
@@ -1260,11 +1260,11 @@ export default function EvidenceTracking() {
             </div>
 
             {/* Load More / Export */}
-            <div className="flex items-center justify-between mt-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mt-6">
               <button className="px-4 py-2 bg-white dark:bg-zinc-900/40 hover:bg-slate-100 dark:hover:bg-zinc-900/60 border border-slate-700/50 text-secondary rounded-xl text-sm font-medium transition-colors">
                 Load More Evidence
               </button>
-              <div className="flex items-center gap-3">
+              <div className="flex flex-wrap items-center gap-3">
                 <button className="px-4 py-2 bg-white dark:bg-zinc-900/40 hover:bg-slate-100 dark:hover:bg-zinc-900/60 border border-slate-700/50 text-secondary rounded-xl text-sm font-medium transition-colors flex items-center gap-2">
                   <Filter className="w-4 h-4" />Filter Evidence
                 </button>

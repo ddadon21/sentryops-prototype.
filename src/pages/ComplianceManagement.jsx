@@ -658,14 +658,14 @@ export default function ComplianceManagement() {
                       className="p-5 cursor-pointer hover:bg-red-500/10 transition-all"
                       onClick={() => setExpandedViolation(expandedViolation === violation.id ? null : violation.id)}
                     >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-4">
-                          <div className="w-12 h-12 bg-red-500/20 rounded-xl flex items-center justify-center">
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                        <div className="flex items-center gap-4 min-w-0">
+                          <div className="w-12 h-12 bg-red-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
                             <AlertCircle className="w-6 h-6 text-red-400" />
                           </div>
-                          <div>
-                            <div className="flex items-center gap-3 mb-1">
-                              <h4 className="text-lg font-semibold text-primary">{violation.title}</h4>
+                          <div className="min-w-0 flex-1">
+                            <div className="flex items-center gap-3 mb-1 flex-wrap">
+                              <h4 className="text-lg font-semibold text-primary break-words">{violation.title}</h4>
                               <span className="px-3 py-1 bg-red-500/20 text-red-400 rounded-full text-xs font-bold uppercase">
                                 {violation.severity}
                               </span>
@@ -673,7 +673,7 @@ export default function ComplianceManagement() {
                             <p className="text-sm text-red-300">{violation.subtitle}</p>
                           </div>
                         </div>
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-3 flex-shrink-0 sm:ml-3">
                           <span className="text-xs text-slate-500">Deadline: {violation.deadline}</span>
                           {expandedViolation === violation.id ? (
                             <ChevronUp className="w-5 h-5 text-secondary" />

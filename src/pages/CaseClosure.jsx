@@ -789,22 +789,22 @@ export default function CaseClosure() {
                       onClick={() => toggleSection(section.id)}
                       className="w-full p-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-zinc-900/30 transition-colors"
                     >
-                      <div className="flex items-center gap-3">
-                        <CheckCircle className="w-5 h-5 text-green-400" />
-                        <Icon className="w-5 h-5 text-purple-400" />
-                        <div className="text-left">
-                          <span className="text-sm font-medium text-primary">{section.title}</span>
-                          <div className="flex items-center gap-2 mt-0.5">
+                      <div className="flex items-center gap-3 min-w-0 flex-1">
+                        <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
+                        <Icon className="w-5 h-5 text-purple-400 flex-shrink-0" />
+                        <div className="text-left min-w-0 flex-1">
+                          <span className="text-sm font-medium text-primary break-words">{section.title}</span>
+                          <div className="flex flex-wrap items-center gap-2 mt-0.5">
                             <span className="text-xs text-secondary">Status: {section.status}</span>
-                            <span className="text-xs text-slate-500">|</span>
+                            <span className="text-xs text-slate-500 hidden sm:inline">|</span>
                             <span className="text-xs text-secondary">Completion: {section.completion}</span>
                           </div>
                         </div>
                       </div>
                       {isExpanded ? (
-                        <ChevronUp className="w-5 h-5 text-secondary" />
+                        <ChevronUp className="w-5 h-5 text-secondary flex-shrink-0 ml-2" />
                       ) : (
-                        <ChevronDown className="w-5 h-5 text-secondary" />
+                        <ChevronDown className="w-5 h-5 text-secondary flex-shrink-0 ml-2" />
                       )}
                     </button>
 
@@ -839,12 +839,12 @@ export default function CaseClosure() {
 
               {/* Lateral Transfer Requirements - IA Review */}
               <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4">
-                <div className="flex items-center gap-3 mb-3">
-                  <AlertTriangle className="w-5 h-5 text-amber-700" />
-                  <div>
-                    <span className="text-sm font-medium text-amber-700">LATERAL TRANSFER REQUIREMENTS</span>
-                    <div className="flex items-center gap-2 mt-0.5">
-                      <Clock className="w-3 h-3 text-amber-700" />
+                <div className="flex items-start gap-3 mb-3">
+                  <AlertTriangle className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" />
+                  <div className="min-w-0 flex-1">
+                    <span className="text-sm font-medium text-amber-700 break-words">LATERAL TRANSFER REQUIREMENTS</span>
+                    <div className="flex flex-wrap items-center gap-2 mt-0.5">
+                      <Clock className="w-3 h-3 text-amber-700 flex-shrink-0" />
                       <span className="text-xs text-amber-300">Internal Affairs Review: PENDING (MANDATORY)</span>
                     </div>
                   </div>
@@ -893,11 +893,9 @@ export default function CaseClosure() {
 
           {/* Investigator Assessment & Key Findings */}
           <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl shadow-sm dark:shadow-none p-6 mb-6">
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h3 className="text-lg font-semibold text-primary">INVESTIGATOR ASSESSMENT & KEY FINDINGS</h3>
-                <p className="text-sm text-secondary">Prepared by: {caseData.investigator}, Badge #{caseData.investigatorBadge} | Review date: {caseData.investigationCompleted}</p>
-              </div>
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold text-primary">INVESTIGATOR ASSESSMENT & KEY FINDINGS</h3>
+              <p className="text-sm text-secondary">Prepared by: {caseData.investigator}, Badge #{caseData.investigatorBadge} | Review date: {caseData.investigationCompleted}</p>
             </div>
 
             {/* Overall Assessment */}

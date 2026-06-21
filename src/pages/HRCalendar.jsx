@@ -341,6 +341,8 @@ export default function HRCalendar() {
                   </button>
                 </div>
 
+                <div className="overflow-x-auto">
+                <div className="min-w-[560px]">
                 <div className="grid grid-cols-7 gap-px mb-1">
                   {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(d => (
                     <div key={d} className="text-center text-[11px] font-semibold text-slate-500 uppercase tracking-wider py-2">{d}</div>
@@ -387,6 +389,8 @@ export default function HRCalendar() {
                       </div>
                     );
                   })}
+                </div>
+                </div>
                 </div>
 
                 {/* Legend */}
@@ -443,7 +447,7 @@ export default function HRCalendar() {
           ) : (
             /* Timeline View */
             <div className="mb-6 bg-white dark:bg-zinc-900/25 border border-border dark:border-slate-700/30 rounded-xl p-5">
-              <div className="flex items-center justify-between mb-6">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-4 mb-6">
                 <h3 className="text-[13px] font-semibold text-primary uppercase tracking-wide">Next 7 Days — Hour by Hour</h3>
                 <span className="text-xs text-slate-500">
                   {timelineDays[0] && `${shortMonth} ${timelineDays[0].day} – ${shortMonth} ${timelineDays[timelineDays.length - 1]?.day}, ${currentYear}`}
@@ -508,9 +512,9 @@ export default function HRCalendar() {
           <div className="fixed inset-0 bg-black/30 z-40" onClick={() => setSelectedEvent(null)} />
           <div className="fixed right-0 top-0 bottom-0 w-full max-w-md bg-white dark:bg-zinc-950 border-l border-border shadow-2xl z-50 overflow-y-auto">
             <div className="p-6">
-              <div className="flex items-start justify-between mb-6">
-                <div className="flex-1">
-                  <h3 className="text-base font-semibold text-primary mb-2">{selectedEvent.title}</h3>
+              <div className="flex items-start justify-between gap-2 mb-6">
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-base font-semibold text-primary mb-2 break-words">{selectedEvent.title}</h3>
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className={`px-1.5 py-0.5 border rounded text-[11px] font-medium ${getStatusBadge(selectedEvent.status).cls}`}>
                       {getStatusBadge(selectedEvent.status).text}

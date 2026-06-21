@@ -71,14 +71,14 @@ export default function JobWorkspace() {
         </button>
 
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div className="min-w-0">
             <div className="flex items-center gap-3 flex-wrap mb-1">
-              <h1 className="text-2xl lg:text-3xl font-bold text-primary">{job.title}</h1>
+              <h1 className="text-2xl lg:text-3xl font-bold text-primary break-words">{job.title}</h1>
               <StatusPill health={job.health} />
             </div>
-            <p className="text-secondary flex items-center gap-1.5 text-sm">
-              <Briefcase className="w-3.5 h-3.5" />{job.division} · {job.hiringAuthority}
-              <MapPin className="w-3.5 h-3.5 ml-2" />{job.location}
+            <p className="text-secondary flex items-center flex-wrap gap-1.5 text-sm">
+              <span className="flex items-center gap-1.5"><Briefcase className="w-3.5 h-3.5 flex-shrink-0" />{job.division} · {job.hiringAuthority}</span>
+              <span className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5 flex-shrink-0" />{job.location}</span>
             </p>
           </div>
           <div className="flex items-center gap-2 flex-wrap">
@@ -156,8 +156,8 @@ export default function JobWorkspace() {
                   onClick={() => navigate(`/hr/jobs/${job.id}/applicants/${a.id}`)}
                   className="w-full flex items-center justify-between gap-3 py-2.5 text-left hover:bg-slate-50 dark:hover:bg-zinc-800/40 -mx-2 px-2 rounded-lg transition-colors"
                 >
-                  <div>
-                    <p className="text-sm font-bold text-primary">{a.name}</p>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-sm font-bold text-primary break-words">{a.name}</p>
                     <p className="text-xs text-secondary">Applied {a.appliedDate}</p>
                   </div>
                   <StagePill stage={a.stage} />

@@ -510,8 +510,8 @@ export default function EmployeeRecords() {
 
             {/* Critical Personnel Issues */}
             <div className="mb-8">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-8 h-8 bg-red-500/20 rounded-lg flex items-center justify-center">
+              <div className="flex items-center gap-3 mb-4 flex-wrap">
+                <div className="w-8 h-8 bg-red-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
                   <AlertTriangle className="w-5 h-5 text-red-400" />
                 </div>
                 <h3 className="text-lg font-bold text-primary">Critical Personnel Issues</h3>
@@ -520,15 +520,15 @@ export default function EmployeeRecords() {
 
               {/* Martinez - Expired Firearms */}
               <div className="mb-4 bg-white dark:bg-zinc-900/40 border border-red-500/30 rounded-xl overflow-hidden">
-                <button onClick={() => toggleIssue('martinez')} className="w-full px-5 py-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors">
-                  <div className="flex items-center gap-3">
-                    <Crosshair className="w-5 h-5 text-red-400" />
-                    <div className="text-left">
-                      <h4 className="text-sm font-semibold text-red-400">Deputy Robert Martinez - Expired Firearms Qualification</h4>
-                      <p className="text-xs text-secondary mt-0.5">Badge #D-2362 | Patrol Division | B-Shift (14:00-02:00) | 25 days overdue</p>
+                <button onClick={() => toggleIssue('martinez')} className="w-full px-5 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors">
+                  <div className="flex items-center gap-3 min-w-0 flex-1">
+                    <Crosshair className="w-5 h-5 text-red-400 flex-shrink-0" />
+                    <div className="text-left min-w-0 flex-1">
+                      <h4 className="text-sm font-semibold text-red-400 break-words">Deputy Robert Martinez - Expired Firearms Qualification</h4>
+                      <p className="text-xs text-secondary mt-0.5 break-words">Badge #D-2362 | Patrol Division | B-Shift (14:00-02:00) | 25 days overdue</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-shrink-0">
                     <span className="px-2 py-1 bg-red-500/20 border border-red-500/40 rounded text-xs text-red-400 font-bold">EXPIRED</span>
                     {expandedIssue.martinez ? <ChevronUp className="w-4 h-4 text-secondary" /> : <ChevronDown className="w-4 h-4 text-secondary" />}
                   </div>
@@ -587,11 +587,11 @@ export default function EmployeeRecords() {
                         ].map((action, idx) => (
                           <div key={idx} className="flex items-start gap-3 px-3 py-2 rounded-lg bg-slate-50 dark:bg-zinc-950/30">
                             {action.completed ? <CheckCircle2 className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" /> : <Circle className="w-4 h-4 text-slate-500 mt-0.5 flex-shrink-0" />}
-                            <div className="flex-1">
-                              <p className={`text-xs font-medium ${action.completed ? 'text-green-400' : 'text-primary'}`}>{action.action}</p>
-                              {action.details && <p className="text-[10px] text-slate-500 mt-1">{action.details}</p>}
+                            <div className="flex-1 min-w-0">
+                              <p className={`text-xs font-medium break-words ${action.completed ? 'text-green-400' : 'text-primary'}`}>{action.action}</p>
+                              {action.details && <p className="text-[10px] text-slate-500 mt-1 break-words">{action.details}</p>}
                             </div>
-                            <span className="text-[10px] text-slate-500">{action.date}</span>
+                            <span className="text-[10px] text-slate-500 flex-shrink-0">{action.date}</span>
                           </div>
                         ))}
                       </div>
@@ -619,15 +619,15 @@ export default function EmployeeRecords() {
 
               {/* Chen - CIT Expiring */}
               <div className="mb-4 bg-white dark:bg-zinc-900/40 border border-amber-500/30 rounded-xl overflow-hidden">
-                <button onClick={() => toggleIssue('chen')} className="w-full px-5 py-4 flex items-center justify-between hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors">
-                  <div className="flex items-center gap-3">
-                    <ShieldAlert className="w-5 h-5 text-amber-700" />
-                    <div className="text-left">
-                      <h4 className="text-sm font-semibold text-amber-700">Deputy Marcus Chen - CIT Certification Expiring (19 Days)</h4>
-                      <p className="text-xs text-secondary mt-0.5">Badge #D-2345 | Patrol Division | C-Shift (18:00-06:00) | Recertification NOT scheduled</p>
+                <button onClick={() => toggleIssue('chen')} className="w-full px-5 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors">
+                  <div className="flex items-center gap-3 min-w-0 flex-1">
+                    <ShieldAlert className="w-5 h-5 text-amber-700 flex-shrink-0" />
+                    <div className="text-left min-w-0 flex-1">
+                      <h4 className="text-sm font-semibold text-amber-700 break-words">Deputy Marcus Chen - CIT Certification Expiring (19 Days)</h4>
+                      <p className="text-xs text-secondary mt-0.5 break-words">Badge #D-2345 | Patrol Division | C-Shift (18:00-06:00) | Recertification NOT scheduled</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-shrink-0">
                     <span className="px-2 py-1 bg-amber-500/20 border border-amber-500/40 rounded text-xs text-amber-700 font-bold">EXPIRING</span>
                     {expandedIssue.chen ? <ChevronUp className="w-4 h-4 text-secondary" /> : <ChevronDown className="w-4 h-4 text-secondary" />}
                   </div>
@@ -717,17 +717,17 @@ export default function EmployeeRecords() {
             {/* AI Workforce Insights */}
             {aiInsightsVisible && (
               <div className="mb-6 bg-gradient-to-r from-violet-500/10 via-blue-500/10 to-cyan-500/10 border border-violet-500/20 rounded-xl p-5">
-                <div className="flex items-center justify-between mb-6">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-violet-500/20 rounded-lg flex items-center justify-center">
+                <div className="flex items-start sm:items-center justify-between gap-2 mb-6">
+                  <div className="flex items-center gap-3 min-w-0 flex-1">
+                    <div className="w-8 h-8 bg-violet-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
                       <Sparkles className="w-5 h-5 text-violet-400" />
                     </div>
-                    <div>
+                    <div className="min-w-0 flex-1">
                       <h3 className="text-sm font-bold text-primary">AI Workforce Insights</h3>
-                      <p className="text-[10px] text-secondary">Real-time personnel analytics • Updated {new Date().toLocaleDateString()}</p>
+                      <p className="text-[10px] text-secondary break-words">Real-time personnel analytics • Updated {new Date().toLocaleDateString()}</p>
                     </div>
                   </div>
-                  <button onClick={() => setAiInsightsVisible(false)} className="p-1.5 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors">
+                  <button onClick={() => setAiInsightsVisible(false)} className="p-1.5 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors flex-shrink-0">
                     <X className="w-4 h-4 text-secondary" />
                   </button>
                 </div>
@@ -778,15 +778,15 @@ export default function EmployeeRecords() {
 
             {/* Personnel Directory */}
             <div className="mb-8">
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
+                <div className="flex items-center gap-3 flex-wrap min-w-0">
+                  <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
                     <Users className="w-5 h-5 text-blue-400" />
                   </div>
                   <h3 className="text-lg font-bold text-primary">Personnel Directory</h3>
                   <span className="text-xs text-slate-500">Showing {filteredEmployees.length} of {personnelStats.total} total employees</span>
                 </div>
-                <div className="flex items-center gap-1 bg-white dark:bg-zinc-900/40 border border-slate-700/50 rounded-lg p-1">
+                <div className="flex items-center gap-1 bg-white dark:bg-zinc-900/40 border border-slate-700/50 rounded-lg p-1 flex-shrink-0 self-start sm:self-auto">
                   <button
                     onClick={() => setViewMode('card')}
                     className={`p-2 rounded-md transition-all ${viewMode === 'card' ? 'bg-amber-500/20 text-amber-700' : 'text-secondary hover:text-slate-900 dark:hover:text-white'}`}
@@ -839,8 +839,8 @@ export default function EmployeeRecords() {
 
               {/* Employee List View */}
               {viewMode === 'list' && (
-                <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl overflow-hidden">
-                  <div className="grid grid-cols-[1fr_120px_140px_120px_100px_80px] gap-2 px-5 py-3 bg-white dark:bg-zinc-900/60 border-b border-border text-[10px] font-semibold text-secondary uppercase tracking-wider">
+                <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl overflow-hidden overflow-x-auto">
+                  <div className="grid grid-cols-[1fr_120px_140px_120px_100px_80px] gap-2 px-5 py-3 bg-white dark:bg-zinc-900/60 border-b border-border text-[10px] font-semibold text-secondary uppercase tracking-wider min-w-[700px]">
                     <span>Employee</span>
                     <span>Badge</span>
                     <span>Department</span>
@@ -851,7 +851,7 @@ export default function EmployeeRecords() {
                   {filteredEmployees.map(employee => {
                     const statusConfig = getStatusConfig(employee.status);
                     return (
-                      <div key={employee.id} className={`grid grid-cols-[1fr_120px_140px_120px_100px_80px] gap-2 px-5 py-3 items-center border-b border-border dark:border-slate-700/30 hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors ${
+                      <div key={employee.id} className={`grid grid-cols-[1fr_120px_140px_120px_100px_80px] gap-2 px-5 py-3 items-center border-b border-border dark:border-slate-700/30 hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors min-w-[700px] ${
                         employee.certAlert === 'expired' ? 'bg-red-500/5' : employee.certAlert === 'expiring' ? 'bg-amber-500/5' : ''
                       }`}>
                         <div className="flex items-center gap-3 min-w-0">
@@ -1000,9 +1000,9 @@ export default function EmployeeRecords() {
                                   const certConfig = getCertStatusConfig(cert.status);
                                   return (
                                     <div key={idx} className={`px-3 py-2 rounded-lg border ${certConfig.border} ${cert.status === 'expired' ? 'bg-red-500/5' : cert.status === 'expiring' ? 'bg-amber-500/5' : 'bg-slate-50 dark:bg-zinc-950/30'}`}>
-                                      <div className="flex items-center justify-between">
-                                        <p className="text-[10px] font-medium text-secondary truncate flex-1">{cert.name}</p>
-                                        <span className={`px-1.5 py-0.5 rounded text-[9px] font-bold ml-2 ${certConfig.bg} ${certConfig.text}`}>
+                                      <div className="flex items-start justify-between gap-2">
+                                        <p className="text-[10px] font-medium text-secondary break-words min-w-0 flex-1">{cert.name}</p>
+                                        <span className={`px-1.5 py-0.5 rounded text-[9px] font-bold flex-shrink-0 ${certConfig.bg} ${certConfig.text}`}>
                                           {certConfig.label}
                                         </span>
                                       </div>
@@ -1064,14 +1064,14 @@ export default function EmployeeRecords() {
       {selectedEmployee && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setSelectedEmployee(null)} />
-          <div className="relative bg-white dark:bg-zinc-950 border border-border rounded-2xl p-6 max-w-4xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
-            <div className="flex items-start justify-between mb-6">
-              <div>
-                <h3 className="text-2xl font-bold text-primary mb-2">{selectedEmployee.name}</h3>
-                <p className="text-sm text-secondary">{selectedEmployee.position} • Badge {selectedEmployee.badge} • {selectedEmployee.department}</p>
-                {selectedEmployee.hireDate && <p className="text-xs text-slate-500 mt-1">Hire Date: {selectedEmployee.hireDate} ({selectedEmployee.yearsOfService})</p>}
+          <div className="relative bg-white dark:bg-zinc-950 border border-border rounded-2xl p-4 sm:p-6 max-w-4xl w-full shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div className="flex items-start justify-between gap-3 mb-6">
+              <div className="min-w-0 flex-1">
+                <h3 className="text-2xl font-bold text-primary mb-2 break-words">{selectedEmployee.name}</h3>
+                <p className="text-sm text-secondary break-words">{selectedEmployee.position} • Badge {selectedEmployee.badge} • {selectedEmployee.department}</p>
+                {selectedEmployee.hireDate && <p className="text-xs text-slate-500 mt-1 break-words">Hire Date: {selectedEmployee.hireDate} ({selectedEmployee.yearsOfService})</p>}
               </div>
-              <button onClick={() => setSelectedEmployee(null)} className="p-2 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors">
+              <button onClick={() => setSelectedEmployee(null)} className="p-2 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors flex-shrink-0">
                 <X className="w-5 h-5 text-secondary" />
               </button>
             </div>
@@ -1182,7 +1182,7 @@ export default function EmployeeRecords() {
                 </div>
               </div>
 
-              <div className="flex gap-3 pt-4 border-t border-border">
+              <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-border">
                 <button className="flex-1 px-4 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-xl font-medium transition-all text-sm">Print Personnel File</button>
                 <button onClick={() => navigate(createPageUrl('PerformanceReviews'))} className="flex-1 px-4 py-3 bg-green-500/20 hover:bg-green-500/30 border border-green-500/30 text-green-400 rounded-xl font-medium transition-all text-sm">View Performance</button>
                 <button onClick={() => navigate(createPageUrl('TrainingCertifications'))} className="flex-1 px-4 py-3 bg-slate-50 dark:bg-zinc-800/40 hover:bg-slate-700/60 border border-slate-600/50 text-primary rounded-xl font-medium transition-all text-sm">Training History</button>
