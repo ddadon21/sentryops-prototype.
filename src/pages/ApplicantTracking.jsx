@@ -47,16 +47,16 @@ function barColor(value) {
 
 function SectionHeader({ children }) {
   return (
-    <h4 className="text-sm font-bold text-amber-700 dark:text-amber-500 uppercase tracking-wide mb-3">{children}</h4>
+    <h4 className="text-xs font-bold text-amber-700 dark:text-amber-500 uppercase tracking-wide mb-2">{children}</h4>
   );
 }
 
 function ScoreBadge({ score }) {
   const t = scoreTone(score);
   return (
-    <div className={`flex flex-col items-center justify-center rounded-xl border ${t.ring} ${t.bg} px-3 py-1.5 min-w-[60px]`}>
-      <span className={`text-lg font-bold leading-none ${t.text}`}>{score}</span>
-      <span className="text-[10px] uppercase tracking-wide text-slate-500 mt-0.5">Score</span>
+    <div className={`flex flex-col items-center justify-center rounded-lg border ${t.ring} ${t.bg} px-2.5 py-1 min-w-[50px]`}>
+      <span className={`text-base font-bold leading-none ${t.text}`}>{score}</span>
+      <span className="text-[9px] uppercase tracking-wide text-slate-500 mt-0.5">Score</span>
     </div>
   );
 }
@@ -66,10 +66,10 @@ function ScoreBreakdown({ score, breakdown }) {
   return (
     <div>
       <SectionHeader>Candidate Score</SectionHeader>
-      <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-4 border border-border">
-        <div className="flex items-center gap-3 mb-4">
-          <div className={`flex items-center justify-center w-14 h-14 rounded-full border-2 ${t.ring} ${t.bg} flex-shrink-0`}>
-            <span className={`text-lg font-bold ${t.text}`}>{score}</span>
+      <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-3 border border-border">
+        <div className="flex items-center gap-3 mb-3">
+          <div className={`flex items-center justify-center w-12 h-12 rounded-full border-2 ${t.ring} ${t.bg} flex-shrink-0`}>
+            <span className={`text-base font-bold ${t.text}`}>{score}</span>
           </div>
           <div className="min-w-0">
             <p className="text-sm font-bold text-primary">Composite Match Score</p>
@@ -745,14 +745,14 @@ function ApplicantCard({ applicant, expanded, onToggle }) {
     <div className={`bg-white dark:bg-zinc-900/40 border rounded-xl overflow-hidden ${a.accent || 'border-border'}`}>
       <button
         onClick={() => onToggle(a.id)}
-        className="w-full p-4 sm:p-5 flex items-center gap-3 sm:gap-4 hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors text-left"
+        className="w-full p-3 sm:p-4 flex items-center gap-3 hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors text-left"
       >
-        <div className={`w-11 h-11 sm:w-12 sm:h-12 rounded-full flex items-center justify-center flex-shrink-0 ${avatarTone[a.status.tone]}`}>
-          <User className="w-6 h-6" />
+        <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center flex-shrink-0 ${avatarTone[a.status.tone]}`}>
+          <User className="w-5 h-5" />
         </div>
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2 flex-wrap">
-            <h3 className="text-base sm:text-lg font-bold text-primary break-words">{a.name}</h3>
+            <h3 className="text-sm sm:text-base font-bold text-primary break-words">{a.name}</h3>
             <span className={`px-2 py-0.5 border rounded text-[11px] font-bold ${toneMap[a.status.tone]}`}>{a.status.label}</span>
             {a.flags.map((f) => (
               <span key={f.label} className={`px-2 py-0.5 border rounded text-[11px] font-bold inline-flex items-center gap-1 ${toneMap[f.tone]}`}>
@@ -760,17 +760,17 @@ function ApplicantCard({ applicant, expanded, onToggle }) {
               </span>
             ))}
           </div>
-          <p className="text-sm text-secondary break-words">{a.position} • {a.division}</p>
-          <p className="text-xs text-slate-500 mt-0.5 break-words">Applied {a.daysAgo} days ago • Ref {a.ref}</p>
+          <p className="text-xs sm:text-sm text-secondary break-words">{a.position} • {a.division}</p>
+          <p className="text-xs text-slate-500 break-words">Applied {a.daysAgo} days ago • Ref {a.ref}</p>
         </div>
-        <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+        <div className="flex items-center gap-2 flex-shrink-0">
           <ScoreBadge score={a.score} />
           {expanded ? <ChevronUp className="w-5 h-5 text-secondary" /> : <ChevronDown className="w-5 h-5 text-secondary" />}
         </div>
       </button>
 
       {expanded && (
-        <div className="px-4 sm:px-5 pb-5 pt-5 space-y-5 border-t border-border">
+        <div className="px-3 sm:px-4 pb-4 pt-4 space-y-4 border-t border-border">
           <HiringTimeline current={a.timelineCurrent} rejected={a.rejected} />
           <ScoreBreakdown score={a.score} breakdown={a.breakdown} />
           <div>
@@ -825,17 +825,17 @@ export default function ApplicantTracking() {
 
   return (
     <DashboardLayout navigation={hrNavigation} profile={hrProfile} notifications={hrNotifications} settingsRoute="/hr/settings" profileRoute="/hr/profile" activityRoute="/hr/activity" activityModuleFilter="hr">
-      <div className="p-4 lg:p-6 min-h-full">
+      <div className="p-3 lg:p-5 min-h-full">
         <div className="max-w-7xl mx-auto">
 
           {/* Section Title */}
-          <div className="mb-6">
-            <h2 className="text-2xl lg:text-3xl font-bold text-primary mb-1">Applicant Pipeline</h2>
-            <p className="text-secondary break-words">Gwinnett County Sheriff's Office • Recruiting &amp; Applicant Tracking</p>
+          <div className="mb-4">
+            <h2 className="text-lg lg:text-xl font-bold text-primary leading-tight">Applicant Pipeline</h2>
+            <p className="text-xs text-secondary break-words">Gwinnett County Sheriff's Office • Recruiting &amp; Applicant Tracking</p>
           </div>
 
           {/* Pipeline-stage tabs */}
-          <div data-swipe-ignore className="mb-6 overflow-x-auto -mx-1 px-1">
+          <div data-swipe-ignore className="mb-4 overflow-x-auto -mx-1 px-1">
             <div className="flex items-center gap-1 min-w-max">
               {pipelineTabs.map((tab, i) => (
                 <React.Fragment key={tab.id}>
@@ -859,19 +859,19 @@ export default function ApplicantTracking() {
           </div>
 
           {/* Filters */}
-          <div className="flex flex-col sm:flex-row flex-wrap gap-3 mb-6">
+          <div className="flex flex-col sm:flex-row flex-wrap gap-2 mb-4">
             <div className="flex-1 min-w-0 relative">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
               <input
                 type="text"
                 placeholder="Search applicants by name, reference #, position..."
-                className="w-full pl-12 pr-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
+                className="w-full pl-12 pr-4 py-2 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
               />
             </div>
             <select
               value={filterPosition}
               onChange={(e) => setFilterPosition(e.target.value)}
-              className="px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-primary text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer"
+              className="px-4 py-2 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-primary text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer"
             >
               <option value="all">All Positions</option>
               <option value="deputy">Deputy Sheriff (23)</option>
@@ -879,20 +879,20 @@ export default function ApplicantTracking() {
               <option value="detention">Detention Officer (8)</option>
               <option value="admin">Administrative Assistant (4)</option>
             </select>
-            <select className="px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-primary text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer">
+            <select className="px-4 py-2 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-primary text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer">
               <option>Sort: Candidate Score</option>
               <option>Sort: Application Date</option>
               <option>Sort: Last Name A-Z</option>
               <option>Sort: Pipeline Stage</option>
             </select>
-            <button className="flex items-center justify-center gap-2 px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-primary text-sm hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-all">
+            <button className="flex items-center justify-center gap-2 px-4 py-2 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-primary text-sm hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-all">
               <Filter className="w-4 h-4" />
               More Filters
             </button>
           </div>
 
           {/* Applicant List */}
-          <div className="space-y-4">
+          <div className="space-y-3">
             {visibleApplicants.map((a) => (
               <ApplicantCard
                 key={a.id}
