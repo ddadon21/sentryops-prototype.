@@ -1,985 +1,965 @@
 import React, { useState } from 'react';
 import {
-  Users, FileText, LayoutDashboard, TrendingUp, Bell, MessageCircle,
-  Search, ChevronRight, CheckCircle, Shield, X, Send, Menu, ChevronLeft,
-  LogOut, UserPlus, Briefcase, Clock, Award, Filter, Download, Eye, Mail,
-  Phone, MapPin, Calendar, FileCheck, ClipboardCheck, GraduationCap,
-  ChevronDown, ChevronUp, AlertTriangle, AlertCircle, Building, User,
-  ExternalLink, Printer, Flag, MessageSquare, Car, BadgeCheck
+  FileText, MessageCircle, Search, ChevronRight, CheckCircle, X, Send,
+  Filter, Download, Eye, Mail, Phone, MapPin, Calendar, FileCheck,
+  ClipboardCheck, ChevronDown, ChevronUp, AlertCircle, User, Printer,
+  Flag, MessageSquare, Share2, ArrowRight, Star
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { createPageUrl } from '@/utils';
 import DashboardLayout from '../layouts/DashboardLayout';
 import { hrNavigation, hrProfile, hrNotifications } from '../config/hrConfig';
 
+/* ------------------------------------------------------------------ */
+/* Shared helpers & presentational components                          */
+/* ------------------------------------------------------------------ */
+
+const toneMap = {
+  blue: 'bg-blue-500/20 border-blue-500/30 text-blue-400',
+  purple: 'bg-purple-500/20 border-purple-500/30 text-purple-400',
+  amber: 'bg-amber-500/20 border-amber-500/30 text-amber-700 dark:text-amber-400',
+  cyan: 'bg-cyan-500/20 border-cyan-500/30 text-cyan-400',
+  green: 'bg-green-500/20 border-green-500/30 text-green-400',
+  red: 'bg-red-500/20 border-red-500/30 text-red-400',
+  slate: 'bg-slate-500/20 border-slate-500/30 text-slate-400',
+};
+
+const avatarTone = {
+  blue: 'bg-blue-500/20 text-blue-400',
+  purple: 'bg-purple-500/20 text-purple-400',
+  amber: 'bg-amber-500/20 text-amber-700 dark:text-amber-400',
+  cyan: 'bg-cyan-500/20 text-cyan-400',
+  green: 'bg-green-500/20 text-green-400',
+  red: 'bg-red-500/20 text-red-400',
+  slate: 'bg-slate-500/20 text-slate-400',
+};
+
+function scoreTone(score) {
+  if (score >= 85) return { text: 'text-green-500 dark:text-green-400', ring: 'border-green-500/40', bg: 'bg-green-500/10' };
+  if (score >= 70) return { text: 'text-amber-600 dark:text-amber-400', ring: 'border-amber-500/40', bg: 'bg-amber-500/10' };
+  return { text: 'text-red-500 dark:text-red-400', ring: 'border-red-500/40', bg: 'bg-red-500/10' };
+}
+
+function barColor(value) {
+  if (value >= 85) return 'bg-green-500';
+  if (value >= 70) return 'bg-amber-500';
+  return 'bg-red-500';
+}
+
+function SectionHeader({ children }) {
+  return (
+    <h4 className="text-sm font-bold text-amber-700 dark:text-amber-500 uppercase tracking-wide mb-3">{children}</h4>
+  );
+}
+
+function ScoreBadge({ score }) {
+  const t = scoreTone(score);
+  return (
+    <div className={`flex flex-col items-center justify-center rounded-xl border ${t.ring} ${t.bg} px-3 py-1.5 min-w-[60px]`}>
+      <span className={`text-lg font-bold leading-none ${t.text}`}>{score}</span>
+      <span className="text-[10px] uppercase tracking-wide text-slate-500 mt-0.5">Score</span>
+    </div>
+  );
+}
+
+function ScoreBreakdown({ score, breakdown }) {
+  const t = scoreTone(score);
+  return (
+    <div>
+      <SectionHeader>Candidate Score</SectionHeader>
+      <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-4 border border-border">
+        <div className="flex items-center gap-3 mb-4">
+          <div className={`flex items-center justify-center w-14 h-14 rounded-full border-2 ${t.ring} ${t.bg} flex-shrink-0`}>
+            <span className={`text-lg font-bold ${t.text}`}>{score}</span>
+          </div>
+          <div className="min-w-0">
+            <p className="text-sm font-bold text-primary">Composite Match Score</p>
+            <p className="text-xs text-secondary break-words">Experience, education, certifications, background &amp; evaluations</p>
+          </div>
+        </div>
+        <div className="space-y-2.5">
+          {breakdown.map(([label, value]) => (
+            <div key={label}>
+              <div className="flex items-center justify-between text-xs mb-1 gap-2">
+                <span className="text-secondary break-words">{label}</span>
+                <span className="text-primary font-medium flex-shrink-0">{value}%</span>
+              </div>
+              <div className="h-1.5 rounded-full bg-slate-200 dark:bg-zinc-800 overflow-hidden">
+                <div className={`h-full rounded-full ${barColor(value)}`} style={{ width: `${value}%` }} />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const PIPELINE = ['Applied', 'Screening', 'Interview', 'Background', 'Medical', 'Offer', 'Hired'];
+
+function HiringTimeline({ current, rejected }) {
+  const currentIndex = PIPELINE.indexOf(current);
+  return (
+    <div>
+      <SectionHeader>Hiring Timeline</SectionHeader>
+      <div data-swipe-ignore className="overflow-x-auto -mx-1 px-1 pb-1">
+        <div className="flex items-start min-w-max">
+          {PIPELINE.map((stage, i) => {
+            const done = !rejected && i < currentIndex;
+            const active = !rejected && i === currentIndex;
+            const rejectedHere = rejected && i === currentIndex;
+            let circle = 'bg-slate-200 dark:bg-zinc-800 text-slate-500 border-transparent';
+            let label = 'text-slate-500';
+            if (done) { circle = 'bg-green-500/20 text-green-400 border-green-500/40'; label = 'text-secondary'; }
+            if (active) { circle = 'bg-amber-500/20 text-amber-600 dark:text-amber-400 border-amber-500/50'; label = 'text-amber-700 dark:text-amber-400 font-semibold'; }
+            if (rejectedHere) { circle = 'bg-red-500/20 text-red-400 border-red-500/50'; label = 'text-red-400 font-semibold'; }
+            return (
+              <React.Fragment key={stage}>
+                <div className="flex flex-col items-center gap-1.5 w-[68px] flex-shrink-0">
+                  <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center ${circle}`}>
+                    {done ? <CheckCircle className="w-4 h-4" /> : rejectedHere ? <X className="w-4 h-4" /> : <span className="text-xs font-bold">{i + 1}</span>}
+                  </div>
+                  <span className={`text-[11px] text-center leading-tight ${label}`}>{stage}</span>
+                </div>
+                {i < PIPELINE.length - 1 && (
+                  <div className={`h-0.5 w-6 mt-4 flex-shrink-0 ${i < currentIndex && !rejected ? 'bg-green-500/40' : 'bg-slate-200 dark:bg-zinc-800'}`} />
+                )}
+              </React.Fragment>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function AssignedTo({ people }) {
+  return (
+    <div>
+      <SectionHeader>Assigned To</SectionHeader>
+      <div className="flex flex-wrap gap-3">
+        {people.map((p) => (
+          <div key={p.role} className="flex items-center gap-2 bg-white dark:bg-zinc-950/40 border border-border rounded-lg px-3 py-2 min-w-0">
+            <div className="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center flex-shrink-0">
+              <User className="w-4 h-4" />
+            </div>
+            <div className="min-w-0">
+              <p className="text-xs text-slate-500 break-words">{p.role}</p>
+              <p className="text-sm text-primary font-medium break-words">{p.name}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function Attachments({ files }) {
+  return (
+    <div>
+      <SectionHeader>Attachments</SectionHeader>
+      <div className="space-y-2">
+        {files.map((f) => (
+          <div key={f.name} className="flex items-center justify-between gap-3 bg-white dark:bg-zinc-950/40 border border-border rounded-lg px-3 py-2 flex-wrap">
+            <div className="flex items-center gap-2 min-w-0">
+              <FileText className="w-4 h-4 text-slate-500 flex-shrink-0" />
+              <span className="text-sm text-primary truncate">{f.name}</span>
+            </div>
+            <div className="flex items-center gap-1 flex-shrink-0">
+              {[{ icon: Eye, label: 'View' }, { icon: Download, label: 'Download' }, { icon: Share2, label: 'Share' }].map(({ icon: Icon, label }) => (
+                <button key={label} title={label} className="flex items-center gap-1 px-2 py-1 rounded-md text-xs text-secondary hover:bg-slate-100 dark:hover:bg-zinc-800/60 transition-colors">
+                  <Icon className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">{label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function InternalNotes({ notes }) {
+  return (
+    <div>
+      <SectionHeader>Internal Notes</SectionHeader>
+      <div className="space-y-2">
+        {notes.map((n, i) => (
+          <div key={i} className="bg-white dark:bg-zinc-950/40 border border-border rounded-lg p-3">
+            <div className="flex items-center justify-between gap-2 mb-1 flex-wrap">
+              <span className="text-sm font-medium text-primary break-words">{n.author}</span>
+              <span className="text-xs text-slate-500 flex-shrink-0">{n.date}</span>
+            </div>
+            <p className="text-sm text-secondary break-words">{n.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function RecentActivity({ items }) {
+  return (
+    <div>
+      <SectionHeader>Recent Activity</SectionHeader>
+      <div className="space-y-0">
+        {items.map((it, i) => (
+          <div key={i} className="flex gap-3">
+            <div className="flex flex-col items-center">
+              <div className="w-2 h-2 rounded-full bg-amber-500 mt-1.5 flex-shrink-0" />
+              {i < items.length - 1 && <div className="w-px flex-1 bg-border my-1" />}
+            </div>
+            <div className="pb-3 min-w-0">
+              <p className="text-xs text-slate-500">{it.when}</p>
+              <p className="text-sm text-secondary break-words">{it.text}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function NextAction({ action }) {
+  if (!action) return null;
+  const tone = action.tone || 'amber';
+  const box = {
+    amber: 'bg-amber-500/10 border-amber-500/40',
+    blue: 'bg-blue-500/10 border-blue-500/40',
+    red: 'bg-red-500/10 border-red-500/40',
+    slate: 'bg-slate-500/10 border-slate-500/40',
+  }[tone];
+  const accent = {
+    amber: 'text-amber-700 dark:text-amber-400',
+    blue: 'text-blue-500 dark:text-blue-400',
+    red: 'text-red-500 dark:text-red-400',
+    slate: 'text-slate-500 dark:text-slate-400',
+  }[tone];
+  const iconBg = {
+    amber: 'bg-amber-500/20 text-amber-700 dark:text-amber-400',
+    blue: 'bg-blue-500/20 text-blue-500 dark:text-blue-400',
+    red: 'bg-red-500/20 text-red-500 dark:text-red-400',
+    slate: 'bg-slate-500/20 text-slate-500 dark:text-slate-400',
+  }[tone];
+  return (
+    <div className={`rounded-xl border ${box} p-4`}>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="flex items-start gap-3 min-w-0">
+          <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${iconBg}`}>
+            <ArrowRight className="w-5 h-5" />
+          </div>
+          <div className="min-w-0">
+            <p className={`text-[11px] font-bold uppercase tracking-wider ${accent}`}>Next Required Action</p>
+            <p className="text-base font-bold text-primary break-words">{action.title}</p>
+            {action.due && <p className="text-xs text-secondary break-words mt-0.5">{action.due}</p>}
+          </div>
+        </div>
+        {action.cta && (
+          <button className={`flex-shrink-0 flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${tone === 'red' ? 'bg-red-500 hover:bg-red-600 text-white' : tone === 'blue' ? 'bg-blue-500 hover:bg-blue-600 text-white' : 'bg-amber-500 hover:bg-amber-600 text-white'}`}>
+            {action.cta}
+            <ChevronRight className="w-4 h-4" />
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
+const actionVariant = {
+  primary: 'bg-blue-500 hover:bg-blue-600 text-white',
+  success: 'bg-green-500 hover:bg-green-600 text-white',
+  warning: 'bg-amber-500 hover:bg-amber-600 text-white',
+  default: 'bg-white dark:bg-zinc-800/60 hover:bg-slate-100 dark:hover:bg-slate-700/80 text-primary',
+};
+
+function ActionButtons({ actions }) {
+  return (
+    <div className="flex flex-wrap gap-3 pt-4 border-t border-border">
+      {actions.map((a, i) => {
+        const Icon = a.icon;
+        return (
+          <button key={i} className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${actionVariant[a.variant || 'default']}`}>
+            <Icon className="w-4 h-4" />
+            {a.label}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+function ContactRow({ contact }) {
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+      <div className="flex items-center gap-2 text-sm min-w-0">
+        <Mail className="w-4 h-4 text-slate-500 flex-shrink-0" />
+        <span className="text-secondary break-words">{contact.email}</span>
+      </div>
+      <div className="flex items-center gap-2 text-sm min-w-0">
+        <Phone className="w-4 h-4 text-slate-500 flex-shrink-0" />
+        <span className="text-secondary break-words">{contact.phone}</span>
+      </div>
+      <div className="flex items-center gap-2 text-sm min-w-0">
+        <MapPin className="w-4 h-4 text-slate-500 flex-shrink-0" />
+        <span className="text-secondary break-words">{contact.location}</span>
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Applicant data — bespoke detail preserved per candidate             */
+/* ------------------------------------------------------------------ */
+
+const applicants = [
+  {
+    id: 'marcus',
+    name: 'Marcus Johnson',
+    position: 'Deputy Sheriff',
+    division: 'Patrol Division',
+    ref: '2026-APP-0142',
+    status: { label: 'SCREENING', tone: 'purple' },
+    flags: [],
+    score: 88,
+    daysAgo: 113,
+    stage: 'screening',
+    timelineCurrent: 'Interview',
+    contact: { email: 'marcus.johnson@email.com', phone: '(555) 234-5678', location: 'Lawrenceville, GA 30046' },
+    breakdown: [['Experience', 90], ['Education', 85], ['POST Certification', 95], ['Certifications', 88], ['Background Pre-Screen', 92], ['Physical Fitness', 90]],
+    assignedTo: [{ role: 'HR Specialist', name: 'J. Martinez' }, { role: 'Interview Panel Chair', name: 'Maj. R. Davis' }],
+    attachments: [{ name: 'Employment Application.pdf' }, { name: 'Resume (2 pages).pdf' }, { name: 'Cover Letter.pdf' }, { name: 'POST Certificate.pdf' }, { name: 'College Transcript.pdf' }],
+    notes: [{ author: 'Lt. K. Williams', date: 'Jan 26, 2026', text: 'Strong patrol background, FTO experience a plus. Confirmed interview attendance. Recommend standard oral board.' }],
+    activity: [
+      { when: 'Today', text: 'Interview packet prepared for oral board' },
+      { when: 'Jan 26, 2026', text: 'Applicant confirmed interview attendance' },
+      { when: 'Oct 22, 2024', text: 'Physical fitness test passed' },
+    ],
+    nextAction: { title: 'Conduct Oral Board Interview', due: 'Due Feb 06, 2026 • 09:30 AM • Conference Room B', tone: 'amber', cta: 'Open Packet' },
+    actions: [
+      { label: 'View Full Application', icon: Eye, variant: 'primary' },
+      { label: 'Email Applicant', icon: Mail },
+      { label: 'Print Score Sheet', icon: Printer },
+      { label: 'Flag for Review', icon: Flag },
+    ],
+    detail: (
+      <>
+        <div>
+          <SectionHeader>Qualifications Summary</SectionHeader>
+          <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-4 border border-border space-y-3">
+            <div>
+              <p className="text-xs text-slate-500 mb-1">Experience</p>
+              <p className="text-sm text-primary font-medium">5 years law enforcement</p>
+              <p className="text-xs text-secondary">Metro Atlanta Police Department (2019-2024) • Patrol Officer, North Precinct</p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <p className="text-xs text-slate-500 mb-1">Education</p>
+                <p className="text-sm text-primary">Bachelor's Degree - Criminal Justice</p>
+                <p className="text-xs text-secondary">Georgia State University (Graduated 2018)</p>
+              </div>
+              <div>
+                <p className="text-xs text-slate-500 mb-1">POST Certification</p>
+                <p className="text-sm text-primary">Georgia POST Basic #48291</p>
+                <p className="text-xs text-green-400">Issued: 06/15/2019 • Expires: 06/15/2027 (Current ✓)</p>
+              </div>
+            </div>
+            <div>
+              <p className="text-xs text-slate-500 mb-1">Additional Certifications</p>
+              <div className="flex flex-wrap gap-2">
+                <span className="px-2 py-1 bg-blue-500/20 text-blue-400 rounded text-xs">Field Training Officer (2022)</span>
+                <span className="px-2 py-1 bg-blue-500/20 text-blue-400 rounded text-xs">Crisis Intervention (2021)</span>
+                <span className="px-2 py-1 bg-blue-500/20 text-blue-400 rounded text-xs">Defensive Tactics Instructor (2023)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <SectionHeader>Screening Status</SectionHeader>
+          <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-4 border border-border space-y-3">
+            <div className="flex items-start gap-3">
+              <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+              <div>
+                <p className="text-sm text-primary font-medium">Initial Application Review: PASSED (10/15/2024)</p>
+                <p className="text-xs text-secondary">Met minimum qualifications: Age 21+ ✓, POST cert ✓, HS/GED ✓</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+              <div>
+                <p className="text-sm text-primary font-medium">Background Pre-Screen: PASSED (10/18/2024)</p>
+                <p className="text-xs text-secondary">GCIC check: No disqualifying convictions ✓ | Driving record: Clean ✓</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+              <div>
+                <p className="text-sm text-primary font-medium">Physical Fitness Test: PASSED (10/22/2024)</p>
+                <p className="text-xs text-secondary">1.5-mi run: 11:45 | Push-ups: 42 | Sit-ups: 48 | 300m: 52s (all PASS)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
+    ),
+  },
+  {
+    id: 'sarah',
+    name: 'Sarah Chen',
+    position: 'Background Investigator',
+    division: 'HR / Internal Affairs',
+    ref: '2026-APP-0087',
+    status: { label: 'INTERVIEW COMPLETED', tone: 'amber' },
+    flags: [{ label: 'TOP CANDIDATE', tone: 'green' }],
+    score: 96,
+    daysAgo: 98,
+    stage: 'interview',
+    timelineCurrent: 'Offer',
+    contact: { email: 'sarah.chen@email.com', phone: '(555) 345-6789', location: 'Duluth, GA 30096' },
+    breakdown: [['Experience', 98], ['Education', 95], ['POST / Federal', 96], ['Specialized Training', 97], ['Interview', 96], ['Clearance', 99]],
+    assignedTo: [{ role: 'HR Director', name: 'L. Bennett' }, { role: 'Command Reviewer', name: 'Sheriff Taylor' }],
+    attachments: [{ name: 'Employment Application.pdf' }, { name: 'Resume.pdf' }, { name: "Master's Transcript (Emory).pdf" }, { name: 'POST Certificate.pdf' }, { name: 'FBI Service Record.pdf' }, { name: 'Clearance Verification.pdf' }],
+    notes: [
+      { author: 'Maj. R. Davis', date: 'Feb 11, 2026', text: 'Exceptional interview — most qualified candidate. FBI investigative experience directly applicable to GCSO backgrounds. Strongly recommend for hire.' },
+      { author: 'HR Director', date: 'Feb 11, 2026', text: 'Writing sample excellent. Forwarding panel recommendation to Sheriff for conditional offer approval.' },
+    ],
+    activity: [
+      { when: 'Feb 11, 2026', text: 'Oral board completed — score 144/150 (96%)' },
+      { when: 'Feb 11, 2026', text: 'Panel recommendation forwarded to Sheriff' },
+      { when: 'Feb 04, 2026', text: 'Writing sample submitted — rated excellent' },
+    ],
+    nextAction: { title: "Await Sheriff's Approval for Conditional Offer", due: 'Sheriff review meeting Feb 14, 2026', tone: 'amber', cta: 'View Recommendation' },
+    actions: [
+      { label: 'View Full Application', icon: Eye, variant: 'primary' },
+      { label: 'View Score Sheets', icon: FileText },
+      { label: 'Prepare Conditional Offer', icon: FileCheck, variant: 'success' },
+    ],
+    detail: (
+      <>
+        <div>
+          <SectionHeader>Qualifications Summary</SectionHeader>
+          <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-4 border border-border space-y-3">
+            <div>
+              <p className="text-xs text-slate-500 mb-1">Experience</p>
+              <p className="text-sm text-primary font-medium">7 years FBI Special Agent</p>
+              <p className="text-xs text-secondary">FBI Atlanta Field Office (2017-2024) • Public Corruption Unit</p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <p className="text-xs text-slate-500 mb-1">Education</p>
+                <p className="text-sm text-primary">Master's Degree - Psychology (Emory 2016)</p>
+                <p className="text-xs text-secondary">Bachelor's - Criminal Justice (UGA 2014)</p>
+              </div>
+              <div>
+                <p className="text-xs text-slate-500 mb-1">POST &amp; Federal Certifications</p>
+                <p className="text-sm text-primary">GA POST Basic #41203 (valid through 05/2027)</p>
+                <p className="text-xs text-green-400">FBI Academy Graduate (Quantico 2017)</p>
+              </div>
+            </div>
+            <div>
+              <p className="text-xs text-slate-500 mb-1">Specialized Training</p>
+              <div className="flex flex-wrap gap-2">
+                <span className="px-2 py-1 bg-purple-500/20 text-purple-400 rounded text-xs">Polygraph Examiner (FBI 2020)</span>
+                <span className="px-2 py-1 bg-purple-500/20 text-purple-400 rounded text-xs">Advanced Interrogation (FBI 2019)</span>
+                <span className="px-2 py-1 bg-amber-500/20 text-amber-700 dark:text-amber-400 rounded text-xs">TOP SECRET/SCI Clearance (Active)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <SectionHeader>Interview Results</SectionHeader>
+          <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
+            <div className="flex items-center justify-between mb-4 gap-3 flex-wrap">
+              <div>
+                <p className="text-sm font-bold text-green-400">ORAL BOARD INTERVIEW COMPLETED</p>
+                <p className="text-xs text-secondary">February 11, 2026 • GCSO HQ, Sheriff's Conference Room</p>
+              </div>
+              <div className="text-right">
+                <p className="text-2xl font-bold text-green-400">144/150</p>
+                <p className="text-xs text-green-400">96.0% - HIGHEST SCORE</p>
+              </div>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm mb-3">
+              <div className="bg-white dark:bg-zinc-900/40 rounded p-2 text-center">
+                <p className="text-primary font-medium">Major R. Davis</p>
+                <p className="text-green-400 font-bold">48/50</p>
+              </div>
+              <div className="bg-white dark:bg-zinc-900/40 rounded p-2 text-center">
+                <p className="text-primary font-medium">HR Director</p>
+                <p className="text-green-400 font-bold">49/50</p>
+              </div>
+              <div className="bg-white dark:bg-zinc-900/40 rounded p-2 text-center">
+                <p className="text-primary font-medium">Lt. K. Hayes</p>
+                <p className="text-green-400 font-bold">47/50</p>
+              </div>
+            </div>
+            <p className="text-sm text-secondary"><span className="text-primary font-medium">Panel Recommendation:</span> <span className="text-green-400 font-bold">STRONGLY RECOMMEND FOR HIRE</span></p>
+          </div>
+        </div>
+      </>
+    ),
+  },
+  {
+    id: 'robert',
+    name: 'Robert Martinez',
+    position: 'Deputy Sheriff',
+    division: 'Patrol Division',
+    ref: '2026-APP-0124',
+    status: { label: 'OFFER ACCEPTED', tone: 'green' },
+    flags: [],
+    score: 91,
+    daysAgo: 102,
+    stage: 'offer',
+    timelineCurrent: 'Hired',
+    accent: 'border-green-500/30',
+    contact: { email: 'robert.martinez@email.com', phone: '(555) 456-7890', location: 'Jonesboro, GA 30236' },
+    breakdown: [['Experience', 88], ['Education', 85], ['POST', 95], ['Interview', 91], ['Background', 93], ['Lateral Transfer', 92]],
+    assignedTo: [{ role: 'HR Specialist', name: 'J. Martinez' }, { role: 'Field Training Officer', name: 'Cpl. J. Williams' }],
+    attachments: [{ name: 'Hiring File (Full).pdf' }, { name: 'Conditional Offer Letter.pdf' }, { name: 'Background Investigation Report.pdf' }, { name: 'Medical Clearance.pdf' }, { name: 'POST Transfer Verification.pdf' }],
+    notes: [{ author: 'Lt. K. Hayes', date: 'Jan 20, 2026', text: 'Background cleared, eligible-for-rehire from Clayton County. Lateral transfer — strong candidate, no concerns.' }],
+    activity: [
+      { when: 'Feb 01, 2026', text: 'Conditional offer accepted' },
+      { when: 'Jan 30, 2026', text: "Sheriff's approval granted" },
+      { when: 'Jan 27, 2026', text: 'Psychological evaluation passed' },
+    ],
+    nextAction: { title: 'Complete Pre-Start Onboarding Documents', due: 'I-9 due Mar 03, 2026 • W-4/G-4 pending', tone: 'blue', cta: 'Open Onboarding' },
+    actions: [
+      { label: 'View Hiring File', icon: Eye, variant: 'primary' },
+      { label: 'Send Document Reminder', icon: Mail },
+      { label: 'Onboarding Checklist', icon: ClipboardCheck },
+      { label: 'Mark as Hired', icon: CheckCircle, variant: 'success' },
+    ],
+    detail: (
+      <>
+        <div>
+          <SectionHeader>Hiring Process - Completed</SectionHeader>
+          <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-4 border border-border space-y-2">
+            {[
+              'Application Received: 10/23/2024',
+              'Initial Screening: PASSED (10/25/2024)',
+              'Physical Fitness: PASSED (10/30/2024)',
+              'Oral Board Interview: 136/150 (90.7%) - 11/15/2024',
+              'Background Investigation: CLEARED (01/20/2026) - Lt. K. Hayes',
+              'Medical Exam: PASSED (01/24/2026)',
+              'Psychological Eval: PASSED (01/27/2026)',
+              "Sheriff's Approval: APPROVED (01/30/2026)",
+            ].map((t) => (
+              <div key={t} className="flex items-center gap-3 text-sm">
+                <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0" />
+                <span className="text-secondary break-words">{t}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
+          <div className="flex items-center gap-2 mb-3">
+            <CheckCircle className="w-5 h-5 text-green-400" />
+            <span className="text-sm font-bold text-green-400">CONDITIONAL OFFER ACCEPTED</span>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-secondary">
+            <div>
+              <p><span className="text-primary font-medium">Salary:</span> $55,200/year (Step 5 - 8 yrs exp)</p>
+              <p><span className="text-primary font-medium">Shift:</span> B-Shift (14:00-02:00) Patrol</p>
+            </div>
+            <div>
+              <p><span className="text-primary font-medium">Start Date:</span> March 03, 2026</p>
+              <p><span className="text-primary font-medium">Last Day Clayton:</span> 02/14/2026</p>
+            </div>
+          </div>
+        </div>
+      </>
+    ),
+  },
+  {
+    id: 'david',
+    name: 'David Brown',
+    position: 'Deputy Sheriff',
+    division: 'Patrol Division',
+    ref: '2026-APP-0178',
+    status: { label: 'BACKGROUND CHECK', tone: 'cyan' },
+    flags: [],
+    score: 84,
+    daysAgo: 67,
+    stage: 'background',
+    timelineCurrent: 'Background',
+    contact: { email: 'david.brown@email.com', phone: '(555) 678-9012', location: 'Buford, GA 30518' },
+    breakdown: [['Experience', 86], ['Education', 84], ['POST', 90], ['Background', 82], ['Driving Record', 80], ['References', 85]],
+    assignedTo: [{ role: 'Background Investigator', name: 'Cpl. J. Adams' }, { role: 'HR Specialist', name: 'J. Martinez' }],
+    attachments: [{ name: 'Employment Application.pdf' }, { name: 'Resume.pdf' }, { name: 'Background Investigation File.pdf' }, { name: 'Driving Record.pdf' }, { name: 'Credit Report.pdf' }],
+    notes: [{ author: 'Cpl. J. Adams', date: 'Feb 02, 2026', text: 'Background proceeding well. No disqualifying issues to date. Awaiting final reference (02/05) and polygraph (02/12). Preliminary: likely recommend for hire pending polygraph.' }],
+    activity: [
+      { when: 'Feb 02, 2026', text: 'Investigator progress note added' },
+      { when: 'Jan 25, 2026', text: 'Credit history check completed (score 720)' },
+      { when: 'Dec 10, 2024', text: 'Employment verification completed' },
+    ],
+    nextAction: { title: 'Complete Polygraph Examination', due: 'Scheduled Feb 12, 2026 • final reference Feb 05', tone: 'amber', cta: 'View Background Case' },
+    actions: [
+      { label: 'View Investigation File', icon: Eye, variant: 'primary' },
+      { label: 'Email Investigator', icon: Mail },
+      { label: 'Investigation Timeline', icon: Calendar },
+    ],
+    detail: (
+      <div>
+        <SectionHeader>Background Investigation Status</SectionHeader>
+        <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-4 mb-4">
+          <div className="flex items-center justify-between gap-3 flex-wrap">
+            <div>
+              <p className="text-sm font-bold text-cyan-400">IN PROGRESS - 67 DAYS</p>
+              <p className="text-xs text-secondary">Case #: BI-2024-0178 | Investigator: Cpl. J. Adams (GCSO IA)</p>
+            </div>
+            <div className="text-right">
+              <p className="text-xs text-secondary">Target Completion</p>
+              <p className="text-sm text-primary font-medium">Feb 15, 2026</p>
+            </div>
+          </div>
+        </div>
+        <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-4 border border-border space-y-3">
+          {[
+            ['Initial Interview - COMPLETED (11/25/2024)', 'Applicant cooperative, professional, no concerns.', true],
+            ['Criminal History Check - COMPLETED (11/26/2024)', 'GCIC/NCIC: No record ✓ | FBI fingerprint: No arrests ✓', true],
+            ['Driving Record - COMPLETED (11/26/2024)', '1 speeding ticket (2021, paid). No DUI/suspensions. Acceptable ✓', true],
+            ['Employment Verification - COMPLETED (12/10/2024)', 'Hall County Sheriff: "Reliable, no disciplinary issues, eligible for rehire"', true],
+            ['Credit History - COMPLETED (01/25/2026)', 'Score: 720 (Good). No bankruptcies or judgments ✓', true],
+          ].map(([title, sub]) => (
+            <div key={title} className="flex items-start gap-3">
+              <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
+              <div className="flex-1 min-w-0">
+                <p className="text-sm text-primary break-words">{title}</p>
+                <p className="text-xs text-secondary break-words">{sub}</p>
+              </div>
+            </div>
+          ))}
+          <div className="flex items-start gap-3">
+            <div className="w-4 h-4 border-2 border-amber-400 rounded-full flex-shrink-0 mt-0.5 animate-pulse" />
+            <div className="flex-1 min-w-0">
+              <p className="text-sm text-amber-700 dark:text-amber-400 break-words">Reference Interviews - IN PROGRESS (4 of 5)</p>
+              <p className="text-xs text-secondary break-words">Reference #5 (Lt. J. Davis) scheduled 02/05/2026</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-3">
+            <div className="w-4 h-4 border border-slate-600 rounded-full flex-shrink-0 mt-0.5" />
+            <div className="flex-1 min-w-0">
+              <p className="text-sm text-primary break-words">Polygraph Examination - SCHEDULED</p>
+              <p className="text-xs text-secondary break-words">February 12, 2026 • 09:00 AM • Examiner: Sgt. R. Johnson (ret. GBI)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: 'lisa',
+    name: 'Lisa Williams',
+    position: 'Detention Officer',
+    division: 'Detention Division',
+    ref: '2026-APP-0201',
+    status: { label: 'NEW', tone: 'blue' },
+    flags: [],
+    score: 71,
+    daysAgo: 93,
+    stage: 'new',
+    timelineCurrent: 'Screening',
+    contact: { email: 'lisa.williams@email.com', phone: '(555) 567-8901', location: 'Snellville, GA 30039' },
+    breakdown: [['Experience', 74], ['Education', 62], ['POST Corrections', 80], ['Certifications', 68], ['Pre-Screen', 70]],
+    assignedTo: [{ role: 'HR Specialist', name: 'J. Martinez' }],
+    attachments: [{ name: 'Employment Application.pdf' }, { name: 'Resume.pdf' }, { name: 'POST Corrections Certificate.pdf' }],
+    notes: [{ author: 'J. Martinez', date: 'Feb 01, 2026', text: 'Solid corrections experience. Application backlogged behind Deputy Sheriff priority hiring. Flagging for screening week of Feb 09.' }],
+    activity: [
+      { when: 'Feb 01, 2026', text: 'Flagged for screening review' },
+      { when: 'Nov 01, 2024', text: 'Application received' },
+    ],
+    nextAction: { title: 'Complete Initial Screening Review', due: 'Backlogged 93 days • target week of Feb 09, 2026', tone: 'red', cta: 'Start Screening' },
+    actions: [
+      { label: 'Priority Review', icon: AlertCircle, variant: 'warning' },
+      { label: 'View Application', icon: Eye, variant: 'primary' },
+      { label: 'Advance to Screening', icon: ChevronRight },
+    ],
+    detail: (
+      <div>
+        <SectionHeader>Qualifications Summary</SectionHeader>
+        <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-4 border border-border space-y-3">
+          <div>
+            <p className="text-xs text-slate-500 mb-1">Experience</p>
+            <p className="text-sm text-primary font-medium">3 years GA Dept of Corrections</p>
+            <p className="text-xs text-secondary">Correctional Officer II, Metro State Prison (2021-2024)</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <p className="text-xs text-slate-500 mb-1">Education</p>
+              <p className="text-sm text-primary">High School Diploma (South Gwinnett HS, 2020)</p>
+            </div>
+            <div>
+              <p className="text-xs text-slate-500 mb-1">POST Certification</p>
+              <p className="text-sm text-primary">GA POST Basic Corrections #52019</p>
+              <p className="text-xs text-green-400">Valid through 08/2029 ✓</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: 'michael',
+    name: 'Michael Davis',
+    position: 'Deputy Sheriff',
+    division: 'Patrol Division',
+    ref: '2026-APP-0156',
+    status: { label: 'DISQUALIFIED', tone: 'red' },
+    flags: [],
+    score: 41,
+    daysAgo: 115,
+    stage: 'rejected',
+    timelineCurrent: 'Screening',
+    rejected: true,
+    accent: 'border-red-500/30',
+    contact: { email: 'michael.davis@email.com', phone: '(555) 789-0123', location: 'Lawrenceville, GA 30043' },
+    breakdown: [['Age Requirement', 0], ['Experience', 55], ['Education', 60]],
+    assignedTo: [{ role: 'HR Specialist', name: 'J. Martinez' }],
+    attachments: [{ name: 'Employment Application.pdf' }, { name: 'Disqualification Notice.pdf' }],
+    notes: [{ author: 'J. Martinez', date: 'Oct 31, 2024', text: 'Applicant is 19. Does not meet POST age 21+ minimum for armed patrol deputy. Disqualified per POST standards & GCSO Policy 2.01. Notified via email + certified mail 11/01.' }],
+    activity: [
+      { when: 'Nov 01, 2024', text: 'Disqualification notice sent' },
+      { when: 'Oct 31, 2024', text: 'Disqualified — age requirement' },
+    ],
+    nextAction: { title: 'No Action Required — Applicant Disqualified', due: 'May reapply after Aug 2027 (age eligibility)', tone: 'slate', cta: null },
+    actions: [
+      { label: 'View Application', icon: Eye, variant: 'primary' },
+      { label: 'View Disqualification Notice', icon: FileText },
+    ],
+    detail: (
+      <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
+        <p className="text-sm font-bold text-red-400 mb-2">DISQUALIFICATION REASON</p>
+        <p className="text-sm text-secondary break-words">Applicant is 19 years old. Georgia POST requires age 21+ for armed patrol deputy positions. Applicant does not meet minimum age requirement per POST standards and GCSO Policy 2.01.</p>
+        <p className="text-xs text-secondary mt-2">Reviewed by: HR Specialist J. Martinez (10/31/2024) • Notification sent 11/01/2024</p>
+      </div>
+    ),
+  },
+];
+
+/* ------------------------------------------------------------------ */
+/* Applicant card                                                      */
+/* ------------------------------------------------------------------ */
+
+function ApplicantCard({ applicant, expanded, onToggle }) {
+  const a = applicant;
+  return (
+    <div className={`bg-white dark:bg-zinc-900/40 border rounded-xl overflow-hidden ${a.accent || 'border-border'}`}>
+      <button
+        onClick={() => onToggle(a.id)}
+        className="w-full p-4 sm:p-5 flex items-center gap-3 sm:gap-4 hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors text-left"
+      >
+        <div className={`w-11 h-11 sm:w-12 sm:h-12 rounded-full flex items-center justify-center flex-shrink-0 ${avatarTone[a.status.tone]}`}>
+          <User className="w-6 h-6" />
+        </div>
+        <div className="min-w-0 flex-1">
+          <div className="flex items-center gap-2 flex-wrap">
+            <h3 className="text-base sm:text-lg font-bold text-primary break-words">{a.name}</h3>
+            <span className={`px-2 py-0.5 border rounded text-[11px] font-bold ${toneMap[a.status.tone]}`}>{a.status.label}</span>
+            {a.flags.map((f) => (
+              <span key={f.label} className={`px-2 py-0.5 border rounded text-[11px] font-bold inline-flex items-center gap-1 ${toneMap[f.tone]}`}>
+                <Star className="w-3 h-3" />{f.label}
+              </span>
+            ))}
+          </div>
+          <p className="text-sm text-secondary break-words">{a.position} • {a.division}</p>
+          <p className="text-xs text-slate-500 mt-0.5 break-words">Applied {a.daysAgo} days ago • Ref {a.ref}</p>
+        </div>
+        <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+          <ScoreBadge score={a.score} />
+          {expanded ? <ChevronUp className="w-5 h-5 text-secondary" /> : <ChevronDown className="w-5 h-5 text-secondary" />}
+        </div>
+      </button>
+
+      {expanded && (
+        <div className="px-4 sm:px-5 pb-5 pt-5 space-y-5 border-t border-border">
+          <HiringTimeline current={a.timelineCurrent} rejected={a.rejected} />
+          <ScoreBreakdown score={a.score} breakdown={a.breakdown} />
+          <div>
+            <SectionHeader>Contact</SectionHeader>
+            <ContactRow contact={a.contact} />
+          </div>
+          <AssignedTo people={a.assignedTo} />
+          {a.detail}
+          <Attachments files={a.attachments} />
+          <InternalNotes notes={a.notes} />
+          <RecentActivity items={a.activity} />
+          <NextAction action={a.nextAction} />
+          <ActionButtons actions={a.actions} />
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Page                                                                */
+/* ------------------------------------------------------------------ */
+
 export default function ApplicantTracking() {
   const navigate = useNavigate();
-  const [activePage, setActivePage] = useState('applicant-tracking');
   const [chatOpen, setChatOpen] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const [notificationsOpen, setNotificationsOpen] = useState(false);
-  const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('all');
   const [filterPosition, setFilterPosition] = useState('all');
   const [expandedApplicant, setExpandedApplicant] = useState('marcus');
 
-  const currentDate = new Date();
-  const formattedDate = currentDate.toLocaleDateString('en-US', {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: '2-digit'
-  });
-  const formattedTime = currentDate.toLocaleTimeString('en-US', {
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-    hour12: true
+  const formattedTime = new Date().toLocaleTimeString('en-US', {
+    hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true,
   });
 
-  const navigation = [
-    { id: 'hr-dashboard', label: 'HR Dashboard', icon: Users, page: 'HRDashboard' },
-    { id: 'job-postings', label: 'Job Postings', icon: Briefcase, page: 'JobPostings' },
-    { id: 'applicant-tracking', label: 'Applicant Tracking', icon: UserPlus },
-    { id: 'hiring-pipeline', label: 'Hiring Pipeline', icon: TrendingUp, page: 'HiringPipeline' },
-    { id: 'compliance', label: 'HR Compliance', icon: ClipboardCheck, page: 'ComplianceManagement' },
-    { id: 'onboarding', label: 'New Hire Onboarding', icon: FileCheck, page: 'NewHireOnboarding' },
-    { id: 'training-certifications', label: 'Training & Certifications', icon: GraduationCap, page: 'TrainingCertifications' },
-    { id: 'employee-records', label: 'Employee Records', icon: FileText, page: 'EmployeeRecords' },
-    { id: 'time-off', label: 'Time Off Management', icon: Calendar, page: 'TimeOffManagement' },
-    { id: 'performance', label: 'Performance Reviews', icon: Award, page: 'PerformanceReviews' },
-    { id: 'hr-reports', label: 'HR Reports', icon: LayoutDashboard, page: 'HRReports' }
+  const statusCounts = { all: 77, new: 8, screening: 12, interview: 17, background: 5, offer: 3, rejected: 9 };
+
+  const pipelineTabs = [
+    { id: 'all', label: 'All', count: statusCounts.all },
+    { id: 'new', label: 'New', count: statusCounts.new },
+    { id: 'screening', label: 'Screening', count: statusCounts.screening },
+    { id: 'background', label: 'Background', count: statusCounts.background },
+    { id: 'interview', label: 'Interview', count: statusCounts.interview },
+    { id: 'offer', label: 'Offer', count: statusCounts.offer },
+    { id: 'rejected', label: 'Rejected', count: statusCounts.rejected },
   ];
 
-  const notifications = [
-    { id: 1, title: '8 Oral Boards Scheduled', message: 'Deputy Sheriff interviews Feb 06, 2026 - review files', time: '15 min ago', urgent: true },
-    { id: 2, title: 'Offer Deadline', message: 'J. Wilson acceptance deadline Feb 05 - follow up required', time: '1 hour ago', urgent: true },
-    { id: 3, title: 'Background Complete', message: 'R. Martinez background cleared - ready for medical', time: '2 hours ago', urgent: false }
-  ];
+  const toggleApplicant = (id) => setExpandedApplicant(expandedApplicant === id ? null : id);
 
-  const statusCounts = {
-    all: 77,
-    new: 8,
-    screening: 12,
-    interview: 17,
-    background: 5,
-    offer: 3,
-    rejected: 9
-  };
-
-  const toggleApplicant = (id) => {
-    setExpandedApplicant(expandedApplicant === id ? null : id);
-  };
-
-  const handleNavigation = (item) => {
-    if (item.page) {
-      navigate(createPageUrl(item.page));
-    } else {
-      setActivePage(item.id);
-      setSidebarOpen(false);
-    }
-  };
-
-  const handleLogout = () => {
-    navigate(createPageUrl('SignIn'));
-  };
+  const visibleApplicants = activeTab === 'all'
+    ? applicants
+    : applicants.filter((a) => a.stage === activeTab);
 
   return (
     <DashboardLayout navigation={hrNavigation} profile={hrProfile} notifications={hrNotifications} settingsRoute="/hr/settings" profileRoute="/hr/profile" activityRoute="/hr/activity" activityModuleFilter="hr">
       <div className="p-4 lg:p-6 min-h-full">
-          <div className="max-w-7xl mx-auto">
+        <div className="max-w-7xl mx-auto">
 
-            {/* Section Title */}
-            <div className="mb-6">
-              <h2 className="text-2xl lg:text-3xl font-bold text-primary mb-1">Applicant Pipeline</h2>
-              <p className="text-secondary">Gwinnett County Sheriff's Office • Recruiting & Applicant Tracking</p>
-            </div>
+          {/* Section Title */}
+          <div className="mb-6">
+            <h2 className="text-2xl lg:text-3xl font-bold text-primary mb-1">Applicant Pipeline</h2>
+            <p className="text-secondary break-words">Gwinnett County Sheriff's Office • Recruiting &amp; Applicant Tracking</p>
+          </div>
 
-            {/* Status Tabs */}
-            <div className="mb-6 flex gap-2 border-b border-border overflow-x-auto">
-              {[
-                { id: 'all', label: 'All Applicants', count: statusCounts.all },
-                { id: 'new', label: 'New', count: statusCounts.new },
-                { id: 'screening', label: 'Screening', count: statusCounts.screening },
-                { id: 'interview', label: 'Interview', count: statusCounts.interview },
-                { id: 'background', label: 'Background Check', count: statusCounts.background },
-                { id: 'offer', label: 'Offer', count: statusCounts.offer },
-                { id: 'rejected', label: 'Rejected', count: statusCounts.rejected }
-              ].map(tab => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all relative whitespace-nowrap ${
-                    activeTab === tab.id ? 'text-amber-700' : 'text-secondary hover:text-slate-300'
-                  }`}
-                >
-                  {tab.label}
-                  <span className={`px-2 py-0.5 rounded-full text-xs ${
-                    activeTab === tab.id ? 'bg-amber-500/20 text-amber-700' : 'bg-white dark:bg-zinc-800/50 text-slate-500'
-                  }`}>{tab.count}</span>
-                  {activeTab === tab.id && (
-                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500"></div>
-                  )}
-                </button>
+          {/* Pipeline-stage tabs */}
+          <div data-swipe-ignore className="mb-6 overflow-x-auto -mx-1 px-1">
+            <div className="flex items-center gap-1 min-w-max">
+              {pipelineTabs.map((tab, i) => (
+                <React.Fragment key={tab.id}>
+                  <button
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all whitespace-nowrap border ${
+                      activeTab === tab.id
+                        ? 'bg-amber-500/15 border-amber-500/40 text-amber-700 dark:text-amber-400'
+                        : 'bg-white dark:bg-zinc-900/40 border-border text-secondary hover:text-primary'
+                    }`}
+                  >
+                    {tab.label}
+                    <span className={`px-1.5 py-0.5 rounded-full text-[11px] ${
+                      activeTab === tab.id ? 'bg-amber-500/20 text-amber-700 dark:text-amber-400' : 'bg-slate-100 dark:bg-zinc-800/60 text-slate-500'
+                    }`}>{tab.count}</span>
+                  </button>
+                  {i < pipelineTabs.length - 1 && <ChevronRight className="w-4 h-4 text-slate-400 dark:text-slate-600 flex-shrink-0" />}
+                </React.Fragment>
               ))}
-            </div>
-
-            {/* Filters */}
-            <div className="flex flex-col sm:flex-row gap-3 mb-6">
-              <div className="flex-1 relative">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-                <input
-                  type="text"
-                  placeholder="Search applicants by name, reference #, position..."
-                  className="w-full pl-12 pr-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
-                />
-              </div>
-              <select
-                value={filterPosition}
-                onChange={(e) => setFilterPosition(e.target.value)}
-                className="px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-primary text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer"
-              >
-                <option value="all">All Positions</option>
-                <option value="deputy">Deputy Sheriff (23)</option>
-                <option value="investigator">Background Investigator (12)</option>
-                <option value="detention">Detention Officer (8)</option>
-                <option value="admin">Administrative Assistant (4)</option>
-              </select>
-              <select className="px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-primary text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer">
-                <option>Sort: Application Date</option>
-                <option>Sort: Last Name A-Z</option>
-                <option>Sort: Position</option>
-                <option>Sort: Pipeline Stage</option>
-              </select>
-              <button className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-primary text-sm hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-all">
-                <Filter className="w-4 h-4" />
-                More Filters
-              </button>
-            </div>
-
-            {/* Applicant List */}
-            <div className="space-y-6">
-
-              {/* Marcus Johnson - Screening Stage */}
-              <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl overflow-hidden">
-                <button
-                  onClick={() => toggleApplicant('marcus')}
-                  className="w-full p-5 flex items-center justify-between gap-3 hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors"
-                >
-                  <div className="flex items-center gap-4 min-w-0 flex-1">
-                    <div className="w-12 h-12 bg-purple-500/20 rounded-full flex items-center justify-center flex-shrink-0">
-                      <User className="w-6 h-6 text-purple-400" />
-                    </div>
-                    <div className="text-left min-w-0 flex-1">
-                      <div className="flex items-center gap-3 flex-wrap">
-                        <h3 className="text-lg font-bold text-primary break-words">MARCUS JOHNSON</h3>
-                        <span className="px-2 py-1 bg-purple-500/20 border border-purple-500/30 rounded text-xs text-purple-400 font-bold">SCREENING</span>
-                      </div>
-                      <p className="text-sm text-secondary break-words">Deputy Sheriff (Patrol Division) • Ref: 2026-APP-0142</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-4 flex-shrink-0">
-                    <div className="text-right hidden md:block">
-                      <p className="text-sm text-primary font-medium">Applied: Oct 12, 2024</p>
-                      <p className="text-xs text-amber-700">Interview Scheduled: Feb 06</p>
-                    </div>
-                    {expandedApplicant === 'marcus' ? <ChevronUp className="w-5 h-5 text-secondary" /> : <ChevronDown className="w-5 h-5 text-secondary" />}
-                  </div>
-                </button>
-
-                {expandedApplicant === 'marcus' && (
-                  <div className="px-5 pb-5 space-y-5 border-t border-border">
-                    {/* Contact Info */}
-                    <div className="pt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-                      <div className="flex items-center gap-2 text-sm min-w-0">
-                        <Mail className="w-4 h-4 text-slate-500 flex-shrink-0" />
-                        <span className="text-secondary break-words">marcus.johnson@email.com</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm min-w-0">
-                        <Phone className="w-4 h-4 text-slate-500 flex-shrink-0" />
-                        <span className="text-secondary break-words">(555) 234-5678</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm min-w-0">
-                        <MapPin className="w-4 h-4 text-slate-500 flex-shrink-0" />
-                        <span className="text-secondary break-words">Lawrenceville, GA 30046</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm min-w-0">
-                        <Calendar className="w-4 h-4 text-slate-500 flex-shrink-0" />
-                        <span className="text-secondary break-words">Applied: Oct 12, 2024 (113 days)</span>
-                      </div>
-                    </div>
-
-                    {/* Qualifications */}
-                    <div>
-                      <h4 className="text-sm font-bold text-amber-700 uppercase tracking-wide mb-3">Qualifications Summary</h4>
-                      <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-4 border border-border space-y-3">
-                        <div>
-                          <p className="text-xs text-slate-500 mb-1">Experience</p>
-                          <p className="text-sm text-primary font-medium">5 years law enforcement</p>
-                          <p className="text-xs text-secondary">Metro Atlanta Police Department (2019-2024) • Patrol Officer, North Precinct</p>
-                          <p className="text-xs text-secondary">Reason for leaving: Seeking career advancement with GCSO</p>
-                        </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <div>
-                            <p className="text-xs text-slate-500 mb-1">Education</p>
-                            <p className="text-sm text-primary">Bachelor's Degree - Criminal Justice</p>
-                            <p className="text-xs text-secondary">Georgia State University (Graduated 2018)</p>
-                          </div>
-                          <div>
-                            <p className="text-xs text-slate-500 mb-1">POST Certification</p>
-                            <p className="text-sm text-primary">Georgia POST Basic #48291</p>
-                            <p className="text-xs text-green-400">Issued: 06/15/2019 • Expires: 06/15/2027 (Current ✓)</p>
-                          </div>
-                        </div>
-                        <div>
-                          <p className="text-xs text-slate-500 mb-1">Additional Certifications</p>
-                          <div className="flex flex-wrap gap-2">
-                            <span className="px-2 py-1 bg-blue-500/20 text-blue-400 rounded text-xs">Field Training Officer (2022)</span>
-                            <span className="px-2 py-1 bg-blue-500/20 text-blue-400 rounded text-xs">Crisis Intervention (2021)</span>
-                            <span className="px-2 py-1 bg-blue-500/20 text-blue-400 rounded text-xs">Defensive Tactics Instructor (2023)</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Documents */}
-                    <div>
-                      <h4 className="text-sm font-bold text-amber-700 uppercase tracking-wide mb-3">Documents Submitted</h4>
-                      <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-                        <div className="flex items-center gap-2 text-sm">
-                          <CheckCircle className="w-4 h-4 text-green-400" />
-                          <span className="text-secondary">Employment Application</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-sm">
-                          <CheckCircle className="w-4 h-4 text-green-400" />
-                          <span className="text-secondary">Resume (2 pages)</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-sm">
-                          <CheckCircle className="w-4 h-4 text-green-400" />
-                          <span className="text-secondary">Cover Letter</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-sm">
-                          <CheckCircle className="w-4 h-4 text-green-400" />
-                          <span className="text-secondary">POST Certificate</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-sm">
-                          <CheckCircle className="w-4 h-4 text-green-400" />
-                          <span className="text-secondary">College Transcript</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-sm text-slate-500">
-                          <div className="w-4 h-4 border border-slate-600 rounded-full"></div>
-                          <span>References (3 listed, not contacted)</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Screening Status */}
-                    <div>
-                      <h4 className="text-sm font-bold text-amber-700 uppercase tracking-wide mb-3">Screening Status</h4>
-                      <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-4 border border-border space-y-3">
-                        <div className="flex items-start gap-3">
-                          <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
-                          <div>
-                            <p className="text-sm text-primary font-medium">Initial Application Review: PASSED (10/15/2024)</p>
-                            <p className="text-xs text-secondary">Reviewed by: HR Specialist J. Martinez</p>
-                            <p className="text-xs text-secondary">Met minimum qualifications: Age 21+ ✓, POST cert ✓, HS/GED ✓</p>
-                          </div>
-                        </div>
-                        <div className="flex items-start gap-3">
-                          <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
-                          <div>
-                            <p className="text-sm text-primary font-medium">Background Pre-Screen: PASSED (10/18/2024)</p>
-                            <p className="text-xs text-secondary">GCIC check: No disqualifying convictions ✓</p>
-                            <p className="text-xs text-secondary">Driving record: Clean ✓ | Employment: Verified current employment ✓</p>
-                          </div>
-                        </div>
-                        <div className="flex items-start gap-3">
-                          <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
-                          <div>
-                            <p className="text-sm text-primary font-medium">Physical Fitness Test: PASSED (10/22/2024)</p>
-                            <p className="text-xs text-secondary">Location: GCSO Training Center (Cooper Standards)</p>
-                            <p className="text-xs text-secondary">1.5-mi run: 11:45 (PASS) | Push-ups: 42 (PASS) | Sit-ups: 48 (PASS) | 300m: 52s (PASS)</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Next Steps */}
-                    <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
-                      <div className="flex items-center gap-2 mb-3">
-                        <Calendar className="w-5 h-5 text-amber-700" />
-                        <span className="text-sm font-bold text-amber-700">ORAL BOARD INTERVIEW SCHEDULED</span>
-                      </div>
-                      <div className="text-sm text-secondary space-y-1">
-                        <p><span className="text-primary font-medium">Date:</span> February 06, 2026 • 09:30 AM (30-minute slot)</p>
-                        <p><span className="text-primary font-medium">Location:</span> GCSO Headquarters, 2900 Commons Dr, Conference Room B</p>
-                        <p><span className="text-primary font-medium">Panel:</span> Major R. Davis (Chair), Lt. K. Williams, Lt. M. Thompson</p>
-                        <p><span className="text-primary font-medium">Format:</span> Structured interview (30 questions, scenario-based, writing sample)</p>
-                        <p><span className="text-green-400">✓ Applicant Confirmed Attendance: 01/26/2026</span></p>
-                      </div>
-                    </div>
-
-                    {/* Actions */}
-                    <div className="flex flex-wrap gap-3 pt-4 border-t border-border">
-                      <button className="flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-medium transition-all">
-                        <Eye className="w-4 h-4" />
-                        View Full Application
-                      </button>
-                      <button className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-zinc-800/60 hover:bg-slate-700/80 text-primary rounded-lg text-sm transition-all">
-                        <Mail className="w-4 h-4" />
-                        Email Applicant
-                      </button>
-                      <button className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-zinc-800/60 hover:bg-slate-700/80 text-primary rounded-lg text-sm transition-all">
-                        <Printer className="w-4 h-4" />
-                        Print Interview Score Sheet
-                      </button>
-                      <button className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-zinc-800/60 hover:bg-slate-700/80 text-primary rounded-lg text-sm transition-all">
-                        <Flag className="w-4 h-4" />
-                        Flag for Review
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Sarah Chen - Interview Stage */}
-              <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl overflow-hidden">
-                <button
-                  onClick={() => toggleApplicant('sarah')}
-                  className="w-full p-5 flex items-center justify-between gap-3 hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors"
-                >
-                  <div className="flex items-center gap-4 min-w-0 flex-1">
-                    <div className="w-12 h-12 bg-amber-500/20 rounded-full flex items-center justify-center flex-shrink-0">
-                      <User className="w-6 h-6 text-amber-700" />
-                    </div>
-                    <div className="text-left min-w-0 flex-1">
-                      <div className="flex items-center gap-3 flex-wrap">
-                        <h3 className="text-lg font-bold text-primary break-words">SARAH CHEN</h3>
-                        <span className="px-2 py-1 bg-amber-500/20 border border-amber-500/30 rounded text-xs text-amber-700 font-bold">INTERVIEW COMPLETED</span>
-                        <span className="px-2 py-1 bg-green-500/20 border border-green-500/30 rounded text-xs text-green-400 font-bold">TOP CANDIDATE</span>
-                      </div>
-                      <p className="text-sm text-secondary break-words">Background Investigator (HR/IA) • Ref: 2026-APP-0087</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-4 flex-shrink-0">
-                    <div className="text-right hidden md:block">
-                      <p className="text-sm text-primary font-medium">Interview Score: 144/150 (96%)</p>
-                      <p className="text-xs text-green-400">Ranked #1 - Awaiting Sheriff Approval</p>
-                    </div>
-                    {expandedApplicant === 'sarah' ? <ChevronUp className="w-5 h-5 text-secondary" /> : <ChevronDown className="w-5 h-5 text-secondary" />}
-                  </div>
-                </button>
-
-                {expandedApplicant === 'sarah' && (
-                  <div className="px-5 pb-5 space-y-5 border-t border-border">
-                    {/* Contact Info */}
-                    <div className="pt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-                      <div className="flex items-center gap-2 text-sm min-w-0">
-                        <Mail className="w-4 h-4 text-slate-500 flex-shrink-0" />
-                        <span className="text-secondary break-words">sarah.chen@email.com</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm min-w-0">
-                        <Phone className="w-4 h-4 text-slate-500 flex-shrink-0" />
-                        <span className="text-secondary break-words">(555) 345-6789</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm min-w-0">
-                        <MapPin className="w-4 h-4 text-slate-500 flex-shrink-0" />
-                        <span className="text-secondary break-words">Duluth, GA 30096</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm min-w-0">
-                        <Calendar className="w-4 h-4 text-slate-500 flex-shrink-0" />
-                        <span className="text-secondary break-words">Applied: Oct 27, 2024 (98 days)</span>
-                      </div>
-                    </div>
-
-                    {/* Qualifications */}
-                    <div>
-                      <h4 className="text-sm font-bold text-amber-700 uppercase tracking-wide mb-3">Qualifications Summary</h4>
-                      <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-4 border border-border space-y-3">
-                        <div>
-                          <p className="text-xs text-slate-500 mb-1">Experience</p>
-                          <p className="text-sm text-primary font-medium">7 years FBI Special Agent</p>
-                          <p className="text-xs text-secondary">FBI Atlanta Field Office (2017-2024) • Public Corruption Unit</p>
-                          <p className="text-xs text-secondary">Reason: Seeking work-life balance, local LE closer to family</p>
-                        </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <div>
-                            <p className="text-xs text-slate-500 mb-1">Education</p>
-                            <p className="text-sm text-primary">Master's Degree - Psychology (Emory 2016)</p>
-                            <p className="text-xs text-secondary">Bachelor's - Criminal Justice (UGA 2014)</p>
-                          </div>
-                          <div>
-                            <p className="text-xs text-slate-500 mb-1">POST & Federal Certifications</p>
-                            <p className="text-sm text-primary">GA POST Basic #41203 (valid through 05/2027)</p>
-                            <p className="text-xs text-green-400">FBI Academy Graduate (Quantico 2017)</p>
-                          </div>
-                        </div>
-                        <div>
-                          <p className="text-xs text-slate-500 mb-1">Specialized Training</p>
-                          <div className="flex flex-wrap gap-2">
-                            <span className="px-2 py-1 bg-purple-500/20 text-purple-400 rounded text-xs">Polygraph Examiner (FBI 2020)</span>
-                            <span className="px-2 py-1 bg-purple-500/20 text-purple-400 rounded text-xs">Advanced Interrogation (FBI 2019)</span>
-                            <span className="px-2 py-1 bg-purple-500/20 text-purple-400 rounded text-xs">Background Investigations (FBI 2018)</span>
-                            <span className="px-2 py-1 bg-amber-500/20 text-amber-700 rounded text-xs">TOP SECRET/SCI Clearance (Active)</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Interview Results */}
-                    <div>
-                      <h4 className="text-sm font-bold text-amber-700 uppercase tracking-wide mb-3">Interview Results</h4>
-                      <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
-                        <div className="flex items-center justify-between mb-6">
-                          <div>
-                            <p className="text-sm font-bold text-green-400">ORAL BOARD INTERVIEW COMPLETED</p>
-                            <p className="text-xs text-secondary">February 11, 2026 • GCSO HQ, Sheriff's Conference Room</p>
-                          </div>
-                          <div className="text-right">
-                            <p className="text-2xl font-bold text-green-400">144/150</p>
-                            <p className="text-xs text-green-400">96.0% - HIGHEST SCORE</p>
-                          </div>
-                        </div>
-                        <div className="space-y-2 mb-4">
-                          <p className="text-xs text-secondary">Panel Scoring (50 pts each, 150 max):</p>
-                          <div className="grid grid-cols-3 gap-2 text-sm">
-                            <div className="bg-white dark:bg-zinc-900/40 rounded p-2 text-center">
-                              <p className="text-primary font-medium">Major R. Davis</p>
-                              <p className="text-green-400 font-bold">48/50</p>
-                            </div>
-                            <div className="bg-white dark:bg-zinc-900/40 rounded p-2 text-center">
-                              <p className="text-primary font-medium">HR Director</p>
-                              <p className="text-green-400 font-bold">49/50</p>
-                            </div>
-                            <div className="bg-white dark:bg-zinc-900/40 rounded p-2 text-center">
-                              <p className="text-primary font-medium">Lt. K. Hayes</p>
-                              <p className="text-green-400 font-bold">47/50</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="text-sm text-secondary space-y-1">
-                          <p><span className="text-primary font-medium">Panel Comments:</span></p>
-                          <p className="text-xs italic">"Exceptional interview - most qualified candidate for this position"</p>
-                          <p className="text-xs italic">"FBI investigative experience directly applicable to GCSO backgrounds"</p>
-                          <p><span className="text-primary font-medium">Writing Sample:</span> <span className="text-green-400">EXCELLENT</span></p>
-                          <p><span className="text-primary font-medium">Panel Recommendation:</span> <span className="text-green-400 font-bold">STRONGLY RECOMMEND FOR HIRE</span></p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Next Steps */}
-                    <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
-                      <div className="flex items-center gap-2 mb-2">
-                        <AlertCircle className="w-5 h-5 text-amber-700" />
-                        <span className="text-sm font-bold text-amber-700">AWAITING SHERIFF'S APPROVAL FOR CONDITIONAL OFFER</span>
-                      </div>
-                      <div className="text-sm text-secondary space-y-1">
-                        <p>• Interview panel recommendation forwarded to Sheriff Taylor: 02/11/2026</p>
-                        <p>• Sheriff review meeting: <span className="text-primary font-medium">February 14, 2026</span></p>
-                        <p>• If approved: Conditional offer pending GCSO background, medical, psychological</p>
-                        <p>• Anticipated salary: <span className="text-green-400">$65,000-68,000</span> (top of range for exceptional qualifications)</p>
-                      </div>
-                    </div>
-
-                    {/* Actions */}
-                    <div className="flex flex-wrap gap-3 pt-4 border-t border-border">
-                      <button className="flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-medium transition-all">
-                        <Eye className="w-4 h-4" />
-                        View Full Application
-                      </button>
-                      <button className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-zinc-800/60 hover:bg-slate-700/80 text-primary rounded-lg text-sm transition-all">
-                        <FileText className="w-4 h-4" />
-                        View Interview Score Sheets
-                      </button>
-                      <button className="flex items-center gap-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg text-sm transition-all">
-                        <FileCheck className="w-4 h-4" />
-                        Prepare Conditional Offer
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Robert Martinez - Offer Stage */}
-              <div className="bg-white dark:bg-zinc-900/40 border border-green-500/30 rounded-xl overflow-hidden">
-                <button
-                  onClick={() => toggleApplicant('robert')}
-                  className="w-full p-5 flex items-center justify-between gap-3 hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors"
-                >
-                  <div className="flex items-center gap-4 min-w-0 flex-1">
-                    <div className="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center flex-shrink-0">
-                      <User className="w-6 h-6 text-green-400" />
-                    </div>
-                    <div className="text-left min-w-0 flex-1">
-                      <div className="flex items-center gap-3 flex-wrap">
-                        <h3 className="text-lg font-bold text-primary break-words">ROBERT MARTINEZ</h3>
-                        <span className="px-2 py-1 bg-green-500/20 border border-green-500/30 rounded text-xs text-green-400 font-bold">OFFER ACCEPTED</span>
-                      </div>
-                      <p className="text-sm text-secondary break-words">Deputy Sheriff (Patrol Division) • Ref: 2026-APP-0124</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-4 flex-shrink-0">
-                    <div className="text-right hidden md:block">
-                      <p className="text-sm text-green-400 font-medium">Start Date: March 03, 2026</p>
-                      <p className="text-xs text-secondary">Lateral from Clayton County Sheriff</p>
-                    </div>
-                    {expandedApplicant === 'robert' ? <ChevronUp className="w-5 h-5 text-secondary" /> : <ChevronDown className="w-5 h-5 text-secondary" />}
-                  </div>
-                </button>
-
-                {expandedApplicant === 'robert' && (
-                  <div className="px-5 pb-5 space-y-5 border-t border-border">
-                    {/* Hiring Process Completed */}
-                    <div className="pt-5">
-                      <h4 className="text-sm font-bold text-amber-700 uppercase tracking-wide mb-3">Hiring Process - COMPLETED</h4>
-                      <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-4 border border-border space-y-2">
-                        <div className="flex items-center gap-3 text-sm">
-                          <CheckCircle className="w-4 h-4 text-green-400" />
-                          <span className="text-secondary">Application Received: 10/23/2024</span>
-                        </div>
-                        <div className="flex items-center gap-3 text-sm">
-                          <CheckCircle className="w-4 h-4 text-green-400" />
-                          <span className="text-secondary">Initial Screening: PASSED (10/25/2024)</span>
-                        </div>
-                        <div className="flex items-center gap-3 text-sm">
-                          <CheckCircle className="w-4 h-4 text-green-400" />
-                          <span className="text-secondary">Physical Fitness: PASSED (10/30/2024)</span>
-                        </div>
-                        <div className="flex items-center gap-3 text-sm">
-                          <CheckCircle className="w-4 h-4 text-green-400" />
-                          <span className="text-secondary">Oral Board Interview: 136/150 (90.7%) - 11/15/2024</span>
-                        </div>
-                        <div className="flex items-center gap-3 text-sm">
-                          <CheckCircle className="w-4 h-4 text-green-400" />
-                          <span className="text-secondary">Background Investigation: CLEARED (01/20/2026) - Lt. K. Hayes</span>
-                        </div>
-                        <div className="flex items-center gap-3 text-sm">
-                          <CheckCircle className="w-4 h-4 text-green-400" />
-                          <span className="text-secondary">Medical Exam: PASSED (01/24/2026)</span>
-                        </div>
-                        <div className="flex items-center gap-3 text-sm">
-                          <CheckCircle className="w-4 h-4 text-green-400" />
-                          <span className="text-secondary">Psychological Eval: PASSED (01/27/2026)</span>
-                        </div>
-                        <div className="flex items-center gap-3 text-sm">
-                          <CheckCircle className="w-4 h-4 text-green-400" />
-                          <span className="text-secondary">Sheriff's Approval: APPROVED (01/30/2026)</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Offer Details */}
-                    <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
-                      <div className="flex items-center gap-2 mb-3">
-                        <CheckCircle className="w-5 h-5 text-green-400" />
-                        <span className="text-sm font-bold text-green-400">CONDITIONAL OFFER ACCEPTED</span>
-                      </div>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-secondary">
-                        <div>
-                          <p><span className="text-primary font-medium">Offer Extended:</span> February 01, 2026</p>
-                          <p><span className="text-primary font-medium">Salary:</span> $55,200/year (Step 5 - 8 yrs exp)</p>
-                          <p><span className="text-primary font-medium">Shift:</span> B-Shift (14:00-02:00) Patrol</p>
-                        </div>
-                        <div>
-                          <p><span className="text-primary font-medium">Start Date:</span> March 03, 2026</p>
-                          <p><span className="text-primary font-medium">Notice Period:</span> Submitted to Clayton County 02/01</p>
-                          <p><span className="text-primary font-medium">Last Day Clayton:</span> 02/14/2026</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Onboarding Status */}
-                    <div>
-                      <h4 className="text-sm font-bold text-amber-700 uppercase tracking-wide mb-3">Pre-Start Onboarding Status</h4>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <div className="flex items-center gap-2 text-sm">
-                          <div className="w-4 h-4 border border-amber-500 rounded-full"></div>
-                          <span className="text-secondary">I-9 Form - Due: 03/03/2026</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-sm">
-                          <div className="w-4 h-4 border border-slate-600 rounded-full"></div>
-                          <span className="text-secondary">W-4/G-4 Tax Forms - Pending</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-sm">
-                          <CheckCircle className="w-4 h-4 text-green-400" />
-                          <span className="text-secondary">POST Cert Transfer - VERIFIED</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-sm">
-                          <CheckCircle className="w-4 h-4 text-green-400" />
-                          <span className="text-secondary">Oath of Office - Scheduled 03/03 08:00 AM</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-sm">
-                          <CheckCircle className="w-4 h-4 text-green-400" />
-                          <span className="text-secondary">Uniform/Equipment - Pickup 02/28</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-sm">
-                          <CheckCircle className="w-4 h-4 text-green-400" />
-                          <span className="text-secondary">Duty Weapon - Glock 17 #GC48291</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-sm">
-                          <CheckCircle className="w-4 h-4 text-green-400" />
-                          <span className="text-secondary">FTO Assigned - Cpl. J. Williams (B-Shift)</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-sm">
-                          <CheckCircle className="w-4 h-4 text-green-400" />
-                          <span className="text-secondary">Patrol Vehicle - Unit 391 (2023 Tahoe)</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Actions */}
-                    <div className="flex flex-wrap gap-3 pt-4 border-t border-border">
-                      <button className="flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-medium transition-all">
-                        <Eye className="w-4 h-4" />
-                        View Full Hiring File
-                      </button>
-                      <button className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-zinc-800/60 hover:bg-slate-700/80 text-primary rounded-lg text-sm transition-all">
-                        <Mail className="w-4 h-4" />
-                        Send Document Reminder
-                      </button>
-                      <button className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-zinc-800/60 hover:bg-slate-700/80 text-primary rounded-lg text-sm transition-all">
-                        <ClipboardCheck className="w-4 h-4" />
-                        Onboarding Checklist
-                      </button>
-                      <button className="flex items-center gap-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg text-sm transition-all">
-                        <CheckCircle className="w-4 h-4" />
-                        Mark as Hired
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* David Brown - Background Check Stage */}
-              <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl overflow-hidden">
-                <button
-                  onClick={() => toggleApplicant('david')}
-                  className="w-full p-5 flex items-center justify-between gap-3 hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors"
-                >
-                  <div className="flex items-center gap-4 min-w-0 flex-1">
-                    <div className="w-12 h-12 bg-cyan-500/20 rounded-full flex items-center justify-center flex-shrink-0">
-                      <User className="w-6 h-6 text-cyan-400" />
-                    </div>
-                    <div className="text-left min-w-0 flex-1">
-                      <div className="flex items-center gap-3 flex-wrap">
-                        <h3 className="text-lg font-bold text-primary break-words">DAVID BROWN</h3>
-                        <span className="px-2 py-1 bg-cyan-500/20 border border-cyan-500/30 rounded text-xs text-cyan-400 font-bold">BACKGROUND CHECK</span>
-                      </div>
-                      <p className="text-sm text-secondary break-words">Deputy Sheriff (Patrol Division) • Ref: 2026-APP-0178</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-4 flex-shrink-0">
-                    <div className="text-right hidden md:block">
-                      <p className="text-sm text-primary font-medium">67 days in progress</p>
-                      <p className="text-xs text-cyan-400">Investigator: Cpl. J. Adams</p>
-                    </div>
-                    {expandedApplicant === 'david' ? <ChevronUp className="w-5 h-5 text-secondary" /> : <ChevronDown className="w-5 h-5 text-secondary" />}
-                  </div>
-                </button>
-
-                {expandedApplicant === 'david' && (
-                  <div className="px-5 pb-5 space-y-5 border-t border-border">
-                    {/* Contact & Qualifications */}
-                    <div className="pt-5 grid grid-cols-2 md:grid-cols-4 gap-4">
-                      <div className="flex items-center gap-2 text-sm">
-                        <Mail className="w-4 h-4 text-slate-500" />
-                        <span className="text-secondary">david.brown@email.com</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm">
-                        <Phone className="w-4 h-4 text-slate-500" />
-                        <span className="text-secondary">(555) 678-9012</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm">
-                        <MapPin className="w-4 h-4 text-slate-500" />
-                        <span className="text-secondary">Buford, GA 30518</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm">
-                        <BadgeCheck className="w-4 h-4 text-slate-500" />
-                        <span className="text-secondary">6 yrs Hall County Sheriff</span>
-                      </div>
-                    </div>
-
-                    {/* Background Investigation Status */}
-                    <div>
-                      <h4 className="text-sm font-bold text-amber-700 uppercase tracking-wide mb-3">Background Investigation Status</h4>
-                      <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-4 mb-4">
-                        <div className="flex items-center justify-between mb-3">
-                          <div>
-                            <p className="text-sm font-bold text-cyan-400">IN PROGRESS - 67 DAYS</p>
-                            <p className="text-xs text-secondary">Case #: BI-2024-0178 | Investigator: Cpl. J. Adams (GCSO IA)</p>
-                          </div>
-                          <div className="text-right">
-                            <p className="text-xs text-secondary">Target Completion</p>
-                            <p className="text-sm text-primary font-medium">Feb 15, 2026</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-4 border border-border space-y-3">
-                        <div className="flex items-start gap-3">
-                          <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
-                          <div className="flex-1">
-                            <p className="text-sm text-primary">Initial Interview - COMPLETED (11/25/2024)</p>
-                            <p className="text-xs text-secondary">2 hours at GCSO HQ. Notes: "Applicant cooperative, professional, no concerns."</p>
-                          </div>
-                        </div>
-                        <div className="flex items-start gap-3">
-                          <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
-                          <div className="flex-1">
-                            <p className="text-sm text-primary">Criminal History Check - COMPLETED (11/26/2024)</p>
-                            <p className="text-xs text-secondary">GCIC/NCIC: No record ✓ | FBI fingerprint: No arrests ✓ | Court records: Clear ✓</p>
-                          </div>
-                        </div>
-                        <div className="flex items-start gap-3">
-                          <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
-                          <div className="flex-1">
-                            <p className="text-sm text-primary">Driving Record - COMPLETED (11/26/2024)</p>
-                            <p className="text-xs text-secondary">1 speeding ticket (2021, 15 mph over, paid). No DUI/suspensions. Acceptable ✓</p>
-                          </div>
-                        </div>
-                        <div className="flex items-start gap-3">
-                          <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
-                          <div className="flex-1">
-                            <p className="text-sm text-primary">Employment Verification - COMPLETED (12/10/2024)</p>
-                            <p className="text-xs text-secondary">Hall County Sheriff: "Good deputy, reliable, no disciplinary issues, eligible for rehire"</p>
-                          </div>
-                        </div>
-                        <div className="flex items-start gap-3">
-                          <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
-                          <div className="flex-1">
-                            <p className="text-sm text-primary">Education/Residence Verification - COMPLETED</p>
-                            <p className="text-xs text-secondary">UNG Bachelor's CJ (2017) verified ✓ | Current address verified ✓</p>
-                          </div>
-                        </div>
-                        <div className="flex items-start gap-3">
-                          <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
-                          <div className="flex-1">
-                            <p className="text-sm text-primary">Credit History - COMPLETED (01/25/2026)</p>
-                            <p className="text-xs text-secondary">Score: 720 (Good). No bankruptcies, collections, or judgments ✓</p>
-                          </div>
-                        </div>
-                        <div className="flex items-start gap-3">
-                          <div className="w-4 h-4 border-2 border-amber-400 rounded-full flex-shrink-0 mt-0.5 animate-pulse"></div>
-                          <div className="flex-1">
-                            <p className="text-sm text-amber-700">Reference Interviews - IN PROGRESS (4 of 5)</p>
-                            <p className="text-xs text-secondary">Reference #5 (Lt. J. Davis) scheduled 02/05/2026 - Lt. returning from vacation</p>
-                          </div>
-                        </div>
-                        <div className="flex items-start gap-3">
-                          <div className="w-4 h-4 border border-slate-600 rounded-full flex-shrink-0 mt-0.5"></div>
-                          <div className="flex-1">
-                            <p className="text-sm text-primary">Polygraph Examination - SCHEDULED</p>
-                            <p className="text-xs text-secondary">February 12, 2026 • 09:00 AM • Examiner: Sgt. R. Johnson (ret. GBI)</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Investigator Notes */}
-                    <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-4 border border-border">
-                      <p className="text-xs text-slate-500 mb-2">INVESTIGATOR NOTES (Cpl. Adams - 02/02/2026):</p>
-                      <p className="text-sm text-secondary italic">"Background investigation proceeding well. No disqualifying issues to date. Strong recommendations from Hall County. Awaiting final reference (02/05) and polygraph (02/12). Preliminary assessment: Likely to recommend for hire pending successful polygraph."</p>
-                    </div>
-
-                    {/* Actions */}
-                    <div className="flex flex-wrap gap-3 pt-4 border-t border-border">
-                      <button className="flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-medium transition-all">
-                        <Eye className="w-4 h-4" />
-                        View Investigation File
-                      </button>
-                      <button className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-zinc-800/60 hover:bg-slate-700/80 text-primary rounded-lg text-sm transition-all">
-                        <Mail className="w-4 h-4" />
-                        Email Investigator
-                      </button>
-                      <button className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-zinc-800/60 hover:bg-slate-700/80 text-primary rounded-lg text-sm transition-all">
-                        <Calendar className="w-4 h-4" />
-                        Investigation Timeline
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Lisa Williams - New Stage */}
-              <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl overflow-hidden">
-                <button
-                  onClick={() => toggleApplicant('lisa')}
-                  className="w-full p-5 flex items-center justify-between gap-3 hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors"
-                >
-                  <div className="flex items-center gap-4 min-w-0 flex-1">
-                    <div className="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center flex-shrink-0">
-                      <User className="w-6 h-6 text-blue-400" />
-                    </div>
-                    <div className="text-left min-w-0 flex-1">
-                      <div className="flex items-center gap-3 flex-wrap">
-                        <h3 className="text-lg font-bold text-primary break-words">LISA WILLIAMS</h3>
-                        <span className="px-2 py-1 bg-blue-500/20 border border-blue-500/30 rounded text-xs text-blue-400 font-bold">NEW</span>
-                      </div>
-                      <p className="text-sm text-secondary break-words">Detention Officer • Ref: 2026-APP-0201</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-4 flex-shrink-0">
-                    <div className="text-right hidden md:block">
-                      <p className="text-sm text-primary font-medium">Applied: Nov 01, 2024</p>
-                      <p className="text-xs text-amber-700">Pending Initial Screening</p>
-                    </div>
-                    {expandedApplicant === 'lisa' ? <ChevronUp className="w-5 h-5 text-secondary" /> : <ChevronDown className="w-5 h-5 text-secondary" />}
-                  </div>
-                </button>
-
-                {expandedApplicant === 'lisa' && (
-                  <div className="px-5 pb-5 space-y-5 border-t border-border">
-                    <div className="pt-5">
-                      <div className="bg-white dark:bg-zinc-950/40 rounded-lg p-4 border border-border space-y-3">
-                        <div>
-                          <p className="text-xs text-slate-500 mb-1">Experience</p>
-                          <p className="text-sm text-primary font-medium">3 years GA Dept of Corrections</p>
-                          <p className="text-xs text-secondary">Correctional Officer II, Metro State Prison (2021-2024)</p>
-                        </div>
-                        <div className="grid grid-cols-2 gap-6">
-                          <div>
-                            <p className="text-xs text-slate-500 mb-1">Education</p>
-                            <p className="text-sm text-primary">High School Diploma (South Gwinnett HS, 2020)</p>
-                          </div>
-                          <div>
-                            <p className="text-xs text-slate-500 mb-1">POST Certification</p>
-                            <p className="text-sm text-primary">GA POST Basic Corrections #52019</p>
-                            <p className="text-xs text-green-400">Valid through 08/2029 ✓</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
-                      <div className="flex items-center gap-2 mb-2">
-                        <AlertCircle className="w-5 h-5 text-amber-700" />
-                        <span className="text-sm font-bold text-amber-700">PENDING INITIAL SCREENING REVIEW</span>
-                      </div>
-                      <div className="text-sm text-secondary space-y-1">
-                        <p>• Application received 93 days ago - awaiting HR review</p>
-                        <p>• Assigned to: HR Specialist J. Martinez</p>
-                        <p>• Status: Backlog due to Deputy Sheriff hiring priority</p>
-                        <p>• Expected review: Week of February 09, 2026</p>
-                      </div>
-                    </div>
-
-                    <div className="flex flex-wrap gap-3 pt-4 border-t border-border">
-                      <button className="flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-sm font-medium transition-all">
-                        <AlertCircle className="w-4 h-4" />
-                        Priority Review
-                      </button>
-                      <button className="flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm transition-all">
-                        <Eye className="w-4 h-4" />
-                        View Application
-                      </button>
-                      <button className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-zinc-800/60 hover:bg-slate-700/80 text-primary rounded-lg text-sm transition-all">
-                        <ChevronRight className="w-4 h-4" />
-                        Advance to Screening
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Michael Davis - Rejected */}
-              <div className="bg-white dark:bg-zinc-900/40 border border-red-500/30 rounded-xl overflow-hidden">
-                <button
-                  onClick={() => toggleApplicant('michael')}
-                  className="w-full p-5 flex items-center justify-between gap-3 hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-colors"
-                >
-                  <div className="flex items-center gap-4 min-w-0 flex-1">
-                    <div className="w-12 h-12 bg-red-500/20 rounded-full flex items-center justify-center flex-shrink-0">
-                      <User className="w-6 h-6 text-red-400" />
-                    </div>
-                    <div className="text-left min-w-0 flex-1">
-                      <div className="flex items-center gap-3 flex-wrap">
-                        <h3 className="text-lg font-bold text-primary break-words">MICHAEL DAVIS</h3>
-                        <span className="px-2 py-1 bg-red-500/20 border border-red-500/30 rounded text-xs text-red-400 font-bold">DISQUALIFIED</span>
-                      </div>
-                      <p className="text-sm text-secondary break-words">Deputy Sheriff • Ref: 2026-APP-0156</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-4 flex-shrink-0">
-                    <div className="text-right hidden md:block">
-                      <p className="text-sm text-red-400 font-medium">Did not meet POST requirements</p>
-                      <p className="text-xs text-secondary">Disqualified: 10/31/2024</p>
-                    </div>
-                    {expandedApplicant === 'michael' ? <ChevronUp className="w-5 h-5 text-secondary" /> : <ChevronDown className="w-5 h-5 text-secondary" />}
-                  </div>
-                </button>
-
-                {expandedApplicant === 'michael' && (
-                  <div className="px-5 pb-5 space-y-4 border-t border-border">
-                    <div className="pt-5">
-                      <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
-                        <p className="text-sm font-bold text-red-400 mb-2">DISQUALIFICATION REASON:</p>
-                        <p className="text-sm text-secondary">Applicant is 19 years old. Georgia POST requires age 21+ for armed patrol deputy positions. Applicant does not meet minimum age requirement per POST standards and GCSO Policy 2.01.</p>
-                        <p className="text-xs text-secondary mt-2">Reviewed by: HR Specialist J. Martinez (10/31/2024)</p>
-                        <p className="text-xs text-secondary">Notification sent: 11/01/2024 via email and certified mail</p>
-                      </div>
-                    </div>
-                    <div className="text-xs text-slate-500">
-                      <p>Note: Applicant may reapply after reaching age 21 (estimated eligibility: August 2027)</p>
-                    </div>
-                  </div>
-                )}
-              </div>
-
             </div>
           </div>
 
+          {/* Filters */}
+          <div className="flex flex-col sm:flex-row flex-wrap gap-3 mb-6">
+            <div className="flex-1 min-w-0 relative">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
+              <input
+                type="text"
+                placeholder="Search applicants by name, reference #, position..."
+                className="w-full pl-12 pr-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-amber-500/50"
+              />
+            </div>
+            <select
+              value={filterPosition}
+              onChange={(e) => setFilterPosition(e.target.value)}
+              className="px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-primary text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer"
+            >
+              <option value="all">All Positions</option>
+              <option value="deputy">Deputy Sheriff (23)</option>
+              <option value="investigator">Background Investigator (12)</option>
+              <option value="detention">Detention Officer (8)</option>
+              <option value="admin">Administrative Assistant (4)</option>
+            </select>
+            <select className="px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-primary text-sm focus:outline-none focus:border-amber-500/50 cursor-pointer">
+              <option>Sort: Candidate Score</option>
+              <option>Sort: Application Date</option>
+              <option>Sort: Last Name A-Z</option>
+              <option>Sort: Pipeline Stage</option>
+            </select>
+            <button className="flex items-center justify-center gap-2 px-4 py-2.5 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-primary text-sm hover:bg-slate-100 dark:hover:bg-zinc-900/60 transition-all">
+              <Filter className="w-4 h-4" />
+              More Filters
+            </button>
+          </div>
+
+          {/* Applicant List */}
+          <div className="space-y-4">
+            {visibleApplicants.map((a) => (
+              <ApplicantCard
+                key={a.id}
+                applicant={a}
+                expanded={expandedApplicant === a.id}
+                onToggle={toggleApplicant}
+              />
+            ))}
+            {visibleApplicants.length === 0 && (
+              <div className="bg-white dark:bg-zinc-900/40 border border-border rounded-xl p-10 text-center">
+                <p className="text-secondary">No applicants in this stage.</p>
+              </div>
+            )}
+          </div>
+        </div>
+
         {/* Footer */}
-        <footer className="border-t border-border px-6 py-3 bg-slate-50 dark:bg-zinc-950/30">
+        <footer className="border-t border-border px-4 sm:px-6 py-3 mt-6 bg-slate-50 dark:bg-zinc-950/30">
           <div className="flex flex-wrap items-center justify-between gap-4 text-xs text-slate-500">
             <span>System: GCSO-HRIS v4.2 | Last Updated: {formattedTime} EST</span>
             <span>Gwinnett County Sheriff's Office • Human Resources Division</span>
           </div>
         </footer>
 
-      {/* Chat Button */}
-      <button
-        onClick={() => setChatOpen(!chatOpen)}
-        className="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-400 hover:to-blue-500 rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 z-40"
-      >
-        {chatOpen ? <X className="w-6 h-6 text-primary" /> : <MessageCircle className="w-6 h-6 text-primary" />}
-      </button>
+        {/* Chat Button */}
+        <button
+          onClick={() => setChatOpen(!chatOpen)}
+          className="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-400 hover:to-blue-500 rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 z-40"
+        >
+          {chatOpen ? <X className="w-6 h-6 text-white" /> : <MessageCircle className="w-6 h-6 text-white" />}
+        </button>
 
-      {chatOpen && (
-        <div className="fixed bottom-24 right-6 w-full max-w-96 h-[500px] bg-surface-raised backdrop-blur-xl border border-border rounded-2xl shadow-2xl flex flex-col z-40 mx-4 sm:mx-0">
-          <div className="p-4 border-b border-border">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
-                <MessageSquare className="w-5 h-5 text-primary" />
-              </div>
-              <div>
-                <h3 className="text-sm font-semibold text-primary">GCSO HR Assistant</h3>
-                <p className="text-xs text-green-400">Online</p>
-              </div>
-            </div>
-          </div>
-          <div className="flex-1 p-4 overflow-y-auto">
-            <div className="flex gap-3">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                <MessageSquare className="w-4 h-4 text-primary" />
-              </div>
-              <div className="flex-1">
-                <div className="bg-white dark:bg-zinc-900/60 p-3 rounded-xl">
-                  <p className="text-sm text-slate-700 dark:text-slate-200">Hi! I can help you track applicant status, schedule interviews, check background investigation progress, and prepare offer letters. What do you need help with?</p>
+        {chatOpen && (
+          <div className="fixed bottom-24 right-4 sm:right-6 left-4 sm:left-auto w-auto sm:w-96 h-[500px] bg-surface-raised backdrop-blur-xl border border-border rounded-2xl shadow-2xl flex flex-col z-40">
+            <div className="p-4 border-b border-border">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
+                  <MessageSquare className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-semibold text-primary">GCSO HR Assistant</h3>
+                  <p className="text-xs text-green-400">Online</p>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="p-4 border-t border-border">
-            <div className="flex items-center gap-2">
-              <input type="text" placeholder="Ask about applicants..." className="flex-1 px-4 py-2 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500/50" />
-              <button className="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center">
-                <Send className="w-5 h-5 text-primary" />
-              </button>
+            <div className="flex-1 p-4 overflow-y-auto">
+              <div className="flex gap-3">
+                <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <MessageSquare className="w-4 h-4 text-white" />
+                </div>
+                <div className="flex-1">
+                  <div className="bg-white dark:bg-zinc-900/60 p-3 rounded-xl">
+                    <p className="text-sm text-slate-700 dark:text-slate-200">Hi! I can help you track applicant status, schedule interviews, check background investigation progress, and prepare offer letters. What do you need help with?</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="p-4 border-t border-border">
+              <div className="flex items-center gap-2">
+                <input type="text" placeholder="Ask about applicants..." className="flex-1 min-w-0 px-4 py-2 bg-white dark:bg-zinc-900/40 border border-border rounded-xl text-primary placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500/50" />
+                <button className="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <Send className="w-5 h-5 text-white" />
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
       </div>
     </DashboardLayout>
   );
