@@ -14,7 +14,7 @@ const incidents = [
   { time: '22:14', type: 'BARRICADE', color: 'text-red-400', text: 'Armed barricade, 4400 Blk Mercer Ave — negotiated surrender, no injuries', status: 'Arrest' },
   { time: '01:47', type: 'DUI', color: 'text-amber-400', text: 'Injury collision, SR-12 MM 34 — driver arrested, passenger transported', status: 'Arrest' },
   { time: '02:30', type: 'BURGLARY', color: 'text-amber-400', text: 'Commercial burglary, Eastgate Plaza — forced entry, under investigation', status: 'Open' },
-  { time: '03:55', type: 'JAIL', color: 'text-slate-300', text: 'Medical transport from C-block — inmate returned 0512, stable', status: 'Resolved' },
+  { time: '03:55', type: 'JAIL', color: 'text-slate-400', text: 'Medical transport from C-block — inmate returned 0512, stable', status: 'Resolved' },
   { time: '04:41', type: 'PURSUIT', color: 'text-amber-400', text: 'Vehicle pursuit terminated per policy at county line — BOLO issued', status: 'BOLO' },
 ];
 
@@ -63,7 +63,7 @@ const dotColor = { red: 'bg-red-500', amber: 'bg-amber-400', gray: 'bg-slate-600
 const dueColor = { red: 'text-red-400', amber: 'text-amber-400', gray: 'text-slate-400' };
 
 function Sparkline({ points, stroke }) {
-  const w = 110, h = 28, pad = 2;
+  const w = 90, h = 24, pad = 2;
   const min = Math.min(...points), max = Math.max(...points);
   const range = max - min || 1;
   const path = points
@@ -78,9 +78,9 @@ function Sparkline({ points, stroke }) {
 
 function SectionLabel({ children, right, tone = 'text-slate-500' }) {
   return (
-    <div className="flex items-baseline justify-between mb-4">
-      <p className={`text-[11px] font-bold uppercase tracking-[0.15em] ${tone}`}>{children}</p>
-      {right && <span className="text-[11px] text-slate-500">{right}</span>}
+    <div className="flex items-baseline justify-between mb-3.5">
+      <p className={`text-[10px] font-bold uppercase tracking-[0.15em] ${tone}`}>{children}</p>
+      {right && <span className="text-[10px] text-slate-500">{right}</span>}
     </div>
   );
 }
@@ -91,50 +91,50 @@ export default function DailyCommandBrief() {
 
   return (
     <DashboardLayout>
-      <div className="min-h-full bg-[#0a0d13] px-6 py-10 lg:py-14">
-        <div className="max-w-[950px] mx-auto">
+      <div className="min-h-full bg-[#0A0A0B] px-6 py-8 lg:py-10">
+        <div className="max-w-[880px] mx-auto">
 
           {/* ── Header ─────────────────────────────────────── */}
           <div className="flex items-start justify-between gap-4">
-            <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-red-500">
+            <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-red-500/90">
               Law Enforcement Sensitive — Internal Use Only
             </p>
-            <div className="flex items-center gap-4 text-[12px] flex-shrink-0">
+            <div className="flex items-center gap-4 text-[11px] flex-shrink-0">
               <button className="text-amber-500 hover:text-amber-400 transition-colors">← Aug 2</button>
               <span className="text-slate-400">Aug 3, 2026</span>
               <span className="text-slate-600 cursor-default">Aug 4 →</span>
             </div>
           </div>
 
-          <h1 className="text-[32px] font-bold text-white mt-4 mb-2">Daily Command Brief</h1>
-          <p className="text-[14px] text-slate-300">Monday, August 3, 2026 · 0600 hrs · Covering 0600 Aug 2 – 0600 Aug 3</p>
-          <p className="text-[12px] text-slate-500 mt-1.5">Auto-generated from CAD · JMS · RMS · HR — Reviewed by Analyst K. Whitfield, 0547</p>
+          <h1 className="text-[22px] font-bold text-slate-100 mt-3 mb-1.5">Daily Command Brief</h1>
+          <p className="text-[12px] text-slate-400">Monday, August 3, 2026 · 0600 hrs · Covering 0600 Aug 2 – 0600 Aug 3</p>
+          <p className="text-[10.5px] text-slate-500 mt-1">Auto-generated from CAD · JMS · RMS · HR — Reviewed by Analyst K. Whitfield, 0547</p>
 
-          <div className="border-b-2 border-slate-300/80 mt-5" />
+          <div className="border-b border-slate-500/60 mt-4" />
 
           {/* ── Overnight Summary ──────────────────────────── */}
-          <section className="pt-8 pb-8 border-b border-slate-800">
+          <section className="pt-6 pb-6 border-b border-slate-800/70">
             <SectionLabel>Overnight Summary</SectionLabel>
-            <p className="text-[15px] text-slate-200 leading-[1.75]">
-              A quiet-to-moderate overnight. Deputies handled <strong className="text-white">31 calls for service</strong> (7-day
+            <p className="text-[12.5px] text-slate-300 leading-[1.7]">
+              A quiet-to-moderate overnight. Deputies handled <span className="font-semibold text-slate-100">31 calls for service</span> (7-day
               avg: 34), with one significant incident — a barricade on Mercer Ave resolved by negotiated surrender at 2214 with
-              no injuries. Jail count stands at <strong className="text-white">412 of 460</strong> after 9 bookings and 6
-              releases. Day-shift patrol opens <strong className="text-amber-400">2 deputies below minimum</strong> in Sector 4
+              no injuries. Jail count stands at <span className="font-semibold text-slate-100">412 of 460</span> after 9 bookings and 6
+              releases. Day-shift patrol opens <span className="font-semibold text-amber-400/90">2 deputies below minimum</span> in Sector 4
               due to two unplanned absences; a coverage request is pending your approval below.
             </p>
-            <p className="text-[11px] text-slate-500 mt-4">Sources: CAD 0553 · JMS 0551 · HR scheduling 0549 · Confidence: high</p>
+            <p className="text-[10px] text-slate-500 mt-3">Sources: CAD 0553 · JMS 0551 · HR scheduling 0549 · Confidence: high</p>
           </section>
 
           {/* ── Requires Your Attention ────────────────────── */}
-          <section className="pt-8 pb-4 border-b border-slate-800">
-            <SectionLabel tone="text-amber-500" right={`${attentionItems.length} items`}>Requires Your Attention Today</SectionLabel>
-            <div className="divide-y divide-slate-800/70">
+          <section className="pt-6 pb-3 border-b border-slate-800/70">
+            <SectionLabel tone="text-amber-500/90" right={`${attentionItems.length} items`}>Requires Your Attention Today</SectionLabel>
+            <div className="divide-y divide-slate-800/50">
               {attentionItems.map((item, i) => (
-                <div key={i} className="flex items-center gap-3 py-3.5">
-                  <span className={`w-2 h-2 rounded-full flex-shrink-0 ${dotColor[item.severity]}`} />
-                  <p className="text-[13.5px] text-slate-200 flex-1 min-w-0">{item.text}</p>
-                  <span className={`text-[12px] font-mono flex-shrink-0 ${dueColor[item.severity]}`}>{item.due}</span>
-                  <button className="text-[13px] font-semibold text-amber-500 hover:text-amber-400 transition-colors flex-shrink-0 w-20 text-right">
+                <div key={i} className="flex items-center gap-3 py-3">
+                  <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${dotColor[item.severity]}`} />
+                  <p className="text-[12px] text-slate-300 flex-1 min-w-0">{item.text}</p>
+                  <span className={`text-[10.5px] font-mono flex-shrink-0 ${dueColor[item.severity]}`}>{item.due}</span>
+                  <button className="text-[11.5px] font-semibold text-amber-500 hover:text-amber-400 transition-colors flex-shrink-0 w-[72px] text-right">
                     {item.action} →
                   </button>
                 </div>
@@ -143,99 +143,99 @@ export default function DailyCommandBrief() {
           </section>
 
           {/* ── Overnight Incidents ────────────────────────── */}
-          <section className="pt-8 pb-6 border-b border-slate-800">
+          <section className="pt-6 pb-5 border-b border-slate-800/70">
             <SectionLabel>Overnight Incidents</SectionLabel>
-            <div className="divide-y divide-slate-800/70">
+            <div className="divide-y divide-slate-800/50">
               {incidents.map((inc, i) => (
-                <div key={i} className="flex items-center gap-4 py-3">
-                  <span className="text-[12px] font-mono text-slate-500 w-11 flex-shrink-0">{inc.time}</span>
-                  <span className={`text-[12px] font-bold w-24 flex-shrink-0 ${inc.color}`}>{inc.type}</span>
-                  <p className="text-[13.5px] text-slate-200 flex-1 min-w-0">{inc.text}</p>
-                  <span className="text-[12px] text-slate-400 flex-shrink-0">{inc.status}</span>
+                <div key={i} className="flex items-center gap-4 py-2.5">
+                  <span className="text-[10.5px] font-mono text-slate-500 w-10 flex-shrink-0">{inc.time}</span>
+                  <span className={`text-[10.5px] font-bold w-20 flex-shrink-0 ${inc.color}`}>{inc.type}</span>
+                  <p className="text-[12px] text-slate-300 flex-1 min-w-0">{inc.text}</p>
+                  <span className="text-[10.5px] text-slate-500 flex-shrink-0">{inc.status}</span>
                 </div>
               ))}
             </div>
-            <p className="text-[11px] text-slate-500 mt-4">
+            <p className="text-[10px] text-slate-500 mt-3">
               Significant incidents only · full log in{' '}
-              <button onClick={() => navigate('/patrol/cad')} className="text-amber-500 hover:text-amber-400 transition-colors">CAD history</button>
+              <button onClick={() => navigate('/patrol/cad')} className="text-amber-500/90 hover:text-amber-400 transition-colors">CAD history</button>
               {' '}· Source: CAD 0553
             </p>
           </section>
 
           {/* ── Today's Posture ────────────────────────────── */}
-          <section className="pt-8 pb-8 border-b border-slate-800">
+          <section className="pt-6 pb-6 border-b border-slate-800/70">
             <SectionLabel>Today's Posture</SectionLabel>
-            <div className="space-y-5">
+            <div className="space-y-4">
               {posture.map((row) => (
                 <div key={row.label} className="flex items-center gap-5">
-                  <p className="text-[13.5px] font-semibold text-slate-200 w-44 flex-shrink-0">{row.label}</p>
-                  <div className="flex-1 relative h-1.5">
-                    <div className="absolute inset-0 bg-slate-800 rounded-full" />
+                  <p className="text-[12px] font-medium text-slate-300 w-40 flex-shrink-0">{row.label}</p>
+                  <div className="flex-1 relative h-1">
+                    <div className="absolute inset-0 bg-slate-800/80 rounded-full" />
                     <div className={`absolute inset-y-0 left-0 rounded-full ${row.fill}`} style={{ width: `${(row.value / row.max) * 100}%` }} />
-                    <div className="absolute top-1/2 -translate-y-1/2 w-px h-3 bg-slate-300" style={{ left: `${(row.min / row.max) * 100}%` }} />
+                    <div className="absolute top-1/2 -translate-y-1/2 w-px h-2.5 bg-slate-400" style={{ left: `${(row.min / row.max) * 100}%` }} />
                   </div>
-                  <span className={`text-[13px] font-mono flex-shrink-0 w-28 text-right ${row.valueColor}`}>{row.display}</span>
+                  <span className={`text-[11px] font-mono flex-shrink-0 w-24 text-right ${row.valueColor}`}>{row.display}</span>
                 </div>
               ))}
             </div>
 
-            <p className="text-[13px] font-semibold text-slate-400 mt-8 mb-3">Scheduled today</p>
-            <div className="space-y-2.5">
+            <p className="text-[11px] font-semibold text-slate-400 mt-6 mb-2.5">Scheduled today</p>
+            <div className="space-y-2">
               {schedule.map((e) => (
-                <div key={e.time} className="flex gap-6">
-                  <span className="text-[12px] font-mono text-slate-500 w-11 flex-shrink-0">{e.time}</span>
-                  <p className="text-[13.5px] text-slate-200">{e.text}</p>
+                <div key={e.time} className="flex gap-5">
+                  <span className="text-[10.5px] font-mono text-slate-500 w-10 flex-shrink-0">{e.time}</span>
+                  <p className="text-[12px] text-slate-300">{e.text}</p>
                 </div>
               ))}
             </div>
           </section>
 
           {/* ── Trends Worth Noting ────────────────────────── */}
-          <section className="pt-8 pb-6 border-b border-slate-800">
+          <section className="pt-6 pb-5 border-b border-slate-800/70">
             <SectionLabel>Trends Worth Noting</SectionLabel>
-            <div className="space-y-5">
+            <div className="space-y-4">
               {trends.map((t, i) => (
                 <div key={i} className="flex items-start gap-4">
-                  <span className={`text-[13px] font-bold flex-shrink-0 w-16 ${t.color}`}>
+                  <span className={`text-[11px] font-bold flex-shrink-0 w-14 ${t.color}`}>
                     {t.dir === 'up' ? '▲' : '▼'} {t.pct}
                   </span>
                   <div className="flex-1 min-w-0">
-                    <p className="text-[13.5px] text-slate-200">{t.text}</p>
-                    <p className="text-[12px] text-slate-500 mt-1">{t.sub}</p>
+                    <p className="text-[12px] text-slate-300">{t.text}</p>
+                    <p className="text-[10.5px] text-slate-500 mt-0.5">{t.sub}</p>
                   </div>
                   <Sparkline points={t.points} stroke={t.stroke} />
                 </div>
               ))}
             </div>
-            <p className="text-[11px] text-slate-500 mt-5">Flagged by Analyst K. Whitfield · 21-day window vs prior period</p>
+            <p className="text-[10px] text-slate-500 mt-4">Flagged by Analyst K. Whitfield · 21-day window vs prior period</p>
           </section>
 
           {/* ── Watch Items ────────────────────────────────── */}
-          <section className="pt-8 pb-4 border-b border-slate-800">
+          <section className="pt-6 pb-3 border-b border-slate-800/70">
             <SectionLabel>Watch Items</SectionLabel>
-            <div className="divide-y divide-slate-800/70">
+            <div className="divide-y divide-slate-800/50">
               {watchItems.map((item, i) => (
-                <div key={i} className="flex items-center gap-4 py-3.5">
-                  <span className="text-[12px] font-mono text-slate-500 w-14 flex-shrink-0">{item.day}</span>
-                  <p className="text-[13.5px] text-slate-200 flex-1 min-w-0">{item.text}</p>
-                  <span className="text-[12px] text-slate-400 flex-shrink-0">{item.status}</span>
+                <div key={i} className="flex items-center gap-4 py-3">
+                  <span className="text-[10.5px] font-mono text-slate-500 w-12 flex-shrink-0">{item.day}</span>
+                  <p className="text-[12px] text-slate-300 flex-1 min-w-0">{item.text}</p>
+                  <span className="text-[10.5px] text-slate-500 flex-shrink-0">{item.status}</span>
                 </div>
               ))}
             </div>
           </section>
 
           {/* ── Acknowledge footer ─────────────────────────── */}
-          <div className="flex items-center justify-between gap-4 pt-8 pb-4">
-            <p className="text-[13px] text-slate-400">
+          <div className="flex items-center justify-between gap-4 pt-6 pb-3">
+            <p className="text-[11px] text-slate-500">
               {acknowledged ? 'Brief acknowledged — recorded to the audit trail.' : 'Acknowledgment is recorded to the audit trail.'}
             </p>
             <button
               onClick={() => setAcknowledged(true)}
               disabled={acknowledged}
-              className={`px-5 py-2.5 rounded-lg border text-[13.5px] font-bold transition-colors ${
+              className={`px-4 py-2 rounded-lg border text-[12px] font-semibold transition-colors ${
                 acknowledged
                   ? 'border-emerald-500/40 text-emerald-400 cursor-default'
-                  : 'border-amber-500/50 text-amber-400 hover:bg-amber-500/10'
+                  : 'border-amber-500/40 text-amber-400/90 hover:bg-amber-500/10'
               }`}
             >
               {acknowledged ? '✓ Acknowledged' : 'Acknowledge brief'}
