@@ -2,7 +2,7 @@ import { useState } from 'react';
 import {
   Radio, MapPin, Users, Car, ArrowRight, Circle, Siren,
   Timer, Phone, PhoneCall, Send, Megaphone, ChevronDown,
-  Map, FileText, X, CheckCircle, Lightbulb, Eye, Clock, Award
+  Map, FileText, X, CheckCircle, Lightbulb, Eye, Clock, Award, Target
 } from 'lucide-react';
 import DashboardLayout from '../../layouts/DashboardLayout';
 
@@ -451,9 +451,21 @@ const CADDispatch = () => {
     }
   ];
 
+  // Standing deployments pulling personnel out of the patrol pool (moved from the old War Room readiness view).
+  const activeDeployments = [
+    { name: 'Metro Fugitive Task Force',  personnel: 6,  lead: 'Det. Ortiz',  status: 'Active',   since: 'D-5' },
+    { name: 'Downtown Security Detail',   personnel: 8,  lead: 'Sgt. Patel',  status: 'Active',   since: 'D-1' },
+    { name: 'Court Transport – Superior', personnel: 4,  lead: 'Dep. Flores', status: 'En Route', since: '06:30' },
+    { name: 'Gang Intel Surveillance',    personnel: 3,  lead: 'Det. Kim',    status: 'Active',   since: 'D-3' },
+    { name: 'Mutual Aid – Northside PD',  personnel: 4,  lead: 'Sgt. Walker', status: 'Active',   since: 'D-0' },
+    { name: 'Warrant Sweep – Alpha Div.', personnel: 12, lead: 'Lt. Grant',   status: 'Staged',   since: '07:00' },
+  ];
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'Available':     return 'bg-emerald-100 text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-400';
+      case 'Active':        return 'bg-emerald-100 text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-400';
+      case 'Staged':        return 'bg-blue-100 text-blue-800 dark:bg-blue-500/20 dark:text-blue-400';
       case 'Dispatched':    return 'bg-blue-100 text-blue-800 dark:bg-blue-500/20 dark:text-blue-400';
       case 'En Route':      return 'bg-amber-100 text-amber-800 dark:bg-amber-500/20 dark:text-amber-400';
       case 'On Scene':      return 'bg-purple-100 text-purple-800 dark:bg-purple-500/20 dark:text-purple-400';
@@ -1118,6 +1130,31 @@ const CADDispatch = () => {
                     <MapPin className="w-3 h-3 flex-shrink-0" />{bolo.zone} · issued {bolo.issued}
                   </p>
                 </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ── Active Deployments ───────────────────────────── */}
+        <div className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
+          <div className="flex items-center gap-2 px-5 py-3.5 border-b border-slate-200 dark:border-slate-700/40">
+            <Target className="w-4 h-4 text-slate-700 dark:text-slate-400" />
+            <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Active Deployments</span>
+            <span className="text-[10px] px-2 py-0.5 bg-slate-50 dark:bg-zinc-800/40 text-slate-700 dark:text-slate-400 rounded-full">
+              {activeDeployments.reduce((s, d) => s + d.personnel, 0)} deputies committed
+            </span>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 divide-y sm:divide-y-0 divide-[#E5E7EB] dark:divide-slate-700/30">
+            {activeDeployments.map(dep => (
+              <div key={dep.name} className="flex items-center gap-3 px-5 py-3">
+                <div className="w-7 h-7 bg-slate-100 dark:bg-zinc-800/40 rounded-md flex items-center justify-center flex-shrink-0">
+                  <span className="text-[11px] font-bold text-slate-700 dark:text-slate-300">{dep.personnel}</span>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-[12px] font-medium text-slate-900 dark:text-slate-200 truncate">{dep.name}</p>
+                  <p className="text-[10px] text-[#6B7280]">{dep.lead} · {dep.since}</p>
+                </div>
+                <span className={`text-[9.5px] px-1.5 py-0.5 rounded-full flex-shrink-0 ${getStatusColor(dep.status)}`}>{dep.status}</span>
               </div>
             ))}
           </div>

@@ -636,6 +636,68 @@ export default function RiskCompliance() {
             </div>
           </div>
 
+          {/* ── AI Operations Advisor (moved from War Room) ── */}
+          <div className="mb-4 bg-slate-900 dark:bg-black border border-slate-700/60 rounded-xl overflow-hidden">
+            <div className="px-4 py-3 border-b border-slate-700/50 flex items-center gap-2">
+              <Zap className="w-3.5 h-3.5 text-violet-400" />
+              <span className="text-[11px] font-bold text-white uppercase tracking-wider">AI Operations Advisor</span>
+              <span className="ml-auto px-2 py-px bg-violet-500/20 border border-violet-500/30 rounded text-[9px] font-bold text-violet-300 uppercase">Live Recommendations</span>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-px bg-slate-700/30">
+              {/* Recommended actions */}
+              <div className="px-4 py-3 bg-slate-900 dark:bg-black">
+                <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-2.5">Recommended Actions</p>
+                <div className="space-y-1.5">
+                  {[
+                    { label: 'Divert Alpha-12 to Beat 7', impact: 'Eliminates coverage gap in <8 min', urgency: 'now' },
+                    { label: 'Contact Training re Rivera cert', impact: 'Prevents forced restricted duty', urgency: 'today' },
+                    { label: 'Activate Bravo overtime roster', impact: 'Restores 92% div. capacity', urgency: 'today' },
+                  ].map((a, i) => (
+                    <div key={i} className={`flex items-start gap-2 rounded-lg p-2 border ${a.urgency === 'now' ? 'bg-red-500/10 border-red-500/25' : 'bg-slate-800/40 dark:bg-zinc-900/40 border-slate-700/40'}`}>
+                      <ArrowRight className={`w-3 h-3 mt-0.5 flex-shrink-0 ${a.urgency === 'now' ? 'text-red-400' : 'text-slate-400'}`} />
+                      <div className="min-w-0">
+                        <p className="text-[11px] font-medium text-slate-200">{a.label}</p>
+                        <p className="text-[10px] text-slate-400">{a.impact}</p>
+                      </div>
+                      <span className={`ml-auto text-[9px] uppercase tracking-wide flex-shrink-0 font-bold mt-0.5 ${a.urgency === 'now' ? 'text-red-400' : 'text-slate-500'}`}>{a.urgency}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              {/* Staffing recommendations */}
+              <div className="px-4 py-3 bg-slate-900 dark:bg-black">
+                <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-2.5">Staffing Recommendations</p>
+                <div className="space-y-1.5">
+                  {[
+                    'Offer voluntary OT to Bravo off-duty pool (6 vacancies)',
+                    'Convert 2 Admin deputies to Patrol field coverage through EOW',
+                    'Request mutual aid reciprocal unit from Northside PD',
+                  ].map((rec, i) => (
+                    <div key={i} className="flex gap-2 items-start">
+                      <CheckCircle className="w-3 h-3 text-emerald-400 flex-shrink-0 mt-0.5" />
+                      <p className="text-[11px] text-slate-300 leading-snug">{rec}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              {/* Estimated impact */}
+              <div className="px-4 py-3 bg-slate-900 dark:bg-black">
+                <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-2.5">Estimated Operational Impact</p>
+                <div className="flex items-center justify-between text-[11px] text-slate-300">
+                  <span>If top 3 actions taken:</span>
+                  <span className="text-emerald-400 font-semibold">+11% shift health</span>
+                </div>
+                <div className="mt-1.5 w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                  <div className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-emerald-400" style={{ width: '91%' }} />
+                </div>
+                <div className="flex justify-between text-[9px] text-slate-500 mt-1">
+                  <span>Current: 91%</span>
+                  <span>Projected: ~100%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* ── Row: Agency Risk Score + Heat Map ────────── */}
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-3 mb-4">
 
