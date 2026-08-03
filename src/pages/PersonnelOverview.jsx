@@ -647,6 +647,19 @@ export default function PersonnelOverview() {
                       );
                     })}
                   </div>
+
+                  {/* Shift operations — moved from Command advisor */}
+                  <div className="mt-3 pt-3 border-t border-slate-700/50">
+                    <div className="flex flex-col lg:flex-row lg:items-center gap-2.5 lg:gap-5">
+                      <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest flex-shrink-0">Shift Operations</p>
+                      <div className="flex items-center gap-4 flex-wrap text-[10.5px] text-slate-300">
+                        <span><span className="text-red-400 font-semibold">now</span> · Divert Alpha-12 to Beat 7 — closes coverage gap in &lt;8 min</span>
+                        <span><span className="text-slate-500 font-semibold">today</span> · Rivera cert follow-up with Training</span>
+                        <span><span className="text-slate-500 font-semibold">today</span> · Activate Bravo overtime roster</span>
+                      </div>
+                      <span className="lg:ml-auto text-[10.5px] text-emerald-400 font-semibold flex-shrink-0">If all taken: +11% shift health (91% → ~100%)</span>
+                    </div>
+                  </div>
                 </div>
 
                 {/* ── Table Toolbar ──────────────────────────── */}
