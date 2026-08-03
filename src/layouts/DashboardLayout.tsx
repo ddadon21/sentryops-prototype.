@@ -263,37 +263,37 @@ export default function DashboardLayout({
   };
 
   return (
-    <div className="min-h-screen bg-[#F5F7FA] dark:bg-black flex">
+    <div className="min-h-screen bg-[#F5F7FA] dark:bg-[#0A0A0B] flex">
       {/* ── Sidebar ──────────────────────────────────────── */}
-      <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-black/[0.06] dark:border-slate-800/30 bg-white dark:bg-zinc-950/60 shadow-[var(--shadow-sidebar)] dark:shadow-none flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-20' : 'w-64'}`}>
+      <aside className={`fixed lg:static inset-y-0 left-0 z-50 border-r border-black/[0.06] dark:border-slate-800/30 bg-white dark:bg-[#0C0C0D] shadow-[var(--shadow-sidebar)] dark:shadow-none flex flex-col transform transition-all lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} ${sidebarCollapsed ? 'w-16' : 'w-56'}`}>
         {/* Logo */}
-        <div className="p-4 border-b border-border flex items-center justify-between">
+        <div className="px-3 py-3 border-b border-border flex items-center justify-between">
           {!sidebarCollapsed && (
             <div className="flex items-center gap-2">
-              <Shield className="w-8 h-8 text-amber-700" />
-              <h1 className="text-xl font-bold text-primary">SentryOps</h1>
+              <Shield className="w-6 h-6 text-amber-700" />
+              <h1 className="text-base font-bold text-primary">SentryOps</h1>
             </div>
           )}
           {sidebarCollapsed && (
-            <Shield className="w-8 h-8 text-amber-700 mx-auto" />
+            <Shield className="w-6 h-6 text-amber-700 mx-auto" />
           )}
           <button
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-            className="p-2 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors hidden lg:block"
+            className="p-1.5 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors hidden lg:block"
           >
-            {sidebarCollapsed ? <ChevronRight className="w-5 h-5 text-muted" /> : <ChevronLeft className="w-5 h-5 text-muted" />}
+            {sidebarCollapsed ? <ChevronRight className="w-4 h-4 text-muted" /> : <ChevronLeft className="w-4 h-4 text-muted" />}
           </button>
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 overflow-y-auto p-4 space-y-1">
+        <nav className="flex-1 overflow-y-auto p-2.5 space-y-0.5">
           {navigation.map(item => {
             // Section label
             if (item.type === 'section') {
               if (sidebarCollapsed) return null;
               return (
-                <div key={item.id} className="pt-4 pb-1 px-2">
-                  <p className="text-[9.5px] font-bold text-slate-400 dark:text-slate-600 uppercase tracking-widest">{item.label}</p>
+                <div key={item.id} className="pt-3 pb-1 px-2">
+                  <p className="text-[9px] font-bold text-slate-400 dark:text-slate-600 uppercase tracking-widest">{item.label}</p>
                 </div>
               );
             }
@@ -305,24 +305,24 @@ export default function DashboardLayout({
               <div key={item.id}>
                 <button
                   onClick={() => handleNavigation(item)}
-                  className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all ${
+                  className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all ${
                     isActive
                       ? 'bg-amber-100 dark:bg-zinc-800/40 text-primary border-l-4 border-l-amber-500 font-semibold'
                       : 'text-secondary hover:bg-slate-50 dark:hover:bg-zinc-900/30 hover:text-slate-900 dark:hover:text-slate-300'
                   } ${sidebarCollapsed ? 'justify-center' : ''}`}
                   title={sidebarCollapsed ? item.label : ''}
                 >
-                  <Icon className="w-[18px] h-[18px] flex-shrink-0" />
+                  <Icon className="w-4 h-4 flex-shrink-0" />
                   {!sidebarCollapsed && (
                     <>
-                      <span className="flex-1 text-left text-[13px] font-medium truncate">{item.label}</span>
+                      <span className="flex-1 text-left text-[12px] font-medium truncate">{item.label}</span>
                       {item.badge && (
-                        <span className={`px-1.5 py-0.5 rounded-full text-[11px] ${
+                        <span className={`px-1.5 py-px rounded-full text-[10px] ${
                           isActive ? 'bg-slate-300 dark:bg-white/10 text-slate-800 dark:text-white' : 'bg-red-100 dark:bg-red-500/15 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-500/20'
                         }`}>{item.badge}</span>
                       )}
                       {item.hasSubmenu && (
-                        <ChevronDown className={`w-4 h-4 transition-transform ${expandedSubmenu === item.id ? 'rotate-180' : ''}`} />
+                        <ChevronDown className={`w-3.5 h-3.5 transition-transform ${expandedSubmenu === item.id ? 'rotate-180' : ''}`} />
                       )}
                     </>
                   )}
@@ -337,7 +337,7 @@ export default function DashboardLayout({
                         <button
                           key={sub.id}
                           onClick={() => handleSubmenuNavigation(sub.route)}
-                          className={`w-full flex items-center gap-3 px-4 py-2 rounded-lg transition-all text-[13px] ${
+                          className={`w-full flex items-center gap-2.5 px-3 py-1.5 rounded-lg transition-all text-[12px] ${
                             isSubActive ? 'bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400' : 'text-slate-700 dark:text-slate-500 hover:bg-slate-200 dark:hover:bg-zinc-900/30 hover:text-slate-900 dark:hover:text-slate-300'
                           }`}
                         >
@@ -356,19 +356,19 @@ export default function DashboardLayout({
         {/* Footer */}
         <div className="border-t border-border">
           {!sidebarCollapsed && (
-            <div className="px-4 py-3">
-              <p className="text-xs text-muted text-center">{orgLabel}</p>
+            <div className="px-3 py-2">
+              <p className="text-[10px] text-muted text-center">{orgLabel}</p>
             </div>
           )}
-          <div className="p-4">
+          <div className="p-2.5">
             <button
               onClick={() => setLogoutConfirmOpen(true)}
-              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all text-secondary hover:bg-slate-200 dark:hover:bg-zinc-900/30 hover:text-slate-900 dark:hover:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
+              className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all text-secondary hover:bg-slate-200 dark:hover:bg-zinc-900/30 hover:text-slate-900 dark:hover:text-slate-300 ${sidebarCollapsed ? 'justify-center' : ''}`}
               title={sidebarCollapsed ? 'Sign Out' : ''}
             >
-              <LogOut className="w-[18px] h-[18px] flex-shrink-0" />
+              <LogOut className="w-4 h-4 flex-shrink-0" />
               {!sidebarCollapsed && (
-                <span className="flex-1 text-left text-[13px] font-medium">Sign Out</span>
+                <span className="flex-1 text-left text-[12px] font-medium">Sign Out</span>
               )}
             </button>
           </div>
@@ -421,7 +421,7 @@ export default function DashboardLayout({
       {/* ── Main Content Area ──────────────────────────── */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Header */}
-        <header className="border-b border-black/[0.06] dark:border-slate-800/50 backdrop-blur-md bg-[#F8FAFC]/90 dark:bg-zinc-950/60 sticky top-0 z-30 shadow-[var(--shadow-nav)] dark:shadow-none">
+        <header className="border-b border-black/[0.06] dark:border-slate-800/50 backdrop-blur-md bg-[#F8FAFC]/90 dark:bg-[#0A0A0B]/95 sticky top-0 z-30 shadow-[var(--shadow-nav)] dark:shadow-none">
           <div className="px-4 lg:px-6 py-4 flex items-center justify-between gap-4">
             {/* Left: mobile menu + compact search */}
             <div className="flex items-center gap-3">

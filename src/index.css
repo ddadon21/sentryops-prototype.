@@ -124,7 +124,8 @@
 
 @layer base {
   html, body {
-    @apply m-0 p-0 antialiased dark:bg-black;
+    /* Matte near-black — flat, no pure-#000 OLED sheen */
+    @apply m-0 p-0 antialiased dark:bg-[#0A0A0B];
     /* clip (not hidden) — hidden makes html/body a scroll container, which
        breaks position: sticky headers on mobile Safari/Chrome; clip just
        trims overflow without creating a scrolling box. */
