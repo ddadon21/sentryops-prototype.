@@ -10,12 +10,14 @@ const ACCENT = {
 // One of the 4 hero metric cards used by every module's Executive KPI row.
 // Pass `gauge` (a 0-100 score) for the health-score variant, or `value` for
 // a plain stat card — both share identical sizing/spacing/typography.
-export default function KPICard({ accent = 'amber', label, value, gauge, statusLabel, detail }) {
+// `compact` renders the dense executive-overview variant (smaller value,
+// tighter padding) without affecting the default used elsewhere.
+export default function KPICard({ accent = 'amber', label, value, gauge, statusLabel, detail, compact = false }) {
   const a = ACCENT[accent] || ACCENT.amber;
   return (
-    <div className={`bg-white dark:bg-zinc-900/30 border ${a.border} border-l-[3px] ${a.borderL} rounded-xl p-4 relative overflow-hidden`}>
+    <div className={`bg-white dark:bg-zinc-900/30 border ${a.border} border-l-[3px] ${a.borderL} rounded-xl ${compact ? 'p-3.5' : 'p-4'} relative overflow-hidden`}>
       <div className={`absolute inset-0 ${a.tint} pointer-events-none`} />
-      <p className={`text-[9px] font-black uppercase tracking-[0.15em] ${a.label} mb-2`}>{label}</p>
+      <p className={`text-[9px] font-black uppercase tracking-[0.15em] ${a.label} ${compact ? 'mb-1.5' : 'mb-2'}`}>{label}</p>
       {gauge != null ? (
         <div className="flex items-center gap-3">
           <HealthGauge score={gauge} />
@@ -26,8 +28,8 @@ export default function KPICard({ accent = 'amber', label, value, gauge, statusL
         </div>
       ) : (
         <>
-          <p className="text-5xl font-black tabular-nums text-slate-900 dark:text-white leading-none mb-1">{value}</p>
-          {statusLabel && <p className={`text-[10px] font-black uppercase tracking-wide ${a.label}`}>{statusLabel}</p>}
+          <p className={`${compact ? 'text-[26px]' : 'text-5xl'} font-black tabular-nums text-slate-900 dark:text-white leading-none mb-1`}>{value}</p>
+          {statusLabel && <p className={`${compact ? 'text-[9px]' : 'text-[10px]'} font-black uppercase tracking-wide ${a.label}`}>{statusLabel}</p>}
           {detail && <p className="text-[9px] text-slate-500 mt-0.5">{detail}</p>}
         </>
       )}

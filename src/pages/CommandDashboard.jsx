@@ -118,15 +118,15 @@ export default function CommandDashboard() {
 
   return (
     <DashboardLayout>
-      <div className="p-4 lg:p-6 space-y-5 bg-slate-100 dark:bg-transparent min-h-full">
+      <div className="p-3 lg:p-4 space-y-3.5 bg-slate-100 dark:bg-transparent min-h-full">
 
         {/* ── Page title row ──────────────────────────────────────────────── */}
         <div className="flex items-start justify-between gap-3 flex-wrap">
           <div>
-            <h1 className="text-xl lg:text-2xl font-black text-slate-900 dark:text-white tracking-tight">
+            <h1 className="text-base lg:text-lg font-black text-slate-900 dark:text-white tracking-tight leading-tight">
               Executive Command Center
             </h1>
-            <div className="flex items-center flex-wrap gap-x-2 gap-y-1 mt-1 text-[11px] text-slate-500">
+            <div className="flex items-center flex-wrap gap-x-1.5 gap-y-0.5 mt-0.5 text-[10px] text-slate-500">
               <span className="font-semibold text-slate-700 dark:text-slate-300">Sheriff Thompson · Administrator</span>
               <span>·</span>
               <span>{formatDate(currentTime)}</span>
@@ -134,36 +134,36 @@ export default function CommandDashboard() {
               <span>{formatTime(currentTime)} EST</span>
             </div>
           </div>
-          <div className="flex items-center gap-1.5 px-2.5 py-1.5 bg-white dark:bg-zinc-900/40 border border-slate-200 dark:border-slate-700/30 rounded-lg flex-shrink-0">
+          <div className="flex items-center gap-1.5 px-2 py-1 bg-white dark:bg-zinc-900/40 border border-slate-200 dark:border-slate-700/30 rounded-lg flex-shrink-0">
             <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
-            <span className="text-[11px] font-medium text-slate-600 dark:text-slate-300">Sync healthy · updated 2m ago</span>
+            <span className="text-[10px] font-medium text-slate-600 dark:text-slate-300">Sync healthy · updated 2m ago</span>
           </div>
         </div>
 
         {/* ── Main 2-column layout (Claude Design hierarchy) ──────────────── */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_1fr] gap-5 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_1fr] gap-3.5 items-start">
 
           {/* ════ LEFT COLUMN ════ */}
-          <div className="space-y-5 min-w-0">
+          <div className="space-y-3.5 min-w-0">
 
             {/* KPI quad */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <KPICard
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <KPICard compact
                 accent="amber" label="Personnel" value="164"
                 statusLabel="14 vacancies · 3 below safety threshold"
                 detail="+2 this week · 164/178 authorized"
               />
-              <KPICard
+              <KPICard compact
                 accent="red" label="Critical Incidents" value="3"
                 statusLabel="2 escalated"
                 detail="1 UOF · 1 facility · 1 staffing · oldest 1h 22m"
               />
-              <KPICard
+              <KPICard compact
                 accent="red" label="Compliance" value="94%"
                 statusLabel="USMS inspection in 2 days"
                 detail="Audit 100% · 3 actions before Dec 12"
               />
-              <KPICard
+              <KPICard compact
                 accent="amber" label="Budget Utilization" value="85%"
                 statusLabel="OT spend 19% above baseline"
                 detail="+1.2% vs plan"
@@ -172,7 +172,7 @@ export default function CommandDashboard() {
 
             {/* Pending Approvals — requires your action */}
             <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none overflow-hidden">
-              <div className="px-5 pt-4">
+              <div className="px-4 pt-3">
                 <SectionHeader
                   title="Pending Approvals — Requires Your Action"
                   action={<span className="text-[10px] text-slate-500">{sortedApprovals.length} pending · sorted by severity</span>}
@@ -182,28 +182,28 @@ export default function CommandDashboard() {
                 {sortedApprovals.map((item) => {
                   const badge = getTierBadge(item.tier);
                   return (
-                    <div key={item.id} className={`border-l-[3px] ${tierAccent(item.tier)} px-4 py-3 hover:bg-slate-50 dark:hover:bg-zinc-900/35 transition-colors`}>
-                      <div className="flex items-start gap-3 flex-wrap sm:flex-nowrap">
+                    <div key={item.id} className={`border-l-[3px] ${tierAccent(item.tier)} px-3.5 py-2 hover:bg-slate-50 dark:hover:bg-zinc-900/35 transition-colors`}>
+                      <div className="flex items-center gap-3 flex-wrap sm:flex-nowrap">
                         <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 flex-wrap">
-                            <p className="text-[13px] font-bold text-slate-900 dark:text-white">{item.type}</p>
-                            {badge && <span className={`px-1.5 py-0.5 border rounded text-[9px] font-black tracking-wide ${badge.classes}`}>{badge.text}</span>}
-                            <span className="text-[10px] text-slate-500">{getTimePending(item.timePendingMinutes)} pending</span>
+                          <div className="flex items-center gap-1.5 flex-wrap">
+                            <p className="text-[12px] font-bold text-slate-900 dark:text-white">{item.type}</p>
+                            {badge && <span className={`px-1 py-px border rounded text-[8px] font-black tracking-wide ${badge.classes}`}>{badge.text}</span>}
+                            <span className="text-[9px] text-slate-500">{getTimePending(item.timePendingMinutes)} pending</span>
                           </div>
-                          <p className="text-[11px] text-slate-600 dark:text-slate-400 mt-0.5 break-words">
+                          <p className="text-[10px] text-slate-600 dark:text-slate-400 mt-px break-words">
                             {item.division} · {item.name}{item.impact ? ` · ${item.impact}` : ''}
                           </p>
                         </div>
-                        <div className="flex items-center gap-3 flex-shrink-0 ml-auto">
+                        <div className="flex items-center gap-2.5 flex-shrink-0 ml-auto">
                           <div className="text-right">
-                            <p className="text-[12px] font-bold tabular-nums text-slate-900 dark:text-white">{item.financial || '—'}</p>
-                            <p className={`text-[10px] font-semibold ${item.tier === 'critical' ? 'text-red-700 dark:text-red-400' : item.tier === 'action' ? 'text-amber-700 dark:text-amber-400' : 'text-slate-500'}`}>
+                            <p className="text-[11px] font-bold tabular-nums text-slate-900 dark:text-white leading-tight">{item.financial || '—'}</p>
+                            <p className={`text-[9px] font-semibold leading-tight ${item.tier === 'critical' ? 'text-red-700 dark:text-red-400' : item.tier === 'action' ? 'text-amber-700 dark:text-amber-400' : 'text-slate-500'}`}>
                               {item.deadline}
                             </p>
                           </div>
                           <button
                             onClick={() => openReview(item)}
-                            className="px-3 py-1.5 text-[12px] font-semibold text-slate-700 dark:text-slate-200 bg-white dark:bg-zinc-900/60 border border-slate-300 dark:border-slate-600/50 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-800/60 transition-colors"
+                            className="px-2.5 py-1 text-[11px] font-semibold text-slate-700 dark:text-slate-200 bg-white dark:bg-zinc-900/60 border border-slate-300 dark:border-slate-600/50 rounded-md hover:bg-slate-100 dark:hover:bg-zinc-800/60 transition-colors"
                           >
                             Review
                           </button>
@@ -217,25 +217,25 @@ export default function CommandDashboard() {
 
             {/* Intelligence Summary */}
             <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none overflow-hidden">
-              <div className="px-5 pt-4">
+              <div className="px-4 pt-3">
                 <SectionHeader
                   icon={FileText}
                   title="Intelligence Summary"
                   action={<span className="text-[10px] text-slate-500 hidden sm:inline">AI-assisted synthesis · 4 sources · confidence 92% · 3m ago</span>}
                 />
               </div>
-              <div className="px-4 pb-4 grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div className="px-3.5 pb-3.5 grid grid-cols-1 md:grid-cols-2 gap-2.5">
                 {intelligence.map((item, i) => {
                   const t = intelTone(item.tone);
                   return (
-                    <div key={i} className={`rounded-lg border p-3.5 space-y-1.5 ${t.box}`}>
-                      <div className="flex items-center gap-2">
+                    <div key={i} className={`rounded-lg border p-3 space-y-1 ${t.box}`}>
+                      <div className="flex items-center gap-1.5">
                         <div className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${t.dot}`}></div>
-                        <p className={`text-[13px] font-bold ${t.title}`}>{item.title}</p>
+                        <p className={`text-[12px] font-bold ${t.title}`}>{item.title}</p>
                       </div>
-                      <p className="text-[12px] text-slate-700 dark:text-slate-300 leading-relaxed">{item.body}</p>
-                      <p className="text-[12px] font-semibold text-slate-800 dark:text-slate-200">→ {item.action}</p>
-                      <p className="text-[10px] text-slate-500 pt-0.5">{item.sources}</p>
+                      <p className="text-[11px] text-slate-700 dark:text-slate-300 leading-relaxed">{item.body}</p>
+                      <p className="text-[11px] font-semibold text-slate-800 dark:text-slate-200">→ {item.action}</p>
+                      <p className="text-[9px] text-slate-500 pt-0.5">{item.sources}</p>
                     </div>
                   );
                 })}
@@ -245,19 +245,19 @@ export default function CommandDashboard() {
           </div>
 
           {/* ════ RIGHT COLUMN ════ */}
-          <div className="space-y-5 min-w-0">
+          <div className="space-y-3.5 min-w-0">
 
             {/* Compliance */}
-            <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+            <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4">
               <SectionHeader
                 icon={Shield}
                 title="Compliance"
                 action={<span className="text-[10px] font-bold text-red-700 dark:text-red-400">USMS inspection Dec 12–14</span>}
               />
-              <div className="space-y-3">
+              <div className="space-y-2.5">
                 {complianceBars.map((row) => (
                   <div key={row.label}>
-                    <div className="flex items-center justify-between mb-1 text-[12px]">
+                    <div className="flex items-center justify-between mb-1 text-[11px]">
                       <span className="text-slate-500">{row.label}</span>
                       <span className={row.warn ? 'text-amber-700 dark:text-amber-400 font-medium tabular-nums' : 'text-slate-700 dark:text-slate-300 tabular-nums'}>{row.value}</span>
                     </div>
@@ -267,30 +267,30 @@ export default function CommandDashboard() {
                   </div>
                 ))}
               </div>
-              <p className="text-[10px] text-slate-500 mt-3">3 policies pending signature · 8 recertifications due · POC Major Anderson</p>
+              <p className="text-[9px] text-slate-500 mt-2.5">3 policies pending signature · 8 recertifications due · POC Major Anderson</p>
             </div>
 
             {/* Division Status */}
-            <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+            <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4">
               <SectionHeader title="Division Status" />
-              <div className="space-y-1">
+              <div className="space-y-0.5">
                 {divisions.map((div, idx) => (
                   <button
                     key={idx}
                     onClick={() => div.route && navigate(createPageUrl(div.route))}
                     onMouseEnter={() => setHoveredDivision(idx)}
                     onMouseLeave={() => setHoveredDivision(null)}
-                    className="w-full flex items-center justify-between gap-3 px-2 py-2 rounded-lg text-left hover:bg-slate-50 dark:hover:bg-zinc-900/35 transition-colors relative"
+                    className="w-full flex items-center justify-between gap-3 px-1.5 py-1.5 rounded-lg text-left hover:bg-slate-50 dark:hover:bg-zinc-900/35 transition-colors relative"
                   >
-                    <div className="flex items-center gap-2.5 min-w-0">
-                      <div className={`w-2 h-2 rounded-full flex-shrink-0 ${div.severity === 'red' ? 'bg-red-500' : div.severity === 'amber' ? 'bg-amber-500' : 'bg-emerald-500'}`}></div>
-                      <span className="text-[13px] font-semibold text-slate-900 dark:text-white truncate">{div.name}</span>
+                    <div className="flex items-center gap-2 min-w-0">
+                      <div className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${div.severity === 'red' ? 'bg-red-500' : div.severity === 'amber' ? 'bg-amber-500' : 'bg-emerald-500'}`}></div>
+                      <span className="text-[12px] font-semibold text-slate-900 dark:text-white truncate">{div.name}</span>
                     </div>
-                    <div className="flex items-center gap-3 flex-shrink-0">
-                      <span className={`text-[12px] ${div.severity === 'red' ? 'text-red-700 dark:text-red-400 font-semibold' : div.severity === 'amber' ? 'text-amber-700 dark:text-amber-400' : 'text-slate-600 dark:text-slate-400'}`}>
+                    <div className="flex items-center gap-2.5 flex-shrink-0">
+                      <span className={`text-[11px] ${div.severity === 'red' ? 'text-red-700 dark:text-red-400 font-semibold' : div.severity === 'amber' ? 'text-amber-700 dark:text-amber-400' : 'text-slate-600 dark:text-slate-400'}`}>
                         {div.status}
                       </span>
-                      <span className="text-[11px] text-slate-500 tabular-nums">{div.staffing}</span>
+                      <span className="text-[10px] text-slate-500 tabular-nums">{div.staffing}</span>
                     </div>
                     {hoveredDivision === idx && (
                       <div className="absolute left-0 right-0 top-full mt-1 z-20 bg-white dark:bg-zinc-900 border border-slate-200 dark:border-slate-700/50 rounded-lg p-3 shadow-xl">
@@ -305,20 +305,20 @@ export default function CommandDashboard() {
             </div>
 
             {/* Staffing */}
-            <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
+            <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-4">
               <SectionHeader
                 title="Staffing"
                 action={<span className="text-[10px] text-slate-500">164/178 authorized · 92.1%</span>}
               />
-              <div className="space-y-3">
+              <div className="space-y-2.5">
                 {staffingLevels.map((div, idx) => (
                   <div key={idx}>
-                    <div className="flex items-center justify-between mb-1.5 gap-2">
+                    <div className="flex items-center justify-between mb-1 gap-2">
                       <div className="flex items-baseline gap-1.5 min-w-0">
-                        <span className="text-[13px] text-slate-800 dark:text-slate-300 truncate">{div.division}</span>
-                        {div.note && <span className={`text-[10px] truncate ${div.percentage < div.minThreshold + 7 && div.percentage < 90 ? 'text-red-700 dark:text-red-400' : 'text-slate-500'}`}>{div.note}</span>}
+                        <span className="text-[12px] text-slate-800 dark:text-slate-300 truncate">{div.division}</span>
+                        {div.note && <span className={`text-[9px] truncate ${div.percentage < div.minThreshold + 7 && div.percentage < 90 ? 'text-red-700 dark:text-red-400' : 'text-slate-500'}`}>{div.note}</span>}
                       </div>
-                      <span className={`text-[12px] font-bold tabular-nums flex-shrink-0 ${div.percentage >= 90 ? 'text-emerald-600 dark:text-emerald-400' : div.percentage >= div.minThreshold ? 'text-amber-700 dark:text-amber-400' : 'text-red-700 dark:text-red-400'}`}>
+                      <span className={`text-[11px] font-bold tabular-nums flex-shrink-0 ${div.percentage >= 90 ? 'text-emerald-600 dark:text-emerald-400' : div.percentage >= div.minThreshold ? 'text-amber-700 dark:text-amber-400' : 'text-red-700 dark:text-red-400'}`}>
                         {div.current}/{div.authorized} · {div.percentage}%
                       </span>
                     </div>
