@@ -463,12 +463,12 @@ export default function OrgChart() {
           <div className="flex-1 relative min-w-0">
             <div
               ref={canvasRef}
-              className="absolute inset-0 overflow-auto bg-[#C3C6CA]"
-              style={{ backgroundImage: 'radial-gradient(circle, rgba(15,23,42,0.11) 1px, transparent 1px)', backgroundSize: '26px 26px' }}
+              className="absolute inset-0 overflow-auto bg-[#33322F]"
+              style={{ backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px)', backgroundSize: '26px 26px' }}
             >
               {proposeMode && (
-                <div className="sticky top-0 left-0 z-20 px-6 py-2 bg-amber-100 border-b border-amber-400/60">
-                  <p className="text-[11px] text-amber-900">
+                <div className="sticky top-0 left-0 z-20 px-6 py-2 bg-amber-500/15 border-b border-amber-500/40 backdrop-blur-sm">
+                  <p className="text-[11px] text-amber-300">
                     <span className="font-bold">Propose mode</span> — select a position, then draft the change. Nothing here edits the live chart; drafts route to the Decision Center for approval.
                   </p>
                 </div>
@@ -481,7 +481,7 @@ export default function OrgChart() {
                       const px = e.from.x + NODE_W / 2, py = e.from.y + NODE_H;
                       const cx = e.to.x + NODE_W / 2, cy = e.to.y;
                       const midY = py + (cy - py) / 2;
-                      return <path key={i} d={`M ${px} ${py} V ${midY} H ${cx} V ${cy}`} fill="none" stroke="#7E858D" strokeWidth="1.5" />;
+                      return <path key={i} d={`M ${px} ${py} V ${midY} H ${cx} V ${cy}`} fill="none" stroke="#6E6D67" strokeWidth="1.5" />;
                     })}
                   </svg>
 
@@ -499,7 +499,7 @@ export default function OrgChart() {
                         <button
                           onClick={() => setSelected(isSel ? null : n)}
                           style={{ width: NODE_W, height: NODE_H }}
-                          className={`relative block text-left px-3 py-2.5 rounded-xl bg-[#14171C] border transition-all shadow-[0_6px_16px_-6px_rgba(15,23,42,0.55)] hover:shadow-[0_10px_22px_-8px_rgba(15,23,42,0.65)] ${
+                          className={`relative block text-left px-3 py-2.5 rounded-xl bg-[#14171C] border transition-all shadow-[0_6px_16px_-6px_rgba(0,0,0,0.55)] hover:shadow-[0_10px_22px_-8px_rgba(0,0,0,0.7)] ${
                             vacant ? 'border-dashed border-red-500/70' : 'border-slate-700/70 hover:border-slate-500'
                           } ${view === 'duty' && !vacant ? dutyRing[n.status] : ''} ${
                             isSel ? 'ring-2 ring-amber-400' : matches(n) ? 'ring-2 ring-amber-400/60' : ''
@@ -541,10 +541,10 @@ export default function OrgChart() {
                             onClick={() => toggle(n.id)}
                             title={isCollapsed ? `Expand ${n.childCount} direct reports` : 'Collapse'}
                             style={{ top: NODE_H + 5 }}
-                            className={`absolute left-1/2 -translate-x-1/2 z-10 h-5 min-w-[20px] px-1.5 rounded-full border text-[9px] font-bold leading-none shadow-sm transition-colors ${
+                            className={`absolute left-1/2 -translate-x-1/2 z-10 h-5 min-w-[20px] px-1.5 rounded-full border text-[9px] font-bold leading-none transition-colors ${
                               isCollapsed
-                                ? 'border-slate-400 bg-white text-slate-700 hover:border-amber-500 hover:text-amber-600'
-                                : 'border-slate-300 bg-[#F4F6F8] text-slate-500 hover:text-slate-800'
+                                ? 'border-[#6E6D67] bg-[#1B1A18] text-slate-200 hover:border-amber-500 hover:text-amber-400'
+                                : 'border-[#57565198] bg-[#2A2926] text-slate-500 hover:text-slate-200'
                             }`}
                           >
                             {isCollapsed ? `+${n.childCount}` : '−'}
@@ -559,7 +559,7 @@ export default function OrgChart() {
 
             {/* ── Detail card — anchored outside the scrolling canvas ── */}
             {selected && (
-              <div className="absolute bottom-6 right-6 z-30 w-80 bg-[#14171C] border border-slate-700/70 rounded-xl p-4 shadow-[0_18px_50px_-10px_rgba(15,23,42,0.6)]">
+              <div className="absolute bottom-6 right-6 z-30 w-80 bg-[#14171C] border border-slate-700/70 rounded-xl p-4 shadow-[0_18px_50px_-10px_rgba(0,0,0,0.7)]">
                 <div className="flex items-start gap-2.5">
                   <span className={`w-9 h-9 rounded-lg border flex items-center justify-center flex-shrink-0 text-[12px] font-bold ${
                     selected.status === 'vacant' ? 'bg-red-500/15 text-red-300 border-red-500/40' : dept[selected.d].tile
