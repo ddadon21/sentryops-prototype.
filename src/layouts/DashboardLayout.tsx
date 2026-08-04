@@ -81,7 +81,7 @@ const defaultNavigation: NavItem[] = [
   { id: 'decision-layer',     label: 'Agency Risk Center',       icon: Layers,       route: '/command/risk' },
   { id: 'alerts',             label: 'Command Notifications Center', icon: AlertCircle,  badge: '7', route: '/command/alerts' },
   { id: 'approvals',          label: 'Decision Center',          icon: CheckCircle,  badge: '8', route: '/command/approvals' },
-  { id: 'calendar',           label: 'Operational Timeline',     icon: Calendar,     route: '/command/calendar' },
+  { id: 'timeline',           label: 'Operational Timeline',     icon: Calendar,     route: '/activity' },
   { id: 'section-agency',     label: 'Agency Operations',        type: 'section' },
   { id: 'staffing',           label: 'Workforce Readiness',      icon: Users,        hasSubmenu: true, submenu: [
     { id: 'staffing-overview', label: 'Workforce Readiness', route: '/command/personnel' },
