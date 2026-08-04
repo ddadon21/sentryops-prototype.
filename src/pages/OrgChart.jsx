@@ -248,7 +248,12 @@ export default function OrgChart() {
   const navigate = useNavigate();
   const [view, setView] = useState('command'); // 'command' | 'duty' | 'acting'
   const [query, setQuery] = useState('');
-  const [scale, setScale] = useState(1);
+  // Free-pan canvas: {x, y} translate + k zoom, applied as one transform. Panning
+  // by scroll only worked when the tree overflowed, so at the default fit — where
+  // it does not — dragging had nowhere to go and appeared broken.
+  const [tf, setTf] = useState({ x: 0, y: 0, k: 1 });
+  const tfRef = useRef(tf);
+  useEffect(() => { tfRef.current = tf; }, [tf]);
   const [selected, setSelected] = useState(null);
   const [proposeMode, setProposeMode] = useState(false);
   const [collapsed, setCollapsed] = useState(collapsedToBureaus);
@@ -259,13 +264,26 @@ export default function OrgChart() {
     [collapsed, view],
   );
 
-  // Fit both axes — a deep branch runs off the bottom just as easily as a wide one.
+  const clampK = (k) => Math.min(1.6, Math.max(0.25, k));
+
+  // Fit both axes — a deep branch runs off the bottom just as easily as a wide one —
+  // then centre what we just sized.
   const fit = () => {
     const el = canvasRef.current;
     if (!el) return;
-    const byWidth = (el.clientWidth - 80) / width;
-    const byHeight = (el.clientHeight - 80) / height;
-    setScale(Math.min(1.15, Math.max(0.35, Math.min(byWidth, byHeight))));
+    const k = Math.min(1.15, Math.max(0.3, Math.min((el.clientWidth - 80) / width, (el.clientHeight - 80) / height)));
+    setTf({ k, x: (el.clientWidth - width * k) / 2, y: (el.clientHeight - height * k) / 2 });
+  };
+
+  // Zoom about a fixed viewport point so the thing under the cursor stays put.
+  const zoomAt = (px, py, factor) => setTf((t) => {
+    const k = clampK(t.k * factor);
+    const r = k / t.k;
+    return { k, x: px - (px - t.x) * r, y: py - (py - t.y) * r };
+  });
+  const zoomCentre = (factor) => {
+    const el = canvasRef.current;
+    if (el) zoomAt(el.clientWidth / 2, el.clientHeight / 2, factor);
   };
 
   // Re-fit only after a change that reshapes the tree — manual zoom is left alone.
@@ -287,16 +305,13 @@ export default function OrgChart() {
 
   const startPan = (e) => {
     if (e.button !== 0 && e.button !== 1) return;
-    const el = canvasRef.current;
-    if (!el) return;
-    const start = { x: e.clientX, y: e.clientY, sl: el.scrollLeft, st: el.scrollTop };
+    const start = { x: e.clientX, y: e.clientY, tx: tfRef.current.x, ty: tfRef.current.y };
     dragged.current = false;
     const move = (ev) => {
       const dx = ev.clientX - start.x, dy = ev.clientY - start.y;
       if (!dragged.current && Math.hypot(dx, dy) < 4) return;
       if (!dragged.current) { dragged.current = true; setGrabbing(true); }
-      el.scrollLeft = start.sl - dx;
-      el.scrollTop = start.st - dy;
+      setTf((t) => ({ ...t, x: start.tx + dx, y: start.ty + dy }));
     };
     const up = () => {
       window.removeEventListener('pointermove', move);
@@ -315,7 +330,8 @@ export default function OrgChart() {
     const onWheel = (e) => {
       if (!e.ctrlKey && !e.metaKey) return;
       e.preventDefault();
-      setScale((s) => Math.min(1.6, Math.max(0.3, s - e.deltaY * 0.0025)));
+      const r = el.getBoundingClientRect();
+      zoomAt(e.clientX - r.left, e.clientY - r.top, Math.exp(-e.deltaY * 0.0025));
     };
     el.addEventListener('wheel', onWheel, { passive: false });
     return () => el.removeEventListener('wheel', onWheel);
@@ -403,8 +419,8 @@ export default function OrgChart() {
               className="w-64 px-3 py-2 bg-zinc-900/60 border border-slate-700/60 rounded-lg text-[11.5px] text-slate-200 placeholder-slate-500 focus:outline-none focus:border-slate-500"
             />
             <div className="flex items-center rounded-lg border border-slate-700/60 overflow-hidden">
-              <button onClick={() => setScale((s) => Math.max(0.3, s - 0.1))} className="px-3 py-2 text-[12px] font-bold text-slate-300 hover:bg-zinc-900/60 transition-colors">−</button>
-              <button onClick={() => setScale((s) => Math.min(1.6, s + 0.1))} className="px-3 py-2 text-[12px] font-bold text-slate-300 hover:bg-zinc-900/60 border-l border-slate-700/60 transition-colors">+</button>
+              <button onClick={() => zoomCentre(1 / 1.15)} className="px-3 py-2 text-[12px] font-bold text-slate-300 hover:bg-zinc-900/60 transition-colors">−</button>
+              <button onClick={() => zoomCentre(1.15)} className="px-3 py-2 text-[12px] font-bold text-slate-300 hover:bg-zinc-900/60 border-l border-slate-700/60 transition-colors">+</button>
               <button onClick={fit} className="px-3 py-2 text-[11.5px] font-semibold text-slate-300 hover:bg-zinc-900/60 border-l border-slate-700/60 transition-colors">Fit</button>
             </div>
             <button onClick={toggleFull} className="px-3.5 py-2 border border-slate-700/60 rounded-lg text-[11.5px] font-semibold text-slate-200 hover:bg-zinc-900/60 transition-colors">
@@ -527,19 +543,22 @@ export default function OrgChart() {
             <div
               ref={canvasRef}
               onPointerDown={startPan}
-              className={`absolute inset-0 overflow-auto bg-[#33322F] select-none ${grabbing ? 'cursor-grabbing' : 'cursor-grab'}`}
+              className={`absolute inset-0 overflow-hidden bg-[#33322F] select-none ${grabbing ? 'cursor-grabbing' : 'cursor-grab'}`}
               style={{ backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px)', backgroundSize: '26px 26px' }}
             >
               {proposeMode && (
-                <div className="sticky top-0 left-0 z-20 px-6 py-2 bg-amber-500/15 border-b border-amber-500/40 backdrop-blur-sm">
+                <div className="absolute top-0 inset-x-0 z-20 px-6 py-2 bg-amber-500/15 border-b border-amber-500/40 backdrop-blur-sm">
                   <p className="text-[11px] text-amber-300">
                     <span className="font-bold">Propose mode</span> — select a position, then draft the change. Nothing here edits the live chart; drafts route to the Decision Center for approval.
                   </p>
                 </div>
               )}
 
-              <div style={{ width: width * scale + 96, height: height * scale + 96, padding: 32 }}>
-                <div style={{ width, height, transform: `scale(${scale})`, transformOrigin: 'top left' }} className="relative">
+              <div
+                style={{ width, height, transform: `translate(${tf.x}px, ${tf.y}px) scale(${tf.k})`, transformOrigin: 'top left' }}
+                className="absolute top-0 left-0"
+              >
+                <div style={{ width, height }} className="relative">
                   <svg width={width} height={height} className="absolute inset-0 pointer-events-none">
                     {edges.map((e, i) => {
                       const px = e.from.x + NODE_W / 2, py = e.from.y + NODE_H;
