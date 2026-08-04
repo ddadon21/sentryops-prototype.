@@ -278,6 +278,52 @@ export default function OrgChart() {
 
   const reshape = (next) => { setCollapsed(next); setPendingFit(true); };
 
+  // ── Drag to pan ───────────────────────────────────────────────
+  // Dragging works anywhere, cards included; a 4px threshold decides whether
+  // the gesture was a pan or a click, and `dragged` swallows the click that
+  // would otherwise fire on the card you grabbed.
+  const dragged = useRef(false);
+  const [grabbing, setGrabbing] = useState(false);
+
+  const startPan = (e) => {
+    if (e.button !== 0 && e.button !== 1) return;
+    const el = canvasRef.current;
+    if (!el) return;
+    const start = { x: e.clientX, y: e.clientY, sl: el.scrollLeft, st: el.scrollTop };
+    dragged.current = false;
+    const move = (ev) => {
+      const dx = ev.clientX - start.x, dy = ev.clientY - start.y;
+      if (!dragged.current && Math.hypot(dx, dy) < 4) return;
+      if (!dragged.current) { dragged.current = true; setGrabbing(true); }
+      el.scrollLeft = start.sl - dx;
+      el.scrollTop = start.st - dy;
+    };
+    const up = () => {
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', up);
+      setGrabbing(false);
+    };
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', up);
+  };
+
+  // Ctrl/⌘ + wheel zooms. Registered natively so preventDefault actually takes —
+  // React's synthetic wheel handler is passive and cannot stop browser zoom.
+  useEffect(() => {
+    const el = canvasRef.current;
+    if (!el) return;
+    const onWheel = (e) => {
+      if (!e.ctrlKey && !e.metaKey) return;
+      e.preventDefault();
+      setScale((s) => Math.min(1.6, Math.max(0.3, s - e.deltaY * 0.0025)));
+    };
+    el.addEventListener('wheel', onWheel, { passive: false });
+    return () => el.removeEventListener('wheel', onWheel);
+  }, []);
+
+  // A pan should never be mistaken for a click on the card underneath.
+  const clickIfNotDragging = (fn) => () => { if (!dragged.current) fn(); };
+
   const toggle = (id) => setCollapsed((prev) => {
     const next = new Set(prev);
     next.has(id) ? next.delete(id) : next.add(id);
@@ -455,7 +501,7 @@ export default function OrgChart() {
             )}
 
             <p className="text-[10.5px] text-slate-500 leading-relaxed mt-auto pt-2">
-              Click a node for details, <span className="text-slate-400">+N</span> to open a branch. Structure edits require Propose mode — changes route to the Decision Center.
+              Drag the canvas to pan · <span className="text-slate-400">⌘/Ctrl + scroll</span> to zoom. Click a node for details, <span className="text-slate-400">+N</span> to open a branch. Structure edits require Propose mode — changes route to the Decision Center.
             </p>
           </div>
 
@@ -463,7 +509,8 @@ export default function OrgChart() {
           <div className="flex-1 relative min-w-0">
             <div
               ref={canvasRef}
-              className="absolute inset-0 overflow-auto bg-[#33322F]"
+              onPointerDown={startPan}
+              className={`absolute inset-0 overflow-auto bg-[#33322F] select-none ${grabbing ? 'cursor-grabbing' : 'cursor-grab'}`}
               style={{ backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px)', backgroundSize: '26px 26px' }}
             >
               {proposeMode && (
@@ -497,7 +544,7 @@ export default function OrgChart() {
                         className={`absolute ${dimmed(n) ? 'opacity-30' : view === 'acting' && !isDelegation(n) ? 'opacity-60' : ''}`}
                       >
                         <button
-                          onClick={() => setSelected(isSel ? null : n)}
+                          onClick={clickIfNotDragging(() => setSelected(isSel ? null : n))}
                           style={{ width: NODE_W, height: NODE_H }}
                           className={`relative block text-left px-3 py-2.5 rounded-xl bg-[#14171C] border transition-all shadow-[0_6px_16px_-6px_rgba(0,0,0,0.55)] hover:shadow-[0_10px_22px_-8px_rgba(0,0,0,0.7)] ${
                             vacant ? 'border-dashed border-red-500/70' : 'border-slate-700/70 hover:border-slate-500'
@@ -538,7 +585,7 @@ export default function OrgChart() {
 
                         {n.childCount > 0 && (
                           <button
-                            onClick={() => toggle(n.id)}
+                            onClick={clickIfNotDragging(() => toggle(n.id))}
                             title={isCollapsed ? `Expand ${n.childCount} direct reports` : 'Collapse'}
                             style={{ top: NODE_H + 5 }}
                             className={`absolute left-1/2 -translate-x-1/2 z-10 h-5 min-w-[20px] px-1.5 rounded-full border text-[9px] font-bold leading-none transition-colors ${
