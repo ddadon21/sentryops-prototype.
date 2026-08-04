@@ -463,8 +463,8 @@ export default function OrgChart() {
           <div className="flex-1 relative min-w-0">
             <div
               ref={canvasRef}
-              className="absolute inset-0 overflow-auto bg-[#E8EBEF]"
-              style={{ backgroundImage: 'radial-gradient(circle, rgba(15,23,42,0.13) 1px, transparent 1px)', backgroundSize: '26px 26px' }}
+              className="absolute inset-0 overflow-auto bg-[#C3C6CA]"
+              style={{ backgroundImage: 'radial-gradient(circle, rgba(15,23,42,0.11) 1px, transparent 1px)', backgroundSize: '26px 26px' }}
             >
               {proposeMode && (
                 <div className="sticky top-0 left-0 z-20 px-6 py-2 bg-amber-100 border-b border-amber-400/60">
@@ -481,7 +481,7 @@ export default function OrgChart() {
                       const px = e.from.x + NODE_W / 2, py = e.from.y + NODE_H;
                       const cx = e.to.x + NODE_W / 2, cy = e.to.y;
                       const midY = py + (cy - py) / 2;
-                      return <path key={i} d={`M ${px} ${py} V ${midY} H ${cx} V ${cy}`} fill="none" stroke="#9AA4B2" strokeWidth="1.5" />;
+                      return <path key={i} d={`M ${px} ${py} V ${midY} H ${cx} V ${cy}`} fill="none" stroke="#7E858D" strokeWidth="1.5" />;
                     })}
                   </svg>
 
