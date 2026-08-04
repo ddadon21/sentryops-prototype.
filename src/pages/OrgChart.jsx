@@ -324,6 +324,20 @@ export default function OrgChart() {
   // A pan should never be mistaken for a click on the card underneath.
   const clickIfNotDragging = (fn) => () => { if (!dragged.current) fn(); };
 
+  // ── Full screen ───────────────────────────────────────────────
+  const rootRef = useRef(null);
+  const [isFull, setIsFull] = useState(false);
+  useEffect(() => {
+    // Covers Escape and the browser's own exit affordance, not just our button.
+    const onChange = () => { setIsFull(!!document.fullscreenElement); setPendingFit(true); };
+    document.addEventListener('fullscreenchange', onChange);
+    return () => document.removeEventListener('fullscreenchange', onChange);
+  }, []);
+  const toggleFull = () => {
+    if (document.fullscreenElement) document.exitFullscreen();
+    else rootRef.current?.requestFullscreen?.();
+  };
+
   const toggle = (id) => setCollapsed((prev) => {
     const next = new Set(prev);
     next.has(id) ? next.delete(id) : next.add(id);
@@ -375,7 +389,7 @@ export default function OrgChart() {
 
   return (
     <DashboardLayout>
-      <div className="h-[calc(100vh-80px)] bg-[#0A0A0B] flex flex-col">
+      <div ref={rootRef} className={`${isFull ? 'h-screen' : 'h-[calc(100vh-80px)]'} bg-[#0A0A0B] flex flex-col`}>
 
         {/* ── Header ─────────────────────────────────────── */}
         <div className="flex items-center gap-3 flex-wrap px-6 py-4 border-b border-slate-800/70">
@@ -393,6 +407,9 @@ export default function OrgChart() {
               <button onClick={() => setScale((s) => Math.min(1.6, s + 0.1))} className="px-3 py-2 text-[12px] font-bold text-slate-300 hover:bg-zinc-900/60 border-l border-slate-700/60 transition-colors">+</button>
               <button onClick={fit} className="px-3 py-2 text-[11.5px] font-semibold text-slate-300 hover:bg-zinc-900/60 border-l border-slate-700/60 transition-colors">Fit</button>
             </div>
+            <button onClick={toggleFull} className="px-3.5 py-2 border border-slate-700/60 rounded-lg text-[11.5px] font-semibold text-slate-200 hover:bg-zinc-900/60 transition-colors">
+              {isFull ? 'Exit full screen' : 'Full screen'}
+            </button>
             <button onClick={() => window.print()} className="px-3.5 py-2 border border-slate-700/60 rounded-lg text-[11.5px] font-semibold text-slate-200 hover:bg-zinc-900/60 transition-colors">
               Export — PDF
             </button>
