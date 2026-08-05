@@ -82,10 +82,15 @@ const housingPods: HousingPod[] = [
 ];
 
 const shifts: ShiftStatus[] = [
-  { label: 'A-Shift', scheduled: 15, present: 15, supervisor: 'Sgt. Williams' },
-  { label: 'B-Shift', scheduled: 14, present: 13, supervisor: 'Sgt. Thompson', issue: 'Officer Smith — sick call 11:30 AM' },
-  { label: 'C-Shift', scheduled: 14, present: 14, supervisor: 'Sgt. Davis' },
-  { label: 'Medical', scheduled: 6,  present: 6,  supervisor: 'RN Martinez' },
+  { label: 'A-Shift',     scheduled: 15, present: 15, supervisor: 'Sgt. Williams' },
+  { label: 'B-Shift',     scheduled: 14, present: 13, supervisor: 'Sgt. Thompson', issue: 'Officer Smith — sick call 11:30 AM' },
+  { label: 'C-Shift',     scheduled: 14, present: 14, supervisor: 'Sgt. Davis' },
+  { label: 'Medical',     scheduled: 6,  present: 6,  supervisor: 'RN Martinez' },
+  { label: 'Kitchen',     scheduled: 8,  present: 7,  supervisor: 'Lead Cook Whitfield', issue: 'Second-shift cook vacant — line on OT' },
+  { label: 'Intake',      scheduled: 9,  present: 9,  supervisor: 'Sgt. Nakamura' },
+  { label: 'Programs',    scheduled: 6,  present: 6,  supervisor: 'Sgt. Coleman' },
+  { label: 'Laundry',     scheduled: 3,  present: 3,  supervisor: 'Sup. Iverson' },
+  { label: 'Maintenance', scheduled: 4,  present: 4,  supervisor: 'Sup. Boyd' },
 ];
 
 const courtRuns: CourtRun[] = [
