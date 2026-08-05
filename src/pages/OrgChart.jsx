@@ -13,6 +13,8 @@ const dept = {
   medical:   { tile: 'bg-emerald-500/20 text-emerald-200 border-emerald-400/30', label: 'text-emerald-300/90', dot: 'bg-emerald-400' },
   court:     { tile: 'bg-indigo-500/20 text-indigo-200 border-indigo-400/30',  label: 'text-indigo-300/90',   dot: 'bg-indigo-400' },
   comms:     { tile: 'bg-cyan-500/20 text-cyan-200 border-cyan-400/30',        label: 'text-cyan-300/90',     dot: 'bg-cyan-400' },
+  food:      { tile: 'bg-orange-500/20 text-orange-200 border-orange-400/30',  label: 'text-orange-300/90',   dot: 'bg-orange-400' },
+  support:   { tile: 'bg-teal-500/20 text-teal-200 border-teal-400/30',        label: 'text-teal-300/90',     dot: 'bg-teal-400' },
   admin:     { tile: 'bg-slate-500/20 text-slate-200 border-slate-400/30',     label: 'text-slate-400',       dot: 'bg-slate-400' },
   standards: { tile: 'bg-rose-500/20 text-rose-200 border-rose-400/30',        label: 'text-rose-300/90',     dot: 'bg-rose-400' },
   training:  { tile: 'bg-lime-500/20 text-lime-200 border-lime-400/30',        label: 'text-lime-300/90',     dot: 'bg-lime-400' },
@@ -90,11 +92,11 @@ const tree = {
         // ── Detention Bureau ───────────────────────────────
         {
           id: 'det', name: 'Chief Dep. Ellis', role: 'Chief Deputy', initials: 'CE',
-          unit: 'Detention Bureau', d: 'jail', status: 'on', strength: [62, 68],
+          unit: 'Detention Bureau', d: 'jail', status: 'on', strength: [85, 94],
           children: [
             {
               id: 'jail', name: 'Capt. Nguyen', role: 'Captain', initials: 'CN',
-              unit: 'Detention Division', d: 'jail', status: 'on', strength: [41, 44],
+              unit: 'Detention Division', d: 'jail', status: 'on', strength: [50, 54],
               detail: 'Also holds interim oversight of Investigations (47 days)',
               children: [
                 {
@@ -108,6 +110,7 @@ const tree = {
                   ],
                 },
                 { id: 'sgt-vega', name: 'Sgt. Vega', role: 'Sergeant', initials: 'SV', unit: 'Inmate Transport', d: 'jail', status: 'on', strength: [6, 6] },
+                { id: 'sgt-cole', name: 'Sgt. Cole', role: 'Sergeant', initials: 'SC', unit: 'Booking & Classification', d: 'jail', status: 'on', strength: [9, 10] },
               ],
             },
             {
@@ -123,6 +126,30 @@ const tree = {
                   link: { label: 'View posting', route: '/hr/jobs' },
                 },
                 { id: 'behavioral', name: 'K. Duarte, LCSW', role: 'Supervisor (civilian)', initials: 'KD', unit: 'Behavioral Health Unit', d: 'medical', status: 'on', strength: [4, 5] },
+              ],
+            },
+            {
+              id: 'food', name: 'L. Okonkwo', role: 'Manager (civilian)', initials: 'LO',
+              unit: 'Food Services', d: 'food', status: 'on', strength: [8, 9],
+              detail: '~1,450 meals/day · second-shift line running on OT',
+              children: [
+                { id: 'cook-main', name: 'D. Whitfield', role: 'Lead Cook (civilian)', initials: 'DW', unit: 'Kitchen — Main Line', d: 'food', status: 'on', strength: [4, 4] },
+                {
+                  id: 'cook-vacant', name: 'VACANT — 34 days', role: 'Cook — Second Shift', initials: '—',
+                  unit: 'Kitchen — Second Shift', d: 'food', status: 'vacant', strength: [2, 3],
+                  detail: 'Second-shift line covered by OT since Jul 2 · posting active',
+                  link: { label: 'View posting', route: '/hr/jobs' },
+                },
+                { id: 'cook-diet', name: 'M. Ferraro', role: 'Cook — Therapeutic Diets (civilian)', initials: 'MF', unit: 'Kitchen — Therapeutic Diets', d: 'food', status: 'on', strength: [2, 2], detail: 'Works medical-diet orders from Correctional Health Services' },
+              ],
+            },
+            {
+              id: 'support', name: 'B. Yates', role: 'Supervisor (civilian)', initials: 'BY',
+              unit: 'Inmate Support Services', d: 'support', status: 'on', strength: [6, 7],
+              children: [
+                { id: 'commissary', name: 'H. Nakamura', role: 'Coordinator (civilian)', initials: 'HN', unit: 'Commissary & Inmate Trust', d: 'support', status: 'on', strength: [2, 2] },
+                { id: 'laundry', name: 'G. Iverson', role: 'Coordinator (civilian)', initials: 'GI', unit: 'Laundry & Inmate Property', d: 'support', status: 'on', strength: [2, 3] },
+                { id: 'chaplain', name: 'Rev. P. Achebe', role: 'Chaplain (contract)', initials: 'PA', unit: 'Chaplaincy & Programs', d: 'support', status: 'on', strength: [1, 1] },
               ],
             },
             {
@@ -230,6 +257,7 @@ const actingItems = [
   { who: 'Cpl. Finch', what: 'Acting sergeant — Housing Unit E-9', since: 'since Jul 21 · tied to Moore board' },
   { who: 'Capt. — Investigations', what: 'Vacant 47 days · interim: Capt. Nguyen', since: '2 internal candidates' },
   { who: 'Staff Nurse — Nights', what: 'Vacant 21 days · drives C-block OT', since: 'contract relief Aug 5' },
+  { who: 'Cook — Second Shift', what: 'Vacant 34 days · kitchen line on OT', since: 'posting active' },
   { who: 'Mgr. — Records', what: 'Vacant 12 days · split under Dir. Osei', since: 'posting active' },
 ];
 
