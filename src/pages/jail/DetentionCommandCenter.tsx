@@ -1,1092 +1,407 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Flag } from 'lucide-react';
 import DashboardLayout from '../../layouts/DashboardLayout';
-import {
-  Building2, Users, AlertTriangle, Shield, Hospital, Truck,
-  Activity, TrendingUp, TrendingDown, Clock, CheckCircle,
-  Circle, ArrowRight, RefreshCw, Sparkles, X,
-  Heart, Zap, AlertOctagon, Calendar, FileText
-} from 'lucide-react';
 
 // ── Types ─────────────────────────────────────────────────────
 
-interface HousingPod {
-  id: string;
-  name: string;
-  type: string;
-  capacity: number;
-  current: number;
-  security: string;
-  status: 'Normal' | 'Near Capacity' | 'Over Capacity';
-  notes?: string;
+interface BedClass { label: string; cur: number; cap: number }
+interface IntakeRow { id: string; name: string; stage: string; mins: number }
+interface CheckRow { unit: string; held: number; lastAgo: number; documented: number }
+interface HoldRow { id: string; name: string; type: string; mins: number }
+interface RiskRow { label: string; count: string; dot: string }
+interface PostRow { post: string; state: 'FILLED' | 'OVERTIME' | 'UNMANNED' }
+interface Movement { time: string; what: string; detail: string; state: 'READY' | 'PENDING' | 'AT RISK' }
+
+// ── Facility state — JMS system of record ──────────────────────
+
+const facility = {
+  population: 416,
+  beds: 470,
+  lastCount: { time: '0500', cleared: 416, discrepancies: 0, next: '0900' },
+  bookings: 9,
+  releases: 6,
+  net: 3,
+};
+
+// Free beds only count if they match the classification — a free male-medium
+// bed does nothing for a female intake, which is why this is a per-class board
+// rather than a single occupancy number.
+const bedClasses: BedClass[] = [
+  { label: 'Maximum',        cur: 74,  cap: 80  },
+  { label: 'Medium',         cur: 168, cap: 190 },
+  { label: 'Minimum',        cur: 96,  cap: 110 },
+  { label: 'Female',         cur: 52,  cap: 56  },
+  { label: 'Juvenile',       cur: 3,   cap: 8   },
+  { label: 'Medical',        cur: 14,  cap: 14  },
+  { label: 'Isolation / seg', cur: 9,  cap: 12  },
+];
+
+// Minutes in custody. The 4-hour medical screening standard is the clock that
+// matters — past it the facility is out of compliance, not merely behind.
+const INTAKE_STANDARD = 240;
+const intakeQueue: IntakeRow[] = [
+  { id: 'B-26-4431', name: 'Mercer, D.',   stage: 'Awaiting medical screening', mins: 329 },
+  { id: 'B-26-4433', name: 'Aldridge, R.', stage: 'Screening in progress',      mins: 278 },
+  { id: 'B-26-4436', name: 'Oyelaran, T.', stage: 'Classification interview',   mins: 170 },
+  { id: 'B-26-4437', name: 'Sanchez, L.',  stage: 'Property / photo',           mins: 118 },
+];
+
+const CHECK_INTERVAL = 30;
+const wellnessChecks: CheckRow[] = [
+  { unit: 'A Block',     held: 96,  lastAgo: 23, documented: 100 },
+  { unit: 'B Block',     held: 88,  lastAgo: 31, documented: 100 },
+  { unit: 'C Block',     held: 104, lastAgo: 4,  documented: 93  },
+  { unit: 'Female Unit', held: 52,  lastAgo: 20, documented: 100 },
+  { unit: 'Medical',     held: 14,  lastAgo: 10, documented: 98  },
+  { unit: 'Segregation', held: 9,   lastAgo: 19, documented: 100 },
+];
+
+// Negative minutes are past the deadline. A missed release is unlawful
+// detention, so these outrank everything else on the page.
+const holds: HoldRow[] = [
+  { id: 'B-26-4009', name: 'Pratt, S.',     type: 'Segregation review',      mins: -503 },
+  { id: 'B-26-4302', name: 'Whitcombe, J.', type: '48-hour hold',            mins: -45  },
+  { id: 'B-26-4188', name: 'Renner, K.',    type: 'Court-ordered release',   mins: 85   },
+  { id: 'B-26-4377', name: 'Bell, A.',      type: 'State facility transfer', mins: 217  },
+  { id: 'B-26-4211', name: 'Doyle, M.',     type: 'Immigration detainer',    mins: 937  },
+];
+
+const populationRisk: RiskRow[] = [
+  { label: 'Suicide watch',      count: '2 active',  dot: 'bg-amber-400' },
+  { label: 'Medical watch',      count: '5 active',  dot: 'bg-slate-600' },
+  { label: 'Detox / withdrawal', count: '3 active',  dot: 'bg-amber-400' },
+  { label: 'Keep-separate pairs', count: '7 tracked', dot: 'bg-slate-600' },
+  { label: 'Administrative seg', count: '9 held',    dot: 'bg-slate-600' },
+];
+
+const medicalQueue = [
+  { label: 'Sick calls pending',        value: '11',  color: 'text-slate-300' },
+  { label: 'Medication passes due 0700', value: '64', color: 'text-slate-300' },
+  { label: 'Off-site appointments today', value: '2', color: 'text-slate-300' },
+  { label: 'Nurse coverage',            value: '2 of 3 posts', color: 'text-amber-400' },
+];
+
+// Every post the facility cannot legally run without — custody and support
+// alike. Food service is a mandatory post: meals are a court-ordered standard,
+// not an amenity, and the kitchen carries its own staffing clock.
+const mandatoryPosts: PostRow[] = [
+  { post: 'Master control',       state: 'FILLED'   },
+  { post: 'A/B Block floor',      state: 'FILLED'   },
+  { post: 'C Block floor',        state: 'OVERTIME' },
+  { post: 'Intake / booking',     state: 'OVERTIME' },
+  { post: 'Medical escort',       state: 'UNMANNED' },
+  { post: 'Kitchen / food service', state: 'FILLED' },
+  { post: 'Cook — second shift',  state: 'OVERTIME' },
+  { post: 'Perimeter / transport', state: 'FILLED'  },
+];
+
+const movements: Movement[] = [
+  { time: '0800', what: 'County court — 3 inmates',            detail: '2 deputies · Sgt. Vega',          state: 'READY'   },
+  { time: '0900', what: 'Court-ordered release — Renner, K.',  detail: 'Property retrieved',              state: 'READY'   },
+  { time: '1100', what: 'State facility transfer — Bell, A.',  detail: '2 deputies · pending assignment', state: 'PENDING' },
+  { time: '1330', what: 'Off-site medical — 2 inmates',        detail: '1 deputy · unmanned post',        state: 'AT RISK' },
+];
+
+// ── Helpers ────────────────────────────────────────────────────
+
+const hm = (m: number) => {
+  const a = Math.abs(m);
+  const h = Math.floor(a / 60);
+  return h ? `${h}h ${a % 60}m` : `${a}m`;
+};
+
+const bedTone = (free: number) =>
+  free === 0
+    ? { card: 'border-red-500/50',   bar: 'bg-red-500',   free: 'text-red-400' }
+    : free <= 3
+      ? { card: 'border-slate-800',  bar: 'bg-amber-400', free: 'text-slate-200' }
+      : { card: 'border-slate-800',  bar: 'bg-slate-500', free: 'text-slate-200' };
+
+const postTone: Record<PostRow['state'], string> = {
+  FILLED:   'text-emerald-400',
+  OVERTIME: 'text-amber-400',
+  UNMANNED: 'text-red-400',
+};
+const postDot: Record<PostRow['state'], string> = {
+  FILLED:   'bg-emerald-400',
+  OVERTIME: 'bg-amber-400',
+  UNMANNED: 'bg-red-500',
+};
+const moveTone: Record<Movement['state'], string> = {
+  READY:     'text-emerald-400',
+  PENDING:   'text-amber-400',
+  'AT RISK': 'text-red-400',
+};
+
+function SectionLabel({ children, right }: { children: React.ReactNode; right?: React.ReactNode }) {
+  return (
+    <div className="flex items-baseline justify-between mb-3">
+      <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-slate-500">{children}</p>
+      {right}
+    </div>
+  );
 }
-
-interface ShiftStatus {
-  label: string;
-  scheduled: number;
-  present: number;
-  supervisor: string;
-  issue?: string;
-}
-
-interface CourtRun {
-  court: string;
-  time: string;
-  inmates: number;
-  deputy: string;
-  status: 'Completed' | 'En Route' | 'Staging' | 'Scheduled';
-  etaReturn?: string;
-}
-
-// ── Static data ────────────────────────────────────────────────
-
-const facilityMetrics = {
-  totalCapacity: 920,
-  currentPopulation: 842,
-  percentFull: 91.5,
-  bookingsToday: 18,
-  releasesToday: 14,
-  netChange: +4,
-  courtTransports: 31,
-  sevenDayAverage: 843,
-};
-
-const populationTrend = [
-  { date: 'D-7', pop: 838 },
-  { date: 'D-6', pop: 841 },
-  { date: 'D-5', pop: 839 },
-  { date: 'D-4', pop: 845 },
-  { date: 'D-3', pop: 848 },
-  { date: 'D-2', pop: 844 },
-  { date: 'D-1', pop: 846 },
-  { date: 'Now',  pop: 842 },
-];
-
-const housingPods: HousingPod[] = [
-  { id: 'A1',  name: 'A-Pod',   type: 'Male GP',          capacity: 96,  current: 94,  security: 'Med',  status: 'Near Capacity' },
-  { id: 'A2',  name: 'A2-Pod',  type: 'Male GP',          capacity: 96,  current: 89,  security: 'Med',  status: 'Normal' },
-  { id: 'B1',  name: 'B-Pod',   type: 'Male Max',         capacity: 64,  current: 61,  security: 'Max',  status: 'Normal' },
-  { id: 'B2',  name: 'B2-Pod',  type: 'Disciplinary',     capacity: 32,  current: 28,  security: 'Max',  status: 'Normal' },
-  { id: 'C1',  name: 'C-Pod',   type: 'Male Medium',      capacity: 128, current: 115, security: 'Med',  status: 'Normal' },
-  { id: 'C2',  name: 'C2-Pod',  type: 'Work Release',     capacity: 48,  current: 42,  security: 'Min',  status: 'Normal' },
-  { id: 'D1',  name: 'D-Pod',   type: 'Female GP',        capacity: 80,  current: 73,  security: 'Med',  status: 'Normal' },
-  { id: 'D2',  name: 'D2-Pod',  type: 'Female Max',       capacity: 32,  current: 29,  security: 'Max',  status: 'Normal' },
-  { id: 'E1',  name: 'E-Pod',   type: 'Medical',          capacity: 48,  current: 44,  security: 'Med',  status: 'Near Capacity', notes: '3 isolation active' },
-  { id: 'E2',  name: 'E2-Pod',  type: 'Mental Health',    capacity: 40,  current: 38,  security: 'Med',  status: 'Near Capacity', notes: '24/7 monitoring' },
-  { id: 'F1',  name: 'F-Pod',   type: 'Intake',           capacity: 64,  current: 52,  security: 'Hi',   status: 'Normal', notes: '12 pending class.' },
-  { id: 'F2',  name: 'F2-Pod',  type: 'Prot. Custody',   capacity: 48,  current: 41,  security: 'Hi',   status: 'Normal' },
-  { id: 'G1',  name: 'G-Pod',   type: 'Juvenile',         capacity: 24,  current: 18,  security: 'Med',  status: 'Normal' },
-  { id: 'G2',  name: 'G2-Pod',  type: 'Pre-Release',      capacity: 40,  current: 35,  security: 'Min',  status: 'Normal' },
-  { id: 'H1',  name: 'H-Pod',   type: 'Federal Hold',     capacity: 48,  current: 47,  security: 'Hi',   status: 'Near Capacity' },
-  { id: 'H2',  name: 'H2-Pod',  type: 'ICE Hold',         capacity: 32,  current: 36,  security: 'Med',  status: 'Over Capacity', notes: 'Emergency beds in use' },
-];
-
-const shifts: ShiftStatus[] = [
-  { label: 'A-Shift',     scheduled: 15, present: 15, supervisor: 'Sgt. Williams' },
-  { label: 'B-Shift',     scheduled: 14, present: 13, supervisor: 'Sgt. Thompson', issue: 'Officer Smith — sick call 11:30 AM' },
-  { label: 'C-Shift',     scheduled: 14, present: 14, supervisor: 'Sgt. Davis' },
-  { label: 'Medical',     scheduled: 6,  present: 6,  supervisor: 'RN Martinez' },
-  { label: 'Kitchen',     scheduled: 8,  present: 7,  supervisor: 'Lead Cook Whitfield', issue: 'Second-shift cook vacant — line on OT' },
-  { label: 'Intake',      scheduled: 9,  present: 9,  supervisor: 'Sgt. Nakamura' },
-  { label: 'Programs',    scheduled: 6,  present: 6,  supervisor: 'Sgt. Coleman' },
-  { label: 'Laundry',     scheduled: 3,  present: 3,  supervisor: 'Sup. Iverson' },
-  { label: 'Maintenance', scheduled: 4,  present: 4,  supervisor: 'Sup. Boyd' },
-];
-
-const courtRuns: CourtRun[] = [
-  { court: 'Superior Court',  time: '09:00', inmates: 8,  deputy: 'Sgt. Williams',  status: 'En Route',  etaReturn: '12:00' },
-  { court: 'State Court',     time: '09:30', inmates: 12, deputy: 'Sgt. Martinez',  status: 'Staging',   etaReturn: '14:00' },
-  { court: 'Magistrate Court',time: '13:00', inmates: 6,  deputy: 'Cpl. Johnson',   status: 'Scheduled', etaReturn: '15:00' },
-  { court: 'Probate Court',   time: '14:00', inmates: 3,  deputy: 'Cpl. Davis',     status: 'Scheduled', etaReturn: '16:00' },
-  { court: 'Juvenile Court',  time: '10:00', inmates: 2,  deputy: 'Det. Anderson',  status: 'Completed', etaReturn: 'Returned 11:45' },
-];
-
-const criticalTasks = [
-  { text: 'Resolve H2-Pod over capacity — coordinate USMS transfer', urgency: 'critical', due: 'Before 1800', actionType: 'transfer',  label: 'Execute Transfer' },
-  { text: 'Authorize OT for B-Shift (Officer Smith callout)',         urgency: 'high',     due: 'ASAP',         actionType: 'ot',         label: 'Authorize OT'    },
-  { text: 'Request 5th transport van — 31 court runs tomorrow',       urgency: 'high',     due: 'Today 1700',   actionType: 'fleet',      label: 'Request Van'     },
-  { text: 'E-Pod review with Medical Director Chen (44/48 beds)',     urgency: 'medium',   due: 'Today 1600',   actionType: 'medReview',  label: 'Schedule Review' },
-  { text: 'Federal audit Dec 12-14 — resolve capacity violations',   urgency: 'medium',   due: 'Dec 11',       actionType: 'transfer',   label: 'Resolve Now'     },
-];
-
-// ── Helper functions ───────────────────────────────────────────
-
-const getPodColor = (pod: HousingPod) => {
-  if (pod.status === 'Over Capacity') return { bg: 'bg-red-500/15 border-red-500/40', text: 'text-red-300', bar: 'bg-red-500' };
-  if (pod.status === 'Near Capacity') return { bg: 'bg-amber-500/10 border-amber-500/30', text: 'text-amber-300', bar: 'bg-amber-500' };
-  return { bg: 'bg-slate-50 dark:bg-zinc-900/35 border-slate-200 dark:border-slate-700/25', text: 'text-slate-500', bar: 'bg-slate-600/50' };
-};
-
-const getPct = (pod: HousingPod) => Math.round((pod.current / pod.capacity) * 100);
-
-const getShiftColors = (shift: ShiftStatus) => {
-  const pct = (shift.present / shift.scheduled) * 100;
-  if (pct < 93) return { text: 'text-red-600 dark:text-red-400',   bg: 'bg-red-500/10 border-red-500/20',     dot: 'bg-red-400' };
-  if (pct < 100) return { text: 'text-amber-600 dark:text-amber-400', bg: 'bg-amber-500/10 border-amber-500/20', dot: 'bg-amber-400' };
-  return { text: 'text-slate-500', bg: 'bg-slate-50 dark:bg-zinc-900/35 border-slate-700/40', dot: 'bg-slate-500' };
-};
-
-const getRunStatus = (status: CourtRun['status']) => {
-  switch (status) {
-    case 'Completed': return 'text-slate-500';
-    case 'En Route':  return 'text-slate-500';
-    case 'Staging':   return 'text-amber-600 dark:text-amber-400';
-    default:          return 'text-slate-500';
-  }
-};
-
-const getUrgencyColors = (u: string) => {
-  if (u === 'critical') return 'border-l-2 border-red-500 bg-red-500/8 text-red-300';
-  if (u === 'high') return 'border-l-2 border-amber-500 bg-amber-500/8 text-amber-300';
-  return 'border-l-2 border-slate-600/50 bg-slate-100 dark:bg-zinc-900/30 text-slate-500';
-};
-
-// ── Component ─────────────────────────────────────────────────
 
 export default function DetentionCommandCenter() {
   const navigate = useNavigate();
-  const [aiExpanded, setAiExpanded] = useState(true);
-  const [transferOpen, setTransferOpen] = useState(false);
-  const [otOpen, setOtOpen] = useState(false);
-  const [fleetOpen, setFleetOpen] = useState(false);
-  const [medReviewOpen, setMedReviewOpen] = useState(false);
-  const [transferDone, setTransferDone] = useState(false);
-  const [otDone, setOtDone] = useState(false);
-  const [fleetDone, setFleetDone] = useState(false);
-  const [medReviewDone, setMedReviewDone] = useState(false);
-  const [selectedTransfer, setSelectedTransfer] = useState(0);
-  const [selectedOt, setSelectedOt] = useState(0);
-  const [activeAlerts, setActiveAlerts] = useState([
-    { id: 1, msg: 'H2-Pod over capacity (36/32) — emergency beds in use', type: 'critical', visible: true },
-    { id: 2, msg: 'B-Shift understaffed 13/14 — ACA minimum at risk',    type: 'critical', visible: true },
-    { id: 3, msg: 'E-Pod medical housing at 92% — monitor closely',       type: 'warning',  visible: true },
-  ]);
 
-  const visibleAlerts = activeAlerts.filter(a => a.visible);
-  const criticalCount = visibleAlerts.filter(a => a.type === 'critical').length;
-  const warningCount = visibleAlerts.filter(a => a.type === 'warning').length;
-  const dismiss = (id: number) => setActiveAlerts(prev => prev.map(a => a.id === id ? { ...a, visible: false } : a));
+  // The clocks on this page are the point of it, so they run. One tick a
+  // minute is enough — anything faster is motion without information.
+  const [tick, setTick] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => setTick((n) => n + 1), 60_000);
+    return () => clearInterval(t);
+  }, []);
 
-  const handleTaskAction = (actionType: string) => {
-    if (actionType === 'transfer')  { setTransferDone(false);   setTransferOpen(true);   }
-    if (actionType === 'ot')        { setOtDone(false);         setOtOpen(true);         }
-    if (actionType === 'fleet')     { setFleetDone(false);      setFleetOpen(true);      }
-    if (actionType === 'medReview') { setMedReviewDone(false);  setMedReviewOpen(true);  }
-  };
+  const intakeNow = intakeQueue.map((r) => ({ ...r, mins: r.mins + tick }));
+  const checksNow = wellnessChecks.map((r) => ({ ...r, lastAgo: r.lastAgo + tick }));
+  const holdsNow = holds.map((r) => ({ ...r, mins: r.mins - tick }));
 
-  const capacityPct = facilityMetrics.percentFull;
-  const totalStaff = shifts.reduce((a, s) => a + s.scheduled, 0);
-  const totalPresent = shifts.reduce((a, s) => a + s.present, 0);
-  const staffPct = Math.round((totalPresent / totalStaff) * 100);
+  // The header's overdue count is the sum of every breached clock below it,
+  // so the number and the list can never disagree.
+  const overdueClocks =
+    intakeNow.filter((r) => r.mins > INTAKE_STANDARD).length +
+    checksNow.filter((r) => r.lastAgo >= CHECK_INTERVAL).length +
+    holdsNow.filter((r) => r.mins < 0).length;
 
-  // Readiness indicators for the status bar
-  const facilityReadiness = capacityPct >= 95 ? 'Critical' : capacityPct >= 85 ? 'Warning' : 'Normal';
-  const staffReadiness = staffPct < 93 ? 'Critical' : staffPct < 100 ? 'Warning' : 'Normal';
-  const medicalReadiness = 'Warning'; // E-Pod 92%
-  const overallReadiness = facilityReadiness === 'Critical' || staffReadiness === 'Critical' ? 'Critical' : 'Warning';
-
-  // ── Detention Risk Score — composite 0–100 ──────────────────────────────
-  const riskComponents = [
-    { label: 'Housing',    score: 23, max: 25, detail: `${capacityPct}% capacity · H2 violation` },
-    { label: 'Staffing',   score: 8,  max: 20, detail: `${staffPct}% coverage · B-Shift gap`     },
-    { label: 'Medical',    score: 12, max: 20, detail: 'E-Pod 92% · E2-Pod 95%'                  },
-    { label: 'Transports', score: 12, max: 15, detail: '31 runs tomorrow · 4 vans available'     },
-    { label: 'Compliance', score: 13, max: 15, detail: 'Federal audit Dec 12 · H2 violation'     },
-    { label: 'Incidents',  score: criticalCount >= 2 ? 5 : 3, max: 5, detail: `${criticalCount} critical · ${warningCount} warning` },
-  ];
-  const riskScore = riskComponents.reduce((s, c) => s + c.score, 0);
-  const riskLevel = riskScore >= 70 ? 'Critical' : riskScore >= 40 ? 'Elevated' : 'Stable';
-  const riskColor = riskScore >= 70 ? {
-    bg: 'bg-red-500/8 border-red-500/25', icon: 'bg-red-500/20 border-red-500/30', text: 'text-red-400',
-    bar: 'bg-red-500', badge: 'bg-red-500/15 border-red-500/30 text-red-400',
-  } : riskScore >= 40 ? {
-    bg: 'bg-amber-500/8 border-amber-500/25', icon: 'bg-amber-500/20 border-amber-500/30', text: 'text-amber-400',
-    bar: 'bg-amber-500', badge: 'bg-amber-500/15 border-amber-500/30 text-amber-400',
-  } : {
-    bg: 'bg-emerald-500/8 border-emerald-500/25', icon: 'bg-emerald-500/20 border-emerald-500/30', text: 'text-emerald-400',
-    bar: 'bg-emerald-500', badge: 'bg-emerald-500/15 border-emerald-500/30 text-emerald-400',
-  };
-
-  const readinessBadge = (r: string) => {
-    if (r === 'Critical') return 'bg-red-100 dark:bg-red-500/15 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-500/25';
-    if (r === 'Warning')  return 'bg-amber-100 dark:bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-500/25';
-    return 'bg-slate-100 dark:bg-zinc-800/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40';
-  };
+  const otPosts = mandatoryPosts.filter((p) => p.state === 'OVERTIME').length;
+  const pct = Math.round((facility.population / facility.beds) * 100);
 
   return (
     <DashboardLayout>
-      <div className="p-4 lg:p-6 space-y-7">
+      <div className="min-h-full bg-[#0A0A0B] px-6 py-8">
+        <div className="max-w-[1500px] mx-auto">
 
-        {/* ── Header ──────────────────────────────────────── */}
-        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-3">
-          <div>
-            <div className="flex items-center gap-3 mb-1">
-              <h1 className="text-xl font-bold text-slate-900 dark:text-white">Detention Command Center</h1>
-              <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-semibold ${readinessBadge(overallReadiness)}`}>
-                {overallReadiness === 'Critical' ? '⬤' : '⚠'} {overallReadiness}
+          {/* ── Header ─────────────────────────────────────── */}
+          <div className="flex flex-col lg:flex-row lg:items-center gap-3 lg:gap-4 pb-5 border-b border-slate-800/70">
+            <div className="flex items-baseline gap-3 flex-wrap">
+              <h1 className="text-[19px] font-bold text-slate-100">Detention Command</h1>
+              <span className="text-[11px] text-slate-500">County Detention Facility · as of 06:12 · JMS system of record</span>
+            </div>
+            <div className="flex items-center gap-4 lg:ml-auto flex-wrap">
+              <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-red-400/70">
+                Protected — <span className="text-red-400">Medical / PREA</span> · Access logged
               </span>
-            </div>
-            <p className="text-[11px] text-slate-500">Gwinnett County Detention Center · {criticalCount > 0 ? `${criticalCount} critical action${criticalCount > 1 ? 's' : ''} pending` : 'Monitoring'}</p>
-          </div>
-          <div className="flex items-center gap-2 text-[11px] text-slate-500">
-            <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> Last updated 6:38 PM EST</span>
-            <button className="flex items-center gap-1 text-amber-600 dark:text-amber-400/70 hover:text-amber-600 dark:text-amber-400 transition-colors ml-2">
-              <RefreshCw className="w-3 h-3" /> Refresh
-            </button>
-          </div>
-        </div>
-
-        {/* ── Detention Risk Score ────────────────────────── */}
-        <div className={`rounded-xl border px-5 py-3.5 flex flex-col sm:flex-row items-start sm:items-center gap-4 ${riskColor.bg}`}>
-          <div className="flex items-center gap-3 flex-shrink-0">
-            <div className={`w-10 h-10 rounded-xl flex items-center justify-center border ${riskColor.icon}`}>
-              <Shield className={`w-5 h-5 ${riskColor.text}`} />
-            </div>
-            <div>
-              <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-500 mb-0.5">Detention Risk Score</p>
-              <div className="flex items-center gap-2">
-                <span className={`text-2xl font-bold ${riskColor.text}`}>{riskScore}<span className="text-sm font-normal text-slate-500">/100</span></span>
-                <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold border ${riskColor.badge}`}>{riskLevel.toUpperCase()}</span>
-                <div className="w-20 h-1.5 bg-white dark:bg-zinc-800/60 rounded-full overflow-hidden">
-                  <div className={`h-full rounded-full ${riskColor.bar}`} style={{ width: `${riskScore}%` }} />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="hidden sm:block w-px h-10 bg-slate-200 dark:bg-zinc-800/50 flex-shrink-0" />
-          <div className="grid grid-cols-3 sm:grid-cols-6 gap-x-5 gap-y-1.5 flex-1">
-            {riskComponents.map(c => {
-              const hi = c.score >= c.max * 0.8;
-              const med = c.score >= c.max * 0.5;
-              return (
-                <div key={c.label} title={c.detail}>
-                  <div className="flex items-center gap-1 mb-0.5">
-                    <div className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${hi ? 'bg-red-400' : med ? 'bg-amber-400' : 'bg-slate-500'}`} />
-                    <p className="text-[9px] font-semibold text-slate-500 uppercase tracking-wide">{c.label}</p>
-                  </div>
-                  <p className={`text-[11px] font-bold ${hi ? 'text-red-400' : med ? 'text-amber-400' : 'text-slate-500'}`}>
-                    {c.score}<span className="text-[9px] font-normal text-slate-600">/{c.max}</span>
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* ── Row 1: Command Snapshot KPIs ───────────────── */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-          {/* Facility Capacity */}
-          <div className={`bg-slate-100 dark:bg-zinc-900/30 border rounded-xl p-4 ${capacityPct >= 95 ? 'border-red-500/30' : capacityPct >= 85 ? 'border-amber-500/30' : 'border-slate-700/50'}`}>
-            <div className="flex items-center gap-1.5 mb-2">
-              <Building2 className="w-3.5 h-3.5 text-slate-700 dark:text-slate-400" />
-              <span className="text-[10px] text-slate-500 font-medium uppercase tracking-wide">Capacity</span>
-            </div>
-            <p className="text-xl font-bold text-slate-900 dark:text-white">{facilityMetrics.currentPopulation}<span className="text-sm text-slate-500">/{facilityMetrics.totalCapacity}</span></p>
-            <p className={`text-[11px] font-semibold mt-0.5 ${capacityPct >= 95 ? 'text-red-600 dark:text-red-400' : capacityPct >= 85 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500'}`}>{capacityPct}% full</p>
-            <div className="w-full h-1 bg-white dark:bg-zinc-800/50 rounded-full mt-1.5 overflow-hidden">
-              <div className={`h-full rounded-full ${capacityPct >= 95 ? 'bg-red-500' : capacityPct >= 85 ? 'bg-amber-500' : 'bg-slate-500/60'}`} style={{ width: `${Math.min(capacityPct, 100)}%` }} />
-            </div>
-          </div>
-
-          {/* Net Population Change */}
-          <div className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
-            <div className="flex items-center gap-1.5 mb-2">
-              <Activity className="w-3.5 h-3.5 text-slate-700 dark:text-slate-400" />
-              <span className="text-[10px] text-slate-500 font-medium uppercase tracking-wide">Population</span>
-            </div>
-            <p className="text-xl font-bold text-slate-900 dark:text-white">{facilityMetrics.bookingsToday}<span className="text-[11px] text-slate-700 dark:text-slate-400 ml-1">in</span></p>
-            <p className="text-[11px] text-slate-700 dark:text-slate-400 mt-0.5">{facilityMetrics.releasesToday} releases</p>
-            <p className={`text-[11px] font-semibold mt-0.5 flex items-center gap-0.5 ${facilityMetrics.netChange > 0 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500'}`}>
-              {facilityMetrics.netChange > 0 ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
-              Net {facilityMetrics.netChange > 0 ? '+' : ''}{facilityMetrics.netChange} today
-            </p>
-          </div>
-
-          {/* Staff Coverage */}
-          <div className={`bg-slate-100 dark:bg-zinc-900/30 border rounded-xl p-4 ${staffReadiness === 'Critical' ? 'border-red-500/30' : staffReadiness === 'Warning' ? 'border-amber-500/30' : 'border-slate-700/50'}`}>
-            <div className="flex items-center gap-1.5 mb-2">
-              <Users className="w-3.5 h-3.5 text-slate-700 dark:text-slate-400" />
-              <span className="text-[10px] text-slate-500 font-medium uppercase tracking-wide">Staff</span>
-            </div>
-            <p className="text-xl font-bold text-slate-900 dark:text-white">{totalPresent}<span className="text-sm text-slate-500">/{totalStaff}</span></p>
-            <p className={`text-[11px] font-semibold mt-0.5 ${staffReadiness === 'Critical' ? 'text-red-600 dark:text-red-400' : staffReadiness === 'Warning' ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500'}`}>{staffPct}% coverage</p>
-            <p className="text-[10px] text-slate-500 mt-0.5">B-Shift gap</p>
-          </div>
-
-          {/* Active Alerts */}
-          <div className={`bg-slate-100 dark:bg-zinc-900/30 border rounded-xl p-4 ${criticalCount > 0 ? 'border-red-500/30' : warningCount > 0 ? 'border-amber-500/30' : 'border-slate-700/50'}`}>
-            <div className="flex items-center gap-1.5 mb-2">
-              <AlertTriangle className="w-3.5 h-3.5 text-red-600 dark:text-red-400" />
-              <span className="text-[10px] text-slate-500 font-medium uppercase tracking-wide">Alerts</span>
-            </div>
-            <p className="text-xl font-bold text-slate-900 dark:text-white">{visibleAlerts.length}</p>
-            <p className="text-[11px] font-semibold mt-0.5 text-red-600 dark:text-red-400">{criticalCount} critical</p>
-            <p className="text-[10px] text-slate-500 mt-0.5">{warningCount} warning</p>
-          </div>
-
-          {/* Medical Unit */}
-          <div className={`bg-slate-100 dark:bg-zinc-900/30 border rounded-xl p-4 ${medicalReadiness === 'Warning' ? 'border-amber-500/30' : 'border-slate-700/50'}`}>
-            <div className="flex items-center gap-1.5 mb-2">
-              <Hospital className="w-3.5 h-3.5 text-slate-700 dark:text-slate-400" />
-              <span className="text-[10px] text-slate-500 font-medium uppercase tracking-wide">Medical</span>
-            </div>
-            <p className="text-xl font-bold text-slate-900 dark:text-white">E-Pod</p>
-            <p className="text-[11px] font-semibold mt-0.5 text-amber-600 dark:text-amber-400">92% occupied</p>
-            <p className="text-[10px] text-slate-500 mt-0.5">44 / 48 beds</p>
-          </div>
-
-          {/* Court Transports */}
-          <div className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
-            <div className="flex items-center gap-1.5 mb-2">
-              <Truck className="w-3.5 h-3.5 text-slate-700 dark:text-slate-400" />
-              <span className="text-[10px] text-slate-500 font-medium uppercase tracking-wide">Transports</span>
-            </div>
-            <p className="text-xl font-bold text-slate-900 dark:text-white">{facilityMetrics.courtTransports}</p>
-            <p className="text-[11px] text-slate-700 dark:text-slate-400 mt-0.5">5 runs today</p>
-            <p className="text-[10px] text-amber-600 dark:text-amber-400 mt-0.5">31 tomorrow ⚠</p>
-          </div>
-        </div>
-
-        {/* ── Row 2: Alerts + AI Intelligence ───────────── */}
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-5">
-
-          {/* Active Alerts */}
-          <div className="lg:col-span-2 bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <AlertOctagon className="w-4 h-4 text-red-600 dark:text-red-400" />
-                <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Active Alerts</h3>
-                {criticalCount > 0 && (
-                  <span className="px-1.5 py-0.5 bg-red-500/15 text-red-600 dark:text-red-400 text-[9px] font-bold rounded border border-red-500/20">{criticalCount} CRITICAL</span>
-                )}
-              </div>
-            </div>
-            <div className="space-y-2">
-              {visibleAlerts.length === 0 ? (
-                <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300 text-sm py-2">
-                  <CheckCircle className="w-4 h-4" />
-                  <span>No active alerts</span>
-                </div>
-              ) : visibleAlerts.map(alert => (
-                <div key={alert.id} className={`flex items-start gap-2.5 p-2.5 rounded-lg border text-[12px] ${
-                  alert.type === 'critical'
-                    ? 'bg-red-500/8 border-red-500/20'
-                    : 'bg-amber-500/8 border-amber-500/20'
-                }`}>
-                  <AlertTriangle className={`w-3.5 h-3.5 flex-shrink-0 mt-0.5 ${alert.type === 'critical' ? 'text-red-600 dark:text-red-400' : 'text-amber-600 dark:text-amber-400'}`} />
-                  <span className={alert.type === 'critical' ? 'text-red-200' : 'text-amber-200'}>{alert.msg}</span>
-                  <button onClick={() => dismiss(alert.id)} className="ml-auto flex-shrink-0 text-slate-700 hover:text-slate-600 dark:text-slate-400 transition-colors">
-                    <X className="w-3 h-3" />
-                  </button>
-                </div>
-              ))}
-            </div>
-
-            {/* Readiness Status Bar */}
-            <div className="mt-4 pt-3 border-t border-slate-200 dark:border-slate-700/50">
-              <p className="text-[10px] text-slate-500 uppercase tracking-wide mb-2">System Readiness</p>
-              <div className="grid grid-cols-2 gap-1.5">
-                {[
-                  { label: 'Capacity',  status: facilityReadiness },
-                  { label: 'Staffing',  status: staffReadiness },
-                  { label: 'Medical',   status: medicalReadiness },
-                  { label: 'Court Ops', status: 'Normal' },
-                ].map(item => (
-                  <div key={item.label} className={`flex items-center justify-between px-2 py-1 rounded text-[10px] border ${readinessBadge(item.status)}`}>
-                    <span>{item.label}</span>
-                    <span className="font-semibold">{item.status}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* AI Command Intelligence */}
-          <div className="lg:col-span-3 bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <div className="w-7 h-7 bg-slate-100 dark:bg-zinc-800/30 rounded-lg flex items-center justify-center">
-                  <Sparkles className="w-4 h-4 text-slate-700 dark:text-slate-400" />
-                </div>
-                <h3 className="text-sm font-semibold text-slate-900 dark:text-white">AI Command Intelligence</h3>
-              </div>
-              <button onClick={() => setAiExpanded(!aiExpanded)} className="text-slate-500 hover:text-slate-700 dark:text-slate-300 transition-colors text-[10px]">
-                {aiExpanded ? 'Collapse' : 'Expand'}
-              </button>
-            </div>
-            {aiExpanded && (
-              <div className="space-y-2.5 text-[12px]">
-
-                {/* H2-Pod */}
-                <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3">
-                  <p className="text-red-300 font-semibold mb-1 flex items-center gap-1.5">
-                    <Circle className="w-2.5 h-2.5 fill-red-400 text-red-600 dark:text-red-400" />
-                    H2-Pod ICE Hold at 112.5% (36/32) — Federal audit Dec 12–14
-                  </p>
-                  <p className="text-slate-300 mb-2">Move 4 min-security detainees to C2-Pod (42/48 — 6 beds available). Expected results:</p>
-                  <div className="flex flex-wrap gap-1.5 mb-2.5">
-                    {['H2 drops to 100% (32/32)', 'Federal compliance restored', 'C2-Pod stays within limits', 'No staffing impact'].map(t => (
-                      <span key={t} className="text-[10px] px-2 py-0.5 rounded-full border bg-emerald-500/10 border-emerald-500/20 text-emerald-400 font-medium">{t}</span>
-                    ))}
-                  </div>
-                  <button onClick={() => { setTransferDone(false); setTransferOpen(true); }} className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-slate-900 text-[11px] font-bold rounded-lg transition-colors">
-                    Approve Transfer <ArrowRight className="w-3 h-3" />
-                  </button>
-                </div>
-
-                {/* B-Shift OT */}
-                <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3">
-                  <p className="text-red-300 font-semibold mb-1 flex items-center gap-1.5">
-                    <Circle className="w-2.5 h-2.5 fill-red-400 text-red-600 dark:text-red-400" />
-                    B-Shift at 92.9% (13/14) — ACA 1:60 ratio at risk with 842 inmates
-                  </p>
-                  <p className="text-slate-300 mb-2">Authorize 8-hr OT for Cpl. Davis (off-duty, certified). Cost: $234. Expected results:</p>
-                  <div className="flex flex-wrap gap-1.5 mb-2.5">
-                    {['B-Shift returns to 100% (14/14)', 'ACA compliance restored', 'Cost: $234 OT'].map(t => (
-                      <span key={t} className="text-[10px] px-2 py-0.5 rounded-full border bg-emerald-500/10 border-emerald-500/20 text-emerald-400 font-medium">{t}</span>
-                    ))}
-                  </div>
-                  <button onClick={() => { setOtDone(false); setOtOpen(true); }} className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-slate-900 text-[11px] font-bold rounded-lg transition-colors">
-                    Authorize Overtime <ArrowRight className="w-3 h-3" />
-                  </button>
-                </div>
-
-                {/* Transport */}
-                <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
-                  <p className="text-amber-300 font-semibold mb-1 flex items-center gap-1.5">
-                    <Circle className="w-2.5 h-2.5 fill-amber-400 text-amber-600 dark:text-amber-400" />
-                    31 court transports tomorrow — only 4 vans available (need 5)
-                  </p>
-                  <p className="text-slate-300 mb-2">Request 1 additional van from Fleet OR stagger (Group 1: 06:30 / Group 2: 08:00). Expected results:</p>
-                  <div className="flex flex-wrap gap-1.5 mb-2.5">
-                    {['All 31 runs covered', 'No schedule delays', 'Fleet ETA: same day'].map(t => (
-                      <span key={t} className="text-[10px] px-2 py-0.5 rounded-full border bg-emerald-500/10 border-emerald-500/20 text-emerald-400 font-medium">{t}</span>
-                    ))}
-                  </div>
-                  <button onClick={() => { setFleetDone(false); setFleetOpen(true); }} className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-slate-900 text-[11px] font-bold rounded-lg transition-colors">
-                    Request Transport <ArrowRight className="w-3 h-3" />
-                  </button>
-                </div>
-
-              </div>
-            )}
-            {!aiExpanded && (
-              <p className="text-[11px] text-slate-500">2 critical actions · 1 warning · Click expand to review</p>
-            )}
-            <div className="mt-3 pt-2.5 border-t border-slate-200 dark:border-slate-700/40 flex items-center justify-between">
-              <span className="text-[10px] text-slate-700">AI-assisted · 4 sources · 3m ago</span>
-              <button className="text-[11px] text-slate-700 dark:text-slate-400 hover:text-slate-700 dark:text-slate-300 transition-colors flex items-center gap-1">
-                Full intelligence brief <ArrowRight className="w-3 h-3" />
+              <button
+                onClick={() => navigate('/command/warroom')}
+                className="px-3.5 py-2 border border-red-500/40 rounded-lg text-[11.5px] font-semibold text-slate-200 hover:bg-red-500/10 transition-colors"
+              >
+                Escalate to War Room
               </button>
             </div>
           </div>
-        </div>
 
-        {/* ── Row 3: Operational Risk ────────────────────── */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-
-          {/* Housing Unit Map */}
-          <div className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <Shield className="w-4 h-4 text-slate-700 dark:text-slate-400" />
-                <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Housing Unit Status</h3>
-              </div>
-              <div className="flex items-center gap-2 text-[9px] text-slate-500">
-                <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-sm bg-slate-600 inline-block" />Normal</span>
-                <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-sm bg-amber-500/60 inline-block" />Near</span>
-                <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-sm bg-red-500/60 inline-block" />Over</span>
-              </div>
+          {/* ── Status bar ─────────────────────────────────── */}
+          <div className="mt-5 border border-slate-800/80 rounded-xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-slate-800/60">
+            <div className="px-5 py-4">
+              <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-slate-500 mb-2">Population</p>
+              <p className="text-[26px] font-bold text-slate-100 leading-none">
+                {facility.population}
+                <span className="text-[12px] font-normal text-slate-500 ml-1.5">/ {facility.beds} beds · {pct}%</span>
+              </p>
             </div>
-            <div className="grid grid-cols-4 gap-1.5">
-              {housingPods.map(pod => {
-                const colors = getPodColor(pod);
-                const pct = getPct(pod);
-                return (
-                  <div key={pod.id} className={`rounded-lg border p-1.5 cursor-default ${colors.bg}`} title={`${pod.name} — ${pod.type}\n${pod.current}/${pod.capacity} (${pct}%)\n${pod.notes || ''}`}>
-                    <p className="text-[9px] font-bold text-slate-900 dark:text-white truncate">{pod.id}</p>
-                    <p className={`text-[10px] font-semibold ${colors.text}`}>{pct}%</p>
-                    <div className="w-full h-0.5 bg-white dark:bg-zinc-800/50 rounded-full mt-1 overflow-hidden">
-                      <div className={`h-full rounded-full ${colors.bar}`} style={{ width: `${Math.min(pct, 100)}%` }} />
-                    </div>
-                  </div>
-                );
-              })}
+            <div className="px-5 py-4">
+              <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-slate-500 mb-2">Last formal count</p>
+              <p className="text-[13px] font-semibold text-emerald-400">
+                {facility.lastCount.time} — {facility.lastCount.cleared} cleared, {facility.lastCount.discrepancies} discrepancies
+              </p>
+              <p className="text-[10.5px] text-slate-500 mt-1">
+                Next count {facility.lastCount.next} ·{' '}
+                <button className="text-amber-500/90 hover:text-amber-400 transition-colors">Log count</button>
+              </p>
             </div>
-            <div className="mt-3 pt-2.5 border-t border-slate-200 dark:border-slate-700/50 flex justify-between text-[10px] text-slate-500">
-              <span>{housingPods.filter(p => p.status === 'Over Capacity').length} over · {housingPods.filter(p => p.status === 'Near Capacity').length} near capacity</span>
-              <span>{housingPods.filter(p => p.status === 'Normal').length} normal</span>
+            <div className="px-5 py-4">
+              <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-slate-500 mb-2">Today</p>
+              <p className="text-[15px] font-mono text-slate-200">{facility.bookings} bookings · {facility.releases} releases</p>
+              <p className="text-[10.5px] text-slate-500 mt-1">+{facility.net} net since 0000</p>
             </div>
-          </div>
-
-          {/* Staff Coverage */}
-          <div className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <Users className="w-4 h-4 text-slate-700 dark:text-slate-400" />
-              <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Staff Coverage</h3>
-            </div>
-            <div className="space-y-2.5">
-              {shifts.map(shift => {
-                const colors = getShiftColors(shift);
-                const pct = Math.round((shift.present / shift.scheduled) * 100);
-                return (
-                  <div key={shift.label} className={`p-3 rounded-lg border ${colors.bg}`}>
-                    <div className="flex items-center justify-between mb-1.5">
-                      <div className="flex items-center gap-2">
-                        <div className={`w-1.5 h-1.5 rounded-full ${colors.dot}`} />
-                        <span className="text-[12px] font-semibold text-slate-900 dark:text-white">{shift.label}</span>
-                      </div>
-                      <span className={`text-[11px] font-bold ${colors.text}`}>{shift.present}/{shift.scheduled}</span>
-                    </div>
-                    <div className="w-full h-1 bg-white dark:bg-zinc-800/50 rounded-full overflow-hidden mb-1.5">
-                      <div className={`h-full rounded-full ${pct < 93 ? 'bg-red-500' : pct < 100 ? 'bg-amber-500' : 'bg-emerald-500'}`} style={{ width: `${pct}%` }} />
-                    </div>
-                    <div className="flex items-center justify-between text-[10px]">
-                      <span className="text-slate-500">{shift.supervisor}</span>
-                      {shift.issue && <span className={`font-medium ${colors.text}`}>⚠ {shift.issue.split('—')[0]}</span>}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Court Transport Schedule */}
-          <div className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <Truck className="w-4 h-4 text-slate-700 dark:text-slate-400" />
-              <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Court Transport Schedule</h3>
-            </div>
-            <div className="space-y-2">
-              {courtRuns.map((run, i) => (
-                <div key={i} className="flex items-start gap-3 py-2 border-b border-slate-200 dark:border-slate-200 dark:border-slate-700/25 last:border-0">
-                  <div className="w-12 text-right flex-shrink-0">
-                    <p className="text-[11px] font-bold text-slate-700 dark:text-slate-300">{run.time}</p>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-[12px] font-medium text-slate-900 dark:text-white truncate">{run.court}</p>
-                    <p className="text-[10px] text-slate-500">{run.inmates} inmates · {run.deputy}</p>
-                  </div>
-                  <div className="flex-shrink-0 text-right">
-                    <span className={`text-[10px] font-semibold ${getRunStatus(run.status)}`}>{run.status}</span>
-                    {run.etaReturn && <p className="text-[9px] text-slate-700">↩ {run.etaReturn}</p>}
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="mt-2 pt-2 border-t border-slate-200 dark:border-slate-700/50">
-              <p className="text-[10px] text-amber-600 dark:text-amber-400 flex items-center gap-1">
-                <AlertTriangle className="w-3 h-3" />
-                31 scheduled tomorrow — request 5th transport van
+            <div className="px-5 py-4">
+              <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-slate-500 mb-2">Overdue clocks</p>
+              <p className="text-[15px]">
+                <span className="text-[22px] font-bold text-red-400 leading-none">{overdueClocks}</span>
+                <span className="text-[11.5px] text-slate-400 ml-2">clocks past due — see below</span>
               </p>
             </div>
           </div>
-        </div>
 
-        {/* ── Row 4: Monitoring ─────────────────────────── */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-
-          {/* Population Trend */}
-          <div className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <TrendingUp className="w-4 h-4 text-slate-700 dark:text-slate-400" />
-                <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Population Trend</h3>
-              </div>
-              <span className="text-[10px] text-slate-500">7-day</span>
+          {/* ── Beds by classification ─────────────────────── */}
+          <div className="mt-6">
+            <SectionLabel>Beds by classification — <span className="text-slate-600">free beds must match classification</span></SectionLabel>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-3">
+              {bedClasses.map((b) => {
+                const free = b.cap - b.cur;
+                const tone = bedTone(free);
+                return (
+                  <div key={b.label} className={`border rounded-xl px-3.5 py-3 ${tone.card}`}>
+                    <div className="flex items-baseline justify-between gap-2">
+                      <p className="text-[12px] font-semibold text-slate-100 truncate">{b.label}</p>
+                      <p className={`text-[11px] font-mono flex-shrink-0 ${tone.free}`}>{free} free</p>
+                    </div>
+                    <div className="w-full h-1 bg-zinc-800/70 rounded-full overflow-hidden my-2">
+                      <div className={`h-full rounded-full ${tone.bar}`} style={{ width: `${(b.cur / b.cap) * 100}%` }} />
+                    </div>
+                    <p className="text-[10px] font-mono text-slate-500">{b.cur} / {b.cap}</p>
+                  </div>
+                );
+              })}
             </div>
-            <div className="flex items-end gap-4">
-              <div className="flex-1">
-                <div className="flex items-end gap-1 h-14">
-                  {populationTrend.map((d, i) => {
-                    const min = 833;
-                    const max = 853;
-                    const pct = ((d.pop - min) / (max - min)) * 100;
-                    const isNow = i === populationTrend.length - 1;
+          </div>
+
+          {/* ── Main grid ──────────────────────────────────── */}
+          <div className="mt-7 grid grid-cols-1 xl:grid-cols-[1fr,440px] gap-8">
+
+            {/* ── Left column ─────────────────────────────── */}
+            <div>
+              {/* Intake queue */}
+              <SectionLabel right={<span className="text-[10px] text-slate-500">{intakeNow.length} in intake</span>}>
+                Intake queue — 4h medical screening standard
+              </SectionLabel>
+              <div className="divide-y divide-slate-800/50">
+                {intakeNow.map((r) => {
+                  const over = r.mins - INTAKE_STANDARD;
+                  return (
+                    <div key={r.id} className={`flex items-center gap-3 py-3 pl-3 border-l-2 ${over > 0 ? 'border-red-500/70' : 'border-transparent'}`}>
+                      <span className="text-[10.5px] font-mono text-slate-500 w-[76px] flex-shrink-0">{r.id}</span>
+                      <span className="text-[12px] text-slate-100 w-32 flex-shrink-0 truncate">{r.name}</span>
+                      <span className="text-[11.5px] text-slate-400 flex-1 min-w-0 truncate">{r.stage}</span>
+                      <span className={`text-[11px] font-mono w-16 flex-shrink-0 text-right ${over > 0 ? 'text-red-400' : 'text-slate-300'}`}>{hm(r.mins)}</span>
+                      <span className="text-[10.5px] font-bold text-red-400 w-36 flex-shrink-0 text-right">
+                        {over > 0 ? `OVERDUE ${hm(over)} over` : ''}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Wellness checks */}
+              <div className="mt-7">
+                <SectionLabel right={<span className="text-[10px] text-slate-500">documentation compliance shown per unit</span>}>
+                  Wellness checks — 30 min interval
+                </SectionLabel>
+                <div className="divide-y divide-slate-800/50">
+                  {checksNow.map((c) => {
+                    const due = CHECK_INTERVAL - c.lastAgo;
                     return (
-                      <div key={d.date} className="flex-1 flex flex-col items-center gap-0.5" title={`${d.date}: ${d.pop}`}>
-                        <div className="w-full rounded-t-sm" style={{ height: `${pct}%`, minHeight: 4, background: isNow ? 'rgba(245,158,11,0.7)' : 'rgba(100,116,139,0.5)' }} />
+                      <div key={c.unit} className={`flex items-center gap-3 py-3 pl-3 border-l-2 ${due <= 0 ? 'border-red-500/70' : 'border-transparent'}`}>
+                        <span className="text-[12px] font-semibold text-slate-100 w-28 flex-shrink-0">{c.unit}</span>
+                        <span className="text-[11px] font-mono text-slate-400 w-20 flex-shrink-0">{c.held} <span className="text-slate-600">held</span></span>
+                        <span className="text-[11px] font-mono text-slate-500 w-28 flex-shrink-0">last {c.lastAgo}m ago</span>
+                        <span className={`text-[11px] font-mono w-24 flex-shrink-0 ${due <= 0 ? 'text-red-400 font-bold' : 'text-slate-300'}`}>
+                          {due <= 0 ? `${Math.abs(due)}m over` : `due in ${due}m`}
+                        </span>
+                        <span className={`text-[11px] flex-1 min-w-0 ${c.documented === 100 ? 'text-emerald-400' : 'text-amber-400'}`}>
+                          {c.documented}% documented
+                        </span>
+                        <button className="px-2.5 py-1 border border-slate-700/60 rounded text-[10.5px] font-semibold text-slate-300 hover:bg-zinc-900/60 transition-colors flex-shrink-0">
+                          Log check
+                        </button>
                       </div>
                     );
                   })}
                 </div>
-                <div className="flex justify-between mt-1">
-                  <span className="text-[9px] text-slate-700">D-7</span>
-                  <span className="text-[9px] text-slate-700">Now</span>
-                </div>
               </div>
-              <div className="text-right">
-                <p className="text-2xl font-bold text-slate-900 dark:text-white">{facilityMetrics.currentPopulation}</p>
-                <p className="text-[10px] text-slate-700 dark:text-slate-400">{facilityMetrics.sevenDayAverage} avg</p>
-                <p className="text-[11px] text-amber-600 dark:text-amber-400 font-medium">+4 today</p>
-              </div>
-            </div>
-            <div className="mt-3 pt-2.5 border-t border-slate-200 dark:border-slate-700/50 grid grid-cols-3 gap-2 text-center">
-              <div>
-                <p className="text-[10px] text-slate-500">Avg Stay</p>
-                <p className="text-[12px] font-semibold text-slate-900 dark:text-white">23.4d</p>
-              </div>
-              <div>
-                <p className="text-[10px] text-slate-500">Longest</p>
-                <p className="text-[12px] font-semibold text-slate-900 dark:text-white">847d</p>
-              </div>
-              <div>
-                <p className="text-[10px] text-slate-500">7-Day Fore.</p>
-                <p className="text-[12px] font-semibold text-amber-600 dark:text-amber-400">840–850</p>
-              </div>
-            </div>
-          </div>
 
-          {/* Medical Monitoring */}
-          <div className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <Heart className="w-4 h-4 text-pink-400" />
-              <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Medical Monitoring</h3>
-            </div>
-            <div className="space-y-2.5">
-              {[
-                { label: 'E-Pod Medical', value: '44/48', pct: 92, status: 'Near Capacity', note: '3 isolation cells active' },
-                { label: 'E2 Mental Health', value: '38/40', pct: 95, status: 'Near Capacity', note: '24/7 monitoring' },
-                { label: 'Hospital Guard', value: '1', pct: null, status: 'Active', note: 'Gwinnett Medical — Deputy Martinez' },
-                { label: 'Pending Med Eval', value: '3', pct: null, status: 'Pending', note: 'Awaiting psych clearance' },
-              ].map(item => (
-                <div key={item.label} className="flex items-start justify-between gap-2">
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between mb-0.5">
-                      <p className="text-[11px] font-medium text-slate-700 dark:text-slate-200">{item.label}</p>
-                      <span className={`text-[10px] font-semibold ${item.pct && item.pct >= 90 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500'}`}>{item.value}</span>
+              {/* Holds & release deadlines */}
+              <div className="mt-7">
+                <SectionLabel right={<span className="text-[10px] text-red-400/80">missed release = unlawful detention</span>}>
+                  Holds & release deadlines
+                </SectionLabel>
+                <div className="divide-y divide-slate-800/50">
+                  {holdsNow.map((h) => (
+                    <div key={h.id} className={`flex items-center gap-3 py-3 pl-3 border-l-2 ${h.mins < 0 ? 'border-red-500/70' : 'border-transparent'}`}>
+                      <span className="text-[10.5px] font-mono text-slate-500 w-[76px] flex-shrink-0">{h.id}</span>
+                      <span className="text-[12px] text-slate-100 w-32 flex-shrink-0 truncate">{h.name}</span>
+                      <span className="text-[11.5px] text-slate-400 flex-1 min-w-0 truncate">{h.type}</span>
+                      <span className={`text-[11px] font-mono w-24 flex-shrink-0 text-right ${h.mins < 0 ? 'text-red-400' : 'text-slate-300'}`}>
+                        {hm(h.mins)}{h.mins < 0 ? ' over' : ''}
+                      </span>
+                      <span className="text-[10.5px] font-bold text-red-400 w-20 flex-shrink-0 text-right">
+                        {h.mins < 0 ? 'ACT NOW' : ''}
+                      </span>
                     </div>
-                    {item.pct !== null && (
-                      <div className="w-full h-1 bg-white dark:bg-zinc-800/50 rounded-full overflow-hidden mb-0.5">
-                        <div className={`h-full rounded-full ${item.pct >= 95 ? 'bg-red-500' : item.pct >= 85 ? 'bg-amber-500' : 'bg-emerald-500'}`} style={{ width: `${item.pct}%` }} />
-                      </div>
-                    )}
-                    <p className="text-[10px] text-slate-700">{item.note}</p>
-                  </div>
+                  ))}
                 </div>
-              ))}
-              <div className="pt-2 border-t border-slate-200 dark:border-slate-700/50">
-                <p className="text-[10px] text-slate-500">Medical staff: 6/6 · RN Martinez on duty · Dr. Anderson on-call</p>
               </div>
             </div>
-          </div>
 
-          {/* Critical Tasks */}
-          <div className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl shadow-sm dark:shadow-none p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <Zap className="w-4 h-4 text-amber-600 dark:text-amber-400" />
-              <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Command Actions</h3>
-            </div>
-            <div className="space-y-2">
-              {criticalTasks.map((task, i) => (
-                <div key={i} className={`px-3 py-2 rounded-lg text-[11px] ${getUrgencyColors(task.urgency)}`}>
-                  <div className="flex items-start gap-2">
-                    <p className="leading-snug flex-1">{task.text}</p>
-                    <button
-                      onClick={() => handleTaskAction(task.actionType)}
-                      className="flex-shrink-0 flex items-center gap-1 px-2 py-1 bg-amber-500 hover:bg-amber-600 text-slate-900 rounded text-[9px] font-bold uppercase tracking-wide transition-colors whitespace-nowrap"
-                    >
-                      {task.label} <ArrowRight className="w-2.5 h-2.5" />
-                    </button>
+            {/* ── Right column ────────────────────────────── */}
+            <div>
+              {/* Population risk */}
+              <SectionLabel>Population risk</SectionLabel>
+              <div className="border border-red-500/40 bg-red-500/[0.07] rounded-xl px-4 py-3">
+                <p className="text-[12px] font-bold text-red-400 flex items-center gap-1.5">
+                  <Flag className="w-3 h-3 flex-shrink-0" />
+                  Keep-separate conflict
+                </p>
+                <p className="text-[11.5px] text-slate-300 mt-1 leading-relaxed">
+                  Pratt, S. (B-26-4009) and Doyle, M. (B-26-4211) both housed in Segregation — flagged keep-separate.{' '}
+                  <button className="text-amber-500/90 hover:text-amber-400 transition-colors">Reassign housing</button>
+                </p>
+              </div>
+              <div className="mt-2 divide-y divide-slate-800/50">
+                {populationRisk.map((r) => (
+                  <div key={r.label} className="flex items-center gap-2.5 py-2.5">
+                    <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${r.dot}`} />
+                    <span className="text-[12px] text-slate-200 flex-1 min-w-0 truncate">{r.label}</span>
+                    <span className="text-[11px] font-mono text-slate-400 flex-shrink-0">{r.count}</span>
+                    <button className="text-[11px] font-semibold text-amber-500/90 hover:text-amber-400 transition-colors flex-shrink-0">View</button>
                   </div>
-                  <p className="text-[9px] mt-0.5 opacity-70 font-medium">Due: {task.due}</p>
+                ))}
+              </div>
+
+              {/* Medical queue */}
+              <div className="mt-7">
+                <SectionLabel>Medical queue</SectionLabel>
+                <div className="divide-y divide-slate-800/50">
+                  {medicalQueue.map((m) => (
+                    <div key={m.label} className="flex items-center justify-between gap-3 py-2.5">
+                      <span className="text-[12px] text-slate-200 min-w-0 truncate">{m.label}</span>
+                      <span className={`text-[11px] font-mono flex-shrink-0 ${m.color}`}>{m.value}</span>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-            <div className="mt-3 pt-2.5 border-t border-slate-200 dark:border-slate-700/50">
-              <button
-                onClick={() => navigate('/jail/dashboard')}
-                className="w-full flex items-center justify-center gap-2 text-[11px] text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:text-white transition-colors py-1"
-              >
-                <span>View Custody Operations</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </button>
+                <p className="text-[10px] text-slate-500 mt-2.5">Detail restricted — need-to-know. Views logged.</p>
+              </div>
+
+              {/* Mandatory posts */}
+              <div className="mt-7">
+                <SectionLabel>Mandatory posts</SectionLabel>
+                <div className="divide-y divide-slate-800/50">
+                  {mandatoryPosts.map((p) => (
+                    <div key={p.post} className="flex items-center gap-2.5 py-2.5">
+                      <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${postDot[p.state]}`} />
+                      <span className="text-[12px] text-slate-200 flex-1 min-w-0 truncate">{p.post}</span>
+                      <span className={`text-[10.5px] font-bold tracking-wider flex-shrink-0 ${postTone[p.state]}`}>{p.state}</span>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-[10px] text-slate-500 mt-2.5">
+                  {otPosts} posts on overtime ·{' '}
+                  <button onClick={() => navigate('/command/personnel')} className="text-amber-500/90 hover:text-amber-400 transition-colors">Workforce Readiness</button>
+                </p>
+              </div>
+
+              {/* Today's movements */}
+              <div className="mt-7">
+                <SectionLabel>Today's movements</SectionLabel>
+                <div className="divide-y divide-slate-800/50">
+                  {movements.map((m) => (
+                    <div key={m.time + m.what} className="flex items-start gap-3 py-3">
+                      <span className="text-[11px] font-mono text-slate-500 w-10 flex-shrink-0">{m.time}</span>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[12px] text-slate-100 truncate">{m.what}</p>
+                        <p className="text-[10.5px] text-slate-500 truncate">{m.detail}</p>
+                      </div>
+                      <span className={`text-[10.5px] font-bold tracking-wider flex-shrink-0 ${moveTone[m.state]}`}>{m.state}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
-
       </div>
-
-      {/* ── Transfer / Housing Workflow Modal ───────────────────────────────── */}
-      {transferOpen && (
-        <div className="fixed inset-0 z-50 flex items-start justify-center p-4 pt-10 overflow-y-auto">
-          <div className="fixed inset-0 bg-slate-950/85 backdrop-blur-sm" onClick={() => { setTransferOpen(false); setTransferDone(false); }} />
-          <div className="relative w-full max-w-lg bg-white dark:bg-zinc-950 border border-slate-200 dark:border-slate-700/60 rounded-2xl shadow-2xl overflow-hidden mb-8">
-            <div className="border-b border-slate-200 dark:border-slate-700/50 px-5 py-4 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-red-500/15 border border-red-500/25 flex items-center justify-center">
-                  <Building2 className="w-4 h-4 text-red-600 dark:text-red-400" />
-                </div>
-                <div>
-                  <h3 className="text-sm font-semibold text-slate-900 dark:text-white">H2-Pod Overcapacity — Transfer Workflow</h3>
-                  <p className="text-[10px] text-slate-500">Housing reassignment · USMS coordination</p>
-                </div>
-              </div>
-              <button onClick={() => { setTransferOpen(false); setTransferDone(false); }} className="p-1.5 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors">
-                <X className="w-4 h-4 text-slate-500" />
-              </button>
-            </div>
-            <div className="p-5">
-              {!transferDone ? (
-                <>
-                  <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-xl mb-4">
-                    <div className="grid grid-cols-3 gap-3 text-center">
-                      {[
-                        { label: 'H2-Pod', value: '36 / 32', sub: '112.5% — Violation', color: 'text-red-400' },
-                        { label: 'Must Remove', value: '4+', sub: 'inmates to comply', color: 'text-slate-900 dark:text-white' },
-                        { label: 'Federal Audit', value: '3 days', sub: 'Dec 12–14', color: 'text-amber-400' },
-                      ].map(item => (
-                        <div key={item.label}>
-                          <p className="text-[10px] text-slate-500 uppercase font-semibold mb-0.5">{item.label}</p>
-                          <p className={`text-xl font-bold ${item.color}`}>{item.value}</p>
-                          <p className={`text-[10px] ${item.color === 'text-red-400' ? 'text-red-400' : 'text-slate-500'}`}>{item.sub}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2">Select Resolution</p>
-                  <div className="space-y-2 mb-4">
-                    {[
-                      {
-                        id: 0, label: 'Internal Transfer — H2 → C2-Pod',
-                        detail: 'C2-Pod (Work Release) has 6 available beds (42/48). Transfer 4 min-security ICE detainees. Immediate — no external coordination.',
-                        outcomes: ['H2 drops to 100% (32/32)', 'Federal compliance restored', 'C2-Pod at 96% — within limits', 'No additional staffing needed'],
-                        timeline: 'Immediate · 2 hrs',
-                      },
-                      {
-                        id: 1, label: 'USMS Coordination — Early Bond Review',
-                        detail: 'Request USMS schedule early bond hearing for 4 federal detainees. Reduces federal population long-term.',
-                        outcomes: ['H2 drops to 100%', 'Long-term population reduction', 'Requires USMS scheduling'],
-                        timeline: '18–24 hrs',
-                      },
-                      {
-                        id: 2, label: 'Temporary Overflow — G2-Pod',
-                        detail: 'G2-Pod (Pre-Release) has 5 beds available (35/40). Temporary housing with enhanced monitoring. Interim solution.',
-                        outcomes: ['H2 at 100%', 'G2-Pod at 100%', 'Requires monitoring officer', 'Resolve by Dec 11'],
-                        timeline: 'Immediate · Interim',
-                      },
-                    ].map(opt => (
-                      <label key={opt.id} className={`block p-3 border rounded-xl cursor-pointer transition-all ${selectedTransfer === opt.id ? 'bg-amber-500/10 border-amber-500/30' : 'bg-slate-100/50 dark:bg-zinc-900/20 border-slate-700/30 hover:border-slate-600/50'}`}>
-                        <div className="flex items-start gap-3">
-                          <input type="radio" name="transferOption" checked={selectedTransfer === opt.id} onChange={() => setSelectedTransfer(opt.id)} className="mt-1 accent-amber-500 flex-shrink-0" />
-                          <div className="flex-1 min-w-0">
-                            <p className="text-[12px] font-semibold text-slate-900 dark:text-white mb-0.5">{opt.label}</p>
-                            <p className="text-[10px] text-slate-500 mb-1.5">{opt.detail}</p>
-                            <div className="flex flex-wrap gap-1 mb-1">
-                              {opt.outcomes.map(o => (
-                                <span key={o} className="text-[9px] px-1.5 py-0.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 rounded-full">{o}</span>
-                              ))}
-                            </div>
-                            <p className="text-[9px] text-slate-500">Timeline: {opt.timeline}</p>
-                          </div>
-                        </div>
-                      </label>
-                    ))}
-                  </div>
-                  <button onClick={() => setTransferDone(true)} className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold rounded-xl text-sm transition-colors">
-                    <CheckCircle className="w-4 h-4" />Approve Transfer Order
-                  </button>
-                </>
-              ) : (
-                <div className="py-4 text-center">
-                  <div className="w-14 h-14 mx-auto mb-3 rounded-full bg-emerald-500/15 border-2 border-emerald-500/30 flex items-center justify-center">
-                    <CheckCircle className="w-7 h-7 text-emerald-600 dark:text-emerald-400" />
-                  </div>
-                  <h4 className="text-base font-bold text-slate-900 dark:text-white mb-1">Transfer Order Issued</h4>
-                  <p className="text-sm text-slate-500 mb-4">Housing reassignment authorized and logged. Officers notified.</p>
-                  <div className="text-left p-3.5 bg-slate-100/80 dark:bg-zinc-900/30 border border-slate-700/40 rounded-xl mb-4 space-y-1.5">
-                    {['Transfer order created and logged', 'Classification officers notified', 'Housing records updated', 'Federal compliance flag cleared', 'Command calendar updated', 'Audit trail created'].map((a, i) => (
-                      <div key={i} className="flex items-center gap-2 text-[11px] text-slate-900 dark:text-white">
-                        <CheckCircle className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />{a}
-                      </div>
-                    ))}
-                  </div>
-                  <button onClick={() => { setTransferOpen(false); setTransferDone(false); }} className="text-sm text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors">Done</button>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* ── OT Authorization Modal ──────────────────────────────────────────── */}
-      {otOpen && (
-        <div className="fixed inset-0 z-50 flex items-start justify-center p-4 pt-10 overflow-y-auto">
-          <div className="fixed inset-0 bg-slate-950/85 backdrop-blur-sm" onClick={() => { setOtOpen(false); setOtDone(false); }} />
-          <div className="relative w-full max-w-lg bg-white dark:bg-zinc-950 border border-slate-200 dark:border-slate-700/60 rounded-2xl shadow-2xl overflow-hidden mb-8">
-            <div className="border-b border-slate-200 dark:border-slate-700/50 px-5 py-4 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-amber-500/15 border border-amber-500/25 flex items-center justify-center">
-                  <Users className="w-4 h-4 text-amber-600 dark:text-amber-400" />
-                </div>
-                <div>
-                  <h3 className="text-sm font-semibold text-slate-900 dark:text-white">B-Shift Staffing — OT Authorization</h3>
-                  <p className="text-[10px] text-slate-500">Staffing approval · Officer Smith sick call</p>
-                </div>
-              </div>
-              <button onClick={() => { setOtOpen(false); setOtDone(false); }} className="p-1.5 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors">
-                <X className="w-4 h-4 text-slate-500" />
-              </button>
-            </div>
-            <div className="p-5">
-              {!otDone ? (
-                <>
-                  <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-xl mb-4">
-                    <div className="grid grid-cols-3 gap-3 text-center">
-                      {[
-                        { label: 'B-Shift', value: '13 / 14', sub: '92.9% — Gap', color: 'text-amber-400' },
-                        { label: 'Population', value: '842', sub: '1:64.8 ratio', color: 'text-slate-900 dark:text-white' },
-                        { label: 'ACA Minimum', value: '1:60', sub: 'Currently at risk', color: 'text-red-400' },
-                      ].map(item => (
-                        <div key={item.label}>
-                          <p className="text-[10px] text-slate-500 uppercase font-semibold mb-0.5">{item.label}</p>
-                          <p className={`text-xl font-bold ${item.color}`}>{item.value}</p>
-                          <p className={`text-[10px] ${item.color === 'text-red-400' ? 'text-red-400' : item.color === 'text-amber-400' ? 'text-amber-400' : 'text-slate-500'}`}>{item.sub}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2">Coverage Options</p>
-                  <div className="space-y-2 mb-4">
-                    {[
-                      {
-                        id: 0, label: 'Authorize OT — Cpl. Davis (Off-Duty)',
-                        detail: 'Cpl. Davis is off-duty, B-Shift certified, and available. 8-hour authorization covers full shift through changeover.',
-                        outcomes: ['B-Shift returns to 100% (14/14)', 'ACA ratio restored (1:60)', 'Cost: $234 overtime'],
-                        note: 'Recommended — lowest operational impact',
-                      },
-                      {
-                        id: 1, label: 'A-Shift Overlap — Reassign Officer Johnson',
-                        detail: 'Officer Johnson available 14:00–14:30 during A/B overlap. Covers the gap for the transition window.',
-                        outcomes: ['Covers gap at $0 OT cost', 'B-Shift at 100%', '30-minute window only'],
-                        note: '$0 cost · Limited to overlap window',
-                      },
-                      {
-                        id: 2, label: 'C-Shift Early Report — Volunteer OT',
-                        detail: 'Request a C-Shift officer to report 2 hours early. Voluntary OT, covers full B-Shift gap through changeover.',
-                        outcomes: ['Full gap covered', 'No mandatory OT', 'Requires volunteer availability'],
-                        note: 'Contingency option',
-                      },
-                    ].map(opt => (
-                      <label key={opt.id} className={`block p-3 border rounded-xl cursor-pointer transition-all ${selectedOt === opt.id ? 'bg-amber-500/10 border-amber-500/30' : 'bg-slate-100/50 dark:bg-zinc-900/20 border-slate-700/30 hover:border-slate-600/50'}`}>
-                        <div className="flex items-start gap-3">
-                          <input type="radio" name="otOption" checked={selectedOt === opt.id} onChange={() => setSelectedOt(opt.id)} className="mt-1 accent-amber-500 flex-shrink-0" />
-                          <div className="flex-1 min-w-0">
-                            <p className="text-[12px] font-semibold text-slate-900 dark:text-white mb-0.5">{opt.label}</p>
-                            <p className="text-[10px] text-slate-500 mb-1.5">{opt.detail}</p>
-                            <div className="flex flex-wrap gap-1 mb-1">
-                              {opt.outcomes.map(o => (
-                                <span key={o} className="text-[9px] px-1.5 py-0.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 rounded-full">{o}</span>
-                              ))}
-                            </div>
-                            <p className="text-[9px] text-slate-500">{opt.note}</p>
-                          </div>
-                        </div>
-                      </label>
-                    ))}
-                  </div>
-                  <button onClick={() => setOtDone(true)} className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold rounded-xl text-sm transition-colors">
-                    <CheckCircle className="w-4 h-4" />Authorize Coverage
-                  </button>
-                </>
-              ) : (
-                <div className="py-4 text-center">
-                  <div className="w-14 h-14 mx-auto mb-3 rounded-full bg-emerald-500/15 border-2 border-emerald-500/30 flex items-center justify-center">
-                    <CheckCircle className="w-7 h-7 text-emerald-600 dark:text-emerald-400" />
-                  </div>
-                  <h4 className="text-base font-bold text-slate-900 dark:text-white mb-1">Coverage Authorized</h4>
-                  <p className="text-sm text-slate-500 mb-4">B-Shift OT authorization logged. Officer notified.</p>
-                  <div className="text-left p-3.5 bg-slate-100/80 dark:bg-zinc-900/30 border border-slate-700/40 rounded-xl mb-4 space-y-1.5">
-                    {['OT authorization logged to payroll system', 'Officer notified via radio and text', 'Sgt. Thompson (B-Shift supervisor) notified', 'Scheduling records updated', 'ACA compliance gap resolved', 'Audit trail created'].map((a, i) => (
-                      <div key={i} className="flex items-center gap-2 text-[11px] text-slate-900 dark:text-white">
-                        <CheckCircle className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />{a}
-                      </div>
-                    ))}
-                  </div>
-                  <button onClick={() => { setOtOpen(false); setOtDone(false); }} className="text-sm text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors">Done</button>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* ── Fleet Request Modal ─────────────────────────────────────────────── */}
-      {fleetOpen && (
-        <div className="fixed inset-0 z-50 flex items-start justify-center p-4 pt-10 overflow-y-auto">
-          <div className="fixed inset-0 bg-slate-950/85 backdrop-blur-sm" onClick={() => { setFleetOpen(false); setFleetDone(false); }} />
-          <div className="relative w-full max-w-lg bg-white dark:bg-zinc-950 border border-slate-200 dark:border-slate-700/60 rounded-2xl shadow-2xl overflow-hidden mb-8">
-            <div className="border-b border-slate-200 dark:border-slate-700/50 px-5 py-4 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-amber-500/15 border border-amber-500/25 flex items-center justify-center">
-                  <Truck className="w-4 h-4 text-amber-600 dark:text-amber-400" />
-                </div>
-                <div>
-                  <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Fleet Resource Request</h3>
-                  <p className="text-[10px] text-slate-500">Transport van request · Court operations</p>
-                </div>
-              </div>
-              <button onClick={() => { setFleetOpen(false); setFleetDone(false); }} className="p-1.5 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors">
-                <X className="w-4 h-4 text-slate-500" />
-              </button>
-            </div>
-            <div className="p-5">
-              {!fleetDone ? (
-                <>
-                  <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-xl mb-4">
-                    <div className="grid grid-cols-3 gap-3 text-center">
-                      {[
-                        { label: 'Runs Tomorrow', value: '31', sub: 'Court transports', color: 'text-amber-400' },
-                        { label: 'Vans Available', value: '4', sub: 'Current fleet', color: 'text-slate-900 dark:text-white' },
-                        { label: 'Shortfall', value: '1 van', sub: 'Need by 0600', color: 'text-red-400' },
-                      ].map(item => (
-                        <div key={item.label}>
-                          <p className="text-[10px] text-slate-500 uppercase font-semibold mb-0.5">{item.label}</p>
-                          <p className={`text-xl font-bold ${item.color}`}>{item.value}</p>
-                          <p className={`text-[10px] ${item.color === 'text-red-400' ? 'text-red-400' : item.color === 'text-amber-400' ? 'text-amber-400' : 'text-slate-500'}`}>{item.sub}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="space-y-3 mb-4">
-                    <div className="grid grid-cols-2 gap-3">
-                      {[
-                        { label: 'Vehicle Type',    value: 'Transport Van (12-passenger)' },
-                        { label: 'Request Date',    value: 'Tomorrow — Dec 12, 2024' },
-                        { label: 'Required By',     value: '06:00 — First run departure' },
-                        { label: 'Return Time',     value: '17:00 est.' },
-                      ].map(f => (
-                        <div key={f.label} className="p-2.5 bg-slate-100/80 dark:bg-zinc-900/30 border border-slate-700/40 rounded-lg">
-                          <p className="text-[10px] text-slate-500 uppercase font-semibold mb-0.5">{f.label}</p>
-                          <p className="text-[12px] font-semibold text-slate-900 dark:text-white">{f.value}</p>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="p-2.5 bg-slate-100/80 dark:bg-zinc-900/30 border border-slate-700/40 rounded-lg">
-                      <p className="text-[10px] text-slate-500 uppercase font-semibold mb-1">Justification</p>
-                      <p className="text-[12px] text-slate-900 dark:text-white">31 court transports scheduled for Dec 12. Current 4-van fleet capacity is insufficient. 1 additional van required for full coverage without schedule delays.</p>
-                    </div>
-                    <div className="p-2.5 bg-blue-500/10 border border-blue-500/20 rounded-lg">
-                      <p className="text-[10px] text-slate-500 uppercase font-semibold mb-1 flex items-center gap-1">
-                        <Sparkles className="w-3 h-3 text-blue-400" />Alternative — Stagger Schedule
-                      </p>
-                      <p className="text-[11px] text-slate-700 dark:text-slate-300">If fleet request delayed: Group 1 depart 06:30 (16 inmates), Group 2 depart 08:00 (15 inmates). Same 4 vans — all runs completed by 17:00.</p>
-                    </div>
-                  </div>
-                  <button onClick={() => setFleetDone(true)} className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold rounded-xl text-sm transition-colors">
-                    <FileText className="w-4 h-4" />Submit Fleet Request
-                  </button>
-                </>
-              ) : (
-                <div className="py-4 text-center">
-                  <div className="w-14 h-14 mx-auto mb-3 rounded-full bg-emerald-500/15 border-2 border-emerald-500/30 flex items-center justify-center">
-                    <CheckCircle className="w-7 h-7 text-emerald-600 dark:text-emerald-400" />
-                  </div>
-                  <h4 className="text-base font-bold text-slate-900 dark:text-white mb-1">Fleet Request Submitted</h4>
-                  <p className="text-sm text-slate-500 mb-4">Request routed to Fleet Management. Confirmation expected within 2 hours.</p>
-                  <div className="text-left p-3.5 bg-slate-100/80 dark:bg-zinc-900/30 border border-slate-700/40 rounded-xl mb-4 space-y-1.5">
-                    {['Fleet request submitted to Fleet Management', 'Transport Coordinator notified', 'Court schedule updated with contingency stagger', 'Request logged to command record', 'Follow-up reminder set for 20:00'].map((a, i) => (
-                      <div key={i} className="flex items-center gap-2 text-[11px] text-slate-900 dark:text-white">
-                        <CheckCircle className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />{a}
-                      </div>
-                    ))}
-                  </div>
-                  <button onClick={() => { setFleetOpen(false); setFleetDone(false); }} className="text-sm text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors">Done</button>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* ── Medical Review Modal ────────────────────────────────────────────── */}
-      {medReviewOpen && (
-        <div className="fixed inset-0 z-50 flex items-start justify-center p-4 pt-10 overflow-y-auto">
-          <div className="fixed inset-0 bg-slate-950/85 backdrop-blur-sm" onClick={() => { setMedReviewOpen(false); setMedReviewDone(false); }} />
-          <div className="relative w-full max-w-lg bg-white dark:bg-zinc-950 border border-slate-200 dark:border-slate-700/60 rounded-2xl shadow-2xl overflow-hidden mb-8">
-            <div className="border-b border-slate-200 dark:border-slate-700/50 px-5 py-4 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-amber-500/15 border border-amber-500/25 flex items-center justify-center">
-                  <Hospital className="w-4 h-4 text-amber-600 dark:text-amber-400" />
-                </div>
-                <div>
-                  <h3 className="text-sm font-semibold text-slate-900 dark:text-white">E-Pod Medical Review</h3>
-                  <p className="text-[10px] text-slate-500">Medical command review · Dr. Chen</p>
-                </div>
-              </div>
-              <button onClick={() => { setMedReviewOpen(false); setMedReviewDone(false); }} className="p-1.5 hover:bg-slate-100 dark:hover:bg-zinc-900/50 rounded-lg transition-colors">
-                <X className="w-4 h-4 text-slate-500" />
-              </button>
-            </div>
-            <div className="p-5">
-              {!medReviewDone ? (
-                <>
-                  <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-xl mb-4">
-                    <div className="grid grid-cols-3 gap-3 text-center">
-                      {[
-                        { label: 'E-Pod Medical', value: '44 / 48', sub: '92% — Near capacity', color: 'text-amber-400' },
-                        { label: 'E2 Mental Health', value: '38 / 40', sub: '95% — Near capacity', color: 'text-amber-400' },
-                        { label: 'Isolation Cells', value: '3', sub: 'Active', color: 'text-slate-900 dark:text-white' },
-                      ].map(item => (
-                        <div key={item.label}>
-                          <p className="text-[10px] text-slate-500 uppercase font-semibold mb-0.5">{item.label}</p>
-                          <p className={`text-xl font-bold ${item.color}`}>{item.value}</p>
-                          <p className="text-[10px] text-slate-500">{item.sub}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="mb-4">
-                    <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2">Review Agenda</p>
-                    <div className="space-y-1.5">
-                      {[
-                        { item: 'E-Pod capacity management plan',          urgency: 'high',   note: '4 beds from capacity' },
-                        { item: 'Active isolation cell assessments (3)',    urgency: 'high',   note: 'Protocols in place' },
-                        { item: 'E2-Pod mental health unit at 95%',        urgency: 'medium', note: 'Monitor for 24 hrs' },
-                        { item: 'Pending psych clearances (3 inmates)',    urgency: 'medium', note: 'Awaiting assessment' },
-                        { item: 'Hospital guard rotation — Deputy Martinez', urgency: 'low',  note: 'Gwinnett Medical' },
-                      ].map(({ item, urgency, note }) => (
-                        <div key={item} className={`flex items-center justify-between px-3 py-2 rounded-lg border text-[11px] ${urgency === 'high' ? 'bg-amber-500/8 border-amber-500/20' : urgency === 'medium' ? 'bg-slate-100/50 dark:bg-zinc-900/20 border-slate-700/30' : 'bg-slate-100/50 dark:bg-zinc-900/20 border-slate-700/30'}`}>
-                          <span className={urgency === 'high' ? 'text-amber-300' : 'text-slate-700 dark:text-slate-300'}>{item}</span>
-                          <span className="text-[9px] text-slate-500 flex-shrink-0 ml-2">{note}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="p-3 bg-slate-100/80 dark:bg-zinc-900/30 border border-slate-700/40 rounded-xl mb-4">
-                    <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2">Meeting Details</p>
-                    <div className="grid grid-cols-2 gap-2 text-[11px]">
-                      <div className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5 text-slate-400" /><span className="text-slate-900 dark:text-white">Today — Dec 11, 2024</span></div>
-                      <div className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5 text-slate-400" /><span className="text-slate-900 dark:text-white">16:00 — E-Pod Conference</span></div>
-                      <div className="flex items-center gap-1.5 col-span-2"><Users className="w-3.5 h-3.5 text-slate-400" /><span className="text-slate-900 dark:text-white">Dr. Chen · RN Martinez · Shift Commander</span></div>
-                    </div>
-                  </div>
-                  <button onClick={() => setMedReviewDone(true)} className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold rounded-xl text-sm transition-colors">
-                    <Calendar className="w-4 h-4" />Confirm Medical Review
-                  </button>
-                </>
-              ) : (
-                <div className="py-4 text-center">
-                  <div className="w-14 h-14 mx-auto mb-3 rounded-full bg-emerald-500/15 border-2 border-emerald-500/30 flex items-center justify-center">
-                    <CheckCircle className="w-7 h-7 text-emerald-600 dark:text-emerald-400" />
-                  </div>
-                  <h4 className="text-base font-bold text-slate-900 dark:text-white mb-1">Medical Review Scheduled</h4>
-                  <p className="text-sm text-slate-500 mb-4">Review confirmed for today at 16:00 — E-Pod Conference Room.</p>
-                  <div className="text-left p-3.5 bg-slate-100/80 dark:bg-zinc-900/30 border border-slate-700/40 rounded-xl mb-4 space-y-1.5">
-                    {['Review scheduled on Command Calendar', 'Dr. Chen notified and confirmed', 'RN Martinez notified', 'Agenda distributed to attendees', 'E-Pod status flagged for review', 'Audit trail created'].map((a, i) => (
-                      <div key={i} className="flex items-center gap-2 text-[11px] text-slate-900 dark:text-white">
-                        <CheckCircle className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />{a}
-                      </div>
-                    ))}
-                  </div>
-                  <button onClick={() => { setMedReviewOpen(false); setMedReviewDone(false); }} className="text-sm text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors">Done</button>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
-
     </DashboardLayout>
   );
 }
