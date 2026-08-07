@@ -1,1420 +1,610 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DashboardLayout from '../../layouts/DashboardLayout';
-import {
-  Users, AlertTriangle, CheckCircle,
-  Circle, ArrowRight, ChevronDown, ChevronUp,
-  Truck, Heart, LogOut, ArrowLeftRight, AlertOctagon,
-  UserCheck, MapPin, Plus, PhoneCall, Lock, UserX,
-  Lightbulb, FileText, X, Award, Repeat, Search, Send
-} from 'lucide-react';
 
-// ── Types ──────────────────────────────────────────────────────
+// ── Types ─────────────────────────────────────────────────────
 
-interface Pod {
-  id: string;
+interface Unit {
   name: string;
-  type: string;
-  security: 'Min' | 'Med' | 'Max' | 'Hi';
-  capacity: number;
-  current: number;
-  assignedOfficer: string | null;
-  status: 'Normal' | 'Near Capacity' | 'Over Capacity';
-  notes?: string;
-  activeMovements: number;
-  incidents: number;
-  trend: 'up' | 'down' | 'stable';
-  projection?: string;
+  classification: string;
+  rated: number;
+  held: number;
+  /** Placeable beds — free AND classification-matched. `null` renders as "–". */
+  placeable: number | null;
+  officers: string;
+  lead: string;
+  lastCheck: string;
+  openItems: string;
+  tone?: 'red' | 'amber';
 }
 
-interface Movement {
-  id: number;
-  inmateName: string;
-  inmateId: string;
-  type: 'Court Transport' | 'Medical Visit' | 'Release' | 'Housing Transfer' | 'Intake';
-  from: string;
-  to: string;
-  escort: string;
-  startTime: string;
-  eta: string;
-  status: 'In Progress' | 'Staging' | 'Pending' | 'Completed';
+interface Post {
+  post: string;
+  requirement: string;
+  staffed: number;
+  required: number;
+  lead: string;
+  relief: string;
+  due: string;
+  overdue?: boolean;
 }
 
-interface Incident {
-  id: number;
-  type: 'Fight' | 'Rule Violation' | 'Contraband' | 'Medical Emergency' | 'Refusal' | 'Self-Harm Threat';
-  pod: string;
-  description: string;
+interface Move {
   time: string;
-  severity: 'critical' | 'high' | 'medium' | 'low';
-  status: 'Open' | 'Under Review' | 'Resolved';
-  reportingOfficer: string;
+  what: string;
+  detail: string;
+  state: 'IN TRANSIT' | 'STAGED';
+  action: string;
+  tone?: 'red' | 'amber';
 }
 
-interface Officer {
-  badge: string;
-  name: string;
-  rank: string;
-  assignment: string;
-  postType: 'Pod' | 'Transport' | 'Medical' | 'Control Room' | 'Float' | 'OT';
-  onPostSince: string;
-  status: 'On Post' | 'Transport' | 'Break' | 'Medical Escort' | 'OT Pending';
-  hoursWorked: number;
-  certifications: string[];
-  otEligible: boolean;
-  crossTrained: string[];
+interface Driver {
+  driver: string;
+  note: string;
+  inmates: number;
+  los: string;
+  delta: number;
+  owner: string;
+  action: string;
+  tone?: 'red' | 'amber';
 }
 
-// ── Static Data ────────────────────────────────────────────────
+interface Tier {
+  id: string;
+  title: string;
+  body: string;
+  trigger: string;
+  authority: string;
+  state: 'CLEARED' | 'ACTIVE' | 'NOT ACTIVE' | string;
+  tone: 'slate' | 'amber' | 'red';
+}
 
-const currentShift = {
-  label: 'B-Shift',
-  window: '14:00 – 22:00',
-  commander: 'Sgt. D. Thompson',
-  scheduled: 14,
-  present: 13,
-  note: 'Officer Smith — sick call 11:30 AM',
+// ── Shift & facility state ─────────────────────────────────────
+
+const shift = {
+  letter: 'B',
+  hours: '0600–1400',
+  supervisor: 'Lt. Moore',
+  elapsed: '02:14',
+  inCustody: 2783,
+  rated: 2616,
+  housedHere: 2641,
+  boardedOut: 142,
+  perDay: 7,
+  daysOver: 47,
+  tempBunks: 105,
+  tempBunkCap: 240,
+  tierSince: 'Jun 20',
 };
 
-const pods: Pod[] = [
-  { id: 'A1',  name: 'A-Pod',   type: 'Male GP',       security: 'Med', capacity: 96,  current: 94,  assignedOfficer: 'Dep. Harris',   status: 'Near Capacity', activeMovements: 1, incidents: 0, trend: 'up',     projection: '2 intakes pending — may hit capacity by 16:00' },
-  { id: 'A2',  name: 'A2-Pod',  type: 'Male GP',       security: 'Med', capacity: 96,  current: 89,  assignedOfficer: 'Dep. White',    status: 'Normal',        activeMovements: 0, incidents: 1, trend: 'stable' },
-  { id: 'B1',  name: 'B-Pod',   type: 'Male Max',      security: 'Max', capacity: 64,  current: 61,  assignedOfficer: 'Dep. King',     status: 'Normal',        activeMovements: 0, incidents: 0, trend: 'stable' },
-  { id: 'B2',  name: 'B2-Pod',  type: 'Disciplinary',  security: 'Max', capacity: 32,  current: 28,  assignedOfficer: 'Dep. Scott',    status: 'Normal',        activeMovements: 0, incidents: 1, trend: 'stable' },
-  { id: 'C1',  name: 'C-Pod',   type: 'Male Medium',   security: 'Med', capacity: 128, current: 115, assignedOfficer: 'Dep. Rivera',   status: 'Normal',        activeMovements: 2, incidents: 0, trend: 'stable' },
-  { id: 'C2',  name: 'C2-Pod',  type: 'Work Release',  security: 'Min', capacity: 48,  current: 42,  assignedOfficer: null,            status: 'Normal',        activeMovements: 1, incidents: 0, trend: 'up',     projection: 'Unassigned post — float coverage gap this shift', notes: 'Float coverage' },
-  { id: 'D1',  name: 'D-Pod',   type: 'Female GP',     security: 'Med', capacity: 80,  current: 73,  assignedOfficer: 'Dep. Carter',   status: 'Normal',        activeMovements: 0, incidents: 0, trend: 'stable' },
-  { id: 'D2',  name: 'D2-Pod',  type: 'Female Max',    security: 'Max', capacity: 32,  current: 29,  assignedOfficer: 'Dep. Lewis',    status: 'Normal',        activeMovements: 0, incidents: 0, trend: 'stable' },
-  { id: 'E1',  name: 'E-Pod',   type: 'Medical',       security: 'Med', capacity: 48,  current: 44,  assignedOfficer: 'Dep. Martinez', status: 'Near Capacity', activeMovements: 1, incidents: 0, trend: 'up',     projection: '3 isolation active + incoming movement — pressure rising', notes: '3 isolation active' },
-  { id: 'E2',  name: 'E2-Pod',  type: 'Mental Health', security: 'Med', capacity: 40,  current: 38,  assignedOfficer: 'Dep. Johnson',  status: 'Near Capacity', activeMovements: 0, incidents: 1, trend: 'up',     projection: 'Near cap + open contraband incident — risk increasing', notes: '24/7 monitoring' },
-  { id: 'F1',  name: 'F-Pod',   type: 'Intake',        security: 'Hi',  capacity: 64,  current: 52,  assignedOfficer: 'Dep. Allen',    status: 'Normal',        activeMovements: 3, incidents: 0, trend: 'up',     projection: '12 pending classification — intake pressure next 2h', notes: '12 pending class.' },
-  { id: 'F2',  name: 'F2-Pod',  type: 'Prot. Custody', security: 'Hi', capacity: 48,  current: 41,  assignedOfficer: 'Dep. Young',    status: 'Normal',        activeMovements: 0, incidents: 0, trend: 'stable' },
-  { id: 'G1',  name: 'G-Pod',   type: 'Juvenile',      security: 'Med', capacity: 24,  current: 18,  assignedOfficer: 'Dep. Hill',     status: 'Normal',        activeMovements: 0, incidents: 0, trend: 'down',   projection: 'Below average occupancy — stable' },
-  { id: 'G2',  name: 'G2-Pod',  type: 'Pre-Release',   security: 'Min', capacity: 40,  current: 35,  assignedOfficer: null,            status: 'Normal',        activeMovements: 1, incidents: 0, trend: 'stable', notes: 'Float coverage' },
-  { id: 'H1',  name: 'H-Pod',   type: 'Federal Hold',  security: 'Hi',  capacity: 48,  current: 47,  assignedOfficer: 'Dep. Clark',    status: 'Near Capacity', activeMovements: 0, incidents: 0, trend: 'stable', projection: 'Federal intake frozen — no change expected' },
-  { id: 'H2',  name: 'H2-Pod',  type: 'ICE Hold',      security: 'Med', capacity: 32,  current: 36,  assignedOfficer: 'Dep. Robinson', status: 'Over Capacity', activeMovements: 0, incidents: 0, trend: 'down',   projection: 'Transfer in progress — drops to 32 within ~45 min', notes: 'Emergency beds in use' },
+// A bed is only a bed if the classification matches. Segregation is excluded
+// from overflow entirely — it cannot absorb general population at any census.
+const units: Unit[] = [
+  { name: 'Tower A — general population', classification: 'Medium male · 22 on temporary bunks', rated: 512, held: 534, placeable: 0,  officers: '6 of 6', lead: 'Ndiaye',       lastCheck: '11m', openItems: 'none',                 tone: 'red'   },
+  { name: 'Tower B — general population', classification: 'Medium / minimum male · 31 on temp bunks', rated: 512, held: 528, placeable: 0, officers: '5 of 6', lead: 'Barrett', lastCheck: '27m', openItems: '1 grievance',          tone: 'red'   },
+  { name: 'Tower C — high security',      classification: 'Maximum male · placement restricted',  rated: 384, held: 372, placeable: 12, officers: '5 of 5', lead: 'Vance',        lastCheck: '9m',  openItems: 'none'                                },
+  { name: 'Tower D — intake',             classification: 'Unclassified first 72h · 52 on temp bunks', rated: 288, held: 311, placeable: 0, officers: '7 of 8', lead: 'Salas',   lastCheck: '14m', openItems: '3 screening overdue',   tone: 'red'   },
+  { name: 'Female housing',               classification: 'Over rated — no female beds available', rated: 352, held: 379, placeable: 0,  officers: '5 of 5', lead: 'Delgado',      lastCheck: '8m',  openItems: '2 pending classification', tone: 'red' },
+  { name: 'Mental health unit',           classification: '41 awaiting state hospital placement',  rated: 96,  held: 113, placeable: 0,  officers: '3 of 4', lead: 'Pike',         lastCheck: '6m',  openItems: '2 suicide watch',       tone: 'red'   },
+  { name: 'Infirmary',                    classification: 'Full — off-site referral in use',       rated: 64,  held: 64,  placeable: 0,  officers: 'Medical staff', lead: '',      lastCheck: '33m', openItems: 'escort post unmanned',  tone: 'amber' },
+  { name: 'Segregation',                  classification: 'Not usable for general population',     rated: 112, held: 97,  placeable: null, officers: '4 of 4', lead: 'Rowe',       lastCheck: '6m',  openItems: '1 review overdue'                    },
+  { name: 'Work release / re-entry',      classification: 'Eligibility-limited — 53 beds idle',    rated: 296, held: 243, placeable: 53, officers: '2 of 2', lead: 'Kim',          lastCheck: '21m', openItems: 'none'                                },
 ];
 
-const movements: Movement[] = [
-  { id: 1, inmateName: 'Williams, D.',   inmateId: '#48821', type: 'Court Transport',  from: 'A-Pod',   to: 'Superior Court',     escort: 'Dep. Foster',    startTime: '08:45', eta: '12:00', status: 'In Progress' },
-  { id: 2, inmateName: 'Gonzalez, M.',   inmateId: '#51044', type: 'Court Transport',  from: 'C-Pod',   to: 'State Court',        escort: 'Dep. Reed',      startTime: '09:15', eta: '14:00', status: 'In Progress' },
-  { id: 3, inmateName: 'Baker, T.',      inmateId: '#39102', type: 'Medical Visit',    from: 'B-Pod',   to: 'E-Pod Medical',      escort: 'Dep. Price',     startTime: '14:20', eta: '15:30', status: 'In Progress' },
-  { id: 4, inmateName: 'Moore, J.',      inmateId: '#62304', type: 'Housing Transfer', from: 'H2-Pod',  to: 'G2-Pod',             escort: 'Dep. Hayes',     startTime: '14:00', eta: '14:15', status: 'Staging' },
-  { id: 5, inmateName: 'Anderson, K.',   inmateId: '#44719', type: 'Release',          from: 'G2-Pod',  to: 'Release Processing', escort: 'Dep. Barnes',    startTime: '14:45', eta: '15:15', status: 'Pending' },
-  { id: 6, inmateName: 'Thomas, R.',     inmateId: '#57683', type: 'Intake',           from: 'Booking', to: 'F-Pod',              escort: 'Dep. Allen',     startTime: '15:00', eta: '15:20', status: 'Pending' },
-  { id: 7, inmateName: 'Jackson, P.',    inmateId: '#33091', type: 'Medical Visit',    from: 'A2-Pod',  to: 'Gwinnett Medical',   escort: 'Dep. Martinez',  startTime: '13:30', eta: 'Returned',  status: 'Completed' },
+const posts: Post[] = [
+  { post: 'Master control',      requirement: 'Senior cert · 2 required',    staffed: 2, required: 2, lead: 'Ofc. Rowe',    relief: 'Break rotation complete',            due: '1h 52m' },
+  { post: 'Tower A floor',       requirement: 'Jail cert · 6 required',      staffed: 6, required: 6, lead: 'Cpl. Ndiaye',  relief: '2 awaiting relief',                  due: '38m'    },
+  { post: 'Tower B floor',       requirement: 'Jail cert · 6 required',      staffed: 5, required: 6, lead: 'Ofc. Barrett', relief: 'Relief overdue — 6th hour on post',  due: '12m over', overdue: true },
+  { post: 'Tower C high security', requirement: 'Advanced cert · 5 required', staffed: 5, required: 5, lead: 'Cpl. Vance',  relief: 'Break rotation on schedule',         due: '1h 04m' },
+  { post: 'Tower D intake',      requirement: 'Jail cert · 8 required',      staffed: 7, required: 8, lead: 'Ofc. Salas',   relief: 'Intake surge — relief deferred',     due: '22m'    },
+  { post: 'Female housing',      requirement: 'Female officer · 5 required', staffed: 5, required: 5, lead: 'Cpl. Delgado', relief: 'Break rotation complete',            due: '1h 36m' },
+  { post: 'Mental health unit',  requirement: 'CIT certified · 4 required',  staffed: 3, required: 4, lead: 'Ofc. Pike',    relief: '1 short — CIT qualified relief only', due: '41m'   },
+  { post: 'Infirmary escort',    requirement: 'Escort qualified · 2 required', staffed: 0, required: 2, lead: 'UNMANNED',   relief: 'Post unmanned since 0600',           due: '–'      },
+  { post: 'Transport / perimeter', requirement: 'Transport qual · 4 required', staffed: 4, required: 4, lead: 'Ofc. Kim',   relief: 'Break scheduled 1030',               due: '2h 23m' },
 ];
 
-const incidents: Incident[] = [
-  { id: 1, type: 'Fight',              pod: 'A2-Pod',  description: 'Altercation between 2 inmates during recreation. One required medical eval.',    time: '13:45', severity: 'high',     status: 'Under Review', reportingOfficer: 'Dep. White' },
-  { id: 2, type: 'Rule Violation',     pod: 'B2-Pod',  description: 'Inmate Harris refused direct order. Placed on disciplinary lockdown.',           time: '14:10', severity: 'medium',   status: 'Resolved',     reportingOfficer: 'Dep. Scott' },
-  { id: 3, type: 'Contraband',         pod: 'E2-Pod',  description: 'Suspected contraband (cell phone components) found during routine shakedown.',    time: '14:30', severity: 'high',     status: 'Open',         reportingOfficer: 'Dep. Johnson' },
-  { id: 4, type: 'Medical Emergency',  pod: 'E1-Pod',  description: 'Inmate collapsed during medication distribution. RN Martinez responded.',        time: '12:55', severity: 'critical', status: 'Resolved',     reportingOfficer: 'Dep. Martinez' },
-  { id: 5, type: 'Refusal',            pod: 'H2-Pod',  description: 'Group refusal to return to cells after dayroom. Non-compliant x3 count.',        time: '13:00', severity: 'medium',   status: 'Resolved',     reportingOfficer: 'Dep. Robinson' },
+const floorPool = [
+  { name: 'Ofc. Trent',    quals: 'Jail cert · escort qualified · transport' },
+  { name: 'Ofc. Aguilar',  quals: 'Jail cert · female housing · CIT' },
+  { name: 'Ofc. Boyd',     quals: 'Jail cert · advanced security' },
+  { name: 'Ofc. Nakamura', quals: 'Jail cert · escort qualified' },
 ];
 
-const officers: Officer[] = [
-  { badge: '2041', name: 'Harris, K.',    rank: 'Deputy',    assignment: 'A-Pod',         postType: 'Pod',          onPostSince: '14:00', status: 'On Post',        hoursWorked: 1, certifications: ['Intake'],                              otEligible: true,  crossTrained: ['B-Pod (Max)'] },
-  { badge: '2088', name: 'White, S.',     rank: 'Deputy',    assignment: 'A2-Pod',        postType: 'Pod',          onPostSince: '14:00', status: 'On Post',        hoursWorked: 1, certifications: ['Crisis Intervention (CIT)'],           otEligible: true,  crossTrained: ['Mental Health'] },
-  { badge: '2110', name: 'King, D.',      rank: 'Deputy',    assignment: 'B-Pod',         postType: 'Pod',          onPostSince: '14:00', status: 'On Post',        hoursWorked: 1, certifications: ['Use of Force Instructor'],             otEligible: false, crossTrained: ['Disciplinary'] },
-  { badge: '2134', name: 'Scott, J.',     rank: 'Deputy',    assignment: 'B2-Pod',        postType: 'Pod',          onPostSince: '14:00', status: 'On Post',        hoursWorked: 1, certifications: ['Disciplinary Housing'],                otEligible: true,  crossTrained: ['Max Security'] },
-  { badge: '2156', name: 'Rivera, M.',    rank: 'Deputy',    assignment: 'C-Pod',         postType: 'Pod',          onPostSince: '14:00', status: 'On Post',        hoursWorked: 1, certifications: ['Field Training Officer (FTO)'],       otEligible: true,  crossTrained: ['Intake'] },
-  { badge: '2204', name: 'Carter, L.',    rank: 'Deputy',    assignment: 'D-Pod',         postType: 'Pod',          onPostSince: '14:00', status: 'On Post',        hoursWorked: 1, certifications: ['PREA Compliance'],                     otEligible: true,  crossTrained: ['D2-Pod (Female Max)'] },
-  { badge: '2217', name: 'Lewis, T.',     rank: 'Deputy',    assignment: 'D2-Pod',        postType: 'Pod',          onPostSince: '14:00', status: 'On Post',        hoursWorked: 1, certifications: ['Crisis Intervention (CIT)'],           otEligible: false, crossTrained: ['D-Pod (Female GP)'] },
-  { badge: '2251', name: 'Martinez, R.',  rank: 'Deputy',    assignment: 'E-Pod',         postType: 'Medical',      onPostSince: '14:00', status: 'Medical Escort', hoursWorked: 9, certifications: ['Medical Escort', 'CPR / First Responder'], otEligible: true,  crossTrained: ['Mental Health'] },
-  { badge: '2289', name: 'Johnson, C.',   rank: 'Deputy',    assignment: 'E2-Pod',        postType: 'Pod',          onPostSince: '14:00', status: 'On Post',        hoursWorked: 1, certifications: ['Intake', 'Medical Escort'],            otEligible: true,  crossTrained: ['Medical', 'Mental Health'] },
-  { badge: '2301', name: 'Allen, P.',     rank: 'Deputy',    assignment: 'F-Pod / Intake',postType: 'Pod',          onPostSince: '14:00', status: 'On Post',        hoursWorked: 1, certifications: ['Intake', 'Classification'],            otEligible: true,  crossTrained: ['Control Room'] },
-  { badge: '2318', name: 'Young, A.',     rank: 'Deputy',    assignment: 'F2-Pod',        postType: 'Pod',          onPostSince: '14:00', status: 'On Post',        hoursWorked: 1, certifications: ['Protective Custody Mgmt'],             otEligible: true,  crossTrained: ['Intake'] },
-  { badge: '2345', name: 'Clark, B.',     rank: 'Deputy',    assignment: 'H-Pod',         postType: 'Pod',          onPostSince: '14:00', status: 'On Post',        hoursWorked: 1, certifications: ['Federal Liaison'],                     otEligible: false, crossTrained: ['ICE Hold (H2)'] },
-  { badge: '2367', name: 'Robinson, E.',  rank: 'Deputy',    assignment: 'H2-Pod',        postType: 'Pod',          onPostSince: '14:00', status: 'On Post',        hoursWorked: 9, certifications: ['ICE Hold Procedures'],                 otEligible: true,  crossTrained: ['Federal Hold (H-Pod)'] },
-  { badge: '2399', name: 'Hill, N.',      rank: 'Deputy',    assignment: 'G-Pod + Float', postType: 'Float',        onPostSince: '14:00', status: 'On Post',        hoursWorked: 1, certifications: ['Float / Utility', 'Crisis Intervention (CIT)'], otEligible: true, crossTrained: ['Pre-Release', 'Intake', 'Mental Health'] },
+const movements: Move[] = [
+  { time: '0800', what: 'Superior Court calendar — 34 inmates, 4 courtrooms', detail: '8 deputies · Cpl. Vance',              state: 'IN TRANSIT', action: 'Returned'   },
+  { time: '0830', what: 'Magistrate first appearance — 22 inmates',            detail: 'Tower D staff · no transport',         state: 'IN TRANSIT', action: 'Returned'   },
+  { time: '0900', what: 'Court-ordered releases — 11 inmates',                 detail: 'Intake processing · records verified', state: 'STAGED',     action: 'In transit' },
+  { time: '1000', what: 'GDC transfer — 18 sentenced to state facilities',     detail: '6 deputies · 2 buses',                 state: 'STAGED',     action: 'In transit' },
+  { time: '1100', what: 'Board-out transfer — 12 to Jackson County',           detail: 'Unassigned — 4 required',              state: 'STAGED',     action: 'In transit', tone: 'amber' },
+  { time: '1330', what: 'Off-site medical — 6 inmates, 3 facilities',          detail: 'Requires infirmary escort post — unmanned', state: 'STAGED', action: 'In transit', tone: 'red' },
+];
+
+// Ranked by beds consumed — the census is an output of these, not a thing that
+// can be managed directly.
+const drivers: Driver[] = [
+  { driver: 'GDC transfer backlog',       note: 'Sentenced state inmates awaiting Georgia DOC intake', inmates: 428, los: '71d',  delta: 63,  owner: 'GDC — external',         action: 'Escalate',      tone: 'red'   },
+  { driver: 'Pretrial over 90 days',      note: 'Awaiting Superior Court disposition, no trial date',  inmates: 347, los: '148d', delta: 21,  owner: 'Superior Court calendar', action: 'Court liaison', tone: 'red'   },
+  { driver: 'Competency / state hospital', note: 'Court-ordered evaluation, no DBHDD bed assigned',    inmates: 41,  los: '94d',  delta: 6,   owner: 'DBHDD — external',        action: 'Escalate',      tone: 'red'   },
+  { driver: 'Probation / parole violations', note: 'Detainer-held pending revocation hearing',         inmates: 286, los: '38d',  delta: -12, owner: 'Probation · Parole Board', action: 'Calendar'                    },
+  { driver: 'Bond set, unable to post',   note: 'Under $2,500 outstanding 14+ days',                   inmates: 193, los: '29d',  delta: 8,   owner: 'Pretrial Services',       action: 'Review',        tone: 'amber' },
+  { driver: 'ICE / out-of-county detainers', note: 'Local charges resolved, outside detainer holding', inmates: 118, los: '22d',  delta: -4,  owner: 'Records · Legal',         action: 'Audit'                       },
+  { driver: 'Awaiting transport to other jurisdictions', note: 'Holds for other Georgia jurisdictions', inmates: 64, los: '17d',  delta: 0,   owner: 'Transport unit',          action: 'Plan'                        },
+];
+
+const tasks = [
+  { task: '0600 formal count — all units',        meta: '0614 · cleared',        done: true  },
+  { task: 'Breakfast service — 9 units',          meta: '0705',                  done: true  },
+  { task: 'Medication pass — AM cycle',           meta: '0740 · 812 of 812',     done: true  },
+  { task: 'Temporary bunk classification audit',  meta: 'Tier 2 daily requirement', done: false },
+  { task: 'Cell search — 3 random units',         meta: 'due 1200',              done: false },
+  { task: 'Recreation — Towers A, B',             meta: 'due 1000',              done: false },
+  { task: '0900 formal count',                    meta: 'due 0900',              done: false },
+  { task: 'Commissary distribution',              meta: 'due 1300',              done: false },
+];
+
+// Each tier names the authority that can pull it. A ladder without named
+// authority is a wish list.
+const tiers: Tier[] = [
+  { id: 'T1', title: 'Normal operations',              body: 'Standard classification placement, no temporary housing.',            trigger: 'Trigger below 95% rated',        authority: 'Jail commander',          state: 'CLEARED',         tone: 'slate' },
+  { id: 'T2', title: 'Temporary housing authorized',   body: 'Dayroom bunks in Towers A, B, D up to 240. Daily classification audit required.', trigger: 'Trigger 100% rated, 7 days', authority: 'Sheriff — Jun 20', state: 'ACTIVE',    tone: 'amber' },
+  { id: 'T3', title: 'Board-out expansion + court petition', body: 'Raise partner cap to 300, petition Superior Court for calendar relief.', trigger: 'Trigger 108% or temp cap reached', authority: 'Sheriff + County Manager', state: 'PROJECTED SEP 22', tone: 'red' },
+  { id: 'T4', title: 'Population emergency declaration', body: 'County declaration, expedited pretrial review, non-violent intake diversion.', trigger: 'Trigger 112% sustained 14 days', authority: 'Sheriff + Commissioners', state: 'NOT ACTIVE', tone: 'slate' },
+  { id: 'T5', title: 'Court-ordered population cap',   body: 'Externally imposed cap with mandated release schedule. Loss of local control.', trigger: 'Trigger consent decree',   authority: 'Court order',             state: 'NOT ACTIVE',      tone: 'slate' },
+];
+
+// Eligibility is advisory only — every row names who actually decides.
+const releaseValves = [
+  { label: 'Bond under $2,500 unpaid 14+ days', authority: 'Pretrial recommends · Judge decides',  count: 193 },
+  { label: 'Time-served eligible at next review', authority: 'Records verifies · Judge signs',     count: 86  },
+  { label: 'Work-release eligible, unplaced',   authority: 'Classification decides — 53 beds idle', count: 61  },
+  { label: 'Pretrial diversion candidates',     authority: 'DA · Pretrial Services',               count: 128 },
+  { label: 'GDC-ready, transport not scheduled', authority: 'GDC accepts · transport moves',       count: 209 },
+  { label: 'Detainer expired or unverified',    authority: 'Legal review required',                count: 64  },
+];
+
+const partners = [
+  { county: 'Barrow County', terms: 'Contract · medium male',        boarded: 48, available: 12, rate: 58 },
+  { county: 'Hall County',   terms: 'Contract · medium / minimum',   boarded: 44, available: 0,  rate: 62 },
+  { county: 'Jackson County', terms: 'Contract · minimum male',      boarded: 31, available: 19, rate: 55 },
+  { county: 'Walton County', terms: 'Spot agreement · female',       boarded: 19, available: 7,  rate: 64 },
+  { county: 'Newton County', terms: 'Pending contract execution',    boarded: 0,  available: 40, rate: 60 },
+];
+
+const floorItems = [
+  { dot: 'bg-red-500',   title: 'No female beds available — 379 held against 352 rated', note: 'Female board-out limited to Walton (7 beds). Next intake requires temporary bunk.' },
+  { dot: 'bg-red-500',   title: 'Infirmary full — 64 of 64, escort post unmanned',       note: 'Off-site referral averages $2,100/day. 1330 medical run at risk.' },
+  { dot: 'bg-red-500',   title: 'Tower B cell 214 — door lock sticking',                 note: 'Work order 8841 · maintenance en route · safety' },
+  { dot: 'bg-amber-400', title: 'Grievance filed — Tower B, food service',               note: 'GRV-2026-221 · 5-day response clock started' },
+  { dot: 'bg-amber-400', title: '53 work-release beds idle but eligibility-restricted',  note: 'Cannot absorb general population — classification bars placement.' },
+];
+
+const passDown = [
+  { time: '0605', text: 'Tower B cell 214 door lock sticking — work order 8841 filed, maintenance en route.' },
+  { time: '0640', text: 'Intake backlog from night shift — 3 cases past the 4-hour screening standard.' },
+  { time: '0705', text: 'No female beds available. Two overnight female intakes on temporary bunks pending classification.' },
+  { time: '0730', text: 'Infirmary escort post unmanned — 1330 off-site medical run at risk.' },
 ];
 
 // ── Helpers ────────────────────────────────────────────────────
 
-const getPodColors = (pod: Pod) => {
-  if (pod.status === 'Over Capacity') return {
-    card: 'bg-red-500/10 border-red-500/40',
-    pct: 'text-red-600 dark:text-red-400',
-    bar: 'bg-red-500',
-    badge: 'bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/20',
-  };
-  if (pod.status === 'Near Capacity') return {
-    card: 'bg-orange-500/8 border-orange-500/30',
-    pct: 'text-orange-600 dark:text-orange-400',
-    bar: 'bg-orange-500',
-    badge: 'bg-orange-500/15 text-orange-600 dark:text-orange-400 border border-orange-500/20',
-  };
-  return {
-    card: 'bg-slate-50 dark:bg-zinc-900/35 border-slate-200 dark:border-slate-700/25',
-    pct: 'text-slate-500',
-    bar: 'bg-slate-600/50',
-    badge: 'bg-slate-100 dark:bg-zinc-800/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40',
-  };
+const n = (v: number) => v.toLocaleString();
+
+const utilTone = (pct: number) =>
+  pct > 100 ? { bar: 'bg-red-500', text: 'text-red-400' }
+    : pct >= 95 ? { bar: 'bg-amber-400', text: 'text-amber-400' }
+      : { bar: 'bg-slate-500', text: 'text-slate-400' };
+
+const staffTone = (staffed: number, required: number) =>
+  staffed === 0 ? 'text-red-400' : staffed < required ? 'text-amber-400' : 'text-emerald-400';
+
+const tierTone: Record<Tier['tone'], { card: string; state: string }> = {
+  slate: { card: 'border-slate-800',      state: 'text-slate-500' },
+  amber: { card: 'border-amber-500/50 bg-amber-500/[0.05]', state: 'text-amber-400' },
+  red:   { card: 'border-red-500/40',     state: 'text-red-400' },
 };
 
-const getMovementIcon = (type: Movement['type']) => {
-  switch (type) {
-    case 'Court Transport':  return Truck;
-    case 'Medical Visit':    return Heart;
-    case 'Release':          return LogOut;
-    case 'Housing Transfer': return ArrowLeftRight;
-    case 'Intake':           return ArrowRight;
-  }
-};
+const rowAccent = (tone?: 'red' | 'amber') =>
+  tone === 'red' ? 'border-red-500/70' : tone === 'amber' ? 'border-amber-500/60' : 'border-transparent';
 
-const getMovementColors = (status: Movement['status']) => {
-  if (status === 'In Progress') return 'bg-orange-100 dark:bg-orange-500/15 text-orange-700 dark:text-orange-400 border border-orange-200 dark:border-orange-500/20';
-  if (status === 'Staging')     return 'bg-orange-100 dark:bg-orange-500/15 text-orange-700 dark:text-orange-400 border border-orange-200 dark:border-orange-500/20';
-  if (status === 'Pending')     return 'bg-slate-100 dark:bg-zinc-800/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40';
-  return 'bg-slate-100 dark:bg-zinc-800/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40';
-};
-
-const getIncidentColors = (severity: Incident['severity'], status: Incident['status']) => {
-  const resolved = status === 'Resolved';
-  if (resolved) return { row: 'opacity-60', badge: 'bg-slate-500/15 text-slate-700 dark:text-slate-400 border border-slate-500/20', sev: '' };
-  if (severity === 'critical') return { row: '', badge: 'bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/20',    sev: 'text-red-600 dark:text-red-400' };
-  if (severity === 'high')     return { row: '', badge: 'bg-orange-500/15 text-orange-600 dark:text-orange-400 border border-orange-500/20', sev: 'text-orange-600 dark:text-orange-400' };
-  return { row: '', badge: 'bg-slate-100 dark:bg-zinc-800/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40', sev: 'text-slate-500' };
-};
-
-const getIncidentIcon = (type: Incident['type']) => {
-  switch (type) {
-    case 'Fight':             return AlertOctagon;
-    case 'Medical Emergency': return Heart;
-    case 'Contraband':        return AlertTriangle;
-    default:                  return AlertTriangle;
-  }
-};
-
-const getMovementDecision = (mov: Movement): { risk: string | null; action: string | null } => {
-  if (mov.status === 'Completed') return { risk: null, action: null };
-  switch (mov.type) {
-    case 'Court Transport':
-      return { risk: 'Delay risk: Missed appearance — rescheduling + judicial notice', action: null };
-    case 'Medical Visit':
-      return { risk: 'Delay risk: Medical window may close — physician availability limited', action: null };
-    case 'Housing Transfer':
-      return { risk: 'Delay risk: Source pod remains over capacity — ACA violation persists', action: 'Complete immediately — resolves H2 compliance' };
-    case 'Release':
-      return { risk: 'Delay risk: Wrongful detention liability after release time', action: 'Verify paperwork · clear by ETA' };
-    case 'Intake':
-      return { risk: null, action: 'Classification required before pod assignment' };
-  }
-};
-
-const getOfficerStatusColors = (status: Officer['status']) => {
-  if (status === 'On Post')        return 'bg-slate-100 dark:bg-zinc-800/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40';
-  if (status === 'Medical Escort') return 'bg-orange-100 dark:bg-orange-500/15 text-orange-700 dark:text-orange-400 border border-orange-200 dark:border-orange-500/20';
-  if (status === 'OT Pending')     return 'bg-orange-100 dark:bg-orange-500/15 text-orange-700 dark:text-orange-400 border border-orange-200 dark:border-orange-500/20';
-  if (status === 'Transport')      return 'bg-slate-100 dark:bg-zinc-800/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40';
-  return 'bg-slate-100 dark:bg-zinc-800/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40';
-};
-
-// ── Component ──────────────────────────────────────────────────
-
-type Priority = 'Immediate' | 'High Priority' | 'Monitor';
-
-interface CriticalIssue {
-  id: string;
-  priority: Priority;
-  severity: 'critical' | 'high' | 'medium';
-  label: string;
-  detail: string;
-  impact: string[];
-  recommendation: string;
-  confidence: 'High' | 'Medium';
-  outcome: string;
-  actions: string[];
+function SectionLabel({ children, right }: { children: React.ReactNode; right?: React.ReactNode }) {
+  return (
+    <div className="flex items-baseline justify-between gap-3 mb-3">
+      <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-slate-500">{children}</p>
+      {right}
+    </div>
+  );
 }
 
-const PRIORITY_ORDER: Record<Priority, number> = { Immediate: 0, 'High Priority': 1, Monitor: 2 };
-
-type ActionPriority = 'Critical' | 'High' | 'Medium';
-const ACTION_PRIORITY_ORDER: Record<ActionPriority, number> = { Critical: 0, High: 1, Medium: 2 };
-
-const IMPACT_PREVIEWS: Record<string, string[]> = {
-  'Redistribute Inmates': [
-    'H2-Pod: 36 → 28 inmates · reduces to 87% capacity',
-    'G2-Pod: 35 → 43 inmates · remains within rated capacity',
-    'ACA compliance violation on H2-Pod cleared',
-    'Requires 2-officer escort team · estimated 45 min',
-  ],
-  'Call Backup': [
-    'Off-duty Deputy eligible — estimated arrival 30 min',
-    'Covers float gap on C2 / G2 rotation',
-    'Overtime cost: ~$52/hr for remainder of shift',
-    'Shift staffing: 13/14 → 14/14 · ACA minimum restored',
-  ],
-  'Approve OT': [
-    'Smith absence covered through end of B-Shift (22:00)',
-    'Staffing ratio: 93% → 100%',
-    'Overtime cost: ~$52/hr · ~6 hours remaining',
-    'Requires watch commander authorization',
-  ],
-  'Lock Unit': [
-    'All inmates returned to cells — dayroom suspended',
-    'Movement in/out of pod halted until command clearance',
-    'Investigating officer and supervisor notified',
-    'Duration: until incident resolved or cleared',
-  ],
-  'Reassign Johnson': [
-    'Johnson (#2289): E2-Pod → Medical Escort (E-Pod) — certified Medical Escort, cross-trained Medical',
-    'Martinez (#2251): relieved after 9h on Medical Escort — fatigue risk cleared, returns to regular rotation',
-    'E2-Pod backfilled by Hill (#2399, Float) — cross-trained Mental Health, no coverage gap created',
-    'No new overtime required · cross-training utilization improved',
-  ],
-};
+function Stat({ label, value, unit, sub, tone = 'text-slate-100' }: {
+  label: string; value: string; unit?: string; sub: string; tone?: string;
+}) {
+  return (
+    <div className="px-5 py-4">
+      <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-slate-500 mb-2">{label}</p>
+      <p className="leading-none">
+        <span className={`text-[24px] font-bold ${tone}`}>{value}</span>
+        {unit && <span className="text-[11.5px] text-slate-400 ml-2">{unit}</span>}
+      </p>
+      <p className="text-[10.5px] text-slate-500 mt-2">{sub}</p>
+    </div>
+  );
+}
 
 export default function CustodyOperations() {
   const navigate = useNavigate();
-  const [expandedPod, setExpandedPod] = useState<string | null>(null);
-  const [expandedIncident, setExpandedIncident] = useState<number | null>(null);
-  const [expandedOfficer, setExpandedOfficer] = useState<string | null>(null);
-  const [activePreview, setActivePreview] = useState<{ issueId: string; action: string } | null>(null);
-  const [showHandoff, setShowHandoff] = useState(false);
-  const [handoffSent, setHandoffSent] = useState(false);
-  const [supervisorNotes, setSupervisorNotes] = useState(
-    'H2-Pod over capacity — redistribution recommended before shift end. E2-Pod contraband sweep pending, intel report due 15:30. Officer Smith out sick — OT/backup still required for remainder of shift.'
+
+  const totals = units.reduce(
+    (a, u) => ({ rated: a.rated + u.rated, held: a.held + u.held, placeable: a.placeable + (u.placeable ?? 0) }),
+    { rated: 0, held: 0, placeable: 0 },
   );
+  const facilityPct = Math.round((totals.held / totals.rated) * 100);
+  const custodyPct = Math.round((shift.inCustody / shift.rated) * 100);
 
-  const staffPct = Math.round((currentShift.present / currentShift.scheduled) * 100);
-  const openIncidents = incidents.filter(i => i.status !== 'Resolved').length;
-  const unresolvedIncidents = incidents.filter(i => i.status !== 'Resolved');
-  const activeMovementCount = movements.filter(m => m.status === 'In Progress' || m.status === 'Staging').length;
-  const pendingMovements = movements.filter(m => m.status !== 'Completed');
-  const overCapacityPods = pods.filter(p => p.status === 'Over Capacity');
-  const criticalPods = pods.filter(p => p.status === 'Over Capacity' || (p.status === 'Near Capacity' && p.incidents > 0));
+  const postsAtStrength = posts.filter((p) => p.staffed >= p.required).length;
+  const belowStrength = posts.filter((p) => p.staffed < p.required).length;
+  const tasksDone = tasks.filter((t) => t.done).length;
 
-  // ── Critical Issues with Priority + Impact ────────────────────
-  const criticalIssues: CriticalIssue[] = [
-    ...overCapacityPods.map(p => ({
-      id: `pod-${p.id}`,
-      priority: 'Immediate' as Priority,
-      severity: 'critical' as const,
-      label: `${p.name} — Over Capacity`,
-      detail: `${p.current}/${p.capacity} beds · ${Math.round((p.current / p.capacity) * 100)}% occupied · ${p.type}`,
-      impact: [
-        `ACA compliance violation active — reportable offense if unresolved by shift end (22:00)`,
-        'Emergency beds exhausted — no capacity for medical overflow or additional intake',
-        'Conflict risk increases ~40% above rated capacity — use-of-force likelihood elevated',
-      ],
-      recommendation: `Move ${p.current - p.capacity + 4} inmates to B-Pod (3 available beds) — restores compliance within ~45 min`,
-      confidence: 'High' as const,
-      outcome: 'ACA violation cleared · conflict risk reduced · medical overflow capacity restored',
-      actions: ['Redistribute Inmates', 'Contact USMS'],
-    })),
-    ...incidents
-      .filter(i => i.status !== 'Resolved' && (i.severity === 'critical' || i.severity === 'high'))
-      .map(i => ({
-        id: `inc-${i.id}`,
-        priority: (i.severity === 'critical' ? 'Immediate' : 'High Priority') as Priority,
-        severity: i.severity as 'critical' | 'high',
-        label: `${i.type} — ${i.pod}`,
-        detail: `${i.time} · ${i.reportingOfficer} · ${i.status}`,
-        impact:
-          i.type === 'Fight'
-            ? [
-                'Escalation risk increases significantly after 30 min without supervisor on-scene',
-                'Injured inmate may require outside transport — pod movement halt for ~2 hours',
-                'ACA incident report required within 24h — clock started at ' + i.time,
-              ]
-            : i.type === 'Contraband'
-            ? [
-                'Contraband in active unit elevates safety risk until sweep completed',
-                `Intel report required within 24h per SOP — due by ${i.time.replace(':', '')}hrs + 24h`,
-                'Investigative hold must be initiated before next shift change (22:00)',
-              ]
-            : [
-                'Unresolved incident compounds if next count finds non-compliance',
-                'ACA documentation requirement triggers if not resolved within current shift',
-              ],
-        recommendation:
-          i.type === 'Fight'
-            ? `Assign supervisor to ${i.pod} now — stabilize before 15:00 count · ${i.reportingOfficer} needs on-scene support`
-            : i.type === 'Contraband'
-            ? `Initiate ${i.pod} sweep immediately — ${i.reportingOfficer} to lead · Intel report due by 15:30`
-            : `Assign supervisor to ${i.pod} to review and document — close before shift end`,
-        confidence: (i.type === 'Fight' ? 'High' : 'Medium') as 'High' | 'Medium',
-        outcome:
-          i.type === 'Fight'
-            ? 'Incident contained · documentation complete · pod count cycle preserved'
-            : i.type === 'Contraband'
-            ? 'Sweep complete · intel report filed · investigation hold initiated'
-            : 'Incident closed · ACA documentation fulfilled · supervisor notified',
-        actions: i.severity === 'critical' ? ['Escalate to Command', 'Lock Unit'] : ['Assign Supervisor', 'Escalate'],
-      })),
-    ...(staffPct < 93 ? [{
-      id: 'staff-short',
-      priority: 'High Priority' as Priority,
-      severity: 'high' as const,
-      label: 'Shift Understaffed',
-      detail: `${currentShift.present}/${currentShift.scheduled} present · ${currentShift.note}`,
-      impact: [
-        'Post coverage gap persists for remaining ~6 hours of B-Shift if no action taken',
-        'Float officers carrying dual-post load — fatigue risk compounds after hour 6',
-        'ACA minimum ratio (1:64) requires full complement — current gap is non-compliant',
-      ],
-      recommendation: 'Approve OT for Smith replacement — covers C2 and G2 float gap · authorization required now',
-      confidence: 'High' as const,
-      outcome: 'Staffing restored to 100% · ACA minimum met · float gap eliminated for remainder of B-Shift',
-      actions: ['Approve OT', 'Call Backup'],
-    }] : []),
-  ].sort((a, b) => PRIORITY_ORDER[a.priority] - PRIORITY_ORDER[b.priority]);
-
-  const togglePreview = (issueId: string, action: string) => {
-    if (activePreview?.issueId === issueId && activePreview?.action === action) {
-      setActivePreview(null);
-    } else {
-      setActivePreview({ issueId, action });
-    }
-  };
-
-  const scrollToSection = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
-
-  // ── AI Prioritized Actions — ranked across pods, incidents, staffing, movements ──
-  const prioritizedActions: { id: string; priority: ActionPriority; label: string; onClick: () => void }[] = [
-    ...criticalIssues.map(issue => ({
-      id: issue.id,
-      priority: (issue.severity === 'critical' ? 'Critical' : issue.severity === 'high' ? 'High' : 'Medium') as ActionPriority,
-      label: issue.label,
-      onClick: () => {
-        if (issue.id.startsWith('pod-')) {
-          setExpandedPod(issue.id.replace('pod-', ''));
-          scrollToSection('housing-section');
-        } else if (issue.id.startsWith('inc-')) {
-          setExpandedIncident(Number(issue.id.replace('inc-', '')));
-          scrollToSection('incident-section');
-        } else {
-          scrollToSection('officer-board');
-        }
-      },
-    })),
-    {
-      id: 'smith-post',
-      priority: 'High' as ActionPriority,
-      label: "Fill Officer Smith's Post — Float/OT coverage required",
-      onClick: () => scrollToSection('officer-board'),
-    },
-    {
-      id: 'medical-transport-delay',
-      priority: 'Medium' as ActionPriority,
-      label: 'Medical Transport Delay Risk — Baker, T. (E-Pod Medical)',
-      onClick: () => scrollToSection('movement-section'),
-    },
-  ].sort((a, b) => ACTION_PRIORITY_ORDER[a.priority] - ACTION_PRIORITY_ORDER[b.priority]);
+  const reviewable = releaseValves.reduce((a, v) => a + v.count, 0);
+  const boarded = partners.reduce((a, p) => a + p.boarded, 0);
+  const boardCost = partners.reduce((a, p) => a + p.boarded * p.rate, 0);
 
   return (
     <DashboardLayout>
-      <div className="p-6 space-y-5">
+      <div className="min-h-full bg-[#0A0A0B] px-6 py-8">
+        <div className="max-w-[1900px] mx-auto">
 
-        {/* ── Page Header ─────────────────────────────────── */}
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <h1 className="text-xl font-bold text-slate-900 dark:text-white mb-1">Custody Operations</h1>
-            <p className="text-[11px] text-slate-500">
-              Watch commander control panel · {currentShift.label} · {currentShift.window} · Commander: <span className="text-slate-700 dark:text-slate-400">{currentShift.commander}</span>
-            </p>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1.5 text-[11px] text-slate-500 bg-slate-100 dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-lg px-3 py-1.5">
-              <Circle className="w-1.5 h-1.5 fill-emerald-500 text-emerald-500" />
-              Live
+          {/* ── Header ─────────────────────────────────────── */}
+          <div className="flex flex-col lg:flex-row lg:items-center gap-3 lg:gap-4">
+            <div className="flex items-baseline gap-3 flex-wrap">
+              <h1 className="text-[19px] font-bold text-slate-100">Custody Operations</h1>
+              <span className="text-[11px] text-slate-500">Detention Center · {shift.letter} Shift floor board · JMS · Superior Court · GDC transfer queue</span>
             </div>
-            <button
-              onClick={() => navigate('/jail/command')}
-              className="flex items-center gap-2 px-3 py-1.5 bg-slate-100 dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-lg text-[12px] text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-zinc-800/30 transition-all"
-            >
-              Command Center <ArrowRight className="w-3.5 h-3.5" />
-            </button>
-          </div>
-        </div>
-
-        {/* ── Shift Snapshot ─────────────────────────────────
-            Everything a commander needs in under 3 seconds. */}
-        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl px-5 py-3">
-          <div>
-            <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-0.5">Staffing</p>
-            <p className={`text-[16px] font-bold leading-none ${staffPct < 100 ? 'text-orange-600 dark:text-orange-400' : 'text-slate-900 dark:text-white'}`}>
-              {currentShift.present}/{currentShift.scheduled}
-            </p>
-          </div>
-          <div className="w-px h-8 bg-slate-200 dark:bg-zinc-800/50" />
-          <div>
-            <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-0.5">Incidents</p>
-            <p className={`text-[16px] font-bold leading-none ${openIncidents > 0 ? 'text-orange-600 dark:text-orange-400' : 'text-slate-900 dark:text-white'}`}>
-              {openIncidents} Open
-            </p>
-          </div>
-          <div className="w-px h-8 bg-slate-200 dark:bg-zinc-800/50" />
-          <div>
-            <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-0.5">Movements</p>
-            <p className="text-[16px] font-bold leading-none text-slate-900 dark:text-white">{activeMovementCount} Active</p>
-          </div>
-          <div className="w-px h-8 bg-slate-200 dark:bg-zinc-800/50" />
-          <div>
-            <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-0.5">Critical Pods</p>
-            <p className={`text-[16px] font-bold leading-none ${criticalPods.length > 0 ? 'text-red-600 dark:text-red-400' : 'text-slate-900 dark:text-white'}`}>
-              {criticalPods.length > 0 ? criticalPods.map(p => p.id).join(', ') : 'None'}
-            </p>
-          </div>
-          <button
-            onClick={() => setShowHandoff(true)}
-            className="ml-auto flex items-center gap-1.5 text-[11px] text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 rounded-lg px-3 py-1.5 hover:bg-slate-700/60 transition-colors"
-          >
-            <FileText className="w-3.5 h-3.5" /> Generate Shift Handoff Report
-          </button>
-        </div>
-
-        {/* ── AI Prioritized Actions ─────────────────────────
-            Existing recommendations, ranked — where to spend attention first. */}
-        <div className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl px-5 py-3">
-          <div className="flex items-center gap-2 mb-1.5">
-            <Lightbulb className="w-4 h-4 text-slate-700 dark:text-slate-400" />
-            <span className="text-[13px] font-semibold text-slate-900 dark:text-white">AI Prioritized Actions</span>
-            <span className="text-[10px] text-slate-500">Ranked by operational risk · click to jump to detail</span>
-          </div>
-          <ol className="space-y-0.5">
-            {prioritizedActions.map((action, i) => (
-              <li key={action.id}>
-                <button
-                  onClick={action.onClick}
-                  className="w-full flex items-center gap-2.5 text-left px-2 py-1.5 rounded-lg hover:bg-slate-700/10 transition-colors group"
-                >
-                  <span className="text-[11px] font-bold text-slate-500 w-4 flex-shrink-0">{i + 1}.</span>
-                  <span className="flex-1 text-[12px] text-slate-700 dark:text-slate-200 truncate">{action.label}</span>
-                  <span className={`text-[9px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider flex-shrink-0 ${
-                    action.priority === 'Critical' ? 'bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/20' :
-                    action.priority === 'High'     ? 'bg-orange-500/15 text-orange-600 dark:text-orange-400 border border-orange-500/20' :
-                                                      'bg-slate-100 dark:bg-zinc-800/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40'
-                  }`}>{action.priority}</span>
-                  <ArrowRight className="w-3 h-3 text-slate-500 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </button>
-              </li>
-            ))}
-          </ol>
-        </div>
-
-        {/* ── Critical Operational Issues ──────────────────── */}
-        {criticalIssues.length > 0 && (
-          <div className="border border-red-500/30 bg-red-500/5 rounded-xl overflow-hidden">
-            <div className="flex items-center justify-between px-5 py-3 border-b border-red-500/20">
-              <div className="flex items-center gap-2">
-                <AlertOctagon className="w-4 h-4 text-red-600 dark:text-red-400" />
-                <span className="text-[13px] font-bold text-red-600 dark:text-red-400 uppercase tracking-wide">
-                  Critical Operational Issues
-                </span>
-                <span className="text-[10px] px-2 py-0.5 bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/20 rounded-full">
-                  {criticalIssues.length} requiring action
-                </span>
-              </div>
-              <span className="text-[10px] text-slate-500 flex items-center gap-1">
-                <ArrowRight className="w-3 h-3" /> Synced to Command Center
-              </span>
-            </div>
-            <div className="divide-y divide-red-500/10">
-              {criticalIssues.map(issue => {
-                const preview = activePreview?.issueId === issue.id ? IMPACT_PREVIEWS[activePreview.action] : null;
-                return (
-                  <div key={issue.id}>
-                    <div className="flex items-start gap-4 px-5 py-4">
-                      {/* Severity strip */}
-                      <div className={`w-1 self-stretch rounded-full flex-shrink-0 ${issue.severity === 'critical' ? 'bg-red-500' : 'bg-orange-500'}`} />
-                      <div className="flex-1 min-w-0">
-                        {/* Priority + title */}
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className={`text-[9px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider ${
-                            issue.priority === 'Immediate'     ? 'bg-red-500/20 text-red-600 dark:text-red-400 border border-red-500/30' :
-                            issue.priority === 'High Priority' ? 'bg-orange-500/20 text-orange-600 dark:text-orange-400 border border-orange-500/30' :
-                                                                 'bg-slate-100 dark:bg-zinc-800/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40'
-                          }`}>{issue.priority}</span>
-                          <p className="text-[13px] font-semibold text-slate-900 dark:text-white">{issue.label}</p>
-                        </div>
-                        <p className="text-[11px] text-slate-700 dark:text-slate-400 mb-2.5">{issue.detail}</p>
-
-                        {/* Operational Impact */}
-                        <div className="bg-white dark:bg-zinc-950/50 border border-slate-700/40 rounded-lg px-3 py-2.5">
-                          <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1.5">Operational Impact — if no action taken</p>
-                          <ul className="space-y-1">
-                            {issue.impact.map((line, i) => (
-                              <li key={i} className="flex items-start gap-2 text-[11px] text-slate-700 dark:text-slate-300">
-                                <span className="text-slate-700 mt-0.5 flex-shrink-0">—</span>
-                                {line}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-
-                      {/* Recommended action + buttons */}
-                      <div className="flex flex-col gap-2 flex-shrink-0 max-w-[210px]">
-                        <div className="bg-white dark:bg-zinc-900/60 border border-slate-700/50 rounded-lg px-2.5 py-2">
-                          <div className="flex items-center justify-between mb-1">
-                            <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold">Recommended</p>
-                            <span className={`text-[8px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider ${
-                              issue.confidence === 'High'
-                                ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20'
-                                : 'bg-slate-100 dark:bg-zinc-800/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40'
-                            }`}>{issue.confidence} confidence</span>
-                          </div>
-                          <p className="text-[11px] text-slate-700 dark:text-slate-200 leading-snug mb-1.5">{issue.recommendation}</p>
-                          <p className="text-[10px] text-slate-500 leading-snug border-t border-slate-200 dark:border-slate-700/40 pt-1.5">
-                            Expected: {issue.outcome}
-                          </p>
-                        </div>
-                        <div className="flex flex-col gap-1">
-                          {issue.actions.map(action => {
-                            const hasPreview = !!IMPACT_PREVIEWS[action];
-                            const isActive = activePreview?.issueId === issue.id && activePreview?.action === action;
-                            const isDestructive = action.toLowerCase().includes('escalate') || action.toLowerCase().includes('lock');
-                            return (
-                              <button
-                                key={action}
-                                onClick={() => hasPreview ? togglePreview(issue.id, action) : undefined}
-                                className={`text-[11px] px-3 py-1.5 rounded-lg font-medium transition-colors whitespace-nowrap ${
-                                  isDestructive
-                                    ? isActive
-                                      ? 'bg-red-500/30 border border-red-500/50 text-red-300'
-                                      : 'bg-red-500/15 border border-red-500/25 text-red-600 dark:text-red-400 hover:bg-red-500/25'
-                                    : isActive
-                                      ? 'bg-slate-600/60 border border-slate-500/60 text-slate-900 dark:text-white'
-                                      : 'bg-white dark:bg-zinc-800/50 border border-slate-600/50 text-slate-700 dark:text-slate-300 hover:bg-slate-700/70'
-                                }`}
-                              >
-                                {action}
-                                {hasPreview && (
-                                  <span className="ml-1.5 text-[9px] opacity-50">{isActive ? '▲' : '▼'}</span>
-                                )}
-                              </button>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Impact Preview — inline */}
-                    {preview && (
-                      <div className="mx-5 mb-4 bg-slate-50 dark:bg-zinc-950/70 border border-slate-200 dark:border-slate-700/60 rounded-lg p-3">
-                        <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-2">Impact Preview — {activePreview!.action}</p>
-                        <ul className="space-y-1 mb-3">
-                          {preview.map((line, i) => (
-                            <li key={i} className="flex items-start gap-2 text-[11px] text-slate-700 dark:text-slate-200">
-                              <span className="text-emerald-600 flex-shrink-0 mt-0.5">→</span>
-                              {line}
-                            </li>
-                          ))}
-                        </ul>
-                        <div className="flex items-center gap-2 pt-2 border-t border-slate-200 dark:border-slate-700/40">
-                          <button className="text-[11px] px-3 py-1.5 bg-white dark:bg-zinc-800/60 border border-slate-600/60 text-slate-900 dark:text-white rounded-lg hover:bg-slate-700 transition-colors font-medium">
-                            Confirm — {activePreview!.action}
-                          </button>
-                          <button onClick={() => setActivePreview(null)} className="text-[11px] text-slate-500 hover:text-slate-700 dark:text-slate-300 transition-colors px-2 py-1.5">
-                            Cancel
-                          </button>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        )}
-
-        {/* ── Section 2: Housing Unit Management ──────────── */}
-        <div id="housing-section" className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
-          <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 dark:border-slate-700/40">
-            <div className="flex items-center gap-2">
-              <MapPin className="w-4 h-4 text-slate-700 dark:text-slate-400" />
-              <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Housing Unit Management</span>
-              <span className="text-[10px] px-2 py-0.5 bg-slate-50 dark:bg-zinc-800/40 text-slate-700 dark:text-slate-400 rounded-full">
-                {pods.filter(p => p.status === 'Over Capacity').length} over · {pods.filter(p => p.status === 'Near Capacity').length} near · {pods.filter(p => p.status === 'Normal').length} stable
-              </span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="flex items-center gap-3 text-[10px] text-slate-500 mr-2">
-                <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-slate-500 inline-block" />Stable</span>
-                <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-orange-400 inline-block" />Near</span>
-                <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-red-500 inline-block" />Over</span>
-                <span className="text-slate-700">·</span>
-                <span className="flex items-center gap-0.5 text-orange-600 dark:text-orange-400 font-bold">↑</span><span className="text-slate-500">worsening</span>
-                <span className="flex items-center gap-0.5 text-emerald-500 font-bold">↓</span><span className="text-slate-500">improving</span>
-              </div>
-              <button className="flex items-center gap-1.5 text-[11px] text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 rounded-lg px-3 py-1.5 hover:bg-slate-700/60 transition-colors">
-                <ArrowLeftRight className="w-3.5 h-3.5" /> Redistribute Inmates
+            <div className="flex items-center gap-2.5 lg:ml-auto flex-wrap">
+              <button className="px-3.5 py-2 border border-slate-700/60 rounded-lg text-[11.5px] font-semibold text-slate-200 hover:bg-zinc-900/60 transition-colors">
+                Escalate overflow tier
+              </button>
+              <button className="px-3.5 py-2 border border-amber-500/60 rounded-lg text-[11.5px] font-semibold text-amber-400 hover:bg-amber-500/10 transition-colors">
+                End shift &amp; hand off
               </button>
             </div>
           </div>
 
-          <div className="p-4 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2">
-            {pods.map(pod => {
-              const colors = getPodColors(pod);
-              const pct = Math.round((pod.current / pod.capacity) * 100);
-              const isExpanded = expandedPod === pod.id;
-              return (
-                <div key={pod.id} className="col-span-1">
-                  <button
-                    onClick={() => setExpandedPod(isExpanded ? null : pod.id)}
-                    title={pod.projection}
-                    className={`w-full rounded-xl border p-2.5 text-left transition-all hover:ring-1 hover:ring-slate-500/40 ${colors.card} ${isExpanded ? 'ring-1 ring-slate-400/30' : ''}`}
-                  >
-                    <div className="flex items-start justify-between mb-1.5">
-                      <span className="text-[11px] font-bold text-slate-900 dark:text-white">{pod.id}</span>
-                      <div className="flex items-center gap-0.5">
-                        {pod.trend === 'up'     && <span className={`text-[10px] font-bold leading-none ${pod.status === 'Over Capacity' ? 'text-red-600 dark:text-red-400' : 'text-orange-600 dark:text-orange-400'}`}>↑</span>}
-                        {pod.trend === 'down'   && <span className="text-[10px] font-bold leading-none text-emerald-500">↓</span>}
-                        {pod.incidents > 0      && <span className="w-1.5 h-1.5 rounded-full bg-orange-400 mt-0.5" title="Active incident" />}
-                        {pod.activeMovements > 0 && <span className="w-1.5 h-1.5 rounded-full bg-slate-400 mt-0.5" title="Active movement" />}
-                      </div>
-                    </div>
-                    <p className={`text-[13px] font-bold ${colors.pct}`}>{pct}%</p>
-                    <p className="text-[9px] text-slate-500 mt-0.5">{pod.current}/{pod.capacity}</p>
-                    <div className="w-full h-0.5 bg-white dark:bg-zinc-800/50 rounded-full mt-1.5 overflow-hidden">
-                      <div className={`h-full rounded-full ${colors.bar}`} style={{ width: `${Math.min(pct, 100)}%` }} />
-                    </div>
-                    <p className="text-[9px] text-slate-500 mt-1.5 truncate">{pod.assignedOfficer ? pod.assignedOfficer.replace('Dep. ', '') : '—'}</p>
-                  </button>
-                </div>
-              );
-            })}
+          {/* ── Capacity banner ────────────────────────────── */}
+          <div className="mt-4 border border-red-500/40 bg-red-500/[0.07] rounded-xl px-5 py-3.5 flex items-baseline gap-4 flex-wrap">
+            <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-red-400 flex-shrink-0">Over rated capacity</span>
+            <p className="text-[12px] text-slate-200 flex-1 min-w-[300px] leading-relaxed">
+              {n(shift.inCustody)} in custody against {n(shift.rated)} rated beds ({custodyPct}%) — {shift.daysOver} consecutive days over capacity.
+              {' '}{n(shift.housedHere)} housed here on {shift.tempBunks} temporary bunks over rated, {shift.boardedOut} boarded to partner counties.
+            </p>
+            <span className="text-[10.5px] font-mono text-slate-500 flex-shrink-0">Tier 2 protocols active since {shift.tierSince}</span>
           </div>
 
-          {/* Expanded pod detail */}
-          {expandedPod && (() => {
-            const pod = pods.find(p => p.id === expandedPod)!;
-            const colors = getPodColors(pod);
-            const pct = Math.round((pod.current / pod.capacity) * 100);
-            return (
-              <div className="mx-4 mb-4 bg-white dark:bg-zinc-950/40 border border-slate-200 dark:border-slate-700/50 rounded-xl p-4">
-                <div className="flex items-start justify-between gap-4 mb-4">
-                  <div>
-                    <div className="flex items-center gap-2 mb-1">
-                      <h3 className="text-[14px] font-bold text-slate-900 dark:text-white">{pod.name} — {pod.type}</h3>
-                      <span className={`text-[10px] px-2 py-0.5 rounded-full ${colors.badge}`}>{pod.status}</span>
-                      <span className="text-[10px] text-slate-500">{pod.security} security</span>
-                    </div>
-                    <p className="text-[11px] text-slate-700 dark:text-slate-400">
-                      {pod.current} / {pod.capacity} beds occupied ({pct}%)
-                      {pod.notes && <span className="ml-2 text-orange-600 dark:text-orange-400">· {pod.notes}</span>}
-                    </p>
-                    {pod.projection && (
-                      <p className="text-[11px] mt-1 flex items-center gap-1.5">
-                        <span className={`font-bold ${pod.trend === 'up' ? (pod.status === 'Over Capacity' ? 'text-red-600 dark:text-red-400' : 'text-orange-600 dark:text-orange-400') : pod.trend === 'down' ? 'text-emerald-500' : 'text-slate-500'}`}>
-                          {pod.trend === 'up' ? '↑' : pod.trend === 'down' ? '↓' : '→'}
+          {/* ── Status bar ─────────────────────────────────── */}
+          <div className="mt-4 border border-slate-800/80 rounded-xl overflow-hidden">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-slate-800/60 border-b border-slate-800/60">
+              <Stat label="Shift" value={shift.letter} unit={shift.hours}
+                sub={`${shift.supervisor} supervising · ${shift.elapsed} elapsed`} />
+              <Stat label="In custody" value={n(shift.inCustody)} unit={`of ${n(shift.rated)} rated`} tone="text-red-400"
+                sub={`${custodyPct}% · ${n(shift.housedHere)} housed + ${shift.boardedOut} boarded · +${shift.perDay}/day`} />
+              <Stat label="Placeable beds" value={String(totals.placeable)} unit="classification-matched" tone="text-amber-400"
+                sub="53 work-release restricted · 12 maximum only" />
+              <Stat label="Posts staffed" value={`${postsAtStrength} of ${posts.length}`} unit="at strength" tone="text-red-400"
+                sub={`infirmary escort unmanned · ${belowStrength} below strength`} />
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-slate-800/60">
+              <Stat label="Temporary bunks" value={String(shift.tempBunks)} unit={`of ${shift.tempBunkCap} cap`} tone="text-amber-400"
+                sub="Tier 2 · daily classification audit required" />
+              <Stat label="Shift tasks" value={`${tasksDone} of ${tasks.length}`} unit="documented"
+                sub="0900 count next · temp bunk audit due" />
+              <Stat label="Open floor items" value={String(floorItems.length)} unit="this shift" tone="text-amber-400"
+                sub="1 safety work order · 2 constraints" />
+            </div>
+          </div>
+
+          {/* ── Main grid ──────────────────────────────────── */}
+          <div className="mt-7 grid grid-cols-1 xl:grid-cols-2 gap-8">
+
+            {/* ══ Left column ═══════════════════════════════ */}
+            <div>
+              {/* Housing units */}
+              <SectionLabel right={<span className="text-[10px] text-slate-500">a free bed is only usable if classification matches</span>}>
+                Housing units — capacity and floor state
+              </SectionLabel>
+              <div className="flex items-end gap-2 pb-2 border-b border-slate-800/70 pl-3 text-[9px] font-bold uppercase tracking-[0.12em] text-slate-500">
+                <span className="flex-1 min-w-0">Unit / classification</span>
+                <span className="w-12 text-right flex-shrink-0">Rated</span>
+                <span className="w-12 text-right flex-shrink-0">Held</span>
+                <span className="w-12 text-right flex-shrink-0">Place.</span>
+                <span className="w-[86px] text-right flex-shrink-0">Util</span>
+                <span className="w-28 flex-shrink-0">Floor officers</span>
+                <span className="w-16 text-right flex-shrink-0">Last check</span>
+                <span className="w-24 text-right flex-shrink-0">Open items</span>
+              </div>
+              <div className="divide-y divide-slate-800/50">
+                {units.map((u) => {
+                  const pct = Math.round((u.held / u.rated) * 100);
+                  const tone = utilTone(pct);
+                  return (
+                    <div key={u.name} className={`flex items-center gap-2 py-3 pl-3 border-l-2 ${rowAccent(u.tone)}`}>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[12px] font-semibold text-slate-100 truncate">{u.name}</p>
+                        <p className={`text-[10px] truncate ${u.tone === 'red' ? 'text-amber-400/80' : 'text-slate-500'}`}>{u.classification}</p>
+                      </div>
+                      <span className="w-12 text-right text-[11px] font-mono text-slate-300 flex-shrink-0">{n(u.rated)}</span>
+                      <span className="w-12 text-right text-[11px] font-mono text-slate-100 flex-shrink-0">{n(u.held)}</span>
+                      <span className={`w-12 text-right text-[11px] font-mono flex-shrink-0 ${
+                        u.placeable === null ? 'text-slate-600' : u.placeable === 0 ? 'text-red-400' : 'text-emerald-400'
+                      }`}>
+                        {u.placeable === null ? '–' : u.placeable}
+                      </span>
+                      <span className="w-[86px] flex items-center justify-end gap-2 flex-shrink-0">
+                        <span className="w-8 h-1 bg-zinc-800/70 rounded-full overflow-hidden">
+                          <span className={`block h-full rounded-full ${tone.bar}`} style={{ width: `${Math.min(pct, 100)}%` }} />
                         </span>
-                        <span className="text-slate-700 dark:text-slate-400">{pod.projection}</span>
-                      </p>
-                    )}
-                  </div>
-                  <button onClick={() => setExpandedPod(null)} className="text-slate-500 hover:text-slate-700 dark:text-slate-300 text-[11px] flex-shrink-0">Close</button>
-                </div>
-
-                {/* Operational Impact — only shown when there's a problem */}
-                {(pod.status !== 'Normal' || !pod.assignedOfficer || pod.incidents > 0) && (
-                  <div className="bg-white dark:bg-zinc-950/50 border border-slate-700/40 rounded-lg px-3 py-2.5 mb-3">
-                    <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1.5">Operational Impact — if no action taken</p>
-                    <ul className="space-y-0.5">
-                      {pod.status === 'Over Capacity' && (
-                        <>
-                          <li className="flex items-start gap-2 text-[11px] text-slate-700 dark:text-slate-300"><span className="text-slate-700 mt-0.5 flex-shrink-0">—</span>ACA compliance violation — reportable offense if unresolved at shift end</li>
-                          <li className="flex items-start gap-2 text-[11px] text-slate-700 dark:text-slate-300"><span className="text-slate-700 mt-0.5 flex-shrink-0">—</span>Emergency beds exhausted — no capacity for medical overflow or intake</li>
-                        </>
-                      )}
-                      {pod.status === 'Near Capacity' && (
-                        <li className="flex items-start gap-2 text-[11px] text-slate-700 dark:text-slate-300"><span className="text-slate-700 mt-0.5 flex-shrink-0">—</span>One additional intake pushes pod into non-compliance — no buffer remaining</li>
-                      )}
-                      {!pod.assignedOfficer && (
-                        <li className="flex items-start gap-2 text-[11px] text-slate-700 dark:text-slate-300"><span className="text-slate-700 mt-0.5 flex-shrink-0">—</span>Unassigned post creates supervisory blind spot — float coverage is non-dedicated</li>
-                      )}
-                      {pod.incidents > 0 && (
-                        <li className="flex items-start gap-2 text-[11px] text-slate-700 dark:text-slate-300"><span className="text-slate-700 mt-0.5 flex-shrink-0">—</span>Open incident may escalate — requires supervisory review and documentation</li>
-                      )}
-                    </ul>
-                  </div>
-                )}
-
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  {/* Officer assignment */}
-                  <div className={`border rounded-lg p-3 ${!pod.assignedOfficer ? 'bg-orange-500/5 border-orange-500/25' : 'bg-slate-100 dark:bg-zinc-900/30 border-slate-700/40'}`}>
-                    <div className="flex items-center justify-between mb-2">
-                      <p className="text-[10px] text-slate-500 uppercase tracking-wide">Assigned Officer</p>
-                      {!pod.assignedOfficer && <span className="text-[9px] px-1.5 py-0.5 bg-orange-500/15 text-orange-600 dark:text-orange-400 border border-orange-500/20 rounded font-semibold uppercase">At Risk</span>}
+                        <span className={`text-[11px] font-mono ${tone.text}`}>{pct}%</span>
+                      </span>
+                      <span className="w-28 text-[11px] text-slate-400 flex-shrink-0 truncate">
+                        {u.officers}{u.lead && ` · ${u.lead}`}
+                      </span>
+                      <span className="w-16 text-right text-[11px] font-mono text-slate-400 flex-shrink-0">{u.lastCheck}</span>
+                      <span className={`w-24 text-right text-[10.5px] flex-shrink-0 truncate ${u.openItems === 'none' ? 'text-slate-600' : 'text-amber-400'}`}>
+                        {u.openItems}
+                      </span>
                     </div>
-                    {pod.assignedOfficer ? (
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <UserCheck className="w-3.5 h-3.5 text-slate-700 dark:text-slate-400" />
-                          <span className="text-[12px] font-medium text-slate-900 dark:text-white">{pod.assignedOfficer}</span>
-                        </div>
-                        <button className="text-[10px] px-2 py-1 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white rounded-lg transition-colors">
-                          Reassign
-                        </button>
-                      </div>
-                    ) : (
-                      <div className="flex items-center justify-between">
-                        <span className="text-[12px] text-orange-600 dark:text-orange-400">Float coverage only</span>
-                        <button className="flex items-center gap-1 text-[10px] px-2 py-1 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white rounded-lg transition-colors">
-                          <Plus className="w-3 h-3" /> Assign Now
-                        </button>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Active movements for this pod */}
-                  <div className="bg-slate-100 dark:bg-zinc-900/30 border border-slate-700/40 rounded-lg p-3">
-                    <p className="text-[10px] text-slate-500 uppercase tracking-wide mb-2">Pod Movements ({pod.activeMovements})</p>
-                    {pod.activeMovements === 0 ? (
-                      <p className="text-[11px] text-slate-700">No active movements</p>
-                    ) : (
-                      movements.filter(m => m.from === pod.name || m.to === pod.name).slice(0, 2).map(m => (
-                        <p key={m.id} className="text-[11px] text-slate-700 dark:text-slate-300 mb-1">{m.type} — {m.inmateName} <span className="text-slate-500">{m.status}</span></p>
-                      ))
-                    )}
-                  </div>
-
-                  {/* Actions */}
-                  <div className="bg-slate-100 dark:bg-zinc-900/30 border border-slate-700/40 rounded-lg p-3">
-                    <p className="text-[10px] text-slate-500 uppercase tracking-wide mb-2">Actions</p>
-                    <div className="space-y-1.5">
-                      <button className="w-full flex items-center gap-2 text-[11px] text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white px-2.5 py-1.5 bg-slate-100 dark:bg-zinc-800/30 border border-slate-700/40 rounded-lg transition-colors">
-                        <ArrowLeftRight className="w-3 h-3" /> Redistribute Inmates
-                      </button>
-                      <button className="w-full flex items-center gap-2 text-[11px] text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white px-2.5 py-1.5 bg-slate-100 dark:bg-zinc-800/30 border border-slate-700/40 rounded-lg transition-colors">
-                        <Lock className="w-3 h-3" /> Lock Unit
-                      </button>
-                      <button className="w-full flex items-center gap-2 text-[11px] text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white px-2.5 py-1.5 bg-slate-100 dark:bg-zinc-800/30 border border-slate-700/40 rounded-lg transition-colors">
-                        <AlertTriangle className="w-3 h-3" /> Log Incident
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Command uplink */}
-                <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-200 dark:border-slate-700/30 flex items-center gap-1.5">
-                  <ArrowRight className="w-3 h-3 text-slate-700" />
-                  <span className="text-[10px] text-slate-700">
-                    {pod.status === 'Over Capacity' ? 'Impacts Command Risk Level — capacity violation flagged upward' : 'Pod status feeds Command Center housing overview'}
-                  </span>
-                </div>
+                  );
+                })}
               </div>
-            );
-          })()}
-        </div>
 
-        {/* ── Section 3: Movement Control + Incidents ──────── */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-
-          {/* Inmate Movement Control */}
-          <div id="movement-section" className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
-            <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 dark:border-slate-700/40">
-              <div className="flex items-center gap-2">
-                <ArrowLeftRight className="w-4 h-4 text-slate-700 dark:text-slate-400" />
-                <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Inmate Movement Control</span>
-                <span className="text-[10px] px-2 py-0.5 bg-slate-100 dark:bg-zinc-800/30 text-slate-700 dark:text-slate-400 border border-slate-700/40 rounded-full">
-                  {activeMovementCount} active
-                </span>
-              </div>
-              <button
-                onClick={() => navigate('/jail/inmates')}
-                className="flex items-center gap-1 text-[11px] text-slate-500 hover:text-slate-700 dark:text-slate-300 transition-colors"
-              >
-                All Movements <ArrowRight className="w-3.5 h-3.5" />
-              </button>
-            </div>
-
-            <div className="divide-y divide-slate-700/10">
-              {movements.map(mov => {
-                const Icon = getMovementIcon(mov.type);
-                const isActive = mov.status === 'In Progress' || mov.status === 'Staging';
-                const decision = getMovementDecision(mov);
-                return (
-                  <div key={mov.id} className="flex items-start gap-3 px-5 py-3 hover:bg-slate-700/10 transition-colors">
-                    <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5 bg-slate-100 dark:bg-zinc-800/30">
-                      <Icon className="w-3.5 h-3.5 text-slate-700 dark:text-slate-400" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-start justify-between gap-2 mb-0.5">
-                        <p className="text-[12px] font-medium text-slate-700 dark:text-slate-200">{mov.inmateName} <span className="text-slate-500 font-normal">{mov.inmateId}</span></p>
-                        <span className={`text-[10px] px-1.5 py-0.5 rounded flex-shrink-0 ${getMovementColors(mov.status)}`}>{mov.status}</span>
-                      </div>
-                      <p className="text-[11px] text-slate-700 dark:text-slate-400">{mov.type} · {mov.from} → {mov.to}</p>
-                      <p className="text-[10px] text-slate-500 mt-0.5">{mov.escort} · Started {mov.startTime} · ETA {mov.eta}</p>
-                      {isActive && decision.risk && (
-                        <p className="text-[10px] text-orange-600 dark:text-orange-400/80 mt-1">⚠ {decision.risk}</p>
-                      )}
-                      {isActive && decision.action && (
-                        <p className="text-[10px] text-slate-700 dark:text-slate-400 mt-0.5">→ {decision.action}</p>
-                      )}
-                    </div>
-                    {isActive && (
-                      <div className="flex flex-col gap-1 flex-shrink-0">
-                        <button className="text-[10px] px-2 py-1 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white rounded transition-colors whitespace-nowrap">
-                          Delay
-                        </button>
-                        <button className="text-[10px] px-2 py-1 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white rounded transition-colors whitespace-nowrap">
-                          Re-route
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-
-            <div className="px-5 py-2.5 border-t border-slate-200 dark:border-slate-200 dark:border-slate-700/30">
-              <p className="text-[10px] text-slate-700 flex items-center gap-1">
-                <ArrowRight className="w-3 h-3" /> Active movements tracked in Command Center transport log
-              </p>
-            </div>
-          </div>
-
-          {/* Incident & Discipline Tracking */}
-          <div id="incident-section" className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
-            <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 dark:border-slate-700/40">
-              <div className="flex items-center gap-2">
-                <AlertOctagon className="w-4 h-4 text-slate-700 dark:text-slate-400" />
-                <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Incident & Discipline</span>
-                {openIncidents > 0 && (
-                  <span className="text-[10px] px-2 py-0.5 bg-orange-500/15 text-orange-600 dark:text-orange-400 border border-orange-500/20 rounded-full">
-                    {openIncidents} open
-                  </span>
-                )}
-              </div>
-              <button
-                onClick={() => navigate('/jail/incidents')}
-                className="flex items-center gap-1 text-[11px] text-slate-500 hover:text-slate-700 dark:text-slate-300 transition-colors"
-              >
-                Full Log <ArrowRight className="w-3.5 h-3.5" />
-              </button>
-            </div>
-
-            <div className="divide-y divide-slate-700/10">
-              {incidents.map(inc => {
-                const colors = getIncidentColors(inc.severity, inc.status);
-                const Icon = getIncidentIcon(inc.type);
-                const isExpanded = expandedIncident === inc.id;
-                return (
-                  <div key={inc.id} className={`transition-colors hover:bg-slate-700/10 ${colors.row}`}>
-                    <button
-                      onClick={() => setExpandedIncident(isExpanded ? null : inc.id)}
-                      className="w-full flex items-start gap-3 px-5 py-3 text-left"
-                    >
-                      <Icon className={`w-4 h-4 flex-shrink-0 mt-0.5 ${colors.sev || 'text-slate-500'}`} />
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-start justify-between gap-2 mb-0.5">
-                          <div className="flex items-center gap-2 flex-wrap">
-                            <p className="text-[12px] font-medium text-slate-700 dark:text-slate-200">{inc.type}</p>
-                            <span className="text-[10px] text-slate-500">{inc.pod}</span>
-                            {inc.status !== 'Resolved' && (
-                              <span className={`text-[9px] px-1.5 py-0.5 rounded font-semibold uppercase tracking-wide ${
-                                inc.severity === 'critical' ? 'bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/20' :
-                                inc.severity === 'high' ? 'bg-orange-500/15 text-orange-600 dark:text-orange-400 border border-orange-500/20' :
-                                'bg-slate-100 dark:bg-zinc-800/30 text-slate-500 border border-slate-700/40'
-                              }`}>
-                                {inc.severity === 'critical' || inc.severity === 'high' ? 'Action Required' : 'Review'}
-                              </span>
-                            )}
-                          </div>
-                          <div className="flex items-center gap-1.5 flex-shrink-0">
-                            <span className={`text-[10px] px-1.5 py-0.5 rounded ${colors.badge}`}>{inc.status}</span>
-                            {isExpanded ? <ChevronUp className="w-3 h-3 text-slate-500" /> : <ChevronDown className="w-3 h-3 text-slate-500" />}
-                          </div>
-                        </div>
-                        <p className="text-[11px] text-slate-500">{inc.time} · {inc.reportingOfficer}</p>
-                      </div>
-                    </button>
-                    {isExpanded && (
-                      <div className="px-5 pb-3 pl-12 space-y-2">
-                        {/* Description */}
-                        <p className="text-[11px] text-slate-700 dark:text-slate-300 leading-relaxed bg-slate-50 dark:bg-zinc-950/30 rounded-lg p-3 border border-slate-700/40">
-                          {inc.description}
-                        </p>
-
-                        {/* Escalation likelihood + recommended action — open incidents only */}
-                        {inc.status !== 'Resolved' && (() => {
-                          const escalation =
-                            inc.type === 'Fight'
-                              ? { level: 'High', text: 'Typically escalates to use-of-force within 30 min without supervisor on-scene', action: `Assign supervisor to ${inc.pod} — ${inc.reportingOfficer} needs immediate support` }
-                              : inc.type === 'Contraband'
-                              ? { level: 'Medium', text: 'Contained, but risk spreads if sweep not completed before next dayroom', action: 'Lock E2 for sweep — complete before 16:00 dayroom window' }
-                              : { level: 'Low', text: 'Unlikely to escalate if documented and closed this shift', action: 'Supervisor sign-off required — close before 22:00' };
-                          return (
-                            <div className="flex items-stretch gap-2">
-                              <div className="flex-1 bg-white dark:bg-zinc-950/50 border border-slate-700/40 rounded-lg px-3 py-2">
-                                <div className="flex items-center gap-1.5 mb-1">
-                                  <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold">Escalation Likelihood</p>
-                                  <span className={`text-[8px] px-1.5 py-0.5 rounded font-bold uppercase ${
-                                    escalation.level === 'High'   ? 'bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/20' :
-                                    escalation.level === 'Medium' ? 'bg-orange-500/15 text-orange-600 dark:text-orange-400 border border-orange-500/20' :
-                                                                    'bg-slate-100 dark:bg-zinc-800/30 text-slate-700 dark:text-slate-400 border border-slate-200 dark:border-slate-700/40'
-                                  }`}>{escalation.level}</span>
-                                </div>
-                                <p className="text-[11px] text-slate-700 dark:text-slate-300 leading-snug">{escalation.text}</p>
-                              </div>
-                              <div className="flex-1 bg-white dark:bg-zinc-950/50 border border-slate-700/40 rounded-lg px-3 py-2">
-                                <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1">Recommended Action</p>
-                                <p className="text-[11px] text-slate-700 dark:text-slate-200 leading-snug">{escalation.action}</p>
-                              </div>
-                            </div>
-                          );
-                        })()}
-
-                        {/* Operational Impact — only for open incidents */}
-                        {inc.status !== 'Resolved' && (
-                          <div className="bg-white dark:bg-zinc-950/50 border border-slate-700/40 rounded-lg px-3 py-2.5">
-                            <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1.5">Operational Impact — if no action taken</p>
-                            <ul className="space-y-0.5">
-                              {inc.type === 'Fight' && (
-                                <>
-                                  <li className="flex items-start gap-2 text-[11px] text-slate-700 dark:text-slate-300"><span className="text-slate-700 mt-0.5 flex-shrink-0">—</span>Risk of escalation to use-of-force without supervisory intervention</li>
-                                  <li className="flex items-start gap-2 text-[11px] text-slate-700 dark:text-slate-300"><span className="text-slate-700 mt-0.5 flex-shrink-0">—</span>Injured inmate may require outside medical transport — pod movement halt</li>
-                                </>
-                              )}
-                              {inc.type === 'Contraband' && (
-                                <>
-                                  <li className="flex items-start gap-2 text-[11px] text-slate-700 dark:text-slate-300"><span className="text-slate-700 mt-0.5 flex-shrink-0">—</span>Contraband in circulation elevates safety risk facility-wide</li>
-                                  <li className="flex items-start gap-2 text-[11px] text-slate-700 dark:text-slate-300"><span className="text-slate-700 mt-0.5 flex-shrink-0">—</span>SOP requires intel report within 24 hours — documentation overdue</li>
-                                </>
-                              )}
-                              {(inc.type !== 'Fight' && inc.type !== 'Contraband') && (
-                                <li className="flex items-start gap-2 text-[11px] text-slate-700 dark:text-slate-300"><span className="text-slate-700 mt-0.5 flex-shrink-0">—</span>Unresolved incident may require ACA documentation — supervisor sign-off needed</li>
-                              )}
-                            </ul>
-                          </div>
-                        )}
-
-                        {/* Actions */}
-                        <div className="flex flex-wrap gap-1.5">
-                          {inc.status !== 'Resolved' && inc.severity === 'critical' && (
-                            <button className="text-[10px] px-2.5 py-1.5 bg-red-500/15 border border-red-500/25 text-red-600 dark:text-red-400 hover:bg-red-500/25 rounded-lg transition-colors font-medium">
-                              Escalate to Command
-                            </button>
-                          )}
-                          {inc.status !== 'Resolved' && (
-                            <>
-                              <button className="text-[10px] px-2.5 py-1.5 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white rounded-lg transition-colors">
-                                Assign Supervisor
-                              </button>
-                              <button className="text-[10px] px-2.5 py-1.5 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white rounded-lg transition-colors">
-                                Lock Unit
-                              </button>
-                              <button className="text-[10px] px-2.5 py-1.5 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white rounded-lg transition-colors">
-                                Mark Resolved
-                              </button>
-                            </>
-                          )}
-                          <button className="text-[10px] px-2.5 py-1.5 bg-slate-100 dark:bg-zinc-800/30 border border-slate-700/40 text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded-lg transition-colors">
-                            View Report
-                          </button>
-                        </div>
-
-                        {inc.severity !== 'low' && inc.status !== 'Resolved' && (
-                          <p className="text-[10px] text-slate-700 flex items-center gap-1">
-                            <ArrowRight className="w-3 h-3" /> {inc.severity === 'critical' ? 'Impacts Command Risk Level' : 'Reported to Command Center'}
-                          </p>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-
-        {/* ── Section 4: Officer Assignment Board ──────────── */}
-        <div id="officer-board" className="bg-white dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/50 rounded-xl overflow-hidden">
-          <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-200 dark:border-slate-700/40">
-            <div className="flex items-center gap-2">
-              <Users className="w-4 h-4 text-slate-700 dark:text-slate-400" />
-              <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Officer Assignment Board</span>
-              <span className={`text-[10px] px-2 py-0.5 rounded-full ${staffPct < 93 ? 'bg-orange-500/15 text-orange-600 dark:text-orange-400 border border-orange-500/20' : 'bg-slate-50 dark:bg-zinc-800/40 text-slate-500'}`}>
-                {currentShift.present}/{currentShift.scheduled} on shift
-              </span>
-            </div>
-            <div className="flex items-center gap-2">
-              <button className="flex items-center gap-1.5 text-[11px] text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 rounded-lg px-3 py-1.5 hover:bg-slate-700/60 transition-colors">
-                <PhoneCall className="w-3.5 h-3.5" /> Call Backup
-              </button>
-              <button className="flex items-center gap-1.5 text-[11px] text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 rounded-lg px-3 py-1.5 hover:bg-slate-700/60 transition-colors">
-                <Plus className="w-3.5 h-3.5" /> Approve OT
-              </button>
-              <button className="flex items-center gap-1.5 text-[11px] text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 rounded-lg px-3 py-1.5 hover:bg-slate-700/60 transition-colors">
-                <ArrowLeftRight className="w-3.5 h-3.5" /> Bulk Reassign
-              </button>
-            </div>
-          </div>
-
-          {/* AI Staffing Recommendation — certifications + cross-training → reassignment */}
-          <div className="mx-5 mt-3 bg-white dark:bg-zinc-900/60 border border-slate-700/50 rounded-lg px-3 py-2.5">
-            <div className="flex items-start justify-between gap-3">
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-1">
-                  <Lightbulb className="w-3.5 h-3.5 text-slate-700 dark:text-slate-400 flex-shrink-0" />
-                  <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold">AI Staffing Recommendation</p>
-                  <span className="text-[8px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">High confidence</span>
-                </div>
-                <p className="text-[11px] text-slate-700 dark:text-slate-200 leading-snug">
-                  <span className="font-semibold">Move Johnson (#2289) to Medical Escort</span> — Certified Intake & Medical Escort, cross-trained Medical, 1h on post. Relieves Martinez (#2251, 9h — fatigue risk). Backfill E2-Pod from Hill (#2399, Float, cross-trained Mental Health).
+              {/* Facility total */}
+              <div className="flex items-start gap-2 py-3 pl-3 border-t border-slate-800/70">
+                <span className="flex-1 min-w-0 text-[12px] font-bold text-slate-100">Facility total</span>
+                <span className="w-12 text-right text-[11px] font-mono font-bold text-slate-200 flex-shrink-0">{n(totals.rated)}</span>
+                <span className="w-12 text-right text-[11px] font-mono font-bold text-slate-100 flex-shrink-0">{n(totals.held)}</span>
+                <span className="w-12 text-right text-[11px] font-mono font-bold text-amber-400 flex-shrink-0">{totals.placeable}</span>
+                <span className="w-[86px] text-right text-[11px] font-mono font-bold text-red-400 flex-shrink-0">{facilityPct}%</span>
+                <p className="w-[268px] text-[10.5px] text-slate-500 leading-relaxed flex-shrink-0">
+                  {n(totals.held)} housed here + {shift.boardedOut} boarded out = {n(shift.inCustody)} in custody ({custodyPct}% of rated).
+                  {' '}{totals.placeable} placeable beds: 53 work-release restricted, 12 maximum-security only. Segregation excluded — not usable for overflow.
                 </p>
               </div>
-              <button
-                onClick={() => togglePreview('staffing-ai', 'Reassign Johnson')}
-                className={`text-[11px] px-3 py-1.5 rounded-lg font-medium transition-colors whitespace-nowrap flex-shrink-0 ${
-                  activePreview?.issueId === 'staffing-ai' && activePreview?.action === 'Reassign Johnson'
-                    ? 'bg-slate-600/60 border border-slate-500/60 text-slate-900 dark:text-white'
-                    : 'bg-white dark:bg-zinc-800/50 border border-slate-600/50 text-slate-700 dark:text-slate-300 hover:bg-slate-700/70'
-                }`}
-              >
-                Reassign Johnson
-                <span className="ml-1.5 text-[9px] opacity-50">{activePreview?.issueId === 'staffing-ai' && activePreview?.action === 'Reassign Johnson' ? '▲' : '▼'}</span>
-              </button>
-            </div>
-            {activePreview?.issueId === 'staffing-ai' && activePreview?.action === 'Reassign Johnson' && (
-              <div className="mt-3 bg-slate-50 dark:bg-zinc-950/70 border border-slate-200 dark:border-slate-700/60 rounded-lg p-3">
-                <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-2">Impact Preview — Reassign Johnson</p>
-                <ul className="space-y-1 mb-3">
-                  {IMPACT_PREVIEWS['Reassign Johnson'].map((line, i) => (
-                    <li key={i} className="flex items-start gap-2 text-[11px] text-slate-700 dark:text-slate-200">
-                      <span className="text-emerald-600 flex-shrink-0 mt-0.5">→</span>
-                      {line}
-                    </li>
+
+              {/* Post assignments */}
+              <div className="mt-7">
+                <SectionLabel right={<span className="text-[10px] text-slate-500">unrelieved posts drive documentation lapses</span>}>
+                  Post assignments &amp; relief
+                </SectionLabel>
+                <div className="flex items-end gap-3 pb-2 border-b border-slate-800/70 pl-3 text-[9px] font-bold uppercase tracking-[0.12em] text-slate-500">
+                  <span className="flex-1 min-w-0">Post</span>
+                  <span className="w-14 text-right flex-shrink-0">Staffed</span>
+                  <span className="w-24 flex-shrink-0">Lead</span>
+                  <span className="flex-1 min-w-0">Relief / break</span>
+                  <span className="w-16 text-right flex-shrink-0">Due</span>
+                  <span className="w-[92px] text-right flex-shrink-0">Action</span>
+                </div>
+                <div className="divide-y divide-slate-800/50">
+                  {posts.map((p) => {
+                    const short = p.staffed < p.required;
+                    return (
+                      <div key={p.post} className={`flex items-center gap-3 py-3 pl-3 border-l-2 ${rowAccent(p.staffed === 0 ? 'red' : short ? 'amber' : undefined)}`}>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-[12px] font-semibold text-slate-100 truncate">{p.post}</p>
+                          <p className="text-[10px] text-slate-500 truncate">{p.requirement}</p>
+                        </div>
+                        <span className={`w-14 text-right text-[11px] font-mono flex-shrink-0 ${staffTone(p.staffed, p.required)}`}>
+                          {p.staffed} of {p.required}
+                        </span>
+                        <span className={`w-24 text-[11px] flex-shrink-0 truncate ${p.lead === 'UNMANNED' ? 'text-red-400 font-semibold' : 'text-slate-300'}`}>{p.lead}</span>
+                        <span className="flex-1 min-w-0 text-[11px] text-slate-400 truncate">{p.relief}</span>
+                        <span className={`w-16 text-right text-[11px] font-mono flex-shrink-0 ${p.overdue ? 'text-red-400' : 'text-amber-400'}`}>{p.due}</span>
+                        <span className="w-[92px] text-right flex-shrink-0">
+                          <button className={`px-2.5 py-1 rounded text-[10.5px] font-semibold whitespace-nowrap transition-colors ${
+                            short
+                              ? 'border border-amber-500/60 text-amber-400 hover:bg-amber-500/10'
+                              : 'border border-slate-700/60 text-slate-300 hover:bg-zinc-900/60'
+                          }`}>
+                            {short ? 'Assign' : 'Log relief'}
+                          </button>
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Movement board */}
+              <div className="mt-7">
+                <SectionLabel right={<span className="text-[10px] text-slate-500">return-overdue flags raise automatically</span>}>
+                  Movement board — this shift
+                </SectionLabel>
+                <div className="divide-y divide-slate-800/50">
+                  {movements.map((m) => (
+                    <div key={m.time + m.what} className={`flex items-center gap-3 py-3 pl-3 border-l-2 ${rowAccent(m.tone)}`}>
+                      <span className="w-10 text-[11px] font-mono text-slate-500 flex-shrink-0">{m.time}</span>
+                      <span className="flex-1 min-w-0 text-[12px] text-slate-100 truncate">{m.what}</span>
+                      <span className="w-44 text-[10.5px] text-slate-500 flex-shrink-0 truncate">{m.detail}</span>
+                      <span className={`w-20 text-[10.5px] font-bold tracking-wider flex-shrink-0 ${m.state === 'IN TRANSIT' ? 'text-amber-400' : 'text-slate-500'}`}>
+                        {m.state}
+                      </span>
+                      <button className="px-2.5 py-1 border border-slate-700/60 rounded text-[10.5px] font-semibold text-slate-300 hover:bg-zinc-900/60 transition-colors flex-shrink-0 w-[84px] whitespace-nowrap">
+                        {m.action}
+                      </button>
+                    </div>
                   ))}
-                </ul>
-                <div className="flex items-center gap-2 pt-2 border-t border-slate-200 dark:border-slate-700/40">
-                  <button className="text-[11px] px-3 py-1.5 bg-white dark:bg-zinc-800/60 border border-slate-600/60 text-slate-900 dark:text-white rounded-lg hover:bg-slate-700 transition-colors font-medium">
-                    Confirm — Reassign Johnson
-                  </button>
-                  <button onClick={() => setActivePreview(null)} className="text-[11px] text-slate-500 hover:text-slate-700 dark:text-slate-300 transition-colors px-2 py-1.5">
-                    Cancel
-                  </button>
                 </div>
               </div>
-            )}
-          </div>
 
-          {/* Table header */}
-          <div className="grid grid-cols-12 px-5 py-2 border-b border-slate-200 dark:border-slate-700/10 text-[10px] text-slate-500 uppercase tracking-wide">
-            <span className="col-span-3">Officer</span>
-            <span className="col-span-3">Assignment</span>
-            <span className="col-span-2">Risk Signals</span>
-            <span className="col-span-1 text-center">Hours</span>
-            <span className="col-span-3 text-right">Status · Actions</span>
-          </div>
-
-          <div className="divide-y divide-slate-700/10">
-            {officers.map(officer => {
-              const isHighHours   = officer.hoursWorked >= 8;
-              const isFatigueRisk = officer.hoursWorked >= 6;
-              const isOffPost     = officer.status !== 'On Post';
-              // Priority post: officer assigned to a pod that is over/near capacity or has incidents
-              const assignedPod   = pods.find(p => p.assignedOfficer === officer.name || p.assignedOfficer === `Dep. ${officer.name.split(', ')[0]}`);
-              const isPriorityPost = assignedPod && (assignedPod.status !== 'Normal' || assignedPod.incidents > 0);
-              // Coverage gap: officer is off-post and pod has no backup
-              const hasCoverageGap = isOffPost && assignedPod && assignedPod.incidents > 0;
-              const isExpandedOfficer = expandedOfficer === officer.badge;
-              return (
-                <div key={officer.badge}>
-                <div className={`grid grid-cols-12 items-center px-5 py-2.5 hover:bg-slate-700/10 transition-colors ${isHighHours ? 'bg-orange-500/[0.03]' : ''}`}>
-                  <div className="col-span-3 flex items-center gap-1.5">
-                    <div className="min-w-0">
-                      <p className="text-[12px] font-medium text-slate-700 dark:text-slate-200">{officer.name}</p>
-                      <p className="text-[10px] text-slate-500">#{officer.badge} · {officer.rank}</p>
-                    </div>
-                    <button
-                      onClick={() => setExpandedOfficer(isExpandedOfficer ? null : officer.badge)}
-                      title="Certifications, OT eligibility & cross-training"
-                      className="ml-auto text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 flex-shrink-0"
-                    >
-                      {isExpandedOfficer ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
-                    </button>
-                  </div>
-                  <div className="col-span-3">
-                    <p className="text-[12px] text-slate-700 dark:text-slate-300">{officer.assignment}</p>
-                    {isOffPost && <p className="text-[9px] text-orange-600 dark:text-orange-400 mt-0.5">Away from post</p>}
-                  </div>
-                  {/* Risk Signals */}
-                  <div className="col-span-2">
-                    <div className="flex flex-wrap gap-1">
-                      {isHighHours && (
-                        <span className="text-[9px] px-1.5 py-0.5 bg-orange-500/15 text-orange-600 dark:text-orange-400 border border-orange-500/20 rounded font-semibold uppercase tracking-wide" title="Officer at or over 8 hours — fatigue risk">
-                          Fatigue
-                        </span>
-                      )}
-                      {!isHighHours && isFatigueRisk && (
-                        <span className="text-[9px] px-1.5 py-0.5 bg-slate-100 dark:bg-zinc-800/30 text-slate-700 dark:text-slate-400 border border-slate-700/40 rounded font-semibold uppercase tracking-wide" title="Approaching 8-hour threshold">
-                          6h+
-                        </span>
-                      )}
-                      {isPriorityPost && (
-                        <span className="text-[9px] px-1.5 py-0.5 bg-slate-100 dark:bg-zinc-800/30 text-orange-700/80 border border-orange-500/20 rounded font-semibold uppercase tracking-wide" title="Assigned to high-priority housing unit">
-                          Priority
-                        </span>
-                      )}
-                      {hasCoverageGap && (
-                        <span className="text-[9px] px-1.5 py-0.5 bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/20 rounded font-semibold uppercase tracking-wide" title="Off post with open incident in assigned unit">
-                          Gap
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                  <div className="col-span-1 text-center">
-                    <span className={`text-[12px] font-semibold ${isHighHours ? 'text-orange-600 dark:text-orange-400' : 'text-slate-500'}`}>
-                      {officer.hoursWorked}h
-                    </span>
-                    {isHighHours && <p className="text-[8px] text-orange-600 dark:text-orange-400/70 leading-none">OT</p>}
-                  </div>
-                  <div className="col-span-3 flex items-center justify-end gap-1.5">
-                    <span className={`text-[10px] px-1.5 py-0.5 rounded-full flex-shrink-0 ${getOfficerStatusColors(officer.status)}`}>
-                      {officer.status}
-                    </span>
-                    <button className="text-[10px] px-2 py-1 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:text-white rounded transition-colors flex-shrink-0">
-                      Reassign
-                    </button>
-                  </div>
+              {/* Population drivers */}
+              <div className="mt-7">
+                <SectionLabel right={<span className="text-[10px] text-slate-500">ranked by beds consumed</span>}>
+                  What is holding population up
+                </SectionLabel>
+                <div className="flex items-end gap-3 pb-2 border-b border-slate-800/70 pl-3 text-[9px] font-bold uppercase tracking-[0.12em] text-slate-500">
+                  <span className="flex-1 min-w-0">Driver</span>
+                  <span className="w-14 text-right flex-shrink-0">Inmates</span>
+                  <span className="w-14 text-right flex-shrink-0">Avg LOS</span>
+                  <span className="w-12 text-right flex-shrink-0">30d</span>
+                  <span className="w-44 flex-shrink-0">Owner / dependency</span>
+                  <span className="w-24 text-right flex-shrink-0">Action</span>
                 </div>
-
-                {/* Certifications · OT eligibility · Cross-training */}
-                {isExpandedOfficer && (
-                  <div className="px-5 pb-2.5 pl-12">
-                    <div className="bg-slate-50 dark:bg-zinc-950/30 border border-slate-700/40 rounded-lg p-3 flex flex-wrap items-start gap-x-6 gap-y-2">
-                      <div>
-                        <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1">Certifications</p>
-                        <div className="flex flex-wrap gap-1">
-                          {officer.certifications.map(cert => (
-                            <span key={cert} className="text-[10px] px-1.5 py-0.5 bg-slate-100 dark:bg-zinc-800/30 text-slate-700 dark:text-slate-300 border border-slate-700/40 rounded inline-flex items-center gap-1">
-                              <Award className="w-2.5 h-2.5" /> {cert}
-                            </span>
-                          ))}
-                        </div>
+                <div className="divide-y divide-slate-800/50">
+                  {drivers.map((d) => (
+                    <div key={d.driver} className={`flex items-center gap-3 py-3 pl-3 border-l-2 ${rowAccent(d.tone)}`}>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[12px] font-semibold text-slate-100 truncate">{d.driver}</p>
+                        <p className="text-[10px] text-slate-500 truncate">{d.note}</p>
                       </div>
-                      <div>
-                        <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1">Cross-Trained For</p>
-                        <div className="flex flex-wrap gap-1">
-                          {officer.crossTrained.map(ct => (
-                            <span key={ct} className="text-[10px] px-1.5 py-0.5 bg-slate-100 dark:bg-zinc-800/30 text-slate-700 dark:text-slate-300 border border-slate-700/40 rounded inline-flex items-center gap-1">
-                              <Repeat className="w-2.5 h-2.5" /> {ct}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                      <div>
-                        <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1">Overtime</p>
-                        <span className={`text-[10px] px-1.5 py-0.5 rounded inline-flex items-center gap-1 ${officer.otEligible ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20' : 'bg-slate-100 dark:bg-zinc-800/30 text-slate-500 border border-slate-700/40'}`}>
-                          {officer.otEligible && <CheckCircle className="w-2.5 h-2.5" />} {officer.otEligible ? 'Eligible' : 'Not Eligible'}
-                        </span>
-                      </div>
+                      <span className="w-14 text-right text-[12px] font-mono font-bold text-slate-100 flex-shrink-0">{d.inmates}</span>
+                      <span className="w-14 text-right text-[11px] font-mono text-red-400 flex-shrink-0">{d.los}</span>
+                      <span className={`w-12 text-right text-[11px] font-mono flex-shrink-0 ${
+                        d.delta > 0 ? 'text-red-400' : d.delta < 0 ? 'text-emerald-400' : 'text-slate-600'
+                      }`}>
+                        {d.delta > 0 ? `▲ ${d.delta}` : d.delta < 0 ? `▼ ${Math.abs(d.delta)}` : '– 0'}
+                      </span>
+                      <span className="w-44 text-[11px] text-slate-400 flex-shrink-0 truncate">{d.owner}</span>
+                      <span className="w-24 text-right flex-shrink-0">
+                        <button className="text-[11px] font-semibold text-amber-500/90 hover:text-amber-400 transition-colors">{d.action} →</button>
+                      </span>
                     </div>
-                  </div>
-                )}
+                  ))}
                 </div>
-              );
-            })}
-
-            {/* Missing officer row */}
-            <div className="grid grid-cols-12 items-center px-5 py-2.5 bg-red-500/5 border-l-2 border-l-red-500/50">
-              <div className="col-span-3">
-                <div className="flex items-center gap-1.5">
-                  <UserX className="w-3 h-3 text-red-600 dark:text-red-400" />
-                  <p className="text-[12px] font-medium text-red-600 dark:text-red-400">Smith, Officer</p>
-                </div>
-                <p className="text-[10px] text-slate-500">#2176 · Deputy</p>
-              </div>
-              <div className="col-span-3">
-                <p className="text-[11px] text-orange-600 dark:text-orange-400">Post uncovered</p>
-                <p className="text-[10px] text-slate-700">Float or OT required</p>
-              </div>
-              <div className="col-span-1 text-center">
-                <span className="text-[10px] text-slate-500">Pod</span>
-              </div>
-              <div className="col-span-1 text-center">
-                <span className="text-[10px] text-slate-700">—</span>
-              </div>
-              <div className="col-span-1 text-center">
-                <span className="text-[10px] text-slate-700">—</span>
-              </div>
-              <div className="col-span-3 flex items-center justify-end gap-1.5">
-                <span className="text-[10px] px-1.5 py-0.5 bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/20 rounded-full flex-shrink-0">Sick Call</span>
-                <button className="text-[10px] px-2 py-1 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white rounded transition-colors flex-shrink-0">
-                  Approve OT
-                </button>
-                <button className="text-[10px] px-2 py-1 bg-slate-50 dark:bg-zinc-800/40 border border-slate-600/50 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white rounded transition-colors flex-shrink-0">
-                  Call Backup
-                </button>
               </div>
             </div>
-          </div>
 
-          <div className="px-5 py-3 border-t border-slate-200 dark:border-slate-200 dark:border-slate-700/30 flex items-center justify-between">
-            <p className="text-[10px] text-slate-700">
-              Officers at 8h+ highlighted · ACA minimum: 1 officer per 64 inmates
-            </p>
-            <div className="flex items-center gap-3">
-              <div className="flex items-center gap-1.5 text-[10px]">
-                <CheckCircle className="w-3 h-3 text-emerald-500" />
-                <span className="text-slate-500">ACA minimum {currentShift.present >= 13 ? 'met' : 'NOT MET'}</span>
+            {/* ══ Right column ══════════════════════════════ */}
+            <div>
+              {/* Floor pool */}
+              <SectionLabel right={<span className="text-[10px] text-slate-500">{floorPool.length} unassigned</span>}>
+                Floor pool
+              </SectionLabel>
+              <div className="divide-y divide-slate-800/50">
+                {floorPool.map((o) => (
+                  <div key={o.name} className="py-2.5">
+                    <p className="text-[12px] text-slate-100">{o.name}</p>
+                    <p className="text-[10.5px] text-slate-500">{o.quals}</p>
+                  </div>
+                ))}
               </div>
-              <span className="text-[10px] text-slate-700 flex items-center gap-1">
-                <ArrowRight className="w-3 h-3" /> Staffing status reported to Command
-              </span>
-            </div>
-          </div>
-        </div>
 
-      </div>
-
-      {/* ── Shift Handoff Report Modal ────────────────────── */}
-      {showHandoff && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-zinc-950 border border-slate-200 dark:border-slate-700/50 rounded-xl w-full max-w-2xl max-h-[85vh] overflow-y-auto">
-            {!handoffSent ? (
-              <>
-                <div className="flex items-start justify-between gap-4 px-5 py-4 border-b border-slate-200 dark:border-slate-700/40">
-                  <div className="flex items-center gap-2">
-                    <FileText className="w-4 h-4 text-slate-700 dark:text-slate-400" />
-                    <div>
-                      <h2 className="text-[14px] font-bold text-slate-900 dark:text-white">Shift Handoff Report</h2>
-                      <p className="text-[10px] text-slate-500">{currentShift.label} · {currentShift.window} · {currentShift.commander}</p>
+              {/* Shift task checklist */}
+              <div className="mt-7">
+                <SectionLabel>Shift task checklist</SectionLabel>
+                <div className="divide-y divide-slate-800/50">
+                  {tasks.map((t) => (
+                    <div key={t.task} className="flex items-center gap-2.5 py-2.5">
+                      <span className={`w-4 h-4 rounded flex items-center justify-center flex-shrink-0 text-[10px] font-bold ${
+                        t.done ? 'bg-emerald-500/20 border border-emerald-500/50 text-emerald-400' : 'border border-slate-700'
+                      }`}>
+                        {t.done ? '✓' : ''}
+                      </span>
+                      <span className={`text-[12px] flex-1 min-w-0 truncate ${t.done ? 'text-slate-300' : 'text-slate-200'}`}>{t.task}</span>
+                      <span className="text-[10px] font-mono text-slate-500 flex-shrink-0">{t.meta}</span>
                     </div>
-                  </div>
-                  <button onClick={() => setShowHandoff(false)} className="text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 flex-shrink-0">
-                    <X className="w-4 h-4" />
-                  </button>
+                  ))}
                 </div>
+              </div>
 
-                <div className="p-5 space-y-4">
-                  {/* Open Incidents */}
-                  <div>
-                    <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1.5 flex items-center gap-1.5">
-                      <AlertOctagon className="w-3 h-3" /> Open Incidents ({unresolvedIncidents.length})
-                    </p>
-                    <ul className="space-y-1">
-                      {unresolvedIncidents.map(i => (
-                        <li key={i.id} className="flex items-start gap-2 text-[11px] text-slate-700 dark:text-slate-300">
-                          <span className="text-slate-700 mt-0.5 flex-shrink-0">—</span>
-                          {i.type} — {i.pod} ({i.time}) · {i.status} · reported by {i.reportingOfficer}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Unfinished Investigations */}
-                  <div>
-                    <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1.5 flex items-center gap-1.5">
-                      <Search className="w-3 h-3" /> Unfinished Investigations
-                    </p>
-                    <ul className="space-y-1">
-                      <li className="flex items-start gap-2 text-[11px] text-slate-700 dark:text-slate-300">
-                        <span className="text-slate-700 mt-0.5 flex-shrink-0">—</span>
-                        Contraband — E2-Pod: sweep + intel report due 15:30, investigative hold pending
-                      </li>
-                      <li className="flex items-start gap-2 text-[11px] text-slate-700 dark:text-slate-300">
-                        <span className="text-slate-700 mt-0.5 flex-shrink-0">—</span>
-                        Fight — A2-Pod: under review, supervisor sign-off required before close
-                      </li>
-                    </ul>
-                  </div>
-
-                  {/* Staffing Shortages */}
-                  <div>
-                    <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1.5 flex items-center gap-1.5">
-                      <Users className="w-3 h-3" /> Staffing Shortages
-                    </p>
-                    <ul className="space-y-1">
-                      <li className="flex items-start gap-2 text-[11px] text-slate-700 dark:text-slate-300">
-                        <span className="text-slate-700 mt-0.5 flex-shrink-0">—</span>
-                        {currentShift.present}/{currentShift.scheduled} present ({staffPct}%) · {currentShift.note}
-                      </li>
-                      <li className="flex items-start gap-2 text-[11px] text-slate-700 dark:text-slate-300">
-                        <span className="text-slate-700 mt-0.5 flex-shrink-0">—</span>
-                        Officer Smith (#2176) post uncovered — Float/OT required for remainder of shift
-                      </li>
-                    </ul>
-                  </div>
-
-                  {/* Pending Inmate Movements */}
-                  <div>
-                    <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1.5 flex items-center gap-1.5">
-                      <ArrowLeftRight className="w-3 h-3" /> Pending Inmate Movements ({pendingMovements.length})
-                    </p>
-                    <ul className="space-y-1">
-                      {pendingMovements.map(m => (
-                        <li key={m.id} className="flex items-start gap-2 text-[11px] text-slate-700 dark:text-slate-300">
-                          <span className="text-slate-700 mt-0.5 flex-shrink-0">—</span>
-                          {m.inmateName} {m.inmateId} · {m.type} · {m.from} → {m.to} · {m.status} · ETA {m.eta}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Medical Concerns */}
-                  <div>
-                    <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1.5 flex items-center gap-1.5">
-                      <Heart className="w-3 h-3" /> Medical Concerns
-                    </p>
-                    <ul className="space-y-1">
-                      <li className="flex items-start gap-2 text-[11px] text-slate-700 dark:text-slate-300">
-                        <span className="text-slate-700 mt-0.5 flex-shrink-0">—</span>
-                        E1-Pod: 3 isolation cases active, Near Capacity (44/48)
-                      </li>
-                      <li className="flex items-start gap-2 text-[11px] text-slate-700 dark:text-slate-300">
-                        <span className="text-slate-700 mt-0.5 flex-shrink-0">—</span>
-                        Martinez (#2251) on Medical Escort 9h — approaching fatigue threshold
-                      </li>
-                      <li className="flex items-start gap-2 text-[11px] text-slate-700 dark:text-slate-300">
-                        <span className="text-slate-700 mt-0.5 flex-shrink-0">—</span>
-                        Baker, T. (#39102) medical visit in progress — return pending, ETA 15:30
-                      </li>
-                    </ul>
-                  </div>
-
-                  {/* Supervisor Notes */}
-                  <div>
-                    <p className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold mb-1.5 flex items-center gap-1.5">
-                      <FileText className="w-3 h-3" /> Supervisor Notes
-                    </p>
-                    <textarea
-                      value={supervisorNotes}
-                      onChange={e => setSupervisorNotes(e.target.value)}
-                      rows={3}
-                      className="w-full text-[11px] text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-zinc-950/40 border border-slate-700/40 rounded-lg p-2.5 resize-none focus:outline-none focus:ring-1 focus:ring-slate-500/40"
-                    />
-                  </div>
+              {/* Overflow escalation ladder */}
+              <div className="mt-7">
+                <SectionLabel>Overflow escalation ladder</SectionLabel>
+                <div className="space-y-2">
+                  {tiers.map((t) => {
+                    const tone = tierTone[t.tone];
+                    return (
+                      <div key={t.id} className={`border rounded-xl px-4 py-3 ${tone.card}`}>
+                        <div className="flex items-baseline gap-2">
+                          <span className="text-[10px] font-mono font-bold text-slate-500 flex-shrink-0">{t.id}</span>
+                          <p className="text-[12px] font-bold text-slate-100 flex-1 min-w-0">{t.title}</p>
+                          <span className={`text-[10px] font-bold tracking-wider flex-shrink-0 ${tone.state}`}>{t.state}</span>
+                        </div>
+                        <p className="text-[11.5px] text-slate-300 mt-1 leading-relaxed">{t.body}</p>
+                        <div className="flex items-baseline justify-between gap-3 mt-1.5">
+                          <span className="text-[10px] text-slate-500">{t.trigger}</span>
+                          <span className="text-[10px] text-slate-500 flex-shrink-0">{t.authority}</span>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
+              </div>
 
-                <div className="flex items-center justify-end gap-2 px-5 py-4 border-t border-slate-200 dark:border-slate-700/40">
-                  <button onClick={() => setShowHandoff(false)} className="text-[11px] text-slate-500 hover:text-slate-700 dark:text-slate-300 px-3 py-1.5">
-                    Cancel
-                  </button>
-                  <button onClick={() => setHandoffSent(true)} className="flex items-center gap-1.5 text-[12px] font-medium text-white bg-slate-700 hover:bg-slate-600 rounded-lg px-3.5 py-1.5 transition-colors">
-                    <Send className="w-3.5 h-3.5" /> Send to Next Shift Commander
-                  </button>
+              {/* Release valves */}
+              <div className="mt-7">
+                <SectionLabel right={<span className="text-[10px] text-slate-500">{n(reviewable)} reviewable</span>}>
+                  Release valves
+                </SectionLabel>
+                <div className="divide-y divide-slate-800/50">
+                  {releaseValves.map((v) => (
+                    <div key={v.label} className="flex items-center gap-3 py-2.5">
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[12px] text-slate-100 truncate">{v.label}</p>
+                        <p className="text-[10px] text-slate-500 truncate">{v.authority}</p>
+                      </div>
+                      <span className="text-[13px] font-mono font-bold text-slate-100 flex-shrink-0">{v.count}</span>
+                      <button className="text-[11px] font-semibold text-amber-500/90 hover:text-amber-400 transition-colors flex-shrink-0 w-14 text-right">Review</button>
+                    </div>
+                  ))}
                 </div>
-              </>
-            ) : (
-              <div className="p-6 text-center">
-                <CheckCircle className="w-10 h-10 text-emerald-500 mx-auto mb-3" />
-                <h2 className="text-[14px] font-bold text-slate-900 dark:text-white mb-1">Handoff Report Sent</h2>
-                <p className="text-[11px] text-slate-500 mb-4">Delivered to incoming Watch Commander · C-Shift (22:00 – 06:00)</p>
-                <ul className="text-[11px] text-slate-700 dark:text-slate-300 text-left space-y-1.5 bg-slate-50 dark:bg-zinc-950/30 border border-slate-700/40 rounded-lg p-3 mb-4">
-                  <li className="flex items-start gap-2"><CheckCircle className="w-3 h-3 text-emerald-500 mt-0.5 flex-shrink-0" /> {unresolvedIncidents.length} open incidents included</li>
-                  <li className="flex items-start gap-2"><CheckCircle className="w-3 h-3 text-emerald-500 mt-0.5 flex-shrink-0" /> {pendingMovements.length} pending movements included</li>
-                  <li className="flex items-start gap-2"><CheckCircle className="w-3 h-3 text-emerald-500 mt-0.5 flex-shrink-0" /> Staffing shortage flagged — Smith's post uncovered</li>
-                  <li className="flex items-start gap-2"><CheckCircle className="w-3 h-3 text-emerald-500 mt-0.5 flex-shrink-0" /> Supervisor notes attached</li>
-                </ul>
+                <p className="text-[10px] text-slate-500 mt-2.5">Eligibility is advisory. No release without the deciding authority named on the row.</p>
+              </div>
+
+              {/* Board-out partners */}
+              <div className="mt-7">
+                <SectionLabel right={<span className="text-[10px] text-slate-500">{boarded} boarded · ${n(boardCost)}/day</span>}>
+                  Board-out partners
+                </SectionLabel>
+                <div className="divide-y divide-slate-800/50">
+                  {partners.map((p) => (
+                    <div key={p.county} className="flex items-center gap-3 py-2.5">
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[12px] text-slate-100 truncate">{p.county}</p>
+                        <p className="text-[10px] text-slate-500 truncate">{p.terms}</p>
+                      </div>
+                      <span className="w-10 text-right text-[11px] font-mono text-slate-200 flex-shrink-0">{p.boarded}</span>
+                      <span className={`w-10 text-right text-[11px] font-mono flex-shrink-0 ${p.available === 0 ? 'text-red-400' : 'text-emerald-400'}`}>{p.available}</span>
+                      <span className="w-10 text-right text-[11px] font-mono text-slate-400 flex-shrink-0">${p.rate}</span>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-[10px] text-slate-500 mt-2.5">boarded · beds available · $/day · contract cap 180 · YTD $1.94M</p>
+              </div>
+
+              {/* Open floor items */}
+              <div className="mt-7">
+                <SectionLabel>Open floor items &amp; constraints</SectionLabel>
+                <div className="divide-y divide-slate-800/50">
+                  {floorItems.map((f) => (
+                    <div key={f.title} className="flex items-start gap-2.5 py-2.5">
+                      <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 mt-1.5 ${f.dot}`} />
+                      <div className="min-w-0">
+                        <p className="text-[12px] text-slate-100">{f.title}</p>
+                        <p className="text-[10.5px] text-slate-500 leading-relaxed">{f.note}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Pass-down log */}
+              <div className="mt-7">
+                <SectionLabel>Pass-down log</SectionLabel>
+                <div className="divide-y divide-slate-800/50">
+                  {passDown.map((p) => (
+                    <div key={p.time} className="flex items-start gap-3 py-2.5">
+                      <span className="text-[11px] font-mono text-slate-500 flex-shrink-0 w-10">{p.time}</span>
+                      <p className="text-[11.5px] text-slate-300 leading-relaxed">{p.text}</p>
+                    </div>
+                  ))}
+                </div>
                 <button
-                  onClick={() => { setShowHandoff(false); setHandoffSent(false); }}
-                  className="text-[12px] font-medium text-white bg-slate-700 hover:bg-slate-600 rounded-lg px-4 py-1.5 transition-colors"
+                  onClick={() => navigate('/jail/command')}
+                  className="text-[11px] font-semibold text-amber-500/90 hover:text-amber-400 transition-colors mt-3"
                 >
-                  Done
+                  Detention Command →
                 </button>
               </div>
-            )}
+            </div>
           </div>
         </div>
-      )}
+      </div>
     </DashboardLayout>
   );
 }
