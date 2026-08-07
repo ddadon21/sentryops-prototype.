@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MainLayout from './layouts/MainLayout';
+import FullscreenToggle from './components/FullscreenToggle';
 
 // Original pages
 import About from './pages/About';
@@ -175,6 +176,9 @@ function App() {
           <Route path="dashboard" element={<Dashboard />} />
         </Route>
       </Routes>
+
+      {/* Sits outside Routes so the control is on every page, landing included. */}
+      <FullscreenToggle />
     </Router>
   );
 }

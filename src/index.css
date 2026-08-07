@@ -144,6 +144,31 @@
   }
 }
 
+/* ── Full screen ─────────────────────────────────────────────
+   The app-wide toggle expands documentElement, so the page keeps its own
+   scrolling. Backgrounds are restated here because the UA paints a black
+   backdrop behind a fullscreen element, which shows through anywhere the
+   page background is transparent — and behind an element-level full screen
+   (the org chart canvas) it is the whole letterbox.                        */
+html:fullscreen,
+html:-webkit-full-screen {
+  overflow-y: auto;
+  background-color: #F5F7FA;
+}
+html.dark:fullscreen,
+html.dark:-webkit-full-screen {
+  background-color: #0A0A0B;
+}
+html:fullscreen body,
+html:-webkit-full-screen body {
+  min-height: 100vh;
+}
+
+/* Element-level full screen — e.g. the org chart's own button. */
+:fullscreen::backdrop { background-color: #F5F7FA; }
+html.dark :fullscreen::backdrop,
+html.dark::backdrop { background-color: #0A0A0B; }
+
 /* ═══════════════════════════════════════════════════════════════
    SYSTEM RULES — Applied globally without per-component changes.
    These use the design tokens above so both modes stay in sync.
