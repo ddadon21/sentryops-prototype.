@@ -1,1886 +1,786 @@
-import { useState, useEffect } from 'react';
-import {
-  Search, Filter, X, Plus, Users, Scale,
-  FlaskConical, BarChart3, Clock,
-  CheckCircle, Link2, ChevronDown, ChevronUp,
-  Activity, Phone, Mail, FileText,
-  Database, FileWarning, Microscope, Circle,
-  AlertTriangle, Zap, TrendingUp, TrendingDown, ArrowRight,
-  UserCheck, Eye, ArrowUpRight, ShieldAlert,
-  Dna, Target, Smartphone, Beaker, Fingerprint, Gavel, Building2
-} from 'lucide-react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import DashboardLayout from '../../layouts/DashboardLayout';
 
-type ProsecutorStatus = 'Ready for Charging' | 'Awaiting Evidence' | 'Awaiting Lab Results' | 'Awaiting Warrant' | 'Under Federal Review';
+// ── Types ─────────────────────────────────────────────────────
 
-interface EvidenceItem {
-  id: string;
-  description: string;
-  category: 'DNA' | 'Ballistics' | 'Digital Forensics' | 'Toxicology' | 'Latent Prints' | 'Records & Documents';
-  lab: string;
-  submittedDate: string;
-  eta: string;
-  status: 'Queued' | 'In Progress' | 'Complete' | 'Overdue';
-}
+type Risk = 'CRITICAL' | 'HIGH' | 'MODERATE';
 
-interface Case {
+interface Factor { label: string; text: string; tone: 'red' | 'amber' | 'slate' | 'blue' }
+
+interface QueueCase {
   id: string;
-  caseNumber: string;
-  type: 'Homicide' | 'Robbery' | 'Narcotics' | 'Burglary' | 'Assault' | 'Fraud' | 'Sexual Assault';
+  pri: 'P1' | 'P2';
   title: string;
-  priority: 'Critical' | 'High' | 'Medium' | 'Low';
-  status: 'Active Investigation' | 'Pending Warrant' | 'Awaiting Lab Results' | 'Court Pending' | 'Closed';
-  leadDetective: string;
-  badge: string;
-  assignedTo: string[];
-  openedDate: string;
-  daysOpen: number;
-  location: string;
-  suspects: number;
-  evidence: number;
-  witnesses: number;
-  nextAction: string;
-  deadline?: string;
-  multiAgency?: boolean;
-  notes: string;
-  criticalReason?: string;
-  prosecutorStatus: ProsecutorStatus;
-  assignedADA?: string;
-  prosecutorNote: string;
-  chargeWindowRisk?: boolean;
-  evidenceItems: EvidenceItem[];
-}
-
-interface CommandAction {
-  id: string;
-  urgency: 'Critical' | 'High' | 'Normal';
-  state: 'Pending' | 'In Progress' | 'Completed' | 'Escalated';
-  decision: string;
-  ifIgnored: string;
-  timeSensitivity: string;
-  countdown?: string;
-  immediateImpact: string;
-  shortTermOutcome: string;
-  result: string;
-  rationale: string;
-  actionLabel: 'Approve' | 'Assign' | 'Escalate';
-}
-
-interface DetectiveLoad {
-  name: string;
-  badge: string;
-  openCases: number;
-  criticalCases: number;
-  clearanceRate: number;
-  utilization: number;
-  risk: 'High' | 'Moderate' | 'Low';
-  bottleneck?: string;
-  recommendation?: string;
-}
-
-type TabId = 'command' | 'cases' | 'detectives' | 'intelligence';
-
-const ActiveCasesDashboard = () => {
-  const [activeTab, setActiveTab] = useState<TabId>('command');
-  const [selectedType, setSelectedType] = useState<string>('all');
-  const [selectedPriority, setSelectedPriority] = useState<string>('all');
-  const [searchTerm, setSearchTerm] = useState('');
-  const [insightsExpanded, setInsightsExpanded] = useState(false);
-  const [showAnalytics, setShowAnalytics] = useState(false);
-  const [showConnections, setShowConnections] = useState(false);
-  const [selectedCase, setSelectedCase] = useState<Case | null>(null);
-  const [urgencySeconds, setUrgencySeconds] = useState(5 * 3600 + 47 * 60 + 22); // 5h 47m countdown
-
-  useEffect(() => {
-    const t = setInterval(() => setUrgencySeconds(s => Math.max(0, s - 1)), 1000);
-    return () => clearInterval(t);
-  }, []);
-
-  const fmtCountdown = (s: number) => {
-    const h = Math.floor(s / 3600);
-    const m = Math.floor((s % 3600) / 60);
-    const sec = s % 60;
-    return `${h}h ${String(m).padStart(2,'0')}m ${String(sec).padStart(2,'0')}s`;
-  };
-
-  const cases: Case[] = [
-    {
-      id: 'INV-2024-0847',
-      caseNumber: '2024-0847',
-      type: 'Homicide',
-      title: 'Shooting Death - Pleasant Hill Road',
-      priority: 'Critical',
-      status: 'Active Investigation',
-      leadDetective: 'Det. Rodriguez, Maria',
-      badge: 'I-5234',
-      assignedTo: ['Det. Rodriguez', 'Det. Williams', 'Det. Chen'],
-      openedDate: '2024-11-28',
-      daysOpen: 7,
-      location: '4200 Pleasant Hill Rd, Duluth',
-      suspects: 2,
-      evidence: 47,
-      witnesses: 8,
-      nextAction: 'Ballistics results expected 12/08',
-      deadline: '2024-12-15',
-      criticalReason: 'Charge window closes in 14 hrs — ballistics overdue',
-      notes: 'Gang-related shooting. 2 suspects identified via surveillance. Witnesses cooperating. Ballistics analysis in progress at GBI lab.',
-      prosecutorStatus: 'Awaiting Lab Results',
-      assignedADA: 'ADA Patricia Coleman (Major Crimes)',
-      prosecutorNote: 'Charging packet drafted — pending GBI ballistics confirmation before filing.',
-      chargeWindowRisk: true,
-      evidenceItems: [
-        { id: 'EV-0847-1', description: 'Ballistics analysis — recovered shell casings', category: 'Ballistics', lab: 'GBI Crime Lab', submittedDate: '2024-11-29', eta: '2024-12-05', status: 'Overdue' },
-        { id: 'EV-0847-2', description: 'Cell phone extraction — suspect device', category: 'Digital Forensics', lab: 'County Digital Forensics Unit', submittedDate: '2024-12-01', eta: '2024-12-10', status: 'In Progress' },
-        { id: 'EV-0847-3', description: 'Toxicology panel — victim autopsy', category: 'Toxicology', lab: 'GBI Crime Lab', submittedDate: '2024-11-29', eta: '2024-12-09', status: 'In Progress' },
-      ],
-    },
-    {
-      id: 'INV-2024-0923',
-      caseNumber: '2024-0923',
-      type: 'Homicide',
-      title: 'Cold Case Review - 2019 Unsolved',
-      priority: 'Medium',
-      status: 'Active Investigation',
-      leadDetective: 'Det. Anderson, Kevin',
-      badge: 'I-4892',
-      assignedTo: ['Det. Anderson', 'Det. Taylor'],
-      openedDate: '2024-10-15',
-      daysOpen: 51,
-      location: '2800 Lawrenceville Hwy, Lawrenceville',
-      suspects: 1,
-      evidence: 23,
-      witnesses: 4,
-      nextAction: 'DNA re-analysis with new technology',
-      criticalReason: 'New DNA tech — time-sensitive re-test window before evidence degrades',
-      notes: 'Cold case reopened due to new DNA technology. Original evidence being re-tested. One person of interest identified.',
-      prosecutorStatus: 'Awaiting Lab Results',
-      prosecutorNote: 'Investigative phase — no charging decision pending DNA re-analysis results.',
-      chargeWindowRisk: false,
-      evidenceItems: [
-        { id: 'EV-0923-1', description: 'DNA re-analysis — archived crime scene samples', category: 'DNA', lab: 'GBI Crime Lab', submittedDate: '2024-11-18', eta: '2024-12-18', status: 'In Progress' },
-      ],
-    },
-    {
-      id: 'INV-2024-1234',
-      caseNumber: '2024-1234',
-      type: 'Narcotics',
-      title: 'DEA Task Force - Fentanyl Distribution Ring',
-      priority: 'Critical',
-      status: 'Active Investigation',
-      leadDetective: 'Lt. Anderson, James',
-      badge: 'I-3456',
-      assignedTo: ['Lt. Anderson', 'Det. Martinez', 'Det. Johnson', 'DEA SA Wilson'],
-      openedDate: '2024-09-12',
-      daysOpen: 84,
-      location: 'Multi-County Operation',
-      suspects: 8,
-      evidence: 156,
-      witnesses: 12,
-      nextAction: 'Surveillance extension requested - 30 days',
-      deadline: '2024-12-20',
-      multiAgency: true,
-      criticalReason: 'Surveillance authorization expires EOD — Sheriff approval required',
-      notes: 'Multi-agency DEA task force. Identified major fentanyl distribution network. 30-day surveillance extension pending command approval. Estimated OT: $12K.',
-      prosecutorStatus: 'Under Federal Review',
-      assignedADA: 'AUSA Daniel Reyes (N.D. Ga.)',
-      prosecutorNote: 'AUSA reviewing wiretap intercepts for grand jury presentation — contingent on surveillance extension approval.',
-      chargeWindowRisk: false,
-      evidenceItems: [
-        { id: 'EV-1234-1', description: 'Wiretap recordings — Title III intercepts', category: 'Digital Forensics', lab: 'FBI Digital Evidence Lab', submittedDate: '2024-11-25', eta: '2024-12-15', status: 'In Progress' },
-        { id: 'EV-1234-2', description: 'Seized narcotics — field samples for chemistry analysis', category: 'Toxicology', lab: 'GBI Crime Lab', submittedDate: '2024-12-02', eta: '2024-12-14', status: 'Queued' },
-      ],
-    },
-    {
-      id: 'INV-2024-1456',
-      caseNumber: '2024-1456',
-      type: 'Narcotics',
-      title: 'Methamphetamine Lab - Residential',
-      priority: 'High',
-      status: 'Pending Warrant',
-      leadDetective: 'Det. Davis, Robert',
-      badge: 'I-2987',
-      assignedTo: ['Det. Davis', 'Det. Garcia'],
-      openedDate: '2024-11-20',
-      daysOpen: 15,
-      location: '1500 Block Buford Dr, Buford',
-      suspects: 3,
-      evidence: 34,
-      witnesses: 6,
-      nextAction: 'Search warrant hearing 12/06',
-      deadline: '2024-12-06',
-      criticalReason: 'Warrant hearing tomorrow — HAZMAT confirmation still pending',
-      notes: 'Suspected meth lab in residential neighborhood. Search warrant drafted. Hearing scheduled for 12/06. HAZMAT on standby.',
-      prosecutorStatus: 'Awaiting Warrant',
-      assignedADA: 'ADA Patricia Coleman (Major Crimes)',
-      prosecutorNote: 'Search warrant hearing 12/06 — charges contingent on warrant approval and HAZMAT confirmation of lab contents.',
-      chargeWindowRisk: true,
-      evidenceItems: [
-        { id: 'EV-1456-1', description: 'Field test results — suspected meth precursors', category: 'Toxicology', lab: 'County Crime Lab', submittedDate: '2024-11-30', eta: '2024-12-04', status: 'Complete' },
-      ],
-    },
-    {
-      id: 'INV-2024-1567',
-      caseNumber: '2024-1567',
-      type: 'Robbery',
-      title: 'Armed Robbery - Gas Station',
-      priority: 'High',
-      status: 'Active Investigation',
-      leadDetective: 'Det. Wilson, Amanda',
-      badge: 'I-4521',
-      assignedTo: ['Det. Wilson', 'Det. Brown'],
-      openedDate: '2024-12-01',
-      daysOpen: 4,
-      location: '3400 Lawrenceville Hwy, Tucker',
-      suspects: 2,
-      evidence: 12,
-      witnesses: 3,
-      nextAction: 'Surveillance review & suspect identification',
-      criticalReason: 'Strong surveillance footage — ID window narrowing as suspects may relocate',
-      notes: '2 armed suspects. $2,400 cash taken. Excellent video surveillance. Suspects wore masks but distinctive clothing visible.',
-      prosecutorStatus: 'Awaiting Evidence',
-      prosecutorNote: 'No charges can be filed until suspects are identified — surveillance review in progress.',
-      chargeWindowRisk: false,
-      evidenceItems: [
-        { id: 'EV-1567-1', description: 'Surveillance video — gas station + adjacent businesses', category: 'Digital Forensics', lab: 'County Digital Forensics Unit', submittedDate: '2024-12-02', eta: '2024-12-09', status: 'In Progress' },
-      ],
-    },
-    {
-      id: 'INV-2024-1489',
-      caseNumber: '2024-1489',
-      type: 'Robbery',
-      title: 'Pharmacy Robbery Series (3 incidents)',
-      priority: 'Critical',
-      status: 'Active Investigation',
-      leadDetective: 'Det. Patel, Rajesh',
-      badge: 'I-3729',
-      assignedTo: ['Det. Patel', 'Det. Thompson', 'Det. Clark'],
-      openedDate: '2024-11-15',
-      daysOpen: 20,
-      location: 'Multiple Locations',
-      suspects: 2,
-      evidence: 28,
-      witnesses: 9,
-      nextAction: 'Pattern analysis & surveillance of target pharmacies',
-      deadline: '2024-12-10',
-      criticalReason: 'Escalating series — 4th incident likely within 72 hrs based on pattern',
-      notes: '3 pharmacy robberies - same MO. Targeting opioid pain medications. Suspects believed to be same 2 individuals. Surveillance on potential targets.',
-      prosecutorStatus: 'Awaiting Evidence',
-      assignedADA: 'ADA Marcus Webb (Property Crimes)',
-      prosecutorNote: 'ADA briefed on series — charging package pending latent print match and surveillance compilation across all 3 scenes.',
-      chargeWindowRisk: false,
-      evidenceItems: [
-        { id: 'EV-1489-1', description: 'Latent prints — pharmacy counters, all 3 scenes', category: 'Latent Prints', lab: 'County Crime Lab', submittedDate: '2024-11-22', eta: '2024-12-13', status: 'In Progress' },
-        { id: 'EV-1489-2', description: 'Surveillance footage compilation — 3 locations', category: 'Digital Forensics', lab: 'County Digital Forensics Unit', submittedDate: '2024-12-03', eta: '2024-12-16', status: 'Queued' },
-      ],
-    },
-    {
-      id: 'INV-2024-1678',
-      caseNumber: '2024-1678',
-      type: 'Sexual Assault',
-      title: 'Aggravated Sexual Battery',
-      priority: 'Critical',
-      status: 'Awaiting Lab Results',
-      leadDetective: 'Det. Taylor, Sarah',
-      badge: 'I-4167',
-      assignedTo: ['Det. Taylor (SVU)', 'Det. Lee (SVU)'],
-      openedDate: '2024-11-25',
-      daysOpen: 10,
-      location: '2100 Block Pleasant Hill Rd, Duluth',
-      suspects: 1,
-      evidence: 19,
-      witnesses: 4,
-      nextAction: 'DNA results expected 12/12',
-      deadline: '2024-12-12',
-      criticalReason: 'Suspect known to victim — ongoing safety risk until arrest',
-      notes: 'Sexual assault case. Suspect known to victim. SANE exam completed. DNA submitted to GBI lab. Warrant ready pending lab confirmation.',
-      prosecutorStatus: 'Awaiting Lab Results',
-      assignedADA: 'ADA Patricia Coleman (SVU)',
-      prosecutorNote: 'Arrest warrant drafted and ready to file — held pending GBI DNA confirmation from SANE exam kit.',
-      chargeWindowRisk: false,
-      evidenceItems: [
-        { id: 'EV-1678-1', description: 'SANE exam kit — DNA analysis', category: 'DNA', lab: 'GBI Crime Lab', submittedDate: '2024-11-26', eta: '2024-12-11', status: 'Overdue' },
-      ],
-    },
-    {
-      id: 'INV-2024-1712',
-      caseNumber: '2024-1712',
-      type: 'Burglary',
-      title: 'Commercial Burglary - Electronics Store',
-      priority: 'Medium',
-      status: 'Active Investigation',
-      leadDetective: 'Det. Johnson, Marcus',
-      badge: 'I-2845',
-      assignedTo: ['Det. Johnson', 'Det. Nguyen'],
-      openedDate: '2024-11-30',
-      daysOpen: 5,
-      location: '5600 Peachtree Pkwy, Norcross',
-      suspects: 4,
-      evidence: 15,
-      witnesses: 2,
-      nextAction: 'Pawn shop monitoring for stolen items',
-      criticalReason: 'Sophisticated entry method — repeat target risk at other electronics retailers',
-      notes: '$45K in electronics stolen. Cut through roof access. Sophisticated operation. Monitoring pawn shops and online marketplaces.',
-      prosecutorStatus: 'Awaiting Evidence',
-      prosecutorNote: 'Charging on hold pending recovered-property trace through pawn shop / marketplace monitoring.',
-      chargeWindowRisk: false,
-      evidenceItems: [
-        { id: 'EV-1712-1', description: 'Pawn shop & online marketplace transaction records', category: 'Records & Documents', lab: 'Financial Crimes Unit', submittedDate: '2024-12-01', eta: '2024-12-12', status: 'In Progress' },
-      ],
-    },
-    {
-      id: 'INV-2024-1823',
-      caseNumber: '2024-1823',
-      type: 'Fraud',
-      title: 'Identity Theft Ring - 47 Victims',
-      priority: 'High',
-      status: 'Active Investigation',
-      leadDetective: 'Det. Chen, Wei',
-      badge: 'I-3892',
-      assignedTo: ['Det. Chen', 'Det. Garcia', 'FBI SA Martinez'],
-      openedDate: '2024-10-22',
-      daysOpen: 44,
-      location: 'Countywide',
-      suspects: 5,
-      evidence: 89,
-      witnesses: 47,
-      nextAction: 'Federal charges being prepared',
-      multiAgency: true,
-      criticalReason: 'Federal charges pending — FBI coordination window time-sensitive',
-      notes: 'Large-scale identity theft operation. 47 victims identified. $380K in fraudulent charges. Working with FBI. Federal charges pending.',
-      prosecutorStatus: 'Under Federal Review',
-      assignedADA: 'AUSA Daniel Reyes / ADA Coleman (state coordination)',
-      prosecutorNote: 'Financial evidence package complete — AUSA finalizing federal vs. state charging strategy for 47-victim indictment.',
-      chargeWindowRisk: false,
-      evidenceItems: [
-        { id: 'EV-1823-1', description: 'Subpoenaed bank & financial records — 47 victims', category: 'Records & Documents', lab: 'Financial Crimes Unit', submittedDate: '2024-11-05', eta: '2024-11-30', status: 'Complete' },
-        { id: 'EV-1823-2', description: 'Digital evidence — seized laptops & drives', category: 'Digital Forensics', lab: 'FBI Digital Evidence Lab', submittedDate: '2024-11-20', eta: '2024-12-18', status: 'In Progress' },
-      ],
-    },
-    {
-      id: 'INV-2024-1934',
-      caseNumber: '2024-1934',
-      type: 'Assault',
-      title: 'Aggravated Assault - Domestic Violence',
-      priority: 'High',
-      status: 'Pending Warrant',
-      leadDetective: 'Det. Martinez, Carlos',
-      badge: 'I-4678',
-      assignedTo: ['Det. Martinez'],
-      openedDate: '2024-12-03',
-      daysOpen: 2,
-      location: '1200 Block Harbins Rd, Dacula',
-      suspects: 1,
-      evidence: 8,
-      witnesses: 3,
-      nextAction: 'Warrant execution planned 12/06',
-      deadline: '2024-12-06',
-      criticalReason: 'Victim hospitalized — suspect at large, escalation risk',
-      notes: 'Domestic violence - severe injuries. Victim hospitalized. Suspect fled scene. Warrant approved. Execution planned for 12/06 AM.',
-      prosecutorStatus: 'Ready for Charging',
-      assignedADA: 'ADA Marcus Webb',
-      prosecutorNote: 'Arrest warrant signed by judge — charges filed. Awaiting suspect apprehension to begin prosecution timeline.',
-      chargeWindowRisk: false,
-      evidenceItems: [
-        { id: 'EV-1934-1', description: 'Medical records & injury photographs', category: 'Records & Documents', lab: 'N/A — Hospital Records', submittedDate: '2024-12-03', eta: '2024-12-04', status: 'Complete' },
-      ],
-    }
-  ];
-
-  const filteredCases = cases.filter(c => {
-    const matchesType = selectedType === 'all' || c.type === selectedType;
-    const matchesPriority = selectedPriority === 'all' || c.priority === selectedPriority;
-    const matchesSearch =
-      c.caseNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      c.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      c.leadDetective.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesType && matchesPriority && matchesSearch;
-  });
-
-  const stats = {
-    total: cases.length,
-    critical: cases.filter(c => c.priority === 'Critical').length,
-    homicide: cases.filter(c => c.type === 'Homicide').length,
-    robbery: cases.filter(c => c.type === 'Robbery').length,
-    narcotics: cases.filter(c => c.type === 'Narcotics').length,
-    multiAgency: cases.filter(c => c.multiAgency).length
-  };
-
-  // ── Prosecutor Readiness — what's blocking charging on each case ──
-  const prosecutorBuckets: { status: ProsecutorStatus; label: string; cases: Case[] }[] = [
-    { status: 'Ready for Charging', label: 'Ready for Charging', cases: cases.filter(c => c.prosecutorStatus === 'Ready for Charging') },
-    { status: 'Awaiting Evidence', label: 'Awaiting Evidence', cases: cases.filter(c => c.prosecutorStatus === 'Awaiting Evidence') },
-    { status: 'Awaiting Lab Results', label: 'Awaiting Lab Results', cases: cases.filter(c => c.prosecutorStatus === 'Awaiting Lab Results') },
-    { status: 'Awaiting Warrant', label: 'Awaiting Warrant', cases: cases.filter(c => c.prosecutorStatus === 'Awaiting Warrant') },
-    { status: 'Under Federal Review', label: 'Under Federal Review', cases: cases.filter(c => c.prosecutorStatus === 'Under Federal Review') },
-  ];
-
-  const chargeWindowRiskCases = cases.filter(c => c.chargeWindowRisk);
-
-  // ── Evidence & Forensics Pipeline — case-linked lab/evidence tracking ──
-  const allEvidenceItems = cases.flatMap(c => c.evidenceItems.map(item => ({ ...item, caseId: c.id, caseNumber: c.caseNumber, caseTitle: c.title })));
-
-  const evidenceCategories: EvidenceItem['category'][] = ['DNA', 'Ballistics', 'Digital Forensics', 'Toxicology', 'Latent Prints', 'Records & Documents'];
-  const evidenceByCategory = evidenceCategories.map(category => {
-    const items = allEvidenceItems.filter(item => item.category === category);
-    return {
-      category,
-      total: items.length,
-      overdue: items.filter(item => item.status === 'Overdue').length,
-    };
-  });
-
-  const overdueEvidenceItems = allEvidenceItems.filter(item => item.status === 'Overdue');
-  const sortedEvidenceItems = [...allEvidenceItems].sort((a, b) => {
-    if (a.status === 'Overdue' && b.status !== 'Overdue') return -1;
-    if (b.status === 'Overdue' && a.status !== 'Overdue') return 1;
-    return 0;
-  });
-
-  // ── Clearance Rate Detail — shared by Command Center summary & Intelligence tab ──
-  const clearanceRateDetail: {
-    type: string;
-    cleared: number;
-    total: number;
-    percentage: number;
-    status: 'on-track' | 'below-target';
+  status: string;
+  unit: string;
+  lead: string;
+  open: string;
+  action: string;
+  due: string;
+  dueTone: 'red' | 'amber' | 'slate';
+  /** Days until the decision is due — drives the awaiting-decision filter. */
+  dueDays: number;
+  risk: Risk;
+  stalled?: boolean;
+  summary?: {
     confidence: number;
-    recommendation: string;
-    immediate: string;
-    downstream: string;
-    outcome: string;
-    action: string | null;
-  }[] = [
-    { type: 'Homicide', cleared: 8, total: 8, percentage: 100, status: 'on-track', confidence: 99, recommendation: 'Maintain current detective coverage. Cold case review ongoing — low risk.', immediate: 'No action needed.', downstream: 'Cold case DNA result expected within 2 weeks.', outcome: 'Rate holds at 100% — strongest in department.', action: null },
-    { type: 'Narcotics', cleared: 8, total: 9, percentage: 89, status: 'on-track', confidence: 91, recommendation: 'Approve DEA task force extension by EOD to sustain rate.', immediate: 'Task force operation continues uninterrupted.', downstream: 'Arrest phase reached within 30 days.', outcome: 'Rate holds at 89%. 8 suspects prosecuted.', action: 'Approve Extension' },
-    { type: 'Sexual Assault', cleared: 5, total: 6, percentage: 83, status: 'on-track', confidence: 85, recommendation: 'Expedite GBI lab for #2024-1678. Warrant ready pending DNA confirmation.', immediate: 'Lab prioritization request filed.', downstream: 'DNA result by Dec 12 enables same-week arrest.', outcome: 'Rate reaches 100% (6/6). Victim safety secured.', action: 'Escalate Lab' },
-    { type: 'Robbery', cleared: 17, total: 25, percentage: 68, status: 'below-target', confidence: 78, recommendation: 'Form robbery task force. Pharmacy series is highest-leverage case to clear.', immediate: 'Task force authorized, Patel + 2 detectives assigned.', downstream: '4th pharmacy incident deterred. Arrest within 14 days.', outcome: 'Rate rises to ~72%. Closes 7-point gap to target.', action: 'Form Task Force' },
-    { type: 'Burglary', cleared: 13, total: 21, percentage: 62, status: 'below-target', confidence: 74, recommendation: 'Assign Det. Wilson (available) to electronics store case #2024-1712.', immediate: 'Wilson assigned. Rodriguez workload reduced.', downstream: 'Electronics case closes within 3 weeks via pawn monitoring.', outcome: 'Rate rises to ~67%. Two moves from annual target.', action: 'Auto Assign' }
-  ];
+    text: string;
+    factors: Factor[];
+    sources: string;
+  };
+}
 
-  const commandActions: CommandAction[] = [
-    {
-      id: 'cmd-1',
-      urgency: 'Critical',
-      state: 'Escalated',
-      decision: 'Escalate GBI lab for Homicide #2024-0847 before charge window closes.',
-      ifIgnored: 'If ignored, suspect release risk increases and prosecution may fail.',
-      timeSensitivity: 'Deadline: Today 14:00',
-      countdown: '5h 42m remaining',
-      immediateImpact: 'GBI prioritizes ballistic queue and command is notified.',
-      shortTermOutcome: 'Charging packet is filed within the legal window.',
-      result: 'Homicide prosecution path remains viable.',
-      rationale: 'Based on legal timing window and overdue forensic dependency.',
-      actionLabel: 'Escalate'
+interface UnitRow {
+  unit: string;
+  note: string;
+  noteTone?: 'red';
+  active: number;
+  load: number;
+  standard: number;
+  clr: string;
+  age: string;
+  overdue: number;
+  staffing: string;
+  staffTone: 'emerald' | 'amber' | 'red';
+}
+
+interface Stage {
+  stage: string;
+  note: string;
+  cases: number;
+  median: string;
+  aging: number;
+  flow: 'WITHIN TARGET' | 'SLOWING' | 'BOTTLENECK';
+}
+
+interface Metric { label: string; value: string; delta: number; up: 'good' | 'bad'; sub: string; tone?: string }
+
+// ── Division metrics ───────────────────────────────────────────
+
+// `up` says which direction is good, so the arrow tone is a property of the
+// metric rather than something restated at every call site.
+const metrics: Metric[] = [
+  { label: 'Active investigations',  value: '636', delta: 34, up: 'bad',     sub: 'vs 30 days prior' },
+  { label: 'High-priority cases',    value: '87',  delta: 6,  up: 'bad',     sub: 'P1 and P2 designations',        tone: 'text-amber-400' },
+  { label: 'Homicide investigations', value: '31', delta: 2,  up: 'bad',     sub: '4 opened this quarter' },
+  { label: 'Officer-involved',       value: '2',   delta: 0,  up: 'bad',     sub: '1 GBI primary · 1 admin review' },
+  { label: 'Cold cases under review', value: '214', delta: -3, up: 'bad',    sub: '23 homicide · 41 SVU' },
+  { label: 'Clearance rate',         value: '38%', delta: 4,  up: 'good',    sub: 'quarter to date · UCR-comparable', tone: 'text-emerald-400' },
+];
+
+const secondaryMetrics: Metric[] = [
+  { label: 'Average days open',  value: '96',  delta: 11, up: 'bad', sub: 'division median across units',  tone: 'text-amber-400' },
+  { label: 'Awaiting prosecutor', value: '112', delta: 18, up: 'bad', sub: '148-day median in prosecution', tone: 'text-amber-400' },
+];
+
+// ── Executive attention queue ──────────────────────────────────
+
+const queue: QueueCase[] = [
+  {
+    id: '26-04471', pri: 'P1',
+    title: 'Homicide — Sever Road shooting',
+    status: 'Suspect development · warrant drafted, not executed',
+    unit: 'Homicide', lead: 'Det. Abara', open: '3d',
+    action: 'Warrant execution decision', due: 'within 24h', dueTone: 'amber', dueDays: 1, risk: 'CRITICAL',
+    summary: {
+      confidence: 0.86,
+      text: 'Third Sever Road corridor shooting in 19 days, second with ballistic linkage to the same firearm. Suspect developed through CCTV and phone records; warrant drafted. Execution needs a tactical element — the address has two prior armed encounters — and the SWAT request awaits command authorization. Delay past 24 hours risks relocation; the subject left the county twice this week.',
+      factors: [
+        { label: 'Officer safety',  text: 'Armed subject, two prior armed encounters at address',            tone: 'red'   },
+        { label: 'Community impact', text: 'Third corridor shooting in 19 days; two community meetings requested', tone: 'amber' },
+        { label: 'Media exposure',  text: 'Two outlets have filed open-records requests',                     tone: 'slate' },
+        { label: 'Interagency',     text: 'GBI ballistics; Duluth PD holds a linked case',                    tone: 'blue'  },
+      ],
+      sources: 'RMS 26-04471 · NIBIN ballistic linkage · CAD 26-08791 · CCTV custodian log · open-records queue',
     },
-    {
-      id: 'cmd-2',
-      urgency: 'Critical',
-      state: 'Pending',
-      decision: 'Approve DEA Task Force #2024-1234 surveillance extension.',
-      ifIgnored: 'If ignored, operation stops tonight and fentanyl targets disperse.',
-      timeSensitivity: 'Deadline: End of day',
-      countdown: '8h 11m remaining',
-      immediateImpact: 'Surveillance authority remains active through next cycle.',
-      shortTermOutcome: 'Task force keeps controlled tracking on all eight targets.',
-      result: 'Arrest phase can proceed without restarting intelligence collection.',
-      rationale: 'Based on expiring legal authorization and active DEA dependency.',
-      actionLabel: 'Approve'
+  },
+  {
+    id: '26-04302', pri: 'P1',
+    title: 'Sexual assault — adult victim, uncharged suspect',
+    status: 'Stalled 34 days · SAK result 22 days past GBI turnaround',
+    unit: 'Special Victims', lead: 'Det. Okafor', open: '142d',
+    action: 'Escalate lab request to GBI agency head', due: 'due now', dueTone: 'red', dueDays: 0, risk: 'HIGH', stalled: true,
+    summary: {
+      confidence: 0.81,
+      text: 'Case has not advanced since the sexual assault kit went to GBI 56 days ago against a 34-day published turnaround. The suspect is identified but uncharged, and the victim has been given three revised timelines. Agency-head escalation is drafted and awaiting signature — the only remaining step under agency control.',
+      factors: [
+        { label: 'Victim obligation', text: 'Third revised timeline given to the victim',        tone: 'red'   },
+        { label: 'Legal exposure',    text: 'Uncharged identified suspect at 142 days',          tone: 'red'   },
+        { label: 'External dependency', text: 'GBI lab queue — outside agency control',          tone: 'amber' },
+        { label: 'Interagency',       text: 'Escalation requires agency-head signature',         tone: 'blue'  },
+      ],
+      sources: 'RMS 26-04302 · GBI lab queue · SVU case notes · victim contact log',
     },
-    {
-      id: 'cmd-3',
-      urgency: 'High',
-      state: 'In Progress',
-      decision: 'Assign 2 detectives to Robbery Series #2024-1489 task force.',
-      ifIgnored: 'If ignored, a fourth robbery is likely within 72 hours.',
-      timeSensitivity: 'Target: next shift briefing',
-      immediateImpact: 'Coverage expands to target pharmacies and hot zones.',
-      shortTermOutcome: 'Pattern disruption likely before next predicted event window.',
-      result: 'Robbery trend pressure decreases and victim risk drops.',
-      rationale: 'Based on recent robbery pattern increase and repeat MO detection.',
-      actionLabel: 'Assign'
+  },
+  {
+    id: '26-04188', pri: 'P1',
+    title: 'Officer-involved shooting — administrative review',
+    status: 'GBI holds criminal investigation · agency review parallel',
+    unit: 'Crimes Against Persons', lead: 'Det. Rowland', open: '11d',
+    action: 'Administrative review board', due: '3 days', dueTone: 'amber', dueDays: 3, risk: 'CRITICAL',
+    summary: {
+      confidence: 0.9,
+      text: 'GBI holds the criminal investigation at day 11 of a 30-day expectation while the agency administrative review runs in parallel. Five open-records requests are pending with one appeal, and the Commission has asked for a briefing. The review board convenes in three days and needs a command decision on scope before it sits.',
+      factors: [
+        { label: 'Political',    text: 'Commission briefing requested',                  tone: 'red'   },
+        { label: 'Media',        text: 'Five open-records requests, one under appeal',   tone: 'red'   },
+        { label: 'Legal exposure', text: 'Parallel criminal and administrative tracks',  tone: 'amber' },
+        { label: 'Interagency',  text: 'GBI primary on the criminal investigation',      tone: 'blue'  },
+      ],
+      sources: 'GBI case file · Prof. Standards review · open-records queue · Commission correspondence',
     },
-    {
-      id: 'cmd-4',
-      urgency: 'Normal',
-      state: 'Pending',
-      decision: 'Approve witness relocation support for Sexual Assault #2024-1678.',
-      ifIgnored: 'If ignored, victim cooperation and safety posture may degrade.',
-      timeSensitivity: 'Decision needed within 24h',
-      immediateImpact: 'Victim protection resources are activated immediately.',
-      shortTermOutcome: 'Interview continuity and testimony reliability improve.',
-      result: 'Case momentum and victim safety confidence both increase.',
-      rationale: 'Based on current victim risk profile and interview dependency.',
-      actionLabel: 'Approve'
+  },
+  {
+    id: '26-03998', pri: 'P2',
+    title: 'Commercial burglary enterprise — Eastgate cluster',
+    status: 'Seven linked cases · tool-mark comparison pending 41 days',
+    unit: 'Property Crimes', lead: 'Det. Kestrel', open: '212d',
+    action: 'Task-force decision — dedicated detail', due: '6 days', dueTone: 'slate', dueDays: 6, risk: 'MODERATE',
+    summary: {
+      confidence: 0.74,
+      text: 'Seven linked commercial burglaries with $340,000 in cumulative loss, held on a tool-mark comparison that has been pending 41 days. A franchise operator has escalated to the Commission, and an evidence-destruction review lands in 34 days. Property Crimes is at 27 cases per detective against a 25 standard, so a dedicated detail means taking capacity from somewhere else.',
+      factors: [
+        { label: 'Financial',       text: '$340,000 cumulative loss across seven cases',   tone: 'amber' },
+        { label: 'Community impact', text: 'Franchise operator escalated to the Commission', tone: 'amber' },
+        { label: 'Evidence risk',   text: 'Destruction review in 34 days',                  tone: 'red'   },
+        { label: 'Capacity',        text: 'Unit at 108% of the per-detective standard',     tone: 'slate' },
+      ],
+      sources: 'RMS 26-03998 + 6 linked · CSU tool-mark queue · Commission correspondence',
     },
-    {
-      id: 'cmd-5',
-      urgency: 'Normal',
-      state: 'Pending',
-      decision: 'Approve charge referral to ADA Webb — DV Assault #2024-1934 (warrant signed, evidence complete).',
-      ifIgnored: 'If ignored, signed charging paperwork sits idle while suspect remains at large.',
-      timeSensitivity: 'Target: next business day',
-      immediateImpact: 'ADA office receives complete charge referral and opens the court file.',
-      shortTermOutcome: 'Prosecution timeline starts on day one of custody — no lag after apprehension.',
-      result: 'Case moves to Court Pending the moment the suspect is taken into custody.',
-      rationale: 'Based on signed arrest warrant and a complete evidence package.',
-      actionLabel: 'Approve'
-    }
-  ];
+  },
+  {
+    id: '26-04388', pri: 'P2',
+    title: 'Elder financial exploitation — organized',
+    status: 'Subpoena return in 3 days · three linked victims',
+    unit: 'Financial Crimes', lead: 'Det. Salvatierra', open: '38d',
+    action: 'Multi-agency referral decision', due: '3 days', dueTone: 'amber', dueDays: 3, risk: 'MODERATE',
+    summary: {
+      confidence: 0.71,
+      text: 'Three linked elderly victims with an identical phone-based approach. Two adjacent counties report comparable loss profiles, which makes a joint USPIS referral viable if the subpoena return shows interstate accounts. That return lands in three days and decides whether this stays local or becomes a federal referral.',
+      factors: [
+        { label: 'Victim obligation', text: 'Three elderly victims, ongoing loss',          tone: 'amber' },
+        { label: 'Financial',         text: 'Interstate accounts suspected',                tone: 'amber' },
+        { label: 'Interagency',       text: 'USPIS referral viable on subpoena return',     tone: 'blue'  },
+        { label: 'Timing',            text: 'Referral decision gated on a 3-day return',    tone: 'slate' },
+      ],
+      sources: 'RMS 26-04388 · subpoena docket · adjacent-agency bulletins',
+    },
+  },
+  {
+    id: '26-04104', pri: 'P1',
+    title: 'Child exploitation — ICAC referral',
+    status: 'Two devices in forensic queue · analysis ETA 12 days',
+    unit: 'Digital Forensics', lead: 'Det. Ferreira', open: '88d',
+    action: 'Forensic prioritization decision', due: '12 days', dueTone: 'amber', dueDays: 12, risk: 'HIGH',
+    summary: {
+      confidence: 0.83,
+      text: 'Two devices sit at position 7 of 19 in a forensic queue served by a single examiner, producing a 71-day median against a 60-day expectation. The federal prosecution option depends on timely analysis. Prioritizing this case only reorders the harm — it does not add capacity, and the second examiner position is unfunded.',
+      factors: [
+        { label: 'Victim obligation', text: 'ICAC matter with a federal prosecution option', tone: 'red'   },
+        { label: 'Capacity',          text: 'One examiner against 19 queued items',          tone: 'red'   },
+        { label: 'Interagency',       text: 'Federal referral depends on analysis timing',   tone: 'blue'  },
+        { label: 'Trade-off',         text: 'Prioritization reorders harm, does not add capacity', tone: 'amber' },
+      ],
+      sources: 'ICAC referral · Digital forensics queue · position control',
+    },
+  },
+];
 
-  const detectiveLoad: DetectiveLoad[] = [
-    { name: 'Det. Rodriguez, Maria', badge: 'I-5234', openCases: 3, criticalCases: 1, clearanceRate: 85, utilization: 96, risk: 'High', bottleneck: 'Critical homicide + burglary overlap', recommendation: 'Reassign burglary #2024-1712 immediately.' },
-    { name: 'Det. Anderson / Lt. Anderson', badge: 'I-4892 / I-3456', openCases: 2, criticalCases: 1, clearanceRate: 72, utilization: 78, risk: 'Moderate', bottleneck: 'DEA extension approval dependency', recommendation: 'Approve extension to prevent investigative stall.' },
-    { name: 'Det. Wilson, Amanda', badge: 'I-4521', openCases: 1, criticalCases: 0, clearanceRate: 80, utilization: 42, risk: 'Low', recommendation: 'Best reassignment candidate for burglary support.' }
-  ];
+// ── Unit health ────────────────────────────────────────────────
 
-  const getPriorityDot = (priority: string) => {
-    switch (priority) {
-      case 'Critical': return 'bg-red-500';
-      case 'High': return 'bg-amber-500';
-      case 'Medium': return 'bg-slate-400';
-      case 'Low': return 'bg-slate-600';
-      default: return 'bg-slate-600';
-    }
+const unitHealth: UnitRow[] = [
+  { unit: 'Homicide',             note: '2 active death investigations this week',       active: 31,  load: 8,  standard: 8,  clr: '61%', age: '88d',  overdue: 3,  staffing: 'AT STRENGTH', staffTone: 'emerald' },
+  { unit: 'Robbery',              note: 'Commercial series under review',                active: 44,  load: 11, standard: 12, clr: '42%', age: '64d',  overdue: 6,  staffing: 'AT STRENGTH', staffTone: 'emerald' },
+  { unit: 'Crimes Against Persons', note: 'Carrying OIS administrative review',          active: 96,  load: 16, standard: 15, clr: '48%', age: '71d',  overdue: 11, staffing: '1 VACANCY',   staffTone: 'amber'   },
+  { unit: 'Property Crimes',      note: 'Eastgate cluster consuming lead capacity',      active: 214, load: 27, standard: 25, clr: '23%', age: '124d', overdue: 38, staffing: '2 VACANCIES', staffTone: 'amber'   },
+  { unit: 'Financial Crimes',     note: 'Elder exploitation volume rising',              active: 78,  load: 20, standard: 20, clr: '31%', age: '96d',  overdue: 9,  staffing: 'AT STRENGTH', staffTone: 'emerald' },
+  { unit: 'Narcotics',            note: 'Two long-term operations active',               active: 52,  load: 9,  standard: 10, clr: '57%', age: '48d',  overdue: 4,  staffing: 'AT STRENGTH', staffTone: 'emerald' },
+  { unit: 'Gangs',                note: 'Corridor violence linkage work',                active: 38,  load: 10, standard: 12, clr: '39%', age: '82d',  overdue: 7,  staffing: '1 VACANCY',   staffTone: 'amber'   },
+  { unit: 'Digital Forensics',    note: 'Single examiner · second position unfunded', noteTone: 'red', active: 19, load: 19, standard: 14, clr: '—', age: '71d', overdue: 6, staffing: 'CRITICAL', staffTone: 'red' },
+  { unit: 'Special Victims',      note: 'Vacancy open 61 days',                          active: 64,  load: 13, standard: 12, clr: '54%', age: '92d',  overdue: 8,  staffing: '1 VACANCY',   staffTone: 'amber'   },
+];
+
+const pipeline: Stage[] = [
+  { stage: 'New assignment',        note: '2 unassigned past the 5-day threshold', cases: 34,  median: '2d',   aging: 2,  flow: 'WITHIN TARGET' },
+  { stage: 'Evidence collection',   note: 'CSU turnaround within target',          cases: 88,  median: '9d',   aging: 4,  flow: 'WITHIN TARGET' },
+  { stage: 'Active investigation',  note: 'Largest stage · 31 past target',        cases: 241, median: '41d',  aging: 31, flow: 'WITHIN TARGET' },
+  { stage: 'Suspect development',   note: 'Lab dependency on 14 cases',            cases: 96,  median: '34d',  aging: 22, flow: 'BOTTLENECK'    },
+  { stage: 'Warrant preparation',   note: '3 awaiting judicial availability',      cases: 41,  median: '6d',   aging: 3,  flow: 'WITHIN TARGET' },
+  { stage: 'Charges filed',         note: 'DA intake queue slowing',               cases: 78,  median: '11d',  aging: 9,  flow: 'SLOWING'       },
+  { stage: 'Prosecution',           note: 'Superior Court calendar constraint',    cases: 112, median: '148d', aging: 47, flow: 'BOTTLENECK'    },
+  { stage: 'Closed — pending review', note: 'Supervisory closure review',          cases: 36,  median: '8d',   aging: 0,  flow: 'WITHIN TARGET' },
+];
+
+const resources = [
+  { resource: 'Detectives',                committed: '42 of 46',    util: 109, constraint: '4 vacancies · 2 in background',        action: 'Reallocate' },
+  { resource: 'Digital Forensics examiners', committed: '1 of 2',    util: 136, constraint: 'Second position unfunded · 19 items queued', action: 'Escalate' },
+  { resource: 'Crime Scene Unit',          committed: '6 of 8',      util: 82,  constraint: 'Within capacity · 2 on training',      action: 'View' },
+  { resource: 'Search warrants pending',   committed: '41',          util: 71,  constraint: '3 awaiting judicial availability',     action: 'View' },
+  { resource: 'Major operations',          committed: '3 active',    util: 94,  constraint: 'Narcotics ×2, Gangs ×1 · 11 detectives', action: 'Review' },
+  { resource: 'Task force / overtime',     committed: '$62,400 MTD', util: 88,  constraint: '88% of investigative OT budget',       action: 'Review' },
+];
+
+// ── Right column ───────────────────────────────────────────────
+
+const highRisk = [
+  {
+    id: '26-04188', title: 'Officer-involved shooting', tier: 1,
+    body: 'GBI criminal investigation with parallel agency administrative review at day 11 of 30. Five open-records requests, one appeal. Commission briefing requested.',
+    tags: ['POLITICAL', 'MEDIA', 'OPEN RECORDS', 'MULTI-AGENCY'],
+    owner: 'Lt. Ibarra · Prof. Standards', next: 'Review board in 3d',
+  },
+  {
+    id: '26-04471', title: 'Sever Road corridor homicide', tier: 1,
+    body: 'Warrant execution pending tactical support authorization. Third corridor shooting in 19 days with ballistic linkage. Two community meetings requested.',
+    tags: ['OFFICER SAFETY', 'COMMUNITY IMPACT', 'MEDIA'],
+    owner: 'Capt. — Investigations (vacant seat)', next: 'Execution decision in 1d',
+  },
+  {
+    id: '26-03998', title: 'Eastgate burglary enterprise', tier: 2,
+    body: 'Seven linked cases, $340,000 cumulative loss. Franchise operator escalated to the Commission. Evidence destruction review in 34 days.',
+    tags: ['FINANCIAL', 'COMMUNITY IMPACT'],
+    owner: 'Sgt. Liu · Property', next: 'Task-force decision in 6d',
+  },
+  {
+    id: '26-04104', title: 'ICAC digital exploitation', tier: 2,
+    body: 'Two devices held in a forensics queue running 71 days against a 60-day expectation. Single examiner; federal prosecution option depends on timely analysis.',
+    tags: ['VICTIM OBLIGATION', 'MULTI-AGENCY'],
+    owner: 'Sgt. Dawes · SVU', next: 'Prioritization in 12d',
+  },
+];
+
+const brief = [
+  {
+    kind: 'Emerging trend', confidence: 0.89,
+    headline: 'Sever Road corridor violence is a single linked series, not three incidents',
+    body: 'NIBIN links two of three shootings to the same firearm; the third shares location and time-of-day pattern. Treating the corridor as one investigation consolidates three case files under Homicide and would justify a dedicated corridor detail.',
+    sources: 'NIBIN · RMS 26-04471, 26-04390, 26-04361 · CAD geospatial cluster',
+    recommended: 'Consolidate under Homicide with a corridor detail; brief Commission before the next community meeting.',
+  },
+  {
+    kind: 'Resource shortage', confidence: 0.94,
+    headline: 'Digital Forensics is the binding constraint on six investigations',
+    body: 'One examiner against 19 queued items produces a 71-day median versus a 60-day expectation. Six active cases, including one ICAC matter with a federal prosecution option, cannot advance until analysis completes. Prioritization only reorders the harm.',
+    sources: 'Digital forensics queue · position control · 6 linked case files',
+    recommended: 'Fund the second examiner position in the FY27 request; seek GBI overflow agreement for interim relief.',
+  },
+  {
+    kind: 'Investigation bottleneck', confidence: 0.83,
+    headline: 'Prosecution stage holds 112 cases at a 148-day median',
+    body: 'The stage exceeds its 120-day target with 47 cases aging. The constraint is the Superior Court calendar rather than agency work product, and it correlates with the 347 pretrial detainees held over 90 days in the detention population.',
+    sources: 'DA case management · Superior Court calendar · JMS pretrial population',
+    recommended: 'Joint calendar-relief petition with Detention; the capacity case and the case-aging case are the same argument.',
+  },
+  {
+    kind: 'Repeat offender', confidence: 0.76,
+    headline: 'Nine property cases trace to four subjects already in custody',
+    body: 'Booking records intersect open property-case suspect fields and pawn transactions. In-custody interviews are cheaper than field investigation and may clear several cases at once.',
+    sources: 'JMS bookings · RMS suspect fields · pawn database',
+    recommended: 'Assign one property detective to in-custody interviews this week.',
+  },
+  {
+    kind: 'Interagency opportunity', confidence: 0.71,
+    headline: 'Elder exploitation method appears in two adjacent counties',
+    body: 'Identical phone-based approach and comparable loss profile in two neighboring agencies. Joint USPIS referral becomes viable if the subpoena return shows interstate accounts.',
+    sources: 'Adjacent-agency bulletins · RMS 26-04388 · subpoena docket',
+    recommended: 'Hold three days for the subpoena return, then refer jointly.',
+  },
+];
+
+const activity = [
+  { time: '06:04',       kind: 'ESCALATION',  tone: 'red',     text: '26-04471 escalated to command — tactical support requested for warrant execution', meta: 'Sgt. Liu · routed to Decision Center' },
+  { time: '05:47',       kind: 'EVIDENCE',    tone: 'violet',  text: 'NIBIN linkage confirmed between 26-04471 and 26-04390',                            meta: 'GBI · received by Det. Abara' },
+  { time: '04:22',       kind: 'CLOSURE',     tone: 'slate',   text: '26-04211 closed exceptionally — pending captain approval',                         meta: 'Det. Nguyen · Property Crimes' },
+  { time: '02:15',       kind: 'ARREST',      tone: 'emerald', text: 'Arrest made on 26-04455 residential burglary — suspect in custody',                meta: 'Det. Kestrel · booking B-26-4436' },
+  { time: 'Aug 6 22:40', kind: 'WARRANT',     tone: 'blue',    text: 'Search warrant approved — 26-04388 financial records, two institutions',           meta: 'Judge Whitmore · Det. Salvatierra' },
+  { time: 'Aug 6 19:08', kind: 'ASSIGNMENT',  tone: 'blue',    text: '26-04468 armed robbery assigned to Det. Rowland after 6 days unassigned',          meta: 'Sgt. Liu · assignment threshold exceeded' },
+  { time: 'Aug 6 16:52', kind: 'PROSECUTION', tone: 'violet',  text: 'Case file submitted to DA — 26-04102 aggravated assault',                          meta: 'Det. Abara · DA intake 26-1188' },
+  { time: 'Aug 6 14:31', kind: 'EVIDENCE',    tone: 'violet',  text: 'Two devices imaged for 26-04104 — analysis queued, position 7 of 19',              meta: 'Digital Forensics · Examiner Pike' },
+  { time: 'Aug 6 11:19', kind: 'ESCALATION',  tone: 'red',     text: 'GBI lab escalation drafted for 26-04302 SAK, 22 days past turnaround',             meta: 'Sgt. Dawes · awaiting agency-head signature' },
+  { time: 'Aug 6 09:05', kind: 'ASSIGNMENT',  tone: 'blue',    text: 'Corridor violence analytic packet distributed to Homicide and Gangs',              meta: 'Analyst K. Whitfield' },
+  { time: 'Aug 6 08:12', kind: 'WARRANT',     tone: 'blue',    text: 'Warrant application returned for correction — 26-03998 tool-mark affidavit',       meta: 'Judge Alcott · Det. Kestrel' },
+];
+
+// ── Helpers ────────────────────────────────────────────────────
+
+const riskTone: Record<Risk, string> = {
+  CRITICAL: 'text-red-400',
+  HIGH:     'text-amber-400',
+  MODERATE: 'text-slate-400',
+};
+
+const flowTone: Record<Stage['flow'], { text: string; bar: string }> = {
+  'WITHIN TARGET': { text: 'text-emerald-400', bar: 'bg-slate-600' },
+  SLOWING:         { text: 'text-amber-400',   bar: 'bg-amber-400' },
+  BOTTLENECK:      { text: 'text-red-400',     bar: 'bg-red-500'   },
+};
+
+const staffTone = { emerald: 'text-emerald-400', amber: 'text-amber-400', red: 'text-red-400' };
+
+const factorTone = {
+  red:   { border: 'border-red-500/70',   label: 'text-red-400'   },
+  amber: { border: 'border-amber-500/70', label: 'text-amber-400' },
+  slate: { border: 'border-slate-600',    label: 'text-slate-400' },
+  blue:  { border: 'border-blue-500/70',  label: 'text-blue-400'  },
+};
+
+const kindTone: Record<string, string> = {
+  red: 'text-red-400', violet: 'text-violet-400', blue: 'text-blue-400',
+  emerald: 'text-emerald-400', slate: 'text-slate-400',
+};
+
+const utilTone = (u: number) =>
+  u >= 120 ? { bar: 'bg-red-500', text: 'text-red-400' }
+    : u > 100 ? { bar: 'bg-amber-400', text: 'text-amber-400' }
+      : { bar: 'bg-slate-600', text: 'text-slate-400' };
+
+function Delta({ value, up }: { value: number; up: 'good' | 'bad' }) {
+  if (value === 0) return <span className="text-[11px] font-mono text-slate-600">— 0</span>;
+  const rising = value > 0;
+  const good = up === 'good' ? rising : !rising;
+  return (
+    <span className={`text-[11px] font-mono ${good ? 'text-emerald-400' : 'text-red-400'}`}>
+      {rising ? '▲' : '▼'} {Math.abs(value)}
+    </span>
+  );
+}
+
+function SectionLabel({ children, right }: { children: React.ReactNode; right?: React.ReactNode }) {
+  return (
+    <div className="flex items-baseline justify-between gap-3 mb-3">
+      <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-slate-500">{children}</p>
+      {right}
+    </div>
+  );
+}
+
+function ActiveCasesDashboard() {
+  const navigate = useNavigate();
+  const [expanded, setExpanded] = useState<string | null>(queue[0].id);
+  const [filter, setFilter] = useState<'all' | 'critical' | 'stalled' | 'decision'>('all');
+
+  const counts = {
+    all: queue.length,
+    critical: queue.filter((c) => c.risk === 'CRITICAL').length,
+    stalled: queue.filter((c) => c.stalled).length,
+    decision: queue.filter((c) => c.dueDays <= 3).length,
   };
+  const shown = queue.filter((c) =>
+    filter === 'all' ? true
+      : filter === 'critical' ? c.risk === 'CRITICAL'
+        : filter === 'stalled' ? !!c.stalled
+          : c.dueDays <= 3);
 
-  const getPriorityBadge = (priority: string) => {
-    switch (priority) {
-      case 'Critical': return 'bg-red-100 border-red-200 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400';
-      case 'High': return 'bg-amber-100 border-amber-200 text-amber-700 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400';
-      case 'Medium': return 'bg-slate-500/10 border-slate-500/20 text-slate-500 dark:text-slate-400';
-      case 'Low': return 'bg-blue-500/10 border-blue-500/20 text-blue-400';
-      default: return 'bg-slate-500/10 border-slate-500/20 text-slate-500 dark:text-slate-400';
-    }
-  };
+  const pipelineTotal = pipeline.reduce((a, s) => a + s.cases, 0);
+  const maxStage = Math.max(...pipeline.map((s) => s.cases));
+  const overCapacity = unitHealth.filter((u) => u.load > u.standard).length;
+  const bottlenecks = pipeline.filter((s) => s.flow === 'BOTTLENECK');
+  const divisionActive = unitHealth.reduce((a, u) => a + u.active, 0);
+  const divisionOverdue = unitHealth.reduce((a, u) => a + u.overdue, 0);
+  const avgLoad = (unitHealth.reduce((a, u) => a + u.load, 0) / unitHealth.reduce((a, u) => a + u.standard, 0)).toFixed(2);
+  const decisionCases = queue.filter((c) => c.due === 'within 24h' || c.due === 'due now');
 
-  const getUrgencyStyles = (urgency: CommandAction['urgency']) => {
-    switch (urgency) {
-      case 'Critical':
-        return 'bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-300 border-red-200 dark:border-red-500/30';
-      case 'High':
-        return 'bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-500/30';
-      default:
-        return 'bg-blue-100 dark:bg-blue-500/10 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-500/30';
-    }
-  };
-
-  const getActionAccent = (urgency: CommandAction['urgency']) => {
-    switch (urgency) {
-      case 'Critical':
-        return 'border-l-red-500';
-      case 'High':
-        return 'border-l-amber-500';
-      default:
-        return 'border-l-blue-500';
-    }
-  };
-
-  const getStateStyles = (state: CommandAction['state']) => {
-    switch (state) {
-      case 'Escalated':
-        return 'bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-300 border-red-200 dark:border-red-500/30';
-      case 'In Progress':
-        return 'bg-blue-100 dark:bg-blue-500/10 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-500/30';
-      case 'Completed':
-        return 'bg-emerald-100 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-500/30';
-      default:
-        return 'bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-500/30';
-    }
-  };
-
-  const getCaseState = (c: Case): CommandAction['state'] => {
-    if (c.status === 'Closed') return 'Completed';
-    if (c.priority === 'Critical' || c.status === 'Pending Warrant') return 'Escalated';
-    if (c.status === 'Active Investigation') return 'In Progress';
-    return 'Pending';
-  };
-
-  const getRiskStyles = (risk: DetectiveLoad['risk']) => {
-    switch (risk) {
-      case 'High':
-        return 'bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-300 border-red-200 dark:border-red-500/30';
-      case 'Moderate':
-        return 'bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-500/30';
-      default:
-        return 'bg-emerald-100 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-500/30';
-    }
-  };
-
-  const getProsecutorStatusStyles = (status: ProsecutorStatus) => {
-    switch (status) {
-      case 'Ready for Charging':
-        return 'bg-emerald-100 dark:bg-emerald-500/10 border-emerald-200 dark:border-emerald-500/25 text-emerald-700 dark:text-emerald-400';
-      case 'Awaiting Evidence':
-        return 'bg-blue-100 dark:bg-blue-500/10 border-blue-200 dark:border-blue-500/25 text-blue-700 dark:text-blue-400';
-      case 'Awaiting Lab Results':
-        return 'bg-amber-100 dark:bg-amber-500/10 border-amber-200 dark:border-amber-500/25 text-amber-700 dark:text-amber-400';
-      case 'Awaiting Warrant':
-        return 'bg-purple-100 dark:bg-purple-500/10 border-purple-200 dark:border-purple-500/25 text-purple-700 dark:text-purple-400';
-      default:
-        return 'bg-slate-200 dark:bg-zinc-800/30 border-slate-300 dark:border-slate-600/30 text-slate-700 dark:text-slate-300';
-    }
-  };
-
-  const getProsecutorStatusIcon = (status: ProsecutorStatus) => {
-    switch (status) {
-      case 'Ready for Charging': return Gavel;
-      case 'Awaiting Evidence': return Search;
-      case 'Awaiting Lab Results': return FlaskConical;
-      case 'Awaiting Warrant': return Scale;
-      default: return Building2;
-    }
-  };
-
-  const getEvidenceStatusStyles = (status: EvidenceItem['status']) => {
-    switch (status) {
-      case 'Complete':
-        return 'bg-emerald-100 dark:bg-emerald-500/10 border-emerald-200 dark:border-emerald-500/25 text-emerald-700 dark:text-emerald-400';
-      case 'In Progress':
-        return 'bg-blue-100 dark:bg-blue-500/10 border-blue-200 dark:border-blue-500/25 text-blue-700 dark:text-blue-400';
-      case 'Overdue':
-        return 'bg-red-100 dark:bg-red-500/10 border-red-200 dark:border-red-500/25 text-red-700 dark:text-red-400';
-      default:
-        return 'bg-slate-200 dark:bg-zinc-800/30 border-slate-300 dark:border-slate-600/30 text-slate-700 dark:text-slate-300';
-    }
-  };
-
-  const getEvidenceCategoryIcon = (category: EvidenceItem['category']) => {
-    switch (category) {
-      case 'DNA': return Dna;
-      case 'Ballistics': return Target;
-      case 'Digital Forensics': return Smartphone;
-      case 'Toxicology': return Beaker;
-      case 'Latent Prints': return Fingerprint;
-      default: return FileText;
-    }
-  };
-
-  const tabs: { id: TabId; label: string; icon: typeof Activity }[] = [
-    { id: 'command', label: 'Command Center', icon: Activity },
-    { id: 'cases', label: 'Active Cases', icon: FileText },
-    { id: 'detectives', label: 'Detective Operations', icon: Users },
-    { id: 'intelligence', label: 'Intelligence & Analytics', icon: BarChart3 },
+  const filters = [
+    { id: 'all' as const,      label: 'All',              n: counts.all },
+    { id: 'critical' as const, label: 'Critical risk',    n: counts.critical },
+    { id: 'stalled' as const,  label: 'Stalled',          n: counts.stalled },
+    { id: 'decision' as const, label: 'Awaiting decision', n: counts.decision },
   ];
 
   return (
     <DashboardLayout>
-      <div className="p-5 lg:p-8 space-y-6 bg-slate-100 dark:bg-transparent min-h-full">
+      <div className="min-h-full bg-[#0A0A0B] px-6 py-8">
+        <div className="max-w-[1500px] mx-auto">
 
-        {/* Page Header — matches Command */}
-        <div>
-          <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-1">Criminal Investigations</h2>
-          <div className="flex items-center gap-2 text-[11px] text-slate-500">
-            <span>{stats.total} active cases</span>
-            <span>·</span>
-            <span>{stats.critical} critical</span>
-            <span>·</span>
-            <span>75% clearance YTD</span>
-            <span>·</span>
-            <span>Updated 2 minutes ago</span>
-            <span>·</span>
-            <span>Data confidence: High</span>
-          </div>
-        </div>
-
-        {/* Tab Navigation */}
-        <div className="flex items-center gap-1 border-b border-slate-200 dark:border-slate-700/30 overflow-x-auto">
-          {tabs.map(tab => {
-            const Icon = tab.icon;
-            const isActive = activeTab === tab.id;
-            return (
+          {/* ── Header ─────────────────────────────────────── */}
+          <div className="flex flex-col lg:flex-row lg:items-center gap-3 lg:gap-4">
+            <div className="flex items-baseline gap-3 flex-wrap">
+              <h1 className="text-[19px] font-bold text-slate-100">Criminal Investigations</h1>
+              <span className="text-[11px] text-slate-500">Command Module · executive oversight · as of 06:12 · RMS · GBI lab · DA case management · CAD</span>
+            </div>
+            <div className="flex items-center gap-4 lg:ml-auto flex-wrap">
+              <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-red-400/80">Law enforcement sensitive · Access logged</span>
               <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-2 px-4 py-2.5 text-[13px] font-semibold border-b-2 transition-colors whitespace-nowrap ${
-                  isActive
-                    ? 'border-slate-900 dark:border-white text-slate-900 dark:text-white'
-                    : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'
-                }`}
+                onClick={() => window.print()}
+                className="px-3.5 py-2 border border-slate-700/60 rounded-lg text-[11.5px] font-semibold text-slate-200 hover:bg-zinc-900/60 transition-colors"
               >
-                <Icon className="w-4 h-4" />
-                {tab.label}
-                {tab.id === 'command' && commandActions.filter(a => a.urgency === 'Critical').length > 0 && (
-                  <span className="px-1.5 py-0.5 rounded-full bg-red-100 dark:bg-red-500/15 text-red-700 dark:text-red-400 text-[10px] font-bold">
-                    {commandActions.filter(a => a.urgency === 'Critical').length}
-                  </span>
-                )}
-                {tab.id === 'cases' && (
-                  <span className="px-1.5 py-0.5 rounded-full bg-slate-200 dark:bg-zinc-800/40 text-slate-700 dark:text-slate-300 text-[10px] font-bold">
-                    {filteredCases.length}
-                  </span>
-                )}
-              </button>
-            );
-          })}
-        </div>
-
-        {activeTab === 'command' && (
-          <>
-            {/* Command Actions */}
-            <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none overflow-hidden">
-              <div className="flex items-center justify-between gap-3 px-5 py-3 border-b border-slate-200 dark:border-slate-700/30">
-                <div className="flex items-center gap-3">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
-                  </span>
-                  <span className="text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-widest">Command Actions — Immediate Decisions Required</span>
-                </div>
-                <span className="px-2 py-1 rounded bg-slate-100 dark:bg-zinc-800/30 border border-slate-200 dark:border-slate-600/30 text-[11px] font-bold text-slate-800 dark:text-slate-200">
-                  {commandActions.filter(a => a.urgency === 'Critical').length} Critical Decisions
-                </span>
-              </div>
-              <div className="p-4 space-y-3.5">
-                {commandActions.map((action) => (
-                  <div
-                    key={action.id}
-                    className={`rounded-lg border border-slate-200 dark:border-slate-700/30 border-l-[3px] ${getActionAccent(action.urgency)} bg-slate-50 dark:bg-zinc-950/30 p-4`}
-                  >
-                    <div className="flex items-start gap-4">
-                      <div className="flex flex-col gap-2 items-start">
-                        <span className={`inline-flex items-center px-2 py-0.5 rounded border text-[10px] font-bold uppercase tracking-wide ${getUrgencyStyles(action.urgency)}`}>
-                          {action.urgency}
-                        </span>
-                        <span className={`inline-flex items-center px-2 py-0.5 rounded border text-[10px] font-semibold uppercase tracking-wide ${getStateStyles(action.state)}`}>
-                          {action.state}
-                        </span>
-                        {action.countdown && (
-                          <span className="px-2 py-0.5 rounded bg-slate-200 dark:bg-zinc-800/40 text-slate-700 dark:text-slate-200 text-[10px] font-semibold tracking-wide">
-                            {action.countdown}
-                          </span>
-                        )}
-                      </div>
-                      <div className="flex-1 min-w-0 space-y-2">
-                        <p className="text-[14px] text-slate-900 dark:text-slate-100 font-bold leading-5">
-                          Decision required: {action.decision}
-                        </p>
-                        <p className="text-[12px] text-slate-800 dark:text-slate-200 font-medium">
-                          At risk if ignored: {action.ifIgnored}
-                        </p>
-                        <p className="text-[12px] text-slate-700 dark:text-slate-300 font-semibold">
-                          {action.timeSensitivity}
-                        </p>
-                        <p className="text-[11px] text-slate-600 dark:text-slate-300">
-                          AI reasoning: {action.rationale}
-                        </p>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-[10px]">
-                          <div>
-                            <p className="font-semibold text-slate-700 dark:text-slate-200 uppercase tracking-wide">Immediate Impact</p>
-                            <p className="text-slate-600 dark:text-slate-300">{action.immediateImpact}</p>
-                          </div>
-                          <div>
-                            <p className="font-semibold text-slate-700 dark:text-slate-200 uppercase tracking-wide">Short-Term Outcome</p>
-                            <p className="text-slate-600 dark:text-slate-300">{action.shortTermOutcome}</p>
-                          </div>
-                          <div>
-                            <p className="font-semibold text-slate-700 dark:text-slate-200 uppercase tracking-wide">Result</p>
-                            <p className="text-slate-600 dark:text-slate-300">{action.result}</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2 flex-shrink-0">
-                        <button className={`px-3 py-1.5 border rounded text-[12px] font-bold transition-all ${
-                          action.urgency === 'Critical'
-                            ? 'bg-red-600 border-red-700 text-white hover:bg-red-700'
-                            : action.urgency === 'High'
-                            ? 'bg-amber-600 border-amber-700 text-white hover:bg-amber-700'
-                            : 'bg-blue-600 border-blue-700 text-white hover:bg-blue-700'
-                        }`}>
-                          {action.actionLabel}
-                        </button>
-                        <button className="px-3 py-1.5 bg-transparent border border-slate-300 dark:border-slate-600/50 text-slate-700 dark:text-slate-200 rounded text-[12px] font-semibold hover:bg-slate-100 dark:hover:bg-zinc-800/40 transition-all">
-                          View
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Executive Snapshot Row */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
-              <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 text-left hover:border-slate-600/40 transition-colors">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs text-slate-500 font-medium">Active Cases</span>
-                  <Circle className="w-2 h-2 fill-slate-400 text-slate-500 dark:text-slate-400" />
-                </div>
-                <p className="text-3xl font-bold text-slate-900 dark:text-white mb-1">{stats.total}</p>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mb-1">Major felony investigations</p>
-                <p className="text-[11px] text-emerald-700 dark:text-emerald-400">-2 from last month</p>
-              </div>
-
-              <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 text-left hover:border-slate-600/40 transition-colors">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs text-slate-500 font-medium">Critical Cases</span>
-                  <span className="relative flex h-2.5 w-2.5">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500"></span>
-                  </span>
-                </div>
-                <p className="text-3xl font-extrabold text-slate-900 dark:text-white mb-1">{stats.critical}</p>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mb-1">Immediate attention required</p>
-                <p className="text-[11px] text-red-700 dark:text-red-400">All require command action today</p>
-              </div>
-
-              <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 text-left">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs text-slate-500 font-medium">Clearance Rate (YTD)</span>
-                  <Circle className="w-2 h-2 fill-emerald-500 text-emerald-500" />
-                </div>
-                <p className="text-3xl font-bold text-slate-900 dark:text-white mb-1">75%</p>
-                <div className="flex items-center gap-2 text-[11px] text-slate-500 dark:text-slate-400 mb-1">
-                  <span>65 of 87 cases</span>
-                  <span className="text-slate-700">·</span>
-                  <span>+3% vs 2023</span>
-                </div>
-                <p className="text-[11px] text-emerald-700 dark:text-emerald-400">Meeting 75% target</p>
-              </div>
-
-              <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5 text-left hover:border-slate-600/40 transition-colors">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs text-slate-500 font-medium">Multi-Agency Ops</span>
-                  <Circle className="w-2 h-2 fill-blue-500 text-blue-500" />
-                </div>
-                <p className="text-3xl font-bold text-slate-900 dark:text-white mb-1">{stats.multiAgency}</p>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mb-1">FBI & DEA active</p>
-                <p className="text-[11px] text-amber-700 dark:text-amber-400">Federal charges pending: 2</p>
-              </div>
-            </div>
-
-            {/* At a Glance — Charge Window Risk / Clearance Status / Detective Bottlenecks */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-              <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Charge Window Risk</h3>
-                  <span className="px-1.5 py-0.5 rounded bg-red-100 dark:bg-red-500/15 text-red-700 dark:text-red-400 text-[10px] font-bold">{chargeWindowRiskCases.length}</span>
-                </div>
-                <div className="space-y-2">
-                  {chargeWindowRiskCases.map(c => (
-                    <div
-                      key={c.id}
-                      onClick={() => setSelectedCase(c)}
-                      className="px-3 py-2 bg-red-500/5 border border-red-500/15 rounded-lg cursor-pointer hover:border-red-500/30 transition-colors"
-                    >
-                      <div className="flex items-center justify-between gap-2 mb-0.5">
-                        <span className="text-[12px] font-semibold text-slate-900 dark:text-white truncate">{c.title}</span>
-                        {c.deadline && <span className="text-[10px] text-red-700 dark:text-red-400 font-bold flex-shrink-0">Deadline: {c.deadline}</span>}
-                      </div>
-                      <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate">#{c.caseNumber} · {c.leadDetective}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Clearance Status</h3>
-                  <span className="text-[11px] text-slate-500">75% YTD</span>
-                </div>
-                <div className="space-y-2.5">
-                  {clearanceRateDetail.map(cat => (
-                    <div key={cat.type} className="flex items-center gap-2">
-                      <span className="text-[12px] text-slate-700 dark:text-slate-300 w-24 truncate">{cat.type}</span>
-                      <div className="relative flex-1 h-1 bg-slate-200 dark:bg-zinc-900/50 rounded-full overflow-visible">
-                        <div className={`h-full rounded-full ${cat.percentage >= 75 ? 'bg-emerald-500 dark:bg-emerald-500/40' : 'bg-amber-500 dark:bg-amber-500/40'}`} style={{ width: `${cat.percentage}%` }} />
-                      </div>
-                      <span className={`text-[12px] font-semibold w-10 text-right ${cat.percentage >= 75 ? 'text-emerald-700 dark:text-emerald-400' : 'text-amber-700 dark:text-amber-400'}`}>{cat.percentage}%</span>
-                    </div>
-                  ))}
-                </div>
-                <button onClick={() => setActiveTab('intelligence')} className="mt-4 flex items-center gap-1 text-[11px] text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 transition-colors">
-                  View full breakdown <ArrowRight className="w-3 h-3" />
-                </button>
-              </div>
-
-              <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Detective Bottlenecks</h3>
-                  <span className="px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-500/15 text-amber-700 dark:text-amber-400 text-[10px] font-bold">{detectiveLoad.filter(d => d.bottleneck).length}</span>
-                </div>
-                <div className="space-y-2">
-                  {detectiveLoad.filter(d => d.bottleneck).map(d => (
-                    <div key={d.name} className="px-3 py-2 bg-amber-500/5 border border-amber-500/15 rounded-lg">
-                      <div className="flex items-center justify-between gap-2 mb-0.5">
-                        <span className="text-[12px] font-semibold text-slate-900 dark:text-white truncate">{d.name}</span>
-                        <span className={`px-1.5 py-0.5 border rounded text-[10px] font-semibold flex-shrink-0 ${getRiskStyles(d.risk)}`}>{d.risk}</span>
-                      </div>
-                      <p className="text-[11px] text-slate-500 dark:text-slate-400">{d.bottleneck}</p>
-                    </div>
-                  ))}
-                </div>
-                <button onClick={() => setActiveTab('detectives')} className="mt-4 flex items-center gap-1 text-[11px] text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 transition-colors">
-                  View detective operations <ArrowRight className="w-3 h-3" />
-                </button>
-              </div>
-            </div>
-
-            {/* Recommended Action */}
-            <div className="bg-white dark:bg-zinc-950/70 border border-amber-400/35 dark:border-amber-500/35 rounded-xl overflow-hidden shadow-sm dark:shadow-none">
-              {/* Urgency header */}
-              <div className="flex items-center justify-between px-5 py-3 bg-amber-500/8 border-b border-amber-500/15">
-                <div className="flex items-center gap-2">
-                  <Zap className="w-4 h-4 text-amber-700 dark:text-amber-400" />
-                  <span className="text-[12px] font-bold text-amber-700 dark:text-amber-400 uppercase tracking-widest">Recommended Action</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Clock className="w-3.5 h-3.5 text-red-700 dark:text-red-400" />
-                  <span className="text-[12px] font-bold text-red-700 dark:text-red-400 tabular-nums">Must act within {fmtCountdown(urgencySeconds)}</span>
-                </div>
-              </div>
-              <div className="p-6">
-                <p className="text-[15px] text-slate-900 dark:text-white font-semibold mb-1">Approve DEA surveillance extension + escalate Homicide lab request</p>
-                <p className="text-[12px] text-slate-500 dark:text-slate-400 mb-4">Two actions. ~5 minutes total. Resolves both URGENT items before EOD. Deferral risks: task force collapse + suspect release on homicide.</p>
-
-                {/* Impact Chain */}
-                <div className="mb-4 bg-slate-100 dark:bg-zinc-900/30 border border-slate-200 dark:border-slate-700/20 rounded-lg p-3.5 space-y-2">
-                  <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest mb-1">Impact Chain</p>
-                  <div className="flex items-start gap-2">
-                    <span className="text-[10px] font-bold text-amber-700 dark:text-amber-400 uppercase w-24 flex-shrink-0 mt-0.5">Immediate</span>
-                    <p className="text-[11px] text-slate-700 dark:text-slate-300">DEA surveillance continues. Lab escalation filed. Both URGENT items cleared from command queue.</p>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase w-24 flex-shrink-0 mt-0.5">Downstream</span>
-                    <p className="text-[11px] text-slate-500 dark:text-slate-400">Fentanyl operation reaches arrest phase within 30 days. Homicide charge filed within 72 hrs pending ballistics.</p>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <span className="text-[10px] font-bold text-emerald-700 dark:text-emerald-400 uppercase w-24 flex-shrink-0 mt-0.5">Outcome</span>
-                    <p className="text-[11px] text-slate-500 dark:text-slate-400">4 of 10 active cases progress. Clearance rate protected at 75%. 0 missed legal windows.</p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-3">
-                  <button className="flex items-center gap-2 px-5 py-3 bg-amber-500 border border-amber-600 text-white rounded-lg text-[13px] font-bold hover:bg-amber-600 transition-all">
-                    <CheckCircle className="w-4 h-4" /> Approve DEA Extension
-                  </button>
-                  <button className="flex items-center gap-2 px-5 py-3 bg-transparent border border-slate-300 dark:border-slate-600/50 text-slate-700 dark:text-slate-300 rounded-lg text-[13px] font-semibold hover:bg-slate-100 dark:hover:bg-zinc-800/40 transition-all">
-                    <ArrowUpRight className="w-4 h-4" /> Escalate Lab Request
-                  </button>
-                </div>
-              </div>
-            </div>
-          </>
-        )}
-
-        {activeTab === 'cases' && (
-          <>
-            {/* Quick Actions */}
-            <div className="flex items-center gap-3 flex-wrap">
-              <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-200 dark:hover:bg-zinc-900/60 transition-all">
-                <Plus className="w-4 h-4" /> New Case
-              </button>
-              <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-200 dark:hover:bg-zinc-900/60 transition-all">
-                <Database className="w-4 h-4" /> Search NCIC
-              </button>
-              <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-200 dark:hover:bg-zinc-900/60 transition-all">
-                <Users className="w-4 h-4" /> Task Force
-              </button>
-              <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-200 dark:hover:bg-zinc-900/60 transition-all">
-                <FileWarning className="w-4 h-4" /> Warrant
-              </button>
-              <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-200 dark:hover:bg-zinc-900/60 transition-all">
-                <Microscope className="w-4 h-4" /> Lab Request
+                Command briefing — PDF
               </button>
             </div>
+          </div>
 
-            {/* Filters */}
-            <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-6">
-              <div className="flex items-center gap-4 mb-5 p-3 bg-slate-50 dark:bg-zinc-950/25 border border-slate-200 dark:border-slate-700/30 rounded-lg">
-                <div className="flex-1 relative">
-                  <Search className="w-4 h-4 text-slate-500 absolute left-4 top-1/2 -translate-y-1/2" />
-                  <input
-                    type="text"
-                    placeholder="Search by case number, title, or detective..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full pl-11 pr-4 py-2 bg-slate-100 dark:bg-zinc-900/40 border border-slate-200 dark:border-slate-700/40 rounded-lg text-[13px] text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-slate-400 dark:focus:border-slate-600"
-                  />
+          {/* ── Command attention ──────────────────────────── */}
+          <div className="mt-4 border border-red-500/40 bg-red-500/[0.07] rounded-xl px-5 py-3.5 flex items-baseline gap-4 flex-wrap">
+            <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-red-400 flex-shrink-0">Command attention</span>
+            <p className="text-[12px] text-slate-200 flex-1 min-w-[300px] leading-relaxed">
+              {decisionCases.length} investigations require a command decision within 24 hours — {decisionCases.map((c) => c.id).join(', ')}.
+              {' '}{counts.critical} cases carry critical operational risk.
+            </p>
+            <span className="text-[10.5px] font-mono text-slate-500 flex-shrink-0">
+              {overCapacity} of {unitHealth.length} units over capacity · {bottlenecks.length} pipeline bottlenecks
+            </span>
+          </div>
+
+          {/* ── Metrics ────────────────────────────────────── */}
+          <div className="mt-4 border border-slate-800/80 rounded-xl overflow-hidden">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 divide-x divide-y lg:divide-y-0 divide-slate-800/60 border-b border-slate-800/60">
+              {metrics.map((m) => (
+                <div key={m.label} className="px-4 py-3.5">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.13em] text-slate-500 mb-2">{m.label}</p>
+                  <p className="flex items-baseline gap-2 leading-none">
+                    <span className={`text-[22px] font-bold ${m.tone ?? 'text-slate-100'}`}>{m.value}</span>
+                    <Delta value={m.delta} up={m.up} />
+                  </p>
+                  <p className="text-[10px] text-slate-500 mt-2">{m.sub}</p>
                 </div>
-              </div>
-              <div className="flex items-center gap-4">
-                <Filter className="w-4 h-4 text-slate-500" />
-                <select
-                  value={selectedType}
-                  onChange={(e) => setSelectedType(e.target.value)}
-                  className="px-4 py-2 bg-slate-100 dark:bg-zinc-900/40 border border-slate-200 dark:border-slate-700/40 rounded-lg text-slate-700 dark:text-slate-300 text-[13px] focus:outline-none focus:border-slate-400 dark:focus:border-slate-600"
-                >
-                  <option value="all">All Types</option>
-                  <option value="Homicide">Homicide</option>
-                  <option value="Sexual Assault">Sexual Assault</option>
-                  <option value="Robbery">Robbery</option>
-                  <option value="Narcotics">Narcotics</option>
-                  <option value="Assault">Assault</option>
-                  <option value="Burglary">Burglary</option>
-                  <option value="Fraud">Fraud</option>
-                </select>
-                <select
-                  value={selectedPriority}
-                  onChange={(e) => setSelectedPriority(e.target.value)}
-                  className="px-4 py-2 bg-slate-100 dark:bg-zinc-900/40 border border-slate-200 dark:border-slate-700/40 rounded-lg text-slate-700 dark:text-slate-300 text-[13px] focus:outline-none focus:border-slate-400 dark:focus:border-slate-600"
-                >
-                  <option value="all">All Priorities</option>
-                  <option value="Critical">Critical</option>
-                  <option value="High">High</option>
-                  <option value="Medium">Medium</option>
-                  <option value="Low">Low</option>
-                </select>
-              </div>
+              ))}
             </div>
-
-            {/* Cases List — compact command cards */}
-            <div className="space-y-2">
-              {(() => {
-                const nowMs = new Date().getTime();
-                return filteredCases.map((c) => {
-                  const caseState = getCaseState(c);
-                  const secondaryTag = c.deadline && new Date(c.deadline).getTime() < nowMs + 86400000
-                    ? 'DEADLINE'
-                    : caseState === 'Escalated'
-                      ? 'ESCALATED'
-                      : null;
-
-                  return (
-                    <div
-                      key={c.id}
-                      onClick={() => setSelectedCase(c)}
-                      className={`bg-white dark:bg-zinc-900/25 border rounded-xl shadow-sm dark:shadow-none hover:border-slate-500/70 transition-colors cursor-pointer ${c.priority === 'Critical' ? 'border-red-300/70 dark:border-red-500/35 ring-1 ring-red-300/40 dark:ring-red-500/20' : 'border-slate-200 dark:border-slate-700/30'}`}
-                    >
-                      <div className="flex items-center gap-3 px-4 py-3">
-                        <div className={`w-2 h-2 rounded-full flex-shrink-0 ${getPriorityDot(c.priority)}`}></div>
-
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 mb-1 flex-wrap">
-                            <span className="text-[13px] font-semibold text-slate-900 dark:text-white truncate">{c.title}</span>
-                            <span className="text-[11px] text-slate-500">#{c.caseNumber}</span>
-                            <span className={`px-1.5 py-0.5 border rounded text-[10px] font-medium ${getPriorityBadge(c.priority)}`}>{c.priority.toUpperCase()}</span>
-                            {secondaryTag && <span className={`px-1.5 py-0.5 border rounded text-[10px] font-semibold ${getStateStyles(caseState)}`}>{secondaryTag}</span>}
-                          </div>
-                          <div className="flex items-center gap-2 text-[11px] flex-wrap text-slate-500 dark:text-slate-400">
-                            <span className="text-slate-700 dark:text-slate-300 font-medium">{c.leadDetective}</span>
-                            {c.deadline && (
-                              <>
-                                <span>·</span>
-                                <span className="font-semibold text-amber-700 dark:text-amber-400">Deadline: {c.deadline}</span>
-                              </>
-                            )}
-                            <span>·</span>
-                            <span>{c.evidence} Evidence</span>
-                            <span>|</span>
-                            <span>{c.witnesses} Witnesses</span>
-                          </div>
-                          {c.criticalReason && (
-                            <div className="flex items-center gap-1.5 mt-1">
-                              <AlertTriangle className="w-3 h-3 text-slate-500 flex-shrink-0" />
-                              <span className="text-[11px] text-slate-600 dark:text-slate-300 italic truncate">{c.criticalReason}</span>
-                            </div>
-                          )}
-                        </div>
-
-                        <div className="flex items-center gap-2 flex-shrink-0">
-                          <button
-                            onClick={(e) => { e.stopPropagation(); setSelectedCase(c); }}
-                            className="flex items-center gap-1 px-3 py-1.5 bg-transparent border border-slate-300 dark:border-slate-600/40 text-slate-700 dark:text-slate-300 rounded text-[11px] font-semibold hover:bg-slate-100 dark:hover:bg-zinc-800/40 transition-all"
-                          >
-                            <Eye className="w-3 h-3" /> Open
-                          </button>
-                          <button
-                            onClick={(e) => e.stopPropagation()}
-                            className={`flex items-center gap-1 px-3 py-1.5 rounded text-[11px] font-semibold text-white transition-all ${c.priority === 'Critical' ? 'bg-red-600 border border-red-700 hover:bg-red-700' : 'bg-amber-600 border border-amber-700 hover:bg-amber-700'}`}
-                          >
-                            <ShieldAlert className="w-3 h-3" /> Escalate
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                });
-              })()}
-            </div>
-          </>
-        )}
-
-        {activeTab === 'detectives' && (
-          <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none">
-            <div className="flex items-center justify-between px-5 py-4 border-b border-slate-200 dark:border-slate-700/30">
-              <div className="flex items-center gap-3">
-                <h3 className="text-sm font-semibold text-slate-800 dark:text-slate-100">Detective Load & Risk</h3>
-                <span className="px-1.5 py-0.5 bg-slate-200 dark:bg-zinc-800/30 text-[11px] text-slate-700 dark:text-slate-300 rounded">{detectiveLoad.length} Detectives</span>
-              </div>
-            </div>
-
-            <div className="px-5 pb-5 space-y-3 pt-4">
-              {/* Recommended Reassignment Banner */}
-              <div className="flex items-center justify-between px-4 py-3 bg-amber-500/5 border border-amber-500/15 rounded-lg">
-                <div className="flex items-start gap-2.5">
-                  <TrendingUp className="w-4 h-4 text-amber-700 dark:text-amber-400 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <p className="text-[12px] font-medium text-amber-700 dark:text-amber-400">Recommended Reassignment</p>
-                    <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Burglary #2024-1712 → Det. Wilson (available, 80% clearance). Relieves Rodriguez and improves burglary rate.</p>
-                  </div>
-                </div>
-                <button className="ml-4 flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 bg-amber-100 dark:bg-amber-500/15 border border-amber-200 dark:border-amber-500/25 text-amber-700 dark:text-amber-300 rounded-lg text-[11px] font-semibold hover:bg-amber-200 dark:hover:bg-amber-500/25 transition-all">
-                  <Zap className="w-3 h-3" /> Auto Assign
-                </button>
-              </div>
-
-              {detectiveLoad.map((d) => (
-                <div key={d.name} className="px-4 py-3.5 bg-slate-50 dark:bg-zinc-950/20 rounded-lg border border-slate-200/80 dark:border-slate-700/30 space-y-2.5">
-                  <div className="flex items-center justify-between gap-3">
-                    <div className="flex items-center gap-2.5 flex-wrap">
-                      <span className="text-[13px] font-semibold text-slate-900 dark:text-white">{d.name}</span>
-                      <span className="text-[11px] text-slate-700 dark:text-slate-300">{d.badge}</span>
-                      <span className={`px-1.5 py-0.5 border rounded text-[11px] font-semibold ${getRiskStyles(d.risk)}`}>{d.risk} RISK</span>
-                      {d.bottleneck && <span className="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-slate-200 dark:bg-zinc-800/40 text-slate-700 dark:text-slate-200">BOTTLENECK</span>}
-                    </div>
-                    <span className="text-xs text-slate-700 dark:text-slate-300">Clearance: {d.clearanceRate}%</span>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-[11px]">
-                    <div className="text-slate-700 dark:text-slate-300">Open cases: <span className="font-semibold">{d.openCases}</span> · Critical: <span className="font-semibold">{d.criticalCases}</span></div>
-                    <div className="md:col-span-2">
-                      <div className="flex items-center justify-between mb-1">
-                        <span className="text-slate-600 dark:text-slate-300">Utilization</span>
-                        <span className="font-semibold text-slate-800 dark:text-slate-100">{d.utilization}%</span>
-                      </div>
-                      <div className="h-2 rounded-full bg-slate-200 dark:bg-zinc-800/50 overflow-hidden">
-                        <div
-                          className={`h-full rounded-full ${d.utilization >= 90 ? 'bg-red-500' : d.utilization >= 70 ? 'bg-amber-500' : 'bg-emerald-500'}`}
-                          style={{ width: `${d.utilization}%` }}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  {d.bottleneck && (
-                    <p className="text-[11px] text-red-800 dark:text-red-300">Bottleneck: {d.bottleneck}</p>
-                  )}
-                  {d.recommendation && (
-                    <p className="text-[11px] text-slate-700 dark:text-slate-200">Suggested reassignment: {d.recommendation}</p>
-                  )}
+            <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-slate-800/60">
+              {secondaryMetrics.map((m) => (
+                <div key={m.label} className="px-4 py-3.5">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.13em] text-slate-500 mb-2">{m.label}</p>
+                  <p className="flex items-baseline gap-2 leading-none">
+                    <span className={`text-[22px] font-bold ${m.tone}`}>{m.value}</span>
+                    <Delta value={m.delta} up="bad" />
+                  </p>
+                  <p className="text-[10px] text-slate-500 mt-2">{m.sub}</p>
                 </div>
               ))}
             </div>
           </div>
-        )}
 
-        {activeTab === 'intelligence' && (
-          <>
-            {/* Intelligence Summary — collapsible */}
-            <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none border-l-2 border-l-slate-600/40">
-              <button
-                onClick={() => setInsightsExpanded(!insightsExpanded)}
-                className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-slate-50 dark:hover:bg-zinc-900/10 transition-colors rounded-xl"
-              >
-                <div className="flex items-center gap-3">
-                  <h3 className="text-sm font-medium text-slate-700 dark:text-slate-300">Criminal Investigations Intelligence</h3>
-                  <span className="px-1.5 py-0.5 bg-slate-200 dark:bg-zinc-800/30 text-[11px] text-slate-500 rounded">3 Alerts</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className="hidden sm:inline text-[10px] text-slate-700">AI-assisted synthesis · Updated 7:28 PM</span>
-                  {insightsExpanded ? <ChevronUp className="w-4 h-4 text-slate-700" /> : <ChevronDown className="w-4 h-4 text-slate-700" />}
-                </div>
-              </button>
+          {/* ── Executive attention queue ──────────────────── */}
+          <div className="mt-7">
+            <SectionLabel
+              right={
+                <span className="flex items-center gap-4">
+                  {filters.map((f) => (
+                    <button
+                      key={f.id}
+                      onClick={() => setFilter(f.id)}
+                      className={`text-[11px] transition-colors ${
+                        filter === f.id ? 'text-slate-100 font-semibold underline underline-offset-4' : 'text-slate-500 hover:text-slate-300'
+                      }`}
+                    >
+                      {f.label} <span className="font-mono text-slate-500">{f.n}</span>
+                    </button>
+                  ))}
+                </span>
+              }
+            >
+              Executive attention queue
+            </SectionLabel>
 
-              {insightsExpanded && (
-                <div className="px-5 pb-5 space-y-4 border-t border-slate-200 dark:border-slate-700/20 pt-4">
-                  {/* Critical */}
-                  <div className="flex items-start gap-3">
-                    <div className="w-1.5 h-1.5 rounded-full bg-red-500 mt-1.5 flex-shrink-0"></div>
-                    <div className="space-y-1">
-                      <p className="text-sm font-medium text-red-700 dark:text-red-400">Homicide #2024-0847 — Ballistics OVERDUE</p>
-                      <ul className="space-y-0.5 text-[13px] text-slate-700 dark:text-slate-300">
-                        <li>GBI Lab results due today — not received</li>
-                        <li>Must charge within 72 hrs (tomorrow 1400)</li>
-                        <li>Lead: Det. Rodriguez | Badge #I-5234</li>
-                      </ul>
-                      <p className="text-[10px] text-slate-500 pt-0.5">GBI Lab · Case file #2024-0847</p>
-                    </div>
-                  </div>
-
-                  {/* DEA */}
-                  <div className="flex items-start gap-3">
-                    <div className="w-1.5 h-1.5 rounded-full bg-red-500 mt-1.5 flex-shrink-0"></div>
-                    <div className="space-y-1">
-                      <p className="text-sm font-medium text-red-700 dark:text-red-400">DEA Task Force — Approval Required by EOD</p>
-                      <ul className="space-y-0.5 text-[13px] text-slate-700 dark:text-slate-300">
-                        <li>30-day surveillance extension expires today</li>
-                        <li>Sheriff approval required for continuation</li>
-                        <li>Cost: $12K (DEA funded)</li>
-                      </ul>
-                      <p className="text-[10px] text-slate-500 pt-0.5">Case #2024-1234 · Fentanyl distribution network</p>
-                    </div>
-                  </div>
-
-                  {/* Trends */}
-                  <div className="flex items-start gap-3">
-                    <div className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 flex-shrink-0"></div>
-                    <div className="space-y-1">
-                      <p className="text-sm font-medium text-amber-700 dark:text-amber-400">Armed Robberies +15% — Trend Alert</p>
-                      <ul className="space-y-0.5 text-[13px] text-slate-700 dark:text-slate-300">
-                        <li>Dec 2024: 23 incidents (vs 20 Nov)</li>
-                        <li>Pharmacy series (3 incidents) — same MO confirmed</li>
-                        <li>Recommendation: Robbery task force formation</li>
-                      </ul>
-                      <p className="text-[10px] text-slate-500 pt-0.5">Crime analytics · Patrol incident reports</p>
-                    </div>
-                  </div>
-
-                  <div className="pt-2 text-[10px] text-slate-700">
-                    Analysis based on {stats.total} active cases · 75% clearance rate YTD
-                  </div>
-                </div>
-              )}
+            <div className="flex items-end gap-3 pb-2 border-b border-slate-800/70 pl-3 text-[9px] font-bold uppercase tracking-[0.12em] text-slate-500">
+              <span className="w-[68px] flex-shrink-0">Case</span>
+              <span className="flex-1 min-w-0">Investigation / status</span>
+              <span className="w-40 flex-shrink-0">Unit</span>
+              <span className="w-32 flex-shrink-0">Lead detective</span>
+              <span className="w-10 text-right flex-shrink-0">Open</span>
+              <span className="w-52 flex-shrink-0">Next critical action</span>
+              <span className="w-20 text-right flex-shrink-0">Risk</span>
+              <span className="w-4 flex-shrink-0" />
             </div>
 
-            {/* Case Type Breakdown */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-              <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 bg-red-700/60 rounded-full"></div>
-                    <span className="text-xs text-slate-500 uppercase tracking-wide font-medium">Homicide</span>
-                  </div>
-                </div>
-                <p className="text-2xl font-semibold text-slate-900 dark:text-white mb-3">{stats.homicide}</p>
-                <div className="space-y-1.5">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-slate-500">Clearance YTD</span>
-                    <span className="text-slate-700 dark:text-slate-300">100% (8/8)</span>
-                  </div>
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-slate-500">Priority</span>
-                    <span className="text-slate-700 dark:text-slate-300">1 critical, 1 medium</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 bg-amber-600/50 rounded-full"></div>
-                    <span className="text-xs text-slate-500 uppercase tracking-wide font-medium">Robbery</span>
-                  </div>
-                </div>
-                <p className="text-2xl font-semibold text-slate-900 dark:text-white mb-3">{stats.robbery}</p>
-                <div className="space-y-1.5">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-slate-500">Clearance YTD</span>
-                    <span className="text-slate-700 dark:text-slate-300">68% (17/25)</span>
-                  </div>
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-slate-500">Priority</span>
-                    <span className="text-slate-700 dark:text-slate-300">1 critical series, 1 high</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 bg-slate-500/50 rounded-full"></div>
-                    <span className="text-xs text-slate-500 uppercase tracking-wide font-medium">Narcotics</span>
-                  </div>
-                </div>
-                <p className="text-2xl font-semibold text-slate-900 dark:text-white mb-3">{stats.narcotics}</p>
-                <div className="space-y-1.5">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-slate-500">Clearance YTD</span>
-                    <span className="text-slate-700 dark:text-slate-300">89% (8/9)</span>
-                  </div>
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-slate-500">Active Ops</span>
-                    <span className="text-slate-700 dark:text-slate-300">1 DEA task force, 1 warrant</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 bg-slate-500/50 rounded-full"></div>
-                    <span className="text-xs text-slate-500 uppercase tracking-wide font-medium">Other</span>
-                  </div>
-                </div>
-                <p className="text-2xl font-semibold text-slate-900 dark:text-white mb-3">4</p>
-                <div className="space-y-1.5">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-slate-500">Sexual Assault</span>
-                    <span className="text-slate-700 dark:text-slate-300">1 (critical)</span>
-                  </div>
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-slate-500">Fraud / Assault / Burglary</span>
-                    <span className="text-slate-700 dark:text-slate-300">3</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Clearance Rate Detail */}
-            <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
-              <div className="flex items-center justify-between mb-5">
-                <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Clearance Rates by Type</h3>
-                <span className="text-[11px] text-slate-500">YTD 2024 — National avg: 62%</span>
-              </div>
-              <div className="space-y-4">
-                {clearanceRateDetail.map((cat) => (
-                  <div key={cat.type} className={`rounded-lg p-3.5 ${cat.status === 'below-target' ? 'bg-amber-500/5 border border-amber-500/10' : 'bg-slate-50 dark:bg-zinc-900/20 border border-slate-200 dark:border-slate-700/20'}`}>
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center gap-2.5">
-                        <span className="text-sm text-slate-700 dark:text-slate-300 font-medium">{cat.type}</span>
-                        <span className={`px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase ${cat.status === 'on-track' ? 'bg-emerald-100 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400' : 'bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400'}`}>
-                          {cat.status === 'on-track' ? 'On Track' : 'Below Target'}
+            <div className="divide-y divide-slate-800/50">
+              {shown.map((c) => {
+                const open = expanded === c.id;
+                return (
+                  <div key={c.id} className={`border-l-2 ${c.risk === 'CRITICAL' ? 'border-red-500/70' : c.risk === 'HIGH' ? 'border-amber-500/60' : 'border-transparent'}`}>
+                    <button
+                      onClick={() => setExpanded(open ? null : c.id)}
+                      className="w-full flex items-center gap-3 py-3 pl-3 text-left hover:bg-zinc-900/40 transition-colors"
+                    >
+                      <span className="w-[68px] text-[10.5px] font-mono text-slate-500 flex-shrink-0">{c.id}</span>
+                      <div className="flex-1 min-w-0">
+                        <span className="flex items-center gap-2">
+                          <span className={`border rounded px-1 py-0.5 text-[9px] font-bold flex-shrink-0 ${
+                            c.pri === 'P1' ? 'border-red-500/60 text-red-400' : 'border-amber-500/60 text-amber-400'
+                          }`}>{c.pri}</span>
+                          <span className="text-[12.5px] font-semibold text-slate-100 truncate">{c.title}</span>
                         </span>
-                        <span className="text-[10px] text-slate-700">{cat.confidence}% confidence</span>
+                        <p className="text-[10px] text-slate-500 truncate mt-0.5">{c.status}</p>
                       </div>
-                      <div className="flex items-center gap-2.5">
-                        <span className="text-xs text-slate-500 dark:text-slate-400">{cat.cleared}/{cat.total}</span>
-                        <span className={`text-sm font-semibold ${cat.percentage >= 75 ? 'text-emerald-700 dark:text-emerald-400' : 'text-amber-700 dark:text-amber-400'}`}>{cat.percentage}%</span>
+                      <span className="w-40 text-[11px] text-slate-400 flex-shrink-0 truncate">{c.unit}</span>
+                      <span className="w-32 text-[11px] text-slate-300 flex-shrink-0 truncate">{c.lead}</span>
+                      <span className="w-10 text-right text-[11px] font-mono text-slate-400 flex-shrink-0">{c.open}</span>
+                      <span className="w-52 flex-shrink-0 min-w-0">
+                        <span className="block text-[11px] text-slate-200 truncate">{c.action}</span>
+                        <span className={`block text-[10px] font-mono ${
+                          c.dueTone === 'red' ? 'text-red-400' : c.dueTone === 'amber' ? 'text-amber-400' : 'text-slate-500'
+                        }`}>{c.due}</span>
+                      </span>
+                      <span className={`w-20 text-right text-[10.5px] font-bold tracking-wider flex-shrink-0 ${riskTone[c.risk]}`}>{c.risk}</span>
+                      <span className="w-4 text-slate-600 text-[9px] flex-shrink-0">{open ? '▾' : '▸'}</span>
+                    </button>
+
+                    {open && c.summary && (
+                      <div className="mx-3 mb-3 border border-slate-800/80 rounded-xl px-4 py-3.5">
+                        <p className="flex items-baseline gap-2">
+                          <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-slate-500">AI executive summary</span>
+                          <span className="text-[10px] text-slate-600">confidence</span>
+                          <span className="text-[10.5px] font-mono text-emerald-400">{c.summary.confidence.toFixed(2)}</span>
+                        </p>
+                        <p className="text-[12px] text-slate-300 leading-relaxed mt-2.5">{c.summary.text}</p>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-3 mt-4">
+                          {c.summary.factors.map((f) => (
+                            <div key={f.label} className={`border-l-2 pl-3 ${factorTone[f.tone].border}`}>
+                              <p className={`text-[9px] font-bold uppercase tracking-[0.12em] ${factorTone[f.tone].label}`}>{f.label}</p>
+                              <p className="text-[11px] text-slate-300 leading-snug mt-1">{f.text}</p>
+                            </div>
+                          ))}
+                        </div>
+
+                        <p className="text-[10px] text-slate-500 mt-4">Sources: {c.summary.sources}</p>
+
+                        <div className="flex items-center gap-2.5 mt-3.5 flex-wrap">
+                          <button className="px-3 py-1.5 border border-amber-500/60 bg-amber-500/10 rounded text-[11px] font-semibold text-amber-400 hover:bg-amber-500/20 transition-colors">Review case</button>
+                          <button className="px-3 py-1.5 border border-slate-700/60 rounded text-[11px] font-semibold text-slate-200 hover:bg-zinc-900/60 transition-colors">View briefing</button>
+                          <button className="px-3 py-1.5 border border-slate-700/60 rounded text-[11px] font-semibold text-slate-200 hover:bg-zinc-900/60 transition-colors">Allocate resources</button>
+                          <button
+                            onClick={() => navigate('/command/approvals')}
+                            className="px-3 py-1.5 border border-red-500/50 rounded text-[11px] font-semibold text-red-400 hover:bg-red-500/10 transition-colors"
+                          >
+                            Escalate to command
+                          </button>
+                          <span className="ml-auto text-[10px] text-slate-600">Every action here is logged to the audit trail with actor and timestamp.</span>
+                        </div>
                       </div>
-                    </div>
-                    <div className="relative w-full h-1 bg-slate-200 dark:bg-zinc-900/50 rounded-full overflow-visible mb-2.5">
-                      <div className={`h-full rounded-full ${cat.percentage >= 75 ? 'bg-emerald-500 dark:bg-emerald-500/40' : 'bg-amber-500 dark:bg-amber-500/40'}`} style={{ width: `${cat.percentage}%` }} />
-                      <div className="absolute top-[-3px] w-[1.5px] h-[calc(100%+6px)] bg-red-500/50 rounded-full" style={{ left: '75%' }} title="Target: 75%" />
-                    </div>
-                    <div className="flex items-start gap-1.5 mb-2">
-                      <ArrowRight className="w-3 h-3 text-slate-500 mt-0.5 flex-shrink-0" />
-                      <p className="text-[11px] text-slate-500 dark:text-slate-400">{cat.recommendation}</p>
-                    </div>
-                    {/* Impact Chain */}
-                    <div className="ml-4 grid grid-cols-3 gap-2 mb-2.5">
-                      <div>
-                        <p className="text-[9px] font-bold text-amber-700 dark:text-amber-400/60 uppercase mb-0.5">Immediate</p>
-                        <p className="text-[10px] text-slate-500">{cat.immediate}</p>
-                      </div>
-                      <div>
-                        <p className="text-[9px] font-bold text-slate-500 uppercase mb-0.5">Downstream</p>
-                        <p className="text-[10px] text-slate-500">{cat.downstream}</p>
-                      </div>
-                      <div>
-                        <p className="text-[9px] font-bold text-emerald-700 dark:text-emerald-400/60 uppercase mb-0.5">Outcome</p>
-                        <p className="text-[10px] text-slate-500">{cat.outcome}</p>
-                      </div>
-                    </div>
-                    {cat.action && (
-                      <button className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-[11px] font-semibold transition-all ${cat.status === 'below-target' ? 'bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-400 hover:bg-amber-500/20' : 'bg-slate-100 dark:bg-zinc-800/30 border border-slate-300 dark:border-slate-600/30 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-zinc-800/50'}`}>
-                        <Zap className="w-3 h-3" /> {cat.action}
-                      </button>
                     )}
                   </div>
-                ))}
-                <div className="flex items-center gap-3 pt-2 text-[10px] text-slate-500">
-                  <div className="flex items-center gap-1.5">
-                    <div className="w-[1.5px] h-2.5 bg-red-500/50 rounded-full"></div>
-                    <span>75% target threshold</span>
-                  </div>
-                </div>
-              </div>
+                );
+              })}
             </div>
+            <p className="text-[10px] text-slate-500 mt-3">
+              Rows expand to the executive summary with confidence and sources. Risk combines operational, legal, financial, and public-safety exposure — not case severity alone.
+            </p>
+          </div>
 
-            {/* Prosecutor Readiness */}
-            <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
-              <div className="flex items-center justify-between mb-5">
-                <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Prosecutor Readiness</h3>
-                <span className="text-[11px] text-slate-500">{stats.total} cases · {chargeWindowRiskCases.length} at risk of missing charge window</span>
+          {/* ── Main grid ──────────────────────────────────── */}
+          <div className="mt-7 grid grid-cols-1 xl:grid-cols-2 gap-8">
+
+            {/* ══ Left column ═══════════════════════════════ */}
+            <div>
+              {/* Unit health */}
+              <SectionLabel right={<span className="text-[10px] text-slate-500">red = over operational capacity</span>}>
+                Investigative unit health
+              </SectionLabel>
+              <div className="flex items-end gap-3 pb-2 border-b border-slate-800/70 pl-3 text-[9px] font-bold uppercase tracking-[0.12em] text-slate-500">
+                <span className="flex-1 min-w-0">Unit</span>
+                <span className="w-12 text-right flex-shrink-0">Active</span>
+                <span className="w-[110px] flex-shrink-0">Workload</span>
+                <span className="w-10 text-right flex-shrink-0">Clr</span>
+                <span className="w-12 text-right flex-shrink-0">Age</span>
+                <span className="w-12 text-right flex-shrink-0">Overdue</span>
+                <span className="w-24 flex-shrink-0">Staffing</span>
               </div>
-
-              {/* Status buckets */}
-              <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-5">
-                {prosecutorBuckets.map(bucket => {
-                  const Icon = getProsecutorStatusIcon(bucket.status);
+              <div className="divide-y divide-slate-800/50">
+                {unitHealth.map((u) => {
+                  const over = u.load > u.standard;
+                  const critical = u.load > u.standard * 1.2;
                   return (
-                    <div key={bucket.status} className={`rounded-lg border p-3 ${getProsecutorStatusStyles(bucket.status)}`}>
-                      <div className="flex items-center justify-between mb-1.5">
-                        <Icon className="w-3.5 h-3.5" />
-                        <span className="text-xl font-bold">{bucket.cases.length}</span>
+                    <div key={u.unit} className={`flex items-center gap-3 py-3 pl-3 border-l-2 ${critical ? 'border-red-500/70' : over ? 'border-amber-500/60' : 'border-transparent'}`}>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[12px] font-semibold text-slate-100 truncate">{u.unit}</p>
+                        <p className={`text-[10px] truncate ${u.noteTone === 'red' ? 'text-red-400/90' : 'text-slate-500'}`}>{u.note}</p>
                       </div>
-                      <p className="text-[10px] font-semibold uppercase tracking-wide">{bucket.label}</p>
+                      <span className="w-12 text-right text-[11px] font-mono text-slate-100 flex-shrink-0">{u.active}</span>
+                      <span className="w-[110px] flex items-center gap-2 flex-shrink-0">
+                        <span className="flex-1 h-1 bg-zinc-800/70 rounded-full overflow-hidden">
+                          <span className={`block h-full rounded-full ${critical ? 'bg-red-500' : over ? 'bg-amber-400' : 'bg-slate-600'}`}
+                            style={{ width: `${Math.min((u.load / u.standard) * 100, 100)}%` }} />
+                        </span>
+                        <span className={`text-[10.5px] font-mono flex-shrink-0 ${critical ? 'text-red-400' : over ? 'text-amber-400' : 'text-slate-400'}`}>
+                          {u.load} / {u.standard}
+                        </span>
+                      </span>
+                      <span className="w-10 text-right text-[11px] font-mono text-slate-300 flex-shrink-0">{u.clr}</span>
+                      <span className="w-12 text-right text-[11px] font-mono text-slate-400 flex-shrink-0">{u.age}</span>
+                      <span className="w-12 text-right text-[11px] font-mono text-slate-300 flex-shrink-0">{u.overdue}</span>
+                      <span className={`w-24 text-[10px] font-bold tracking-wider flex-shrink-0 ${staffTone[u.staffTone]}`}>{u.staffing}</span>
                     </div>
                   );
                 })}
               </div>
+              <div className="flex items-start gap-3 py-3 pl-3 border-t border-slate-800/70">
+                <span className="flex-1 min-w-0 text-[12px] font-bold text-slate-100">Division</span>
+                <span className="w-12 text-right text-[11px] font-mono font-bold text-slate-100 flex-shrink-0">{divisionActive}</span>
+                <span className="w-[110px] text-[10.5px] font-mono text-slate-300 flex-shrink-0">{avgLoad} avg</span>
+                <span className="w-10 text-right text-[11px] font-mono font-bold text-slate-200 flex-shrink-0">38%</span>
+                <span className="w-12 text-right text-[11px] font-mono text-slate-400 flex-shrink-0">96d</span>
+                <span className="w-12 text-right text-[11px] font-mono font-bold text-red-400 flex-shrink-0">{divisionOverdue}</span>
+                <span className="w-24 text-[10px] text-slate-500 leading-relaxed flex-shrink-0">
+                  {overCapacity} of {unitHealth.length} units over capacity · workload shown per detective against unit standard
+                </span>
+              </div>
 
-              {/* At risk of missing charge window — highlighted */}
-              {chargeWindowRiskCases.length > 0 && (
-                <div className="mb-4 space-y-1.5">
-                  <p className="text-[10px] font-bold text-red-700 dark:text-red-400 uppercase tracking-widest flex items-center gap-1.5">
-                    <AlertTriangle className="w-3 h-3" /> At Risk of Missing Charge Window
-                  </p>
-                  {chargeWindowRiskCases.map(c => (
-                    <div
-                      key={c.id}
-                      onClick={() => setSelectedCase(c)}
-                      className="flex items-center justify-between gap-3 px-4 py-2.5 bg-red-500/5 border border-red-500/15 rounded-lg cursor-pointer hover:border-red-500/30 transition-colors"
-                    >
-                      <div className="min-w-0">
-                        <div className="flex items-center gap-2 mb-0.5 flex-wrap">
-                          <span className="text-[13px] font-semibold text-slate-900 dark:text-white">{c.title}</span>
-                          <span className="text-[11px] text-slate-500">#{c.caseNumber}</span>
-                        </div>
-                        <p className="text-[11px] text-slate-600 dark:text-slate-300">{c.prosecutorNote}</p>
-                      </div>
-                      {c.deadline && (
-                        <span className="text-[11px] font-semibold text-red-700 dark:text-red-400 flex-shrink-0">Deadline: {c.deadline}</span>
-                      )}
-                    </div>
-                  ))}
+              {/* Pipeline */}
+              <div className="mt-7">
+                <SectionLabel right={<span className="text-[10px] text-slate-500">{pipelineTotal} investigations in pipeline</span>}>
+                  Investigation pipeline
+                </SectionLabel>
+                <div className="flex items-end gap-3 pb-2 border-b border-slate-800/70 pl-3 text-[9px] font-bold uppercase tracking-[0.12em] text-slate-500">
+                  <span className="flex-1 min-w-0">Stage</span>
+                  <span className="w-12 text-right flex-shrink-0">Cases</span>
+                  <span className="w-12 text-right flex-shrink-0">Median</span>
+                  <span className="w-10 text-right flex-shrink-0">Aging</span>
+                  <span className="w-44 flex-shrink-0">Volume</span>
+                  <span className="w-28 text-right flex-shrink-0">Flow</span>
                 </div>
-              )}
-
-              {/* Per-status case lists */}
-              <div className="space-y-3">
-                {prosecutorBuckets.filter(b => b.cases.length > 0).map(bucket => (
-                  <div key={bucket.status}>
-                    <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">{bucket.label} ({bucket.cases.length})</p>
-                    <div className="space-y-1.5">
-                      {bucket.cases.map(c => (
-                        <div
-                          key={c.id}
-                          onClick={() => setSelectedCase(c)}
-                          className="flex items-center justify-between gap-3 px-4 py-2 bg-slate-50 dark:bg-zinc-950/20 rounded-lg border border-slate-200/80 dark:border-slate-700/30 cursor-pointer hover:border-slate-400/50 dark:hover:border-slate-500/50 transition-colors"
-                        >
-                          <div className="min-w-0 flex-1">
-                            <div className="flex items-center gap-2 flex-wrap">
-                              <span className="text-[12px] font-semibold text-slate-900 dark:text-white">{c.title}</span>
-                              <span className="text-[11px] text-slate-500">#{c.caseNumber}</span>
-                              {c.assignedADA && <span className="text-[11px] text-slate-600 dark:text-slate-300">· {c.assignedADA}</span>}
-                            </div>
-                            <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">{c.prosecutorNote}</p>
-                          </div>
+                <div className="divide-y divide-slate-800/50">
+                  {pipeline.map((s, i) => {
+                    const tone = flowTone[s.flow];
+                    return (
+                      <div key={s.stage} className={`flex items-center gap-3 py-3 pl-3 border-l-2 ${
+                        s.flow === 'BOTTLENECK' ? 'border-red-500/70' : s.flow === 'SLOWING' ? 'border-amber-500/60' : 'border-transparent'
+                      }`}>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-[12px] font-semibold text-slate-100 truncate">
+                            <span className="font-mono text-[9px] text-slate-600 mr-1.5">{i + 1}</span>
+                            {s.stage}
+                          </p>
+                          <p className="text-[10px] text-slate-500 truncate">{s.note}</p>
                         </div>
+                        <span className="w-12 text-right text-[12px] font-mono font-bold text-slate-100 flex-shrink-0">{s.cases}</span>
+                        <span className="w-12 text-right text-[11px] font-mono text-slate-300 flex-shrink-0">{s.median}</span>
+                        <span className={`w-10 text-right text-[11px] font-mono flex-shrink-0 ${s.aging > 20 ? 'text-red-400' : s.aging > 5 ? 'text-amber-400' : 'text-slate-500'}`}>{s.aging}</span>
+                        <span className="w-44 flex-shrink-0">
+                          <span className="block h-1.5 bg-zinc-800/70 rounded-full overflow-hidden">
+                            <span className={`block h-full rounded-full ${tone.bar}`} style={{ width: `${(s.cases / maxStage) * 100}%` }} />
+                          </span>
+                        </span>
+                        <span className={`w-28 text-right text-[10px] font-bold tracking-wider flex-shrink-0 ${tone.text}`}>{s.flow}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+                <p className="text-[10px] text-slate-500 mt-3">
+                  Aging = cases exceeding the stage target. Median = days in current stage. Bottlenecks: {bottlenecks.map((b) => b.stage.toLowerCase()).join(', ')}.
+                </p>
+              </div>
+
+              {/* Resource allocation */}
+              <div className="mt-7">
+                <SectionLabel right={<span className="text-[10px] text-slate-500">utilization above 100% indicates committed beyond authorized strength</span>}>
+                  Resource allocation
+                </SectionLabel>
+                <div className="flex items-end gap-3 pb-2 border-b border-slate-800/70 pl-3 text-[9px] font-bold uppercase tracking-[0.12em] text-slate-500">
+                  <span className="w-40 flex-shrink-0">Resource</span>
+                  <span className="w-24 text-right flex-shrink-0">Committed</span>
+                  <span className="w-[120px] flex-shrink-0">Utilization</span>
+                  <span className="flex-1 min-w-0">Constraint</span>
+                  <span className="w-24 text-right flex-shrink-0">Action</span>
+                </div>
+                <div className="divide-y divide-slate-800/50">
+                  {resources.map((r) => {
+                    const tone = utilTone(r.util);
+                    return (
+                      <div key={r.resource} className={`flex items-center gap-3 py-3 pl-3 border-l-2 ${r.util > 100 ? (r.util >= 120 ? 'border-red-500/70' : 'border-amber-500/60') : 'border-transparent'}`}>
+                        <span className="w-40 text-[12px] font-semibold text-slate-100 flex-shrink-0 truncate">{r.resource}</span>
+                        <span className="w-24 text-right text-[11px] font-mono text-slate-200 flex-shrink-0">{r.committed}</span>
+                        <span className="w-[120px] flex items-center gap-2 flex-shrink-0">
+                          <span className="flex-1 h-1 bg-zinc-800/70 rounded-full overflow-hidden">
+                            <span className={`block h-full rounded-full ${tone.bar}`} style={{ width: `${Math.min(r.util, 100)}%` }} />
+                          </span>
+                          <span className={`text-[10.5px] font-mono flex-shrink-0 ${tone.text}`}>{r.util}%</span>
+                        </span>
+                        <span className="flex-1 min-w-0 text-[11px] text-slate-400 truncate">{r.constraint}</span>
+                        <span className="w-24 text-right flex-shrink-0">
+                          <button className="text-[11px] font-semibold text-amber-500/90 hover:text-amber-400 transition-colors">{r.action} →</button>
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+
+            {/* ══ Right column ══════════════════════════════ */}
+            <div>
+              {/* High-risk investigations */}
+              <SectionLabel right={<span className="text-[10px] text-slate-500">{highRisk.length} tracked</span>}>
+                High-risk investigations
+              </SectionLabel>
+              <div className="space-y-2.5">
+                {highRisk.map((h) => (
+                  <div key={h.id} className={`border rounded-xl px-4 py-3.5 ${h.tier === 1 ? 'border-slate-700/70' : 'border-slate-800'}`}>
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-[10px] font-mono text-slate-500 flex-shrink-0">{h.id}</span>
+                      <p className="text-[12.5px] font-bold text-slate-100 flex-1 min-w-0">{h.title}</p>
+                      <span className={`text-[10px] font-bold tracking-wider flex-shrink-0 ${h.tier === 1 ? 'text-red-400' : 'text-amber-400'}`}>TIER {h.tier}</span>
+                    </div>
+                    <p className="text-[11.5px] text-slate-300 leading-relaxed mt-1.5">{h.body}</p>
+                    <div className="flex items-center gap-1.5 flex-wrap mt-2.5">
+                      {h.tags.map((t) => (
+                        <span key={t} className={`border rounded px-1.5 py-0.5 text-[9px] font-bold tracking-wider ${
+                          h.tier === 1 ? 'border-red-500/50 text-red-400' : 'border-amber-500/50 text-amber-400'
+                        }`}>{t}</span>
                       ))}
                     </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Evidence & Forensics Pipeline */}
-            <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
-              <div className="flex items-center justify-between mb-5">
-                <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Evidence & Forensics Pipeline</h3>
-                <span className="text-[11px] text-slate-500">{allEvidenceItems.length} items in pipeline · {overdueEvidenceItems.length} overdue</span>
-              </div>
-
-              {/* Category backlog tiles */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-5">
-                {evidenceByCategory.map(cat => {
-                  const Icon = getEvidenceCategoryIcon(cat.category);
-                  return (
-                    <div
-                      key={cat.category}
-                      className={`rounded-lg border p-3 ${cat.overdue > 0 ? 'bg-red-500/5 border-red-500/15' : 'bg-slate-50 dark:bg-zinc-950/20 border-slate-200 dark:border-slate-700/30'}`}
-                    >
-                      <div className="flex items-center justify-between mb-1.5">
-                        <Icon className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
-                        {cat.overdue > 0 && (
-                          <span className="px-1.5 py-0.5 rounded text-[9px] font-bold uppercase bg-red-100 dark:bg-red-500/15 text-red-700 dark:text-red-400">
-                            {cat.overdue} overdue
-                          </span>
-                        )}
-                      </div>
-                      <p className="text-xl font-bold text-slate-900 dark:text-white">{cat.total}</p>
-                      <p className="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-wide">{cat.category}</p>
-                    </div>
-                  );
-                })}
-              </div>
-
-              {/* Evidence item queue — overdue first */}
-              <div className="space-y-1.5">
-                {sortedEvidenceItems.map(item => (
-                  <div key={item.id} className="flex items-center justify-between gap-3 px-4 py-2.5 bg-slate-50 dark:bg-zinc-950/20 rounded-lg border border-slate-200/80 dark:border-slate-700/30">
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-center gap-2 flex-wrap mb-0.5">
-                        <span className="text-[12px] font-semibold text-slate-900 dark:text-white">{item.description}</span>
-                        <span className={`px-1.5 py-0.5 rounded border text-[10px] font-semibold ${getEvidenceStatusStyles(item.status)}`}>{item.status}</span>
-                      </div>
-                      <p className="text-[11px] text-slate-500 dark:text-slate-400">#{item.caseNumber} · {item.caseTitle} · {item.lab}</p>
-                    </div>
-                    <div className="text-right flex-shrink-0">
-                      <p className="text-[11px] text-slate-500">ETA</p>
-                      <p className={`text-[12px] font-semibold ${item.status === 'Overdue' ? 'text-red-700 dark:text-red-400' : 'text-slate-700 dark:text-slate-300'}`}>{item.eta}</p>
+                    <div className="flex items-baseline justify-between gap-3 mt-2.5">
+                      <span className="text-[10px] text-slate-500 truncate">{h.owner}</span>
+                      <span className="text-[10px] text-slate-500 flex-shrink-0">{h.next}</span>
                     </div>
                   </div>
                 ))}
               </div>
-            </div>
 
-            {/* Connected Cases & Patterns — collapsible */}
-            <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none">
-              <button
-                onClick={() => setShowConnections(!showConnections)}
-                className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-slate-50 dark:hover:bg-zinc-900/10 transition-colors rounded-xl"
-              >
-                <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Connected Cases & Patterns</h3>
-                {showConnections ? <ChevronUp className="w-4 h-4 text-slate-700" /> : <ChevronDown className="w-4 h-4 text-slate-700" />}
-              </button>
-
-              {showConnections && (
-                <div className="px-5 pb-5 space-y-2 border-t border-slate-200 dark:border-slate-700/20 pt-4">
-                  <div className="flex items-center gap-4 px-4 py-2.5 bg-slate-50 dark:bg-zinc-950/20 rounded border-l-[3px] border-l-amber-700/50">
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-3">
-                        <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Pharmacy Robbery Series</span>
-                        <span className="text-[11px] text-slate-700">#2024-1489</span>
-                        <span className="px-1.5 py-0.5 border rounded text-[11px] font-medium bg-amber-100 dark:bg-amber-500/10 border-amber-200 dark:border-amber-500/20 text-amber-700 dark:text-amber-400">SERIES</span>
+              {/* Executive intelligence brief */}
+              <div className="mt-7">
+                <SectionLabel right={<span className="text-[10px] text-slate-500">generated 05:58</span>}>
+                  Executive intelligence brief
+                </SectionLabel>
+                <div className="space-y-4">
+                  {brief.map((b) => {
+                    const hot = b.confidence >= 0.85;
+                    return (
+                      <div key={b.headline} className={`border-l-2 pl-3.5 ${hot ? 'border-red-500/70' : 'border-amber-500/60'}`}>
+                        <p className="flex items-baseline gap-2">
+                          <span className={`text-[9px] font-bold uppercase tracking-[0.13em] flex-1 ${hot ? 'text-red-400' : 'text-amber-400'}`}>{b.kind}</span>
+                          <span className="text-[10.5px] font-mono text-emerald-400 flex-shrink-0">{b.confidence.toFixed(2)}</span>
+                        </p>
+                        <p className="text-[12.5px] font-bold text-slate-100 mt-1 leading-snug">{b.headline}</p>
+                        <p className="text-[11.5px] text-slate-400 leading-relaxed mt-1">{b.body}</p>
+                        <p className="text-[10px] text-slate-600 mt-1.5">Sources: {b.sources}</p>
+                        <p className="text-[11px] text-amber-400/90 mt-1.5 leading-relaxed">Recommended: {b.recommended}</p>
                       </div>
-                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">3 incidents, same MO — targeting opioid medications</p>
-                    </div>
-                    <span className="text-xs text-slate-500 flex-shrink-0">20 days open</span>
-                  </div>
-
-                  <div className="flex items-center gap-4 px-4 py-2.5 bg-slate-50 dark:bg-zinc-950/20 rounded border-l-[3px] border-l-red-800/60">
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-3">
-                        <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Gang-Related Shootings</span>
-                        <span className="text-[11px] text-slate-700">#2024-0847 + linked</span>
-                        <span className="px-1.5 py-0.5 border rounded text-[11px] font-medium bg-red-100 dark:bg-red-500/10 border-red-200 dark:border-red-500/20 text-red-700 dark:text-red-400">CRITICAL</span>
-                      </div>
-                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Territory dispute — retaliation risk HIGH</p>
-                    </div>
-                    <span className="text-xs text-slate-500 flex-shrink-0">7 days open</span>
-                  </div>
-
-                  <div className="flex items-center gap-4 px-4 py-2.5 bg-slate-50 dark:bg-zinc-950/20 rounded border-l-[3px] border-l-slate-600/30">
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-3">
-                        <span className="text-[13px] font-semibold text-slate-900 dark:text-white">Identity Theft Ring</span>
-                        <span className="text-[11px] text-slate-700">#2024-1823</span>
-                        <span className="px-1.5 py-0.5 border rounded text-[11px] font-medium bg-blue-500/10 border-blue-500/20 text-blue-400">MULTI-AGENCY</span>
-                      </div>
-                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">47 victims, $380K — FBI coordination, federal charges pending</p>
-                    </div>
-                    <span className="text-xs text-slate-500 flex-shrink-0">44 days open</span>
-                  </div>
+                    );
+                  })}
                 </div>
-              )}
-            </div>
-
-            {/* Case Analytics — collapsible */}
-            <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none">
-              <button
-                onClick={() => setShowAnalytics(!showAnalytics)}
-                className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-slate-50 dark:hover:bg-zinc-900/10 transition-colors rounded-xl"
-              >
-                <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Case Analytics</h3>
-                {showAnalytics ? <ChevronUp className="w-4 h-4 text-slate-700" /> : <ChevronDown className="w-4 h-4 text-slate-700" />}
-              </button>
-
-              {showAnalytics && (
-                <div className="px-5 pb-5 border-t border-slate-200 dark:border-slate-700/20 pt-4">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                    <div className="border border-slate-200 dark:border-slate-700/20 rounded-lg p-5">
-                      <span className="text-sm font-medium text-slate-900 dark:text-white">Avg Time to Clearance</span>
-                      <div className="space-y-2 mt-3 text-xs">
-                        <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Homicide</span><span className="text-slate-700 dark:text-slate-300">45 days</span></div>
-                        <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Robbery</span><span className="text-slate-700 dark:text-slate-300">22 days</span></div>
-                        <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Narcotics</span><span className="text-slate-700 dark:text-slate-300">38 days</span></div>
-                        <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Sexual Assault</span><span className="text-slate-700 dark:text-slate-300">67 days</span></div>
-                        <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Fraud</span><span className="text-slate-700 dark:text-slate-300">52 days</span></div>
-                      </div>
-                    </div>
-
-                    <div className="border border-slate-200 dark:border-slate-700/20 rounded-lg p-5">
-                      <span className="text-sm font-medium text-slate-900 dark:text-white">Evidence Processing</span>
-                      <div className="space-y-2 mt-3 text-xs">
-                        <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Pending lab results</span><span className="text-amber-700 dark:text-amber-400">6 cases</span></div>
-                        <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Avg lab turnaround</span><span className="text-red-700 dark:text-red-400">18 days (target: 14)</span></div>
-                        <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Ballistics backlog</span><span className="text-amber-700 dark:text-amber-400">2 cases</span></div>
-                        <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">DNA backlog</span><span className="text-emerald-700 dark:text-emerald-400">0 cases</span></div>
-                        <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Fingerprint match</span><span className="text-slate-700 dark:text-slate-300">42%</span></div>
-                      </div>
-                    </div>
-
-                    <div className="border border-slate-200 dark:border-slate-700/20 rounded-lg p-5">
-                      <span className="text-sm font-medium text-slate-900 dark:text-white">Comparisons</span>
-                      <div className="space-y-2 mt-3 text-xs">
-                        <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Our clearance</span><span className="text-emerald-700 dark:text-emerald-400">75%</span></div>
-                        <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">National avg</span><span className="text-slate-700 dark:text-slate-300">62% (+13%)</span></div>
-                        <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Georgia avg</span><span className="text-slate-700 dark:text-slate-300">68% (+7%)</span></div>
-                        <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Cases vs Nov</span><span className="text-emerald-700 dark:text-emerald-400">-2 (improving)</span></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* AI Insight Panel */}
-            <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
-              <div className="flex items-center gap-2 mb-4">
-                <Activity className="w-4 h-4 text-slate-500 dark:text-slate-400" />
-                <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide">AI Decision Guidance</h3>
-                <span className="ml-auto text-[10px] text-slate-700">Action-linked · Updated 7:28 PM</span>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <div className="flex items-start gap-2.5 p-3 bg-red-500/5 border border-red-500/10 rounded-lg">
-                  <AlertTriangle className="w-3.5 h-3.5 text-red-700 dark:text-red-400 mt-0.5 flex-shrink-0" />
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between mb-0.5">
-                      <p className="text-[11px] font-semibold text-red-700 dark:text-red-400">Urgent Deadline Collision</p>
-                      <div className="flex items-center gap-1.5">
-                        <span className="px-1.5 py-0.5 border rounded text-[9px] font-semibold uppercase bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-300 border-red-200 dark:border-red-500/30">Escalated</span>
-                        <span className="text-[10px] font-bold text-red-700 dark:text-red-400/70">97% confidence</span>
-                      </div>
-                    </div>
-                    <p className="text-[11px] text-slate-500 dark:text-slate-400 mb-1">Homicide charge window + DEA surveillance expiration hit today.</p>
-                    <p className="text-[10px] text-slate-700 mb-2">Recommended action: Approve DEA extension and escalate lab now.</p>
-                    <p className="text-[10px] text-slate-600 dark:text-slate-300 mb-2">Based on expiring legal deadlines and unresolved forensic dependency.</p>
-                    <button className="px-2.5 py-1 bg-red-700 text-white rounded text-[10px] font-semibold hover:bg-red-800 transition-colors">Execute 2-step action</button>
-                  </div>
-                </div>
-                <div className="flex items-start gap-2.5 p-3 bg-amber-500/5 border border-amber-500/10 rounded-lg">
-                  <TrendingUp className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400 mt-0.5 flex-shrink-0" />
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between mb-0.5">
-                      <p className="text-[11px] font-semibold text-amber-700 dark:text-amber-400">Robbery Escalation Risk</p>
-                      <div className="flex items-center gap-1.5">
-                        <span className="px-1.5 py-0.5 border rounded text-[9px] font-semibold uppercase bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-500/30">Pending</span>
-                        <span className="text-[10px] font-bold text-amber-700 dark:text-amber-400/70">88% confidence</span>
-                      </div>
-                    </div>
-                    <p className="text-[11px] text-slate-500 dark:text-slate-400 mb-1">Pattern indicates probable 4th pharmacy robbery within 72 hours.</p>
-                    <p className="text-[10px] text-slate-700 mb-2">Recommended action: Assign task force before next shift turnover.</p>
-                    <p className="text-[10px] text-slate-600 dark:text-slate-300 mb-2">Based on pattern clustering and unchanged suspect MO profile.</p>
-                    <button className="px-2.5 py-1 bg-amber-600 text-white rounded text-[10px] font-semibold hover:bg-amber-700 transition-colors">Assign task force now</button>
-                  </div>
-                </div>
-                <div className="flex items-start gap-2.5 p-3 bg-slate-50 dark:bg-zinc-800/20 border border-slate-200 dark:border-slate-700/20 rounded-lg">
-                  <Users className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 mt-0.5 flex-shrink-0" />
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between mb-0.5">
-                      <p className="text-[11px] font-semibold text-slate-700 dark:text-slate-300">Workload Bottleneck</p>
-                      <div className="flex items-center gap-1.5">
-                        <span className="px-1.5 py-0.5 border rounded text-[9px] font-semibold uppercase bg-blue-100 dark:bg-blue-500/10 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-500/30">In Progress</span>
-                        <span className="text-[10px] font-bold text-slate-500">92% confidence</span>
-                      </div>
-                    </div>
-                    <p className="text-[11px] text-slate-500 dark:text-slate-400 mb-1">Rodriguez overload is constraining homicide follow-up speed.</p>
-                    <p className="text-[10px] text-slate-700 mb-2">Recommended action: Reassign burglary #2024-1712 to Det. Wilson.</p>
-                    <p className="text-[10px] text-slate-600 dark:text-slate-300 mb-2">Based on current utilization imbalance across detectives.</p>
-                    <button className="px-2.5 py-1 bg-slate-700 text-white rounded text-[10px] font-semibold hover:bg-slate-800 transition-colors">Apply reassignment</button>
-                  </div>
-                </div>
-                <div className="flex items-start gap-2.5 p-3 bg-slate-50 dark:bg-zinc-800/20 border border-slate-200 dark:border-slate-700/20 rounded-lg">
-                  <TrendingDown className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 mt-0.5 flex-shrink-0" />
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between mb-0.5">
-                      <p className="text-[11px] font-semibold text-slate-700 dark:text-slate-300">Clearance Gap Recovery</p>
-                      <div className="flex items-center gap-1.5">
-                        <span className="px-1.5 py-0.5 border rounded text-[9px] font-semibold uppercase bg-emerald-100 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-500/30">Pending</span>
-                        <span className="text-[10px] font-bold text-slate-500">81% confidence</span>
-                      </div>
-                    </div>
-                    <p className="text-[11px] text-slate-500 dark:text-slate-400 mb-1">Robbery and burglary are below target and trending negative.</p>
-                    <p className="text-[10px] text-slate-700 mb-2">Recommended action: Approve both task-force staffing and reassignment package.</p>
-                    <p className="text-[10px] text-slate-600 dark:text-slate-300 mb-2">Based on projected 30-day clearance trajectory against target.</p>
-                    <button className="px-2.5 py-1 bg-blue-700 text-white rounded text-[10px] font-semibold hover:bg-blue-800 transition-colors">Approve recovery package</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </>
-        )}
-
-        {/* Case Detail Side Panel */}
-        {selectedCase && (
-          <div className="fixed inset-0 z-50 flex justify-end">
-            <div
-              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-              onClick={() => setSelectedCase(null)}
-            />
-            <div className="relative bg-white dark:bg-zinc-950 border-l border-slate-200 dark:border-slate-700/50 w-full sm:w-[600px] lg:w-[760px] h-full overflow-y-auto shadow-2xl p-6">
-              <button
-                onClick={() => setSelectedCase(null)}
-                className="absolute top-4 right-4 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
-              >
-                <X className="w-6 h-6" />
-              </button>
-
-              <div className="mb-6">
-                <div className="flex items-center gap-2 mb-3">
-                  <span className={`px-1.5 py-0.5 border rounded text-[11px] font-medium ${getPriorityBadge(selectedCase.priority)}`}>
-                    {selectedCase.priority.toUpperCase()}
-                  </span>
-                  <span className="text-[13px] text-slate-500 dark:text-slate-400">{selectedCase.type}</span>
-                  {selectedCase.multiAgency && (
-                    <span className="px-1.5 py-0.5 border rounded text-[11px] font-medium bg-blue-500/10 border-blue-500/20 text-blue-400">MULTI-AGENCY</span>
-                  )}
-                </div>
-                <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-1">{selectedCase.title}</h2>
-                <div className="text-[11px] text-slate-500">
-                  Case #{selectedCase.caseNumber} · {selectedCase.daysOpen} days open · Opened {selectedCase.openedDate}
-                </div>
+                <p className="text-[10px] text-slate-500 mt-4">
+                  Confidence reflects source completeness, not investigative certainty. No recommendation executes without command action.
+                </p>
               </div>
 
-              {/* Lead Detective */}
-              <div className="mb-5 bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
-                <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide mb-3">Lead Detective</h3>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="text-[13px] text-slate-900 dark:text-white font-medium">{selectedCase.leadDetective}</div>
-                    <div className="text-[11px] text-slate-500">Badge: {selectedCase.badge}</div>
-                  </div>
-                  <div className="flex gap-2">
-                    <button className="flex items-center gap-2 px-3 py-1.5 bg-slate-100 dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-300 rounded-lg text-xs hover:bg-slate-200 dark:hover:bg-zinc-900/60 transition-all">
-                      <Phone className="w-3 h-3" /> Call
-                    </button>
-                    <button className="flex items-center gap-2 px-3 py-1.5 bg-slate-100 dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-300 rounded-lg text-xs hover:bg-slate-200 dark:hover:bg-zinc-900/60 transition-all">
-                      <Mail className="w-3 h-3" /> Email
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              {/* Status & Evidence */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
-                <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
-                  <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide mb-3">Status</h3>
-                  <div className="space-y-2 text-xs">
-                    <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Current</span><span className="text-slate-700 dark:text-slate-300">{selectedCase.status}</span></div>
-                    <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Opened</span><span className="text-slate-700 dark:text-slate-300">{selectedCase.openedDate}</span></div>
-                    <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Last Update</span><span className="text-slate-700 dark:text-slate-300">2 hours ago</span></div>
-                  </div>
-                </div>
-                <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
-                  <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide mb-3">Evidence & Witnesses</h3>
-                  <div className="space-y-2 text-xs">
-                    <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Evidence</span><span className="text-slate-700 dark:text-slate-300">{selectedCase.evidence} collected</span></div>
-                    <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Witnesses</span><span className="text-slate-700 dark:text-slate-300">{selectedCase.witnesses} interviewed</span></div>
-                    <div className="flex justify-between"><span className="text-slate-500 dark:text-slate-400">Suspects</span><span className="text-slate-700 dark:text-slate-300">{selectedCase.suspects} identified</span></div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Prosecutor Readiness & Evidence Tracking */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
-                <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
-                  <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide mb-3">Prosecutor Readiness</h3>
-                  <div className="flex items-center justify-between gap-2 mb-2 flex-wrap">
-                    <span className={`px-2 py-1 rounded border text-[11px] font-semibold ${getProsecutorStatusStyles(selectedCase.prosecutorStatus)}`}>{selectedCase.prosecutorStatus}</span>
-                    {selectedCase.assignedADA && <span className="text-[11px] text-slate-600 dark:text-slate-300 text-right">{selectedCase.assignedADA}</span>}
-                  </div>
-                  <p className="text-[12px] text-slate-700 dark:text-slate-300">{selectedCase.prosecutorNote}</p>
-                  {selectedCase.chargeWindowRisk && (
-                    <p className="text-[11px] text-red-700 dark:text-red-400 font-semibold mt-2 flex items-center gap-1.5">
-                      <AlertTriangle className="w-3 h-3" /> At risk of missing charge window
-                    </p>
-                  )}
-                </div>
-                <div className="bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
-                  <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide mb-3">Evidence & Lab Tracking</h3>
-                  <div className="space-y-2">
-                    {selectedCase.evidenceItems.map(item => (
-                      <div key={item.id} className="flex items-center justify-between gap-3 px-3 py-2 bg-slate-50 dark:bg-zinc-950/20 rounded-lg border border-slate-200/80 dark:border-slate-700/30">
-                        <div className="min-w-0">
-                          <p className="text-[12px] font-medium text-slate-900 dark:text-white">{item.description}</p>
-                          <p className="text-[11px] text-slate-500 dark:text-slate-400">{item.category} · {item.lab}</p>
-                        </div>
-                        <div className="text-right flex-shrink-0">
-                          <span className={`px-1.5 py-0.5 rounded border text-[10px] font-semibold ${getEvidenceStatusStyles(item.status)}`}>{item.status}</span>
-                          <p className="text-[11px] text-slate-500 mt-0.5">ETA {item.eta}</p>
-                        </div>
+              {/* Operational activity */}
+              <div className="mt-7">
+                <SectionLabel right={<span className="text-[10px] text-slate-500">last 24 hours · {activity.length} entries</span>}>
+                  Operational activity
+                </SectionLabel>
+                <div className="divide-y divide-slate-800/50">
+                  {activity.map((a, i) => (
+                    <div key={i} className="flex items-start gap-3 py-2.5">
+                      <span className="w-20 text-[10.5px] font-mono text-slate-500 flex-shrink-0">{a.time}</span>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[11.5px] text-slate-200 leading-snug">
+                          <span className={`text-[9.5px] font-bold tracking-wider mr-1.5 ${kindTone[a.tone]}`}>{a.kind}</span>
+                          {a.text}
+                        </p>
+                        <p className="text-[10px] text-slate-500 mt-0.5">{a.meta}</p>
                       </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* Timeline */}
-              <div className="mb-5 bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
-                <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide mb-4">Case Timeline</h3>
-                <div className="space-y-3">
-                  <div className="flex gap-3">
-                    <div className="flex flex-col items-center">
-                      <CheckCircle className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
-                      <div className="w-px h-full bg-slate-600 mt-1"></div>
                     </div>
-                    <div className="flex-1 pb-4">
-                      <div className="text-[13px] text-slate-900 dark:text-white font-medium">Case Opened</div>
-                      <div className="text-[11px] text-slate-500">{selectedCase.openedDate}</div>
-                    </div>
-                  </div>
-                  <div className="flex gap-3">
-                    <div className="flex flex-col items-center">
-                      <CheckCircle className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
-                      <div className="w-px h-full bg-slate-600 mt-1"></div>
-                    </div>
-                    <div className="flex-1 pb-4">
-                      <div className="text-[13px] text-slate-900 dark:text-white font-medium">Evidence Collected</div>
-                      <div className="text-[11px] text-slate-500">{selectedCase.evidence} items logged</div>
-                    </div>
-                  </div>
-                  <div className="flex gap-3">
-                    <div className="flex flex-col items-center">
-                      <CheckCircle className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
-                      <div className="w-px h-full bg-slate-600 mt-1"></div>
-                    </div>
-                    <div className="flex-1 pb-4">
-                      <div className="text-[13px] text-slate-900 dark:text-white font-medium">Witnesses Interviewed</div>
-                      <div className="text-[11px] text-slate-500">{selectedCase.witnesses} statements</div>
-                    </div>
-                  </div>
-                  <div className="flex gap-3">
-                    <div className="flex flex-col items-center">
-                      {selectedCase.status === 'Awaiting Lab Results' ? (
-                        <Clock className="w-4 h-4 text-amber-700 dark:text-amber-400" />
-                      ) : (
-                        <CheckCircle className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
-                      )}
-                    </div>
-                    <div className="flex-1">
-                      <div className="text-[13px] text-slate-900 dark:text-white font-medium">{selectedCase.nextAction}</div>
-                      {selectedCase.deadline && (
-                        <div className="text-[11px] text-red-700 dark:text-red-400">Deadline: {selectedCase.deadline}</div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Team */}
-              <div className="mb-5 bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
-                <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide mb-3">Assigned Team</h3>
-                <div className="flex flex-wrap gap-2">
-                  {selectedCase.assignedTo.map((person, idx) => (
-                    <span key={idx} className="px-3 py-1.5 bg-slate-100 dark:bg-zinc-800/30 text-slate-700 dark:text-slate-300 rounded-lg text-[13px]">
-                      {person}
-                    </span>
                   ))}
                 </div>
-              </div>
-
-              {/* Notes */}
-              <div className="mb-5 bg-white dark:bg-zinc-900/25 border border-slate-200 dark:border-slate-700/30 rounded-xl shadow-sm dark:shadow-none p-5">
-                <h3 className="text-[13px] font-semibold text-slate-900 dark:text-white uppercase tracking-wide mb-3">Case Summary</h3>
-                <p className="text-[13px] text-slate-700 dark:text-slate-300">{selectedCase.notes}</p>
-              </div>
-
-              {/* Actions */}
-              <div className="flex flex-wrap gap-2">
-                <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-200 dark:hover:bg-zinc-900/60 transition-all">
-                  <UserCheck className="w-4 h-4" /> Reassign Detective
-                </button>
-                <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-200 dark:hover:bg-zinc-900/60 transition-all">
-                  <FileText className="w-4 h-4" /> Update Status
-                </button>
-                <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-200 dark:hover:bg-zinc-900/60 transition-all">
-                  <Scale className="w-4 h-4" /> Request Warrant
-                </button>
-                <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-200 dark:hover:bg-zinc-900/60 transition-all">
-                  <FlaskConical className="w-4 h-4" /> Lab Request
-                </button>
-                <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-200 dark:hover:bg-zinc-900/60 transition-all">
-                  <Link2 className="w-4 h-4" /> Link Cases
-                </button>
-                <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-zinc-900/40 border border-slate-300 dark:border-slate-700/40 text-slate-700 dark:text-slate-300 rounded-lg text-[13px] font-medium hover:bg-slate-200 dark:hover:bg-zinc-900/60 transition-all">
-                  <Activity className="w-4 h-4" /> Case Notes
-                </button>
+                <p className="text-[10px] text-slate-500 mt-3">All entries are audit-logged with actor, timestamp, and source system.</p>
               </div>
             </div>
           </div>
-        )}
+        </div>
       </div>
     </DashboardLayout>
   );
-};
+}
 
 export default ActiveCasesDashboard;
