@@ -58,9 +58,9 @@ const bodies = [
   {
     body: 'Georgia POST — Agency Certification', scope: 'Sworn personnel · annual', milestone: 'Filing Dec 31',
     compliant: 22, atRisk: 2, nonCompliant: 0, proof: 'Training records 93.8% current',
-    // Sixty-five, not the mock's sixty-two: 1,046 sworn against 981 current is
-    // the same arithmetic that produces the 93.8% shown beside it.
-    note: 'Sixty-five personnel short of the twenty-hour annual mandate with five months remaining in the training year.',
+    // Shortfall is templated from the POST course row so it cannot drift from
+    // the bar and percentage printed beside it.
+    note: null,
   },
 ];
 
@@ -76,13 +76,17 @@ const earlyIntervention = [
 
 // Accreditation courses are marked at 95%; CIT carries an agency target of 60%.
 const ACCREDITATION_FLOOR = 95;
+// Denominators come from HR position control: 984 sworn of 1,183 filled. CJIS
+// is scoped to authorized system users, PREA to staff with inmate contact —
+// both subsets of filled strength, neither of it a different agency size.
+const SWORN = 984;
 const training = [
-  { course: 'POST annual 20 hours',        note: 'state mandate',      current: 981,  total: 1046, floor: ACCREDITATION_FLOOR },
-  { course: 'Use of force / de-escalation', note: 'CALEA 4.3',         current: 1024, total: 1046, floor: ACCREDITATION_FLOOR },
-  { course: 'Firearms qualification',      note: 'biannual',           current: 1039, total: 1046, floor: ACCREDITATION_FLOOR },
-  { course: 'PREA refresher',              note: '28 CFR 115',         current: 604,  total: 641,  floor: ACCREDITATION_FLOOR },
-  { course: 'CJIS security awareness',     note: 'biennial',           current: 1198, total: 1214, floor: ACCREDITATION_FLOOR },
-  { course: 'Crisis intervention (CIT)',   note: 'agency target 60%',  current: 512,  total: 1046, floor: 60 },
+  { course: 'POST annual 20 hours',        note: 'state mandate',      current: 923,  total: SWORN, floor: ACCREDITATION_FLOOR },
+  { course: 'Use of force / de-escalation', note: 'CALEA 4.3',         current: 963,  total: SWORN, floor: ACCREDITATION_FLOOR },
+  { course: 'Firearms qualification',      note: 'biannual',           current: 977,  total: SWORN, floor: ACCREDITATION_FLOOR },
+  { course: 'PREA refresher',              note: '28 CFR 115 · staff with inmate contact', current: 604, total: 641, floor: ACCREDITATION_FLOOR },
+  { course: 'CJIS security awareness',     note: 'biennial · authorized users', current: 1127, total: 1142, floor: ACCREDITATION_FLOOR },
+  { course: 'Crisis intervention (CIT)',   note: 'agency target 60%',  current: 481,  total: SWORN, floor: 60 },
 ];
 
 const mandated = [
@@ -189,6 +193,12 @@ export default function PerformanceCompliance() {
   const sworn = post.total;
   const trainingCurrency = (post.current / post.total) * 100;
   const shortOfMandate = post.total - post.current;
+  const spell = { 61: 'Sixty-one', 62: 'Sixty-two', 63: 'Sixty-three', 64: 'Sixty-four', 65: 'Sixty-five' };
+  const bodyRows = bodies.map((b) => b.note ? b : ({
+    ...b,
+    note: `${spell[shortOfMandate] ?? shortOfMandate} personnel short of the twenty-hour annual mandate `
+      + 'with five months remaining in the training year.',
+  }));
 
   return (
     <DashboardLayout>
@@ -348,7 +358,7 @@ export default function PerformanceCompliance() {
                     Accreditation readiness
                   </SectionLabel>
                   <div className="space-y-5">
-                    {bodies.map((b) => {
+                    {bodyRows.map((b) => {
                       const total = b.compliant + b.atRisk + b.nonCompliant;
                       const accent = b.nonCompliant > 0 ? 'border-red-500/70' : b.atRisk > 0 ? 'border-amber-500/60' : 'border-transparent';
                       return (

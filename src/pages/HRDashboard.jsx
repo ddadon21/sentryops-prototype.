@@ -18,14 +18,14 @@ import DashboardLayout from '../layouts/DashboardLayout';
 // headcount.
 
 const divisions = [
-  { division: 'Patrol',                 kind: 'Sworn · deputy through captain',        auth: 412, filled: 371, funded: 33, pipeline: 22, net90: 4,  offDuty: 24 },
-  { division: 'Detention',              kind: 'Sworn · detention officer through captain', auth: 486, filled: 427, funded: 48, pipeline: 31, net90: -6, offDuty: 25 },
-  { division: 'Court Services',         kind: 'Sworn · civil process and courthouse',  auth: 118, filled: 112, funded: 6,  pipeline: 3,  net90: 1,  offDuty: 7  },
-  { division: 'Criminal Investigations', kind: 'Sworn · detective and supervisory',    auth: 46,  filled: 42,  funded: 4,  pipeline: 2,  net90: -1, offDuty: 3  },
-  { division: 'Communications',         kind: 'Civilian · 911 dispatch and records',   auth: 96,  filled: 79,  funded: 14, pipeline: 14, net90: -2, offDuty: 11 },
-  { division: 'Support Services',       kind: 'Civilian · records, property, fleet',   auth: 104, filled: 96,  funded: 5,  pipeline: 5,  net90: 0,  offDuty: 12 },
-  { division: 'Training',               kind: 'Sworn and civilian · academy and range', auth: 22, filled: 20,  funded: 1,  pipeline: 1,  net90: 0,  offDuty: 3  },
-  { division: 'Administration',         kind: 'Sworn and civilian · command and business', auth: 38, filled: 36, funded: 1, pipeline: 2, net90: 1,  offDuty: 4  },
+  { division: 'Patrol',                 kind: 'Sworn · deputy through captain',        auth: 412, filled: 371, sworn: 371, funded: 33, pipeline: 22, net90: 4,  offDuty: 24 },
+  { division: 'Detention',              kind: 'Sworn · detention officer through captain', auth: 486, filled: 427, sworn: 427, funded: 48, pipeline: 31, net90: -6, offDuty: 25 },
+  { division: 'Court Services',         kind: 'Sworn · civil process and courthouse',  auth: 118, filled: 112, sworn: 112, funded: 6,  pipeline: 3,  net90: 1,  offDuty: 7  },
+  { division: 'Criminal Investigations', kind: 'Sworn · detective and supervisory',    auth: 46,  filled: 42,  sworn: 42,  funded: 4,  pipeline: 2,  net90: -1, offDuty: 3  },
+  { division: 'Communications',         kind: 'Civilian · 911 dispatch and records',   auth: 96,  filled: 79,  sworn: 0,   funded: 14, pipeline: 14, net90: -2, offDuty: 11 },
+  { division: 'Support Services',       kind: 'Civilian · records, property, fleet',   auth: 104, filled: 96,  sworn: 0,   funded: 5,  pipeline: 5,  net90: 0,  offDuty: 12 },
+  { division: 'Training',               kind: 'Sworn and civilian · academy and range', auth: 22, filled: 20,  sworn: 14,  funded: 1,  pipeline: 1,  net90: 0,  offDuty: 3  },
+  { division: 'Administration',         kind: 'Sworn and civilian · command and business', auth: 38, filled: 36, sworn: 18, funded: 1, pipeline: 2, net90: 1,  offDuty: 4  },
 ];
 
 const strength = {
@@ -233,8 +233,9 @@ export default function HRDashboard() {
   const vacancyRate = pct(vacant, t.auth);
   const held = vacant - t.funded;
 
-  const swornFilled = divisions.filter((d) => d.kind.startsWith('Sworn ·')).reduce((a, d) => a + d.filled, 0);
-  const civilianFilled = divisions.filter((d) => d.kind.startsWith('Civilian')).reduce((a, d) => a + d.filled, 0);
+  // Sworn strength is what POST currency on Performance & Compliance measures against.
+  const swornFilled = divisions.reduce((a, d) => a + d.sworn, 0);
+  const civilianFilled = t.filled - swornFilled;
 
   const separationTotal = separations.reduce((a, s) => a + s.count, 0);
   const attrition = pct(separationTotal, t.filled);
@@ -414,7 +415,7 @@ export default function HRDashboard() {
                 </div>
                 <p className="text-[10px] text-slate-500 mt-2 leading-relaxed">
                   Pipeline = candidates in process against that division's vacancies. 90-day = net change in filled positions.
-                  Filled strength is {swornFilled.toLocaleString()} sworn and {civilianFilled} civilian, with {t.filled - swornFilled - civilianFilled} in mixed divisions.
+                  Filled strength is {swornFilled} sworn and {civilianFilled} civilian — sworn strength is the denominator for POST currency on Performance &amp; Compliance.
                   {' '}Detention carries {detention.auth - detention.filled} vacant positions but {detentionUncovered} uncovered posts once
                   {' '}{detention.offDuty} off-full-duty personnel are counted — post boards quote the second number.
                 </p>
