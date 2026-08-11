@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DashboardLayout from '../layouts/DashboardLayout';
+import { hrNavigation, hrProfile, hrNotifications } from '../config/hrConfig';
 
 // ── Position control ───────────────────────────────────────────
 // Position control is the spine of this page: every strength figure is summed
@@ -282,7 +283,15 @@ export default function HRDashboard() {
   const dueProcessOpen = dueProcess.reduce((a, d) => a + d.count, 0);
 
   return (
-    <DashboardLayout>
+    <DashboardLayout
+      navigation={hrNavigation}
+      profile={hrProfile}
+      notifications={hrNotifications}
+      settingsRoute="/hr/settings"
+      profileRoute="/hr/profile"
+      activityRoute="/hr/activity"
+      activityModuleFilter="hr"
+    >
       <div className="min-h-full bg-[#0A0A0B] px-6 py-8">
         <div className="max-w-[1500px] mx-auto">
 
